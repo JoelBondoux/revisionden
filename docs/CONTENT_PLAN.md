@@ -128,7 +128,7 @@ Shared definitions live in `content/schemas/common.schema.json`.
   Items point at them with `diagram_ref`.
 
 Draft content may have citations without quotes yet (for example when the source still needs to
-be read). The validator passes it but reports how many entries still need sourcing; it can never
+be read). The validator passes it but lists every entry that still needs sourcing; it can never
 become `verified` without quotes.
 
 ## Validator
@@ -139,7 +139,7 @@ pnpm content:validate                             # schemas, ids, links, maths a
 pnpm content:validate --no-maths                  # schemas and links only (prints a warning)
 pnpm content:validate --baseline <old content dir> # also refuse in-place edits to verified content
 pnpm content:validate --report                    # audit summary for everything, as JSON
-pnpm content:audit <item, topic, tree or subject id>  # full audit: citations, quotes, checks
+pnpm content:validate --audit <item, topic, tree or subject id>  # full audit trail (JSON)
 MATHS_PYTHON=.venv/bin/python pnpm content:validate   # pick the Python that has SymPy
 node --test 'scripts/content/*.test.mjs'          # validator tests
 ```

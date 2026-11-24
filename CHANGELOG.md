@@ -29,7 +29,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
   answer; safer input parsing; 90% coverage gate; container smoke test in CI.
 - Content citations and verification records on every item, topic leaf, mark scheme and diagram,
   enforced by the validator (quotes, required checks, immutable verified versions, no PDFs or
-  raster images); code-drawn SVG diagram schema; `pnpm content:audit <id>` audit report.
+  raster images); code-drawn SVG diagram schema; `pnpm content:validate --audit <id>` audit trail (a fuller `pnpm content:audit` is workstream V).
 
 ## [00.01.002] - 2026-11-24
 

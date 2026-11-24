@@ -81,6 +81,11 @@ test('a draft without quotes passes but is counted as needing sourcing', async (
   });
   assert.equal(code, 0);
   assert.match(out.lines.join('\n'), /6 of 6 entries still need sourcing \(quotes\)/);
+  assert.match(
+    out.lines.join('\n'),
+    /needs sourcing: item fixture-a17-0001 \(items\/sample\.json\)/,
+  );
+  assert.match(out.lines.join('\n'), /needs sourcing: topic fixture-a6 /);
 });
 
 test('--report prints the audit report as JSON', async () => {
@@ -114,7 +119,7 @@ test('--baseline with an unchanged copy passes', async () => {
   assert.equal(code, 0, out.lines.join('\n'));
 });
 
-test('content:audit prints the detailed report for one id', async () => {
+test('--audit prints the detailed report for one id', async () => {
   const out = capture();
   const code = await run(['--content', join(FIXTURES, 'verified'), '--audit', 'fixture-a17-0001'], {
     out: out.log,
@@ -127,7 +132,7 @@ test('content:audit prints the detailed report for one id', async () => {
   assert.equal(row.detail.verification.status, 'verified');
 });
 
-test('content:audit for an unknown id exits 1', async () => {
+test('--audit for an unknown id exits 1', async () => {
   const out = capture();
   const code = await run(['--content', join(FIXTURES, 'valid'), '--audit', 'nope'], {
     out: out.log,

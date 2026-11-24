@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // pnpm content:validate [--content <dir>] [--no-maths] [--baseline <dir>] [--report]
-// pnpm content:audit <item | topic | topic tree | subject id>   (same as --audit <id>)
+// --audit <item | topic | topic tree | subject id> prints the full audit trail as JSON.
 // Validates content/ and checks every maths answer with the Python maths engine.
 // MATHS_PYTHON picks the Python that has services/maths/requirements.txt installed.
 import { dirname, join, resolve } from 'node:path';
@@ -63,9 +63,10 @@ export async function run(argv, deps = {}) {
   }
   if (values['no-maths']) err('Warning: maths answers were NOT checked (--no-maths).');
   const report = auditReport(content);
-  const unsourced = report.filter((r) => r.needs_sourcing).length;
-  if (unsourced) {
-    err(`Note: ${unsourced} of ${report.length} entries still need sourcing (quotes).`);
+  const unsourced = report.filter((r) => r.needs_sourcing);
+  for (const r of unsourced) err(`needs sourcing: ${r.kind} ${r.id} (${r.file})`);
+  if (unsourced.length) {
+    err(`Note: ${unsourced.length} of ${report.length} entries still need sourcing (quotes).`);
   }
   if (values.report) {
     out(JSON.stringify(report, null, 2));
