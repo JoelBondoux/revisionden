@@ -1,6 +1,7 @@
 import { http, HttpResponse, type RequestHandler } from 'msw';
 import { answerRequestSchema } from '../api/schemas';
 import { answerKeys, family, learningPath, lessons, XP_PER_CORRECT } from './data';
+import { learnHandlers } from '../features/learn/mocks';
 
 const normalise = (value: string) => value.trim().toLowerCase().replace(/\s+/g, '');
 
@@ -30,4 +31,7 @@ export const handlers: RequestHandler[] = [
       xpEarned: correct ? XP_PER_CORRECT : 0,
     });
   }),
+
+  // Learning loop and flashcards (workstream F).
+  ...learnHandlers,
 ];
