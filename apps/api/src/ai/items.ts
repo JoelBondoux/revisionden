@@ -1,13 +1,18 @@
 import { z } from 'zod';
 import type { MarkPoint, ShortAnswerQuestion } from './marking';
 
-// The item format from content/schemas/item.schema.json, as stored in `items.body` and
-// `items.answer`. `mark_points` is an optional structured form with rule wording per point.
+// The item format stored by the content sync (learning/content-sync.ts, ItemBody and
+// ItemAnswer): body.prompt and body.marks are shown to the student; answer.key is the content
+// item's answer and answer.markScheme its mark points ("B1 for ..."). markPoints is an optional
+// structured form with rule wording per point.
 const bodySchema = z.object({
   prompt: z.string().min(1),
   marks: z.number().int().min(1).max(20),
-  mark_scheme: z.array(z.string().min(1)).optional(),
-  mark_points: z
+});
+const answerSchema = z.object({
+  key: z.object({ accepted: z.array(z.string().min(1)).default([]) }).default({}),
+  markScheme: z.array(z.string().min(1)).optional(),
+  markPoints: z
     .array(
       z.object({
         code: z.string().regex(/^[A-Z]{1,2}[0-9]$/),
@@ -17,7 +22,6 @@ const bodySchema = z.object({
     )
     .optional(),
 });
-const answerSchema = z.object({ accepted: z.array(z.string().min(1)).default([]) });
 
 const MARK_SCHEME_LINE = /^([A-Z]{1,2}[0-9])\s+(?:for\s+)?(.+)$/;
 
@@ -32,13 +36,13 @@ export function toShortAnswerQuestion(item: {
   const body = bodySchema.safeParse(item.body);
   const answer = answerSchema.safeParse(item.answer ?? {});
   if (!body.success || !answer.success) return null;
-  const accepted = answer.data.accepted;
+  const accepted = answer.data.key.accepted;
 
   let points: MarkPoint[];
-  if (body.data.mark_points) {
-    points = body.data.mark_points;
-  } else if (body.data.mark_scheme) {
-    const parsed = body.data.mark_scheme.map((line) => MARK_SCHEME_LINE.exec(line.trim()));
+  if (answer.data.markPoints) {
+    points = answer.data.markPoints;
+  } else if (answer.data.markScheme) {
+    const parsed = answer.data.markScheme.map((line) => MARK_SCHEME_LINE.exec(line.trim()));
     if (parsed.some((m) => !m)) return null;
     // The official wording of a point earns it by rule; the AI only judges other wording.
     points = parsed.map((m) => ({ code: m![1]!, description: m![2]!, accepted: [m![2]!] }));

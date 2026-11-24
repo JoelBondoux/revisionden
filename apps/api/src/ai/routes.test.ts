@@ -40,12 +40,12 @@ async function setUp(nickname = 'pixel_fox') {
     .values({
       topicId: 'test-cells',
       type: 'short_answer',
-      body: {
-        prompt: 'What does the cell membrane do?',
-        marks: 1,
-        mark_scheme: ['B1 for controls what enters and leaves the cell'],
+      // The stored item format (learning/content-sync.ts).
+      body: { prompt: 'What does the cell membrane do?', marks: 1 },
+      answer: {
+        key: { accepted: ['controls what enters and leaves the cell'] },
+        markScheme: ['B1 for controls what enters and leaves the cell'],
       },
-      answer: { accepted: ['controls what enters and leaves the cell'] },
     })
     .returning();
   return { ...s, headers, item: item!, rec };

@@ -46,9 +46,14 @@ export interface ContentItem {
   [key: string]: unknown;
 }
 
-/** What the student sees (never the answer, except a flashcard's back). */
+/**
+ * The item JSON format in the items table (shared by the content sync, the learning loop and AI
+ * marking; round trip tested in ai/items-roundtrip.test.ts).
+ * body: what the student sees (never the answer, except a flashcard's back).
+ */
 export interface ItemBody {
   prompt?: string;
+  marks?: number;
   options?: string[];
   unit?: string;
   hint?: string;
@@ -56,7 +61,7 @@ export interface ItemBody {
   back?: string;
 }
 
-/** Kept on the server: the answer key and how to check it. */
+/** answer: kept on the server. key is the content item's answer; markScheme its mark points. */
 export interface ItemAnswer {
   key?: Record<string, unknown>;
   verify?: Record<string, unknown>;
@@ -72,6 +77,7 @@ export function itemBody(item: ContentItem): ItemBody {
   const unit = typeof item.answer?.unit === 'string' ? item.answer.unit : undefined;
   return defined({
     prompt: item.prompt,
+    marks: typeof item.marks === 'number' ? item.marks : undefined,
     options: item.options,
     unit: item.type === 'numeric' ? unit : undefined,
     hint: item.hint,
