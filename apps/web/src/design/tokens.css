@@ -19,7 +19,11 @@
   --color-danger-edge: #8e1b1b;
   --color-gold: #ffc83d;
   --color-streak: #ff9f1c;
-  --color-locked: #c9c9d4;
+  --color-locked: #c4c4cf;
+  --color-locked-soft: #e5e5ec;
+  --color-mastery-fill: #d9cfff;
+  --color-weak: #c2541a;
+  --color-challenge: #2b2b3a;
   --color-pip: #ff7a2f;
   --color-pip-side: #e35f17;
   --color-pip-ears: #3a2622;

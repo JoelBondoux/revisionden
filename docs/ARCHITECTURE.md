@@ -51,6 +51,19 @@
   (starting test), `/learn/subject/:subjectId/practice` (mixed lesson), `/learn/topic/:topicId`, `/learn/command-words`;
   `/cards` is the flashcards screen. They call `/v1/student/...` with the device cookie.
 - **Routes:** `/` welcome, `/family`, `/learn` (path), `/lesson/:id`, `/lesson/:id/complete`,
+  | Folder | What it holds |
+  | ---------------- | ----------------------------------------------------------------------------------------- |
+  | `src/design` | Design tokens (`tokens.ts`, mirrored as CSS variables in `tokens.css`), base styles |
+  | `src/components` | Shared components (Button, Pill, ProgressBar, Card, BottomNav, Toast, Sheet, Avatar, Pip) |
+  | `src/layout` | `AppLayout` (main nav: bottom bar on phones, side rail from 768px) and `FocusLayout` |
+  | `src/map` | Topic map pieces: honeycomb row layout, topic and challenge hexes, Next mission card |
+  | `src/pages` | One component per screen; `src/routes.tsx` maps paths to screens |
+  | `src/api` | Typed API client (every response checked with Zod), `useApiResource`, retry UI |
+  | `src/mocks` | MSW handlers and made-up demo data, used by tests and by `pnpm dev` |
+  | `src/pwa` | Service worker registration and the offline banner |
+  | `src/session` | Which student is using this device (a convenience until device linking lands) |
+  | `public/` | Web app manifest, icons, `sw.js` (app shell cache) and the MSW worker for development |
+- **Routes:** `/` welcome, `/family`, `/map` (topic map; `/learn` redirects there), `/lesson/:id`, `/lesson/:id/complete`,
   `/cards`, `/plan`, `/papers`, `/progress`, `/settings`, `/install`; anything else shows a 404.
 - **API address:** `VITE_API_URL`, defaulting to `/api` on the same site. In development the MSW
   mock API answers instead (turn off with `VITE_USE_MOCKS=false`).
