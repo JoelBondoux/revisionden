@@ -50,6 +50,19 @@ and reports which line first goes wrong; Cloud Run container ready to deploy.
 | H   | Reminders (web push) and AI gateway with per-child cost cap             | B                    |
 | V   | Verification pipeline, review queue, quarantine and audit reports       | C, D                 |
 
+## Content sourcing
+
+| ID  | Workstream                              | Owns these paths                                                                            | Branch                     | Status    | PR                                                      |
+| --- | --------------------------------------- | ------------------------------------------------------------------------------------------- | -------------------------- | --------- | ------------------------------------------------------- |
+| S   | Official citations for pilot GCSE Maths | `content/items/**`, `content/topic-trees/**`, `content/mark-schemes/**`, `docs/sourcing/**` | `feature/s-pilot-sourcing` | in review | [#7](https://github.com/JoelBondoux/revisionden/pull/7) |
+
+### S: Official citations for pilot GCSE Maths
+
+Read the Pearson Edexcel 1MA1 specification (Issue 2) and the DfE GCSE mathematics subject
+content; fill every pilot citation with a verbatim quote, page, retrieval date and SHA-256;
+check every answer and wrong option independently. Leaves status `draft`: the remaining pipeline
+steps belong to V and the product owner.
+
 ### Wave 2 progress
 
 | ID  | Workstream                                                                                                                                                    | Owns these paths                                                                                              | Branch                        | Status    | PR                                                      |

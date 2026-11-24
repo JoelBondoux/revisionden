@@ -157,6 +157,29 @@ in `services/maths`; CI runs the same in the `content` job.
 
 GCSE Maths Higher, Pearson Edexcel 1MA1: `content/topic-trees/gcse-maths-edexcel-1ma1-higher.json`
 (content references N1 to S6, one leaf each) and sample items in
-`content/items/gcse-maths-higher/`. All pilot content is `draft`: its citations give the
-specification point and link but no quotes yet, because the specification could not be read from
-the build session. It must be sourced and pass the pipeline before release.
+`content/items/gcse-maths-higher/`. Every citation has been sourced from the official documents
+(quote, page, `retrieved_at`, `sha256`); the record of what was read, what each citation backs
+and what is still unsupported is in [`sourcing/gcse-maths-1ma1-pilot.md`](sourcing/gcse-maths-1ma1-pilot.md).
+All pilot content is still `draft` until it passes the rest of the pipeline.
+
+## Citation conventions (settled while sourcing the pilot)
+
+- **`url`** points at the document itself (the PDF), not the qualification page, so the
+  `sha256` refers to exactly that file. **`sha256`** is the hash of the file as fetched on
+  `retrieved_at`; the private archive (once it exists) must store that same file.
+- **`title`** is the title printed on the document; **`document_ref`** is the code plus the
+  issue and date printed on it (for example `1MA1 Issue 2 (June 2015)`), not the PDF's
+  modified date.
+- **`location`** gives the heading path, the content reference and both page numbers: the page
+  number printed on the page and the PDF page, for example
+  `Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N7 (page 12; PDF page 24)`.
+- **`quote`** is one contiguous, word-for-word run of text from that location, at most 50 words.
+  Do not join pieces with ellipses. Typeset maths (superscripts, fractions, formulae) does not
+  survive copying as text, so choose a run of plain words next to it instead, and check the
+  quote against a rendered image of the page, not only against extracted text.
+- **`supports`** names only the parts the quote itself backs. A specification quote shows the
+  question is in scope for that tier (`question`, `topic`, `front`); it does not show that an
+  answer is right. Maths answers, steps and worked values are backed by the maths engine (or,
+  for types the engine does not check yet, an exact check recorded in the sourcing record).
+  Definitions, hints, explanations and hand-written mark points that no official document
+  states are listed as unsupported in the sourcing record, so review can see them.
