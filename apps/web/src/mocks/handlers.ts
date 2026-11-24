@@ -4,6 +4,7 @@ import { onboardingHandlers } from '../features/onboarding/mocks';
 import { answerKeys, cardsDue, family, lessons, topicMap, XP_PER_CORRECT } from './data';
 import { learnHandlers } from '../features/learn/mocks';
 import { rewardsHandlers } from '../features/rewards/mocks';
+import { statsHandlers } from '../features/stats/mocks';
 
 const isKnownStudent = (id: unknown) => family.students.some((s) => s.id === id);
 
@@ -47,4 +48,7 @@ export const handlers: RequestHandler[] = [
   // Learning loop and flashcards (workstream F).
   ...learnHandlers,
   ...rewardsHandlers,
+
+  // Statistics dashboards (workstream K).
+  ...statsHandlers,
 ];

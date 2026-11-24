@@ -23,6 +23,12 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - New original avatar art: five chapter finale tops, rooftop scene, and the Frost Fest drop (bobble hat, paper lantern, frosty night scene).
 - Verification: blind marking for extended answers: three exemplars (top, middle, low) marked by a second provider without the intended levels must all match; verified extended answers need `blind-marking` and individual human approval, and review batches always include them.
 - Verification: the quote checker reports near matches (letters only, or words with small insertions or reordering, with a confidence) for a reviewer to confirm instead of passing them.
+- Statistics dashboards (K): student "My stats" on the Progress tab (week, term and year; XP chart
+  with goal line, tooltip and table view; mastery by subject; personal bests; kind framing), the
+  parent stats dashboard at `/parent/stats` (study time, plan kept, accuracy, streak, 8-week chart,
+  subjects, weak spots, healthy habits, AI spend, recent activity, Save as PDF in the browser),
+  "What your parent can see" in Settings, and `GET /v1/student/stats`, `GET /v1/students/:id/stats`
+  and `GET /v1/students/:id/dashboard`.
 - Five-year rewards progression design (`docs/REWARDS.md`) and backlog workstream R.
 - Policies index and rules (`docs/LEGAL.md`), About page, feedback and sound effects specs, backlog workstreams L and U.
 - Statistics dashboards spec for student and parent (`docs/PRODUCT_RULES.md`) and backlog workstream K; parent-set rewards detail (`docs/REWARDS.md`).

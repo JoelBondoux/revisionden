@@ -20,3 +20,5 @@ export * from './reward-xp';
 export * from './chapters';
 export * from './reward-stats';
 export * from './rewards-schemas';
+export * from './stats';
+export * from './stats-schemas';
