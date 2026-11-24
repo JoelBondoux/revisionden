@@ -111,10 +111,22 @@ export const ParentDashboardSchema = z
         scores: z.array(z.object({ label: z.string(), value: z.string(), scale: z.string() })),
       })
       .nullable(),
-    /** Parent-set reward progress (workstream R5); null until one is set up. */
-    reward: z
-      .object({ title: z.string().max(60), progress: z.number().min(0).max(1), met: z.boolean() })
-      .nullable(),
+    /**
+     * Parent-set rewards with progress (workstream R5, `ParentReward` in rewards-schemas), not
+     * yet given ones first. Empty shows "Not set up yet". The note to the student is left out.
+     */
+    rewards: z.array(
+      z
+        .object({
+          title: z.string().max(60),
+          targetLabel: z.string(),
+          current: z.number().min(0),
+          goal: z.number().min(0),
+          reached: z.boolean(),
+          given: z.boolean(),
+        })
+        .strict(),
+    ),
     healthyHabits: z.object({
       quietHourSessions: Count,
       daysOverCap: Count,

@@ -52,7 +52,7 @@ const sampleDashboard: ParentDashboard = {
   ],
   weakSpots: [{ topicId: 't1', title: 'Topic one', subjectId: 'gcse-maths', then: 40, now: 45 }],
   effortScores: null,
-  reward: null,
+  rewards: [],
   healthyHabits: { quietHourSessions: 0, daysOverCap: 0, restDays: 1, dailyCapMinutes: 120 },
   aiSpend: { month: '2026-11', spentMicroUsd: 10_000, capMicroUsd: 2_500_000 },
   recentActivity: [
@@ -67,6 +67,24 @@ describe('stats schemas', () => {
 
   it('accepts a parent dashboard with panels that are not set up yet', () => {
     expect(ParentDashboardSchema.parse(sampleDashboard)).toEqual(sampleDashboard);
+  });
+
+  it('takes parent-set rewards with their progress', () => {
+    const rewards = [
+      {
+        title: 'Cinema trip',
+        targetLabel: '30-day streak',
+        current: 12,
+        goal: 30,
+        reached: false,
+        given: false,
+      },
+    ];
+    expect(ParentDashboardSchema.parse({ ...sampleDashboard, rewards }).rewards).toEqual(rewards);
+    const tooLong = [{ ...rewards[0], title: 'x'.repeat(61) }];
+    expect(ParentDashboardSchema.safeParse({ ...sampleDashboard, rewards: tooLong }).success).toBe(
+      false,
+    );
   });
 
   it('rejects free text the student might have written in recent activity', () => {

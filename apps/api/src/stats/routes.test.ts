@@ -194,7 +194,7 @@ describe('GET /v1/students/:id/stats and /dashboard (parent)', () => {
       now: topicC,
     });
     expect(body.effortScores).toBeNull();
-    expect(body.reward).toBeNull();
+    expect(body.rewards).toEqual([]);
     // Monday 16:00 is outside quiet hours; rest days so far this week: none (Monday studied).
     expect(body.healthyHabits).toEqual({
       quietHourSessions: 0,

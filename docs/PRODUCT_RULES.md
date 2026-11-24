@@ -251,8 +251,10 @@ Mockups: screens 19 (student) and 20 (parent).
 - **Recent activity** groups back-to-back answers of one kind and subject (gaps up to 5 minutes)
   into lessons, tests, starting tests and flashcard practice. Flashcard reviews show only each
   card's latest review (that is all that is stored).
-- Panels not built yet (study plan, school report effort, parent-set reward, predicted and target
-  grades, level bar) come from adapters in `apps/api/src/stats/adapters.ts` that return null.
+- Panels not built yet (study plan, school report effort, parent-set rewards, predicted and target
+  grades, level bar) come from adapters in `apps/api/src/stats/adapters.ts` that return null (or
+  an empty list). Parent-set rewards are listed not-yet-given first, without the note to the
+  student; `toRewardPanel` maps R5's `ParentReward` once it is on dev.
 - Implemented: `packages/core/src/stats.ts` (pure functions) and `stats-schemas.ts` (shared
   schemas); API `GET /v1/student/stats?period=week|term|year` (student device),
   `GET /v1/students/:id/stats?period=…` and `GET /v1/students/:id/dashboard` (parent, own children

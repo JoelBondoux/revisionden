@@ -77,7 +77,24 @@ describe('Parent stats dashboard', () => {
             date: '2026-11-01',
             scores: [{ label: 'Commitment', value: '3', scale: '1 to 4' }],
           },
-          reward: { title: 'Cinema trip', progress: 0.5, met: false },
+          rewards: [
+            {
+              title: 'Cinema trip',
+              targetLabel: '30-day streak',
+              current: 12,
+              goal: 30,
+              reached: false,
+              given: false,
+            },
+            {
+              title: 'New game',
+              targetLabel: 'Level 10',
+              current: 10,
+              goal: 10,
+              reached: true,
+              given: false,
+            },
+          ],
         }),
       ),
     );
@@ -88,7 +105,11 @@ describe('Parent stats dashboard', () => {
     expect(screen.getByRole('region', { name: 'School report effort' })).toHaveTextContent(
       'Commitment: 3 (1 to 4)',
     );
-    expect(screen.getByRole('progressbar', { name: 'Cinema trip' })).toBeInTheDocument();
+    expect(screen.getByRole('progressbar', { name: 'Cinema trip' })).toHaveAttribute(
+      'aria-valuetext',
+      '12 of 30 (30-day streak)',
+    );
+    expect(screen.getByRole('region', { name: 'Reward' })).toHaveTextContent('New game: reached');
   });
 
   it('saves as PDF in the browser', async () => {

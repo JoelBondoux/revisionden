@@ -112,7 +112,7 @@ export function demoDashboard(childId = DEMO_CHILDREN[0]!.id): ParentDashboard {
       },
     ],
     effortScores: null,
-    reward: null,
+    rewards: [],
     healthyHabits: { quietHourSessions: 1, daysOverCap: 0, restDays: 1, dailyCapMinutes: 120 },
     aiSpend: { month: '2026-11', spentMicroUsd: 420_000, capMicroUsd: 2_500_000 },
     recentActivity: [

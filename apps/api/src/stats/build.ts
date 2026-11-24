@@ -145,7 +145,7 @@ export async function buildDashboard(
       title: data.topicTitles.get(w.topicId) ?? w.topicId,
     })),
     effortScores: await adapters.effortScores(student.id),
-    reward: await adapters.reward(student.id),
+    rewards: await adapters.rewards(student.id),
     healthyHabits: {
       quietHourSessions: quietSessions(sessions, isQuiet),
       daysOverCap: study.filter((d) => d.overCap && d.day >= week.start && d.day < week.end).length,
