@@ -696,3 +696,35 @@ export const recalculationJobs = pgTable('recalculation_jobs', {
   createdAt: createdAt(),
   completedAt: timestamp('completed_at', { withTimezone: true }),
 });
+
+// ---------------------------------------------------------------------------------------------
+// Five-year rewards (workstream R)
+// ---------------------------------------------------------------------------------------------
+
+/**
+ * Real-world rewards a parent ties to a target: a catalogue reward id, or a stat reaching a
+ * number. The parent marks them as given. Only a short title is stored (no personal data).
+ */
+export const parentRewards = pgTable(
+  'parent_rewards',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    title: text('title').notNull(),
+    targetKind: text('target_kind', { enum: ['reward', 'stat'] }).notNull(),
+    rewardId: text('reward_id'),
+    stat: text('stat'),
+    atLeast: integer('at_least'),
+    createdAt: createdAt(),
+    givenAt: timestamp('given_at', { withTimezone: true }),
+  },
+  (t) => [
+    index('parent_rewards_student_idx').on(t.studentId),
+    check(
+      'parent_rewards_target',
+      sql`(${t.targetKind} = 'reward' and ${t.rewardId} is not null) or (${t.targetKind} = 'stat' and ${t.stat} is not null and ${t.atLeast} >= 1)`,
+    ),
+  ],
+);
