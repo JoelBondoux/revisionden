@@ -5,12 +5,6 @@
 
 ## Open
 
-- [ ] Extended-answer items can never be verified: `scripts/content/validate.mjs` requires a
-      passing `blind-answer` check for every verified item, but an extended answer has no single
-      answer to compare, so `scripts/verify/blind-answer.mjs` always fails it ("needs human
-      approval"). Not settled by workstream V because it is a protocol decision for the product
-      owner (`docs/VERIFICATION.md` section 3): for example, let human approval stand in for the
-      blind answer on extended answers, or define a blind-marking check against the mark scheme.
 - [ ] Request schemas for the H routes (push subscriptions, reminder settings, short-answer
       marking) live in `apps/api/src/notifications/routes.ts` and `apps/api/src/ai/routes.ts`, but
       `docs/ARCHITECTURE.md` (Conventions) says every body has a Zod schema in `packages/core`.
@@ -23,19 +17,8 @@
       "each reward unlocks one item". Settled for now by letting the 100-day streak unlock two items
       (crown and Alien skin) in `packages/core/src/avatar.ts`; `docs/PRODUCT_RULES.md` and
       `product-facts.md` updated. Needs the product owner to confirm or name a 15th reward.
-- [ ] GCSE Statistics boards: the approved design gives the default four (AQA, Pearson Edexcel, OCR,
-      WJEC Eduqas), but it is believed only AQA and Pearson Edexcel offer GCSE Statistics. Followed the
-      design in `packages/core/src/onboarding.ts`; not verified against board websites, so not changed.
-- [ ] **Flashcard XP.** Product facts and `packages/core/src/xp.ts` say a correct flashcard earns 5 XP;
-      the approved flashcards design (workstream F brief) says +2 XP per card reviewed in a deck. F
-      uses 5 XP for a flashcard answered inside a lesson and 2 XP (`DECK_REVIEW_XP` in
-      `packages/core/src/learning.ts`) for each deck review. Not settled because it is a product
-      decision: confirm whether deck reviews should earn 2 or 5.
-- [ ] **Spec reference on flashcards.** `docs/VERIFICATION.md` says citations are never shown in the
-      app; the approved flashcards design shows "its citation's spec reference" small on the answer
-      side. F shows the item's `source_ref` (the specification point, for example "content reference
-      A18"), not the citation record. Confirm this is acceptable or drop it
-      (`apps/web/src/features/flashcards/FlashcardsPage.tsx`).
+      Superseded by workstream R (five-year rewards catalogue, about 650 unlocks), which gives every
+      locked item its own reward.
 - [ ] **Item type names.** `content/schemas/item.schema.json` uses `worked_maths` and
       `extended_answer`; `packages/core/src/schemas.ts` (`ItemTypeSchema`, XP table) uses `working` and
       `long_answer`. F maps them (`contentTypeToItemType`) instead of renaming either, because both
@@ -43,6 +26,17 @@
 
 ## Resolved
 
+- [x] Extended-answer verification: settled by the lead session in `docs/VERIFICATION.md` section 3.
+      Extended answers replace the blind answer with blind marking of exemplar answers, and always need
+      individual human approval. Implementation is a follow-up for workstream V.
+- [x] GCSE Statistics boards: checked on the board websites (2026-11-24). Only AQA (8382) and
+      Pearson Edexcel offer GCSE Statistics; OCR and WJEC Eduqas list none. Fixed in
+      `packages/core/src/onboarding.ts` with a test.
+- [x] Flashcard XP: keep 5 XP for a flashcard answered inside a lesson and 2 XP per deck review, so
+      quick deck flipping cannot farm XP. Lead decision; the product owner can change it.
+- [x] Spec reference on flashcards: acceptable. The product owner said citations need not be shown,
+      not that they must be hidden; showing the specification point (`source_ref`) is fine. The full
+      citation record stays out of the app.
 - [x] **"Again" time on flashcards.** The flashcards mockup labels Again "< 1 min"; the scheduler
       (`packages/core/src/spaced-repetition.ts`, PRODUCT_RULES "within 10 minutes") brings a missed
       card back in 10 minutes. The brief says each button shows the time the scheduler computes, so
