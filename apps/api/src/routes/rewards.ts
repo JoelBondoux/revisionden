@@ -245,6 +245,13 @@ export function parentRewardRoutes({ db, clock }: Deps) {
     return c.json(await rewardsView(db, student, clock.now()));
   });
 
+  /** Parent-set rewards with progress only (read by the parent dashboard, workstream K). */
+  app.get('/:id/parent-rewards', async (c) => {
+    const student = await requireFamilyStudent(db, family(c), c.req.param('id'));
+    const { parentRewards: list } = await rewardsView(db, student, clock.now());
+    return c.json({ parentRewards: list });
+  });
+
   app.post('/:id/parent-rewards', async (c) => {
     const student = await requireFamilyStudent(db, family(c), c.req.param('id'));
     const { title, note, target } = await readJson(c, CreateParentRewardRequestSchema);

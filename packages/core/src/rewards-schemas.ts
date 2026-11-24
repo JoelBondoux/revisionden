@@ -136,6 +136,10 @@ export const ParentRewardSchema = z.object({
 });
 export type ParentReward = z.infer<typeof ParentRewardSchema>;
 
+/** A child's parent-set rewards with progress (for the parent dashboard, workstream K). */
+export const ParentRewardsResponseSchema = z.object({ parentRewards: z.array(ParentRewardSchema) });
+export type ParentRewardsResponse = z.infer<typeof ParentRewardsResponseSchema>;
+
 export const StudentRewardsResponseSchema = z.object({
   overview: RewardsOverviewSchema,
   /** Rewards earned since the last look, to celebrate. */

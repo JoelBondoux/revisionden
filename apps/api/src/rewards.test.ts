@@ -3,6 +3,7 @@ import { eq } from 'drizzle-orm';
 import {
   CHAPTER_STEP_XP,
   ParentRewardSchema,
+  ParentRewardsResponseSchema,
   StudentRewardsResponseSchema,
   encodeAvatar,
   DEFAULT_AVATAR,
@@ -179,6 +180,27 @@ describe('parent-set rewards', () => {
     ]);
     const studentView = await studentRewards(headers);
     expect(studentView.parentRewards).toHaveLength(2);
+  });
+
+  it("lists a child's parent rewards with progress for the parent dashboard", async () => {
+    const { studentId, parent } = await t.familyStudent('r_parent_list');
+    await addReward(parent.headers, studentId, {
+      title: 'New game',
+      target: { kind: 'stat', stat: 'level', atLeast: 1 },
+    });
+    const res = await t.app.request(`/v1/students/${studentId}/parent-rewards`, {
+      headers: parent.headers,
+    });
+    expect(res.status).toBe(200);
+    const body = ParentRewardsResponseSchema.parse(await res.json());
+    expect(body.parentRewards).toEqual([
+      expect.objectContaining({ title: 'New game', reached: true, current: 1, goal: 1 }),
+    ]);
+    const other = await t.signInParent();
+    expect(
+      (await t.app.request(`/v1/students/${studentId}/parent-rewards`, { headers: other.headers }))
+        .status,
+    ).toBe(404);
   });
 
   it('rejects bad targets', async () => {
