@@ -1,4 +1,4 @@
-import type { RouteObject } from 'react-router-dom';
+import { Navigate, type RouteObject } from 'react-router-dom';
 import { AppLayout, FocusLayout } from './layout/AppLayout';
 import { LinkPage } from './features/onboarding/LinkPage';
 import { OnboardingPage } from './features/onboarding/OnboardingPage';
@@ -7,10 +7,18 @@ import { FamilyPage } from './pages/FamilyPage';
 import { InstallHelpPage } from './pages/InstallHelpPage';
 import { LessonCompletePage } from './pages/LessonCompletePage';
 import { LessonPage } from './pages/LessonPage';
+import { MapPage } from './pages/MapPage';
 import { NotFoundPage } from './pages/NotFoundPage';
-import { PathPage } from './pages/PathPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { WelcomePage } from './pages/WelcomePage';
+import { FlashcardsPage } from './features/flashcards/FlashcardsPage';
+import {
+  CommandWordsPage,
+  SubjectPage,
+  SubjectPracticePage,
+  TopicLessonPage,
+} from './features/learn/pages';
+import { StartingTestPage } from './features/learn/StartingTestPage';
 
 export const routes: RouteObject[] = [
   {
@@ -22,17 +30,21 @@ export const routes: RouteObject[] = [
       { path: '/link', element: <LinkPage /> },
       { path: '/lesson/:lessonId', element: <LessonPage /> },
       { path: '/lesson/:lessonId/complete', element: <LessonCompletePage /> },
+      // Learning loop (workstream F): lessons and the starting test hide the nav.
+      { path: '/learn/topic/:topicId', element: <TopicLessonPage /> },
+      { path: '/learn/subject/:subjectId/practice', element: <SubjectPracticePage /> },
+      { path: '/learn/subject/:subjectId/start', element: <StartingTestPage /> },
+      { path: '/learn/command-words', element: <CommandWordsPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },
   {
     element: <AppLayout />,
     children: [
-      { path: '/learn', element: <PathPage /> },
-      {
-        path: '/cards',
-        element: <ComingSoon title="Cards" description="Flashcards that come back just in time." />,
-      },
+      { path: '/map', element: <MapPage /> },
+      { path: '/learn', element: <Navigate to="/map" replace /> },
+      { path: '/learn/subject/:subjectId', element: <SubjectPage /> },
+      { path: '/cards', element: <FlashcardsPage /> },
       {
         path: '/plan',
         element: (

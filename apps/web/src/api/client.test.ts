@@ -30,9 +30,14 @@ describe('API client', () => {
     await expect(client.getFamily()).rejects.toMatchObject({ kind: 'network' });
   });
 
-  it('fetches a learning path for a student', async () => {
-    const path = await client.getPath('student-1');
-    expect(path.units.length).toBeGreaterThan(0);
+  it('fetches the topic map for a student', async () => {
+    const map = await client.getTopicMap('student-1');
+    expect(map.units.length).toBeGreaterThan(0);
+  });
+
+  it('fetches how many flashcards are due', async () => {
+    const cards = await client.getCardsDue('student-1');
+    expect(cards.due).toBeGreaterThanOrEqual(0);
   });
 
   it('fetches a lesson by id', async () => {

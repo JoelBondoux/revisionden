@@ -1,0 +1,351 @@
+/**
+ * Learning loop routes for a signed-in student device, under /v1/student/learn. The student
+ * session check runs first (see `studentSessionRoutes`). Every item served or accepted passes
+ * the content gate: verified only, unless the development flag also serves drafts.
+ */
+import { Hono } from 'hono';
+import { and, asc, desc, eq, inArray, isNotNull, sql, type SQL } from 'drizzle-orm';
+import { z } from 'zod';
+import {
+  LearnAttemptRequestSchema,
+  STARTING_TEST_SECONDS,
+  StartingTestRequestSchema,
+  createRng,
+  pickStartingTest,
+  selectNextItems,
+  topicMastery,
+  xpForAnswer,
+  type Candidate,
+  type ItemType,
+  type LearnAttemptResponse,
+  type LearnItem,
+  type TopicMastery,
+} from '@revisionden/core';
+import {
+  attempts,
+  flashcards,
+  items,
+  mastery,
+  startingTests,
+  topics,
+  type Database,
+} from '@revisionden/db';
+import type { AppConfig } from '../env';
+import type { AppEnv } from '../context';
+import { ApiError, notFound } from '../errors';
+import { readJson } from '../http';
+import type { Clock } from '../rate-limit';
+import { isId } from '../validation';
+import {
+  correctAnswerText,
+  explanationOf,
+  markItem,
+  servableItem,
+  toLearnItem,
+  type ItemRow,
+} from '../learning/items';
+import type { MathsEngine } from '../learning/maths-engine';
+import { awardXp, getProgress } from '../learning/progress';
+
+export interface LearnDeps {
+  db: Database;
+  clock: Clock;
+  config: AppConfig;
+  mathsEngine?: MathsEngine;
+}
+
+export const COMMAND_WORD_TAG = 'command-word';
+const MASTERY_WINDOW = 30;
+
+const LessonQuerySchema = z
+  .object({
+    subjectId: z.string().min(1).optional(),
+    topicId: z.string().min(1).optional(),
+    count: z.coerce.number().int().min(1).max(20).default(10),
+  })
+  .refine((q) => q.subjectId || q.topicId, 'Give a subjectId or a topicId');
+
+const noContent = () =>
+  new ApiError(404, 'no_content', 'No questions are ready for this subject yet');
+
+function lessonResponse(list: LearnItem[]) {
+  return { items: list, draftContent: list.some((i) => i.draft) };
+}
+
+/** Mastery (0–100) recomputed from the student's latest attempts in a topic. */
+async function updateMastery(db: Database, studentId: string, topicId: string, now: Date) {
+  const recent = await db
+    .select({ score: attempts.score, correct: attempts.correct, at: attempts.createdAt })
+    .from(attempts)
+    .innerJoin(items, eq(items.id, attempts.itemId))
+    .where(and(eq(attempts.studentId, studentId), eq(items.topicId, topicId)))
+    .orderBy(desc(attempts.createdAt))
+    .limit(MASTERY_WINDOW);
+  const value = topicMastery(
+    recent.map((r) => ({ score: r.score ?? (r.correct ? 1 : 0), at: r.at.getTime() })),
+    now.getTime(),
+  );
+  await db
+    .insert(mastery)
+    .values({ studentId, topicId, value: value / 100, updatedAt: now })
+    .onConflictDoUpdate({
+      target: [mastery.studentId, mastery.topicId],
+      set: { value: value / 100, updatedAt: now },
+    });
+}
+
+export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
+  const app = new Hono<AppEnv>();
+  const servable = servableItem(config.serveDraftContent);
+
+  /** Servable items with their topic titles, in a stable order. */
+  async function loadItems(where: SQL, limit?: number) {
+    const query = db
+      .select({ item: items, topicTitle: topics.title, subjectId: topics.subjectId })
+      .from(items)
+      .innerJoin(topics, eq(topics.id, items.topicId))
+      .where(and(servable, where))
+      .orderBy(asc(items.difficulty), asc(items.contentId));
+    return limit === undefined ? query : query.limit(limit);
+  }
+
+  async function masteryByTopic(studentId: string): Promise<Map<string, number>> {
+    const rows = await db.select().from(mastery).where(eq(mastery.studentId, studentId));
+    return new Map(rows.map((r) => [r.topicId, Math.round(r.value * 100)]));
+  }
+
+  async function subjectLesson(studentId: string, subjectId: string, count: number) {
+    const rows = await loadItems(eq(topics.subjectId, subjectId));
+    const levels = await masteryByTopic(studentId);
+    const dueCards = await db
+      .select({ itemId: flashcards.itemId, dueAt: flashcards.dueAt })
+      .from(flashcards)
+      .where(and(eq(flashcards.studentId, studentId), isNotNull(flashcards.itemId)));
+    const dueAt = new Map(dueCards.map((c) => [c.itemId, c.dueAt.getTime()]));
+    const now = clock.now().getTime();
+    const candidates: Candidate[] = rows.map(({ item }) =>
+      item.type === 'flashcard'
+        ? {
+            itemId: item.id,
+            topicId: item.topicId,
+            kind: 'flashcard',
+            due: (dueAt.get(item.id) ?? now) <= now,
+          }
+        : { itemId: item.id, topicId: item.topicId, kind: 'question' },
+    );
+    const topicIds = [...new Set(rows.map((r) => r.item.topicId))];
+    const picked = selectNextItems({
+      topics: topicIds.map((topicId) => ({
+        topicId,
+        subjectId,
+        mastery: levels.get(topicId) ?? 0,
+      })),
+      candidates,
+      count,
+      rng: createRng(now),
+    });
+    const byId = new Map(rows.map((r) => [r.item.id, r]));
+    return picked.map((c) => byId.get(c.itemId)!).map((r) => toLearnItem(r.item, r.topicTitle));
+  }
+
+  app.get('/lesson', async (c) => {
+    const query = LessonQuerySchema.parse(c.req.query());
+    const studentId = c.var.student.studentId;
+    if (query.topicId) {
+      const rows = await loadItems(eq(items.topicId, query.topicId), query.count);
+      return c.json(lessonResponse(rows.map((r) => toLearnItem(r.item, r.topicTitle))));
+    }
+    return c.json(lessonResponse(await subjectLesson(studentId, query.subjectId!, query.count)));
+  });
+
+  app.get('/command-words', async (c) => {
+    const rows = await loadItems(
+      sql`${items.tags} @> ${JSON.stringify([COMMAND_WORD_TAG])}::jsonb`,
+    );
+    return c.json(lessonResponse(rows.map((r) => toLearnItem(r.item, r.topicTitle))));
+  });
+
+  app.get('/progress', async (c) => {
+    return c.json(await getProgress(db, c.var.student.studentId, clock.now()));
+  });
+
+  app.get('/subjects/:subjectId/topics', async (c) => {
+    const subjectId = c.req.param('subjectId');
+    const studentId = c.var.student.studentId;
+    const counts = await db
+      .select({ topicId: topics.id, title: topics.title, items: sql<number>`count(*)::int` })
+      .from(items)
+      .innerJoin(topics, eq(topics.id, items.topicId))
+      .where(and(servable, eq(topics.subjectId, subjectId)))
+      .groupBy(topics.id, topics.title)
+      .orderBy(asc(topics.id));
+    const levels = await masteryByTopic(studentId);
+    const [done] = await db
+      .select({ id: startingTests.id })
+      .from(startingTests)
+      .where(
+        and(
+          eq(startingTests.studentId, studentId),
+          eq(startingTests.subjectId, subjectId),
+          isNotNull(startingTests.finishedAt),
+        ),
+      )
+      .limit(1);
+    return c.json({
+      subjectId,
+      startingTestDone: done !== undefined,
+      topics: counts.map((t) => ({ ...t, mastery: levels.get(t.topicId) ?? 0 })),
+    });
+  });
+
+  // Starting test --------------------------------------------------------------------------
+
+  app.post('/starting-tests', async (c) => {
+    const { subjectId } = await readJson(c, StartingTestRequestSchema);
+    const rows = await loadItems(eq(topics.subjectId, subjectId));
+    const now = clock.now();
+    const picked = pickStartingTest(
+      rows.map(({ item }) => ({
+        itemId: item.id,
+        topicId: item.topicId,
+        difficulty: item.difficulty ?? 3,
+        type: item.type as ItemType,
+      })),
+      { rng: createRng(now.getTime()) },
+    );
+    if (picked.length === 0) throw noContent();
+    const [test] = await db
+      .insert(startingTests)
+      .values({ studentId: c.var.student.studentId, subjectId, itemIds: picked, startedAt: now })
+      .returning({ id: startingTests.id });
+    const byId = new Map(rows.map((r) => [r.item.id, r]));
+    const list = picked.map((id) => toLearnItem(byId.get(id)!.item, byId.get(id)!.topicTitle));
+    return c.json(
+      { id: test!.id, subjectId, timeLimitSeconds: STARTING_TEST_SECONDS, ...lessonResponse(list) },
+      201,
+    );
+  });
+
+  async function ownTest(studentId: string, id: string) {
+    if (!isId(id)) throw notFound();
+    const [test] = await db
+      .select()
+      .from(startingTests)
+      .where(and(eq(startingTests.id, id), eq(startingTests.studentId, studentId)));
+    if (!test) throw notFound();
+    return test;
+  }
+
+  app.post('/starting-tests/:id/finish', async (c) => {
+    const studentId = c.var.student.studentId;
+    const test = await ownTest(studentId, c.req.param('id'));
+    await db
+      .update(startingTests)
+      .set({ finishedAt: clock.now() })
+      .where(eq(startingTests.id, test.id));
+    const answered = await db
+      .select({ correct: attempts.correct })
+      .from(attempts)
+      .where(eq(attempts.startingTestId, test.id));
+    const testTopics = await db
+      .selectDistinct({ topicId: topics.id, title: topics.title })
+      .from(items)
+      .innerJoin(topics, eq(topics.id, items.topicId))
+      .where(inArray(items.id, test.itemIds))
+      .orderBy(asc(topics.id));
+    const levels = await masteryByTopic(studentId);
+    const result: TopicMastery[] = testTopics.map((t) => ({
+      ...t,
+      mastery: levels.get(t.topicId) ?? 0,
+    }));
+    return c.json({
+      id: test.id,
+      correct: answered.filter((a) => a.correct).length,
+      answered: answered.length,
+      total: test.itemIds.length,
+      topics: result,
+    });
+  });
+
+  // Attempts -------------------------------------------------------------------------------
+
+  app.post('/attempts', async (c) => {
+    const input = await readJson(c, LearnAttemptRequestSchema);
+    const studentId = c.var.student.studentId;
+    const now = clock.now();
+    const [row] = await db
+      .select()
+      .from(items)
+      .where(and(servable, eq(items.id, input.itemId)));
+    if (!row) throw notFound();
+
+    if (input.startingTestId) {
+      if (input.mode !== 'test') {
+        throw new ApiError(400, 'invalid_request', 'Starting test answers use test mode');
+      }
+      const test = await ownTest(studentId, input.startingTestId);
+      if (!test.itemIds.includes(row.id)) {
+        throw new ApiError(400, 'invalid_request', 'That question is not in this test');
+      }
+    }
+
+    const marked = await markItem(row, input.answer, mathsEngine);
+    const xpEarned = xpForAnswer({ type: row.type as ItemType, score: marked.score });
+    const [saved] = await db
+      .insert(attempts)
+      .values({
+        studentId,
+        itemId: row.id,
+        correct: marked.correct,
+        score: marked.score,
+        timeMs: input.timeMs,
+        itemVersion: row.version,
+        mode: input.mode,
+        xpEarned,
+        startingTestId: input.startingTestId ?? null,
+        createdAt: now,
+      })
+      .returning({ id: attempts.id, createdAt: attempts.createdAt });
+    await updateMastery(db, studentId, row.topicId, now);
+
+    const learning = input.mode === 'learn';
+    const flashcardAdded =
+      learning && !marked.correct && row.type !== 'flashcard'
+        ? await addWrongAnswerCard(db, studentId, row, now)
+        : false;
+    const progress = await awardXp(db, studentId, xpEarned, now);
+    const explanation = explanationOf(row);
+    const response: LearnAttemptResponse = {
+      id: saved!.id,
+      itemId: row.id,
+      correct: marked.correct,
+      score: marked.score,
+      xpEarned,
+      createdAt: saved!.createdAt.toISOString(),
+      feedback: learning
+        ? {
+            correctAnswer: correctAnswerText(row),
+            ...(explanation ? { explanation } : {}),
+            ...(marked.firstWrongLine !== undefined
+              ? { firstWrongLine: marked.firstWrongLine }
+              : {}),
+          }
+        : null,
+      progress,
+      flashcardAdded,
+    };
+    return c.json(response);
+  });
+
+  return app;
+}
+
+/** A missed question becomes a flashcard due now. Returns false if it already was one. */
+async function addWrongAnswerCard(db: Database, studentId: string, row: ItemRow, now: Date) {
+  const inserted = await db
+    .insert(flashcards)
+    .values({ studentId, itemId: row.id, topicId: row.topicId, origin: 'wrong_answer', dueAt: now })
+    .onConflictDoNothing()
+    .returning({ id: flashcards.id });
+  return inserted.length > 0;
+}

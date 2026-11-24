@@ -11,6 +11,9 @@ import { ensureParent } from './families';
 import { studentRoutes } from './routes/students';
 import { deviceRoutes, parentDeviceRoutes, studentSessionRoutes } from './routes/devices';
 import { avatarRoutes, onboardingRoutes } from './routes/onboarding';
+import { learnRoutes } from './routes/learn';
+import { flashcardRoutes } from './routes/flashcards';
+import type { MathsEngine } from './learning/maths-engine';
 
 export interface AppDeps {
   version: string;
@@ -20,6 +23,8 @@ export interface AppDeps {
   clock: Clock;
   passkeys: PasskeyService;
   rateLimiters: { auth: RateLimiter; ai: RateLimiter };
+  /** Checks worked maths answers; without it, those answers get a 503. */
+  mathsEngine?: MathsEngine;
 }
 
 export function createApp(deps: AppDeps) {
@@ -73,6 +78,9 @@ export function createApp(deps: AppDeps) {
 
   app.route('/v1/device', deviceRoutes(deps));
   app.route('/v1/student', studentSessionRoutes(deps));
+  // Mounted after the student routes, so their session check runs first.
+  app.route('/v1/student/learn', learnRoutes(deps));
+  app.route('/v1/student/flashcards', flashcardRoutes(deps));
   app.route('/v1', parent);
 
   app.notFound(() => {

@@ -1,0 +1,167 @@
+/* Flashcards (workstream F). */
+.tabs {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  overflow-x: auto;
+}
+
+.tabs__tab {
+  min-height: var(--tap-target);
+  padding: 0 var(--space-4);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.tabs__tab--active {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-edge);
+}
+
+.tabs__tab:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.review {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.deck-header__subject {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.deck-header__topic {
+  margin: 0;
+}
+
+/* The card flips in 3D: both faces share one spot; the back is turned away until flipped. */
+.flip-card {
+  perspective: 1200px;
+}
+
+.flip-card__inner {
+  position: relative;
+  min-height: 240px;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+}
+
+.flip-card--flipped .flip-card__inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-card__face--back {
+  transform: rotateY(180deg);
+  border-color: var(--color-success);
+}
+
+.flip-card__label {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-black);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.flip-card__topic {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+.flip-card__text {
+  margin: auto 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-extrabold);
+  text-align: center;
+}
+
+.flip-card__ref {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-card__inner {
+    transition: none;
+  }
+}
+
+.ratings {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.ratings .btn {
+  flex-direction: column;
+  padding-inline: var(--space-1);
+}
+
+.ratings__label {
+  font-weight: var(--font-weight-black);
+}
+
+.ratings__when {
+  font-size: var(--font-size-sm);
+}
+
+.deck-done__xp {
+  color: var(--color-warning-text);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-black);
+}
+
+.deck-list {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  list-style: none;
+}
+
+.deck-list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.deck-list__title {
+  margin: 0;
+  font-weight: var(--font-weight-extrabold);
+}
+
+.card-form {
+  display: grid;
+  gap: var(--space-3);
+}

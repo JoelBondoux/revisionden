@@ -45,6 +45,13 @@
 - [x] **A6 Screen shells.** Welcome and sign-in, learning path, lesson question, lesson complete,
       matching the mockups, wired to MSW data.
   - Tests: path shows locked, done, current and weak-spot nodes; lesson shows answer feedback.
+- [x] **A7 Topic map.** The learning path becomes a honeycomb of hexagons, one per topic, grouped
+      by unit: mastered (gold, tick), in progress (violet, mastery fill level and %), weak spot
+      (orange, wrench, pulsing glow), locked (grey, lock) and a unit challenge (dark, crown,
+      unlocks at 80%). Next mission card above the map; unit headers with % mastered; Learn tab
+      renamed Map; Cards tab shows the due count.
+  - Tests: each hex state and its accessible name; locked items explain how to unlock; mission
+    card links to its lesson; Cards badge shows the due count.
 
 ### B. API, database and sign-in (`apps/api`, `packages/db`)
 
@@ -128,9 +135,19 @@
 
 ### F. Learning loop (`apps/web/src/features/learn`, `apps/api` learn routes)
 
-- [ ] F1 Starting test per subject (about 5 minutes) sets initial mastery.
+- [x] F1 Starting test per subject (about 5 minutes) sets initial mastery.
 - [ ] F2 Learning path from mastery; lesson player for each item type; instant feedback.
-- [ ] F3 Flashcards with spaced repetition.
+      Lesson player, instant feedback and a subject page with mastery are done; the learning path
+      map (workstream A's screen) still reads mock data and links to the old mock lessons.
+- [x] F3 Flashcards with spaced repetition.
+- [x] F4 XP, daily goal and streak shown and updated.
+- [ ] F5 Exam technique basics: command word lessons. The lesson screen and API are done
+      (items tagged `command-word`); verified command-word items are still to be written through
+      the content pipeline.
+- [ ] F3 Flashcards with spaced repetition. Design: mockup screen 18 (card flips in 3D from
+      question to answer; Again, Hard, Good and Easy buttons showing the next review time; Due
+      today, All decks and My cards tabs; deck-done summary with XP). The Cards tab and its due
+      badge already exist (A7); the page itself is a placeholder.
 - [ ] F4 XP, daily goal and streak shown and updated.
 - [ ] F5 Exam technique basics: command word lessons.
 - Tests: API integration for attempt recording; Playwright "complete a lesson and see XP".

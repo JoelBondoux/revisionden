@@ -11,6 +11,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Avatar builder (E3): layered SVG avatar with Face, Hair, Top, Eyewear, Headwear, Holding and Background tabs, Shuffle, and locked items that show their reward; avatar catalogue matches the approved design.
 - Device linking screens (E4): one-time QR code (10 minutes, single use) with "Do this later", and the student `/link` page that sets up a passkey.
 - API: `POST /v1/onboarding/children`, `GET /v1/onboarding/family`, `GET` and `PUT /v1/students/:id/avatar` (locked items need their reward).
+- Learning loop (F): starting test per subject, lesson player for every item type with instant feedback, XP, daily goal and streak, flashcards with SM-2 (due, decks, own cards, wrong answers become cards), command-word lessons, and a content gate that serves only verified items unless `SERVE_DRAFT_CONTENT=true` in development (with a "DRAFT CONTENT" banner).
 - Verification protocol (`docs/VERIFICATION.md`): official citations on every item, multi-step checks, human approval, quarantine and audit reports; new workstream V and task D6.
 
 - Web: design tokens from the mockups (Nunito, violet, 3D edges) with a 4.5:1 contrast check (A1).
@@ -19,6 +20,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Web: typed API client that checks every response, with retry UI and an MSW mock API for development and tests (A4).
 - Web: installable PWA with icons, an offline app shell, an offline banner and Add to Home Screen help for iPad (A5).
 - Web: welcome, family, learning path, lesson and lesson complete screens wired to mock data (A6).
+- Web: topic map replaces the learning path: hexagons per topic by unit, a Next mission card, the Map tab and a due-cards badge on Cards (A7).
 - Shared Zod schemas for students, enrolments, items, attempts, plans and API errors, with
   readable error messages (`packages/core`).
 - Nickname rules with a block list, and avatar codes with 14 layers and reward-locked items.

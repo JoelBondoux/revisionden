@@ -11,3 +11,5 @@ export * from './streaks';
 export * from './rewards';
 export * from './onboarding';
 export * from './onboarding-schemas';
+export * from './learning';
+export * from './learning-schemas';

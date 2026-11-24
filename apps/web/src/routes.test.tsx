@@ -5,7 +5,7 @@ describe('routes', () => {
   it.each([
     ['/', 'RevisionDen'],
     ['/family', "Who's revising?"],
-    ['/learn', 'Your path'],
+    ['/map', 'Topic map'],
     ['/lesson/standard-form', 'Standard form'],
     ['/lesson/demo/complete', 'Lesson complete!'],
     ['/progress', 'Progress'],
@@ -29,7 +29,7 @@ describe('routes', () => {
   });
 
   it('shows the main navigation on app pages', async () => {
-    renderRoute('/learn');
+    renderRoute('/map');
     expect(await screen.findByRole('navigation', { name: 'Main' })).toBeInTheDocument();
     expect(screen.getByRole('main')).toBeInTheDocument();
   });
@@ -51,7 +51,7 @@ describe('routes', () => {
     );
   });
 
-  it.each(['/learn', '/lesson/standard-form'])(
+  it.each(['/map', '/lesson/standard-form'])(
     'shows the offline banner on %s when offline',
     async (path) => {
       Object.defineProperty(navigator, 'onLine', { configurable: true, get: () => false });
@@ -63,4 +63,18 @@ describe('routes', () => {
       }
     },
   );
+
+  it('shows the number of flashcards due on the Cards tab', async () => {
+    renderRoute('/map');
+    expect(await screen.findByRole('link', { name: 'Cards, 12 due' })).toHaveAttribute(
+      'href',
+      '/cards',
+    );
+  });
+
+  it('opens the flashcards screen from the Cards tab', async () => {
+    renderRoute('/cards');
+    expect(await screen.findByRole('heading', { level: 1, name: 'Cards' })).toBeInTheDocument();
+    expect(screen.queryByText('Coming soon.')).not.toBeInTheDocument();
+  });
 });

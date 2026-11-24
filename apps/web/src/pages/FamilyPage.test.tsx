@@ -16,7 +16,7 @@ describe('Family screen', () => {
   it("opens the chosen student's learning path", async () => {
     renderRoute('/family', { studentId: null });
     await userEvent.click(await screen.findByRole('button', { name: /PixelOwl/ }));
-    expect(await screen.findByRole('heading', { level: 1, name: 'Your path' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { level: 1, name: 'Topic map' })).toBeInTheDocument();
   });
 
   it('offers a retry when the family cannot be loaded', async () => {

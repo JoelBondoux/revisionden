@@ -37,7 +37,7 @@ export function LessonCompletePage() {
           </Card>
         </div>
       )}
-      <ButtonLink to="/learn" block>
+      <ButtonLink to="/map" block>
         Continue
       </ButtonLink>
     </div>

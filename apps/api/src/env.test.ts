@@ -42,4 +42,24 @@ describe('environment validation', () => {
   it('rejects an unknown environment name', () => {
     expect(() => parseEnv({ ...complete, ENVIRONMENT: 'prod' })).toThrow(/ENVIRONMENT/);
   });
+
+  it('serves draft content only when the development flag is on in development', () => {
+    expect(parseEnv(complete).serveDraftContent).toBe(false);
+    expect(parseEnv({ ...complete, SERVE_DRAFT_CONTENT: 'false' }).serveDraftContent).toBe(false);
+    expect(parseEnv({ ...complete, SERVE_DRAFT_CONTENT: 'true' }).serveDraftContent).toBe(true);
+  });
+
+  it('never serves draft content in staging or production, even with the flag on', () => {
+    for (const ENVIRONMENT of ['staging', 'production']) {
+      const config = parseEnv({ ...complete, ENVIRONMENT, SERVE_DRAFT_CONTENT: 'true' });
+      expect(config.serveDraftContent).toBe(false);
+    }
+  });
+
+  it('reads the optional maths engine address', () => {
+    expect(parseEnv(complete).mathsEngineUrl).toBeUndefined();
+    expect(
+      parseEnv({ ...complete, MATHS_ENGINE_URL: 'https://maths.example.com' }).mathsEngineUrl,
+    ).toBe('https://maths.example.com');
+  });
 });

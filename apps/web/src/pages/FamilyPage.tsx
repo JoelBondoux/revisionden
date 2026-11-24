@@ -13,7 +13,7 @@ export function FamilyPage() {
 
   const choose = (id: string) => {
     chooseStudent(id);
-    navigate('/learn');
+    navigate('/map');
   };
 
   return (

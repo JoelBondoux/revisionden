@@ -87,6 +87,6 @@ describe('Lesson screen', () => {
 
   it('lets you leave the lesson', async () => {
     await openLesson();
-    expect(screen.getByRole('link', { name: 'Leave lesson' })).toHaveAttribute('href', '/learn');
+    expect(screen.getByRole('link', { name: 'Leave lesson' })).toHaveAttribute('href', '/map');
   });
 });
