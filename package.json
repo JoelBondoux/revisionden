@@ -14,14 +14,15 @@
     "typecheck": "pnpm -r --if-present typecheck",
     "test": "pnpm -r --if-present test",
     "test:coverage": "pnpm -r --if-present test:coverage",
-    "test:scripts": "node --test scripts/*.test.mjs 'scripts/verify/**/*.test.mjs'",
+    "test:scripts": "node --test scripts/*.test.mjs 'scripts/verify/**/*.test.mjs' 'evals/*.test.mjs'",
     "content:validate": "node scripts/content/cli.mjs",
     "version:show": "node scripts/bump-version.mjs --show",
     "version:bump": "node scripts/bump-version.mjs",
     "content:quote-check": "node scripts/verify/quote-check-cli.mjs",
     "content:model-check": "node scripts/verify/model-check-cli.mjs",
     "content:exact-check": "node scripts/verify/exact/exact-check.mjs",
-    "content:audit": "node scripts/verify/audit.mjs"
+    "content:audit": "node scripts/verify/audit.mjs",
+    "evals": "node evals/run.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

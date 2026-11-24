@@ -1,0 +1,38 @@
+{
+  "_comment": "Synthetic fixture for harness tests only. Not a golden set and not educational content.",
+  "scheme": {
+    "type": "levels",
+    "levels": [
+      { "level": 1, "marks": [1, 3] },
+      { "level": 2, "marks": [4, 6] },
+      { "level": 3, "marks": [7, 9] },
+      { "level": 4, "marks": [10, 12] }
+    ]
+  },
+  "cases": [
+    {
+      "id": "fixture-essay-1",
+      "question": "Fixture question?",
+      "answer": "Fixture answer one.",
+      "knownLevel": 3
+    },
+    {
+      "id": "fixture-essay-2",
+      "question": "Fixture question?",
+      "answer": "Fixture answer two.",
+      "knownLevel": 2
+    },
+    {
+      "id": "fixture-essay-3",
+      "question": "Fixture question?",
+      "answer": "Fixture answer three.",
+      "knownLevel": 4
+    },
+    {
+      "id": "fixture-essay-4",
+      "question": "Fixture question?",
+      "answer": "Fixture answer four.",
+      "knownLevel": 1
+    }
+  ]
+}
