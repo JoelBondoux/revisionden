@@ -106,4 +106,58 @@ describe('validateAvatar', () => {
       expect(AVATAR_CATALOGUE[layer][0]?.unlockedBy).toBeUndefined();
     }
   });
+
+  it('matches the approved builder: item counts per layer', () => {
+    const counts = Object.fromEntries(
+      AVATAR_LAYERS.map((layer) => [layer, AVATAR_CATALOGUE[layer].length]),
+    );
+    expect(counts).toEqual({
+      skin: 10,
+      eyes: 10,
+      mouth: 10,
+      facialHair: 5,
+      hairStyle: 16,
+      hairColour: 14,
+      top: 12,
+      topColour: 12,
+      eyewear: 9,
+      headwear: 12,
+      heldItem: 13,
+      backgroundColour: 12,
+      pattern: 8,
+      scene: 9,
+    });
+  });
+
+  it('locks the approved special items behind rewards', () => {
+    const lockedIds = AVATAR_LAYERS.flatMap((layer) =>
+      AVATAR_CATALOGUE[layer].filter((item) => item.unlockedBy).map((item) => item.id),
+    );
+    expect(lockedIds.sort()).toEqual(
+      [
+        'alien',
+        'robot',
+        'neon-green',
+        'hot-pink',
+        'gold-hoodie',
+        'captain-shirt',
+        'night-vision',
+        'laser-visor',
+        'crown',
+        'dino-hood',
+        'trophy',
+        'dino-buddy',
+        'pixel-sword',
+        'jungle',
+        'space',
+      ].sort(),
+    );
+  });
+
+  it('gives every item in a layer a unique id', () => {
+    for (const layer of AVATAR_LAYERS) {
+      const ids = AVATAR_CATALOGUE[layer].map((item) => item.id);
+      expect(new Set(ids).size).toBe(ids.length);
+    }
+  });
 });

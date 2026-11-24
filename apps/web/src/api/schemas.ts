@@ -16,28 +16,50 @@ export const familySchema = z.object({
   students: z.array(studentSchema),
 });
 
-export const pathNodeStatusSchema = z.enum(['done', 'current', 'locked', 'weak']);
+export const topicStatusSchema = z.enum(['mastered', 'in-progress', 'weak', 'locked']);
 
-export const pathNodeSchema = z.object({
+export const topicSchema = z.object({
   id: z.string(),
   title: z.string(),
   lessonId: z.string(),
-  status: pathNodeStatusSchema,
+  status: topicStatusSchema,
+  /** Topic mastery, 0 to 100. */
+  mastery: z.number().int().min(0).max(100),
 });
 
-export const pathUnitSchema = z.object({
+export const unitChallengeSchema = z.object({
+  lessonId: z.string(),
+  unlockAtPercent: z.number().int().min(0).max(100),
+  unlocked: z.boolean(),
+});
+
+export const unitSchema = z.object({
   id: z.string(),
   title: z.string(),
-  nodes: z.array(pathNodeSchema),
+  masteryPercent: z.number().int().min(0).max(100),
+  topics: z.array(topicSchema),
+  challenge: unitChallengeSchema,
 });
 
-export const learningPathSchema = z.object({
+export const nextMissionSchema = z.object({
+  kind: z.enum(['weak-spot', 'continue', 'review']),
+  title: z.string(),
+  lessonId: z.string(),
+  minutes: z.number().int().positive(),
+});
+
+export const topicMapSchema = z.object({
   subject: z.string(),
   qualification: z.string(),
   streakDays: z.number().int().nonnegative(),
   xpToday: z.number().int().nonnegative(),
   dailyGoalXp: z.number().int().positive(),
-  units: z.array(pathUnitSchema),
+  nextMission: nextMissionSchema.nullable(),
+  units: z.array(unitSchema),
+});
+
+export const cardsDueSchema = z.object({
+  due: z.number().int().nonnegative(),
 });
 
 const multipleChoiceItemSchema = z.object({
@@ -79,10 +101,13 @@ export const answerResultSchema = z.object({
 
 export type Student = z.infer<typeof studentSchema>;
 export type Family = z.infer<typeof familySchema>;
-export type PathNodeStatus = z.infer<typeof pathNodeStatusSchema>;
-export type PathNode = z.infer<typeof pathNodeSchema>;
-export type PathUnit = z.infer<typeof pathUnitSchema>;
-export type LearningPath = z.infer<typeof learningPathSchema>;
+export type TopicStatus = z.infer<typeof topicStatusSchema>;
+export type Topic = z.infer<typeof topicSchema>;
+export type UnitChallenge = z.infer<typeof unitChallengeSchema>;
+export type Unit = z.infer<typeof unitSchema>;
+export type NextMission = z.infer<typeof nextMissionSchema>;
+export type TopicMap = z.infer<typeof topicMapSchema>;
+export type CardsDue = z.infer<typeof cardsDueSchema>;
 export type LessonItem = z.infer<typeof lessonItemSchema>;
 export type Lesson = z.infer<typeof lessonSchema>;
 export type AnswerRequest = z.infer<typeof answerRequestSchema>;

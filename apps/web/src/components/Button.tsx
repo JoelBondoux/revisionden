@@ -1,7 +1,7 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { Link, type LinkProps } from 'react-router-dom';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'success' | 'danger';
+export type ButtonVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'gold';
 
 function classes(variant: ButtonVariant, block: boolean, extra?: string): string {
   return ['btn', `btn--${variant}`, block ? 'btn--block' : '', extra ?? '']

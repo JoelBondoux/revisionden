@@ -11,11 +11,11 @@
 
 ## Now
 
-- [ ] Wave 2: E onboarding and avatar, F learning loop and flashcards, H reminders and AI gateway.
+- [ ] Wave 2: E onboarding and avatar, F learning loop and flashcards, H reminders and AI gateway,
+      V verification pipeline and audit.
+- [ ] S: real official citations (quotes) for the pilot GCSE Maths content.
 - [ ] A follow-up: topic map restyle (waiting for the product owner's go-ahead in session A).
 
 ## Blocked
 
 - [ ] G deploys: needs a scoped Cloudflare API token and Neon key added as GitHub secrets.
-- [ ] V verification pipeline and real citation quotes: needs network access to exam board and
-      gov.uk sites in the build environment.

@@ -109,7 +109,67 @@ easy early wins (starting test, 25 right in a row).
 - Avatar code: version `1` then two base-36 characters per layer, in this order: skin, eyes,
   mouth, facial hair, hair style, hair colour, top, top colour, eyewear, headwear, held item,
   background colour, pattern, scene. Locked items are rejected unless their reward is earned.
+- Catalogue (approved builder): skin 10, eyes 10, mouth 10, facial hair 5, hair style 16, hair
+  colour 14, top 12, top colour 12, eyewear 9, headwear 12, held item 13, background colour 12,
+  pattern 8, scene 9. 15 locked items: Alien and Robot skin, neon green and hot pink hair, gold
+  hoodie, captain shirt, night vision, laser visor, crown, dino hood, trophy, dino buddy, pixel
+  sword, jungle and space scenes. 14 rewards unlock them: one item each, except the 100-day
+  streak, which unlocks two (crown and Alien skin).
+- Shuffle picks only items the student can wear. Avatars are drawn as SVG shapes, never photos.
 - Implemented: `packages/core/src/nickname.ts`, `packages/core/src/avatar.ts`.
+
+## Onboarding
+
+- The parent adds each child: nickname, avatar, school year, subjects, and an exam board and tier
+  per subject. Years 9 to 11 take GCSE, Years 12 and 13 take A-Level. Changing level clears the
+  chosen subjects.
+- Subjects: GCSE English Language, English Literature, Maths, Statistics, Combined Science,
+  Biology, Chemistry, Physics, French, Spanish, German, History, Drama, Film Studies. A-Level
+  Maths, Further Maths, Computer Science, Physics.
+- Boards offered: GCSE Film Studies WJEC Eduqas only; GCSE French, Spanish, German AQA, Pearson
+  Edexcel, WJEC Eduqas; A-Level Maths and Further Maths AQA, Pearson Edexcel, OCR; A-Level
+  Computer Science AQA, OCR, WJEC Eduqas; everything else AQA, Pearson Edexcel, OCR, WJEC Eduqas.
+  "Not sure" is always offered. A subject with one board has it picked already.
+- Tiered GCSEs (Foundation, Higher or Not sure): Maths, Statistics, Combined Science, Biology,
+  Chemistry, Physics, French, Spanish, German. Other subjects have no tier.
+- Each board or tier left as "Not sure" counts as one thing to check later.
+- Final exams are in the summer: Years 11 and 13 at the end of the current school year (which
+  starts in September), Years 10 and 12 a year later, Year 9 two years later.
+- A new child has earned no rewards, so their avatar cannot use locked items.
+- The school report step (upload, same school as a sibling, skip) stores nothing yet: report
+  reading arrives in Stage 5.
+- Implemented: `packages/core/src/onboarding.ts`, `apps/api/src/routes/onboarding.ts`,
+  `apps/web/src/features/onboarding/`.
+
+## Learning loop (workstream F)
+
+- **Content gate.** Students only ever see items whose verification status is `verified`.
+  Drafts are served only when `SERVE_DRAFT_CONTENT=true` in development (never in staging or
+  production), and the app then shows a "DRAFT CONTENT" banner. Quarantined and retired items
+  are never served. Answers to items that may not be served are refused (404).
+- **Starting test** per subject: about 5 minutes (300 seconds, up to 10 questions), Test mode
+  (no feedback until the end). One question per topic before a second from any topic, middle
+  difficulty (3) preferred; no flashcards or long answers. Its answers set the first mastery for
+  each topic it covers.
+- **Lessons** run in Learn mode at feedback level 1: every answer is marked at once with the right
+  answer, the explanation and, for maths working, the first line that goes wrong (maths engine,
+  no AI). Long answers are shown with a "marked by AI soon" note and are not marked yet.
+- **Mastery** of a topic is recomputed from the student's last 30 attempts after every answer.
+- **Wrong answers** in a lesson (Learn mode, not the starting test) become a flashcard due at once,
+  once per question.
+- **Flashcard buttons:** Again (SM-2 quality 1, back in 10 minutes), Hard (3), Good (4), Easy (5).
+  Each button shows when the card would come back, worked out by the scheduler. Reviewing a card
+  in a deck earns 2 XP (approved flashcards design). Deck cards come from flashcard items in the
+  student's enrolled subjects; students can add their own cards (front and back up to 300
+  characters) to a topic.
+- **Daily goal and streak:** XP is totalled per day in UK time (Europe/London). The first time a
+  day's total reaches the daily goal (50 XP) the day counts on the streak, once. On the first goal
+  day of a new week, last week is settled (a skip day if the weekly goal was hit). A streak with
+  missed days shows as lapsed (or kept by skip days) before anything is saved.
+- **Command-word lessons** (exam technique basics) are items tagged `command-word` in `content/`.
+  None are verified yet, so the lesson says nothing is ready.
+- Implemented: `packages/core/src/learning.ts`, `apps/api/src/routes/learn.ts`,
+  `apps/api/src/routes/flashcards.ts`.
 
 ## Flashcards and mastery
 

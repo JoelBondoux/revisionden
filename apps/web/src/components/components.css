@@ -61,6 +61,12 @@
   box-shadow: var(--shadow-3d-danger);
 }
 
+.btn--gold {
+  background: var(--color-gold);
+  color: var(--color-text);
+  box-shadow: 0 5px 0 #c99412;
+}
+
 .btn:disabled {
   background: var(--color-border);
   color: var(--color-text-secondary);
@@ -204,6 +210,27 @@
   font-weight: var(--font-weight-extrabold);
   color: var(--color-text-secondary);
   text-decoration: none;
+}
+
+.main-nav__icon {
+  position: relative;
+  display: inline-flex;
+}
+
+.main-nav__badge {
+  position: absolute;
+  top: -6px;
+  right: -12px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: var(--radius-pill);
+  background: var(--color-danger);
+  color: var(--color-text-on-primary);
+  font-size: 0.7rem;
+  font-weight: var(--font-weight-black);
+  line-height: 20px;
+  text-align: center;
 }
 
 .main-nav__link[aria-current='page'] {

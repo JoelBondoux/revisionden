@@ -21,10 +21,15 @@ Tags: #product #rules #limits #defaults
 
 ## Subjects
 
-- GCSE: English Language, English Literature, Maths, Biology, Chemistry, Physics, Drama, Film
-  Studies, French, History. A-Level: Maths, Further Maths, Computer Science, Physics.
+- GCSE: English Language, English Literature, Maths, Statistics, Combined Science, Biology,
+  Chemistry, Physics, French, Spanish, German, History, Drama, Film Studies. A-Level: Maths,
+  Further Maths, Computer Science, Physics. Implemented in `packages/core/src/onboarding.ts`.
 - Exam boards and tiers are picked in the app; "not sure" is allowed and reminded later.
-- GCSE Film Studies is offered only by WJEC Eduqas.
+- GCSE Film Studies is offered only by WJEC Eduqas. Boards per subject and tiered GCSEs are listed
+  in `docs/PRODUCT_RULES.md` "Onboarding".
+- Onboarding takes Years 9 to 13 (9–11 GCSE, 12–13 A-Level). Exams are worked out from the year:
+  Year 11 and 13 sit them next summer (2027 in school year 2026/27), Year 10 and 12 a year later,
+  Year 9 two years later.
 
 ## Learning rules
 
@@ -42,19 +47,44 @@ Tags: #product #rules #limits #defaults
   `packages/core/src/streaks.ts` and `xp.ts`.
 - XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, working 20,
   long answer 30; part marks earn part.
+- 14 rewards unlock the 15 locked avatar items: one each, except the 100-day streak, which unlocks
+  two (crown and Alien skin). `packages/core/src/rewards.ts`, `avatar.ts`.
 - 14 rewards, each unlocking one avatar item: `packages/core/src/rewards.ts`.
+- Only `verified` items reach students. Drafts are served only with `SERVE_DRAFT_CONTENT=true` in
+  development (never staging or production), with a "DRAFT CONTENT" banner; quarantined and
+  retired items never. Implemented in `packages/core/src/learning.ts` and `apps/api`.
+- Starting test per subject: about 5 minutes (300 s, up to 10 questions, one per topic first),
+  Test mode; its answers set first mastery. Lessons are Learn mode at feedback level 1.
+- Wrong lesson answers become flashcards. Flashcard buttons Again/Hard/Good/Easy = SM-2 quality
+  1/3/4/5; each shows when the card comes back. Reviewing a deck card earns 2 XP (see
+  contradictions). Students can add their own cards (up to 300 characters a side).
+- XP is totalled per day in UK time; a streak day counts once, the first time the day reaches the
+  daily goal. Command-word lessons are items tagged `command-word` (none verified yet).
+- Worked maths answers are checked by the maths engine (`MATHS_ENGINE_URL`); long answers are not
+  marked yet ("marked by AI soon").
 - Effort scores (e.g. CBI: Commitment, Behaviour and Inspiration, 1–4, 4 best) shape habits, never
   the predicted grade.
 
 ## Web app
 
+- Learning screens: `/learn/subject/:id` (topics, mastery, weak spots), `/learn/subject/:id/start`
+  (starting test), `/learn/subject/:id/practice`, `/learn/topic/:id`, `/learn/command-words`,
+  `/cards` (flashcards: Due today, All decks, My cards; 3D flip card, reduced motion respected).
 - Installable PWA. Main nav tabs: Learn, Cards, Plan, Papers, Progress (bottom bar on phones, side
+- Installable PWA. Main nav tabs: Map, Cards, Plan, Papers, Progress (bottom bar on phones, side
   rail from 768px wide). Welcome and lessons hide the nav to keep focus.
+- The learning path is a topic map: one hexagon per topic, grouped by unit. States: mastered
+  (gold, tick), in progress (violet, fill level shows mastery %), weak spot (orange, pulsing
+  glow), locked (grey). Each unit ends in a challenge that unlocks at 80% unit mastery. A Next
+  mission card suggests what to do next. The Cards tab shows how many flashcards are due.
 - Mascot: Pip, an angular geometric fox (orange `#FF7A2F`). Brand violet `#6C47F5`; font Nunito,
   self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
 - Works offline for the app shell; API calls are never cached. iPad users get an "Add to Home
   Screen" help page (`/install`), because iPadOS has no install prompt.
 - Until the real API and sign-in land, the web app runs on an MSW mock API with made-up data.
+- Parent onboarding is at `/onboarding` (family list, add a child, school report, link a device,
+  finish); the student scans the QR code to `/link` and sets up a passkey.
+- Avatars are drawn as layered SVG from the avatar code (`apps/web/src/features/avatar`).
 
 ## Content
 
@@ -113,3 +143,9 @@ Tags: #product #rules #limits #defaults
 - Sessions drag between days and open an editable detail panel. Edits can become per-student rules
   ("Always do Maths on Wednesdays") that the planner applies every week; rules can be toggled or
   removed; conflicts are reported, not silently broken. Detail: `docs/PRODUCT_RULES.md`.
+
+## Build environments
+
+- Content and verification sessions run in the `revisionden` cloud environment, which can reach
+  the exam board sites (Pearson, AQA, OCR, WJEC/Eduqas) and gov.uk. Other sessions use the default
+  environment, which cannot.
