@@ -21,6 +21,15 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Flashcard scheduler (SM-2 style) and topic mastery with time decay.
 - Next-item selection: weak spots first, parent focus weights, due flashcards, variety rule.
 - XP, daily goal, streaks, skip days and gift days; rewards catalogue with 14 unlock targets.
+- Content JSON Schemas for subjects, topic trees, items and mark schemes (`content/schemas/`).
+- `pnpm content:validate`: checks schemas, unique ids, topic links and every maths answer with
+  the maths engine; runs in CI.
+- GCSE Maths Higher pilot topic tree (Pearson Edexcel 1MA1) with sample items.
+- Maths engine `POST /check-working`: finds the first wrong line of working and checks the final
+  answer; safer input parsing; 90% coverage gate; container smoke test in CI.
+- Content citations and verification records on every item, topic leaf, mark scheme and diagram,
+  enforced by the validator (quotes, required checks, immutable verified versions, no PDFs or
+  raster images); code-drawn SVG diagram schema; `pnpm content:validate --audit <id>` audit trail (a fuller `pnpm content:audit` is workstream V).
 
 ## [00.01.002] - 2026-11-24
 

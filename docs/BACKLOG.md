@@ -95,21 +95,21 @@
 
 ### D. Content format and maths engine (`content`, `services/maths`, `scripts/content`)
 
-- [ ] **D1 Schemas.** JSON Schemas for subjects, topic trees (spec references), items (multiple
+- [x] **D1 Schemas.** JSON Schemas for subjects, topic trees (spec references), items (multiple
       choice, short answer, numeric, worked maths, flashcard, extended answer), mark schemes.
   - Tests: sample files validate; missing source reference fails.
-- [ ] **D2 Validator.** `pnpm content:validate` checks schemas, unique IDs, topic links, and sends
+- [x] **D2 Validator.** `pnpm content:validate` checks schemas, unique IDs, topic links, and sends
       every maths answer to the engine.
   - Tests: duplicate ID fails; wrong maths answer fails; orphan topic fails.
-- [ ] **D3 Pilot topic tree.** GCSE Maths Higher topic tree from the official specification (one
+- [x] **D3 Pilot topic tree.** GCSE Maths Higher topic tree from the official specification (one
       board), with specification references.
   - Tests: every leaf topic has a spec reference; tree depth at most 3.
-- [ ] **D4 Working-lines checker.** Engine endpoint takes ordered lines of working and returns the
+- [x] **D4 Working-lines checker.** Engine endpoint takes ordered lines of working and returns the
       first line that is not equivalent to the previous, plus final-answer correctness.
   - Tests: correct chain passes; sign slip detected on the right line; unsafe input rejected.
-- [ ] **D5 Container.** Dockerfile builds; container answers `/health`; ready for Cloud Run.
+- [x] **D5 Container.** Dockerfile builds; container answers `/health`; ready for Cloud Run.
   - Tests: container smoke test in CI.
-- [ ] **D6 Citations and verification records.** Required `citations` (min 1) and `verification`
+- [x] **D6 Citations and verification records.** Required `citations` (min 1) and `verification`
       record on every item, topic leaf, mark scheme and diagram, per `VERIFICATION.md`.
   - Tests: missing citation, quote, location or URL fails; verified item without required checks
     fails; `other_authoritative`-only item without `needs_human_approval` fails.

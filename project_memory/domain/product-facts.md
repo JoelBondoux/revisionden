@@ -49,6 +49,26 @@ Tags: #product #rules #limits #defaults
   Screen" help page (`/install`), because iPadOS has no install prompt.
 - Until the real API and sign-in land, the web app runs on an MSW mock API with made-up data.
 
+## Content
+
+- Content is JSON in `content/`, checked by `pnpm content:validate` (schemas in
+  `content/schemas/`). Every item has `source_ref` and `checked_by`; every topic-tree leaf has a
+  specification reference; trees are at most 3 levels deep. Detail: `docs/CONTENT_PLAN.md`.
+- Every maths answer (numeric and worked maths items, and model solutions) is verified by the
+  maths engine before content can merge.
+- Every item, topic leaf, mark scheme and diagram carries official citations and a verification
+  record (`docs/VERIFICATION.md`); verified content needs quotes and every pipeline check, and is
+  immutable (edits create a new version). `pnpm content:validate --audit <id>` prints the audit trail.
+- Diagrams are SVG drawn by code from verified data; no AI-generated or raster teaching images.
+- Pilot: GCSE Maths Higher, Pearson Edexcel 1MA1 (content references N1 to S6). All pilot
+  content is still `draft`: citations have no quotes yet.
+
+## Maths engine
+
+- `services/maths`: SymPy, no AI. `POST /check-working` returns the 0-based index of the first
+  line of working that does not follow from the previous line, and whether the final answer is
+  correct. Input is limited to safe maths (single letters, a few functions, 200 characters).
+
 ## AI
 
 - Every AI-marked result says: "Marked by AI. This is a guide to help you improve, not your

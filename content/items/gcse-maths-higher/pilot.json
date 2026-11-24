@@ -1,0 +1,376 @@
+[
+  {
+    "id": "gcse-maths-h-n7-0001",
+    "topic": "gcse-maths-h-n7",
+    "type": "numeric",
+    "difficulty": 2,
+    "prompt": "Work out 8^(2/3).",
+    "answer": {
+      "value": "4"
+    },
+    "verify": {
+      "expression": "8^(2/3)"
+    },
+    "marks": 1,
+    "hint": "Find the cube root first, then square it.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "GCSE (9-1) Mathematics specification",
+        "document_ref": "1MA1 (issue not yet confirmed)",
+        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
+        "location": "Subject content, reference N7",
+        "supports": ["question", "answer", "hint"]
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": []
+    }
+  },
+  {
+    "id": "gcse-maths-h-r9-0001",
+    "topic": "gcse-maths-h-r9",
+    "type": "numeric",
+    "difficulty": 2,
+    "prompt": "A coat costs £80. The price goes up by 15%. Work out the new price.",
+    "answer": {
+      "value": "92",
+      "unit": "£"
+    },
+    "verify": {
+      "expression": "80 * 115/100"
+    },
+    "marks": 2,
+    "mark_scheme": ["M1 for 80 x 1.15 or 80 + 12", "A1 for 92"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R9",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "GCSE (9-1) Mathematics specification",
+        "document_ref": "1MA1 (issue not yet confirmed)",
+        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
+        "location": "Subject content, reference R9",
+        "supports": ["question", "answer", "mark_scheme"]
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": []
+    }
+  },
+  {
+    "id": "gcse-maths-h-g17-0001",
+    "topic": "gcse-maths-h-g17",
+    "type": "numeric",
+    "difficulty": 2,
+    "prompt": "A circle has radius 3 cm. Work out its area. Give your answer correct to 2 decimal places.",
+    "answer": {
+      "value": "28.27",
+      "unit": "cm^2",
+      "tolerance": 0.005
+    },
+    "verify": {
+      "expression": "pi * 3^2"
+    },
+    "marks": 2,
+    "mark_scheme": ["M1 for pi x 3^2", "A1 for 28.27"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G17",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "GCSE (9-1) Mathematics specification",
+        "document_ref": "1MA1 (issue not yet confirmed)",
+        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
+        "location": "Subject content, reference G17",
+        "supports": ["question", "answer", "mark_scheme"]
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": []
+    }
+  },
+  {
+    "id": "gcse-maths-h-a18-0001",
+    "topic": "gcse-maths-h-a18",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "prompt": "Solve 3x^2 + 5x - 2 = 0",
+    "answer": {
+      "solutions": ["1/3", "-2"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "3x^2 + 5x - 2 = 0",
+      "variable": "x"
+    },
+    "steps": ["3x^2 + 5x - 2 = 0", "(3x - 1)(x + 2) = 0", "x = 1/3 or x = -2"],
+    "marks": 3,
+    "mark_scheme": ["M1 for (3x - 1)(x + 2)", "A1 for x = 1/3", "A1 for x = -2"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "GCSE (9-1) Mathematics specification",
+        "document_ref": "1MA1 (issue not yet confirmed)",
+        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
+        "location": "Subject content, reference A18",
+        "supports": ["question", "answer", "steps", "mark_scheme"]
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": []
+    }
+  },
+  {
+    "id": "gcse-maths-h-a17-0001",
+    "topic": "gcse-maths-h-a17",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "prompt": "Solve 5(x - 3) = 2x + 6",
+    "answer": {
+      "solutions": ["7"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "5(x - 3) = 2x + 6",
+      "variable": "x"
+    },
+    "steps": ["5(x - 3) = 2x + 6", "5x - 15 = 2x + 6", "3x = 21", "x = 7"],
+    "marks": 3,
+    "mark_scheme": [
+      "M1 for expanding the bracket correctly",
+      "M1 for collecting x terms on one side",
+      "A1 for x = 7"
+    ],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "GCSE (9-1) Mathematics specification",
+        "document_ref": "1MA1 (issue not yet confirmed)",
+        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
+        "location": "Subject content, reference A17",
+        "supports": ["question", "answer", "steps", "mark_scheme"]
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": []
+    }
+  },
+  {
+    "id": "gcse-maths-h-a4-0001",
+    "topic": "gcse-maths-h-a4",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "prompt": "Factorise fully 6x^2 + 9x",
+    "answer": {
+      "expression": "3x(2x + 3)"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "6x^2 + 9x",
+      "form": "factorised"
+    },
+    "steps": ["6x^2 + 9x", "3x(2x + 3)"],
+    "marks": 2,
+    "mark_scheme": [
+      "B1 for a partial factorisation such as 3(2x^2 + 3x) or x(6x + 9)",
+      "B1 for 3x(2x + 3)"
+    ],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "GCSE (9-1) Mathematics specification",
+        "document_ref": "1MA1 (issue not yet confirmed)",
+        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
+        "location": "Subject content, reference A4",
+        "supports": ["question", "answer", "steps", "mark_scheme"]
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": []
+    }
+  },
+  {
+    "id": "gcse-maths-h-a4-0002",
+    "topic": "gcse-maths-h-a4",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "prompt": "Expand and simplify (2x - 1)(x + 4)",
+    "answer": {
+      "expression": "2x^2 + 7x - 4"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "(2x - 1)(x + 4)",
+      "form": "expanded"
+    },
+    "steps": ["(2x - 1)(x + 4)", "2x^2 + 8x - x - 4", "2x^2 + 7x - 4"],
+    "marks": 2,
+    "mark_scheme": ["M1 for at least three of the four terms correct", "A1 for 2x^2 + 7x - 4"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "GCSE (9-1) Mathematics specification",
+        "document_ref": "1MA1 (issue not yet confirmed)",
+        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
+        "location": "Subject content, reference A4",
+        "supports": ["question", "answer", "steps", "mark_scheme"]
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": []
+    }
+  },
+  {
+    "id": "gcse-maths-h-n4-0001",
+    "topic": "gcse-maths-h-n4",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "prompt": "Which of these numbers is prime?",
+    "options": ["51", "57", "59", "63"],
+    "answer": {
+      "option": 2
+    },
+    "marks": 1,
+    "explanation": "51 = 3 x 17, 57 = 3 x 19 and 63 = 7 x 9, so only 59 is prime.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N4",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "GCSE (9-1) Mathematics specification",
+        "document_ref": "1MA1 (issue not yet confirmed)",
+        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
+        "location": "Subject content, reference N4",
+        "supports": [
+          "question",
+          "answer",
+          "distractor:0",
+          "distractor:1",
+          "distractor:3",
+          "explanation"
+        ]
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": []
+    }
+  },
+  {
+    "id": "gcse-maths-h-g9-0001",
+    "topic": "gcse-maths-h-g9",
+    "type": "short_answer",
+    "difficulty": 1,
+    "prompt": "What is the name of a straight line that touches a circle at exactly one point?",
+    "answer": {
+      "accepted": ["tangent", "a tangent"]
+    },
+    "marks": 1,
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G9",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "GCSE (9-1) Mathematics specification",
+        "document_ref": "1MA1 (issue not yet confirmed)",
+        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
+        "location": "Subject content, reference G9",
+        "supports": ["question", "answer"]
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": []
+    }
+  },
+  {
+    "id": "gcse-maths-h-a18-0002",
+    "topic": "gcse-maths-h-a18",
+    "type": "flashcard",
+    "difficulty": 2,
+    "front": "The quadratic formula for ax^2 + bx + c = 0",
+    "back": "x = (-b ± √(b^2 - 4ac)) / 2a",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "GCSE (9-1) Mathematics specification",
+        "document_ref": "1MA1 (issue not yet confirmed)",
+        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
+        "location": "Subject content, reference A18",
+        "supports": ["front", "back"]
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": []
+    }
+  },
+  {
+    "id": "gcse-maths-h-a6-0001",
+    "topic": "gcse-maths-h-a6",
+    "type": "extended_answer",
+    "difficulty": 4,
+    "prompt": "Prove that the sum of any three consecutive integers is a multiple of 3.",
+    "marks": 3,
+    "mark_scheme_ref": "gcse-maths-ms-consecutive-integers-proof",
+    "command_word": "Prove",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "GCSE (9-1) Mathematics specification",
+        "document_ref": "1MA1 (issue not yet confirmed)",
+        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
+        "location": "Subject content, reference A6",
+        "supports": ["question", "mark_scheme"]
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": []
+    }
+  }
+]
