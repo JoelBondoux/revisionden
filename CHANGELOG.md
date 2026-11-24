@@ -46,8 +46,6 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
-- Verification protocol (`docs/VERIFICATION.md`): official citations on every item, multi-step checks, human approval, quarantine and audit reports; new workstream V and task D6.
-
 - Project memory (`project_memory/`) in the AtlasMind layout as the single source of truth, with the AtlasMind SSOT rule in `CLAUDE.md` and `AGENTS.md`; decision records moved to `project_memory/decisions/`.
 
 - Monorepo skeleton: web app, API, core domain logic, maths engine.
