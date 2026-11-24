@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/JoelBondoux/revisionden/content/schemas/item.schema.json",
+  "title": "Question bank item",
+  "description": "One item. Item files in content/items/ hold a JSON array of these.",
+  "type": "object",
+  "required": ["id", "type", "topic", "difficulty", "source_ref", "checked_by"],
+  "properties": {
+    "id": { "$ref": "#/$defs/id" },
+    "type": {
+      "enum": [
+        "multiple_choice",
+        "short_answer",
+        "numeric",
+        "worked_maths",
+        "flashcard",
+        "extended_answer"
+      ]
+    },
+    "topic": { "$ref": "#/$defs/id", "description": "Id of a leaf topic in a topic tree." },
+    "difficulty": { "type": "integer", "minimum": 1, "maximum": 5 },
+    "source_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Specification point or mark scheme this item is built from."
+    },
+    "checked_by": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "enum": ["maths-engine", "model-b", "human"] },
+      "description": "How the item was checked. Maths items must include maths-engine."
+    },
+    "tags": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "hint": { "type": "string", "minLength": 1 },
+    "explanation": { "type": "string", "minLength": 1 },
+    "mark_scheme": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Short inline mark scheme, one mark point per entry."
+    },
+    "mark_scheme_ref": { "$ref": "#/$defs/id", "description": "Id of a mark scheme file." }
+  },
+  "allOf": [
+    {
+      "if": { "$ref": "#/$defs/isType/multiple_choice" },
+      "then": { "$ref": "#/$defs/multiple_choice" }
+    },
+    { "if": { "$ref": "#/$defs/isType/short_answer" }, "then": { "$ref": "#/$defs/short_answer" } },
+    { "if": { "$ref": "#/$defs/isType/numeric" }, "then": { "$ref": "#/$defs/numeric" } },
+    { "if": { "$ref": "#/$defs/isType/worked_maths" }, "then": { "$ref": "#/$defs/worked_maths" } },
+    { "if": { "$ref": "#/$defs/isType/flashcard" }, "then": { "$ref": "#/$defs/flashcard" } },
+    {
+      "if": { "$ref": "#/$defs/isType/extended_answer" },
+      "then": { "$ref": "#/$defs/extended_answer" }
+    }
+  ],
+  "unevaluatedProperties": false,
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "text": { "type": "string", "minLength": 1 },
+    "maths": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "marks": { "type": "integer", "minimum": 1 },
+    "isType": {
+      "multiple_choice": { "properties": { "type": { "const": "multiple_choice" } } },
+      "short_answer": { "properties": { "type": { "const": "short_answer" } } },
+      "numeric": { "properties": { "type": { "const": "numeric" } } },
+      "worked_maths": { "properties": { "type": { "const": "worked_maths" } } },
+      "flashcard": { "properties": { "type": { "const": "flashcard" } } },
+      "extended_answer": { "properties": { "type": { "const": "extended_answer" } } }
+    },
+    "multiple_choice": {
+      "required": ["prompt", "options", "answer", "marks"],
+      "properties": {
+        "prompt": { "$ref": "#/$defs/text" },
+        "options": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/text" }
+        },
+        "answer": {
+          "type": "object",
+          "required": ["option"],
+          "properties": { "option": { "type": "integer", "minimum": 0 } },
+          "additionalProperties": false,
+          "description": "Zero-based index of the correct option."
+        },
+        "marks": { "$ref": "#/$defs/marks" }
+      }
+    },
+    "short_answer": {
+      "required": ["prompt", "answer", "marks"],
+      "properties": {
+        "prompt": { "$ref": "#/$defs/text" },
+        "answer": {
+          "type": "object",
+          "required": ["accepted"],
+          "properties": {
+            "accepted": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/text" } }
+          },
+          "additionalProperties": false
+        },
+        "marks": { "$ref": "#/$defs/marks" }
+      }
+    },
+    "numeric": {
+      "required": ["prompt", "answer", "verify", "marks"],
+      "properties": {
+        "prompt": { "$ref": "#/$defs/text" },
+        "answer": {
+          "type": "object",
+          "required": ["value"],
+          "properties": {
+            "value": { "$ref": "#/$defs/maths" },
+            "unit": { "$ref": "#/$defs/text" },
+            "tolerance": { "type": "number", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        "verify": {
+          "type": "object",
+          "required": ["expression"],
+          "properties": { "expression": { "$ref": "#/$defs/maths" } },
+          "additionalProperties": false,
+          "description": "Calculation the maths engine evaluates and compares with answer.value."
+        },
+        "marks": { "$ref": "#/$defs/marks" }
+      }
+    },
+    "worked_maths": {
+      "required": ["prompt", "answer", "verify", "marks"],
+      "properties": {
+        "prompt": { "$ref": "#/$defs/text" },
+        "answer": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": ["solutions"],
+              "properties": {
+                "solutions": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": { "$ref": "#/$defs/maths" }
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": ["expression"],
+              "properties": { "expression": { "$ref": "#/$defs/maths" } },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "verify": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": ["method", "equation"],
+              "properties": {
+                "method": { "const": "solve" },
+                "equation": { "$ref": "#/$defs/maths" },
+                "variable": { "type": "string", "pattern": "^[a-zA-Z]$" }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": ["method", "expression"],
+              "properties": {
+                "method": { "const": "expression" },
+                "expression": { "$ref": "#/$defs/maths" },
+                "form": { "enum": ["factorised", "expanded"] }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 50,
+          "items": { "$ref": "#/$defs/maths" },
+          "description": "Model solution as lines of working; each line is checked by the engine."
+        },
+        "marks": { "$ref": "#/$defs/marks" }
+      }
+    },
+    "flashcard": {
+      "required": ["front", "back"],
+      "properties": {
+        "front": { "$ref": "#/$defs/text" },
+        "back": { "$ref": "#/$defs/text" }
+      }
+    },
+    "extended_answer": {
+      "required": ["prompt", "marks", "mark_scheme_ref"],
+      "properties": {
+        "prompt": { "$ref": "#/$defs/text" },
+        "marks": { "$ref": "#/$defs/marks" },
+        "command_word": { "$ref": "#/$defs/text" }
+      }
+    }
+  }
+}

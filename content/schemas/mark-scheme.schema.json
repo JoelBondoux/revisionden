@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/JoelBondoux/revisionden/content/schemas/mark-scheme.schema.json",
+  "title": "Mark scheme",
+  "description": "A reusable mark scheme: mark points (M1, A1, B1) or level descriptors for extended answers.",
+  "type": "object",
+  "required": ["id", "type", "source_ref"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "type": { "enum": ["points", "levels"] },
+    "source_ref": { "type": "string", "minLength": 1 },
+    "points": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["code", "description"],
+        "properties": {
+          "code": { "type": "string", "pattern": "^[A-Z]{1,2}[0-9]$" },
+          "description": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "levels": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["level", "marks", "descriptor"],
+        "properties": {
+          "level": { "type": "integer", "minimum": 0 },
+          "marks": {
+            "type": "array",
+            "items": { "type": "integer", "minimum": 0 },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "Lowest and highest mark in this level."
+          },
+          "descriptor": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "type": { "const": "points" } } },
+      "then": { "required": ["points"], "not": { "required": ["levels"] } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "levels" } } },
+      "then": { "required": ["levels"], "not": { "required": ["points"] } }
+    }
+  ],
+  "additionalProperties": false
+}
