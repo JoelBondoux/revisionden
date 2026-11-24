@@ -1,0 +1,6 @@
+{
+  "id": "fixture-subject",
+  "name": "Fixture subject",
+  "level": "GCSE",
+  "boards": [{ "board": "edexcel", "spec_code": "FIX1", "tiers": ["higher"] }]
+}

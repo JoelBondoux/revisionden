@@ -13,7 +13,9 @@
 
 ## Accounts
 
-- Parent: Google or Microsoft sign-in (Apple later). Only the sign-in email is stored.
+- Parent: Google or Microsoft sign-in (Apple later). Only the sign-in email is stored: the
+  provider's display name is blanked, the picture is never fetched or stored, and sessions keep
+  no IP address or browser details.
 - Student: no outside account. Nickname (letters, numbers, underscore; 2–16 characters), layered
   avatar saved as a short code, year group. Device linked by one-time QR, then a passkey.
 
@@ -29,8 +31,21 @@ user confirms the reading. Only extracted values and confirmed text are kept.
 
 ## AI providers
 
-Only the question, the student's answer and the topic are sent. Paid API tiers only (no free
-tiers that may train on data). AI Gateway logging must not store request bodies in production.
+Only the question, the student's answer, the topic and the mark scheme are sent. Paid API tiers
+only (no free tiers that may train on data). AI Gateway logging must not store request bodies:
+every call sends `cf-aig-collect-log-payload: false`, so only tokens, cost and status are logged.
+
+The API refuses to send any request that contains the student's nickname, id, family id, avatar
+code or year group ("Year 10"), an email address or a UK phone number, and tells the student
+not to include personal details (`apps/api/src/ai/privacy.ts`; tested on the real HTTP body).
+AI usage is stored per child as tokens and cost only, never the prompt or the answer.
+
+## Reminders (web push)
+
+Pushes are sent with no payload, so the push services (Google, Apple, Mozilla) never see any
+reminder text. The service worker fetches the text from our API, or shows a generic reminder if
+the device is locked. Only the browser's push endpoint and keys are stored, per device; the
+VAPID contact is our web address, never a personal email.
 
 ## Friends
 
@@ -46,3 +61,9 @@ deleted automatically.
 
 Review against the ICO Age Appropriate Design Code (Children's Code); data protection impact
 assessment; make the repository private.
+
+## Repository visibility
+
+While the repository is public it has no README and no GitHub description, to keep it hard to
+discover. The project overview lives in `docs/OVERVIEW.md`. Do not add a root README or set a
+repository description until the repository is private.

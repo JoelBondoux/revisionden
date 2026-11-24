@@ -56,6 +56,7 @@ CI fails below the gate. Raising a gate is welcome; lowering one needs a reason 
 pnpm install
 pnpm test            # all TypeScript unit and component tests
 pnpm test:coverage   # with coverage gates
-pnpm test:scripts    # repo scripts
+pnpm test:scripts    # repo scripts, scripts/verify and the evals harness (fakes only)
+UPDATE_SNAPSHOTS=1 node --test scripts/verify/audit.test.mjs   # refresh the audit snapshot
 cd services/maths && pip install -r requirements-dev.txt && python -m pytest -q
 ```

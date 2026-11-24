@@ -1,0 +1,20 @@
+[
+  {
+    "itemId": "fixture-item-verified",
+    "itemVersion": 1,
+    "reason": "wrong_answer",
+    "status": "confirmed_error",
+    "reportedAt": "2026-11-19T08:00:00.000Z",
+    "decidedAt": "2026-11-19T12:00:00.000Z",
+    "decidedByRole": "content-lead"
+  },
+  {
+    "itemId": "fixture-item-verified",
+    "itemVersion": 2,
+    "reason": "unclear",
+    "status": "open",
+    "reportedAt": "2026-11-23T08:00:00.000Z",
+    "decidedAt": null,
+    "decidedByRole": null
+  }
+]

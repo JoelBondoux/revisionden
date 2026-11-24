@@ -1,0 +1,12 @@
+{
+  "id": "gcse-maths",
+  "name": "Maths",
+  "level": "GCSE",
+  "boards": [
+    {
+      "board": "edexcel",
+      "spec_code": "1MA1",
+      "tiers": ["foundation", "higher"]
+    }
+  ]
+}

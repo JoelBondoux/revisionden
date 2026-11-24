@@ -1,0 +1,22 @@
+import { Link } from 'react-router-dom';
+import { Card } from '../components/Card';
+import { DeviceReminders } from '../features/notifications';
+
+export function SettingsPage() {
+  return (
+    <div className="stack">
+      <h1>Settings</h1>
+      <Card title="This device">
+        <ul className="link-list">
+          <li>
+            <Link to="/install">Add to Home Screen</Link>
+          </li>
+          <li>
+            <Link to="/family">Switch profile</Link>
+          </li>
+        </ul>
+      </Card>
+      <DeviceReminders />
+    </div>
+  );
+}

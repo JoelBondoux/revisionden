@@ -1,0 +1,17 @@
+# Copy to .dev.vars (git-ignored) and fill in. Never commit real values.
+DATABASE_URL=postgres://USER:PASSWORD@HOST/revisionden?sslmode=require
+BETTER_AUTH_SECRET=generate-with-openssl-rand-base64-32
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+MICROSOFT_CLIENT_ID=
+MICROSOFT_CLIENT_SECRET=
+AI_GATEWAY_URL=https://gateway.ai.cloudflare.com/v1/ACCOUNT_ID/revisionden-dev
+# Development only: also serve draft (unverified) content. Ignored in staging and production.
+# SERVE_DRAFT_CONTENT=true
+# MATHS_ENGINE_URL=http://localhost:8000
+# Optional (workstream H): leave blank to keep live AI and reminders switched off.
+ANTHROPIC_API_KEY=
+OPENAI_API_KEY=
+AI_GATEWAY_TOKEN=
+VAPID_PUBLIC_KEY=
+VAPID_PRIVATE_KEY=

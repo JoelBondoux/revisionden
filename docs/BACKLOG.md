@@ -26,89 +26,100 @@
 
 ### A. Web foundations and design system (`apps/web`)
 
-- [ ] **A1 Design tokens.** Colours, type (Nunito), spacing, radii, shadows from the mockups as CSS
+- [x] **A1 Design tokens.** Colours, type (Nunito), spacing, radii, shadows from the mockups as CSS
       variables; light theme first.
   - Test: token file exports every named token; contrast check script passes 4.5:1 for text pairs.
-- [ ] **A2 Core components.** `Button` (primary, secondary, danger, 3D press), `Pill`, `ProgressBar`,
+- [x] **A2 Core components.** `Button` (primary, secondary, danger, 3D press), `Pill`, `ProgressBar`,
       `Card`, `BottomNav`, `Toast`, `Sheet`, `Avatar` (renders from avatar code, placeholder until E).
   - Tests: renders label; disabled state not clickable; `ProgressBar` exposes `role=progressbar`
     with correct values; `Toast` announces via `role=status`.
-- [ ] **A3 Routing and layout.** Routes for welcome, family, path, lesson, lesson complete,
+- [x] **A3 Routing and layout.** Routes for welcome, family, path, lesson, lesson complete,
       progress, plan, settings; phone layout with bottom nav, tablet and desktop with side nav.
   - Tests: each route renders its heading; unknown route shows a friendly 404.
-- [ ] **A4 API client and mocks.** Typed client using Zod schemas from `packages/core`; MSW
+- [x] **A4 API client and mocks.** Typed client using Zod schemas from `packages/core`; MSW
       handlers for development and tests.
   - Tests: client rejects responses that fail the schema; network error shows retry UI.
-- [ ] **A5 PWA.** Manifest (name, icons, theme colour), service worker caching the app shell,
+- [x] **A5 PWA.** Manifest (name, icons, theme colour), service worker caching the app shell,
       offline banner, "Add to Home Screen" help screen for iPad.
   - Tests: manifest valid; offline banner shows when `navigator.onLine` is false.
-- [ ] **A6 Screen shells.** Welcome and sign-in, learning path, lesson question, lesson complete,
+- [x] **A6 Screen shells.** Welcome and sign-in, learning path, lesson question, lesson complete,
       matching the mockups, wired to MSW data.
   - Tests: path shows locked, done, current and weak-spot nodes; lesson shows answer feedback.
+- [x] **A7 Topic map.** The learning path becomes a honeycomb of hexagons, one per topic, grouped
+      by unit: mastered (gold, tick), in progress (violet, mastery fill level and %), weak spot
+      (orange, wrench, pulsing glow), locked (grey, lock) and a unit challenge (dark, crown,
+      unlocks at 80%). Next mission card above the map; unit headers with % mastered; Learn tab
+      renamed Map; Cards tab shows the due count.
+  - Tests: each hex state and its accessible name; locked items explain how to unlock; mission
+    card links to its lesson; Cards badge shows the due count.
 
 ### B. API, database and sign-in (`apps/api`, `packages/db`)
 
-- [ ] **B1 Database schema.** Drizzle tables from `ARCHITECTURE.md`; first migration; seed script
+- [x] **B1 Database schema.** Drizzle tables from `ARCHITECTURE.md`; first migration; seed script
       with made-up data.
   - Tests (PGlite): migration applies cleanly; foreign keys enforced; no column named for real
     names, birth dates or student emails (schema guard test).
-- [ ] **B2 Worker setup.** Wrangler config for dev, staging, production; bindings for Neon
+- [x] **B2 Worker setup.** Wrangler config for dev, staging, production; bindings for Neon
       (Hyperdrive or serverless driver), R2, AI Gateway; `/health` reports version.
   - Tests: health returns version; env validation fails fast on missing bindings.
-- [ ] **B3 Parent sign-in.** Better Auth with Google and Microsoft; sessions in Postgres; sign-out.
+- [x] **B3 Parent sign-in.** Better Auth with Google and Microsoft; sessions in Postgres; sign-out.
   - Tests: protected routes reject anonymous requests (401); session cookie is HttpOnly,
     Secure, SameSite=Lax.
-- [ ] **B4 Family and students.** Create family on first sign-in; CRUD for student profiles
+- [x] **B4 Family and students.** Create family on first sign-in; CRUD for student profiles
       (nickname, avatar code, year group); enrolments (subject, board, tier, "not sure").
   - Tests: nickname validation (from core); a parent cannot see another family's students.
-- [ ] **B5 Device linking.** Parent creates a one-time token (10 minutes, single use) shown as QR;
+- [x] **B5 Device linking.** Parent creates a one-time token (10 minutes, single use) shown as QR;
       student device redeems it and registers a passkey; later unlock with passkey.
   - Tests: token expires; token cannot be reused; wrong family cannot redeem.
-- [ ] **B6 Rate limits and errors.** Consistent JSON errors; rate limit on auth and AI routes.
+- [x] **B6 Rate limits and errors.** Consistent JSON errors; rate limit on auth and AI routes.
   - Tests: error shape matches schema; 429 after limit.
 
 ### C. Core domain rules and shared schemas (`packages/core`)
 
 - [x] **C0 Feedback levels** (done in skeleton).
-- [ ] **C1 Schemas.** Zod schemas for every API request and response defined so far (students,
+- [x] **C1 Schemas.** Zod schemas for every API request and response defined so far (students,
       enrolments, items, attempts, plans).
   - Tests: valid samples parse; invalid samples give readable errors.
-- [ ] **C2 Nickname and avatar code.** Nickname rules (2 to 16 letters, numbers, underscore; block
+- [x] **C2 Nickname and avatar code.** Nickname rules (2 to 16 letters, numbers, underscore; block
       list); avatar code encode, decode and validate against the item catalogue, including locked
       items.
   - Tests: round-trip encode/decode; locked item rejected unless earned.
-- [ ] **C3 Spaced repetition.** Card scheduler (SM-2 style intervals); wrong answers return sooner.
+- [x] **C3 Spaced repetition.** Card scheduler (SM-2 style intervals); wrong answers return sooner.
   - Tests: interval grows on success; resets on failure; due cards ordered by urgency.
-- [ ] **C4 Mastery.** Topic mastery 0 to 100 from recent attempts with decay over time.
+- [x] **C4 Mastery.** Topic mastery 0 to 100 from recent attempts with decay over time.
   - Tests: correct answers raise mastery; old attempts weigh less; never outside 0 to 100.
-- [ ] **C5 Next-item selection.** Weak spots first, parent focus weights (light +10, medium +22,
+- [x] **C5 Next-item selection.** Weak spots first, parent focus weights (light +10, medium +22,
       strong +38 points), due flashcards, variety rule (no more than 3 in a row from one topic).
   - Tests: weakest topic chosen most often (seeded randomness); focus subject share rises by the
     expected amount; variety rule holds.
-- [ ] **C6 XP, goals and streaks.** XP per answer type; daily goal; streak days; skip days (earned
+- [x] **C6 XP, goals and streaks.** XP per answer type; daily goal; streak days; skip days (earned
       by weekly goal, max 2 in a row); gift days (only given away; +20 XP for gifting).
   - Tests: streak breaks without goal or skip day; third skip in a row refused; gift day cannot be
     applied to own streak.
-- [ ] **C7 Rewards catalogue.** Reward definitions with unlock targets; evaluator that returns newly
+- [x] **C7 Rewards catalogue.** Reward definitions with unlock targets; evaluator that returns newly
       earned rewards from stats.
   - Tests: each target type (streak, grade, practice, friendship, competition) unlocks correctly.
 
 ### D. Content format and maths engine (`content`, `services/maths`, `scripts/content`)
 
-- [ ] **D1 Schemas.** JSON Schemas for subjects, topic trees (spec references), items (multiple
+- [x] **D1 Schemas.** JSON Schemas for subjects, topic trees (spec references), items (multiple
       choice, short answer, numeric, worked maths, flashcard, extended answer), mark schemes.
   - Tests: sample files validate; missing source reference fails.
-- [ ] **D2 Validator.** `pnpm content:validate` checks schemas, unique IDs, topic links, and sends
+- [x] **D2 Validator.** `pnpm content:validate` checks schemas, unique IDs, topic links, and sends
       every maths answer to the engine.
   - Tests: duplicate ID fails; wrong maths answer fails; orphan topic fails.
-- [ ] **D3 Pilot topic tree.** GCSE Maths Higher topic tree from the official specification (one
+- [x] **D3 Pilot topic tree.** GCSE Maths Higher topic tree from the official specification (one
       board), with specification references.
   - Tests: every leaf topic has a spec reference; tree depth at most 3.
-- [ ] **D4 Working-lines checker.** Engine endpoint takes ordered lines of working and returns the
+- [x] **D4 Working-lines checker.** Engine endpoint takes ordered lines of working and returns the
       first line that is not equivalent to the previous, plus final-answer correctness.
   - Tests: correct chain passes; sign slip detected on the right line; unsafe input rejected.
-- [ ] **D5 Container.** Dockerfile builds; container answers `/health`; ready for Cloud Run.
+- [x] **D5 Container.** Dockerfile builds; container answers `/health`; ready for Cloud Run.
   - Tests: container smoke test in CI.
+- [x] **D6 Citations and verification records.** Required `citations` (min 1) and `verification`
+      record on every item, topic leaf, mark scheme and diagram, per `VERIFICATION.md`.
+  - Tests: missing citation, quote, location or URL fails; verified item without required checks
+    fails; `other_authoritative`-only item without `needs_human_approval` fails.
 
 ---
 
@@ -116,17 +127,27 @@
 
 ### E. Family onboarding and avatar builder (`apps/web/src/features/onboarding`, `.../avatar`)
 
-- [ ] E1 Onboarding flow from screen 15 of the mockups, against the real API.
-- [ ] E2 Board and tier picker per subject, with "not sure" reminders.
-- [ ] E3 Avatar builder from screen 16 (layers, shuffle, locked items, short code).
-- [ ] E4 QR device linking screens (parent shows code; student scans; passkey set-up).
+- [x] E1 Onboarding flow from screen 15 of the mockups, against the real API.
+- [x] E2 Board and tier picker per subject, with "not sure" reminders.
+- [x] E3 Avatar builder from screen 16 (layers, shuffle, locked items, short code).
+- [x] E4 QR device linking screens (parent shows code; student scans; passkey set-up).
 - Tests: Playwright journey "parent adds two students and links a device"; component tests per step.
 
 ### F. Learning loop (`apps/web/src/features/learn`, `apps/api` learn routes)
 
-- [ ] F1 Starting test per subject (about 5 minutes) sets initial mastery.
+- [x] F1 Starting test per subject (about 5 minutes) sets initial mastery.
 - [ ] F2 Learning path from mastery; lesson player for each item type; instant feedback.
-- [ ] F3 Flashcards with spaced repetition.
+      Lesson player, instant feedback and a subject page with mastery are done; the learning path
+      map (workstream A's screen) still reads mock data and links to the old mock lessons.
+- [x] F3 Flashcards with spaced repetition.
+- [x] F4 XP, daily goal and streak shown and updated.
+- [ ] F5 Exam technique basics: command word lessons. The lesson screen and API are done
+      (items tagged `command-word`); verified command-word items are still to be written through
+      the content pipeline.
+- [ ] F3 Flashcards with spaced repetition. Design: mockup screen 18 (card flips in 3D from
+      question to answer; Again, Hard, Good and Easy buttons showing the next review time; Due
+      today, All decks and My cards tabs; deck-done summary with XP). The Cards tab and its due
+      badge already exist (A7); the page itself is a placeholder.
 - [ ] F4 XP, daily goal and streak shown and updated.
 - [ ] F5 Exam technique basics: command word lessons.
 - Tests: API integration for attempt recording; Playwright "complete a lesson and see XP".
@@ -141,18 +162,73 @@
 
 ### H. Reminders and AI gateway (`apps/api` notifications and AI)
 
-- [ ] H1 Web push subscription and scheduled reminders with quiet hours.
-- [ ] H2 AI gateway client with provider routing, retries and per-child monthly cap.
-- [ ] H3 Short-answer marking via the small model with recorded-fixture tests.
+- [x] H1 Web push subscription and scheduled reminders with quiet hours.
+- [x] H2 AI gateway client with provider routing, retries and per-child monthly cap.
+- [x] H3 Short-answer marking via the small model with fixture tests (no live provider calls).
 
 ---
+
+### V. Verification pipeline and audit (`scripts/verify/`, `apps/api` review routes, `evals/`)
+
+- [x] V1 Quote checker: fetches the cited source (or private archive copy) and confirms the quote at the stated location.
+- [x] V2 Blind-answer and adversarial review runners using two different providers; results written to the verification record.
+- [x] V3 Exact checkers: units, chemical equation balancing, equation-sheet lookups (maths via the engine).
+- [x] V4 Human review queue (admin screen) with batch sampling rule and approval recording (role, not name).
+- [x] V5 Quarantine on report; recalculation of affected scores; batch re-check trigger.
+- [ ] V6 `pnpm content:audit` report (done) and parent-portal PDF export (to do).
+- [x] V7 Double AI marking with criterion citations and disagreement flagging; golden-set evals with the pass bars in `AI.md`.
+- Tests: each checker red/green with known-good and known-bad fixtures; audit report snapshot test.
+
+### R. Five-year rewards progression (`packages/core`, catalogue data, avatar layers)
+
+- [ ] R1 Level curve (1 to 100 plus prestige) from XP, tuned so daily practice reaches about level 20 a year.
+- [ ] R2 Catalogue as data with rarity, source (level, chapter, milestone, collection, season) and unlock target; validator for unique ids and reachable targets.
+- [ ] R3 Year chapters (Years 9 to 13) and milestone ladders from `REWARDS.md`, with carry-over from GCSE to A-Level and mid-way joiners.
+- [ ] R4 Collections and set bonuses; seasonal drops with term windows and later re-release.
+- [ ] R5 Parent-set real-world rewards tied to any target, marked as given by the parent.
+- [ ] R6 First seasonal drop and chapter 2 (Year 10) item art as original SVG layers.
+- Tests: curve properties (monotonic, reachable), each target type unlocks once, no reward for late-night study or time spent, catalogue validator fixtures.
+
+### K. Statistics dashboards (`packages/core/src/stats.ts`, `apps/api/src/stats/**`, `apps/web/src/features/stats/**`)
+
+Spec: `PRODUCT_RULES.md`, statistics dashboards. Mockups 19 and 20.
+
+- [ ] K1 Pure stats functions in core: periods (week, term, year in the family time zone), XP and questions per bucket, accuracy, active study time (5-minute gap rule, daily cap), personal bests, subject mastery average and change, weak-spot trend.
+- [ ] K2 API: `GET /students/:id/stats?period=` (student or own parent only) and `GET /parent/students/:id/dashboard` (parent only), with shared Zod schemas.
+- [ ] K3 Student "My stats" screen from the Progress tab: period toggle, tiles, XP bar chart with goal line, tooltip and table view, mastery by subject, personal bests, level bar.
+- [ ] K4 Parent dashboard: student switcher, tiles, 8-week study time chart with plan line, subjects table, weak spots, effort scores, reward progress, healthy habits, AI spend, recent activity.
+- [ ] K5 Save as PDF in the browser (nicknames only); "Not set up yet" states for missing panels; student Settings line showing what the parent can see.
+- [ ] K6 Accessibility: table view for every chart, keyboard focus on bars, reduced motion.
+- Tests: each number rule red/green with fixed clocks (gap rule, cap, part marks, unmarked answers left out, week boundaries in UK time, term and year buckets); access control (a parent cannot read another family's child); empty states; component tests for toggles, tooltips and table views.
+
+### L. Policies, About page and feedback (`docs/legal/**`, `apps/web/src/features/legal/**`, `apps/web/src/features/about/**`, `apps/web/src/features/feedback/**`, feedback API routes and table)
+
+Spec: `docs/LEGAL.md` and `PRODUCT_RULES.md` (About page, policies and feedback). Mockup 21.
+
+- [ ] L1 Write every policy in `docs/LEGAL.md` (plain English first, then full text), checked statement by statement against the code and docs; list every mismatch found.
+- [ ] L2 Policy pages at `/legal/<name>` built from the same Markdown, with placeholders filled from build variables; reachable signed out; print style.
+- [ ] L3 About page: version, environment, build date, commit, "What's new" from `CHANGELOG.md`, policy links, open-source licences.
+- [ ] L4 Feedback: form, privacy checks, device details toggle, parent view, operator triage at `/admin/feedback`, status updates, rate limit, retention.
+- [ ] L5 Policy acceptance in onboarding (version stored) and the "policy changed" prompt.
+- Tests: placeholder filling and the missing-value message; What's new parsing (versions without the subsection hidden); feedback refuses emails, phone numbers and nicknames; a parent sees only their family's feedback; only the operator role reaches triage; rate limit; acceptance version stored.
+
+### U. Sound effects (`apps/web/src/features/sound/**`)
+
+Spec: `PRODUCT_RULES.md` (Sound effects).
+
+- [ ] U1 Sound bank synthesised with Web Audio (one function per event), `SoundProvider` and `useSound().play(event)`.
+- [ ] U2 Settings: header quick mute, Settings section (on/off, volume, tap sounds), saved per device; iOS ambient audio session; no sound before first tap or in the background.
+- [ ] U3 Wire `play()` into lessons, flashcards, streaks, rewards, plan and celebrations (one-line calls, listed in the PR), with the Test mode rule.
+- Tests: mute and volume respected; tap sounds off by default; Test mode plays no correct/wrong before submit; nothing plays before first interaction; a fake AudioContext records calls.
 
 ## Stage 2 and later
 
 Broken down into tasks when Stage 1 ships, following the same format. Headline order:
 
-1. Mastery dashboard and predicted grade.
-2. Exams, mocks and assessments entry; study plan generator and calendar (editable by both).
+1. Predicted grade (the stats dashboards are workstream K).
+2. Exams, mocks and assessments entry; study plan generator and calendar (editable by both):
+   drag sessions between days; detail panel to edit a session; custom rules created from edits,
+   toggled and removed, applied by the generator, with conflict warnings (mockup screen 5).
 3. School report setup and upload reading (delete after confirm).
 4. Parent portal: weekly summary and focus nudges.
 5. Feedback levels in the lesson player; Learn and Test modes.

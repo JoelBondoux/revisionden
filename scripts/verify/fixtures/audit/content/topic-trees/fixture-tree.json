@@ -1,0 +1,38 @@
+{
+  "id": "fixture-tree",
+  "subject": "fixture-subject",
+  "board": "edexcel",
+  "tier": "higher",
+  "specification": {
+    "code": "FIX1",
+    "title": "Fixture specification",
+    "url": "https://example.org/spec"
+  },
+  "topics": [
+    {
+      "id": "fixture-branch",
+      "title": "Fixture branch",
+      "children": [
+        {
+          "id": "fixture-leaf",
+          "title": "Fixture leaf",
+          "spec_ref": ["F1"],
+          "citations": [
+            {
+              "source_type": "specification",
+              "publisher": "Fixture board",
+              "title": "Fixture specification",
+              "document_ref": "FIX1 issue 1",
+              "url": "https://example.org/spec",
+              "location": "page 3, F1",
+              "quote": "fixture leaf words",
+              "retrieved_at": "2026-11-20",
+              "supports": ["topic"]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "verification": { "status": "draft", "version": 1, "checks": [] }
+}

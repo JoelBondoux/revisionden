@@ -1,0 +1,117 @@
+# Cloudflare Worker for the RevisionDen API.
+# No real IDs or secrets here: secrets (including AI_GATEWAY_URL, which holds the account id)
+# are set with `wrangler secret put <NAME> --env <env>`
+# and listed in docs/ENVIRONMENTS.md. Locally, put them in apps/api/.dev.vars (git-ignored).
+name = "revisionden-api-dev"
+main = "src/index.ts"
+compatibility_date = "2026-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Local development (`pnpm --filter @revisionden/api dev`) uses these top-level values.
+[vars]
+ENVIRONMENT = "development"
+API_ORIGIN = "http://localhost:8787"
+WEB_ORIGIN = "http://localhost:5173"
+PASSKEY_RP_ID = "localhost"
+
+[[r2_buckets]]
+binding = "UPLOADS"
+bucket_name = "revisionden-uploads-dev"
+
+[[ratelimits]]
+name = "AUTH_RATE_LIMITER"
+namespace_id = "1001"
+simple = { limit = 30, period = 60 }
+
+[[ratelimits]]
+name = "AI_RATE_LIMITER"
+namespace_id = "1002"
+simple = { limit = 20, period = 60 }
+
+# Reminder cron (web push): checks every 15 minutes which reminders are due.
+[triggers]
+crons = ["*/15 * * * *"]
+
+# ---------------------------------------------------------------------------------------------
+[env.dev]
+name = "revisionden-api-dev"
+routes = [{ pattern = "api-dev.revisionden.com", custom_domain = true }]
+
+[env.dev.vars]
+ENVIRONMENT = "development"
+API_ORIGIN = "https://api-dev.revisionden.com"
+WEB_ORIGIN = "https://dev.revisionden.com"
+PASSKEY_RP_ID = "dev.revisionden.com"
+
+[env.dev.triggers]
+crons = ["*/15 * * * *"]
+
+[[env.dev.r2_buckets]]
+binding = "UPLOADS"
+bucket_name = "revisionden-uploads-dev"
+
+[[env.dev.ratelimits]]
+name = "AUTH_RATE_LIMITER"
+namespace_id = "1001"
+simple = { limit = 30, period = 60 }
+
+[[env.dev.ratelimits]]
+name = "AI_RATE_LIMITER"
+namespace_id = "1002"
+simple = { limit = 20, period = 60 }
+
+# ---------------------------------------------------------------------------------------------
+[env.staging]
+name = "revisionden-api-staging"
+routes = [{ pattern = "api-staging.revisionden.com", custom_domain = true }]
+
+[env.staging.vars]
+ENVIRONMENT = "staging"
+API_ORIGIN = "https://api-staging.revisionden.com"
+WEB_ORIGIN = "https://staging.revisionden.com"
+PASSKEY_RP_ID = "staging.revisionden.com"
+
+[env.staging.triggers]
+crons = ["*/15 * * * *"]
+
+[[env.staging.r2_buckets]]
+binding = "UPLOADS"
+bucket_name = "revisionden-uploads-staging"
+
+[[env.staging.ratelimits]]
+name = "AUTH_RATE_LIMITER"
+namespace_id = "2001"
+simple = { limit = 30, period = 60 }
+
+[[env.staging.ratelimits]]
+name = "AI_RATE_LIMITER"
+namespace_id = "2002"
+simple = { limit = 20, period = 60 }
+
+# ---------------------------------------------------------------------------------------------
+[env.production]
+name = "revisionden-api"
+routes = [{ pattern = "api.revisionden.com", custom_domain = true }]
+
+[env.production.vars]
+ENVIRONMENT = "production"
+API_ORIGIN = "https://api.revisionden.com"
+WEB_ORIGIN = "https://revisionden.com"
+PASSKEY_RP_ID = "revisionden.com"
+
+[env.production.triggers]
+crons = ["*/15 * * * *"]
+
+[[env.production.r2_buckets]]
+binding = "UPLOADS"
+bucket_name = "revisionden-uploads-production"
+
+[[env.production.ratelimits]]
+name = "AUTH_RATE_LIMITER"
+namespace_id = "3001"
+simple = { limit = 30, period = 60 }
+
+[[env.production.ratelimits]]
+name = "AI_RATE_LIMITER"
+namespace_id = "3002"
+simple = { limit = 20, period = 60 }

@@ -1,0 +1,51 @@
+# Maths engine
+
+Exact maths checking with SymPy (no AI), served by FastAPI on Google Cloud Run.
+
+## Endpoints
+
+| Method and path       | Body                                                          | Returns                                                    |
+| --------------------- | ------------------------------------------------------------- | ---------------------------------------------------------- |
+| `GET /health`         |                                                               | `{"status": "ok"}`                                         |
+| `POST /equivalent`    | `{"a": "2(x+3)", "b": "2x+6"}`                                | `{"equivalent": true}`                                     |
+| `POST /solutions`     | `{"expression": "x^2 = 4", "answers": ["2", "-2"]}`           | `{"correct": true}`                                        |
+| `POST /check-working` | `{"lines": ["2x + 3 = 7", "2x = 4", "x = 2"], "expected": …}` | `{"first_wrong_line": null, "final_answer_correct": true}` |
+
+`/check-working` takes up to 50 ordered lines. `first_wrong_line` is the 0-based index of the
+first line that does not follow from the line before (`null` when every step is right).
+`expected` is optional:
+
+- `{"solutions": ["1/3", "-2"]}` for equations: the last line must be `x = …` (several roots
+  joined by `or` or commas) with exactly these values.
+- `{"expression": "(x+2)(x+3)", "form": "factorised"}` for expressions; `form` is optional and
+  can be `factorised` or `expanded`.
+
+`final_answer_correct` is `null` when no `expected` answer is given. Unreadable or unsafe input
+returns 400.
+
+How steps are compared: expressions must be identical; equations in one unknown must have the
+same solutions (so losing a root, as in `x^2 = 9` to `x = 3`, is caught); equations in several
+letters (rearranging a formula) must be constant multiples of each other.
+
+## Input safety
+
+Input is untrusted. Only digits, single letters, `sqrt sin cos tan log ln exp pi`, `+ - * / ^ ( )`,
+`.` and spaces are allowed, at most 200 characters per expression. Python builtins are switched
+off during parsing, scientific-notation literals and powers inside exponents are refused, and
+numeric exponents are capped at 50, so input like `9^9^9^9` cannot hang the service. Implicit
+multiplication (`3x`, `(x+1)(x+2)`) and `^` for powers are understood.
+
+## Content checks
+
+`python -m app.content_check` reads `{"checks": [...]}` on stdin and writes results to stdout.
+`pnpm content:validate` uses it to verify every maths answer in `content/`.
+
+## Run and test
+
+```bash
+cd services/maths
+pip install -r requirements-dev.txt
+python -m pytest -q          # includes the 90% line and branch coverage gate
+uvicorn app.main:app --reload
+./smoke-test.sh              # builds the Docker image and checks /health and /check-working
+```
