@@ -167,19 +167,19 @@ Content is built alongside: weakest subjects first during M2, the rest by M4.
 
 ## 12. Document map
 
-| Document                               | What it covers                                       |
-| -------------------------------------- | ---------------------------------------------------- |
-| [`BACKLOG.md`](BACKLOG.md)             | Every task, with the tests to write first            |
-| [`WORKSTREAMS.md`](WORKSTREAMS.md)     | Which session owns what, and status                  |
-| [`PRODUCT_RULES.md`](PRODUCT_RULES.md) | Agreed rules (levels, streaks, focus, effort scores) |
-| [`ARCHITECTURE.md`](ARCHITECTURE.md)   | Services, layout, flows, data model                  |
-| [`TESTING.md`](TESTING.md)             | Red/green TDD and all test layers                    |
-| [`BRANCHING.md`](BRANCHING.md)         | Branches, environments, versions                     |
-| [`CONTENT_PLAN.md`](CONTENT_PLAN.md)   | Subjects, sources, how items are built and checked   |
-| [`AI.md`](AI.md)                       | Model routing, guardrails, evaluations               |
-| [`ENVIRONMENTS.md`](ENVIRONMENTS.md)   | Accounts, domains, secrets, set-up steps             |
-| [`PRIVACY.md`](PRIVACY.md)             | Data minimisation and safety                         |
-| [`decisions/`](decisions/)             | Architecture decision records                        |
+| Document                                                  | What it covers                                         |
+| --------------------------------------------------------- | ------------------------------------------------------ |
+| [`BACKLOG.md`](BACKLOG.md)                                | Every task, with the tests to write first              |
+| [`WORKSTREAMS.md`](WORKSTREAMS.md)                        | Which session owns what, and status                    |
+| [`PRODUCT_RULES.md`](PRODUCT_RULES.md)                    | Agreed rules (levels, streaks, focus, effort scores)   |
+| [`ARCHITECTURE.md`](ARCHITECTURE.md)                      | Services, layout, flows, data model                    |
+| [`TESTING.md`](TESTING.md)                                | Red/green TDD and all test layers                      |
+| [`BRANCHING.md`](BRANCHING.md)                            | Branches, environments, versions                       |
+| [`CONTENT_PLAN.md`](CONTENT_PLAN.md)                      | Subjects, sources, how items are built and checked     |
+| [`AI.md`](AI.md)                                          | Model routing, guardrails, evaluations                 |
+| [`ENVIRONMENTS.md`](ENVIRONMENTS.md)                      | Accounts, domains, secrets, set-up steps               |
+| [`PRIVACY.md`](PRIVACY.md)                                | Data minimisation and safety                           |
+| [`../project_memory/`](../project_memory/project_soul.md) | Project memory (SSOT): facts, decisions, misadventures |
 
 ## 13. Open questions
 
