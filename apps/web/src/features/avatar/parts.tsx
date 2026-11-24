@@ -129,7 +129,11 @@ const EYES: Record<string, Draw> = {
   'eyes-focused': () =>
     pair((x) => (
       <>
-        <path d={`M${x - 4} ${x < 60 ? 44 : 46} L${x + 4} ${x < 60 ? 46 : 44}`} stroke={INK} strokeWidth={2} />
+        <path
+          d={`M${x - 4} ${x < 60 ? 44 : 46} L${x + 4} ${x < 60 ? 46 : 44}`}
+          stroke={INK}
+          strokeWidth={2}
+        />
         <circle cx={x} cy={50} r={2.5} fill={INK} />
       </>
     )),
@@ -137,7 +141,11 @@ const EYES: Record<string, Draw> = {
     pair((x) => (
       <>
         <circle cx={x} cy={50} r={3} fill={INK} />
-        <path d={`M${x - 3} 46 l-2 -2 M${x} 45.5 v-2.5 M${x + 3} 46 l2 -2`} stroke={INK} strokeWidth={1.2} />
+        <path
+          d={`M${x - 3} 46 l-2 -2 M${x} 45.5 v-2.5 M${x + 3} 46 l2 -2`}
+          stroke={INK}
+          strokeWidth={1.2}
+        />
       </>
     )),
   'eyes-side': () =>
@@ -177,7 +185,9 @@ const MOUTHS: Record<string, Draw> = {
   'mouth-teeth': () => (
     <rect x={53} y={60} width={14} height={6} rx={2} fill={WHITE} stroke={INK} strokeWidth={1.5} />
   ),
-  'mouth-whistle': () => <circle cx={62} cy={63} r={2.5} fill="none" stroke={INK} strokeWidth={2} />,
+  'mouth-whistle': () => (
+    <circle cx={62} cy={63} r={2.5} fill="none" stroke={INK} strokeWidth={2} />
+  ),
   'mouth-braces': () => (
     <>
       <path d="M52 60 H68 Q60 72 52 60 Z" fill={INK} />
@@ -195,7 +205,10 @@ const FACIAL_HAIR: Record<string, Draw> = {
   moustache: ({ hair }) => <path d="M52 59 Q60 54 68 59 Q60 57 52 59 Z" fill={hair} />,
   goatee: ({ hair }) => <polygon points="55,67 65,67 63,75 57,75" fill={hair} />,
   'full-beard': ({ hair }) => (
-    <path d="M40 56 L42 64 L50 76 H70 L78 64 L80 56 L74 66 H46 Z M52 59 Q60 54 68 59 Q60 57 52 59 Z" fill={hair} />
+    <path
+      d="M40 56 L42 64 L50 76 H70 L78 64 L80 56 L74 66 H46 Z M52 59 Q60 54 68 59 Q60 57 52 59 Z"
+      fill={hair}
+    />
   ),
 };
 
@@ -258,14 +271,19 @@ export const HAIR_STYLES: Record<string, Hair> = {
   bald: { front: nothing },
   spiky: {
     front: ({ hair }) => (
-      <polygon points="38,42 40,30 44,32 46,18 52,28 58,14 62,27 70,16 72,29 78,22 80,34 82,42 76,36 44,36" fill={hair} />
+      <polygon
+        points="38,42 40,30 44,32 46,18 52,28 58,14 62,27 70,16 72,29 78,22 80,34 82,42 76,36 44,36"
+        fill={hair}
+      />
     ),
   },
   mohawk: {
     front: ({ hair }) => <polygon points="54,34 52,22 56,10 64,10 68,22 66,34" fill={hair} />,
   },
   'side-part': {
-    front: ({ hair }) => <polygon points="38,46 40,32 50,22 74,24 82,36 82,44 70,32 56,36 44,38" fill={hair} />,
+    front: ({ hair }) => (
+      <polygon points="38,46 40,32 50,22 74,24 82,36 82,44 70,32 56,36 44,38" fill={hair} />
+    ),
   },
   quiff: {
     front: ({ hair }) => (
@@ -387,7 +405,15 @@ const TOPS: Record<string, Draw> = {
       {topBase(top)}
       <path d="M50 84 Q60 90 70 84" fill="none" stroke={WHITE} strokeWidth={3} />
       <rect x={84} y={98} width={10} height={8} rx={1} fill={GOLD} transform="rotate(14 89 102)" />
-      <text x={89} y={105} fontSize={7} fontWeight={900} textAnchor="middle" fill={INK} transform="rotate(14 89 102)">
+      <text
+        x={89}
+        y={105}
+        fontSize={7}
+        fontWeight={900}
+        textAnchor="middle"
+        fill={INK}
+        transform="rotate(14 89 102)"
+      >
         C
       </text>
     </>
@@ -407,14 +433,33 @@ const EYEWEAR: Record<string, Draw> = {
     lensPair((x) => <circle cx={x} cy={50} r={6} fill="none" stroke={INK} strokeWidth={2} />),
   'square-glasses': () =>
     lensPair((x) => (
-      <rect x={x - 6} y={45} width={12} height={10} rx={1.5} fill="none" stroke={INK} strokeWidth={2} />
+      <rect
+        x={x - 6}
+        y={45}
+        width={12}
+        height={10}
+        rx={1.5}
+        fill="none"
+        stroke={INK}
+        strokeWidth={2}
+      />
     )),
   sunglasses: () =>
     lensPair((x) => <rect x={x - 6.5} y={45} width={13} height={9} rx={4} fill={INK} />),
   'sport-goggles': () => (
     <>
       <path d="M40 50 H80" stroke="#FF7A2F" strokeWidth={4} />
-      <rect x={43} y={44} width={34} height={12} rx={6} fill="#2F6FDE" opacity={0.8} stroke={INK} strokeWidth={1.5} />
+      <rect
+        x={43}
+        y={44}
+        width={34}
+        height={12}
+        rx={6}
+        fill="#2F6FDE"
+        opacity={0.8}
+        stroke={INK}
+        strokeWidth={1.5}
+      />
     </>
   ),
   'pixel-shades': () => (
@@ -422,7 +467,12 @@ const EYEWEAR: Record<string, Draw> = {
   ),
   'heart-glasses': () =>
     lensPair((x) => (
-      <path d={`M${x} 56 L${x - 6} 49 A3.2 3.2 0 0 1 ${x} 45.5 A3.2 3.2 0 0 1 ${x + 6} 49 Z`} fill="#F062A8" stroke={INK} strokeWidth={1} />
+      <path
+        d={`M${x} 56 L${x - 6} 49 A3.2 3.2 0 0 1 ${x} 45.5 A3.2 3.2 0 0 1 ${x + 6} 49 Z`}
+        fill="#F062A8"
+        stroke={INK}
+        strokeWidth={1}
+      />
     )),
   'night-vision': () => (
     <>
@@ -513,7 +563,10 @@ const HEADWEAR: Record<string, Draw> = {
   ),
   'dino-hood': () => (
     <>
-      <path d="M34 66 V36 Q34 14 60 14 Q86 14 86 36 V66 L80 66 V38 Q80 24 60 24 Q40 24 40 38 V66 Z" fill="#4CAF50" />
+      <path
+        d="M34 66 V36 Q34 14 60 14 Q86 14 86 36 V66 L80 66 V38 Q80 24 60 24 Q40 24 40 38 V66 Z"
+        fill="#4CAF50"
+      />
       {[44, 54, 64, 74].map((x) => (
         <polygon key={x} points={`${x},16 ${x + 5},6 ${x + 10},16`} fill="#FFC83D" />
       ))}
@@ -546,7 +599,10 @@ const HELD: Record<string, Draw> = {
   ),
   controller: () => (
     <>
-      <path d="M82 98 Q82 90 90 90 H106 Q114 90 114 98 L116 108 Q116 114 110 112 L104 106 H92 L86 112 Q80 114 80 108 Z" fill="#2B2B3A" />
+      <path
+        d="M82 98 Q82 90 90 90 H106 Q114 90 114 98 L116 108 Q116 114 110 112 L104 106 H92 L86 112 Q80 114 80 108 Z"
+        fill="#2B2B3A"
+      />
       <path d="M89 96 V102 M86 99 H92" stroke={WHITE} strokeWidth={2} />
       <circle cx={105} cy={97} r={1.8} fill="#FF7A2F" />
       <circle cx={109} cy={101} r={1.8} fill="#0B8457" />
@@ -555,7 +611,12 @@ const HELD: Record<string, Draw> = {
   pickaxe: () => (
     <>
       <rect x={96} y={78} width={5} height={40} fill="#8E5B2E" transform="rotate(-25 98 98)" />
-      <path d="M82 84 Q98 72 116 82 L112 86 Q98 80 86 88 Z" fill="#8A8A99" stroke={INK} strokeWidth={1} />
+      <path
+        d="M82 84 Q98 72 116 82 L112 86 Q98 80 86 88 Z"
+        fill="#8A8A99"
+        stroke={INK}
+        strokeWidth={1}
+      />
     </>
   ),
   clapperboard: () => (
@@ -582,21 +643,34 @@ const HELD: Record<string, Draw> = {
   ),
   drumsticks: () => (
     <>
-      <path d="M84 116 L108 82 M92 118 L114 88" stroke="#C99A5B" strokeWidth={3.5} strokeLinecap="round" />
+      <path
+        d="M84 116 L108 82 M92 118 L114 88"
+        stroke="#C99A5B"
+        strokeWidth={3.5}
+        strokeLinecap="round"
+      />
       <circle cx={108} cy={82} r={2.5} fill="#E8C46A" />
       <circle cx={114} cy={88} r={2.5} fill="#E8C46A" />
     </>
   ),
   trophy: () => (
     <>
-      <path d="M86 86 H110 V94 Q110 106 98 106 Q86 106 86 94 Z" fill={GOLD} stroke={GOLD_EDGE} strokeWidth={1.5} />
+      <path
+        d="M86 86 H110 V94 Q110 106 98 106 Q86 106 86 94 Z"
+        fill={GOLD}
+        stroke={GOLD_EDGE}
+        strokeWidth={1.5}
+      />
       <rect x={95} y={106} width={6} height={6} fill={GOLD_EDGE} />
       <rect x={88} y={112} width={20} height={5} fill={GOLD} />
     </>
   ),
   'dino-buddy': () => (
     <>
-      <path d="M84 116 Q82 100 94 98 L100 86 Q106 82 110 88 L106 98 Q114 104 112 116 Z" fill="#4CAF50" />
+      <path
+        d="M84 116 Q82 100 94 98 L100 86 Q106 82 110 88 L106 98 Q114 104 112 116 Z"
+        fill="#4CAF50"
+      />
       <circle cx={105} cy={88} r={1.5} fill={INK} />
       <polygon points="88,100 90,94 94,99" fill="#FFC83D" />
     </>
@@ -622,7 +696,8 @@ const grid = (step: number, draw: (x: number, y: number) => ReactNode) => {
 
 const PATTERNS: Record<string, Draw> = {
   none: nothing,
-  dots: () => grid(15, (x, y) => <circle key={`${x}-${y}`} cx={x} cy={y} r={2.5} fill={PATTERN_FILL} />),
+  dots: () =>
+    grid(15, (x, y) => <circle key={`${x}-${y}`} cx={x} cy={y} r={2.5} fill={PATTERN_FILL} />),
   stripes: () =>
     [0, 20, 40, 60, 80, 100].map((y) => (
       <rect key={y} x={0} y={y} width={120} height={8} fill={PATTERN_FILL} />
@@ -694,7 +769,10 @@ const SCENES: Record<string, Draw> = {
   ),
   'pixel-hills': () => (
     <>
-      <path d="M0 120 V92 H12 V84 H24 V76 H36 V88 H48 V96 H72 V86 H84 V74 H96 V82 H108 V90 H120 V120 Z" fill="#4CAF50" />
+      <path
+        d="M0 120 V92 H12 V84 H24 V76 H36 V88 H48 V96 H72 V86 H84 V74 H96 V82 H108 V90 H120 V120 Z"
+        fill="#4CAF50"
+      />
       <path d="M14 20 H34 V26 H40 V32 H8 V26 H14 Z" fill={WHITE} opacity={0.9} />
     </>
   ),
@@ -721,7 +799,15 @@ const SCENES: Record<string, Draw> = {
         [10, 90, 20],
         [108, 96, 160],
       ].map(([x, y, r]) => (
-        <ellipse key={`${x}-${y}`} cx={x} cy={y} rx={26} ry={10} fill="#2E7D32" transform={`rotate(${r} ${x} ${y})`} />
+        <ellipse
+          key={`${x}-${y}`}
+          cx={x}
+          cy={y}
+          rx={26}
+          ry={10}
+          fill="#2E7D32"
+          transform={`rotate(${r} ${x} ${y})`}
+        />
       ))}
       <rect x={0} y={108} width={120} height={12} fill="#33691E" />
     </>

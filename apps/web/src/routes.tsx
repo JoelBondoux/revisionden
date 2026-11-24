@@ -1,5 +1,7 @@
 import type { RouteObject } from 'react-router-dom';
 import { AppLayout, FocusLayout } from './layout/AppLayout';
+import { LinkPage } from './features/onboarding/LinkPage';
+import { OnboardingPage } from './features/onboarding/OnboardingPage';
 import { ComingSoon } from './pages/ComingSoon';
 import { FamilyPage } from './pages/FamilyPage';
 import { InstallHelpPage } from './pages/InstallHelpPage';
@@ -16,6 +18,8 @@ export const routes: RouteObject[] = [
     children: [
       { path: '/', element: <WelcomePage /> },
       { path: '/family', element: <FamilyPage /> },
+      { path: '/onboarding', element: <OnboardingPage /> },
+      { path: '/link', element: <LinkPage /> },
       { path: '/lesson/:lessonId', element: <LessonPage /> },
       { path: '/lesson/:lessonId/complete', element: <LessonCompletePage /> },
       { path: '*', element: <NotFoundPage /> },

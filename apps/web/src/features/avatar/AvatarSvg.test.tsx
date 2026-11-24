@@ -1,10 +1,5 @@
 import { render } from '@testing-library/react';
-import {
-  AVATAR_CATALOGUE,
-  AVATAR_LAYERS,
-  DEFAULT_AVATAR,
-  encodeAvatar,
-} from '@revisionden/core';
+import { AVATAR_CATALOGUE, AVATAR_LAYERS, DEFAULT_AVATAR, encodeAvatar } from '@revisionden/core';
 import { AvatarSvg } from './AvatarSvg';
 import { hasArt } from './parts';
 
@@ -14,7 +9,9 @@ const index = (layer: keyof typeof AVATAR_CATALOGUE, id: string) =>
 describe('AvatarSvg', () => {
   it('has original art for every item in the catalogue', () => {
     const missing = AVATAR_LAYERS.flatMap((layer) =>
-      AVATAR_CATALOGUE[layer].filter((item) => !hasArt(layer, item.id)).map((i) => `${layer}:${i.id}`),
+      AVATAR_CATALOGUE[layer]
+        .filter((item) => !hasArt(layer, item.id))
+        .map((i) => `${layer}:${i.id}`),
     );
     expect(missing).toEqual([]);
   });

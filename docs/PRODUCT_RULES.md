@@ -109,7 +109,37 @@ easy early wins (starting test, 25 right in a row).
 - Avatar code: version `1` then two base-36 characters per layer, in this order: skin, eyes,
   mouth, facial hair, hair style, hair colour, top, top colour, eyewear, headwear, held item,
   background colour, pattern, scene. Locked items are rejected unless their reward is earned.
+- Catalogue (approved builder): skin 10, eyes 10, mouth 10, facial hair 5, hair style 16, hair
+  colour 14, top 12, top colour 12, eyewear 9, headwear 12, held item 13, background colour 12,
+  pattern 8, scene 9. 15 locked items: Alien and Robot skin, neon green and hot pink hair, gold
+  hoodie, captain shirt, night vision, laser visor, crown, dino hood, trophy, dino buddy, pixel
+  sword, jungle and space scenes. 14 rewards unlock them: one item each, except the 100-day
+  streak, which unlocks two (crown and Alien skin).
+- Shuffle picks only items the student can wear. Avatars are drawn as SVG shapes, never photos.
 - Implemented: `packages/core/src/nickname.ts`, `packages/core/src/avatar.ts`.
+
+## Onboarding
+
+- The parent adds each child: nickname, avatar, school year, subjects, and an exam board and tier
+  per subject. Years 9 to 11 take GCSE, Years 12 and 13 take A-Level. Changing level clears the
+  chosen subjects.
+- Subjects: GCSE English Language, English Literature, Maths, Statistics, Combined Science,
+  Biology, Chemistry, Physics, French, Spanish, German, History, Drama, Film Studies. A-Level
+  Maths, Further Maths, Computer Science, Physics.
+- Boards offered: GCSE Film Studies WJEC Eduqas only; GCSE French, Spanish, German AQA, Pearson
+  Edexcel, WJEC Eduqas; A-Level Maths and Further Maths AQA, Pearson Edexcel, OCR; A-Level
+  Computer Science AQA, OCR, WJEC Eduqas; everything else AQA, Pearson Edexcel, OCR, WJEC Eduqas.
+  "Not sure" is always offered. A subject with one board has it picked already.
+- Tiered GCSEs (Foundation, Higher or Not sure): Maths, Statistics, Combined Science, Biology,
+  Chemistry, Physics, French, Spanish, German. Other subjects have no tier.
+- Each board or tier left as "Not sure" counts as one thing to check later.
+- Final exams are in the summer: Years 11 and 13 at the end of the current school year (which
+  starts in September), Years 10 and 12 a year later, Year 9 two years later.
+- A new child has earned no rewards, so their avatar cannot use locked items.
+- The school report step (upload, same school as a sibling, skip) stores nothing yet: report
+  reading arrives in Stage 5.
+- Implemented: `packages/core/src/onboarding.ts`, `apps/api/src/routes/onboarding.ts`,
+  `apps/web/src/features/onboarding/`.
 
 ## Flashcards and mastery
 

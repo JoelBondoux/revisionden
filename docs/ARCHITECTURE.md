@@ -122,6 +122,9 @@ All bodies are validated with the Zod schemas in `packages/core`. Errors always 
 | `GET, POST /v1/students/:id/enrolments`                           | parent         | List (`{ enrolments }`) or add/replace    |
 | `DELETE /v1/students/:id/enrolments/:subjectId`                   | parent         | Remove an enrolment                       |
 | `POST /v1/students/:id/link-tokens`                               | parent         | One-time token and QR link (10 minutes)   |
+| `GET, PUT /v1/students/:id/avatar`                                | parent         | Avatar code and earned rewards; save code |
+| `POST /v1/onboarding/children`                                    | parent         | Add a child with subjects, boards, tiers  |
+| `GET /v1/onboarding/family`                                       | parent         | Children with exams, checks left, devices |
 | `GET /v1/students/:id/devices`, `DELETE .../devices/:id`          | parent         | List or unlink devices                    |
 | `POST /v1/device/link`                                            | new device     | Redeem token + family id; passkey options |
 | `POST /v1/device/link/verify`                                     | new device     | Register passkey; starts student session  |

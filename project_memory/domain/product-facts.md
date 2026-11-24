@@ -21,10 +21,15 @@ Tags: #product #rules #limits #defaults
 
 ## Subjects
 
-- GCSE: English Language, English Literature, Maths, Biology, Chemistry, Physics, Drama, Film
-  Studies, French, History. A-Level: Maths, Further Maths, Computer Science, Physics.
+- GCSE: English Language, English Literature, Maths, Statistics, Combined Science, Biology,
+  Chemistry, Physics, French, Spanish, German, History, Drama, Film Studies. A-Level: Maths,
+  Further Maths, Computer Science, Physics. Implemented in `packages/core/src/onboarding.ts`.
 - Exam boards and tiers are picked in the app; "not sure" is allowed and reminded later.
-- GCSE Film Studies is offered only by WJEC Eduqas.
+- GCSE Film Studies is offered only by WJEC Eduqas. Boards per subject and tiered GCSEs are listed
+  in `docs/PRODUCT_RULES.md` "Onboarding".
+- Onboarding takes Years 9 to 13 (9–11 GCSE, 12–13 A-Level). Exams are worked out from the year:
+  Year 11 and 13 sit them next summer (2027 in school year 2026/27), Year 10 and 12 a year later,
+  Year 9 two years later.
 
 ## Learning rules
 
@@ -42,7 +47,8 @@ Tags: #product #rules #limits #defaults
   `packages/core/src/streaks.ts` and `xp.ts`.
 - XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, working 20,
   long answer 30; part marks earn part.
-- 14 rewards, each unlocking one avatar item: `packages/core/src/rewards.ts`.
+- 14 rewards unlock the 15 locked avatar items: one each, except the 100-day streak, which unlocks
+  two (crown and Alien skin). `packages/core/src/rewards.ts`, `avatar.ts`.
 - Effort scores (e.g. CBI: Commitment, Behaviour and Inspiration, 1–4, 4 best) shape habits, never
   the predicted grade.
 
@@ -55,6 +61,9 @@ Tags: #product #rules #limits #defaults
 - Works offline for the app shell; API calls are never cached. iPad users get an "Add to Home
   Screen" help page (`/install`), because iPadOS has no install prompt.
 - Until the real API and sign-in land, the web app runs on an MSW mock API with made-up data.
+- Parent onboarding is at `/onboarding` (family list, add a child, school report, link a device,
+  finish); the student scans the QR code to `/link` and sets up a passkey.
+- Avatars are drawn as layered SVG from the avatar code (`apps/web/src/features/avatar`).
 
 ## Content
 

@@ -44,7 +44,10 @@ export function AvatarBuilder({
     <div className="avatar-builder">
       <div className="avatar-builder__preview">
         <AvatarSvg code={code} label={`${nickname || 'Your'}'s avatar`} size={160} />
-        <Button variant="secondary" onClick={() => onChange(encodeAvatar(shuffleAvatar(random, earnedRewardIds)))}>
+        <Button
+          variant="secondary"
+          onClick={() => onChange(encodeAvatar(shuffleAvatar(random, earnedRewardIds)))}
+        >
           Shuffle
         </Button>
       </div>
@@ -89,7 +92,11 @@ export function AvatarBuilder({
                     onClick={() => open && pick(layer, index)}
                   >
                     {swatch ? (
-                      <span className="avatar-option__swatch" style={{ backgroundColor: swatch }} aria-hidden="true" />
+                      <span
+                        className="avatar-option__swatch"
+                        style={{ backgroundColor: swatch }}
+                        aria-hidden="true"
+                      />
                     ) : (
                       <AvatarSvg code={encodeAvatar({ ...choices, [layer]: index })} size={56} />
                     )}

@@ -24,4 +24,11 @@ describe('Family screen', () => {
     renderRoute('/family', { studentId: null });
     expect(await screen.findByRole('button', { name: 'Try again' })).toBeInTheDocument();
   });
+
+  it('lets a parent add or manage children', async () => {
+    renderRoute('/family', { studentId: null });
+    expect(
+      await screen.findByRole('link', { name: 'Parents: add or manage children' }),
+    ).toHaveAttribute('href', '/onboarding');
+  });
 });

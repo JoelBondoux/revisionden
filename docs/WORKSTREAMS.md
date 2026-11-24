@@ -49,3 +49,9 @@ and reports which line first goes wrong; Cloud Run container ready to deploy.
 | G   | Deploy pipelines for dev, staging and production; Playwright end-to-end | A, B (domain bought) |
 | H   | Reminders (web push) and AI gateway with per-child cost cap             | B                    |
 | V   | Verification pipeline, review queue, quarantine and audit reports       | C, D                 |
+
+### Wave 2 progress
+
+| ID  | Workstream                                   | Owns these paths                                                                                              | Branch                        | Status    | PR      |
+| --- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ----------------------------- | --------- | ------- |
+| E   | Family onboarding and avatar builder screens | `apps/web/src/features/onboarding/**`, `apps/web/src/features/avatar/**`, `apps/api/src/routes/onboarding.ts` | `feature/e-onboarding-avatar` | in review | PR_LINK |

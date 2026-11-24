@@ -7,6 +7,10 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Onboarding (E1, E2): parents add each child with a nickname, avatar, school year (9 to 13), subjects, and an exam board and tier per subject ("Not sure" counted to check later); exams worked out from the year; school report step; finish screen with each child's starting test (`/onboarding`).
+- Avatar builder (E3): layered SVG avatar with Face, Hair, Top, Eyewear, Headwear, Holding and Background tabs, Shuffle, and locked items that show their reward; avatar catalogue matches the approved design.
+- Device linking screens (E4): one-time QR code (10 minutes, single use) with "Do this later", and the student `/link` page that sets up a passkey.
+- API: `POST /v1/onboarding/children`, `GET /v1/onboarding/family`, `GET` and `PUT /v1/students/:id/avatar` (locked items need their reward).
 - Verification protocol (`docs/VERIFICATION.md`): official citations on every item, multi-step checks, human approval, quarantine and audit reports; new workstream V and task D6.
 
 - Web: design tokens from the mockups (Nunito, violet, 3D edges) with a 4.5:1 contrast check (A1).

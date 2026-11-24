@@ -63,7 +63,10 @@ export function AvatarSvg({ code, label, size = 120 }: AvatarSvgProps) {
       aria-hidden={label ? undefined : true}
       className="avatar-svg"
     >
-      {layer('backgroundColour', <rect width={120} height={120} fill={BACKGROUND[id('backgroundColour')]} />)}
+      {layer(
+        'backgroundColour',
+        <rect width={120} height={120} fill={BACKGROUND[id('backgroundColour')]} />,
+      )}
       {layer('pattern')}
       {layer('scene')}
       {layer(

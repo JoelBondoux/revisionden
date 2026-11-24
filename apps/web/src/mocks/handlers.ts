@@ -1,11 +1,13 @@
 import { http, HttpResponse, type RequestHandler } from 'msw';
 import { answerRequestSchema } from '../api/schemas';
+import { onboardingHandlers } from '../features/onboarding/mocks';
 import { answerKeys, family, learningPath, lessons, XP_PER_CORRECT } from './data';
 
 const normalise = (value: string) => value.trim().toLowerCase().replace(/\s+/g, '');
 
 /** Mock API used in development and tests until the real API (workstream B) is ready. */
 export const handlers: RequestHandler[] = [
+  ...onboardingHandlers,
   http.get('*/api/family', () => HttpResponse.json(family)),
 
   http.get('*/api/students/:studentId/path', ({ params }) => {
