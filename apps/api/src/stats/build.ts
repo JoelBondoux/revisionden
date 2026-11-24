@@ -114,7 +114,8 @@ export async function buildDashboard(
     return day >= week.start && day < week.end;
   });
   const isQuiet = (at: number) => isQuietTime(localClock(new Date(at), tz), data.settings);
-  const activeDays = new Set(data.answers.map((a) => localDate(new Date(a.at), tz)));
+  // Any practice counts as study: answers and flashcard reviews (which make no attempt).
+  const activeDays = new Set(data.activity.map((a) => localDate(new Date(a.at), tz)));
 
   const trendSince = now.getTime() - TREND_DAYS * DAY_MS;
   const subjects = await Promise.all(
