@@ -28,9 +28,11 @@ Status values: `queued`, `in progress`, `in review` (PR open into `dev`), `merge
 
 ## Next (queued)
 
-| ID  | Workstream                                                                                                    | Depends on                                                  |
-| --- | ------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| F2  | Map and cards-due API endpoints for the topic map (`/students/:id/map`, `/cards/due`), shared schemas in core | A2, F                                                       |
-| G   | Deploy pipelines for dev, staging and production; Playwright end-to-end and accessibility                     | Scoped Cloudflare token and Neon key from the product owner |
-| S2  | Run the full verification pipeline on the pilot and present it for human approval                             | V                                                           |
-| K   | Statistics dashboards for student and parent (spec in `PRODUCT_RULES.md`, mockups 19 and 20)                  | F (merged), H (merged); reward panel uses R5 when it lands  |
+| ID  | Workstream                                                                                                    | Depends on                                                                |
+| --- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| F2  | Map and cards-due API endpoints for the topic map (`/students/:id/map`, `/cards/due`), shared schemas in core | A2, F                                                                     |
+| G   | Deploy pipelines for dev, staging and production; Playwright end-to-end and accessibility                     | Scoped Cloudflare token and Neon key from the product owner               |
+| S2  | Run the full verification pipeline on the pilot and present it for human approval                             | V                                                                         |
+| L   | Policies (plain English + full legal text), About page with plain-English changelog, feedback and bug reports | Placeholders for operator details; legal review before any public release |
+| U   | Sound effects with mute (Web Audio, original)                                                                 | Touches lesson, flashcard, streak and reward screens with one-line calls  |
+| K   | Statistics dashboards for student and parent (spec in `PRODUCT_RULES.md`, mockups 19 and 20)                  | F (merged), H (merged); reward panel uses R5 when it lands                |

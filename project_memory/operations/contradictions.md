@@ -17,6 +17,12 @@
 - [ ] **Parent reward notification.** `docs/REWARDS.md` says the parent gets a notification when a
       parent-set target is met; not built (reminders are workstream H). The student celebration is
       built.
+- [ ] `docs/PRIVACY.md` principle 5 says data stays in the UK or EU, but `docs/AI.md` sends
+      answers, essays and homework photos to Anthropic, OpenAI and Gemini, which may process them
+      in the US. The answers carry no identifying details, but they are still personal data, and a
+      photo of homework may show a name. Not settled: needs a product owner decision (EU/UK
+      processing where offered, or say so in the privacy notice with the UK transfer safeguard).
+      Workstream L must describe whatever is true in `docs/legal/processors.md`.
 
 - [ ] Request schemas for the H routes (push subscriptions, reminder settings, short-answer
       marking) live in `apps/api/src/notifications/routes.ts` and `apps/api/src/ai/routes.ts`, but
@@ -26,18 +32,18 @@
       `body.prompt`, `body.marks`, `body.mark_scheme` (or `body.mark_points`) and
       `answer.accepted` (`apps/api/src/ai/items.ts`), matching `content/schemas/item.schema.json`;
       the content loader (F or D) must store items in that shape. Not settled: no loader exists yet.
-- [ ] The approved avatar builder has 15 locked items but there are 14 rewards and the old rule was
-      "each reward unlocks one item". Settled for now by letting the 100-day streak unlock two items
-      (crown and Alien skin) in `packages/core/src/avatar.ts`; `docs/PRODUCT_RULES.md` and
-      `product-facts.md` updated. Needs the product owner to confirm or name a 15th reward.
-      Superseded by workstream R (five-year rewards catalogue, about 650 unlocks), which gives every
-      locked item its own reward.
 - [ ] **Item type names.** `content/schemas/item.schema.json` uses `worked_maths` and
       `extended_answer`; `packages/core/src/schemas.ts` (`ItemTypeSchema`, XP table) uses `working` and
       `long_answer`. F maps them (`contentTypeToItemType`) instead of renaming either, because both
       sit in other workstreams' lanes. Pick one set of names.
 
 ## Resolved
+
+- [x] 15 locked avatar items and 14 rewards: settled by workstream R. In the five-year catalogue a
+      reward can give several items (the finisher sets give three), so the 100-day streak giving
+      the crown and the Alien skin is consistent and keeps rewards already earned intact. Every
+      locked avatar item now names the one reward that unlocks it, checked by the catalogue
+      validator (`packages/core/src/catalogue/validate.ts`).
 
 - [x] Extended-answer verification: settled by the lead session in `docs/VERIFICATION.md` section 3.
       Extended answers replace the blind answer with blind marking of exemplar answers, and always need

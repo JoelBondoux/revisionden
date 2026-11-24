@@ -201,6 +201,26 @@ Spec: `PRODUCT_RULES.md`, statistics dashboards. Mockups 19 and 20.
 - [ ] K6 Accessibility: table view for every chart, keyboard focus on bars, reduced motion.
 - Tests: each number rule red/green with fixed clocks (gap rule, cap, part marks, unmarked answers left out, week boundaries in UK time, term and year buckets); access control (a parent cannot read another family's child); empty states; component tests for toggles, tooltips and table views.
 
+### L. Policies, About page and feedback (`docs/legal/**`, `apps/web/src/features/legal/**`, `apps/web/src/features/about/**`, `apps/web/src/features/feedback/**`, feedback API routes and table)
+
+Spec: `docs/LEGAL.md` and `PRODUCT_RULES.md` (About page, policies and feedback). Mockup 21.
+
+- [ ] L1 Write every policy in `docs/LEGAL.md` (plain English first, then full text), checked statement by statement against the code and docs; list every mismatch found.
+- [ ] L2 Policy pages at `/legal/<name>` built from the same Markdown, with placeholders filled from build variables; reachable signed out; print style.
+- [ ] L3 About page: version, environment, build date, commit, "What's new" from `CHANGELOG.md`, policy links, open-source licences.
+- [ ] L4 Feedback: form, privacy checks, device details toggle, parent view, operator triage at `/admin/feedback`, status updates, rate limit, retention.
+- [ ] L5 Policy acceptance in onboarding (version stored) and the "policy changed" prompt.
+- Tests: placeholder filling and the missing-value message; What's new parsing (versions without the subsection hidden); feedback refuses emails, phone numbers and nicknames; a parent sees only their family's feedback; only the operator role reaches triage; rate limit; acceptance version stored.
+
+### U. Sound effects (`apps/web/src/features/sound/**`)
+
+Spec: `PRODUCT_RULES.md` (Sound effects).
+
+- [ ] U1 Sound bank synthesised with Web Audio (one function per event), `SoundProvider` and `useSound().play(event)`.
+- [ ] U2 Settings: header quick mute, Settings section (on/off, volume, tap sounds), saved per device; iOS ambient audio session; no sound before first tap or in the background.
+- [ ] U3 Wire `play()` into lessons, flashcards, streaks, rewards, plan and celebrations (one-line calls, listed in the PR), with the Test mode rule.
+- Tests: mute and volume respected; tap sounds off by default; Test mode plays no correct/wrong before submit; nothing plays before first interaction; a fake AudioContext records calls.
+
 ## Stage 2 and later
 
 Broken down into tasks when Stage 1 ships, following the same format. Headline order:
