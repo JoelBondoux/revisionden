@@ -1,0 +1,13 @@
+{
+  "id": "chatcmpl-fixture-0001",
+  "object": "chat.completion",
+  "model": "checker-model",
+  "choices": [
+    {
+      "index": 0,
+      "message": { "role": "assistant", "content": "{\"agree\":true}", "refusal": null },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": { "prompt_tokens": 300, "completion_tokens": 20, "total_tokens": 320 }
+}
