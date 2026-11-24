@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Content: official citations with verbatim quotes, pages and SHA-256 for all 110 pilot GCSE Maths entries (1MA1 Issue 2 and DfE subject content); quadratic formula flashcard fixed; sourcing record in `docs/sourcing/` (S).
 - Verification protocol (`docs/VERIFICATION.md`): official citations on every item, multi-step checks, human approval, quarantine and audit reports; new workstream V and task D6.
 
 - Web: design tokens from the mockups (Nunito, violet, 3D edges) with a 4.5:1 contrast check (A1).

@@ -67,8 +67,13 @@ Tags: #product #rules #limits #defaults
   record (`docs/VERIFICATION.md`); verified content needs quotes and every pipeline check, and is
   immutable (edits create a new version). `pnpm content:validate --audit <id>` prints the audit trail.
 - Diagrams are SVG drawn by code from verified data; no AI-generated or raster teaching images.
-- Pilot: GCSE Maths Higher, Pearson Edexcel 1MA1 (content references N1 to S6). All pilot
-  content is still `draft`: citations have no quotes yet.
+- Pilot: GCSE Maths Higher, Pearson Edexcel 1MA1 (content references N1 to S6). Every pilot
+  citation has a verbatim quote from the 1MA1 specification Issue 2 (or, for the quadratic
+  formula, the DfE subject content DFE-00233-2013), with page and SHA-256. All pilot content is
+  still `draft`: blind answer, adversarial review and human approval are still to do.
+- Citation `supports` names only what the quote itself backs. A specification quote backs the
+  question being in scope (`question`, `topic`); maths answers are backed by the maths engine,
+  not by a citation. Sourcing record: `docs/sourcing/gcse-maths-1ma1-pilot.md`.
 
 ## Maths engine
 

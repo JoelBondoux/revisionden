@@ -49,3 +49,16 @@ and reports which line first goes wrong; Cloud Run container ready to deploy.
 | G   | Deploy pipelines for dev, staging and production; Playwright end-to-end | A, B (domain bought) |
 | H   | Reminders (web push) and AI gateway with per-child cost cap             | B                    |
 | V   | Verification pipeline, review queue, quarantine and audit reports       | C, D                 |
+
+## Content sourcing
+
+| ID  | Workstream                              | Owns these paths                                                                            | Branch                     | Status    | PR  |
+| --- | --------------------------------------- | ------------------------------------------------------------------------------------------- | -------------------------- | --------- | --- |
+| S   | Official citations for pilot GCSE Maths | `content/items/**`, `content/topic-trees/**`, `content/mark-schemes/**`, `docs/sourcing/**` | `feature/s-pilot-sourcing` | in review | —   |
+
+### S: Official citations for pilot GCSE Maths
+
+Read the Pearson Edexcel 1MA1 specification (Issue 2) and the DfE GCSE mathematics subject
+content; fill every pilot citation with a verbatim quote, page, retrieval date and SHA-256;
+check every answer and wrong option independently. Leaves status `draft`: the remaining pipeline
+steps belong to V and the product owner.
