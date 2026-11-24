@@ -1,5 +1,6 @@
 # Cloudflare Worker for the RevisionDen API.
-# No real IDs or secrets here: secrets are set with `wrangler secret put <NAME> --env <env>`
+# No real IDs or secrets here: secrets (including AI_GATEWAY_URL, which holds the account id)
+# are set with `wrangler secret put <NAME> --env <env>`
 # and listed in docs/ENVIRONMENTS.md. Locally, put them in apps/api/.dev.vars (git-ignored).
 name = "revisionden-api-dev"
 main = "src/index.ts"
@@ -12,7 +13,6 @@ ENVIRONMENT = "development"
 API_ORIGIN = "http://localhost:8787"
 WEB_ORIGIN = "http://localhost:5173"
 PASSKEY_RP_ID = "localhost"
-AI_GATEWAY_URL = "https://gateway.ai.cloudflare.com/v1/ACCOUNT_ID_PLACEHOLDER/revisionden-dev"
 
 [[r2_buckets]]
 binding = "UPLOADS"
@@ -38,7 +38,6 @@ ENVIRONMENT = "development"
 API_ORIGIN = "https://api-dev.revisionden.com"
 WEB_ORIGIN = "https://dev.revisionden.com"
 PASSKEY_RP_ID = "dev.revisionden.com"
-AI_GATEWAY_URL = "https://gateway.ai.cloudflare.com/v1/ACCOUNT_ID_PLACEHOLDER/revisionden-dev"
 
 [[env.dev.r2_buckets]]
 binding = "UPLOADS"
@@ -64,7 +63,6 @@ ENVIRONMENT = "staging"
 API_ORIGIN = "https://api-staging.revisionden.com"
 WEB_ORIGIN = "https://staging.revisionden.com"
 PASSKEY_RP_ID = "staging.revisionden.com"
-AI_GATEWAY_URL = "https://gateway.ai.cloudflare.com/v1/ACCOUNT_ID_PLACEHOLDER/revisionden-staging"
 
 [[env.staging.r2_buckets]]
 binding = "UPLOADS"
@@ -90,7 +88,6 @@ ENVIRONMENT = "production"
 API_ORIGIN = "https://api.revisionden.com"
 WEB_ORIGIN = "https://revisionden.com"
 PASSKEY_RP_ID = "revisionden.com"
-AI_GATEWAY_URL = "https://gateway.ai.cloudflare.com/v1/ACCOUNT_ID_PLACEHOLDER/revisionden-production"
 
 [[env.production.r2_buckets]]
 binding = "UPLOADS"

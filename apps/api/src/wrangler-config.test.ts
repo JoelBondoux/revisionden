@@ -21,13 +21,7 @@ describe('wrangler config', () => {
     (name) => {
       const env = config.env[name]!;
       expect(env).toBeDefined();
-      for (const key of [
-        'ENVIRONMENT',
-        'API_ORIGIN',
-        'WEB_ORIGIN',
-        'PASSKEY_RP_ID',
-        'AI_GATEWAY_URL',
-      ]) {
+      for (const key of ['ENVIRONMENT', 'API_ORIGIN', 'WEB_ORIGIN', 'PASSKEY_RP_ID']) {
         expect(env.vars[key], `${name}.${key}`).toBeTruthy();
       }
       expect(env.r2_buckets.map((b) => b.binding)).toContain('UPLOADS');
@@ -47,6 +41,8 @@ describe('wrangler config', () => {
       'MICROSOFT_CLIENT_SECRET',
       'GOOGLE_CLIENT_ID',
       'MICROSOFT_CLIENT_ID',
+      // Contains the Cloudflare account id, so it is a secret too.
+      'AI_GATEWAY_URL',
     ]) {
       expect(text).not.toMatch(new RegExp(`^\\s*${secret}\\s*=`, 'm'));
     }
