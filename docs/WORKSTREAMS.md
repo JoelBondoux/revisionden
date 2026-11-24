@@ -7,12 +7,12 @@ Status values: `queued`, `in progress`, `in review` (PR open into `dev`), `merge
 
 ## Wave 1: Stage 1 foundations (running in parallel)
 
-| ID  | Workstream                           | Owns these paths                                        | Branch                      | Status    | PR         |
-| --- | ------------------------------------ | ------------------------------------------------------- | --------------------------- | --------- | ---------- |
-| A   | Web foundations and design system    | `apps/web/**`                                           | `feature/a-web-foundations` | in review | PR pending |
-| B   | API, database and sign-in            | `apps/api/**`, `packages/db/**`                         | `feature/b-api-db-auth`     | queued    |            |
-| C   | Core domain rules and shared schemas | `packages/core/**`                                      | `feature/c-core-rules`      | queued    |            |
-| D   | Content format and maths engine      | `content/**`, `services/maths/**`, `scripts/content/**` | `feature/d-content-maths`   | queued    |            |
+| ID  | Workstream                           | Owns these paths                                        | Branch                      | Status    | PR                                                      |
+| --- | ------------------------------------ | ------------------------------------------------------- | --------------------------- | --------- | ------------------------------------------------------- |
+| A   | Web foundations and design system    | `apps/web/**`                                           | `feature/a-web-foundations` | in review | [#4](https://github.com/JoelBondoux/revisionden/pull/4) |
+| B   | API, database and sign-in            | `apps/api/**`, `packages/db/**`                         | `feature/b-api-db-auth`     | queued    |                                                         |
+| C   | Core domain rules and shared schemas | `packages/core/**`                                      | `feature/c-core-rules`      | queued    |                                                         |
+| D   | Content format and maths engine      | `content/**`, `services/maths/**`, `scripts/content/**` | `feature/d-content-maths`   | queued    |                                                         |
 
 ### A: Web foundations and design system
 
