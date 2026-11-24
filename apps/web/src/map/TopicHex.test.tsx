@@ -1,0 +1,81 @@
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
+import type { Topic } from '../api/schemas';
+import { ChallengeHex, TopicHex } from './TopicHex';
+
+function renderHex(topic: Topic, onLocked = vi.fn()) {
+  render(
+    <MemoryRouter>
+      <TopicHex topic={topic} onLocked={onLocked} />
+    </MemoryRouter>,
+  );
+  return onLocked;
+}
+
+const base = { id: 't1', title: 'Surds', lessonId: 'surds' };
+
+describe('TopicHex', () => {
+  it('shows a mastered topic in gold with a tick', () => {
+    renderHex({ ...base, status: 'mastered', mastery: 100 });
+    const hex = screen.getByRole('link', { name: 'Surds, mastered' });
+    expect(hex).toHaveClass('hex--mastered');
+    expect(hex).toHaveAttribute('href', '/lesson/surds');
+  });
+
+  it('shows an in-progress topic with its mastery level and percentage', () => {
+    renderHex({ ...base, status: 'in-progress', mastery: 45 });
+    const hex = screen.getByRole('link', { name: 'Surds, 45% mastered' });
+    expect(hex).toHaveTextContent('45%');
+    expect(hex.querySelector<HTMLElement>('.hex__fill')!.style.height).toBe('45%');
+  });
+
+  it('shows a weak spot with its warning label', () => {
+    renderHex({ ...base, status: 'weak', mastery: 38 });
+    const hex = screen.getByRole('link', { name: 'Surds, weak spot, 38% mastered' });
+    expect(hex).toHaveClass('hex--weak');
+    expect(hex).toHaveTextContent('WEAK · 38%');
+  });
+
+  it('shows a locked topic as a button that explains how to unlock it', async () => {
+    const onLocked = renderHex({ ...base, status: 'locked', mastery: 0 });
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+    await userEvent.click(screen.getByRole('button', { name: 'Surds, locked' }));
+    expect(onLocked).toHaveBeenCalledWith('Finish the topics before Surds to unlock it.');
+  });
+});
+
+describe('ChallengeHex', () => {
+  it('shows a locked unit challenge with its unlock target', async () => {
+    const onLocked = vi.fn();
+    render(
+      <MemoryRouter>
+        <ChallengeHex
+          unitTitle="Number"
+          challenge={{ lessonId: 'number-challenge', unlockAtPercent: 80, unlocked: false }}
+          onLocked={onLocked}
+        />
+      </MemoryRouter>,
+    );
+    const hex = screen.getByRole('button', { name: 'Number challenge, unlocks at 80% mastered' });
+    expect(hex).toHaveTextContent('Unlocks at 80%');
+    await userEvent.click(hex);
+    expect(onLocked).toHaveBeenCalledWith('Reach 80% mastery in Number to unlock the challenge.');
+  });
+
+  it('links to an unlocked unit challenge', () => {
+    render(
+      <MemoryRouter>
+        <ChallengeHex
+          unitTitle="Number"
+          challenge={{ lessonId: 'number-challenge', unlockAtPercent: 80, unlocked: true }}
+          onLocked={() => {}}
+        />
+      </MemoryRouter>,
+    );
+    expect(screen.getByRole('link', { name: 'Number challenge' })).toHaveAttribute(
+      'href',
+      '/lesson/number-challenge',
+    );
+  });
+});

@@ -22,7 +22,11 @@ export const tokens = {
   '--color-danger-edge': '#8E1B1B',
   '--color-gold': '#FFC83D',
   '--color-streak': '#FF9F1C',
-  '--color-locked': '#C9C9D4',
+  '--color-locked': '#C4C4CF',
+  '--color-locked-soft': '#E5E5EC',
+  '--color-mastery-fill': '#D9CFFF',
+  '--color-weak': '#C2541A',
+  '--color-challenge': '#2B2B3A',
   '--color-pip': '#FF7A2F',
   '--color-pip-side': '#E35F17',
   '--color-pip-ears': '#3A2622',
@@ -133,6 +137,26 @@ export const textPairs: TextPair[] = [
     name: 'body text on streak orange',
     foreground: tokens['--color-text'],
     background: tokens['--color-streak'],
+  },
+  {
+    name: 'mastery text on mastery fill',
+    foreground: tokens['--color-primary-edge'],
+    background: tokens['--color-mastery-fill'],
+  },
+  {
+    name: 'secondary text on locked hex',
+    foreground: tokens['--color-text-secondary'],
+    background: tokens['--color-locked-soft'],
+  },
+  {
+    name: 'gold on challenge hex',
+    foreground: tokens['--color-gold'],
+    background: tokens['--color-challenge'],
+  },
+  {
+    name: 'white on challenge hex',
+    foreground: tokens['--color-text-on-primary'],
+    background: tokens['--color-challenge'],
   },
 ];
 

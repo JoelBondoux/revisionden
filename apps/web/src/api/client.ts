@@ -1,14 +1,16 @@
 import type { ZodType } from 'zod';
 import {
   answerResultSchema,
+  cardsDueSchema,
   familySchema,
-  learningPathSchema,
   lessonSchema,
+  topicMapSchema,
   type AnswerRequest,
   type AnswerResult,
+  type CardsDue,
   type Family,
-  type LearningPath,
   type Lesson,
+  type TopicMap,
 } from './schemas';
 
 export type ApiErrorKind = 'network' | 'http' | 'schema';
@@ -26,7 +28,8 @@ export class ApiError extends Error {
 
 export interface ApiClient {
   getFamily(): Promise<Family>;
-  getPath(studentId: string): Promise<LearningPath>;
+  getTopicMap(studentId: string): Promise<TopicMap>;
+  getCardsDue(studentId: string): Promise<CardsDue>;
   getLesson(lessonId: string): Promise<Lesson>;
   submitAnswer(lessonId: string, answer: AnswerRequest): Promise<AnswerResult>;
 }
@@ -65,8 +68,10 @@ export function createApiClient({
 
   return {
     getFamily: () => request('family', familySchema),
-    getPath: (studentId) =>
-      request(`students/${encodeURIComponent(studentId)}/path`, learningPathSchema),
+    getTopicMap: (studentId) =>
+      request(`students/${encodeURIComponent(studentId)}/map`, topicMapSchema),
+    getCardsDue: (studentId) =>
+      request(`students/${encodeURIComponent(studentId)}/cards/due`, cardsDueSchema),
     getLesson: (lessonId) => request(`lessons/${encodeURIComponent(lessonId)}`, lessonSchema),
     submitAnswer: (lessonId, answer) =>
       request(`lessons/${encodeURIComponent(lessonId)}/answers`, answerResultSchema, {
