@@ -221,6 +221,48 @@ async function rewardsView(
   };
 }
 
+/**
+ * Rewards progress without saving anything: the overview and parent-set rewards as they stand,
+ * counting rewards earned but not yet seen as earned. For read-only screens (the stats
+ * dashboards, workstream K), so the student's own Rewards page still gets its "New!" rewards.
+ */
+export async function rewardsProgress(
+  db: Database,
+  student: { id: string; yearGroup: number },
+  now: Date,
+): Promise<Pick<StudentRewardsResponse, 'overview' | 'parentRewards'>> {
+  const { stats, seasonProgress, totalRewardXp } = await loadStats(
+    db,
+    student.id,
+    student.yearGroup,
+    now,
+  );
+  const stored = await db
+    .select({ rewardId: rewards.rewardId })
+    .from(rewards)
+    .where(eq(rewards.studentId, student.id));
+  const before = stored.map((r) => r.rewardId);
+  const fresh = evaluateRewards(stats, before, REWARDS, { now, seasonProgress });
+  const earnedIds = [...before, ...fresh.map((r) => r.id)];
+  const overview = rewardsOverview({
+    stats,
+    earnedIds,
+    totalRewardXp,
+    yearGroup: student.yearGroup,
+    now,
+    seasonProgress,
+  });
+  const parentRows = await db
+    .select()
+    .from(parentRewards)
+    .where(eq(parentRewards.studentId, student.id))
+    .orderBy(asc(parentRewards.createdAt), asc(parentRewards.id));
+  return {
+    overview,
+    parentRewards: parentRows.map((row) => toParentReward(row, stats, earnedIds, localDate(now))),
+  };
+}
+
 /** Student routes under /v1/student/rewards (the session check runs before these). */
 export function studentRewardRoutes({ db, clock }: Deps) {
   const app = new Hono<AppEnv>();
@@ -248,7 +290,8 @@ export function parentRewardRoutes({ db, clock }: Deps) {
   /** Parent-set rewards with progress only (read by the parent dashboard, workstream K). */
   app.get('/:id/parent-rewards', async (c) => {
     const student = await requireFamilyStudent(db, family(c), c.req.param('id'));
-    const { parentRewards: list } = await rewardsView(db, student, clock.now());
+    // Read-only, so a parent looking does not use up the child's "New!" rewards.
+    const { parentRewards: list } = await rewardsProgress(db, student, clock.now());
     return c.json({ parentRewards: list });
   });
 

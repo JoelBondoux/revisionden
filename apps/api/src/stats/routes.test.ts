@@ -9,7 +9,12 @@ import {
   streaks,
   topics,
 } from '@revisionden/db';
-import { ParentDashboardSchema, StudentStatsSchema, topicMastery } from '@revisionden/core';
+import {
+  ParentDashboardSchema,
+  StudentRewardsResponseSchema,
+  StudentStatsSchema,
+  topicMastery,
+} from '@revisionden/core';
 import { createTestContext, jsonRequest, type TestContext } from '../test/helpers';
 
 let ctx: TestContext;
@@ -231,6 +236,16 @@ describe('GET /v1/students/:id/stats and /dashboard (parent)', () => {
       );
     expect((await dashboard()).healthyHabits.quietHourSessions).toBe(1);
     expect((await dashboard()).healthyHabits.restDays).toBe(1);
+    // Flashcard practice on Monday makes it a study day, not a rest day.
+    await ctx.db.insert(flashcards).values({
+      studentId,
+      topicId: 'stats-topic-a',
+      origin: 'own',
+      front: 'Own card front',
+      back: 'Own card back',
+      lastReviewedAt: new Date(Date.parse('2026-11-23T17:00:00Z')),
+    });
+    expect((await dashboard()).healthyHabits.restDays).toBe(0);
     // In a time zone where 09:00 UTC is the evening, it is not quiet time.
     await ctx.db
       .insert(reminderSettings)
@@ -295,5 +310,41 @@ describe('panels from the rewards progression (workstream R)', () => {
     );
     expect(stats.level).toMatchObject({ level: 1 });
     expect(stats.level!.xpForNextLevel).toBeGreaterThan(0);
+  });
+});
+
+describe('reading rewards for the stats pages', () => {
+  it('leaves the child\'s "New!" rewards for their own Rewards page', async () => {
+    ctx = await createTestContext();
+    const { studentId, parent, headers } = await ctx.familyStudent('stats_kid');
+    const item = await seedContent(ctx.db);
+    // 21 daytime days of 30 XP this term: enough to earn level 2.
+    await ctx.db.insert(attempts).values(
+      Array.from({ length: 21 }, (_, i) => ({
+        studentId,
+        itemId: item['stats-topic-a']!,
+        correct: true,
+        score: 1,
+        mode: 'learn',
+        xpEarned: 30,
+        createdAt: new Date(`2026-11-${String(i + 3).padStart(2, '0')}T12:00:00Z`),
+      })),
+    );
+
+    for (let i = 0; i < 2; i++) {
+      const dashboard = await ctx.app.request(`/v1/students/${studentId}/dashboard`, {
+        headers: parent.headers,
+      });
+      expect(dashboard.status).toBe(200);
+      const stats = StudentStatsSchema.parse(
+        await (await ctx.app.request('/v1/student/stats', { headers })).json(),
+      );
+      expect(stats.level).toMatchObject({ level: 2 });
+    }
+
+    const own = StudentRewardsResponseSchema.parse(
+      await (await ctx.app.request('/v1/student/rewards', { headers })).json(),
+    );
+    expect(own.newlyEarned.map((r) => r.id)).toContain('level-2');
   });
 });

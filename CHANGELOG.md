@@ -17,6 +17,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Parent stats dashboard: a day with only flashcard practice no longer counts as a rest day (K).
+- Opening My stats, the parent dashboard or a child's parent-set rewards no longer uses up the "New!" rewards the student should see on their Rewards page (K, via a read-only `rewardsProgress` in R's rewards routes).
 - GCSE Statistics offers only AQA and Pearson Edexcel in onboarding (checked on the board websites).
 - Verification protocol now covers extended answers (blind marking of exemplars plus individual human approval).
 

@@ -231,6 +231,9 @@ Tags: #product #rules #limits #defaults
   the parent marks it given; then kept as history (409). Shown to the student with a "From home"
   badge and a celebration when the target is met. Routes in `apps/api/src/routes/rewards.ts`;
   screens `/rewards` (student, linked from Settings) and `/family/:id/rewards` (parent).
+- Newly earned rewards are saved (and announced as "New!") by `rewardsView`, used by the student's
+  `GET /v1/student/rewards` and the parent's full `GET /v1/students/:id/rewards`. The parent's
+  `GET /v1/students/:id/parent-rewards` and the stats pages use the read-only `rewardsProgress`.
 - New avatar items: chapter finale tops (chapter hoodie, bomber jacket, GCSE finisher jacket,
   sixth-form coat, A-Level finisher jacket), rooftop scene, and the Frost Fest drop (bobble hat,
   paper lantern, frosty night scene). Always appended to a layer so saved avatar codes still work.
@@ -249,9 +252,12 @@ Tags: #product #rules #limits #defaults
   (Term). Daily cap 2 hours (provisional, `DEFAULT_DAILY_CAP_MINUTES`, until wellbeing settings).
 - Subject mastery averages practised topics; change is replayed from marked answers (period start
   for the student, 4 weeks for the parent). Healthy habits are for this week; quiet hours are the
-  reminder quiet hours.
+  reminder quiet hours. A rest day is a finished day with no study at all: answers and flashcard
+  reviews both count as study.
 - Level bar and parent-set rewards come from the rewards progression (same numbers as the Rewards
-  page). Plan, school report effort and predicted/target grade panels show "Not set up yet"
+  page), read with the read-only `rewardsProgress`: it counts earned-but-unseen rewards and saves
+  nothing, so the stats pages and the parent's parent-rewards view never use up the student's
+  "New!" rewards (only the student's own Rewards page saves and announces them). Plan, school report effort and predicted/target grade panels show "Not set up yet"
   (adapters in `apps/api/src/stats/adapters.ts`) until those features land.
 - Routes: `/progress` (My stats), `/parent/stats` (parent); API `GET /v1/student/stats`,
   `GET /v1/students/:id/stats`, `GET /v1/students/:id/dashboard`. Implemented in

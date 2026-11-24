@@ -345,3 +345,25 @@ describe('parent-set rewards', () => {
     }
   });
 });
+
+describe('parent reading rewards', () => {
+  it('leaves the child\'s "New!" rewards for their own Rewards page', async () => {
+    const { studentId, parent, headers } = await t.familyStudent('r_read_kid');
+    const days = Array.from(
+      { length: 21 },
+      (_, i) => `2026-11-${String(i + 3).padStart(2, '0')}T12:00:00Z`,
+    );
+    await answers(studentId, days, 30);
+
+    for (let i = 0; i < 2; i++) {
+      const res = await t.app.request(`/v1/students/${studentId}/parent-rewards`, {
+        headers: parent.headers,
+      });
+      expect(res.status).toBe(200);
+      ParentRewardsResponseSchema.parse(await res.json());
+    }
+
+    const own = await studentRewards(headers);
+    expect(own.newlyEarned.map((r) => r.id)).toContain('level-2');
+  });
+});
