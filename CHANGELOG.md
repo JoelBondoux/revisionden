@@ -5,6 +5,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ## [Unreleased]
 
+## [00.01.002] - 2026-11-24
+
 ## [00.01.001] - 2026-11-24
 
 ### Added
