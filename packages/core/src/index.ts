@@ -15,3 +15,5 @@ export * from './onboarding';
 export * from './onboarding-schemas';
 export * from './learning';
 export * from './learning-schemas';
+export * from './stats';
+export * from './stats-schemas';
