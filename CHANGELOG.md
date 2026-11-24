@@ -16,6 +16,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Verification: the quote checker reports near matches (letters only, or words with small insertions or reordering, with a confidence) for a reviewer to confirm instead of passing them.
 
 - Five-year rewards progression design (`docs/REWARDS.md`) and backlog workstream R.
+- Statistics dashboards spec for student and parent (`docs/PRODUCT_RULES.md`) and backlog workstream K; parent-set rewards detail (`docs/REWARDS.md`).
 
 - Content: official citations with verbatim quotes, pages and SHA-256 for all 110 pilot GCSE Maths entries (1MA1 Issue 2 and DfE subject content); quadratic formula flashcard fixed; sourcing record in `docs/sourcing/` (S).
 - Onboarding (E1, E2): parents add each child with a nickname, avatar, school year (9 to 13), subjects, and an exam board and tier per subject ("Not sure" counted to check later); exams worked out from the year; school report step; finish screen with each child's starting test (`/onboarding`).

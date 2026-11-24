@@ -17,7 +17,8 @@
 - [x] H reminders and AI gateway (#11) merged.
 - [x] V verification pipeline and audit (#12) merged.
 - [ ] V2: blind marking for extended answers; unify item type names and item JSON format.
-- [ ] R: five-year rewards progression (in progress).
+- [ ] R: five-year rewards progression (in progress); parent-set rewards (R5) first.
+- [ ] K: statistics dashboards for student and parent (spec and mockups 19–20 done; build next).
 - [ ] Topic map API endpoints (map, cards due) still to build.
 
 ## Blocked
