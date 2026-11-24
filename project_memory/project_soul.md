@@ -20,12 +20,14 @@ teenagers. It replaces a paid revision subscription and runs almost entirely on 
 
 - Students revise on 5+ days a week; most practice time goes to weak topics.
 - Mock and assessment results move towards target grades.
-- Fewer than 1 in 200 questions reported as wrong.
+- Zero confirmed errors in released content; every item cited and verified (`docs/VERIFICATION.md`).
 - Under £10 a month to run for one family.
 
 ## Principles
 
 - Privacy first: store the minimum; no student real names, photos or school names; no passwords.
+- No mistakes on the education side: every question, answer, diagram and mark is grounded in an
+  official citation where one exists and passes the verification pipeline (`docs/VERIFICATION.md`).
 - Trustworthy answers: facts from official exam board material; maths checked by the engine; AI
   marking always labelled as a guide.
 - Red/green/refactor TDD for all behaviour.

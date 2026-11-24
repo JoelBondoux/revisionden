@@ -109,6 +109,10 @@
   - Tests: correct chain passes; sign slip detected on the right line; unsafe input rejected.
 - [ ] **D5 Container.** Dockerfile builds; container answers `/health`; ready for Cloud Run.
   - Tests: container smoke test in CI.
+- [ ] **D6 Citations and verification records.** Required `citations` (min 1) and `verification`
+      record on every item, topic leaf, mark scheme and diagram, per `VERIFICATION.md`.
+  - Tests: missing citation, quote, location or URL fails; verified item without required checks
+    fails; `other_authoritative`-only item without `needs_human_approval` fails.
 
 ---
 
@@ -146,6 +150,17 @@
 - [ ] H3 Short-answer marking via the small model with recorded-fixture tests.
 
 ---
+
+### V. Verification pipeline and audit (`scripts/verify/`, `apps/api` review routes, `evals/`)
+
+- [ ] V1 Quote checker: fetches the cited source (or private archive copy) and confirms the quote at the stated location.
+- [ ] V2 Blind-answer and adversarial review runners using two different providers; results written to the verification record.
+- [ ] V3 Exact checkers: units, chemical equation balancing, equation-sheet lookups (maths via the engine).
+- [ ] V4 Human review queue (admin screen) with batch sampling rule and approval recording (role, not name).
+- [ ] V5 Quarantine on report; recalculation of affected scores; batch re-check trigger.
+- [ ] V6 `pnpm content:audit` report and parent-portal PDF export.
+- [ ] V7 Double AI marking with criterion citations and disagreement flagging; golden-set evals with the pass bars in `AI.md`.
+- Tests: each checker red/green with known-good and known-bad fixtures; audit report snapshot test.
 
 ## Stage 2 and later
 
