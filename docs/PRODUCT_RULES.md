@@ -321,5 +321,11 @@ Mockups: screens 19 (student) and 20 (parent).
   the whole set. Timed papers play only the timer warning.
 - Sound is never the only signal: every sound has a matching visual. Reduced motion does not mute
   sound; the two settings are separate.
-- Implemented (planned): `apps/web/src/features/sound/**` (`SoundProvider`, `useSound`, the
-  synthesised sound bank and settings), with one-line `play()` calls in the other features.
+- Volume levels (master gain): low 0.12, medium 0.25, high 0.45. Settings key on the device:
+  `revisionden.sound`; if the browser cannot save, the choice still applies until the app closes.
+  The Settings section has a "Play a sample" button. The starting test timer turns orange at
+  1 minute left, alongside the warning sound.
+- Implemented: `apps/web/src/features/sound/**` (`SoundProvider`, `useSound().play(event, { mode })`,
+  `MuteButton`, `SoundSettingsCard`, the synthesised sound bank in `bank.ts`, the Test mode rule in
+  `events.ts`), with one-line `play()` calls in lessons, the starting test and flashcards. Level up,
+  rewards, gifts, plan and timed papers get their calls when those screens are built.

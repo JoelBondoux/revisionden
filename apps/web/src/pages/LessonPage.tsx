@@ -7,6 +7,7 @@ import { useApiResource } from '../api/useApiResource';
 import { Button } from '../components/Button';
 import { CloseIcon } from '../components/icons';
 import { ProgressBar } from '../components/ProgressBar';
+import { useSound } from '../features/sound';
 import type { LessonResults } from './LessonCompletePage';
 
 function AnswerInput({
@@ -78,6 +79,7 @@ function Feedback({ result }: { result: AnswerResult }) {
 function LessonRunner({ lesson }: { lesson: Lesson }) {
   const api = useApi();
   const navigate = useNavigate();
+  const { play } = useSound();
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState('');
   const [result, setResult] = useState<AnswerResult | null>(null);
@@ -94,6 +96,7 @@ function LessonRunner({ lesson }: { lesson: Lesson }) {
     setError(false);
     try {
       const marked = await api.submitAnswer(lesson.id, { itemId: item.id, answer });
+      play(marked.correct ? 'correct' : 'wrong');
       setResult(marked);
       setTotals((t) => ({
         correct: t.correct + (marked.correct ? 1 : 0),

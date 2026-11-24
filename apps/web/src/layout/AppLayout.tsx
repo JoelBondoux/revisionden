@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { useApi } from '../api/ApiContext';
 import { useApiResource } from '../api/useApiResource';
 import { BottomNav } from '../components/BottomNav';
+import { MuteButton } from '../features/sound';
 import { OfflineBanner } from '../pwa/OfflineBanner';
 import { useStudent } from '../session/StudentContext';
 
@@ -27,6 +28,9 @@ export function AppLayout() {
       <OfflineBanner />
       <BottomNav cardsDue={cardsDue} />
       <main id="main" className="app-main" tabIndex={-1}>
+        <header className="sound-header">
+          <MuteButton />
+        </header>
         <Outlet />
       </main>
     </div>

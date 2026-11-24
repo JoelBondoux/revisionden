@@ -280,3 +280,10 @@ Tags: #product #rules #limits #defaults
 - Original Web Audio sounds, no files. Header quick mute and Settings (on/off, volume, tap sounds
   off by default), per device; follows the iOS silent switch where possible. No correct/wrong
   sounds in Test mode before submit. Sound is never the only signal. Workstream U.
+- Defaults: on, medium volume, tap sounds off; saved in `localStorage` key `revisionden.sound`
+  (storage errors are ignored). One AudioContext, made at the first tap or key press; paused when
+  the app is hidden. Test mode: submit and one reveal for the set; timed papers: only the timer
+  warning (once, at 1 minute left). Implemented in `apps/web/src/features/sound/`.
+- Wired so far: lessons (correct, wrong, part marks, daily goal met, lesson complete), starting
+  test (submit, reveal, timer warning) and flashcards (flip, rating). Level up, rewards, gifts and
+  plan sounds exist in the bank but wait for their screens.

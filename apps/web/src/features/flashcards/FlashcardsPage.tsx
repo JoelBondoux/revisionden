@@ -7,6 +7,7 @@ import { Card } from '../../components/Card';
 import { ProgressBar } from '../../components/ProgressBar';
 import { subjectLabel, useLearnApi, type FlashcardRating } from '../learn/learnApi';
 import { DraftBanner } from '../learn/parts';
+import { useSound } from '../sound';
 import './flashcards.css';
 
 const RATINGS: {
@@ -45,6 +46,7 @@ const cardsText = (n: number) => `${n} card${n === 1 ? '' : 's'}`;
 /** Reviews a list of cards one by one, then shows the deck-done summary. */
 function ReviewSession({ cards, onExit }: { cards: Flashcard[]; onExit?: () => void }) {
   const api = useLearnApi();
+  const { play } = useSound();
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -77,6 +79,7 @@ function ReviewSession({ cards, onExit }: { cards: Flashcard[]; onExit?: () => v
     setError(false);
     try {
       const result = await api.reviewFlashcard(card.id, rating);
+      play('cardRated');
       setXp((x) => x + result.xpEarned);
       if (result.comesBackSooner) setSooner((s) => s + 1);
       setIndex((i) => i + 1);
@@ -125,7 +128,7 @@ function ReviewSession({ cards, onExit }: { cards: Flashcard[]; onExit?: () => v
           })}
         </div>
       ) : (
-        <Button block onClick={() => setFlipped(true)}>
+        <Button block onClick={() => (play('cardFlip'), setFlipped(true))}>
           Show answer
         </Button>
       )}
