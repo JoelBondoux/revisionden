@@ -94,8 +94,8 @@ export const ItemTypeSchema = z.enum([
   'multiple_choice',
   'short_answer',
   'numeric',
-  'working',
-  'long_answer',
+  'worked_maths',
+  'extended_answer',
   'flashcard',
 ]);
 export type ItemType = z.infer<typeof ItemTypeSchema>;

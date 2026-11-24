@@ -52,7 +52,8 @@ export function FeedbackPage() {
   const preset = params.get('kind');
   const [kind, setKind] = useState<FeedbackKind | undefined>(isKind(preset) ? preset : undefined);
   const [text, setText] = useState('');
-  const [includeDevice, setIncludeDevice] = useState(true);
+  // High-privacy default for children (Children's Code): off for students, on for parents.
+  const [includeDevice, setIncludeDevice] = useState(sender === 'parent');
   const [error, setError] = useState<string>();
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);

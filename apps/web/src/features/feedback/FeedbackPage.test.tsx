@@ -86,6 +86,17 @@ describe('feedback form', () => {
     expect(api.send).not.toHaveBeenCalled();
   });
 
+  it('starts with device details off for a student, who can turn them on', async () => {
+    const api = fakeApi();
+    show(api, { path: '/feedback?kind=bug', studentId: 'student-1' });
+    const box = screen.getByRole('checkbox', { name: 'Include device details' });
+    expect(box).not.toBeChecked();
+    await userEvent.click(screen.getByRole('button', { name: /send/i }));
+    expect(api.send).toHaveBeenCalledWith('student', { kind: 'bug' });
+    await userEvent.click(box);
+    expect(box).toBeChecked();
+  });
+
   it('tells a student their parent can see it, and sends as the student', async () => {
     const api = fakeApi();
     show(api, { path: '/feedback?kind=other', studentId: 'student-1' });

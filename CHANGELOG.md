@@ -9,6 +9,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 - Coming soon: a stats page for students and a stats dashboard for parents.
 - Coming soon: rewards you set yourself as a parent, like a cinema trip for a 30-day streak.
+- Sound effects: soft, original sounds for right and wrong answers, finishing a lesson, meeting your daily goal, flashcards and the starting test. Mute them from the speaker button at the top, or change the volume and tap sounds in Settings.
 - Coming soon: sound effects, with a mute button.
 - Read our privacy notice, terms and other policies in plain English, at any time, even signed out.
 - New About page shows the app version and what's new.
@@ -21,9 +22,14 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Sound effects (U1–U3): Web Audio sound bank (one synthesised sound per event, no audio files), `SoundProvider` and `useSound().play()`, header quick mute, Settings Sound section (on/off, volume, tap sounds; saved per device), iOS ambient audio session, nothing before the first tap or in the background, Test mode rule; wired into lessons, starting test and flashcards.
+- Five-year rewards progression (R): level curve 1 to 100 with prestige stars, a 369-reward catalogue as data (levels, year chapters, milestone ladders, collections, 2026/27 seasonal drops) with a validator, healthy-limit rules (no late-night or time-based rewards, daily cap), student `/rewards` screen, and parent-set real-world rewards (`/family/:id/rewards`, `parent_rewards` table, migration 0004).
+- New original avatar art: five chapter finale tops, rooftop scene, and the Frost Fest drop (bobble hat, paper lantern, frosty night scene).
+- Verification: blind marking for extended answers: three exemplars (top, middle, low) marked by a second provider without the intended levels must all match; verified extended answers need `blind-marking` and individual human approval, and review batches always include them.
+- Verification: the quote checker reports near matches (letters only, or words with small insertions or reordering, with a confidence) for a reviewer to confirm instead of passing them.
 - Policies (L1): all eleven `docs/legal/` policies as 1.0 drafts, checked against the code; mismatches recorded in contradictions.
 - Policy pages `/legal` and `/legal/:name` from the same Markdown with build-time placeholders and print style (L2); About page with What's new from `CHANGELOG.md` and licences (L3).
-- Feedback (L4): form, personal-details check, device details toggle, family and own lists, operator triage, 5 per 24 hours, 12-month retention; `feedback` table (migration 0004), `OPERATOR_EMAILS`.
+- Feedback (L4): form, personal-details check, device details toggle, family and own lists, operator triage, 5 per 24 hours, 12-month retention; `feedback` table (migration 0005), `OPERATOR_EMAILS`.
 - Policy acceptance in onboarding with a "policy changed" prompt, `policy_acceptances` table and `GET, PUT /v1/policy-acceptances` (L5).
 - Five-year rewards progression design (`docs/REWARDS.md`) and backlog workstream R.
 - Policies index and rules (`docs/LEGAL.md`), About page, feedback and sound effects specs, backlog workstreams L and U.
@@ -83,6 +89,11 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
   spend cap (US$2.50 by default) and a guard that refuses any request with personal data.
 - Short-answer marking (H3): rules against the mark scheme first, Claude Haiku 5.5 only for
   wording variants, citing each mark point; unsure answers say "Check with your teacher".
+
+### Changed
+
+- Item type names are the content schema names everywhere (`worked_maths`, `extended_answer`); the mapping in core is removed.
+- One item JSON format in the `items` table for the content sync and AI marking (`body.marks` added; marking reads `answer.key` and `answer.markScheme`), with a round-trip test.
 
 ## [00.01.002] - 2026-11-24
 

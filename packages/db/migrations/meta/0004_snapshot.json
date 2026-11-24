@@ -1,5 +1,5 @@
 {
-  "id": "7f28e05a-d75c-460c-a906-c901c95e4dd2",
+  "id": "b0c0b3ed-0dcb-425b-95c7-27f11c5ba578",
   "prevId": "5576b576-37b6-464c-bbe1-03252a802969",
   "version": "7",
   "dialect": "postgresql",
@@ -983,171 +983,6 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.feedback": {
-      "name": "feedback",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "family_id": {
-          "name": "family_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "sender_role": {
-          "name": "sender_role",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "student_id": {
-          "name": "student_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "sender_auth_user_id": {
-          "name": "sender_auth_user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "kind": {
-          "name": "kind",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "text": {
-          "name": "text",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "device": {
-          "name": "device",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "status": {
-          "name": "status",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'new'"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "closed_at": {
-          "name": "closed_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {
-        "feedback_family_id_idx": {
-          "name": "feedback_family_id_idx",
-          "columns": [
-            {
-              "expression": "family_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "feedback_created_at_idx": {
-          "name": "feedback_created_at_idx",
-          "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "feedback_family_id_families_id_fk": {
-          "name": "feedback_family_id_families_id_fk",
-          "tableFrom": "feedback",
-          "tableTo": "families",
-          "columnsFrom": ["family_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "feedback_student_id_students_id_fk": {
-          "name": "feedback_student_id_students_id_fk",
-          "tableFrom": "feedback",
-          "tableTo": "students",
-          "columnsFrom": ["student_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "feedback_sender_auth_user_id_auth_users_id_fk": {
-          "name": "feedback_sender_auth_user_id_auth_users_id_fk",
-          "tableFrom": "feedback",
-          "tableTo": "auth_users",
-          "columnsFrom": ["sender_auth_user_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {
-        "feedback_kind_values": {
-          "name": "feedback_kind_values",
-          "value": "\"feedback\".\"kind\" in ('bug', 'idea', 'confusing', 'other')"
-        },
-        "feedback_sender_role_values": {
-          "name": "feedback_sender_role_values",
-          "value": "\"feedback\".\"sender_role\" in ('student', 'parent')"
-        },
-        "feedback_status_values": {
-          "name": "feedback_status_values",
-          "value": "\"feedback\".\"status\" in ('new', 'looking_into_it', 'fixed', 'will_not_fix')"
-        },
-        "feedback_text_length": {
-          "name": "feedback_text_length",
-          "value": "char_length(\"feedback\".\"text\") <= 500"
-        }
-      },
-      "isRLSEnabled": false
-    },
     "public.flashcards": {
       "name": "flashcards",
       "schema": "",
@@ -1618,6 +1453,118 @@
       },
       "isRLSEnabled": false
     },
+    "public.parent_rewards": {
+      "name": "parent_rewards",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "student_id": {
+          "name": "student_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "note": {
+          "name": "note",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "target_kind": {
+          "name": "target_kind",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reward_id": {
+          "name": "reward_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stat": {
+          "name": "stat",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "at_least": {
+          "name": "at_least",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "target_date": {
+          "name": "target_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "given_at": {
+          "name": "given_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "parent_rewards_student_idx": {
+          "name": "parent_rewards_student_idx",
+          "columns": [
+            {
+              "expression": "student_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "parent_rewards_student_id_students_id_fk": {
+          "name": "parent_rewards_student_id_students_id_fk",
+          "tableFrom": "parent_rewards",
+          "tableTo": "students",
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "parent_rewards_target": {
+          "name": "parent_rewards_target",
+          "value": "(\"parent_rewards\".\"target_kind\" = 'reward' and \"parent_rewards\".\"reward_id\" is not null) or (\"parent_rewards\".\"target_kind\" = 'stat' and \"parent_rewards\".\"stat\" is not null and \"parent_rewards\".\"at_least\" >= 1) or (\"parent_rewards\".\"target_kind\" = 'date' and \"parent_rewards\".\"target_date\" is not null)"
+        }
+      },
+      "isRLSEnabled": false
+    },
     "public.parents": {
       "name": "parents",
       "schema": "",
@@ -1822,59 +1769,6 @@
           "columns": ["student_id", "week_start"]
         }
       },
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.policy_acceptances": {
-      "name": "policy_acceptances",
-      "schema": "",
-      "columns": {
-        "auth_user_id": {
-          "name": "auth_user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "policy": {
-          "name": "policy",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "version": {
-          "name": "version",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "accepted_at": {
-          "name": "accepted_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "policy_acceptances_auth_user_id_auth_users_id_fk": {
-          "name": "policy_acceptances_auth_user_id_auth_users_id_fk",
-          "tableFrom": "policy_acceptances",
-          "tableTo": "auth_users",
-          "columnsFrom": ["auth_user_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {
-        "policy_acceptances_auth_user_id_policy_pk": {
-          "name": "policy_acceptances_auth_user_id_policy_pk",
-          "columns": ["auth_user_id", "policy"]
-        }
-      },
-      "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

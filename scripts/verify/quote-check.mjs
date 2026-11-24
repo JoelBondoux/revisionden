@@ -14,7 +14,11 @@ async function pagesOf(source) {
   return extracted.get(source.bytes);
 }
 
-/** { result, url, page, sha256, reason } for one citation. store: see sources.mjs. */
+/**
+ * { result, url, page, sha256, reason, match, confidence } for one citation. result: 'pass'
+ * (exact quote at its location), 'near' (found only by a looser match, so a reviewer must confirm
+ * it) or 'fail'. store: see sources.mjs.
+ */
 export async function checkCitation(citation, store) {
   const base = { url: citation.url, page: null, sha256: null };
   if (!citation.quote) return { ...base, result: 'fail', reason: 'the citation has no quote yet' };
@@ -34,17 +38,20 @@ export async function checkCitation(citation, store) {
     ...base,
     sha256: source.sha256,
     page: found.page,
-    result: found.found && found.locationConfirmed ? 'pass' : 'fail',
+    result:
+      !found.found || !found.locationConfirmed ? 'fail' : found.match === 'exact' ? 'pass' : 'near',
     reason: found.reason,
-    spacingIgnored: found.spacingIgnored,
+    match: found.match,
+    confidence: found.confidence,
   };
 }
 
 function describe(results) {
   return results
     .map((r, i) => {
-      const where = `${r.page ? `found on page ${r.page}` : 'found'}${r.spacingIgnored ? ' (PDF spacing ignored)' : ''}`;
-      const what = r.result === 'pass' ? where : r.reason;
+      const where = r.page ? `found on page ${r.page}` : 'found';
+      const near = `near match (${r.match}, confidence ${r.confidence?.toFixed(2)}): a reviewer must confirm it`;
+      const what = { pass: where, near: `${where}; ${near}`, fail: r.reason }[r.result];
       return `citation ${i + 1}: ${what}${r.sha256 ? ` (sha256 ${r.sha256})` : ''}`;
     })
     .join('; ');
@@ -59,6 +66,7 @@ export async function quoteCheckContent(content, { store, now = () => new Date()
   for (const { kind, file, data, citations } of entriesOf(content, { only })) {
     const checked = [];
     for (const c of citations) checked.push(await checkCitation(c, store));
+    // A near match never passes on its own: a reviewer confirms it (docs/VERIFICATION.md).
     const result = checked.length && checked.every((r) => r.result === 'pass') ? 'pass' : 'fail';
     results.push({
       id: data.id,

@@ -1,0 +1,98 @@
+.rewards__level {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.rewards__stars {
+  color: var(--color-gold);
+  font-size: var(--font-size-lg);
+  margin: 0;
+}
+
+.rewards__new {
+  background: var(--color-primary-soft);
+  border-radius: 12px;
+  padding: var(--space-3) var(--space-4);
+  font-weight: var(--font-weight-extrabold);
+}
+
+.rewards__new p {
+  margin: 0;
+}
+
+.rewards__track {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: var(--space-1);
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+}
+
+.rewards__step {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--color-locked-soft);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.rewards__step--earned {
+  background: var(--color-gold);
+  color: var(--color-text);
+}
+
+.rewards__list {
+  display: grid;
+  gap: var(--space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rewards__list > li {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.rewards__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.rewards-form label {
+  display: grid;
+  gap: var(--space-1);
+  font-weight: var(--font-weight-extrabold);
+}
+
+.rewards-form input,
+.rewards-form select {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  min-height: var(--tap-target);
+  padding: 0 var(--space-4);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+
+.rewards-form input:focus-visible,
+.rewards-form select:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.rewards-form__error {
+  color: var(--color-danger);
+  font-weight: var(--font-weight-bold);
+}

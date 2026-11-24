@@ -5,6 +5,7 @@ import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { CloseIcon } from '../../components/icons';
 import { ProgressBar } from '../../components/ProgressBar';
+import { markSound, useSound } from '../sound';
 import { useLearnApi } from './learnApi';
 import { DailyGoal, DraftBanner, ItemInput, toAnswer, type Answer, type Draft } from './parts';
 
@@ -49,6 +50,7 @@ export function LessonPlayer({
   doneHref = '/learn',
 }: LessonPlayerProps) {
   const api = useLearnApi();
+  const { play } = useSound();
   const [index, setIndex] = useState(0);
   const [draft, setDraft] = useState<Draft>(null);
   const [result, setResult] = useState<LearnAttemptResponse | null>(null);
@@ -93,6 +95,9 @@ export function LessonPlayer({
         timeMs: Math.max(0, Date.now() - shownAt.current),
         mode: 'learn',
       });
+      play(markSound(marked));
+      if (marked.progress.goalMet && progress && !progress.goalMet)
+        play('streakDay', { delay: 0.4 });
       setResult(marked);
       setProgress(marked.progress);
       setTotals((t) => ({
@@ -114,6 +119,7 @@ export function LessonPlayer({
 
   function advance() {
     if (isLast) {
+      play('celebration');
       setDone(true);
       return;
     }
@@ -148,7 +154,7 @@ export function LessonPlayer({
     );
   }
 
-  const unmarked = item.type === 'long_answer';
+  const unmarked = item.type === 'extended_answer';
   return (
     <form className="lesson" onSubmit={check}>
       <div className="lesson__top">

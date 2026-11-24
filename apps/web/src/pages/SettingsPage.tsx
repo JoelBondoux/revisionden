@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Card } from '../components/Card';
 import { DeviceReminders } from '../features/notifications';
+import { SoundSettingsCard } from '../features/sound';
 
 export function SettingsPage() {
   return (
@@ -14,8 +15,12 @@ export function SettingsPage() {
           <li>
             <Link to="/family">Switch profile</Link>
           </li>
+          <li>
+            <Link to="/rewards">My rewards</Link>
+          </li>
         </ul>
       </Card>
+      <SoundSettingsCard />
       <DeviceReminders />
       <Card title="Help and information">
         <ul className="link-list">

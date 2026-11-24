@@ -183,3 +183,27 @@ test('writing to verified content is refused, because verified versions are immu
     /verified version 1 is immutable/,
   );
 });
+
+test('a near match is reported for a reviewer to confirm, and does not pass the entry', async () => {
+  const page = new TextEncoder().encode(
+    '<p>A23 either a term-to-term or a position-toterm rule</p>',
+  );
+  const store = fakeStore({ 'https://www.gov.uk/near': { bytes: page, contentType: 'text/html' } });
+  const c = quoted({
+    url: 'https://www.gov.uk/near',
+    location: 'A23',
+    quote: 'a position-to-term rule',
+  });
+  const one = await checkCitation(c, store);
+  assert.equal(one.result, 'near');
+  assert.equal(one.match, 'letters');
+  const [entry] = await quoteCheckContent(
+    { items: [{ file: 'f', data: draftItem('fixture-near', [c]) }] },
+    { store, now: () => AT },
+  );
+  assert.equal(entry.result, 'fail');
+  assert.match(
+    entry.check.notes,
+    /near match \(letters, confidence 1\.00\): a reviewer must confirm it/,
+  );
+});

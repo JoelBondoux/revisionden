@@ -181,12 +181,12 @@
 
 ### R. Five-year rewards progression (`packages/core`, catalogue data, avatar layers)
 
-- [ ] R1 Level curve (1 to 100 plus prestige) from XP, tuned so daily practice reaches about level 20 a year.
-- [ ] R2 Catalogue as data with rarity, source (level, chapter, milestone, collection, season) and unlock target; validator for unique ids and reachable targets.
-- [ ] R3 Year chapters (Years 9 to 13) and milestone ladders from `REWARDS.md`, with carry-over from GCSE to A-Level and mid-way joiners.
-- [ ] R4 Collections and set bonuses; seasonal drops with term windows and later re-release.
-- [ ] R5 Parent-set real-world rewards tied to any target, marked as given by the parent.
-- [ ] R6 First seasonal drop and chapter 2 (Year 10) item art as original SVG layers.
+- [x] R1 Level curve (1 to 100 plus prestige) from XP, tuned so daily practice reaches about level 20 a year.
+- [x] R2 Catalogue as data with rarity, source (level, chapter, milestone, collection, season) and unlock target; validator for unique ids and reachable targets.
+- [x] R3 Year chapters (Years 9 to 13) and milestone ladders from `REWARDS.md`, with carry-over from GCSE to A-Level and mid-way joiners.
+- [x] R4 Collections and set bonuses; seasonal drops with term windows and later re-release.
+- [x] R5 Parent-set real-world rewards tied to any target, marked as given by the parent.
+- [x] R6 First seasonal drop and chapter 2 (Year 10) item art as original SVG layers.
 - Tests: curve properties (monotonic, reachable), each target type unlocks once, no reward for late-night study or time spent, catalogue validator fixtures.
 
 ### K. Statistics dashboards (`packages/core/src/stats.ts`, `apps/api/src/stats/**`, `apps/web/src/features/stats/**`)
@@ -216,9 +216,9 @@ Spec: `docs/LEGAL.md` and `PRODUCT_RULES.md` (About page, policies and feedback)
 
 Spec: `PRODUCT_RULES.md` (Sound effects).
 
-- [ ] U1 Sound bank synthesised with Web Audio (one function per event), `SoundProvider` and `useSound().play(event)`.
-- [ ] U2 Settings: header quick mute, Settings section (on/off, volume, tap sounds), saved per device; iOS ambient audio session; no sound before first tap or in the background.
-- [ ] U3 Wire `play()` into lessons, flashcards, streaks, rewards, plan and celebrations (one-line calls, listed in the PR), with the Test mode rule.
+- [x] U1 Sound bank synthesised with Web Audio (one function per event), `SoundProvider` and `useSound().play(event)`.
+- [x] U2 Settings: header quick mute, Settings section (on/off, volume, tap sounds), saved per device; iOS ambient audio session; no sound before first tap or in the background.
+- [ ] U3 Wire `play()` into lessons, flashcards, streaks, rewards, plan and celebrations (one-line calls, listed in the PR), with the Test mode rule. Done: lessons (correct, wrong, part marks, daily goal met, celebration), starting test (submit, reveal, one-minute timer warning), flashcards (flip, rating). Still to wire when those screens exist: level up, reward unlocked, gifts, plan session dropped, timed papers (`mode: 'timed'`).
 - Tests: mute and volume respected; tap sounds off by default; Test mode plays no correct/wrong before submit; nothing plays before first interaction; a fake AudioContext records calls.
 
 ## Stage 2 and later

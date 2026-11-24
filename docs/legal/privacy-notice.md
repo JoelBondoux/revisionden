@@ -240,7 +240,8 @@ optional text of up to 500 characters. Before it is saved, the text is checked a
 contains an email address, a UK mobile phone number or a nickname from your family.
 
 9.2 You can choose to include device details: the app version, the screen you were on, the
-browser family, the screen size and whether you were online. We never collect your IP address,
+browser family, the screen size and whether you were online. For students this starts switched
+off; for parents it starts switched on and can be turned off. We never collect your IP address,
 location or contacts with feedback.
 
 9.3 Parents can see their family's feedback and its status. Feedback is never sent automatically

@@ -171,7 +171,15 @@ export function reviewRoutes(db: Database, deps: VerificationDeps & { now: () =>
   // ---- Batches ------------------------------------------------------------------------------
 
   app.post('/batches', async (c) => {
-    const input = await readJson(c, CreateBatchSchema);
+    const parsed = await readJson(c, CreateBatchSchema);
+    // Extended answers always need individual human approval (docs/VERIFICATION.md section 3).
+    const input = {
+      ...parsed,
+      items: parsed.items.map((i) => ({
+        ...i,
+        needsHumanApproval: i.needsHumanApproval || i.snapshot.type === 'extended_answer',
+      })),
+    };
     const sampleSeed = randomSeed();
     const sample = new Set(drawSample(input.items, createRng(sampleSeed)));
     const [batch] = await db

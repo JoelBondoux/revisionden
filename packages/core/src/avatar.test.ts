@@ -118,14 +118,14 @@ describe('validateAvatar', () => {
       facialHair: 5,
       hairStyle: 16,
       hairColour: 14,
-      top: 12,
+      top: 17,
       topColour: 12,
       eyewear: 9,
-      headwear: 12,
-      heldItem: 13,
+      headwear: 13,
+      heldItem: 14,
       backgroundColour: 12,
       pattern: 8,
-      scene: 9,
+      scene: 11,
     });
   });
 
@@ -150,8 +150,30 @@ describe('validateAvatar', () => {
         'pixel-sword',
         'jungle',
         'space',
+        // Five-year rewards: chapter finales and the first seasonal drop.
+        'chapter-hoodie',
+        'bomber-jacket',
+        'gcse-finisher-jacket',
+        'sixth-form-coat',
+        'a-level-finisher-jacket',
+        'rooftop',
+        'bobble-hat',
+        'lantern',
+        'frosty-night',
       ].sort(),
     );
+  });
+
+  it('only adds new items at the end of a layer, so saved avatar codes keep their items', () => {
+    expect(
+      AVATAR_CATALOGUE.top
+        .slice(0, 12)
+        .map((i) => i.id)
+        .at(-1),
+    ).toBe('captain-shirt');
+    expect(AVATAR_CATALOGUE.headwear[11]!.id).toBe('dino-hood');
+    expect(AVATAR_CATALOGUE.heldItem[12]!.id).toBe('pixel-sword');
+    expect(AVATAR_CATALOGUE.scene[8]!.id).toBe('space');
   });
 
   it('gives every item in a layer a unique id', () => {

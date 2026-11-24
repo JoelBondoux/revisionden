@@ -116,9 +116,11 @@ function linkErrors(content) {
     claim(data.id, file);
     subjects.add(data.id);
   }
+  const schemeLevels = new Map();
   for (const { file, data } of content.markSchemes) {
     claim(data.id, file);
     markSchemes.add(data.id);
+    if (data.levels) schemeLevels.set(data.id, new Set(data.levels.map((l) => l.level)));
   }
   for (const { file, data } of content.diagrams ?? []) {
     claim(data.id, file);
@@ -142,6 +144,14 @@ function linkErrors(content) {
     else if (!topic.leaf) fail(`topic ${item.topic} must be a leaf topic`);
     if (item.mark_scheme_ref && !markSchemes.has(item.mark_scheme_ref)) {
       fail(`mark scheme ${item.mark_scheme_ref} does not exist`);
+    }
+    if (item.exemplars) {
+      const scheme = schemeLevels.get(item.mark_scheme_ref);
+      for (const e of item.exemplars) {
+        if (scheme && !scheme.has(e.level)) {
+          fail(`exemplar level ${e.level} is not in ${item.mark_scheme_ref}`);
+        }
+      }
     }
     if (item.diagram_ref && !diagrams.has(item.diagram_ref)) {
       fail(`diagram ${item.diagram_ref} does not exist`);
@@ -174,13 +184,9 @@ function citationsOf(kind, data) {
 // Pipeline steps from docs/VERIFICATION.md section 3 that verified content must have passed.
 function requiredChecks(kind, data) {
   if (kind !== 'items') return ['quote-check', 'schema'];
-  const checks = [
-    'grounded-writing',
-    'quote-check',
-    'blind-answer',
-    'adversarial-review',
-    'schema',
-  ];
+  // Extended answers have no single answer: blind marking of three exemplars replaces it.
+  const blind = data.type === 'extended_answer' ? 'blind-marking' : 'blind-answer';
+  const checks = ['grounded-writing', 'quote-check', blind, 'adversarial-review', 'schema'];
   if (MATHS_TYPES.has(data.type)) checks.push('maths-engine');
   // Exact checks (scripts/verify/exact) for the facts an item names in its exact block.
   if (data.exact?.quantity) checks.push('units');
@@ -194,6 +200,12 @@ function verificationErrors(kind, file, data) {
   const fail = (message) => errors.push({ file, id: data.id, message });
   const { verification } = data;
   if (verification.status !== 'verified') return errors;
+  if (kind === 'items' && data.type === 'extended_answer') {
+    const bands = new Set((data.exemplars ?? []).map((e) => e.band));
+    if (!['top', 'middle', 'low'].every((b) => bands.has(b))) {
+      fail('verified extended answers need exemplars for the top, middle and low bands');
+    }
+  }
   if (citationsOf(kind, data).some((c) => !c.quote)) {
     fail('verified content needs a quote in every citation');
   }
@@ -208,6 +220,10 @@ function verificationErrors(kind, file, data) {
   if (data.needs_human_approval === true) {
     if (!passed('human-approval')) {
       fail('needs_human_approval items need a passing human-approval check');
+    }
+  } else if (kind === 'items' && data.type === 'extended_answer') {
+    if (!passed('human-approval')) {
+      fail('extended answers need a passing human-approval check (never batch sampling)');
     }
   } else if (!passed('human-approval') && !passed('batch-sample')) {
     fail('verified content needs a passing human-approval or batch-sample check');

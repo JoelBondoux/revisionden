@@ -118,6 +118,7 @@
                   "grounded-writing",
                   "quote-check",
                   "blind-answer",
+                  "blind-marking",
                   "adversarial-review",
                   "maths-engine",
                   "schema",
@@ -127,7 +128,7 @@
                   "chemical-equation",
                   "equation-sheet"
                 ],
-                "description": "Pipeline step from docs/VERIFICATION.md section 3. batch-sample: released through a batch that passed the sampling rule. units, chemical-equation, equation-sheet: exact checks for the facts in an item's exact block."
+                "description": "Pipeline step from docs/VERIFICATION.md section 3. batch-sample: released through a batch that passed the sampling rule. units, chemical-equation, equation-sheet: exact checks for the facts in an item's exact block. blind-marking: extended answers' replacement for blind-answer."
               },
               "result": {
                 "enum": ["pass", "fail"]

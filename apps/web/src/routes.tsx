@@ -21,6 +21,7 @@ import {
   TopicLessonPage,
 } from './features/learn/pages';
 import { StartingTestPage } from './features/learn/StartingTestPage';
+import { ParentRewardsPage, RewardsPage } from './features/rewards';
 import { LegalIndexPage, PolicyPage } from './features/legal/pages';
 import { PolicyGate } from './features/legal/acceptance';
 import { YoungPeopleNoticePage } from './features/legal/youngPeopleNotice';
@@ -43,6 +44,7 @@ export const routes: RouteObject[] = [
         ),
       },
       { path: '/link', element: <LinkPage /> },
+      { path: '/family/:studentId/rewards', element: <ParentRewardsPage /> },
       { path: '/lesson/:lessonId', element: <LessonPage /> },
       { path: '/lesson/:lessonId/complete', element: <LessonCompletePage /> },
       { path: '/review', element: <ReviewQueuePage /> },
@@ -67,6 +69,7 @@ export const routes: RouteObject[] = [
       { path: '/learn', element: <Navigate to="/map" replace /> },
       { path: '/learn/subject/:subjectId', element: <SubjectPage /> },
       { path: '/cards', element: <FlashcardsPage /> },
+      { path: '/rewards', element: <RewardsPage /> },
       {
         path: '/plan',
         element: (

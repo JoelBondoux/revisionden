@@ -128,6 +128,7 @@ Source of truth: `packages/db/src/schema.ts`; migrations in `packages/db/migrati
 | `school_reports`     | id, student_id, date, values (JSON)                                                                                                             |
 | `plans`              | id, student_id, week_start (unique per student), sessions (JSON), edited_by                                                                     |
 | `rewards`            | student_id + reward_id (key), earned_at                                                                                                         |
+| `parent_rewards`     | id, student_id, title, note, target_kind (reward, stat, date), reward_id, stat, at_least, target_date, given_at                                 |
 | `streaks`            | student_id (key), current, best, skip_days, gift_days, skips_in_a_row, last_date, last_settled_week                                             |
 | `daily_xp`           | student_id + day (key, UK date), xp                                                                                                             |
 | `starting_tests`     | id, student_id, subject_id, item_ids (JSON), started (created_at), finished_at                                                                  |
@@ -182,6 +183,11 @@ All bodies are validated with the Zod schemas in `packages/core`. Errors always 
 | `GET /v1/student/learn/progress`                                                                                                   | student device  | XP today, total, daily goal, streak                       |
 | `GET, POST /v1/student/flashcards`                                                                                                 | student device  | Due cards, decks, own cards; add own card                 |
 | `GET /v1/student/flashcards/decks/:topicId`                                                                                        | student device  | One deck's cards                                          |
+| `GET /v1/student/rewards`                                                                                                          | student device  | Level, chapter, milestones, drops; saves new rewards      |
+| `GET /v1/students/:id/rewards`                                                                                                     | parent          | The same rewards view for a child                         |
+| `GET, POST /v1/students/:id/parent-rewards`                                                                                        | parent          | List with progress; add one to any target                 |
+| `PATCH, DELETE /v1/students/:id/parent-rewards/:rewardId`                                                                          | parent          | Edit or delete it until given (then 409)                  |
+| `POST /v1/students/:id/parent-rewards/:rewardId/given`                                                                             | parent          | Mark it as given                                          |
 | `POST /v1/student/flashcards/:id/review`                                                                                           | student device  | Rate a card (again, hard, good, easy)                     |
 | `GET /v1/notifications/vapid-key`                                                                                                  | anyone          | Public key for web push (503 if off)                      |
 | `POST, DELETE /v1/student/push-subscriptions`                                                                                      | student device  | Turn reminders on or off for this device                  |

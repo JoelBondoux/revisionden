@@ -1,0 +1,47 @@
+{
+  "_comment": "Short text extracted by pdftotext from the Pearson Edexcel GCSE Mathematics (1MA1) specification, Issue 2, PDF pages 26 to 30, with the citations from content/topic-trees/gcse-maths-edexcel-1ma1-higher.json. Extraction breaks these quotes; the checker must still find them, as near matches. The PDF itself is never committed.",
+  "cases": [
+    {
+      "case": "an inserted fragment (the \"1\" of a fraction)",
+      "quote": "recognise, sketch and interpret graphs of linear functions, quadratic functions, simple cubic functions, the reciprocal function",
+      "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A12 (page 14; PDF page 26)",
+      "pdf_page": 26,
+      "extracted_text": "A12\n\nrecognise, sketch and interpret graphs of linear functions, quadratic\n1\nfunctions, simple cubic functions, the reciprocal function y = with x ≠ 0,\nx\nx\n\nexponential functions y = k for positive values of k, and the\ntrigonometric functions (with arguments in degrees) y = sin x,\ny = cos x and y = tan x for angles of any size\nA13"
+    },
+    {
+      "case": "a hyphen dropped at a line end (\"position-toterm\")",
+      "quote": "generate terms of a sequence from either a term-to-term or a position-to-term rule",
+      "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Sequences, content reference A23 (page 15; PDF page 27)",
+      "pdf_page": 27,
+      "extracted_text": "A23\n\ngenerate terms of a sequence from either a term-to-term or a position-toterm rule\n\nA24"
+    },
+    {
+      "case": "an inserted superscript (\"n\")",
+      "quote": "recognise and use sequences of triangular, square and cube numbers, simple arithmetic progressions, Fibonacci type sequences, quadratic sequences, and simple geometric progressions",
+      "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Sequences, content reference A24 (page 15; PDF page 27)",
+      "pdf_page": 27,
+      "extracted_text": "A24\n\nrecognise and use sequences of triangular, square and cube numbers, simple\narithmetic progressions, Fibonacci type sequences, quadratic sequences, and\nn\nsimple geometric progressions (r where n is an integer, and r is a rational\nnumber > 0 or a surd) and other sequences\n\nA25"
+    },
+    {
+      "case": "two-column wrapping inserts \"Y\"",
+      "quote": "construct and interpret equations that describe direct and inverse proportion",
+      "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R13 (page 16; PDF page 28)",
+      "pdf_page": 28,
+      "extracted_text": "R13\n\nunderstand that X is inversely proportional to Y is equivalent to X is\n1\nproportional to\n; construct and interpret equations that describe direct\nY\nand inverse proportion\n\nR14"
+    },
+    {
+      "case": "an inserted fraction part (\"adjacent\")",
+      "quote": "apply them to find angles and lengths in right-angled triangles and, where possible, general triangles in two and three dimensional figures",
+      "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G20 (page 18; PDF page 30)",
+      "pdf_page": 30,
+      "extracted_text": "G20\n\nknow the formulae for: Pythagoras’ theorem a + b = c , and the\n\n2\n\ntrigonometric ratios, sin θ =\n\ntan θ =\n\n2\n\n2\n\nopposite\nadjacent\n, cos θ =\nand\nhypotenuse\nhypotenuse\n\nopposite\n; apply them to find angles and lengths in right-angled\nadjacent\n\ntriangles and, where possible, general triangles in two and three\ndimensional figures\nG21"
+    },
+    {
+      "case": "a formula split across lines reorders the text",
+      "quote": "to calculate the area, sides or angles of any triangle",
+      "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G23 (page 18; PDF page 30)",
+      "pdf_page": 30,
+      "extracted_text": "G23\n\nknow and apply Area =\nangles of any triangle\n\n1\nab sin C to calculate the area, sides or\n2\n\nVectors\nWhat students need to learn:\nG24"
+    }
+  ]
+}

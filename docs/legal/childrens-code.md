@@ -75,10 +75,8 @@ is offered beyond the operator's family.
 #### 2.7 Default settings
 
 - **Met:** the most private option is the default. Reminders are off until the student turns them
-  on; there is no public profile; friends (when built) need a parent's approval; device details on
-  feedback can be turned off.
-- **To do:** "Include device details" on feedback is on by default (as specified); review whether
-  it should be off by default for students.
+  on; there is no public profile; friends (when built) need a parent's approval; "Include device
+  details" on feedback starts off for students (a student can turn it on) and on for parents.
 
 #### 2.8 Data minimisation
 
