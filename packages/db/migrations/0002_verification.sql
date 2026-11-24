@@ -17,6 +17,7 @@ CREATE TABLE "quarantined_items" (
 	"item_id" text PRIMARY KEY NOT NULL,
 	"item_version" integer NOT NULL,
 	"cause" text NOT NULL,
+	"previous_status" text,
 	"since" timestamp with time zone DEFAULT now() NOT NULL
 );
 --> statement-breakpoint

@@ -30,7 +30,7 @@ describe('Button', () => {
     expect(onClick).not.toHaveBeenCalled();
   });
 
-  it.each(['primary', 'secondary', 'success', 'danger'] as const)(
+  it.each(['primary', 'secondary', 'success', 'danger', 'gold'] as const)(
     'applies the %s style',
     (variant) => {
       render(<Button variant={variant}>Styled</Button>);

@@ -7,6 +7,11 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Onboarding (E1, E2): parents add each child with a nickname, avatar, school year (9 to 13), subjects, and an exam board and tier per subject ("Not sure" counted to check later); exams worked out from the year; school report step; finish screen with each child's starting test (`/onboarding`).
+- Avatar builder (E3): layered SVG avatar with Face, Hair, Top, Eyewear, Headwear, Holding and Background tabs, Shuffle, and locked items that show their reward; avatar catalogue matches the approved design.
+- Device linking screens (E4): one-time QR code (10 minutes, single use) with "Do this later", and the student `/link` page that sets up a passkey.
+- API: `POST /v1/onboarding/children`, `GET /v1/onboarding/family`, `GET` and `PUT /v1/students/:id/avatar` (locked items need their reward).
+- Learning loop (F): starting test per subject, lesson player for every item type with instant feedback, XP, daily goal and streak, flashcards with SM-2 (due, decks, own cards, wrong answers become cards), command-word lessons, and a content gate that serves only verified items unless `SERVE_DRAFT_CONTENT=true` in development (with a "DRAFT CONTENT" banner).
 - Verification: quote checker that fetches official sources (cached outside git), confirms each quote at its page or specification code and records the source SHA-256 (V1).
 - Verification: blind-answer and adversarial-review runners over one provider interface (Anthropic, OpenAI, Gemini), tested with recorded fixtures (V2).
 - Verification: exact checkers for units, chemical equation balancing and equation-sheet lookups, with an optional `exact` block on items (V3).
@@ -22,6 +27,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Web: typed API client that checks every response, with retry UI and an MSW mock API for development and tests (A4).
 - Web: installable PWA with icons, an offline app shell, an offline banner and Add to Home Screen help for iPad (A5).
 - Web: welcome, family, learning path, lesson and lesson complete screens wired to mock data (A6).
+- Web: topic map replaces the learning path: hexagons per topic by unit, a Next mission card, the Map tab and a due-cards badge on Cards (A7).
 - Shared Zod schemas for students, enrolments, items, attempts, plans and API errors, with
   readable error messages (`packages/core`).
 - Nickname rules with a block list, and avatar codes with 14 layers and reward-locked items.

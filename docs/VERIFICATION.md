@@ -184,9 +184,13 @@ sample), its writer prompt and its source. A passed batch is then recorded in ea
 `batch-sample` check by the content session.
 
 **Reports and quarantine (section 6).** "Report a problem" stores only the item, its version and
-a reason (no free text, so no personal data) and hides the item at once (`quarantined_items`;
-the learning loop must skip `quarantinedItemIds()`). "No error" releases the item once no
-report is left open. A confirmed error keeps it hidden, queues a recalculation job, calls the
+a reason (no free text, so no personal data) and hides the item at once: a row in
+`quarantined_items` and status `quarantined` in `items`, which the learning loop's content gate
+never serves. Students report by the item id the app was given. Every content sync puts the
+`quarantined` status back (`reapplyQuarantine`), so content/ cannot lift it. "No error" releases
+the item once no report is left open and restores its earlier status. A confirmed-error
+quarantine lifts when a newer version of the item is synced (a fixed version that has been
+through the pipeline again). A confirmed error keeps it hidden, queues a recalculation job, calls the
 `onConfirmedError` hook (the learning loop recalculates scores and mastery there) and files an
 item re-check. The audit report reads version history from git and reports from
 `GET /v1/review/reports?item=<id>`. The parent-portal PDF export is still to do.

@@ -39,7 +39,7 @@ the last one. Each stage ends with a `[minor]` release to `main`.
 | Avatar builder           | Layered avatar saved as a short code; locked items show their unlock target                                                      |
 | Subjects and topic trees | Topic list per subject, board and tier, built from official specifications                                                       |
 | Starting test            | About 5 minutes per subject; sets initial mastery per topic                                                                      |
-| Learning path            | Lessons laid out as a path; current lesson highlighted; weak spots marked                                                        |
+| Topic map                | Topics as a honeycomb of hexagons by unit, showing mastery; weak spots marked; next mission suggested                            |
 | Lessons and quizzes      | Multiple choice and short answer; instant feedback at feedback level 1                                                           |
 | Flashcards               | Spaced repetition; wrong cards return sooner                                                                                     |
 | XP, daily goal, streak   | XP per correct answer; daily goal; streak counts days with goal met                                                              |

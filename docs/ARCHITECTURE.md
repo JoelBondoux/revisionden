@@ -33,19 +33,37 @@
 
 ## Web app (`apps/web`)
 
-| Folder           | What it holds                                                                             |
-| ---------------- | ----------------------------------------------------------------------------------------- |
-| `src/design`     | Design tokens (`tokens.ts`, mirrored as CSS variables in `tokens.css`), base styles       |
-| `src/components` | Shared components (Button, Pill, ProgressBar, Card, BottomNav, Toast, Sheet, Avatar, Pip) |
-| `src/layout`     | `AppLayout` (main nav: bottom bar on phones, side rail from 768px) and `FocusLayout`      |
-| `src/pages`      | One component per screen; `src/routes.tsx` maps paths to screens                          |
-| `src/api`        | Typed API client (every response checked with Zod), `useApiResource`, retry UI            |
-| `src/mocks`      | MSW handlers and made-up demo data, used by tests and by `pnpm dev`                       |
-| `src/pwa`        | Service worker registration and the offline banner                                        |
-| `src/session`    | Which student is using this device (a convenience until device linking lands)             |
-| `public/`        | Web app manifest, icons, `sw.js` (app shell cache) and the MSW worker for development     |
+| Folder                    | What it holds                                                                                |
+| ------------------------- | -------------------------------------------------------------------------------------------- |
+| `src/design`              | Design tokens (`tokens.ts`, mirrored as CSS variables in `tokens.css`), base styles          |
+| `src/components`          | Shared components (Button, Pill, ProgressBar, Card, BottomNav, Toast, Sheet, Avatar, Pip)    |
+| `src/layout`              | `AppLayout` (main nav: bottom bar on phones, side rail from 768px) and `FocusLayout`         |
+| `src/pages`               | One component per screen; `src/routes.tsx` maps paths to screens                             |
+| `src/api`                 | Typed API client (every response checked with Zod), `useApiResource`, retry UI               |
+| `src/mocks`               | MSW handlers and made-up demo data, used by tests and by `pnpm dev`                          |
+| `src/pwa`                 | Service worker registration and the offline banner                                           |
+| `src/session`             | Which student is using this device (a convenience until device linking lands)                |
+| `src/features/learn`      | Lesson player, starting test, subject page, command words, learning API client and mocks (F) |
+| `src/features/flashcards` | Cards tab: due cards, all decks, my cards, 3D flip card (F)                                  |
+| `public/`                 | Web app manifest, icons, `sw.js` (app shell cache) and the MSW worker for development        |
 
+- **Learning routes (F):** `/learn/subject/:subjectId` (topics and mastery), `/learn/subject/:subjectId/start`
+  (starting test), `/learn/subject/:subjectId/practice` (mixed lesson), `/learn/topic/:topicId`, `/learn/command-words`;
+  `/cards` is the flashcards screen. They call `/v1/student/...` with the device cookie.
 - **Routes:** `/` welcome, `/family`, `/learn` (path), `/lesson/:id`, `/lesson/:id/complete`,
+  | Folder           | What it holds                                                                             |
+  | ---------------- | ----------------------------------------------------------------------------------------- |
+  | `src/design`     | Design tokens (`tokens.ts`, mirrored as CSS variables in `tokens.css`), base styles       |
+  | `src/components` | Shared components (Button, Pill, ProgressBar, Card, BottomNav, Toast, Sheet, Avatar, Pip) |
+  | `src/layout`     | `AppLayout` (main nav: bottom bar on phones, side rail from 768px) and `FocusLayout`      |
+  | `src/map`        | Topic map pieces: honeycomb row layout, topic and challenge hexes, Next mission card      |
+  | `src/pages`      | One component per screen; `src/routes.tsx` maps paths to screens                          |
+  | `src/api`        | Typed API client (every response checked with Zod), `useApiResource`, retry UI            |
+  | `src/mocks`      | MSW handlers and made-up demo data, used by tests and by `pnpm dev`                       |
+  | `src/pwa`        | Service worker registration and the offline banner                                        |
+  | `src/session`    | Which student is using this device (a convenience until device linking lands)             |
+  | `public/`        | Web app manifest, icons, `sw.js` (app shell cache) and the MSW worker for development     |
+- **Routes:** `/` welcome, `/family`, `/map` (topic map; `/learn` redirects there), `/lesson/:id`, `/lesson/:id/complete`,
   `/cards`, `/plan`, `/papers`, `/progress`, `/settings`, `/install`; anything else shows a 404.
 - **API address:** `VITE_API_URL`, defaulting to `/api` on the same site. In development the MSW
   mock API answers instead (turn off with `VITE_USE_MOCKS=false`).
@@ -78,36 +96,39 @@ personal data, spend tracking and the monthly cap per child.
 
 Source of truth: `packages/db/src/schema.ts`; migrations in `packages/db/migrations`.
 
-| Table                | Key fields                                                                                    |
-| -------------------- | --------------------------------------------------------------------------------------------- |
-| `auth_users`         | id, email, email_verified, name (always blank), image (always null)                           |
-| `auth_sessions`      | id, token, user_id, expires_at (IP address and user agent not kept)                           |
-| `auth_accounts`      | id, user_id, provider_id, account_id, OAuth tokens (no passwords)                             |
-| `auth_verifications` | id, identifier, value, expires_at (OAuth state)                                               |
-| `families`           | id, created_at                                                                                |
-| `parents`            | id, family_id, auth_user_id (unique)                                                          |
-| `students`           | id, family_id, nickname (unique per family), avatar_code, year_group (7–13)                   |
-| `enrolments`         | student_id + subject_id (key), board, tier, spec_version                                      |
-| `devices`            | id, student_id, credential_id, public_key, counter, transports, linked_at                     |
-| `device_link_tokens` | id, token_hash, family_id, student_id, expires_at, used_at                                    |
-| `passkey_challenges` | id, kind (register, unlock), challenge, student_id, expires_at, used_at                       |
-| `student_sessions`   | id, token_hash, student_id, device_id, expires_at                                             |
-| `topics`             | id (text), subject_id, board, spec_ref, title, parent_topic_id                                |
-| `items`              | id, topic_id, type, body (JSON), answer (JSON), source_ref, checked_by                        |
-| `attempts`           | id, student_id, item_id, correct, score, time_ms, created_at                                  |
-| `mastery`            | student_id + topic_id (key), value (0–1), updated_at                                          |
-| `exams`              | id, student_id, kind (exam, mock, assessment), subject_id, date, result                       |
-| `school_reports`     | id, student_id, date, values (JSON)                                                           |
-| `plans`              | id, student_id, week_start (unique per student), sessions (JSON), edited_by                   |
-| `rewards`            | student_id + reward_id (key), earned_at                                                       |
-| `streaks`            | student_id (key), current, best, skip_days, gift_days                                         |
-| `reviewer_roles`     | auth_user_id (key), role (subject-specialist, content-lead, parent-reviewer)                  |
-| `item_reports`       | id, item_id, item_version, reason, reported_by, family_id, status, decided_by_role            |
-| `quarantined_items`  | item_id (key), item_version, cause (report, confirmed_error, batch_failed)                    |
-| `review_batches`     | id, title, writer_prompt, source_url, status, sample_seed                                     |
-| `review_batch_items` | batch_id + item_id (key), item_version, in_sample, snapshot (JSON), decision, decided_by_role |
-| `recheck_requests`   | id, scope (batch, item, writer_prompt, source), scope_value, cause, status                    |
-| `recalculation_jobs` | id, item_id, item_version, status                                                             |
+| Table                | Key fields                                                                                                                                      |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `auth_users`         | id, email, email_verified, name (always blank), image (always null)                                                                             |
+| `auth_sessions`      | id, token, user_id, expires_at (IP address and user agent not kept)                                                                             |
+| `auth_accounts`      | id, user_id, provider_id, account_id, OAuth tokens (no passwords)                                                                               |
+| `auth_verifications` | id, identifier, value, expires_at (OAuth state)                                                                                                 |
+| `families`           | id, created_at                                                                                                                                  |
+| `parents`            | id, family_id, auth_user_id (unique)                                                                                                            |
+| `students`           | id, family_id, nickname (unique per family), avatar_code, year_group (7–13)                                                                     |
+| `enrolments`         | student_id + subject_id (key), board, tier, spec_version                                                                                        |
+| `devices`            | id, student_id, credential_id, public_key, counter, transports, linked_at                                                                       |
+| `device_link_tokens` | id, token_hash, family_id, student_id, expires_at, used_at                                                                                      |
+| `passkey_challenges` | id, kind (register, unlock), challenge, student_id, expires_at, used_at                                                                         |
+| `student_sessions`   | id, token_hash, student_id, device_id, expires_at                                                                                               |
+| `topics`             | id (text), subject_id, board, spec_ref, title, parent_topic_id                                                                                  |
+| `items`              | id, topic_id, type, body (JSON), answer (JSON), source_ref, checked_by, content_id (unique), version, status, difficulty, tags                  |
+| `attempts`           | id, student_id, item_id, correct, score, time_ms, created_at, item_version, mode, xp_earned, starting_test_id                                   |
+| `mastery`            | student_id + topic_id (key), value (0–1), updated_at                                                                                            |
+| `exams`              | id, student_id, kind (exam, mock, assessment), subject_id, date, result                                                                         |
+| `school_reports`     | id, student_id, date, values (JSON)                                                                                                             |
+| `plans`              | id, student_id, week_start (unique per student), sessions (JSON), edited_by                                                                     |
+| `rewards`            | student_id + reward_id (key), earned_at                                                                                                         |
+| `streaks`            | student_id (key), current, best, skip_days, gift_days, skips_in_a_row, last_date, last_settled_week                                             |
+| `daily_xp`           | student_id + day (key, UK date), xp                                                                                                             |
+| `starting_tests`     | id, student_id, subject_id, item_ids (JSON), started (created_at), finished_at                                                                  |
+| `flashcards`         | id, student_id, item_id (null for own cards), topic_id, origin (deck, wrong_answer, own), front, back, repetitions, interval_days, ease, due_at |
+| `reviewer_roles`     | auth_user_id (key), role (subject-specialist, content-lead, parent-reviewer)                                                                    |
+| `item_reports`       | id, item_id, item_version, reason, reported_by, family_id, status, decided_by_role                                                              |
+| `quarantined_items`  | item_id (key), item_version, cause (report, confirmed_error, batch_failed)                                                                      |
+| `review_batches`     | id, title, writer_prompt, source_url, status, sample_seed                                                                                       |
+| `review_batch_items` | batch_id + item_id (key), item_version, in_sample, snapshot (JSON), decision, decided_by_role                                                   |
+| `recheck_requests`   | id, scope (batch, item, writer_prompt, source), scope_value, cause, status                                                                      |
+| `recalculation_jobs` | id, item_id, item_version, status                                                                                                               |
 
 No table stores a real name, date of birth, email of a student, photo or school name. The
 schema guard test (`packages/db/src/schema-guard.test.ts`) checks the migrated database and fails
@@ -119,31 +140,65 @@ if such a column appears. The only allowed matches are the parent's Better Auth 
 All bodies are validated with the Zod schemas in `packages/core`. Errors always look like
 `{ "error": { "code", "message", "details"? } }` (`ApiErrorSchema`).
 
-| Route                                                                                                                              | Who             | What                                                |
-| ---------------------------------------------------------------------------------------------------------------------------------- | --------------- | --------------------------------------------------- |
-| `GET /health`                                                                                                                      | anyone          | `{ status, version }`                               |
-| `/api/auth/*`                                                                                                                      | anyone          | Better Auth: Google, Microsoft, sign-out            |
-| `GET /v1/me`                                                                                                                       | parent          | Family id and sign-in email                         |
-| `GET, POST /v1/students`                                                                                                           | parent          | List (`{ students }`) or create                     |
-| `GET, PATCH, DELETE /v1/students/:id`                                                                                              | parent          | One student                                         |
-| `GET, POST /v1/students/:id/enrolments`                                                                                            | parent          | List (`{ enrolments }`) or add/replace              |
-| `DELETE /v1/students/:id/enrolments/:subjectId`                                                                                    | parent          | Remove an enrolment                                 |
-| `POST /v1/students/:id/link-tokens`                                                                                                | parent          | One-time token and QR link (10 minutes)             |
-| `GET /v1/students/:id/devices`, `DELETE .../devices/:id`                                                                           | parent          | List or unlink devices                              |
-| `POST /v1/device/link`                                                                                                             | new device      | Redeem token + family id; passkey options           |
-| `POST /v1/device/link/verify`                                                                                                      | new device      | Register passkey; starts student session            |
-| `POST /v1/device/unlock/options`, `POST /v1/device/unlock/verify`                                                                  | linked device   | Unlock with the passkey                             |
-| `GET /v1/student/me`, `POST /v1/student/lock`                                                                                      | student device  | Who is signed in; lock the device                   |
-| `POST /v1/student/items/:itemId/reports`, `POST /v1/items/:itemId/reports`                                                         | student, parent | Report a problem; hides the item at once            |
-| `GET /v1/review/me`, `GET /v1/review/reports`, `POST .../reports/:id/decision`                                                     | reviewer        | Reviewer role; reports; no error or confirmed error |
-| `GET, POST /v1/review/batches`, `GET .../batches/:id`, `POST .../batches/:id/items/:itemId/decision`                               | reviewer        | Batch samples and decisions                         |
-| `GET, POST /v1/review/rechecks`, `POST .../rechecks/:id/done`, `GET /v1/review/recalculations`, `POST .../recalculations/:id/done` | reviewer        | Re-check requests and recalculation jobs            |
+| Route                                                                                                                              | Who             | What                                                      |
+| ---------------------------------------------------------------------------------------------------------------------------------- | --------------- | --------------------------------------------------------- |
+| `GET /health`                                                                                                                      | anyone          | `{ status, version }`                                     |
+| `/api/auth/*`                                                                                                                      | anyone          | Better Auth: Google, Microsoft, sign-out                  |
+| `GET /v1/me`                                                                                                                       | parent          | Family id and sign-in email                               |
+| `GET, POST /v1/students`                                                                                                           | parent          | List (`{ students }`) or create                           |
+| `GET, PATCH, DELETE /v1/students/:id`                                                                                              | parent          | One student                                               |
+| `GET, POST /v1/students/:id/enrolments`                                                                                            | parent          | List (`{ enrolments }`) or add/replace                    |
+| `DELETE /v1/students/:id/enrolments/:subjectId`                                                                                    | parent          | Remove an enrolment                                       |
+| `POST /v1/students/:id/link-tokens`                                                                                                | parent          | One-time token and QR link (10 minutes)                   |
+| `GET, PUT /v1/students/:id/avatar`                                                                                                 | parent          | Avatar code and earned rewards; save code                 |
+| `POST /v1/onboarding/children`                                                                                                     | parent          | Add a child with subjects, boards, tiers                  |
+| `GET /v1/onboarding/family`                                                                                                        | parent          | Children with exams, checks left, devices                 |
+| `GET /v1/students/:id/devices`, `DELETE .../devices/:id`                                                                           | parent          | List or unlink devices                                    |
+| `POST /v1/device/link`                                                                                                             | new device      | Redeem token + family id; passkey options                 |
+| `POST /v1/device/link/verify`                                                                                                      | new device      | Register passkey; starts student session                  |
+| `POST /v1/device/unlock/options`, `POST /v1/device/unlock/verify`                                                                  | linked device   | Unlock with the passkey                                   |
+| `GET /v1/student/me`, `POST /v1/student/lock`                                                                                      | student device  | Who is signed in; lock the device                         |
+| Route                                                                                                                              | Who             | What                                                      |
+| -----------------------------------------------------------------                                                                  | --------------  | --------------------------------------------------------- |
+| `GET /health`                                                                                                                      | anyone          | `{ status, version }`                                     |
+| `/api/auth/*`                                                                                                                      | anyone          | Better Auth: Google, Microsoft, sign-out                  |
+| `GET /v1/me`                                                                                                                       | parent          | Family id and sign-in email                               |
+| `GET, POST /v1/students`                                                                                                           | parent          | List (`{ students }`) or create                           |
+| `GET, PATCH, DELETE /v1/students/:id`                                                                                              | parent          | One student                                               |
+| `GET, POST /v1/students/:id/enrolments`                                                                                            | parent          | List (`{ enrolments }`) or add/replace                    |
+| `DELETE /v1/students/:id/enrolments/:subjectId`                                                                                    | parent          | Remove an enrolment                                       |
+| `POST /v1/students/:id/link-tokens`                                                                                                | parent          | One-time token and QR link (10 minutes)                   |
+| `GET /v1/students/:id/devices`, `DELETE .../devices/:id`                                                                           | parent          | List or unlink devices                                    |
+| `POST /v1/device/link`                                                                                                             | new device      | Redeem token + family id; passkey options                 |
+| `POST /v1/device/link/verify`                                                                                                      | new device      | Register passkey; starts student session                  |
+| `POST /v1/device/unlock/options`, `POST /v1/device/unlock/verify`                                                                  | linked device   | Unlock with the passkey                                   |
+| `GET /v1/student/me`, `POST /v1/student/lock`                                                                                      | student device  | Who is signed in; lock the device                         |
+| `GET /v1/student/learn/lesson?topicId=…` or `?subjectId=…`                                                                         | student device  | Lesson items (no answers); mixed by mastery for a subject |
+| `GET /v1/student/learn/command-words`                                                                                              | student device  | Command-word lesson                                       |
+| `GET /v1/student/learn/subjects/:id/topics`                                                                                        | student device  | Topics with mastery; starting test done?                  |
+| `POST /v1/student/learn/starting-tests`, `POST .../:id/finish`                                                                     | student device  | Start the starting test; finish and see mastery           |
+| `POST /v1/student/learn/attempts`                                                                                                  | student device  | Mark an answer; XP, mastery, streak, feedback             |
+| `GET /v1/student/learn/progress`                                                                                                   | student device  | XP today, total, daily goal, streak                       |
+| `GET, POST /v1/student/flashcards`                                                                                                 | student device  | Due cards, decks, own cards; add own card                 |
+| `GET /v1/student/flashcards/decks/:topicId`                                                                                        | student device  | One deck's cards                                          |
+| `POST /v1/student/flashcards/:id/review`                                                                                           | student device  | Rate a card (again, hard, good, easy)                     |
+| ---------------------------------------------------------------------------------------------------------------------------------- | --------------- | ---------------------------------------------------       |
+| `POST /v1/student/items/:itemId/reports`, `POST /v1/items/:itemId/reports`                                                         | student, parent | Report a problem; hides the item at once                  |
+| `GET /v1/review/me`, `GET /v1/review/reports`, `POST .../reports/:id/decision`                                                     | reviewer        | Reviewer role; reports; no error or confirmed error       |
+| `GET, POST /v1/review/batches`, `GET .../batches/:id`, `POST .../batches/:id/items/:itemId/decision`                               | reviewer        | Batch samples and decisions                               |
+| `GET, POST /v1/review/rechecks`, `POST .../rechecks/:id/done`, `GET /v1/review/recalculations`, `POST .../recalculations/:id/done` | reviewer        | Re-check requests and recalculation jobs                  |
 
 A parent only ever sees their own family: another family's student answers 404. The QR code
 holds `<web origin>/link?token=…&family=…`. The passkey relying party is the web app's host
 (`PASSKEY_RP_ID`). Student sessions use the `__Host-rd_student` cookie (HttpOnly, Secure,
 SameSite=Lax) and last 12 hours. Sign-in, device and AI routes are rate limited per address
 (30 and 20 requests a minute) and answer 429 with `Retry-After`.
+
+**Content in the database.** `pnpm --filter @revisionden/api content:sync` loads `content/` into
+`topics` and `items` (keyed by `items.content_id`), keeping each item's verification status and
+version. What a student may see is decided when items are served: only `verified`, plus drafts
+with `SERVE_DRAFT_CONTENT=true` in development. Content type names `worked_maths` and
+`extended_answer` are stored as the core item types `working` and `long_answer`.
 
 ## Conventions
 
