@@ -58,3 +58,43 @@ describe('database schema', () => {
     ).rejects.toThrow(/foreign key/i);
   });
 });
+
+describe('student constraints', () => {
+  async function newFamily(): Promise<string> {
+    const res = await client.query<{ id: string }>(
+      'insert into families default values returning id',
+    );
+    return res.rows[0]!.id;
+  }
+
+  it('rejects a nickname with spaces or symbols', async () => {
+    const familyId = await newFamily();
+    await expect(
+      client.query(
+        `insert into students (family_id, nickname, avatar_code, year_group) values ($1, 'Bad Name!', 'a1', 10)`,
+        [familyId],
+      ),
+    ).rejects.toThrow(/students_nickname_format/);
+  });
+
+  it('rejects a year group outside 7 to 13', async () => {
+    const familyId = await newFamily();
+    await expect(
+      client.query(
+        `insert into students (family_id, nickname, avatar_code, year_group) values ($1, 'owl_7', 'a1', 6)`,
+        [familyId],
+      ),
+    ).rejects.toThrow(/students_year_group_range/);
+  });
+
+  it('does not allow two students with the same nickname in one family', async () => {
+    const familyId = await newFamily();
+    const insert = () =>
+      client.query(
+        `insert into students (family_id, nickname, avatar_code, year_group) values ($1, 'fox_1', 'a1', 11)`,
+        [familyId],
+      );
+    await insert();
+    await expect(insert()).rejects.toThrow(/students_family_nickname_unique/);
+  });
+});

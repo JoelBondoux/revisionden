@@ -18,6 +18,7 @@
     "db:seed": "tsx src/seed-cli.ts"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.2.1",
     "drizzle-orm": "^0.45.4"
   },
   "devDependencies": {
