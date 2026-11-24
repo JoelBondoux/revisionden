@@ -6,7 +6,7 @@ describe('routes', () => {
     ['/', 'RevisionDen'],
     ['/family', "Who's revising?"],
     ['/learn', 'Your path'],
-    ['/lesson/demo', 'Lesson'],
+    ['/lesson/standard-form', 'Standard form'],
     ['/lesson/demo/complete', 'Lesson complete!'],
     ['/progress', 'Progress'],
     ['/plan', 'Plan'],
@@ -32,11 +32,14 @@ describe('routes', () => {
     expect(screen.getByRole('main')).toBeInTheDocument();
   });
 
-  it.each(['/', '/lesson/demo'])('hides the main navigation on %s to keep focus', async (path) => {
-    renderRoute(path);
-    await screen.findByRole('heading', { level: 1 });
-    expect(screen.queryByRole('navigation', { name: 'Main' })).not.toBeInTheDocument();
-  });
+  it.each(['/', '/lesson/standard-form'])(
+    'hides the main navigation on %s to keep focus',
+    async (path) => {
+      renderRoute(path);
+      await screen.findByRole('heading', { level: 1 });
+      expect(screen.queryByRole('navigation', { name: 'Main' })).not.toBeInTheDocument();
+    },
+  );
 
   it('offers a skip link to the main content on app pages', async () => {
     renderRoute('/plan');
@@ -46,7 +49,7 @@ describe('routes', () => {
     );
   });
 
-  it.each(['/learn', '/lesson/demo'])(
+  it.each(['/learn', '/lesson/standard-form'])(
     'shows the offline banner on %s when offline',
     async (path) => {
       Object.defineProperty(navigator, 'onLine', { configurable: true, get: () => false });
