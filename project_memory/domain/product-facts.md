@@ -41,3 +41,8 @@ Tags: #product #rules #limits #defaults
 ## Versions and releases
 
 - Format `xx.xx.xxx`; started `00.01.000`; every push to `main` bumps the patch automatically.
+
+## Hosting
+
+- Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Planned hosts: `revisionden.com` and
+  `api.revisionden.com` (production), `staging.` and `api-staging.` (staging), `dev.` and `api-dev.` (development).
