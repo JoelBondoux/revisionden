@@ -15,6 +15,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Web: typed API client that checks every response, with retry UI and an MSW mock API for development and tests (A4).
 - Web: installable PWA with icons, an offline app shell, an offline banner and Add to Home Screen help for iPad (A5).
 - Web: welcome, family, learning path, lesson and lesson complete screens wired to mock data (A6).
+- Web: topic map replaces the learning path: hexagons per topic by unit, a Next mission card, the Map tab and a due-cards badge on Cards (A7).
 - Shared Zod schemas for students, enrolments, items, attempts, plans and API errors, with
   readable error messages (`packages/core`).
 - Nickname rules with a block list, and avatar codes with 14 layers and reward-locked items.

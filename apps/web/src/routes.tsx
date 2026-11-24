@@ -1,12 +1,12 @@
-import type { RouteObject } from 'react-router-dom';
+import { Navigate, type RouteObject } from 'react-router-dom';
 import { AppLayout, FocusLayout } from './layout/AppLayout';
 import { ComingSoon } from './pages/ComingSoon';
 import { FamilyPage } from './pages/FamilyPage';
 import { InstallHelpPage } from './pages/InstallHelpPage';
 import { LessonCompletePage } from './pages/LessonCompletePage';
 import { LessonPage } from './pages/LessonPage';
+import { MapPage } from './pages/MapPage';
 import { NotFoundPage } from './pages/NotFoundPage';
-import { PathPage } from './pages/PathPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { WelcomePage } from './pages/WelcomePage';
 
@@ -24,7 +24,8 @@ export const routes: RouteObject[] = [
   {
     element: <AppLayout />,
     children: [
-      { path: '/learn', element: <PathPage /> },
+      { path: '/map', element: <MapPage /> },
+      { path: '/learn', element: <Navigate to="/map" replace /> },
       {
         path: '/cards',
         element: <ComingSoon title="Cards" description="Flashcards that come back just in time." />,

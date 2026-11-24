@@ -20,6 +20,11 @@ const requiredTokens = [
   '--color-danger-edge',
   '--color-gold',
   '--color-streak',
+  '--color-mastery-fill',
+  '--color-weak',
+  '--color-locked',
+  '--color-locked-soft',
+  '--color-challenge',
   '--color-pip',
   '--color-pip-side',
   '--color-pip-ears',
@@ -57,6 +62,11 @@ describe('design tokens', () => {
     expect(tokens['--color-text']).toBe('#2B2B3A');
     expect(tokens['--color-success']).toBe('#0B8457');
     expect(tokens['--shadow-3d-primary']).toBe('0 5px 0 #4B2BC9');
+    expect(tokens['--color-mastery-fill']).toBe('#D9CFFF');
+    expect(tokens['--color-weak']).toBe('#C2541A');
+    expect(tokens['--color-locked']).toBe('#C4C4CF');
+    expect(tokens['--color-locked-soft']).toBe('#E5E5EC');
+    expect(tokens['--color-challenge']).toBe('#2B2B3A');
   });
 
   it('defines every token in the CSS file with the same value', () => {
@@ -74,6 +84,18 @@ describe('contrast check', () => {
 
   it('gives the same answer whichever colour comes first', () => {
     expect(contrastRatio('#2B2B3A', '#FFFFFF')).toBe(contrastRatio('#FFFFFF', '#2B2B3A'));
+  });
+
+  it('checks the topic map colour pairs', () => {
+    const names = textPairs.map((p) => p.name);
+    expect(names).toEqual(
+      expect.arrayContaining([
+        'mastery text on mastery fill',
+        'secondary text on locked hex',
+        'gold on challenge hex',
+        'white on challenge hex',
+      ]),
+    );
   });
 
   it.each(textPairs)('$name reaches at least 4.5 to 1', ({ foreground, background }) => {

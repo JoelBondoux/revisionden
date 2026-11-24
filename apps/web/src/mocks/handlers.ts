@@ -1,6 +1,8 @@
 import { http, HttpResponse, type RequestHandler } from 'msw';
 import { answerRequestSchema } from '../api/schemas';
-import { answerKeys, family, learningPath, lessons, XP_PER_CORRECT } from './data';
+import { answerKeys, cardsDue, family, lessons, topicMap, XP_PER_CORRECT } from './data';
+
+const isKnownStudent = (id: unknown) => family.students.some((s) => s.id === id);
 
 const normalise = (value: string) => value.trim().toLowerCase().replace(/\s+/g, '');
 
@@ -8,10 +10,17 @@ const normalise = (value: string) => value.trim().toLowerCase().replace(/\s+/g, 
 export const handlers: RequestHandler[] = [
   http.get('*/api/family', () => HttpResponse.json(family)),
 
-  http.get('*/api/students/:studentId/path', ({ params }) => {
-    const known = family.students.some((s) => s.id === params.studentId);
-    return known ? HttpResponse.json(learningPath) : new HttpResponse(null, { status: 404 });
-  }),
+  http.get('*/api/students/:studentId/map', ({ params }) =>
+    isKnownStudent(params.studentId)
+      ? HttpResponse.json(topicMap)
+      : new HttpResponse(null, { status: 404 }),
+  ),
+
+  http.get('*/api/students/:studentId/cards/due', ({ params }) =>
+    isKnownStudent(params.studentId)
+      ? HttpResponse.json(cardsDue)
+      : new HttpResponse(null, { status: 404 }),
+  ),
 
   http.get('*/api/lessons/:lessonId', ({ params }) => {
     const lesson = lessons[String(params.lessonId)];
