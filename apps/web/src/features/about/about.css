@@ -1,0 +1,29 @@
+.about__facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+}
+
+.about__facts dt {
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-text-secondary);
+}
+
+.about__facts dd {
+  margin: 0;
+}
+
+.about__version h3 {
+  font-size: var(--font-size-md);
+  margin: var(--space-4) 0 var(--space-2);
+}
+
+.about__version:first-child h3 {
+  margin-top: 0;
+}
+
+.about__licences {
+  font-size: var(--font-size-sm);
+  padding-left: var(--space-6);
+}

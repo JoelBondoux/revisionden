@@ -52,6 +52,14 @@ VAPID contact is our web address, never a personal email.
 Nickname, avatar and XP only. Invite codes need parent approval. No chat, no free text between
 students.
 
+## Feedback and policy confirmations
+
+Feedback stores the family, who sent it (role, and the student or parent sign-in), the kind,
+optional text (refused if it holds an email, UK mobile number or a family nickname) and optional
+device details (app version, screen, browser family, screen size, online). Never IP, location or
+contacts. Deleted 12 months after closing. Policy confirmations store only the policy, version and
+date per parent sign-in.
+
 ## Deletion
 
 One button deletes a student's data; export first is offered. Accounts unused for 12 months are

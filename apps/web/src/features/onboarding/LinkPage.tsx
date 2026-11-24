@@ -5,6 +5,7 @@ import { Avatar, Button } from '../../components';
 import { useStudent } from '../../session/StudentContext';
 import type { LinkStart } from './api';
 import { useOnboardingApi } from './OnboardingApiContext';
+import { afterLinkPath } from '../legal/youngPeopleNotice';
 
 /** Creates a passkey on this device from the server's options; returns the browser's answer. */
 export type RegisterPasskey = (options: Record<string, unknown>) => Promise<unknown>;
@@ -65,7 +66,7 @@ export function LinkPage({ register = browserRegister }: { register?: RegisterPa
       const response = await register(link.options);
       const done = await api.verifyLink({ challengeId: link.challengeId, response });
       chooseStudent(done.student.id);
-      navigate('/learn');
+      navigate(afterLinkPath());
     } catch {
       setState({ status: 'ready', link, error: 'The passkey was not set up. Try again.' });
       setBusy(false);

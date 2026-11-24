@@ -4,6 +4,13 @@
 > them. The policies are **drafts** until a qualified UK solicitor has reviewed them; they must be
 > reviewed before the app is offered to anyone outside the family.
 
+## Status
+
+All eleven policies are written as version 1.0 drafts (workstream L, 2026-11-24). Pages:
+`/legal` (index) and `/legal/<name>`, built from these files by `apps/web/src/features/legal`.
+Open points for the product owner and a solicitor are in the L pull request and in
+`project_memory/operations/contradictions.md`.
+
 ## Layout of every policy
 
 Each policy is one Markdown file in `docs/legal/`, shown in the app at `/legal/<name>`:
@@ -44,7 +51,8 @@ never drift apart.
 - **No personal details in the repository.** The operator's name, contact email and postal
   address are placeholders (`{{OPERATOR_NAME}}`, `{{CONTACT_EMAIL}}`, `{{POSTAL_ADDRESS}}`), filled
   at build from `VITE_OPERATOR_NAME`, `VITE_CONTACT_EMAIL` and `VITE_POSTAL_ADDRESS`. A build
-  without them shows "contact details to be added". Production builds fail without them
+  without them shows "contact details to be added". `{{EFFECTIVE_DATE}}` comes from
+  `VITE_POLICY_EFFECTIVE_DATE` ("date to be added" when unset). Production builds fail without them
   (workstream G).
 - **Accurate legal references only.** Name laws and guidance exactly (UK GDPR, Data Protection
   Act 2018, Privacy and Electronic Communications Regulations 2003, ICO Age Appropriate Design

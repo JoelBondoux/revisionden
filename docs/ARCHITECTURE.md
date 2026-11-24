@@ -46,6 +46,9 @@
 | `src/features/learn`         | Lesson player, starting test, subject page, command words, learning API client and mocks (F) |
 | `src/features/flashcards`    | Cards tab: due cards, all decks, my cards, 3D flip card (F)                                  |
 | `src/features/notifications` | Reminders card for this device, parent reminder settings, push helpers (H)                   |
+| `src/features/legal`         | Policy pages from `docs/legal/*.md`, placeholders, safe Markdown, policy acceptance gate (L) |
+| `src/features/about`         | About page: version, environment, build, What's new from `CHANGELOG.md`, licences (L)        |
+| `src/features/feedback`      | Feedback form, family and own feedback lists, operator triage at `/admin/feedback` (L)       |
 | `public/`                    | Web app manifest, icons, `sw.js` (app shell cache) and the MSW worker for development        |
 
 - **Learning routes (F):** `/learn/subject/:subjectId` (topics and mastery), `/learn/subject/:subjectId/start`
@@ -65,7 +68,9 @@
   | `src/session`    | Which student is using this device (a convenience until device linking lands)             |
   | `public/`        | Web app manifest, icons, `sw.js` (app shell cache) and the MSW worker for development     |
 - **Routes:** `/` welcome, `/family`, `/map` (topic map; `/learn` redirects there), `/lesson/:id`, `/lesson/:id/complete`,
-  `/cards`, `/plan`, `/papers`, `/progress`, `/settings`, `/install`; anything else shows a 404.
+  `/cards`, `/plan`, `/papers`, `/progress`, `/settings`, `/install`, `/about`, `/feedback`,
+  `/feedback/family`, `/feedback/mine`; signed out: `/legal`, `/legal/:name`, `/welcome/privacy`;
+  `/admin/feedback` (operator); anything else shows a 404.
 - **API address:** `VITE_API_URL`, defaulting to `/api` on the same site. In development the MSW
   mock API answers instead (turn off with `VITE_USE_MOCKS=false`).
 - **Offline:** `sw.js` caches the app shell (pages network first, built assets cache first) and

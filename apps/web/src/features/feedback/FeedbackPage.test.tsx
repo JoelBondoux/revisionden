@@ -1,0 +1,118 @@
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
+import { StudentProvider } from '../../session/StudentContext';
+import { FeedbackApiError, FeedbackApiProvider, type FeedbackApi } from './feedbackApi';
+import { FeedbackPage } from './FeedbackPage';
+
+function fakeApi(overrides: Partial<FeedbackApi> = {}): FeedbackApi {
+  return {
+    send: vi.fn(async () => {}),
+    listOwn: vi.fn(async () => []),
+    listFamily: vi.fn(async () => []),
+    listAll: vi.fn(async () => []),
+    setStatus: vi.fn(),
+    ...overrides,
+  };
+}
+
+function show(api: FeedbackApi, { path = '/feedback', studentId = null as string | null } = {}) {
+  render(
+    <StudentProvider storage={{ getItem: () => studentId, setItem: () => {} }}>
+      <FeedbackApiProvider value={api}>
+        <MemoryRouter
+          initialEntries={[
+            {
+              pathname: '/feedback',
+              search: path.split('?')[1] ? `?${path.split('?')[1]}` : '',
+              state: { from: '/cards' },
+            },
+          ]}
+        >
+          <FeedbackPage />
+        </MemoryRouter>
+      </FeedbackApiProvider>
+    </StudentProvider>,
+  );
+}
+
+describe('feedback form', () => {
+  it('presets the kind from the link', () => {
+    show(fakeApi(), { path: '/feedback?kind=idea' });
+    expect(screen.getByRole('radio', { name: 'Idea' })).toBeChecked();
+  });
+
+  it('sends a parent report with device details by default', async () => {
+    const api = fakeApi();
+    show(api);
+    await userEvent.click(screen.getByRole('radio', { name: 'Something confusing' }));
+    await userEvent.type(screen.getByLabelText(/Tell us more/), 'The plan page is hard to read');
+    expect(screen.getByText('29 / 500')).toBeInTheDocument();
+    expect(screen.getByRole('checkbox', { name: 'Include device details' })).toBeChecked();
+    expect(screen.getByText(/Never your IP address, location or contacts/)).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(api.send).toHaveBeenCalledWith('parent', {
+      kind: 'confusing',
+      text: 'The plan page is hard to read',
+      device: expect.objectContaining({ route: '/cards', online: true }),
+    });
+    expect(await screen.findByRole('heading', { name: 'Thank you!' })).toBeInTheDocument();
+  });
+
+  it('leaves the device details out when turned off and sends no empty text', async () => {
+    const api = fakeApi();
+    show(api);
+    await userEvent.click(screen.getByRole('radio', { name: 'Bug' }));
+    await userEvent.click(screen.getByRole('checkbox', { name: 'Include device details' }));
+    expect(screen.queryByText(/App version/)).not.toBeInTheDocument();
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(api.send).toHaveBeenCalledWith('parent', { kind: 'bug' });
+  });
+
+  it('asks for a kind before sending', async () => {
+    const api = fakeApi();
+    show(api);
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('Choose what kind of feedback this is.');
+    expect(api.send).not.toHaveBeenCalled();
+  });
+
+  it('refuses email addresses and phone numbers before sending', async () => {
+    const api = fakeApi();
+    show(api, { path: '/feedback?kind=bug' });
+    await userEvent.type(screen.getByLabelText(/Tell us more/), 'write to someone@example.com');
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(screen.getByRole('alert')).toHaveTextContent('Please leave out personal details');
+    expect(api.send).not.toHaveBeenCalled();
+  });
+
+  it('tells a student their parent can see it, and sends as the student', async () => {
+    const api = fakeApi();
+    show(api, { path: '/feedback?kind=other', studentId: 'student-1' });
+    expect(screen.getByText('Your parent can see what you send.')).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(api.send).toHaveBeenCalledWith('student', expect.objectContaining({ kind: 'other' }));
+  });
+
+  it('shows the message from the API when it refuses', async () => {
+    const api = fakeApi({
+      send: vi.fn(async () => {
+        throw new FeedbackApiError(
+          429,
+          'feedback_limit',
+          'You can send 5 messages a day. Try again tomorrow.',
+        );
+      }),
+    });
+    show(api, { path: '/feedback?kind=bug' });
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent('You can send 5 messages a day.');
+  });
+
+  it('shows a general message for other failures', async () => {
+    const api = fakeApi({ send: vi.fn(async () => Promise.reject(new Error('boom'))) });
+    show(api, { path: '/feedback?kind=bug' });
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent('Something went wrong');
+  });
+});

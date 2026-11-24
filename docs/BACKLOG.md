@@ -205,11 +205,11 @@ Spec: `PRODUCT_RULES.md`, statistics dashboards. Mockups 19 and 20.
 
 Spec: `docs/LEGAL.md` and `PRODUCT_RULES.md` (About page, policies and feedback). Mockup 21.
 
-- [ ] L1 Write every policy in `docs/LEGAL.md` (plain English first, then full text), checked statement by statement against the code and docs; list every mismatch found.
-- [ ] L2 Policy pages at `/legal/<name>` built from the same Markdown, with placeholders filled from build variables; reachable signed out; print style.
-- [ ] L3 About page: version, environment, build date, commit, "What's new" from `CHANGELOG.md`, policy links, open-source licences.
-- [ ] L4 Feedback: form, privacy checks, device details toggle, parent view, operator triage at `/admin/feedback`, status updates, rate limit, retention.
-- [ ] L5 Policy acceptance in onboarding (version stored) and the "policy changed" prompt.
+- [x] L1 Write every policy in `docs/LEGAL.md` (plain English first, then full text), checked statement by statement against the code and docs; list every mismatch found.
+- [x] L2 Policy pages at `/legal/<name>` built from the same Markdown, with placeholders filled from build variables; reachable signed out; print style.
+- [x] L3 About page: version, environment, build date, commit, "What's new" from `CHANGELOG.md`, policy links, open-source licences.
+- [x] L4 Feedback: form, privacy checks, device details toggle, parent view, operator triage at `/admin/feedback`, status updates, rate limit, retention.
+- [x] L5 Policy acceptance in onboarding (version stored) and the "policy changed" prompt.
 - Tests: placeholder filling and the missing-value message; What's new parsing (versions without the subsection hidden); feedback refuses emails, phone numbers and nicknames; a parent sees only their family's feedback; only the operator role reaches triage; rate limit; acceptance version stored.
 
 ### U. Sound effects (`apps/web/src/features/sound/**`)

@@ -10,6 +10,9 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Coming soon: a stats page for students and a stats dashboard for parents.
 - Coming soon: rewards you set yourself as a parent, like a cinema trip for a 30-day streak.
 - Coming soon: sound effects, with a mute button.
+- Read our privacy notice, terms and other policies in plain English, at any time, even signed out.
+- New About page shows the app version and what's new.
+- Send us a bug, an idea or something confusing from Settings, and see what happens to it.
 
 ### Fixed
 
@@ -18,6 +21,10 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Policies (L1): all eleven `docs/legal/` policies as 1.0 drafts, checked against the code; mismatches recorded in contradictions.
+- Policy pages `/legal` and `/legal/:name` from the same Markdown with build-time placeholders and print style (L2); About page with What's new from `CHANGELOG.md` and licences (L3).
+- Feedback (L4): form, personal-details check, device details toggle, family and own lists, operator triage, 5 per 24 hours, 12-month retention; `feedback` table (migration 0004), `OPERATOR_EMAILS`.
+- Policy acceptance in onboarding with a "policy changed" prompt, `policy_acceptances` table and `GET, PUT /v1/policy-acceptances` (L5).
 - Five-year rewards progression design (`docs/REWARDS.md`) and backlog workstream R.
 - Policies index and rules (`docs/LEGAL.md`), About page, feedback and sound effects specs, backlog workstreams L and U.
 - Statistics dashboards spec for student and parent (`docs/PRODUCT_RULES.md`) and backlog workstream K; parent-set rewards detail (`docs/REWARDS.md`).

@@ -17,6 +17,27 @@ export function SettingsPage() {
         </ul>
       </Card>
       <DeviceReminders />
+      <Card title="Help and information">
+        <ul className="link-list">
+          <li>
+            <Link to="/feedback" state={{ from: '/settings' }}>
+              Send feedback or report a bug
+            </Link>
+          </li>
+          <li>
+            <Link to="/feedback/mine">Your feedback</Link>
+          </li>
+          <li>
+            <Link to="/feedback/family">Your family&apos;s feedback (parents)</Link>
+          </li>
+          <li>
+            <Link to="/legal">Policies</Link>
+          </li>
+          <li>
+            <Link to="/about">About RevisionDen</Link>
+          </li>
+        </ul>
+      </Card>
     </div>
   );
 }

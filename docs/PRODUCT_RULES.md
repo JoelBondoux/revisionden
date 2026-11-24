@@ -277,7 +277,13 @@ Mockups: screens 19 (student) and 20 (parent).
   changes.
 - Never sent automatically to GitHub (the repository is public). The operator may copy a report
   into an issue by hand, without any text that could identify the family.
-- Rate limit 5 a day per account. Deleted 12 months after it is closed.
+- Rate limit 5 in any 24 hours per sender (each student, each parent sign-in). Deleted 12 months
+  after it is closed (fixed or will not fix), by the 15-minute cron. The operator is any parent
+  whose sign-in email is in `OPERATOR_EMAILS`; anyone else gets a 404 from `/v1/admin/feedback`.
+- Until real parent and student sign-in is wired in the web app, the form sends as the student when
+  the device has a chosen student, otherwise as the parent.
+- Implemented: `apps/api/src/feedback/`, `apps/web/src/features/{legal,about,feedback}/`; tables
+  `feedback` and `policy_acceptances` (migration 0004).
 
 ## Sound effects (workstream U)
 

@@ -3,6 +3,8 @@ import { answerRequestSchema } from '../api/schemas';
 import { onboardingHandlers } from '../features/onboarding/mocks';
 import { answerKeys, cardsDue, family, lessons, topicMap, XP_PER_CORRECT } from './data';
 import { learnHandlers } from '../features/learn/mocks';
+import { feedbackHandlers } from '../features/feedback/mocks';
+import { legalHandlers } from '../features/legal/mocks';
 
 const isKnownStudent = (id: unknown) => family.students.some((s) => s.id === id);
 
@@ -45,4 +47,7 @@ export const handlers: RequestHandler[] = [
 
   // Learning loop and flashcards (workstream F).
   ...learnHandlers,
+  // Policies, About and feedback (workstream L).
+  ...feedbackHandlers,
+  ...legalHandlers,
 ];
