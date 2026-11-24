@@ -30,9 +30,9 @@ export const demoItems: LearnItem[] = [
   },
   { ...topic, id: id(2), type: 'short_answer', prompt: 'Demo question 2' },
   { ...topicB, id: id(3), type: 'numeric', prompt: 'Demo question 3', unit: 'cm' },
-  { ...topicB, id: id(4), type: 'working', prompt: 'Demo question 4' },
+  { ...topicB, id: id(4), type: 'worked_maths', prompt: 'Demo question 4' },
   { ...topic, id: id(5), type: 'flashcard', front: 'Demo front 1', back: 'Demo back 1' },
-  { ...topicB, id: id(6), type: 'long_answer', prompt: 'Demo question 6' },
+  { ...topicB, id: id(6), type: 'extended_answer', prompt: 'Demo question 6' },
 ];
 
 const keys: Record<string, { answer: unknown; display: string; xp: number }> = {

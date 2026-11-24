@@ -38,7 +38,7 @@ export type Answer = number | string | { lines: string[] } | boolean;
 export function toAnswer(item: LearnItem, draft: Draft): Answer | null {
   if (item.type === 'multiple_choice') return typeof draft === 'number' ? draft : null;
   const text = typeof draft === 'string' ? draft : '';
-  if (item.type === 'working') {
+  if (item.type === 'worked_maths') {
     const lines = text
       .split('\n')
       .map((l) => l.trim())
@@ -156,24 +156,24 @@ export function ItemInput({ item, draft, disabled, onChange, onSelfCheck }: Item
       );
     case 'flashcard':
       return <FlashcardCheck item={item} disabled={disabled} onSelfCheck={onSelfCheck} />;
-    case 'working':
-    case 'long_answer':
+    case 'worked_maths':
+    case 'extended_answer':
       return (
         <div className="question">
           <p className="question__prompt">{item.prompt}</p>
           <label className="field">
             <span className="field__label">
-              {item.type === 'working' ? 'Your working (one step per line)' : 'Your answer'}
+              {item.type === 'worked_maths' ? 'Your working (one step per line)' : 'Your answer'}
             </span>
             <textarea
               className="field__input field__input--multiline"
               value={text}
               disabled={disabled}
-              rows={item.type === 'working' ? 5 : 8}
+              rows={item.type === 'worked_maths' ? 5 : 8}
               onChange={(event) => onChange(event.target.value)}
             />
           </label>
-          {item.type === 'long_answer' && (
+          {item.type === 'extended_answer' && (
             <p className="secondary-text">
               Long answers will be marked by AI soon. For now, write your answer and compare it with
               your notes.

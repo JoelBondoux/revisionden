@@ -4,7 +4,7 @@
  * draft or quarantined item can sit in the database without ever reaching a student.
  */
 import { sql } from 'drizzle-orm';
-import { contentTypeToItemType } from '@revisionden/core';
+import { ItemTypeSchema } from '@revisionden/core';
 import { items, topics, type Database } from '@revisionden/db';
 import { reapplyQuarantine } from '../routes/quarantine';
 
@@ -136,7 +136,8 @@ export async function syncContent(
   const itemRows = content.items.map((item) => ({
     contentId: item.id,
     topicId: item.topic,
-    type: contentTypeToItemType(item.type),
+    // Content files and the app share the item type names (packages/core ItemTypeSchema).
+    type: ItemTypeSchema.parse(item.type),
     body: itemBody(item),
     answer: itemAnswer(item),
     sourceRef: item.source_ref,

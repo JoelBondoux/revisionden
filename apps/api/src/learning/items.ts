@@ -49,8 +49,8 @@ export function toLearnItem(row: ItemRow, topicTitle: string): LearnItem {
         ...(row.sourceRef ? { sourceRef: row.sourceRef } : {}),
       };
     case 'short_answer':
-    case 'working':
-    case 'long_answer':
+    case 'worked_maths':
+    case 'extended_answer':
       return { ...base, type: row.type, prompt };
     default:
       throw new Error(`Unknown item type in the database: ${row.type}`);
@@ -69,7 +69,7 @@ export function correctAnswerText(row: ItemRow): string {
       return (key.accepted as string[] | undefined)?.[0] ?? '';
     case 'numeric':
       return [key.value, b.unit].filter(Boolean).join(' ');
-    case 'working': {
+    case 'worked_maths': {
       if (Array.isArray(key.solutions)) {
         const prefix = typeof verify.variable === 'string' ? `${verify.variable} = ` : '';
         return (key.solutions as string[]).map((s) => `${prefix}${s}`).join(' or ');
@@ -110,7 +110,7 @@ export async function markItem(
     case 'flashcard':
       if (typeof answer !== 'boolean') throw wrongShape();
       return { correct: answer, score: answer ? 1 : 0 };
-    case 'working': {
+    case 'worked_maths': {
       if (typeof answer !== 'object' || answer === null || !('lines' in answer)) throw wrongShape();
       if (!engine) {
         throw new ApiError(503, 'maths_engine_unavailable', 'Maths checking is not available');

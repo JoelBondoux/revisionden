@@ -148,7 +148,7 @@ export function LessonPlayer({
     );
   }
 
-  const unmarked = item.type === 'long_answer';
+  const unmarked = item.type === 'extended_answer';
   return (
     <form className="lesson" onSubmit={check}>
       <div className="lesson__top">
