@@ -147,7 +147,41 @@ Parallel build sessions and their status: [`WORKSTREAMS.md`](WORKSTREAMS.md).
 | Exam board changes           | Specifications versioned; question banks rebuilt per specification               |
 | Public repository leaks data | No personal data ever committed; PR checklist; secrets only in CI and Cloudflare |
 
-## 11. Open questions
+## 11. Milestones and sequence
+
+Durations are estimates for parallel AI build sessions with product-owner review; they move with
+review time and AI usage limits.
+
+| Milestone            | Contents                                                 | Gate to next                            | Estimate                 |
+| -------------------- | -------------------------------------------------------- | --------------------------------------- | ------------------------ |
+| M0 Set-up            | Repository, branches, CI, domains, accounts              | CI green on `dev`                       | Days                     |
+| M1 Wave 1            | Workstreams A, B, C, D                                   | All four merged into `dev`              | 1 to 2 weeks             |
+| M2 Wave 2            | Workstreams E, F, G, H; first content (2 to 3 subjects)  | Product owner uses it on staging        | 1 to 2 weeks             |
+| M3 Stage 1 release   | Both students using it daily                             | `[minor]` release to `main` (00.02.000) | After a week of real use |
+| M4 Stage 2           | Planning, parent portal, feedback levels, school reports | `[minor]` (00.03.000)                   | 2 to 3 weeks             |
+| M5 Stage 3           | Exam practice, essays, Mark my homework                  | `[minor]` (00.04.000)                   | 2 to 3 weeks             |
+| M6 Stage 4           | Rewards, friends, interactive lessons                    | `[minor]` (00.05.000)                   | 2 to 3 weeks             |
+| M7 Public (optional) | Stage 5                                                  | `[major]` (01.00.000)                   | When ready               |
+
+Content is built alongside: weakest subjects first during M2, the rest by M4.
+
+## 12. Document map
+
+| Document                               | What it covers                                       |
+| -------------------------------------- | ---------------------------------------------------- |
+| [`BACKLOG.md`](BACKLOG.md)             | Every task, with the tests to write first            |
+| [`WORKSTREAMS.md`](WORKSTREAMS.md)     | Which session owns what, and status                  |
+| [`PRODUCT_RULES.md`](PRODUCT_RULES.md) | Agreed rules (levels, streaks, focus, effort scores) |
+| [`ARCHITECTURE.md`](ARCHITECTURE.md)   | Services, layout, flows, data model                  |
+| [`TESTING.md`](TESTING.md)             | Red/green TDD and all test layers                    |
+| [`BRANCHING.md`](BRANCHING.md)         | Branches, environments, versions                     |
+| [`CONTENT_PLAN.md`](CONTENT_PLAN.md)   | Subjects, sources, how items are built and checked   |
+| [`AI.md`](AI.md)                       | Model routing, guardrails, evaluations               |
+| [`ENVIRONMENTS.md`](ENVIRONMENTS.md)   | Accounts, domains, secrets, set-up steps             |
+| [`PRIVACY.md`](PRIVACY.md)             | Data minimisation and safety                         |
+| [`decisions/`](decisions/)             | Architecture decision records                        |
+
+## 13. Open questions
 
 - Exam access arrangements for either student.
 - AI provider API account and monthly cap.

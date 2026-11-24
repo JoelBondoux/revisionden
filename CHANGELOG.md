@@ -9,6 +9,6 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 - Monorepo skeleton: web app, API, core domain logic, maths engine.
 - CI on every pull request; automatic version bump and tag on every push to `main`.
-- Project plan and live documentation in `docs/`.
+- Project plan, delivery backlog, content plan, AI plan and environment set-up in `docs/`.
 - Feedback-level rules tied to grade boundaries (`packages/core`).
 - Maths equivalence checking with SymPy (`services/maths`).

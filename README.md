@@ -10,6 +10,7 @@ exams and keeps students motivated with streaks, rewards and a friendly fox call
 - Architecture: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
 - Privacy: [`docs/PRIVACY.md`](docs/PRIVACY.md)
 - Who is building what: [`docs/WORKSTREAMS.md`](docs/WORKSTREAMS.md)
+- Task list: [`docs/BACKLOG.md`](docs/BACKLOG.md)
 - Changes: [`CHANGELOG.md`](CHANGELOG.md)
 
 ## Quick start
