@@ -20,7 +20,8 @@
     "version:bump": "node scripts/bump-version.mjs",
     "content:quote-check": "node scripts/verify/quote-check-cli.mjs",
     "content:model-check": "node scripts/verify/model-check-cli.mjs",
-    "content:exact-check": "node scripts/verify/exact/exact-check.mjs"
+    "content:exact-check": "node scripts/verify/exact/exact-check.mjs",
+    "content:audit": "node scripts/verify/audit.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
