@@ -15,8 +15,9 @@
 ## Now
 
 - [x] H reminders and AI gateway (#11) merged.
-- [ ] V verification pipeline (#12): regenerating its
-      database migration on top of dev.
+- [x] V verification pipeline and audit (#12) merged.
+- [ ] V2: blind marking for extended answers; unify item type names and item JSON format.
+- [ ] R: five-year rewards progression (in progress).
 - [ ] Topic map API endpoints (map, cards due) still to build.
 
 ## Blocked
