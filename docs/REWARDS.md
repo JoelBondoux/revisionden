@@ -35,6 +35,25 @@
   rare item.
 - After level 100: **prestige stars** (up to 5) and gold frames, so it never stops.
 
+**Formula (implemented in `packages/core/src/levels.ts`).** The XP to go from level L to L + 1
+is `min(750, 300 + 50 × (L − 1))`: 300 XP for level 2, rising by 50 a level until it reaches
+750 XP at level 10 and stays there. Level 20 needs 12,000 XP in total and level 100 needs
+72,000 XP. Each prestige star after level 100 needs another 7,500 XP (ten levels' worth).
+
+**Assumptions behind the tuning** (exported constants, checked by tests):
+
+- A practice day earns about **60 XP** (the 50 XP daily goal plus a little more).
+- A school year has about **250 practice days** (most school days plus some in the holidays),
+  so about 15,000 XP a year and about 300 XP a week.
+- That gives a level-up about every week at first and every two to three weeks from level 10;
+  about level 24 after Year 9, then about 20 levels a year, and level 100 about 4.8 school years
+  in (late in Year 13). Students who practise less still level up, just more slowly.
+
+**Which XP counts** (`packages/core/src/reward-xp.ts`): XP from answers only (never minutes or
+taps); XP earned **late at night (22:00 to 05:59 UK time)** does not count; at most **300 XP a
+UK day** counts (five times the daily goal). The XP still shows and still counts for the daily
+goal; it just does not move levels, chapters or seasonal challenges.
+
 ### 2. Year chapters
 
 Each school year has its own themed track that opens in September and stays available forever.
@@ -49,6 +68,16 @@ Each school year has its own themed track that opens in September and stays avai
 
 A student who joins mid-way (for example in Year 12) starts at that chapter; earlier chapters
 remain earnable for collectors.
+
+**How it works (`packages/core/src/chapters.ts`, `catalogue/chapters.ts`).** Each chapter has 30
+steps: 29 steps one every 400 chapter XP (12,000 XP fills a chapter, a little under a year of
+daily practice) and a finale. Chapter XP is reward XP earned during that chapter's school year
+(school years start on 1 September). Once a chapter is full, extra XP from that year spills into
+the earliest unfinished earlier chapter, which is how a mid-way joiner can still collect
+chapters 1 to 3; nothing spills forward. Steps 10, 20 and 25 are epic Pip outfits, other even
+steps are rare. The Year 11 and Year 13 finales are given when the last GCSE or A-Level exam is
+sat. A-Level students (Year 12 and up) count as having sat their GCSEs, so the GCSE finisher set
+carries over. Nothing resets at A-Level: level, XP and every earned item carry over.
 
 ### 3. Milestones
 
@@ -72,12 +101,23 @@ Streak milestones also grant gift days (7 → 1, 30 → 2, 100 → 3, 365 → 5,
 Items belong to sets (for example "Gig kit", "Skate crew", "Pitch day", "Pixel world",
 "Dino expedition", "Cinema night"). Completing a set unlocks a bonus item and a profile title.
 
+A set is a list of reward ids from any source (levels, chapters, milestones). The six hobby
+sets give an epic bonus (a Pip outfit or frame plus a title); each term's seasonal drop is also a
+set whose bonus is a "collector" title (`packages/core/src/catalogue/collections.ts`).
+
 ### 5. Seasonal drops
 
 - Each term (6 a year, 30 over five years) brings about 8 to 12 new original items tied to a
   short challenge (for example "master 3 topics this half-term").
 - Exam-season drops reward revision consistency, not cramming.
 - Missed drops come back later as collection items, so nothing is gone for good.
+
+The 2026/27 drops are in `packages/core/src/catalogue/seasons.ts`: six back-to-back windows
+(1 Sep to 1 Nov, 2 Nov to 3 Jan, 4 Jan to 21 Feb, 22 Feb to 11 Apr, 12 Apr to 6 Jun, 7 Jun to
+31 Aug), 8 items each at rising challenge targets (3 common, 3 rare, 2 epic). The challenge
+counts right answers or daily-goal days inside the window only; the summer exam-term drop
+counts goal days (consistency, not cramming). Each drop comes back for the same window a year
+later. Later years' drops are added as data each term.
 
 ## Rarity
 
@@ -87,6 +127,9 @@ Items belong to sets (for example "Gig kit", "Skate crew", "Pitch day", "Pixel w
 | Rare      | Every 10th level, chapter steps, mid milestones                 | About 30%      |
 | Epic      | Chapter finales, collections, big milestones                    | About 15%      |
 | Legendary | Year 11 and Year 13 finishers, 1,000-day streak, Subject master | About 5%       |
+
+The catalogue validator test checks the shares stay within 6 points of these. Today (369
+rewards): common 52.6%, rare 30.6%, epic 14.6%, legendary 2.7%.
 
 ## Volume
 
@@ -101,6 +144,23 @@ Items belong to sets (for example "Gig kit", "Skate crew", "Pitch day", "Pixel w
 
 Rewards are not only avatar items: profile frames, titles ("Algebra Ace"), app colour themes,
 Pip the fox outfits and extra gift days.
+
+**Built so far** (the rest arrive as seasonal data each term): 99 level rewards and 5 prestige
+stars, 150 chapter steps, 55 milestones, 12 collection bonuses and 48 seasonal items for
+2026/27 (369 in total). The catalogue is data in `packages/core/src/catalogue/`; each entry has
+an id, name, rarity, source, one stated target (a stat, a collection or a seasonal challenge),
+the items it gives and its gift days. The 14 original reward ids are unchanged, so rewards
+already earned stay earned. Avatar items only unlock from the reward that locks them in
+`AVATAR_CATALOGUE`; new avatar items are always appended to their layer so saved avatar codes
+keep working.
+
+## Guard rails (tested)
+
+- No reward stat measures time spent, sessions or app opens; late-night XP never counts.
+- No randomness anywhere in the rewards code; every reward has a fixed, stated target.
+- Avatar items are rejected until their reward is earned.
+- Each reward is stored once (student + reward id), so gift days that come with it are added
+  once.
 
 ## Parent-set rewards
 

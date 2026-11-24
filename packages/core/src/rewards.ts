@@ -145,7 +145,7 @@ export interface RewardCard {
   id: string;
   name: string;
   rarity: Rarity;
-  items: readonly RewardItem[];
+  items: RewardItem[];
   earned: boolean;
   current: number;
   target: number;
@@ -193,7 +193,7 @@ export function rewardsOverview(input: OverviewInput): RewardsOverview {
     id: r.id,
     name: r.name,
     rarity: r.rarity,
-    items: r.items,
+    items: [...r.items],
     earned: earned.has(r.id),
     ...rewardProgress(r, input.stats, ctx),
   });
