@@ -29,6 +29,8 @@ import { avatarRoutes, onboardingRoutes } from './routes/onboarding';
 import { learnRoutes } from './routes/learn';
 import { flashcardRoutes } from './routes/flashcards';
 import type { MathsEngine } from './learning/maths-engine';
+import { parentStatsRoutes, studentStatsRoutes } from './stats/routes';
+import type { StatsAdapters } from './stats/adapters';
 
 export interface AppDeps {
   version: string;
@@ -46,6 +48,8 @@ export interface AppDeps {
   sleep?: (ms: number) => Promise<void>;
   /** Checks worked maths answers; without it, those answers get a 503. */
   mathsEngine?: MathsEngine;
+  /** Sources for dashboard panels owned by other workstreams; unset ones show "Not set up yet". */
+  statsAdapters?: Partial<StatsAdapters>;
 }
 
 export function createApp(deps: AppDeps) {
@@ -106,6 +110,7 @@ export function createApp(deps: AppDeps) {
   parent.route('/students', parentReminderRoutes(deps));
   parent.route('/students', parentAiUsageRoutes({ ...deps, gateway }));
   parent.route('/students', avatarRoutes(deps));
+  parent.route('/students', parentStatsRoutes(deps));
   parent.route('/onboarding', onboardingRoutes(deps));
   parent.route('/', reportRoutes(deps.db, 'parent'));
   parent.route(
@@ -123,6 +128,7 @@ export function createApp(deps: AppDeps) {
   app.route('/v1/student/learn', learnRoutes(deps));
   app.route('/v1/student/flashcards', flashcardRoutes(deps));
   app.route('/v1/student', reportRoutes(deps.db, 'student'));
+  app.route('/v1/student', studentStatsRoutes(deps));
   app.use('/v1/ai/*', studentAuth(deps));
   app.route('/v1/ai', aiRoutes({ ...deps, gateway }));
   app.route('/v1', parent);
