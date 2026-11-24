@@ -8,6 +8,7 @@ import { createAuth } from '../auth';
 import type { AppConfig } from '../env';
 import { createMemoryRateLimiter } from '../rate-limit';
 import { createPasskeyService } from '../passkeys';
+import type { VerificationDeps } from '../routes/review';
 
 export const TEST_CONFIG: AppConfig = {
   environment: 'development',
@@ -38,6 +39,7 @@ export function createTestClock(start = new Date('2026-11-24T10:00:00Z')): TestC
 export interface TestContextOptions {
   authLimit?: number;
   aiLimit?: number;
+  verification?: VerificationDeps;
 }
 
 export async function createTestContext(options: TestContextOptions = {}) {
@@ -56,6 +58,7 @@ export async function createTestContext(options: TestContextOptions = {}) {
       auth: createMemoryRateLimiter({ limit: options.authLimit ?? 1000, periodMs: 60_000, clock }),
       ai: createMemoryRateLimiter({ limit: options.aiLimit ?? 1000, periodMs: 60_000, clock }),
     },
+    verification: options.verification,
   });
 
   let parentCount = 0;

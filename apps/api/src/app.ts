@@ -10,6 +10,8 @@ import type { AppEnv } from './context';
 import { ensureParent } from './families';
 import { studentRoutes } from './routes/students';
 import { deviceRoutes, parentDeviceRoutes, studentSessionRoutes } from './routes/devices';
+import { reportRoutes } from './routes/quarantine';
+import { reviewRoutes, type VerificationDeps } from './routes/review';
 
 export interface AppDeps {
   version: string;
@@ -19,6 +21,8 @@ export interface AppDeps {
   clock: Clock;
   passkeys: PasskeyService;
   rateLimiters: { auth: RateLimiter; ai: RateLimiter };
+  /** Review queue and quarantine hooks (workstream V). */
+  verification?: VerificationDeps;
 }
 
 export function createApp(deps: AppDeps) {
@@ -56,6 +60,8 @@ export function createApp(deps: AppDeps) {
   const parent = new Hono<AppEnv>();
   parent.use('/me', requireParent);
   parent.use('/students/*', requireParent);
+  parent.use('/items/*', requireParent);
+  parent.use('/review/*', requireParent);
   async function requireParent(c: Context<AppEnv>, next: Next) {
     const session = await deps.auth.api.getSession({ headers: c.req.raw.headers });
     if (!session) throw unauthorized();
@@ -66,9 +72,16 @@ export function createApp(deps: AppDeps) {
   parent.get('/me', (c) => c.json({ familyId: c.var.parent.familyId, email: c.var.parentEmail }));
   parent.route('/students', studentRoutes(deps.db));
   parent.route('/students', parentDeviceRoutes(deps));
+  parent.route('/', reportRoutes(deps.db, 'parent'));
+  parent.route(
+    '/review',
+    reviewRoutes(deps.db, { ...deps.verification, now: () => deps.clock.now() }),
+  );
 
   app.route('/v1/device', deviceRoutes(deps));
   app.route('/v1/student', studentSessionRoutes(deps));
+  // Runs after the student session check registered by studentSessionRoutes.
+  app.route('/v1/student', reportRoutes(deps.db, 'student'));
   app.route('/v1', parent);
 
   app.notFound(() => {
