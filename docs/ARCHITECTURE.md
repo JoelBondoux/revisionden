@@ -160,21 +160,6 @@ All bodies are validated with the Zod schemas in `packages/core`. Errors always 
 | `POST /v1/device/link/verify`                                     | new device     | Register passkey; starts student session                  |
 | `POST /v1/device/unlock/options`, `POST /v1/device/unlock/verify` | linked device  | Unlock with the passkey                                   |
 | `GET /v1/student/me`, `POST /v1/student/lock`                     | student device | Who is signed in; lock the device                         |
-| Route                                                             | Who            | What                                                      |
-| ----------------------------------------------------------------- | -------------- | --------------------------------------------------------- |
-| `GET /health`                                                     | anyone         | `{ status, version }`                                     |
-| `/api/auth/*`                                                     | anyone         | Better Auth: Google, Microsoft, sign-out                  |
-| `GET /v1/me`                                                      | parent         | Family id and sign-in email                               |
-| `GET, POST /v1/students`                                          | parent         | List (`{ students }`) or create                           |
-| `GET, PATCH, DELETE /v1/students/:id`                             | parent         | One student                                               |
-| `GET, POST /v1/students/:id/enrolments`                           | parent         | List (`{ enrolments }`) or add/replace                    |
-| `DELETE /v1/students/:id/enrolments/:subjectId`                   | parent         | Remove an enrolment                                       |
-| `POST /v1/students/:id/link-tokens`                               | parent         | One-time token and QR link (10 minutes)                   |
-| `GET /v1/students/:id/devices`, `DELETE .../devices/:id`          | parent         | List or unlink devices                                    |
-| `POST /v1/device/link`                                            | new device     | Redeem token + family id; passkey options                 |
-| `POST /v1/device/link/verify`                                     | new device     | Register passkey; starts student session                  |
-| `POST /v1/device/unlock/options`, `POST /v1/device/unlock/verify` | linked device  | Unlock with the passkey                                   |
-| `GET /v1/student/me`, `POST /v1/student/lock`                     | student device | Who is signed in; lock the device                         |
 | `GET /v1/student/learn/lesson?topicId=…` or `?subjectId=…`        | student device | Lesson items (no answers); mixed by mastery for a subject |
 | `GET /v1/student/learn/command-words`                             | student device | Command-word lesson                                       |
 | `GET /v1/student/learn/subjects/:id/topics`                       | student device | Topics with mastery; starting test done?                  |
