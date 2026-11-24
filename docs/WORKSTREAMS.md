@@ -25,6 +25,7 @@ Status values: `queued`, `in progress`, `in review` (PR open into `dev`), `merge
 | V   | Verification pipeline, review queue, quarantine and audit | `scripts/verify/**`, `evals/**`, `apps/web/src/features/review/**`, review API routes           | merged      | [#12](https://github.com/JoelBondoux/revisionden/pull/12) |
 | R   | Five-year rewards progression, parent-set rewards first   | `packages/core/src/rewards*.ts`, reward catalogue data, avatar layers, rewards API routes       | in progress |                                                           |
 | S   | Official citations for pilot GCSE Maths content           | `content/items/**`, `content/topic-trees/**`, `content/mark-schemes/**`                         | merged      | [#7](https://github.com/JoelBondoux/revisionden/pull/7)   |
+| U   | Sound effects with mute (Web Audio, original)             | `apps/web/src/features/sound/**` (plus one-line `play()` calls listed in the PR)                | in review   |                                                           |
 
 ## Next (queued)
 
@@ -34,5 +35,4 @@ Status values: `queued`, `in progress`, `in review` (PR open into `dev`), `merge
 | G   | Deploy pipelines for dev, staging and production; Playwright end-to-end and accessibility                     | Scoped Cloudflare token and Neon key from the product owner               |
 | S2  | Run the full verification pipeline on the pilot and present it for human approval                             | V                                                                         |
 | L   | Policies (plain English + full legal text), About page with plain-English changelog, feedback and bug reports | Placeholders for operator details; legal review before any public release |
-| U   | Sound effects with mute (Web Audio, original)                                                                 | Touches lesson, flashcard, streak and reward screens with one-line calls  |
 | K   | Statistics dashboards for student and parent (spec in `PRODUCT_RULES.md`, mockups 19 and 20)                  | F (merged), H (merged); reward panel uses R5 when it lands                |
