@@ -28,7 +28,12 @@ export function normaliseText(text, { joinHyphens = true } = {}) {
   out = out.replace(/\u00ad/g, '').replace(/\u200b|\u200c|\u200d|\ufeff/g, '');
   for (const [pattern, replacement] of CHARACTERS) out = out.replace(pattern, replacement);
   out = out.replace(/(\w)-[ \t]*\r?\n\s*(\w)/g, joinHyphens ? '$1$2' : '$1-$2');
-  return out.replace(/\s+/g, ' ').trim();
+  out = out.replace(/\s+/g, ' ');
+  // PDF text often has spaces inside brackets and before punctuation; words are untouched.
+  return out
+    .replace(/([([]) /g, '$1')
+    .replace(/ ([)\],;:.!?])/g, '$1')
+    .trim();
 }
 
 /** Index of the quote in the normalised source, or -1. Tries both ways of reading line hyphens. */

@@ -42,34 +42,39 @@ function codeProblem(code, before, quoted) {
     : `${code} does not appear before the quote`;
 }
 
-const notFound = (reason) => ({ found: false, page: null, locationConfirmed: false, reason });
+const notFound = (reason) => ({
+  found: false,
+  page: null,
+  locationConfirmed: false,
+  reason,
+  spacingIgnored: false,
+});
 
 /**
- * { found, page, locationConfirmed, reason } for a citation ({ quote, location }) in a source.
- * pages: text of each page. paged: false for web pages (no page numbers). window: how many
- * characters before the quote to look for the nearest specification code. labels: the printed page number
- * of each page (a "page N" location may use either the PDF page or the printed page number).
+ * Copies of the quote when spaces are ignored on both sides: PDFs split words around
+ * superscripts and brackets ("n th", "variable (s)"). The letters must still match in order.
  */
-export function locateQuote(
-  { quote, location },
-  pages,
-  { paged = true, window = 1500, labels = [] } = {},
-) {
-  const needle = normaliseText(quote);
-  if (!needle) return notFound('the citation has no quote');
-  let match = null;
-  for (const joinHyphens of [true, false]) {
-    const { text, starts } = joinPages(pages, joinHyphens);
-    const at = text.indexOf(needle);
-    if (at >= 0) {
-      match = { text, at, page: starts.findLastIndex((s) => s <= at) + 1 };
-      break;
+function spacelessMatches(pages, needle) {
+  const { text, starts } = joinPages(pages, true);
+  const kept = [];
+  let tight = '';
+  for (let i = 0; i < text.length; i += 1) {
+    if (text[i] !== ' ') {
+      kept.push(i);
+      tight += text[i];
     }
   }
-  if (!match) return notFound('quote not found in the source');
+  const want = needle.replace(/ /g, '');
+  const found = [];
+  for (let at = tight.indexOf(want); at >= 0; at = tight.indexOf(want, at + 1)) {
+    const start = kept[at];
+    const length = kept[at + want.length - 1] + 1 - start;
+    found.push({ text, at: start, length, page: starts.findLastIndex((s) => s <= start) + 1 });
+  }
+  return found;
+}
 
-  const { text, at, page } = match;
-  const loc = parseLocation(location);
+function locationProblems({ text, at, page, length }, loc, { paged, window, labels }) {
   const problems = [];
   if (loc.pages.length && !paged) {
     problems.push('a web page has no page numbers; give a section or specification code');
@@ -83,7 +88,7 @@ export function locateQuote(
     }
   }
   const before = text.slice(Math.max(0, at - window), at);
-  const quoted = text.slice(at, at + needle.length);
+  const quoted = text.slice(at, at + length);
   for (const code of loc.codes) {
     const problem = codeProblem(code, before, quoted);
     if (problem) problems.push(problem);
@@ -91,10 +96,46 @@ export function locateQuote(
   if (!loc.pages.length && !loc.codes.length) {
     problems.push('the location has no page number or specification code to check');
   }
+  return problems;
+}
+
+/**
+ * { found, page, locationConfirmed, reason, spacingIgnored } for a citation ({ quote, location }) in a source.
+ * pages: text of each page. paged: false for web pages (no page numbers). window: how many
+ * characters before the quote to look for the nearest specification code. labels: the printed page number
+ * of each page (a "page N" location may use either the PDF page or the printed page number).
+ */
+export function locateQuote(
+  { quote, location },
+  pages,
+  { paged = true, window = 1500, labels = [] } = {},
+) {
+  const needle = normaliseText(quote);
+  if (!needle) return notFound('the citation has no quote');
+  const loc = parseLocation(location);
+  // Every copy of the quote (a specification can repeat text, e.g. Foundation and Higher tiers).
+  const matches = [];
+  for (const joinHyphens of [true, false]) {
+    const { text, starts } = joinPages(pages, joinHyphens);
+    for (let at = text.indexOf(needle); at >= 0; at = text.indexOf(needle, at + 1)) {
+      const page = starts.findLastIndex((s) => s <= at) + 1;
+      matches.push({ text, at, length: needle.length, page });
+    }
+  }
+  const spacingIgnored = matches.length === 0;
+  if (spacingIgnored) matches.push(...spacelessMatches(pages, needle));
+  if (matches.length === 0) return notFound('quote not found in the source');
+
+  const checks = matches.map((m) => ({
+    ...m,
+    problems: locationProblems(m, loc, { paged, window, labels }),
+  }));
+  const { page, problems } = checks.find((c) => c.problems.length === 0) ?? checks[0];
   return {
     found: true,
     page: paged ? page : null,
     locationConfirmed: problems.length === 0,
     reason: problems.length ? problems.join('; ') : null,
+    spacingIgnored,
   };
 }

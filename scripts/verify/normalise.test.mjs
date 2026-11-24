@@ -55,3 +55,15 @@ test('does not find a quote that is not in the source', () => {
 test('an empty quote never counts as found', () => {
   assert.equal(findQuote('   ', 'anything'), -1);
 });
+
+test('ignores spaces that PDFs put inside brackets and before punctuation', () => {
+  assert.equal(
+    normaliseText('equations ( including those ) by factorising , and formula ; find it .'),
+    'equations (including those) by factorising, and formula; find it.',
+  );
+  assert.ok(findQuote('use the symbols =, ≠, <, >', 'use the symbols   = , ≠,   <, > , ≤') >= 0);
+});
+
+test('still keeps the words themselves exact', () => {
+  assert.equal(findQuote('by factorising', 'by factor ising'), -1);
+});

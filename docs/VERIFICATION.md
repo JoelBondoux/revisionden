@@ -142,8 +142,12 @@ quarantine in `apps/api` and `apps/web/src/features/review/`, and the marking ru
 `scripts/verify/sources.mjs` (Pearson, AQA, OCR, Eduqas, WJEC, gov.uk) over https, and cached
 outside the repository (`REVISIONDEN_SOURCE_CACHE`, default `~/.cache/revisionden/sources`);
 exam board documents are never committed. Text is compared after normalising whitespace,
-ligatures, curly quotes, dashes, soft hyphens and words split across lines; letter case and
-words must match exactly. The location must be checkable:
+ligatures, curly quotes, dashes, soft hyphens, words split across lines and spaces inside
+brackets or before punctuation; letter case and words must match exactly. If that fails, a
+match with all spaces ignored is accepted (PDFs split "nth" into "n th" around a superscript),
+and the check's notes say "PDF spacing ignored" so a reviewer can see it. A quote that appears
+more than once (Foundation and Higher tiers repeat text) passes if any copy is at the stated
+location. The location must be checkable:
 
 - `page N` matches the PDF page or the printed page number on that page (board specifications
   number pages from the start of the content, so printed page 5 can be PDF page 17);

@@ -36,13 +36,14 @@ export async function checkCitation(citation, store) {
     page: found.page,
     result: found.found && found.locationConfirmed ? 'pass' : 'fail',
     reason: found.reason,
+    spacingIgnored: found.spacingIgnored,
   };
 }
 
 function describe(results) {
   return results
     .map((r, i) => {
-      const where = r.page ? `found on page ${r.page}` : 'found';
+      const where = `${r.page ? `found on page ${r.page}` : 'found'}${r.spacingIgnored ? ' (PDF spacing ignored)' : ''}`;
       const what = r.result === 'pass' ? where : r.reason;
       return `citation ${i + 1}: ${what}${r.sha256 ? ` (sha256 ${r.sha256})` : ''}`;
     })

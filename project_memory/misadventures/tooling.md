@@ -25,6 +25,11 @@ Tags: #tooling #ci
   rejects (`no-irregular-whitespace`, `no-misleading-character-class`). Write invisible or
   special characters as escapes from a script, quote object keys (`'\ufb01': 'fi'`), and use
   alternation rather than a character class for joiners (`/\u200b|\u200d/`).
+- **PDF text has spacing artefacts and repeated text.** pdf.js gives "( including", "formula ;",
+  "variable (s)" and "n th" (superscript), and the Pearson 1MA1 specification repeats most
+  Higher-tier text in the Foundation section. The quote checker first matched only the first copy
+  and failed 9 of 13 sourced pilot quotes; it now ignores punctuation spacing, falls back to a
+  spaceless match (noted in the check) and accepts any copy at the stated location.
 - **Specification "page 5" is not PDF page 5.** Board specifications number pages from the start
   of the content (Pearson 1MA1: printed page 5 is PDF page 17). The quote checker accepts either.
 - **`docker build` in a Claude cloud session fails pip installs with "certificate verify

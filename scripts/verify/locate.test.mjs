@@ -32,7 +32,13 @@ test('passes when the quote is on the stated page', () => {
     { quote: 'solve linear equations in one unknown', location: 'page 3' },
     spec,
   );
-  assert.deepEqual(r, { found: true, page: 3, locationConfirmed: true, reason: null });
+  assert.deepEqual(r, {
+    found: true,
+    page: 3,
+    locationConfirmed: true,
+    reason: null,
+    spacingIgnored: false,
+  });
 });
 
 test('fails when the quote is on a different page from the stated one', () => {
@@ -79,6 +85,7 @@ test('fails when the quote is not in the source at all', () => {
     page: null,
     locationConfirmed: false,
     reason: 'quote not found in the source',
+    spacingIgnored: false,
   });
 });
 
@@ -140,4 +147,41 @@ test('a code inside the quote itself confirms the location', () => {
   const pages = ['N7 calculate with roots'];
   const r = locateQuote({ quote: 'N7 calculate with roots', location: 'N7' }, pages);
   assert.equal(r.locationConfirmed, true);
+});
+
+test('a quote that appears more than once passes if any copy is at the stated location', () => {
+  const pages = [
+    'Foundation tier A17 solve linear equations in one unknown',
+    'Higher tier A17 solve linear equations in one unknown',
+  ];
+  const r = locateQuote({ quote: 'solve linear equations', location: 'page 2, A17' }, pages);
+  assert.equal(r.locationConfirmed, true);
+  assert.equal(r.page, 2);
+});
+
+test('when no copy is at the stated location, the reason names the first copy', () => {
+  const pages = ['A17 solve linear equations', 'A17 solve linear equations', 'other'];
+  const r = locateQuote({ quote: 'solve linear equations', location: 'page 3' }, pages);
+  assert.equal(r.locationConfirmed, false);
+  assert.match(r.reason, /found on page 1, not page 3/);
+});
+
+test('a quote split by PDF spacing (a superscript "th", a bracket) still matches, and says so', () => {
+  const pages = ['A25 deduce expressions to calculate the n th term of linear sequences'];
+  const r = locateQuote({ quote: 'calculate the nth term', location: 'A25' }, pages);
+  assert.equal(r.found, true);
+  assert.equal(r.locationConfirmed, true);
+  assert.equal(r.spacingIgnored, true);
+});
+
+test('an exact match does not report ignored spacing', () => {
+  const r = locateQuote({ quote: 'nth term', location: 'A25' }, ['A25 the nth term']);
+  assert.equal(r.spacingIgnored, false);
+});
+
+test('ignoring spacing never changes the letters: a different word still fails', () => {
+  const r = locateQuote({ quote: 'calculate the 9th term', location: 'A25' }, [
+    'A25 calculate the n th term',
+  ]);
+  assert.equal(r.found, false);
 });
