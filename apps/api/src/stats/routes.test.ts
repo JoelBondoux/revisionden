@@ -9,7 +9,12 @@ import {
   streaks,
   topics,
 } from '@revisionden/db';
-import { ParentDashboardSchema, StudentStatsSchema, topicMastery } from '@revisionden/core';
+import {
+  ParentDashboardSchema,
+  StudentRewardsResponseSchema,
+  StudentStatsSchema,
+  topicMastery,
+} from '@revisionden/core';
 import { createTestContext, jsonRequest, type TestContext } from '../test/helpers';
 
 let ctx: TestContext;
@@ -305,5 +310,41 @@ describe('panels from the rewards progression (workstream R)', () => {
     );
     expect(stats.level).toMatchObject({ level: 1 });
     expect(stats.level!.xpForNextLevel).toBeGreaterThan(0);
+  });
+});
+
+describe('reading rewards for the stats pages', () => {
+  it('leaves the child\'s "New!" rewards for their own Rewards page', async () => {
+    ctx = await createTestContext();
+    const { studentId, parent, headers } = await ctx.familyStudent('stats_kid');
+    const item = await seedContent(ctx.db);
+    // 21 daytime days of 30 XP this term: enough to earn level 2.
+    await ctx.db.insert(attempts).values(
+      Array.from({ length: 21 }, (_, i) => ({
+        studentId,
+        itemId: item['stats-topic-a']!,
+        correct: true,
+        score: 1,
+        mode: 'learn',
+        xpEarned: 30,
+        createdAt: new Date(`2026-11-${String(i + 3).padStart(2, '0')}T12:00:00Z`),
+      })),
+    );
+
+    for (let i = 0; i < 2; i++) {
+      const dashboard = await ctx.app.request(`/v1/students/${studentId}/dashboard`, {
+        headers: parent.headers,
+      });
+      expect(dashboard.status).toBe(200);
+      const stats = StudentStatsSchema.parse(
+        await (await ctx.app.request('/v1/student/stats', { headers })).json(),
+      );
+      expect(stats.level).toMatchObject({ level: 2 });
+    }
+
+    const own = StudentRewardsResponseSchema.parse(
+      await (await ctx.app.request('/v1/student/rewards', { headers })).json(),
+    );
+    expect(own.newlyEarned.map((r) => r.id)).toContain('level-2');
   });
 });

@@ -256,7 +256,8 @@ Mockups: screens 19 (student) and 20 (parent).
   into lessons, tests, starting tests and flashcard practice. Flashcard reviews show only each
   card's latest review (that is all that is stored).
 - The level bar and parent-set rewards come from the rewards progression (workstream R), read
-  from the same view as the Rewards page (`apps/api/src/stats/reward-adapters.ts`). Parent-set
+  through R's read-only `rewardsProgress` (`apps/api/src/stats/reward-adapters.ts`), so the
+  numbers match the Rewards page and reading them never uses up the student's "New!" rewards. Parent-set
   rewards are listed not-yet-given first, without the note to the student.
 - Panels not built yet (study plan, school report effort, predicted and target grades) come from
   adapters in `apps/api/src/stats/adapters.ts` that return null and show "Not set up yet".

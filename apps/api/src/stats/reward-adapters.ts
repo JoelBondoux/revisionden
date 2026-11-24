@@ -1,37 +1,33 @@
 /**
  * Real sources for the level and parent-set reward panels, from the rewards progression
- * (workstream R). They read R's own student rewards view (the code behind
- * GET /v1/student/rewards) in-process, so the numbers match the Rewards page and R's rules stay
- * in one place. The stats routes check the family before an adapter is called.
+ * (workstream R). They use R's read-only `rewardsProgress`, so the numbers match the Rewards
+ * page and nothing is saved: the student's own Rewards page still announces new rewards. The
+ * stats routes check the family before an adapter is called.
  */
-import { Hono } from 'hono';
-import { StudentRewardsResponseSchema, type StudentRewardsResponse } from '@revisionden/core';
-import type { Database } from '@revisionden/db';
-import type { AppEnv } from '../context';
+import { eq } from 'drizzle-orm';
+import { students, type Database } from '@revisionden/db';
 import type { Clock } from '../rate-limit';
-import { studentRewardRoutes } from '../routes/rewards';
+import { rewardsProgress } from '../routes/rewards';
+import { notFound } from '../errors';
 import { toRewardPanel, type StatsAdapters } from './adapters';
 
 export function rewardAdapters(deps: {
   db: Database;
   clock: Clock;
 }): Pick<StatsAdapters, 'rewards' | 'level'> {
-  async function view(studentId: string): Promise<StudentRewardsResponse> {
-    const app = new Hono<AppEnv>();
-    app.use('*', async (c, next) => {
-      c.set('student', { studentId, familyId: '', deviceId: '' });
-      await next();
-    });
-    app.route('/', studentRewardRoutes(deps));
-    const res = await app.request('/');
-    if (!res.ok) throw new Error(`Rewards view failed with ${res.status}`);
-    return StudentRewardsResponseSchema.parse(await res.json());
+  async function progress(studentId: string) {
+    const [student] = await deps.db
+      .select({ id: students.id, yearGroup: students.yearGroup })
+      .from(students)
+      .where(eq(students.id, studentId));
+    if (!student) throw notFound('Student not found');
+    return rewardsProgress(deps.db, student, deps.clock.now());
   }
 
   return {
-    rewards: async (studentId) => toRewardPanel((await view(studentId)).parentRewards),
+    rewards: async (studentId) => toRewardPanel((await progress(studentId)).parentRewards),
     level: async (studentId) => {
-      const { level, xpIntoLevel, xpForNext } = (await view(studentId)).overview.level;
+      const { level, xpIntoLevel, xpForNext } = (await progress(studentId)).overview.level;
       return { level, xpIntoLevel, xpForNextLevel: xpForNext };
     },
   };
