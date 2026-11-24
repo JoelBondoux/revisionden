@@ -19,6 +19,14 @@ export const TEST_CONFIG: AppConfig = {
   microsoft: { clientId: 'test-ms-id', clientSecret: 'test-ms-secret' },
   aiGatewayUrl: 'https://gateway.example.com/v1/test',
   passkeyRpId: 'dev.revisionden.test',
+  push: null,
+  ai: {
+    anthropicApiKey: undefined,
+    openaiApiKey: undefined,
+    gatewayToken: undefined,
+    monthlyCapMicroUsd: 2_500_000,
+    checker: undefined,
+  },
 };
 
 /** A valid avatar code (core format). */
