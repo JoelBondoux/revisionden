@@ -167,7 +167,9 @@
 Broken down into tasks when Stage 1 ships, following the same format. Headline order:
 
 1. Mastery dashboard and predicted grade.
-2. Exams, mocks and assessments entry; study plan generator and calendar (editable by both).
+2. Exams, mocks and assessments entry; study plan generator and calendar (editable by both):
+   drag sessions between days; detail panel to edit a session; custom rules created from edits,
+   toggled and removed, applied by the generator, with conflict warnings (mockup screen 5).
 3. School report setup and upload reading (delete after confirm).
 4. Parent portal: weekly summary and focus nudges.
 5. Feedback levels in the lesson player; Learn and Test modes.

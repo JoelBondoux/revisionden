@@ -75,3 +75,9 @@ Tags: #product #rules #limits #defaults
 - Reports quarantine an item immediately; `pnpm content:audit` reports the evidence for any item.
 - Essay and homework marking: two independent AI markings citing mark-scheme criteria; a gap of
   more than one level, or uncertainty, is shown as "check with your teacher", never guessed.
+
+## Study plan
+
+- Sessions drag between days and open an editable detail panel. Edits can become per-student rules
+  ("Always do Maths on Wednesdays") that the planner applies every week; rules can be toggled or
+  removed; conflicts are reported, not silently broken. Detail: `docs/PRODUCT_RULES.md`.
