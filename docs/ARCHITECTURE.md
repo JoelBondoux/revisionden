@@ -31,6 +31,29 @@
 | `scripts/`       | Repo tooling (version bump)                                                                                       |
 | `docs/`          | Live documentation                                                                                                |
 
+## Web app (`apps/web`)
+
+| Folder           | What it holds                                                                             |
+| ---------------- | ----------------------------------------------------------------------------------------- |
+| `src/design`     | Design tokens (`tokens.ts`, mirrored as CSS variables in `tokens.css`), base styles       |
+| `src/components` | Shared components (Button, Pill, ProgressBar, Card, BottomNav, Toast, Sheet, Avatar, Pip) |
+| `src/layout`     | `AppLayout` (main nav: bottom bar on phones, side rail from 768px) and `FocusLayout`      |
+| `src/pages`      | One component per screen; `src/routes.tsx` maps paths to screens                          |
+| `src/api`        | Typed API client (every response checked with Zod), `useApiResource`, retry UI            |
+| `src/mocks`      | MSW handlers and made-up demo data, used by tests and by `pnpm dev`                       |
+| `src/pwa`        | Service worker registration and the offline banner                                        |
+| `src/session`    | Which student is using this device (a convenience until device linking lands)             |
+| `public/`        | Web app manifest, icons, `sw.js` (app shell cache) and the MSW worker for development     |
+
+- **Routes:** `/` welcome, `/family`, `/learn` (path), `/lesson/:id`, `/lesson/:id/complete`,
+  `/cards`, `/plan`, `/papers`, `/progress`, `/settings`, `/install`; anything else shows a 404.
+- **API address:** `VITE_API_URL`, defaulting to `/api` on the same site. In development the MSW
+  mock API answers instead (turn off with `VITE_USE_MOCKS=false`).
+- **Offline:** `sw.js` caches the app shell (pages network first, built assets cache first) and
+  never caches `/api/` calls. It is registered in production builds only.
+- **Temporary schemas:** `src/api/schemas.ts` holds local Zod schemas until `packages/core`
+  publishes the shared ones (workstream C).
+
 ## Key flows
 
 **Sign-in.** Parent uses Google or Microsoft through Better Auth (runs in our Worker; sessions in

@@ -39,6 +39,16 @@ Tags: #product #rules #limits #defaults
 - Effort scores (e.g. CBI: Commitment, Behaviour and Inspiration, 1–4, 4 best) shape habits, never
   the predicted grade.
 
+## Web app
+
+- Installable PWA. Main nav tabs: Learn, Cards, Plan, Papers, Progress (bottom bar on phones, side
+  rail from 768px wide). Welcome and lessons hide the nav to keep focus.
+- Mascot: Pip, an angular geometric fox (orange `#FF7A2F`). Brand violet `#6C47F5`; font Nunito,
+  self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
+- Works offline for the app shell; API calls are never cached. iPad users get an "Add to Home
+  Screen" help page (`/install`), because iPadOS has no install prompt.
+- Until the real API and sign-in land, the web app runs on an MSW mock API with made-up data.
+
 ## Content
 
 - Content is JSON in `content/`, checked by `pnpm content:validate` (schemas in
