@@ -15,6 +15,13 @@
       "when": 1795552743445,
       "tag": "0001_learning_loop",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1795557406527,
+      "tag": "0002_reminders_ai",
+      "breakpoints": true
     }
   ]
 }

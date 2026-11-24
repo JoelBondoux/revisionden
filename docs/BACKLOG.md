@@ -162,9 +162,9 @@
 
 ### H. Reminders and AI gateway (`apps/api` notifications and AI)
 
-- [ ] H1 Web push subscription and scheduled reminders with quiet hours.
-- [ ] H2 AI gateway client with provider routing, retries and per-child monthly cap.
-- [ ] H3 Short-answer marking via the small model with recorded-fixture tests.
+- [x] H1 Web push subscription and scheduled reminders with quiet hours.
+- [x] H2 AI gateway client with provider routing, retries and per-child monthly cap.
+- [x] H3 Short-answer marking via the small model with fixture tests (no live provider calls).
 
 ---
 

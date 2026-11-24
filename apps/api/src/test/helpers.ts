@@ -8,6 +8,7 @@ import { createAuth } from '../auth';
 import type { AppConfig } from '../env';
 import { createMemoryRateLimiter } from '../rate-limit';
 import { createPasskeyService } from '../passkeys';
+import type { AiProvider, ProviderName } from '../ai/types';
 import type { MathsEngine } from '../learning/maths-engine';
 import { STUDENT_COOKIE } from '../routes/devices';
 import { hashToken, randomToken } from '../tokens';
@@ -23,6 +24,14 @@ export const TEST_CONFIG: AppConfig = {
   aiGatewayUrl: 'https://gateway.example.com/v1/test',
   passkeyRpId: 'dev.revisionden.test',
   serveDraftContent: false,
+  push: null,
+  ai: {
+    anthropicApiKey: undefined,
+    openaiApiKey: undefined,
+    gatewayToken: undefined,
+    monthlyCapMicroUsd: 2_500_000,
+    checker: undefined,
+  },
 };
 
 /** A valid avatar code (core format). */
@@ -42,6 +51,8 @@ export function createTestClock(start = new Date('2026-11-24T10:00:00Z')): TestC
 export interface TestContextOptions {
   authLimit?: number;
   aiLimit?: number;
+  config?: Partial<AppConfig>;
+  aiProviders?: Partial<Record<ProviderName, AiProvider>>;
   serveDraftContent?: boolean;
   mathsEngine?: MathsEngine;
 }
@@ -50,14 +61,21 @@ export async function createTestContext(options: TestContextOptions = {}) {
   const { db: pglite, client } = await createTestDb();
   const db = pglite as unknown as Database;
   const clock = createTestClock();
-  const auth = createAuth({ db, config: TEST_CONFIG });
+  const config: AppConfig = {
+    ...TEST_CONFIG,
+    serveDraftContent: options.serveDraftContent ?? false,
+    ...options.config,
+  };
+  const auth = createAuth({ db, config });
   const app = createApp({
     version: '00.01.000',
-    config: { ...TEST_CONFIG, serveDraftContent: options.serveDraftContent ?? false },
+    config,
     db,
     auth,
     clock,
     passkeys: createPasskeyService(TEST_CONFIG),
+    aiProviders: options.aiProviders ?? {},
+    sleep: async () => undefined,
     rateLimiters: {
       auth: createMemoryRateLimiter({ limit: options.authLimit ?? 1000, periodMs: 60_000, clock }),
       ai: createMemoryRateLimiter({ limit: options.aiLimit ?? 1000, periodMs: 60_000, clock }),

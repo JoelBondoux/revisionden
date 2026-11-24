@@ -33,19 +33,20 @@
 
 ## Web app (`apps/web`)
 
-| Folder                    | What it holds                                                                                |
-| ------------------------- | -------------------------------------------------------------------------------------------- |
-| `src/design`              | Design tokens (`tokens.ts`, mirrored as CSS variables in `tokens.css`), base styles          |
-| `src/components`          | Shared components (Button, Pill, ProgressBar, Card, BottomNav, Toast, Sheet, Avatar, Pip)    |
-| `src/layout`              | `AppLayout` (main nav: bottom bar on phones, side rail from 768px) and `FocusLayout`         |
-| `src/pages`               | One component per screen; `src/routes.tsx` maps paths to screens                             |
-| `src/api`                 | Typed API client (every response checked with Zod), `useApiResource`, retry UI               |
-| `src/mocks`               | MSW handlers and made-up demo data, used by tests and by `pnpm dev`                          |
-| `src/pwa`                 | Service worker registration and the offline banner                                           |
-| `src/session`             | Which student is using this device (a convenience until device linking lands)                |
-| `src/features/learn`      | Lesson player, starting test, subject page, command words, learning API client and mocks (F) |
-| `src/features/flashcards` | Cards tab: due cards, all decks, my cards, 3D flip card (F)                                  |
-| `public/`                 | Web app manifest, icons, `sw.js` (app shell cache) and the MSW worker for development        |
+| Folder                       | What it holds                                                                                |
+| ---------------------------- | -------------------------------------------------------------------------------------------- |
+| `src/design`                 | Design tokens (`tokens.ts`, mirrored as CSS variables in `tokens.css`), base styles          |
+| `src/components`             | Shared components (Button, Pill, ProgressBar, Card, BottomNav, Toast, Sheet, Avatar, Pip)    |
+| `src/layout`                 | `AppLayout` (main nav: bottom bar on phones, side rail from 768px) and `FocusLayout`         |
+| `src/pages`                  | One component per screen; `src/routes.tsx` maps paths to screens                             |
+| `src/api`                    | Typed API client (every response checked with Zod), `useApiResource`, retry UI               |
+| `src/mocks`                  | MSW handlers and made-up demo data, used by tests and by `pnpm dev`                          |
+| `src/pwa`                    | Service worker registration and the offline banner                                           |
+| `src/session`                | Which student is using this device (a convenience until device linking lands)                |
+| `src/features/learn`         | Lesson player, starting test, subject page, command words, learning API client and mocks (F) |
+| `src/features/flashcards`    | Cards tab: due cards, all decks, my cards, 3D flip card (F)                                  |
+| `src/features/notifications` | Reminders card for this device, parent reminder settings, push helpers (H)                   |
+| `public/`                    | Web app manifest, icons, `sw.js` (app shell cache) and the MSW worker for development        |
 
 - **Learning routes (F):** `/learn/subject/:subjectId` (topics and mastery), `/learn/subject/:subjectId/start`
   (starting test), `/learn/subject/:subjectId/practice` (mixed lesson), `/learn/topic/:topicId`, `/learn/command-words`;
@@ -90,7 +91,11 @@ marked by AI. Maths lines go to the maths engine, not to AI.
 deletes them as soon as the user confirms what was read.
 
 **AI gateway.** All AI calls go through Cloudflare AI Gateway: provider routing, logs without
-personal data, spend tracking and the monthly cap per child.
+personal data, spend tracking and the monthly cap per child. Detail: `docs/AI.md`.
+
+**Reminders.** A cron trigger (every 15 minutes) works out each subscribed student's due
+reminders (`apps/api/src/notifications/schedule.ts`), logs them and sends an empty VAPID-signed
+push to each device. The service worker then fetches the text and shows the notification.
 
 ## Data model (owned by the API/DB workstream)
 
@@ -122,6 +127,10 @@ Source of truth: `packages/db/src/schema.ts`; migrations in `packages/db/migrati
 | `daily_xp`           | student_id + day (key, UK date), xp                                                                                                             |
 | `starting_tests`     | id, student_id, subject_id, item_ids (JSON), started (created_at), finished_at                                                                  |
 | `flashcards`         | id, student_id, item_id (null for own cards), topic_id, origin (deck, wrong_answer, own), front, back, repetitions, interval_days, ease, due_at |
+| `push_subscriptions` | id, student_id, device_id, endpoint (unique), p256dh, auth                                                                                      |
+| `reminder_settings`  | student_id (key), on/off switches, quiet and weekday quiet times, time zone                                                                     |
+| `reminder_log`       | id, student_id, kind (streak, session), local_date, message, sent_at                                                                            |
+| `ai_usage`           | id, student_id, job, provider, model, tokens, cost_micro_usd (no prompts)                                                                       |
 
 No table stores a real name, date of birth, email of a student, photo or school name. The
 schema guard test (`packages/db/src/schema-guard.test.ts`) checks the migrated database and fails
@@ -175,6 +184,12 @@ All bodies are validated with the Zod schemas in `packages/core`. Errors always 
 | `GET, POST /v1/student/flashcards`                                | student device | Due cards, decks, own cards; add own card                 |
 | `GET /v1/student/flashcards/decks/:topicId`                       | student device | One deck's cards                                          |
 | `POST /v1/student/flashcards/:id/review`                          | student device | Rate a card (again, hard, good, easy)                     |
+| `GET /v1/notifications/vapid-key`                                 | anyone         | Public key for web push (503 if off)                      |
+| `POST, DELETE /v1/student/push-subscriptions`                     | student device | Turn reminders on or off for this device                  |
+| `GET /v1/student/reminders/latest`                                | student device | Latest reminder text (for the worker)                     |
+| `GET, PUT /v1/students/:id/reminder-settings`                     | parent         | Quiet hours, school hours, reminder kinds                 |
+| `GET /v1/students/:id/ai-usage`                                   | parent         | This month's AI calls, spend and cap                      |
+| `POST /v1/ai/mark-short-answer`                                   | student device | Mark a short answer (rules, then AI)                      |
 
 A parent only ever sees their own family: another family's student answers 404. The QR code
 holds `<web origin>/link?token=…&family=…`. The passkey relying party is the web app's host
