@@ -42,10 +42,23 @@ and reports which line first goes wrong; Cloud Run container ready to deploy.
 
 ## Wave 2: queued until Wave 1 is merged
 
-| ID  | Workstream                                                                                                                                                    | Depends on           |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| E   | Family onboarding and avatar builder screens                                                                                                                  | A, B, C              |
-| F   | Learning loop: starting test, path, lessons, flashcards, XP (`feature/f-learning-loop`, in review, [#10](https://github.com/JoelBondoux/revisionden/pull/10)) | A, B, C, D           |
-| G   | Deploy pipelines for dev, staging and production; Playwright end-to-end                                                                                       | A, B (domain bought) |
-| H   | Reminders (web push) and AI gateway with per-child cost cap                                                                                                   | B                    |
-| V   | Verification pipeline, review queue, quarantine and audit reports                                                                                             | C, D                 |
+| ID  | Workstream                                                              | Depends on           |
+| --- | ----------------------------------------------------------------------- | -------------------- |
+| E   | Family onboarding and avatar builder screens                            | A, B, C              |
+| F   | Learning loop: starting test, path, lessons, flashcards, XP             | A, B, C, D           |
+| G   | Deploy pipelines for dev, staging and production; Playwright end-to-end | A, B (domain bought) |
+| H   | Reminders (web push) and AI gateway with per-child cost cap             | B                    |
+| V   | Verification pipeline, review queue, quarantine and audit reports       | C, D                 |
+
+### Wave 2 progress
+
+| ID  | Workstream                                                                                                                                                    | Owns these paths                                                                                              | Branch                        | Status    | PR                                                      |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ----------------------------- | --------- | ------------------------------------------------------- |
+| E   | Family onboarding and avatar builder screens                                                                                                                  | `apps/web/src/features/onboarding/**`, `apps/web/src/features/avatar/**`, `apps/api/src/routes/onboarding.ts` | `feature/e-onboarding-avatar` | in review | [#9](https://github.com/JoelBondoux/revisionden/pull/9) |
+| ID  | Workstream                                                                                                                                                    | Depends on                                                                                                    |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------                                                                                          |
+| E   | Family onboarding and avatar builder screens                                                                                                                  | A, B, C                                                                                                       |
+| F   | Learning loop: starting test, path, lessons, flashcards, XP (`feature/f-learning-loop`, in review, [#10](https://github.com/JoelBondoux/revisionden/pull/10)) | A, B, C, D                                                                                                    |
+| G   | Deploy pipelines for dev, staging and production; Playwright end-to-end                                                                                       | A, B (domain bought)                                                                                          |
+| H   | Reminders (web push) and AI gateway with per-child cost cap                                                                                                   | B                                                                                                             |
+| V   | Verification pipeline, review queue, quarantine and audit reports                                                                                             | C, D                                                                                                          |

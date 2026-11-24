@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useApi } from '../api/ApiContext';
 import { LoadingOrError } from '../api/LoadingOrError';
 import { useApiResource } from '../api/useApiResource';
@@ -36,6 +36,9 @@ export function FamilyPage() {
           ))}
         </ul>
       )}
+      <Link to="/onboarding" className="secondary-text">
+        Parents: add or manage children
+      </Link>
     </div>
   );
 }

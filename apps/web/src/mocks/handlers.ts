@@ -1,5 +1,6 @@
 import { http, HttpResponse, type RequestHandler } from 'msw';
 import { answerRequestSchema } from '../api/schemas';
+import { onboardingHandlers } from '../features/onboarding/mocks';
 import { answerKeys, cardsDue, family, lessons, topicMap, XP_PER_CORRECT } from './data';
 import { learnHandlers } from '../features/learn/mocks';
 
@@ -9,6 +10,7 @@ const normalise = (value: string) => value.trim().toLowerCase().replace(/\s+/g, 
 
 /** Mock API used in development and tests until the real API (workstream B) is ready. */
 export const handlers: RequestHandler[] = [
+  ...onboardingHandlers,
   http.get('*/api/family', () => HttpResponse.json(family)),
 
   http.get('*/api/students/:studentId/map', ({ params }) =>

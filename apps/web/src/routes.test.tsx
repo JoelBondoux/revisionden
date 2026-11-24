@@ -13,6 +13,8 @@ describe('routes', () => {
     ['/settings', 'Settings'],
     ['/cards', 'Cards'],
     ['/papers', 'Papers'],
+    ['/onboarding', "Who's studying?"],
+    ['/link', 'Link this device'],
   ])('%s shows the heading "%s"', async (path, heading) => {
     renderRoute(path);
     expect(await screen.findByRole('heading', { level: 1, name: heading })).toBeInTheDocument();
@@ -32,7 +34,7 @@ describe('routes', () => {
     expect(screen.getByRole('main')).toBeInTheDocument();
   });
 
-  it.each(['/', '/lesson/standard-form'])(
+  it.each(['/', '/lesson/standard-form', '/onboarding'])(
     'hides the main navigation on %s to keep focus',
     async (path) => {
       renderRoute(path);

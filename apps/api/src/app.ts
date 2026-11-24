@@ -10,6 +10,7 @@ import type { AppEnv } from './context';
 import { ensureParent } from './families';
 import { studentRoutes } from './routes/students';
 import { deviceRoutes, parentDeviceRoutes, studentSessionRoutes } from './routes/devices';
+import { avatarRoutes, onboardingRoutes } from './routes/onboarding';
 import { learnRoutes } from './routes/learn';
 import { flashcardRoutes } from './routes/flashcards';
 import type { MathsEngine } from './learning/maths-engine';
@@ -61,6 +62,7 @@ export function createApp(deps: AppDeps) {
   const parent = new Hono<AppEnv>();
   parent.use('/me', requireParent);
   parent.use('/students/*', requireParent);
+  parent.use('/onboarding/*', requireParent);
   async function requireParent(c: Context<AppEnv>, next: Next) {
     const session = await deps.auth.api.getSession({ headers: c.req.raw.headers });
     if (!session) throw unauthorized();
@@ -71,6 +73,8 @@ export function createApp(deps: AppDeps) {
   parent.get('/me', (c) => c.json({ familyId: c.var.parent.familyId, email: c.var.parentEmail }));
   parent.route('/students', studentRoutes(deps.db));
   parent.route('/students', parentDeviceRoutes(deps));
+  parent.route('/students', avatarRoutes(deps));
+  parent.route('/onboarding', onboardingRoutes(deps));
 
   app.route('/v1/device', deviceRoutes(deps));
   app.route('/v1/student', studentSessionRoutes(deps));

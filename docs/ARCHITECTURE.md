@@ -143,6 +143,24 @@ All bodies are validated with the Zod schemas in `packages/core`. Errors always 
 | `GET, POST /v1/students/:id/enrolments`                           | parent         | List (`{ enrolments }`) or add/replace                    |
 | `DELETE /v1/students/:id/enrolments/:subjectId`                   | parent         | Remove an enrolment                                       |
 | `POST /v1/students/:id/link-tokens`                               | parent         | One-time token and QR link (10 minutes)                   |
+| `GET, PUT /v1/students/:id/avatar`                                | parent         | Avatar code and earned rewards; save code                 |
+| `POST /v1/onboarding/children`                                    | parent         | Add a child with subjects, boards, tiers                  |
+| `GET /v1/onboarding/family`                                       | parent         | Children with exams, checks left, devices                 |
+| `GET /v1/students/:id/devices`, `DELETE .../devices/:id`          | parent         | List or unlink devices                                    |
+| `POST /v1/device/link`                                            | new device     | Redeem token + family id; passkey options                 |
+| `POST /v1/device/link/verify`                                     | new device     | Register passkey; starts student session                  |
+| `POST /v1/device/unlock/options`, `POST /v1/device/unlock/verify` | linked device  | Unlock with the passkey                                   |
+| `GET /v1/student/me`, `POST /v1/student/lock`                     | student device | Who is signed in; lock the device                         |
+| Route                                                             | Who            | What                                                      |
+| ----------------------------------------------------------------- | -------------- | --------------------------------------------------------- |
+| `GET /health`                                                     | anyone         | `{ status, version }`                                     |
+| `/api/auth/*`                                                     | anyone         | Better Auth: Google, Microsoft, sign-out                  |
+| `GET /v1/me`                                                      | parent         | Family id and sign-in email                               |
+| `GET, POST /v1/students`                                          | parent         | List (`{ students }`) or create                           |
+| `GET, PATCH, DELETE /v1/students/:id`                             | parent         | One student                                               |
+| `GET, POST /v1/students/:id/enrolments`                           | parent         | List (`{ enrolments }`) or add/replace                    |
+| `DELETE /v1/students/:id/enrolments/:subjectId`                   | parent         | Remove an enrolment                                       |
+| `POST /v1/students/:id/link-tokens`                               | parent         | One-time token and QR link (10 minutes)                   |
 | `GET /v1/students/:id/devices`, `DELETE .../devices/:id`          | parent         | List or unlink devices                                    |
 | `POST /v1/device/link`                                            | new device     | Redeem token + family id; passkey options                 |
 | `POST /v1/device/link/verify`                                     | new device     | Register passkey; starts student session                  |

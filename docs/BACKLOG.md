@@ -127,10 +127,10 @@
 
 ### E. Family onboarding and avatar builder (`apps/web/src/features/onboarding`, `.../avatar`)
 
-- [ ] E1 Onboarding flow from screen 15 of the mockups, against the real API.
-- [ ] E2 Board and tier picker per subject, with "not sure" reminders.
-- [ ] E3 Avatar builder from screen 16 (layers, shuffle, locked items, short code).
-- [ ] E4 QR device linking screens (parent shows code; student scans; passkey set-up).
+- [x] E1 Onboarding flow from screen 15 of the mockups, against the real API.
+- [x] E2 Board and tier picker per subject, with "not sure" reminders.
+- [x] E3 Avatar builder from screen 16 (layers, shuffle, locked items, short code).
+- [x] E4 QR device linking screens (parent shows code; student scans; passkey set-up).
 - Tests: Playwright journey "parent adds two students and links a device"; component tests per step.
 
 ### F. Learning loop (`apps/web/src/features/learn`, `apps/api` learn routes)
