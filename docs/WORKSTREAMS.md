@@ -52,7 +52,7 @@ and reports which line first goes wrong; Cloud Run container ready to deploy.
 
 ### H: Reminders and AI gateway
 
-Branch `feature/h-reminders-ai`. Status: in review (PR into `dev`). Owns
+Branch `feature/h-reminders-ai`. Status: in review, [#11](https://github.com/JoelBondoux/revisionden/pull/11). Owns
 `apps/api/src/ai/**`, `apps/api/src/notifications/**`, the H tables in `packages/db` and
 `apps/web/src/features/notifications/**`. Web push reminders with quiet hours and a cron
 trigger; AI gateway client (Anthropic primary, OpenAI second checker, retries, Zod-validated
