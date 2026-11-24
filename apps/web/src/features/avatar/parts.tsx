@@ -418,6 +418,62 @@ const TOPS: Record<string, Draw> = {
       </text>
     </>
   ),
+  // Year chapter finales (original art).
+  'chapter-hoodie': ({ top }) => (
+    <>
+      {hoodie(top)}
+      <circle cx={60} cy={104} r={7} fill={WHITE} />
+      <text x={60} y={107.5} fontSize={9} fontWeight={900} textAnchor="middle" fill={INK}>
+        1
+      </text>
+    </>
+  ),
+  'bomber-jacket': () => (
+    <>
+      {topBase('#3F5D3A')}
+      <path d="M26 114 H94 V120 H26 Z" fill="#C8102E" opacity={0.85} />
+      <path d="M48 84 Q60 92 72 84" fill="none" stroke="#C8102E" strokeWidth={4} />
+      <path d="M60 88 V120" stroke={GOLD} strokeWidth={2} />
+      <rect x={38} y={98} width={8} height={6} rx={1} fill="#FF7A2F" />
+    </>
+  ),
+  'gcse-finisher-jacket': () => (
+    <>
+      {topBase('#1E2A78')}
+      <path d="M40 92 L60 120 L80 92" fill="none" stroke={GOLD} strokeWidth={4} />
+      <path d="M26 112 H94" stroke={GOLD} strokeWidth={2} />
+      <polygon
+        points="86,96 88,101 93,101 89,104 91,109 86,106 81,109 83,104 79,101 84,101"
+        fill={GOLD}
+        stroke={GOLD_EDGE}
+        strokeWidth={0.8}
+      />
+    </>
+  ),
+  'sixth-form-coat': () => (
+    <>
+      {topBase('#5B3A29')}
+      <polygon points="46,84 60,104 52,120 38,92" fill="#4A2F21" />
+      <polygon points="74,84 60,104 68,120 82,92" fill="#4A2F21" />
+      <polygon points="52,86 60,100 68,86" fill="#F2E6D8" />
+      {[108, 116].map((y) => (
+        <circle key={y} cx={64} cy={y} r={1.6} fill={GOLD} />
+      ))}
+    </>
+  ),
+  'a-level-finisher-jacket': () => (
+    <>
+      {topBase('#5A1E78')}
+      <path d="M40 92 L60 120 L80 92" fill="none" stroke={GOLD} strokeWidth={4} />
+      <path d="M26 108 H94 M26 113 H94" stroke={GOLD} strokeWidth={1.5} />
+      <path
+        d="M82 96 L90 96 L86 104 Z M86 104 V110"
+        fill={GOLD}
+        stroke={GOLD_EDGE}
+        strokeWidth={0.8}
+      />
+    </>
+  ),
 };
 
 const lensPair = (draw: (x: number) => ReactNode, bridge = true) => (
@@ -489,62 +545,6 @@ const EYEWEAR: Record<string, Draw> = {
     <>
       <rect x={40} y={44} width={40} height={11} rx={3} fill="#FF2E4D" opacity={0.75} />
       <path d="M42 49.5 H78" stroke={WHITE} strokeWidth={1.5} opacity={0.9} />
-    </>
-  ),
-  // Year chapter finales (original art).
-  'chapter-hoodie': ({ top }) => (
-    <>
-      {hoodie(top)}
-      <circle cx={60} cy={104} r={7} fill={WHITE} />
-      <text x={60} y={107.5} fontSize={9} fontWeight={900} textAnchor="middle" fill={INK}>
-        1
-      </text>
-    </>
-  ),
-  'bomber-jacket': () => (
-    <>
-      {topBase('#3F5D3A')}
-      <path d="M26 114 H94 V120 H26 Z" fill="#C8102E" opacity={0.85} />
-      <path d="M48 84 Q60 92 72 84" fill="none" stroke="#C8102E" strokeWidth={4} />
-      <path d="M60 88 V120" stroke={GOLD} strokeWidth={2} />
-      <rect x={38} y={98} width={8} height={6} rx={1} fill="#FF7A2F" />
-    </>
-  ),
-  'gcse-finisher-jacket': () => (
-    <>
-      {topBase('#1E2A78')}
-      <path d="M40 92 L60 120 L80 92" fill="none" stroke={GOLD} strokeWidth={4} />
-      <path d="M26 112 H94" stroke={GOLD} strokeWidth={2} />
-      <polygon
-        points="86,96 88,101 93,101 89,104 91,109 86,106 81,109 83,104 79,101 84,101"
-        fill={GOLD}
-        stroke={GOLD_EDGE}
-        strokeWidth={0.8}
-      />
-    </>
-  ),
-  'sixth-form-coat': () => (
-    <>
-      {topBase('#5B3A29')}
-      <polygon points="46,84 60,104 52,120 38,92" fill="#4A2F21" />
-      <polygon points="74,84 60,104 68,120 82,92" fill="#4A2F21" />
-      <polygon points="52,86 60,100 68,86" fill="#F2E6D8" />
-      {[108, 116].map((y) => (
-        <circle key={y} cx={64} cy={y} r={1.6} fill={GOLD} />
-      ))}
-    </>
-  ),
-  'a-level-finisher-jacket': () => (
-    <>
-      {topBase('#5A1E78')}
-      <path d="M40 92 L60 120 L80 92" fill="none" stroke={GOLD} strokeWidth={4} />
-      <path d="M26 108 H94 M26 113 H94" stroke={GOLD} strokeWidth={1.5} />
-      <path
-        d="M82 96 L90 96 L86 104 Z M86 104 V110"
-        fill={GOLD}
-        stroke={GOLD_EDGE}
-        strokeWidth={0.8}
-      />
     </>
   ),
 };
@@ -947,7 +947,7 @@ const SCENES: Record<string, Draw> = {
         [88, 44],
         [10, 58],
         [112, 70],
-      ].map(([x, y]) => (
+      ].map(([x = 0, y = 0]) => (
         <path
           key={`${x}-${y}`}
           d={`M${x - 3} ${y} H${x + 3} M${x} ${y - 3} V${y + 3}`}
