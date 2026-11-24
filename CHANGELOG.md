@@ -27,6 +27,9 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - GCSE Maths Higher pilot topic tree (Pearson Edexcel 1MA1) with sample items.
 - Maths engine `POST /check-working`: finds the first wrong line of working and checks the final
   answer; safer input parsing; 90% coverage gate; container smoke test in CI.
+- Content citations and verification records on every item, topic leaf, mark scheme and diagram,
+  enforced by the validator (quotes, required checks, immutable verified versions, no PDFs or
+  raster images); code-drawn SVG diagram schema; `pnpm content:audit <id>` audit report.
 
 ## [00.01.002] - 2026-11-24
 

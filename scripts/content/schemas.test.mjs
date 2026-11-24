@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createValidators } from './schemas.mjs';
+import { citation, draft, quotedCitation, verified } from './test-helpers.mjs';
 
 const v = createValidators();
 
@@ -16,6 +17,8 @@ const base = {
   difficulty: 2,
   source_ref: 'Pearson Edexcel 1MA1 A17',
   checked_by: ['maths-engine'],
+  citations: [citation()],
+  verification: draft(),
 };
 
 const samples = {
@@ -130,7 +133,12 @@ test('unknown fields are rejected so typos are caught', () => {
   assert.equal(v.item({ ...samples.flashcard, sourceRef: 'x' }), false);
 });
 
-const leaf = (id, ref) => ({ id, title: `Topic ${id}`, spec_ref: [ref] });
+const leaf = (id, ref) => ({
+  id,
+  title: `Topic ${id}`,
+  spec_ref: [ref],
+  citations: [citation({ supports: ['topic'] })],
+});
 
 const tree = {
   id: 'gcse-maths-edexcel-higher',
@@ -142,6 +150,7 @@ const tree = {
     title: 'GCSE (9-1) Mathematics',
     url: 'https://example.org/spec.pdf',
   },
+  verification: draft(),
   topics: [
     {
       id: 'gcse-maths-h-algebra',
@@ -193,15 +202,172 @@ test('points and levels mark schemes pass; an empty one fails', () => {
     id: 'ms-points',
     type: 'points',
     source_ref: 'Edexcel sample mark scheme style',
+    citations: [citation({ source_type: 'mark_scheme', supports: ['mark_scheme'] })],
+    verification: draft(),
     points: [{ code: 'M1', description: 'Correct method' }],
   };
   const levels = {
     id: 'ms-levels',
     type: 'levels',
     source_ref: 'Board level descriptors',
+    citations: [citation({ source_type: 'mark_scheme', supports: ['mark_scheme'] })],
+    verification: draft(),
     levels: [{ level: 1, marks: [1, 2], descriptor: 'Some relevant points' }],
   };
   assert.equal(v.markScheme(points), true, JSON.stringify(v.markScheme.errors));
   assert.equal(v.markScheme(levels), true, JSON.stringify(v.markScheme.errors));
   assert.equal(v.markScheme({ ...points, points: [] }), false);
+});
+
+test('an item without citations, or with an empty list, fails', () => {
+  assert.equal(v.item(without(samples.numeric, 'citations')), false);
+  assert.equal(v.item({ ...samples.numeric, citations: [] }), false);
+});
+
+for (const field of [
+  'source_type',
+  'publisher',
+  'title',
+  'document_ref',
+  'url',
+  'location',
+  'supports',
+]) {
+  test(`a citation without ${field} fails`, () => {
+    assert.equal(v.item({ ...samples.numeric, citations: [without(citation(), field)] }), false);
+  });
+}
+
+test('a citation must use a known source type and an https url', () => {
+  assert.equal(
+    v.item({ ...samples.numeric, citations: [citation({ source_type: 'blog' })] }),
+    false,
+  );
+  assert.equal(
+    v.item({ ...samples.numeric, citations: [citation({ url: 'http://x.org' })] }),
+    false,
+  );
+});
+
+test('a quote needs the date it was retrieved, and a retrieval date needs a quote', () => {
+  const quoteOnly = without(quotedCitation(), 'retrieved_at');
+  const dateOnly = without(quotedCitation(), 'quote');
+  assert.equal(v.item({ ...samples.numeric, citations: [quoteOnly] }), false);
+  assert.equal(v.item({ ...samples.numeric, citations: [dateOnly] }), false);
+  assert.equal(v.item({ ...samples.numeric, citations: [quotedCitation()] }), true);
+});
+
+test('a retrieval date must be an ISO date', () => {
+  const bad = quotedCitation({ retrieved_at: '24/11/2026' });
+  assert.equal(v.item({ ...samples.numeric, citations: [bad] }), false);
+});
+
+test('supports names known parts, including a distractor by index', () => {
+  const ok = citation({ supports: ['distractor:2', 'explanation', 'diagram'] });
+  assert.equal(v.item({ ...samples.numeric, citations: [ok] }), true);
+  const bad = citation({ supports: ['vibes'] });
+  assert.equal(v.item({ ...samples.numeric, citations: [bad] }), false);
+});
+
+test('an item without a verification record fails', () => {
+  assert.equal(v.item(without(samples.numeric, 'verification')), false);
+});
+
+test('verification status, version and check results are restricted', () => {
+  assert.equal(v.item({ ...samples.numeric, verification: { ...draft(), status: 'ok' } }), false);
+  assert.equal(v.item({ ...samples.numeric, verification: { ...draft(), version: 0 } }), false);
+  const failing = verified({ maths: true });
+  failing.checks[0].result = 'maybe';
+  assert.equal(v.item({ ...samples.numeric, verification: failing }), false);
+  assert.equal(v.item({ ...samples.numeric, verification: verified({ maths: true }) }), true);
+});
+
+test('reviewed_by must be a role, not a person', () => {
+  const named = { ...verified(), reviewed_by: 'Sam Smith' };
+  assert.equal(v.item({ ...samples.numeric, verification: named }), false);
+});
+
+test('needs_human_approval is allowed on items', () => {
+  assert.equal(v.item({ ...samples.numeric, needs_human_approval: true }), true);
+});
+
+test('a leaf topic without citations fails', () => {
+  const bad = structuredClone(tree);
+  delete bad.topics[0].children[0].children[0].citations;
+  assert.equal(v.topicTree(bad), false);
+});
+
+test('a topic tree without a verification record fails', () => {
+  assert.equal(v.topicTree(without(tree, 'verification')), false);
+});
+
+test('a mark scheme without citations fails', () => {
+  const ms = {
+    id: 'ms-points',
+    type: 'points',
+    source_ref: 'x',
+    verification: draft(),
+    points: [{ code: 'M1', description: 'Correct method' }],
+  };
+  assert.equal(v.markScheme(ms), false);
+});
+
+const diagram = {
+  id: 'diagram-right-triangle',
+  generated_by: 'code',
+  format: 'svg',
+  svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path d="M0 0L10 10"/></svg>',
+  data: { a: 3, b: 4, c: 5 },
+  alt: 'Right-angled triangle with sides 3, 4 and 5',
+  citations: [citation({ supports: ['diagram'] })],
+  verification: draft(),
+};
+
+test('a diagram drawn by code as SVG passes', () => {
+  assert.equal(v.diagram(diagram), true, JSON.stringify(v.diagram.errors));
+});
+
+test('AI-generated or raster diagrams are refused', () => {
+  assert.equal(v.diagram({ ...diagram, generated_by: 'ai' }), false);
+  assert.equal(v.diagram({ ...diagram, format: 'png' }), false);
+  assert.equal(v.diagram({ ...diagram, svg: 'data:image/png;base64,AAAA' }), false);
+});
+
+test('a diagram needs alt text, citations and a verification record', () => {
+  for (const field of ['alt', 'citations', 'verification']) {
+    assert.equal(v.diagram(without(diagram, field)), false, field);
+  }
+});
+
+test('an item can point at a diagram', () => {
+  assert.equal(v.item({ ...samples.numeric, diagram_ref: 'diagram-right-triangle' }), true);
+});
+
+test('grade boundaries are an allowed source type', () => {
+  const c = citation({ source_type: 'grade_boundaries' });
+  assert.equal(v.item({ ...samples.numeric, citations: [c] }), true);
+});
+
+test('a citation can record the SHA-256 of the archived source file', () => {
+  const ok = citation({ sha256: 'a'.repeat(64) });
+  assert.equal(v.item({ ...samples.numeric, citations: [ok] }), true);
+  assert.equal(v.item({ ...samples.numeric, citations: [citation({ sha256: 'abc' })] }), false);
+});
+
+test('check names follow the verification pipeline', () => {
+  const old = draft();
+  old.checks = [
+    {
+      name: 'second-model',
+      result: 'pass',
+      tool: 'x',
+      tool_version: '1',
+      at: '2026-11-24T12:00:00Z',
+    },
+  ];
+  assert.equal(v.item({ ...samples.numeric, verification: old }), false);
+  assert.equal(
+    v.item({ ...samples.numeric, verification: verified({ release: 'batch-sample' }) }),
+    true,
+  );
 });

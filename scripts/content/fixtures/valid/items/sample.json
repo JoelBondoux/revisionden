@@ -13,7 +13,23 @@
     },
     "marks": 1,
     "source_ref": "A17",
-    "checked_by": ["maths-engine"]
+    "checked_by": ["maths-engine"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Example board",
+        "title": "Example specification",
+        "document_ref": "EX1",
+        "url": "https://example.org/spec",
+        "location": "Section 1",
+        "supports": ["question", "answer"]
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": []
+    }
   },
   {
     "id": "fixture-a6-0001",
@@ -24,6 +40,22 @@
     "marks": 3,
     "mark_scheme_ref": "fixture-ms-proof",
     "source_ref": "A6",
-    "checked_by": ["human"]
+    "checked_by": ["human"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Example board",
+        "title": "Example specification",
+        "document_ref": "EX1",
+        "url": "https://example.org/spec",
+        "location": "Section 1",
+        "supports": ["question", "answer"]
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": []
+    }
   }
 ]

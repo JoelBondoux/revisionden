@@ -1,0 +1,87 @@
+[
+  {
+    "id": "fixture-a17-0001",
+    "topic": "fixture-a17",
+    "type": "numeric",
+    "difficulty": 1,
+    "prompt": "Work out 2 + 2",
+    "answer": {
+      "value": "4"
+    },
+    "verify": {
+      "expression": "2 + 2"
+    },
+    "marks": 1,
+    "source_ref": "A17",
+    "checked_by": ["maths-engine"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Example board",
+        "title": "Example specification",
+        "document_ref": "EX1",
+        "url": "https://example.org/spec",
+        "location": "Section 1",
+        "supports": ["question", "answer"],
+        "quote": "Made-up fixture text standing in for a specification quote",
+        "retrieved_at": "2026-11-24"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "version": 1,
+      "reviewed_by": "subject-specialist",
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "writer-model",
+          "tool_version": "1",
+          "at": "2026-11-24T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1",
+          "at": "2026-11-24T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "second-provider-model",
+          "tool_version": "1",
+          "at": "2026-11-24T12:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "review-model",
+          "tool_version": "1",
+          "at": "2026-11-24T12:00:00Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths",
+          "tool_version": "1",
+          "at": "2026-11-24T12:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "1",
+          "at": "2026-11-24T12:00:00Z"
+        },
+        {
+          "name": "human-approval",
+          "result": "pass",
+          "tool": "subject-specialist",
+          "tool_version": "1",
+          "at": "2026-11-24T12:00:00Z"
+        }
+      ]
+    }
+  }
+]

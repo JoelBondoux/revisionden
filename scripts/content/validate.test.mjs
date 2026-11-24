@@ -4,7 +4,14 @@ import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { loadContent, mathsChecks, validateContent } from './validate.mjs';
+import {
+  auditReport,
+  immutabilityErrors,
+  loadContent,
+  mathsChecks,
+  validateContent,
+} from './validate.mjs';
+import { citation, draft, quotedCitation, verified } from './test-helpers.mjs';
 
 const FIXTURES = join(dirname(fileURLToPath(import.meta.url)), 'fixtures');
 
@@ -21,11 +28,19 @@ const tree = {
   board: 'edexcel',
   tier: 'higher',
   specification: { code: '1MA1', title: 'GCSE Mathematics', url: 'https://example.org/spec' },
+  verification: draft(),
   topics: [
     {
       id: 'gcse-maths-h-algebra',
       title: 'Algebra',
-      children: [{ id: 'gcse-maths-h-a17', title: 'Linear equations', spec_ref: ['A17'] }],
+      children: [
+        {
+          id: 'gcse-maths-h-a17',
+          title: 'Linear equations',
+          spec_ref: ['A17'],
+          citations: [citation({ supports: ['topic'] })],
+        },
+      ],
     },
   ],
 };
@@ -42,6 +57,8 @@ const solveItem = {
   marks: 2,
   source_ref: 'Pearson Edexcel 1MA1 A17',
   checked_by: ['maths-engine'],
+  citations: [citation()],
+  verification: draft(),
 };
 
 const numericItem = {
@@ -55,6 +72,8 @@ const numericItem = {
   marks: 1,
   source_ref: 'Pearson Edexcel 1MA1 N12',
   checked_by: ['maths-engine'],
+  citations: [citation()],
+  verification: draft(),
 };
 
 const at = (file, data) => ({ file, data });
@@ -143,6 +162,8 @@ test('a missing mark scheme reference fails', async () => {
     mark_scheme_ref: 'ms-missing',
     source_ref: 'A6',
     checked_by: ['human'],
+    citations: [citation()],
+    verification: draft(),
   };
   const errors = await validateContent(content({ items: [at('items/a.json', essay)] }), {
     checkMaths: fakeEngine(),
@@ -162,6 +183,8 @@ test('a multiple choice answer must point at one of the options', async () => {
     marks: 1,
     source_ref: 'A17',
     checked_by: ['human'],
+    citations: [citation()],
+    verification: draft(),
   };
   const errors = await validateContent(content({ items: [at('items/a.json', mc)] }), {
     checkMaths: fakeEngine(),
@@ -287,4 +310,263 @@ test('invalid JSON is reported with its file', async () => {
 test('the fixture content passes in full', async () => {
   const loaded = await loadContent(join(FIXTURES, 'valid'));
   assert.deepEqual(await validateContent(loaded, { checkMaths: fakeEngine() }), []);
+});
+
+const mc = {
+  id: 'gcse-maths-h-a17-0009',
+  topic: 'gcse-maths-h-a17',
+  type: 'multiple_choice',
+  difficulty: 1,
+  prompt: 'Pick the solution of 2x = 4',
+  options: ['1', '2', '4'],
+  answer: { option: 1 },
+  marks: 1,
+  source_ref: 'A17',
+  checked_by: ['human'],
+  citations: [citation()],
+  verification: draft(),
+};
+
+const check = (items, extra = {}) =>
+  validateContent(content({ items: items.map((i) => at('items/a.json', i)), ...extra }), {
+    checkMaths: fakeEngine(),
+  });
+
+test('a quote longer than 50 words fails', async () => {
+  const quote = Array.from({ length: 51 }, () => 'word').join(' ');
+  const errors = await check([{ ...numericItem, citations: [quotedCitation({ quote })] }]);
+  assert.match(messages(errors), /quote is 51 words; keep it to 50 or fewer/);
+});
+
+test('an item cited only by other authoritative sources needs human approval', async () => {
+  const other = { ...numericItem, citations: [citation({ source_type: 'other_authoritative' })] };
+  assert.match(messages(await check([other])), /needs_human_approval: true/);
+  assert.deepEqual(await check([{ ...other, needs_human_approval: true }]), []);
+});
+
+test('a distractor citation must point at a wrong option', async () => {
+  const ok = { ...mc, citations: [citation({ supports: ['question', 'distractor:0'] })] };
+  assert.deepEqual(await check([ok]), []);
+  const correct = { ...mc, citations: [citation({ supports: ['distractor:1'] })] };
+  assert.match(messages(await check([correct])), /distractor:1 is the correct option/);
+  const missing = { ...mc, citations: [citation({ supports: ['distractor:7'] })] };
+  assert.match(messages(await check([missing])), /distractor:7 is not one of the 3 options/);
+});
+
+test('a distractor citation on an item without options fails', async () => {
+  const bad = { ...numericItem, citations: [citation({ supports: ['distractor:0'] })] };
+  assert.match(messages(await check([bad])), /only multiple choice items have distractors/);
+});
+
+test('a fully checked verified item passes', async () => {
+  const item = {
+    ...numericItem,
+    citations: [quotedCitation()],
+    verification: verified({ maths: true }),
+  };
+  assert.deepEqual(await check([item]), []);
+});
+
+test('a verified item whose citations have no quote fails', async () => {
+  const item = { ...numericItem, verification: verified({ maths: true }) };
+  assert.match(messages(await check([item])), /verified content needs a quote in every citation/);
+});
+
+test('a verified item missing a required check fails', async () => {
+  const noEngine = {
+    ...numericItem,
+    citations: [quotedCitation()],
+    verification: verified({ maths: false }),
+  };
+  assert.match(
+    messages(await check([noEngine])),
+    /verified content needs a passing maths-engine check/,
+  );
+  const v = verified({ maths: true });
+  v.checks = v.checks.filter((c) => c.name !== 'blind-answer');
+  const noModel = { ...numericItem, citations: [quotedCitation()], verification: v };
+  assert.match(messages(await check([noModel])), /needs a passing blind-answer check/);
+});
+
+test('a verified item with a failed check fails', async () => {
+  const v = verified({ maths: true });
+  v.checks.push({ ...v.checks[0], result: 'fail' });
+  const item = { ...numericItem, citations: [quotedCitation()], verification: v };
+  assert.match(
+    messages(await check([item])),
+    /verified content has a failed grounded-writing check/,
+  );
+});
+
+test('a verified item without a reviewer role fails', async () => {
+  const v = verified({ maths: true });
+  delete v.reviewed_by;
+  const item = { ...numericItem, citations: [quotedCitation()], verification: v };
+  assert.match(messages(await check([item])), /verified content needs reviewed_by/);
+});
+
+test('a verified topic tree needs quotes on every leaf', async () => {
+  const t = structuredClone(tree);
+  t.verification = { ...verified(), checks: verified().checks };
+  const errors = await validateContent(content({ topicTrees: [at('topic-trees/t.json', t)] }), {
+    checkMaths: null,
+  });
+  assert.match(messages(errors), /verified content needs a quote in every citation/);
+  t.topics[0].children[0].citations = [quotedCitation({ supports: ['topic'] })];
+  const ok = await validateContent(content({ topicTrees: [at('topic-trees/t.json', t)] }), {
+    checkMaths: null,
+  });
+  assert.deepEqual(ok, []);
+});
+
+const diagram = {
+  id: 'diagram-line',
+  generated_by: 'code',
+  format: 'svg',
+  svg: '<svg xmlns="http://www.w3.org/2000/svg"></svg>',
+  alt: 'A line',
+  citations: [citation({ supports: ['diagram'] })],
+  verification: draft(),
+};
+
+test('an item pointing at a missing diagram fails; an existing one passes', async () => {
+  const item = { ...numericItem, diagram_ref: 'diagram-line' };
+  assert.match(messages(await check([item])), /diagram diagram-line does not exist/);
+  assert.deepEqual(await check([item], { diagrams: [at('diagrams/line.json', diagram)] }), []);
+});
+
+test('diagram ids must be unique too', async () => {
+  const errors = await check([numericItem], {
+    diagrams: [at('diagrams/a.json', diagram), at('diagrams/b.json', diagram)],
+  });
+  assert.match(messages(errors), /duplicate id diagram-line/);
+});
+
+test('changing verified content without a new version fails', () => {
+  const v1 = {
+    ...numericItem,
+    citations: [quotedCitation()],
+    verification: verified({ maths: true }),
+  };
+  const before = content({ items: [at('items/a.json', v1)] });
+  const edited = { ...v1, prompt: 'Work out 3/4 of 160.' };
+  const sameVersion = content({ items: [at('items/a.json', edited)] });
+  assert.match(
+    messages(immutabilityErrors(before, sameVersion)),
+    /verified version 1 was changed; edits need version 2/,
+  );
+  const bumped = { ...edited, verification: { ...draft(), version: 2 } };
+  assert.deepEqual(
+    immutabilityErrors(before, content({ items: [at('items/a.json', bumped)] })),
+    [],
+  );
+  assert.deepEqual(immutabilityErrors(before, before), []);
+});
+
+test('a version number can never go down', () => {
+  const v2 = { ...numericItem, verification: { ...draft(), version: 2 } };
+  const v1 = { ...numericItem, verification: draft() };
+  const errors = immutabilityErrors(
+    content({ items: [at('items/a.json', v2)] }),
+    content({ items: [at('items/a.json', v1)] }),
+  );
+  assert.match(messages(errors), /version went down from 2 to 1/);
+});
+
+test('the audit report lists every piece of content with its sources and status', () => {
+  const report = auditReport(content());
+  const row = report.find((r) => r.id === numericItem.id);
+  assert.deepEqual(row, {
+    id: numericItem.id,
+    kind: 'item',
+    file: 'items/a.json',
+    status: 'draft',
+    version: 1,
+    citations: 1,
+    quoted: 0,
+    needs_sourcing: true,
+    needs_human_approval: false,
+    sources: ['Pearson Edexcel 1MA1 Content reference A17'],
+  });
+  assert.ok(report.some((r) => r.kind === 'topic' && r.id === 'gcse-maths-h-a17'));
+  assert.ok(report.some((r) => r.kind === 'topic-tree'));
+});
+
+test('copies of documents and raster images in the content folder are refused', async () => {
+  const root = mkdtempSync(join(tmpdir(), 'content-'));
+  mkdirSync(join(root, 'items'));
+  writeFileSync(join(root, 'items', 'spec.pdf'), '%PDF-1.7');
+  writeFileSync(join(root, 'items', 'triangle.png'), 'png');
+  const errors = await validateContent(await loadContent(root), { checkMaths: null });
+  assert.equal(errors.length, 2);
+  assert.match(messages(errors), /do not commit copies of documents or raster images/);
+});
+
+test('a verified item needs human approval or a passed batch sample to be released', async () => {
+  const sampled = {
+    ...numericItem,
+    citations: [quotedCitation()],
+    verification: verified({ maths: true, release: 'batch-sample' }),
+  };
+  assert.deepEqual(await check([sampled]), []);
+  const v = verified({ maths: true });
+  v.checks = v.checks.filter((c) => c.name !== 'human-approval');
+  const neither = { ...numericItem, citations: [quotedCitation()], verification: v };
+  assert.match(
+    messages(await check([neither])),
+    /needs a passing human-approval or batch-sample check/,
+  );
+});
+
+test('an item that needs human approval cannot be released by batch sampling', async () => {
+  const item = {
+    ...numericItem,
+    needs_human_approval: true,
+    citations: [quotedCitation({ source_type: 'other_authoritative' })],
+    verification: verified({ maths: true, release: 'batch-sample' }),
+  };
+  assert.match(
+    messages(await check([item])),
+    /needs_human_approval items need a passing human-approval check/,
+  );
+});
+
+test('verified topic trees, mark schemes and diagrams need quote, schema and human checks', async () => {
+  const t = structuredClone(tree);
+  t.topics[0].children[0].citations = [quotedCitation({ supports: ['topic'] })];
+  t.verification = { ...verified(), checks: verified().checks.filter((c) => c.name === 'schema') };
+  const errors = await validateContent(content({ topicTrees: [at('topic-trees/t.json', t)] }), {
+    checkMaths: null,
+  });
+  assert.match(messages(errors), /needs a passing quote-check check/);
+  assert.match(messages(errors), /needs a passing human-approval or batch-sample check/);
+});
+
+test('the audit report for one id includes every citation and check', () => {
+  const item = {
+    ...numericItem,
+    citations: [quotedCitation()],
+    verification: verified({ maths: true }),
+  };
+  const report = auditReport(content({ items: [at('items/a.json', item)] }), {
+    detail: true,
+    filter: numericItem.id,
+  });
+  assert.equal(report.length, 1);
+  assert.equal(report[0].detail.citations[0].quote, quotedCitation().quote);
+  assert.equal(report[0].detail.checks.length, 7);
+  assert.equal(report[0].detail.reviewed_by, 'subject-specialist');
+});
+
+test('the audit report can be filtered to a topic or a whole subject', () => {
+  const byTopic = auditReport(content(), { filter: 'gcse-maths-h-a17' });
+  assert.deepEqual(
+    byTopic.map((r) => r.id).sort(),
+    ['gcse-maths-h-a17', 'gcse-maths-h-a17-0001', 'gcse-maths-h-a17-0002'].sort(),
+  );
+  const byBranch = auditReport(content(), { filter: 'gcse-maths-h-algebra' });
+  assert.ok(byBranch.some((r) => r.id === 'gcse-maths-h-a17-0002'));
+  const bySubject = auditReport(content(), { filter: 'gcse-maths' });
+  assert.equal(bySubject.length, auditReport(content()).length);
+  assert.deepEqual(auditReport(content(), { filter: 'nothing-here' }), []);
 });

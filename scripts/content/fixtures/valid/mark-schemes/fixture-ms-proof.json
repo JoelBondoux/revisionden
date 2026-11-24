@@ -13,5 +13,21 @@
       "marks": [2, 3],
       "descriptor": "Complete argument"
     }
-  ]
+  ],
+  "citations": [
+    {
+      "source_type": "mark_scheme",
+      "publisher": "Example board",
+      "title": "Example specification",
+      "document_ref": "EX1",
+      "url": "https://example.org/spec",
+      "location": "Section 1",
+      "supports": ["mark_scheme"]
+    }
+  ],
+  "verification": {
+    "status": "draft",
+    "version": 1,
+    "checks": []
+  }
 }

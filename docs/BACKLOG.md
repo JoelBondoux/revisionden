@@ -109,7 +109,7 @@
   - Tests: correct chain passes; sign slip detected on the right line; unsafe input rejected.
 - [x] **D5 Container.** Dockerfile builds; container answers `/health`; ready for Cloud Run.
   - Tests: container smoke test in CI.
-- [ ] **D6 Citations and verification records.** Required `citations` (min 1) and `verification`
+- [x] **D6 Citations and verification records.** Required `citations` (min 1) and `verification`
       record on every item, topic leaf, mark scheme and diagram, per `VERIFICATION.md`.
   - Tests: missing citation, quote, location or URL fails; verified item without required checks
     fails; `other_authoritative`-only item without `needs_human_approval` fails.

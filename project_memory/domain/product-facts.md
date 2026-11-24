@@ -56,7 +56,12 @@ Tags: #product #rules #limits #defaults
   specification reference; trees are at most 3 levels deep. Detail: `docs/CONTENT_PLAN.md`.
 - Every maths answer (numeric and worked maths items, and model solutions) is verified by the
   maths engine before content can merge.
-- Pilot: GCSE Maths Higher, Pearson Edexcel 1MA1 (content references N1 to S6).
+- Every item, topic leaf, mark scheme and diagram carries official citations and a verification
+  record (`docs/VERIFICATION.md`); verified content needs quotes and every pipeline check, and is
+  immutable (edits create a new version). `pnpm content:audit <id>` prints the audit trail.
+- Diagrams are SVG drawn by code from verified data; no AI-generated or raster teaching images.
+- Pilot: GCSE Maths Higher, Pearson Edexcel 1MA1 (content references N1 to S6). All pilot
+  content is still `draft`: citations have no quotes yet.
 
 ## Maths engine
 

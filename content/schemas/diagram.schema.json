@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/JoelBondoux/revisionden/content/schemas/diagram.schema.json",
+  "title": "Diagram",
+  "description": "A teaching diagram drawn by code as SVG from verified data. AI-generated and raster images are not allowed.",
+  "type": "object",
+  "required": ["id", "generated_by", "format", "svg", "alt", "citations", "verification"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "generated_by": { "const": "code" },
+    "format": { "const": "svg" },
+    "svg": { "type": "string", "pattern": "^\\s*<svg[\\s>]" },
+    "generator": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Script that draws the SVG from data."
+    },
+    "data": { "type": "object", "description": "The verified values the diagram is drawn from." },
+    "alt": { "type": "string", "minLength": 1 },
+    "citations": { "$ref": "common.schema.json#/$defs/citations" },
+    "verification": { "$ref": "common.schema.json#/$defs/verification" }
+  },
+  "additionalProperties": false
+}

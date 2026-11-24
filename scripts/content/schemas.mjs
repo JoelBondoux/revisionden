@@ -11,7 +11,11 @@ const FILES = {
   topicTree: 'topic-tree.schema.json',
   item: 'item.schema.json',
   markScheme: 'mark-scheme.schema.json',
+  diagram: 'diagram.schema.json',
 };
+const SHARED = ['common.schema.json'];
+
+const read = (dir, file) => JSON.parse(readFileSync(join(dir, file), 'utf8'));
 
 export function createValidators(schemaDir = SCHEMA_DIR) {
   const ajv = new Ajv2020({
@@ -20,10 +24,8 @@ export function createValidators(schemaDir = SCHEMA_DIR) {
     strictTypes: false,
     strictRequired: false,
   });
+  for (const file of SHARED) ajv.addSchema(read(schemaDir, file));
   return Object.fromEntries(
-    Object.entries(FILES).map(([kind, file]) => [
-      kind,
-      ajv.compile(JSON.parse(readFileSync(join(schemaDir, file), 'utf8'))),
-    ]),
+    Object.entries(FILES).map(([kind, file]) => [kind, ajv.compile(read(schemaDir, file))]),
   );
 }

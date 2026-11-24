@@ -67,6 +67,12 @@ jobs:
         run: node --test 'scripts/content/*.test.mjs'
       - name: Validate content
         run: pnpm content:validate
+      - name: Verified content is not edited in place
+        if: github.event_name == 'pull_request'
+        run: |
+          git fetch --depth=1 origin "${{ github.base_ref }}"
+          git worktree add /tmp/base FETCH_HEAD
+          pnpm content:validate --no-maths --baseline /tmp/base/content
 
   maths-container:
     name: Maths engine container smoke test

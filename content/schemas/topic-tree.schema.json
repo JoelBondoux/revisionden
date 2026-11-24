@@ -4,57 +4,121 @@
   "title": "Topic tree",
   "description": "Topics for one subject, board and tier, at most three levels deep. Every leaf has a specification reference.",
   "type": "object",
-  "required": ["id", "subject", "board", "specification", "topics"],
+  "required": ["id", "subject", "board", "specification", "topics", "verification"],
   "properties": {
-    "id": { "$ref": "#/$defs/id" },
-    "subject": { "$ref": "#/$defs/id", "description": "Id of a subject in content/subjects/." },
-    "board": { "$ref": "#/$defs/id" },
-    "tier": { "enum": ["foundation", "higher"] },
+    "id": {
+      "$ref": "#/$defs/id"
+    },
+    "subject": {
+      "$ref": "#/$defs/id",
+      "description": "Id of a subject in content/subjects/."
+    },
+    "board": {
+      "$ref": "#/$defs/id"
+    },
+    "tier": {
+      "enum": ["foundation", "higher"]
+    },
     "specification": {
       "type": "object",
       "required": ["code", "title", "url"],
       "properties": {
-        "code": { "type": "string", "minLength": 1 },
-        "title": { "type": "string", "minLength": 1 },
-        "url": { "type": "string", "pattern": "^https://" },
-        "version": { "type": "string", "minLength": 1 }
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https://"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        }
       },
       "additionalProperties": false
     },
-    "notes": { "type": "string" },
-    "topics": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/level1" } }
+    "notes": {
+      "type": "string"
+    },
+    "topics": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/level1"
+      }
+    },
+    "verification": {
+      "$ref": "common.schema.json#/$defs/verification"
+    }
   },
   "additionalProperties": false,
   "$defs": {
-    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
-    "title": { "type": "string", "minLength": 1 },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
     "leaf": {
       "type": "object",
-      "required": ["id", "title", "spec_ref"],
+      "required": ["id", "title", "spec_ref", "citations"],
       "properties": {
-        "id": { "$ref": "#/$defs/id" },
-        "title": { "$ref": "#/$defs/title" },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "title": {
+          "$ref": "#/$defs/title"
+        },
         "spec_ref": {
           "type": "array",
           "minItems": 1,
-          "items": { "type": "string", "minLength": 1 },
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
           "description": "Specification content references, for example A18."
         },
-        "higher_only": { "type": "boolean" }
+        "higher_only": {
+          "type": "boolean"
+        },
+        "citations": {
+          "$ref": "common.schema.json#/$defs/citations"
+        }
       },
       "additionalProperties": false
     },
-    "level3": { "$ref": "#/$defs/leaf" },
+    "level3": {
+      "$ref": "#/$defs/leaf"
+    },
     "level2": {
       "oneOf": [
-        { "$ref": "#/$defs/leaf" },
+        {
+          "$ref": "#/$defs/leaf"
+        },
         {
           "type": "object",
           "required": ["id", "title", "children"],
           "properties": {
-            "id": { "$ref": "#/$defs/id" },
-            "title": { "$ref": "#/$defs/title" },
-            "children": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/level3" } }
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "title": {
+              "$ref": "#/$defs/title"
+            },
+            "children": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/level3"
+              }
+            }
           },
           "additionalProperties": false
         }
@@ -62,14 +126,26 @@
     },
     "level1": {
       "oneOf": [
-        { "$ref": "#/$defs/leaf" },
+        {
+          "$ref": "#/$defs/leaf"
+        },
         {
           "type": "object",
           "required": ["id", "title", "children"],
           "properties": {
-            "id": { "$ref": "#/$defs/id" },
-            "title": { "$ref": "#/$defs/title" },
-            "children": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/level2" } }
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "title": {
+              "$ref": "#/$defs/title"
+            },
+            "children": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/level2"
+              }
+            }
           },
           "additionalProperties": false
         }

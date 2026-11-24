@@ -97,8 +97,39 @@ Item types: `multiple_choice`, `short_answer`, `numeric`, `worked_maths`, `flash
   line by line.
 
 `checked_by` values: `maths-engine`, `model-b` (second AI model agreed), `human`, and `author`
-(only the writing session checked it; needs `model-b` or `human` before release). Maths items
-must include `maths-engine`.
+(only the writing session checked it). It is a short summary; the full audit trail is the
+`verification` record below. Maths items must include `maths-engine`.
+
+### Citations and verification (see `docs/VERIFICATION.md`)
+
+Shared definitions live in `content/schemas/common.schema.json`.
+
+- **`citations`** (required, at least one) on every item, topic leaf, mark scheme and diagram.
+  Each has `source_type`, `publisher`, `title`, `document_ref`, `url` (https), `location` and
+  `supports` (`question`, `answer`, `explanation`, `hint`, `steps`, `mark_scheme`, `diagram`,
+  `topic`, `front`, `back`, or `distractor:N` for wrong option N). `quote` (at most 50 words,
+  verbatim) and `retrieved_at` (ISO date) go together. Optional `sha256` of the archived source.
+  Never commit copies of board documents: the validator refuses PDFs and raster images in
+  `content/`.
+- Items whose citations are all `other_authoritative` must set `needs_human_approval: true`.
+- **`verification`** (required) on every item, topic tree, mark scheme and diagram: `status`
+  (`draft`, `verified`, `quarantined`, `retired`), integer `version`, `checks` (name, pass or
+  fail, tool or model id, tool version, UTC time) and `reviewed_by` (a role, never a name).
+- Check names are the pipeline steps: `grounded-writing`, `quote-check`, `blind-answer`,
+  `adversarial-review`, `maths-engine`, `schema`, then `human-approval` or `batch-sample`.
+  A `verified` item needs every step to pass (plus `maths-engine` for maths items), a quote in
+  every citation, a reviewer role, and `human-approval` (not just `batch-sample`) when
+  `needs_human_approval` is set. Topic trees, mark schemes and diagrams need `quote-check`,
+  `schema` and a release check.
+- Verified content is immutable: a change needs a higher `version`, and versions never go down.
+  CI checks this against the base branch.
+- **Diagrams** (`content/diagrams/`, `diagram.schema.json`): SVG drawn by code from verified
+  `data`, with alt text, citations and verification. AI-generated and raster images are refused.
+  Items point at them with `diagram_ref`.
+
+Draft content may have citations without quotes yet (for example when the source still needs to
+be read). The validator passes it but reports how many entries still need sourcing; it can never
+become `verified` without quotes.
 
 ## Validator
 
@@ -106,11 +137,17 @@ must include `maths-engine`.
 pip install -r services/maths/requirements.txt   # once, for maths answer checks
 pnpm content:validate                             # schemas, ids, links, maths answers
 pnpm content:validate --no-maths                  # schemas and links only (prints a warning)
+pnpm content:validate --baseline <old content dir> # also refuse in-place edits to verified content
+pnpm content:validate --report                    # audit summary for everything, as JSON
+pnpm content:audit <item, topic, tree or subject id>  # full audit: citations, quotes, checks
 MATHS_PYTHON=.venv/bin/python pnpm content:validate   # pick the Python that has SymPy
 node --test 'scripts/content/*.test.mjs'          # validator tests
 ```
 
-It fails on: schema errors, duplicate ids (across all files), items linked to a missing or
+It fails on: schema errors, missing or empty citations, quotes over 50 words, distractor
+citations that do not point at a wrong option, verified content missing quotes, checks or a
+reviewer role, edits to verified content without a new version, PDFs or images in `content/`,
+duplicate ids (across all files), items linked to a missing or
 non-leaf topic, trees linked to a missing subject, missing mark schemes, multiple-choice answers
 outside the options, maths items without `maths-engine`, and any maths answer or model solution
 the engine does not confirm. Maths checks run locally by starting `python -m app.content_check`
@@ -120,4 +157,6 @@ in `services/maths`; CI runs the same in the `content` job.
 
 GCSE Maths Higher, Pearson Edexcel 1MA1: `content/topic-trees/gcse-maths-edexcel-1ma1-higher.json`
 (content references N1 to S6, one leaf each) and sample items in
-`content/items/gcse-maths-higher/`.
+`content/items/gcse-maths-higher/`. All pilot content is `draft`: its citations give the
+specification point and link but no quotes yet, because the specification could not be read from
+the build session. It must be sourced and pass the pipeline before release.
