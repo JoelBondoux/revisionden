@@ -70,9 +70,9 @@ describe('routes', () => {
     );
   });
 
-  it('keeps the Cards tab as a placeholder until flashcards are built', async () => {
+  it('opens the flashcards screen from the Cards tab', async () => {
     renderRoute('/cards');
     expect(await screen.findByRole('heading', { level: 1, name: 'Cards' })).toBeInTheDocument();
-    expect(screen.getByText('Coming soon.')).toBeInTheDocument();
+    expect(screen.queryByText('Coming soon.')).not.toBeInTheDocument();
   });
 });

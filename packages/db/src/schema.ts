@@ -262,8 +262,22 @@ export const items = pgTable(
     answer: jsonb('answer').notNull(),
     sourceRef: text('source_ref'),
     checkedBy: text('checked_by'),
+    // Added by workstream F. The item's id in content/ (for example gcse-maths-h-n7-0001).
+    contentId: text('content_id').unique(),
+    version: integer('version').notNull().default(1),
+    // Verification status from content/ (docs/VERIFICATION.md). Only 'verified' is served to
+    // students, unless the development flag serves drafts too.
+    status: text('status').notNull().default('draft'),
+    difficulty: integer('difficulty'),
+    tags: jsonb('tags').$type<string[]>(),
   },
-  (t) => [index('items_topic_id_idx').on(t.topicId)],
+  (t) => [
+    index('items_topic_id_idx').on(t.topicId),
+    check(
+      'items_status_values',
+      sql`${t.status} in ('draft', 'verified', 'quarantined', 'retired')`,
+    ),
+  ],
 );
 
 // ---------------------------------------------------------------------------------------------
@@ -284,6 +298,14 @@ export const attempts = pgTable(
     score: real('score'),
     timeMs: integer('time_ms'),
     createdAt: createdAt(),
+    // Added by workstream F: the item version the student saw (docs/VERIFICATION.md), the
+    // mode, the XP earned and, for starting test answers, which test.
+    itemVersion: integer('item_version'),
+    mode: text('mode'),
+    xpEarned: integer('xp_earned').notNull().default(0),
+    startingTestId: uuid('starting_test_id').references((): AnyPgColumn => startingTests.id, {
+      onDelete: 'set null',
+    }),
   },
   (t) => [index('attempts_student_created_idx').on(t.studentId, t.createdAt)],
 );
@@ -371,4 +393,73 @@ export const streaks = pgTable('streaks', {
   best: integer('best').notNull().default(0),
   skipDays: integer('skip_days').notNull().default(0),
   giftDays: integer('gift_days').notNull().default(0),
+  // Added by workstream F so the streak rules in packages/core can carry on between days.
+  skipsInARow: integer('skips_in_a_row').notNull().default(0),
+  lastDate: date('last_date'),
+  lastSettledWeek: date('last_settled_week'),
 });
+
+// ---------------------------------------------------------------------------------------------
+// Learning loop (workstream F)
+// ---------------------------------------------------------------------------------------------
+
+/** XP earned per student per calendar day (UK time), for the daily goal and streak. */
+export const dailyXp = pgTable(
+  'daily_xp',
+  {
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    day: date('day').notNull(),
+    xp: integer('xp').notNull().default(0),
+  },
+  (t) => [primaryKey({ columns: [t.studentId, t.day] })],
+);
+
+/** A student's starting test for one subject (about 5 minutes; sets first mastery). */
+export const startingTests = pgTable(
+  'starting_tests',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    subjectId: text('subject_id').notNull(),
+    itemIds: jsonb('item_ids').$type<string[]>().notNull(),
+    startedAt: createdAt(),
+    finishedAt: timestamp('finished_at', { withTimezone: true }),
+  },
+  (t) => [index('starting_tests_student_id_idx').on(t.studentId)],
+);
+
+/**
+ * A student's flashcards with their SM-2 state. Deck and wrong-answer cards point at an item
+ * (their text comes from the content); a student's own cards keep their own front and back.
+ */
+export const flashcards = pgTable(
+  'flashcards',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    itemId: uuid('item_id').references(() => items.id, { onDelete: 'cascade' }),
+    topicId: text('topic_id')
+      .notNull()
+      .references(() => topics.id, { onDelete: 'cascade' }),
+    origin: text('origin', { enum: ['deck', 'wrong_answer', 'own'] }).notNull(),
+    front: text('front'),
+    back: text('back'),
+    repetitions: integer('repetitions').notNull().default(0),
+    intervalDays: integer('interval_days').notNull().default(0),
+    ease: real('ease').notNull().default(2.5),
+    dueAt: timestamp('due_at', { withTimezone: true }).notNull().defaultNow(),
+    lastReviewedAt: timestamp('last_reviewed_at', { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    unique('flashcards_student_item_unique').on(t.studentId, t.itemId),
+    index('flashcards_student_due_idx').on(t.studentId, t.dueAt),
+    check('flashcards_origin_values', sql`${t.origin} in ('deck', 'wrong_answer', 'own')`),
+  ],
+);

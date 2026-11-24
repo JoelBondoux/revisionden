@@ -1,6 +1,7 @@
 import { http, HttpResponse, type RequestHandler } from 'msw';
 import { answerRequestSchema } from '../api/schemas';
 import { answerKeys, cardsDue, family, lessons, topicMap, XP_PER_CORRECT } from './data';
+import { learnHandlers } from '../features/learn/mocks';
 
 const isKnownStudent = (id: unknown) => family.students.some((s) => s.id === id);
 
@@ -39,4 +40,7 @@ export const handlers: RequestHandler[] = [
       xpEarned: correct ? XP_PER_CORRECT : 0,
     });
   }),
+
+  // Learning loop and flashcards (workstream F).
+  ...learnHandlers,
 ];

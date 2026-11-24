@@ -72,6 +72,9 @@ importers:
       smol-toml:
         specifier: ^1.9.1
         version: 1.9.1
+      tsx:
+        specifier: ^4.23.15
+        version: 4.23.15
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -87,6 +90,9 @@ importers:
       '@fontsource/nunito':
         specifier: ^5.3.0
         version: 5.3.0
+      '@revisionden/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       react:
         specifier: ^18.3.1
         version: 18.3.1

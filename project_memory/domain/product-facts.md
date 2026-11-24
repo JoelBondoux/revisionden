@@ -43,11 +43,27 @@ Tags: #product #rules #limits #defaults
 - XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, working 20,
   long answer 30; part marks earn part.
 - 14 rewards, each unlocking one avatar item: `packages/core/src/rewards.ts`.
+- Only `verified` items reach students. Drafts are served only with `SERVE_DRAFT_CONTENT=true` in
+  development (never staging or production), with a "DRAFT CONTENT" banner; quarantined and
+  retired items never. Implemented in `packages/core/src/learning.ts` and `apps/api`.
+- Starting test per subject: about 5 minutes (300 s, up to 10 questions, one per topic first),
+  Test mode; its answers set first mastery. Lessons are Learn mode at feedback level 1.
+- Wrong lesson answers become flashcards. Flashcard buttons Again/Hard/Good/Easy = SM-2 quality
+  1/3/4/5; each shows when the card comes back. Reviewing a deck card earns 2 XP (see
+  contradictions). Students can add their own cards (up to 300 characters a side).
+- XP is totalled per day in UK time; a streak day counts once, the first time the day reaches the
+  daily goal. Command-word lessons are items tagged `command-word` (none verified yet).
+- Worked maths answers are checked by the maths engine (`MATHS_ENGINE_URL`); long answers are not
+  marked yet ("marked by AI soon").
 - Effort scores (e.g. CBI: Commitment, Behaviour and Inspiration, 1–4, 4 best) shape habits, never
   the predicted grade.
 
 ## Web app
 
+- Learning screens: `/learn/subject/:id` (topics, mastery, weak spots), `/learn/subject/:id/start`
+  (starting test), `/learn/subject/:id/practice`, `/learn/topic/:id`, `/learn/command-words`,
+  `/cards` (flashcards: Due today, All decks, My cards; 3D flip card, reduced motion respected).
+- Installable PWA. Main nav tabs: Learn, Cards, Plan, Papers, Progress (bottom bar on phones, side
 - Installable PWA. Main nav tabs: Map, Cards, Plan, Papers, Progress (bottom bar on phones, side
   rail from 768px wide). Welcome and lessons hide the nav to keep focus.
 - The learning path is a topic map: one hexagon per topic, grouped by unit. States: mastered

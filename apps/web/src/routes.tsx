@@ -9,6 +9,14 @@ import { MapPage } from './pages/MapPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { WelcomePage } from './pages/WelcomePage';
+import { FlashcardsPage } from './features/flashcards/FlashcardsPage';
+import {
+  CommandWordsPage,
+  SubjectPage,
+  SubjectPracticePage,
+  TopicLessonPage,
+} from './features/learn/pages';
+import { StartingTestPage } from './features/learn/StartingTestPage';
 
 export const routes: RouteObject[] = [
   {
@@ -18,6 +26,11 @@ export const routes: RouteObject[] = [
       { path: '/family', element: <FamilyPage /> },
       { path: '/lesson/:lessonId', element: <LessonPage /> },
       { path: '/lesson/:lessonId/complete', element: <LessonCompletePage /> },
+      // Learning loop (workstream F): lessons and the starting test hide the nav.
+      { path: '/learn/topic/:topicId', element: <TopicLessonPage /> },
+      { path: '/learn/subject/:subjectId/practice', element: <SubjectPracticePage /> },
+      { path: '/learn/subject/:subjectId/start', element: <StartingTestPage /> },
+      { path: '/learn/command-words', element: <CommandWordsPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },
@@ -26,10 +39,8 @@ export const routes: RouteObject[] = [
     children: [
       { path: '/map', element: <MapPage /> },
       { path: '/learn', element: <Navigate to="/map" replace /> },
-      {
-        path: '/cards',
-        element: <ComingSoon title="Cards" description="Flashcards that come back just in time." />,
-      },
+      { path: '/learn/subject/:subjectId', element: <SubjectPage /> },
+      { path: '/cards', element: <FlashcardsPage /> },
       {
         path: '/plan',
         element: (

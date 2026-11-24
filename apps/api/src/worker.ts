@@ -4,6 +4,7 @@ import { createAuth } from './auth';
 import { parseEnv } from './env';
 import { errorBody } from './errors';
 import { createPasskeyService } from './passkeys';
+import { createMathsEngineClient } from './learning/maths-engine';
 import { createMemoryRateLimiter } from './rate-limit';
 
 const systemClock = { now: () => new Date() };
@@ -28,6 +29,9 @@ export function createWorker(version: string) {
       auth: createAuth({ db, config }),
       clock: systemClock,
       passkeys: createPasskeyService(config),
+      ...(config.mathsEngineUrl
+        ? { mathsEngine: createMathsEngineClient(config.mathsEngineUrl) }
+        : {}),
       rateLimiters: {
         auth:
           config.raw.AUTH_RATE_LIMITER ??

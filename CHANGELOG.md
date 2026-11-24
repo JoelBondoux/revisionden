@@ -7,6 +7,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Learning loop (F): starting test per subject, lesson player for every item type with instant feedback, XP, daily goal and streak, flashcards with SM-2 (due, decks, own cards, wrong answers become cards), command-word lessons, and a content gate that serves only verified items unless `SERVE_DRAFT_CONTENT=true` in development (with a "DRAFT CONTENT" banner).
+
 - Verification protocol (`docs/VERIFICATION.md`): official citations on every item, multi-step checks, human approval, quarantine and audit reports; new workstream V and task D6.
 
 - Web: design tokens from the mockups (Nunito, violet, 3D edges) with a 4.5:1 contrast check (A1).
