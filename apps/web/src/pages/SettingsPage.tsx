@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Card } from '../components/Card';
 import { DeviceReminders } from '../features/notifications';
+import { ParentCanSee } from '../features/stats/ParentCanSee';
 
 export function SettingsPage() {
   return (
@@ -17,6 +18,7 @@ export function SettingsPage() {
         </ul>
       </Card>
       <DeviceReminders />
+      <ParentCanSee />
     </div>
   );
 }

@@ -12,6 +12,12 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Statistics dashboards (K): student "My stats" on the Progress tab (week, term and year; XP chart
+  with goal line, tooltip and table view; mastery by subject; personal bests; kind framing), the
+  parent stats dashboard at `/parent/stats` (study time, plan kept, accuracy, streak, 8-week chart,
+  subjects, weak spots, healthy habits, AI spend, recent activity, Save as PDF in the browser),
+  "What your parent can see" in Settings, and `GET /v1/student/stats`, `GET /v1/students/:id/stats`
+  and `GET /v1/students/:id/dashboard`.
 - Five-year rewards progression design (`docs/REWARDS.md`) and backlog workstream R.
 - Statistics dashboards spec for student and parent (`docs/PRODUCT_RULES.md`) and backlog workstream K; parent-set rewards detail (`docs/REWARDS.md`).
 

@@ -206,7 +206,18 @@ Tags: #product #rules #limits #defaults
   as fractions; unmarked left out). Subject mastery: average of its topic mastery scores.
 - Student view never uses red or "worse" wording; drops are shown to the parent. Empty panels say
   "Not set up yet", never zeros. PDF export is made in the browser with nicknames only.
-- Detail: `docs/PRODUCT_RULES.md` (statistics dashboards). Workstream K; not built yet.
+- Terms until real dates are entered: autumn 1 Sep–31 Dec, spring 1 Jan–31 Mar, summer
+  1 Apr–31 Aug; the school year is 1 Sep–31 Aug. Goal lines: 50 XP a day (Week), 250 XP a week
+  (Term). Daily cap 2 hours (provisional, `DEFAULT_DAILY_CAP_MINUTES`, until wellbeing settings).
+- Subject mastery averages practised topics; change is replayed from marked answers (period start
+  for the student, 4 weeks for the parent). Healthy habits are for this week; quiet hours are the
+  reminder quiet hours.
+- Plan, school report effort, parent-set reward, predicted/target grade and level panels show
+  "Not set up yet" (adapters in `apps/api/src/stats/adapters.ts`) until those features land.
+- Routes: `/progress` (My stats), `/parent/stats` (parent); API `GET /v1/student/stats`,
+  `GET /v1/students/:id/stats`, `GET /v1/students/:id/dashboard`. Implemented in
+  `packages/core/src/stats.ts`, `apps/api/src/stats/`, `apps/web/src/features/stats/`.
+  Detail: `docs/PRODUCT_RULES.md` (statistics dashboards). Workstream K.
 
 ## Parent-set rewards
 
