@@ -189,11 +189,23 @@
 - [ ] R6 First seasonal drop and chapter 2 (Year 10) item art as original SVG layers.
 - Tests: curve properties (monotonic, reachable), each target type unlocks once, no reward for late-night study or time spent, catalogue validator fixtures.
 
+### K. Statistics dashboards (`packages/core/src/stats.ts`, `apps/api/src/stats/**`, `apps/web/src/features/stats/**`)
+
+Spec: `PRODUCT_RULES.md`, statistics dashboards. Mockups 19 and 20.
+
+- [ ] K1 Pure stats functions in core: periods (week, term, year in the family time zone), XP and questions per bucket, accuracy, active study time (5-minute gap rule, daily cap), personal bests, subject mastery average and change, weak-spot trend.
+- [ ] K2 API: `GET /students/:id/stats?period=` (student or own parent only) and `GET /parent/students/:id/dashboard` (parent only), with shared Zod schemas.
+- [ ] K3 Student "My stats" screen from the Progress tab: period toggle, tiles, XP bar chart with goal line, tooltip and table view, mastery by subject, personal bests, level bar.
+- [ ] K4 Parent dashboard: student switcher, tiles, 8-week study time chart with plan line, subjects table, weak spots, effort scores, reward progress, healthy habits, AI spend, recent activity.
+- [ ] K5 Save as PDF in the browser (nicknames only); "Not set up yet" states for missing panels; student Settings line showing what the parent can see.
+- [ ] K6 Accessibility: table view for every chart, keyboard focus on bars, reduced motion.
+- Tests: each number rule red/green with fixed clocks (gap rule, cap, part marks, unmarked answers left out, week boundaries in UK time, term and year buckets); access control (a parent cannot read another family's child); empty states; component tests for toggles, tooltips and table views.
+
 ## Stage 2 and later
 
 Broken down into tasks when Stage 1 ships, following the same format. Headline order:
 
-1. Mastery dashboard and predicted grade.
+1. Predicted grade (the stats dashboards are workstream K).
 2. Exams, mocks and assessments entry; study plan generator and calendar (editable by both):
    drag sessions between days; detail panel to edit a session; custom rules created from edits,
    toggled and removed, applied by the generator, with conflict warnings (mockup screen 5).

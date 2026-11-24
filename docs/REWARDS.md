@@ -105,8 +105,17 @@ Pip the fox outfits and extra gift days.
 ## Parent-set rewards
 
 Parents can add their own real-world rewards to any target (for example "cinema trip at a
-100-day streak" or "new game when the Year 10 mocks hit target"). They appear in the student's
-track with a parent badge and the parent marks them as given.
+100-day streak" or "new game when the Year 10 mocks hit target"). Built in R5.
+
+- The parent sets a title (up to 60 characters), an optional note (up to 200), and a target:
+  any target type from the catalogue (streak days, questions correct, topics mastered, weak spots
+  fixed, papers, mock or assessment grades, level) or a custom date.
+- The student sees it in their track with a "from home" badge and their progress towards it.
+- When the target is met: a celebration for the student and a notification for the parent.
+- The parent marks it "given". Before that the parent can edit or delete it; once given it is
+  kept as history and cannot be changed.
+- The student cannot send free text to the parent about it (no chat).
+- Progress also shows on the parent stats dashboard (`PRODUCT_RULES.md`, statistics dashboards).
 
 ## Content pipeline for new items
 

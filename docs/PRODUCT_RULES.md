@@ -183,3 +183,60 @@ easy early wins (starting test, 25 right in a row).
   imaginary wrong answers as a starting point, so mastery is earned and fades without practice.
   A weak spot is a topic below 60.
 - Implemented: `packages/core/src/spaced-repetition.ts`, `packages/core/src/mastery.ts`.
+
+## Statistics dashboards (workstream K)
+
+Two read-only dashboards built from data the app already holds. No new personal data is collected.
+Mockups: screens 19 (student) and 20 (parent).
+
+### Student: My stats (from the Progress tab)
+
+- Period toggle: **Week** (Monday to Sunday, UK time), **Term** (weeks of the current term),
+  **Year** (school year, September to July).
+- Headline tiles: XP, questions answered (and how many correct), accuracy, current streak. Each
+  tile has a short note comparing with the previous period.
+- One bar chart of XP per day (Week), per week (Term) or per month (Year). The goal line is the
+  daily goal (Week) or the weekly goal (Term); Year has no goal line. Tap or hover a bar for its
+  value; every chart also has a table view for screen readers.
+- Mastery by subject: the average of that subject's topic mastery scores (0 to 100), with the
+  change over the period.
+- Personal bests: longest streak, most correct answers in a row, best week of XP.
+- Level progress bar (levels from `REWARDS.md`).
+- Kind framing: the student view shows gains and "same", never red or "worse" wording. Drops are
+  visible to the parent and in the student's topic list, not called out here.
+
+### Parent: stats dashboard (parent portal)
+
+- Student switcher; one child at a time. Parents see only their own children.
+- Headline tiles for this week: active study time (with change on last week), plan sessions kept
+  (done of planned), accuracy, streak.
+- Study time for the last 8 weeks as one bar chart with the weekly plan as a dashed line.
+- Subjects table: mastery (average of topics), predicted grade and target (with "on target" or
+  how far below), change in mastery over the last 4 weeks.
+- Weak spots: the three weakest topics, 4 weeks ago and now.
+- Latest school report effort scores (for example CBI), shown on the school's own scale.
+- Parent-set reward progress (from `REWARDS.md`).
+- Healthy habits: sessions in quiet hours, days over the daily cap, rest days taken.
+- AI marking spend this month against the per-child cap.
+- Recent activity: the last 10 events (lessons, flashcards, papers, homework marked, plan edits).
+  No free text written by the student is shown.
+- **Save as PDF**: made in the browser, nicknames only, nothing stored on the server.
+
+### Rules for the numbers
+
+- **Active study time** counts time between answers in a session; a gap of more than 5 minutes
+  ends the session and the gap is not counted. Time past the daily cap is not counted.
+- **Accuracy** is correct answers ÷ marked answers in the period (part marks count as the
+  fraction earned). Unmarked or "check with your teacher" answers are left out.
+- **Plan kept** is sessions completed on their day (or the day they were moved to) ÷ planned
+  sessions. Before the study plan exists it shows "No plan yet".
+- Panels with no data (no school report, no parent reward, no plan) show a short "Not set up yet"
+  line with a link to set it up, never zeros.
+- All periods use the family time zone (default Europe/London). Time is injected in tests.
+- The student can see, in Settings, exactly which stats their parent can see (Children's Code
+  transparency).
+- Charts follow one style: single violet series, one axis, a dashed reference line where there
+  is a goal or plan, values in tooltips and a table view, and no animation with reduced motion.
+- Implemented (planned): `packages/core/src/stats.ts` (pure functions), API
+  `GET /students/:id/stats?period=week|term|year` (student or their parent) and
+  `GET /parent/students/:id/dashboard`, web `apps/web/src/features/stats/**`.
