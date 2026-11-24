@@ -10,7 +10,7 @@ import {
   topics,
 } from '@revisionden/db';
 import { ParentDashboardSchema, StudentStatsSchema, topicMastery } from '@revisionden/core';
-import { createTestContext, type TestContext } from '../test/helpers';
+import { createTestContext, jsonRequest, type TestContext } from '../test/helpers';
 
 let ctx: TestContext;
 afterEach(async () => ctx?.close());
@@ -112,7 +112,7 @@ describe('GET /v1/student/stats', () => {
       ['gcse-maths', 'Maths'],
       ['gcse-physics', 'Physics'],
     ]);
-    expect(body.level).toBeNull();
+    expect(body.level).toMatchObject({ level: 1, xpIntoLevel: 40 });
   });
 
   it('uses the weekly goal for the term and no goal for the year', async () => {
@@ -255,5 +255,45 @@ describe('GET /v1/students/:id/stats and /dashboard (parent)', () => {
     const { studentId, headers } = await ctx.familyStudent('stats_kid');
     const res = await ctx.app.request(`/v1/students/${studentId}/dashboard`, { headers });
     expect(res.status).toBe(401);
+  });
+});
+
+describe('panels from the rewards progression (workstream R)', () => {
+  it("shows the parent's rewards on the dashboard and the level in My stats", async () => {
+    ctx = await createTestContext();
+    const { studentId, parent, headers } = await ctx.familyStudent('stats_kid');
+    await seedStudy(ctx, studentId);
+    const created = await ctx.app.request(
+      `/v1/students/${studentId}/parent-rewards`,
+      jsonRequest(
+        'POST',
+        {
+          title: 'Cinema trip',
+          note: 'You pick the film',
+          target: { kind: 'date', on: '2027-01-01' },
+        },
+        parent.headers,
+      ),
+    );
+    expect(created.status).toBe(201);
+
+    const dashboard = ParentDashboardSchema.parse(
+      await (
+        await ctx.app.request(`/v1/students/${studentId}/dashboard`, { headers: parent.headers })
+      ).json(),
+    );
+    expect(dashboard.rewards).toHaveLength(1);
+    expect(dashboard.rewards[0]).toMatchObject({
+      title: 'Cinema trip',
+      reached: false,
+      given: false,
+    });
+    expect(JSON.stringify(dashboard)).not.toContain('You pick the film');
+
+    const stats = StudentStatsSchema.parse(
+      await (await ctx.app.request('/v1/student/stats', { headers })).json(),
+    );
+    expect(stats.level).toMatchObject({ level: 1 });
+    expect(stats.level!.xpForNextLevel).toBeGreaterThan(0);
   });
 });

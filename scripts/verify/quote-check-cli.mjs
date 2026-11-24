@@ -56,7 +56,13 @@ export async function run(argv, deps = {}) {
       out(`${r.result === 'pass' ? 'pass' : 'FAIL'}  ${LABEL[r.kind]} ${r.id}  ${r.check.notes}`);
     }
     const passed = results.filter((r) => r.result === 'pass').length;
-    out(`Quote check: ${passed} of ${results.length} passed.`);
+    const all = results.flatMap((r) => r.citations);
+    const count = (result) => all.filter((c) => c.result === result).length;
+    out(
+      `Quote check: ${passed} of ${results.length} passed. Citations: ${all.length}, ` +
+        `${count('pass')} exact, ${count('near')} near matches for a reviewer to confirm, ` +
+        `${count('fail')} not confirmed.`,
+    );
   }
 
   if (values.write) {

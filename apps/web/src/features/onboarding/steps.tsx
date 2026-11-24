@@ -35,6 +35,14 @@ export function FamilyListStep({ children, onAdd, onLink, onFinish }: FamilyList
                 </span>
                 {c.toCheckLater > 0 && <Pill tone="warning">{c.toCheckLater} to check later</Pill>}
               </span>
+              <ButtonLink
+                variant="secondary"
+                to={`/family/${c.student.id}/rewards`}
+                state={{ nickname: c.student.nickname }}
+                aria-label={`Rewards for ${c.student.nickname}`}
+              >
+                Rewards
+              </ButtonLink>
               {c.linkedDevices > 0 ? (
                 <Pill tone="success">Device linked</Pill>
               ) : (

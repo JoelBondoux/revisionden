@@ -604,3 +604,88 @@ test('an unknown exact fact is a schema error', async () => {
   const item = { ...numericItem, exact: { colour: 'blue' } };
   assert.match(messages(await check([item])), /must NOT have additional properties colour/);
 });
+
+// Extended answers (docs/VERIFICATION.md section 3): blind marking of three exemplars replaces
+// the blind answer, and every one needs individual human approval.
+const levelScheme = {
+  id: 'ms-fixture-levels',
+  type: 'levels',
+  source_ref: 'Fixture',
+  levels: [
+    { level: 1, marks: [1, 2], descriptor: 'Fixture low descriptor' },
+    { level: 2, marks: [3, 4], descriptor: 'Fixture middle descriptor' },
+    { level: 3, marks: [5, 6], descriptor: 'Fixture top descriptor' },
+  ],
+  citations: [quotedCitation({ supports: ['mark_scheme'] })],
+  verification: draft(),
+};
+const exemplars = [
+  { band: 'top', level: 3, answer: 'Fixture top answer.' },
+  { band: 'middle', level: 2, answer: 'Fixture middle answer.' },
+  { band: 'low', level: 1, answer: 'Fixture low answer.' },
+];
+function verifiedEssay(checksFilter = () => true, extra = {}) {
+  const v = verified();
+  v.checks = v.checks.filter((c) => c.name !== 'blind-answer').filter(checksFilter);
+  v.checks.push({ ...v.checks[0], name: 'blind-marking', tool: 'openai:fixture' });
+  return {
+    id: 'gcse-maths-h-a17-0009',
+    topic: 'gcse-maths-h-a17',
+    type: 'extended_answer',
+    difficulty: 4,
+    prompt: 'Fixture essay question',
+    marks: 6,
+    mark_scheme_ref: 'ms-fixture-levels',
+    exemplars,
+    source_ref: 'Fixture',
+    checked_by: ['model-b', 'human'],
+    citations: [quotedCitation()],
+    verification: v,
+    ...extra,
+  };
+}
+const withScheme = { markSchemes: [at('mark-schemes/ms.json', levelScheme)] };
+
+test('a verified extended answer needs blind marking, not a blind answer', async () => {
+  assert.deepEqual(await check([verifiedEssay()], withScheme), []);
+  const noMarking = verifiedEssay((c) => c.name !== 'blind-marking');
+  noMarking.verification.checks = noMarking.verification.checks.filter(
+    (c) => c.name !== 'blind-marking',
+  );
+  assert.match(
+    messages(await check([noMarking], withScheme)),
+    /verified content needs a passing blind-marking check/,
+  );
+});
+
+test('a verified extended answer cannot be released by batch sampling', async () => {
+  const essay = verifiedEssay((c) => c.name !== 'human-approval');
+  essay.verification.checks.push({ ...essay.verification.checks[0], name: 'batch-sample' });
+  assert.match(
+    messages(await check([essay], withScheme)),
+    /extended answers need a passing human-approval check/,
+  );
+});
+
+test('a verified extended answer needs a top, middle and low exemplar', async () => {
+  const two = verifiedEssay(() => true, { exemplars: exemplars.slice(0, 2) });
+  assert.match(
+    messages(await check([two], withScheme)),
+    /verified extended answers need exemplars for the top, middle and low bands/,
+  );
+});
+
+test('an exemplar level must be one of the mark scheme levels', async () => {
+  const bad = verifiedEssay(() => true, {
+    exemplars: [...exemplars.slice(0, 2), { band: 'low', level: 7, answer: 'Fixture.' }],
+  });
+  assert.match(
+    messages(await check([bad], withScheme)),
+    /exemplar level 7 is not in ms-fixture-levels/,
+  );
+});
+
+test('exemplars belong only to extended answers', async () => {
+  const mc = { ...numericItem, exemplars };
+  assert.match(messages(await check([mc])), /must NOT have unevaluated properties|exemplars/);
+});

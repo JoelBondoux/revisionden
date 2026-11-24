@@ -21,6 +21,7 @@ import {
   TopicLessonPage,
 } from './features/learn/pages';
 import { StartingTestPage } from './features/learn/StartingTestPage';
+import { ParentRewardsPage, RewardsPage } from './features/rewards';
 import { MyStatsPage } from './features/stats/MyStatsPage';
 import { ParentDashboardPage } from './features/stats/ParentDashboardPage';
 
@@ -32,6 +33,7 @@ export const routes: RouteObject[] = [
       { path: '/family', element: <FamilyPage /> },
       { path: '/onboarding', element: <OnboardingPage /> },
       { path: '/link', element: <LinkPage /> },
+      { path: '/family/:studentId/rewards', element: <ParentRewardsPage /> },
       { path: '/lesson/:lessonId', element: <LessonPage /> },
       { path: '/lesson/:lessonId/complete', element: <LessonCompletePage /> },
       { path: '/review', element: <ReviewQueuePage /> },
@@ -52,6 +54,7 @@ export const routes: RouteObject[] = [
       { path: '/learn', element: <Navigate to="/map" replace /> },
       { path: '/learn/subject/:subjectId', element: <SubjectPage /> },
       { path: '/cards', element: <FlashcardsPage /> },
+      { path: '/rewards', element: <RewardsPage /> },
       {
         path: '/plan',
         element: (

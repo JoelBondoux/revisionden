@@ -11,8 +11,8 @@ export const XP_PER_CORRECT: Record<ItemType, number> = {
   multiple_choice: 10,
   short_answer: 15,
   numeric: 15,
-  working: 20,
-  long_answer: 30,
+  worked_maths: 20,
+  extended_answer: 30,
 };
 
 export const FOCUS_XP_MULTIPLIER = 2;

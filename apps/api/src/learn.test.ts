@@ -82,7 +82,7 @@ describe('content sync', () => {
     const [mc] = await t.db.select().from(items).where(eq(items.contentId, 'test-mc-0001'));
     expect(mc).toMatchObject({ type: 'multiple_choice', status: 'verified', version: 1 });
     const [work] = await t.db.select().from(items).where(eq(items.contentId, 'test-work-0001'));
-    expect(work!.type).toBe('working');
+    expect(work!.type).toBe('worked_maths');
   });
 
   it('updates items in place when run again', async () => {
@@ -361,7 +361,9 @@ describe('starting test', () => {
     const test = await start(headers);
     expect(test.timeLimitSeconds).toBe(300);
     expect(test.items.length).toBeGreaterThan(0);
-    expect(test.items.every((i) => i.type !== 'flashcard' && i.type !== 'long_answer')).toBe(true);
+    expect(test.items.every((i) => i.type !== 'flashcard' && i.type !== 'extended_answer')).toBe(
+      true,
+    );
     expect(new Set(test.items.map((i) => i.topicId))).toEqual(
       new Set(['test-topic-a', 'test-topic-b']),
     );

@@ -16,6 +16,7 @@ import { monthStart, monthlySpendMicroUsd } from '../ai/gateway';
 import { NOT_SET_UP, type StatsAdapters } from './adapters';
 import { buildDashboard, buildStudentStats } from './build';
 import { loadStatsData } from './load';
+import { rewardAdapters } from './reward-adapters';
 
 export interface StatsDeps {
   db: Database;
@@ -24,7 +25,11 @@ export interface StatsDeps {
   statsAdapters?: Partial<StatsAdapters>;
 }
 
-const adaptersOf = (deps: StatsDeps): StatsAdapters => ({ ...NOT_SET_UP, ...deps.statsAdapters });
+const adaptersOf = (deps: StatsDeps): StatsAdapters => ({
+  ...NOT_SET_UP,
+  ...rewardAdapters(deps),
+  ...deps.statsAdapters,
+});
 
 async function studentStats(deps: StatsDeps, studentId: string, query: unknown) {
   const { period } = StatsQuerySchema.parse(query);

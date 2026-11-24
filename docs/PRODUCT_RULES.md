@@ -33,8 +33,8 @@
 - **Gift days** come with some rewards (for example streak badges). They can only be given to a
   friend, never used on the student's own streak. Gifting earns 20 XP.
 - Details settled in code:
-  - XP per correct answer: flashcard 5, multiple choice 10, short answer 15, numeric 15, working
-    20, long answer 30. Part marks earn part of it (rounded). Wrong answers earn 0.
+  - XP per correct answer: flashcard 5, multiple choice 10, short answer 15, numeric 15, worked
+    maths 20, extended answer 30. Part marks earn part of it (rounded). Wrong answers earn 0.
   - Daily goal defaults to 50 XP. Weekly goal defaults to the daily goal met on 5 days; each week
     hit earns 1 skip day (paid once per week).
   - A skip day keeps the streak but does not add to it. A day with no activity counts as missed.
@@ -92,17 +92,21 @@
 ## Rewards (avatar unlocks)
 
 The full five-year progression (levels 1 to 100, year chapters, milestones, collections,
-seasonal drops, rarity, parent-set rewards) is in [`REWARDS.md`](REWARDS.md). The current
-implemented catalogue is the first slice of it:
+seasonal drops, rarity, parent-set rewards) is in [`REWARDS.md`](REWARDS.md), including the level
+formula and its assumptions. Summary of what is built:
 
-Targets vary: streaks (7, 30, 100 days), grades (target hit in a mock, every target at an
-assessment), practice (full past paper, 10 weak spots fixed, 10 topics mastered, perfect set),
-friendship (gift 3 days, gift to 5 friends), competition (top of friends league for a week), and
-easy early wins (starting test, 25 right in a row).
-
-- Each reward unlocks one avatar item. Streak badges come with gift days: 7 days → 1, 30 days → 2,
-  100 days → 3.
-- Implemented: `packages/core/src/rewards.ts`.
+- Catalogue as data (`packages/core/src/catalogue/`): every reward has one stated target (a stat,
+  a collection or a seasonal challenge), a rarity, a source and the items it gives. The original
+  14 targets are kept with the same ids: streaks (7, 30, 100 days), grades (target hit in a mock,
+  every target at an assessment), practice (full past paper, 10 weak spots fixed, 10 topics
+  mastered, perfect set), friendship (gift 3 days, gift to 5 friends), competition (top of
+  friends league for a week), and easy early wins (starting test, 25 right in a row).
+- Streak milestones come with gift days: 7 days → 1, 30 → 2, 100 → 3, 365 → 5, 1,000 → 10.
+- Rewards never come from time spent or late-night study (22:00 to 05:59 UK time), at most
+  300 reward XP count a day, and there are no random draws.
+- Avatar items only unlock from the reward that locks them; locked items are refused when saving.
+- Implemented: `packages/core/src/rewards.ts`, `levels.ts`, `chapters.ts`, `reward-xp.ts`,
+  `reward-stats.ts`, `rewards-schemas.ts`; API `apps/api/src/routes/rewards.ts`.
 
 ## Nickname and avatar
 
@@ -251,12 +255,71 @@ Mockups: screens 19 (student) and 20 (parent).
 - **Recent activity** groups back-to-back answers of one kind and subject (gaps up to 5 minutes)
   into lessons, tests, starting tests and flashcard practice. Flashcard reviews show only each
   card's latest review (that is all that is stored).
-- Panels not built yet (study plan, school report effort, parent-set rewards, predicted and target
-  grades, level bar) come from adapters in `apps/api/src/stats/adapters.ts` that return null (or
-  an empty list). Parent-set rewards are listed not-yet-given first, without the note to the
-  student; `toRewardPanel` maps R5's `ParentReward` once it is on dev.
+- The level bar and parent-set rewards come from the rewards progression (workstream R), read
+  from the same view as the Rewards page (`apps/api/src/stats/reward-adapters.ts`). Parent-set
+  rewards are listed not-yet-given first, without the note to the student.
+- Panels not built yet (study plan, school report effort, predicted and target grades) come from
+  adapters in `apps/api/src/stats/adapters.ts` that return null and show "Not set up yet".
 - Implemented: `packages/core/src/stats.ts` (pure functions) and `stats-schemas.ts` (shared
   schemas); API `GET /v1/student/stats?period=week|term|year` (student device),
   `GET /v1/students/:id/stats?period=…` and `GET /v1/students/:id/dashboard` (parent, own children
   only); web `apps/web/src/features/stats/**` (`/progress` My stats, `/parent/stats` dashboard,
   "What your parent can see" in Settings).
+
+## About page, policies and feedback (workstream L)
+
+### About
+
+- Reached from Settings (student and parent) and from the footer of the sign-in page.
+- Shows the app version (`VERSION`, for example `00.04.012`), environment (development, staging
+  or live), build date and short commit id, all injected at build.
+- **What's new**: the plain-English changelog. Each version lists the lines from its
+  `### What's new` subsection in `CHANGELOG.md`, newest first; versions without one are hidden.
+  The technical changelog stays on GitHub.
+- Links to every policy in `docs/LEGAL.md`, the open-source licences used by the app (generated
+  at build) and "Report a bug" / "Send an idea".
+
+### Policies
+
+- One page per policy at `/legal/<name>`: the plain-English summary first, then the full text
+  behind a "Read the full text" heading on the same page (not hidden), then the change history.
+- Reachable without signing in. Printable. No tracking.
+
+### Feedback and bug reports
+
+- Kinds: **bug**, **idea**, **something confusing**, **other**. (Mistakes in a question keep
+  using "Report a problem" on the item, which quarantines it.)
+- Optional text up to 500 characters. Before saving, the same checks as the AI privacy filter
+  run: email addresses, phone numbers and the student's nickname are refused with a friendly
+  "please leave out personal details" message.
+- Optional "include device details" (on by default, can be turned off): app version, screen,
+  route, browser family, screen size and online/offline. Never IP address, location or contacts.
+- Students can send feedback; the form tells them their parent can see it. Parents see their
+  family's feedback and its status in the parent portal.
+- Stored in a `feedback` table (family id, sender role, kind, text, device details, status). The
+  operator sees and triages it at `/admin/feedback` (operator role from configuration, not from
+  an email in code). Status: new, looking into it, fixed, will not fix; the sender sees status
+  changes.
+- Never sent automatically to GitHub (the repository is public). The operator may copy a report
+  into an issue by hand, without any text that could identify the family.
+- Rate limit 5 a day per account. Deleted 12 months after it is closed.
+
+## Sound effects (workstream U)
+
+- Short, original sounds made in the browser with the Web Audio API (no audio files, no
+  third-party sounds). Playful but not childish: soft, musical, under half a second for taps.
+- Events: tap (subtle), correct, wrong (gentle, never a buzzer), part marks, submit, results
+  reveal, streak day met, level up, reward unlocked, gift sent or received, card flip, flashcard
+  rating, plan session dropped, celebration, timer warning (one at 1 minute left).
+- **Mute**: a quick mute button in the app header and a Sound section in Settings with on/off,
+  volume, and a separate "tap sounds" switch (off by default). Saved per device. Sounds default to
+  on at a medium volume except tap sounds.
+- On iPhone and iPad, sounds follow the silent switch where the browser allows it
+  (`navigator.audioSession.type = "ambient"`). No sound plays before the first tap (browser rule)
+  or while the app is in the background.
+- **Test mode**: no correct or wrong sound before the student submits; the reveal plays once for
+  the whole set. Timed papers play only the timer warning.
+- Sound is never the only signal: every sound has a matching visual. Reduced motion does not mute
+  sound; the two settings are separate.
+- Implemented (planned): `apps/web/src/features/sound/**` (`SoundProvider`, `useSound`, the
+  synthesised sound bank and settings), with one-line `play()` calls in the other features.

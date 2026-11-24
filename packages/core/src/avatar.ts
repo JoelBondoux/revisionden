@@ -138,6 +138,12 @@ export const AVATAR_CATALOGUE: AvatarCatalogue = {
     ),
     locked('gold-hoodie', 'assessment-all-targets'),
     locked('captain-shirt', 'mock-target-hit'),
+    // Year chapter finales (docs/REWARDS.md); appended so saved avatar codes keep their items.
+    locked('chapter-hoodie', 'chapter-1-finale'),
+    locked('bomber-jacket', 'chapter-2-finale'),
+    locked('gcse-finisher-jacket', 'chapter-3-finale'),
+    locked('sixth-form-coat', 'chapter-4-finale'),
+    locked('a-level-finisher-jacket', 'chapter-5-finale'),
   ],
   topColour: free(...COLOURS),
   eyewear: [
@@ -168,6 +174,7 @@ export const AVATAR_CATALOGUE: AvatarCatalogue = {
     ),
     locked('crown', 'streak-100'),
     locked('dino-hood', 'gift-5-friends'),
+    locked('bobble-hat', 'autumn-2-2026-2'),
   ],
   heldItem: [
     ...free(
@@ -185,6 +192,7 @@ export const AVATAR_CATALOGUE: AvatarCatalogue = {
     locked('trophy', 'league-top'),
     locked('dino-buddy', 'gift-3-days'),
     locked('pixel-sword', 'perfect-set'),
+    locked('lantern', 'autumn-2-2026-5'),
   ],
   backgroundColour: free(
     'sky',
@@ -205,6 +213,8 @@ export const AVATAR_CATALOGUE: AvatarCatalogue = {
     ...free('none', 'pitch', 'skate-park', 'gig-stage', 'pixel-hills', 'cinema', 'vinyl'),
     locked('jungle', 'starting-test'),
     locked('space', 'correct-25-in-a-row'),
+    locked('rooftop', 'chapter-2-finale'),
+    locked('frosty-night', 'autumn-2-2026-8'),
   ],
 };
 

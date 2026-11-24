@@ -451,6 +451,30 @@
         },
         "command_word": {
           "$ref": "#/$defs/text"
+        },
+        "exemplars": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "description": "Exemplar answers written from the mark scheme with their intended levels (top, middle and low band). A model from a different provider marks them blind (check: blind-marking, docs/VERIFICATION.md section 3). Not shown to students.",
+          "items": {
+            "type": "object",
+            "required": ["band", "level", "answer"],
+            "properties": {
+              "band": {
+                "enum": ["top", "middle", "low"]
+              },
+              "level": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "answer": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false
+          }
         }
       }
     }

@@ -5,6 +5,12 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ## [Unreleased]
 
+### What's new
+
+- Coming soon: a stats page for students and a stats dashboard for parents.
+- Coming soon: rewards you set yourself as a parent, like a cinema trip for a 30-day streak.
+- Coming soon: sound effects, with a mute button.
+
 ### Fixed
 
 - GCSE Statistics offers only AQA and Pearson Edexcel in onboarding (checked on the board websites).
@@ -12,6 +18,10 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Five-year rewards progression (R): level curve 1 to 100 with prestige stars, a 369-reward catalogue as data (levels, year chapters, milestone ladders, collections, 2026/27 seasonal drops) with a validator, healthy-limit rules (no late-night or time-based rewards, daily cap), student `/rewards` screen, and parent-set real-world rewards (`/family/:id/rewards`, `parent_rewards` table, migration 0004).
+- New original avatar art: five chapter finale tops, rooftop scene, and the Frost Fest drop (bobble hat, paper lantern, frosty night scene).
+- Verification: blind marking for extended answers: three exemplars (top, middle, low) marked by a second provider without the intended levels must all match; verified extended answers need `blind-marking` and individual human approval, and review batches always include them.
+- Verification: the quote checker reports near matches (letters only, or words with small insertions or reordering, with a confidence) for a reviewer to confirm instead of passing them.
 - Statistics dashboards (K): student "My stats" on the Progress tab (week, term and year; XP chart
   with goal line, tooltip and table view; mastery by subject; personal bests; kind framing), the
   parent stats dashboard at `/parent/stats` (study time, plan kept, accuracy, streak, 8-week chart,
@@ -19,6 +29,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
   "What your parent can see" in Settings, and `GET /v1/student/stats`, `GET /v1/students/:id/stats`
   and `GET /v1/students/:id/dashboard`.
 - Five-year rewards progression design (`docs/REWARDS.md`) and backlog workstream R.
+- Policies index and rules (`docs/LEGAL.md`), About page, feedback and sound effects specs, backlog workstreams L and U.
 - Statistics dashboards spec for student and parent (`docs/PRODUCT_RULES.md`) and backlog workstream K; parent-set rewards detail (`docs/REWARDS.md`).
 
 - Content: official citations with verbatim quotes, pages and SHA-256 for all 110 pilot GCSE Maths entries (1MA1 Issue 2 and DfE subject content); quadratic formula flashcard fixed; sourcing record in `docs/sourcing/` (S).
@@ -75,6 +86,11 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
   spend cap (US$2.50 by default) and a guard that refuses any request with personal data.
 - Short-answer marking (H3): rules against the mark scheme first, Claude Haiku 5.5 only for
   wording variants, citing each mark point; unsure answers say "Check with your teacher".
+
+### Changed
+
+- Item type names are the content schema names everywhere (`worked_maths`, `extended_answer`); the mapping in core is removed.
+- One item JSON format in the `items` table for the content sync and AI marking (`body.marks` added; marking reads `answer.key` and `answer.markScheme`), with a round-trip test.
 
 ## [00.01.002] - 2026-11-24
 

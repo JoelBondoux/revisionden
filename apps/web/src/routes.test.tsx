@@ -78,4 +78,20 @@ describe('routes', () => {
     expect(await screen.findByRole('heading', { level: 1, name: 'Cards' })).toBeInTheDocument();
     expect(screen.queryByText('Coming soon.')).not.toBeInTheDocument();
   });
+
+  it('opens the student rewards screen from Settings', async () => {
+    renderRoute('/settings');
+    expect(await screen.findByRole('link', { name: 'My rewards' })).toHaveAttribute(
+      'href',
+      '/rewards',
+    );
+    renderRoute('/rewards');
+    expect(await screen.findByRole('heading', { level: 1, name: 'Level 4' })).toBeInTheDocument();
+  });
+
+  it("opens a child's real-world rewards for the parent", async () => {
+    renderRoute('/family/demo-student/rewards');
+    expect(await screen.findByRole('heading', { level: 1, name: 'Rewards' })).toBeInTheDocument();
+    expect(await screen.findByText(/No real-world rewards yet/)).toBeInTheDocument();
+  });
 });

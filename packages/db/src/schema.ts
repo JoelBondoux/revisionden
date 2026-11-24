@@ -696,3 +696,38 @@ export const recalculationJobs = pgTable('recalculation_jobs', {
   createdAt: createdAt(),
   completedAt: timestamp('completed_at', { withTimezone: true }),
 });
+
+// ---------------------------------------------------------------------------------------------
+// Five-year rewards (workstream R)
+// ---------------------------------------------------------------------------------------------
+
+/**
+ * Real-world rewards a parent ties to a target: a catalogue reward id, a stat reaching a number,
+ * or a date. The parent can edit or delete one until it is marked as given; then it is history.
+ * Only a short title and an optional note are stored.
+ */
+export const parentRewards = pgTable(
+  'parent_rewards',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    title: text('title').notNull(),
+    note: text('note'),
+    targetKind: text('target_kind', { enum: ['reward', 'stat', 'date'] }).notNull(),
+    rewardId: text('reward_id'),
+    stat: text('stat'),
+    atLeast: integer('at_least'),
+    targetDate: date('target_date'),
+    createdAt: createdAt(),
+    givenAt: timestamp('given_at', { withTimezone: true }),
+  },
+  (t) => [
+    index('parent_rewards_student_idx').on(t.studentId),
+    check(
+      'parent_rewards_target',
+      sql`(${t.targetKind} = 'reward' and ${t.rewardId} is not null) or (${t.targetKind} = 'stat' and ${t.stat} is not null and ${t.atLeast} >= 1) or (${t.targetKind} = 'date' and ${t.targetDate} is not null)`,
+    ),
+  ],
+);

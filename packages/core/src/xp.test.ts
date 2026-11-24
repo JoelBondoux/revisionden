@@ -8,10 +8,10 @@ describe('xpForAnswer', () => {
       multiple_choice: 10,
       short_answer: 15,
       numeric: 15,
-      working: 20,
-      long_answer: 30,
+      worked_maths: 20,
+      extended_answer: 30,
     });
-    expect(xpForAnswer({ type: 'working', score: 1 })).toBe(20);
+    expect(xpForAnswer({ type: 'worked_maths', score: 1 })).toBe(20);
   });
 
   it('gives nothing for a wrong answer', () => {
@@ -19,7 +19,7 @@ describe('xpForAnswer', () => {
   });
 
   it('gives part of the XP for part marks, rounded', () => {
-    expect(xpForAnswer({ type: 'long_answer', score: 0.5 })).toBe(15);
+    expect(xpForAnswer({ type: 'extended_answer', score: 0.5 })).toBe(15);
     expect(xpForAnswer({ type: 'short_answer', score: 1 / 3 })).toBe(5);
   });
 
