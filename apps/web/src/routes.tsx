@@ -9,6 +9,8 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { PathPage } from './pages/PathPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { WelcomePage } from './pages/WelcomePage';
+import { BatchReviewPage } from './features/review/BatchReviewPage';
+import { ReviewQueuePage } from './features/review/ReviewQueuePage';
 
 export const routes: RouteObject[] = [
   {
@@ -18,6 +20,8 @@ export const routes: RouteObject[] = [
       { path: '/family', element: <FamilyPage /> },
       { path: '/lesson/:lessonId', element: <LessonPage /> },
       { path: '/lesson/:lessonId/complete', element: <LessonCompletePage /> },
+      { path: '/review', element: <ReviewQueuePage /> },
+      { path: '/review/batches/:batchId', element: <BatchReviewPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },
