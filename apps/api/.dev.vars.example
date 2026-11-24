@@ -1,0 +1,8 @@
+# Copy to .dev.vars (git-ignored) and fill in. Never commit real values.
+DATABASE_URL=postgres://USER:PASSWORD@HOST/revisionden?sslmode=require
+BETTER_AUTH_SECRET=generate-with-openssl-rand-base64-32
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+MICROSOFT_CLIENT_ID=
+MICROSOFT_CLIENT_SECRET=
+AI_GATEWAY_URL=https://gateway.ai.cloudflare.com/v1/ACCOUNT_ID/revisionden-dev

@@ -1,0 +1,374 @@
+/**
+ * RevisionDen database schema (Drizzle, Postgres).
+ *
+ * Privacy rule: no table stores a student's real name, date of birth, email, photo or school
+ * name. Students have only a nickname, an avatar code and a year group. The schema guard test
+ * (`schema-guard.test.ts`) fails if a column like that appears.
+ *
+ * The parent's identity lives in the `auth_*` tables owned by Better Auth. Only the sign-in
+ * email is kept: the API blanks the provider's display name and never stores the picture.
+ */
+import { sql } from 'drizzle-orm';
+import {
+  type AnyPgColumn,
+  boolean,
+  check,
+  date,
+  index,
+  integer,
+  jsonb,
+  pgTable,
+  primaryKey,
+  real,
+  text,
+  timestamp,
+  unique,
+  uuid,
+} from 'drizzle-orm/pg-core';
+
+const createdAt = () => timestamp('created_at', { withTimezone: true }).notNull().defaultNow();
+const updatedAt = () => timestamp('updated_at', { withTimezone: true }).notNull().defaultNow();
+
+// ---------------------------------------------------------------------------------------------
+// Better Auth tables (parent sign-in). Column names follow Better Auth's core schema.
+// ---------------------------------------------------------------------------------------------
+
+export const authUsers = pgTable('auth_users', {
+  id: text('id').primaryKey(),
+  // Required by Better Auth; always stored as an empty string (see apps/api auth config).
+  name: text('name').notNull().default(''),
+  email: text('email').notNull().unique(),
+  emailVerified: boolean('email_verified').notNull().default(false),
+  // Required by Better Auth's schema; always null (we never store the provider's picture).
+  image: text('image'),
+  createdAt: createdAt(),
+  updatedAt: updatedAt(),
+});
+
+export const authSessions = pgTable(
+  'auth_sessions',
+  {
+    id: text('id').primaryKey(),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    token: text('token').notNull().unique(),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+    ipAddress: text('ip_address'),
+    userAgent: text('user_agent'),
+    userId: text('user_id')
+      .notNull()
+      .references(() => authUsers.id, { onDelete: 'cascade' }),
+  },
+  (t) => [index('auth_sessions_user_id_idx').on(t.userId)],
+);
+
+export const authAccounts = pgTable(
+  'auth_accounts',
+  {
+    id: text('id').primaryKey(),
+    accountId: text('account_id').notNull(),
+    providerId: text('provider_id').notNull(),
+    userId: text('user_id')
+      .notNull()
+      .references(() => authUsers.id, { onDelete: 'cascade' }),
+    accessToken: text('access_token'),
+    refreshToken: text('refresh_token'),
+    idToken: text('id_token'),
+    accessTokenExpiresAt: timestamp('access_token_expires_at', { withTimezone: true }),
+    refreshTokenExpiresAt: timestamp('refresh_token_expires_at', { withTimezone: true }),
+    scope: text('scope'),
+    // Better Auth's schema has a password column; it stays null (no passwords anywhere).
+    password: text('password'),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [index('auth_accounts_user_id_idx').on(t.userId)],
+);
+
+export const authVerifications = pgTable('auth_verifications', {
+  id: text('id').primaryKey(),
+  identifier: text('identifier').notNull(),
+  value: text('value').notNull(),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+  createdAt: createdAt(),
+  updatedAt: updatedAt(),
+});
+
+// ---------------------------------------------------------------------------------------------
+// Families, parents and students
+// ---------------------------------------------------------------------------------------------
+
+export const families = pgTable('families', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  createdAt: createdAt(),
+});
+
+export const parents = pgTable(
+  'parents',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    familyId: uuid('family_id')
+      .notNull()
+      .references(() => families.id, { onDelete: 'cascade' }),
+    authUserId: text('auth_user_id')
+      .notNull()
+      .unique()
+      .references(() => authUsers.id, { onDelete: 'cascade' }),
+    createdAt: createdAt(),
+  },
+  (t) => [index('parents_family_id_idx').on(t.familyId)],
+);
+
+export const students = pgTable(
+  'students',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    familyId: uuid('family_id')
+      .notNull()
+      .references(() => families.id, { onDelete: 'cascade' }),
+    nickname: text('nickname').notNull(),
+    avatarCode: text('avatar_code').notNull(),
+    yearGroup: integer('year_group').notNull(),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [
+    unique('students_family_nickname_unique').on(t.familyId, t.nickname),
+    check('students_nickname_format', sql`${t.nickname} ~ '^[A-Za-z0-9_]{2,16}$'`),
+    check('students_year_group_range', sql`${t.yearGroup} between 7 and 13`),
+  ],
+);
+
+export const enrolments = pgTable(
+  'enrolments',
+  {
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    subjectId: text('subject_id').notNull(),
+    // Exam board as in core's BoardSchema (for example 'AQA'), or 'not_sure'.
+    board: text('board').notNull().default('not_sure'),
+    // As in core's TierSchema: 'none' when the subject has no tiers.
+    tier: text('tier').notNull().default('not_sure'),
+    specVersion: text('spec_version'),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.studentId, t.subjectId] }),
+    check('enrolments_tier_values', sql`${t.tier} in ('foundation', 'higher', 'none', 'not_sure')`),
+  ],
+);
+
+// ---------------------------------------------------------------------------------------------
+// Devices and device linking
+// ---------------------------------------------------------------------------------------------
+
+export const devices = pgTable(
+  'devices',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    // WebAuthn passkey credential (public part only).
+    credentialId: text('credential_id').notNull().unique(),
+    publicKey: text('public_key').notNull(),
+    counter: integer('counter').notNull().default(0),
+    transports: jsonb('transports').$type<string[]>(),
+    linkedAt: timestamp('linked_at', { withTimezone: true }).notNull().defaultNow(),
+    lastUsedAt: timestamp('last_used_at', { withTimezone: true }),
+  },
+  (t) => [index('devices_student_id_idx').on(t.studentId)],
+);
+
+/** One-time tokens a parent shows as a QR code to link a student device. */
+export const deviceLinkTokens = pgTable(
+  'device_link_tokens',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    // SHA-256 of the token; the token itself is never stored.
+    tokenHash: text('token_hash').notNull().unique(),
+    familyId: uuid('family_id')
+      .notNull()
+      .references(() => families.id, { onDelete: 'cascade' }),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    usedAt: timestamp('used_at', { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (t) => [index('device_link_tokens_student_id_idx').on(t.studentId)],
+);
+
+/** WebAuthn challenges waiting for a device's response (registration or unlock). */
+export const passkeyChallenges = pgTable('passkey_challenges', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  kind: text('kind', { enum: ['register', 'unlock'] }).notNull(),
+  challenge: text('challenge').notNull(),
+  // Set for registration (the student being linked); null for unlock.
+  studentId: uuid('student_id').references(() => students.id, { onDelete: 'cascade' }),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+  usedAt: timestamp('used_at', { withTimezone: true }),
+  createdAt: createdAt(),
+});
+
+/** Sessions for a linked, unlocked student device. */
+export const studentSessions = pgTable(
+  'student_sessions',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    tokenHash: text('token_hash').notNull().unique(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    deviceId: uuid('device_id')
+      .notNull()
+      .references(() => devices.id, { onDelete: 'cascade' }),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [index('student_sessions_student_id_idx').on(t.studentId)],
+);
+
+// ---------------------------------------------------------------------------------------------
+// Content (topic trees and items come from content/ via workstream D)
+// ---------------------------------------------------------------------------------------------
+
+export const topics = pgTable(
+  'topics',
+  {
+    id: text('id').primaryKey(),
+    subjectId: text('subject_id').notNull(),
+    board: text('board').notNull(),
+    specRef: text('spec_ref'),
+    title: text('title').notNull(),
+    parentTopicId: text('parent_topic_id').references((): AnyPgColumn => topics.id, {
+      onDelete: 'cascade',
+    }),
+  },
+  (t) => [index('topics_subject_board_idx').on(t.subjectId, t.board)],
+);
+
+export const items = pgTable(
+  'items',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    topicId: text('topic_id')
+      .notNull()
+      .references(() => topics.id, { onDelete: 'cascade' }),
+    type: text('type').notNull(),
+    body: jsonb('body').notNull(),
+    answer: jsonb('answer').notNull(),
+    sourceRef: text('source_ref'),
+    checkedBy: text('checked_by'),
+  },
+  (t) => [index('items_topic_id_idx').on(t.topicId)],
+);
+
+// ---------------------------------------------------------------------------------------------
+// Learning records
+// ---------------------------------------------------------------------------------------------
+
+export const attempts = pgTable(
+  'attempts',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    itemId: uuid('item_id')
+      .notNull()
+      .references(() => items.id, { onDelete: 'cascade' }),
+    correct: boolean('correct').notNull(),
+    score: real('score'),
+    timeMs: integer('time_ms'),
+    createdAt: createdAt(),
+  },
+  (t) => [index('attempts_student_created_idx').on(t.studentId, t.createdAt)],
+);
+
+export const mastery = pgTable(
+  'mastery',
+  {
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    topicId: text('topic_id')
+      .notNull()
+      .references(() => topics.id, { onDelete: 'cascade' }),
+    value: real('value').notNull().default(0),
+    updatedAt: updatedAt(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.studentId, t.topicId] }),
+    check('mastery_value_range', sql`${t.value} between 0 and 1`),
+  ],
+);
+
+export const exams = pgTable(
+  'exams',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    kind: text('kind', { enum: ['exam', 'mock', 'assessment'] }).notNull(),
+    subjectId: text('subject_id').notNull(),
+    date: date('date').notNull(),
+    result: text('result'),
+  },
+  (t) => [index('exams_student_id_idx').on(t.studentId)],
+);
+
+export const schoolReports = pgTable(
+  'school_reports',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    date: date('date').notNull(),
+    // Extracted grades only, never the school's name or the report image.
+    values: jsonb('values').notNull(),
+  },
+  (t) => [index('school_reports_student_id_idx').on(t.studentId)],
+);
+
+export const plans = pgTable(
+  'plans',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    weekStart: date('week_start').notNull(),
+    sessions: jsonb('sessions').notNull(),
+    editedBy: text('edited_by', { enum: ['auto', 'parent', 'student'] })
+      .notNull()
+      .default('auto'),
+  },
+  (t) => [unique('plans_student_week_unique').on(t.studentId, t.weekStart)],
+);
+
+export const rewards = pgTable(
+  'rewards',
+  {
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    rewardId: text('reward_id').notNull(),
+    earnedAt: timestamp('earned_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [primaryKey({ columns: [t.studentId, t.rewardId] })],
+);
+
+export const streaks = pgTable('streaks', {
+  studentId: uuid('student_id')
+    .primaryKey()
+    .references(() => students.id, { onDelete: 'cascade' }),
+  current: integer('current').notNull().default(0),
+  best: integer('best').notNull().default(0),
+  skipDays: integer('skip_days').notNull().default(0),
+  giftDays: integer('gift_days').notNull().default(0),
+});

@@ -36,9 +36,55 @@ Cloudflare Registrar, auto-renew on.
 
 ## Worker secrets (set with `wrangler secret put`, per environment)
 
-`DATABASE_URL`, `BETTER_AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`,
-`MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET`, `AI_GATEWAY_URL`, `ANTHROPIC_API_KEY`,
-`MATHS_ENGINE_URL`, `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`.
+Set each with `pnpm --filter @revisionden/api exec wrangler secret put <NAME> --env <dev|staging|production>`.
+Locally, copy `apps/api/.dev.vars.example` to `apps/api/.dev.vars` (git-ignored). The API checks
+these on start-up and answers every request with a JSON 500 (`server_misconfigured`) naming
+nothing secret if one is missing; the missing names are written to the Worker log.
+
+| Secret                                           | Needed from | Notes                                                                 |
+| ------------------------------------------------ | ----------- | --------------------------------------------------------------------- |
+| `DATABASE_URL`                                   | B (now)     | Neon connection string for that environment's branch (London)         |
+| `BETTER_AUTH_SECRET`                             | B (now)     | At least 32 random characters: `openssl rand -base64 32`; one per env |
+| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`       | B (now)     | Google OAuth web client                                               |
+| `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` | B (now)     | Microsoft Entra app, "personal and work accounts" (`common` tenant)   |
+| `AI_GATEWAY_URL`                                 | B (now)     | `https://gateway.ai.cloudflare.com/v1/<account id>/<gateway>`         |
+| `ANTHROPIC_API_KEY`                              | H           | Live AI                                                               |
+| `MATHS_ENGINE_URL`                               | F           | Cloud Run maths engine                                                |
+| `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`          | H           | Web push                                                              |
+
+## Worker variables and bindings (in `apps/api/wrangler.toml`, not secret)
+
+| Name                | dev                               | staging                               | production                       |
+| ------------------- | --------------------------------- | ------------------------------------- | -------------------------------- |
+| `ENVIRONMENT`       | `development`                     | `staging`                             | `production`                     |
+| `API_ORIGIN`        | `https://api-dev.revisionden.com` | `https://api-staging.revisionden.com` | `https://api.revisionden.com`    |
+| `WEB_ORIGIN`        | `https://dev.revisionden.com`     | `https://staging.revisionden.com`     | `https://revisionden.com`        |
+| `PASSKEY_RP_ID`     | `dev.revisionden.com`             | `staging.revisionden.com`             | `revisionden.com`                |
+| `UPLOADS` (R2)      | `revisionden-uploads-dev`         | `revisionden-uploads-staging`         | `revisionden-uploads-production` |
+| `AUTH_RATE_LIMITER` | 30 a minute per address           | same                                  | same                             |
+| `AI_RATE_LIMITER`   | 20 a minute per address           | same                                  | same                             |
+
+Local `wrangler dev` uses the top-level values (`localhost:8787` API, `localhost:5173` web).
+The rate limiters use Cloudflare's Workers rate limiting binding; their `namespace_id` values are
+our own numbers, not account ids.
+
+## OAuth callback URLs
+
+Register these in the Google and Microsoft apps (one app per provider can hold all three):
+
+- `https://api-dev.revisionden.com/api/auth/callback/google` (and `/microsoft`)
+- `https://api-staging.revisionden.com/api/auth/callback/google` (and `/microsoft`)
+- `https://api.revisionden.com/api/auth/callback/google` (and `/microsoft`)
+
+Scopes: email and profile only. The API keeps only the email: the name is blanked and the
+picture is never fetched or stored.
+
+## Database migrations
+
+Migrations are generated from `packages/db/src/schema.ts` with
+`pnpm --filter @revisionden/db db:generate` and applied with
+`DATABASE_URL=<branch url> pnpm --filter @revisionden/db db:migrate` (workstream G will run this
+from CI). Made-up seed data: `DATABASE_URL=<dev url> pnpm --filter @revisionden/db db:seed`.
 
 ## One-off set-up steps
 
@@ -50,3 +96,4 @@ Cloudflare Registrar, auto-renew on.
 6. Create the Cloudflare AI Gateway and R2 buckets (one per environment, 24-hour lifecycle rule).
 7. Create the Cloud Run service per environment (scale to zero) and workload identity for GitHub.
 8. Add the secrets above.
+9. Create the R2 buckets named above and apply the migrations to each Neon branch.
