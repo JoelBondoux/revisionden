@@ -1,0 +1,49 @@
+name: Release version bump
+
+# Every push to main bumps VERSION (xx.xx.xxx), tags it and merges it back into staging and dev.
+# Put [minor] or [major] in the merge commit message to bump those parts instead of the patch.
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    if: "!contains(github.event.head_commit.message, 'chore(release)')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - name: Bump version
+        id: bump
+        env:
+          MESSAGE: ${{ github.event.head_commit.message }}
+        run: |
+          NEXT=$(node scripts/bump-version.mjs --message "$MESSAGE")
+          echo "version=$NEXT" >> "$GITHUB_OUTPUT"
+      - name: Update changelog heading
+        run: |
+          DATE=$(date -u +%Y-%m-%d)
+          sed -i "s/^## \[Unreleased\]/## [Unreleased]\n\n## [${{ steps.bump.outputs.version }}] - $DATE/" CHANGELOG.md
+      - name: Commit, tag and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "chore(release): v${{ steps.bump.outputs.version }}"
+          git tag "v${{ steps.bump.outputs.version }}"
+          git push origin main --follow-tags
+      - name: Merge the release back into staging and dev
+        continue-on-error: true
+        run: |
+          for BRANCH in staging dev; do
+            git fetch origin "$BRANCH"
+            git checkout "$BRANCH"
+            git merge --no-edit main
+            git push origin "$BRANCH"
+          done
