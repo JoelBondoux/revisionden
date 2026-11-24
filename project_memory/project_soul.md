@@ -37,6 +37,8 @@ teenagers. It replaces a paid revision subscription and runs almost entirely on 
 
 - Stack: Cloudflare (web, Workers, R2, AI Gateway), Neon Postgres, Cloud Run maths engine
   (`decisions/0001-stack.md`).
+- Parent sign-in with Better Auth; student devices with one-time link tokens and passkeys; tests
+  on PGlite (`decisions/0002-auth-db-testing.md`).
 - Branch flow `feature/*` → `dev` → `staging` → `main`; version `xx.xx.xxx` bumped on every push to
   `main` (`docs/BRANCHING.md`).
 - The repository has no root README or GitHub description while it is public (`docs/PRIVACY.md`).
