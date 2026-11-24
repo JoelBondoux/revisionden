@@ -14,6 +14,9 @@ export function SettingsPage() {
           <li>
             <Link to="/family">Switch profile</Link>
           </li>
+          <li>
+            <Link to="/rewards">My rewards</Link>
+          </li>
         </ul>
       </Card>
       <DeviceReminders />
