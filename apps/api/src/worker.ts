@@ -4,6 +4,7 @@ import { createAuth } from './auth';
 import { parseEnv } from './env';
 import { errorBody } from './errors';
 import { createPasskeyService } from './passkeys';
+import { createMathsEngineClient } from './learning/maths-engine';
 import { createMemoryRateLimiter } from './rate-limit';
 import { runReminders as defaultRunReminders } from './notifications/runner';
 import { createWebPushSender } from './notifications/web-push';
@@ -38,6 +39,9 @@ export function createWorker(version: string, options: WorkerOptions = {}) {
       clock: systemClock,
       passkeys: createPasskeyService(config),
       aiProviders: createProviders(config),
+      ...(config.mathsEngineUrl
+        ? { mathsEngine: createMathsEngineClient(config.mathsEngineUrl) }
+        : {}),
       rateLimiters: {
         auth:
           config.raw.AUTH_RATE_LIMITER ??

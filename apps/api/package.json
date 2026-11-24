@@ -12,7 +12,8 @@
     "deploy:dev": "wrangler deploy --env dev",
     "deploy:staging": "wrangler deploy --env staging",
     "deploy:production": "wrangler deploy --env production",
-    "check:bundle": "wrangler deploy --dry-run --env production --outdir .wrangler/dry-run"
+    "check:bundle": "wrangler deploy --dry-run --env production --outdir .wrangler/dry-run",
+    "content:sync": "tsx src/learning/content-sync-cli.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.13.0",
@@ -31,6 +32,7 @@
     "@types/node": "^22.20.5",
     "@vitest/coverage-v8": "^2.1.8",
     "smol-toml": "^1.9.1",
+    "tsx": "^4.23.15",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8",
     "wrangler": "^4.168.0"

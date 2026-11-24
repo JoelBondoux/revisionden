@@ -32,6 +32,9 @@ const envSchema = z
     PASSKEY_RP_ID: z.string().min(1).optional(),
     AUTH_RATE_LIMITER: optionalRateLimiter,
     AI_RATE_LIMITER: optionalRateLimiter,
+    // Development only: also serve unverified (draft) content. Ignored in staging and production.
+    SERVE_DRAFT_CONTENT: z.enum(['true', 'false']).optional(),
+    MATHS_ENGINE_URL: url.optional(),
     // Workstream H: all optional, so push and live AI stay off until their secrets are set.
     VAPID_PUBLIC_KEY: secret.optional(),
     VAPID_PRIVATE_KEY: secret.optional(),
@@ -75,6 +78,10 @@ export interface AppConfig {
   aiGatewayUrl: string;
   /** WebAuthn relying party id: the web app's host unless overridden. */
   passkeyRpId: string;
+  /** Serve draft content as well as verified. Only ever true in development. */
+  serveDraftContent: boolean;
+  /** Maths engine (services/maths) used to check worked maths answers. */
+  mathsEngineUrl?: string;
   /** Web push; null until both VAPID keys are set. */
   push: { keys: { publicKey: string; privateKey: string } } | null;
   ai: AiConfig;
@@ -109,6 +116,8 @@ export function parseEnv(env: Record<string, unknown>): AppConfig & { raw: Worke
     microsoft: { clientId: e.MICROSOFT_CLIENT_ID, clientSecret: e.MICROSOFT_CLIENT_SECRET },
     aiGatewayUrl: e.AI_GATEWAY_URL,
     passkeyRpId: e.PASSKEY_RP_ID ?? new URL(e.WEB_ORIGIN).hostname,
+    serveDraftContent: e.ENVIRONMENT === 'development' && e.SERVE_DRAFT_CONTENT === 'true',
+    ...(e.MATHS_ENGINE_URL ? { mathsEngineUrl: e.MATHS_ENGINE_URL } : {}),
     push:
       e.VAPID_PUBLIC_KEY && e.VAPID_PRIVATE_KEY
         ? { keys: { publicKey: e.VAPID_PUBLIC_KEY, privateKey: e.VAPID_PRIVATE_KEY } }

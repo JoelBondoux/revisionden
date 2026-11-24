@@ -6,6 +6,9 @@ GOOGLE_CLIENT_SECRET=
 MICROSOFT_CLIENT_ID=
 MICROSOFT_CLIENT_SECRET=
 AI_GATEWAY_URL=https://gateway.ai.cloudflare.com/v1/ACCOUNT_ID/revisionden-dev
+# Development only: also serve draft (unverified) content. Ignored in staging and production.
+# SERVE_DRAFT_CONTENT=true
+# MATHS_ENGINE_URL=http://localhost:8000
 # Optional (workstream H): leave blank to keep live AI and reminders switched off.
 ANTHROPIC_API_KEY=
 OPENAI_API_KEY=

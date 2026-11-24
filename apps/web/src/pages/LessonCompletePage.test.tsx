@@ -22,10 +22,7 @@ describe('Lesson complete screen', () => {
 
   it('leads back to the learning path', async () => {
     renderComplete({ xpEarned: 10, correct: 1, total: 3 });
-    expect(await screen.findByRole('link', { name: /continue/i })).toHaveAttribute(
-      'href',
-      '/learn',
-    );
+    expect(await screen.findByRole('link', { name: /continue/i })).toHaveAttribute('href', '/map');
   });
 
   it('still makes sense when opened without results', async () => {

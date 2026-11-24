@@ -25,11 +25,21 @@ describe('rewards catalogue', () => {
     ]);
   });
 
-  it('links every reward to exactly one avatar item, and every locked item to a real reward', () => {
+  it('links every reward to an avatar item, and every locked item to a real reward', () => {
     const lockedBy = AVATAR_LAYERS.flatMap((layer) =>
       AVATAR_CATALOGUE[layer].flatMap((item) => (item.unlockedBy ? [item.unlockedBy] : [])),
     );
-    expect([...lockedBy].sort()).toEqual(REWARDS.map((r) => r.id).sort());
+    expect([...new Set(lockedBy)].sort()).toEqual(REWARDS.map((r) => r.id).sort());
+  });
+
+  it('unlocks one item per reward, except the 100-day streak, which unlocks two', () => {
+    const counts = new Map<string, number>();
+    for (const layer of AVATAR_LAYERS) {
+      for (const item of AVATAR_CATALOGUE[layer]) {
+        if (item.unlockedBy) counts.set(item.unlockedBy, (counts.get(item.unlockedBy) ?? 0) + 1);
+      }
+    }
+    for (const r of REWARDS) expect(counts.get(r.id)).toBe(r.id === 'streak-100' ? 2 : 1);
   });
 
   it('gives gift days with streak badges', () => {

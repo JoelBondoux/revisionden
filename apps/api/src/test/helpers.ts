@@ -1,5 +1,5 @@
 import { createTestDb } from '@revisionden/db/testing';
-import { authSessions, authUsers } from '@revisionden/db';
+import { authSessions, authUsers, devices, studentSessions } from '@revisionden/db';
 import type { Database } from '@revisionden/db';
 import { makeSignature } from 'better-auth/crypto';
 import { DEFAULT_AVATAR, encodeAvatar } from '@revisionden/core';
@@ -9,6 +9,9 @@ import type { AppConfig } from '../env';
 import { createMemoryRateLimiter } from '../rate-limit';
 import { createPasskeyService } from '../passkeys';
 import type { AiProvider, ProviderName } from '../ai/types';
+import type { MathsEngine } from '../learning/maths-engine';
+import { STUDENT_COOKIE } from '../routes/devices';
+import { hashToken, randomToken } from '../tokens';
 
 export const TEST_CONFIG: AppConfig = {
   environment: 'development',
@@ -20,6 +23,7 @@ export const TEST_CONFIG: AppConfig = {
   microsoft: { clientId: 'test-ms-id', clientSecret: 'test-ms-secret' },
   aiGatewayUrl: 'https://gateway.example.com/v1/test',
   passkeyRpId: 'dev.revisionden.test',
+  serveDraftContent: false,
   push: null,
   ai: {
     anthropicApiKey: undefined,
@@ -49,13 +53,19 @@ export interface TestContextOptions {
   aiLimit?: number;
   config?: Partial<AppConfig>;
   aiProviders?: Partial<Record<ProviderName, AiProvider>>;
+  serveDraftContent?: boolean;
+  mathsEngine?: MathsEngine;
 }
 
 export async function createTestContext(options: TestContextOptions = {}) {
   const { db: pglite, client } = await createTestDb();
   const db = pglite as unknown as Database;
   const clock = createTestClock();
-  const config: AppConfig = { ...TEST_CONFIG, ...options.config };
+  const config: AppConfig = {
+    ...TEST_CONFIG,
+    serveDraftContent: options.serveDraftContent ?? false,
+    ...options.config,
+  };
   const auth = createAuth({ db, config });
   const app = createApp({
     version: '00.01.000',
@@ -70,6 +80,7 @@ export async function createTestContext(options: TestContextOptions = {}) {
       auth: createMemoryRateLimiter({ limit: options.authLimit ?? 1000, periodMs: 60_000, clock }),
       ai: createMemoryRateLimiter({ limit: options.aiLimit ?? 1000, periodMs: 60_000, clock }),
     },
+    ...(options.mathsEngine ? { mathsEngine: options.mathsEngine } : {}),
   });
 
   let parentCount = 0;
@@ -94,7 +105,50 @@ export async function createTestContext(options: TestContextOptions = {}) {
     };
   }
 
-  return { app, db, client, clock, auth, signInParent, close: () => client.close() };
+  /** Gives a student a linked device and an unlocked session; returns the cookie header. */
+  async function signInStudent(studentId: string): Promise<Record<string, string>> {
+    const [device] = await db
+      .insert(devices)
+      .values({ studentId, credentialId: `test-credential-${randomToken()}`, publicKey: 'test' })
+      .returning({ id: devices.id });
+    const token = randomToken();
+    await db.insert(studentSessions).values({
+      tokenHash: await hashToken(token),
+      studentId,
+      deviceId: device!.id,
+      expiresAt: new Date(clock.now().getTime() + 12 * 60 * 60 * 1000),
+    });
+    return { cookie: `${STUDENT_COOKIE}=${token}` };
+  }
+
+  /** A parent with one student signed in on a device, enrolled in the given subjects. */
+  async function familyStudent(nickname = 'test_kid', subjectIds: string[] = []) {
+    const parent = await signInParent();
+    const res = await app.request(
+      '/v1/students',
+      jsonRequest('POST', { nickname, avatarCode: AVATAR, yearGroup: 11 }, parent.headers),
+    );
+    const { id } = (await res.json()) as { id: string };
+    for (const subjectId of subjectIds) {
+      await app.request(
+        `/v1/students/${id}/enrolments`,
+        jsonRequest('POST', { subjectId, board: 'not_sure', tier: 'none' }, parent.headers),
+      );
+    }
+    return { studentId: id, parent, headers: await signInStudent(id) };
+  }
+
+  return {
+    app,
+    db,
+    client,
+    clock,
+    auth,
+    signInParent,
+    signInStudent,
+    familyStudent,
+    close: () => client.close(),
+  };
 }
 
 export type TestContext = Awaited<ReturnType<typeof createTestContext>>;

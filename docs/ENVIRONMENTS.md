@@ -51,7 +51,7 @@ nothing secret if one is missing; the missing names are written to the Worker lo
 | `ANTHROPIC_API_KEY`                              | H (now)     | Live AI (Claude). Optional: AI routes answer 503 until it is set      |
 | `OPENAI_API_KEY`                                 | H (now)     | Optional second checker through the gateway (see `AI_CHECKER_MODEL`)  |
 | `AI_GATEWAY_TOKEN`                               | H (now)     | Optional: only if the AI Gateway is set to "authenticated"            |
-| `MATHS_ENGINE_URL`                               | F           | Cloud Run maths engine                                                |
+| `MATHS_ENGINE_URL`                               | F (now)     | Cloud Run maths engine; without it worked maths answers get a 503     |
 | `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`          | H (now)     | Web push. Both or neither; reminders stay off until set (see below)   |
 
 ## Worker variables and bindings (in `apps/api/wrangler.toml`, not secret)
@@ -81,6 +81,12 @@ due reminders. It does nothing until both VAPID keys are set.
 `npx web-push generate-vapid-keys` (any tool that gives a P-256 key pair as base64url works:
 the public key is the 65-byte uncompressed point, the private key the 32-byte scalar). Set both
 with `wrangler secret put`. Changing the keys means every device has to turn reminders on again.
+
+`SERVE_DRAFT_CONTENT` (workstream F) is off unless set to `true`, and only works when
+`ENVIRONMENT` is `development`: staging and production never serve draft content, whatever it
+says. Set it in `apps/api/.dev.vars` to try the pilot drafts locally; the app then shows a
+"DRAFT CONTENT" banner. Load content into a database with
+`DATABASE_URL=... pnpm --filter @revisionden/api content:sync`.
 
 Local `wrangler dev` uses the top-level values (`localhost:8787` API, `localhost:5173` web).
 The rate limiters use Cloudflare's Workers rate limiting binding; their `namespace_id` values are

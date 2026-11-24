@@ -1,4 +1,4 @@
-import type { Family, LearningPath, Lesson } from '../api/schemas';
+import type { CardsDue, Family, Lesson, TopicMap } from '../api/schemas';
 
 /* Made-up demo data. Never put real names, schools or answers here. */
 
@@ -9,36 +9,68 @@ export const family: Family = {
   ],
 };
 
-export const learningPath: LearningPath = {
+export const topicMap: TopicMap = {
   subject: 'Maths',
   qualification: 'GCSE Higher',
   streakDays: 4,
   xpToday: 30,
   dailyGoalXp: 50,
+  nextMission: { kind: 'weak-spot', title: 'Fix weak spot: Surds', lessonId: 'surds', minutes: 8 },
   units: [
     {
       id: 'number',
       title: 'Number',
-      nodes: [
-        { id: 'n1', title: 'Fractions', lessonId: 'fractions', status: 'done' },
-        { id: 'n2', title: 'Indices', lessonId: 'indices', status: 'done' },
-        { id: 'n3', title: 'Surds', lessonId: 'surds', status: 'weak' },
-        { id: 'n4', title: 'Standard form', lessonId: 'standard-form', status: 'current' },
-        { id: 'n5', title: 'Bounds', lessonId: 'bounds', status: 'locked' },
+      masteryPercent: 57,
+      topics: [
+        { id: 'n1', title: 'Fractions', lessonId: 'fractions', status: 'mastered', mastery: 100 },
+        { id: 'n2', title: 'Indices', lessonId: 'indices', status: 'mastered', mastery: 100 },
+        { id: 'n3', title: 'Surds', lessonId: 'surds', status: 'weak', mastery: 38 },
+        {
+          id: 'n4',
+          title: 'Standard form',
+          lessonId: 'standard-form',
+          status: 'in-progress',
+          mastery: 45,
+        },
+        { id: 'n5', title: 'Bounds', lessonId: 'bounds', status: 'locked', mastery: 0 },
       ],
+      challenge: { lessonId: 'number-challenge', unlockAtPercent: 80, unlocked: false },
     },
     {
       id: 'algebra',
       title: 'Algebra',
-      nodes: [
-        { id: 'a1', title: 'Expanding brackets', lessonId: 'expanding', status: 'locked' },
-        { id: 'a2', title: 'Factorising', lessonId: 'factorising', status: 'locked' },
+      masteryPercent: 0,
+      topics: [
+        { id: 'a1', title: 'Expanding', lessonId: 'expanding', status: 'locked', mastery: 0 },
+        { id: 'a2', title: 'Factorising', lessonId: 'factorising', status: 'locked', mastery: 0 },
+        { id: 'a3', title: 'Equations', lessonId: 'equations', status: 'locked', mastery: 0 },
       ],
+      challenge: { lessonId: 'algebra-challenge', unlockAtPercent: 80, unlocked: false },
     },
   ],
 };
 
+export const cardsDue: CardsDue = { due: 12 };
+
 export const lessons: Record<string, Lesson> = {
+  surds: {
+    id: 'surds',
+    title: 'Surds',
+    topic: 'Number',
+    items: [
+      {
+        id: 'su-1',
+        type: 'multiple-choice',
+        prompt: 'Simplify √12.',
+        options: [
+          { id: 'a', text: '2√3' },
+          { id: 'b', text: '3√2' },
+          { id: 'c', text: '4√3' },
+        ],
+      },
+      { id: 'su-2', type: 'short-answer', prompt: 'Work out √2 × √8.' },
+    ],
+  },
   'standard-form': {
     id: 'standard-form',
     title: 'Standard form',
@@ -81,6 +113,16 @@ interface AnswerKey {
 }
 
 export const answerKeys: Record<string, AnswerKey> = {
+  'su-1': {
+    answer: 'a',
+    display: '2√3',
+    explanation: '12 = 4 × 3, and √4 = 2, so √12 = 2√3.',
+  },
+  'su-2': {
+    answer: '4',
+    display: '4',
+    explanation: '√2 × √8 = √16 = 4.',
+  },
   'sf-1': {
     answer: 'a',
     display: '4.5 × 10⁴',
