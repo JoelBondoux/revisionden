@@ -5,6 +5,15 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ## [Unreleased]
 
+### Added
+
+- Shared Zod schemas for students, enrolments, items, attempts, plans and API errors, with
+  readable error messages (`packages/core`).
+- Nickname rules with a block list, and avatar codes with 14 layers and reward-locked items.
+- Flashcard scheduler (SM-2 style) and topic mastery with time decay.
+- Next-item selection: weak spots first, parent focus weights, due flashcards, variety rule.
+- XP, daily goal, streaks, skip days and gift days; rewards catalogue with 14 unlock targets.
+
 ## [00.01.002] - 2026-11-24
 
 ## [00.01.001] - 2026-11-24

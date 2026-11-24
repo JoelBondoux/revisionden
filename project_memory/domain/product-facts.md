@@ -26,8 +26,16 @@ Tags: #product #rules #limits #defaults
   the boundary one grade under target. Implemented in `packages/core/src/feedback-level.ts`.
 - Learn mode shows results live; Test mode only after submit, one attempt.
 - Parent focus weights: light +10, medium +22, strong +38 percentage points; double XP on focus.
-- Skip days: earned by weekly goal, max 2 in a row. Gift days: come with rewards, only given away,
-  +20 XP for gifting.
+- Parent focus adds the points to the focus subject's share before normalising; a subject's base
+  share follows how weak its topics are. Weak spots (below 60% mastery) come first; never more
+  than 3 items in a row from one topic. Implemented in `packages/core/src/next-item.ts`.
+- Skip days: earned by weekly goal (default 5 days with the daily goal met; daily goal default
+  50 XP), max 2 in a row. Gift days: come with streak badges (1, 2, 3 for 7, 30, 100 days), only
+  given away (arrive as a skip day for the friend), +20 XP for gifting. Implemented in
+  `packages/core/src/streaks.ts` and `xp.ts`.
+- XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, working 20,
+  long answer 30; part marks earn part.
+- 14 rewards, each unlocking one avatar item: `packages/core/src/rewards.ts`.
 - Effort scores (e.g. CBI: Commitment, Behaviour and Inspiration, 1–4, 4 best) shape habits, never
   the predicted grade.
 
