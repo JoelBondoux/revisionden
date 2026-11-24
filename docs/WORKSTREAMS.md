@@ -49,3 +49,11 @@ and reports which line first goes wrong; Cloud Run container ready to deploy.
 | G   | Deploy pipelines for dev, staging and production; Playwright end-to-end | A, B (domain bought) |
 | H   | Reminders (web push) and AI gateway with per-child cost cap             | B                    |
 | V   | Verification pipeline, review queue, quarantine and audit reports       | C, D                 |
+
+### H: Reminders and AI gateway
+
+Branch `feature/h-reminders-ai`. Status: in review (PR into `dev`). Owns
+`apps/api/src/ai/**`, `apps/api/src/notifications/**`, the H tables in `packages/db` and
+`apps/web/src/features/notifications/**`. Web push reminders with quiet hours and a cron
+trigger; AI gateway client (Anthropic primary, OpenAI second checker, retries, Zod-validated
+structured outputs, per-child monthly cap, personal-data guard); short-answer marking.

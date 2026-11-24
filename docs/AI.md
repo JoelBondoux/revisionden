@@ -16,6 +16,34 @@
 All live calls go through Cloudflare AI Gateway (logging without request bodies in production,
 spend tracking, per-child monthly cap, provider fallback).
 
+## Gateway client (`apps/api/src/ai`, workstream H)
+
+- Claude through the official `@anthropic-ai/sdk`, pointed at `<AI_GATEWAY_URL>/anthropic`;
+  OpenAI (second checker) through `<AI_GATEWAY_URL>/openai`. Jobs and models:
+  `short_answer_marking` → `claude-haiku-5-5` (effort low), `long_answer_marking` →
+  `claude-opus-5-5` (route ready, not used yet), `second_check` → `AI_CHECKER_MODEL`.
+- Every reply uses structured outputs (a JSON schema) and is validated with Zod before use.
+- Up to 3 attempts with exponential backoff (250 ms, 500 ms, plus jitter) for timeouts, rate
+  limits, overload, server errors, network errors and replies that fail validation. Refusals
+  and bad requests are not retried.
+- Per-child monthly cap (default US$2.50, `AI_MONTHLY_CAP_USD`), checked before every call;
+  when reached the student sees "You've used all your AI marking for this month. It comes back
+  on the 1st." Every billed attempt is recorded in `ai_usage` (tokens and cost only).
+- A request containing the student's profile fields or other personal data is refused before
+  it is sent. Parents see this month's spend at `GET /v1/students/:id/ai-usage`.
+
+## Short-answer marking (`POST /v1/ai/mark-short-answer`)
+
+1. Blank answer: 0, no AI. An accepted answer, or the official wording of a mark point, found in
+   the answer earns the mark by rule (not when the answer has a negation such as "not").
+2. Only the points left go to Claude Haiku 5.5, with the question, topic, answer and those mark
+   points. For each point it must say met or not and quote the student's words as evidence.
+3. If the AI is unsure, leaves a point out, cites a point that is not in the mark scheme, or
+   quotes words that are not in the answer, the result is "Not sure about this one. Check with
+   your teacher." with only the rule-awarded marks. No guesses.
+4. Items with no official mark points (a multi-mark item without a mark scheme) are never
+   AI-marked. Any result the AI touched carries the AI label.
+
 ## Guardrails
 
 - Only the question, the student's answer, the topic and the mark scheme are sent. Never names.
