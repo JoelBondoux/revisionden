@@ -2,15 +2,14 @@ import { Hono } from 'hono';
 import { and, asc, eq } from 'drizzle-orm';
 import { enrolments, students, type Database } from '@revisionden/db';
 import type { AppEnv } from '../context';
-import { ApiError, notFound } from '../errors';
-import { findFamilyStudent } from '../families';
+import { ApiError } from '../errors';
+import { requireFamilyStudent } from '../families';
 import { isUniqueViolation, readJson } from '../http';
 import {
   createStudentSchema,
   enrolmentSchema,
   subjectIdSchema,
   updateStudentSchema,
-  uuidSchema,
 } from '../validation';
 
 type StudentRow = typeof students.$inferSelect;
@@ -29,12 +28,7 @@ const nicknameTaken = () =>
 export function studentRoutes(db: Database) {
   const app = new Hono<AppEnv>();
 
-  async function ownStudent(familyId: string, id: string) {
-    if (!uuidSchema.safeParse(id).success) throw notFound('Student not found');
-    const student = await findFamilyStudent(db, familyId, id);
-    if (!student) throw notFound('Student not found');
-    return student;
-  }
+  const ownStudent = (familyId: string, id: string) => requireFamilyStudent(db, familyId, id);
 
   app.get('/', async (c) => {
     const rows = await db

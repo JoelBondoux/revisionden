@@ -4,7 +4,7 @@ import {
   verifyAuthenticationResponse,
   verifyRegistrationResponse,
   type AuthenticationResponseJSON,
-  type AuthenticatorTransportFuture,
+  type AuthenticatorTransport,
   type PublicKeyCredentialCreationOptionsJSON,
   type PublicKeyCredentialRequestOptionsJSON,
   type RegistrationResponseJSON,
@@ -64,7 +64,7 @@ export function createPasskeyService(config: AppConfig): PasskeyService {
         rpName: 'RevisionDen',
         rpID,
         userName,
-        userID: new TextEncoder().encode(userId),
+        userID: Uint8Array.from(new TextEncoder().encode(userId)),
         attestationType: 'none',
         authenticatorSelection: { residentKey: 'required', userVerification: 'required' },
       });
@@ -113,7 +113,7 @@ export function createPasskeyService(config: AppConfig): PasskeyService {
             publicKey: fromB64url(credential.publicKey),
             counter: credential.counter,
             transports: (credential.transports ?? undefined) as
-              AuthenticatorTransportFuture[] | undefined,
+              AuthenticatorTransport[] | undefined,
           },
         });
         return result.verified ? { newCounter: result.authenticationInfo.newCounter } : null;

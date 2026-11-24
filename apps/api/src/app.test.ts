@@ -43,3 +43,10 @@ describe('API', () => {
     expect(other.headers.get('access-control-allow-origin')).toBeNull();
   });
 });
+
+describe('routing', () => {
+  it('answers 404, not 401, for unknown routes under /v1', async () => {
+    const res = await t.app.request('/v1/unknown');
+    expect(res.status).toBe(404);
+  });
+});
