@@ -32,6 +32,14 @@
   Up to 2 in a row.
 - **Gift days** come with some rewards (for example streak badges). They can only be given to a
   friend, never used on the student's own streak. Gifting earns 20 XP.
+- Details settled in code:
+  - XP per correct answer: flashcard 5, multiple choice 10, short answer 15, numeric 15, working
+    20, long answer 30. Part marks earn part of it (rounded). Wrong answers earn 0.
+  - Daily goal defaults to 50 XP. Weekly goal defaults to the daily goal met on 5 days; each week
+    hit earns 1 skip day (paid once per week).
+  - A skip day keeps the streak but does not add to it. A day with no activity counts as missed.
+  - A gifted day arrives as a skip day for the friend (still limited to 2 in a row).
+- Implemented: `packages/core/src/xp.ts`, `packages/core/src/streaks.ts`.
 
 ## Parent focus
 
@@ -39,6 +47,16 @@
 - Weights added to the focus subject's share of sessions: light +10, medium +22, strong +38
   percentage points before normalising.
 - The student gets double XP on the focus that week. Weak-spot picks still come first.
+- Details settled in code:
+  - Each topic's weight is (100 − mastery) + 5. A subject's share is the sum of its topics'
+    weights, so the weakest topic overall gets the most picks. A topic focus adds the points to
+    that topic's share instead.
+  - Focus changes how many picks a subject gets; it never changes the order. Within a batch,
+    weak spots (mastery below 60) come first, weakest first.
+  - No more than 3 items in a row from one topic, counting the items served just before. If that
+    cannot be kept (for example only one topic has items left), the batch is cut short.
+  - Within a topic, due flashcards come before questions.
+- Implemented: `packages/core/src/next-item.ts` (seeded randomness from `rng.ts`).
 
 ## Effort scores (for example CBI)
 
@@ -63,5 +81,29 @@
 
 Targets vary: streaks (7, 30, 100 days), grades (target hit in a mock, every target at an
 assessment), practice (full past paper, 10 weak spots fixed, 10 topics mastered, perfect set),
-friendship (gift 3 days, gift to 5 friends), competition (top of friends league), and easy early
-wins (starting test, 25 right in a row).
+friendship (gift 3 days, gift to 5 friends), competition (top of friends league for a week), and
+easy early wins (starting test, 25 right in a row).
+
+- Each reward unlocks one avatar item. Streak badges come with gift days: 7 days → 1, 30 days → 2,
+  100 days → 3.
+- Implemented: `packages/core/src/rewards.ts`.
+
+## Nickname and avatar
+
+- Nickname: 2–16 letters (A–Z), numbers and underscores, not on the block list. Strong words are
+  blocked anywhere (number swaps such as `sh1t` and underscores are seen through); short words
+  that hide inside ordinary words (for example "ass" in "class") only when they stand alone.
+  Names pretending to be staff (admin, teacher, moderator) are blocked.
+- Avatar code: version `1` then two base-36 characters per layer, in this order: skin, eyes,
+  mouth, facial hair, hair style, hair colour, top, top colour, eyewear, headwear, held item,
+  background colour, pattern, scene. Locked items are rejected unless their reward is earned.
+- Implemented: `packages/core/src/nickname.ts`, `packages/core/src/avatar.ts`.
+
+## Flashcards and mastery
+
+- Flashcards follow SM-2: intervals 1 day, 6 days, then interval × ease; a wrong card comes back
+  within 10 minutes. Due cards are ordered by how late they are compared with their interval.
+- Mastery 0–100: weighted average of the last 30 attempts; weights halve every 30 days; two
+  imaginary wrong answers as a starting point, so mastery is earned and fades without practice.
+  A weak spot is a topic below 60.
+- Implemented: `packages/core/src/spaced-repetition.ts`, `packages/core/src/mastery.ts`.

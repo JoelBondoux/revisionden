@@ -70,26 +70,26 @@
 ### C. Core domain rules and shared schemas (`packages/core`)
 
 - [x] **C0 Feedback levels** (done in skeleton).
-- [ ] **C1 Schemas.** Zod schemas for every API request and response defined so far (students,
+- [x] **C1 Schemas.** Zod schemas for every API request and response defined so far (students,
       enrolments, items, attempts, plans).
   - Tests: valid samples parse; invalid samples give readable errors.
-- [ ] **C2 Nickname and avatar code.** Nickname rules (2 to 16 letters, numbers, underscore; block
+- [x] **C2 Nickname and avatar code.** Nickname rules (2 to 16 letters, numbers, underscore; block
       list); avatar code encode, decode and validate against the item catalogue, including locked
       items.
   - Tests: round-trip encode/decode; locked item rejected unless earned.
-- [ ] **C3 Spaced repetition.** Card scheduler (SM-2 style intervals); wrong answers return sooner.
+- [x] **C3 Spaced repetition.** Card scheduler (SM-2 style intervals); wrong answers return sooner.
   - Tests: interval grows on success; resets on failure; due cards ordered by urgency.
-- [ ] **C4 Mastery.** Topic mastery 0 to 100 from recent attempts with decay over time.
+- [x] **C4 Mastery.** Topic mastery 0 to 100 from recent attempts with decay over time.
   - Tests: correct answers raise mastery; old attempts weigh less; never outside 0 to 100.
-- [ ] **C5 Next-item selection.** Weak spots first, parent focus weights (light +10, medium +22,
+- [x] **C5 Next-item selection.** Weak spots first, parent focus weights (light +10, medium +22,
       strong +38 points), due flashcards, variety rule (no more than 3 in a row from one topic).
   - Tests: weakest topic chosen most often (seeded randomness); focus subject share rises by the
     expected amount; variety rule holds.
-- [ ] **C6 XP, goals and streaks.** XP per answer type; daily goal; streak days; skip days (earned
+- [x] **C6 XP, goals and streaks.** XP per answer type; daily goal; streak days; skip days (earned
       by weekly goal, max 2 in a row); gift days (only given away; +20 XP for gifting).
   - Tests: streak breaks without goal or skip day; third skip in a row refused; gift day cannot be
     applied to own streak.
-- [ ] **C7 Rewards catalogue.** Reward definitions with unlock targets; evaluator that returns newly
+- [x] **C7 Rewards catalogue.** Reward definitions with unlock targets; evaluator that returns newly
       earned rewards from stats.
   - Tests: each target type (streak, grade, practice, friendship, competition) unlocks correctly.
 

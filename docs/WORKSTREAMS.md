@@ -11,7 +11,7 @@ Status values: `queued`, `in progress`, `in review` (PR open into `dev`), `merge
 | --- | ------------------------------------ | ------------------------------------------------------- | --------------------------- | --------- | ------------------------------------------------------- |
 | A   | Web foundations and design system    | `apps/web/**`                                           | `feature/a-web-foundations` | queued    |                                                         |
 | B   | API, database and sign-in            | `apps/api/**`, `packages/db/**`                         | `feature/b-api-db-auth`     | queued    |                                                         |
-| C   | Core domain rules and shared schemas | `packages/core/**`                                      | `feature/c-core-rules`      | queued    |                                                         |
+| C   | Core domain rules and shared schemas | `packages/core/**`                                      | `feature/c-core-rules`      | merged    | [#3](https://github.com/JoelBondoux/revisionden/pull/3) |
 | D   | Content format and maths engine      | `content/**`, `services/maths/**`, `scripts/content/**` | `feature/d-content-maths`   | in review | [#5](https://github.com/JoelBondoux/revisionden/pull/5) |
 
 ### A: Web foundations and design system

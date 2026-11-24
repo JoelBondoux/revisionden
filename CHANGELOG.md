@@ -7,6 +7,12 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Shared Zod schemas for students, enrolments, items, attempts, plans and API errors, with
+  readable error messages (`packages/core`).
+- Nickname rules with a block list, and avatar codes with 14 layers and reward-locked items.
+- Flashcard scheduler (SM-2 style) and topic mastery with time decay.
+- Next-item selection: weak spots first, parent focus weights, due flashcards, variety rule.
+- XP, daily goal, streaks, skip days and gift days; rewards catalogue with 14 unlock targets.
 - Content JSON Schemas for subjects, topic trees, items and mark schemes (`content/schemas/`).
 - `pnpm content:validate`: checks schemas, unique ids, topic links and every maths answer with
   the maths engine; runs in CI.
