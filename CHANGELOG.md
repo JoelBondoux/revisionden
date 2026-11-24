@@ -10,6 +10,10 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Coming soon: a stats page for students and a stats dashboard for parents.
 - Coming soon: rewards you set yourself as a parent, like a cinema trip for a 30-day streak.
 - Sound effects: soft, original sounds for right and wrong answers, finishing a lesson, meeting your daily goal, flashcards and the starting test. Mute them from the speaker button at the top, or change the volume and tap sounds in Settings.
+- Coming soon: sound effects, with a mute button.
+- Read our privacy notice, terms and other policies in plain English, at any time, even signed out.
+- New About page shows the app version and what's new.
+- Send us a bug, an idea or something confusing from Settings, and see what happens to it.
 
 ### Fixed
 
@@ -23,6 +27,10 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - New original avatar art: five chapter finale tops, rooftop scene, and the Frost Fest drop (bobble hat, paper lantern, frosty night scene).
 - Verification: blind marking for extended answers: three exemplars (top, middle, low) marked by a second provider without the intended levels must all match; verified extended answers need `blind-marking` and individual human approval, and review batches always include them.
 - Verification: the quote checker reports near matches (letters only, or words with small insertions or reordering, with a confidence) for a reviewer to confirm instead of passing them.
+- Policies (L1): all eleven `docs/legal/` policies as 1.0 drafts, checked against the code; mismatches recorded in contradictions.
+- Policy pages `/legal` and `/legal/:name` from the same Markdown with build-time placeholders and print style (L2); About page with What's new from `CHANGELOG.md` and licences (L3).
+- Feedback (L4): form, personal-details check, device details toggle, family and own lists, operator triage, 5 per 24 hours, 12-month retention; `feedback` table (migration 0005), `OPERATOR_EMAILS`.
+- Policy acceptance in onboarding with a "policy changed" prompt, `policy_acceptances` table and `GET, PUT /v1/policy-acceptances` (L5).
 - Statistics dashboards (K): student "My stats" on the Progress tab (week, term and year; XP chart
   with goal line, tooltip and table view; mastery by subject; personal bests; kind framing), the
   parent stats dashboard at `/parent/stats` (study time, plan kept, accuracy, streak, 8-week chart,

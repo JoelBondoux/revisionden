@@ -40,6 +40,8 @@ function renderLink(
     [
       { path: '/link', element: <LinkPage register={register} /> },
       { path: '/learn', element: <h1>Learn</h1> },
+      // A newly linked device shows the young people's privacy notice first (workstream L).
+      { path: '/welcome/privacy', element: <h1>Privacy notice for young people</h1> },
     ],
     { initialEntries: [path] },
   );
@@ -59,7 +61,7 @@ function renderLink(
 }
 
 describe('LinkPage (student device)', () => {
-  it('greets the student, sets up a passkey and opens Learn', async () => {
+  it('greets the student, sets up a passkey and shows the young people’s privacy notice', async () => {
     const api = fakeApi();
     const user = userEvent.setup();
     const { storage, register } = renderLink(api);
@@ -74,7 +76,9 @@ describe('LinkPage (student device)', () => {
       challengeId: 'challenge-1',
       response: { id: 'cred-1', response: {} },
     });
-    expect(await screen.findByRole('heading', { name: 'Learn' })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('heading', { name: 'Privacy notice for young people' }),
+    ).toBeInTheDocument();
     expect(storage.get('revisionden.studentId')).toBe(STUDENT.id);
   });
 
@@ -113,6 +117,8 @@ describe('LinkPage (student device)', () => {
       'The passkey was not set up. Try again.',
     );
     await user.click(screen.getByRole('button', { name: 'Set up passkey' }));
-    expect(await screen.findByRole('heading', { name: 'Learn' })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('heading', { name: 'Privacy notice for young people' }),
+    ).toBeInTheDocument();
   });
 });

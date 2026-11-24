@@ -23,6 +23,33 @@
       photo of homework may show a name. Not settled: needs a product owner decision (EU/UK
       processing where offered, or say so in the privacy notice with the UK transfer safeguard).
       Workstream L must describe whatever is true in `docs/legal/processors.md`.
+      L (2026-11-24): `docs/legal/processors.md` and the privacy notice now say honestly that
+      answer text may be processed in the US and that the safeguard is still to confirm. Still open.
+
+- [ ] **OAuth tokens kept.** `docs/PRIVACY.md` and the policies say only the parent's sign-in
+      email is stored, but Better Auth stores `access_token`, `refresh_token` and `id_token` in
+      `auth_accounts` (`packages/db/src/schema.ts`, `apps/api/src/auth.ts`); a Google or Microsoft
+      ID token usually carries the account name and picture URL. Not settled: auth is workstream
+      B's lane. The privacy notice (4.5) describes it as it is today.
+- [ ] **Youngest school year.** Onboarding and the policies take Years 9 to 13 (13+), but the
+      `students_year_group_range` check in `packages/db/src/schema.ts` allows 7 to 13. Not
+      settled: schema is B's lane; needs a product owner nod to tighten to 9.
+- [ ] **Promised deletion tools not built.** `docs/PRIVACY.md` says "export first is offered" and
+      "accounts unused for 12 months are deleted automatically"; neither exists in `apps/api`.
+      Expired link tokens, student sessions and parent sessions are not cleaned up either. The
+      policies (`docs/legal/data-retention.md`) say "still to do". Not settled: outside L's lane.
+- [ ] **Own flashcards are not privacy-checked.** Students can write their own flashcards (300
+      characters a side, `apps/api/src/routes/flashcards.ts`) and they are stored as free text with
+      no personal-data check, unlike AI requests and feedback. Not settled: F's lane; the
+      community rules ask students to take care.
+- [ ] **Live AI providers in the docs.** `docs/ARCHITECTURE.md` (diagram) and `docs/AI.md` (photo
+      reading by Gemini or Claude) describe Gemini and OpenAI as live providers, but in the code only
+      Anthropic is used live; OpenAI's `second_check` job is not called by any route and Gemini is
+      used only offline in `scripts/verify`. Not settled: docs belong to H and the lead; the policies
+      describe the code.
+- [ ] **R2 bucket location.** `docs/PRIVACY.md` principle 5 says data stays in the UK or EU, but
+      `apps/api/wrangler.toml` sets no R2 jurisdiction or location for `UPLOADS`. Not settled:
+      deploy config is G's lane; nothing uploads yet.
 
 - [ ] Request schemas for the H routes (push subscriptions, reminder settings, short-answer
       marking) live in `apps/api/src/notifications/routes.ts` and `apps/api/src/ai/routes.ts`, but
@@ -38,6 +65,11 @@
       sit in other workstreams' lanes. Pick one set of names.
 
 ## Resolved
+
+- [x] **Feedback device details default.** Spec said on by default; the Children's Code prefers the
+      most private default. Lead decision (2026-11-24): off by default for students, on for parents.
+      Implemented in `apps/web/src/features/feedback/FeedbackPage.tsx` with a test; PRODUCT_RULES,
+      product facts, the privacy notice and `docs/legal/childrens-code.md` updated.
 
 - [x] 15 locked avatar items and 14 rewards: settled by workstream R. In the five-year catalogue a
       reward can give several items (the finisher sets give three), so the 100-day streak giving

@@ -267,13 +267,18 @@ Tags: #product #rules #limits #defaults
 ## Policies, About and feedback
 
 - Policies live in `docs/legal/` (index `docs/LEGAL.md`): plain English first, then the full legal
-  text, then changes. Drafts until reviewed by a UK solicitor. Operator name, email and address are
+  text, then changes. All eleven written as 1.0 drafts; drafts until reviewed by a UK solicitor.
+  Shown at `/legal/<name>`, signed out, printable. Operator name, email and address are
   build-time placeholders, never in the repository.
 - About page: version, environment, build date, commit, "What's new" (the `### What's new`
   lines in `CHANGELOG.md`), policy links, open-source licences.
 - Feedback kinds: bug, idea, something confusing, other; text up to 500 characters with personal
   details refused; device details optional; parents see their family's feedback; never sent to
-  GitHub automatically; 5 a day; deleted 12 months after closing. Workstream L.
+  GitHub automatically; 5 in any 24 hours per sender; device details off by default for students, on for parents; deleted 12 months after closing (cron).
+  Operator triage at `/admin/feedback` for sign-in emails in `OPERATOR_EMAILS`. Workstream L.
+- Parents confirm the terms and privacy notice in onboarding (version stored in
+  `policy_acceptances`); a changed version shows a "We've updated" prompt. A newly linked student
+  device shows the young people's notice once (`revisionden.youngPeopleNotice` in local storage).
 
 ## Sound
 

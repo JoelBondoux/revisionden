@@ -514,3 +514,8 @@
 .complete .btn {
   width: 100%;
 }
+
+.welcome__footer {
+  text-align: center;
+  font-size: var(--font-size-sm);
+}

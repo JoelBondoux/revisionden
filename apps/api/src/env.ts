@@ -46,6 +46,8 @@ const envSchema = z
       .regex(/^\d+(\.\d{1,2})?$/)
       .optional(),
     AI_CHECKER_MODEL: z.string().min(1).optional(),
+    // Workstream L: sign-in emails of the operator, who triages feedback (comma-separated).
+    OPERATOR_EMAILS: z.string().optional(),
     // "input/output" US dollars per million tokens, e.g. "0.15/0.6".
     AI_CHECKER_PRICES: z
       .string()
@@ -85,6 +87,8 @@ export interface AppConfig {
   /** Web push; null until both VAPID keys are set. */
   push: { keys: { publicKey: string; privateKey: string } } | null;
   ai: AiConfig;
+  /** Parent sign-in emails (lower case) allowed to triage feedback at /v1/admin. */
+  operatorEmails: string[];
 }
 
 export interface AiConfig {
@@ -118,6 +122,10 @@ export function parseEnv(env: Record<string, unknown>): AppConfig & { raw: Worke
     passkeyRpId: e.PASSKEY_RP_ID ?? new URL(e.WEB_ORIGIN).hostname,
     serveDraftContent: e.ENVIRONMENT === 'development' && e.SERVE_DRAFT_CONTENT === 'true',
     ...(e.MATHS_ENGINE_URL ? { mathsEngineUrl: e.MATHS_ENGINE_URL } : {}),
+    operatorEmails: (e.OPERATOR_EMAILS ?? '')
+      .split(',')
+      .map((email) => email.trim().toLowerCase())
+      .filter(Boolean),
     push:
       e.VAPID_PUBLIC_KEY && e.VAPID_PRIVATE_KEY
         ? { keys: { publicKey: e.VAPID_PUBLIC_KEY, privateKey: e.VAPID_PRIVATE_KEY } }

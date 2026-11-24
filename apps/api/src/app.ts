@@ -30,6 +30,11 @@ import { learnRoutes } from './routes/learn';
 import { flashcardRoutes } from './routes/flashcards';
 import { parentRewardRoutes, studentRewardRoutes } from './routes/rewards';
 import type { MathsEngine } from './learning/maths-engine';
+import {
+  adminFeedbackRoutes,
+  parentFeedbackRoutes,
+  studentFeedbackRoutes,
+} from './feedback/routes';
 import { parentStatsRoutes, studentStatsRoutes } from './stats/routes';
 import type { StatsAdapters } from './stats/adapters';
 
@@ -98,6 +103,9 @@ export function createApp(deps: AppDeps) {
   parent.use('/items/*', requireParent);
   parent.use('/review/*', requireParent);
   parent.use('/onboarding/*', requireParent);
+  parent.use('/feedback', requireParent);
+  parent.use('/policy-acceptances', requireParent);
+  parent.use('/admin/*', requireParent);
   async function requireParent(c: Context<AppEnv>, next: Next) {
     const session = await deps.auth.api.getSession({ headers: c.req.raw.headers });
     if (!session) throw unauthorized();
@@ -115,6 +123,8 @@ export function createApp(deps: AppDeps) {
   parent.route('/students', parentStatsRoutes(deps));
   parent.route('/onboarding', onboardingRoutes(deps));
   parent.route('/', reportRoutes(deps.db, 'parent'));
+  parent.route('/', parentFeedbackRoutes(deps));
+  parent.route('/admin', adminFeedbackRoutes(deps));
   parent.route(
     '/review',
     reviewRoutes(deps.db, { ...deps.verification, now: () => deps.clock.now() }),
@@ -131,6 +141,7 @@ export function createApp(deps: AppDeps) {
   app.route('/v1/student/flashcards', flashcardRoutes(deps));
   app.route('/v1/student', reportRoutes(deps.db, 'student'));
   app.route('/v1/student/rewards', studentRewardRoutes(deps));
+  app.route('/v1/student', studentFeedbackRoutes(deps));
   app.route('/v1/student', studentStatsRoutes(deps));
   app.use('/v1/ai/*', studentAuth(deps));
   app.route('/v1/ai', aiRoutes({ ...deps, gateway }));

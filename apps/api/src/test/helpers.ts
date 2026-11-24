@@ -26,6 +26,7 @@ export const TEST_CONFIG: AppConfig = {
   passkeyRpId: 'dev.revisionden.test',
   serveDraftContent: false,
   push: null,
+  operatorEmails: [],
   ai: {
     anthropicApiKey: undefined,
     openaiApiKey: undefined,

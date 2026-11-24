@@ -75,6 +75,14 @@ describe('environment validation', () => {
     });
   });
 
+  it('reads the operator sign-in emails, trimmed and in lower case, and has none by default', () => {
+    expect(parseEnv(complete).operatorEmails).toEqual([]);
+    expect(
+      parseEnv({ ...complete, OPERATOR_EMAILS: ' Ops@Example.com, ,second@example.com ' })
+        .operatorEmails,
+    ).toEqual(['ops@example.com', 'second@example.com']);
+  });
+
   it('reads the VAPID keys, AI keys, cap and second-checker model when set', () => {
     const config = parseEnv({
       ...complete,

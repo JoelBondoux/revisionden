@@ -731,3 +731,73 @@ export const parentRewards = pgTable(
     ),
   ],
 );
+
+// Feedback and policy acceptance (workstream L, docs/PRODUCT_RULES.md "About page, policies and
+// feedback"). Feedback text is checked for personal details before it is saved; it is deleted
+// 12 months after it is closed.
+// ---------------------------------------------------------------------------------------------
+
+export const FEEDBACK_KINDS = ['bug', 'idea', 'confusing', 'other'] as const;
+export const FEEDBACK_STATUSES = ['new', 'looking_into_it', 'fixed', 'will_not_fix'] as const;
+export const FEEDBACK_MAX_TEXT = 500;
+
+/** Device details a sender may include: never IP address, location or contacts. */
+export interface FeedbackDevice {
+  appVersion?: string;
+  route?: string;
+  browserFamily?: string;
+  screenSize?: string;
+  online?: boolean;
+}
+
+export const feedback = pgTable(
+  'feedback',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    familyId: uuid('family_id')
+      .notNull()
+      .references(() => families.id, { onDelete: 'cascade' }),
+    senderRole: text('sender_role', { enum: ['student', 'parent'] }).notNull(),
+    // Set when a student sent it.
+    studentId: uuid('student_id').references(() => students.id, { onDelete: 'cascade' }),
+    // Set when a parent sent it (for the daily limit per account).
+    senderAuthUserId: text('sender_auth_user_id').references(() => authUsers.id, {
+      onDelete: 'cascade',
+    }),
+    kind: text('kind', { enum: FEEDBACK_KINDS }).notNull(),
+    text: text('text'),
+    device: jsonb('device').$type<FeedbackDevice>(),
+    status: text('status', { enum: FEEDBACK_STATUSES }).notNull().default('new'),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+    // Set when the status becomes fixed or will_not_fix; the row is deleted 12 months later.
+    closedAt: timestamp('closed_at', { withTimezone: true }),
+  },
+  (t) => [
+    index('feedback_family_id_idx').on(t.familyId),
+    index('feedback_created_at_idx').on(t.createdAt),
+    check('feedback_kind_values', sql`${t.kind} in ('bug', 'idea', 'confusing', 'other')`),
+    check('feedback_sender_role_values', sql`${t.senderRole} in ('student', 'parent')`),
+    check(
+      'feedback_status_values',
+      sql`${t.status} in ('new', 'looking_into_it', 'fixed', 'will_not_fix')`,
+    ),
+    check('feedback_text_length', sql`char_length(${t.text}) <= 500`),
+  ],
+);
+
+export const POLICIES_TO_ACCEPT = ['privacy-notice', 'terms-of-use'] as const;
+
+/** The version of each policy a parent confirmed. No other data. */
+export const policyAcceptances = pgTable(
+  'policy_acceptances',
+  {
+    authUserId: text('auth_user_id')
+      .notNull()
+      .references(() => authUsers.id, { onDelete: 'cascade' }),
+    policy: text('policy').notNull(),
+    version: text('version').notNull(),
+    acceptedAt: timestamp('accepted_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [primaryKey({ columns: [t.authUserId, t.policy] })],
+);

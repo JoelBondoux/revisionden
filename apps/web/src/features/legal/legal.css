@@ -1,0 +1,119 @@
+.policy {
+  max-width: 760px;
+  line-height: 1.6;
+}
+
+.policy h2 {
+  margin-top: var(--space-6);
+}
+
+.policy__summary {
+  background: var(--color-primary-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+
+.md-table {
+  overflow-x: auto;
+}
+
+.md-table table,
+.policy table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: var(--font-size-sm);
+}
+
+.md-table th,
+.md-table td {
+  border: 1px solid var(--color-border);
+  padding: var(--space-2);
+  text-align: left;
+  vertical-align: top;
+}
+
+.md-table th {
+  background: var(--color-background);
+}
+
+.policy blockquote {
+  border-left: 4px solid var(--color-primary);
+  margin: 0;
+  padding-left: var(--space-3);
+}
+
+.policy-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.policy-list li {
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+}
+
+.policy-list__link {
+  display: flex;
+  flex-direction: column;
+  min-height: var(--tap-target);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.policy-list__title {
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-primary);
+}
+
+.policy-list__audience {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+@media print {
+  .no-print,
+  .bottom-nav,
+  .offline-banner,
+  .skip-link,
+  nav,
+  button {
+    display: none !important;
+  }
+
+  body,
+  .policy,
+  .policy__summary,
+  main {
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+  }
+
+  .policy a {
+    color: #000000;
+  }
+
+  .md-table th {
+    background: #ffffff;
+  }
+}
+
+.legal-check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--tap-target);
+  font-weight: var(--font-weight-bold);
+}
+
+.legal-check input {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  accent-color: var(--color-primary);
+}

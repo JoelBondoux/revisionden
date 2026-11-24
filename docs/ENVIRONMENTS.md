@@ -74,8 +74,20 @@ Optional AI settings (workstream H), set as plain variables when needed:
 | `AI_CHECKER_MODEL`   | unset   | OpenAI model used as the second checker; off when unset                     |
 | `AI_CHECKER_PRICES`  | unset   | Its prices, `input/output` US dollars per million tokens; needed with model |
 
-**Cron trigger:** every 15 minutes (`[triggers] crons` in `wrangler.toml`) the Worker sends
-due reminders. It does nothing until both VAPID keys are set.
+Feedback triage (workstream L), set as a secret so no email is in the code:
+
+| Name              | Default | What it does                                                                          |
+| ----------------- | ------- | ------------------------------------------------------------------------------------- |
+| `OPERATOR_EMAILS` | unset   | Comma-separated parent sign-in emails that may use `/admin/feedback`; none when unset |
+
+Web build variables (workstream L), filled into the policies and About page at build:
+`VITE_OPERATOR_NAME`, `VITE_CONTACT_EMAIL`, `VITE_POSTAL_ADDRESS`, `VITE_POLICY_EFFECTIVE_DATE`,
+`VITE_ENVIRONMENT` and `VITE_COMMIT`. Without the operator details the pages say "contact details
+to be added"; production builds must fail without them (workstream G).
+
+**Cron trigger:** every 15 minutes (`[triggers] crons` in `wrangler.toml`) the Worker deletes
+feedback closed more than 12 months ago, then sends due reminders. Reminders do nothing until
+both VAPID keys are set.
 
 **VAPID keys:** generate once per environment, for example with
 `npx web-push generate-vapid-keys` (any tool that gives a P-256 key pair as base64url works:

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { Pip } from '../components/Pip';
@@ -31,6 +31,9 @@ export function WelcomePage() {
           device&apos;s camera.
         </p>
       </Card>
+      <footer className="welcome__footer secondary-text">
+        <Link to="/legal">Policies</Link> · <Link to="/about">About</Link>
+      </footer>
     </div>
   );
 }
