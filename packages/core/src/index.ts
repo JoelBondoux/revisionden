@@ -15,3 +15,6 @@ export * from './onboarding';
 export * from './onboarding-schemas';
 export * from './learning';
 export * from './learning-schemas';
+export * from './levels';
+export * from './reward-xp';
+export * from './chapters';
