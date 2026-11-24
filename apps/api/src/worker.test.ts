@@ -61,16 +61,35 @@ describe('worker entry', () => {
       };
     }
 
-    it('does nothing while web push is not configured', async () => {
+    it('sends no reminders while web push is not configured', async () => {
       const runner = recordingRunner();
-      const worker = createWorker('00.01.000', { runReminders: runner.run });
+      const worker = createWorker('00.01.000', {
+        runReminders: runner.run,
+        cleanUp: async () => ({ feedbackDeleted: 0 }),
+      });
       await worker.scheduled(controller as never, fullEnv);
       expect(runner.calls).toHaveLength(0);
     });
 
+    it('deletes expired data on every run, even without web push', async () => {
+      const cleaned: Date[] = [];
+      const worker = createWorker('00.01.000', {
+        runReminders: recordingRunner().run,
+        cleanUp: async ({ now }) => {
+          cleaned.push(now);
+          return { feedbackDeleted: 0 };
+        },
+      });
+      await worker.scheduled(controller as never, fullEnv);
+      expect(cleaned).toEqual([new Date('2026-11-24T19:00:00Z')]);
+    });
+
     it('sends reminders at the scheduled time once VAPID keys are set', async () => {
       const runner = recordingRunner();
-      const worker = createWorker('00.01.000', { runReminders: runner.run });
+      const worker = createWorker('00.01.000', {
+        runReminders: runner.run,
+        cleanUp: async () => ({ feedbackDeleted: 0 }),
+      });
       await worker.scheduled(controller as never, {
         ...fullEnv,
         VAPID_PUBLIC_KEY: 'BPUB',

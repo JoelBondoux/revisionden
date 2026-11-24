@@ -138,6 +138,8 @@ Source of truth: `packages/db/src/schema.ts`; migrations in `packages/db/migrati
 | `review_batch_items` | batch_id + item_id (key), item_version, in_sample, snapshot (JSON), decision, decided_by_role                                                   |
 | `recheck_requests`   | id, scope (batch, item, writer_prompt, source), scope_value, cause, status                                                                      |
 | `recalculation_jobs` | id, item_id, item_version, status                                                                                                               |
+| `feedback`           | id, family_id, sender_role, student_id, sender_auth_user_id, kind, text (≤500), device (JSON), status, created_at, updated_at, closed_at        |
+| `policy_acceptances` | auth_user_id + policy (key), version, accepted_at                                                                                               |
 
 No table stores a real name, date of birth, email of a student, photo or school name. The
 schema guard test (`packages/db/src/schema-guard.test.ts`) checks the migrated database and fails
@@ -188,6 +190,10 @@ All bodies are validated with the Zod schemas in `packages/core`. Errors always 
 | `GET /v1/review/me`, `GET /v1/review/reports`, `POST .../reports/:id/decision`                                                     | reviewer        | Reviewer role; reports; no error or confirmed error       |
 | `GET, POST /v1/review/batches`, `GET .../batches/:id`, `POST .../batches/:id/items/:itemId/decision`                               | reviewer        | Batch samples and decisions                               |
 | `GET, POST /v1/review/rechecks`, `POST .../rechecks/:id/done`, `GET /v1/review/recalculations`, `POST .../recalculations/:id/done` | reviewer        | Re-check requests and recalculation jobs                  |
+| `GET, POST /v1/student/feedback`                                                                                                   | student device  | Own feedback and its status; send feedback                |
+| `GET, POST /v1/feedback`                                                                                                           | parent          | The family's feedback; send feedback                      |
+| `GET /v1/admin/feedback`, `PATCH /v1/admin/feedback/:id`                                                                           | operator        | Triage all feedback (404 for anyone else)                 |
+| `GET, PUT /v1/policy-acceptances`                                                                                                  | parent          | Versions of the terms and privacy notice confirmed        |
 
 A parent only ever sees their own family: another family's student answers 404. The QR code
 holds `<web origin>/link?token=…&family=…`. The passkey relying party is the web app's host

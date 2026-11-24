@@ -9,6 +9,7 @@ import { createMemoryRateLimiter } from './rate-limit';
 import { runReminders as defaultRunReminders } from './notifications/runner';
 import { createWebPushSender } from './notifications/web-push';
 import { createProviders } from './ai/providers';
+import { cleanUpExpiredData as defaultCleanUp } from './feedback/retention';
 
 const systemClock = { now: () => new Date() };
 
@@ -21,10 +22,13 @@ type App = ReturnType<typeof createApp>;
 export interface WorkerOptions {
   /** Injected in tests; defaults to the real reminder runner. */
   runReminders?: typeof defaultRunReminders;
+  /** Injected in tests; defaults to deleting data past its retention period. */
+  cleanUp?: typeof defaultCleanUp;
 }
 
 export function createWorker(version: string, options: WorkerOptions = {}) {
   const runReminders = options.runReminders ?? defaultRunReminders;
+  const cleanUp = options.cleanUp ?? defaultCleanUp;
   let cached: { env: unknown; app: App } | undefined;
 
   function appFor(env: Record<string, unknown>): App {
@@ -70,7 +74,10 @@ export function createWorker(version: string, options: WorkerOptions = {}) {
       return app.fetch(request, env, ctx);
     },
 
-    /** Cron trigger (every 15 minutes, see wrangler.toml): sends due reminders. */
+    /**
+     * Cron trigger (every 15 minutes, see wrangler.toml): deletes data past its retention
+     * period (feedback 12 months after closing), then sends due reminders.
+     */
     async scheduled(
       controller: Pick<ScheduledController, 'scheduledTime'>,
       env: Record<string, unknown>,
@@ -82,10 +89,12 @@ export function createWorker(version: string, options: WorkerOptions = {}) {
         console.error((err as Error).message);
         return;
       }
-      if (!config.push) return;
       const now = new Date(controller.scheduledTime);
+      const db = createNeonDatabase(config.databaseUrl);
+      console.log('clean-up', JSON.stringify(await cleanUp({ db, now })));
+      if (!config.push) return;
       const summary = await runReminders({
-        db: createNeonDatabase(config.databaseUrl),
+        db,
         now,
         sender: createWebPushSender({
           keys: config.push.keys,
