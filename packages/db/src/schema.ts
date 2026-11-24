@@ -702,8 +702,9 @@ export const recalculationJobs = pgTable('recalculation_jobs', {
 // ---------------------------------------------------------------------------------------------
 
 /**
- * Real-world rewards a parent ties to a target: a catalogue reward id, or a stat reaching a
- * number. The parent marks them as given. Only a short title is stored (no personal data).
+ * Real-world rewards a parent ties to a target: a catalogue reward id, a stat reaching a number,
+ * or a date. The parent can edit or delete one until it is marked as given; then it is history.
+ * Only a short title and an optional note are stored.
  */
 export const parentRewards = pgTable(
   'parent_rewards',
@@ -713,10 +714,12 @@ export const parentRewards = pgTable(
       .notNull()
       .references(() => students.id, { onDelete: 'cascade' }),
     title: text('title').notNull(),
-    targetKind: text('target_kind', { enum: ['reward', 'stat'] }).notNull(),
+    note: text('note'),
+    targetKind: text('target_kind', { enum: ['reward', 'stat', 'date'] }).notNull(),
     rewardId: text('reward_id'),
     stat: text('stat'),
     atLeast: integer('at_least'),
+    targetDate: date('target_date'),
     createdAt: createdAt(),
     givenAt: timestamp('given_at', { withTimezone: true }),
   },
@@ -724,7 +727,7 @@ export const parentRewards = pgTable(
     index('parent_rewards_student_idx').on(t.studentId),
     check(
       'parent_rewards_target',
-      sql`(${t.targetKind} = 'reward' and ${t.rewardId} is not null) or (${t.targetKind} = 'stat' and ${t.stat} is not null and ${t.atLeast} >= 1)`,
+      sql`(${t.targetKind} = 'reward' and ${t.rewardId} is not null) or (${t.targetKind} = 'stat' and ${t.stat} is not null and ${t.atLeast} >= 1) or (${t.targetKind} = 'date' and ${t.targetDate} is not null)`,
     ),
   ],
 );

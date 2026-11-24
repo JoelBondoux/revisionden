@@ -24,11 +24,13 @@ export const rewardsHandlers: RequestHandler[] = [
   http.post('*/v1/students/:id/parent-rewards', async ({ request }) => {
     const parsed = CreateParentRewardRequestSchema.safeParse(await request.json());
     if (!parsed.success) return HttpResponse.json({ error: { code: 'invalid' } }, { status: 400 });
-    const { title, target } = parsed.data;
-    const progress = parentRewardProgress(target, { level: 4, bestStreak: 5 }, []);
+    const { title, note, target } = parsed.data;
+    const today = new Date().toISOString().slice(0, 10);
+    const progress = parentRewardProgress(target, { level: 4, bestStreak: 5 }, [], today);
     const reward: ParentReward = {
       id: crypto.randomUUID(),
       title,
+      note: note ?? null,
       target,
       targetLabel: parentTargetLabel(target),
       reached: progress.reached,

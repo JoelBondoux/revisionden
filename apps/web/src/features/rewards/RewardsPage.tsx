@@ -19,6 +19,7 @@ export function RewardsScreen({ api }: { api: RewardsApi }) {
   );
   if (resource.status !== 'ready') return <LoadingOrError resource={resource} />;
   const { overview, newlyEarned, parentRewards } = resource.data;
+  const metFromHome = parentRewards.filter((r) => r.reached && !r.givenAt);
   const { level, chapter } = overview;
   const next =
     level.prestigeStars > 0 || level.level === 100
@@ -27,10 +28,13 @@ export function RewardsScreen({ api }: { api: RewardsApi }) {
 
   return (
     <div className="stack rewards">
-      {newlyEarned.length > 0 && (
+      {newlyEarned.length + metFromHome.length > 0 && (
         <div role="status" className="rewards__new">
           {newlyEarned.map((r) => (
             <p key={r.id}>New: {r.name}</p>
+          ))}
+          {metFromHome.map((r) => (
+            <p key={r.id}>Target met: {r.title} (from home)</p>
           ))}
         </div>
       )}
@@ -143,19 +147,27 @@ export function RewardsScreen({ api }: { api: RewardsApi }) {
       </Card>
 
       {parentRewards.length > 0 && (
-        <Card title="From your parent">
+        <Card title="From home">
           <ul className="rewards__list">
             {parentRewards.map((r) => (
               <li key={r.id}>
                 <span className="rewards__row">
-                  <strong>{r.title}</strong> <Pill tone="primary">Parent reward</Pill>
+                  <strong>{r.title}</strong> <Pill tone="primary">From home</Pill>
                   {r.givenAt ? (
                     <Pill tone="success">Given</Pill>
                   ) : (
-                    r.reached && <Pill tone="gold">Reached</Pill>
+                    r.reached && <Pill tone="gold">Target met</Pill>
                   )}
                 </span>
+                {r.note && <span>{r.note}</span>}
                 <span className="secondary-text">{r.targetLabel}</span>
+                <ProgressBar
+                  label={r.title}
+                  value={r.current}
+                  max={r.goal}
+                  valueText={`${r.current} of ${r.goal}`}
+                  tone="success"
+                />
               </li>
             ))}
           </ul>

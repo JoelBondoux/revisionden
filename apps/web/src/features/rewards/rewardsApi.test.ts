@@ -54,6 +54,14 @@ describe('rewards API client', () => {
     expect(del.calls[0]!.init.method).toBe('DELETE');
   });
 
+  it('edits a parent reward', async () => {
+    const { calls, fetch } = fakeFetch(200, cinemaTrip);
+    const api = createRewardsApi({ baseUrl: 'https://a.example', fetch });
+    await api.updateParentReward('s1', cinemaTrip.id, { note: null });
+    expect(calls[0]!.init.method).toBe('PATCH');
+    expect(calls[0]!.url).toBe(`https://a.example/v1/students/s1/parent-rewards/${cinemaTrip.id}`);
+  });
+
   it('throws on an error status or a bad response', async () => {
     const failing = createRewardsApi({
       baseUrl: 'https://a.example',

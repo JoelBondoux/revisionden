@@ -85,6 +85,18 @@ export const ParentRewardTargetSchema = z.union([
     .object({ kind: z.literal('stat'), stat: z.enum(statKeys), atLeast: z.number().int().min(1) })
     .strict()
     .refine((t) => t.atLeast <= STAT_MAX[t.stat], 'That target can never be reached'),
+  z
+    .object({
+      kind: z.literal('date'),
+      on: z
+        .string()
+        .regex(/^\d{4}-\d{2}-\d{2}$/, 'Use a date')
+        .refine((d) => {
+          const time = Date.parse(`${d}T00:00:00Z`);
+          return !Number.isNaN(time) && new Date(time).toISOString().startsWith(d);
+        }, 'Not a real date'),
+    })
+    .strict(),
 ]);
 export type ParentRewardTarget = z.infer<typeof ParentRewardTargetSchema>;
 
@@ -92,14 +104,28 @@ export const CreateParentRewardRequestSchema = z
   .object({
     /** A short description of the real-world reward, for example "Cinema trip". */
     title: z.string().trim().min(1, 'Give the reward a short title').max(60),
+    /** An optional note for the student, for example "you pick the film". */
+    note: z.string().trim().max(200).optional(),
     target: ParentRewardTargetSchema,
   })
   .strict();
 export type CreateParentRewardRequest = z.infer<typeof CreateParentRewardRequestSchema>;
 
+/** Changes a parent can make before the reward is given. */
+export const UpdateParentRewardRequestSchema = z
+  .object({
+    title: z.string().trim().min(1).max(60).optional(),
+    note: z.string().trim().max(200).nullable().optional(),
+    target: ParentRewardTargetSchema.optional(),
+  })
+  .strict()
+  .refine((u) => Object.keys(u).length > 0, 'Change at least one thing');
+export type UpdateParentRewardRequest = z.infer<typeof UpdateParentRewardRequestSchema>;
+
 export const ParentRewardSchema = z.object({
   id: z.string(),
   title: z.string(),
+  note: z.string().nullable(),
   target: ParentRewardTargetSchema,
   /** What the target is, in words, for example "100-day streak" or "Level 20". */
   targetLabel: z.string(),
@@ -122,7 +148,13 @@ export function parentRewardProgress(
   target: ParentRewardTarget,
   stats: Partial<RewardStats>,
   earnedIds: readonly string[],
+  /** UK date today (YYYY-MM-DD), for date targets. */
+  today?: string,
 ): { reached: boolean; current: number; target: number } {
+  if (target.kind === 'date') {
+    const reached = today !== undefined && today >= target.on;
+    return { reached, current: reached ? 1 : 0, target: 1 };
+  }
   if (target.kind === 'stat') {
     const value = stats[target.stat] ?? 0;
     return {
@@ -178,5 +210,14 @@ const STAT_WORDS: Record<StatKey, (n: number) => string> = {
 /** The target in words, for the parent and student screens. */
 export function parentTargetLabel(target: ParentRewardTarget): string {
   if (target.kind === 'stat') return STAT_WORDS[target.stat](target.atLeast);
+  if (target.kind === 'date') {
+    const date = new Intl.DateTimeFormat('en-GB', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      timeZone: 'UTC',
+    }).format(new Date(`${target.on}T00:00:00Z`));
+    return `On ${date}`;
+  }
   return REWARDS.find((r) => r.id === target.rewardId)?.name ?? target.rewardId;
 }

@@ -26,6 +26,7 @@ export function sampleRewards(over: Partial<StudentRewardsResponse> = {}): Stude
 export const cinemaTrip: ParentReward = {
   id: '11111111-1111-4111-8111-111111111111',
   title: 'Cinema trip',
+  note: 'You pick the film',
   target: { kind: 'reward', rewardId: 'streak-100' },
   targetLabel: '100-day streak',
   reached: false,

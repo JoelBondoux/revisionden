@@ -13,7 +13,9 @@ afterAll(async () => {
 });
 
 async function makeStudent(nickname: string): Promise<string> {
-  const fam = await client.query<{ id: string }>(`insert into families default values returning id`);
+  const fam = await client.query<{ id: string }>(
+    `insert into families default values returning id`,
+  );
   const st = await client.query<{ id: string }>(
     `insert into students (family_id, nickname, avatar_code, year_group)
      values ('${fam.rows[0]!.id}', '${nickname}', 'a1', 10) returning id`,
@@ -52,6 +54,24 @@ describe('parent-set rewards table (workstream R)', () => {
       `select count(*)::int as n from parent_rewards where student_id = '${studentId}'`,
     );
     expect(res.rows[0]!.n).toBe(1);
+  });
+
+  it('stores an optional note and a custom date target', async () => {
+    const studentId = await makeStudent('r_kid_five');
+    await client.query(
+      `insert into parent_rewards (student_id, title, note, target_kind, target_date)
+       values ('${studentId}', 'Day out', 'You pick where', 'date', '2027-02-14')`,
+    );
+    const res = await client.query<{ note: string; target_date: string }>(
+      `select note, target_date::text from parent_rewards where student_id = '${studentId}'`,
+    );
+    expect(res.rows[0]).toEqual({ note: 'You pick where', target_date: '2027-02-14' });
+    await expect(
+      client.query(
+        `insert into parent_rewards (student_id, title, target_kind)
+         values ('${studentId}', 'No date', 'date')`,
+      ),
+    ).rejects.toThrow();
   });
 
   it('rejects a reward without a complete target', async () => {

@@ -5,6 +5,7 @@ import {
   type CreateParentRewardRequest,
   type ParentReward,
   type StudentRewardsResponse,
+  type UpdateParentRewardRequest,
 } from '@revisionden/core';
 
 export interface RewardsApi {
@@ -15,6 +16,12 @@ export interface RewardsApi {
   addParentReward(studentId: string, body: CreateParentRewardRequest): Promise<ParentReward>;
   markGiven(studentId: string, rewardId: string): Promise<ParentReward>;
   removeParentReward(studentId: string, rewardId: string): Promise<void>;
+  /** Changes title, note or target; only before the reward is given. */
+  updateParentReward(
+    studentId: string,
+    rewardId: string,
+    change: UpdateParentRewardRequest,
+  ): Promise<ParentReward>;
 }
 
 /** Calls the rewards routes (apps/api/src/routes/rewards.ts) with the session cookies. */
@@ -54,6 +61,11 @@ export function createRewardsApi(options: {
           method: 'POST',
         },
       ),
+    updateParentReward: (id, rewardId, change) =>
+      read(ParentRewardSchema, `${child(id)}/parent-rewards/${encodeURIComponent(rewardId)}`, {
+        method: 'PATCH',
+        body: JSON.stringify(change),
+      }),
     removeParentReward: async (id, rewardId) => {
       await send(`${child(id)}/parent-rewards/${encodeURIComponent(rewardId)}`, {
         method: 'DELETE',

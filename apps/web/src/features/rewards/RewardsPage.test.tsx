@@ -11,6 +11,7 @@ function fakeApi(over: Partial<RewardsApi> = {}): RewardsApi {
     addParentReward: async () => cinemaTrip,
     markGiven: async () => cinemaTrip,
     removeParentReward: async () => undefined,
+    updateParentReward: async () => cinemaTrip,
     ...over,
   };
 }
@@ -45,12 +46,27 @@ describe('Student rewards screen', () => {
     expect(within(drop).getByText(/Ends 3 January 2027/)).toBeInTheDocument();
   });
 
-  it('shows parent-set rewards with a parent badge', async () => {
+  it('shows parent-set rewards with a "from home" badge, the note and progress', async () => {
     show(fakeApi());
-    const parent = await screen.findByRole('region', { name: 'From your parent' });
+    const parent = await screen.findByRole('region', { name: 'From home' });
     expect(within(parent).getByText('Cinema trip')).toBeInTheDocument();
-    expect(within(parent).getByText('Parent reward')).toBeInTheDocument();
-    expect(within(parent).getByText('100-day streak')).toBeInTheDocument();
+    expect(within(parent).getAllByText('From home')).toHaveLength(2);
+    expect(within(parent).getByText('You pick the film')).toBeInTheDocument();
+    expect(within(parent).getByRole('progressbar', { name: 'Cinema trip' })).toHaveAttribute(
+      'aria-valuetext',
+      '5 of 100',
+    );
+  });
+
+  it('celebrates a parent reward whose target is met', async () => {
+    show(
+      fakeApi({
+        getMyRewards: async () =>
+          sampleRewards({ parentRewards: [{ ...cinemaTrip, reached: true, current: 100 }] }),
+      }),
+    );
+    const note = await screen.findByText(/Target met: Cinema trip/);
+    expect(note.closest('[role="status"]')).not.toBeNull();
   });
 
   it('celebrates rewards earned since the last visit', async () => {

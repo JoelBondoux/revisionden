@@ -4,6 +4,7 @@ import {
   RewardsOverviewSchema,
   parentRewardProgress,
   parentTargetLabel,
+  UpdateParentRewardRequestSchema,
 } from './rewards-schemas';
 import { REWARD_STAT_KEYS, rewardsOverview } from './rewards';
 
@@ -102,5 +103,51 @@ describe('parentTargetLabel', () => {
     for (const stat of REWARD_STAT_KEYS) {
       expect(parentTargetLabel({ kind: 'stat', stat, atLeast: 1 })).not.toContain(stat);
     }
+  });
+});
+
+describe('parent rewards from the newer spec', () => {
+  it('takes an optional note of up to 200 characters', () => {
+    const base = { title: 'Cinema trip', target: { kind: 'reward', rewardId: 'streak-7' } };
+    expect(CreateParentRewardRequestSchema.parse({ ...base, note: ' Pick the film ' }).note).toBe(
+      'Pick the film',
+    );
+    expect(
+      CreateParentRewardRequestSchema.safeParse({ ...base, note: 'a'.repeat(201) }).success,
+    ).toBe(false);
+  });
+
+  it('takes a custom date as a target, reached on that UK date', () => {
+    const target = { kind: 'date', on: '2027-02-14' } as const;
+    expect(CreateParentRewardRequestSchema.safeParse({ title: 'Day out', target }).success).toBe(
+      true,
+    );
+    expect(
+      CreateParentRewardRequestSchema.safeParse({
+        title: 'x',
+        target: { kind: 'date', on: '14/02/2027' },
+      }).success,
+    ).toBe(false);
+    expect(
+      CreateParentRewardRequestSchema.safeParse({
+        title: 'x',
+        target: { kind: 'date', on: '2027-02-31' },
+      }).success,
+    ).toBe(false);
+    expect(parentRewardProgress(target, {}, [], '2027-02-13')).toMatchObject({ reached: false });
+    expect(parentRewardProgress(target, {}, [], '2027-02-14')).toEqual({
+      reached: true,
+      current: 1,
+      target: 1,
+    });
+    expect(parentRewardProgress(target, {}, [])).toMatchObject({ reached: false });
+    expect(parentTargetLabel(target)).toBe('On 14 February 2027');
+  });
+
+  it('lets a parent change the title, note or target, one at a time', () => {
+    expect(UpdateParentRewardRequestSchema.parse({ note: null })).toEqual({ note: null });
+    expect(UpdateParentRewardRequestSchema.safeParse({ title: 'New title' }).success).toBe(true);
+    expect(UpdateParentRewardRequestSchema.safeParse({}).success).toBe(false);
+    expect(UpdateParentRewardRequestSchema.safeParse({ givenAt: 'now' }).success).toBe(false);
   });
 });

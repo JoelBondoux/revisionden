@@ -5,8 +5,9 @@
  * - Student: GET /v1/student/rewards (level, chapter track, next milestones, collections, live
  *   seasonal drops, parent rewards). Newly earned rewards are saved here, once each, and the gift
  *   days that come with them are added to the student's streak record.
- * - Parent: GET /v1/students/:id/rewards (the same view), and POST, DELETE and "given" for
- *   parent-set real-world rewards under /v1/students/:id/parent-rewards.
+ * - Parent: GET /v1/students/:id/rewards (the same view), and POST, PATCH, DELETE and "given"
+ *   for parent-set real-world rewards under /v1/students/:id/parent-rewards. Once given, a
+ *   reward is kept as history: it can no longer be changed or deleted (409).
  */
 import { Hono } from 'hono';
 import { and, asc, eq, gte, isNotNull, sql } from 'drizzle-orm';
@@ -15,6 +16,8 @@ import {
   DEFAULT_DAILY_GOAL_XP,
   ParentRewardTargetSchema,
   REWARDS,
+  UpdateParentRewardRequestSchema,
+  type ParentRewardTarget,
   bestRun,
   evaluateRewards,
   giftDaysFor,
@@ -44,7 +47,7 @@ import {
   type Database,
 } from '@revisionden/db';
 import type { AppEnv } from '../context';
-import { notFound } from '../errors';
+import { ApiError, notFound } from '../errors';
 import { requireFamilyStudent } from '../families';
 import { readJson } from '../http';
 import type { Clock } from '../rate-limit';
@@ -123,20 +126,36 @@ async function saveEarned(db: Database, studentId: string, ids: string[], now: D
   return addedIds;
 }
 
+const targetOf = (row: ParentRewardRow): ParentRewardTarget =>
+  ParentRewardTargetSchema.parse(
+    row.targetKind === 'reward'
+      ? { kind: 'reward', rewardId: row.rewardId }
+      : row.targetKind === 'date'
+        ? { kind: 'date', on: row.targetDate }
+        : { kind: 'stat', stat: row.stat, atLeast: row.atLeast },
+  );
+
+/** Target columns for a row: every target column is set, unused ones to null. */
+const targetColumns = (target: ParentRewardTarget) => ({
+  targetKind: target.kind,
+  rewardId: target.kind === 'reward' ? target.rewardId : null,
+  stat: target.kind === 'stat' ? target.stat : null,
+  atLeast: target.kind === 'stat' ? target.atLeast : null,
+  targetDate: target.kind === 'date' ? target.on : null,
+});
+
 function toParentReward(
   row: ParentRewardRow,
   stats: Partial<RewardStats>,
   earnedIds: readonly string[],
+  today: string,
 ): ParentReward {
-  const target = ParentRewardTargetSchema.parse(
-    row.targetKind === 'reward'
-      ? { kind: 'reward', rewardId: row.rewardId }
-      : { kind: 'stat', stat: row.stat, atLeast: row.atLeast },
-  );
-  const progress = parentRewardProgress(target, stats, earnedIds);
+  const target = targetOf(row);
+  const progress = parentRewardProgress(target, stats, earnedIds, today);
   return {
     id: row.id,
     title: row.title,
+    note: row.note,
     target,
     targetLabel: parentTargetLabel(target),
     reached: progress.reached,
@@ -198,7 +217,7 @@ async function rewardsView(
   return {
     overview,
     newlyEarned,
-    parentRewards: parentRows.map((row) => toParentReward(row, stats, earnedIds)),
+    parentRewards: parentRows.map((row) => toParentReward(row, stats, earnedIds, localDate(now))),
   };
 }
 
@@ -228,17 +247,10 @@ export function parentRewardRoutes({ db, clock }: Deps) {
 
   app.post('/:id/parent-rewards', async (c) => {
     const student = await requireFamilyStudent(db, family(c), c.req.param('id'));
-    const { title, target } = await readJson(c, CreateParentRewardRequestSchema);
+    const { title, note, target } = await readJson(c, CreateParentRewardRequestSchema);
     const [row] = await db
       .insert(parentRewards)
-      .values({
-        studentId: student.id,
-        title,
-        targetKind: target.kind,
-        ...(target.kind === 'reward'
-          ? { rewardId: target.rewardId }
-          : { stat: target.stat, atLeast: target.atLeast }),
-      })
+      .values({ studentId: student.id, title, note: note || null, ...targetColumns(target) })
       .returning();
     const view = await rewardsView(db, student, clock.now());
     return c.json(
@@ -268,9 +280,30 @@ export function parentRewardRoutes({ db, clock }: Deps) {
     return c.json(view.parentRewards.find((r) => r.id === row.id)!);
   });
 
+  const alreadyGiven = () =>
+    new ApiError(409, 'already_given', 'This reward has been given, so it is kept as history');
+
+  app.patch('/:id/parent-rewards/:rewardId', async (c) => {
+    const student = await requireFamilyStudent(db, family(c), c.req.param('id'));
+    const row = await requireParentReward(student.id, c.req.param('rewardId'));
+    const change = await readJson(c, UpdateParentRewardRequestSchema);
+    if (row.givenAt) throw alreadyGiven();
+    await db
+      .update(parentRewards)
+      .set({
+        ...(change.title !== undefined && { title: change.title }),
+        ...(change.note !== undefined && { note: change.note || null }),
+        ...(change.target && targetColumns(change.target)),
+      })
+      .where(eq(parentRewards.id, row.id));
+    const view = await rewardsView(db, student, clock.now());
+    return c.json(view.parentRewards.find((r) => r.id === row.id)!);
+  });
+
   app.delete('/:id/parent-rewards/:rewardId', async (c) => {
     const student = await requireFamilyStudent(db, family(c), c.req.param('id'));
     const row = await requireParentReward(student.id, c.req.param('rewardId'));
+    if (row.givenAt) throw alreadyGiven();
     await db.delete(parentRewards).where(eq(parentRewards.id, row.id));
     return c.body(null, 204);
   });

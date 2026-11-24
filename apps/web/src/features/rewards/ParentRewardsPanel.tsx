@@ -30,6 +30,8 @@ export function ParentRewardsPanel({ api, studentId, nickname }: PanelProps) {
   const [title, setTitle] = useState('');
   const [target, setTarget] = useState(TARGET_REWARDS[0]!.id);
   const [level, setLevel] = useState('10');
+  const [note, setNote] = useState('');
+  const [date, setDate] = useState('');
   const [problem, setProblem] = useState<string | null>(null);
 
   async function add(event: FormEvent) {
@@ -38,9 +40,14 @@ export function ParentRewardsPanel({ api, studentId, nickname }: PanelProps) {
       setProblem('Give the reward a short title');
       return;
     }
+    if (target === 'date' && !date) {
+      setProblem('Pick a date');
+      return;
+    }
     setProblem(null);
     await api.addParentReward(studentId, {
       title: title.trim(),
+      ...(note.trim() && { note: note.trim() }),
       target:
         target === 'level'
           ? {
@@ -48,9 +55,12 @@ export function ParentRewardsPanel({ api, studentId, nickname }: PanelProps) {
               stat: 'level',
               atLeast: Math.min(MAX_LEVEL, Math.max(1, Number(level) || 1)),
             }
-          : { kind: 'reward', rewardId: target },
+          : target === 'date'
+            ? { kind: 'date', on: date }
+            : { kind: 'reward', rewardId: target },
     });
     setTitle('');
+    setNote('');
     reload();
   }
 
@@ -74,6 +84,7 @@ export function ParentRewardsPanel({ api, studentId, nickname }: PanelProps) {
                 r.reached && <Pill tone="gold">Reached</Pill>
               )}
             </span>
+            {r.note && <span>{r.note}</span>}
             <span className="secondary-text">{r.targetLabel}</span>
             <span className="secondary-text">
               {r.current} of {r.goal}
@@ -88,13 +99,15 @@ export function ParentRewardsPanel({ api, studentId, nickname }: PanelProps) {
                   Mark as given
                 </Button>
               )}
-              <Button
-                variant="secondary"
-                aria-label={`Remove ${r.title}`}
-                onClick={act(() => api.removeParentReward(studentId, r.id))}
-              >
-                Remove
-              </Button>
+              {!r.givenAt && (
+                <Button
+                  variant="secondary"
+                  aria-label={`Remove ${r.title}`}
+                  onClick={act(() => api.removeParentReward(studentId, r.id))}
+                >
+                  Remove
+                </Button>
+              )}
             </span>
           </li>
         ))}
@@ -119,9 +132,14 @@ export function ParentRewardsPanel({ api, studentId, nickname }: PanelProps) {
           />
         </label>
         <label>
+          Note (optional)
+          <input value={note} maxLength={200} onChange={(e) => setNote(e.target.value)} />
+        </label>
+        <label>
           When they reach
           <select value={target} onChange={(e) => setTarget(e.target.value)}>
             <option value="level">A level</option>
+            <option value="date">A date</option>
             {TARGET_REWARDS.map((r) => (
               <option key={r.id} value={r.id}>
                 {r.name}
@@ -141,13 +159,20 @@ export function ParentRewardsPanel({ api, studentId, nickname }: PanelProps) {
             />
           </label>
         )}
+        {target === 'date' && (
+          <label>
+            Date
+            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+          </label>
+        )}
         {problem && (
           <p role="alert" className="rewards-form__error">
             {problem}
           </p>
         )}
         <p className="secondary-text">
-          Keep it short and leave out names. Only you mark it as given.
+          Keep it short and leave out names. Only you mark it as given; after that it is kept as
+          history.
         </p>
         <Button type="submit">Add reward</Button>
       </form>

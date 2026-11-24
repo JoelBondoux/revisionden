@@ -31,6 +31,7 @@ function memoryApi(initial: ParentReward[] = []) {
     removeParentReward: async (_id, rewardId) => {
       list = list.filter((r) => r.id !== rewardId);
     },
+    updateParentReward: async (_id, rewardId) => list.find((r) => r.id === rewardId)!,
   };
   return { api, added };
 }
@@ -70,13 +71,42 @@ describe('Parent rewards panel', () => {
     ]);
   });
 
-  it('marks a reward as given, then removes it', async () => {
+  it('adds a reward with a note and a custom date', async () => {
+    const { api, added } = memoryApi();
+    render(<ParentRewardsPanel api={api} studentId="s1" nickname="Comet" />);
+    await userEvent.type(await screen.findByLabelText('Reward'), 'Day out');
+    await userEvent.type(screen.getByLabelText('Note (optional)'), 'You pick where');
+    await userEvent.selectOptions(screen.getByLabelText('When they reach'), 'date');
+    await userEvent.type(screen.getByLabelText('Date'), '2027-02-14');
+    await userEvent.click(screen.getByRole('button', { name: 'Add reward' }));
+    expect(added).toEqual([
+      { title: 'Day out', note: 'You pick where', target: { kind: 'date', on: '2027-02-14' } },
+    ]);
+  });
+
+  it('can remove a reward before it is given', async () => {
+    const { api } = memoryApi([cinemaTrip]);
+    render(<ParentRewardsPanel api={api} studentId="s1" nickname="Comet" />);
+    await userEvent.click(await screen.findByRole('button', { name: 'Remove Cinema trip' }));
+    expect(await screen.findByText(/No real-world rewards yet/)).toBeInTheDocument();
+  });
+
+  it('marks a reward as given, then keeps it as history', async () => {
     const { api } = memoryApi([{ ...cinemaTrip, reached: true }]);
     render(<ParentRewardsPanel api={api} studentId="s1" nickname="Comet" />);
     await userEvent.click(await screen.findByRole('button', { name: 'Mark Cinema trip as given' }));
     expect(await screen.findByText('Given')).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('button', { name: 'Remove Cinema trip' }));
-    expect(await screen.findByText(/No real-world rewards yet/)).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Remove Cinema trip' })).not.toBeInTheDocument();
+  });
+
+  it('does not add a date reward without a date', async () => {
+    const { api, added } = memoryApi();
+    render(<ParentRewardsPanel api={api} studentId="s1" nickname="Comet" />);
+    await userEvent.type(await screen.findByLabelText('Reward'), 'Day out');
+    await userEvent.selectOptions(screen.getByLabelText('When they reach'), 'date');
+    await userEvent.click(screen.getByRole('button', { name: 'Add reward' }));
+    expect(added).toEqual([]);
+    expect(screen.getByRole('alert')).toHaveTextContent('Pick a date');
   });
 
   it('does not add a reward without a title', async () => {

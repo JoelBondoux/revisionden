@@ -190,7 +190,7 @@ describe('parent-set rewards', () => {
     expect(res.status).toBe(400);
   });
 
-  it('is marked as given by the parent, and can be removed', async () => {
+  it('is marked as given by the parent and then kept', async () => {
     const { studentId, parent, headers } = await t.familyStudent('r_parent_kid_d');
     const created = ParentRewardSchema.parse(
       await (
@@ -208,12 +208,103 @@ describe('parent-set rewards', () => {
     expect(ParentRewardSchema.parse(await given.json()).givenAt).toBe(t.clock.now().toISOString());
     expect((await studentRewards(headers)).parentRewards[0]!.givenAt).not.toBeNull();
 
+    // Once given it is history: it stays on the student's screen and cannot be removed.
     const del = await t.app.request(`/v1/students/${studentId}/parent-rewards/${created.id}`, {
       method: 'DELETE',
       headers: parent.headers,
     });
+    expect(del.status).toBe(409);
+    expect((await studentRewards(headers)).parentRewards).toHaveLength(1);
+  });
+
+  it('keeps a note and supports a custom date target', async () => {
+    const { studentId, parent } = await t.familyStudent('r_parent_kid_f');
+    const res = await addReward(parent.headers, studentId, {
+      title: 'Day out',
+      note: 'You pick where',
+      target: { kind: 'date', on: '2026-11-24' },
+    });
+    expect(res.status).toBe(201);
+    expect(ParentRewardSchema.parse(await res.json())).toMatchObject({
+      note: 'You pick where',
+      targetLabel: 'On 24 November 2026',
+      reached: true,
+    });
+  });
+
+  it('can be edited until it is given, then is kept as history', async () => {
+    const { studentId, parent } = await t.familyStudent('r_parent_kid_g');
+    const created = ParentRewardSchema.parse(
+      await (
+        await addReward(parent.headers, studentId, {
+          title: 'Pizza',
+          target: { kind: 'stat', stat: 'level', atLeast: 5 },
+        })
+      ).json(),
+    );
+    const url = `/v1/students/${studentId}/parent-rewards/${created.id}`;
+    const edit = await t.app.request(
+      url,
+      jsonRequest(
+        'PATCH',
+        {
+          title: 'Pizza night',
+          note: 'Any toppings',
+          target: { kind: 'stat', stat: 'level', atLeast: 1 },
+        },
+        parent.headers,
+      ),
+    );
+    expect(edit.status).toBe(200);
+    expect(ParentRewardSchema.parse(await edit.json())).toMatchObject({
+      title: 'Pizza night',
+      note: 'Any toppings',
+      targetLabel: 'Level 1',
+      reached: true,
+    });
+    const clear = await t.app.request(url, jsonRequest('PATCH', { note: null }, parent.headers));
+    expect(ParentRewardSchema.parse(await clear.json()).note).toBeNull();
+
+    await t.app.request(`${url}/given`, { method: 'POST', headers: parent.headers });
+    const late = await t.app.request(
+      url,
+      jsonRequest('PATCH', { title: 'Changed' }, parent.headers),
+    );
+    expect(late.status).toBe(409);
+    const del = await t.app.request(url, { method: 'DELETE', headers: parent.headers });
+    expect(del.status).toBe(409);
+    const again = await t.app.request(`${url}/given`, { method: 'POST', headers: parent.headers });
+    expect(again.status).toBe(200);
+  });
+
+  it('rejects an empty edit and an edit of a missing reward', async () => {
+    const { studentId, parent } = await t.familyStudent('r_parent_kid_h');
+    const created = ParentRewardSchema.parse(
+      await (
+        await addReward(parent.headers, studentId, {
+          title: 'Pizza',
+          target: { kind: 'reward', rewardId: 'streak-7' },
+        })
+      ).json(),
+    );
+    const base = `/v1/students/${studentId}/parent-rewards`;
+    expect(
+      (await t.app.request(`${base}/${created.id}`, jsonRequest('PATCH', {}, parent.headers)))
+        .status,
+    ).toBe(400);
+    expect(
+      (
+        await t.app.request(
+          `${base}/00000000-0000-4000-8000-000000000000`,
+          jsonRequest('PATCH', { title: 'x' }, parent.headers),
+        )
+      ).status,
+    ).toBe(404);
+    const del = await t.app.request(`${base}/${created.id}`, {
+      method: 'DELETE',
+      headers: parent.headers,
+    });
     expect(del.status).toBe(204);
-    expect((await studentRewards(headers)).parentRewards).toEqual([]);
   });
 
   it("answers 404 for a reward that is not this student's", async () => {
