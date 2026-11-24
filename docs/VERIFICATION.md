@@ -67,6 +67,12 @@ storage exists, so a citation still works if a board moves a document.
 | 6    | Schema and links   | Content validator in CI                                                                                           | Missing fields, broken topic links, duplicate IDs                 |
 | 7    | Human approval     | Product owner or a subject teacher, in a review queue                                                             | Rejected, or any earlier step marked uncertain                    |
 
+**Extended answers and essays.** There is no single correct answer to check blind, so step 3
+becomes **blind marking**: the writer also produces three exemplar answers from the mark scheme
+(top, middle and low band) with their intended levels; a model from a different provider marks
+them against the mark scheme without seeing the intended levels and must match all three exactly.
+Every extended-answer item also needs individual human approval (never batch sampling).
+
 Release rule: an item is published only when steps 1 to 6 all pass unanimously **and** it is
 human-approved, or it falls in a batch that passed the sampling rule below with zero defects.
 

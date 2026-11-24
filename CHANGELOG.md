@@ -5,6 +5,11 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ## [Unreleased]
 
+### Fixed
+
+- GCSE Statistics offers only AQA and Pearson Edexcel in onboarding (checked on the board websites).
+- Verification protocol now covers extended answers (blind marking of exemplars plus individual human approval).
+
 ### Added
 
 - Five-year rewards progression design (`docs/REWARDS.md`) and backlog workstream R.

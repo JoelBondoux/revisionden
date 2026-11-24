@@ -60,7 +60,7 @@ export const SUBJECTS: readonly Subject[] = [
   gcse('english-language', 'English Language'),
   gcse('english-literature', 'English Literature'),
   gcse('maths', 'Maths', true),
-  gcse('statistics', 'Statistics', true),
+  gcse('statistics', 'Statistics', true, ['AQA', 'Edexcel']),
   gcse('combined-science', 'Combined Science', true),
   gcse('biology', 'Biology', true),
   gcse('chemistry', 'Chemistry', true),
