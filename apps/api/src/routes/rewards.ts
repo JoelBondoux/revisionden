@@ -290,7 +290,8 @@ export function parentRewardRoutes({ db, clock }: Deps) {
   /** Parent-set rewards with progress only (read by the parent dashboard, workstream K). */
   app.get('/:id/parent-rewards', async (c) => {
     const student = await requireFamilyStudent(db, family(c), c.req.param('id'));
-    const { parentRewards: list } = await rewardsView(db, student, clock.now());
+    // Read-only, so a parent looking does not use up the child's "New!" rewards.
+    const { parentRewards: list } = await rewardsProgress(db, student, clock.now());
     return c.json({ parentRewards: list });
   });
 
