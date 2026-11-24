@@ -5,6 +5,15 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ## [Unreleased]
 
+### Added
+
+- Content JSON Schemas for subjects, topic trees, items and mark schemes (`content/schemas/`).
+- `pnpm content:validate`: checks schemas, unique ids, topic links and every maths answer with
+  the maths engine; runs in CI.
+- GCSE Maths Higher pilot topic tree (Pearson Edexcel 1MA1) with sample items.
+- Maths engine `POST /check-working`: finds the first wrong line of working and checks the final
+  answer; safer input parsing; 90% coverage gate; container smoke test in CI.
+
 ## [00.01.002] - 2026-11-24
 
 ## [00.01.001] - 2026-11-24

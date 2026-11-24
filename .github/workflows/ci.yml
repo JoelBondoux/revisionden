@@ -45,3 +45,32 @@ jobs:
           cache-dependency-path: services/maths/requirements-dev.txt
       - run: pip install -r requirements-dev.txt
       - run: python -m pytest -q
+
+  content:
+    name: Content validation (schemas, links, maths answers)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: services/maths/requirements.txt
+      - run: pip install -r services/maths/requirements.txt
+      - run: pnpm install --frozen-lockfile
+      - name: Validator tests
+        run: node --test 'scripts/content/*.test.mjs'
+      - name: Validate content
+        run: pnpm content:validate
+
+  maths-container:
+    name: Maths engine container smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: services/maths/smoke-test.sh

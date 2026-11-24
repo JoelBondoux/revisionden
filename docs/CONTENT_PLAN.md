@@ -61,11 +61,58 @@ Start smaller (about 500 items) and grow where students struggle.
   "difficulty": 3,
   "prompt": "Solve 3x^2 + 5x - 2 = 0",
   "answer": { "solutions": ["1/3", "-2"] },
+  "verify": { "method": "solve", "equation": "3x^2 + 5x - 2 = 0", "variable": "x" },
+  "steps": ["3x^2 + 5x - 2 = 0", "(3x - 1)(x + 2) = 0", "x = 1/3 or x = -2"],
   "marks": 3,
   "mark_scheme": ["M1 correct factorisation", "A1 x = 1/3", "A1 x = -2"],
-  "source_ref": "Specification A19",
+  "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
   "checked_by": ["model-b", "maths-engine"]
 }
 ```
 
-The full schemas live in `content/schemas/` (workstream D).
+## Schemas and folders
+
+The full schemas (JSON Schema draft 2020-12) live in `content/schemas/`:
+
+| Content      | Folder                  | Schema                    | Key rules                                                              |
+| ------------ | ----------------------- | ------------------------- | ---------------------------------------------------------------------- |
+| Subjects     | `content/subjects/`     | `subject.schema.json`     | Level GCSE or A-Level; boards with spec codes and tiers                |
+| Topic trees  | `content/topic-trees/`  | `topic-tree.schema.json`  | At most 3 levels; every leaf has `spec_ref`; links to a subject        |
+| Items        | `content/items/**`      | `item.schema.json`        | Files hold arrays; every item has `source_ref` and `checked_by`        |
+| Mark schemes | `content/mark-schemes/` | `mark-scheme.schema.json` | `points` (M1, A1, B1) or `levels` (level descriptors with mark ranges) |
+
+Item types: `multiple_choice`, `short_answer`, `numeric`, `worked_maths`, `flashcard`,
+`extended_answer`. Maths items carry a `verify` block the maths engine can check:
+
+- `numeric`: `verify.expression` is evaluated and compared with `answer.value` (exactly, or
+  within `answer.tolerance` for rounded answers).
+- `worked_maths`: `verify.method` is `solve` (`equation`, `variable`) compared with
+  `answer.solutions`, or `expression` (`expression`, optional `form`: `factorised` or
+  `expanded`) compared with `answer.expression`. Optional `steps` (a model solution) are checked
+  line by line.
+
+`checked_by` values: `maths-engine`, `model-b` (second AI model agreed), `human`, and `author`
+(only the writing session checked it; needs `model-b` or `human` before release). Maths items
+must include `maths-engine`.
+
+## Validator
+
+```bash
+pip install -r services/maths/requirements.txt   # once, for maths answer checks
+pnpm content:validate                             # schemas, ids, links, maths answers
+pnpm content:validate --no-maths                  # schemas and links only (prints a warning)
+MATHS_PYTHON=.venv/bin/python pnpm content:validate   # pick the Python that has SymPy
+node --test 'scripts/content/*.test.mjs'          # validator tests
+```
+
+It fails on: schema errors, duplicate ids (across all files), items linked to a missing or
+non-leaf topic, trees linked to a missing subject, missing mark schemes, multiple-choice answers
+outside the options, maths items without `maths-engine`, and any maths answer or model solution
+the engine does not confirm. Maths checks run locally by starting `python -m app.content_check`
+in `services/maths`; CI runs the same in the `content` job.
+
+## Pilot
+
+GCSE Maths Higher, Pearson Edexcel 1MA1: `content/topic-trees/gcse-maths-edexcel-1ma1-higher.json`
+(content references N1 to S6, one leaf each) and sample items in
+`content/items/gcse-maths-higher/`.
