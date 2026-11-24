@@ -11,6 +11,9 @@ importers:
       '@eslint/js':
         specifier: ^9.17.0
         version: 9.39.5
+      ajv:
+        specifier: ^8.20.0
+        version: 8.20.0
       eslint:
         specifier: ^9.17.0
         version: 9.39.5
@@ -43,10 +46,10 @@ importers:
         version: 14.1.0
       better-auth:
         specifier: ^1.7.28
-        version: 1.7.28(drizzle-kit@0.31.11)(drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261124.1)(@electric-sql/pglite@0.6.0)(@neondatabase/serverless@1.2.1)(kysely@0.29.9))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vitest@2.1.9(@types/node@22.20.5)(jsdom@25.0.1)(msw@2.15.0(@types/node@22.20.5)(typescript@5.9.3)))
+        version: 1.7.28(drizzle-kit@0.31.11)(drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261124.2)(@electric-sql/pglite@0.6.0)(@neondatabase/serverless@1.2.1)(kysely@0.29.9))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vitest@2.1.9(@types/node@22.20.5)(jsdom@25.0.1)(msw@2.15.0(@types/node@22.20.5)(typescript@5.9.3)))
       drizzle-orm:
         specifier: ^0.45.4
-        version: 0.45.4(@cloudflare/workers-types@5.20261124.1)(@electric-sql/pglite@0.6.0)(@neondatabase/serverless@1.2.1)(kysely@0.29.9)
+        version: 0.45.4(@cloudflare/workers-types@5.20261124.2)(@electric-sql/pglite@0.6.0)(@neondatabase/serverless@1.2.1)(kysely@0.29.9)
       hono:
         specifier: ^4.6.14
         version: 4.13.21
@@ -56,7 +59,7 @@ importers:
     devDependencies:
       '@cloudflare/workers-types':
         specifier: ^5.20261124.1
-        version: 5.20261124.1
+        version: 5.20261124.2
       '@electric-sql/pglite':
         specifier: ^0.6.0
         version: 0.6.0
@@ -77,7 +80,7 @@ importers:
         version: 2.1.9(@types/node@22.20.5)(jsdom@25.0.1)(msw@2.15.0(@types/node@22.20.5)(typescript@5.9.3))
       wrangler:
         specifier: ^4.168.0
-        version: 4.168.0(@cloudflare/workers-types@5.20261124.1)(@types/node@22.20.5)(vitest@2.1.9(@types/node@22.20.5)(jsdom@25.0.1)(msw@2.15.0(@types/node@22.20.5)(typescript@5.9.3)))
+        version: 4.168.0(@cloudflare/workers-types@5.20261124.2)(@types/node@22.20.5)(vitest@2.1.9(@types/node@22.20.5)(jsdom@25.0.1)(msw@2.15.0(@types/node@22.20.5)(typescript@5.9.3)))
 
   apps/web:
     dependencies:
@@ -157,7 +160,7 @@ importers:
         version: 1.2.1
       drizzle-orm:
         specifier: ^0.45.4
-        version: 0.45.4(@cloudflare/workers-types@5.20261124.1)(@electric-sql/pglite@0.6.0)(@neondatabase/serverless@1.2.1)(kysely@0.29.9)
+        version: 0.45.4(@cloudflare/workers-types@5.20261124.2)(@electric-sql/pglite@0.6.0)(@neondatabase/serverless@1.2.1)(kysely@0.29.9)
     devDependencies:
       '@electric-sql/pglite':
         specifier: ^0.6.0
@@ -399,8 +402,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workers-types@5.20261124.1':
-    resolution: {integrity: sha512-n99jv9oDm6AYg7dTkRYJVgD5GhXG14Cd8rLDtbld28ZjGJVKFtQPXJxnVoOV2IBSRuqHt0PnP/4oqoiUKw2SAA==}
+  '@cloudflare/workers-types@5.20261124.2':
+    resolution: {integrity: sha512-zgpqEeenF5zm6Riayxxt5GQZUPGGxw6OgDEVISnFoojBx/13wR0F14/SXiQpH+vsSlp+sT5jgMgF+7Kfsm253w==}
 
   '@cloudflare/workers-utils@0.57.0':
     resolution: {integrity: sha512-6NulTDuddhxZUvCmDeyIVtn54Wo0rTV58YztF46V8NKBpH+PISm3aiudkCn0vLlRWeyYReNu5XmdE7hyvTwoLg==}
@@ -1790,6 +1793,9 @@ packages:
   ajv@6.15.0:
     resolution: {integrity: sha512-fgFx7Hfoq60ytK2c7DhnF8jIvzYgOMxfugjLOSMHjLIPgenqa7S7oaagATUq99mV6IYvN2tRmC0wnTYX6iPbMw==}
 
+  ajv@8.20.0:
+    resolution: {integrity: sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA==}
+
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
     engines: {node: '>=8'}
@@ -2298,6 +2304,9 @@ packages:
   fast-string-width@3.0.2:
     resolution: {integrity: sha512-gX8LrtNEI5hq8DVUfRQMbr5lpaS4nMIWV+7XEbXk2b8kiQIizgnlr12B4dA3ZEx3308ze0O4Q1R+cHts8kyUJg==}
 
+  fast-uri@3.1.9:
+    resolution: {integrity: sha512-hS/0Wt3Ya043oKXs0sIxrMpKQITXhMLIrVAKKXi4gozGC9v7YRWVnXIZzjNPTO02M9BdxLCWqK1yRXgNziVyJQ==}
+
   fast-wrap-ansi@0.2.2:
     resolution: {integrity: sha512-7F2Fl+TjRSenLqlU3UjSH0iyqopqoZIu7eZVpEirP2g1GtWa2G/ecEmBdgz31+Mxr+ELclgg6sokpSFIQiZ02Q==}
 
@@ -2526,6 +2535,9 @@ packages:
 
   json-schema-traverse@0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
+
+  json-schema-traverse@1.0.0:
+    resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
 
   json-stable-stringify-without-jsonify@1.0.1:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
@@ -2801,6 +2813,10 @@ packages:
 
   require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
+    engines: {node: '>=0.10.0'}
+
+  require-from-string@2.0.2:
+    resolution: {integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==}
     engines: {node: '>=0.10.0'}
 
   resolve-from@4.0.0:
@@ -3439,12 +3455,12 @@ snapshots:
       nanostores: 1.5.5
       zod: 4.6.7
 
-  '@better-auth/drizzle-adapter@1.7.28(@better-auth/core@1.7.28(@better-auth/utils@0.5.1)(@better-fetch/fetch@1.3.3)(better-call@1.4.6(zod@3.25.76))(jose@6.2.18)(kysely@0.29.9)(nanostores@1.5.5))(@better-auth/utils@0.5.1)(drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261124.1)(@electric-sql/pglite@0.6.0)(@neondatabase/serverless@1.2.1)(kysely@0.29.9))':
+  '@better-auth/drizzle-adapter@1.7.28(@better-auth/core@1.7.28(@better-auth/utils@0.5.1)(@better-fetch/fetch@1.3.3)(better-call@1.4.6(zod@3.25.76))(jose@6.2.18)(kysely@0.29.9)(nanostores@1.5.5))(@better-auth/utils@0.5.1)(drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261124.2)(@electric-sql/pglite@0.6.0)(@neondatabase/serverless@1.2.1)(kysely@0.29.9))':
     dependencies:
       '@better-auth/core': 1.7.28(@better-auth/utils@0.5.1)(@better-fetch/fetch@1.3.3)(better-call@1.4.6(zod@3.25.76))(jose@6.2.18)(kysely@0.29.9)(nanostores@1.5.5)
       '@better-auth/utils': 0.5.1
     optionalDependencies:
-      drizzle-orm: 0.45.4(@cloudflare/workers-types@5.20261124.1)(@electric-sql/pglite@0.6.0)(@neondatabase/serverless@1.2.1)(kysely@0.29.9)
+      drizzle-orm: 0.45.4(@cloudflare/workers-types@5.20261124.2)(@electric-sql/pglite@0.6.0)(@neondatabase/serverless@1.2.1)(kysely@0.29.9)
 
   '@better-auth/kysely-adapter@1.7.28(@better-auth/core@1.7.28(@better-auth/utils@0.5.1)(@better-fetch/fetch@1.3.3)(better-call@1.4.6(zod@3.25.76))(jose@6.2.18)(kysely@0.29.9)(nanostores@1.5.5))(@better-auth/utils@0.5.1)(kysely@0.29.9)':
     dependencies:
@@ -3503,7 +3519,7 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20261123.1':
     optional: true
 
-  '@cloudflare/workers-types@5.20261124.1': {}
+  '@cloudflare/workers-types@5.20261124.2': {}
 
   '@cloudflare/workers-utils@0.57.0(vitest@2.1.9(@types/node@22.20.5)(jsdom@25.0.1)(msw@2.15.0(@types/node@22.20.5)(typescript@5.9.3)))':
     dependencies:
@@ -4691,6 +4707,13 @@ snapshots:
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
 
+  ajv@8.20.0:
+    dependencies:
+      fast-deep-equal: 3.1.3
+      fast-uri: 3.1.9
+      json-schema-traverse: 1.0.0
+      require-from-string: 2.0.2
+
   ansi-regex@5.0.1: {}
 
   ansi-regex@6.6.0: {}
@@ -4727,10 +4750,10 @@ snapshots:
 
   baseline-browser-mapping@2.11.39: {}
 
-  better-auth@1.7.28(drizzle-kit@0.31.11)(drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261124.1)(@electric-sql/pglite@0.6.0)(@neondatabase/serverless@1.2.1)(kysely@0.29.9))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vitest@2.1.9(@types/node@22.20.5)(jsdom@25.0.1)(msw@2.15.0(@types/node@22.20.5)(typescript@5.9.3))):
+  better-auth@1.7.28(drizzle-kit@0.31.11)(drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261124.2)(@electric-sql/pglite@0.6.0)(@neondatabase/serverless@1.2.1)(kysely@0.29.9))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vitest@2.1.9(@types/node@22.20.5)(jsdom@25.0.1)(msw@2.15.0(@types/node@22.20.5)(typescript@5.9.3))):
     dependencies:
       '@better-auth/core': 1.7.28(@better-auth/utils@0.5.1)(@better-fetch/fetch@1.3.3)(better-call@1.4.6(zod@3.25.76))(jose@6.2.18)(kysely@0.29.9)(nanostores@1.5.5)
-      '@better-auth/drizzle-adapter': 1.7.28(@better-auth/core@1.7.28(@better-auth/utils@0.5.1)(@better-fetch/fetch@1.3.3)(better-call@1.4.6(zod@3.25.76))(jose@6.2.18)(kysely@0.29.9)(nanostores@1.5.5))(@better-auth/utils@0.5.1)(drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261124.1)(@electric-sql/pglite@0.6.0)(@neondatabase/serverless@1.2.1)(kysely@0.29.9))
+      '@better-auth/drizzle-adapter': 1.7.28(@better-auth/core@1.7.28(@better-auth/utils@0.5.1)(@better-fetch/fetch@1.3.3)(better-call@1.4.6(zod@3.25.76))(jose@6.2.18)(kysely@0.29.9)(nanostores@1.5.5))(@better-auth/utils@0.5.1)(drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261124.2)(@electric-sql/pglite@0.6.0)(@neondatabase/serverless@1.2.1)(kysely@0.29.9))
       '@better-auth/kysely-adapter': 1.7.28(@better-auth/core@1.7.28(@better-auth/utils@0.5.1)(@better-fetch/fetch@1.3.3)(better-call@1.4.6(zod@3.25.76))(jose@6.2.18)(kysely@0.29.9)(nanostores@1.5.5))(@better-auth/utils@0.5.1)(kysely@0.29.9)
       '@better-auth/memory-adapter': 1.7.28(@better-auth/core@1.7.28(@better-auth/utils@0.5.1)(@better-fetch/fetch@1.3.3)(better-call@1.4.6(zod@3.25.76))(jose@6.2.18)(kysely@0.29.9)(nanostores@1.5.5))(@better-auth/utils@0.5.1)
       '@better-auth/mongo-adapter': 1.7.28(@better-auth/core@1.7.28(@better-auth/utils@0.5.1)(@better-fetch/fetch@1.3.3)(better-call@1.4.6(zod@3.25.76))(jose@6.2.18)(kysely@0.29.9)(nanostores@1.5.5))(@better-auth/utils@0.5.1)
@@ -4748,7 +4771,7 @@ snapshots:
       zod: 4.6.7
     optionalDependencies:
       drizzle-kit: 0.31.11
-      drizzle-orm: 0.45.4(@cloudflare/workers-types@5.20261124.1)(@electric-sql/pglite@0.6.0)(@neondatabase/serverless@1.2.1)(kysely@0.29.9)
+      drizzle-orm: 0.45.4(@cloudflare/workers-types@5.20261124.2)(@electric-sql/pglite@0.6.0)(@neondatabase/serverless@1.2.1)(kysely@0.29.9)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       vitest: 2.1.9(@types/node@22.20.5)(jsdom@25.0.1)(msw@2.15.0(@types/node@22.20.5)(typescript@5.9.3))
@@ -4904,9 +4927,9 @@ snapshots:
       esbuild: 0.25.12
       tsx: 4.23.15
 
-  drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261124.1)(@electric-sql/pglite@0.6.0)(@neondatabase/serverless@1.2.1)(kysely@0.29.9):
+  drizzle-orm@0.45.4(@cloudflare/workers-types@5.20261124.2)(@electric-sql/pglite@0.6.0)(@neondatabase/serverless@1.2.1)(kysely@0.29.9):
     optionalDependencies:
-      '@cloudflare/workers-types': 5.20261124.1
+      '@cloudflare/workers-types': 5.20261124.2
       '@electric-sql/pglite': 0.6.0
       '@neondatabase/serverless': 1.2.1
       kysely: 0.29.9
@@ -5147,6 +5170,8 @@ snapshots:
     dependencies:
       fast-string-truncated-width: 3.0.3
 
+  fast-uri@3.1.9: {}
+
   fast-wrap-ansi@0.2.2:
     dependencies:
       fast-string-width: 3.0.2
@@ -5385,6 +5410,8 @@ snapshots:
   json-buffer@3.0.1: {}
 
   json-schema-traverse@0.4.1: {}
+
+  json-schema-traverse@1.0.0: {}
 
   json-stable-stringify-without-jsonify@1.0.1: {}
 
@@ -5658,6 +5685,8 @@ snapshots:
   reflect-metadata@0.2.2: {}
 
   require-directory@2.1.1: {}
+
+  require-from-string@2.0.2: {}
 
   resolve-from@4.0.0: {}
 
@@ -6113,7 +6142,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20261123.1
       '@cloudflare/workerd-windows-64': 1.20261123.1
 
-  wrangler@4.168.0(@cloudflare/workers-types@5.20261124.1)(@types/node@22.20.5)(vitest@2.1.9(@types/node@22.20.5)(jsdom@25.0.1)(msw@2.15.0(@types/node@22.20.5)(typescript@5.9.3))):
+  wrangler@4.168.0(@cloudflare/workers-types@5.20261124.2)(@types/node@22.20.5)(vitest@2.1.9(@types/node@22.20.5)(jsdom@25.0.1)(msw@2.15.0(@types/node@22.20.5)(typescript@5.9.3))):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.5.1
       '@cloudflare/unenv-preset': 2.16.2(unenv@2.0.0-rc.24)(workerd@1.20261123.1)
@@ -6129,7 +6158,7 @@ snapshots:
       unenv: 2.0.0-rc.24
       workerd: 1.20261123.1
     optionalDependencies:
-      '@cloudflare/workers-types': 5.20261124.1
+      '@cloudflare/workers-types': 5.20261124.2
       fsevents: 2.3.3
     transitivePeerDependencies:
       - '@types/node'

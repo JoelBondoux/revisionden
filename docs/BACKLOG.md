@@ -95,21 +95,21 @@
 
 ### D. Content format and maths engine (`content`, `services/maths`, `scripts/content`)
 
-- [ ] **D1 Schemas.** JSON Schemas for subjects, topic trees (spec references), items (multiple
+- [x] **D1 Schemas.** JSON Schemas for subjects, topic trees (spec references), items (multiple
       choice, short answer, numeric, worked maths, flashcard, extended answer), mark schemes.
   - Tests: sample files validate; missing source reference fails.
-- [ ] **D2 Validator.** `pnpm content:validate` checks schemas, unique IDs, topic links, and sends
+- [x] **D2 Validator.** `pnpm content:validate` checks schemas, unique IDs, topic links, and sends
       every maths answer to the engine.
   - Tests: duplicate ID fails; wrong maths answer fails; orphan topic fails.
-- [ ] **D3 Pilot topic tree.** GCSE Maths Higher topic tree from the official specification (one
+- [x] **D3 Pilot topic tree.** GCSE Maths Higher topic tree from the official specification (one
       board), with specification references.
   - Tests: every leaf topic has a spec reference; tree depth at most 3.
-- [ ] **D4 Working-lines checker.** Engine endpoint takes ordered lines of working and returns the
+- [x] **D4 Working-lines checker.** Engine endpoint takes ordered lines of working and returns the
       first line that is not equivalent to the previous, plus final-answer correctness.
   - Tests: correct chain passes; sign slip detected on the right line; unsafe input rejected.
-- [ ] **D5 Container.** Dockerfile builds; container answers `/health`; ready for Cloud Run.
+- [x] **D5 Container.** Dockerfile builds; container answers `/health`; ready for Cloud Run.
   - Tests: container smoke test in CI.
-- [ ] **D6 Citations and verification records.** Required `citations` (min 1) and `verification`
+- [x] **D6 Citations and verification records.** Required `citations` (min 1) and `verification`
       record on every item, topic leaf, mark scheme and diagram, per `VERIFICATION.md`.
   - Tests: missing citation, quote, location or URL fails; verified item without required checks
     fails; `other_authoritative`-only item without `needs_human_approval` fails.
@@ -167,7 +167,9 @@
 Broken down into tasks when Stage 1 ships, following the same format. Headline order:
 
 1. Mastery dashboard and predicted grade.
-2. Exams, mocks and assessments entry; study plan generator and calendar (editable by both).
+2. Exams, mocks and assessments entry; study plan generator and calendar (editable by both):
+   drag sessions between days; detail panel to edit a session; custom rules created from edits,
+   toggled and removed, applied by the generator, with conflict warnings (mockup screen 5).
 3. School report setup and upload reading (delete after confirm).
 4. Parent portal: weekly summary and focus nudges.
 5. Feedback levels in the lesson player; Learn and Test modes.

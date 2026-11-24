@@ -49,18 +49,18 @@ the last one. Each stage ends with a `[minor]` release to `main`.
 
 ### Stage 2: Smart focus and planning (target 00.03.000)
 
-| Feature                   | Acceptance criteria                                                                                                     |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Mastery and weak spots    | Mastery % per topic from all answers; weakest topics surfaced                                                           |
-| Predicted grade           | From mastery, mock and assessment results, and school progress indicator                                                |
-| Exams, mocks, assessments | Entered with dates and results by parent or student                                                                     |
-| Study plan calendar       | Auto-built weekly plan weighted to weak topics and upcoming exams; editable by parent and student; rebalances on change |
-| School report upload      | Photo or PDF read; values checked by the user; file deleted after reading                                               |
-| School report setup       | Effort score name, scale, direction and grade columns, per school                                                       |
-| Parent portal             | Weekly summary; suggested focus with light, medium or strong nudge                                                      |
-| Feedback levels           | Bigger chunks as the student improves, tied to grade boundaries                                                         |
-| Learn and Test modes      | Interactive items reveal answers live in Learn, only after submit in Test                                               |
-| Wellbeing                 | Daily study cap, breaks, burnout signals                                                                                |
+| Feature                   | Acceptance criteria                                                                                                                                                                                                                                                                                             |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Mastery and weak spots    | Mastery % per topic from all answers; weakest topics surfaced                                                                                                                                                                                                                                                   |
+| Predicted grade           | From mastery, mock and assessment results, and school progress indicator                                                                                                                                                                                                                                        |
+| Exams, mocks, assessments | Entered with dates and results by parent or student                                                                                                                                                                                                                                                             |
+| Study plan calendar       | Auto-built weekly plan weighted to weak topics and upcoming exams; sessions drag between days; tapping a session opens an editable detail panel (day, length, type, time, note); edits can be turned into rules the planner follows every week; rules can be toggled or removed; editable by parent and student |
+| School report upload      | Photo or PDF read; values checked by the user; file deleted after reading                                                                                                                                                                                                                                       |
+| School report setup       | Effort score name, scale, direction and grade columns, per school                                                                                                                                                                                                                                               |
+| Parent portal             | Weekly summary; suggested focus with light, medium or strong nudge                                                                                                                                                                                                                                              |
+| Feedback levels           | Bigger chunks as the student improves, tied to grade boundaries                                                                                                                                                                                                                                                 |
+| Learn and Test modes      | Interactive items reveal answers live in Learn, only after submit in Test                                                                                                                                                                                                                                       |
+| Wellbeing                 | Daily study cap, breaks, burnout signals                                                                                                                                                                                                                                                                        |
 
 ### Stage 3: Exam practice (target 00.04.000)
 

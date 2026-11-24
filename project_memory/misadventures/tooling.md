@@ -21,3 +21,8 @@ Tags: #tooling #ci
   handling, pass a plain object `{ url, method: 'GET', mode: 'navigate' }` instead.
 - **The root ESLint config has no `react-hooks` plugin**, so an
   `eslint-disable react-hooks/...` comment is itself a lint error.
+- **`docker build` in a Claude cloud session fails pip installs with "certificate verify
+  failed"** because the session proxy re-signs TLS. This is sandbox-only (CI is fine). For a
+  local check, build a throwaway Dockerfile copy that trusts `/root/.ccr/ca-bundle.crt` via
+  `PIP_CERT`; do not commit that change. The Docker daemon may also need starting
+  (`sudo dockerd &`).

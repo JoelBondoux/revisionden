@@ -1,0 +1,33 @@
+{
+  "id": "fixture-ms-proof",
+  "type": "levels",
+  "source_ref": "Made-up levels for tests",
+  "levels": [
+    {
+      "level": 1,
+      "marks": [1, 1],
+      "descriptor": "Starts a correct method"
+    },
+    {
+      "level": 2,
+      "marks": [2, 3],
+      "descriptor": "Complete argument"
+    }
+  ],
+  "citations": [
+    {
+      "source_type": "mark_scheme",
+      "publisher": "Example board",
+      "title": "Example specification",
+      "document_ref": "EX1",
+      "url": "https://example.org/spec",
+      "location": "Section 1",
+      "supports": ["mark_scheme"]
+    }
+  ],
+  "verification": {
+    "status": "draft",
+    "version": 1,
+    "checks": []
+  }
+}

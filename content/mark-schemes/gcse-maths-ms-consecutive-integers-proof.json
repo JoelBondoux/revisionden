@@ -1,0 +1,35 @@
+{
+  "id": "gcse-maths-ms-consecutive-integers-proof",
+  "type": "points",
+  "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6 (mark points written for RevisionDen in the board's M/A/B style)",
+  "points": [
+    {
+      "code": "B1",
+      "description": "Writes three consecutive integers algebraically, for example n, n + 1, n + 2"
+    },
+    {
+      "code": "M1",
+      "description": "Adds them to get 3n + 3"
+    },
+    {
+      "code": "A1",
+      "description": "Writes 3n + 3 = 3(n + 1) and concludes it is a multiple of 3"
+    }
+  ],
+  "citations": [
+    {
+      "source_type": "specification",
+      "publisher": "Pearson Edexcel",
+      "title": "GCSE (9-1) Mathematics specification",
+      "document_ref": "1MA1 (issue not yet confirmed)",
+      "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
+      "location": "Subject content, reference A6",
+      "supports": ["mark_scheme"]
+    }
+  ],
+  "verification": {
+    "status": "draft",
+    "version": 1,
+    "checks": []
+  }
+}
