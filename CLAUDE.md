@@ -17,7 +17,10 @@ You are building RevisionDen, a family revision tutor (GCSE and A-Level). Read `
 5. **Privacy.** This repository is public. Do not add a root README.md or a repository description. Never commit real names, schools, emails, photos or
    any personal data, even in tests. Never commit secrets; use `.dev.vars` (git-ignored).
 6. **Versions.** Do not edit `VERSION` by hand; the release workflow bumps it on `main`.
-7. **Green before PR.** `pnpm lint && pnpm typecheck && pnpm test:coverage && pnpm test:scripts`
+7. **Verified content only.** Any educational content (questions, answers, diagrams, facts, mark
+   schemes) follows `docs/VERIFICATION.md`: at least one official citation, all checks passed. Never
+   invent a fact, a citation or a quote.
+8. **Green before PR.** `pnpm lint && pnpm typecheck && pnpm test:coverage && pnpm test:scripts`
    and, for `services/maths`, `python -m pytest -q`.
 
 ## Commands

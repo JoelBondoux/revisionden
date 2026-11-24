@@ -30,12 +30,12 @@ spend tracking, per-child monthly cap, provider fallback).
 
 ## Quality measurement (`evals/`)
 
-| Evaluation           | Set                                                 | Pass bar                                              |
-| -------------------- | --------------------------------------------------- | ----------------------------------------------------- |
-| Essay marking        | 50 anonymised or synthetic essays with known levels | 80% within ±1 level; no response without the AI label |
-| Short-answer marking | 300 answers with known correctness                  | 95% agreement                                         |
-| Handwriting reading  | 40 synthetic handwritten pages                      | 98% word accuracy on confirmed text                   |
-| Item correctness     | Random 200 items per subject                        | 99.5% correct                                         |
+| Evaluation           | Set                                                 | Pass bar                                                                                  |
+| -------------------- | --------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Essay marking        | 50 anonymised or synthetic essays with known levels | 90% within ±1 level; 0 results without the AI label; disagreements flagged, never guessed |
+| Short-answer marking | 300 answers with known correctness                  | 95% agreement                                                                             |
+| Handwriting reading  | 40 synthetic handwritten pages                      | 98% word accuracy on confirmed text                                                       |
+| Item correctness     | Random 200 items per subject                        | 100% correct (any error triggers a batch re-check)                                        |
 
 Teacher marks added in Mark my homework are collected (with no personal data) to compare against
 AI marks over time. Evaluations run weekly and whenever a prompt or model changes; never in CI by

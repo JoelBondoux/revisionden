@@ -79,3 +79,20 @@ Tags: #product #rules #limits #defaults
 
 - Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Planned hosts: `revisionden.com` and
   `api.revisionden.com` (production), `staging.` and `api-staging.` (staging), `dev.` and `api-dev.` (development).
+
+## Verification (no mistakes on the education side)
+
+- Every item, topic leaf, mark scheme and diagram has at least one citation (official where one
+  exists), stored with the content and not shown in the app. Full protocol: `docs/VERIFICATION.md`.
+- Release needs: quote found in source, blind answer by a second provider, adversarial review,
+  exact checks, schema validation, and human approval (or a zero-defect 10% batch sample).
+- No AI-generated images for teaching; diagrams are code-drawn from verified data.
+- Reports quarantine an item immediately; `pnpm content:audit` reports the evidence for any item.
+- Essay and homework marking: two independent AI markings citing mark-scheme criteria; a gap of
+  more than one level, or uncertainty, is shown as "check with your teacher", never guessed.
+
+## Study plan
+
+- Sessions drag between days and open an editable detail panel. Edits can become per-student rules
+  ("Always do Maths on Wednesdays") that the planner applies every week; rules can be toggled or
+  removed; conflicts are reported, not silently broken. Detail: `docs/PRODUCT_RULES.md`.

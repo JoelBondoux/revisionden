@@ -48,3 +48,4 @@ and reports which line first goes wrong; Cloud Run container ready to deploy.
 | F   | Learning loop: starting test, path, lessons, flashcards, XP             | A, B, C, D           |
 | G   | Deploy pipelines for dev, staging and production; Playwright end-to-end | A, B (domain bought) |
 | H   | Reminders (web push) and AI gateway with per-child cost cap             | B                    |
+| V   | Verification pipeline, review queue, quarantine and audit reports       | C, D                 |

@@ -34,20 +34,25 @@ Start smaller (about 500 items) and grow where students struggle.
 
 ## Build process
 
-1. **Topic tree.** Read the specification; write the tree as JSON with a specification reference
-   on every leaf. Validate.
+Every item goes through the verification pipeline in [`VERIFICATION.md`](VERIFICATION.md) before
+release. In short:
+
+1. **Topic tree.** Read the specification; write the tree as JSON with a citation (specification
+   point, quote and location) on every leaf. Validate.
 2. **Write items.** In subscription working sessions, generate items topic by topic from the
-   specification text. Each item stores `source_ref` (spec point or mark scheme).
-3. **Check items.** A second, different AI model independently answers each item; disagreements
-   are flagged for review. Maths answers are checked by the maths engine.
-4. **Validate.** `pnpm content:validate` must pass in CI (schema, IDs, links, maths answers).
-5. **Spot-check.** A human samples 5% of each batch; any error rate above 1% sends the batch back.
-6. **Release.** Content merges like code: pull request into `dev`.
+   source excerpts only. Every claim carries a citation (at least one official citation per item).
+3. **Verify.** Quote check against the source, blind answer by a different provider's model,
+   adversarial review, exact checks (maths engine, units, equations), schema validation.
+4. **Approve.** Human approval for each item, or a 10% sample per batch with zero defects allowed;
+   items with no official source are always approved individually.
+5. **Release.** Content merges like code: pull request into `dev`.
 
 ## Keeping it right
 
 - "Report a problem" on every item; reported items are hidden until reviewed.
-- Items reported twice or failing the second check are removed automatically.
+- Reported items are quarantined immediately; confirmed errors trigger a re-check of the whole
+  batch and are recorded in `project_memory/misadventures/`.
+- `pnpm content:audit` reports the citations and checks behind any item, topic or subject.
 - When a board publishes a new specification, the affected subject is rebuilt and versioned
   (`spec_version` on topics and enrolments).
 

@@ -41,6 +41,18 @@
   - A gifted day arrives as a skip day for the friend (still limited to 2 in a row).
 - Implemented: `packages/core/src/xp.ts`, `packages/core/src/streaks.ts`.
 
+## Study plan rules
+
+- Sessions can be dragged to another day or edited (day, length, type, time of day, note).
+- After a move or edit, the app offers to turn it into a rule (for example "Always do Maths on
+  Wednesdays", "Keep Fridays free for football training", "Biology sessions are 25 minutes").
+  "Just this week" changes only this week.
+- Rules belong to a student, can be switched on and off or removed, and are applied every time the
+  plan is built. Weak-spot priority and exam dates still apply within the rules.
+- If rules conflict or leave too little time before an exam, the planner says so instead of
+  silently breaking a rule.
+- Edits show who made them (parent or student).
+
 ## Parent focus
 
 - Parent picks a subject or a topic and a nudge: light, medium or strong.

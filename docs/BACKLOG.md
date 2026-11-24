@@ -109,6 +109,10 @@
   - Tests: correct chain passes; sign slip detected on the right line; unsafe input rejected.
 - [x] **D5 Container.** Dockerfile builds; container answers `/health`; ready for Cloud Run.
   - Tests: container smoke test in CI.
+- [ ] **D6 Citations and verification records.** Required `citations` (min 1) and `verification`
+      record on every item, topic leaf, mark scheme and diagram, per `VERIFICATION.md`.
+  - Tests: missing citation, quote, location or URL fails; verified item without required checks
+    fails; `other_authoritative`-only item without `needs_human_approval` fails.
 
 ---
 
@@ -147,12 +151,25 @@
 
 ---
 
+### V. Verification pipeline and audit (`scripts/verify/`, `apps/api` review routes, `evals/`)
+
+- [ ] V1 Quote checker: fetches the cited source (or private archive copy) and confirms the quote at the stated location.
+- [ ] V2 Blind-answer and adversarial review runners using two different providers; results written to the verification record.
+- [ ] V3 Exact checkers: units, chemical equation balancing, equation-sheet lookups (maths via the engine).
+- [ ] V4 Human review queue (admin screen) with batch sampling rule and approval recording (role, not name).
+- [ ] V5 Quarantine on report; recalculation of affected scores; batch re-check trigger.
+- [ ] V6 `pnpm content:audit` report and parent-portal PDF export.
+- [ ] V7 Double AI marking with criterion citations and disagreement flagging; golden-set evals with the pass bars in `AI.md`.
+- Tests: each checker red/green with known-good and known-bad fixtures; audit report snapshot test.
+
 ## Stage 2 and later
 
 Broken down into tasks when Stage 1 ships, following the same format. Headline order:
 
 1. Mastery dashboard and predicted grade.
-2. Exams, mocks and assessments entry; study plan generator and calendar (editable by both).
+2. Exams, mocks and assessments entry; study plan generator and calendar (editable by both):
+   drag sessions between days; detail panel to edit a session; custom rules created from edits,
+   toggled and removed, applied by the generator, with conflict warnings (mockup screen 5).
 3. School report setup and upload reading (delete after confirm).
 4. Parent portal: weekly summary and focus nudges.
 5. Feedback levels in the lesson player; Learn and Test modes.

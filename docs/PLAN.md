@@ -9,14 +9,14 @@ game-like style. It replaces a paid revision subscription and runs almost entire
 
 ## 1. Goals
 
-| Goal                      | How we know it's met                                          |
-| ------------------------- | ------------------------------------------------------------- |
-| Students revise most days | Both students use it on 5+ days a week for 4 weeks            |
-| Effort goes to weak spots | 60%+ of practice time is on topics below 60% mastery          |
-| Grades improve            | Mock and assessment results rise towards target grades        |
-| Parents stay informed     | Weekly summary sent; parent can set a focus in under a minute |
-| Answers are trustworthy   | Fewer than 1 in 200 questions reported as wrong               |
-| Cheap to run              | Under £10 a month all-in for one family                       |
+| Goal                      | How we know it's met                                                     |
+| ------------------------- | ------------------------------------------------------------------------ |
+| Students revise most days | Both students use it on 5+ days a week for 4 weeks                       |
+| Effort goes to weak spots | 60%+ of practice time is on topics below 60% mastery                     |
+| Grades improve            | Mock and assessment results rise towards target grades                   |
+| Parents stay informed     | Weekly summary sent; parent can set a focus in under a minute            |
+| Answers are trustworthy   | Zero confirmed errors; every item cited and verified (`VERIFICATION.md`) |
+| Cheap to run              | Under £10 a month all-in for one family                                  |
 
 ## 2. Users
 
@@ -49,18 +49,18 @@ the last one. Each stage ends with a `[minor]` release to `main`.
 
 ### Stage 2: Smart focus and planning (target 00.03.000)
 
-| Feature                   | Acceptance criteria                                                                                                     |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Mastery and weak spots    | Mastery % per topic from all answers; weakest topics surfaced                                                           |
-| Predicted grade           | From mastery, mock and assessment results, and school progress indicator                                                |
-| Exams, mocks, assessments | Entered with dates and results by parent or student                                                                     |
-| Study plan calendar       | Auto-built weekly plan weighted to weak topics and upcoming exams; editable by parent and student; rebalances on change |
-| School report upload      | Photo or PDF read; values checked by the user; file deleted after reading                                               |
-| School report setup       | Effort score name, scale, direction and grade columns, per school                                                       |
-| Parent portal             | Weekly summary; suggested focus with light, medium or strong nudge                                                      |
-| Feedback levels           | Bigger chunks as the student improves, tied to grade boundaries                                                         |
-| Learn and Test modes      | Interactive items reveal answers live in Learn, only after submit in Test                                               |
-| Wellbeing                 | Daily study cap, breaks, burnout signals                                                                                |
+| Feature                   | Acceptance criteria                                                                                                                                                                                                                                                                                             |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Mastery and weak spots    | Mastery % per topic from all answers; weakest topics surfaced                                                                                                                                                                                                                                                   |
+| Predicted grade           | From mastery, mock and assessment results, and school progress indicator                                                                                                                                                                                                                                        |
+| Exams, mocks, assessments | Entered with dates and results by parent or student                                                                                                                                                                                                                                                             |
+| Study plan calendar       | Auto-built weekly plan weighted to weak topics and upcoming exams; sessions drag between days; tapping a session opens an editable detail panel (day, length, type, time, note); edits can be turned into rules the planner follows every week; rules can be toggled or removed; editable by parent and student |
+| School report upload      | Photo or PDF read; values checked by the user; file deleted after reading                                                                                                                                                                                                                                       |
+| School report setup       | Effort score name, scale, direction and grade columns, per school                                                                                                                                                                                                                                               |
+| Parent portal             | Weekly summary; suggested focus with light, medium or strong nudge                                                                                                                                                                                                                                              |
+| Feedback levels           | Bigger chunks as the student improves, tied to grade boundaries                                                                                                                                                                                                                                                 |
+| Learn and Test modes      | Interactive items reveal answers live in Learn, only after submit in Test                                                                                                                                                                                                                                       |
+| Wellbeing                 | Daily study cap, breaks, burnout signals                                                                                                                                                                                                                                                                        |
 
 ### Stage 3: Exam practice (target 00.04.000)
 
@@ -167,19 +167,20 @@ Content is built alongside: weakest subjects first during M2, the rest by M4.
 
 ## 12. Document map
 
-| Document                                                  | What it covers                                         |
-| --------------------------------------------------------- | ------------------------------------------------------ |
-| [`BACKLOG.md`](BACKLOG.md)                                | Every task, with the tests to write first              |
-| [`WORKSTREAMS.md`](WORKSTREAMS.md)                        | Which session owns what, and status                    |
-| [`PRODUCT_RULES.md`](PRODUCT_RULES.md)                    | Agreed rules (levels, streaks, focus, effort scores)   |
-| [`ARCHITECTURE.md`](ARCHITECTURE.md)                      | Services, layout, flows, data model                    |
-| [`TESTING.md`](TESTING.md)                                | Red/green TDD and all test layers                      |
-| [`BRANCHING.md`](BRANCHING.md)                            | Branches, environments, versions                       |
-| [`CONTENT_PLAN.md`](CONTENT_PLAN.md)                      | Subjects, sources, how items are built and checked     |
-| [`AI.md`](AI.md)                                          | Model routing, guardrails, evaluations                 |
-| [`ENVIRONMENTS.md`](ENVIRONMENTS.md)                      | Accounts, domains, secrets, set-up steps               |
-| [`PRIVACY.md`](PRIVACY.md)                                | Data minimisation and safety                           |
-| [`../project_memory/`](../project_memory/project_soul.md) | Project memory (SSOT): facts, decisions, misadventures |
+| Document                                                  | What it covers                                          |
+| --------------------------------------------------------- | ------------------------------------------------------- |
+| [`BACKLOG.md`](BACKLOG.md)                                | Every task, with the tests to write first               |
+| [`WORKSTREAMS.md`](WORKSTREAMS.md)                        | Which session owns what, and status                     |
+| [`PRODUCT_RULES.md`](PRODUCT_RULES.md)                    | Agreed rules (levels, streaks, focus, effort scores)    |
+| [`ARCHITECTURE.md`](ARCHITECTURE.md)                      | Services, layout, flows, data model                     |
+| [`TESTING.md`](TESTING.md)                                | Red/green TDD and all test layers                       |
+| [`BRANCHING.md`](BRANCHING.md)                            | Branches, environments, versions                        |
+| [`CONTENT_PLAN.md`](CONTENT_PLAN.md)                      | Subjects, sources, how items are built and checked      |
+| [`AI.md`](AI.md)                                          | Model routing, guardrails, evaluations                  |
+| [`VERIFICATION.md`](VERIFICATION.md)                      | Citations, checks and audit for all educational content |
+| [`ENVIRONMENTS.md`](ENVIRONMENTS.md)                      | Accounts, domains, secrets, set-up steps                |
+| [`PRIVACY.md`](PRIVACY.md)                                | Data minimisation and safety                            |
+| [`../project_memory/`](../project_memory/project_soul.md) | Project memory (SSOT): facts, decisions, misadventures  |
 
 ## 13. Open questions
 
