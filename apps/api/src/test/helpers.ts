@@ -8,6 +8,7 @@ import { createAuth } from '../auth';
 import type { AppConfig } from '../env';
 import { createMemoryRateLimiter } from '../rate-limit';
 import { createPasskeyService } from '../passkeys';
+import type { AiProvider, ProviderName } from '../ai/types';
 
 export const TEST_CONFIG: AppConfig = {
   environment: 'development',
@@ -47,6 +48,7 @@ export interface TestContextOptions {
   authLimit?: number;
   aiLimit?: number;
   config?: Partial<AppConfig>;
+  aiProviders?: Partial<Record<ProviderName, AiProvider>>;
 }
 
 export async function createTestContext(options: TestContextOptions = {}) {
@@ -62,6 +64,8 @@ export async function createTestContext(options: TestContextOptions = {}) {
     auth,
     clock,
     passkeys: createPasskeyService(TEST_CONFIG),
+    aiProviders: options.aiProviders ?? {},
+    sleep: async () => undefined,
     rateLimiters: {
       auth: createMemoryRateLimiter({ limit: options.authLimit ?? 1000, periodMs: 60_000, clock }),
       ai: createMemoryRateLimiter({ limit: options.aiLimit ?? 1000, periodMs: 60_000, clock }),

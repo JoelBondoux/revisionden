@@ -7,6 +7,7 @@ import { createPasskeyService } from './passkeys';
 import { createMemoryRateLimiter } from './rate-limit';
 import { runReminders as defaultRunReminders } from './notifications/runner';
 import { createWebPushSender } from './notifications/web-push';
+import { createProviders } from './ai/providers';
 
 const systemClock = { now: () => new Date() };
 
@@ -36,6 +37,7 @@ export function createWorker(version: string, options: WorkerOptions = {}) {
       auth: createAuth({ db, config }),
       clock: systemClock,
       passkeys: createPasskeyService(config),
+      aiProviders: createProviders(config),
       rateLimiters: {
         auth:
           config.raw.AUTH_RATE_LIMITER ??

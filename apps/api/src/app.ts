@@ -20,6 +20,9 @@ import {
   pushKeyRoutes,
   studentNotificationRoutes,
 } from './notifications/routes';
+import { createAiGateway } from './ai/gateway';
+import { aiRoutes, parentAiUsageRoutes } from './ai/routes';
+import type { AiProvider, ProviderName } from './ai/types';
 
 export interface AppDeps {
   version: string;
@@ -29,10 +32,21 @@ export interface AppDeps {
   clock: Clock;
   passkeys: PasskeyService;
   rateLimiters: { auth: RateLimiter; ai: RateLimiter };
+  /** AI providers that are configured (see ai/providers.ts). */
+  aiProviders: Partial<Record<ProviderName, AiProvider>>;
+  /** Backoff wait between AI retries; tests pass one that returns at once. */
+  sleep?: (ms: number) => Promise<void>;
 }
 
 export function createApp(deps: AppDeps) {
   const app = new Hono<AppEnv>();
+  const gateway = createAiGateway({
+    db: deps.db,
+    clock: deps.clock,
+    config: deps.config.ai,
+    providers: deps.aiProviders,
+    sleep: deps.sleep,
+  });
 
   app.use(
     '*',
@@ -77,6 +91,7 @@ export function createApp(deps: AppDeps) {
   parent.route('/students', studentRoutes(deps.db));
   parent.route('/students', parentDeviceRoutes(deps));
   parent.route('/students', parentReminderRoutes(deps));
+  parent.route('/students', parentAiUsageRoutes({ ...deps, gateway }));
 
   app.route('/v1/device', deviceRoutes(deps));
   app.route('/v1/notifications', pushKeyRoutes(deps));
@@ -84,6 +99,8 @@ export function createApp(deps: AppDeps) {
   app.use('/v1/student/*', studentAuth(deps));
   app.route('/v1/student', studentNotificationRoutes(deps));
   app.route('/v1/student', studentSessionRoutes(deps));
+  app.use('/v1/ai/*', studentAuth(deps));
+  app.route('/v1/ai', aiRoutes({ ...deps, gateway }));
   app.route('/v1', parent);
 
   app.notFound(() => {
