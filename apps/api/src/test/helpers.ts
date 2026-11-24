@@ -46,16 +46,18 @@ export function createTestClock(start = new Date('2026-11-24T10:00:00Z')): TestC
 export interface TestContextOptions {
   authLimit?: number;
   aiLimit?: number;
+  config?: Partial<AppConfig>;
 }
 
 export async function createTestContext(options: TestContextOptions = {}) {
   const { db: pglite, client } = await createTestDb();
   const db = pglite as unknown as Database;
   const clock = createTestClock();
-  const auth = createAuth({ db, config: TEST_CONFIG });
+  const config: AppConfig = { ...TEST_CONFIG, ...options.config };
+  const auth = createAuth({ db, config });
   const app = createApp({
     version: '00.01.000',
-    config: TEST_CONFIG,
+    config,
     db,
     auth,
     clock,

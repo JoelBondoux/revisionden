@@ -9,7 +9,17 @@ import { clientKey, RETRY_AFTER_SECONDS, type Clock, type RateLimiter } from './
 import type { AppEnv } from './context';
 import { ensureParent } from './families';
 import { studentRoutes } from './routes/students';
-import { deviceRoutes, parentDeviceRoutes, studentSessionRoutes } from './routes/devices';
+import {
+  deviceRoutes,
+  parentDeviceRoutes,
+  studentAuth,
+  studentSessionRoutes,
+} from './routes/devices';
+import {
+  parentReminderRoutes,
+  pushKeyRoutes,
+  studentNotificationRoutes,
+} from './notifications/routes';
 
 export interface AppDeps {
   version: string;
@@ -66,8 +76,13 @@ export function createApp(deps: AppDeps) {
   parent.get('/me', (c) => c.json({ familyId: c.var.parent.familyId, email: c.var.parentEmail }));
   parent.route('/students', studentRoutes(deps.db));
   parent.route('/students', parentDeviceRoutes(deps));
+  parent.route('/students', parentReminderRoutes(deps));
 
   app.route('/v1/device', deviceRoutes(deps));
+  app.route('/v1/notifications', pushKeyRoutes(deps));
+  // Student routes: the session middleware runs before every /v1/student route below.
+  app.use('/v1/student/*', studentAuth(deps));
+  app.route('/v1/student', studentNotificationRoutes(deps));
   app.route('/v1/student', studentSessionRoutes(deps));
   app.route('/v1', parent);
 

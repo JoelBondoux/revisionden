@@ -5,6 +5,8 @@ import { parseEnv } from './env';
 import { errorBody } from './errors';
 import { createPasskeyService } from './passkeys';
 import { createMemoryRateLimiter } from './rate-limit';
+import { runReminders as defaultRunReminders } from './notifications/runner';
+import { createWebPushSender } from './notifications/web-push';
 
 const systemClock = { now: () => new Date() };
 
@@ -14,7 +16,13 @@ type App = ReturnType<typeof createApp>;
  * Builds the app from the Worker environment. Validation runs first, so a missing secret or
  * binding fails on the first request with a clear message instead of deep inside a handler.
  */
-export function createWorker(version: string) {
+export interface WorkerOptions {
+  /** Injected in tests; defaults to the real reminder runner. */
+  runReminders?: typeof defaultRunReminders;
+}
+
+export function createWorker(version: string, options: WorkerOptions = {}) {
+  const runReminders = options.runReminders ?? defaultRunReminders;
   let cached: { env: unknown; app: App } | undefined;
 
   function appFor(env: Record<string, unknown>): App {
@@ -54,6 +62,33 @@ export function createWorker(version: string) {
         );
       }
       return app.fetch(request, env, ctx);
+    },
+
+    /** Cron trigger (every 15 minutes, see wrangler.toml): sends due reminders. */
+    async scheduled(
+      controller: Pick<ScheduledController, 'scheduledTime'>,
+      env: Record<string, unknown>,
+      _ctx: ExecutionContext,
+    ): Promise<void> {
+      let config: ReturnType<typeof parseEnv>;
+      try {
+        config = parseEnv(env);
+      } catch (err) {
+        console.error((err as Error).message);
+        return;
+      }
+      if (!config.push) return;
+      const now = new Date(controller.scheduledTime);
+      const summary = await runReminders({
+        db: createNeonDatabase(config.databaseUrl),
+        now,
+        sender: createWebPushSender({
+          keys: config.push.keys,
+          subject: config.webOrigin,
+          clock: { now: () => new Date() },
+        }),
+      });
+      console.log('reminders', JSON.stringify(summary));
     },
   };
 }
