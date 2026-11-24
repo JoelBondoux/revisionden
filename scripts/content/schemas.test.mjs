@@ -59,7 +59,7 @@ const samples = {
     ...base,
     type: 'flashcard',
     front: 'Quadratic formula',
-    back: 'x = (-b ± √(b² - 4ac)) / 2a',
+    back: 'x = (-b \u00b1 \u221a(b\u00b2 - 4ac)) / 2a',
   },
   extended_answer: {
     ...base,

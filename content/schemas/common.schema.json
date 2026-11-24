@@ -122,9 +122,12 @@
                   "maths-engine",
                   "schema",
                   "human-approval",
-                  "batch-sample"
+                  "batch-sample",
+                  "units",
+                  "chemical-equation",
+                  "equation-sheet"
                 ],
-                "description": "Pipeline step from docs/VERIFICATION.md section 3. batch-sample: released through a batch that passed the sampling rule."
+                "description": "Pipeline step from docs/VERIFICATION.md section 3. batch-sample: released through a batch that passed the sampling rule. units, chemical-equation, equation-sheet: exact checks for the facts in an item's exact block."
               },
               "result": {
                 "enum": ["pass", "fail"]
