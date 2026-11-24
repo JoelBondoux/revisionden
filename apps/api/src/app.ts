@@ -6,6 +6,9 @@ import type { AppConfig } from './env';
 import { handleError, notFound, unauthorized } from './errors';
 import type { PasskeyService } from './passkeys';
 import type { Clock, RateLimiter } from './rate-limit';
+import type { AppEnv } from './context';
+import { ensureParent } from './families';
+import { studentRoutes } from './routes/students';
 
 export interface AppDeps {
   version: string;
@@ -18,7 +21,7 @@ export interface AppDeps {
 }
 
 export function createApp(deps: AppDeps) {
-  const app = new Hono();
+  const app = new Hono<AppEnv>();
 
   app.use(
     '*',
@@ -34,11 +37,18 @@ export function createApp(deps: AppDeps) {
 
   app.get('/health', (c) => c.json({ status: 'ok', version: deps.version }));
 
-  app.get('/v1/me', async (c) => {
+  // Parent routes: a Better Auth session is required, and the family is created on first use.
+  const parent = new Hono<AppEnv>();
+  parent.use('*', async (c, next) => {
     const session = await deps.auth.api.getSession({ headers: c.req.raw.headers });
     if (!session) throw unauthorized();
-    return c.json({ email: session.user.email });
+    c.set('parent', await ensureParent(deps.db, session.user.id));
+    c.set('parentEmail', session.user.email);
+    await next();
   });
+  parent.get('/me', (c) => c.json({ familyId: c.var.parent.familyId, email: c.var.parentEmail }));
+  parent.route('/students', studentRoutes(deps.db));
+  app.route('/v1', parent);
 
   app.notFound(() => {
     throw notFound();
