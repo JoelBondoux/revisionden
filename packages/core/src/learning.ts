@@ -29,23 +29,6 @@ export function isServable(status: string, serveDrafts: boolean): boolean {
   return (servableStatuses(serveDrafts) as string[]).includes(status);
 }
 
-/** Content files name two types differently from the XP table. */
-export function contentTypeToItemType(contentType: string): ItemType {
-  switch (contentType) {
-    case 'worked_maths':
-      return 'working';
-    case 'extended_answer':
-      return 'long_answer';
-    case 'multiple_choice':
-    case 'short_answer':
-    case 'numeric':
-    case 'flashcard':
-      return contentType;
-    default:
-      throw new Error(`Unknown item type: ${contentType}`);
-  }
-}
-
 // ---------------------------------------------------------------------------------------------
 // Marking
 // ---------------------------------------------------------------------------------------------
@@ -169,7 +152,7 @@ export function pickStartingTest(
 ): string[] {
   const byTopic = new Map<string, StartingTestCandidate[]>();
   for (const c of candidates) {
-    if (c.type === 'flashcard' || c.type === 'long_answer') continue;
+    if (c.type === 'flashcard' || c.type === 'extended_answer') continue;
     byTopic.set(c.topicId, [...(byTopic.get(c.topicId) ?? []), c]);
   }
   const queues = shuffle([...byTopic.keys()], rng).map((topicId) =>
