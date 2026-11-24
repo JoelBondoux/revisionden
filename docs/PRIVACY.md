@@ -46,3 +46,9 @@ deleted automatically.
 
 Review against the ICO Age Appropriate Design Code (Children's Code); data protection impact
 assessment; make the repository private.
+
+## Repository visibility
+
+While the repository is public it has no README and no GitHub description, to keep it hard to
+discover. The project overview lives in `docs/OVERVIEW.md`. Do not add a root README or set a
+repository description until the repository is private.

@@ -14,7 +14,7 @@ You are building RevisionDen, a family revision tutor (GCSE and A-Level). Read t
    If you need a change elsewhere, note it in your PR description instead.
 4. **Live docs.** In the same PR: update the docs your change affects, add a line under
    `## [Unreleased]` in `CHANGELOG.md`, and update your row in `docs/WORKSTREAMS.md`.
-5. **Privacy.** This repository is public. Never commit real names, schools, emails, photos or
+5. **Privacy.** This repository is public. Do not add a root README.md or a repository description. Never commit real names, schools, emails, photos or
    any personal data, even in tests. Never commit secrets; use `.dev.vars` (git-ignored).
 6. **Versions.** Do not edit `VERSION` by hand; the release workflow bumps it on `main`.
 7. **Green before PR.** `pnpm lint && pnpm typecheck && pnpm test:coverage && pnpm test:scripts`

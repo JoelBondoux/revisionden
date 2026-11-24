@@ -3,15 +3,15 @@
 A family revision tutor for GCSE and A-Level students: it finds weak spots, plans revision around
 exams and keeps students motivated with streaks, rewards and a friendly fox called Pip.
 
-- Version: see [`VERSION`](VERSION) (format `xx.xx.xxx`)
-- Plan: [`docs/PLAN.md`](docs/PLAN.md)
-- How we test: [`docs/TESTING.md`](docs/TESTING.md)
-- Branches and releases: [`docs/BRANCHING.md`](docs/BRANCHING.md)
-- Architecture: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
-- Privacy: [`docs/PRIVACY.md`](docs/PRIVACY.md)
-- Who is building what: [`docs/WORKSTREAMS.md`](docs/WORKSTREAMS.md)
-- Task list: [`docs/BACKLOG.md`](docs/BACKLOG.md)
-- Changes: [`CHANGELOG.md`](CHANGELOG.md)
+- Version: see [`VERSION`](../VERSION) (format `xx.xx.xxx`)
+- Plan: [`docs/PLAN.md`](PLAN.md)
+- How we test: [`docs/TESTING.md`](TESTING.md)
+- Branches and releases: [`docs/BRANCHING.md`](BRANCHING.md)
+- Architecture: [`docs/ARCHITECTURE.md`](ARCHITECTURE.md)
+- Privacy: [`docs/PRIVACY.md`](PRIVACY.md)
+- Who is building what: [`docs/WORKSTREAMS.md`](WORKSTREAMS.md)
+- Task list: [`docs/BACKLOG.md`](BACKLOG.md)
+- Changes: [`CHANGELOG.md`](../CHANGELOG.md)
 
 ## Quick start
 
