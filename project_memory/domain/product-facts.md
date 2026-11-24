@@ -196,3 +196,20 @@ Tags: #product #rules #limits #defaults
   collections, and new seasonal items each term; about 650 unlocks in total. Rewards follow learning,
   never screen time; no loot boxes; everything carries over to A-Level; parents can add real-world
   rewards. Detail: `docs/REWARDS.md`.
+
+## Statistics dashboards
+
+- Student "My stats" (from the Progress tab) and a parent stats dashboard, both read-only, built
+  from data already held. Periods: week (Mon–Sun), term, school year; family time zone.
+- Active study time: time between answers; a gap over 5 minutes ends the session and is not
+  counted; time past the daily cap is not counted. Accuracy: correct ÷ marked answers (part marks
+  as fractions; unmarked left out). Subject mastery: average of its topic mastery scores.
+- Student view never uses red or "worse" wording; drops are shown to the parent. Empty panels say
+  "Not set up yet", never zeros. PDF export is made in the browser with nicknames only.
+- Detail: `docs/PRODUCT_RULES.md` (statistics dashboards). Workstream K; not built yet.
+
+## Parent-set rewards
+
+- Title (60 characters), optional note (200), target from any catalogue target type or a custom
+  date; "from home" badge for the student; celebration and parent notification when met; parent
+  marks "given" (locked after that); no student free text. Workstream R5. Detail: `docs/REWARDS.md`.
