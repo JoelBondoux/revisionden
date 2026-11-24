@@ -91,3 +91,23 @@ export const AlertIcon = () => (
     <path d="M12 10v4M12 17.5v.01" />
   </Icon>
 );
+
+export const WrenchIcon = () => (
+  <Icon>
+    <path d="M14.5 6.5a4 4 0 015 5L12 19a2.1 2.1 0 01-3-3l7.5-7.5" />
+    <path d="M14.5 6.5L17 9" />
+  </Icon>
+);
+
+export const CrownIcon = () => (
+  <Icon>
+    <path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z" />
+  </Icon>
+);
+
+export const MapIcon = () => (
+  <Icon>
+    <path d="M12 2.5l4 2.3v4.6l-4 2.3-4-2.3V4.8z" />
+    <path d="M7 11.5l4 2.3v4.6l-4 2.3-4-2.3v-4.6zM17 11.5l4 2.3v4.6l-4 2.3-4-2.3v-4.6z" />
+  </Icon>
+);

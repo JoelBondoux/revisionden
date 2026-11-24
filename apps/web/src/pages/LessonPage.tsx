@@ -120,7 +120,7 @@ function LessonRunner({ lesson }: { lesson: Lesson }) {
   return (
     <form className="lesson" onSubmit={check}>
       <div className="lesson__top">
-        <Link to="/learn" className="icon-button" aria-label="Leave lesson">
+        <Link to="/map" className="icon-button" aria-label="Leave lesson">
           <CloseIcon />
         </Link>
         <ProgressBar
