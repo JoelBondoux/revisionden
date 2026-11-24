@@ -188,3 +188,11 @@ Tags: #product #rules #limits #defaults
 - Content and verification sessions run in the `revisionden` cloud environment, which can reach
   the exam board sites (Pearson, AQA, OCR, WJEC/Eduqas) and gov.uk. Other sessions use the default
   environment, which cannot.
+
+## Rewards progression
+
+- Rewards span five years (Year 9 to Year 13): levels 1–100 plus prestige, a themed track per school
+  year, long milestones (streaks up to 1,000 days, questions up to 25,000, Subject master), item
+  collections, and new seasonal items each term; about 650 unlocks in total. Rewards follow learning,
+  never screen time; no loot boxes; everything carries over to A-Level; parents can add real-world
+  rewards. Detail: `docs/REWARDS.md`.

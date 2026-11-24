@@ -177,6 +177,7 @@ Content is built alongside: weakest subjects first during M2, the rest by M4.
 | [`BRANCHING.md`](BRANCHING.md)                            | Branches, environments, versions                        |
 | [`CONTENT_PLAN.md`](CONTENT_PLAN.md)                      | Subjects, sources, how items are built and checked      |
 | [`AI.md`](AI.md)                                          | Model routing, guardrails, evaluations                  |
+| [`REWARDS.md`](REWARDS.md)                                | Five-year rewards progression                           |
 | [`VERIFICATION.md`](VERIFICATION.md)                      | Citations, checks and audit for all educational content |
 | [`ENVIRONMENTS.md`](ENVIRONMENTS.md)                      | Accounts, domains, secrets, set-up steps                |
 | [`PRIVACY.md`](PRIVACY.md)                                | Data minimisation and safety                            |
