@@ -5,6 +5,13 @@
 
 ## Open
 
+- [ ] `docs/PRIVACY.md` principle 5 says data stays in the UK or EU, but `docs/AI.md` sends
+      answers, essays and homework photos to Anthropic, OpenAI and Gemini, which may process them
+      in the US. The answers carry no identifying details, but they are still personal data, and a
+      photo of homework may show a name. Not settled: needs a product owner decision (EU/UK
+      processing where offered, or say so in the privacy notice with the UK transfer safeguard).
+      Workstream L must describe whatever is true in `docs/legal/processors.md`.
+
 - [ ] Request schemas for the H routes (push subscriptions, reminder settings, short-answer
       marking) live in `apps/api/src/notifications/routes.ts` and `apps/api/src/ai/routes.ts`, but
       `docs/ARCHITECTURE.md` (Conventions) says every body has a Zod schema in `packages/core`.
