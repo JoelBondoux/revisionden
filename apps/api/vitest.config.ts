@@ -7,7 +7,12 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       include: ['src/**/*.ts'],
-      exclude: ['src/**/*.test.ts', 'src/test/**', 'src/index.ts', 'src/learning/content-sync-cli.ts'],
+      exclude: [
+        'src/**/*.test.ts',
+        'src/test/**',
+        'src/index.ts',
+        'src/learning/content-sync-cli.ts',
+      ],
       thresholds: { lines: 80, functions: 80, branches: 80, statements: 80 },
     },
   },
