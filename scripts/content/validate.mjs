@@ -182,6 +182,10 @@ function requiredChecks(kind, data) {
     'schema',
   ];
   if (MATHS_TYPES.has(data.type)) checks.push('maths-engine');
+  // Exact checks (scripts/verify/exact) for the facts an item names in its exact block.
+  if (data.exact?.quantity) checks.push('units');
+  if (data.exact?.chemical_equation) checks.push('chemical-equation');
+  if (data.exact?.equation_sheet) checks.push('equation-sheet');
   return checks;
 }
 

@@ -1,0 +1,16 @@
+{
+  "_comment": "Recorded-format generateContent response (synthetic values) used by tests. Never call real models in tests.",
+  "candidates": [
+    {
+      "content": {
+        "role": "model",
+        "parts": [
+          { "text": "{\"option\":2,\"confidence\":\"high\",\"reasoning\":\"Fixture reasoning.\"}" }
+        ]
+      },
+      "finishReason": "STOP"
+    }
+  ],
+  "modelVersion": "gemini-fixture-model-001",
+  "usageMetadata": { "promptTokenCount": 120, "candidatesTokenCount": 40 }
+}

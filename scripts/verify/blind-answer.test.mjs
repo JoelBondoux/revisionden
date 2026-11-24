@@ -1,0 +1,224 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { blindAnswerPrompt, runBlindAnswer, writerProviderOf } from './blind-answer.mjs';
+import { draftItem } from './test-content.mjs';
+
+const AT = () => new Date('2026-11-24T12:00:00Z');
+
+function fakeProvider(output, provider = 'openai') {
+  const requests = [];
+  return {
+    provider,
+    model: `${provider}-fixture-model`,
+    requests,
+    async complete(req) {
+      requests.push(req);
+      return { output, modelVersion: `${provider}-fixture-model-001` };
+    },
+  };
+}
+
+const mc = draftItem('fixture-mc', undefined, {
+  type: 'multiple_choice',
+  prompt: 'Fixture question with options?',
+  options: ['first', 'second', 'third'],
+  answer: { option: 1 },
+  explanation: 'SECRET EXPLANATION',
+});
+
+test('the blind prompt shows the question and options but never the answer or explanation', () => {
+  const { prompt } = blindAnswerPrompt(mc);
+  assert.match(prompt, /Fixture question with options\?/);
+  assert.match(prompt, /0\. first/);
+  assert.match(prompt, /2\. third/);
+  assert.doesNotMatch(prompt, /SECRET|"option"|answer: 1/);
+});
+
+test('multiple choice passes when the second model picks the same option with high confidence', async () => {
+  const r = await runBlindAnswer(
+    mc,
+    fakeProvider({ answer: '1', confidence: 'high', reasoning: 'r' }),
+    { now: AT },
+  );
+  assert.equal(r.result, 'pass');
+  assert.deepEqual(r.check, {
+    name: 'blind-answer',
+    result: 'pass',
+    tool: 'openai:openai-fixture-model',
+    tool_version: 'openai-fixture-model-001',
+    at: '2026-11-24T12:00:00Z',
+    notes: 'model answered "1"; expected "1"',
+  });
+});
+
+test('multiple choice fails when the second model picks another option', async () => {
+  const r = await runBlindAnswer(
+    mc,
+    fakeProvider({ answer: '2', confidence: 'high', reasoning: 'r' }),
+    { now: AT },
+  );
+  assert.equal(r.result, 'fail');
+  assert.match(r.check.notes, /model answered "2"; expected "1"/);
+});
+
+test('an unsure answer fails even when it matches', async () => {
+  const r = await runBlindAnswer(
+    mc,
+    fakeProvider({ answer: '1', confidence: 'medium', reasoning: 'r' }),
+    { now: AT },
+  );
+  assert.equal(r.result, 'fail');
+  assert.match(r.check.notes, /confidence medium/);
+});
+
+test('numeric answers match within the item tolerance and ignore units and commas', async () => {
+  const item = draftItem('fixture-num', undefined, {
+    type: 'numeric',
+    prompt: 'Fixture?',
+    answer: { value: '1250.5', unit: 'cm', tolerance: 0.05 },
+    verify: { expression: '1250.5' },
+  });
+  const ok = await runBlindAnswer(
+    item,
+    fakeProvider({ answer: '1,250.53 cm', confidence: 'high', reasoning: '' }),
+    { now: AT },
+  );
+  assert.equal(ok.result, 'pass');
+  const off = await runBlindAnswer(
+    item,
+    fakeProvider({ answer: '1250.6', confidence: 'high', reasoning: '' }),
+    { now: AT },
+  );
+  assert.equal(off.result, 'fail');
+});
+
+test('numeric answers given as fractions are compared by value', async () => {
+  const item = draftItem('fixture-frac', undefined, {
+    type: 'numeric',
+    prompt: 'Fixture?',
+    answer: { value: '0.75' },
+    verify: { expression: '3/4' },
+  });
+  const r = await runBlindAnswer(
+    item,
+    fakeProvider({ answer: '3/4', confidence: 'high', reasoning: '' }),
+    { now: AT },
+  );
+  assert.equal(r.result, 'pass');
+});
+
+test('short answers match any accepted answer, ignoring case, spacing and end punctuation', async () => {
+  const item = draftItem('fixture-short', undefined, {
+    answer: { accepted: ['Fixture Answer', 'other'] },
+  });
+  const r = await runBlindAnswer(
+    item,
+    fakeProvider({ answer: '  fixture   answer. ', confidence: 'high', reasoning: '' }),
+    { now: AT },
+  );
+  assert.equal(r.result, 'pass');
+  const wrong = await runBlindAnswer(
+    item,
+    fakeProvider({ answer: 'fixture answers', confidence: 'high', reasoning: '' }),
+    { now: AT },
+  );
+  assert.equal(wrong.result, 'fail');
+});
+
+test('flashcards compare the model answer to the back of the card', async () => {
+  const item = draftItem('fixture-card', undefined, {
+    type: 'flashcard',
+    front: 'Fixture front',
+    back: 'Fixture back',
+    prompt: undefined,
+    answer: undefined,
+    marks: undefined,
+  });
+  const { prompt } = blindAnswerPrompt(item);
+  assert.match(prompt, /Fixture front/);
+  assert.doesNotMatch(prompt, /Fixture back/);
+  const r = await runBlindAnswer(
+    item,
+    fakeProvider({ answer: 'fixture back', confidence: 'high', reasoning: '' }),
+    { now: AT },
+  );
+  assert.equal(r.result, 'pass');
+});
+
+test('worked maths solutions match as a set, in any order', async () => {
+  const item = draftItem('fixture-solve', undefined, {
+    type: 'worked_maths',
+    prompt: 'Fixture?',
+    answer: { solutions: ['3', '-2'] },
+    verify: { method: 'solve', equation: 'x' },
+  });
+  const r = await runBlindAnswer(
+    item,
+    fakeProvider({ answer: 'x = -2, x = 3', confidence: 'high', reasoning: '' }),
+    { now: AT },
+  );
+  assert.equal(r.result, 'pass');
+  const missing = await runBlindAnswer(
+    item,
+    fakeProvider({ answer: '3', confidence: 'high', reasoning: '' }),
+    { now: AT },
+  );
+  assert.equal(missing.result, 'fail');
+});
+
+test('worked maths expressions match after removing spaces and multiplication signs', async () => {
+  const item = draftItem('fixture-expr', undefined, {
+    type: 'worked_maths',
+    prompt: 'Fixture?',
+    answer: { expression: '(x + 2)(x + 3)' },
+    verify: { method: 'expression', expression: 'x' },
+  });
+  const r = await runBlindAnswer(
+    item,
+    fakeProvider({ answer: '(x+2)*(x+3)', confidence: 'high', reasoning: '' }),
+    { now: AT },
+  );
+  assert.equal(r.result, 'pass');
+});
+
+test('extended answers have no single answer to compare, so they fail and need a person', async () => {
+  const item = draftItem('fixture-long', undefined, {
+    type: 'extended_answer',
+    prompt: 'Fixture essay?',
+    answer: undefined,
+    mark_scheme_ref: 'fixture-ms',
+  });
+  const provider = fakeProvider({ answer: 'x', confidence: 'high', reasoning: '' });
+  const r = await runBlindAnswer(item, provider, { now: AT });
+  assert.equal(r.result, 'fail');
+  assert.match(r.check.notes, /no single answer/);
+  assert.equal(provider.requests.length, 0);
+});
+
+test('the blind answer must come from a different provider from the writer', async () => {
+  const p = fakeProvider({ answer: '1', confidence: 'high', reasoning: '' }, 'anthropic');
+  await assert.rejects(
+    runBlindAnswer(mc, p, { now: AT }),
+    /must come from a different provider than the writer \(anthropic\)/,
+  );
+});
+
+test('the writer provider is read from the grounded-writing check, defaulting to Anthropic', () => {
+  assert.equal(writerProviderOf(mc), 'anthropic');
+  const byGemini = {
+    ...mc,
+    verification: {
+      ...mc.verification,
+      checks: [
+        {
+          name: 'grounded-writing',
+          result: 'pass',
+          tool: 'gemini:fixture',
+          tool_version: '1',
+          at: 'x',
+        },
+      ],
+    },
+  };
+  assert.equal(writerProviderOf(byGemini), 'gemini');
+});

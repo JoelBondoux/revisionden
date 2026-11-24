@@ -570,3 +570,37 @@ test('the audit report can be filtered to a topic or a whole subject', () => {
   assert.equal(bySubject.length, auditReport(content()).length);
   assert.deepEqual(auditReport(content(), { filter: 'nothing-here' }), []);
 });
+
+test('an item may name facts for the exact checkers, and verified ones need those checks', async () => {
+  const item = {
+    ...numericItem,
+    answer: { value: '90', unit: 'cm^2' },
+    exact: { quantity: 'area' },
+    citations: [quotedCitation()],
+    verification: verified({ maths: true }),
+  };
+  assert.match(messages(await check([item])), /verified content needs a passing units check/);
+  const withUnits = verified({ maths: true });
+  withUnits.checks.push({ ...withUnits.checks[0], name: 'units', tool: 'revisionden-exact' });
+  assert.deepEqual(await check([{ ...item, verification: withUnits }]), []);
+});
+
+test('chemical equation and equation sheet facts need their exact checks when verified', async () => {
+  const item = {
+    ...numericItem,
+    exact: {
+      chemical_equation: '2H2 + O2 -> 2H2O',
+      equation_sheet: { sheet: 'fixture-sheet', equation: 'fixture-eq' },
+    },
+    citations: [quotedCitation()],
+    verification: verified({ maths: true }),
+  };
+  const errors = messages(await check([item]));
+  assert.match(errors, /needs a passing chemical-equation check/);
+  assert.match(errors, /needs a passing equation-sheet check/);
+});
+
+test('an unknown exact fact is a schema error', async () => {
+  const item = { ...numericItem, exact: { colour: 'blue' } };
+  assert.match(messages(await check([item])), /must NOT have additional properties colour/);
+});

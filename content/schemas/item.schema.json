@@ -92,6 +92,47 @@
     "diagram_ref": {
       "$ref": "#/$defs/id",
       "description": "Id of a diagram in content/diagrams/."
+    },
+    "exact": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "Facts the exact checkers verify (docs/VERIFICATION.md step 5, pnpm content:exact-check). Verified items need a passing check for each fact given.",
+      "properties": {
+        "quantity": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The quantity the answer measures (for example area, speed, energy); its answer.unit must have that dimension. Check: units."
+        },
+        "chemical_equation": {
+          "type": "string",
+          "minLength": 3,
+          "description": "A chemical equation the item states or expects; atoms and charge must balance in lowest terms. Check: chemical-equation."
+        },
+        "allow_fractions": {
+          "type": "boolean",
+          "description": "Allow fractional coefficients (such as 1/2 O2) in chemical_equation."
+        },
+        "equation_sheet": {
+          "type": "object",
+          "required": ["sheet", "equation"],
+          "properties": {
+            "sheet": {
+              "$ref": "#/$defs/id"
+            },
+            "equation": {
+              "$ref": "#/$defs/id"
+            },
+            "as_written": {
+              "type": "string",
+              "minLength": 3,
+              "description": "The equation as the item writes it; must be equivalent to the sheet's."
+            }
+          },
+          "additionalProperties": false,
+          "description": "An equation from a verified equation sheet in content/equation-sheets/. Check: equation-sheet."
+        }
+      },
+      "additionalProperties": false
     }
   },
   "allOf": [

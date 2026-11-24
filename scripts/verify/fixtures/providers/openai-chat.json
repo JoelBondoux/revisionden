@@ -1,0 +1,19 @@
+{
+  "_comment": "Recorded-format Chat Completions response (synthetic values) used by tests. Never call real models in tests.",
+  "id": "chatcmpl-fixture-0001",
+  "object": "chat.completion",
+  "created": 1795550000,
+  "model": "openai-fixture-model-2026-11-01",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "{\"option\":2,\"confidence\":\"high\",\"reasoning\":\"Fixture reasoning.\"}",
+        "refusal": null
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": { "prompt_tokens": 120, "completion_tokens": 40, "total_tokens": 160 }
+}

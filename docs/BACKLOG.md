@@ -170,13 +170,13 @@
 
 ### V. Verification pipeline and audit (`scripts/verify/`, `apps/api` review routes, `evals/`)
 
-- [ ] V1 Quote checker: fetches the cited source (or private archive copy) and confirms the quote at the stated location.
-- [ ] V2 Blind-answer and adversarial review runners using two different providers; results written to the verification record.
-- [ ] V3 Exact checkers: units, chemical equation balancing, equation-sheet lookups (maths via the engine).
-- [ ] V4 Human review queue (admin screen) with batch sampling rule and approval recording (role, not name).
-- [ ] V5 Quarantine on report; recalculation of affected scores; batch re-check trigger.
-- [ ] V6 `pnpm content:audit` report and parent-portal PDF export.
-- [ ] V7 Double AI marking with criterion citations and disagreement flagging; golden-set evals with the pass bars in `AI.md`.
+- [x] V1 Quote checker: fetches the cited source (or private archive copy) and confirms the quote at the stated location.
+- [x] V2 Blind-answer and adversarial review runners using two different providers; results written to the verification record.
+- [x] V3 Exact checkers: units, chemical equation balancing, equation-sheet lookups (maths via the engine).
+- [x] V4 Human review queue (admin screen) with batch sampling rule and approval recording (role, not name).
+- [x] V5 Quarantine on report; recalculation of affected scores; batch re-check trigger.
+- [ ] V6 `pnpm content:audit` report (done) and parent-portal PDF export (to do).
+- [x] V7 Double AI marking with criterion citations and disagreement flagging; golden-set evals with the pass bars in `AI.md`.
 - Tests: each checker red/green with known-good and known-bad fixtures; audit report snapshot test.
 
 ### R. Five-year rewards progression (`packages/core`, catalogue data, avatar layers)

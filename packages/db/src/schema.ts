@@ -561,3 +561,138 @@ export const aiUsage = pgTable(
   },
   (t) => [index('ai_usage_student_created_idx').on(t.studentId, t.createdAt)],
 );
+
+// ---------------------------------------------------------------------------------------------
+// Verification: reports, quarantine, review queue and re-checks (workstream V,
+// docs/VERIFICATION.md sections 3 and 6). Content ids are the text ids from content/.
+// Reviewers are recorded by role only, never by name.
+// ---------------------------------------------------------------------------------------------
+
+export const REVIEWER_ROLES = ['subject-specialist', 'content-lead', 'parent-reviewer'] as const;
+export const REPORT_REASONS = [
+  'wrong_answer',
+  'wrong_explanation',
+  'unclear',
+  'typo',
+  'not_on_my_course',
+  'other',
+] as const;
+
+/** Signed-in parent accounts allowed to use the review queue, and their role. */
+export const reviewerRoles = pgTable(
+  'reviewer_roles',
+  {
+    authUserId: text('auth_user_id')
+      .primaryKey()
+      .references(() => authUsers.id, { onDelete: 'cascade' }),
+    role: text('role', { enum: REVIEWER_ROLES }).notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    check(
+      'reviewer_roles_role_values',
+      sql`${t.role} in ('subject-specialist', 'content-lead', 'parent-reviewer')`,
+    ),
+  ],
+);
+
+/** "Report a problem". Only the reason is stored: no free text, so no personal data. */
+export const itemReports = pgTable(
+  'item_reports',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    itemId: text('item_id').notNull(),
+    itemVersion: integer('item_version').notNull(),
+    reason: text('reason', { enum: REPORT_REASONS }).notNull(),
+    reportedBy: text('reported_by', { enum: ['student', 'parent'] }).notNull(),
+    familyId: uuid('family_id')
+      .notNull()
+      .references(() => families.id, { onDelete: 'cascade' }),
+    status: text('status', { enum: ['open', 'no_error', 'confirmed_error'] })
+      .notNull()
+      .default('open'),
+    decidedByRole: text('decided_by_role', { enum: REVIEWER_ROLES }),
+    decisionNotes: text('decision_notes'),
+    createdAt: createdAt(),
+    decidedAt: timestamp('decided_at', { withTimezone: true }),
+  },
+  (t) => [
+    index('item_reports_item_idx').on(t.itemId, t.status),
+    check('item_reports_version_positive', sql`${t.itemVersion} >= 1`),
+  ],
+);
+
+/**
+ * Items hidden from every student until a reviewer decides. While a row is here the item's
+ * status in items is 'quarantined' (the learning loop's content gate never serves it), and
+ * every content sync puts that status back (reapplyQuarantine in apps/api).
+ */
+export const quarantinedItems = pgTable('quarantined_items', {
+  itemId: text('item_id').primaryKey(),
+  itemVersion: integer('item_version').notNull(),
+  cause: text('cause', { enum: ['report', 'confirmed_error', 'batch_failed'] }).notNull(),
+  // The item's status in items before it was hidden, put back when a reviewer finds no error.
+  previousStatus: text('previous_status'),
+  since: timestamp('since', { withTimezone: true }).notNull().defaultNow(),
+});
+
+/** A batch of generated items released by the sampling rule (10%, at least 30). */
+export const reviewBatches = pgTable('review_batches', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  title: text('title').notNull(),
+  // Writer prompt and source the batch came from, so a confirmed error can re-check siblings.
+  writerPrompt: text('writer_prompt'),
+  sourceUrl: text('source_url'),
+  status: text('status', { enum: ['in_review', 'passed', 'failed'] })
+    .notNull()
+    .default('in_review'),
+  // Seed of the random sample, so the draw can be replayed for audit.
+  sampleSeed: integer('sample_seed').notNull(),
+  createdAt: createdAt(),
+  decidedAt: timestamp('decided_at', { withTimezone: true }),
+});
+
+export const reviewBatchItems = pgTable(
+  'review_batch_items',
+  {
+    batchId: uuid('batch_id')
+      .notNull()
+      .references(() => reviewBatches.id, { onDelete: 'cascade' }),
+    itemId: text('item_id').notNull(),
+    itemVersion: integer('item_version').notNull(),
+    needsHumanApproval: boolean('needs_human_approval').notNull().default(false),
+    inSample: boolean('in_sample').notNull(),
+    // The item as the reviewer sees it (question, answer, citations), from content/.
+    snapshot: jsonb('snapshot').notNull(),
+    decision: text('decision', { enum: ['approved', 'confirmed_error'] }),
+    decidedByRole: text('decided_by_role', { enum: REVIEWER_ROLES }),
+    decisionNotes: text('decision_notes'),
+    decidedAt: timestamp('decided_at', { withTimezone: true }),
+  },
+  (t) => [primaryKey({ columns: [t.batchId, t.itemId] })],
+);
+
+/** Requests to send items back through pipeline steps 3 to 5 (picked up by the offline tools). */
+export const recheckRequests = pgTable('recheck_requests', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  scope: text('scope', { enum: ['batch', 'item', 'writer_prompt', 'source'] }).notNull(),
+  scopeValue: text('scope_value').notNull(),
+  cause: text('cause').notNull(),
+  status: text('status', { enum: ['pending', 'done'] })
+    .notNull()
+    .default('pending'),
+  createdAt: createdAt(),
+  completedAt: timestamp('completed_at', { withTimezone: true }),
+});
+
+/** Scores and mastery to recalculate after a confirmed error in an item. */
+export const recalculationJobs = pgTable('recalculation_jobs', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  itemId: text('item_id').notNull(),
+  itemVersion: integer('item_version').notNull(),
+  status: text('status', { enum: ['pending', 'done'] })
+    .notNull()
+    .default('pending'),
+  createdAt: createdAt(),
+  completedAt: timestamp('completed_at', { withTimezone: true }),
+});

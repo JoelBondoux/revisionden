@@ -121,3 +121,86 @@ with AI marks over time.
 | Confirmed errors in released items           | 0 (each one triggers section 6) |
 | Time from report to quarantine               | Immediate                       |
 | Time from report to decision                 | Within 48 hours                 |
+
+## 9. How the pipeline is built (workstream V)
+
+The tools live in `scripts/verify/` (offline, run by content sessions), the review queue and
+quarantine in `apps/api` and `apps/web/src/features/review/`, and the marking rules in
+`packages/core`. Commands:
+
+| Command                                                | Step | What it does                                                                                      |
+| ------------------------------------------------------ | ---- | ------------------------------------------------------------------------------------------------- |
+| `pnpm content:quote-check [--only <id>] [--write]`     | 2    | Fetches each cited source, finds the quote at its location, records the result and source SHA-256 |
+| `pnpm content:model-check --blind <p> --review <p>`    | 3, 4 | Blind answer and adversarial review (providers: `anthropic`, `openai`, `gemini`); costs money     |
+| `pnpm content:exact-check [--only <id>] [--write]`     | 5    | Units, chemical equations and equation-sheet lookups (maths stays with `pnpm content:validate`)   |
+| `pnpm content:audit <item, topic, tree or subject id>` | 6    | Markdown audit report (`--reports <file>` adds reports exported from the review API)              |
+| `pnpm evals essay --golden <file> --live`              | 7    | Double-marking accuracy against a golden set; never in CI                                         |
+
+`--write` only changes draft content: verified versions are immutable.
+
+**Quote check (step 2).** Sources are fetched only from the official hosts in
+`scripts/verify/sources.mjs` (Pearson, AQA, OCR, Eduqas, WJEC, gov.uk) over https, and cached
+outside the repository (`REVISIONDEN_SOURCE_CACHE`, default `~/.cache/revisionden/sources`);
+exam board documents are never committed. Text is compared after normalising whitespace,
+ligatures, curly quotes, dashes, soft hyphens, words split across lines and spaces inside
+brackets or before punctuation; letter case and words must match exactly. If that fails, a
+match with all spaces ignored is accepted (PDFs split "nth" into "n th" around a superscript),
+and the check's notes say "PDF spacing ignored" so a reviewer can see it. A quote that appears
+more than once (Foundation and Higher tiers repeat text) passes if any copy is at the stated
+location. The location must be checkable:
+
+- `page N` matches the PDF page or the printed page number on that page (board specifications
+  number pages from the start of the content, so printed page 5 can be PDF page 17);
+- a specification code (`N7`, `A17`, `4.2.1`) must be the nearest code of its kind before the
+  quote, or inside it; a section code also covers its subsections (`4.2.1` covers `4.2.1.3`);
+- a web page has no pages, so its citations need a code; a location with neither a page nor a
+  code fails. Anything the checker cannot confirm fails, for a person to fix.
+
+**Blind answer and adversarial review (steps 3 and 4).** Providers share one interface
+(`scripts/verify/providers.mjs`) with structured JSON output that is validated before use. The
+blind answer must come from a different provider from the writer (Claude by default, read from
+the grounded-writing check). It sees no answer, hint or explanation, and passes only on a match
+with high confidence (multiple choice: same option; numeric: within the item tolerance; short
+answers and flashcards: same words ignoring case and end punctuation; worked maths: the same
+solutions in any order, or the same expression). The reviewer sees the whole item and the
+quoted sources and must report factual errors, a wrong answer, ambiguity, a second correct
+option, content outside the specification, unsupported claims or poor wording; any problem or
+an unsure reviewer fails. Tests use recorded fixtures only.
+
+**Exact checks (step 5).** An item names the facts to check in an optional `exact` block:
+`quantity` (its `answer.unit` must have that dimension), `chemical_equation` (atoms and charge
+balance, coefficients in lowest terms) and `equation_sheet` (`sheet`, `equation`, optional
+`as_written`). Verified items then need a passing `units`, `chemical-equation` or
+`equation-sheet` check. Equation sheets are sourced content in `content/equation-sheets/`
+(`id`, `title`, `citations`, `verification`, `equations[]` with `id`, `equation`, `symbols` as
+units); every sheet equation must be dimensionally consistent, and an item can only use a
+verified sheet. `as_written` matches the same equation in any equivalent form (`1/2` or `0.5`,
+any order of factors); a rearranged equation does not match and needs a person. Chemical
+equations put spaces around `+` between species and write a polyatomic charge above 1 with `^`
+or a space (`SO4^2-`).
+
+**Human review (step 7).** Reviewers are parent accounts with a row in `reviewer_roles`
+(`subject-specialist`, `content-lead` or `parent-reviewer`), added by the product owner; every
+decision stores the role, never a name. A batch (`POST /v1/review/batches`, with a snapshot of
+each item) draws its sample with a recorded seed so the draw can be replayed. One confirmed
+error fails the batch and files re-check requests for the batch (steps 3 to 5 and a fresh
+sample), its writer prompt and its source. A passed batch is then recorded in each item as a
+`batch-sample` check by the content session.
+
+**Reports and quarantine (section 6).** "Report a problem" stores only the item, its version and
+a reason (no free text, so no personal data) and hides the item at once: a row in
+`quarantined_items` and status `quarantined` in `items`, which the learning loop's content gate
+never serves. Students report by the item id the app was given. Every content sync puts the
+`quarantined` status back (`reapplyQuarantine`), so content/ cannot lift it. "No error" releases
+the item once no report is left open and restores its earlier status. A confirmed-error
+quarantine lifts when a newer version of the item is synced (a fixed version that has been
+through the pipeline again). A confirmed error keeps it hidden, queues a recalculation job, calls the
+`onConfirmedError` hook (the learning loop recalculates scores and mastery there) and files an
+item re-check. The audit report reads version history from git and reports from
+`GET /v1/review/reports?item=<id>`. The parent-portal PDF export is still to do.
+
+**Double marking (section 7).** `packages/core/src/double-marking.ts`: each marking must cite a
+mark point code or the level (`L3`) for every mark, with evidence, and stay within the scheme.
+An invalid or unsure marking, a marker failure, or a gap of more than one level (more than one
+mark for mark-point schemes) gives "check with your teacher" instead of a mark. When the two
+agree, the lower marking is used. Every result carries the AI label.

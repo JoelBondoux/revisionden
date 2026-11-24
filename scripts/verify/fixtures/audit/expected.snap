@@ -1,0 +1,121 @@
+# Audit report: fixture-subject
+
+Generated 2026-11-24T12:00:00Z. Citations are kept for audit and are not shown in the app.
+
+- Entries: 4
+- Verified: 1
+- Every citation quoted: 3 of 4
+- With a failed check: 0
+
+## item fixture-item-verified
+
+- File: items/fixture-items.json
+- Status: verified (version 2)
+- Reviewer role: subject-specialist
+- Needs human approval: no
+
+### Citations
+
+| # | Source | Location | Quote | URL | Retrieved | SHA-256 | Supports |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | Fixture board, Fixture specification (FIX1 issue 1) [specification] | page 3, F1 | fixture quoted words | https://example.org/spec | 2026-11-20 | aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | question, answer |
+
+### Checks
+
+| Check | Result | Tool or model | Version | When | Notes |
+| --- | --- | --- | --- | --- | --- |
+| grounded-writing | pass | anthropic:fixture-writer | fixture-1 | 2026-11-20T10:00:00Z | - |
+| quote-check | pass | revisionden-quote-check | 1.0.0 | 2026-11-20T10:05:00Z | citation 1: found on page 3 |
+| blind-answer | pass | openai:fixture-model | fixture-model-001 | 2026-11-20T10:10:00Z | model answered "fixture answer" |
+| adversarial-review | pass | gemini:fixture-model | fixture-model-002 | 2026-11-20T10:15:00Z | no problems found |
+| schema | pass | revisionden-content-validate | 1 | 2026-11-20T10:20:00Z | - |
+| human-approval | pass | subject-specialist | review-queue-1 | 2026-11-21T09:00:00Z | - |
+
+### Version history
+
+| Version | Status | Since | Commit |
+| --- | --- | --- | --- |
+| 1 | verified | 2026-11-18T10:00:00Z | aaaaaaa |
+| 2 | verified | 2026-11-21T09:30:00Z | bbbbbbb |
+
+### Reports
+
+| Reported | Version | Reason | Status | Decided by (role) | Decided |
+| --- | --- | --- | --- | --- | --- |
+| 2026-11-19T08:00:00.000Z | 1 | wrong_answer | confirmed_error | content-lead | 2026-11-19T12:00:00.000Z |
+| 2026-11-23T08:00:00.000Z | 2 | unclear | open | - | - |
+
+## item fixture-item-draft
+
+- File: items/fixture-items.json
+- Status: draft (version 1)
+- Reviewer role: none yet
+- Needs human approval: no
+
+### Citations
+
+| # | Source | Location | Quote | URL | Retrieved | SHA-256 | Supports |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | Fixture board, Fixture specification (FIX1 issue 1) [specification] | F1 | (no quote yet) | https://example.org/spec | - | - | front, back |
+
+### Checks
+
+No checks recorded yet.
+
+### Version history
+
+No version history found.
+
+### Reports
+
+No reports.
+
+## topic-tree fixture-tree
+
+- File: topic-trees/fixture-tree.json
+- Status: draft (version 1)
+- Reviewer role: none yet
+- Needs human approval: no
+
+### Citations
+
+| # | Source | Location | Quote | URL | Retrieved | SHA-256 | Supports |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | Fixture board, Fixture specification (FIX1 issue 1) [specification] | page 3, F1 | fixture leaf words | https://example.org/spec | 2026-11-20 | - | topic |
+
+### Checks
+
+No checks recorded yet.
+
+### Version history
+
+No version history found.
+
+### Reports
+
+No reports.
+
+## topic fixture-leaf
+
+- File: topic-trees/fixture-tree.json
+- Status: draft (version 1)
+- Reviewer role: none yet
+- Needs human approval: no
+
+### Citations
+
+| # | Source | Location | Quote | URL | Retrieved | SHA-256 | Supports |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | Fixture board, Fixture specification (FIX1 issue 1) [specification] | page 3, F1 | fixture leaf words | https://example.org/spec | 2026-11-20 | - | topic |
+
+### Checks
+
+No checks recorded yet.
+
+### Version history
+
+No version history found.
+
+### Reports
+
+No reports.

@@ -11,6 +11,8 @@ import { MapPage } from './pages/MapPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { WelcomePage } from './pages/WelcomePage';
+import { BatchReviewPage } from './features/review/BatchReviewPage';
+import { ReviewQueuePage } from './features/review/ReviewQueuePage';
 import { FlashcardsPage } from './features/flashcards/FlashcardsPage';
 import {
   CommandWordsPage,
@@ -30,6 +32,8 @@ export const routes: RouteObject[] = [
       { path: '/link', element: <LinkPage /> },
       { path: '/lesson/:lessonId', element: <LessonPage /> },
       { path: '/lesson/:lessonId/complete', element: <LessonCompletePage /> },
+      { path: '/review', element: <ReviewQueuePage /> },
+      { path: '/review/batches/:batchId', element: <BatchReviewPage /> },
       // Learning loop (workstream F): lessons and the starting test hide the nav.
       { path: '/learn/topic/:topicId', element: <TopicLessonPage /> },
       { path: '/learn/subject/:subjectId/practice', element: <SubjectPracticePage /> },

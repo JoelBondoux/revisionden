@@ -6,6 +6,7 @@
 import { sql } from 'drizzle-orm';
 import { contentTypeToItemType } from '@revisionden/core';
 import { items, topics, type Database } from '@revisionden/db';
+import { reapplyQuarantine } from '../routes/quarantine';
 
 export interface ContentTopic {
   id: string;
@@ -165,5 +166,7 @@ export async function syncContent(
         },
       });
   }
+  // Reports and confirmed errors (workstream V) outrank the status copied from content/.
+  await reapplyQuarantine(db);
   return { topics: topicRows.length, items: itemRows.length };
 }

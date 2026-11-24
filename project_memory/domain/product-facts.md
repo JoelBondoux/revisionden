@@ -157,7 +157,25 @@ Tags: #product #rules #limits #defaults
 - No AI-generated images for teaching; diagrams are code-drawn from verified data.
 - Reports quarantine an item immediately; `pnpm content:audit` reports the evidence for any item.
 - Essay and homework marking: two independent AI markings citing mark-scheme criteria; a gap of
-  more than one level, or uncertainty, is shown as "check with your teacher", never guessed.
+  more than one level (one mark for mark-point schemes), uncertainty or a marking that does not
+  cite the scheme is shown as "check with your teacher", never guessed. When they agree, the
+  lower of the two marks is given. Implemented in `packages/core/src/double-marking.ts`.
+- Quote check: sources are fetched only from official hosts (Pearson, AQA, OCR, Eduqas, WJEC,
+  gov.uk) and cached outside git with their SHA-256. "page N" may be the PDF page or the printed
+  page; a specification code must be the nearest code before the quote. Unconfirmable = fail.
+- Blind answer must come from a different provider from the writer (Claude by default) and be
+  highly confident; any adversarial-review problem fails the item. Real models never run in
+  tests or CI.
+- Exact checks: units, chemical equation balancing and equation-sheet lookups, for facts named
+  in an item's `exact` block; equation sheets live in `content/equation-sheets/`.
+- Review queue at `/review` for parent accounts given a reviewer role (subject-specialist,
+  content-lead, parent-reviewer) in `reviewer_roles`; decisions store the role only. Batch
+  samples: 10% of the batch, at least 30, plus every item needing approval; seed recorded; one
+  confirmed error fails the batch and re-checks the batch, writer prompt and source.
+- Report a problem stores only item, version and a reason (no free text) and hides the item at
+  once (status `quarantined` in `items`, kept through content syncs; restored on "no error";
+  lifted after a confirmed error only when a newer version is synced). A confirmed error queues a score recalculation job and re-checks the item. The
+  parent-portal PDF export of the audit report is not built yet.
 
 ## Study plan
 

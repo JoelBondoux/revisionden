@@ -1,0 +1,101 @@
+[
+  {
+    "id": "fixture-item-verified",
+    "topic": "fixture-leaf",
+    "type": "short_answer",
+    "difficulty": 1,
+    "prompt": "Fixture question | with a pipe?",
+    "answer": { "accepted": ["fixture answer"] },
+    "marks": 1,
+    "source_ref": "Fixture specification F1",
+    "checked_by": ["model-b", "human"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Fixture board",
+        "title": "Fixture specification",
+        "document_ref": "FIX1 issue 1",
+        "url": "https://example.org/spec",
+        "location": "page 3, F1",
+        "quote": "fixture quoted words",
+        "retrieved_at": "2026-11-20",
+        "supports": ["question", "answer"],
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "version": 2,
+      "reviewed_by": "subject-specialist",
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "anthropic:fixture-writer",
+          "tool_version": "fixture-1",
+          "at": "2026-11-20T10:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-20T10:05:00Z",
+          "notes": "citation 1: found on page 3"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:fixture-model",
+          "tool_version": "fixture-model-001",
+          "at": "2026-11-20T10:10:00Z",
+          "notes": "model answered \"fixture answer\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:fixture-model",
+          "tool_version": "fixture-model-002",
+          "at": "2026-11-20T10:15:00Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "1",
+          "at": "2026-11-20T10:20:00Z"
+        },
+        {
+          "name": "human-approval",
+          "result": "pass",
+          "tool": "subject-specialist",
+          "tool_version": "review-queue-1",
+          "at": "2026-11-21T09:00:00Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "fixture-item-draft",
+    "topic": "fixture-leaf",
+    "type": "flashcard",
+    "difficulty": 1,
+    "front": "Fixture front",
+    "back": "Fixture back",
+    "source_ref": "Fixture specification F1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Fixture board",
+        "title": "Fixture specification",
+        "document_ref": "FIX1 issue 1",
+        "url": "https://example.org/spec",
+        "location": "F1",
+        "supports": ["front", "back"]
+      }
+    ],
+    "verification": { "status": "draft", "version": 1, "checks": [] }
+  }
+]

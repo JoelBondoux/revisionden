@@ -23,6 +23,8 @@ import {
 import { createAiGateway } from './ai/gateway';
 import { aiRoutes, parentAiUsageRoutes } from './ai/routes';
 import type { AiProvider, ProviderName } from './ai/types';
+import { reportRoutes } from './routes/quarantine';
+import { reviewRoutes, type VerificationDeps } from './routes/review';
 import { avatarRoutes, onboardingRoutes } from './routes/onboarding';
 import { learnRoutes } from './routes/learn';
 import { flashcardRoutes } from './routes/flashcards';
@@ -36,6 +38,8 @@ export interface AppDeps {
   clock: Clock;
   passkeys: PasskeyService;
   rateLimiters: { auth: RateLimiter; ai: RateLimiter };
+  /** Review queue and quarantine hooks (workstream V). */
+  verification?: VerificationDeps;
   /** AI providers that are configured (see ai/providers.ts). */
   aiProviders: Partial<Record<ProviderName, AiProvider>>;
   /** Backoff wait between AI retries; tests pass one that returns at once. */
@@ -86,6 +90,8 @@ export function createApp(deps: AppDeps) {
   const parent = new Hono<AppEnv>();
   parent.use('/me', requireParent);
   parent.use('/students/*', requireParent);
+  parent.use('/items/*', requireParent);
+  parent.use('/review/*', requireParent);
   parent.use('/onboarding/*', requireParent);
   async function requireParent(c: Context<AppEnv>, next: Next) {
     const session = await deps.auth.api.getSession({ headers: c.req.raw.headers });
@@ -101,6 +107,11 @@ export function createApp(deps: AppDeps) {
   parent.route('/students', parentAiUsageRoutes({ ...deps, gateway }));
   parent.route('/students', avatarRoutes(deps));
   parent.route('/onboarding', onboardingRoutes(deps));
+  parent.route('/', reportRoutes(deps.db, 'parent'));
+  parent.route(
+    '/review',
+    reviewRoutes(deps.db, { ...deps.verification, now: () => deps.clock.now() }),
+  );
 
   app.route('/v1/device', deviceRoutes(deps));
   app.route('/v1/notifications', pushKeyRoutes(deps));
@@ -111,6 +122,7 @@ export function createApp(deps: AppDeps) {
   // Mounted after the student routes, so their session check runs first.
   app.route('/v1/student/learn', learnRoutes(deps));
   app.route('/v1/student/flashcards', flashcardRoutes(deps));
+  app.route('/v1/student', reportRoutes(deps.db, 'student'));
   app.use('/v1/ai/*', studentAuth(deps));
   app.route('/v1/ai', aiRoutes({ ...deps, gateway }));
   app.route('/v1', parent);

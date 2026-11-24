@@ -14,16 +14,22 @@
     "typecheck": "pnpm -r --if-present typecheck",
     "test": "pnpm -r --if-present test",
     "test:coverage": "pnpm -r --if-present test:coverage",
-    "test:scripts": "node --test scripts/*.test.mjs",
+    "test:scripts": "node --test scripts/*.test.mjs 'scripts/verify/**/*.test.mjs' 'evals/*.test.mjs'",
     "content:validate": "node scripts/content/cli.mjs",
     "version:show": "node scripts/bump-version.mjs --show",
-    "version:bump": "node scripts/bump-version.mjs"
+    "version:bump": "node scripts/bump-version.mjs",
+    "content:quote-check": "node scripts/verify/quote-check-cli.mjs",
+    "content:model-check": "node scripts/verify/model-check-cli.mjs",
+    "content:exact-check": "node scripts/verify/exact/exact-check.mjs",
+    "content:audit": "node scripts/verify/audit.mjs",
+    "evals": "node evals/run.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
     "ajv": "^8.20.0",
     "eslint": "^9.17.0",
     "globals": "^15.14.0",
+    "pdfjs-dist": "5.4.296",
     "prettier": "^3.4.2",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.18.2"

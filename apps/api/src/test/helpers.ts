@@ -8,6 +8,7 @@ import { createAuth } from '../auth';
 import type { AppConfig } from '../env';
 import { createMemoryRateLimiter } from '../rate-limit';
 import { createPasskeyService } from '../passkeys';
+import type { VerificationDeps } from '../routes/review';
 import type { AiProvider, ProviderName } from '../ai/types';
 import type { MathsEngine } from '../learning/maths-engine';
 import { STUDENT_COOKIE } from '../routes/devices';
@@ -51,6 +52,7 @@ export function createTestClock(start = new Date('2026-11-24T10:00:00Z')): TestC
 export interface TestContextOptions {
   authLimit?: number;
   aiLimit?: number;
+  verification?: VerificationDeps;
   config?: Partial<AppConfig>;
   aiProviders?: Partial<Record<ProviderName, AiProvider>>;
   serveDraftContent?: boolean;
@@ -80,6 +82,7 @@ export async function createTestContext(options: TestContextOptions = {}) {
       auth: createMemoryRateLimiter({ limit: options.authLimit ?? 1000, periodMs: 60_000, clock }),
       ai: createMemoryRateLimiter({ limit: options.aiLimit ?? 1000, periodMs: 60_000, clock }),
     },
+    verification: options.verification,
     ...(options.mathsEngine ? { mathsEngine: options.mathsEngine } : {}),
   });
 

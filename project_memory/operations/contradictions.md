@@ -5,6 +5,12 @@
 
 ## Open
 
+- [ ] Extended-answer items can never be verified: `scripts/content/validate.mjs` requires a
+      passing `blind-answer` check for every verified item, but an extended answer has no single
+      answer to compare, so `scripts/verify/blind-answer.mjs` always fails it ("needs human
+      approval"). Not settled by workstream V because it is a protocol decision for the product
+      owner (`docs/VERIFICATION.md` section 3): for example, let human approval stand in for the
+      blind answer on extended answers, or define a blind-marking check against the mark scheme.
 - [ ] Request schemas for the H routes (push subscriptions, reminder settings, short-answer
       marking) live in `apps/api/src/notifications/routes.ts` and `apps/api/src/ai/routes.ts`, but
       `docs/ARCHITECTURE.md` (Conventions) says every body has a Zod schema in `packages/core`.
