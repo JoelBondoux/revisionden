@@ -11,6 +11,13 @@ Tags: #product #rules #limits #defaults
   a paid Apple developer membership).
 - Students have no outside account: nickname (2–16 letters, numbers, underscore), avatar code and
   year group only. Devices linked by a one-time QR token (10 minutes, single use), then a passkey.
+- Nicknames are unique within a family. A family is created the first time a parent signs in.
+- The link token is redeemed with the family id from the QR code; a wrong family id does not use
+  the token up. Tokens and sessions are stored only as hashes.
+- A student device session lasts 12 hours, then the student unlocks again with the passkey.
+  Parents can unlink a device, which ends its session.
+- Rate limits per address: 30 a minute on sign-in and device routes, 20 a minute on AI routes.
+  Implemented in `apps/api`.
 
 ## Subjects
 

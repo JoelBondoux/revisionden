@@ -21,6 +21,15 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Flashcard scheduler (SM-2 style) and topic mastery with time decay.
 - Next-item selection: weak spots first, parent focus weights, due flashcards, variety rule.
 - XP, daily goal, streaks, skip days and gift days; rewards catalogue with 14 unlock targets.
+- Database schema and first migration (`packages/db`), with a privacy guard test that fails if a
+  column could hold a student's real name, birth date, email, photo or school name; made-up
+  seed data.
+- API Worker config for dev, staging and production; environment checked on start-up; `/health`
+  reports the version.
+- Parent sign-in with Google or Microsoft (Better Auth); only the sign-in email is kept.
+- Family created on first sign-in; student profiles and enrolments, each family isolated.
+- Student device linking: one-time 10-minute QR code, then a passkey; unlock with the passkey.
+- Rate limits on sign-in, device and AI routes; every error uses the shared JSON shape.
 
 ## [00.01.002] - 2026-11-24
 

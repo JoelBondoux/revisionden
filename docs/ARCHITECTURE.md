@@ -74,26 +74,65 @@ deletes them as soon as the user confirms what was read.
 **AI gateway.** All AI calls go through Cloudflare AI Gateway: provider routing, logs without
 personal data, spend tracking and the monthly cap per child.
 
-## Data model (first draft, owned by the API/DB workstream)
+## Data model (owned by the API/DB workstream)
 
-| Table            | Key fields                                                              |
-| ---------------- | ----------------------------------------------------------------------- |
-| `families`       | id, created_at                                                          |
-| `parents`        | id, family_id, auth_user_id                                             |
-| `students`       | id, family_id, nickname, avatar_code, year_group                        |
-| `devices`        | id, student_id, passkey credential, linked_at                           |
-| `enrolments`     | student_id, subject_id, board, tier, spec_version                       |
-| `topics`         | id, subject_id, board, spec_ref, parent_topic_id                        |
-| `items`          | id, topic_id, type, body (JSON), answer (JSON), source_ref, checked_by  |
-| `attempts`       | id, student_id, item_id, correct, score, time_ms, created_at            |
-| `mastery`        | student_id, topic_id, value, updated_at                                 |
-| `exams`          | id, student_id, kind (exam, mock, assessment), subject_id, date, result |
-| `school_reports` | id, student_id, date, values (JSON)                                     |
-| `plans`          | id, student_id, week_start, sessions (JSON), edited_by                  |
-| `rewards`        | student_id, reward_id, earned_at                                        |
-| `streaks`        | student_id, current, best, skip_days, gift_days                         |
+Source of truth: `packages/db/src/schema.ts`; migrations in `packages/db/migrations`.
 
-No table stores a real name, date of birth, email of a student, photo or school name.
+| Table                | Key fields                                                                  |
+| -------------------- | --------------------------------------------------------------------------- |
+| `auth_users`         | id, email, email_verified, name (always blank), image (always null)         |
+| `auth_sessions`      | id, token, user_id, expires_at (IP address and user agent not kept)         |
+| `auth_accounts`      | id, user_id, provider_id, account_id, OAuth tokens (no passwords)           |
+| `auth_verifications` | id, identifier, value, expires_at (OAuth state)                             |
+| `families`           | id, created_at                                                              |
+| `parents`            | id, family_id, auth_user_id (unique)                                        |
+| `students`           | id, family_id, nickname (unique per family), avatar_code, year_group (7–13) |
+| `enrolments`         | student_id + subject_id (key), board, tier, spec_version                    |
+| `devices`            | id, student_id, credential_id, public_key, counter, transports, linked_at   |
+| `device_link_tokens` | id, token_hash, family_id, student_id, expires_at, used_at                  |
+| `passkey_challenges` | id, kind (register, unlock), challenge, student_id, expires_at, used_at     |
+| `student_sessions`   | id, token_hash, student_id, device_id, expires_at                           |
+| `topics`             | id (text), subject_id, board, spec_ref, title, parent_topic_id              |
+| `items`              | id, topic_id, type, body (JSON), answer (JSON), source_ref, checked_by      |
+| `attempts`           | id, student_id, item_id, correct, score, time_ms, created_at                |
+| `mastery`            | student_id + topic_id (key), value (0–1), updated_at                        |
+| `exams`              | id, student_id, kind (exam, mock, assessment), subject_id, date, result     |
+| `school_reports`     | id, student_id, date, values (JSON)                                         |
+| `plans`              | id, student_id, week_start (unique per student), sessions (JSON), edited_by |
+| `rewards`            | student_id + reward_id (key), earned_at                                     |
+| `streaks`            | student_id (key), current, best, skip_days, gift_days                       |
+
+No table stores a real name, date of birth, email of a student, photo or school name. The
+schema guard test (`packages/db/src/schema-guard.test.ts`) checks the migrated database and fails
+if such a column appears. The only allowed matches are the parent's Better Auth fields listed in
+`schema-guard.ts`. Tokens (link tokens, student sessions) are stored as SHA-256 hashes.
+
+## API (workstream B)
+
+All bodies are validated with the Zod schemas in `packages/core`. Errors always look like
+`{ "error": { "code", "message", "details"? } }` (`ApiErrorSchema`).
+
+| Route                                                             | Who            | What                                      |
+| ----------------------------------------------------------------- | -------------- | ----------------------------------------- |
+| `GET /health`                                                     | anyone         | `{ status, version }`                     |
+| `/api/auth/*`                                                     | anyone         | Better Auth: Google, Microsoft, sign-out  |
+| `GET /v1/me`                                                      | parent         | Family id and sign-in email               |
+| `GET, POST /v1/students`                                          | parent         | List (`{ students }`) or create           |
+| `GET, PATCH, DELETE /v1/students/:id`                             | parent         | One student                               |
+| `GET, POST /v1/students/:id/enrolments`                           | parent         | List (`{ enrolments }`) or add/replace    |
+| `DELETE /v1/students/:id/enrolments/:subjectId`                   | parent         | Remove an enrolment                       |
+| `POST /v1/students/:id/link-tokens`                               | parent         | One-time token and QR link (10 minutes)   |
+| `GET /v1/students/:id/devices`, `DELETE .../devices/:id`          | parent         | List or unlink devices                    |
+| `POST /v1/device/link`                                            | new device     | Redeem token + family id; passkey options |
+| `POST /v1/device/link/verify`                                     | new device     | Register passkey; starts student session  |
+| `POST /v1/device/unlock/options`, `POST /v1/device/unlock/verify` | linked device  | Unlock with the passkey                   |
+| `GET /v1/student/me`, `POST /v1/student/lock`                     | student device | Who is signed in; lock the device         |
+
+A parent only ever sees their own family: another family's student answers 404. The QR code
+holds `<web origin>/link?token=…&family=…`. The passkey relying party is the web app's host
+(`PASSKEY_RP_ID`). Student sessions use the `__Host-rd_student` cookie (HttpOnly, Secure,
+SameSite=Lax) and last 12 hours. Sign-in, device and AI routes are rate limited per address
+(30 and 20 requests a minute) and answer 429 with `Retry-After`.
 
 ## Conventions
 

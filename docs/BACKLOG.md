@@ -48,23 +48,23 @@
 
 ### B. API, database and sign-in (`apps/api`, `packages/db`)
 
-- [ ] **B1 Database schema.** Drizzle tables from `ARCHITECTURE.md`; first migration; seed script
+- [x] **B1 Database schema.** Drizzle tables from `ARCHITECTURE.md`; first migration; seed script
       with made-up data.
   - Tests (PGlite): migration applies cleanly; foreign keys enforced; no column named for real
     names, birth dates or student emails (schema guard test).
-- [ ] **B2 Worker setup.** Wrangler config for dev, staging, production; bindings for Neon
+- [x] **B2 Worker setup.** Wrangler config for dev, staging, production; bindings for Neon
       (Hyperdrive or serverless driver), R2, AI Gateway; `/health` reports version.
   - Tests: health returns version; env validation fails fast on missing bindings.
-- [ ] **B3 Parent sign-in.** Better Auth with Google and Microsoft; sessions in Postgres; sign-out.
+- [x] **B3 Parent sign-in.** Better Auth with Google and Microsoft; sessions in Postgres; sign-out.
   - Tests: protected routes reject anonymous requests (401); session cookie is HttpOnly,
     Secure, SameSite=Lax.
-- [ ] **B4 Family and students.** Create family on first sign-in; CRUD for student profiles
+- [x] **B4 Family and students.** Create family on first sign-in; CRUD for student profiles
       (nickname, avatar code, year group); enrolments (subject, board, tier, "not sure").
   - Tests: nickname validation (from core); a parent cannot see another family's students.
-- [ ] **B5 Device linking.** Parent creates a one-time token (10 minutes, single use) shown as QR;
+- [x] **B5 Device linking.** Parent creates a one-time token (10 minutes, single use) shown as QR;
       student device redeems it and registers a passkey; later unlock with passkey.
   - Tests: token expires; token cannot be reused; wrong family cannot redeem.
-- [ ] **B6 Rate limits and errors.** Consistent JSON errors; rate limit on auth and AI routes.
+- [x] **B6 Rate limits and errors.** Consistent JSON errors; rate limit on auth and AI routes.
   - Tests: error shape matches schema; 429 after limit.
 
 ### C. Core domain rules and shared schemas (`packages/core`)

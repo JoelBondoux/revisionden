@@ -13,7 +13,9 @@
 
 ## Accounts
 
-- Parent: Google or Microsoft sign-in (Apple later). Only the sign-in email is stored.
+- Parent: Google or Microsoft sign-in (Apple later). Only the sign-in email is stored: the
+  provider's display name is blanked, the picture is never fetched or stored, and sessions keep
+  no IP address or browser details.
 - Student: no outside account. Nickname (letters, numbers, underscore; 2–16 characters), layered
   avatar saved as a short code, year group. Device linked by one-time QR, then a passkey.
 
