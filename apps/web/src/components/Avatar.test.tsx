@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { DEFAULT_AVATAR, encodeAvatar } from '@revisionden/core';
 import { Avatar } from './Avatar';
 
 describe('Avatar', () => {
@@ -30,5 +31,11 @@ describe('Avatar', () => {
       }),
     );
     expect(colours.size).toBeGreaterThan(1);
+  });
+
+  it('draws the layered avatar when the code is a real avatar code', () => {
+    const { container } = render(<Avatar code={encodeAvatar(DEFAULT_AVATAR)} nickname="Nova" />);
+    expect(screen.getByRole('img', { name: "Nova's avatar" }).tagName.toLowerCase()).toBe('svg');
+    expect(container.querySelector('[data-layer="skin"]')).not.toBeNull();
   });
 });

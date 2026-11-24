@@ -1,0 +1,113 @@
+.avatar-svg {
+  display: block;
+  border-radius: var(--radius-md);
+}
+
+.avatar-builder {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.avatar-builder__preview {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+}
+
+.avatar-builder__tabs {
+  display: flex;
+  gap: var(--space-2);
+  overflow-x: auto;
+  padding-bottom: var(--space-1);
+}
+
+.avatar-builder__tab {
+  min-height: var(--tap-target);
+  padding: 0 var(--space-4);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-weight: var(--font-weight-extrabold);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.avatar-builder__tab[aria-selected='true'] {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-edge);
+}
+
+.avatar-builder__tab:focus-visible,
+.avatar-option:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.avatar-builder__section {
+  border: 0;
+  margin: 0 0 var(--space-4);
+  padding: 0;
+}
+
+.avatar-builder__section legend {
+  font-weight: var(--font-weight-black);
+  margin-bottom: var(--space-2);
+}
+
+.avatar-builder__options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+  gap: var(--space-2);
+}
+
+.avatar-option {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-1);
+  min-height: var(--tap-target);
+  padding: var(--space-2) var(--space-1);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+}
+
+.avatar-option[aria-pressed='true'] {
+  border-color: var(--color-primary);
+  box-shadow: 0 3px 0 var(--color-primary-edge);
+}
+
+.avatar-option--locked {
+  cursor: not-allowed;
+  background: var(--color-background);
+}
+
+.avatar-option--locked .avatar-svg,
+.avatar-option--locked .avatar-option__swatch {
+  opacity: 0.45;
+}
+
+.avatar-option__swatch {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+}
+
+.avatar-option__lock {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.avatar-option__lock::before {
+  content: '🔒 ';
+}
