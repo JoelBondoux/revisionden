@@ -47,30 +47,124 @@ const notFound = (reason) => ({
   page: null,
   locationConfirmed: false,
   reason,
-  spacingIgnored: false,
+  match: null,
+  confidence: null,
 });
 
-/**
- * Copies of the quote when spaces are ignored on both sides: PDFs split words around
- * superscripts and brackets ("n th", "variable (s)"). The letters must still match in order.
- */
-function spacelessMatches(pages, needle) {
-  const { text, starts } = joinPages(pages, true);
-  const kept = [];
-  let tight = '';
-  for (let i = 0; i < text.length; i += 1) {
-    if (text[i] !== ' ') {
-      kept.push(i);
-      tight += text[i];
+const pageAt = (starts, at) => starts.findLastIndex((s) => s <= at) + 1;
+
+/** Copies of the quote in the normalised text (a specification can repeat text). */
+function exactMatches(pages, needle) {
+  const found = [];
+  for (const joinHyphens of [true, false]) {
+    const { text, starts } = joinPages(pages, joinHyphens);
+    for (let at = text.indexOf(needle); at >= 0; at = text.indexOf(needle, at + 1)) {
+      found.push({ text, at, length: needle.length, page: pageAt(starts, at), confidence: 1 });
     }
   }
-  const want = needle.replace(/ /g, '');
+  return found;
+}
+
+const LETTER = /[\p{L}\p{N}]/u;
+
+/**
+ * Copies of the quote when everything but letters and digits is ignored on both sides: PDFs
+ * split words around superscripts and brackets ("n th"), and drop hyphens at line ends
+ * ("position-toterm"). The letters must still match, in order.
+ */
+function letterMatches(pages, needle) {
+  const { text, starts } = joinPages(pages, false);
+  const kept = [];
+  let letters = '';
+  for (let i = 0; i < text.length; i += 1) {
+    if (LETTER.test(text[i])) {
+      kept.push(i);
+      letters += text[i];
+    }
+  }
+  const want = [...needle].filter((ch) => LETTER.test(ch)).join('');
   const found = [];
-  for (let at = tight.indexOf(want); at >= 0; at = tight.indexOf(want, at + 1)) {
+  if (!want) return found;
+  for (let at = letters.indexOf(want); at >= 0; at = letters.indexOf(want, at + 1)) {
     const start = kept[at];
     const length = kept[at + want.length - 1] + 1 - start;
-    found.push({ text, at: start, length, page: starts.findLastIndex((s) => s <= start) + 1 });
+    found.push({ text, at: start, length, page: pageAt(starts, start), confidence: 1 });
   }
+  return found;
+}
+
+function lcs(a, b) {
+  const row = new Array(b.length + 1).fill(0);
+  for (const x of a) {
+    let diagonal = 0;
+    for (let j = 1; j <= b.length; j += 1) {
+      const above = row[j];
+      row[j] = x === b[j - 1] ? diagonal + 1 : Math.max(row[j], row[j - 1]);
+      diagonal = above;
+    }
+  }
+  return row[b.length];
+}
+
+function coversAll(window, wanted) {
+  const counts = new Map();
+  for (const w of window) counts.set(w, (counts.get(w) ?? 0) + 1);
+  for (const w of wanted) {
+    if (!counts.get(w)) return false;
+    counts.set(w, counts.get(w) - 1);
+  }
+  return true;
+}
+
+export const MIN_WORD_CONFIDENCE = 0.5;
+
+/**
+ * Copies of the quote as a sequence of words, allowing a few inserted fragments ("Y", "1") and
+ * some reordering (formulas split across lines). Every word of the quote must appear within a
+ * window only slightly longer than the quote. confidence: the share of the quote's words that
+ * appear in the same order.
+ */
+function wordMatches(pages, needle) {
+  const { text, starts } = joinPages(pages, false);
+  const tokens = [...text.matchAll(/[\p{L}\p{N}]+/gu)].map((m) => ({
+    word: m[0],
+    at: m.index,
+    end: m.index + m[0].length,
+  }));
+  const wanted = [...needle.matchAll(/[\p{L}\p{N}]+/gu)].map((m) => m[0]);
+  if (wanted.length === 0) return [];
+  const slack = Math.max(5, Math.ceil(wanted.length / 2));
+  const size = wanted.length + slack;
+  const occurrences = (w) => tokens.filter((t) => t.word === w).length;
+  const counts = wanted.map(occurrences);
+  if (counts.some((n) => n === 0)) return [];
+  const anchorIndex = counts.indexOf(Math.min(...counts));
+  const anchor = wanted[anchorIndex];
+  const found = [];
+  tokens.forEach((t, i) => {
+    if (t.word !== anchor) return;
+    let best = null;
+    for (let start = Math.max(0, i - size + 1); start <= i; start += 1) {
+      const window = tokens.slice(start, start + size);
+      const words = window.map((w) => w.word);
+      if (!coversAll(words, wanted)) continue;
+      const confidence = lcs(wanted, words) / wanted.length;
+      if (!best || confidence > best.confidence) {
+        const used = window.filter((w) => wanted.includes(w.word));
+        best = { first: used[0], last: used.at(-1), confidence };
+      }
+    }
+    if (best && best.confidence >= MIN_WORD_CONFIDENCE) {
+      const at = best.first.at;
+      found.push({
+        text,
+        at,
+        length: best.last.end - at,
+        page: pageAt(starts, at),
+        confidence: best.confidence,
+      });
+    }
+  });
   return found;
 }
 
@@ -100,10 +194,11 @@ function locationProblems({ text, at, page, length }, loc, { paged, window, labe
 }
 
 /**
- * { found, page, locationConfirmed, reason, spacingIgnored } for a citation ({ quote, location }) in a source.
+ * { found, page, locationConfirmed, reason, match, confidence } for a citation ({ quote, location }) in a source.
  * pages: text of each page. paged: false for web pages (no page numbers). window: how many
  * characters before the quote to look for the nearest specification code. labels: the printed page number
  * of each page (a "page N" location may use either the PDF page or the printed page number).
+ * match: 'exact', or a near match ('letters' or 'words') that a person must confirm.
  */
 export function locateQuote(
   { quote, location },
@@ -113,29 +208,34 @@ export function locateQuote(
   const needle = normaliseText(quote);
   if (!needle) return notFound('the citation has no quote');
   const loc = parseLocation(location);
-  // Every copy of the quote (a specification can repeat text, e.g. Foundation and Higher tiers).
-  const matches = [];
-  for (const joinHyphens of [true, false]) {
-    const { text, starts } = joinPages(pages, joinHyphens);
-    for (let at = text.indexOf(needle); at >= 0; at = text.indexOf(needle, at + 1)) {
-      const page = starts.findLastIndex((s) => s <= at) + 1;
-      matches.push({ text, at, length: needle.length, page });
+  // Strictest first; a looser level is a near match that a person must confirm.
+  const levels = [
+    ['exact', () => exactMatches(pages, needle)],
+    ['letters', () => letterMatches(pages, needle)],
+    ['words', () => wordMatches(pages, needle)],
+  ];
+  let match = null;
+  let matches = [];
+  for (const [level, find] of levels) {
+    matches = find();
+    if (matches.length) {
+      match = level;
+      break;
     }
   }
-  const spacingIgnored = matches.length === 0;
-  if (spacingIgnored) matches.push(...spacelessMatches(pages, needle));
-  if (matches.length === 0) return notFound('quote not found in the source');
+  if (!match) return notFound('quote not found in the source');
 
   const checks = matches.map((m) => ({
     ...m,
     problems: locationProblems(m, loc, { paged, window, labels }),
   }));
-  const { page, problems } = checks.find((c) => c.problems.length === 0) ?? checks[0];
+  const { page, problems, confidence } = checks.find((c) => c.problems.length === 0) ?? checks[0];
   return {
     found: true,
     page: paged ? page : null,
     locationConfirmed: problems.length === 0,
     reason: problems.length ? problems.join('; ') : null,
-    spacingIgnored,
+    match,
+    confidence: Math.round(confidence * 100) / 100,
   };
 }

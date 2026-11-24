@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest';
 import {
   DECK_REVIEW_XP,
   RATING_QUALITY,
-  contentTypeToItemType,
   formatReviewDelay,
   isServable,
   localDate,
@@ -17,6 +16,7 @@ import {
   weekStartOf,
   type StartingTestCandidate,
 } from './learning';
+import { ItemTypeSchema } from './schemas';
 import { createRng } from './rng';
 import { DAY_MS, newCard, RELEARN_DELAY_MS } from './spaced-repetition';
 import { newStreak, type StreakState } from './streaks';
@@ -40,15 +40,23 @@ describe('content gate', () => {
 });
 
 describe('content item types', () => {
-  it('maps the content names onto the item types used for XP', () => {
-    expect(contentTypeToItemType('worked_maths')).toBe('working');
-    expect(contentTypeToItemType('extended_answer')).toBe('long_answer');
-    expect(contentTypeToItemType('multiple_choice')).toBe('multiple_choice');
-    expect(contentTypeToItemType('flashcard')).toBe('flashcard');
+  it('uses the same type names as the content files, with no mapping', () => {
+    for (const t of [
+      'multiple_choice',
+      'short_answer',
+      'numeric',
+      'worked_maths',
+      'flashcard',
+      'extended_answer',
+    ]) {
+      expect(ItemTypeSchema.parse(t)).toBe(t);
+    }
   });
 
-  it('rejects an unknown type', () => {
-    expect(() => contentTypeToItemType('essay')).toThrow(/Unknown item type/);
+  it('rejects the old names and unknown types', () => {
+    for (const t of ['working', 'long_answer', 'essay']) {
+      expect(ItemTypeSchema.safeParse(t).success).toBe(false);
+    }
   });
 });
 
@@ -159,7 +167,7 @@ describe('starting test', () => {
 
   it('leaves out flashcards and long answers', () => {
     const picked = pickStartingTest(
-      [item('f', 't', 3, 'flashcard'), item('l', 't', 3, 'long_answer'), item('q', 'u')],
+      [item('f', 't', 3, 'flashcard'), item('l', 't', 3, 'extended_answer'), item('q', 'u')],
       { count: 5, rng: createRng(3) },
     );
     expect(picked).toEqual(['q']);

@@ -45,6 +45,21 @@
       locked avatar item now names the one reward that unlocks it, checked by the catalogue
       validator (`packages/core/src/catalogue/validate.ts`).
 
+- [ ] The approved avatar builder has 15 locked items but there are 14 rewards and the old rule was
+      "each reward unlocks one item". Settled for now by letting the 100-day streak unlock two items
+      (crown and Alien skin) in `packages/core/src/avatar.ts`; `docs/PRODUCT_RULES.md` and
+      `product-facts.md` updated. Needs the product owner to confirm or name a 15th reward.
+      Superseded by workstream R (five-year rewards catalogue, about 650 unlocks), which gives every
+      locked item its own reward.
+- [x] **Item type names.** Settled by workstream V: the content schema names (`worked_maths`,
+      `extended_answer`) are used everywhere (`packages/core` ItemTypeSchema and XP table, API, web);
+      F's `contentTypeToItemType` mapping is removed.
+- [x] Item JSON in the `items` table: settled by workstream V. The format is the one the content
+      sync writes (`ItemBody` and `ItemAnswer` in `apps/api/src/learning/content-sync.ts`, now with
+      `body.marks`); H's marking (`apps/api/src/ai/items.ts`) reads `answer.key.accepted` and
+      `answer.markScheme`. Round trip tested in `apps/api/src/ai/items-roundtrip.test.ts`.
+- [x] Extended-answer blind marking: implemented by workstream V (`blind-marking` check, validator
+      and review-queue rules).
 - [x] Extended-answer verification: settled by the lead session in `docs/VERIFICATION.md` section 3.
       Extended answers replace the blind answer with blind marking of exemplar answers, and always need
       individual human approval. Implementation is a follow-up for workstream V.

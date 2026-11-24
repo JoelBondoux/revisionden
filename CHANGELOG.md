@@ -20,6 +20,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 - Five-year rewards progression (R): level curve 1 to 100 with prestige stars, a 369-reward catalogue as data (levels, year chapters, milestone ladders, collections, 2026/27 seasonal drops) with a validator, healthy-limit rules (no late-night or time-based rewards, daily cap), student `/rewards` screen, and parent-set real-world rewards (`/family/:id/rewards`, `parent_rewards` table, migration 0004).
 - New original avatar art: five chapter finale tops, rooftop scene, and the Frost Fest drop (bobble hat, paper lantern, frosty night scene).
+- Verification: blind marking for extended answers: three exemplars (top, middle, low) marked by a second provider without the intended levels must all match; verified extended answers need `blind-marking` and individual human approval, and review batches always include them.
+- Verification: the quote checker reports near matches (letters only, or words with small insertions or reordering, with a confidence) for a reviewer to confirm instead of passing them.
 - Five-year rewards progression design (`docs/REWARDS.md`) and backlog workstream R.
 - Policies index and rules (`docs/LEGAL.md`), About page, feedback and sound effects specs, backlog workstreams L and U.
 - Statistics dashboards spec for student and parent (`docs/PRODUCT_RULES.md`) and backlog workstream K; parent-set rewards detail (`docs/REWARDS.md`).
@@ -78,6 +80,11 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
   spend cap (US$2.50 by default) and a guard that refuses any request with personal data.
 - Short-answer marking (H3): rules against the mark scheme first, Claude Haiku 5.5 only for
   wording variants, citing each mark point; unsure answers say "Check with your teacher".
+
+### Changed
+
+- Item type names are the content schema names everywhere (`worked_maths`, `extended_answer`); the mapping in core is removed.
+- One item JSON format in the `items` table for the content sync and AI marking (`body.marks` added; marking reads `answer.key` and `answer.markScheme`), with a round-trip test.
 
 ## [00.01.002] - 2026-11-24
 

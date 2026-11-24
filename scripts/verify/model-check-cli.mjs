@@ -11,6 +11,7 @@ import { parseArgs } from 'node:util';
 import { loadContent } from '../content/validate.mjs';
 import { runAdversarialReview } from './adversarial-review.mjs';
 import { runBlindAnswer } from './blind-answer.mjs';
+import { runBlindMarking } from './blind-marking.mjs';
 import { replaceInFile } from './content-files.mjs';
 import { providerFromEnv } from './providers.mjs';
 import { withCheck } from './record.mjs';
@@ -58,7 +59,15 @@ export async function run(argv, deps = {}) {
       : []),
   ];
   const root = resolve(values.content ?? `${REPO_ROOT}/content`);
-  const entries = (await loadContent(root)).items.filter(
+  const content = await loadContent(root);
+  const schemes = new Map(content.markSchemes.map(({ data }) => [data.id, data]));
+  // Extended answers have no single answer: they get blind marking of their exemplars instead.
+  const blindMarking = (item, provider, opts) => {
+    const scheme = schemes.get(item.mark_scheme_ref);
+    if (!scheme) throw new Error(`mark scheme ${item.mark_scheme_ref} does not exist`);
+    return runBlindMarking(item, scheme, provider, opts);
+  };
+  const entries = content.items.filter(
     ({ data }) => data.verification.status === 'draft' && (!values.only || data.id === values.only),
   );
   if (entries.length === 0) {
@@ -71,8 +80,12 @@ export async function run(argv, deps = {}) {
     let updated = data;
     for (const step of steps) {
       try {
-        const r = await step.run(data, step.provider, { now });
-        out(`${r.result === 'pass' ? 'pass' : 'FAIL'}  ${data.id}  ${step.name}  ${r.check.notes}`);
+        const essay = step.name === 'blind-answer' && data.type === 'extended_answer';
+        const run = essay ? blindMarking : step.run;
+        const r = await run(data, step.provider, { now });
+        out(
+          `${r.result === 'pass' ? 'pass' : 'FAIL'}  ${data.id}  ${r.check.name}  ${r.check.notes}`,
+        );
         ok &&= r.result === 'pass';
         updated = withCheck(updated, r.check);
       } catch (e) {

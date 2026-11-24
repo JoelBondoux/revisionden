@@ -50,6 +50,11 @@ Tags: #product #rules #limits #defaults
   long answer 30; part marks earn part.
 - The 14 original rewards keep their ids and avatar items (the 100-day streak unlocks two: crown
   and Alien skin). They are now part of the five-year catalogue (see "Rewards progression").
+- XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, worked maths
+  20, extended answer 30; part marks earn part.
+- 14 rewards unlock the 15 locked avatar items: one each, except the 100-day streak, which unlocks
+  two (crown and Alien skin). `packages/core/src/rewards.ts`, `avatar.ts`.
+- 14 rewards, each unlocking one avatar item: `packages/core/src/rewards.ts`.
 - Only `verified` items reach students. Drafts are served only with `SERVE_DRAFT_CONTENT=true` in
   development (never staging or production), with a "DRAFT CONTENT" banner; quarantined and
   retired items never. Implemented in `packages/core/src/learning.ts` and `apps/api`.
@@ -163,6 +168,17 @@ Tags: #product #rules #limits #defaults
 - Quote check: sources are fetched only from official hosts (Pearson, AQA, OCR, Eduqas, WJEC,
   gov.uk) and cached outside git with their SHA-256. "page N" may be the PDF page or the printed
   page; a specification code must be the nearest code before the quote. Unconfirmable = fail.
+  Only an exact match (after normalising) passes; a near match (letters only, or words with
+  small insertions or reordering, with a confidence) is flagged for a reviewer to confirm.
+  Pilot (2026-11-24): 110 of 110 citations found, 108 exact and 2 near.
+- Item type names are the same everywhere (content, database, API, app): multiple_choice,
+  short_answer, numeric, worked_maths, flashcard, extended_answer. Item JSON in the `items`
+  table: `body` is what the student sees (prompt, marks, options, unit, hint, front, back);
+  `answer` is server-only (`key` = the content answer, `verify`, `explanation`, `steps`,
+  `markScheme`). Defined in `apps/api/src/learning/content-sync.ts`.
+- Extended answers: blind marking replaces the blind answer (three exemplars, top, middle and low,
+  marked by a second provider without the intended levels; all three must match exactly), and
+  every one needs individual human approval; review batches always include them.
 - Blind answer must come from a different provider from the writer (Claude by default) and be
   highly confident; any adversarial-review problem fails the item. Real models never run in
   tests or CI.

@@ -33,8 +33,8 @@
 - **Gift days** come with some rewards (for example streak badges). They can only be given to a
   friend, never used on the student's own streak. Gifting earns 20 XP.
 - Details settled in code:
-  - XP per correct answer: flashcard 5, multiple choice 10, short answer 15, numeric 15, working
-    20, long answer 30. Part marks earn part of it (rounded). Wrong answers earn 0.
+  - XP per correct answer: flashcard 5, multiple choice 10, short answer 15, numeric 15, worked
+    maths 20, extended answer 30. Part marks earn part of it (rounded). Wrong answers earn 0.
   - Daily goal defaults to 50 XP. Weekly goal defaults to the daily goal met on 5 days; each week
     hit earns 1 skip day (paid once per week).
   - A skip day keeps the streak but does not add to it. A day with no activity counts as missed.

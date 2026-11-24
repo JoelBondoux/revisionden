@@ -19,8 +19,8 @@ describe('learning schemas', () => {
       { ...base, type: 'multiple_choice', prompt: 'Test question 1', options: ['A', 'B'] },
       { ...base, type: 'short_answer', prompt: 'Test question 2' },
       { ...base, type: 'numeric', prompt: 'Test question 3', unit: 'cm' },
-      { ...base, type: 'working', prompt: 'Test question 4' },
-      { ...base, type: 'long_answer', prompt: 'Test question 5' },
+      { ...base, type: 'worked_maths', prompt: 'Test question 4' },
+      { ...base, type: 'extended_answer', prompt: 'Test question 5' },
       { ...base, type: 'flashcard', front: 'Test front', back: 'Test back' },
     ];
     for (const item of items) expect(LearnItemSchema.parse(item)).toMatchObject(item);
