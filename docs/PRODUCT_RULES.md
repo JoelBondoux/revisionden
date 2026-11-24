@@ -196,7 +196,7 @@ Mockups: screens 19 (student) and 20 (parent).
 ### Student: My stats (from the Progress tab)
 
 - Period toggle: **Week** (Monday to Sunday, UK time), **Term** (weeks of the current term),
-  **Year** (school year, September to July).
+  **Year** (school year, September to August).
 - Headline tiles: XP, questions answered (and how many correct), accuracy, current streak. Each
   tile has a short note comparing with the previous period.
 - One bar chart of XP per day (Week), per week (Term) or per month (Year). The goal line is the
@@ -241,9 +241,30 @@ Mockups: screens 19 (student) and 20 (parent).
   transparency).
 - Charts follow one style: single violet series, one axis, a dashed reference line where there
   is a goal or plan, values in tooltips and a table view, and no animation with reduced motion.
-- Implemented (planned): `packages/core/src/stats.ts` (pure functions), API
-  `GET /students/:id/stats?period=week|term|year` (student or their parent) and
-  `GET /parent/students/:id/dashboard`, web `apps/web/src/features/stats/**`.
+- **Terms** (until real term dates are entered): autumn 1 September to 31 December, spring
+  1 January to 31 March, summer 1 April to 31 August. The school year runs 1 September to
+  31 August (August counts in the year just ended); the Year chart has 12 months.
+- **Goal lines**: daily goal 50 XP (Week); weekly goal 250 XP, 5 days of the daily goal (Term).
+- **Daily cap** (provisional, until the wellbeing work makes it a parent setting): 2 hours of
+  active study a day.
+- **Subject mastery** averages the topics the student has practised; the change replays topic
+  mastery from the marked answers at the start of the period (student) or 4 weeks ago (parent),
+  counting topics not practised then as 0. Weak spots are the three lowest practised topics.
+- **Healthy habits** are for this week: sessions that start in the reminder quiet hours (night or
+  school hours, as set by the parent), days past the daily cap, and finished days with no study.
+- **Recent activity** groups back-to-back answers of one kind and subject (gaps up to 5 minutes)
+  into lessons, tests, starting tests and flashcard practice. Flashcard reviews show only each
+  card's latest review (that is all that is stored).
+- The level bar and parent-set rewards come from the rewards progression (workstream R), read
+  from the same view as the Rewards page (`apps/api/src/stats/reward-adapters.ts`). Parent-set
+  rewards are listed not-yet-given first, without the note to the student.
+- Panels not built yet (study plan, school report effort, predicted and target grades) come from
+  adapters in `apps/api/src/stats/adapters.ts` that return null and show "Not set up yet".
+- Implemented: `packages/core/src/stats.ts` (pure functions) and `stats-schemas.ts` (shared
+  schemas); API `GET /v1/student/stats?period=week|term|year` (student device),
+  `GET /v1/students/:id/stats?period=…` and `GET /v1/students/:id/dashboard` (parent, own children
+  only); web `apps/web/src/features/stats/**` (`/progress` My stats, `/parent/stats` dashboard,
+  "What your parent can see" in Settings).
 
 ## About page, policies and feedback (workstream L)
 

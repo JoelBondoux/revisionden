@@ -31,6 +31,12 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Policy pages `/legal` and `/legal/:name` from the same Markdown with build-time placeholders and print style (L2); About page with What's new from `CHANGELOG.md` and licences (L3).
 - Feedback (L4): form, personal-details check, device details toggle, family and own lists, operator triage, 5 per 24 hours, 12-month retention; `feedback` table (migration 0005), `OPERATOR_EMAILS`.
 - Policy acceptance in onboarding with a "policy changed" prompt, `policy_acceptances` table and `GET, PUT /v1/policy-acceptances` (L5).
+- Statistics dashboards (K): student "My stats" on the Progress tab (week, term and year; XP chart
+  with goal line, tooltip and table view; mastery by subject; personal bests; kind framing), the
+  parent stats dashboard at `/parent/stats` (study time, plan kept, accuracy, streak, 8-week chart,
+  subjects, weak spots, healthy habits, AI spend, recent activity, Save as PDF in the browser),
+  "What your parent can see" in Settings, and `GET /v1/student/stats`, `GET /v1/students/:id/stats`
+  and `GET /v1/students/:id/dashboard`.
 - Five-year rewards progression design (`docs/REWARDS.md`) and backlog workstream R.
 - Policies index and rules (`docs/LEGAL.md`), About page, feedback and sound effects specs, backlog workstreams L and U.
 - Statistics dashboards spec for student and parent (`docs/PRODUCT_RULES.md`) and backlog workstream K; parent-set rewards detail (`docs/REWARDS.md`).

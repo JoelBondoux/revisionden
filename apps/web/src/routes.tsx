@@ -28,6 +28,8 @@ import { YoungPeopleNoticePage } from './features/legal/youngPeopleNotice';
 import { AboutPage } from './features/about/AboutPage';
 import { FeedbackPage } from './features/feedback/FeedbackPage';
 import { AdminFeedbackPage, FeedbackListPage } from './features/feedback/lists';
+import { MyStatsPage } from './features/stats/MyStatsPage';
+import { ParentDashboardPage } from './features/stats/ParentDashboardPage';
 
 export const routes: RouteObject[] = [
   {
@@ -48,6 +50,7 @@ export const routes: RouteObject[] = [
       { path: '/lesson/:lessonId', element: <LessonPage /> },
       { path: '/lesson/:lessonId/complete', element: <LessonCompletePage /> },
       { path: '/review', element: <ReviewQueuePage /> },
+      { path: '/parent/stats', element: <ParentDashboardPage /> },
       { path: '/review/batches/:batchId', element: <BatchReviewPage /> },
       // Learning loop (workstream F): lessons and the starting test hide the nav.
       { path: '/learn/topic/:topicId', element: <TopicLessonPage /> },
@@ -82,12 +85,8 @@ export const routes: RouteObject[] = [
           <ComingSoon title="Papers" description="Past papers with a timer and mark schemes." />
         ),
       },
-      {
-        path: '/progress',
-        element: (
-          <ComingSoon title="Progress" description="Mastery per topic and your predicted grades." />
-        ),
-      },
+      // Statistics dashboards (workstream K): My stats lives on the Progress tab.
+      { path: '/progress', element: <MyStatsPage /> },
       { path: '/settings', element: <SettingsPage /> },
       { path: '/install', element: <InstallHelpPage /> },
       { path: '/about', element: <AboutPage /> },

@@ -14,12 +14,13 @@
 
 ## Now
 
-- [x] H reminders and AI gateway (#11) merged.
-- [x] V verification pipeline and audit (#12) merged.
-- [ ] V2: blind marking for extended answers; unify item type names and item JSON format.
-- [ ] R: five-year rewards progression (in progress); parent-set rewards (R5) first.
-- [ ] K: statistics dashboards for student and parent (spec and mockups 19–20 done; build next).
-- [ ] Topic map API endpoints (map, cards due) still to build.
+- [x] H reminders and AI gateway (#11), V verification (#12) and V2 (#13) merged.
+- [x] R five-year rewards progression and parent-set rewards (#16) merged.
+- [x] U sound effects with mute (#17) merged.
+- [ ] K statistics dashboards (#18): wiring R5 rewards and levels, then merge.
+- [ ] L policies, About page and feedback (#19): renumbering its migration, then merge.
+- [ ] F2 topic map API endpoints: waiting for the product owner's go-ahead.
+- [ ] Follow-ups queued: H2 (reward-met notification), B2 (privacy fixes found by L), T (vitest 4), S2.
 
 ## Blocked
 

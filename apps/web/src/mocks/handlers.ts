@@ -6,6 +6,7 @@ import { learnHandlers } from '../features/learn/mocks';
 import { rewardsHandlers } from '../features/rewards/mocks';
 import { feedbackHandlers } from '../features/feedback/mocks';
 import { legalHandlers } from '../features/legal/mocks';
+import { statsHandlers } from '../features/stats/mocks';
 
 const isKnownStudent = (id: unknown) => family.students.some((s) => s.id === id);
 
@@ -52,4 +53,7 @@ export const handlers: RequestHandler[] = [
   // Policies, About and feedback (workstream L).
   ...feedbackHandlers,
   ...legalHandlers,
+
+  // Statistics dashboards (workstream K).
+  ...statsHandlers,
 ];
