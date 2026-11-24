@@ -213,3 +213,20 @@ Tags: #product #rules #limits #defaults
 - Title (60 characters), optional note (200), target from any catalogue target type or a custom
   date; "from home" badge for the student; celebration and parent notification when met; parent
   marks "given" (locked after that); no student free text. Workstream R5. Detail: `docs/REWARDS.md`.
+
+## Policies, About and feedback
+
+- Policies live in `docs/legal/` (index `docs/LEGAL.md`): plain English first, then the full legal
+  text, then changes. Drafts until reviewed by a UK solicitor. Operator name, email and address are
+  build-time placeholders, never in the repository.
+- About page: version, environment, build date, commit, "What's new" (the `### What's new`
+  lines in `CHANGELOG.md`), policy links, open-source licences.
+- Feedback kinds: bug, idea, something confusing, other; text up to 500 characters with personal
+  details refused; device details optional; parents see their family's feedback; never sent to
+  GitHub automatically; 5 a day; deleted 12 months after closing. Workstream L.
+
+## Sound
+
+- Original Web Audio sounds, no files. Header quick mute and Settings (on/off, volume, tap sounds
+  off by default), per device; follows the iOS silent switch where possible. No correct/wrong
+  sounds in Test mode before submit. Sound is never the only signal. Workstream U.

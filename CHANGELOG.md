@@ -5,6 +5,12 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ## [Unreleased]
 
+### What's new
+
+- Coming soon: a stats page for students and a stats dashboard for parents.
+- Coming soon: rewards you set yourself as a parent, like a cinema trip for a 30-day streak.
+- Coming soon: sound effects, with a mute button.
+
 ### Fixed
 
 - GCSE Statistics offers only AQA and Pearson Edexcel in onboarding (checked on the board websites).
@@ -13,6 +19,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 ### Added
 
 - Five-year rewards progression design (`docs/REWARDS.md`) and backlog workstream R.
+- Policies index and rules (`docs/LEGAL.md`), About page, feedback and sound effects specs, backlog workstreams L and U.
 - Statistics dashboards spec for student and parent (`docs/PRODUCT_RULES.md`) and backlog workstream K; parent-set rewards detail (`docs/REWARDS.md`).
 
 - Content: official citations with verbatim quotes, pages and SHA-256 for all 110 pilot GCSE Maths entries (1MA1 Issue 2 and DfE subject content); quadratic formula flashcard fixed; sourcing record in `docs/sourcing/` (S).
