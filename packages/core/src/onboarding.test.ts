@@ -96,6 +96,10 @@ describe('boardsFor', () => {
     expect(boardsFor('alevel-computer-science')).toEqual(['AQA', 'OCR', 'Eduqas']);
   });
 
+  it('offers only AQA and Pearson Edexcel for GCSE Statistics (checked on the board websites)', () => {
+    expect(boardsFor('gcse-statistics')).toEqual(['AQA', 'Edexcel']);
+  });
+
   it('offers the four main boards otherwise', () => {
     expect(boardsFor('gcse-history')).toEqual(['AQA', 'Edexcel', 'OCR', 'Eduqas']);
   });

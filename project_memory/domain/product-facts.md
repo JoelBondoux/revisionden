@@ -25,7 +25,7 @@ Tags: #product #rules #limits #defaults
   Chemistry, Physics, French, Spanish, German, History, Drama, Film Studies. A-Level: Maths,
   Further Maths, Computer Science, Physics. Implemented in `packages/core/src/onboarding.ts`.
 - Exam boards and tiers are picked in the app; "not sure" is allowed and reminded later.
-- GCSE Film Studies is offered only by WJEC Eduqas. Boards per subject and tiered GCSEs are listed
+- GCSE Film Studies is offered only by WJEC Eduqas. GCSE Statistics only by AQA and Pearson Edexcel. Boards per subject and tiered GCSEs are listed
   in `docs/PRODUCT_RULES.md` "Onboarding".
 - Onboarding takes Years 9 to 13 (9–11 GCSE, 12–13 A-Level). Exams are worked out from the year:
   Year 11 and 13 sit them next summer (2027 in school year 2026/27), Year 10 and 12 a year later,
