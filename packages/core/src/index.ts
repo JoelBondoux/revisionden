@@ -8,3 +8,4 @@ export * from './rng';
 export * from './next-item';
 export * from './xp';
 export * from './streaks';
+export * from './rewards';
