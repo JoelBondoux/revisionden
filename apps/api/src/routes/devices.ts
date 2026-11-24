@@ -14,11 +14,12 @@ import type { AppEnv } from '../context';
 import type { AppConfig } from '../env';
 import { ApiError, notFound, unauthorized } from '../errors';
 import { requireFamilyStudent } from '../families';
+import { toStudent } from './students';
 import { readJson } from '../http';
 import type { PasskeyService } from '../passkeys';
 import type { Clock } from '../rate-limit';
 import { hashToken, randomToken } from '../tokens';
-import { uuidSchema } from '../validation';
+import { isId } from '../validation';
 
 export const LINK_TOKEN_TTL_MS = 10 * 60 * 1000;
 export const CHALLENGE_TTL_MS = 5 * 60 * 1000;
@@ -43,19 +44,17 @@ const invalidChallenge = () =>
 const passkeyNotVerified = () =>
   new ApiError(400, 'passkey_not_verified', 'The passkey could not be checked.');
 
-const toStudent = (s: typeof students.$inferSelect) => ({
-  id: s.id,
-  nickname: s.nickname,
-  avatarCode: s.avatarCode,
-  yearGroup: s.yearGroup,
-});
-
-const redeemSchema = z.strictObject({ token: z.string().min(16).max(128), familyId: z.string() });
-const credentialResponse = z.looseObject({ id: z.string().min(1), response: z.looseObject({}) });
-const verifySchema = z.strictObject({ challengeId: z.string(), response: credentialResponse });
-const unlockOptionsSchema = z.strictObject({
-  credentialIds: z.array(z.string()).max(10).optional(),
-});
+// TODO(workstream C): move these device-linking request schemas into packages/core.
+const redeemSchema = z
+  .object({ token: z.string().min(16).max(128), familyId: z.string() })
+  .strict();
+const credentialResponse = z
+  .object({ id: z.string().min(1), response: z.object({}).passthrough() })
+  .passthrough();
+const verifySchema = z.object({ challengeId: z.string(), response: credentialResponse }).strict();
+const unlockOptionsSchema = z
+  .object({ credentialIds: z.array(z.string()).max(10).optional() })
+  .strict();
 
 /** Parent routes under /v1/students: create link tokens, list and unlink devices. */
 export function parentDeviceRoutes({ db, config, clock }: DeviceDeps) {
@@ -93,13 +92,13 @@ export function parentDeviceRoutes({ db, config, clock }: DeviceDeps) {
       .select({ id: devices.id, linkedAt: devices.linkedAt, lastUsedAt: devices.lastUsedAt })
       .from(devices)
       .where(eq(devices.studentId, student.id));
-    return c.json(rows);
+    return c.json({ devices: rows });
   });
 
   app.delete('/:id/devices/:deviceId', async (c) => {
     const student = await requireFamilyStudent(db, c.var.parent.familyId, c.req.param('id'));
     const deviceId = c.req.param('deviceId');
-    if (!uuidSchema.safeParse(deviceId).success) throw notFound('Device not found');
+    if (!isId(deviceId)) throw notFound('Device not found');
     const deleted = await db
       .delete(devices)
       .where(and(eq(devices.id, deviceId), eq(devices.studentId, student.id)))
@@ -135,7 +134,7 @@ export function deviceRoutes({ db, clock, passkeys }: DeviceDeps) {
 
   /** Marks a challenge used, once, if it is still valid. */
   async function consumeChallenge(id: string, kind: 'register' | 'unlock') {
-    if (!uuidSchema.safeParse(id).success) throw invalidChallenge();
+    if (!isId(id)) throw invalidChallenge();
     const [row] = await db
       .update(passkeyChallenges)
       .set({ usedAt: now() })
@@ -176,7 +175,7 @@ export function deviceRoutes({ db, clock, passkeys }: DeviceDeps) {
 
   app.post('/link', async (c) => {
     const { token, familyId } = await readJson(c, redeemSchema);
-    if (!uuidSchema.safeParse(familyId).success) throw invalidLinkToken();
+    if (!isId(familyId)) throw invalidLinkToken();
     // Single use: the update succeeds only once, only before expiry, only for this family.
     const [used] = await db
       .update(deviceLinkTokens)

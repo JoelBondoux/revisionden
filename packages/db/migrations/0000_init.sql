@@ -1,7 +1,7 @@
 CREATE TABLE "attempts" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"student_id" uuid NOT NULL,
-	"item_id" text NOT NULL,
+	"item_id" uuid NOT NULL,
 	"correct" boolean NOT NULL,
 	"score" real,
 	"time_ms" integer,
@@ -83,11 +83,11 @@ CREATE TABLE "enrolments" (
 	"student_id" uuid NOT NULL,
 	"subject_id" text NOT NULL,
 	"board" text DEFAULT 'not_sure' NOT NULL,
-	"tier" text,
+	"tier" text DEFAULT 'not_sure' NOT NULL,
 	"spec_version" text,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "enrolments_student_id_subject_id_pk" PRIMARY KEY("student_id","subject_id"),
-	CONSTRAINT "enrolments_tier_values" CHECK ("enrolments"."tier" is null or "enrolments"."tier" in ('foundation', 'higher', 'not_sure'))
+	CONSTRAINT "enrolments_tier_values" CHECK ("enrolments"."tier" in ('foundation', 'higher', 'none', 'not_sure'))
 );
 --> statement-breakpoint
 CREATE TABLE "exams" (
@@ -105,7 +105,7 @@ CREATE TABLE "families" (
 );
 --> statement-breakpoint
 CREATE TABLE "items" (
-	"id" text PRIMARY KEY NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"topic_id" text NOT NULL,
 	"type" text NOT NULL,
 	"body" jsonb NOT NULL,
@@ -146,7 +146,7 @@ CREATE TABLE "plans" (
 	"student_id" uuid NOT NULL,
 	"week_start" date NOT NULL,
 	"sessions" jsonb NOT NULL,
-	"edited_by" text DEFAULT 'system' NOT NULL,
+	"edited_by" text DEFAULT 'auto' NOT NULL,
 	CONSTRAINT "plans_student_week_unique" UNIQUE("student_id","week_start")
 );
 --> statement-breakpoint

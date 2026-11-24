@@ -26,7 +26,7 @@ const SEED_TOPICS = [
 
 const SEED_ITEMS = [
   {
-    id: 'seed-item-solve-1',
+    id: '00000000-0000-4000-8000-000000000001',
     topicId: 'seed-maths-linear-equations',
     type: 'short_answer',
     body: { prompt: 'Solve 2x + 3 = 11' },

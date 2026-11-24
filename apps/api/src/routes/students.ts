@@ -1,24 +1,34 @@
 import { Hono } from 'hono';
 import { and, asc, eq } from 'drizzle-orm';
+import {
+  CreateEnrolmentRequestSchema,
+  CreateStudentRequestSchema,
+  UpdateStudentRequestSchema,
+  type Enrolment,
+  type Student,
+} from '@revisionden/core';
 import { enrolments, students, type Database } from '@revisionden/db';
 import type { AppEnv } from '../context';
 import { ApiError } from '../errors';
 import { requireFamilyStudent } from '../families';
 import { isUniqueViolation, readJson } from '../http';
-import {
-  createStudentSchema,
-  enrolmentSchema,
-  subjectIdSchema,
-  updateStudentSchema,
-} from '../validation';
 
 type StudentRow = typeof students.$inferSelect;
+type EnrolmentRow = typeof enrolments.$inferSelect;
 
-const toStudent = (s: StudentRow) => ({
+export const toStudent = (s: StudentRow): Student => ({
   id: s.id,
   nickname: s.nickname,
   avatarCode: s.avatarCode,
   yearGroup: s.yearGroup,
+});
+
+const toEnrolment = (e: EnrolmentRow): Enrolment => ({
+  studentId: e.studentId,
+  subjectId: e.subjectId,
+  board: e.board as Enrolment['board'],
+  tier: e.tier as Enrolment['tier'],
+  ...(e.specVersion ? { specVersion: e.specVersion } : {}),
 });
 
 const nicknameTaken = () =>
@@ -27,7 +37,6 @@ const nicknameTaken = () =>
 /** Parent routes for student profiles and enrolments. Every query is scoped to the family. */
 export function studentRoutes(db: Database) {
   const app = new Hono<AppEnv>();
-
   const ownStudent = (familyId: string, id: string) => requireFamilyStudent(db, familyId, id);
 
   app.get('/', async (c) => {
@@ -36,11 +45,11 @@ export function studentRoutes(db: Database) {
       .from(students)
       .where(eq(students.familyId, c.var.parent.familyId))
       .orderBy(asc(students.createdAt), asc(students.nickname));
-    return c.json(rows.map(toStudent));
+    return c.json({ students: rows.map(toStudent) });
   });
 
   app.post('/', async (c) => {
-    const input = await readJson(c, createStudentSchema);
+    const input = await readJson(c, CreateStudentRequestSchema);
     try {
       const [row] = await db
         .insert(students)
@@ -59,7 +68,7 @@ export function studentRoutes(db: Database) {
 
   app.patch('/:id', async (c) => {
     const student = await ownStudent(c.var.parent.familyId, c.req.param('id'));
-    const input = await readJson(c, updateStudentSchema);
+    const input = await readJson(c, UpdateStudentRequestSchema);
     try {
       const [row] = await db
         .update(students)
@@ -82,32 +91,28 @@ export function studentRoutes(db: Database) {
   app.get('/:id/enrolments', async (c) => {
     const student = await ownStudent(c.var.parent.familyId, c.req.param('id'));
     const rows = await db
-      .select({
-        subjectId: enrolments.subjectId,
-        board: enrolments.board,
-        tier: enrolments.tier,
-        specVersion: enrolments.specVersion,
-      })
+      .select()
       .from(enrolments)
       .where(eq(enrolments.studentId, student.id))
       .orderBy(asc(enrolments.subjectId));
-    return c.json(rows);
+    return c.json({ enrolments: rows.map(toEnrolment) });
   });
 
-  app.put('/:id/enrolments/:subjectId', async (c) => {
+  /** Enrols the student in a subject, or replaces the existing enrolment for that subject. */
+  app.post('/:id/enrolments', async (c) => {
     const student = await ownStudent(c.var.parent.familyId, c.req.param('id'));
-    const subjectId = subjectIdSchema.parse(c.req.param('subjectId'));
-    const input = await readJson(c, enrolmentSchema);
+    const input = await readJson(c, CreateEnrolmentRequestSchema);
     const values = {
       board: input.board,
-      tier: input.tier ?? null,
+      tier: input.tier,
       specVersion: input.specVersion ?? null,
     };
-    await db
+    const [row] = await db
       .insert(enrolments)
-      .values({ studentId: student.id, subjectId, ...values })
-      .onConflictDoUpdate({ target: [enrolments.studentId, enrolments.subjectId], set: values });
-    return c.json({ subjectId, ...values });
+      .values({ studentId: student.id, subjectId: input.subjectId, ...values })
+      .onConflictDoUpdate({ target: [enrolments.studentId, enrolments.subjectId], set: values })
+      .returning();
+    return c.json(toEnrolment(row!));
   });
 
   app.delete('/:id/enrolments/:subjectId', async (c) => {

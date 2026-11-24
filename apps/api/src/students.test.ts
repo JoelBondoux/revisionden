@@ -1,5 +1,11 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { createTestContext, jsonRequest, type TestContext } from './test/helpers';
+import {
+  EnrolmentListResponseSchema,
+  EnrolmentSchema,
+  StudentListResponseSchema,
+  StudentSchema,
+} from '@revisionden/core';
+import { AVATAR, AVATAR_2, createTestContext, jsonRequest, type TestContext } from './test/helpers';
 
 let t: TestContext;
 
@@ -13,8 +19,13 @@ afterAll(async () => {
 
 type Headers = Record<string, string>;
 
-async function createStudent(headers: Headers, body: Record<string, unknown>) {
+function createStudent(headers: Headers, body: Record<string, unknown>) {
   return t.app.request('/v1/students', jsonRequest('POST', body, headers));
+}
+
+async function newStudentId(headers: Headers, nickname: string): Promise<string> {
+  const res = await createStudent(headers, { nickname, avatarCode: AVATAR, yearGroup: 11 });
+  return StudentSchema.parse(await res.json()).id;
 }
 
 describe('family', () => {
@@ -38,17 +49,12 @@ describe('student profiles', () => {
     const { headers } = await t.signInParent();
     const res = await createStudent(headers, {
       nickname: 'quiz_fox',
-      avatarCode: 'fx01',
+      avatarCode: AVATAR,
       yearGroup: 11,
     });
     expect(res.status).toBe(201);
-    const student = await res.json();
-    expect(student).toEqual({
-      id: expect.any(String),
-      nickname: 'quiz_fox',
-      avatarCode: 'fx01',
-      yearGroup: 11,
-    });
+    const student = StudentSchema.strict().parse(await res.json());
+    expect(student).toMatchObject({ nickname: 'quiz_fox', avatarCode: AVATAR, yearGroup: 11 });
   });
 
   it.each([
@@ -56,16 +62,27 @@ describe('student profiles', () => {
     ['too long', 'a'.repeat(17)],
     ['a space', 'quiz fox'],
     ['a symbol', 'quiz-fox!'],
+    ['a blocked word', 'admin_kid'],
   ])('rejects a nickname with %s', async (_label, nickname) => {
     const { headers } = await t.signInParent();
-    const res = await createStudent(headers, { nickname, avatarCode: 'fx01', yearGroup: 11 });
+    const res = await createStudent(headers, { nickname, avatarCode: AVATAR, yearGroup: 11 });
     expect(res.status).toBe(400);
-    expect(await res.json()).toMatchObject({ error: 'invalid_request' });
+    expect(await res.json()).toMatchObject({ error: { code: 'invalid_request' } });
+  });
+
+  it('rejects an avatar code that is not in the avatar format', async () => {
+    const { headers } = await t.signInParent();
+    const res = await createStudent(headers, { nickname: 'owl_0', avatarCode: 'x', yearGroup: 9 });
+    expect(res.status).toBe(400);
   });
 
   it('rejects a year group outside 7 to 13', async () => {
     const { headers } = await t.signInParent();
-    const res = await createStudent(headers, { nickname: 'owl_1', avatarCode: 'o', yearGroup: 14 });
+    const res = await createStudent(headers, {
+      nickname: 'owl_1',
+      avatarCode: AVATAR,
+      yearGroup: 14,
+    });
     expect(res.status).toBe(400);
   });
 
@@ -73,7 +90,7 @@ describe('student profiles', () => {
     const { headers } = await t.signInParent();
     const res = await createStudent(headers, {
       nickname: 'owl_2',
-      avatarCode: 'o',
+      avatarCode: AVATAR,
       yearGroup: 9,
       realName: 'Should Not Be Stored',
     });
@@ -82,20 +99,22 @@ describe('student profiles', () => {
 
   it('refuses a second student with the same nickname in the family', async () => {
     const { headers } = await t.signInParent();
-    await createStudent(headers, { nickname: 'twin', avatarCode: 'a', yearGroup: 10 });
-    const res = await createStudent(headers, { nickname: 'twin', avatarCode: 'b', yearGroup: 10 });
+    await newStudentId(headers, 'twin');
+    const res = await createStudent(headers, {
+      nickname: 'twin',
+      avatarCode: AVATAR,
+      yearGroup: 9,
+    });
     expect(res.status).toBe(409);
-    expect(await res.json()).toMatchObject({ error: 'nickname_taken' });
+    expect(await res.json()).toMatchObject({ error: { code: 'nickname_taken' } });
   });
 
   it('refuses to rename a student to a nickname already used in the family', async () => {
     const { headers } = await t.signInParent();
-    await createStudent(headers, { nickname: 'taken', avatarCode: 'a', yearGroup: 10 });
-    const other = (await (
-      await createStudent(headers, { nickname: 'free', avatarCode: 'a', yearGroup: 10 })
-    ).json()) as { id: string };
+    await newStudentId(headers, 'taken');
+    const other = await newStudentId(headers, 'free');
     const res = await t.app.request(
-      `/v1/students/${other.id}`,
+      `/v1/students/${other}`,
       jsonRequest('PATCH', { nickname: 'taken' }, headers),
     );
     expect(res.status).toBe(409);
@@ -103,28 +122,36 @@ describe('student profiles', () => {
 
   it('lists, updates and deletes the family students', async () => {
     const { headers } = await t.signInParent();
-    const created = (await (
-      await createStudent(headers, { nickname: 'maths_cat', avatarCode: 'c1', yearGroup: 10 })
-    ).json()) as { id: string };
+    const id = await newStudentId(headers, 'maths_cat');
 
     const list = await t.app.request('/v1/students', { headers });
-    expect(await list.json()).toEqual([
-      { id: created.id, nickname: 'maths_cat', avatarCode: 'c1', yearGroup: 10 },
-    ]);
+    expect(StudentListResponseSchema.parse(await list.json())).toEqual({
+      students: [{ id, nickname: 'maths_cat', avatarCode: AVATAR, yearGroup: 11 }],
+    });
 
     const patched = await t.app.request(
-      `/v1/students/${created.id}`,
-      jsonRequest('PATCH', { avatarCode: 'c2', yearGroup: 11 }, headers),
+      `/v1/students/${id}`,
+      jsonRequest('PATCH', { avatarCode: AVATAR_2, yearGroup: 12 }, headers),
     );
     expect(patched.status).toBe(200);
-    expect(await patched.json()).toMatchObject({ avatarCode: 'c2', yearGroup: 11 });
+    expect(StudentSchema.parse(await patched.json())).toMatchObject({
+      avatarCode: AVATAR_2,
+      yearGroup: 12,
+    });
 
-    const one = await t.app.request(`/v1/students/${created.id}`, { headers });
-    expect(await one.json()).toMatchObject({ nickname: 'maths_cat', avatarCode: 'c2' });
+    const one = await t.app.request(`/v1/students/${id}`, { headers });
+    expect(StudentSchema.parse(await one.json())).toMatchObject({ nickname: 'maths_cat' });
 
-    const del = await t.app.request(`/v1/students/${created.id}`, { method: 'DELETE', headers });
+    const del = await t.app.request(`/v1/students/${id}`, { method: 'DELETE', headers });
     expect(del.status).toBe(204);
-    expect((await t.app.request(`/v1/students/${created.id}`, { headers })).status).toBe(404);
+    expect((await t.app.request(`/v1/students/${id}`, { headers })).status).toBe(404);
+  });
+
+  it('rejects an update with nothing to change', async () => {
+    const { headers } = await t.signInParent();
+    const id = await newStudentId(headers, 'still_me');
+    const res = await t.app.request(`/v1/students/${id}`, jsonRequest('PATCH', {}, headers));
+    expect(res.status).toBe(400);
   });
 
   it('returns 404 for a student id that is not a valid id', async () => {
@@ -137,13 +164,12 @@ describe('family isolation', () => {
   it('never lets a parent see or change another family students', async () => {
     const a = await t.signInParent();
     const b = await t.signInParent();
-    const student = (await (
-      await createStudent(a.headers, { nickname: 'private_1', avatarCode: 'p', yearGroup: 12 })
-    ).json()) as { id: string };
+    const id = await newStudentId(a.headers, 'private_1');
 
-    expect(await (await t.app.request('/v1/students', { headers: b.headers })).json()).toEqual([]);
+    const bList = await t.app.request('/v1/students', { headers: b.headers });
+    expect(await bList.json()).toEqual({ students: [] });
 
-    const path = `/v1/students/${student.id}`;
+    const path = `/v1/students/${id}`;
     expect((await t.app.request(path, { headers: b.headers })).status).toBe(404);
     expect(
       (await t.app.request(path, jsonRequest('PATCH', { yearGroup: 7 }, b.headers))).status,
@@ -153,66 +179,82 @@ describe('family isolation', () => {
     expect(
       (
         await t.app.request(
-          `${path}/enrolments/gcse-maths`,
-          jsonRequest('PUT', { board: 'aqa', tier: 'higher' }, b.headers),
+          `${path}/enrolments`,
+          jsonRequest('POST', { subjectId: 'gcse-maths', board: 'AQA', tier: 'higher' }, b.headers),
         )
+      ).status,
+    ).toBe(404);
+    expect(
+      (
+        await t.app.request(`${path}/enrolments/gcse-maths`, {
+          method: 'DELETE',
+          headers: b.headers,
+        })
       ).status,
     ).toBe(404);
 
     // Still intact for its own family.
     const own = await t.app.request(path, { headers: a.headers });
-    expect(await own.json()).toMatchObject({ yearGroup: 12 });
+    expect(await own.json()).toMatchObject({ yearGroup: 11 });
   });
 });
 
 describe('enrolments', () => {
   it('records subject, board and tier, including "not sure"', async () => {
     const { headers } = await t.signInParent();
-    const { id } = (await (
-      await createStudent(headers, { nickname: 'chem_owl', avatarCode: 'o', yearGroup: 11 })
-    ).json()) as { id: string };
+    const id = await newStudentId(headers, 'chem_owl');
+    const enrol = (body: Record<string, unknown>) =>
+      t.app.request(`/v1/students/${id}/enrolments`, jsonRequest('POST', body, headers));
 
-    const put = await t.app.request(
-      `/v1/students/${id}/enrolments/gcse-maths`,
-      jsonRequest('PUT', { board: 'aqa', tier: 'higher', specVersion: '8300' }, headers),
-    );
-    expect(put.status).toBe(200);
-    await t.app.request(
-      `/v1/students/${id}/enrolments/gcse-chemistry`,
-      jsonRequest('PUT', { board: 'not_sure', tier: 'not_sure' }, headers),
-    );
-    // Changing an enrolment replaces it.
-    await t.app.request(
-      `/v1/students/${id}/enrolments/gcse-maths`,
-      jsonRequest('PUT', { board: 'edexcel', tier: 'foundation' }, headers),
-    );
+    const created = await enrol({
+      subjectId: 'gcse-maths',
+      board: 'AQA',
+      tier: 'higher',
+      specVersion: '8300',
+    });
+    expect(created.status).toBe(200);
+    expect(EnrolmentSchema.parse(await created.json())).toEqual({
+      studentId: id,
+      subjectId: 'gcse-maths',
+      board: 'AQA',
+      tier: 'higher',
+      specVersion: '8300',
+    });
+    await enrol({ subjectId: 'gcse-chemistry', board: 'not_sure', tier: 'not_sure' });
+    // Enrolling again in the same subject replaces it.
+    await enrol({ subjectId: 'gcse-maths', board: 'Edexcel', tier: 'foundation' });
 
     const list = await t.app.request(`/v1/students/${id}/enrolments`, { headers });
-    expect(await list.json()).toEqual([
-      { subjectId: 'gcse-chemistry', board: 'not_sure', tier: 'not_sure', specVersion: null },
-      { subjectId: 'gcse-maths', board: 'edexcel', tier: 'foundation', specVersion: null },
-    ]);
+    expect(EnrolmentListResponseSchema.parse(await list.json())).toEqual({
+      enrolments: [
+        { studentId: id, subjectId: 'gcse-chemistry', board: 'not_sure', tier: 'not_sure' },
+        { studentId: id, subjectId: 'gcse-maths', board: 'Edexcel', tier: 'foundation' },
+      ],
+    });
 
     const del = await t.app.request(`/v1/students/${id}/enrolments/gcse-chemistry`, {
       method: 'DELETE',
       headers,
     });
     expect(del.status).toBe(204);
-    const after = (await (
-      await t.app.request(`/v1/students/${id}/enrolments`, { headers })
-    ).json()) as unknown[];
-    expect(after).toHaveLength(1);
+    const after = EnrolmentListResponseSchema.parse(
+      await (await t.app.request(`/v1/students/${id}/enrolments`, { headers })).json(),
+    );
+    expect(after.enrolments).toHaveLength(1);
   });
 
-  it('rejects an unknown tier', async () => {
+  it('rejects an unknown tier or board', async () => {
     const { headers } = await t.signInParent();
-    const { id } = (await (
-      await createStudent(headers, { nickname: 'bio_owl', avatarCode: 'o', yearGroup: 11 })
-    ).json()) as { id: string };
-    const res = await t.app.request(
-      `/v1/students/${id}/enrolments/gcse-biology`,
-      jsonRequest('PUT', { board: 'aqa', tier: 'expert' }, headers),
-    );
-    expect(res.status).toBe(400);
+    const id = await newStudentId(headers, 'bio_owl');
+    for (const body of [
+      { subjectId: 'gcse-biology', board: 'AQA', tier: 'expert' },
+      { subjectId: 'gcse-biology', board: 'Hogwarts', tier: 'higher' },
+    ]) {
+      const res = await t.app.request(
+        `/v1/students/${id}/enrolments`,
+        jsonRequest('POST', body, headers),
+      );
+      expect(res.status).toBe(400);
+    }
   });
 });

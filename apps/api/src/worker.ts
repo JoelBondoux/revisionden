@@ -2,6 +2,7 @@ import { createNeonDatabase } from '@revisionden/db';
 import { createApp } from './app';
 import { createAuth } from './auth';
 import { parseEnv } from './env';
+import { errorBody } from './errors';
 import { createPasskeyService } from './passkeys';
 import { createMemoryRateLimiter } from './rate-limit';
 
@@ -48,7 +49,7 @@ export function createWorker(version: string) {
       } catch (err) {
         console.error((err as Error).message);
         return Response.json(
-          { error: 'server_misconfigured', message: 'The server is not configured correctly' },
+          errorBody('server_misconfigured', 'The server is not configured correctly'),
           { status: 500 },
         );
       }

@@ -5,7 +5,7 @@ export interface RateLimitBinding {
   limit(options: { key: string }): Promise<{ success: boolean }>;
 }
 
-const url = z.url();
+const url = z.string().url();
 const secret = z.string().min(1);
 const binding = z.custom<object>((v) => typeof v === 'object' && v !== null);
 const optionalRateLimiter = z

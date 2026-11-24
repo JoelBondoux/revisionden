@@ -1,7 +1,8 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { Hono } from 'hono';
-import { errorBodySchema, handleError } from './errors';
-import { createTestContext, jsonRequest, type TestContext } from './test/helpers';
+import { ApiErrorSchema } from '@revisionden/core';
+import { handleError } from './errors';
+import { AVATAR, createTestContext, jsonRequest, type TestContext } from './test/helpers';
 
 describe('consistent JSON errors', () => {
   let t: TestContext;
@@ -20,18 +21,20 @@ describe('consistent JSON errors', () => {
       body: '{not json',
     });
     expect(res.status).toBe(400);
-    expect(errorBodySchema.parse(await res.json())).toMatchObject({ error: 'invalid_json' });
+    expect(ApiErrorSchema.parse(await res.json())).toMatchObject({
+      error: { code: 'invalid_json' },
+    });
   });
 
   it('answers validation failures with 400 and field details', async () => {
     const { headers } = await t.signInParent();
     const res = await t.app.request(
       '/v1/students',
-      jsonRequest('POST', { nickname: '!', avatarCode: 'a', yearGroup: 10 }, headers),
+      jsonRequest('POST', { nickname: '!', avatarCode: AVATAR, yearGroup: 10 }, headers),
     );
-    const body = errorBodySchema.parse(await res.json());
-    expect(body.error).toBe('invalid_request');
-    expect(JSON.stringify(body.details)).toContain('nickname');
+    const body = ApiErrorSchema.parse(await res.json());
+    expect(body.error.code).toBe('invalid_request');
+    expect(body.error.details?.some((line) => line.startsWith('nickname:'))).toBe(true);
   });
 
   it('hides internal errors behind a generic 500', async () => {
@@ -43,9 +46,8 @@ describe('consistent JSON errors', () => {
     const res = await app.request('/boom');
     expect(res.status).toBe(500);
     const body = await res.json();
-    expect(errorBodySchema.parse(body)).toEqual({
-      error: 'internal_error',
-      message: 'Something went wrong',
+    expect(ApiErrorSchema.parse(body)).toEqual({
+      error: { code: 'internal_error', message: 'Something went wrong' },
     });
     expect(JSON.stringify(body)).not.toContain('hunter2');
   });
@@ -57,8 +59,8 @@ describe('consistent JSON errors', () => {
     );
     expect(res.status).toBeGreaterThanOrEqual(400);
     expect(res.status).toBeLessThan(500);
-    const body = errorBodySchema.parse(await res.json());
-    expect(body.error).toMatch(/^[a-z_]+$/);
+    const body = ApiErrorSchema.parse(await res.json());
+    expect(body.error.code).toMatch(/^[a-z_]+$/);
   });
 });
 
@@ -90,7 +92,9 @@ describe('rate limits', () => {
     }
     expect(res!.status).toBe(429);
     expect(res!.headers.get('retry-after')).toBe('60');
-    expect(errorBodySchema.parse(await res!.json())).toMatchObject({ error: 'rate_limited' });
+    expect(ApiErrorSchema.parse(await res!.json())).toMatchObject({
+      error: { code: 'rate_limited' },
+    });
   });
 
   it('counts each address separately', async () => {

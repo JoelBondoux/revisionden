@@ -8,7 +8,7 @@ describe('worker entry', () => {
     const worker = createWorker('00.01.000');
     const res = await worker.fetch(new Request('https://api.test/health'), {}, ctx);
     expect(res.status).toBe(500);
-    expect(await res.json()).toMatchObject({ error: 'server_misconfigured' });
+    expect(await res.json()).toMatchObject({ error: { code: 'server_misconfigured' } });
   });
 
   it('serves health once the environment is complete', async () => {

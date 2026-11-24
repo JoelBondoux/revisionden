@@ -2,6 +2,7 @@ import { createTestDb } from '@revisionden/db/testing';
 import { authSessions, authUsers } from '@revisionden/db';
 import type { Database } from '@revisionden/db';
 import { makeSignature } from 'better-auth/crypto';
+import { DEFAULT_AVATAR, encodeAvatar } from '@revisionden/core';
 import { createApp } from '../app';
 import { createAuth } from '../auth';
 import type { AppConfig } from '../env';
@@ -19,6 +20,10 @@ export const TEST_CONFIG: AppConfig = {
   aiGatewayUrl: 'https://gateway.example.com/v1/test',
   passkeyRpId: 'dev.revisionden.test',
 };
+
+/** A valid avatar code (core format). */
+export const AVATAR = encodeAvatar(DEFAULT_AVATAR);
+export const AVATAR_2 = encodeAvatar({ ...DEFAULT_AVATAR, skin: 2, eyes: 1 });
 
 export interface TestClock {
   now(): Date;

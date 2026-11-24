@@ -1,5 +1,5 @@
 {
-  "id": "dd76f4e7-4981-4be3-a659-94273a475e2c",
+  "id": "1b1e1e5a-ec9b-4c6e-aaf4-fa4645fca76d",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -23,7 +23,7 @@
         },
         "item_id": {
           "name": "item_id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -653,7 +653,8 @@
           "name": "tier",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": "'not_sure'"
         },
         "spec_version": {
           "name": "spec_version",
@@ -692,7 +693,7 @@
       "checkConstraints": {
         "enrolments_tier_values": {
           "name": "enrolments_tier_values",
-          "value": "\"enrolments\".\"tier\" is null or \"enrolments\".\"tier\" in ('foundation', 'higher', 'not_sure')"
+          "value": "\"enrolments\".\"tier\" in ('foundation', 'higher', 'none', 'not_sure')"
         }
       },
       "isRLSEnabled": false
@@ -806,9 +807,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "topic_id": {
           "name": "topic_id",
@@ -1130,7 +1132,7 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": "'system'"
+          "default": "'auto'"
         }
       },
       "indexes": {},

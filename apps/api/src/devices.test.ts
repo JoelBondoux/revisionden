@@ -1,5 +1,12 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { createTestContext, jsonRequest, TEST_CONFIG, type TestContext } from './test/helpers';
+import { StudentSchema } from '@revisionden/core';
+import {
+  AVATAR,
+  createTestContext,
+  jsonRequest,
+  TEST_CONFIG,
+  type TestContext,
+} from './test/helpers';
 import { createSoftAuthenticator } from './test/soft-authenticator';
 
 let t: TestContext;
@@ -27,7 +34,7 @@ async function familyWithStudent(nickname = 'quiz_fox') {
   const parent = await t.signInParent();
   const res = await t.app.request(
     '/v1/students',
-    jsonRequest('POST', { nickname, avatarCode: 'fx01', yearGroup: 11 }, parent.headers),
+    jsonRequest('POST', { nickname, avatarCode: AVATAR, yearGroup: 11 }, parent.headers),
   );
   const student = (await res.json()) as { id: string };
   return { ...parent, studentId: student.id };
@@ -113,7 +120,7 @@ describe('device link tokens', () => {
     t.clock.advance(TEN_MINUTES + 1000);
     const res = await redeem(token, familyId);
     expect(res.status).toBe(400);
-    expect(await res.json()).toMatchObject({ error: 'invalid_link_token' });
+    expect(await res.json()).toMatchObject({ error: { code: 'invalid_link_token' } });
   });
 
   it('cannot be reused', async () => {
@@ -122,7 +129,7 @@ describe('device link tokens', () => {
     expect((await redeem(token, familyId)).status).toBe(200);
     const again = await redeem(token, familyId);
     expect(again.status).toBe(400);
-    expect(await again.json()).toMatchObject({ error: 'invalid_link_token' });
+    expect(await again.json()).toMatchObject({ error: { code: 'invalid_link_token' } });
   });
 
   it('cannot be redeemed for the wrong family, and the attempt does not use it up', async () => {
@@ -133,7 +140,7 @@ describe('device link tokens', () => {
 
     const wrong = await redeem(token, bFamily);
     expect(wrong.status).toBe(400);
-    expect(await wrong.json()).toMatchObject({ error: 'invalid_link_token' });
+    expect(await wrong.json()).toMatchObject({ error: { code: 'invalid_link_token' } });
     expect((await redeem(token, familyId)).status).toBe(200);
   });
 
@@ -157,15 +164,15 @@ describe('passkey registration and unlock', () => {
 
     const me = await t.app.request('/v1/student/me', { headers: { cookie } });
     expect(me.status).toBe(200);
-    expect(await me.json()).toEqual({
+    expect(StudentSchema.parse(await me.json())).toEqual({
       id: studentId,
       nickname: 'linked_1',
-      avatarCode: 'fx01',
+      avatarCode: AVATAR,
       yearGroup: 11,
     });
 
     const devices = await t.app.request(`/v1/students/${studentId}/devices`, { headers });
-    expect(((await devices.json()) as unknown[]).length).toBe(1);
+    expect(((await devices.json()) as { devices: unknown[] }).devices).toHaveLength(1);
   });
 
   it('will not accept the same registration challenge twice', async () => {
@@ -186,7 +193,7 @@ describe('passkey registration and unlock', () => {
     expect((await send()).status).toBe(201);
     const again = await send();
     expect(again.status).toBe(400);
-    expect(await again.json()).toMatchObject({ error: 'invalid_challenge' });
+    expect(await again.json()).toMatchObject({ error: { code: 'invalid_challenge' } });
   });
 
   it('rejects a passkey registration that fails verification', async () => {
@@ -204,7 +211,7 @@ describe('passkey registration and unlock', () => {
       }),
     );
     expect(res.status).toBe(400);
-    expect(await res.json()).toMatchObject({ error: 'passkey_not_verified' });
+    expect(await res.json()).toMatchObject({ error: { code: 'passkey_not_verified' } });
   });
 
   it('unlocks a linked device later with its passkey', async () => {
@@ -238,7 +245,7 @@ describe('passkey registration and unlock', () => {
       jsonRequest('POST', { challengeId, response: softDevice().authenticate(options) }),
     );
     expect(res.status).toBe(400);
-    expect(await res.json()).toMatchObject({ error: 'passkey_not_verified' });
+    expect(await res.json()).toMatchObject({ error: { code: 'passkey_not_verified' } });
   });
 
   it('refuses an unlock challenge that has expired', async () => {
@@ -253,7 +260,7 @@ describe('passkey registration and unlock', () => {
       jsonRequest('POST', { challengeId, response: device.authenticate(options) }),
     );
     expect(res.status).toBe(400);
-    expect(await res.json()).toMatchObject({ error: 'invalid_challenge' });
+    expect(await res.json()).toMatchObject({ error: { code: 'invalid_challenge' } });
   });
 
   it('locks the device: the student session stops working', async () => {
@@ -282,9 +289,11 @@ describe('passkey registration and unlock', () => {
   it('lets the parent unlink a device, which ends its session', async () => {
     const { headers, studentId } = await familyWithStudent();
     const { cookie } = await linkDevice(headers, studentId);
-    const [device] = (await (
-      await t.app.request(`/v1/students/${studentId}/devices`, { headers })
-    ).json()) as { id: string }[];
+    const {
+      devices: [device],
+    } = (await (await t.app.request(`/v1/students/${studentId}/devices`, { headers })).json()) as {
+      devices: { id: string }[];
+    };
 
     const other = await t.signInParent();
     expect(

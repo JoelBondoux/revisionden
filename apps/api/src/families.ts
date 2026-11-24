@@ -1,7 +1,7 @@
 import { and, eq } from 'drizzle-orm';
 import { families, parents, students, type Database } from '@revisionden/db';
 import { notFound } from './errors';
-import { uuidSchema } from './validation';
+import { isId } from './validation';
 
 export interface ParentContext {
   parentId: string;
@@ -46,7 +46,7 @@ export async function findFamilyStudent(db: Database, familyId: string, studentI
 
 /** Like findFamilyStudent, but a missing or foreign student is a 404. */
 export async function requireFamilyStudent(db: Database, familyId: string, studentId: string) {
-  if (!uuidSchema.safeParse(studentId).success) throw notFound('Student not found');
+  if (!isId(studentId)) throw notFound('Student not found');
   const student = await findFamilyStudent(db, familyId, studentId);
   if (!student) throw notFound('Student not found');
   return student;

@@ -1,23 +1,15 @@
 import type { Context } from 'hono';
 import type { ContentfulStatusCode } from 'hono/utils/http-status';
 import { z } from 'zod';
+import { readableErrors, type ApiError as ApiErrorBody } from '@revisionden/core';
 
-// TODO(workstream C): move to packages/core as the shared API error schema.
-export const errorBodySchema = z.object({
-  error: z.string(),
-  message: z.string(),
-  details: z.unknown().optional(),
-});
-
-export type ErrorBody = z.infer<typeof errorBodySchema>;
-
-/** An error that becomes a JSON response in the shared error shape. */
+/** An error that becomes a JSON response in the shared shape (`ApiErrorSchema` in core). */
 export class ApiError extends Error {
   constructor(
     readonly status: ContentfulStatusCode,
     readonly code: string,
     message: string,
-    readonly details?: unknown,
+    readonly details?: string[],
   ) {
     super(message);
   }
@@ -26,10 +18,12 @@ export class ApiError extends Error {
 export const notFound = (message = 'Not found') => new ApiError(404, 'not_found', message);
 export const unauthorized = () => new ApiError(401, 'unauthorized', 'Sign in to continue');
 
+export function errorBody(code: string, message: string, details?: string[]): ApiErrorBody {
+  return { error: details ? { code, message, details } : { code, message } };
+}
+
 export function errorResponse(c: Context, err: ApiError) {
-  const body: ErrorBody = { error: err.code, message: err.message };
-  if (err.details !== undefined) body.details = err.details;
-  return c.json(body, err.status);
+  return c.json(errorBody(err.code, err.message, err.details), err.status);
 }
 
 export function handleError(err: Error, c: Context) {
@@ -37,7 +31,7 @@ export function handleError(err: Error, c: Context) {
   if (err instanceof z.ZodError) {
     return errorResponse(
       c,
-      new ApiError(400, 'invalid_request', 'The request is not valid', z.treeifyError(err)),
+      new ApiError(400, 'invalid_request', 'The request is not valid', readableErrors(err)),
     );
   }
   console.error('Unhandled error', err);
@@ -50,10 +44,10 @@ export async function toSharedErrorShape(res: Response): Promise<Response> {
     return res;
   }
   const original = (await res.clone().json()) as { code?: unknown; message?: unknown };
-  const body: ErrorBody = {
-    error: typeof original.code === 'string' ? original.code.toLowerCase() : 'auth_error',
-    message: typeof original.message === 'string' ? original.message : 'Sign-in failed',
-  };
+  const body = errorBody(
+    typeof original.code === 'string' ? original.code.toLowerCase() : 'auth_error',
+    typeof original.message === 'string' ? original.message : 'Sign-in failed',
+  );
   const headers = new Headers(res.headers);
   headers.delete('content-length');
   return new Response(JSON.stringify(body), { status: res.status, headers });

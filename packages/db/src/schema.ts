@@ -146,19 +146,16 @@ export const enrolments = pgTable(
       .notNull()
       .references(() => students.id, { onDelete: 'cascade' }),
     subjectId: text('subject_id').notNull(),
-    // Exam board code (for example 'aqa'), or 'not_sure'.
+    // Exam board as in core's BoardSchema (for example 'AQA'), or 'not_sure'.
     board: text('board').notNull().default('not_sure'),
-    // 'foundation', 'higher', 'not_sure', or null when the subject has no tiers.
-    tier: text('tier'),
+    // As in core's TierSchema: 'none' when the subject has no tiers.
+    tier: text('tier').notNull().default('not_sure'),
     specVersion: text('spec_version'),
     createdAt: createdAt(),
   },
   (t) => [
     primaryKey({ columns: [t.studentId, t.subjectId] }),
-    check(
-      'enrolments_tier_values',
-      sql`${t.tier} is null or ${t.tier} in ('foundation', 'higher', 'not_sure')`,
-    ),
+    check('enrolments_tier_values', sql`${t.tier} in ('foundation', 'higher', 'none', 'not_sure')`),
   ],
 );
 
@@ -256,7 +253,7 @@ export const topics = pgTable(
 export const items = pgTable(
   'items',
   {
-    id: text('id').primaryKey(),
+    id: uuid('id').primaryKey().defaultRandom(),
     topicId: text('topic_id')
       .notNull()
       .references(() => topics.id, { onDelete: 'cascade' }),
@@ -280,7 +277,7 @@ export const attempts = pgTable(
     studentId: uuid('student_id')
       .notNull()
       .references(() => students.id, { onDelete: 'cascade' }),
-    itemId: text('item_id')
+    itemId: uuid('item_id')
       .notNull()
       .references(() => items.id, { onDelete: 'cascade' }),
     correct: boolean('correct').notNull(),
@@ -347,9 +344,9 @@ export const plans = pgTable(
       .references(() => students.id, { onDelete: 'cascade' }),
     weekStart: date('week_start').notNull(),
     sessions: jsonb('sessions').notNull(),
-    editedBy: text('edited_by', { enum: ['system', 'parent', 'student'] })
+    editedBy: text('edited_by', { enum: ['auto', 'parent', 'student'] })
       .notNull()
-      .default('system'),
+      .default('auto'),
   },
   (t) => [unique('plans_student_week_unique').on(t.studentId, t.weekStart)],
 );

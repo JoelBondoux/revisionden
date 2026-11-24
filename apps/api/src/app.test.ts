@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { errorBodySchema } from './errors';
+import { ApiErrorSchema } from '@revisionden/core';
 import { createTestContext, type TestContext } from './test/helpers';
 
 let t: TestContext;
@@ -23,13 +23,15 @@ describe('API', () => {
     const res = await t.app.request('/nope');
     expect(res.status).toBe(404);
     const body = await res.json();
-    expect(errorBodySchema.parse(body)).toEqual({ error: 'not_found', message: 'Not found' });
+    expect(ApiErrorSchema.parse(body)).toEqual({
+      error: { code: 'not_found', message: 'Not found' },
+    });
   });
 
   it('rejects anonymous requests to parent routes with 401', async () => {
     const res = await t.app.request('/v1/me');
     expect(res.status).toBe(401);
-    expect(await res.json()).toMatchObject({ error: 'unauthorized' });
+    expect(await res.json()).toMatchObject({ error: { code: 'unauthorized' } });
   });
 
   it('lets the web app call the API with cookies (CORS for the web origin only)', async () => {
