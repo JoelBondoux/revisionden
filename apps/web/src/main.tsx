@@ -4,6 +4,7 @@ import './design/base.css';
 import './components/components.css';
 import './layout/layout.css';
 import { App } from './App';
+import { registerServiceWorker } from './pwa/register';
 
 /** Until the real API (workstream B) is live, development uses the MSW mock API. */
 async function startMocks() {
@@ -20,3 +21,5 @@ void startMocks().then(() => {
     </StrictMode>,
   );
 });
+
+void registerServiceWorker(navigator, import.meta.env.PROD);

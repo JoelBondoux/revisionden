@@ -45,4 +45,17 @@ describe('routes', () => {
       '#main',
     );
   });
+
+  it.each(['/learn', '/lesson/demo'])(
+    'shows the offline banner on %s when offline',
+    async (path) => {
+      Object.defineProperty(navigator, 'onLine', { configurable: true, get: () => false });
+      try {
+        renderRoute(path);
+        expect(await screen.findByText(/you're offline/i)).toBeInTheDocument();
+      } finally {
+        Object.defineProperty(navigator, 'onLine', { configurable: true, get: () => true });
+      }
+    },
+  );
 });

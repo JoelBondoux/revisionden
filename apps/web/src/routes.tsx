@@ -2,6 +2,7 @@ import type { RouteObject } from 'react-router-dom';
 import { AppLayout, FocusLayout } from './layout/AppLayout';
 import { ComingSoon } from './pages/ComingSoon';
 import { FamilyPage } from './pages/FamilyPage';
+import { InstallHelpPage } from './pages/InstallHelpPage';
 import { LessonCompletePage } from './pages/LessonCompletePage';
 import { LessonPage } from './pages/LessonPage';
 import { NotFoundPage } from './pages/NotFoundPage';
@@ -47,6 +48,7 @@ export const routes: RouteObject[] = [
         ),
       },
       { path: '/settings', element: <SettingsPage /> },
+      { path: '/install', element: <InstallHelpPage /> },
     ],
   },
 ];
