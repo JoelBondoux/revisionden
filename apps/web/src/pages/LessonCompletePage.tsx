@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ButtonLink } from '../components/Button';
 import { Card } from '../components/Card';
 import { Pip } from '../components/Pip';
+import { useSound } from '../features/sound';
 
 export interface LessonResults {
   xpEarned: number;
@@ -18,6 +20,8 @@ function isLessonResults(value: unknown): value is LessonResults {
 export function LessonCompletePage() {
   const { state } = useLocation();
   const results = isLessonResults(state) ? state : null;
+  const { play } = useSound();
+  useEffect(() => void play('celebration'), [play]);
 
   return (
     <div className="complete stack">

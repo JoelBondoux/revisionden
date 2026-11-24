@@ -5,6 +5,7 @@ import { ApiError } from '../../api/client';
 import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { ProgressBar } from '../../components/ProgressBar';
+import { useSound } from '../sound';
 import { useLearnApi } from './learnApi';
 import { DraftBanner, ItemInput, toAnswer, type Draft } from './parts';
 
@@ -20,6 +21,8 @@ function Results({
   timeUp: boolean;
   subjectId: string;
 }) {
+  const { play } = useSound();
+  useEffect(() => void play('reveal', { mode: 'test' }), [play]);
   return (
     <div className="complete">
       <Card title="Your starting point">
@@ -57,6 +60,7 @@ function Runner({
   onFinished: (result: StartingTestResult, timeUp: boolean) => void;
 }) {
   const api = useLearnApi();
+  const { play } = useSound();
   const [index, setIndex] = useState(0);
   const [draft, setDraft] = useState<Draft>(null);
   const [busy, setBusy] = useState(false);
@@ -65,6 +69,7 @@ function Runner({
   const startedAt = useRef(Date.now());
   const shownAt = useRef(Date.now());
   const finishing = useRef(false);
+  const warned = useRef(false);
 
   const finish = useCallback(
     async (timeUp: boolean) => {
@@ -87,10 +92,14 @@ function Runner({
         test.timeLimitSeconds - Math.floor((Date.now() - startedAt.current) / 1000),
       );
       setSecondsLeft(left);
+      if (left <= 60 && !warned.current && test.timeLimitSeconds > 60) {
+        warned.current = true;
+        play('timerWarning', { mode: 'test' });
+      }
       if (left === 0) void finish(true);
     }, 250);
     return () => clearInterval(timer);
-  }, [finish, test.timeLimitSeconds]);
+  }, [finish, play, test.timeLimitSeconds]);
 
   const item = test.items[index]!;
   const isLast = index === test.items.length - 1;
@@ -101,6 +110,7 @@ function Runner({
     setError(false);
     try {
       if (!skip && answer !== null) {
+        play('submit', { mode: 'test' });
         await api.submitAttempt({
           itemId: item.id,
           answer,
@@ -127,7 +137,7 @@ function Runner({
     <div className="lesson">
       <div className="lesson__top">
         <ProgressBar label="Test progress" tone="success" value={index} max={test.items.length} />
-        <span className="timer" aria-live="off">
+        <span className={`timer${secondsLeft <= 60 ? ' timer--warning' : ''}`} aria-live="off">
           {clockText(secondsLeft)}
         </span>
       </div>
