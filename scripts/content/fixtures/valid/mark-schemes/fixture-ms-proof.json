@@ -1,0 +1,17 @@
+{
+  "id": "fixture-ms-proof",
+  "type": "levels",
+  "source_ref": "Made-up levels for tests",
+  "levels": [
+    {
+      "level": 1,
+      "marks": [1, 1],
+      "descriptor": "Starts a correct method"
+    },
+    {
+      "level": 2,
+      "marks": [2, 3],
+      "descriptor": "Complete argument"
+    }
+  ]
+}

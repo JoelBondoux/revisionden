@@ -1,0 +1,29 @@
+{
+  "id": "fixture-tree",
+  "subject": "gcse-maths",
+  "board": "edexcel",
+  "tier": "higher",
+  "specification": {
+    "code": "1MA1",
+    "title": "GCSE Mathematics",
+    "url": "https://example.org/spec"
+  },
+  "topics": [
+    {
+      "id": "fixture-algebra",
+      "title": "Algebra",
+      "children": [
+        {
+          "id": "fixture-a6",
+          "title": "Proof",
+          "spec_ref": ["A6"]
+        },
+        {
+          "id": "fixture-a17",
+          "title": "Linear equations",
+          "spec_ref": ["A17"]
+        }
+      ]
+    }
+  ]
+}

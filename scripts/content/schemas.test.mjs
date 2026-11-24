@@ -4,6 +4,12 @@ import { createValidators } from './schemas.mjs';
 
 const v = createValidators();
 
+const without = (obj, key) => {
+  const copy = { ...obj };
+  delete copy[key];
+  return copy;
+};
+
 const base = {
   id: 'gcse-maths-h-a17-0001',
   topic: 'gcse-maths-h-a17',
@@ -68,7 +74,7 @@ for (const [type, item] of Object.entries(samples)) {
 }
 
 test('an item without a source reference fails', () => {
-  const { source_ref: _drop, ...item } = samples.numeric;
+  const item = without(samples.numeric, 'source_ref');
   assert.equal(v.item(item), false);
   assert.match(JSON.stringify(v.item.errors), /source_ref/);
 });
@@ -78,7 +84,7 @@ test('an item with an empty source reference fails', () => {
 });
 
 test('an item without checked_by fails, and so does an empty list', () => {
-  const { checked_by: _drop, ...item } = samples.flashcard;
+  const item = without(samples.flashcard, 'checked_by');
   assert.equal(v.item(item), false);
   assert.equal(v.item({ ...samples.flashcard, checked_by: [] }), false);
 });
@@ -88,7 +94,7 @@ test('an unknown item type fails', () => {
 });
 
 test('a numeric item without a verify expression fails', () => {
-  const { verify: _drop, ...item } = samples.numeric;
+  const item = without(samples.numeric, 'verify');
   assert.equal(v.item(item), false);
 });
 
@@ -108,7 +114,7 @@ test('a worked maths item can check an expression answer in a required form', ()
 });
 
 test('an extended answer must point at a mark scheme', () => {
-  const { mark_scheme_ref: _drop, ...item } = samples.extended_answer;
+  const item = without(samples.extended_answer, 'mark_scheme_ref');
   assert.equal(v.item(item), false);
 });
 

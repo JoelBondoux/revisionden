@@ -15,6 +15,7 @@
     "test": "pnpm -r --if-present test",
     "test:coverage": "pnpm -r --if-present test:coverage",
     "test:scripts": "node --test scripts/*.test.mjs",
+    "content:validate": "node scripts/content/cli.mjs",
     "version:show": "node scripts/bump-version.mjs --show",
     "version:bump": "node scripts/bump-version.mjs"
   },

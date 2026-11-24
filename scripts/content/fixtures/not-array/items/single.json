@@ -1,0 +1,16 @@
+{
+  "id": "fixture-a17-0001",
+  "topic": "fixture-a17",
+  "type": "numeric",
+  "difficulty": 1,
+  "prompt": "Work out 2 + 2",
+  "answer": {
+    "value": "4"
+  },
+  "verify": {
+    "expression": "2 + 2"
+  },
+  "marks": 1,
+  "source_ref": "A17",
+  "checked_by": ["maths-engine"]
+}

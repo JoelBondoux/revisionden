@@ -1,0 +1,29 @@
+[
+  {
+    "id": "fixture-a17-0001",
+    "topic": "fixture-a17",
+    "type": "numeric",
+    "difficulty": 1,
+    "prompt": "Work out 2 + 2",
+    "answer": {
+      "value": "4"
+    },
+    "verify": {
+      "expression": "2 + 2"
+    },
+    "marks": 1,
+    "source_ref": "A17",
+    "checked_by": ["maths-engine"]
+  },
+  {
+    "id": "fixture-a6-0001",
+    "topic": "fixture-a6",
+    "type": "extended_answer",
+    "difficulty": 3,
+    "prompt": "Show that the sum of two even numbers is even.",
+    "marks": 3,
+    "mark_scheme_ref": "fixture-ms-proof",
+    "source_ref": "A6",
+    "checked_by": ["human"]
+  }
+]
