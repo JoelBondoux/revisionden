@@ -179,6 +179,16 @@
 - [ ] V7 Double AI marking with criterion citations and disagreement flagging; golden-set evals with the pass bars in `AI.md`.
 - Tests: each checker red/green with known-good and known-bad fixtures; audit report snapshot test.
 
+### R. Five-year rewards progression (`packages/core`, catalogue data, avatar layers)
+
+- [ ] R1 Level curve (1 to 100 plus prestige) from XP, tuned so daily practice reaches about level 20 a year.
+- [ ] R2 Catalogue as data with rarity, source (level, chapter, milestone, collection, season) and unlock target; validator for unique ids and reachable targets.
+- [ ] R3 Year chapters (Years 9 to 13) and milestone ladders from `REWARDS.md`, with carry-over from GCSE to A-Level and mid-way joiners.
+- [ ] R4 Collections and set bonuses; seasonal drops with term windows and later re-release.
+- [ ] R5 Parent-set real-world rewards tied to any target, marked as given by the parent.
+- [ ] R6 First seasonal drop and chapter 2 (Year 10) item art as original SVG layers.
+- Tests: curve properties (monotonic, reachable), each target type unlocks once, no reward for late-night study or time spent, catalogue validator fixtures.
+
 ## Stage 2 and later
 
 Broken down into tasks when Stage 1 ships, following the same format. Headline order:

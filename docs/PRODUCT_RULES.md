@@ -91,6 +91,10 @@
 
 ## Rewards (avatar unlocks)
 
+The full five-year progression (levels 1 to 100, year chapters, milestones, collections,
+seasonal drops, rarity, parent-set rewards) is in [`REWARDS.md`](REWARDS.md). The current
+implemented catalogue is the first slice of it:
+
 Targets vary: streaks (7, 30, 100 days), grades (target hit in a mock, every target at an
 assessment), practice (full past paper, 10 weak spots fixed, 10 topics mastered, perfect set),
 friendship (gift 3 days, gift to 5 friends), competition (top of friends league for a week), and
