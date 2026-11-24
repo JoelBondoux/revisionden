@@ -108,3 +108,9 @@ Tags: #product #rules #limits #defaults
 - Sessions drag between days and open an editable detail panel. Edits can become per-student rules
   ("Always do Maths on Wednesdays") that the planner applies every week; rules can be toggled or
   removed; conflicts are reported, not silently broken. Detail: `docs/PRODUCT_RULES.md`.
+
+## Build environments
+
+- Content and verification sessions run in the `revisionden` cloud environment, which can reach
+  the exam board sites (Pearson, AQA, OCR, WJEC/Eduqas) and gov.uk. Other sessions use the default
+  environment, which cannot.
