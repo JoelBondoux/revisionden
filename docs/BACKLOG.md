@@ -26,23 +26,23 @@
 
 ### A. Web foundations and design system (`apps/web`)
 
-- [ ] **A1 Design tokens.** Colours, type (Nunito), spacing, radii, shadows from the mockups as CSS
+- [x] **A1 Design tokens.** Colours, type (Nunito), spacing, radii, shadows from the mockups as CSS
       variables; light theme first.
   - Test: token file exports every named token; contrast check script passes 4.5:1 for text pairs.
-- [ ] **A2 Core components.** `Button` (primary, secondary, danger, 3D press), `Pill`, `ProgressBar`,
+- [x] **A2 Core components.** `Button` (primary, secondary, danger, 3D press), `Pill`, `ProgressBar`,
       `Card`, `BottomNav`, `Toast`, `Sheet`, `Avatar` (renders from avatar code, placeholder until E).
   - Tests: renders label; disabled state not clickable; `ProgressBar` exposes `role=progressbar`
     with correct values; `Toast` announces via `role=status`.
-- [ ] **A3 Routing and layout.** Routes for welcome, family, path, lesson, lesson complete,
+- [x] **A3 Routing and layout.** Routes for welcome, family, path, lesson, lesson complete,
       progress, plan, settings; phone layout with bottom nav, tablet and desktop with side nav.
   - Tests: each route renders its heading; unknown route shows a friendly 404.
-- [ ] **A4 API client and mocks.** Typed client using Zod schemas from `packages/core`; MSW
+- [x] **A4 API client and mocks.** Typed client using Zod schemas from `packages/core`; MSW
       handlers for development and tests.
   - Tests: client rejects responses that fail the schema; network error shows retry UI.
-- [ ] **A5 PWA.** Manifest (name, icons, theme colour), service worker caching the app shell,
+- [x] **A5 PWA.** Manifest (name, icons, theme colour), service worker caching the app shell,
       offline banner, "Add to Home Screen" help screen for iPad.
   - Tests: manifest valid; offline banner shows when `navigator.onLine` is false.
-- [ ] **A6 Screen shells.** Welcome and sign-in, learning path, lesson question, lesson complete,
+- [x] **A6 Screen shells.** Welcome and sign-in, learning path, lesson question, lesson complete,
       matching the mockups, wired to MSW data.
   - Tests: path shows locked, done, current and weak-spot nodes; lesson shows answer feedback.
 

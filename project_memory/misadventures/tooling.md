@@ -11,3 +11,13 @@ Tags: #tooling #ci
   `gh pr list`. Use the REST API instead, e.g.
   `gh api repos/JoelBondoux/revisionden/pulls -f title='...' -f head='feature/x' -f base='dev' -f body='...'`
   and `gh api repos/JoelBondoux/revisionden/pulls?state=open`.
+- **`pnpm add` leaves `pnpm-lock.yaml` failing `pnpm format:check`.** pnpm writes the lockfile in
+  its own style and Prettier checks it. Run `npx prettier --write pnpm-lock.yaml` after changing
+  dependencies (pnpm still reads it), or add the lockfile to a root `.prettierignore`.
+- **Vitest returns an empty string for `import css from './file.css?raw'`.** Read the file with
+  `readFileSync(join(__dirname, 'file.css'))` instead; `new URL(..., import.meta.url)` fails
+  under jsdom because the URL is not `file:`.
+- **`new Request(url, { mode: 'navigate' })` throws in Node.** To test a service worker's page
+  handling, pass a plain object `{ url, method: 'GET', mode: 'navigate' }` instead.
+- **The root ESLint config has no `react-hooks` plugin**, so an
+  `eslint-disable react-hooks/...` comment is itself a lint error.

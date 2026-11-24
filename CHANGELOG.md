@@ -5,6 +5,15 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ## [Unreleased]
 
+### Added
+
+- Web: design tokens from the mockups (Nunito, violet, 3D edges) with a 4.5:1 contrast check (A1).
+- Web: core components: Button, Pill, ProgressBar, Card, BottomNav, Toast, Sheet, Avatar and Pip the fox (A2).
+- Web: routes for every Stage 1 screen, a friendly 404, bottom nav on phones and a side nav on tablets and desktops (A3).
+- Web: typed API client that checks every response, with retry UI and an MSW mock API for development and tests (A4).
+- Web: installable PWA with icons, an offline app shell, an offline banner and Add to Home Screen help for iPad (A5).
+- Web: welcome, family, learning path, lesson and lesson complete screens wired to mock data (A6).
+
 ## [00.01.002] - 2026-11-24
 
 ## [00.01.001] - 2026-11-24
