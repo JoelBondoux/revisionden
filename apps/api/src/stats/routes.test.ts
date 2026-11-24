@@ -231,6 +231,16 @@ describe('GET /v1/students/:id/stats and /dashboard (parent)', () => {
       );
     expect((await dashboard()).healthyHabits.quietHourSessions).toBe(1);
     expect((await dashboard()).healthyHabits.restDays).toBe(1);
+    // Flashcard practice on Monday makes it a study day, not a rest day.
+    await ctx.db.insert(flashcards).values({
+      studentId,
+      topicId: 'stats-topic-a',
+      origin: 'own',
+      front: 'Own card front',
+      back: 'Own card back',
+      lastReviewedAt: new Date(Date.parse('2026-11-23T17:00:00Z')),
+    });
+    expect((await dashboard()).healthyHabits.restDays).toBe(0);
     // In a time zone where 09:00 UTC is the evening, it is not quiet time.
     await ctx.db
       .insert(reminderSettings)
