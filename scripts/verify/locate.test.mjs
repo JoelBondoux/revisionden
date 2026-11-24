@@ -57,7 +57,7 @@ test('fails when the stated code is not next to the quote', () => {
   });
   assert.equal(r.found, true);
   assert.equal(r.locationConfirmed, false);
-  assert.match(r.reason, /N6 is not next to the quote/);
+  assert.match(r.reason, /the nearest code before the quote is A17, not N6/);
 });
 
 test('a code must match as a whole word (A1 is not A17)', () => {
@@ -99,4 +99,45 @@ test('a web page has no page numbers, so a page location cannot be confirmed the
   });
   assert.equal(r.locationConfirmed, false);
   assert.match(r.reason, /web page has no page numbers/);
+});
+
+test('a page location may use the printed page number instead of the PDF page number', () => {
+  const r = locateQuote({ quote: 'solve linear equations', location: 'page 5' }, spec, {
+    labels: [null, '4', '5'],
+  });
+  assert.equal(r.locationConfirmed, true);
+  assert.equal(r.page, 3);
+});
+
+test('the wrong printed page number still fails', () => {
+  const r = locateQuote({ quote: 'solve linear equations', location: 'page 4' }, spec, {
+    labels: [null, '4', '5'],
+  });
+  assert.equal(r.locationConfirmed, false);
+  assert.match(r.reason, /found on page 3 \(printed page 5\), not page 4/);
+});
+
+test('a code that comes just after the quote does not confirm the location', () => {
+  const pages = ['N7 calculate with roots, and with integer indices N8 calculate exactly'];
+  const r = locateQuote({ quote: 'calculate with roots', location: 'N8' }, pages);
+  assert.equal(r.locationConfirmed, false);
+  assert.match(r.reason, /the nearest code before the quote is N7, not N8/);
+});
+
+test('the nearest code before the quote must be the stated one, not an earlier one', () => {
+  const pages = ['N6 use powers N7 calculate with roots'];
+  const r = locateQuote({ quote: 'calculate with roots', location: 'N6' }, pages);
+  assert.equal(r.locationConfirmed, false);
+});
+
+test('a section code also confirms a quote from one of its subsections', () => {
+  const pages = ['4.2 Topic 4.2.1 Sub topic 4.2.1.3 fixture quoted words here'];
+  const r = locateQuote({ quote: 'fixture quoted words', location: 'section 4.2.1' }, pages);
+  assert.equal(r.locationConfirmed, true);
+});
+
+test('a code inside the quote itself confirms the location', () => {
+  const pages = ['N7 calculate with roots'];
+  const r = locateQuote({ quote: 'N7 calculate with roots', location: 'N7' }, pages);
+  assert.equal(r.locationConfirmed, true);
 });

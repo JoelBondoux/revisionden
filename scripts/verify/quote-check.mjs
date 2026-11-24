@@ -26,7 +26,10 @@ export async function checkCitation(citation, store) {
   } catch (err) {
     return { ...base, result: 'fail', reason: err.message };
   }
-  const found = locateQuote(citation, text.pages, { paged: text.kind === 'pdf' });
+  const found = locateQuote(citation, text.pages, {
+    paged: text.kind === 'pdf',
+    labels: text.labels,
+  });
   return {
     ...base,
     sha256: source.sha256,

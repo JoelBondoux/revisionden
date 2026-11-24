@@ -52,3 +52,18 @@ test('refuses a file type it cannot read', async () => {
     /cannot read image\/png/,
   );
 });
+
+test('reads the printed page number of each PDF page when it has one', async () => {
+  const pdf = buildPdf([
+    ['Cover page with no number'],
+    ['Fixture specification header', '5', 'Body text of the page'],
+    ['Body text', 'more body', '6'],
+  ]);
+  const { labels } = await extractText(pdf, 'application/pdf');
+  assert.deepEqual(labels, [null, '5', '6']);
+});
+
+test('web pages have no printed page numbers', async () => {
+  const { labels } = await extractText(new TextEncoder().encode('<p>5</p>'), 'text/html');
+  assert.deepEqual(labels, [null]);
+});

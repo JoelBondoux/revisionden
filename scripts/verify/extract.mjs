@@ -43,11 +43,27 @@ async function pdfPages(bytes) {
   return pages;
 }
 
-/** { kind: 'pdf' | 'html', pages: string[] } for the bytes of a fetched source. */
+/** The printed page number: a line holding only a number among the first or last 4 lines. */
+function printedPageNumber(text) {
+  const lines = text
+    .split('\n')
+    .map((l) => l.trim())
+    .filter(Boolean);
+  const edges = [...lines.slice(0, 4), ...lines.slice(-4)];
+  return edges.find((l) => /^\d{1,4}$/.test(l)) ?? null;
+}
+
+/**
+ * { kind: 'pdf' | 'html', pages: string[], labels: (string | null)[] } for a fetched source.
+ * labels: the printed page number of each page, where one can be read.
+ */
 export async function extractText(bytes, contentType = '') {
-  if (isPdf(bytes, contentType)) return { kind: 'pdf', pages: await pdfPages(bytes) };
+  if (isPdf(bytes, contentType)) {
+    const pages = await pdfPages(bytes);
+    return { kind: 'pdf', pages, labels: pages.map(printedPageNumber) };
+  }
   if (isHtml(contentType)) {
-    return { kind: 'html', pages: [htmlToText(new TextDecoder().decode(bytes))] };
+    return { kind: 'html', pages: [htmlToText(new TextDecoder().decode(bytes))], labels: [null] };
   }
   throw new Error(`cannot read ${contentType || 'unknown type'}: only PDF and HTML sources`);
 }
