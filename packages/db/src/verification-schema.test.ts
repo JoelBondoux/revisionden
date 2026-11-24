@@ -34,7 +34,9 @@ describe('verification tables', () => {
   it('only accepts known reviewer roles', async () => {
     await client.query(`insert into auth_users (id, email) values ('rv-1', 'rv1@example.com')`);
     await expect(
-      client.query(`insert into reviewer_roles (auth_user_id, role) values ('rv-1', 'headteacher')`),
+      client.query(
+        `insert into reviewer_roles (auth_user_id, role) values ('rv-1', 'headteacher')`,
+      ),
     ).rejects.toThrow(/reviewer_roles_role_values/);
   });
 

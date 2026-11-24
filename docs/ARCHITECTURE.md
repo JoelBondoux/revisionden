@@ -27,8 +27,8 @@
 | `services/maths` | Python FastAPI + SymPy maths engine for Cloud Run                                                                 |
 | `content/`       | Specification topic trees and question banks (JSON), with schemas                                                 |
 | `e2e/`           | Playwright end-to-end and accessibility tests                                                                     |
-| `evals/`         | AI marking evaluation set (never run in CI by default)                                                            |
-| `scripts/`       | Repo tooling (version bump)                                                                                       |
+| `evals/`         | AI marking evaluation harness and golden sets (never run in CI by default)                                        |
+| `scripts/`       | Repo tooling: version bump, content validator (`content/`), verification pipeline (`verify/`)                     |
 | `docs/`          | Live documentation                                                                                                |
 
 ## Web app (`apps/web`)
@@ -78,29 +78,36 @@ personal data, spend tracking and the monthly cap per child.
 
 Source of truth: `packages/db/src/schema.ts`; migrations in `packages/db/migrations`.
 
-| Table                | Key fields                                                                  |
-| -------------------- | --------------------------------------------------------------------------- |
-| `auth_users`         | id, email, email_verified, name (always blank), image (always null)         |
-| `auth_sessions`      | id, token, user_id, expires_at (IP address and user agent not kept)         |
-| `auth_accounts`      | id, user_id, provider_id, account_id, OAuth tokens (no passwords)           |
-| `auth_verifications` | id, identifier, value, expires_at (OAuth state)                             |
-| `families`           | id, created_at                                                              |
-| `parents`            | id, family_id, auth_user_id (unique)                                        |
-| `students`           | id, family_id, nickname (unique per family), avatar_code, year_group (7–13) |
-| `enrolments`         | student_id + subject_id (key), board, tier, spec_version                    |
-| `devices`            | id, student_id, credential_id, public_key, counter, transports, linked_at   |
-| `device_link_tokens` | id, token_hash, family_id, student_id, expires_at, used_at                  |
-| `passkey_challenges` | id, kind (register, unlock), challenge, student_id, expires_at, used_at     |
-| `student_sessions`   | id, token_hash, student_id, device_id, expires_at                           |
-| `topics`             | id (text), subject_id, board, spec_ref, title, parent_topic_id              |
-| `items`              | id, topic_id, type, body (JSON), answer (JSON), source_ref, checked_by      |
-| `attempts`           | id, student_id, item_id, correct, score, time_ms, created_at                |
-| `mastery`            | student_id + topic_id (key), value (0–1), updated_at                        |
-| `exams`              | id, student_id, kind (exam, mock, assessment), subject_id, date, result     |
-| `school_reports`     | id, student_id, date, values (JSON)                                         |
-| `plans`              | id, student_id, week_start (unique per student), sessions (JSON), edited_by |
-| `rewards`            | student_id + reward_id (key), earned_at                                     |
-| `streaks`            | student_id (key), current, best, skip_days, gift_days                       |
+| Table                | Key fields                                                                                    |
+| -------------------- | --------------------------------------------------------------------------------------------- |
+| `auth_users`         | id, email, email_verified, name (always blank), image (always null)                           |
+| `auth_sessions`      | id, token, user_id, expires_at (IP address and user agent not kept)                           |
+| `auth_accounts`      | id, user_id, provider_id, account_id, OAuth tokens (no passwords)                             |
+| `auth_verifications` | id, identifier, value, expires_at (OAuth state)                                               |
+| `families`           | id, created_at                                                                                |
+| `parents`            | id, family_id, auth_user_id (unique)                                                          |
+| `students`           | id, family_id, nickname (unique per family), avatar_code, year_group (7–13)                   |
+| `enrolments`         | student_id + subject_id (key), board, tier, spec_version                                      |
+| `devices`            | id, student_id, credential_id, public_key, counter, transports, linked_at                     |
+| `device_link_tokens` | id, token_hash, family_id, student_id, expires_at, used_at                                    |
+| `passkey_challenges` | id, kind (register, unlock), challenge, student_id, expires_at, used_at                       |
+| `student_sessions`   | id, token_hash, student_id, device_id, expires_at                                             |
+| `topics`             | id (text), subject_id, board, spec_ref, title, parent_topic_id                                |
+| `items`              | id, topic_id, type, body (JSON), answer (JSON), source_ref, checked_by                        |
+| `attempts`           | id, student_id, item_id, correct, score, time_ms, created_at                                  |
+| `mastery`            | student_id + topic_id (key), value (0–1), updated_at                                          |
+| `exams`              | id, student_id, kind (exam, mock, assessment), subject_id, date, result                       |
+| `school_reports`     | id, student_id, date, values (JSON)                                                           |
+| `plans`              | id, student_id, week_start (unique per student), sessions (JSON), edited_by                   |
+| `rewards`            | student_id + reward_id (key), earned_at                                                       |
+| `streaks`            | student_id (key), current, best, skip_days, gift_days                                         |
+| `reviewer_roles`     | auth_user_id (key), role (subject-specialist, content-lead, parent-reviewer)                  |
+| `item_reports`       | id, item_id, item_version, reason, reported_by, family_id, status, decided_by_role            |
+| `quarantined_items`  | item_id (key), item_version, cause (report, confirmed_error, batch_failed)                    |
+| `review_batches`     | id, title, writer_prompt, source_url, status, sample_seed                                     |
+| `review_batch_items` | batch_id + item_id (key), item_version, in_sample, snapshot (JSON), decision, decided_by_role |
+| `recheck_requests`   | id, scope (batch, item, writer_prompt, source), scope_value, cause, status                    |
+| `recalculation_jobs` | id, item_id, item_version, status                                                             |
 
 No table stores a real name, date of birth, email of a student, photo or school name. The
 schema guard test (`packages/db/src/schema-guard.test.ts`) checks the migrated database and fails
@@ -112,21 +119,25 @@ if such a column appears. The only allowed matches are the parent's Better Auth 
 All bodies are validated with the Zod schemas in `packages/core`. Errors always look like
 `{ "error": { "code", "message", "details"? } }` (`ApiErrorSchema`).
 
-| Route                                                             | Who            | What                                      |
-| ----------------------------------------------------------------- | -------------- | ----------------------------------------- |
-| `GET /health`                                                     | anyone         | `{ status, version }`                     |
-| `/api/auth/*`                                                     | anyone         | Better Auth: Google, Microsoft, sign-out  |
-| `GET /v1/me`                                                      | parent         | Family id and sign-in email               |
-| `GET, POST /v1/students`                                          | parent         | List (`{ students }`) or create           |
-| `GET, PATCH, DELETE /v1/students/:id`                             | parent         | One student                               |
-| `GET, POST /v1/students/:id/enrolments`                           | parent         | List (`{ enrolments }`) or add/replace    |
-| `DELETE /v1/students/:id/enrolments/:subjectId`                   | parent         | Remove an enrolment                       |
-| `POST /v1/students/:id/link-tokens`                               | parent         | One-time token and QR link (10 minutes)   |
-| `GET /v1/students/:id/devices`, `DELETE .../devices/:id`          | parent         | List or unlink devices                    |
-| `POST /v1/device/link`                                            | new device     | Redeem token + family id; passkey options |
-| `POST /v1/device/link/verify`                                     | new device     | Register passkey; starts student session  |
-| `POST /v1/device/unlock/options`, `POST /v1/device/unlock/verify` | linked device  | Unlock with the passkey                   |
-| `GET /v1/student/me`, `POST /v1/student/lock`                     | student device | Who is signed in; lock the device         |
+| Route                                                                                                                              | Who             | What                                                |
+| ---------------------------------------------------------------------------------------------------------------------------------- | --------------- | --------------------------------------------------- |
+| `GET /health`                                                                                                                      | anyone          | `{ status, version }`                               |
+| `/api/auth/*`                                                                                                                      | anyone          | Better Auth: Google, Microsoft, sign-out            |
+| `GET /v1/me`                                                                                                                       | parent          | Family id and sign-in email                         |
+| `GET, POST /v1/students`                                                                                                           | parent          | List (`{ students }`) or create                     |
+| `GET, PATCH, DELETE /v1/students/:id`                                                                                              | parent          | One student                                         |
+| `GET, POST /v1/students/:id/enrolments`                                                                                            | parent          | List (`{ enrolments }`) or add/replace              |
+| `DELETE /v1/students/:id/enrolments/:subjectId`                                                                                    | parent          | Remove an enrolment                                 |
+| `POST /v1/students/:id/link-tokens`                                                                                                | parent          | One-time token and QR link (10 minutes)             |
+| `GET /v1/students/:id/devices`, `DELETE .../devices/:id`                                                                           | parent          | List or unlink devices                              |
+| `POST /v1/device/link`                                                                                                             | new device      | Redeem token + family id; passkey options           |
+| `POST /v1/device/link/verify`                                                                                                      | new device      | Register passkey; starts student session            |
+| `POST /v1/device/unlock/options`, `POST /v1/device/unlock/verify`                                                                  | linked device   | Unlock with the passkey                             |
+| `GET /v1/student/me`, `POST /v1/student/lock`                                                                                      | student device  | Who is signed in; lock the device                   |
+| `POST /v1/student/items/:itemId/reports`, `POST /v1/items/:itemId/reports`                                                         | student, parent | Report a problem; hides the item at once            |
+| `GET /v1/review/me`, `GET /v1/review/reports`, `POST .../reports/:id/decision`                                                     | reviewer        | Reviewer role; reports; no error or confirmed error |
+| `GET, POST /v1/review/batches`, `GET .../batches/:id`, `POST .../batches/:id/items/:itemId/decision`                               | reviewer        | Batch samples and decisions                         |
+| `GET, POST /v1/review/rechecks`, `POST .../rechecks/:id/done`, `GET /v1/review/recalculations`, `POST .../recalculations/:id/done` | reviewer        | Re-check requests and recalculation jobs            |
 
 A parent only ever sees their own family: another family's student answers 404. The QR code
 holds `<web origin>/link?token=…&family=…`. The passkey relying party is the web app's host

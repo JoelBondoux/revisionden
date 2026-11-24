@@ -21,6 +21,12 @@ Tags: #tooling #ci
   handling, pass a plain object `{ url, method: 'GET', mode: 'navigate' }` instead.
 - **The root ESLint config has no `react-hooks` plugin**, so an
   `eslint-disable react-hooks/...` comment is itself a lint error.
+- **A file-writing tool turned `\u00a0`-style escapes into the real characters**, which ESLint
+  rejects (`no-irregular-whitespace`, `no-misleading-character-class`). Write invisible or
+  special characters as escapes from a script, quote object keys (`'\ufb01': 'fi'`), and use
+  alternation rather than a character class for joiners (`/\u200b|\u200d/`).
+- **Specification "page 5" is not PDF page 5.** Board specifications number pages from the start
+  of the content (Pearson 1MA1: printed page 5 is PDF page 17). The quote checker accepts either.
 - **`docker build` in a Claude cloud session fails pip installs with "certificate verify
   failed"** because the session proxy re-signs TLS. This is sandbox-only (CI is fine). For a
   local check, build a throwaway Dockerfile copy that trusts `/root/.ccr/ca-bundle.crt` via

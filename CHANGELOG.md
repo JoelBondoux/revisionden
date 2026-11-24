@@ -7,6 +7,13 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Verification: quote checker that fetches official sources (cached outside git), confirms each quote at its page or specification code and records the source SHA-256 (V1).
+- Verification: blind-answer and adversarial-review runners over one provider interface (Anthropic, OpenAI, Gemini), tested with recorded fixtures (V2).
+- Verification: exact checkers for units, chemical equation balancing and equation-sheet lookups, with an optional `exact` block on items (V3).
+- Review queue API and screens: batch sampling (10%, at least 30, one confirmed error fails the batch), decisions recorded by role (V4).
+- Report a problem: the item is hidden at once; confirmed errors queue score recalculation and re-checks of the item, batch, writer prompt and source (V5).
+- `pnpm content:audit <id | topic | subject>`: markdown audit report with citations, checks, reviewer role, version history and reports (V6).
+- Double AI marking rules in `packages/core` and an essay golden-set eval harness in `evals/` with the `docs/AI.md` pass bars (V7).
 - Verification protocol (`docs/VERIFICATION.md`): official citations on every item, multi-step checks, human approval, quarantine and audit reports; new workstream V and task D6.
 
 - Web: design tokens from the mockups (Nunito, violet, 3D edges) with a 4.5:1 contrast check (A1).

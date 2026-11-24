@@ -81,12 +81,8 @@
           "name": "attempts_student_id_students_id_fk",
           "tableFrom": "attempts",
           "tableTo": "students",
-          "columnsFrom": [
-            "student_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -94,12 +90,8 @@
           "name": "attempts_item_id_items_id_fk",
           "tableFrom": "attempts",
           "tableTo": "items",
-          "columnsFrom": [
-            "item_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["item_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -217,12 +209,8 @@
           "name": "auth_accounts_user_id_auth_users_id_fk",
           "tableFrom": "auth_accounts",
           "tableTo": "auth_users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -310,12 +298,8 @@
           "name": "auth_sessions_user_id_auth_users_id_fk",
           "tableFrom": "auth_sessions",
           "tableTo": "auth_users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -325,9 +309,7 @@
         "auth_sessions_token_unique": {
           "name": "auth_sessions_token_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "token"
-          ]
+          "columns": ["token"]
         }
       },
       "policies": {},
@@ -392,9 +374,7 @@
         "auth_users_email_unique": {
           "name": "auth_users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},
@@ -523,12 +503,8 @@
           "name": "device_link_tokens_family_id_families_id_fk",
           "tableFrom": "device_link_tokens",
           "tableTo": "families",
-          "columnsFrom": [
-            "family_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["family_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -536,12 +512,8 @@
           "name": "device_link_tokens_student_id_students_id_fk",
           "tableFrom": "device_link_tokens",
           "tableTo": "students",
-          "columnsFrom": [
-            "student_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -551,9 +523,7 @@
         "device_link_tokens_token_hash_unique": {
           "name": "device_link_tokens_token_hash_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "token_hash"
-          ]
+          "columns": ["token_hash"]
         }
       },
       "policies": {},
@@ -638,12 +608,8 @@
           "name": "devices_student_id_students_id_fk",
           "tableFrom": "devices",
           "tableTo": "students",
-          "columnsFrom": [
-            "student_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -653,9 +619,7 @@
         "devices_credential_id_unique": {
           "name": "devices_credential_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "credential_id"
-          ]
+          "columns": ["credential_id"]
         }
       },
       "policies": {},
@@ -712,12 +676,8 @@
           "name": "enrolments_student_id_students_id_fk",
           "tableFrom": "enrolments",
           "tableTo": "students",
-          "columnsFrom": [
-            "student_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -725,10 +685,7 @@
       "compositePrimaryKeys": {
         "enrolments_student_id_subject_id_pk": {
           "name": "enrolments_student_id_subject_id_pk",
-          "columns": [
-            "student_id",
-            "subject_id"
-          ]
+          "columns": ["student_id", "subject_id"]
         }
       },
       "uniqueConstraints": {},
@@ -805,12 +762,8 @@
           "name": "exams_student_id_students_id_fk",
           "tableFrom": "exams",
           "tableTo": "students",
-          "columnsFrom": [
-            "student_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -950,12 +903,8 @@
           "name": "item_reports_family_id_families_id_fk",
           "tableFrom": "item_reports",
           "tableTo": "families",
-          "columnsFrom": [
-            "family_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["family_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1041,12 +990,8 @@
           "name": "items_topic_id_topics_id_fk",
           "tableFrom": "items",
           "tableTo": "topics",
-          "columnsFrom": [
-            "topic_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["topic_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1094,12 +1039,8 @@
           "name": "mastery_student_id_students_id_fk",
           "tableFrom": "mastery",
           "tableTo": "students",
-          "columnsFrom": [
-            "student_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1107,12 +1048,8 @@
           "name": "mastery_topic_id_topics_id_fk",
           "tableFrom": "mastery",
           "tableTo": "topics",
-          "columnsFrom": [
-            "topic_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["topic_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1120,10 +1057,7 @@
       "compositePrimaryKeys": {
         "mastery_student_id_topic_id_pk": {
           "name": "mastery_student_id_topic_id_pk",
-          "columns": [
-            "student_id",
-            "topic_id"
-          ]
+          "columns": ["student_id", "topic_id"]
         }
       },
       "uniqueConstraints": {},
@@ -1189,12 +1123,8 @@
           "name": "parents_family_id_families_id_fk",
           "tableFrom": "parents",
           "tableTo": "families",
-          "columnsFrom": [
-            "family_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["family_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1202,12 +1132,8 @@
           "name": "parents_auth_user_id_auth_users_id_fk",
           "tableFrom": "parents",
           "tableTo": "auth_users",
-          "columnsFrom": [
-            "auth_user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["auth_user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1217,9 +1143,7 @@
         "parents_auth_user_id_unique": {
           "name": "parents_auth_user_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "auth_user_id"
-          ]
+          "columns": ["auth_user_id"]
         }
       },
       "policies": {},
@@ -1281,12 +1205,8 @@
           "name": "passkey_challenges_student_id_students_id_fk",
           "tableFrom": "passkey_challenges",
           "tableTo": "students",
-          "columnsFrom": [
-            "student_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1340,12 +1260,8 @@
           "name": "plans_student_id_students_id_fk",
           "tableFrom": "plans",
           "tableTo": "students",
-          "columnsFrom": [
-            "student_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1355,10 +1271,7 @@
         "plans_student_week_unique": {
           "name": "plans_student_week_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "student_id",
-            "week_start"
-          ]
+          "columns": ["student_id", "week_start"]
         }
       },
       "policies": {},
@@ -1585,12 +1498,8 @@
           "name": "review_batch_items_batch_id_review_batches_id_fk",
           "tableFrom": "review_batch_items",
           "tableTo": "review_batches",
-          "columnsFrom": [
-            "batch_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["batch_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1598,10 +1507,7 @@
       "compositePrimaryKeys": {
         "review_batch_items_batch_id_item_id_pk": {
           "name": "review_batch_items_batch_id_item_id_pk",
-          "columns": [
-            "batch_id",
-            "item_id"
-          ]
+          "columns": ["batch_id", "item_id"]
         }
       },
       "uniqueConstraints": {},
@@ -1703,12 +1609,8 @@
           "name": "reviewer_roles_auth_user_id_auth_users_id_fk",
           "tableFrom": "reviewer_roles",
           "tableTo": "auth_users",
-          "columnsFrom": [
-            "auth_user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["auth_user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1754,12 +1656,8 @@
           "name": "rewards_student_id_students_id_fk",
           "tableFrom": "rewards",
           "tableTo": "students",
-          "columnsFrom": [
-            "student_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1767,10 +1665,7 @@
       "compositePrimaryKeys": {
         "rewards_student_id_reward_id_pk": {
           "name": "rewards_student_id_reward_id_pk",
-          "columns": [
-            "student_id",
-            "reward_id"
-          ]
+          "columns": ["student_id", "reward_id"]
         }
       },
       "uniqueConstraints": {},
@@ -1830,12 +1725,8 @@
           "name": "school_reports_student_id_students_id_fk",
           "tableFrom": "school_reports",
           "tableTo": "students",
-          "columnsFrom": [
-            "student_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1891,12 +1782,8 @@
           "name": "streaks_student_id_students_id_fk",
           "tableFrom": "streaks",
           "tableTo": "students",
-          "columnsFrom": [
-            "student_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1972,12 +1859,8 @@
           "name": "student_sessions_student_id_students_id_fk",
           "tableFrom": "student_sessions",
           "tableTo": "students",
-          "columnsFrom": [
-            "student_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1985,12 +1868,8 @@
           "name": "student_sessions_device_id_devices_id_fk",
           "tableFrom": "student_sessions",
           "tableTo": "devices",
-          "columnsFrom": [
-            "device_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["device_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -2000,9 +1879,7 @@
         "student_sessions_token_hash_unique": {
           "name": "student_sessions_token_hash_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "token_hash"
-          ]
+          "columns": ["token_hash"]
         }
       },
       "policies": {},
@@ -2065,12 +1942,8 @@
           "name": "students_family_id_families_id_fk",
           "tableFrom": "students",
           "tableTo": "families",
-          "columnsFrom": [
-            "family_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["family_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -2080,10 +1953,7 @@
         "students_family_nickname_unique": {
           "name": "students_family_nickname_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "family_id",
-            "nickname"
-          ]
+          "columns": ["family_id", "nickname"]
         }
       },
       "policies": {},
@@ -2168,12 +2038,8 @@
           "name": "topics_parent_topic_id_topics_id_fk",
           "tableFrom": "topics",
           "tableTo": "topics",
-          "columnsFrom": [
-            "parent_topic_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_topic_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }

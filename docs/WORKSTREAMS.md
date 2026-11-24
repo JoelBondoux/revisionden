@@ -49,3 +49,14 @@ and reports which line first goes wrong; Cloud Run container ready to deploy.
 | G   | Deploy pipelines for dev, staging and production; Playwright end-to-end | A, B (domain bought) |
 | H   | Reminders (web push) and AI gateway with per-child cost cap             | B                    |
 | V   | Verification pipeline, review queue, quarantine and audit reports       | C, D                 |
+
+### V: Verification pipeline and audit
+
+| Owns these paths                                                                                                                                       | Branch                   | Status    | PR  |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------ | --------- | --- |
+| `scripts/verify/**`, `evals/**`, `apps/api/src/routes/{review,quarantine}.ts`, verification tables in `packages/db`, `apps/web/src/features/review/**` | `feature/v-verification` | in review | -   |
+
+V1 to V7 built (see `docs/VERIFICATION.md` section 9); the parent-portal PDF export of the audit
+report is still to do. Small additive edits outside the lane: `exact` block and check names in
+`content/schemas`, required exact checks in `scripts/content/validate.mjs`, two new files in
+`packages/core`, route wiring in `apps/api/src/app.ts` and `apps/web/src/routes.tsx`.
