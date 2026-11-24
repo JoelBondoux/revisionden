@@ -70,7 +70,6 @@ export function createWorker(version: string, options: WorkerOptions = {}) {
     async scheduled(
       controller: Pick<ScheduledController, 'scheduledTime'>,
       env: Record<string, unknown>,
-      _ctx: ExecutionContext,
     ): Promise<void> {
       let config: ReturnType<typeof parseEnv>;
       try {

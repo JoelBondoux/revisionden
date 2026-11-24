@@ -43,8 +43,9 @@ export async function loadReminderSettings(
     .from(reminderSettings)
     .where(eq(reminderSettings.studentId, studentId));
   if (!row) return DEFAULT_REMINDER_SETTINGS;
-  const { studentId: _id, updatedAt: _u, ...settings } = row;
-  return settings;
+  return Object.fromEntries(
+    Object.keys(DEFAULT_REMINDER_SETTINGS).map((k) => [k, row[k as keyof ReminderSettings]]),
+  ) as unknown as ReminderSettings;
 }
 
 /** Runs from the Worker's cron trigger: sends each student the reminders due now. */

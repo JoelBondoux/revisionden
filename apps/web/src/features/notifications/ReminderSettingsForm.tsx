@@ -78,7 +78,8 @@ export function ReminderSettingsForm({ api, studentId }: ReminderSettingsFormPro
     if (!settings) return;
     setBusy(true);
     setError(null);
-    const { maxPerDay: _max, ...update } = settings;
+    const update: Partial<ReminderSettings> = { ...settings };
+    delete update.maxPerDay;
     try {
       setSettings(await api.saveReminderSettings(studentId, update));
       setSaved(true);

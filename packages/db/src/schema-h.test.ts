@@ -21,7 +21,9 @@ async function columns(table: string): Promise<string[]> {
 }
 
 async function makeStudent(): Promise<string> {
-  const fam = await client.query<{ id: string }>(`insert into families default values returning id`);
+  const fam = await client.query<{ id: string }>(
+    `insert into families default values returning id`,
+  );
   const st = await client.query<{ id: string }>(
     `insert into students (family_id, nickname, avatar_code, year_group)
      values ('${fam.rows[0]!.id}', 'test_kid_${Math.floor(Math.random() * 1e6)}', 'a1', 10) returning id`,

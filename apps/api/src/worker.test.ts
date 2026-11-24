@@ -64,25 +64,25 @@ describe('worker entry', () => {
     it('does nothing while web push is not configured', async () => {
       const runner = recordingRunner();
       const worker = createWorker('00.01.000', { runReminders: runner.run });
-      await worker.scheduled(controller as never, fullEnv, ctx);
+      await worker.scheduled(controller as never, fullEnv);
       expect(runner.calls).toHaveLength(0);
     });
 
     it('sends reminders at the scheduled time once VAPID keys are set', async () => {
       const runner = recordingRunner();
       const worker = createWorker('00.01.000', { runReminders: runner.run });
-      await worker.scheduled(
-        controller as never,
-        { ...fullEnv, VAPID_PUBLIC_KEY: 'BPUB', VAPID_PRIVATE_KEY: 'priv' },
-        ctx,
-      );
+      await worker.scheduled(controller as never, {
+        ...fullEnv,
+        VAPID_PUBLIC_KEY: 'BPUB',
+        VAPID_PRIVATE_KEY: 'priv',
+      });
       expect(runner.calls).toEqual([{ now: new Date('2026-11-24T19:00:00Z') }]);
     });
 
     it('logs instead of throwing when the environment is incomplete', async () => {
       const runner = recordingRunner();
       const worker = createWorker('00.01.000', { runReminders: runner.run });
-      await expect(worker.scheduled(controller as never, {}, ctx)).resolves.toBeUndefined();
+      await expect(worker.scheduled(controller as never, {})).resolves.toBeUndefined();
       expect(runner.calls).toHaveLength(0);
     });
   });
