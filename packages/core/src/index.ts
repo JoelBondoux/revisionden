@@ -9,3 +9,5 @@ export * from './next-item';
 export * from './xp';
 export * from './streaks';
 export * from './rewards';
+export * from './onboarding';
+export * from './onboarding-schemas';
