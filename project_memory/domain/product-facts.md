@@ -42,14 +42,14 @@ Tags: #product #rules #limits #defaults
   share follows how weak its topics are. Weak spots (below 60% mastery) come first; never more
   than 3 items in a row from one topic. Implemented in `packages/core/src/next-item.ts`.
 - Skip days: earned by weekly goal (default 5 days with the daily goal met; daily goal default
-  50 XP), max 2 in a row. Gift days: come with streak badges (1, 2, 3 for 7, 30, 100 days), only
+  50 XP), max 2 in a row. Gift days: come with streak milestones (1, 2, 3, 5, 10 for 7, 30, 100,
+  365, 1,000 days), added once when the reward is saved (`GET /v1/student/rewards`), only
   given away (arrive as a skip day for the friend), +20 XP for gifting. Implemented in
   `packages/core/src/streaks.ts` and `xp.ts`.
 - XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, working 20,
   long answer 30; part marks earn part.
-- 14 rewards unlock the 15 locked avatar items: one each, except the 100-day streak, which unlocks
-  two (crown and Alien skin). `packages/core/src/rewards.ts`, `avatar.ts`.
-- 14 rewards, each unlocking one avatar item: `packages/core/src/rewards.ts`.
+- The 14 original rewards keep their ids and avatar items (the 100-day streak unlocks two: crown
+  and Alien skin). They are now part of the five-year catalogue (see "Rewards progression").
 - Only `verified` items reach students. Drafts are served only with `SERVE_DRAFT_CONTENT=true` in
   development (never staging or production), with a "DRAFT CONTENT" banner; quarantined and
   retired items never. Implemented in `packages/core/src/learning.ts` and `apps/api`.
@@ -196,6 +196,28 @@ Tags: #product #rules #limits #defaults
   collections, and new seasonal items each term; about 650 unlocks in total. Rewards follow learning,
   never screen time; no loot boxes; everything carries over to A-Level; parents can add real-world
   rewards. Detail: `docs/REWARDS.md`.
+- Built (workstream R): 369 catalogue rewards as data in `packages/core/src/catalogue/` (99 level,
+  5 prestige, 150 chapter, 55 milestone, 12 collection bonuses, 48 seasonal for 2026/27). Rarity
+  shares 52.6 / 30.6 / 14.6 / 2.7% (common / rare / epic / legendary), checked within 6 points.
+- Level curve: XP from level L to L + 1 is min(750, 300 + 50 × (L − 1)); level 20 at 12,000 XP,
+  level 100 at 72,000 XP; a prestige star every 7,500 XP after that, up to 5. Assumes 60 XP a
+  practice day and 250 practice days a school year (`packages/core/src/levels.ts`).
+- Reward XP: only answer XP counts; nothing from 22:00 to 05:59 UK time; at most 300 XP a UK day
+  (`packages/core/src/reward-xp.ts`). Flashcard deck reviews do not count yet (see contradictions).
+- Year chapters: 30 steps each (a step every 400 chapter XP, 12,000 fills a chapter); spill-over
+  into earlier unfinished chapters for mid-way joiners; Year 11 and 13 finales on the last exam;
+  Year 12+ count as GCSE finished (`packages/core/src/chapters.ts`).
+- Seasonal drops: six back-to-back windows a school year, 8 items each, re-released the same
+  window a year later; challenges count right answers or goal days inside the window.
+- A topic counts as mastered at 80% for milestones (`packages/core/src/reward-stats.ts`).
+- Parent-set rewards (`parent_rewards` table): title up to 60 characters, optional note up to 200,
+  target = a catalogue reward, a stat reaching a number, or a UK date. Editable and deletable until
+  the parent marks it given; then kept as history (409). Shown to the student with a "From home"
+  badge and a celebration when the target is met. Routes in `apps/api/src/routes/rewards.ts`;
+  screens `/rewards` (student, linked from Settings) and `/family/:id/rewards` (parent).
+- New avatar items: chapter finale tops (chapter hoodie, bomber jacket, GCSE finisher jacket,
+  sixth-form coat, A-Level finisher jacket), rooftop scene, and the Frost Fest drop (bobble hat,
+  paper lantern, frosty night scene). Always appended to a layer so saved avatar codes still work.
 
 ## Statistics dashboards
 

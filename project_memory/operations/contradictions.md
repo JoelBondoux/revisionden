@@ -5,6 +5,19 @@
 
 ## Open
 
+- [ ] **Flashcard deck XP and rewards.** `docs/REWARDS.md` says XP from flashcards counts towards
+      levels, but deck reviews (`apps/api/src/routes/flashcards.ts`) only add to `daily_xp`, which
+      has no time of day, so the late-night rule cannot be checked. Reward XP is therefore built
+      from `attempts` only (`apps/api/src/routes/rewards.ts`) and deck reviews do not count yet.
+      Not settled: the fix (a timestamped XP record for deck reviews) is in workstream F's lane.
+- [ ] **Reward stats with no data yet.** Milestones for past papers, mock and assessment grades,
+      exams sat, flashcards reviewed, weak spots fixed, perfect sets, gifting and the friends league
+      are in the catalogue, but nothing records those numbers yet, so the rewards route counts them
+      as 0 (`apps/api/src/routes/rewards.ts`). They unlock once those features store the numbers.
+- [ ] **Parent reward notification.** `docs/REWARDS.md` says the parent gets a notification when a
+      parent-set target is met; not built (reminders are workstream H). The student celebration is
+      built.
+
 - [ ] Request schemas for the H routes (push subscriptions, reminder settings, short-answer
       marking) live in `apps/api/src/notifications/routes.ts` and `apps/api/src/ai/routes.ts`, but
       `docs/ARCHITECTURE.md` (Conventions) says every body has a Zod schema in `packages/core`.

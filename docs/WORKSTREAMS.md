@@ -16,15 +16,15 @@ Status values: `queued`, `in progress`, `in review` (PR open into `dev`), `merge
 
 ## Wave 2
 
-| ID  | Workstream                                                | Owns these paths                                                                                | Status      | PR                                                        |
-| --- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------- | --------------------------------------------------------- |
-| A2  | Hexagon topic map, next mission card, Map tab             | `apps/web/**` (map)                                                                             | merged      | [#8](https://github.com/JoelBondoux/revisionden/pull/8)   |
-| E   | Family onboarding and avatar builder                      | `apps/web/src/features/onboarding/**`, `apps/web/src/features/avatar/**`, onboarding API routes | merged      | [#9](https://github.com/JoelBondoux/revisionden/pull/9)   |
-| F   | Learning loop, starting test, flashcards, XP              | `apps/web/src/features/learn/**`, `apps/web/src/features/flashcards/**`, learning API routes    | merged      | [#10](https://github.com/JoelBondoux/revisionden/pull/10) |
-| H   | Reminders and AI gateway with per-child cost cap          | `apps/api/src/ai/**`, `apps/api/src/notifications/**`, `apps/web/src/features/notifications/**` | merged      | [#11](https://github.com/JoelBondoux/revisionden/pull/11) |
-| V   | Verification pipeline, review queue, quarantine and audit | `scripts/verify/**`, `evals/**`, `apps/web/src/features/review/**`, review API routes           | merged      | [#12](https://github.com/JoelBondoux/revisionden/pull/12) |
-| R   | Five-year rewards progression, parent-set rewards first   | `packages/core/src/rewards*.ts`, reward catalogue data, avatar layers, rewards API routes       | in progress |                                                           |
-| S   | Official citations for pilot GCSE Maths content           | `content/items/**`, `content/topic-trees/**`, `content/mark-schemes/**`                         | merged      | [#7](https://github.com/JoelBondoux/revisionden/pull/7)   |
+| ID  | Workstream                                                | Owns these paths                                                                                | Status    | PR                                                        |
+| --- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | --------- | --------------------------------------------------------- |
+| A2  | Hexagon topic map, next mission card, Map tab             | `apps/web/**` (map)                                                                             | merged    | [#8](https://github.com/JoelBondoux/revisionden/pull/8)   |
+| E   | Family onboarding and avatar builder                      | `apps/web/src/features/onboarding/**`, `apps/web/src/features/avatar/**`, onboarding API routes | merged    | [#9](https://github.com/JoelBondoux/revisionden/pull/9)   |
+| F   | Learning loop, starting test, flashcards, XP              | `apps/web/src/features/learn/**`, `apps/web/src/features/flashcards/**`, learning API routes    | merged    | [#10](https://github.com/JoelBondoux/revisionden/pull/10) |
+| H   | Reminders and AI gateway with per-child cost cap          | `apps/api/src/ai/**`, `apps/api/src/notifications/**`, `apps/web/src/features/notifications/**` | merged    | [#11](https://github.com/JoelBondoux/revisionden/pull/11) |
+| V   | Verification pipeline, review queue, quarantine and audit | `scripts/verify/**`, `evals/**`, `apps/web/src/features/review/**`, review API routes           | merged    | [#12](https://github.com/JoelBondoux/revisionden/pull/12) |
+| R   | Five-year rewards progression, parent-set rewards first   | `packages/core/src/rewards*.ts`, reward catalogue data, avatar layers, rewards API routes       | in review |                                                           |
+| S   | Official citations for pilot GCSE Maths content           | `content/items/**`, `content/topic-trees/**`, `content/mark-schemes/**`                         | merged    | [#7](https://github.com/JoelBondoux/revisionden/pull/7)   |
 
 ## Next (queued)
 

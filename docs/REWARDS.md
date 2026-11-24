@@ -177,6 +177,14 @@ Parents can add their own real-world rewards to any target (for example "cinema 
 - The student cannot send free text to the parent about it (no chat).
 - Progress also shows on the parent stats dashboard (`PRODUCT_RULES.md`, statistics dashboards).
 
+**Built (R5):** `parent_rewards` table; routes in `apps/api/src/routes/rewards.ts` (add, edit,
+delete, mark given; editing or deleting a given reward answers 409); target = a catalogue
+reward, a stat reaching a number (level, streak and the rest) or a UK date. The student's
+`/rewards` screen shows them under "From home" with progress and a "Target met" celebration;
+the parent manages them at `/family/:id/rewards` (linked from the family list). Not built yet:
+the parent notification when a target is met (reminders are workstream H) and the panel on
+the parent stats dashboard (workstream K).
+
 ## Content pipeline for new items
 
 - Items are original SVG art in the app's style, inspired by the student's hobbies (music,
