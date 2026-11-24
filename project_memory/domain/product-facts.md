@@ -111,12 +111,33 @@ Tags: #product #rules #limits #defaults
   line of working that does not follow from the previous line, and whether the final answer is
   correct. Input is limited to safe maths (single letters, a few functions, 200 characters).
 
+## Reminders
+
+- Web push per device, turned on by the student from Settings (the permission prompt appears
+  only after a tap). iPhone and iPad need the app on the Home Screen first.
+- Two kinds: a planned-session reminder (from 16:30 on a day with a planned session) and a
+  streak reminder (from 19:00 when the streak is 1+ days). Neither is sent once the student has
+  practised that day; each kind at most once a day; at most 2 reminders a day (fixed).
+- Quiet hours by default: 21:00–07:30 every night and 08:30–15:30 on weekdays (school hours).
+  The parent can change all these times, the time zone (default Europe/London) and switch each
+  kind or all reminders off. Implemented in `apps/api/src/notifications/schedule.ts`.
+- Pushes carry no text; the service worker fetches it from the API (generic text if locked).
+  The cron runs every 15 minutes and does nothing until the VAPID keys are set.
+
 ## AI
 
 - Every AI-marked result says: "Marked by AI. This is a guide to help you improve, not your
   teacher's mark." AI never rewrites a student's work.
 - Quick feedback: Claude Haiku 5.5. Long answers and homework: Claude Opus 5.5. Maths: no AI.
 - Question banks are written in subscription working sessions; live AI is capped per child.
+- AI spend cap: US$2.50 per child per calendar month (UTC) by default (`AI_MONTHLY_CAP_USD`),
+  checked before every call; every billed attempt counts. Up to 3 attempts per call.
+- Short answers: rules first (accepted answers and official mark-point wording, not when the
+  answer contains a negation), then Claude Haiku 5.5 only for the remaining mark points, citing
+  each point and quoting the student's words. Unsure → "Check with your teacher", never a guess.
+- Requests with the student's nickname, ids, avatar code, year group, an email or a phone number
+  are refused before sending. Gateway logs keep no prompt or answer.
+- Implemented in `apps/api/src/ai/`.
 
 ## Versions and releases
 

@@ -19,8 +19,15 @@
     {
       "idx": 2,
       "version": "7",
-      "when": 1795557524917,
-      "tag": "0002_verification",
+      "when": 1795557406527,
+      "tag": "0002_reminders_ai",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1795558228502,
+      "tag": "0003_verification",
       "breakpoints": true
     }
   ]

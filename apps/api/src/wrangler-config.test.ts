@@ -7,6 +7,7 @@ interface EnvBlock {
   vars: Record<string, string>;
   r2_buckets: { binding: string }[];
   ratelimits: { name: string }[];
+  triggers?: { crons: string[] };
 }
 
 const config = parse(
@@ -47,4 +48,11 @@ describe('wrangler config', () => {
       expect(text).not.toMatch(new RegExp(`^\\s*${secret}\\s*=`, 'm'));
     }
   });
+
+  it.each(['dev', 'staging', 'production'])(
+    'runs the reminder cron every 15 minutes in %s',
+    (name) => {
+      expect(config.env[name]!.triggers?.crons).toEqual(['*/15 * * * *']);
+    },
+  );
 });

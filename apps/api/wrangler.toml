@@ -28,6 +28,10 @@ name = "AI_RATE_LIMITER"
 namespace_id = "1002"
 simple = { limit = 20, period = 60 }
 
+# Reminder cron (web push): checks every 15 minutes which reminders are due.
+[triggers]
+crons = ["*/15 * * * *"]
+
 # ---------------------------------------------------------------------------------------------
 [env.dev]
 name = "revisionden-api-dev"
@@ -38,6 +42,9 @@ ENVIRONMENT = "development"
 API_ORIGIN = "https://api-dev.revisionden.com"
 WEB_ORIGIN = "https://dev.revisionden.com"
 PASSKEY_RP_ID = "dev.revisionden.com"
+
+[env.dev.triggers]
+crons = ["*/15 * * * *"]
 
 [[env.dev.r2_buckets]]
 binding = "UPLOADS"
@@ -64,6 +71,9 @@ API_ORIGIN = "https://api-staging.revisionden.com"
 WEB_ORIGIN = "https://staging.revisionden.com"
 PASSKEY_RP_ID = "staging.revisionden.com"
 
+[env.staging.triggers]
+crons = ["*/15 * * * *"]
+
 [[env.staging.r2_buckets]]
 binding = "UPLOADS"
 bucket_name = "revisionden-uploads-staging"
@@ -88,6 +98,9 @@ ENVIRONMENT = "production"
 API_ORIGIN = "https://api.revisionden.com"
 WEB_ORIGIN = "https://revisionden.com"
 PASSKEY_RP_ID = "revisionden.com"
+
+[env.production.triggers]
+crons = ["*/15 * * * *"]
 
 [[env.production.r2_buckets]]
 binding = "UPLOADS"

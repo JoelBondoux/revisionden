@@ -14,8 +14,9 @@
 
 ## Now
 
-- [ ] H reminders and AI gateway (#11) and V verification pipeline (#12): regenerating their
-      database migrations on top of dev.
+- [x] H reminders and AI gateway (#11) merged.
+- [ ] V verification pipeline (#12): regenerating its
+      database migration on top of dev.
 - [ ] Topic map API endpoints (map, cards due) still to build.
 
 ## Blocked

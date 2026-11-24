@@ -258,11 +258,16 @@ export function deviceRoutes({ db, clock, passkeys }: DeviceDeps) {
   return app;
 }
 
-/** Routes for a signed-in student device under /v1/student. */
-export function studentSessionRoutes({ db, clock }: DeviceDeps) {
-  const app = new Hono<AppEnv>();
-
-  app.use('*', async (c, next) => {
+/**
+ * Requires an unlocked student device (the student session cookie) and sets `c.var.student`.
+ * Reused by other student routes (reminders, AI marking); skips the lookup if already done.
+ */
+export function studentAuth({
+  db,
+  clock,
+}: Pick<DeviceDeps, 'db' | 'clock'>): MiddlewareHandler<AppEnv> {
+  return async (c, next) => {
+    if (c.get('student')) return next();
     const token = getCookie(c, STUDENT_COOKIE);
     if (!token) throw unauthorized();
     const [session] = await db
@@ -282,7 +287,14 @@ export function studentSessionRoutes({ db, clock }: DeviceDeps) {
     if (!session) throw unauthorized();
     c.set('student', session);
     await next();
-  });
+  };
+}
+
+/** Routes for a signed-in student device under /v1/student. */
+export function studentSessionRoutes({ db, clock }: DeviceDeps) {
+  const app = new Hono<AppEnv>();
+
+  app.use('*', studentAuth({ db, clock }));
 
   app.get('/me', async (c) => {
     const [student] = await db

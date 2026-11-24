@@ -53,6 +53,14 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Content citations and verification records on every item, topic leaf, mark scheme and diagram,
   enforced by the validator (quotes, required checks, immutable verified versions, no PDFs or
   raster images); code-drawn SVG diagram schema; `pnpm content:validate --audit <id>` audit trail (a fuller `pnpm content:audit` is workstream V).
+- Reminders (H1): web push per device with VAPID, a Settings card to turn them on, parent
+  settings for quiet hours (21:00–07:30 and weekday school hours by default), at most 2 a day,
+  and a 15-minute cron trigger. Pushes carry no text.
+- AI gateway (H2): Claude via the Anthropic SDK through Cloudflare AI Gateway, OpenAI as an
+  optional second checker, retries with backoff, Zod-checked JSON replies, a per-child monthly
+  spend cap (US$2.50 by default) and a guard that refuses any request with personal data.
+- Short-answer marking (H3): rules against the mark scheme first, Claude Haiku 5.5 only for
+  wording variants, citing each mark point; unsure answers say "Check with your teacher".
 
 ## [00.01.002] - 2026-11-24
 

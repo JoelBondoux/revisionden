@@ -1,0 +1,21 @@
+{
+  "id": "msg_fixture_0001",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-haiku-5-5",
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"points\":[{\"code\":\"B1\",\"met\":true,\"evidence\":\"controls what goes in and out\"}],\"sure\":true,\"feedback\":\"Good: you described what the membrane does.\"}"
+    }
+  ],
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+    "input_tokens": 412,
+    "output_tokens": 96,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 0
+  }
+}

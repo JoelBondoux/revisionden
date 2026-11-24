@@ -11,6 +11,14 @@
       approval"). Not settled by workstream V because it is a protocol decision for the product
       owner (`docs/VERIFICATION.md` section 3): for example, let human approval stand in for the
       blind answer on extended answers, or define a blind-marking check against the mark scheme.
+- [ ] Request schemas for the H routes (push subscriptions, reminder settings, short-answer
+      marking) live in `apps/api/src/notifications/routes.ts` and `apps/api/src/ai/routes.ts`, but
+      `docs/ARCHITECTURE.md` (Conventions) says every body has a Zod schema in `packages/core`.
+      Not settled: `packages/core` is outside workstream H's lane (same TODO as B's device routes).
+- [ ] Item JSON in the `items` table has no fixed format yet. H's marking reads
+      `body.prompt`, `body.marks`, `body.mark_scheme` (or `body.mark_points`) and
+      `answer.accepted` (`apps/api/src/ai/items.ts`), matching `content/schemas/item.schema.json`;
+      the content loader (F or D) must store items in that shape. Not settled: no loader exists yet.
 - [ ] The approved avatar builder has 15 locked items but there are 14 rewards and the old rule was
       "each reward unlocks one item". Settled for now by letting the 100-day streak unlock two items
       (crown and Alien skin) in `packages/core/src/avatar.ts`; `docs/PRODUCT_RULES.md` and

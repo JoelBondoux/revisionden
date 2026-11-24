@@ -16,6 +16,7 @@
     "content:sync": "tsx src/learning/content-sync-cli.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.13.0",
     "@neondatabase/serverless": "^1.2.1",
     "@revisionden/core": "workspace:*",
     "@revisionden/db": "workspace:*",

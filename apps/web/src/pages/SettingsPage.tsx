@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Card } from '../components/Card';
+import { DeviceReminders } from '../features/notifications';
 
 export function SettingsPage() {
   return (
@@ -15,6 +16,7 @@ export function SettingsPage() {
           </li>
         </ul>
       </Card>
+      <DeviceReminders />
     </div>
   );
 }
