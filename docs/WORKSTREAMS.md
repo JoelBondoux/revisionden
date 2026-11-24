@@ -52,9 +52,9 @@ and reports which line first goes wrong; Cloud Run container ready to deploy.
 
 ### V: Verification pipeline and audit
 
-| Owns these paths                                                                                                                                       | Branch                   | Status    | PR  |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------ | --------- | --- |
-| `scripts/verify/**`, `evals/**`, `apps/api/src/routes/{review,quarantine}.ts`, verification tables in `packages/db`, `apps/web/src/features/review/**` | `feature/v-verification` | in review | -   |
+| Owns these paths                                                                                                                                       | Branch                   | Status    | PR                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------ | --------- | --------------------------------------------------------- |
+| `scripts/verify/**`, `evals/**`, `apps/api/src/routes/{review,quarantine}.ts`, verification tables in `packages/db`, `apps/web/src/features/review/**` | `feature/v-verification` | in review | [#12](https://github.com/JoelBondoux/revisionden/pull/12) |
 
 V1 to V7 built (see `docs/VERIFICATION.md` section 9); the parent-portal PDF export of the audit
 report is still to do. Small additive edits outside the lane: `exact` block and check names in
