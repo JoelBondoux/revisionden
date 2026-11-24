@@ -3,9 +3,9 @@ import { cors } from 'hono/cors';
 import type { Database } from '@revisionden/db';
 import { AUTH_BASE_PATH, type Auth } from './auth';
 import type { AppConfig } from './env';
-import { handleError, notFound, unauthorized } from './errors';
+import { ApiError, handleError, notFound, toSharedErrorShape, unauthorized } from './errors';
 import type { PasskeyService } from './passkeys';
-import type { Clock, RateLimiter } from './rate-limit';
+import { clientKey, RETRY_AFTER_SECONDS, type Clock, type RateLimiter } from './rate-limit';
 import type { AppEnv } from './context';
 import { ensureParent } from './families';
 import { studentRoutes } from './routes/students';
@@ -34,7 +34,21 @@ export function createApp(deps: AppDeps) {
     }),
   );
 
-  app.on(['GET', 'POST'], `${AUTH_BASE_PATH}/*`, (c) => deps.auth.handler(c.req.raw));
+  const limit = (scope: string, limiter: RateLimiter) => async (c: Context, next: Next) => {
+    const { success } = await limiter.limit({ key: `${scope}:${clientKey(c.req.raw.headers)}` });
+    if (!success) {
+      c.header('Retry-After', String(RETRY_AFTER_SECONDS));
+      throw new ApiError(429, 'rate_limited', 'Too many requests. Please wait a minute.');
+    }
+    await next();
+  };
+  app.use(`${AUTH_BASE_PATH}/*`, limit('auth', deps.rateLimiters.auth));
+  app.use('/v1/device/*', limit('auth', deps.rateLimiters.auth));
+  app.use('/v1/ai/*', limit('ai', deps.rateLimiters.ai));
+
+  app.on(['GET', 'POST'], `${AUTH_BASE_PATH}/*`, async (c) =>
+    toSharedErrorShape(await deps.auth.handler(c.req.raw)),
+  );
 
   app.get('/health', (c) => c.json({ status: 'ok', version: deps.version }));
 

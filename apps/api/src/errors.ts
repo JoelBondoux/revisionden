@@ -43,3 +43,18 @@ export function handleError(err: Error, c: Context) {
   console.error('Unhandled error', err);
   return errorResponse(c, new ApiError(500, 'internal_error', 'Something went wrong'));
 }
+
+/** Rewrites Better Auth's JSON errors ({ code, message }) into the shared error shape. */
+export async function toSharedErrorShape(res: Response): Promise<Response> {
+  if (res.status < 400 || !res.headers.get('content-type')?.includes('application/json')) {
+    return res;
+  }
+  const original = (await res.clone().json()) as { code?: unknown; message?: unknown };
+  const body: ErrorBody = {
+    error: typeof original.code === 'string' ? original.code.toLowerCase() : 'auth_error',
+    message: typeof original.message === 'string' ? original.message : 'Sign-in failed',
+  };
+  const headers = new Headers(res.headers);
+  headers.delete('content-length');
+  return new Response(JSON.stringify(body), { status: res.status, headers });
+}

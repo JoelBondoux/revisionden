@@ -88,6 +88,19 @@ describe('student profiles', () => {
     expect(await res.json()).toMatchObject({ error: 'nickname_taken' });
   });
 
+  it('refuses to rename a student to a nickname already used in the family', async () => {
+    const { headers } = await t.signInParent();
+    await createStudent(headers, { nickname: 'taken', avatarCode: 'a', yearGroup: 10 });
+    const other = (await (
+      await createStudent(headers, { nickname: 'free', avatarCode: 'a', yearGroup: 10 })
+    ).json()) as { id: string };
+    const res = await t.app.request(
+      `/v1/students/${other.id}`,
+      jsonRequest('PATCH', { nickname: 'taken' }, headers),
+    );
+    expect(res.status).toBe(409);
+  });
+
   it('lists, updates and deletes the family students', async () => {
     const { headers } = await t.signInParent();
     const created = (await (

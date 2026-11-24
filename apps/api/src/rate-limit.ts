@@ -29,3 +29,11 @@ export function createMemoryRateLimiter(options: {
     },
   };
 }
+
+/** Seconds a client should wait after a 429; matches the one-minute windows we configure. */
+export const RETRY_AFTER_SECONDS = 60;
+
+/** Key for a client: Cloudflare's connecting IP (not stored anywhere). */
+export function clientKey(headers: Headers): string {
+  return headers.get('cf-connecting-ip') ?? headers.get('x-forwarded-for') ?? 'unknown';
+}
