@@ -24,7 +24,7 @@ Status values: `queued`, `in progress`, `in review` (PR open into `dev`), `merge
 | H   | Reminders and AI gateway with per-child cost cap          | `apps/api/src/ai/**`, `apps/api/src/notifications/**`, `apps/web/src/features/notifications/**` | merged      | [#11](https://github.com/JoelBondoux/revisionden/pull/11) |
 | V   | Verification pipeline, review queue, quarantine and audit | `scripts/verify/**`, `evals/**`, `apps/web/src/features/review/**`, review API routes           | merged      | [#12](https://github.com/JoelBondoux/revisionden/pull/12) |
 | R   | Five-year rewards progression, parent-set rewards first   | `packages/core/src/rewards*.ts`, reward catalogue data, avatar layers, rewards API routes       | in progress |                                                           |
-| K   | Statistics dashboards for student and parent              | `packages/core/src/stats*.ts`, `apps/api/src/stats/**`, `apps/web/src/features/stats/**`        | in progress |                                                           |
+| K   | Statistics dashboards for student and parent              | `packages/core/src/stats*.ts`, `apps/api/src/stats/**`, `apps/web/src/features/stats/**`        | in review   | [#18](https://github.com/JoelBondoux/revisionden/pull/18) |
 | S   | Official citations for pilot GCSE Maths content           | `content/items/**`, `content/topic-trees/**`, `content/mark-schemes/**`                         | merged      | [#7](https://github.com/JoelBondoux/revisionden/pull/7)   |
 
 ## Next (queued)
