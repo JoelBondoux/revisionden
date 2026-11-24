@@ -163,6 +163,9 @@ Tags: #product #rules #limits #defaults
 - Quote check: sources are fetched only from official hosts (Pearson, AQA, OCR, Eduqas, WJEC,
   gov.uk) and cached outside git with their SHA-256. "page N" may be the PDF page or the printed
   page; a specification code must be the nearest code before the quote. Unconfirmable = fail.
+  Only an exact match (after normalising) passes; a near match (letters only, or words with
+  small insertions or reordering, with a confidence) is flagged for a reviewer to confirm.
+  Pilot (2026-11-24): 110 of 110 citations found, 108 exact and 2 near.
 - Blind answer must come from a different provider from the writer (Claude by default) and be
   highly confident; any adversarial-review problem fails the item. Real models never run in
   tests or CI.

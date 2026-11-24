@@ -143,9 +143,21 @@ quarantine in `apps/api` and `apps/web/src/features/review/`, and the marking ru
 outside the repository (`REVISIONDEN_SOURCE_CACHE`, default `~/.cache/revisionden/sources`);
 exam board documents are never committed. Text is compared after normalising whitespace,
 ligatures, curly quotes, dashes, soft hyphens, words split across lines and spaces inside
-brackets or before punctuation; letter case and words must match exactly. If that fails, a
-match with all spaces ignored is accepted (PDFs split "nth" into "n th" around a superscript),
-and the check's notes say "PDF spacing ignored" so a reviewer can see it. A quote that appears
+brackets or before punctuation; letter case and words must match exactly. Only that exact
+match passes on its own. Text extraction can still break a genuine quote, so the checker then
+looks for a **near match**, which never passes automatically:
+
+- `letters`: the same letters and digits in order, ignoring everything else (a hyphen dropped
+  at a line end, "position-toterm"; "n th" for a superscript);
+- `words`: every word of the quote within a window only slightly longer than the quote,
+  allowing inserted fragments ("Y" from a two-column layout, the "1" of a fraction) and some
+  reordering (a formula split across lines); confidence is the share of words in order, and
+  anything below 0.5 is not a match.
+
+A near match makes the citation `near` and the entry's quote-check `fail`, with notes such as
+"near match (words, confidence 0.60): a reviewer must confirm it". A reviewer compares the quote
+with the source by hand; the content session then records the quote-check as passed with the
+reviewer's role as the tool. A quote that appears
 more than once (Foundation and Higher tiers repeat text) passes if any copy is at the stated
 location. The location must be checkable:
 
