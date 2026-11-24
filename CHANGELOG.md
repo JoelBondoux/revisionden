@@ -11,6 +11,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Project memory (`project_memory/`) in the AtlasMind layout as the single source of truth, with the AtlasMind SSOT rule in `CLAUDE.md` and `AGENTS.md`; decision records moved to `project_memory/decisions/`.
+
 - Monorepo skeleton: web app, API, core domain logic, maths engine.
 - CI on every pull request; automatic version bump and tag on every push to `main`.
 - Project overview moved to `docs/OVERVIEW.md` (no README while the repository is public).

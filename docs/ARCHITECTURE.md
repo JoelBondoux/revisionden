@@ -1,7 +1,7 @@
 # Architecture
 
 > Live document. Update when a service, boundary or data flow changes. Decisions are recorded in
-> [`decisions/`](decisions/).
+> [`project_memory/decisions/`](../project_memory/decisions/).
 
 ## Overview
 
