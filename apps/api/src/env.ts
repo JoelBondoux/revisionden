@@ -31,6 +31,9 @@ const envSchema = z.object({
   PASSKEY_RP_ID: z.string().min(1).optional(),
   AUTH_RATE_LIMITER: optionalRateLimiter,
   AI_RATE_LIMITER: optionalRateLimiter,
+  // Development only: also serve unverified (draft) content. Ignored in staging and production.
+  SERVE_DRAFT_CONTENT: z.enum(['true', 'false']).optional(),
+  MATHS_ENGINE_URL: url.optional(),
 });
 
 export type WorkerEnv = z.infer<typeof envSchema>;
@@ -46,6 +49,10 @@ export interface AppConfig {
   aiGatewayUrl: string;
   /** WebAuthn relying party id: the web app's host unless overridden. */
   passkeyRpId: string;
+  /** Serve draft content as well as verified. Only ever true in development. */
+  serveDraftContent: boolean;
+  /** Maths engine (services/maths) used to check worked maths answers. */
+  mathsEngineUrl?: string;
 }
 
 /** Validates the Worker environment. Throws naming every missing or invalid key. */
@@ -67,5 +74,7 @@ export function parseEnv(env: Record<string, unknown>): AppConfig & { raw: Worke
     microsoft: { clientId: e.MICROSOFT_CLIENT_ID, clientSecret: e.MICROSOFT_CLIENT_SECRET },
     aiGatewayUrl: e.AI_GATEWAY_URL,
     passkeyRpId: e.PASSKEY_RP_ID ?? new URL(e.WEB_ORIGIN).hostname,
+    serveDraftContent: e.ENVIRONMENT === 'development' && e.SERVE_DRAFT_CONTENT === 'true',
+    ...(e.MATHS_ENGINE_URL ? { mathsEngineUrl: e.MATHS_ENGINE_URL } : {}),
   };
 }
