@@ -418,6 +418,62 @@ const TOPS: Record<string, Draw> = {
       </text>
     </>
   ),
+  // Year chapter finales (original art).
+  'chapter-hoodie': ({ top }) => (
+    <>
+      {hoodie(top)}
+      <circle cx={60} cy={104} r={7} fill={WHITE} />
+      <text x={60} y={107.5} fontSize={9} fontWeight={900} textAnchor="middle" fill={INK}>
+        1
+      </text>
+    </>
+  ),
+  'bomber-jacket': () => (
+    <>
+      {topBase('#3F5D3A')}
+      <path d="M26 114 H94 V120 H26 Z" fill="#C8102E" opacity={0.85} />
+      <path d="M48 84 Q60 92 72 84" fill="none" stroke="#C8102E" strokeWidth={4} />
+      <path d="M60 88 V120" stroke={GOLD} strokeWidth={2} />
+      <rect x={38} y={98} width={8} height={6} rx={1} fill="#FF7A2F" />
+    </>
+  ),
+  'gcse-finisher-jacket': () => (
+    <>
+      {topBase('#1E2A78')}
+      <path d="M40 92 L60 120 L80 92" fill="none" stroke={GOLD} strokeWidth={4} />
+      <path d="M26 112 H94" stroke={GOLD} strokeWidth={2} />
+      <polygon
+        points="86,96 88,101 93,101 89,104 91,109 86,106 81,109 83,104 79,101 84,101"
+        fill={GOLD}
+        stroke={GOLD_EDGE}
+        strokeWidth={0.8}
+      />
+    </>
+  ),
+  'sixth-form-coat': () => (
+    <>
+      {topBase('#5B3A29')}
+      <polygon points="46,84 60,104 52,120 38,92" fill="#4A2F21" />
+      <polygon points="74,84 60,104 68,120 82,92" fill="#4A2F21" />
+      <polygon points="52,86 60,100 68,86" fill="#F2E6D8" />
+      {[108, 116].map((y) => (
+        <circle key={y} cx={64} cy={y} r={1.6} fill={GOLD} />
+      ))}
+    </>
+  ),
+  'a-level-finisher-jacket': () => (
+    <>
+      {topBase('#5A1E78')}
+      <path d="M40 92 L60 120 L80 92" fill="none" stroke={GOLD} strokeWidth={4} />
+      <path d="M26 108 H94 M26 113 H94" stroke={GOLD} strokeWidth={1.5} />
+      <path
+        d="M82 96 L90 96 L86 104 Z M86 104 V110"
+        fill={GOLD}
+        stroke={GOLD_EDGE}
+        strokeWidth={0.8}
+      />
+    </>
+  ),
 };
 
 const lensPair = (draw: (x: number) => ReactNode, bridge = true) => (
@@ -572,10 +628,37 @@ const HEADWEAR: Record<string, Draw> = {
       ))}
     </>
   ),
+  // Seasonal drop: Frost Fest 2026 (original art).
+  'bobble-hat': () => (
+    <>
+      <path d="M36 40 Q36 14 60 14 Q84 14 84 40 Z" fill="#2E86AB" />
+      <path d="M36 36 H84 V44 H36 Z" fill={WHITE} />
+      {[44, 54, 64, 74].map((x) => (
+        <path key={x} d={`M${x} 26 l4 -4 l4 4`} fill="none" stroke={WHITE} strokeWidth={2} />
+      ))}
+      <circle cx={60} cy={11} r={6} fill={WHITE} />
+    </>
+  ),
 };
 
 const HELD: Record<string, Draw> = {
   none: nothing,
+  // Seasonal drop: Frost Fest 2026 (original art).
+  lantern: () => (
+    <>
+      <path d="M98 78 V86" stroke={INK} strokeWidth={1.5} />
+      <ellipse cx={98} cy={100} rx={11} ry={14} fill="#E94F37" />
+      <path
+        d="M90 90 Q98 100 90 110 M106 90 Q98 100 106 110"
+        fill="none"
+        stroke="#B83A28"
+        strokeWidth={1.5}
+      />
+      <ellipse cx={98} cy={100} rx={4} ry={6} fill={GOLD} opacity={0.9} />
+      <rect x={93} y={85} width={10} height={3} fill={INK} />
+      <rect x={93} y={113} width={10} height={3} fill={INK} />
+    </>
+  ),
   guitar: () => (
     <>
       <rect x={96} y={62} width={5} height={36} fill="#6B4226" transform="rotate(20 98 80)" />
@@ -827,6 +910,52 @@ const SCENES: Record<string, Draw> = {
       ))}
       <circle cx={98} cy={30} r={12} fill="#FF7A2F" />
       <ellipse cx={98} cy={30} rx={20} ry={4} fill="none" stroke={GOLD} strokeWidth={2} />
+    </>
+  ),
+  // Chapter 2 finale (original art): a city rooftop at dusk with water tanks.
+  rooftop: () => (
+    <>
+      <rect x={0} y={0} width={120} height={120} fill="#3B2A5C" />
+      <circle cx={96} cy={22} r={9} fill="#FFD27A" />
+      {[
+        [0, 60, 18],
+        [20, 48, 14],
+        [100, 54, 20],
+      ].map(([x, y, w]) => (
+        <rect key={x} x={x} y={y} width={w} height={60} fill="#241A3A" />
+      ))}
+      {[
+        [4, 66],
+        [24, 54],
+        [104, 62],
+        [110, 74],
+      ].map(([x, y]) => (
+        <rect key={`${x}-${y}`} x={x} y={y} width={4} height={4} fill="#FFD27A" />
+      ))}
+      <rect x={0} y={104} width={120} height={16} fill="#5A4A6E" />
+      <path d="M0 104 H120" stroke="#7A6A8E" strokeWidth={2} />
+    </>
+  ),
+  // Seasonal drop: Frost Fest 2026 (original art).
+  'frosty-night': () => (
+    <>
+      <rect x={0} y={0} width={120} height={120} fill="#16324F" />
+      {[
+        [14, 18],
+        [40, 10],
+        [104, 16],
+        [88, 44],
+        [10, 58],
+        [112, 70],
+      ].map(([x = 0, y = 0]) => (
+        <path
+          key={`${x}-${y}`}
+          d={`M${x - 3} ${y} H${x + 3} M${x} ${y - 3} V${y + 3}`}
+          stroke={WHITE}
+          strokeWidth={1.2}
+        />
+      ))}
+      <path d="M0 100 Q30 92 60 100 Q90 108 120 98 V120 H0 Z" fill="#E8F1F8" />
     </>
   ),
 };

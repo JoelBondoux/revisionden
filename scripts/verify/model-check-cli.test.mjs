@@ -109,3 +109,63 @@ test('reports a provider error for an item and carries on', async () => {
   assert.match(out.lines.join('\n'), /ERROR fixture-a {2}blind-answer {2}openai returned HTTP 500/);
   assert.match(out.lines.join('\n'), /pass {2}fixture-b {2}blind-answer/);
 });
+
+test('extended answers get blind marking of their exemplars instead of a blind answer', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'rd-mc-essay-'));
+  await mkdir(join(root, 'items'), { recursive: true });
+  await mkdir(join(root, 'mark-schemes'), { recursive: true });
+  const scheme = {
+    id: 'fixture-ms-levels',
+    type: 'levels',
+    levels: [
+      { level: 1, marks: [1, 2], descriptor: 'Fixture low' },
+      { level: 2, marks: [3, 4], descriptor: 'Fixture middle' },
+      { level: 3, marks: [5, 6], descriptor: 'Fixture top' },
+    ],
+  };
+  const exemplars = [
+    { band: 'top', level: 3, answer: 'Fixture top answer.' },
+    { band: 'middle', level: 2, answer: 'Fixture middle answer.' },
+    { band: 'low', level: 1, answer: 'Fixture low answer.' },
+  ];
+  const essay = draftItem('fixture-essay', undefined, {
+    type: 'extended_answer',
+    prompt: 'Fixture essay?',
+    marks: 6,
+    mark_scheme_ref: 'fixture-ms-levels',
+    exemplars,
+    answer: undefined,
+  });
+  await writeFile(join(root, 'items/f.json'), JSON.stringify([essay]));
+  await writeFile(join(root, 'mark-schemes/ms.json'), JSON.stringify(scheme));
+  const marks = { 1: 2, 2: 3, 3: 6 };
+  const openai = {
+    provider: 'openai',
+    model: 'fixture-model',
+    async complete({ prompt }) {
+      const level = exemplars.find((e) => prompt.includes(e.answer)).level;
+      return {
+        output: {
+          marks: marks[level],
+          level,
+          confidence: 'high',
+          awards: [{ criterion: `L${level}`, marks: marks[level], evidence: 'Fixture.' }],
+          feedback: '',
+        },
+        modelVersion: 'fixture-001',
+      };
+    },
+  };
+  const out = io();
+  const code = await run(['--content', root, '--blind', 'openai', '--write'], {
+    ...out,
+    providerFor: () => openai,
+  });
+  assert.equal(code, 0, out.lines.join('\n'));
+  assert.match(out.lines.join('\n'), /pass {2}fixture-essay {2}blind-marking/);
+  const [saved] = JSON.parse(await readFile(join(root, 'items/f.json'), 'utf8'));
+  assert.deepEqual(
+    saved.verification.checks.map((c) => c.name),
+    ['blind-marking'],
+  );
+});

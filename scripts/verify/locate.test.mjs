@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { parseLocation, locateQuote } from './locate.mjs';
 
 test('reads page numbers from a location', () => {
@@ -37,7 +38,8 @@ test('passes when the quote is on the stated page', () => {
     page: 3,
     locationConfirmed: true,
     reason: null,
-    spacingIgnored: false,
+    match: 'exact',
+    confidence: 1,
   });
 });
 
@@ -85,7 +87,8 @@ test('fails when the quote is not in the source at all', () => {
     page: null,
     locationConfirmed: false,
     reason: 'quote not found in the source',
-    spacingIgnored: false,
+    match: null,
+    confidence: null,
   });
 });
 
@@ -166,22 +169,73 @@ test('when no copy is at the stated location, the reason names the first copy', 
   assert.match(r.reason, /found on page 1, not page 3/);
 });
 
-test('a quote split by PDF spacing (a superscript "th", a bracket) still matches, and says so', () => {
+test('a quote split by PDF spacing is a near match (letters), never an exact one', () => {
   const pages = ['A25 deduce expressions to calculate the n th term of linear sequences'];
   const r = locateQuote({ quote: 'calculate the nth term', location: 'A25' }, pages);
   assert.equal(r.found, true);
   assert.equal(r.locationConfirmed, true);
-  assert.equal(r.spacingIgnored, true);
+  assert.equal(r.match, 'letters');
 });
 
-test('an exact match does not report ignored spacing', () => {
+test('an exact match says so, with full confidence', () => {
   const r = locateQuote({ quote: 'nth term', location: 'A25' }, ['A25 the nth term']);
-  assert.equal(r.spacingIgnored, false);
+  assert.equal(r.match, 'exact');
+  assert.equal(r.confidence, 1);
 });
 
 test('ignoring spacing never changes the letters: a different word still fails', () => {
   const r = locateQuote({ quote: 'calculate the 9th term', location: 'A25' }, [
     'A25 calculate the n th term',
   ]);
+  assert.equal(r.found, false);
+});
+
+const PDFTOTEXT = JSON.parse(
+  readFileSync(new URL('./fixtures/pdftotext-cases.json', import.meta.url), 'utf8'),
+).cases;
+
+for (const c of PDFTOTEXT) {
+  test(`pdftotext case: ${c.case} is found as a near match at its location`, () => {
+    const pages = [...Array(c.pdf_page - 1).fill(''), c.extracted_text];
+    const r = locateQuote({ quote: c.quote, location: c.location }, pages);
+    assert.equal(r.found, true, r.reason);
+    assert.equal(r.locationConfirmed, true, r.reason);
+    assert.notEqual(r.match, 'exact');
+    assert.ok(r.confidence > 0 && r.confidence <= 1);
+  });
+}
+
+test('a dropped line-end hyphen is a letters match with full confidence', () => {
+  const r = locateQuote({ quote: 'a position-to-term rule', location: 'A23' }, [
+    'A23 either a term-to-term or a position-toterm rule',
+  ]);
+  assert.equal(r.match, 'letters');
+});
+
+test('reordered or interrupted words are a words match with a confidence below 1', () => {
+  const pages = [
+    'G23 know and apply Area = angles of any triangle 1 ab sin C to calculate the area, sides or 2',
+  ];
+  const r = locateQuote(
+    { quote: 'to calculate the area, sides or angles of any triangle', location: 'G23' },
+    pages,
+  );
+  assert.equal(r.match, 'words');
+  assert.ok(r.confidence < 1 && r.confidence >= 0.5, String(r.confidence));
+});
+
+test('a word that is not in the source is still not found, even by the word fallback', () => {
+  const pages = ['N7 calculate with roots, and with integer and fractional indices'];
+  const r = locateQuote(
+    { quote: 'calculate with roots, and with integer and decimal indices', location: 'N7' },
+    pages,
+  );
+  assert.equal(r.found, false);
+});
+
+test('words scattered far apart are not a match', () => {
+  const filler = Array(80).fill('other').join(' ');
+  const pages = [`N7 calculate ${filler} with roots ${filler} and indices`];
+  const r = locateQuote({ quote: 'calculate with roots and indices', location: 'N7' }, pages);
   assert.equal(r.found, false);
 });

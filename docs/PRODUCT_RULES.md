@@ -33,8 +33,8 @@
 - **Gift days** come with some rewards (for example streak badges). They can only be given to a
   friend, never used on the student's own streak. Gifting earns 20 XP.
 - Details settled in code:
-  - XP per correct answer: flashcard 5, multiple choice 10, short answer 15, numeric 15, working
-    20, long answer 30. Part marks earn part of it (rounded). Wrong answers earn 0.
+  - XP per correct answer: flashcard 5, multiple choice 10, short answer 15, numeric 15, worked
+    maths 20, extended answer 30. Part marks earn part of it (rounded). Wrong answers earn 0.
   - Daily goal defaults to 50 XP. Weekly goal defaults to the daily goal met on 5 days; each week
     hit earns 1 skip day (paid once per week).
   - A skip day keeps the streak but does not add to it. A day with no activity counts as missed.
@@ -92,17 +92,21 @@
 ## Rewards (avatar unlocks)
 
 The full five-year progression (levels 1 to 100, year chapters, milestones, collections,
-seasonal drops, rarity, parent-set rewards) is in [`REWARDS.md`](REWARDS.md). The current
-implemented catalogue is the first slice of it:
+seasonal drops, rarity, parent-set rewards) is in [`REWARDS.md`](REWARDS.md), including the level
+formula and its assumptions. Summary of what is built:
 
-Targets vary: streaks (7, 30, 100 days), grades (target hit in a mock, every target at an
-assessment), practice (full past paper, 10 weak spots fixed, 10 topics mastered, perfect set),
-friendship (gift 3 days, gift to 5 friends), competition (top of friends league for a week), and
-easy early wins (starting test, 25 right in a row).
-
-- Each reward unlocks one avatar item. Streak badges come with gift days: 7 days → 1, 30 days → 2,
-  100 days → 3.
-- Implemented: `packages/core/src/rewards.ts`.
+- Catalogue as data (`packages/core/src/catalogue/`): every reward has one stated target (a stat,
+  a collection or a seasonal challenge), a rarity, a source and the items it gives. The original
+  14 targets are kept with the same ids: streaks (7, 30, 100 days), grades (target hit in a mock,
+  every target at an assessment), practice (full past paper, 10 weak spots fixed, 10 topics
+  mastered, perfect set), friendship (gift 3 days, gift to 5 friends), competition (top of
+  friends league for a week), and easy early wins (starting test, 25 right in a row).
+- Streak milestones come with gift days: 7 days → 1, 30 → 2, 100 → 3, 365 → 5, 1,000 → 10.
+- Rewards never come from time spent or late-night study (22:00 to 05:59 UK time), at most
+  300 reward XP count a day, and there are no random draws.
+- Avatar items only unlock from the reward that locks them; locked items are refused when saving.
+- Implemented: `packages/core/src/rewards.ts`, `levels.ts`, `chapters.ts`, `reward-xp.ts`,
+  `reward-stats.ts`, `rewards-schemas.ts`; API `apps/api/src/routes/rewards.ts`.
 
 ## Nickname and avatar
 

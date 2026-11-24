@@ -26,8 +26,8 @@ export const LearnItemSchema = z.discriminatedUnion('type', [
   }),
   z.object({ ...itemBase, type: z.literal('short_answer'), prompt: text }),
   z.object({ ...itemBase, type: z.literal('numeric'), prompt: text, unit: text.optional() }),
-  z.object({ ...itemBase, type: z.literal('working'), prompt: text }),
-  z.object({ ...itemBase, type: z.literal('long_answer'), prompt: text }),
+  z.object({ ...itemBase, type: z.literal('worked_maths'), prompt: text }),
+  z.object({ ...itemBase, type: z.literal('extended_answer'), prompt: text }),
   z.object({
     ...itemBase,
     type: z.literal('flashcard'),

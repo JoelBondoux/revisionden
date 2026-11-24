@@ -1,0 +1,115 @@
+/**
+ * Shapes for the rewards catalogue (see docs/REWARDS.md). The catalogue is plain data: every
+ * reward has one stated target, so there are no random draws and nothing is bought.
+ */
+import type { AvatarLayer } from '../avatar';
+
+/**
+ * Numbers a reward target can check. All of them measure learning, kindness or exams; none
+ * measure time spent in the app (see the guard-rail tests).
+ */
+export interface RewardStats {
+  /** Longest streak ever, in days. */
+  bestStreak: number;
+  /** Mocks where the student hit their target grade. */
+  mocksWithTargetHit: number;
+  /** Mocks where the student beat their target grade. */
+  mocksAboveTarget: number;
+  /** Assessments where the student hit every target. */
+  assessmentsWithAllTargetsHit: number;
+  fullPastPapers: number;
+  /** Topics that were weak spots and are now at or above the weak-spot line. */
+  weakSpotsFixed: number;
+  /** Topics mastered across all subjects. */
+  topicsMastered: number;
+  /** Topics mastered in the student's best subject. */
+  bestSubjectTopicsMastered: number;
+  /** Share of topics mastered in the student's best subject, 0 to 100. */
+  bestSubjectMasteryPercent: number;
+  /** Sets with every question right (for example 5 out of 5). */
+  perfectSets: number;
+  correctAnswers: number;
+  flashcardsReviewed: number;
+  daysGifted: number;
+  /** Different friends the student has gifted a day to. */
+  friendsGiftedTo: number;
+  weeksTopOfLeague: number;
+  startingTestsCompleted: number;
+  /** Most answers right in a row. */
+  bestCorrectRun: number;
+  /** Level 1 to 100 (see levels.ts). */
+  level: number;
+  prestigeStars: number;
+  chapter1Xp: number;
+  chapter2Xp: number;
+  chapter3Xp: number;
+  chapter4Xp: number;
+  chapter5Xp: number;
+  gcseExamsSat: number;
+  /** 1 once the last GCSE exam is sat. */
+  gcseFinished: number;
+  aLevelExamsSat: number;
+  /** 1 once the last A-Level exam is sat. */
+  aLevelFinished: number;
+}
+
+export type StatKey = keyof RewardStats;
+
+export type Rarity = 'common' | 'rare' | 'epic' | 'legendary';
+export const RARITIES: readonly Rarity[] = ['common', 'rare', 'epic', 'legendary'];
+
+export type RewardSource = 'level' | 'chapter' | 'milestone' | 'collection' | 'season';
+
+/** What the student gets. Avatar items point at a layer item in AVATAR_CATALOGUE. */
+export type RewardItem =
+  | { kind: 'avatar'; layer: AvatarLayer; id: string }
+  | { kind: 'frame'; id: string }
+  | { kind: 'title'; text: string }
+  | { kind: 'theme'; id: string }
+  | { kind: 'pipOutfit'; id: string }
+  | { kind: 'badge'; id: string };
+
+export type UnlockTarget =
+  | { kind: 'stat'; stat: StatKey; atLeast: number }
+  /** Every member of the collection earned. */
+  | { kind: 'collection'; collectionId: string }
+  /** The season's challenge progress, counted inside its term window (or its re-release). */
+  | { kind: 'season'; seasonId: string; atLeast: number };
+
+export interface Reward {
+  id: string;
+  name: string;
+  rarity: Rarity;
+  source: RewardSource;
+  target: UnlockTarget;
+  items: readonly RewardItem[];
+  /** Gift days that come with this reward (they can only be given to friends). */
+  giftDays: number;
+}
+
+export interface Collection {
+  id: string;
+  name: string;
+  /** Reward ids that make up the set. */
+  members: readonly string[];
+}
+
+/** What a season's challenge counts, inside the window only. */
+export type SeasonMeasure = 'correctAnswers' | 'goalDays';
+
+export interface DateWindow {
+  /** First day, YYYY-MM-DD (UK date), inclusive. */
+  start: string;
+  /** Last day, YYYY-MM-DD (UK date), inclusive. */
+  end: string;
+}
+
+export interface Season {
+  id: string;
+  name: string;
+  window: DateWindow;
+  /** When missed items come back (the same term a year later). */
+  rerelease: DateWindow;
+  measure: SeasonMeasure;
+  challenge: string;
+}
