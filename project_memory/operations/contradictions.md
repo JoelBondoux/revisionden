@@ -9,23 +9,24 @@
       marking) live in `apps/api/src/notifications/routes.ts` and `apps/api/src/ai/routes.ts`, but
       `docs/ARCHITECTURE.md` (Conventions) says every body has a Zod schema in `packages/core`.
       Not settled: `packages/core` is outside workstream H's lane (same TODO as B's device routes).
-- [ ] Item JSON in the `items` table has no fixed format yet. H's marking reads
-      `body.prompt`, `body.marks`, `body.mark_scheme` (or `body.mark_points`) and
-      `answer.accepted` (`apps/api/src/ai/items.ts`), matching `content/schemas/item.schema.json`;
-      the content loader (F or D) must store items in that shape. Not settled: no loader exists yet.
 - [ ] The approved avatar builder has 15 locked items but there are 14 rewards and the old rule was
       "each reward unlocks one item". Settled for now by letting the 100-day streak unlock two items
       (crown and Alien skin) in `packages/core/src/avatar.ts`; `docs/PRODUCT_RULES.md` and
       `product-facts.md` updated. Needs the product owner to confirm or name a 15th reward.
       Superseded by workstream R (five-year rewards catalogue, about 650 unlocks), which gives every
       locked item its own reward.
-- [ ] **Item type names.** `content/schemas/item.schema.json` uses `worked_maths` and
-      `extended_answer`; `packages/core/src/schemas.ts` (`ItemTypeSchema`, XP table) uses `working` and
-      `long_answer`. F maps them (`contentTypeToItemType`) instead of renaming either, because both
-      sit in other workstreams' lanes. Pick one set of names.
 
 ## Resolved
 
+- [x] **Item type names.** Settled by workstream V: the content schema names (`worked_maths`,
+      `extended_answer`) are used everywhere (`packages/core` ItemTypeSchema and XP table, API, web);
+      F's `contentTypeToItemType` mapping is removed.
+- [x] Item JSON in the `items` table: settled by workstream V. The format is the one the content
+      sync writes (`ItemBody` and `ItemAnswer` in `apps/api/src/learning/content-sync.ts`, now with
+      `body.marks`); H's marking (`apps/api/src/ai/items.ts`) reads `answer.key.accepted` and
+      `answer.markScheme`. Round trip tested in `apps/api/src/ai/items-roundtrip.test.ts`.
+- [x] Extended-answer blind marking: implemented by workstream V (`blind-marking` check, validator
+      and review-queue rules).
 - [x] Extended-answer verification: settled by the lead session in `docs/VERIFICATION.md` section 3.
       Extended answers replace the blind answer with blind marking of exemplar answers, and always need
       individual human approval. Implementation is a follow-up for workstream V.

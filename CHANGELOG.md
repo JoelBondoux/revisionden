@@ -12,6 +12,9 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Verification: blind marking for extended answers: three exemplars (top, middle, low) marked by a second provider without the intended levels must all match; verified extended answers need `blind-marking` and individual human approval, and review batches always include them.
+- Verification: the quote checker reports near matches (letters only, or words with small insertions or reordering, with a confidence) for a reviewer to confirm instead of passing them.
+
 - Five-year rewards progression design (`docs/REWARDS.md`) and backlog workstream R.
 
 - Content: official citations with verbatim quotes, pages and SHA-256 for all 110 pilot GCSE Maths entries (1MA1 Issue 2 and DfE subject content); quadratic formula flashcard fixed; sourcing record in `docs/sourcing/` (S).
@@ -68,6 +71,11 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
   spend cap (US$2.50 by default) and a guard that refuses any request with personal data.
 - Short-answer marking (H3): rules against the mark scheme first, Claude Haiku 5.5 only for
   wording variants, citing each mark point; unsure answers say "Check with your teacher".
+
+### Changed
+
+- Item type names are the content schema names everywhere (`worked_maths`, `extended_answer`); the mapping in core is removed.
+- One item JSON format in the `items` table for the content sync and AI marking (`body.marks` added; marking reads `answer.key` and `answer.markScheme`), with a round-trip test.
 
 ## [00.01.002] - 2026-11-24
 

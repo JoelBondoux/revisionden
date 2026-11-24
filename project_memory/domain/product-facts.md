@@ -45,8 +45,8 @@ Tags: #product #rules #limits #defaults
   50 XP), max 2 in a row. Gift days: come with streak badges (1, 2, 3 for 7, 30, 100 days), only
   given away (arrive as a skip day for the friend), +20 XP for gifting. Implemented in
   `packages/core/src/streaks.ts` and `xp.ts`.
-- XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, working 20,
-  long answer 30; part marks earn part.
+- XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, worked maths
+  20, extended answer 30; part marks earn part.
 - 14 rewards unlock the 15 locked avatar items: one each, except the 100-day streak, which unlocks
   two (crown and Alien skin). `packages/core/src/rewards.ts`, `avatar.ts`.
 - 14 rewards, each unlocking one avatar item: `packages/core/src/rewards.ts`.
@@ -166,6 +166,14 @@ Tags: #product #rules #limits #defaults
   Only an exact match (after normalising) passes; a near match (letters only, or words with
   small insertions or reordering, with a confidence) is flagged for a reviewer to confirm.
   Pilot (2026-11-24): 110 of 110 citations found, 108 exact and 2 near.
+- Item type names are the same everywhere (content, database, API, app): multiple_choice,
+  short_answer, numeric, worked_maths, flashcard, extended_answer. Item JSON in the `items`
+  table: `body` is what the student sees (prompt, marks, options, unit, hint, front, back);
+  `answer` is server-only (`key` = the content answer, `verify`, `explanation`, `steps`,
+  `markScheme`). Defined in `apps/api/src/learning/content-sync.ts`.
+- Extended answers: blind marking replaces the blind answer (three exemplars, top, middle and low,
+  marked by a second provider without the intended levels; all three must match exactly), and
+  every one needs individual human approval; review batches always include them.
 - Blind answer must come from a different provider from the writer (Claude by default) and be
   highly confident; any adversarial-review problem fails the item. Real models never run in
   tests or CI.

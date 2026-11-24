@@ -244,6 +244,20 @@ describe('batch sampling', () => {
     expect(again.sample).toEqual(batch.sample);
   });
 
+  it('always reviews extended answers individually, even when not flagged', async () => {
+    const headers = await reviewer();
+    const items = batchItems(400).map((i, n) =>
+      n === 9 ? { ...i, snapshot: { ...i.snapshot, type: 'extended_answer' } } : i,
+    );
+    const res = await t.app.request(
+      '/v1/review/batches',
+      jsonRequest('POST', { title: 'Fixture batch', items }, headers),
+    );
+    const batch = (await res.json()) as { sample: string[] };
+    expect(batch.sample).toContain('fixture-item-9');
+    expect(batch.sample).toHaveLength(41);
+  });
+
   it('shows the reviewer only the sampled items, with what they need to check', async () => {
     const headers = await reviewer();
     const batch = await createBatch(headers, 50);

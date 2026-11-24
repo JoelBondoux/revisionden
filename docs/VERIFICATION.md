@@ -174,6 +174,15 @@ location. The location must be checkable:
 - a web page has no pages, so its citations need a code; a location with neither a page nor a
   code fails. Anything the checker cannot confirm fails, for a person to fix.
 
+**Blind marking for extended answers (step 3).** The item lists three `exemplars` (`band`: top,
+middle or low; the intended `level`; the `answer`), written from the mark scheme. Each is marked
+by a model from a different provider from the writer (`scripts/verify/blind-marking.mjs`,
+run by `pnpm content:model-check --blind <provider>`), given only the question, the exemplar
+and the mark scheme. The check passes only if all three are marked at exactly their intended
+levels (total marks for mark-point schemes), confidently, with every mark citing the scheme.
+Verified extended answers need a passing `blind-marking` check (not `blind-answer`), all three
+exemplars, and a `human-approval` check; review batches always include them in the sample.
+
 **Blind answer and adversarial review (steps 3 and 4).** Providers share one interface
 (`scripts/verify/providers.mjs`) with structured JSON output that is validated before use. The
 blind answer must come from a different provider from the writer (Claude by default, read from
