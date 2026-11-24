@@ -52,9 +52,9 @@ and reports which line first goes wrong; Cloud Run container ready to deploy.
 
 ## Content sourcing
 
-| ID  | Workstream                              | Owns these paths                                                                            | Branch                     | Status    | PR  |
-| --- | --------------------------------------- | ------------------------------------------------------------------------------------------- | -------------------------- | --------- | --- |
-| S   | Official citations for pilot GCSE Maths | `content/items/**`, `content/topic-trees/**`, `content/mark-schemes/**`, `docs/sourcing/**` | `feature/s-pilot-sourcing` | in review | —   |
+| ID  | Workstream                              | Owns these paths                                                                            | Branch                     | Status    | PR                                                      |
+| --- | --------------------------------------- | ------------------------------------------------------------------------------------------- | -------------------------- | --------- | ------------------------------------------------------- |
+| S   | Official citations for pilot GCSE Maths | `content/items/**`, `content/topic-trees/**`, `content/mark-schemes/**`, `docs/sourcing/**` | `feature/s-pilot-sourcing` | in review | [#7](https://github.com/JoelBondoux/revisionden/pull/7) |
 
 ### S: Official citations for pilot GCSE Maths
 
