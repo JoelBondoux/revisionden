@@ -31,6 +31,21 @@ Tags: #product #rules #limits #defaults
 - Effort scores (e.g. CBI: Commitment, Behaviour and Inspiration, 1–4, 4 best) shape habits, never
   the predicted grade.
 
+## Content
+
+- Content is JSON in `content/`, checked by `pnpm content:validate` (schemas in
+  `content/schemas/`). Every item has `source_ref` and `checked_by`; every topic-tree leaf has a
+  specification reference; trees are at most 3 levels deep. Detail: `docs/CONTENT_PLAN.md`.
+- Every maths answer (numeric and worked maths items, and model solutions) is verified by the
+  maths engine before content can merge.
+- Pilot: GCSE Maths Higher, Pearson Edexcel 1MA1 (content references N1 to S6).
+
+## Maths engine
+
+- `services/maths`: SymPy, no AI. `POST /check-working` returns the 0-based index of the first
+  line of working that does not follow from the previous line, and whether the final answer is
+  correct. Input is limited to safe maths (single letters, a few functions, 200 characters).
+
 ## AI
 
 - Every AI-marked result says: "Marked by AI. This is a guide to help you improve, not your

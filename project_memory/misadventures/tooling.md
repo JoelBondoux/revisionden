@@ -11,3 +11,11 @@ Tags: #tooling #ci
   `gh pr list`. Use the REST API instead, e.g.
   `gh api repos/JoelBondoux/revisionden/pulls -f title='...' -f head='feature/x' -f base='dev' -f body='...'`
   and `gh api repos/JoelBondoux/revisionden/pulls?state=open`.
+- **`pnpm add` rewrites `pnpm-lock.yaml` in pnpm's own style**, but the repository keeps the
+  lockfile Prettier-formatted, so `pnpm format:check` fails. After adding a dependency run
+  `pnpm exec prettier --write pnpm-lock.yaml`.
+- **`docker build` in a Claude cloud session fails pip installs with "certificate verify
+  failed"** because the session proxy re-signs TLS. This is sandbox-only (CI is fine). For a
+  local check, build a throwaway Dockerfile copy that trusts `/root/.ccr/ca-bundle.crt` via
+  `PIP_CERT`; do not commit that change. The Docker daemon may also need starting
+  (`sudo dockerd &`).
