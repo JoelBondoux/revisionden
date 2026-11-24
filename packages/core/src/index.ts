@@ -3,3 +3,4 @@ export * from './nickname';
 export * from './avatar';
 export * from './schemas';
 export * from './spaced-repetition';
+export * from './mastery';
