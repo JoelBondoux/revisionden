@@ -42,10 +42,10 @@ and reports which line first goes wrong; Cloud Run container ready to deploy.
 
 ## Wave 2: queued until Wave 1 is merged
 
-| ID  | Workstream                                                                                         | Depends on           |
-| --- | -------------------------------------------------------------------------------------------------- | -------------------- |
-| E   | Family onboarding and avatar builder screens                                                       | A, B, C              |
-| F   | Learning loop: starting test, path, lessons, flashcards, XP (`feature/f-learning-loop`, in review) | A, B, C, D           |
-| G   | Deploy pipelines for dev, staging and production; Playwright end-to-end                            | A, B (domain bought) |
-| H   | Reminders (web push) and AI gateway with per-child cost cap                                        | B                    |
-| V   | Verification pipeline, review queue, quarantine and audit reports                                  | C, D                 |
+| ID  | Workstream                                                                                                                                                    | Depends on           |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| E   | Family onboarding and avatar builder screens                                                                                                                  | A, B, C              |
+| F   | Learning loop: starting test, path, lessons, flashcards, XP (`feature/f-learning-loop`, in review, [#10](https://github.com/JoelBondoux/revisionden/pull/10)) | A, B, C, D           |
+| G   | Deploy pipelines for dev, staging and production; Playwright end-to-end                                                                                       | A, B (domain bought) |
+| H   | Reminders (web push) and AI gateway with per-child cost cap                                                                                                   | B                    |
+| V   | Verification pipeline, review queue, quarantine and audit reports                                                                                             | C, D                 |
