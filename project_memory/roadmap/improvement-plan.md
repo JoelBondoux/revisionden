@@ -17,10 +17,10 @@
 - [x] H reminders and AI gateway (#11), V verification (#12) and V2 (#13) merged.
 - [x] R five-year rewards progression and parent-set rewards (#16) merged.
 - [x] U sound effects with mute (#17) merged.
-- [ ] K statistics dashboards (#18): wiring R5 rewards and levels, then merge.
-- [ ] L policies, About page and feedback (#19): renumbering its migration, then merge.
+- [x] K statistics dashboards (#18) merged.
+- [x] L policies, About page, feedback and policy acceptance (#19) merged (policies are drafts for solicitor review).
 - [ ] F2 topic map API endpoints: waiting for the product owner's go-ahead.
-- [ ] Follow-ups queued: H2 (reward-met notification), B2 (privacy fixes found by L), T (vitest 4), S2.
+- [ ] Follow-ups queued: H2 (reward-met notification), B2 (privacy fixes found by L), P (parent home page), T (vitest 4), S2.
 
 ## Blocked
 
