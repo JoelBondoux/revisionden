@@ -19,11 +19,14 @@
       {
         "source_type": "specification",
         "publisher": "Pearson Edexcel",
-        "title": "GCSE (9-1) Mathematics specification",
-        "document_ref": "1MA1 (issue not yet confirmed)",
-        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
-        "location": "Subject content, reference N7",
-        "supports": ["question", "answer", "hint"]
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N7 (page 12; PDF page 24)",
+        "quote": "calculate with roots, and with integer and fractional indices",
+        "retrieved_at": "2026-11-24",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
     "verification": {
@@ -53,11 +56,14 @@
       {
         "source_type": "specification",
         "publisher": "Pearson Edexcel",
-        "title": "GCSE (9-1) Mathematics specification",
-        "document_ref": "1MA1 (issue not yet confirmed)",
-        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
-        "location": "Subject content, reference R9",
-        "supports": ["question", "answer", "mark_scheme"]
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R9 (page 16; PDF page 28)",
+        "quote": "solve problems involving percentage change, including percentage increase/decrease and original value problems, and simple interest including in financial mathematics",
+        "retrieved_at": "2026-11-24",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
     "verification": {
@@ -88,11 +94,14 @@
       {
         "source_type": "specification",
         "publisher": "Pearson Edexcel",
-        "title": "GCSE (9-1) Mathematics specification",
-        "document_ref": "1MA1 (issue not yet confirmed)",
-        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
-        "location": "Subject content, reference G17",
-        "supports": ["question", "answer", "mark_scheme"]
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G17 (page 18; PDF page 30)",
+        "quote": "areas of circles and composite shapes",
+        "retrieved_at": "2026-11-24",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
     "verification": {
@@ -124,11 +133,14 @@
       {
         "source_type": "specification",
         "publisher": "Pearson Edexcel",
-        "title": "GCSE (9-1) Mathematics specification",
-        "document_ref": "1MA1 (issue not yet confirmed)",
-        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
-        "location": "Subject content, reference A18",
-        "supports": ["question", "answer", "steps", "mark_scheme"]
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A18 (page 15; PDF page 27)",
+        "quote": "solve quadratic equations (including those that require rearrangement) algebraically by factorising, by completing the square and by using the quadratic formula; find approximate solutions using a graph",
+        "retrieved_at": "2026-11-24",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
     "verification": {
@@ -164,11 +176,14 @@
       {
         "source_type": "specification",
         "publisher": "Pearson Edexcel",
-        "title": "GCSE (9-1) Mathematics specification",
-        "document_ref": "1MA1 (issue not yet confirmed)",
-        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
-        "location": "Subject content, reference A17",
-        "supports": ["question", "answer", "steps", "mark_scheme"]
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A17 (page 15; PDF page 27)",
+        "quote": "solve linear equations in one unknown algebraically (including those with the unknown on both sides of the equation); find approximate solutions using a graph",
+        "retrieved_at": "2026-11-24",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
     "verification": {
@@ -203,11 +218,14 @@
       {
         "source_type": "specification",
         "publisher": "Pearson Edexcel",
-        "title": "GCSE (9-1) Mathematics specification",
-        "document_ref": "1MA1 (issue not yet confirmed)",
-        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
-        "location": "Subject content, reference A4",
-        "supports": ["question", "answer", "steps", "mark_scheme"]
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
+        "quote": "taking out common factors",
+        "retrieved_at": "2026-11-24",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
     "verification": {
@@ -239,11 +257,14 @@
       {
         "source_type": "specification",
         "publisher": "Pearson Edexcel",
-        "title": "GCSE (9-1) Mathematics specification",
-        "document_ref": "1MA1 (issue not yet confirmed)",
-        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
-        "location": "Subject content, reference A4",
-        "supports": ["question", "answer", "steps", "mark_scheme"]
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
+        "quote": "expanding products of two or more binomials",
+        "retrieved_at": "2026-11-24",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
     "verification": {
@@ -270,18 +291,14 @@
       {
         "source_type": "specification",
         "publisher": "Pearson Edexcel",
-        "title": "GCSE (9-1) Mathematics specification",
-        "document_ref": "1MA1 (issue not yet confirmed)",
-        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
-        "location": "Subject content, reference N4",
-        "supports": [
-          "question",
-          "answer",
-          "distractor:0",
-          "distractor:1",
-          "distractor:3",
-          "explanation"
-        ]
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N4 (page 12; PDF page 24)",
+        "quote": "use the concepts and vocabulary of prime numbers, factors (divisors), multiples, common factors, common multiples, highest common factor, lowest common multiple, prime factorisation, including using product notation and the unique factorisation theorem",
+        "retrieved_at": "2026-11-24",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
     "verification": {
@@ -306,11 +323,14 @@
       {
         "source_type": "specification",
         "publisher": "Pearson Edexcel",
-        "title": "GCSE (9-1) Mathematics specification",
-        "document_ref": "1MA1 (issue not yet confirmed)",
-        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
-        "location": "Subject content, reference G9",
-        "supports": ["question", "answer"]
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G9 (page 17; PDF page 29)",
+        "quote": "identify and apply circle definitions and properties, including: centre, radius, chord, diameter, circumference, tangent, arc, sector and segment",
+        "retrieved_at": "2026-11-24",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
     "verification": {
@@ -325,18 +345,33 @@
     "type": "flashcard",
     "difficulty": 2,
     "front": "The quadratic formula for ax^2 + bx + c = 0",
-    "back": "x = (-b ± √(b^2 - 4ac)) / 2a",
+    "back": "x = (-b ± √(b^2 - 4ac)) / (2a), where a ≠ 0",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["author"],
     "citations": [
       {
         "source_type": "specification",
         "publisher": "Pearson Edexcel",
-        "title": "GCSE (9-1) Mathematics specification",
-        "document_ref": "1MA1 (issue not yet confirmed)",
-        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
-        "location": "Subject content, reference A18",
-        "supports": ["front", "back"]
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A18 (page 15; PDF page 27)",
+        "quote": "solve quadratic equations (including those that require rearrangement) algebraically by factorising, by completing the square and by using the quadratic formula",
+        "retrieved_at": "2026-11-24",
+        "supports": ["front"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "dfe_subject_content",
+        "publisher": "DfE",
+        "title": "Mathematics: GCSE subject content and assessment objectives",
+        "document_ref": "DFE-00233-2013 (November 2013)",
+        "url": "https://assets.publishing.service.gov.uk/media/5a7cb5b040f0b6629523b52c/GCSE_mathematics_subject_content_and_assessment_objectives.pdf",
+        "location": "Appendix: Mathematical formulae, section 1 (formulae candidates are expected to know), 'The quadratic formula' (page 14)",
+        "quote": "Formulae included in the subject content. Candidates are expected to know these formulae; they must not be given in the assessment.",
+        "retrieved_at": "2026-11-24",
+        "supports": ["back"],
+        "sha256": "647a751b51c71d9ced1c9356aa70b15ceb1a4acb2fd5bc9af49619ead06d0ee6"
       }
     ],
     "verification": {
@@ -360,11 +395,14 @@
       {
         "source_type": "specification",
         "publisher": "Pearson Edexcel",
-        "title": "GCSE (9-1) Mathematics specification",
-        "document_ref": "1MA1 (issue not yet confirmed)",
-        "url": "https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.html",
-        "location": "Subject content, reference A6",
-        "supports": ["question", "mark_scheme"]
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A6 (page 14; PDF page 26)",
+        "quote": "know the difference between an equation and an identity; argue mathematically to show algebraic expressions are equivalent, and use algebra to support and construct arguments and proofs",
+        "retrieved_at": "2026-11-24",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
     "verification": {

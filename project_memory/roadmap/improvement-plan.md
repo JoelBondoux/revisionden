@@ -6,16 +6,19 @@
 
 ## Done
 
-- [x] Wave 1 (Stage 1 foundations), merged into `dev` on 2026-11-24: A web (#4), B API, database
-      and sign-in (#6), C core rules (#3), D content format and maths engine (#5).
+- [x] Wave 1 (Stage 1 foundations), merged 2026-11-24: web (#4), API/DB/auth (#6), core rules
+      (#3), content format and maths engine (#5).
+- [x] Wave 2 so far, merged 2026-11-24: topic map (#8), learning loop and flashcards (#10),
+      onboarding and avatar builder (#9), official quotes for the pilot GCSE Maths content (#7;
+      109/109 Pearson quotes spot-checked against the PDF by the lead session).
 
 ## Now
 
-- [ ] Wave 2: E onboarding and avatar, F learning loop and flashcards, H reminders and AI gateway,
-      V verification pipeline and audit.
-- [ ] S: real official citations (quotes) for the pilot GCSE Maths content.
-- [ ] A follow-up: topic map restyle (waiting for the product owner's go-ahead in session A).
+- [ ] H reminders and AI gateway (#11) and V verification pipeline (#12): regenerating their
+      database migrations on top of dev.
+- [ ] Topic map API endpoints (map, cards due) still to build.
 
 ## Blocked
 
-- [ ] G deploys: needs a scoped Cloudflare API token and Neon key added as GitHub secrets.
+- [ ] G deploys: needs a scoped Cloudflare API token (account + revisionden.com zone) and a Neon
+      key scoped to a `revisionden` project.
