@@ -372,3 +372,101 @@ export const streaks = pgTable('streaks', {
   skipDays: integer('skip_days').notNull().default(0),
   giftDays: integer('gift_days').notNull().default(0),
 });
+
+// ---------------------------------------------------------------------------------------------
+// Reminders (web push) and AI usage (workstream H)
+// ---------------------------------------------------------------------------------------------
+
+const hhmm = (column: unknown) => sql`${column} ~ '^([01][0-9]|2[0-3]):[0-5][0-9]$'`;
+
+/** Web push subscriptions, one per linked device (the push service's endpoint and keys). */
+export const pushSubscriptions = pgTable(
+  'push_subscriptions',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    deviceId: uuid('device_id')
+      .notNull()
+      .references(() => devices.id, { onDelete: 'cascade' }),
+    endpoint: text('endpoint').notNull().unique(),
+    p256dh: text('p256dh').notNull(),
+    auth: text('auth').notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [index('push_subscriptions_student_id_idx').on(t.studentId)],
+);
+
+/**
+ * Reminder settings per student, set by the parent. Times are local "HH:MM" in `time_zone`.
+ * Quiet hours (no reminders): every night, and on weekdays during the daytime window (school
+ * hours by default). At most two reminders a day (fixed in apps/api).
+ */
+export const reminderSettings = pgTable(
+  'reminder_settings',
+  {
+    studentId: uuid('student_id')
+      .primaryKey()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    enabled: boolean('enabled').notNull().default(true),
+    streakReminders: boolean('streak_reminders').notNull().default(true),
+    sessionReminders: boolean('session_reminders').notNull().default(true),
+    quietStart: text('quiet_start').notNull().default('21:00'),
+    quietEnd: text('quiet_end').notNull().default('07:30'),
+    weekdayQuietStart: text('weekday_quiet_start').notNull().default('08:30'),
+    weekdayQuietEnd: text('weekday_quiet_end').notNull().default('15:30'),
+    sessionReminderTime: text('session_reminder_time').notNull().default('16:30'),
+    streakReminderTime: text('streak_reminder_time').notNull().default('19:00'),
+    timeZone: text('time_zone').notNull().default('Europe/London'),
+    updatedAt: updatedAt(),
+  },
+  (t) => [
+    check('reminder_settings_quiet_start_format', hhmm(t.quietStart)),
+    check('reminder_settings_quiet_end_format', hhmm(t.quietEnd)),
+    check('reminder_settings_weekday_quiet_start_format', hhmm(t.weekdayQuietStart)),
+    check('reminder_settings_weekday_quiet_end_format', hhmm(t.weekdayQuietEnd)),
+    check('reminder_settings_session_time_format', hhmm(t.sessionReminderTime)),
+    check('reminder_settings_streak_time_format', hhmm(t.streakReminderTime)),
+  ],
+);
+
+/** Reminders sent, used for the daily limit and so each kind is sent once a day at most. */
+export const reminderLog = pgTable(
+  'reminder_log',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    kind: text('kind', { enum: ['streak', 'session'] }).notNull(),
+    localDate: date('local_date').notNull(),
+    // Our own reminder wording (no personal data), shown by the service worker.
+    message: text('message').notNull(),
+    sentAt: timestamp('sent_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    unique('reminder_log_student_kind_day_unique').on(t.studentId, t.kind, t.localDate),
+    index('reminder_log_student_day_idx').on(t.studentId, t.localDate),
+  ],
+);
+
+/** AI calls per child: tokens and cost only. Prompts and answers are never stored. */
+export const aiUsage = pgTable(
+  'ai_usage',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    job: text('job').notNull(),
+    provider: text('provider').notNull(),
+    model: text('model').notNull(),
+    inputTokens: integer('input_tokens').notNull(),
+    outputTokens: integer('output_tokens').notNull(),
+    // Cost in millionths of a US dollar (providers bill in USD).
+    costMicroUsd: integer('cost_micro_usd').notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [index('ai_usage_student_created_idx').on(t.studentId, t.createdAt)],
+);
