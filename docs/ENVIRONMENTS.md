@@ -5,18 +5,18 @@
 
 ## Accounts (owned by the product owner)
 
-| Service                                            | Used for                                     | Status                        |
-| -------------------------------------------------- | -------------------------------------------- | ----------------------------- |
-| GitHub (`JoelBondoux/revisionden`, public for now) | Code, CI                                     | To create                     |
-| Cloudflare                                         | Domain, web hosting, Workers, R2, AI Gateway | Account exists; domain to buy |
-| Neon                                               | Postgres                                     | Account exists                |
-| Google Cloud                                       | Cloud Run (maths engine, content jobs)       | Account exists                |
-| Anthropic API                                      | Live AI                                      | To set up, with monthly limit |
-| OpenAI or Gemini API                               | Second checker, photo reading                | Optional                      |
+| Service                                            | Used for                                     | Status                                     |
+| -------------------------------------------------- | -------------------------------------------- | ------------------------------------------ |
+| GitHub (`JoelBondoux/revisionden`, public for now) | Code, CI                                     | To create                                  |
+| Cloudflare                                         | Domain, web hosting, Workers, R2, AI Gateway | Account exists; revisionden.com registered |
+| Neon                                               | Postgres                                     | Account exists                             |
+| Google Cloud                                       | Cloud Run (maths engine, content jobs)       | Account exists                             |
+| Anthropic API                                      | Live AI                                      | To set up, with monthly limit              |
+| OpenAI or Gemini API                               | Second checker, photo reading                | Optional                                   |
 
 ## Domains
 
-`revisionden.com` (primary) and `revisionden.co.uk` (redirects to .com), registered with
+`revisionden.com` (primary, registered with Cloudflare on 2026-11-24) and optionally `revisionden.co.uk` (not yet bought; would redirect to .com), registered with
 Cloudflare Registrar, auto-renew on.
 
 | Host                                                     | Environment |
@@ -44,7 +44,7 @@ Cloudflare Registrar, auto-renew on.
 
 1. Create the GitHub repository; push `main`, `staging`, `dev`.
 2. Add branch protection to `main`, `staging`, `dev`: pull requests required, CI must pass.
-3. Buy the domains in Cloudflare.
+3. ~~Buy the domains in Cloudflare.~~ Done for revisionden.com (2026-11-24); .co.uk optional.
 4. Create the Neon project in the London region with branches `dev` and `staging` off `main`.
 5. Create Google and Microsoft OAuth apps with callback URLs for each environment.
 6. Create the Cloudflare AI Gateway and R2 buckets (one per environment, 24-hour lifecycle rule).
