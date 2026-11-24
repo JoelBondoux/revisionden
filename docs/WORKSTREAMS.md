@@ -25,7 +25,7 @@ Status values: `queued`, `in progress`, `in review` (PR open into `dev`), `merge
 | V   | Verification pipeline, review queue, quarantine and audit | `scripts/verify/**`, `evals/**`, `apps/web/src/features/review/**`, review API routes           | merged      | [#12](https://github.com/JoelBondoux/revisionden/pull/12) |
 | R   | Five-year rewards progression, parent-set rewards first   | `packages/core/src/rewards*.ts`, reward catalogue data, avatar layers, rewards API routes       | in progress |                                                           |
 | S   | Official citations for pilot GCSE Maths content           | `content/items/**`, `content/topic-trees/**`, `content/mark-schemes/**`                         | merged      | [#7](https://github.com/JoelBondoux/revisionden/pull/7)   |
-| U   | Sound effects with mute (Web Audio, original)             | `apps/web/src/features/sound/**` (plus one-line `play()` calls listed in the PR)                | in review   |                                                           |
+| U   | Sound effects with mute (Web Audio, original)             | `apps/web/src/features/sound/**` (plus one-line `play()` calls listed in the PR)                | in review   | [#17](https://github.com/JoelBondoux/revisionden/pull/17) |
 
 ## Next (queued)
 
