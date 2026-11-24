@@ -16,26 +16,6 @@ Status values: `queued`, `in progress`, `in review` (PR open into `dev`), `merge
 
 ## Wave 2
 
-| ID  | Workstream                                                | Owns these paths                                                                                | Status    | PR                                                        |
-| --- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | --------- | --------------------------------------------------------- |
-| A2  | Hexagon topic map, next mission card, Map tab             | `apps/web/**` (map)                                                                             | merged    | [#8](https://github.com/JoelBondoux/revisionden/pull/8)   |
-| E   | Family onboarding and avatar builder                      | `apps/web/src/features/onboarding/**`, `apps/web/src/features/avatar/**`, onboarding API routes | merged    | [#9](https://github.com/JoelBondoux/revisionden/pull/9)   |
-| F   | Learning loop, starting test, flashcards, XP              | `apps/web/src/features/learn/**`, `apps/web/src/features/flashcards/**`, learning API routes    | merged    | [#10](https://github.com/JoelBondoux/revisionden/pull/10) |
-| H   | Reminders and AI gateway with per-child cost cap          | `apps/api/src/ai/**`, `apps/api/src/notifications/**`, `apps/web/src/features/notifications/**` | merged    | [#11](https://github.com/JoelBondoux/revisionden/pull/11) |
-| V   | Verification pipeline, review queue, quarantine and audit | `scripts/verify/**`, `evals/**`, `apps/web/src/features/review/**`, review API routes           | merged    | [#12](https://github.com/JoelBondoux/revisionden/pull/12) |
-| R   | Five-year rewards progression, parent-set rewards first   | `packages/core/src/rewards*.ts`, reward catalogue data, avatar layers, rewards API routes       | in review | [#16](https://github.com/JoelBondoux/revisionden/pull/16) |
-| K   | Statistics dashboards for student and parent              | `packages/core/src/stats*.ts`, `apps/api/src/stats/**`, `apps/web/src/features/stats/**`        | in review | [#18](https://github.com/JoelBondoux/revisionden/pull/18) |
-| S   | Official citations for pilot GCSE Maths content           | `content/items/**`, `content/topic-trees/**`, `content/mark-schemes/**`                         | merged    | [#7](https://github.com/JoelBondoux/revisionden/pull/7)   |
-
-## Next (queued)
-
-| ID  | Workstream                                                                                                    | Depends on                                                                |
-| --- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| F2  | Map and cards-due API endpoints for the topic map (`/students/:id/map`, `/cards/due`), shared schemas in core | A2, F                                                                     |
-| G   | Deploy pipelines for dev, staging and production; Playwright end-to-end and accessibility                     | Scoped Cloudflare token and Neon key from the product owner               |
-| S2  | Run the full verification pipeline on the pilot and present it for human approval                             | V                                                                         |
-| L   | Policies (plain English + full legal text), About page with plain-English changelog, feedback and bug reports | Placeholders for operator details; legal review before any public release |
-| U   | Sound effects with mute (Web Audio, original)                                                                 | Touches lesson, flashcard, streak and reward screens with one-line calls  |
 | ID  | Workstream                                                                            | Owns these paths                                                                                | Status                                    | PR                                                        |
 | --- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------- | --------------------------------------------------------- |
 | A2  | Hexagon topic map, next mission card, Map tab                                         | `apps/web/**` (map)                                                                             | merged                                    | [#8](https://github.com/JoelBondoux/revisionden/pull/8)   |
@@ -49,6 +29,9 @@ Status values: `queued`, `in progress`, `in review` (PR open into `dev`), `merge
 | U   | Sound effects with mute (Web Audio, original)                                         | `apps/web/src/features/sound/**` (plus one-line `play()` calls listed in the PR)                | merged                                    | [#17](https://github.com/JoelBondoux/revisionden/pull/17) |
 | K   | Statistics dashboards for student and parent                                          | `packages/core/src/stats.ts`, `apps/api/src/stats/**`, `apps/web/src/features/stats/**`         | in review (wiring R5 rewards and levels)  | [#18](https://github.com/JoelBondoux/revisionden/pull/18) |
 | L   | Policies, About page, feedback and policy acceptance                                  | `docs/legal/**`, `apps/web/src/features/{legal,about,feedback}/**`, feedback API routes         | in review (renumbering migration to 0005) | [#19](https://github.com/JoelBondoux/revisionden/pull/19) |
+
+## Next (queued)
+
 | ID  | Workstream                                                                                                                                                      | Depends on                                                  |
 | --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
 | F2  | Map and cards-due API endpoints for the topic map (`/students/:id/map`, `/cards/due`), shared schemas in core                                                   | A2, F; product owner go-ahead                               |

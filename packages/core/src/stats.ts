@@ -13,6 +13,7 @@
  */
 import { localDate, weekStartOf } from './learning';
 import { topicMastery, type MasteryAttempt } from './mastery';
+import type { DayXp } from './reward-xp';
 
 export const STATS_PERIODS = ['week', 'term', 'year'] as const;
 export type StatsPeriod = (typeof STATS_PERIODS)[number];
@@ -157,12 +158,6 @@ export function previousPeriod(range: PeriodRange): PeriodRange {
 // ---------------------------------------------------------------------------------------------
 // XP
 // ---------------------------------------------------------------------------------------------
-
-/** XP earned on one local day (the daily XP rows). */
-export interface DayXp {
-  day: string;
-  xp: number;
-}
 
 export interface BucketValue {
   start: string;
