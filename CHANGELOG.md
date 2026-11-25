@@ -7,6 +7,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Parents can make a formal complaint from the parent home ("Make a complaint") and follow it there: we aim to reply within 2 working days and to sort it out within 14 days. If it isn't sorted 5 working days after we reply, you can ask for a manager to review it.
+- Students can ask a parent to raise something for them, from Settings ("Ask a parent to raise something"). Only your parents see it.
 - Questions that say "give your answer to 2 decimal places" (or significant figures) now only accept an answer rounded that way, as in the real exam. And when a question asks you to make t the subject, writing "t = …" is marked right.
 - Build your own title! Rewards now unlock title words. Pick a first word and a last word (like "Cosmic Scholar") on the Rewards page. It shows under your nickname, and you can change it whenever you like.
 - The parent stats page now shows each child's AI marking allowance as a percentage used this month and the date it resets, with no money figures.
@@ -96,6 +98,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Complaints O4 (O): `complaints` and `complaint_messages` tables (migration `0020_complaints`); parent `GET/POST /v1/complaints` and `POST /v1/complaints/:id/messages` (`apps/api/src/complaints/routes.ts`); AppDeck `GET/POST /operator/appdeck/complaints` and `POST .../complaints/:id/{acknowledge,reply,resolve,escalate}` (`apps/api/src/operator/complaints.ts`); `complaintDueDates` with England and Wales bank holidays (gov.uk, through 2028) in `packages/core/src/complaints.ts`; overview `openComplaints`; complaints in the family export; 12-month clean-up; web `/complaints` page and parent-home link. Owner decisions (decision 0006): "aim to" deadlines; `complaint_requests` (student asks a parent: `POST /v1/student/complaint-requests`, parent `GET`/`DELETE /v1/complaint-requests`, `fromRequestId` on a new complaint; never in AppDeck; 90 days); parent `POST /v1/complaints/:id/escalate` from 5 working days after acknowledgement (`complaintEscalationFrom`); AppDeck complaints gain `escalationFrom`, `acknowledgeOverdue`, `resolveOverdue`; web `/ask-a-parent` (Settings link, Get help link). Complaints policy 1.1 (ICO details placeholder until the owner checks them), data retention policy 1.7.
 - Maths engine fact proofs (S2, decision 0009): `transformation` (graph transformations), `implication` (inequalities, sampled and symbolic), `sign_change` (root location), `parallel`, `trig_value` (exact values, tan 90° undefined) and `graph_measure` (travel graph gradient and area by units), in `services/maths/app/facts.py`; the schema now lists the allowed `facts[].engine.kind` values.
 - Rewards R7b fixes (from review): Comeback Kid ignores flashcard self-ratings (they never change mastery), and its counter replays only the 30-answer mastery window, so long histories stay fast.
 - Rewards R8 review fixes: the family data export includes the chosen title (`titleFirst`, `titleLast` in each student's profile), and the picker explains a word pair on the manual review list instead of a generic error (`isReviewedPair`).
