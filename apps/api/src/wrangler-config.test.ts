@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 interface EnvBlock {
   name: string;
   vars: Record<string, string>;
-  r2_buckets: { binding: string }[];
+  r2_buckets: { binding: string; bucket_name: string; jurisdiction?: string }[];
   ratelimits: { name: string }[];
   triggers?: { crons: string[] };
 }
@@ -30,6 +30,15 @@ describe('wrangler config', () => {
         'AI_RATE_LIMITER',
         'AUTH_RATE_LIMITER',
       ]);
+    },
+  );
+
+  it.each(['dev', 'staging', 'production'])(
+    'keeps %s uploads in an EU-jurisdiction bucket named for the environment',
+    (name) => {
+      const uploads = config.env[name]!.r2_buckets.find((b) => b.binding === 'UPLOADS')!;
+      expect(uploads.bucket_name).toBe(`revisionden-uploads-${name}`);
+      expect(uploads.jurisdiction).toBe('eu');
     },
   );
 

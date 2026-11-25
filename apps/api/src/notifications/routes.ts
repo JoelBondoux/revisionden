@@ -1,7 +1,15 @@
 import { Hono } from 'hono';
 import { and, desc, eq, gt } from 'drizzle-orm';
 import { z } from 'zod';
-import { pushSubscriptions, reminderLog, reminderSettings, type Database } from '@revisionden/db';
+import {
+  parentPushSubscriptions,
+  parentRewards,
+  pushSubscriptions,
+  reminderLog,
+  reminderSettings,
+  students,
+  type Database,
+} from '@revisionden/db';
 import type { AppEnv } from '../context';
 import type { AppConfig } from '../env';
 import { ApiError } from '../errors';
@@ -9,6 +17,7 @@ import { requireFamilyStudent } from '../families';
 import { readJson } from '../http';
 import type { Clock } from '../rate-limit';
 import { loadReminderSettings } from './runner';
+import { parentRewardMessage } from './parent-rewards';
 import { MAX_REMINDERS_PER_DAY } from './schedule';
 
 export interface NotificationDeps {
@@ -141,6 +150,61 @@ export function parentReminderRoutes({ db }: NotificationDeps) {
         set: { ...update, updatedAt: new Date() },
       });
     return c.json(await current(student.id));
+  });
+
+  return app;
+}
+
+/**
+ * Parent device routes under /v1/parent (the parent session is checked by the caller): push on
+ * the parent's own devices, used only to say a parent-set reward target was met.
+ */
+export function parentNotificationRoutes({ db, clock }: NotificationDeps) {
+  const app = new Hono<AppEnv>();
+
+  app.post('/push-subscriptions', async (c) => {
+    const body = await readJson(c, subscribeSchema);
+    const values = {
+      parentId: c.var.parent.parentId,
+      endpoint: body.endpoint,
+      p256dh: body.keys.p256dh,
+      auth: body.keys.auth,
+    };
+    await db
+      .insert(parentPushSubscriptions)
+      .values(values)
+      .onConflictDoUpdate({ target: parentPushSubscriptions.endpoint, set: values });
+    return c.json({ subscribed: true }, 201);
+  });
+
+  app.delete('/push-subscriptions', async (c) => {
+    const { endpoint } = await readJson(c, unsubscribeSchema);
+    await db
+      .delete(parentPushSubscriptions)
+      .where(
+        and(
+          eq(parentPushSubscriptions.endpoint, endpoint),
+          eq(parentPushSubscriptions.parentId, c.var.parent.parentId),
+        ),
+      );
+    return c.body(null, 204);
+  });
+
+  app.get('/notifications/latest', async (c) => {
+    const since = new Date(clock.now().getTime() - LATEST_REMINDER_MS);
+    const [row] = await db
+      .select({ nickname: students.nickname, title: parentRewards.title })
+      .from(parentRewards)
+      .innerJoin(students, eq(students.id, parentRewards.studentId))
+      .where(
+        and(
+          eq(students.familyId, c.var.parent.familyId),
+          gt(parentRewards.reachedNotifiedAt, since),
+        ),
+      )
+      .orderBy(desc(parentRewards.reachedNotifiedAt))
+      .limit(1);
+    return c.json({ message: row ? parentRewardMessage(row.nickname, row.title) : null });
   });
 
   return app;

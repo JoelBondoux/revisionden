@@ -21,6 +21,13 @@ export function SettingsPage() {
           </li>
         </ul>
       </Card>
+      <Card title="Parents">
+        <ul className="link-list">
+          <li>
+            <Link to="/parent">Parent home</Link>
+          </li>
+        </ul>
+      </Card>
       <SoundSettingsCard />
       <DeviceReminders />
       <Card title="Help and information">

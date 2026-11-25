@@ -3,12 +3,16 @@ import { cors } from 'hono/cors';
 import type { Database } from '@revisionden/db';
 import { AUTH_BASE_PATH, type Auth } from './auth';
 import type { AppConfig } from './env';
-import { ApiError, handleError, notFound, toSharedErrorShape, unauthorized } from './errors';
+import { ClientErrorReportSchema } from '@revisionden/core';
+import { ApiError, createErrorReporting, notFound, unauthorized, type ErrorLog } from './errors';
+import { readJson } from './http';
 import type { PasskeyService } from './passkeys';
 import { clientKey, RETRY_AFTER_SECONDS, type Clock, type RateLimiter } from './rate-limit';
 import type { AppEnv } from './context';
 import { ensureParent } from './families';
 import { studentRoutes } from './routes/students';
+import { familyRoutes, recordActivity, studentActivity } from './routes/family';
+import { familyExport } from './routes/export';
 import {
   deviceRoutes,
   parentDeviceRoutes,
@@ -16,6 +20,7 @@ import {
   studentSessionRoutes,
 } from './routes/devices';
 import {
+  parentNotificationRoutes,
   parentReminderRoutes,
   pushKeyRoutes,
   studentNotificationRoutes,
@@ -57,10 +62,15 @@ export interface AppDeps {
   mathsEngine?: MathsEngine;
   /** Sources for dashboard panels owned by other workstreams; unset ones show "Not set up yet". */
   statsAdapters?: Partial<StatsAdapters>;
+  /** Randomness for error reference codes; tests pass a fixed one. */
+  random?: () => number;
+  /** Where error reference lines go (Workers logs by default). */
+  errorLog?: ErrorLog;
 }
 
 export function createApp(deps: AppDeps) {
   const app = new Hono<AppEnv>();
+  const reporting = createErrorReporting({ random: deps.random, log: deps.errorLog });
   const gateway = createAiGateway({
     db: deps.db,
     clock: deps.clock,
@@ -90,12 +100,21 @@ export function createApp(deps: AppDeps) {
   app.use(`${AUTH_BASE_PATH}/*`, limit('auth', deps.rateLimiters.auth));
   app.use('/v1/device/*', limit('auth', deps.rateLimiters.auth));
   app.use('/v1/ai/*', limit('ai', deps.rateLimiters.ai));
+  app.use('/v1/client-errors', limit('auth', deps.rateLimiters.auth));
 
   app.on(['GET', 'POST'], `${AUTH_BASE_PATH}/*`, async (c) =>
-    toSharedErrorShape(await deps.auth.handler(c.req.raw)),
+    reporting.toSharedErrorShape(await deps.auth.handler(c.req.raw), c),
   );
 
   app.get('/health', (c) => c.json({ status: 'ok', version: deps.version }));
+  // Public: which sign-in buttons the web app should show.
+  app.get('/v1/auth/providers', (c) => c.json({ providers: deps.config.signInProviders }));
+  // Public: the web app reports an error it showed with a reference code (no personal data).
+  app.post('/v1/client-errors', async (c) => {
+    const report = await readJson(c, ClientErrorReportSchema);
+    (deps.errorLog ?? ((line) => console.warn(JSON.stringify(line))))({ source: 'web', ...report });
+    return c.body(null, 204);
+  });
 
   // Parent routes: a Better Auth session is required, and the family is created on first use.
   const parent = new Hono<AppEnv>();
@@ -107,10 +126,16 @@ export function createApp(deps: AppDeps) {
   parent.use('/feedback', requireParent);
   parent.use('/policy-acceptances', requireParent);
   parent.use('/admin/*', requireParent);
+  parent.use('/parent/*', requireParent);
+  parent.use('/family/*', requireParent);
+  parent.use('/export', requireParent);
   async function requireParent(c: Context<AppEnv>, next: Next) {
     const session = await deps.auth.api.getSession({ headers: c.req.raw.headers });
     if (!session) throw unauthorized();
-    c.set('parent', await ensureParent(deps.db, session.user.id));
+    const ctx = await ensureParent(deps.db, session.user.id);
+    // Keeps the account from being deleted as unused (routes/family.ts).
+    await recordActivity(deps.db, ctx.familyId, deps.clock.now());
+    c.set('parent', ctx);
     c.set('parentEmail', session.user.email);
     await next();
   }
@@ -125,7 +150,10 @@ export function createApp(deps: AppDeps) {
   parent.route('/onboarding', onboardingRoutes(deps));
   parent.route('/', reportRoutes(deps.db, 'parent'));
   parent.route('/', parentFeedbackRoutes(deps));
+  parent.route('/family', familyRoutes(deps));
+  parent.route('/', familyExport(deps));
   parent.route('/admin', adminFeedbackRoutes(deps));
+  parent.route('/parent', parentNotificationRoutes(deps));
   parent.route(
     '/review',
     reviewRoutes(deps.db, { ...deps.verification, now: () => deps.clock.now() }),
@@ -135,6 +163,7 @@ export function createApp(deps: AppDeps) {
   app.route('/v1/notifications', pushKeyRoutes(deps));
   // Student routes: the session middleware runs before every /v1/student route below.
   app.use('/v1/student/*', studentAuth(deps));
+  app.use('/v1/student/*', studentActivity(deps));
   app.route('/v1/student', studentNotificationRoutes(deps));
   app.route('/v1/student', studentSessionRoutes(deps));
   // Mounted after the student routes, so their session check runs first.
@@ -152,6 +181,6 @@ export function createApp(deps: AppDeps) {
   app.notFound(() => {
     throw notFound();
   });
-  app.onError(handleError);
+  app.onError(reporting.onError);
   return app;
 }

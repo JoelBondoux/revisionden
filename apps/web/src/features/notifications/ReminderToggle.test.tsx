@@ -9,6 +9,7 @@ import type { PushEnvironment } from './push';
 function setup(
   overrides: Partial<PushEnvironment> = {},
   apiOverrides: Partial<NotificationsApi> = {},
+  audience: 'student' | 'parent' = 'student',
 ) {
   let permission: NotificationPermission = 'default';
   let current: {
@@ -47,7 +48,7 @@ function setup(
   };
   render(
     <MemoryRouter>
-      <ReminderToggle env={env} api={api} />
+      <ReminderToggle env={env} api={api} audience={audience} />
     </MemoryRouter>,
   );
   return { env, api };
@@ -100,5 +101,19 @@ describe('ReminderToggle', () => {
     await waitFor(() =>
       expect(screen.getByRole('button', { name: /turn on reminders/i })).toBeEnabled(),
     );
+  });
+});
+
+describe('ReminderToggle on a parent device', () => {
+  it('offers reward news for the parent and remembers the device is a parent device', async () => {
+    const user = userEvent.setup();
+    const rememberAudience = vi.fn(async () => undefined);
+    const { api } = setup({ rememberAudience }, {}, 'parent');
+    expect(screen.getByRole('heading', { name: 'Reward news' })).toBeInTheDocument();
+    expect(screen.getByText(/reward target you set/i)).toBeInTheDocument();
+    await user.click(await screen.findByRole('button', { name: /turn on reward news/i }));
+    expect(await screen.findByText(/reward news is on for this device/i)).toBeInTheDocument();
+    expect(api.saveSubscription).toHaveBeenCalledOnce();
+    expect(rememberAudience).toHaveBeenCalledWith('parent');
   });
 });

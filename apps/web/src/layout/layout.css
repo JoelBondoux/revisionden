@@ -91,3 +91,69 @@
   min-height: var(--tap-target);
   font-weight: var(--font-weight-extrabold);
 }
+
+/* Version footer (G5). In the app shell it sits above the fixed bottom navigation on phones and
+   beside the side navigation on wider screens. */
+.version-footer {
+  padding: var(--space-3) var(--space-4);
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+}
+
+.version-footer a {
+  color: inherit;
+}
+
+.app-shell > .version-footer {
+  margin-top: -72px;
+  padding-bottom: calc(96px + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 768px) {
+  .app-shell > .version-footer {
+    margin: 0 0 0 200px;
+    padding-bottom: var(--space-4);
+  }
+}
+
+.update-banner {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-surface);
+  border-bottom: 2px solid var(--color-border);
+  font-weight: var(--font-weight-extrabold);
+}
+
+.public-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 2px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.public-header__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: inherit;
+  font-weight: var(--font-weight-extrabold);
+  text-decoration: none;
+}
+
+.public-header__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}

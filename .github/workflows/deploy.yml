@@ -1,0 +1,88 @@
+name: Deploy (reusable)
+
+# Called by deploy-dev.yml, deploy-staging.yml and deploy-production.yml.
+# Order: migrate the Neon branch, deploy the API Worker, build and deploy the web app, then check
+# that /health answers with the new version. Secrets are set per GitHub environment; see
+# docs/ENVIRONMENTS.md ("Deploys from GitHub Actions"). Nothing here prints a secret.
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: 'dev, staging or production (wrangler --env and GitHub environment)'
+        required: true
+        type: string
+      ref:
+        description: 'Git ref to deploy (defaults to the triggering commit)'
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy to ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ inputs.environment == 'production' && 'https://revisionden.com' || format('https://{0}.revisionden.com', inputs.environment) }}
+    concurrency:
+      group: deploy-${{ inputs.environment }}
+      cancel-in-progress: false
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      API_URL: ${{ inputs.environment == 'production' && 'https://api.revisionden.com' || format('https://api-{0}.revisionden.com', inputs.environment) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Check the deploy secrets are set
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          missing=""
+          [ -n "$CLOUDFLARE_API_TOKEN" ] || missing="$missing CLOUDFLARE_API_TOKEN"
+          [ -n "$CLOUDFLARE_ACCOUNT_ID" ] || missing="$missing CLOUDFLARE_ACCOUNT_ID"
+          [ -n "$DATABASE_URL" ] || missing="$missing DATABASE_URL"
+          if [ -n "$missing" ]; then
+            echo "::error::Missing GitHub secrets for ${{ inputs.environment }}:$missing (see docs/ENVIRONMENTS.md)"
+            exit 1
+          fi
+
+      - name: Run database migrations
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: pnpm --filter @revisionden/db db:migrate:deploy
+
+      - name: Deploy the API Worker
+        working-directory: apps/api
+        run: pnpm exec wrangler deploy --env ${{ inputs.environment }} --define "__APP_VERSION__:\"$(cat ../../VERSION)\""
+
+      - name: Build the web app
+        env:
+          VITE_ENVIRONMENT: ${{ inputs.environment == 'dev' && 'development' || inputs.environment }}
+          VITE_API_URL: ${{ env.API_URL }}
+          VITE_COMMIT: ${{ github.sha }}
+          # Operator details (decision 0003): GitHub environment variables. A production build
+          # fails without them; dev and staging show "to be added".
+          VITE_OPERATOR_NAME: ${{ vars.VITE_OPERATOR_NAME }}
+          VITE_CONTACT_EMAIL: ${{ vars.VITE_CONTACT_EMAIL }}
+          VITE_POSTAL_ADDRESS: ${{ vars.VITE_POSTAL_ADDRESS }}
+          VITE_POLICY_EFFECTIVE_DATE: ${{ vars.VITE_POLICY_EFFECTIVE_DATE }}
+        run: pnpm --filter @revisionden/web build
+
+      - name: Deploy the web app
+        working-directory: apps/web
+        run: pnpm exec wrangler deploy --env ${{ inputs.environment }}
+
+      - name: Check the API answers with the new version
+        run: node scripts/check-deploy.mjs --url "$API_URL" --environment ${{ inputs.environment }}

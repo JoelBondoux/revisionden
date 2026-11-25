@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 import { z, type ZodType } from 'zod';
 import { defaultBaseUrl } from '../../api/ApiContext';
-import { ApiError } from '../../api/client';
+import { apiRequest } from '../../api/client';
 
 const role = z.enum(['subject-specialist', 'content-lead', 'parent-reviewer']);
 export type ReviewerRole = z.infer<typeof role>;
@@ -91,27 +91,11 @@ export function createReviewClient({
   baseUrl: string;
   fetch?: typeof globalThis.fetch;
 }): ReviewClient {
-  const root = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
-  async function request<T>(path: string, schema: ZodType<T>, body?: unknown): Promise<T> {
-    let res: Response;
-    try {
-      res = await fetch(new URL(`v1/review/${path}`, root), {
-        method: body === undefined ? 'GET' : 'POST',
-        credentials: 'include',
-        headers: {
-          Accept: 'application/json',
-          ...(body === undefined ? {} : { 'Content-Type': 'application/json' }),
-        },
-        body: body === undefined ? undefined : JSON.stringify(body),
-      });
-    } catch {
-      throw new ApiError('network', 'The request could not be sent.');
-    }
-    if (!res.ok) throw new ApiError('http', `The server replied with ${res.status}.`, res.status);
-    const parsed = schema.safeParse(await res.json().catch(() => undefined));
-    if (!parsed.success) throw new ApiError('schema', `Unexpected response from ${path}.`);
-    return parsed.data;
-  }
+  const request = <T>(path: string, schema: ZodType<T>, body?: unknown): Promise<T> =>
+    apiRequest({ baseUrl, fetch }, `v1/review/${path}`, schema, {
+      method: body === undefined ? 'GET' : 'POST',
+      ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+    });
   const withNotes = (decision: string, notes?: string) =>
     notes ? { decision, notes } : { decision };
   const id = encodeURIComponent;

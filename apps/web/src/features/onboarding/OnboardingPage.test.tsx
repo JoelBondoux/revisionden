@@ -10,7 +10,7 @@ import {
   type OnboardChildRequest,
   type OnboardedChild,
 } from '@revisionden/core';
-import type { OnboardingApi } from './api';
+import { OnboardingApiError, type OnboardingApi } from './api';
 import { OnboardingApiProvider } from './OnboardingApiContext';
 import { OnboardingPage } from './OnboardingPage';
 
@@ -76,11 +76,31 @@ async function addChild(
 }
 
 describe('OnboardingPage', () => {
+  it('asks a signed-out parent to sign in, with the sign-in buttons', async () => {
+    const api = fakeApi();
+    api.getFamily = vi.fn(async () =>
+      Promise.reject(new OnboardingApiError('unauthorized', 'Sign in to continue', 401)),
+    );
+    renderPage(api);
+    expect(await screen.findByRole('heading', { name: 'Please sign in' })).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'Continue with Google' })).toBeInTheDocument();
+  });
+
   it('starts with an empty family and Finish switched off', async () => {
     renderPage(fakeApi());
     expect(await screen.findByRole('heading', { name: "Who's studying?" })).toBeInTheDocument();
     expect(screen.getByText('No one yet. Add a child to get started.')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
+  });
+
+  it('offers the family data download on the family list', async () => {
+    renderPage(fakeApi());
+    expect(
+      await screen.findByRole('link', { name: 'Download your family’s data' }),
+    ).toHaveAttribute('href', expect.stringMatching(/\/v1\/export$/));
+    expect(
+      await screen.findByText(/Accounts nobody uses for 12 months are deleted automatically/),
+    ).toBeInTheDocument();
   });
 
   it('adds two children, links a device, and finishes', async () => {
@@ -185,5 +205,15 @@ describe('OnboardingPage', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent('Could not reach RevisionDen.');
     await user.click(screen.getByRole('button', { name: 'Try again' }));
     expect(await screen.findByRole('heading', { name: "Who's studying?" })).toBeInTheDocument();
+  });
+});
+
+describe('OnboardingPage from "Who\'s revising?"', () => {
+  it("opens straight on linking the chosen child's device", async () => {
+    const { renderRoute } = await import('../../test/render');
+    renderRoute('/onboarding?link=8f6d2b1e-4c3a-4d5e-9f00-000000000002', { studentId: null });
+    expect(
+      await screen.findByRole('heading', { name: "Link PixelOwl's device" }),
+    ).toBeInTheDocument();
   });
 });

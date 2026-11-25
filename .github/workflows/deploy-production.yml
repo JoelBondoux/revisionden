@@ -1,0 +1,24 @@
+name: Deploy production
+
+# Production deploys after the release workflow has bumped VERSION on main, so the live app and
+# /health show the new version. (The bump is pushed with the workflow token, which does not start
+# push workflows, hence workflow_run.) It can also be started by hand from the Actions tab.
+on:
+  workflow_run:
+    workflows: ['Release version bump']
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: production
+      # The release commit is the newest commit on main, not the commit that started the run.
+      ref: main
+    secrets: inherit

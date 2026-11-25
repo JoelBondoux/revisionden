@@ -107,6 +107,19 @@ formula and its assumptions. Summary of what is built:
 - Avatar items only unlock from the reward that locks them; locked items are refused when saving.
 - Implemented: `packages/core/src/rewards.ts`, `levels.ts`, `chapters.ts`, `reward-xp.ts`,
   `reward-stats.ts`, `rewards-schemas.ts`; API `apps/api/src/routes/rewards.ts`.
+- Parent-set reward met (workstream H2): the parent gets one notification per reward on each of
+  their devices with "Reward news" on, while it is not marked given. Not counted in the child's
+  2 reminders a day; waits for the end of the child's nightly quiet hours (not school hours).
+  Text: "<nickname> reached a reward target: <title>" (fetched by the service worker, never in
+  the push itself).
+
+## Parent home (workstream P)
+
+- `/parent` is the parent's way in: a student switcher (when there is more than one child) with
+  that child's "Rewards you set" and "Reminder times" (`/parent/reminders/:id`), and cards for the
+  stats dashboard, add or manage children, family feedback, download your family's data (the
+  B2 panel on `/onboarding`), Reward news for this device, app settings and policies. Linked from the profile picker (`/family`, where a parent lands after
+  signing in) and from Settings. Focus suggestions get a card once it exists.
 
 ## Nickname and avatar
 
@@ -130,7 +143,8 @@ formula and its assumptions. Summary of what is built:
 
 - The parent adds each child: nickname, avatar, school year, subjects, and an exam board and tier
   per subject. Years 9 to 11 take GCSE, Years 12 and 13 take A-Level. Changing level clears the
-  chosen subjects.
+  chosen subjects. Only Years 9 to 13 are accepted (the API and a database check both refuse 7
+  and 8).
 - Subjects: GCSE English Language, English Literature, Maths, Statistics, Combined Science,
   Biology, Chemistry, Physics, French, Spanish, German, History, Drama, Film Studies. A-Level
   Maths, Further Maths, Computer Science, Physics.
@@ -149,6 +163,21 @@ formula and its assumptions. Summary of what is built:
 - Implemented: `packages/core/src/onboarding.ts`, `apps/api/src/routes/onboarding.ts`,
   `apps/web/src/features/onboarding/`.
 
+### "Who's revising?" (`/family`, parents only)
+
+Product owner decision, 2026-11-25: **parent view only**.
+
+- After sign-in a parent lands on `/family`, which lists their children (a family with none goes
+  to `/onboarding`).
+- Tapping a child opens the parent's view of that child: the parent home with that child
+  chosen (`/parent?student=<id>`, workstream P), which links on to their stats, rewards and
+  reminder times. It never opens student screens.
+- Each child also shows "Rewards you set" (`/family/:id/rewards`) and "Link a device"
+  (`/onboarding?link=<id>`, straight to that child's QR code). The page links to family
+  feedback (`/feedback/family`) and to the parent home (`/parent`).
+- Students always use their own device, linked by QR code and passkey. A student device behaves
+  as before.
+
 ## Learning loop (workstream F)
 
 - **Content gate.** Students only ever see items whose verification status is `verified`.
@@ -166,10 +195,19 @@ formula and its assumptions. Summary of what is built:
 - **Wrong answers** in a lesson (Learn mode, not the starting test) become a flashcard due at once,
   once per question.
 - **Flashcard buttons:** Again (SM-2 quality 1, back in 10 minutes), Hard (3), Good (4), Easy (5).
-  Each button shows when the card would come back, worked out by the scheduler. Reviewing a card
-  in a deck earns 2 XP (approved flashcards design). Deck cards come from flashcard items in the
-  student's enrolled subjects; students can add their own cards (front and back up to 300
-  characters) to a topic.
+  Each button shows when the card would come back, worked out by the scheduler. Deck XP is per
+  **session, not per card** (product owner, 2026-11-25), so rating every card "Good" earns
+  nothing extra:
+  - A session ends when the due queue is empty or after 20 cards, whichever comes first. A
+    completed session of at least 5 cards earns **20 XP**, whatever the ratings. Fewer than 5
+    cards, or leaving early, earns nothing.
+  - At most **2 rewarded sessions a day** (40 XP), so flashcards alone cannot reach the daily goal.
+  - Cards answered "Again" coming back in the same session do not count twice.
+  - Self-ratings only schedule the card (SM-2); they never change topic mastery or the predicted
+    grade. The "flashcards reviewed" milestones count cards in completed sessions. Deck cards come from flashcard items in the
+    student's enrolled subjects; students can add their own cards (front and back up to 300
+    characters) to a topic. Like feedback, an own card holding an email address, a UK mobile
+    number or a nickname from the family is refused ("Please leave out personal details…").
 - **Daily goal and streak:** XP is totalled per day in UK time (Europe/London). The first time a
   day's total reaches the daily goal (50 XP) the day counts on the streak, once. On the first goal
   day of a new week, last week is settled (a skip day if the weekly goal was hit). A streak with
@@ -319,6 +357,30 @@ Mockups: screens 19 (student) and 20 (parent).
 - Implemented: `apps/api/src/feedback/`, `apps/web/src/features/{legal,about,feedback}/`; tables
   `feedback` and `policy_acceptances` (migration 0005).
 
+## Family data: export, clean-up and inactive accounts (workstream B2)
+
+- **Export:** "Download your family's data" in the parent area (the family list in onboarding)
+  downloads `GET /v1/export`: one JSON file with the parent's sign-in email, provider account id,
+  policy confirmations, the family, and for each of that parent's own children the profile and
+  every record (courses, devices, answers, mastery, exams, reports, plans, rewards, streak, daily
+  XP, starting tests, flashcards, reminders, AI usage, parent-set rewards), plus the family's
+  feedback and question reports. Secrets are left out (session and link-code hashes, passkey keys
+  and credential ids, push keys). Never another family's data.
+- **Activity:** any parent or student request marks the family as used (`families.last_active_at`,
+  written at most once an hour).
+- **Inactive accounts:** a family nobody has used for more than 12 calendar months is deleted by
+  the 15-minute clean-up, with its students and all their records and the parents' sign-in
+  records. A sign-in that never became a family is deleted 12 months after it was made.
+- **Warning:** the parent area always says the date the account will be deleted if nobody uses it.
+  If the family comes back after 11 months or more without use, the parent area shows a warning
+  with the date it would have been deleted (for that visit: until the next hourly activity
+  write). No emails are sent.
+- **Clean-up** (every 15 minutes): expired device link codes, student sessions, parent sessions,
+  passkey challenges and sign-in checks are deleted.
+- **Sign-in tokens:** the Google or Microsoft access, refresh and ID tokens are never kept.
+- Implemented: `apps/api/src/cleanup.ts`, `apps/api/src/routes/{family,export}.ts`,
+  `apps/api/src/auth.ts`, `apps/web/src/features/family-data/`; migration 0006.
+
 ## Sound effects (workstream U)
 
 - Short, original sounds made in the browser with the Web Audio API (no audio files, no
@@ -334,13 +396,49 @@ Mockups: screens 19 (student) and 20 (parent).
   or while the app is in the background.
 - **Test mode**: no correct or wrong sound before the student submits; the reveal plays once for
   the whole set. Timed papers play only the timer warning.
+- **Reward sounds grow with the reward** (product owner, 2026-11-25). Bigger rewards sound
+  bigger, and there is enough variety to stay fresh over five years:
+  - Four tiers follow the reward's rarity (`REWARDS.md`): **common** (a bright chime, about
+    0.5 s), **rare** (a two-part motif, about 1 s), **epic** (a rising run with shimmer, about
+    1.5 s) and **legendary** (a short fanfare with harmony and a low hit, at most 3 s).
+  - Each tier has at least **4 variations**; the same one never plays twice in a row (randomness
+    injected, so tests are repeatable).
+  - **Ladders climb:** each step of a milestone ladder (for example streak 7, 30, 60, 100 … 1,000
+    days) plays its tier's sound a step higher and a little fuller than the step before, so the
+    100-day streak sounds bigger than the 30-day one.
+  - **Levels:** the level-up sound rises gently every 10 levels; every 10th level plays the rare
+    sound; prestige stars play legendary.
+  - **Year chapters** each have their own sound colour (a different synth voice), so Year 11
+    rewards sound different from Year 9; the GCSE and A-Level finisher sets get unique fanfares.
+  - Several rewards at once play only the biggest one, once (never a pile-up), after the lesson's
+    own result sound.
+  - Legendary sounds can be skipped with a tap; all reward sounds follow mute and volume, and never
+    play in Test mode before submit.
 - Sound is never the only signal: every sound has a matching visual. Reduced motion does not mute
   sound; the two settings are separate.
 - Volume levels (master gain): low 0.12, medium 0.25, high 0.45. Settings key on the device:
   `revisionden.sound`; if the browser cannot save, the choice still applies until the app closes.
-  The Settings section has a "Play a sample" button. The starting test timer turns orange at
+  The Settings section has a "Play a sample" button and Common, Rare, Epic and Legend reward
+  samples (each tap plays another variation). The starting test timer turns orange at
   1 minute left, alongside the warning sound.
 - Implemented: `apps/web/src/features/sound/**` (`SoundProvider`, `useSound().play(event, { mode })`,
   `MuteButton`, `SoundSettingsCard`, the synthesised sound bank in `bank.ts`, the Test mode rule in
-  `events.ts`), with one-line `play()` calls in lessons, the starting test and flashcards. Level up,
-  rewards, gifts, plan and timed papers get their calls when those screens are built.
+  `events.ts`), with one-line `play()` calls in lessons, the starting test and flashcards. Reward
+  sounds (U4): `rewardSounds.ts` (which sound: tier, step, voice, fanfare, biggest, variation),
+  `rewardBank.ts` (synthesis) and `<RewardSound rewards={newlyEarned} />` on the Rewards screen.
+  Prestige stars play legendary even where the catalogue rarity is epic. Gifts, plan and timed
+  papers get their calls when those screens are built.
+
+## App updates (installable app)
+
+So nobody runs an old copy of the app for long after a deploy (decided 2026-11-25):
+
+- Opening or reloading the app always fetches the newest page from the server; the offline copy
+  is only used when there is no connection, and is replaced by the newest page each visit.
+- Every build publishes its id at `/version.json` (version and commit). The app checks it when it
+  starts, when it comes back to the foreground and every 15 minutes. When a newer build is
+  deployed it shows "A new version of RevisionDen is ready." with a Refresh button.
+- If an API reply suggests the app is out of date (an unknown route, or a reply in an unexpected
+  shape) the app checks at once and, when a newer build exists, reloads by itself, once per new
+  build, so it can never get stuck or loop. Without browser storage it only shows the banner.
+- Implemented: `apps/web/public/sw.js`, `apps/web/src/pwa/updates.tsx`, `apps/web/vite.config.ts`.

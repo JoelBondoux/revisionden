@@ -6,14 +6,14 @@ import { createApiClient } from './client';
 import { useApiResource } from './useApiResource';
 import { LoadingOrError } from './LoadingOrError';
 
-const client = createApiClient({ baseUrl: 'http://api.test/api' });
+const client = createApiClient({ baseUrl: 'http://api.test' });
 
 function FamilyNames() {
   const resource = useApiResource(() => client.getFamily(), []);
   if (resource.status !== 'ready') return <LoadingOrError resource={resource} />;
   return (
     <ul>
-      {resource.data.students.map((s) => (
+      {resource.data.children.map(({ student: s }) => (
         <li key={s.id}>{s.nickname}</li>
       ))}
     </ul>
@@ -28,7 +28,7 @@ describe('loading data from the API', () => {
   });
 
   it('shows retry UI on a network error and recovers when retried', async () => {
-    server.use(http.get('*/api/family', () => HttpResponse.error(), { once: true }));
+    server.use(http.get('*/v1/onboarding/family', () => HttpResponse.error(), { once: true }));
     render(<FamilyNames />);
     const alert = await screen.findByRole('alert');
     expect(alert).toHaveTextContent(/can't reach revisionden/i);
@@ -37,7 +37,7 @@ describe('loading data from the API', () => {
   });
 
   it('explains a server problem differently from being offline', async () => {
-    server.use(http.get('*/api/family', () => new HttpResponse(null, { status: 503 })));
+    server.use(http.get('*/v1/onboarding/family', () => new HttpResponse(null, { status: 503 })));
     render(<FamilyNames />);
     expect(await screen.findByRole('alert')).toHaveTextContent(/something went wrong/i);
   });

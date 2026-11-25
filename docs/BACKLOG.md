@@ -148,11 +148,13 @@
 
 ### G. Deploy pipelines and end-to-end (`.github/workflows/deploy-*.yml`, `e2e/`)
 
-- [ ] G1 Deploy web and API to Cloudflare per branch (dev, staging, production).
-- [ ] G2 Neon branch per environment; migrations run on deploy.
-- [ ] G3 Maths engine to Cloud Run per environment.
-- [ ] G4 Playwright suite at three viewports with axe accessibility checks on PRs into staging and main.
-- [ ] G5 Version shown in the app footer and `/health`.
+- [x] G1 Deploy web and API to Cloudflare per branch (dev, staging, production). Production web
+      waits for the operator details; CI deploys wait for the GitHub secrets (docs/ENVIRONMENTS.md).
+- [x] G2 Neon branch per environment; migrations run on deploy.
+- [ ] G3 Maths engine to Cloud Run per environment. Workflow written and disabled until Google
+      Cloud is set up (`.github/workflows/deploy-maths.yml`).
+- [x] G4 Playwright suite at three viewports with axe accessibility checks on PRs into staging and main.
+- [x] G5 Version shown in the app footer and `/health`.
 
 ### H. Reminders and AI gateway (`apps/api` notifications and AI)
 
@@ -213,6 +215,7 @@ Spec: `PRODUCT_RULES.md` (Sound effects).
 - [x] U1 Sound bank synthesised with Web Audio (one function per event), `SoundProvider` and `useSound().play(event)`.
 - [x] U2 Settings: header quick mute, Settings section (on/off, volume, tap sounds), saved per device; iOS ambient audio session; no sound before first tap or in the background.
 - [ ] U3 Wire `play()` into lessons, flashcards, streaks, rewards, plan and celebrations (one-line calls, listed in the PR), with the Test mode rule. Done: lessons (correct, wrong, part marks, daily goal met, celebration), starting test (submit, reveal, one-minute timer warning), flashcards (flip, rating). Still to wire when those screens exist: level up, reward unlocked, gifts, plan session dropped, timed papers (`mode: 'timed'`).
+- [x] U4 Reward sound tiers (common, rare, epic, legendary) with 4+ variations each, climbing ladders and levels, chapter sound colours, finisher fanfares, one sound for several rewards, skippable legendary.
 - Tests: mute and volume respected; tap sounds off by default; Test mode plays no correct/wrong before submit; nothing plays before first interaction; a fake AudioContext records calls.
 
 ## Stage 2 and later

@@ -1,12 +1,14 @@
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
+import { ErrorRef } from './ErrorRef';
+import { SignInPrompt } from './SignInButtons';
 import type { ApiResource } from './useApiResource';
 
 interface LoadingOrErrorProps {
   resource: Exclude<ApiResource<unknown>, { status: 'ready' }>;
 }
 
-/** Shared loading message and retry UI for any screen that loads data. */
+/** Shared loading message, sign-in prompt and retry UI for any screen that loads data. */
 export function LoadingOrError({ resource }: LoadingOrErrorProps) {
   if (resource.status === 'loading') {
     return (
@@ -15,7 +17,15 @@ export function LoadingOrError({ resource }: LoadingOrErrorProps) {
       </p>
     );
   }
-  const offline = resource.error.kind === 'network';
+  const { error } = resource;
+  if (error.kind === 'http' && error.status === 401) {
+    return (
+      <Card>
+        <SignInPrompt />
+      </Card>
+    );
+  }
+  const offline = error.kind === 'network';
   return (
     <Card>
       <div role="alert">
@@ -25,6 +35,7 @@ export function LoadingOrError({ resource }: LoadingOrErrorProps) {
             ? 'Check your internet connection, then try again.'
             : 'It is not you, it is us. Please try again in a moment.'}
         </p>
+        {!offline && <ErrorRef code={error.ref} />}
       </div>
       <Button onClick={resource.retry}>Try again</Button>
     </Card>

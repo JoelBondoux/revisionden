@@ -24,7 +24,7 @@ Effective date: {{EFFECTIVE_DATE}}
 ### 1. About these terms
 
 1.1 These terms of use ("terms") apply to RevisionDen (the "app"), provided by {{OPERATOR_NAME}}
-("we", "us"), contact {{CONTACT_EMAIL}}, {{POSTAL_ADDRESS}}.
+("we", "us"), contact {{CONTACT_EMAIL}}.
 
 1.2 They form an agreement between us and the parent or carer who creates a family account
 ("you"). By confirming them when you set up the app, you agree to them. Please also read the

@@ -4,7 +4,8 @@
  * - Deck cards come from verified flashcard items in the student's enrolled subjects (plus
  *   drafts with the development flag on). A student's row is made the first time they look.
  * - Wrong answers in lessons become cards (see the learn routes).
- * - Students can add their own cards to a topic.
+ * - Students can add their own cards to a topic; like feedback, a card holding an email
+ *   address, a UK phone number or a nickname from the family is refused.
  * - Reviews follow SM-2 from packages/core; each card reviewed earns 2 XP.
  */
 import { Hono } from 'hono';
@@ -29,6 +30,7 @@ import { correctAnswerText, servableItem } from '../learning/items';
 import type { ItemBody } from '../learning/content-sync';
 import { awardXp } from '../learning/progress';
 import { flashcardStore, toCard, type Loaded } from '../learning/flashcard-store';
+import { containsPersonalData, familyProfiles, personalDetails } from '../feedback/routes';
 import type { LearnDeps } from './learn';
 
 function cardText({ card, item }: Loaded): { front: string; back: string } {
@@ -111,6 +113,9 @@ export function flashcardRoutes({ db, clock, config }: LearnDeps) {
 
   app.post('/', async (c) => {
     const input = await readJson(c, CreateFlashcardRequestSchema);
+    // The same personal-details check as feedback: emails, phone numbers, family nicknames.
+    const profiles = await familyProfiles(db, c.var.student.familyId);
+    if (containsPersonalData(`${input.front}\n${input.back}`, profiles)) throw personalDetails();
     const [topic] = await db.select().from(topics).where(eq(topics.id, input.topicId));
     if (!topic) throw notFound('No such topic');
     const now = clock.now();

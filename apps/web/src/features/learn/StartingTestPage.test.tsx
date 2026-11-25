@@ -95,4 +95,19 @@ describe('Starting test', () => {
     await click('Start');
     expect(await screen.findByText(/No questions are ready/)).toBeInTheDocument();
   });
+
+  it('shows a reference code when the test cannot start', async () => {
+    server.use(
+      http.post('*/v1/student/learn/starting-tests', () =>
+        HttpResponse.json(
+          { error: { code: 'internal_error', message: 'Something went wrong', ref: 'RD-7K2M9Q' } },
+          { status: 500 },
+        ),
+      ),
+    );
+    renderRoute('/learn/subject/gcse-maths/start');
+    await click('Start');
+    expect(await screen.findByText(/Something went wrong/)).toBeInTheDocument();
+    expect(screen.getByText('RD-7K2M9Q')).toBeInTheDocument();
+  });
 });

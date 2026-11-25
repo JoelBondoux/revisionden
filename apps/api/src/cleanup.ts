@@ -1,0 +1,127 @@
+/**
+ * The scheduled clean-up (cron every 15 minutes, see worker.ts): deletes data whose retention
+ * period is over, as `docs/legal/data-retention.md` describes.
+ */
+import { and, eq, inArray, lt, notExists } from 'drizzle-orm';
+import {
+  authSessions,
+  authUsers,
+  authVerifications,
+  deviceLinkTokens,
+  families,
+  parents,
+  passkeyChallenges,
+  studentSessions,
+  type Database,
+} from '@revisionden/db';
+import { deleteExpiredFeedback } from './feedback/retention';
+
+/** Accounts nobody has used for this many months are deleted. */
+export const INACTIVE_DELETE_AFTER_MONTHS = 12;
+/** A parent who comes back after this many months without use sees a warning. */
+export const INACTIVE_WARNING_AFTER_MONTHS = 11;
+
+/** The same day and time, `months` calendar months before `now` (UTC). */
+export function monthsBefore(now: Date, months: number): Date {
+  const d = new Date(now);
+  d.setUTCMonth(d.getUTCMonth() - months);
+  return d;
+}
+
+async function count<T>(rows: Promise<T[]>): Promise<number> {
+  return (await rows).length;
+}
+
+/**
+ * Deletes families nobody has used for over 12 months. Deleting a family removes its parents,
+ * students and every student record with them (foreign keys cascade); the parents' sign-in
+ * records (email, provider account, sessions) are deleted separately because they are not
+ * owned by the family. Sign-ins that never became a family are deleted once 12 months old.
+ */
+export async function deleteInactiveAccounts(db: Database, now: Date) {
+  const cutoff = monthsBefore(now, INACTIVE_DELETE_AFTER_MONTHS);
+  const expired = await db
+    .select({ id: families.id })
+    .from(families)
+    .where(lt(families.lastActiveAt, cutoff));
+  let authUsersDeleted = 0;
+  if (expired.length > 0) {
+    const familyIds = expired.map((f) => f.id);
+    const signIns = await db
+      .select({ id: parents.authUserId })
+      .from(parents)
+      .where(inArray(parents.familyId, familyIds));
+    await db.delete(families).where(inArray(families.id, familyIds));
+    if (signIns.length > 0) {
+      authUsersDeleted += await count(
+        db
+          .delete(authUsers)
+          .where(
+            inArray(
+              authUsers.id,
+              signIns.map((s) => s.id),
+            ),
+          )
+          .returning({ id: authUsers.id }),
+      );
+    }
+  }
+  authUsersDeleted += await count(
+    db
+      .delete(authUsers)
+      .where(
+        and(
+          lt(authUsers.createdAt, cutoff),
+          notExists(
+            db.select({ id: parents.id }).from(parents).where(eq(parents.authUserId, authUsers.id)),
+          ),
+        ),
+      )
+      .returning({ id: authUsers.id }),
+  );
+  return { inactiveFamiliesDeleted: expired.length, authUsersDeleted };
+}
+
+/** Everything the scheduled clean-up deletes because its retention period is over. */
+export async function cleanUpExpiredData({ db, now }: { db: Database; now: Date }) {
+  const feedbackDeleted = await deleteExpiredFeedback(db, now);
+  const linkTokensDeleted = await count(
+    db
+      .delete(deviceLinkTokens)
+      .where(lt(deviceLinkTokens.expiresAt, now))
+      .returning({ id: deviceLinkTokens.id }),
+  );
+  const studentSessionsDeleted = await count(
+    db
+      .delete(studentSessions)
+      .where(lt(studentSessions.expiresAt, now))
+      .returning({ id: studentSessions.id }),
+  );
+  const parentSessionsDeleted = await count(
+    db
+      .delete(authSessions)
+      .where(lt(authSessions.expiresAt, now))
+      .returning({ id: authSessions.id }),
+  );
+  const challengesDeleted = await count(
+    db
+      .delete(passkeyChallenges)
+      .where(lt(passkeyChallenges.expiresAt, now))
+      .returning({ id: passkeyChallenges.id }),
+  );
+  const verificationsDeleted = await count(
+    db
+      .delete(authVerifications)
+      .where(lt(authVerifications.expiresAt, now))
+      .returning({ id: authVerifications.id }),
+  );
+  return {
+    feedbackDeleted,
+    linkTokensDeleted,
+    studentSessionsDeleted,
+    parentSessionsDeleted,
+    challengesDeleted,
+    verificationsDeleted,
+    ...(await deleteInactiveAccounts(db, now)),
+  };
+}

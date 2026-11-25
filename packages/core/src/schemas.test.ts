@@ -67,7 +67,7 @@ describe('students', () => {
     expect(errors).toEqual([
       'nickname: Nickname must be at least 2 characters',
       'avatarCode: Avatar code is not valid',
-      'yearGroup: Year group must be from 7 to 13',
+      'yearGroup: Year group must be from 9 to 13',
     ]);
   });
 

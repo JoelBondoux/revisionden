@@ -8,7 +8,13 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { createSoundEngine, type AudioContextLike, type PlayOptions } from './engine';
+import {
+  createSoundEngine,
+  type AudioContextLike,
+  type PlayedReward,
+  type PlayOptions,
+} from './engine';
+import type { EarnedReward, RewardTier } from './rewardSounds';
 import type { SoundEvent } from './events';
 import {
   DEFAULT_SOUND_SETTINGS,
@@ -24,12 +30,18 @@ export interface SoundApi {
   settings: SoundSettings;
   /** Changes and saves this device's sound settings. */
   update(change: Partial<SoundSettings>): void;
+  /** One sound for newly earned rewards: the biggest, after any sound still playing. */
+  playReward(rewards: readonly EarnedReward[], options?: PlayOptions): PlayedReward | null;
+  /** The next variation of a reward tier (Settings samples). */
+  sampleReward(tier: RewardTier): PlayedReward | null;
 }
 
 const silent: SoundApi = {
   play: () => false,
   settings: DEFAULT_SOUND_SETTINGS,
   update: () => undefined,
+  playReward: () => null,
+  sampleReward: () => null,
 };
 
 const SoundContext = createContext<SoundApi>(silent);
@@ -59,6 +71,7 @@ function browserAudioContext(): AudioContextLike | null {
 }
 
 const GESTURES = ['pointerdown', 'keydown', 'touchend', 'click'] as const;
+const SKIP_GESTURES = ['pointerdown', 'keydown'] as const;
 const TAPPABLE =
   'button, a[href], [role="button"], [role="tab"], input[type="checkbox"], input[type="radio"]';
 
@@ -66,6 +79,8 @@ interface SoundProviderProps {
   children: ReactNode;
   storage?: SettingsStorage | null;
   createContext?: () => AudioContextLike | null;
+  /** Randomness for reward variations, returning [0, 1). */
+  random?: () => number;
 }
 
 /**
@@ -76,6 +91,7 @@ export function SoundProvider({
   children,
   storage = browserStorage(),
   createContext: makeContext = browserAudioContext,
+  random = Math.random,
 }: SoundProviderProps) {
   const [settings, setSettings] = useState(() => loadSoundSettings(storage));
   const current = useRef(settings);
@@ -88,11 +104,14 @@ export function SoundProvider({
       settings: () => current.current,
       isHidden: () => document.visibilityState === 'hidden',
       audioSession: (navigator as { audioSession?: { type: string } }).audioSession,
+      random,
     }),
   );
 
   useEffect(() => {
     const unlock = () => engine.unlock();
+    // A tap or key press skips a legendary reward sound that is playing.
+    const skip = () => void engine.skip();
     const tap = (event: Event) => {
       const target = event.target as Element | null;
       if (target?.closest?.(TAPPABLE)) engine.play('tap');
@@ -101,10 +120,12 @@ export function SoundProvider({
       if (document.visibilityState === 'hidden') engine.suspend();
     };
     for (const g of GESTURES) window.addEventListener(g, unlock, true);
+    for (const g of SKIP_GESTURES) window.addEventListener(g, skip, true);
     document.addEventListener('click', tap);
     document.addEventListener('visibilitychange', visibility);
     return () => {
       for (const g of GESTURES) window.removeEventListener(g, unlock, true);
+      for (const g of SKIP_GESTURES) window.removeEventListener(g, skip, true);
       document.removeEventListener('click', tap);
       document.removeEventListener('visibilitychange', visibility);
     };
@@ -125,6 +146,16 @@ export function SoundProvider({
     [engine],
   );
 
-  const api = useMemo(() => ({ play, settings, update }), [play, settings, update]);
+  const playReward = useCallback(
+    (rewards: readonly EarnedReward[], options?: PlayOptions) =>
+      engine.playReward(rewards, options),
+    [engine],
+  );
+  const sampleReward = useCallback((tier: RewardTier) => engine.sampleReward(tier), [engine]);
+
+  const api = useMemo(
+    () => ({ play, settings, update, playReward, sampleReward }),
+    [play, settings, update, playReward, sampleReward],
+  );
   return <SoundContext.Provider value={api}>{children}</SoundContext.Provider>;
 }

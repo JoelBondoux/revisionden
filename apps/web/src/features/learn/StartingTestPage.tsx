@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import type { StartingTestResponse, StartingTestResult } from '@revisionden/core';
 import { ApiError } from '../../api/client';
+import { ErrorRef, refOf } from '../../api/ErrorRef';
 import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { ProgressBar } from '../../components/ProgressBar';
@@ -64,7 +65,7 @@ function Runner({
   const [index, setIndex] = useState(0);
   const [draft, setDraft] = useState<Draft>(null);
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<{ ref: string | undefined } | null>(null);
   const [secondsLeft, setSecondsLeft] = useState(test.timeLimitSeconds);
   const startedAt = useRef(Date.now());
   const shownAt = useRef(Date.now());
@@ -77,9 +78,9 @@ function Runner({
       finishing.current = true;
       try {
         onFinished(await api.finishStartingTest(test.id), timeUp);
-      } catch {
+      } catch (err) {
         finishing.current = false;
-        setError(true);
+        setError({ ref: refOf(err) });
       }
     },
     [api, onFinished, test.id],
@@ -107,7 +108,7 @@ function Runner({
 
   async function next(skip: boolean) {
     setBusy(true);
-    setError(false);
+    setError(null);
     try {
       if (!skip && answer !== null) {
         play('submit', { mode: 'test' });
@@ -126,8 +127,8 @@ function Runner({
         setDraft(null);
         shownAt.current = Date.now();
       }
-    } catch {
-      setError(true);
+    } catch (err) {
+      setError({ ref: refOf(err) });
     } finally {
       setBusy(false);
     }
@@ -146,9 +147,10 @@ function Runner({
       <ItemInput key={item.id} item={item} draft={draft} disabled={busy} onChange={setDraft} />
       <div className="lesson__footer">
         {error && (
-          <p role="alert" className="feedback feedback--wrong">
-            Something went wrong. Please try again.
-          </p>
+          <div role="alert" className="feedback feedback--wrong">
+            <p>Something went wrong. Please try again.</p>
+            <ErrorRef code={error.ref} />
+          </div>
         )}
         <div className="self-check">
           <Button variant="secondary" disabled={busy} onClick={() => void next(true)}>
@@ -171,7 +173,7 @@ export function StartingTestPage() {
   const { subjectId = '' } = useParams();
   const api = useLearnApi();
   const [test, setTest] = useState<StartingTestResponse | null>(null);
-  const [problem, setProblem] = useState<string | null>(null);
+  const [problem, setProblem] = useState<{ text: string; ref?: string } | null>(null);
   const [outcome, setOutcome] = useState<{ result: StartingTestResult; timeUp: boolean } | null>(
     null,
   );
@@ -187,8 +189,10 @@ export function StartingTestPage() {
     } catch (err) {
       setProblem(
         err instanceof ApiError && err.status === 404
-          ? 'No questions are ready for this subject yet. Every question is checked first.'
-          : 'Something went wrong. Please try again.',
+          ? {
+              text: 'No questions are ready for this subject yet. Every question is checked first.',
+            }
+          : { text: 'Something went wrong. Please try again.', ref: refOf(err) },
       );
     }
   }
@@ -204,9 +208,10 @@ export function StartingTestPage() {
           results come at the end and set where you start.
         </p>
         {problem && (
-          <p role="alert" className="feedback feedback--wrong">
-            {problem}
-          </p>
+          <div role="alert" className="feedback feedback--wrong">
+            <p>{problem.text}</p>
+            <ErrorRef code={problem.ref} />
+          </div>
         )}
         <Button block onClick={() => void start()}>
           Start

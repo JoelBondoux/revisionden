@@ -12,14 +12,19 @@
 5. Stored data stays in the UK or EU, encrypted at rest. Text sent for AI marking (with nothing
    that identifies the student) may be processed in the US by the AI provider; accepted by the
    product owner for now (`project_memory/decisions/0003-owner-decisions-hosting-ai-controller.md`).
+6. No third parties in the web app: no analytics, trackers, beacons or outside fonts. Pages load
+   only from our own site and its API (checked by the deployed smoke test, `e2e/smoke`).
 
 ## Accounts
 
 - Parent: Google or Microsoft sign-in (Apple later). Only the sign-in email is stored: the
   provider's display name is blanked, the picture is never fetched or stored, and sessions keep
-  no IP address or browser details.
+  no IP address or browser details. The provider's access, refresh and ID tokens are blanked
+  before the sign-in record is saved (`apps/api/src/auth.ts`): Better Auth needs only the
+  provider's account id to sign a parent in again, and we call no Google or Microsoft API.
 - Student: no outside account. Nickname (letters, numbers, underscore; 2–16 characters), layered
-  avatar saved as a short code, year group. Device linked by one-time QR, then a passkey.
+  avatar saved as a short code, year group (Years 9 to 13, checked by the API and the database).
+  Device linked by one-time QR, then a passkey.
 
 ## Never stored
 
@@ -28,7 +33,7 @@ Student real name, date of birth, address, phone, email, photos, location, conta
 
 ## Uploads
 
-R2 bucket with a lifecycle rule deleting objects after 24 hours; deleted immediately after the
+R2 bucket in the EU jurisdiction (one per environment) with a lifecycle rule deleting objects after 24 hours; deleted immediately after the
 user confirms the reading. Only extracted values and confirmed text are kept.
 
 ## AI providers
@@ -62,10 +67,25 @@ device details (app version, screen, browser family, screen size, online). Never
 contacts. Deleted 12 months after closing. Policy confirmations store only the policy, version and
 date per parent sign-in.
 
-## Deletion
+## Own flashcards
 
-One button deletes a student's data; export first is offered. Accounts unused for 12 months are
-deleted automatically.
+A student's own flashcards (up to 300 characters a side) get the same check as feedback before
+they are saved: refused if they hold an email address, a UK mobile number or a nickname from the
+family (`apps/api/src/routes/flashcards.ts`).
+
+## Export and deletion
+
+- One button deletes a student's data.
+- Export: a parent can download everything we hold about them and their own children as one JSON
+  file (`GET /v1/export`, "Download your family's data" in the parent area). Secrets are left
+  out: session and link-code hashes, passkey keys and credential ids, push keys.
+- Accounts unused for 12 months are deleted automatically: every parent or student request
+  records that the family is in use (at most once an hour), and the scheduled clean-up deletes a
+  family not used for over 12 months, with its students, all their records and the parents'
+  sign-in records. A parent who comes back after 11 months or more without use sees a warning
+  in the parent area. We send no emails, so there is no warning before deletion if nobody signs in.
+- The same clean-up (every 15 minutes) deletes expired device link codes, student and parent
+  sessions, passkey challenges and sign-in checks (`apps/api/src/cleanup.ts`).
 
 ## Before any public release
 

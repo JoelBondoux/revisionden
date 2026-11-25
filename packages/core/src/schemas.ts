@@ -6,6 +6,7 @@
  * name) are rejected, never silently stored.
  */
 import { z } from 'zod';
+import { ErrorRefSchema } from './error-ref';
 import { decodeAvatar } from './avatar';
 import { NICKNAME_MESSAGES, validateNickname } from './nickname';
 
@@ -37,11 +38,12 @@ export const AvatarCodeSchema = z.string().refine(
   { message: 'Avatar code is not valid' },
 );
 
-const yearGroupMessage = 'Year group must be from 7 to 13';
+// Years 9 to 13 (GCSE and A-Level, 13+); the database check matches.
+const yearGroupMessage = 'Year group must be from 9 to 13';
 export const YearGroupSchema = z
   .number()
   .int(yearGroupMessage)
-  .min(7, yearGroupMessage)
+  .min(9, yearGroupMessage)
   .max(13, yearGroupMessage);
 
 // Students
@@ -164,6 +166,8 @@ export const ApiErrorSchema = z.object({
     code: z.string().min(1),
     message: z.string(),
     details: z.array(z.string()).optional(),
+    /** Reference code for the owner to find the logged error (`makeErrorRef`). */
+    ref: ErrorRefSchema.optional(),
   }),
 });
 export type ApiError = z.infer<typeof ApiErrorSchema>;

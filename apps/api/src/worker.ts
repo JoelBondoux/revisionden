@@ -1,15 +1,17 @@
-import { createNeonDatabase } from '@revisionden/db';
+import { createNeonDatabase, type Database } from '@revisionden/db';
 import { createApp } from './app';
 import { createAuth } from './auth';
 import { parseEnv } from './env';
+import { makeErrorRef } from '@revisionden/core';
 import { errorBody } from './errors';
 import { createPasskeyService } from './passkeys';
 import { createMathsEngineClient } from './learning/maths-engine';
 import { createMemoryRateLimiter } from './rate-limit';
 import { runReminders as defaultRunReminders } from './notifications/runner';
+import { runParentRewardNotifications as defaultRunParentRewards } from './notifications/parent-rewards';
 import { createWebPushSender } from './notifications/web-push';
 import { createProviders } from './ai/providers';
-import { cleanUpExpiredData as defaultCleanUp } from './feedback/retention';
+import { cleanUpExpiredData as defaultCleanUp } from './cleanup';
 
 const systemClock = { now: () => new Date() };
 
@@ -22,12 +24,15 @@ type App = ReturnType<typeof createApp>;
 export interface WorkerOptions {
   /** Injected in tests; defaults to the real reminder runner. */
   runReminders?: typeof defaultRunReminders;
-  /** Injected in tests; defaults to deleting data past its retention period. */
-  cleanUp?: typeof defaultCleanUp;
+  /** Injected in tests; defaults to telling parents about met parent-set reward targets. */
+  runParentRewardNotifications?: typeof defaultRunParentRewards;
+  /** Injected in tests; defaults to deleting data past its retention period (cleanup.ts). */
+  cleanUp?: (deps: { db: Database; now: Date }) => Promise<Record<string, number>>;
 }
 
 export function createWorker(version: string, options: WorkerOptions = {}) {
   const runReminders = options.runReminders ?? defaultRunReminders;
+  const runParentRewards = options.runParentRewardNotifications ?? defaultRunParentRewards;
   const cleanUp = options.cleanUp ?? defaultCleanUp;
   let cached: { env: unknown; app: App } | undefined;
 
@@ -65,9 +70,21 @@ export function createWorker(version: string, options: WorkerOptions = {}) {
       try {
         app = appFor(env);
       } catch (err) {
+        const ref = makeErrorRef(Math.random);
+        // The message names missing settings only, never a value.
+        console.error(JSON.stringify({ ref, status: 500, code: 'server_misconfigured' }));
         console.error((err as Error).message);
+        // The deploy check reads the version even before every secret is set.
+        if (new URL(request.url).pathname === '/health') {
+          return Response.json({ status: 'misconfigured', version }, { status: 503 });
+        }
         return Response.json(
-          errorBody('server_misconfigured', 'The server is not configured correctly'),
+          errorBody(
+            'server_misconfigured',
+            'The server is not configured correctly',
+            undefined,
+            ref,
+          ),
           { status: 500 },
         );
       }
@@ -76,7 +93,9 @@ export function createWorker(version: string, options: WorkerOptions = {}) {
 
     /**
      * Cron trigger (every 15 minutes, see wrangler.toml): deletes data past its retention
-     * period (feedback 12 months after closing), then sends due reminders.
+     * period (expired link codes, sessions and challenges; feedback 12 months after closing;
+     * families unused for 12 months), then sends due reminders, then tells parents about
+     * parent-set reward targets met.
      */
     async scheduled(
       controller: Pick<ScheduledController, 'scheduledTime'>,
@@ -93,16 +112,15 @@ export function createWorker(version: string, options: WorkerOptions = {}) {
       const db = createNeonDatabase(config.databaseUrl);
       console.log('clean-up', JSON.stringify(await cleanUp({ db, now })));
       if (!config.push) return;
-      const summary = await runReminders({
-        db,
-        now,
-        sender: createWebPushSender({
-          keys: config.push.keys,
-          subject: config.webOrigin,
-          clock: { now: () => new Date() },
-        }),
+      const sender = createWebPushSender({
+        keys: config.push.keys,
+        subject: config.webOrigin,
+        clock: { now: () => new Date() },
       });
+      const summary = await runReminders({ db, now, sender });
       console.log('reminders', JSON.stringify(summary));
+      // Parent news (H2) is separate from the child reminders and their 2-a-day limit.
+      console.log('parent-rewards', JSON.stringify(await runParentRewards({ db, now, sender })));
     },
   };
 }

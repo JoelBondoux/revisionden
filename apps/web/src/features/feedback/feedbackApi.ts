@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+import { failureRef } from '../../api/client';
 import { z, type ZodType } from 'zod';
 import { defaultBaseUrl } from '../../api/ApiContext';
 import type { DeviceDetails } from './details';
@@ -37,6 +38,8 @@ export class FeedbackApiError extends Error {
     readonly status: number,
     readonly code: string,
     message: string,
+    /** Reference code shown to the user and logged on the server. */
+    readonly ref?: string,
   ) {
     super(message);
     this.name = 'FeedbackApiError';
@@ -79,9 +82,15 @@ export function createFeedbackApi(options: {
     const body: unknown = await res.json().catch(() => undefined);
     if (!res.ok) {
       const parsed = errorBody.safeParse(body);
+      const ref = failureRef(options, res, body);
       throw parsed.success
-        ? new FeedbackApiError(res.status, parsed.data.error.code, parsed.data.error.message)
-        : new FeedbackApiError(res.status, 'http_error', 'Something went wrong. Please try again.');
+        ? new FeedbackApiError(res.status, parsed.data.error.code, parsed.data.error.message, ref)
+        : new FeedbackApiError(
+            res.status,
+            'http_error',
+            'Something went wrong. Please try again.',
+            ref,
+          );
     }
     return schema.parse(body);
   }

@@ -1,12 +1,10 @@
-import { Navigate, type RouteObject } from 'react-router-dom';
+import { Navigate, useParams, type RouteObject } from 'react-router-dom';
 import { AppLayout, FocusLayout } from './layout/AppLayout';
 import { LinkPage } from './features/onboarding/LinkPage';
 import { OnboardingPage } from './features/onboarding/OnboardingPage';
 import { ComingSoon } from './pages/ComingSoon';
 import { FamilyPage } from './pages/FamilyPage';
 import { InstallHelpPage } from './pages/InstallHelpPage';
-import { LessonCompletePage } from './pages/LessonCompletePage';
-import { LessonPage } from './pages/LessonPage';
 import { MapPage } from './pages/MapPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { SettingsPage } from './pages/SettingsPage';
@@ -30,6 +28,12 @@ import { FeedbackPage } from './features/feedback/FeedbackPage';
 import { AdminFeedbackPage, FeedbackListPage } from './features/feedback/lists';
 import { MyStatsPage } from './features/stats/MyStatsPage';
 import { ParentDashboardPage } from './features/stats/ParentDashboardPage';
+import { ParentHomePage, ParentRemindersPage } from './features/parent';
+
+function LessonRedirect() {
+  const { lessonId = '' } = useParams();
+  return <Navigate to={`/learn/topic/${encodeURIComponent(lessonId)}`} replace />;
+}
 
 export const routes: RouteObject[] = [
   {
@@ -47,9 +51,13 @@ export const routes: RouteObject[] = [
       },
       { path: '/link', element: <LinkPage /> },
       { path: '/family/:studentId/rewards', element: <ParentRewardsPage /> },
-      { path: '/lesson/:lessonId', element: <LessonPage /> },
-      { path: '/lesson/:lessonId/complete', element: <LessonCompletePage /> },
+      // Old topic map links: the lesson player is /learn/topic/:topicId (workstream F).
+      { path: '/lesson/:lessonId', element: <LessonRedirect /> },
+      { path: '/lesson/:lessonId/complete', element: <Navigate to="/map" replace /> },
       { path: '/review', element: <ReviewQueuePage /> },
+      // Parent home (workstream P): the way in to the parent pages.
+      { path: '/parent', element: <ParentHomePage /> },
+      { path: '/parent/reminders/:studentId', element: <ParentRemindersPage /> },
       { path: '/parent/stats', element: <ParentDashboardPage /> },
       { path: '/review/batches/:batchId', element: <BatchReviewPage /> },
       // Learning loop (workstream F): lessons and the starting test hide the nav.
@@ -58,8 +66,6 @@ export const routes: RouteObject[] = [
       { path: '/learn/subject/:subjectId/start', element: <StartingTestPage /> },
       { path: '/learn/command-words', element: <CommandWordsPage /> },
       // Policies, About and feedback (workstream L): policies are reachable without signing in.
-      { path: '/legal', element: <LegalIndexPage /> },
-      { path: '/legal/:name', element: <PolicyPage /> },
       { path: '/welcome/privacy', element: <YoungPeopleNoticePage /> },
       { path: '/admin/feedback', element: <AdminFeedbackPage /> },
       { path: '*', element: <NotFoundPage /> },
@@ -90,6 +96,9 @@ export const routes: RouteObject[] = [
       { path: '/settings', element: <SettingsPage /> },
       { path: '/install', element: <InstallHelpPage /> },
       { path: '/about', element: <AboutPage /> },
+      // Policies are reachable without signing in (workstream L).
+      { path: '/legal', element: <LegalIndexPage /> },
+      { path: '/legal/:name', element: <PolicyPage /> },
       { path: '/feedback', element: <FeedbackPage /> },
       { path: '/feedback/family', element: <FeedbackListPage scope="family" /> },
       { path: '/feedback/mine', element: <FeedbackListPage scope="mine" /> },

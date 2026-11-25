@@ -8,7 +8,7 @@ import {
   type Flashcard,
 } from '@revisionden/core';
 import { syncContent } from './learning/content-sync';
-import { createTestContext, jsonRequest, type TestContext } from './test/helpers';
+import { AVATAR, createTestContext, jsonRequest, type TestContext } from './test/helpers';
 import { TEST_SUBJECT, testItems, testTopicTree } from './test/learning-fixtures';
 
 type H = Record<string, string>;
@@ -160,6 +160,31 @@ describe('wrong answers and the student’s own cards', () => {
     const view = await overview(headers);
     expect(view.mine.map((c) => c.id)).toEqual([card.id]);
     expect(view.due.map((c) => c.id)).toContain(card.id);
+  });
+
+  it.each([
+    ['an email address', { front: 'Ask me at someone@example.com', back: 'ok' }],
+    ['a UK mobile number', { front: 'Sine rule', back: 'text 07700 900123' }],
+    ['their own nickname', { front: 'Who made this', back: 'card_kid_a did' }],
+    ['a brother or sister’s nickname', { front: 'Quiz card_kid_b on this', back: 'ok' }],
+  ])('refuses an own card that holds %s, and saves nothing', async (what, sides) => {
+    const { headers, parent } = await t.familyStudent(`card_kid_a`, [TEST_SUBJECT]);
+    void what;
+    await t.app.request(
+      '/v1/students',
+      jsonRequest(
+        'POST',
+        { nickname: 'card_kid_b', avatarCode: AVATAR, yearGroup: 9 },
+        parent.headers,
+      ),
+    );
+    const res = await t.app.request(
+      '/v1/student/flashcards',
+      jsonRequest('POST', { topicId: 'test-topic-b', ...sides }, headers),
+    );
+    expect(res.status).toBe(400);
+    expect(await res.json()).toMatchObject({ error: { code: 'personal_details' } });
+    expect((await overview(headers)).mine).toEqual([]);
   });
 
   it('refuses a card for a topic that does not exist', async () => {

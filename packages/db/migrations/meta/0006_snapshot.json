@@ -1,5 +1,5 @@
 {
-  "id": "f0aebdee-0b7a-4d88-8605-b622422fd5e3",
+  "id": "f8749b94-f407-413e-9415-52cb70447f9c",
   "prevId": "73924108-8644-4c4e-81f5-1104c55ba1a1",
   "version": "7",
   "dialect": "postgresql",
@@ -973,6 +973,19 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "last_active_at": {
+          "name": "last_active_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "previous_active_at": {
+          "name": "previous_active_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -3097,7 +3110,7 @@
         },
         "students_year_group_range": {
           "name": "students_year_group_range",
-          "value": "\"students\".\"year_group\" between 7 and 13"
+          "value": "\"students\".\"year_group\" between 9 and 13"
         }
       },
       "isRLSEnabled": false
@@ -3141,13 +3154,6 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
-        },
-        "position": {
-          "name": "position",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 0
         }
       },
       "indexes": {

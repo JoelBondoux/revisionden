@@ -59,4 +59,29 @@ pnpm test:coverage   # with coverage gates
 pnpm test:scripts    # repo scripts, scripts/verify and the evals harness (fakes only)
 UPDATE_SNAPSHOTS=1 node --test scripts/verify/audit.test.mjs   # refresh the audit snapshot
 cd services/maths && pip install -r requirements-dev.txt && python -m pytest -q
+pnpm --filter @revisionden/web build && pnpm --filter @revisionden/e2e e2e   # end-to-end + axe
+E2E_BASE_URL=https://dev.revisionden.com pnpm --filter @revisionden/e2e e2e  # against a live site
+E2E_BASE_URL=https://staging.revisionden.com pnpm --filter @revisionden/e2e smoke  # deployed smoke
+UPDATE_ROUTES=1 pnpm --filter @revisionden/api test   # refresh apps/api/routes.json after a route change
 ```
+
+**Mocks mirror the real API.** `apps/api/routes.json` lists every real route (generated from the
+Hono app; its test fails when it is out of date). Web tests fail if an MSW handler, shared or set
+by one test, names a route that is not in it (`apps/web/src/test/apiRoutes.ts`), except the few in
+`PENDING_ROUTES` that another workstream has agreed but not built.
+
+**Deployed smoke test** (`e2e/smoke`, `pnpm --filter @revisionden/e2e smoke`): health ok, Google
+offered, Google sign-in starts with the right callback (stops before Google), the parent family
+route exists and refuses a signed-out request with a reference code, policy pages, the Google
+button, the signed-out `/family` prompt, and that `/`, `/family`, `/legal`, a policy and `/about`
+request nothing from third parties (only the web origin and its API host; it caught Cloudflare's
+injected Web Analytics beacon on staging, 2026-11-25). The local suite checks the same for the
+built app. It signs nobody in: there is no test backdoor.
+Still checked by a person after each staging deploy: signing in with Google and landing on
+"Who's revising?", adding a child, linking a device with the QR code and passkey, and the
+student using the app on that device.
+
+End-to-end tests (`e2e/tests`) run at phone (390×844), tablet (820×1180) and desktop (1280×800)
+in Chromium, fail on any axe WCAG 2.2 A/AA violation or sideways scrolling, and always run with
+`--trace off` (turn traces on only to debug one test). Without `E2E_BASE_URL` they serve the built
+app with `vite preview`. CI: `.github/workflows/e2e.yml`.

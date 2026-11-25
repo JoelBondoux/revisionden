@@ -16,8 +16,3 @@ export async function deleteExpiredFeedback(db: Database, now: Date): Promise<nu
     .returning({ id: feedback.id });
   return deleted.length;
 }
-
-/** Everything the daily cron deletes because its retention period is over. */
-export async function cleanUpExpiredData({ db, now }: { db: Database; now: Date }) {
-  return { feedbackDeleted: await deleteExpiredFeedback(db, now) };
-}

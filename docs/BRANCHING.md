@@ -27,7 +27,10 @@ feature/<workstream>-<short-name>  ──PR──▶  dev  ──PR──▶  st
 | Staging     | `staging.revisionden.com` | `api-staging.revisionden.com` | Neon branch `staging` |
 | Production  | `revisionden.com`         | `api.revisionden.com`         | Neon `main`           |
 
-Deploys run from GitHub Actions on merge to each branch once the deploy workstream is done.
+Deploys run from GitHub Actions (`.github/workflows/deploy-*.yml`): a push to `dev` deploys
+development, a push to `staging` deploys staging, and production deploys once the release
+workflow has bumped the version on `main`. Each deploy migrates that environment's database
+first. Set-up and secrets: `docs/ENVIRONMENTS.md`.
 
 ## Versions
 

@@ -14,9 +14,6 @@
       exams sat, flashcards reviewed, weak spots fixed, perfect sets, gifting and the friends league
       are in the catalogue, but nothing records those numbers yet, so the rewards route counts them
       as 0 (`apps/api/src/routes/rewards.ts`). They unlock once those features store the numbers.
-- [ ] **Parent reward notification.** `docs/REWARDS.md` says the parent gets a notification when a
-      parent-set target is met; not built (reminders are workstream H). The student celebration is
-      built.
 - [ ] **OAuth tokens kept.** `docs/PRIVACY.md` and the policies say only the parent's sign-in
       email is stored, but Better Auth stores `access_token`, `refresh_token` and `id_token` in
       `auth_accounts` (`packages/db/src/schema.ts`, `apps/api/src/auth.ts`); a Google or Microsoft
@@ -33,6 +30,9 @@
       characters a side, `apps/api/src/routes/flashcards.ts`) and they are stored as free text with
       no personal-data check, unlike AI requests and feedback. Not settled: F's lane; the
       community rules ask students to take care.
+- [ ] **Parent reward notification.** `docs/REWARDS.md` says the parent gets a notification when a
+      parent-set target is met; not built (reminders are workstream H). The student celebration is
+      built.
 - [ ] **Live AI providers in the docs.** `docs/ARCHITECTURE.md` (diagram) and `docs/AI.md` (photo
       reading by Gemini or Claude) describe Gemini and OpenAI as live providers, but in the code only
       Anthropic is used live; OpenAI's `second_check` job is not called by any route and Gemini is
@@ -54,8 +54,61 @@
       `extended_answer`; `packages/core/src/schemas.ts` (`ItemTypeSchema`, XP table) uses `working` and
       `long_answer`. F maps them (`contentTypeToItemType`) instead of renaming either, because both
       sit in other workstreams' lanes. Pick one set of names.
+- [ ] **Question reports when a family is deleted.** `docs/legal/data-retention.md` says reports
+      of a mistake are "kept as part of the content audit trail; linked to the family until the
+      family account is deleted", but `item_reports.family_id` is `on delete cascade`
+      (`packages/db/src/schema.ts`), so deleting a family (by hand or the 12-month inactive
+      clean-up) deletes its reports too. Not settled: keeping them needs a nullable family id and
+      a decision from workstream V on the audit trail; B2 left the code as it is.
+
+- [ ] **Topic map and cards due have no API yet.** The web app's map (`/map`) and Cards badge call
+      `GET /v1/student/map` and `GET /v1/student/cards/due` (`apps/web/src/api/client.ts`), agreed
+      with F2, but `apps/api` has neither, so on staging the map shows "Something went wrong" (with
+      a code) and the badge shows 0. A student device therefore has no way into subject lessons
+      except a direct link. Not settled: F2's lane; no F2 branch or PR exists yet (2026-11-25).
 
 ## Resolved
+
+- [x] **Parent reward notification.** `docs/REWARDS.md` says the parent gets a notification when a
+      parent-set target is met; not built (reminders are workstream H). The student celebration is
+      built. Settled by H2 (2026-11-25): parent devices get one web push per reward
+      (`apps/api/src/notifications/parent-rewards.ts`, migration 0007); not counted in the 2-a-day
+      limit, respects the child's nightly quiet hours.
+- [x] **OAuth tokens kept.** `docs/PRIVACY.md` and the policies say only the parent's sign-in
+      email is stored, but Better Auth stores `access_token`, `refresh_token` and `id_token` in
+      `auth_accounts` (`packages/db/src/schema.ts`, `apps/api/src/auth.ts`); a Google or Microsoft
+      ID token usually carries the account name and picture URL. Not settled: auth is workstream
+      B's lane. The privacy notice (4.5) describes it as it is today.
+      B2 (2026-11-25): settled. Better Auth needs only the provider account id to sign a parent in
+      again, so the account hook blanks access, refresh and ID tokens (and their expiry times) on
+      create and update (`apps/api/src/auth.ts`, tested in `auth.test.ts`). Privacy notice 4.5,
+      `docs/legal/processors.md` and `docs/PRIVACY.md` updated.
+- [x] **Youngest school year.** Onboarding and the policies take Years 9 to 13 (13+), but the
+      `students_year_group_range` check in `packages/db/src/schema.ts` allows 7 to 13. Not
+      settled: schema is B's lane; needs a product owner nod to tighten to 9.
+      B2 (2026-11-25): settled by the B2 brief (product owner). Database check is now 9 to 13
+      (migration 0006), and core's `YearGroupSchema` and the web response schema match, so the API
+      answers 400 for Years 7 and 8.
+- [x] **Promised deletion tools not built.** `docs/PRIVACY.md` says "export first is offered" and
+      "accounts unused for 12 months are deleted automatically"; neither exists in `apps/api`.
+      Expired link tokens, student sessions and parent sessions are not cleaned up either. The
+      policies (`docs/legal/data-retention.md`) say "still to do". Not settled: outside L's lane.
+      B2 (2026-11-25): settled. Export (`GET /v1/export` and a parent-area button), 12-month
+      inactive deletion with a return warning, and clean-up of expired link codes, sessions,
+      challenges and sign-in checks, all in the 15-minute cron (`apps/api/src/cleanup.ts`).
+      `docs/legal/data-retention.md` and the privacy notice updated. The parent account deletion
+      button is still to do (not in this contradiction).
+- [x] **Own flashcards are not privacy-checked.** Students can write their own flashcards (300
+      characters a side, `apps/api/src/routes/flashcards.ts`) and they are stored as free text with
+      no personal-data check, unlike AI requests and feedback. Not settled: F's lane; the
+      community rules ask students to take care.
+      B2 (2026-11-25): settled. Own cards get the feedback check (email, UK mobile, any family
+      nickname) before saving (`apps/api/src/routes/flashcards.ts`, cleared with F for this change).
+- [x] **"Who's revising?" on a parent's device.** Picking a child opened `/map`, which needs the
+      student device cookie. Settled by the product owner (2026-11-25): parent view only. Tapping
+      a child opens the parent's stats dashboard for that child (`/parent/stats?student=<id>`),
+      with "Rewards you set" and "Link a device" per child and a "Family feedback" link; it never
+      opens student screens (`apps/web/src/pages/FamilyPage.tsx`, `docs/PRODUCT_RULES.md`).
 
 - [x] `docs/PRIVACY.md` principle 5 says data stays in the UK or EU, but `docs/AI.md` sends
       answers, essays and homework photos to Anthropic, OpenAI and Gemini, which may process them
@@ -101,7 +154,7 @@
 - [x] GCSE Statistics boards: checked on the board websites (2026-11-24). Only AQA (8382) and
       Pearson Edexcel offer GCSE Statistics; OCR and WJEC Eduqas list none. Fixed in
       `packages/core/src/onboarding.ts` with a test.
-- [x] Flashcard XP: keep 5 XP for a flashcard answered inside a lesson and 2 XP per deck review, so
+- [x] Flashcard XP (superseded 2026-11-25: deck XP is now 20 per completed session, see PRODUCT_RULES): keep 5 XP for a flashcard answered inside a lesson and 2 XP per deck review, so
       quick deck flipping cannot farm XP. Lead decision; the product owner can change it.
 - [x] Spec reference on flashcards: acceptable. The product owner said citations need not be shown,
       not that they must be hidden; showing the specification point (`source_ref`) is fine. The full

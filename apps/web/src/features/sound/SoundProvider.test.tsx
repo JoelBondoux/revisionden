@@ -174,3 +174,82 @@ describe('SoundSettingsCard', () => {
     expect(screen.getByRole('radio', { name: 'Low' })).toBeChecked();
   });
 });
+
+describe('reward sounds through the provider', () => {
+  it('Settings has Common, Rare, Epic and Legend samples; each tap plays a new variation', async () => {
+    const randoms = [0, 0, 0, 0];
+    let i = 0;
+    const contexts: FakeAudioContext[] = [];
+    render(
+      <SoundProvider
+        storage={memoryStorage()}
+        random={() => randoms[i++ % randoms.length]!}
+        createContext={() => {
+          const ctx = createFakeAudioContext();
+          contexts.push(ctx);
+          return ctx;
+        }}
+      >
+        <SoundSettingsCard />
+      </SoundProvider>,
+    );
+    const counts: number[] = [];
+    for (const name of ['Common', 'Rare', 'Epic', 'Legend']) {
+      await userEvent.click(screen.getByRole('button', { name: `Play a ${name} reward sound` }));
+      counts.push(contexts[0]!.oscillators.length);
+    }
+    expect(counts[0]).toBeGreaterThan(0);
+    expect([...counts].sort((a, b) => a - b)).toEqual(counts);
+    const first = () => contexts[0]!.oscillators.length;
+    const a = first();
+    await userEvent.click(screen.getByRole('button', { name: 'Play a Common reward sound' }));
+    const b = first();
+    await userEvent.click(screen.getByRole('button', { name: 'Play a Common reward sound' }));
+    // A different variation each time: the opening note changes.
+    expect(contexts[0]!.oscillators[b]!.frequencies[0]).not.toBe(
+      contexts[0]!.oscillators[a]!.frequencies[0],
+    );
+  });
+
+  it('a tap skips a legendary sound that is playing', async () => {
+    function Legend() {
+      const { playReward } = useSound();
+      return (
+        <button
+          type="button"
+          onClick={() => playReward([{ id: 'streak-1000', rarity: 'legendary' }])}
+        >
+          Earn
+        </button>
+      );
+    }
+    const contexts: FakeAudioContext[] = [];
+    render(
+      <SoundProvider
+        storage={memoryStorage()}
+        createContext={() => {
+          const ctx = createFakeAudioContext();
+          contexts.push(ctx);
+          return ctx;
+        }}
+      >
+        <Legend />
+        <p>Elsewhere</p>
+      </SoundProvider>,
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'Earn' }));
+    const voice = contexts[0]!.gains[1]!;
+    expect(voice.peaks).not.toContain(0);
+    await userEvent.click(screen.getByText('Elsewhere'));
+    expect(voice.peaks.at(-1)).toBe(0);
+  });
+
+  it('reward calls do nothing without a provider', () => {
+    function Bare() {
+      const { playReward, sampleReward } = useSound();
+      return <p>{String(playReward([{ id: 'x', rarity: 'rare' }]) ?? sampleReward('rare'))}</p>;
+    }
+    render(<Bare />);
+    expect(screen.getByText('null')).toBeInTheDocument();
+  });
+});

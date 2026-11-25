@@ -4,6 +4,7 @@ import type { Database } from '@revisionden/db';
 import { makeSignature } from 'better-auth/crypto';
 import { DEFAULT_AVATAR, encodeAvatar } from '@revisionden/core';
 import { createApp } from '../app';
+import type { ErrorLog } from '../errors';
 import { createAuth } from '../auth';
 import type { AppConfig } from '../env';
 import { createMemoryRateLimiter } from '../rate-limit';
@@ -22,6 +23,7 @@ export const TEST_CONFIG: AppConfig = {
   webOrigin: 'https://dev.revisionden.test',
   google: { clientId: 'test-google-id', clientSecret: 'test-google-secret' },
   microsoft: { clientId: 'test-ms-id', clientSecret: 'test-ms-secret' },
+  signInProviders: ['google', 'microsoft'],
   aiGatewayUrl: 'https://gateway.example.com/v1/test',
   passkeyRpId: 'dev.revisionden.test',
   serveDraftContent: false,
@@ -58,6 +60,8 @@ export interface TestContextOptions {
   aiProviders?: Partial<Record<ProviderName, AiProvider>>;
   serveDraftContent?: boolean;
   mathsEngine?: MathsEngine;
+  /** Collects error reference log lines; by default they are dropped to keep test output quiet. */
+  errorLog?: ErrorLog;
 }
 
 export async function createTestContext(options: TestContextOptions = {}) {
@@ -84,6 +88,7 @@ export async function createTestContext(options: TestContextOptions = {}) {
       ai: createMemoryRateLimiter({ limit: options.aiLimit ?? 1000, periodMs: 60_000, clock }),
     },
     verification: options.verification,
+    errorLog: options.errorLog ?? (() => {}),
     ...(options.mathsEngine ? { mathsEngine: options.mathsEngine } : {}),
   });
 

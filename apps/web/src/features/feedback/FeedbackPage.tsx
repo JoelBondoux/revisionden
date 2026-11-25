@@ -2,8 +2,10 @@ import { useState, type FormEvent } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
+import { ErrorRef, refOf } from '../../api/ErrorRef';
 import { useStudent } from '../../session/StudentContext';
 import { buildInfo } from '../about/buildInfo';
+import { SUPPORT_EMAIL } from '../legal/supportEmail';
 import {
   collectDeviceDetails,
   findPersonalDetails,
@@ -55,6 +57,7 @@ export function FeedbackPage() {
   // High-privacy default for children (Children's Code): off for students, on for parents.
   const [includeDevice, setIncludeDevice] = useState(sender === 'parent');
   const [error, setError] = useState<string>();
+  const [errorRef, setErrorRef] = useState<string>();
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
   const device = currentDeviceDetails(route);
@@ -68,10 +71,12 @@ export function FeedbackPage() {
     if (includeDevice) body.device = device;
     setBusy(true);
     setError(undefined);
+    setErrorRef(undefined);
     try {
       await api.send(sender, body);
       setSent(true);
     } catch (err) {
+      setErrorRef(refOf(err));
       setError(
         err instanceof FeedbackApiError ? err.message : 'Something went wrong. Please try again.',
       );
@@ -107,6 +112,10 @@ export function FeedbackPage() {
         so we can hide it straight away.
       </p>
       {sender === 'student' && <p className="feedback__note">Your parent can see what you send.</p>}
+      <p className="secondary-text">
+        Prefer email? <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>. Please include only
+        the personal details we need to help you.
+      </p>
 
       <fieldset className="feedback__kinds">
         <legend className="field__label">What is it about?</legend>
@@ -164,9 +173,10 @@ export function FeedbackPage() {
       </Card>
 
       {error && (
-        <p role="alert" className="field__error">
-          {error}
-        </p>
+        <div role="alert">
+          <p className="field__error">{error}</p>
+          <ErrorRef code={errorRef} />
+        </div>
       )}
       <Button type="submit" block disabled={busy}>
         Send

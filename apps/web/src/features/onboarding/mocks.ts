@@ -6,12 +6,13 @@ import {
   toCheckLaterCount,
   type OnboardedChild,
 } from '@revisionden/core';
+import { family } from '../../mocks/data';
 
 /** Mock onboarding API for development and tests (made-up data only, nothing kept). */
 export const onboardingHandlers: RequestHandler[] = [
-  http.get('*/api/v1/onboarding/family', () => HttpResponse.json({ children: [] })),
+  http.get('*/v1/onboarding/family', () => HttpResponse.json(family)),
 
-  http.post('*/api/v1/onboarding/children', async ({ request }) => {
+  http.post('*/v1/onboarding/children', async ({ request }) => {
     const body = OnboardChildRequestSchema.safeParse(await request.json());
     if (!body.success) return new HttpResponse(null, { status: 400 });
     const { subjects, ...student } = body.data;
@@ -27,7 +28,7 @@ export const onboardingHandlers: RequestHandler[] = [
     return HttpResponse.json(child, { status: 201 });
   }),
 
-  http.post('*/api/v1/students/:id/link-tokens', ({ params }) => {
+  http.post('*/v1/students/:id/link-tokens', ({ params }) => {
     const token = 'mock'.repeat(8);
     return HttpResponse.json(
       {

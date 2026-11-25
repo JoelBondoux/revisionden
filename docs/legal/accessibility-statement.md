@@ -1,6 +1,6 @@
 # Accessibility statement
 
-Version: 1.0
+Version: 1.1
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -9,7 +9,7 @@ Effective date: {{EFFECTIVE_DATE}}
   keyboard, zoom or other tools.
 - We aim to meet the international standard WCAG 2.2 at level AA.
 - We haven't fully tested the whole app yet, so there may be problems. Some are listed below.
-- If something is hard to use, tell us at {{CONTACT_EMAIL}} and we'll try to fix it or help
+- If something is hard to use, tell us at {{SUPPORT_EMAIL}} and we'll try to fix it or help
   another way.
 - If the summary and the full text seem to differ, the full text is the one that counts.
 
@@ -48,7 +48,7 @@ accessibility tools across every screen, or by people using assistive technology
 
 ### 4. Feedback and contact
 
-4.1 If you find a problem, or need information in a different format, contact {{CONTACT_EMAIL}} or
+4.1 If you find a problem, or need information in a different format, contact {{SUPPORT_EMAIL}} or
 use **Report a bug** in the app. Tell us the screen and what you were trying to do. We will reply as
 soon as we can.
 
@@ -60,4 +60,5 @@ and at least once a year.
 
 ## Changes
 
+- 1.1: Help requests go to our help inbox, {{SUPPORT_EMAIL}}.
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft).
