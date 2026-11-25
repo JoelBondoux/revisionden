@@ -1,5 +1,5 @@
 {
-  "id": "4e80b34e-c416-4f0b-b2ce-0c9b78bea01b",
+  "id": "dcb14ff1-3acd-42e9-b173-ce8d239fc4bc",
   "prevId": "a5d78382-6f53-419d-8202-68715d2b601c",
   "version": "7",
   "dialect": "postgresql",
@@ -1085,6 +1085,18 @@
         },
         "spec_version": {
           "name": "spec_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_target_grade": {
+          "name": "parent_target_grade",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "student_target_grade": {
+          "name": "student_target_grade",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -2269,12 +2281,6 @@
         },
         "tags": {
           "name": "tags",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "review_snapshot": {
-          "name": "review_snapshot",
           "type": "jsonb",
           "primaryKey": false,
           "notNull": false
