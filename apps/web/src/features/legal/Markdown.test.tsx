@@ -99,3 +99,19 @@ describe('policyHref', () => {
     expect(policyHref(input)).toBe(expected);
   });
 });
+
+describe('Markdown comments', () => {
+  it('never shows HTML comments, which carry icon names for the friendly view', () => {
+    const { container } = render(
+      <MemoryRouter>
+        <Markdown
+          text={'- <!-- icon: mask --> Hidden icon name\n\n<!-- icon: folder -->\n\nText'}
+        />
+      </MemoryRouter>,
+    );
+    expect(container.textContent).not.toContain('icon:');
+    expect(container.textContent).not.toContain('<!--');
+    expect(container).toHaveTextContent('Hidden icon name');
+    expect(container).toHaveTextContent('Text');
+  });
+});
