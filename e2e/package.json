@@ -6,7 +6,8 @@
   "description": "End-to-end and accessibility checks (Playwright + axe) at phone, tablet and desktop sizes.",
   "scripts": {
     "e2e": "playwright test --trace off",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "smoke": "playwright test --config playwright.smoke.config.ts --trace off"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.1",

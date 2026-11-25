@@ -89,7 +89,15 @@ Tags: #product #rules #limits #defaults
   self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
 - Works offline for the app shell; API calls are never cached. iPad users get an "Add to Home
   Screen" help page (`/install`), because iPadOS has no install prompt.
-- Until the real API and sign-in land, the web app runs on an MSW mock API with made-up data.
+- The web app calls the real API on dev and staging (parent session cookie, or the student
+  device cookie). MSW mocks with made-up data are used only in local development and tests, and
+  must use real API paths (`apps/api/routes.json`). Parents sign in from the welcome page
+  (Better Auth) and land on "Who's revising?" (`/family`, `GET /v1/onboarding/family`); signed
+  out, screens ask them to sign in. The topic map and Cards badge wait for F2's
+  `GET /v1/student/map` and `GET /v1/student/cards/due`.
+- Every "Something went wrong" shows a reference code like `RD-7K2M9Q` (no I, L, O or U), also
+  in the API logs with no personal data, so a family can report it. Implemented in
+  `packages/core/src/error-ref.ts`, `apps/api/src/errors.ts`, `apps/web/src/api/client.ts`.
 - Parent onboarding is at `/onboarding` (family list, add a child, school report, link a device,
   finish); the student scans the QR code to `/link` and sets up a passkey.
 - Avatars are drawn as layered SVG from the avatar code (`apps/web/src/features/avatar`).
