@@ -40,6 +40,8 @@ describe('operator bridge: signed requests from AppDeck', () => {
         environment: 'development',
         version: '00.01.000',
         operator: { email: 'agent@example.com', role: 'agent' },
+        errorReportsLastHour: 0,
+        errorReports24h: 0,
       },
     });
   });
@@ -240,6 +242,27 @@ describe('operator bridge: roles, changes and the audit log', () => {
     expect(retry.headers.get('x-appdeck-replayed')).toBe('true');
     expect(runs).toBe(1);
     expect(await t.db.select().from(operatorAuditLog)).toHaveLength(1);
+  });
+
+  it('never replays a stored answer to a different operator or role', async () => {
+    const first = await post('/money', { amount: 5 }, { role: 'manager', requestId: 'who-0001' });
+    expect(first.status).toBe(200);
+    const asAgent = await post('/money', { amount: 5 }, { role: 'agent', requestId: 'who-0001' });
+    expect(asAgent.status).toBe(409);
+    expect(await errorCode(asAgent)).toBe('operator_request_conflict');
+    const asOther = await app.request(
+      ...(await signedOperatorRequest({
+        clock: t.clock,
+        method: 'POST',
+        path: '/money',
+        body: { amount: 5 },
+        role: 'manager',
+        email: 'someone-else@example.com',
+        requestId: 'who-0001',
+      })),
+    );
+    expect(asOther.status).toBe(409);
+    expect(runs).toBe(1);
   });
 
   it('refuses a request id reused with a different body', async () => {

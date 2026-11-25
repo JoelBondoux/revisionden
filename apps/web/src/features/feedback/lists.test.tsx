@@ -26,6 +26,7 @@ const items: TriageFeedback[] = [
     outcome: null,
     rewardXp: 0,
     duplicateOf: null,
+    replies: [],
   },
   {
     ...base,
@@ -39,6 +40,7 @@ const items: TriageFeedback[] = [
     outcome: null,
     rewardXp: 0,
     duplicateOf: null,
+    replies: [],
   },
 ];
 
@@ -113,6 +115,19 @@ describe("family's feedback", () => {
     expect(within(rows[1]!).getByText("Won't fix")).toBeInTheDocument();
     expect(within(rows[1]!).getByText(/From you/)).toBeInTheDocument();
     expect(within(rows[1]!).getByText('No message')).toBeInTheDocument();
+  });
+
+  it('shows replies from RevisionDen support under the message', async () => {
+    const replied = {
+      ...items[0]!,
+      replies: [
+        { body: 'Thanks, fixed in the next update', createdAt: '2026-11-25T09:00:00.000Z' },
+      ],
+    };
+    show(fakeApi({ listOwn: vi.fn(async () => [replied]) }), <FeedbackListPage scope="mine" />);
+    const [row] = await screen.findAllByRole('listitem');
+    expect(within(row!).getByText('Reply from RevisionDen')).toBeInTheDocument();
+    expect(within(row!).getByText('Thanks, fixed in the next update')).toBeInTheDocument();
   });
 
   it("shows a student's own feedback", async () => {

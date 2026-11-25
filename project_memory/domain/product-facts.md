@@ -156,8 +156,22 @@ Tags: #product #rules #limits #defaults
   first answer); 120 requests a minute per address. Implemented in
   `packages/core/src/operator-signature.ts` and `apps/api/src/operator/bridge.ts`.
 - Roles from AppDeck: Agent (support) and Manager (also money and data), enforced by the API.
+- AppDeck reads (O2): health, overview, family search by exact parent email or family id only
+  (POST body, no browsing names), family detail (parents' emails, children as nickname + year
+  group only, flags), tickets (a student's ticket text is never sent), error-report groups,
+  content reports, audit log. `apps/api/src/operator/reads.ts`; shapes in
+  `packages/core/src/operator-schemas.ts`.
+- AppDeck actions (O3, all Agent): internal family notes (≤2000, never shown to the family, in its
+  export), ticket replies (≤5000, shown under the message in the sender's app without the
+  operator's email), ticket status, confirm bug and duplicate (same L7 rules and rewards, shared
+  `confirmFeedback` and `setFeedbackStatus` in `apps/api/src/feedback/routes.ts`).
+- Data requests (O3b): an Agent logs an emailed export or deletion request (due one calendar
+  month later, `dataRequestDueAt` in core); a Manager marks it handled. Handling a deletion runs
+  `deleteFamilies` only for a one-parent family (two parents: 409 `needs_both_parents`, both
+  confirm in the app). Records kept 2 years. Trial and free-place routes answer 503
+  `payments_not_ready` until workstream $.
 - Every operator read of a family and every action goes in `operator_audit_log`, kept 2 years
-  (data retention policy 1.3); the scheduled clean-up deletes older entries.
+  (data retention policy 1.5); the scheduled clean-up deletes older entries.
 
 ## Content
 

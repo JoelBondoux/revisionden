@@ -3,7 +3,10 @@ import type { Database } from '@revisionden/db';
 import type { AppEnv } from '../context';
 import type { AppConfig } from '../env';
 import type { Clock, RateLimiter } from '../rate-limit';
-import { ok, operatorAuth } from './bridge';
+import { operatorAuth } from './bridge';
+import { OPERATOR_READ_POSTS, operatorReadRoutes } from './reads';
+import { operatorActionRoutes } from './actions';
+import { operatorDataRequestRoutes } from './data-requests';
 
 export interface OperatorRouteDeps {
   version: string;
@@ -13,20 +16,23 @@ export interface OperatorRouteDeps {
   rateLimiter: RateLimiter;
 }
 
+/** Where the bridge is mounted (`app.ts`). */
+export const OPERATOR_BASE_PATH = '/operator/appdeck';
+
 /** `/operator/appdeck/*`: the signed bridge AppDeck calls (`docs/OPERATOR_CONSOLE.md`). */
 export function operatorRoutes(deps: OperatorRouteDeps) {
   const app = new Hono<AppEnv>();
-  app.use('*', operatorAuth(deps));
-
-  // Connection check for AppDeck: which environment and build it reached, and as whom.
-  app.get('/health', (c) =>
-    ok(c, {
-      status: 'ok',
-      environment: deps.config.environment,
-      version: deps.version,
-      operator: { email: c.var.operator.email, role: c.var.operator.role },
+  app.use(
+    '*',
+    operatorAuth({
+      ...deps,
+      readPosts: OPERATOR_READ_POSTS.map((p) => `${OPERATOR_BASE_PATH}${p}`),
     }),
   );
+
+  app.route('/', operatorReadRoutes(deps));
+  app.route('/', operatorActionRoutes(deps));
+  app.route('/', operatorDataRequestRoutes(deps));
 
   return app;
 }
