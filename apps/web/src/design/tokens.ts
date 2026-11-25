@@ -1,6 +1,7 @@
 /**
  * Design tokens from the approved mockups. `tokens.css` mirrors these values as CSS variables;
- * a test keeps the two in step. Light theme only for now.
+ * a test keeps the two in step. The light theme is the default; `--arena-*` colours are the dark
+ * "arena" theme for practice screens (docs/GAME_FEEL.md, mockup 22). Motion tokens set effect timings.
  */
 export const tokens = {
   '--color-primary': '#6C47F5',
@@ -56,6 +57,33 @@ export const tokens = {
   '--shadow-card': '0 2px 0 #E3E3EA',
   '--focus-ring': '0 0 0 3px #FFFFFF, 0 0 0 6px #6C47F5',
   '--tap-target': '44px',
+  '--arena-bg': '#1A1033',
+  '--arena-raised': '#2A1A52',
+  '--arena-text': '#FFFFFF',
+  '--arena-text-secondary': '#C9BEF0',
+  '--arena-option-1': '#6C47F5',
+  '--arena-option-1-edge': '#4B2BC9',
+  '--arena-option-2': '#0E7490',
+  '--arena-option-2-edge': '#0A5468',
+  '--arena-option-3': '#B4235A',
+  '--arena-option-3-edge': '#7F1940',
+  '--arena-option-4': '#A84E00',
+  '--arena-option-4-edge': '#733600',
+  '--arena-correct': '#0B8457',
+  '--arena-correct-edge': '#075C3C',
+  '--arena-glow': '#3DF5C8',
+  '--arena-gold': '#FFC83D',
+  '--arena-spark-0': '#3DF5C8',
+  '--arena-spark-1': '#FFC83D',
+  '--arena-spark-2': '#FF6FB5',
+  '--arena-spark-3': '#8B6CFF',
+  '--motion-fast': '150ms',
+  '--motion-shake': '400ms',
+  '--motion-medium': '500ms',
+  '--motion-burst': '800ms',
+  '--motion-pulse': '1600ms',
+  '--ease-out': 'cubic-bezier(0.22, 1, 0.36, 1)',
+  '--ease-spring': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
 } as const;
 
 export type TokenName = keyof typeof tokens;
@@ -159,6 +187,26 @@ export const textPairs: TextPair[] = [
     background: tokens['--color-challenge'],
   },
 ];
+
+/** Text on the dark arena theme. Each must reach 4.5:1 (WCAG 2.2 AA). */
+export const arenaTextPairs: TextPair[] = [
+  ['white on arena background', '--arena-text', '--arena-bg'],
+  ['white on raised arena card', '--arena-text', '--arena-raised'],
+  ['secondary text on arena background', '--arena-text-secondary', '--arena-bg'],
+  ['secondary text on raised arena card', '--arena-text-secondary', '--arena-raised'],
+  ['gold on arena background', '--arena-gold', '--arena-bg'],
+  ['glow on arena background', '--arena-glow', '--arena-bg'],
+  ['white on answer 1', '--arena-text', '--arena-option-1'],
+  ['white on answer 2', '--arena-text', '--arena-option-2'],
+  ['white on answer 3', '--arena-text', '--arena-option-3'],
+  ['white on answer 4', '--arena-text', '--arena-option-4'],
+  ['white on right answer', '--arena-text', '--arena-correct'],
+  ['dark text on combo badge', '--color-text', '--arena-gold'],
+].map(([name, fg, bg]) => ({
+  name: name as string,
+  foreground: tokens[fg as TokenName],
+  background: tokens[bg as TokenName],
+}));
 
 function channel(value: number): number {
   const c = value / 255;

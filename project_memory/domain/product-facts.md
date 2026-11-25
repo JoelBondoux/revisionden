@@ -90,7 +90,6 @@ Tags: #product #rules #limits #defaults
 - Learning screens: `/learn/subject/:id` (topics, mastery, weak spots), `/learn/subject/:id/start`
   (starting test), `/learn/subject/:id/practice`, `/learn/topic/:id`, `/learn/command-words`,
   `/cards` (flashcards: Due today, All decks, My cards; 3D flip card, reduced motion respected).
-- Installable PWA. Main nav tabs: Learn, Cards, Plan, Papers, Progress (bottom bar on phones, side
 - Installable PWA. Main nav tabs: Map, Cards, Plan, Papers, Progress (bottom bar on phones, side
   rail from 768px wide). Welcome and lessons hide the nav to keep focus. Only a linked student
   device gets the student nav: elsewhere (signed out, or a parent) About, Policies, Feedback and
@@ -101,6 +100,12 @@ Tags: #product #rules #limits #defaults
   (gold, tick), in progress (violet, fill level shows mastery %), weak spot (orange, pulsing
   glow), locked (grey). Each unit ends in a challenge that unlocks at 80% unit mastery. A Next
   mission card suggests what to do next. The Cards tab shows how many flashcards are due.
+- Topic map data (F2, `GET /v1/student/map`): units are the top-level topics of the subject's tree,
+  leaf topics in specification order. Locked = no item may be served yet; mastered at 80%; weak
+  spot = tried and below 60%; otherwise in progress (including not tried). Unit mastery averages
+  its open topics. Next mission: weakest weak spot, else first topic not mastered, else review
+  the weakest mastered topic (5 minutes). A unit id opens its challenge lesson (all its topics).
+  Implemented in `packages/core/src/map.ts`.
 - Mascot: Pip, an angular geometric fox (orange `#FF7A2F`). Brand violet `#6C47F5`; font Nunito,
   self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
 - Works offline for the app shell; API calls are never cached. Pages always come fresh from the
@@ -367,6 +372,9 @@ Tags: #product #rules #limits #defaults
 - Parents confirm the terms and privacy notice in onboarding (version stored in
   `policy_acceptances`); a changed version shows a "We've updated" prompt. A newly linked student
   device shows the young people's notice once (`revisionden.youngPeopleNotice` in local storage).
+- The young people's notice has a friendly view built from the same file: 6 short-version cards,
+  2 to 4 key points per part always visible, "Read more" and "Expand all", original icons and Pip;
+  motion off under reduced motion. Format rules in `docs/LEGAL.md` (Friendly view).
 
 ## Sound
 
@@ -399,3 +407,33 @@ Tags: #product #rules #limits #defaults
 - The app is run by a sole trader; name and contact details come from build variables only.
   Policy contact: `privacy@revisionden.com`; no postal address shown.
   Decision 0003.
+
+## Game feel
+
+- Approved 2026-11-25 (mockup 22): practice screens use a dark "arena" style with particle bursts,
+  combos, rising chimes, a set-complete celebration and a pulsing Next mission button; calm screens
+  stay light. Combo bonus: +5 XP per right answer from the 3rd in a row (Learn mode; Test mode at the
+  reveal). Never lives, timers, pay-to-continue, mystery rewards or streak guilt; after the daily cap
+  the call to action becomes "See you tomorrow". Detail: `docs/GAME_FEEL.md`. Workstream J.
+- Settled in J1 (`apps/web/src/features/juice/logic.ts`): stars for a set are 3 for all right, 2 for at
+  least 60% right (3–4 of 5), otherwise 1. A burst is about 20 particles, capped at 24; confetti is
+  capped at 40 pieces. The combo badge shows from 2 in a row. The CTA pulse takes 1.6 s (well under 3
+  flashes a second). Reduced motion removes particles, confetti, float-ups, shakes and pulsing; combo,
+  stars and XP still show as text. Arena colours live in `apps/web/src/design/tokens.ts` (`--arena-*`).
+
+## Exam practice (planned)
+
+- Timed papers sat in real time (exam conditions or practice), each question timed, all marked at
+  the end. Pacing target per question = its marks × (official duration ÷ total marks); flags at
+  1.5× slow and 0.5× rushed with marks lost. Board-style papers from our own verified items first;
+  official past papers only as links to the board's site (never copied). Detail:
+  `docs/EXAM_PRACTICE.md`. Workstream X (queued).
+
+## Bug Hunter and secret achievements (planned)
+
+- Bug icon on every screen opens the bug report sheet. A student's bug confirmed by the operator:
+  +50 XP and a step on the hidden Bug Hunter track (badge, title, avatar item, frame, Pip outfit,
+  effect, legendary set at 20). Duplicates +10 XP; at most 3 confirmed-bug rewards a week; parents
+  are thanked, not rewarded.
+- Secret achievements: hidden "???" cards with a found count; learning-based conditions only;
+  defined in the catalogue with `secret: true`. Detail: `docs/REWARDS.md`.

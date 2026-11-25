@@ -173,3 +173,20 @@ test('signed-out public pages show the small site header, accessibly', async ({ 
   await expectNoSidewaysScroll(page);
   await expectAccessible(page);
 });
+
+test("the young people's notice shows cards, expands its parts and is accessible", async ({
+  page,
+}) => {
+  await page.goto('/legal/privacy-for-young-people');
+  await expect(page.getByRole('list', { name: 'The short version' })).toBeVisible();
+  const more = page.getByRole('button', { name: /^Read more about What we keep about you/ });
+  await expect(more).toHaveAttribute('aria-expanded', 'false');
+  await more.click();
+  await expect(
+    page.getByRole('button', { name: /^Show less about What we keep about you/ }),
+  ).toHaveAttribute('aria-expanded', 'true');
+  await page.getByRole('button', { name: 'Expand all' }).click();
+  await expect(page.getByRole('button', { name: 'Collapse all' })).toBeVisible();
+  await expectNoSidewaysScroll(page);
+  await expectAccessible(page);
+});

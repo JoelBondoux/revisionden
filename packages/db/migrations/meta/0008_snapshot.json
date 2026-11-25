@@ -1,5 +1,5 @@
 {
-  "id": "7572dbd8-848c-4d9c-a5c0-e57e0637d1a8",
+  "id": "07f3f3b7-a097-4a07-b168-c01fc7f6e67d",
   "prevId": "ff47f21d-017b-4727-8149-5f1bb4ccf9b8",
   "version": "7",
   "dialect": "postgresql",
@@ -876,108 +876,6 @@
         "enrolments_tier_values": {
           "name": "enrolments_tier_values",
           "value": "\"enrolments\".\"tier\" in ('foundation', 'higher', 'none', 'not_sure')"
-        }
-      },
-      "isRLSEnabled": false
-    },
-    "public.error_reports": {
-      "name": "error_reports",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "ref": {
-          "name": "ref",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "screen": {
-          "name": "screen",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "api_path": {
-          "name": "api_path",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "status": {
-          "name": "status",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "build": {
-          "name": "build",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "browser": {
-          "name": "browser",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "online": {
-          "name": "online",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "reported_at": {
-          "name": "reported_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "error_reports_created_at_idx": {
-          "name": "error_reports_created_at_idx",
-          "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "error_reports_ref_unique": {
-          "name": "error_reports_ref_unique",
-          "nullsNotDistinct": false,
-          "columns": ["ref"]
-        }
-      },
-      "policies": {},
-      "checkConstraints": {
-        "error_reports_browser_values": {
-          "name": "error_reports_browser_values",
-          "value": "\"error_reports\".\"browser\" in ('Chrome', 'Edge', 'Firefox', 'Safari', 'Other')"
         }
       },
       "isRLSEnabled": false
@@ -3345,6 +3243,13 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
+        },
+        "position": {
+          "name": "position",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
         }
       },
       "indexes": {

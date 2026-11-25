@@ -23,7 +23,7 @@ export const handlers: RequestHandler[] = [
   http.get('*/api/auth/get-session', () => HttpResponse.json(null)),
   http.post('*/api/auth/sign-out', () => HttpResponse.json({ success: true })),
   ...onboardingHandlers,
-  // Student device topic map and cards due: agreed with workstream F2, not on the API yet.
+  // Student device topic map and cards due (F2).
   http.get('*/v1/student/map', () => HttpResponse.json(topicMap)),
   http.get('*/v1/student/cards/due', () => HttpResponse.json(cardsDue)),
 
