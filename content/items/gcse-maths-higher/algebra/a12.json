@@ -8,9 +8,7 @@
     "expected_seconds": 25,
     "prompt": "Which equation has a reciprocal graph?",
     "options": ["y = x^2", "y = 1/x", "y = 2^x", "y = x^3"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "y = 1/x is the reciprocal function. The others are quadratic, exponential and cubic.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
@@ -85,9 +83,7 @@
     "expected_seconds": 25,
     "prompt": "Which equation has a cubic graph?",
     "options": ["y = 3x + 1", "y = x^2 - 4", "y = x^3 - 2x", "y = 4/x"],
-    "answer": {
-      "option": 2
-    },
+    "answer": { "option": 2 },
     "marks": 1,
     "explanation": "The highest power of x in y = x^3 - 2x is 3, so it is a cubic.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
@@ -162,9 +158,7 @@
     "expected_seconds": 25,
     "prompt": "Which equation has a straight-line graph?",
     "options": ["y = x^2", "y = 5 - 2x", "y = 1/x", "y = 2^x"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "y = 5 - 2x has the form y = mx + c, so its graph is a straight line.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
@@ -239,9 +233,7 @@
     "expected_seconds": 25,
     "prompt": "Which of these graphs passes through the point (0, 1)?",
     "options": ["y = 2^x", "y = x^2 - 1", "y = x^3", "y = 1/x"],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "At x = 0: 2^0 = 1, 0^2 - 1 = -1 and 0^3 = 0, and 1/x has no value at x = 0.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
@@ -339,12 +331,8 @@
     "learning_point": "gcse-maths-h-a12-lp-trig-graphs",
     "expected_seconds": 30,
     "prompt": "The graph of y = cos x is drawn for 0° ≤ x ≤ 360°. What is the value of y when x = 180°?",
-    "answer": {
-      "value": "-1"
-    },
-    "verify": {
-      "expression": "cos(pi)"
-    },
+    "answer": { "value": "-1" },
+    "verify": { "expression": "cos(pi)" },
     "marks": 1,
     "mark_scheme": ["B1 for -1"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
@@ -426,12 +414,8 @@
     "learning_point": "gcse-maths-h-a12-lp-trig-graphs",
     "expected_seconds": 30,
     "prompt": "The graph of y = sin x is drawn for 0° ≤ x ≤ 360°. What is the value of y when x = 270°?",
-    "answer": {
-      "value": "-1"
-    },
-    "verify": {
-      "expression": "sin(3pi/2)"
-    },
+    "answer": { "value": "-1" },
+    "verify": { "expression": "sin(3pi/2)" },
     "marks": 1,
     "mark_scheme": ["B1 for -1"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
@@ -513,12 +497,8 @@
     "learning_point": "gcse-maths-h-a12-lp-trig-graphs",
     "expected_seconds": 30,
     "prompt": "The graph of y = tan x is drawn. What is the value of y when x = 45°?",
-    "answer": {
-      "value": "1"
-    },
-    "verify": {
-      "expression": "tan(pi/4)"
-    },
+    "answer": { "value": "1" },
+    "verify": { "expression": "tan(pi/4)" },
     "marks": 1,
     "mark_scheme": ["B1 for 1"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
@@ -601,9 +581,7 @@
     "expected_seconds": 25,
     "prompt": "For which of these angles does y = tan x have no value?",
     "options": ["0°", "45°", "90°", "180°"],
-    "answer": {
-      "option": 2
-    },
+    "answer": { "option": 2 },
     "marks": 1,
     "explanation": "tan x = sin x / cos x and cos 90° = 0, so tan 90° is undefined (the graph has an asymptote there).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
@@ -676,11 +654,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:36:46Z",
-          "notes": "fact 1: maths engine proof pass; blind statement differs (\"\\(\\tan x\\) is undefined at \\(x = 90^\\circ\\) for angles between \\(0^\\circ\\) and \\(180^\\circ\\). This is because \\(\\tan x = \\frac{\\sin x}{\\cos x}\\), and \\(\\cos 90^\\circ = 0\\), so the expression involves division by zero.\")"
+          "at": "2026-11-25T20:37:46Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"Between 0° and 180°, \u0000tan x is undefined at x = 90^\u0000 only. This is because \\(\\tan x = \\frac{\\sin x}{\\cos x}\\), and at \\(90^\\circ\\), \\(\\cos 90^\\circ = 0\\), so the expression would involve division by zero.\")"
         }
       ]
     }

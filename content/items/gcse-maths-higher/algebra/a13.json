@@ -13,9 +13,7 @@
       "A translation 3 units to the right",
       "A translation 3 units to the left"
     ],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "Adding 3 to f(x) adds 3 to every y-value, so the graph moves 3 units up.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
@@ -88,11 +86,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:36:57Z",
-          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: up if a > 0 and down if a < 0.\")"
+          "at": "2026-11-25T20:37:57Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: upwards if a > 0 and downwards if a < 0.\")"
         }
       ]
     }
@@ -111,9 +109,7 @@
       "A translation 2 units to the right",
       "A translation 2 units to the left"
     ],
-    "answer": {
-      "option": 2
-    },
+    "answer": { "option": 2 },
     "marks": 1,
     "explanation": "The value of f(x - 2) at x is the value f had at x - 2, so each point of the graph moves 2 units to the right.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
@@ -209,9 +205,7 @@
       "A translation 4 units to the right",
       "A translation 4 units to the left"
     ],
-    "answer": {
-      "option": 3
-    },
+    "answer": { "option": 3 },
     "marks": 1,
     "explanation": "The value of f(x + 4) at x is the value f had at x + 4, so each point of the graph moves 4 units to the left.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
@@ -301,9 +295,7 @@
     "learning_point": "gcse-maths-h-a13-lp-translations",
     "expected_seconds": 40,
     "prompt": "The point (3, 5) is on the graph of y = f(x). Write down the coordinates of the point it moves to on the graph of y = f(x) - 4.",
-    "answer": {
-      "accepted": ["(3, 1)", "(3,1)"]
-    },
+    "answer": { "accepted": ["(3, 1)", "(3,1)"] },
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
@@ -392,14 +384,8 @@
     "learning_point": "gcse-maths-h-a13-lp-translations",
     "expected_seconds": 90,
     "prompt": "The graph of y = x^2 + 1 is translated 10 units down. Find the x-coordinates where the new graph crosses the x-axis.",
-    "answer": {
-      "solutions": ["3", "-3"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "x^2 + 1 - 10 = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["3", "-3"] },
+    "verify": { "method": "solve", "equation": "x^2 + 1 - 10 = 0", "variable": "x" },
     "steps": ["x^2 + 1 - 10 = 0", "x^2 - 9 = 0", "(x - 3)(x + 3) = 0", "x = 3 or x = -3"],
     "marks": 3,
     "mark_scheme": [
@@ -508,9 +494,7 @@
       "A reflection in the line y = x",
       "A translation 1 unit down"
     ],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "Every y-value changes sign, so the graph is reflected in the x-axis.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
@@ -606,9 +590,7 @@
       "A reflection in the line y = x",
       "A translation 1 unit down"
     ],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "The value at x is the old value at -x, so the graph is reflected in the y-axis.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
@@ -698,9 +680,7 @@
     "learning_point": "gcse-maths-h-a13-lp-reflections",
     "expected_seconds": 40,
     "prompt": "The point (2, -7) is on the graph of y = f(x). Write down the coordinates of the point it moves to on the graph of y = f(-x).",
-    "answer": {
-      "accepted": ["(-2, -7)", "(-2,-7)", "(−2, −7)", "(−2,−7)"]
-    },
+    "answer": { "accepted": ["(-2, -7)", "(-2,-7)", "(−2, −7)", "(−2,−7)"] },
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
