@@ -130,11 +130,11 @@ is offered beyond the operator's family.
 
 #### 2.15 Online tools
 
-- **Met in part:** a parent can delete a student and all their data in the app and unlink devices;
-  students and parents can send feedback and report a mistake from within the app.
-- **To do:** one-click export of a student's data, a parent account deletion button, a way for a
-  student to ask for help with their rights from inside the app, and automatic deletion of accounts
-  unused for 12 months.
+- **Met in part:** a parent can delete a student and all their data in the app, unlink devices and
+  download all the family's data as a file; accounts unused for 12 months are deleted
+  automatically; students and parents can send feedback and report a mistake from within the app.
+- **To do:** a parent account deletion button and a way for a student to ask for help with their
+  rights from inside the app.
 
 ## Changes
 

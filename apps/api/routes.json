@@ -10,6 +10,8 @@
     "GET /health",
     "GET /v1/admin/feedback",
     "GET /v1/auth/providers",
+    "GET /v1/export",
+    "GET /v1/family/activity",
     "GET /v1/feedback",
     "GET /v1/me",
     "GET /v1/notifications/vapid-key",

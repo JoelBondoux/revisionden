@@ -101,6 +101,12 @@ export const authVerifications = pgTable('auth_verifications', {
 export const families = pgTable('families', {
   id: uuid('id').primaryKey().defaultRandom(),
   createdAt: createdAt(),
+  // Last time a parent or student used the account (updated at most hourly). A family unused
+  // for 12 months is deleted by the scheduled clean-up (docs/legal/data-retention.md).
+  lastActiveAt: timestamp('last_active_at', { withTimezone: true }).notNull().defaultNow(),
+  // The value lastActiveAt had before its latest update, so the app can warn a parent who
+  // comes back after a long gap. Null until the second update.
+  previousActiveAt: timestamp('previous_active_at', { withTimezone: true }),
 });
 
 export const parents = pgTable(
@@ -135,7 +141,7 @@ export const students = pgTable(
   (t) => [
     unique('students_family_nickname_unique').on(t.familyId, t.nickname),
     check('students_nickname_format', sql`${t.nickname} ~ '^[A-Za-z0-9_]{2,16}$'`),
-    check('students_year_group_range', sql`${t.yearGroup} between 7 and 13`),
+    check('students_year_group_range', sql`${t.yearGroup} between 9 and 13`),
   ],
 );
 

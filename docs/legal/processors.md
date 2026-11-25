@@ -106,8 +106,8 @@ page before the app is offered beyond the operator's family.
 - **What they receive:** the fact that you are signing in to RevisionDen, from your browser, under
   their own privacy policies (they act as separate controllers for your account with them).
 - **What we receive from them:** your email address, whether it is verified, an account
-  identifier and sign-in tokens. We blank your name and picture before saving your profile; the ID
-  token the sign-in library stores may still contain them (see the privacy notice, 4.5).
+  identifier and sign-in tokens. We blank your name and picture before saving your profile, and
+  we do not keep the tokens (see the privacy notice, 4.5).
 
 #### 2.7 Browser push services: reminders
 
