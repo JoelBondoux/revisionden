@@ -1,14 +1,41 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { Pip } from '../components/Pip';
-import { useSignInProviders } from '../api/signInProviders';
+import { defaultBaseUrl } from '../api/ApiContext';
+import { ErrorRef, refOf } from '../api/ErrorRef';
+import { startSignIn } from '../api/signIn';
+import { useSignInProviders, type SignInProvider } from '../api/signInProviders';
 
-export function WelcomePage() {
-  const navigate = useNavigate();
-  // TODO(workstream B): replace with Better Auth sign-in. For now, go straight to the mock family.
-  const signIn = () => navigate('/family');
+const goTo = (url: string) => window.location.assign(url);
+
+interface WelcomePageProps {
+  /** Leaves the app for the sign-in provider; tests pass a spy. */
+  redirect?: (url: string) => void;
+}
+
+export function WelcomePage({ redirect = goTo }: WelcomePageProps) {
   const providers = useSignInProviders();
+  const [params] = useSearchParams();
+  const [busy, setBusy] = useState(false);
+  const [failure, setFailure] = useState<{ ref: string | undefined } | null>(null);
+  const returnedWithError = params.has('error');
+
+  const signIn = async (provider: SignInProvider) => {
+    setBusy(true);
+    setFailure(null);
+    try {
+      await startSignIn(provider, {
+        baseUrl: defaultBaseUrl(import.meta.env, window.location.origin),
+        webOrigin: window.location.origin,
+        redirect,
+      });
+    } catch (err) {
+      setFailure({ ref: refOf(err) });
+      setBusy(false);
+    }
+  };
 
   return (
     <div className="welcome stack">
@@ -19,16 +46,25 @@ export function WelcomePage() {
       </div>
       <Card title="Parents">
         <div className="stack">
+          {failure ? (
+            <div role="alert">
+              <p>Sign-in could not start. Please try again.</p>
+              <ErrorRef code={failure.ref} />
+            </div>
+          ) : (
+            returnedWithError && <p role="alert">Sign-in did not finish. Please try again.</p>
+          )}
           {providers?.includes('google') && (
-            <Button block onClick={signIn}>
+            <Button block disabled={busy} onClick={() => void signIn('google')}>
               Continue with Google
             </Button>
           )}
           {providers?.includes('microsoft') && (
             <Button
               block
+              disabled={busy}
               variant={providers.includes('google') ? 'secondary' : 'primary'}
-              onClick={signIn}
+              onClick={() => void signIn('microsoft')}
             >
               Continue with Microsoft
             </Button>

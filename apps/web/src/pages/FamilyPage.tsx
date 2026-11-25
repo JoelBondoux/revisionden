@@ -23,7 +23,10 @@ export function FamilyPage() {
         <LoadingOrError resource={family} />
       ) : (
         <ul className="profile-list">
-          {family.data.students.map((student) => (
+          {family.data.children.length === 0 && (
+            <li className="secondary-text">No children added yet.</li>
+          )}
+          {family.data.children.map(({ student }) => (
             <li key={student.id}>
               <button type="button" className="profile" onClick={() => choose(student.id)}>
                 <Avatar code={student.avatarCode} nickname={student.nickname} size={56} />

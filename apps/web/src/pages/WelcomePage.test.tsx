@@ -1,8 +1,10 @@
-import { screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { server } from '../mocks/server';
 import { renderRoute } from '../test/render';
+import { WelcomePage } from './WelcomePage';
 
 describe('Welcome screen', () => {
   it('shows the app name, the promise and Pip', async () => {
@@ -43,12 +45,58 @@ describe('Welcome screen', () => {
     expect(screen.getByRole('button', { name: /continue with google/i })).toBeInTheDocument();
   });
 
-  it('goes on to choose who is revising after signing in', async () => {
-    renderRoute('/', { studentId: null });
+  it('starts Google sign-in on the API and goes to the address it gives', async () => {
+    let body: unknown;
+    let credentials: RequestCredentials | undefined;
+    server.use(
+      http.post('*/api/auth/sign-in/social', async ({ request }) => {
+        body = await request.json();
+        credentials = request.credentials;
+        return HttpResponse.json({ url: 'https://accounts.example/consent', redirect: true });
+      }),
+    );
+    const redirect = vi.fn();
+    render(
+      <MemoryRouter>
+        <WelcomePage redirect={redirect} />
+      </MemoryRouter>,
+    );
     await userEvent.click(await screen.findByRole('button', { name: /continue with google/i }));
-    expect(
-      await screen.findByRole('heading', { level: 1, name: "Who's revising?" }),
-    ).toBeInTheDocument();
+    await waitFor(() => expect(redirect).toHaveBeenCalledWith('https://accounts.example/consent'));
+    expect(body).toEqual({
+      provider: 'google',
+      callbackURL: `${window.location.origin}/family`,
+      errorCallbackURL: `${window.location.origin}/`,
+    });
+    expect(credentials).toBe('include');
+  });
+
+  it('says so, with a reference code, when sign-in cannot start', async () => {
+    server.use(
+      http.post('*/api/auth/sign-in/social', () =>
+        HttpResponse.json(
+          {
+            error: { code: 'provider_not_found', message: 'Provider not found', ref: 'RD-7K2M9Q' },
+          },
+          { status: 404 },
+        ),
+      ),
+    );
+    const redirect = vi.fn();
+    render(
+      <MemoryRouter>
+        <WelcomePage redirect={redirect} />
+      </MemoryRouter>,
+    );
+    await userEvent.click(await screen.findByRole('button', { name: /continue with microsoft/i }));
+    expect(await screen.findByRole('alert')).toHaveTextContent(/sign-in could not start/i);
+    expect(screen.getByText('RD-7K2M9Q')).toBeInTheDocument();
+    expect(redirect).not.toHaveBeenCalled();
+  });
+
+  it('says sign-in did not finish when the provider sends the parent back with an error', async () => {
+    renderRoute('/?error=access_denied', { studentId: null });
+    expect(await screen.findByRole('alert')).toHaveTextContent(/sign-in did not finish/i);
   });
 
   it('lets a student link this device with a code from a parent', async () => {

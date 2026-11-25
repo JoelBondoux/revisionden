@@ -1,52 +1,30 @@
 import { http, HttpResponse, type RequestHandler } from 'msw';
-import { answerRequestSchema } from '../api/schemas';
 import { onboardingHandlers } from '../features/onboarding/mocks';
-import { answerKeys, cardsDue, family, lessons, topicMap, XP_PER_CORRECT } from './data';
+import { cardsDue, topicMap } from './data';
 import { learnHandlers } from '../features/learn/mocks';
 import { rewardsHandlers } from '../features/rewards/mocks';
 import { feedbackHandlers } from '../features/feedback/mocks';
 import { legalHandlers } from '../features/legal/mocks';
 import { statsHandlers } from '../features/stats/mocks';
 
-const isKnownStudent = (id: unknown) => family.students.some((s) => s.id === id);
-
-const normalise = (value: string) => value.trim().toLowerCase().replace(/\s+/g, '');
-
-/** Mock API used in development and tests until the real API (workstream B) is ready. */
+/**
+ * Mock API for development and tests. Every handler uses a real API path exactly (checked by
+ * src/test/apiRoutes.test.ts against apps/api/routes.json), so tests cannot pass against a route
+ * the API does not have.
+ */
 export const handlers: RequestHandler[] = [
   http.get('*/v1/auth/providers', () => HttpResponse.json({ providers: ['google', 'microsoft'] })),
+  // Parent sign-in (Better Auth): in development the mock "signs in" straight to the family.
+  http.post('*/api/auth/sign-in/social', () =>
+    HttpResponse.json({ url: `${location.origin}/family`, redirect: true }),
+  ),
   ...onboardingHandlers,
-  http.get('*/api/family', () => HttpResponse.json(family)),
+  // Student device topic map and cards due: agreed with workstream F2, not on the API yet.
+  http.get('*/v1/student/map', () => HttpResponse.json(topicMap)),
+  http.get('*/v1/student/cards/due', () => HttpResponse.json(cardsDue)),
 
-  http.get('*/api/students/:studentId/map', ({ params }) =>
-    isKnownStudent(params.studentId)
-      ? HttpResponse.json(topicMap)
-      : new HttpResponse(null, { status: 404 }),
-  ),
-
-  http.get('*/api/students/:studentId/cards/due', ({ params }) =>
-    isKnownStudent(params.studentId)
-      ? HttpResponse.json(cardsDue)
-      : new HttpResponse(null, { status: 404 }),
-  ),
-
-  http.get('*/api/lessons/:lessonId', ({ params }) => {
-    const lesson = lessons[String(params.lessonId)];
-    return lesson ? HttpResponse.json(lesson) : new HttpResponse(null, { status: 404 });
-  }),
-
-  http.post('*/api/lessons/:lessonId/answers', async ({ request }) => {
-    const body = answerRequestSchema.safeParse(await request.json());
-    const key = body.success ? answerKeys[body.data.itemId] : undefined;
-    if (!body.success || !key) return new HttpResponse(null, { status: 400 });
-    const correct = normalise(body.data.answer) === normalise(key.answer);
-    return HttpResponse.json({
-      correct,
-      correctAnswer: key.display,
-      explanation: key.explanation,
-      xpEarned: correct ? XP_PER_CORRECT : 0,
-    });
-  }),
+  // Error reports from the web app (reference codes).
+  http.post('*/v1/client-errors', () => new HttpResponse(null, { status: 204 })),
 
   // Learning loop and flashcards (workstream F).
   ...learnHandlers,

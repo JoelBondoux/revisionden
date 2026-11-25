@@ -90,17 +90,6 @@ describe('sounds in the app', () => {
     expect(played).toEqual(['wrong']);
   });
 
-  it('the older lesson screen plays the marking sound, and its finish screen celebrates', async () => {
-    const { played, router } = renderWithSound('/lesson/standard-form');
-    await userEvent.click(await screen.findByRole('radio', { name: '45 × 10³' }));
-    await click('Check');
-    await screen.findByRole('status', { name: 'Answer feedback' });
-    expect(played).toEqual(['wrong']);
-    await act(() => router.navigate('/lesson/standard-form/complete'));
-    await screen.findByRole('heading', { name: 'Lesson complete!' });
-    expect(played).toEqual(['wrong', 'celebration']);
-  });
-
   it('Test mode: no right or wrong sounds before submit, and the reveal plays once', async () => {
     const { played } = renderWithSound('/learn/subject/gcse-maths/start');
     await click('Start');

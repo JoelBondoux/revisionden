@@ -24,7 +24,7 @@ describe('API', () => {
     expect(res.status).toBe(404);
     const body = await res.json();
     expect(ApiErrorSchema.parse(body)).toEqual({
-      error: { code: 'not_found', message: 'Not found' },
+      error: { code: 'not_found', message: 'Not found', ref: expect.stringMatching(/^RD-/) },
     });
   });
 

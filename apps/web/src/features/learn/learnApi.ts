@@ -22,7 +22,7 @@ import {
   type StartingTestResult,
   type SubjectTopicsResponse,
 } from '@revisionden/core';
-import { ApiError } from '../../api/client';
+import { apiRequest } from '../../api/client';
 import { defaultBaseUrl } from '../../api/ApiContext';
 
 export type FlashcardRating = 'again' | 'hard' | 'good' | 'easy';
@@ -55,30 +55,11 @@ export function createLearnApi({
   baseUrl,
   fetch = (...args) => globalThis.fetch(...args),
 }: Options): LearnApi {
-  const root = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
-
-  async function request<T>(path: string, schema: ZodType<T>, body?: unknown): Promise<T> {
-    let response: Response;
-    try {
-      response = await fetch(new URL(`v1/student/${path}`, root), {
-        method: body === undefined ? 'GET' : 'POST',
-        credentials: 'include',
-        headers: {
-          Accept: 'application/json',
-          ...(body === undefined ? {} : { 'Content-Type': 'application/json' }),
-        },
-        ...(body === undefined ? {} : { body: JSON.stringify(body) }),
-      });
-    } catch {
-      throw new ApiError('network', 'The request could not be sent.');
-    }
-    if (!response.ok) {
-      throw new ApiError('http', `The server replied with ${response.status}.`, response.status);
-    }
-    const parsed = schema.safeParse(await response.json().catch(() => undefined));
-    if (!parsed.success) throw new ApiError('schema', `Unexpected response from ${path}.`);
-    return parsed.data;
-  }
+  const request = <T>(path: string, schema: ZodType<T>, body?: unknown): Promise<T> =>
+    apiRequest({ baseUrl, fetch }, `v1/student/${path}`, schema, {
+      method: body === undefined ? 'GET' : 'POST',
+      ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+    });
 
   const enc = encodeURIComponent;
   return {
