@@ -63,11 +63,58 @@ export type StudentAvatar = z.infer<typeof StudentAvatarSchema>;
 export const UpdateAvatarRequestSchema = z.object({ avatarCode: AvatarCodeSchema }).strict();
 
 /** Returned by POST /v1/students/:id/link-tokens (one-time QR code for a device). */
+export const LinkKindSchema = z.enum(['qr', 'share']);
+export type LinkKind = z.infer<typeof LinkKindSchema>;
+
+/** POST /v1/students/:id/link-tokens: a QR code (10 minutes) or a shared link (24 hours). */
+export const CreateLinkTokenRequestSchema = z
+  .object({ kind: LinkKindSchema.default('qr') })
+  .strict();
+
 export const LinkTokenSchema = z.object({
+  tokenId: z.string(),
+  kind: LinkKindSchema,
   token: z.string(),
   familyId: z.string(),
   studentId: z.string(),
   expiresAt: z.string().datetime(),
   linkUrl: z.string().url(),
+  /** Short code the child can type at /link instead, shown as "ABCD-EFGH". */
+  code: z.string(),
 });
 export type LinkToken = z.infer<typeof LinkTokenSchema>;
+
+/** GET /v1/students/:id/link-tokens/:tokenId: has the child's device used the link yet? */
+export const LinkStatusSchema = z.object({
+  status: z.enum(['waiting', 'linked', 'expired', 'cancelled']),
+});
+export type LinkStatus = z.infer<typeof LinkStatusSchema>['status'];
+
+export const DeviceTypeSchema = z.enum(['phone', 'tablet', 'computer']);
+export type DeviceType = z.infer<typeof DeviceTypeSchema>;
+
+/** GET /v1/students/:id/devices: the child's linked devices, for the parent area. */
+export const DeviceListSchema = z.object({
+  devices: z.array(
+    z.object({
+      id: z.string(),
+      deviceType: DeviceTypeSchema.nullable(),
+      linkedAt: z.string().datetime(),
+      lastUsedAt: z.string().datetime().nullable(),
+    }),
+  ),
+});
+export type LinkedDevice = z.infer<typeof DeviceListSchema>['devices'][number];
+/** PATCH a subject's board or tier (parent: any valid value; student: only from Not sure). */
+export const UpdateSubjectChoiceRequestSchema = z
+  .object({ board: BoardSchema.optional(), tier: TierSchema.optional() })
+  .strict()
+  .refine((v) => v.board !== undefined || v.tier !== undefined, 'Send a board or a tier');
+export type UpdateSubjectChoiceRequest = z.infer<typeof UpdateSubjectChoiceRequestSchema>;
+
+/** GET /v1/student/subjects: the student's own subjects and how many are left to check. */
+export const StudentSubjectsSchema = z.object({
+  enrolments: z.array(EnrolmentSchema),
+  toCheckLater: z.number().int().min(0),
+});
+export type StudentSubjects = z.infer<typeof StudentSubjectsSchema>;

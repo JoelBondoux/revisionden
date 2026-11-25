@@ -191,7 +191,8 @@ delete, mark given; editing or deleting a given reward answers 409); target = a 
 reward, a stat reaching a number (level, streak and the rest) or a UK date. The student's
 `/rewards` screen shows them under "From home" with progress and a "Target met" celebration;
 the parent manages them at `/family/:id/rewards` (linked from the family list and the parent
-home at `/parent`). Not built yet: the panel on the parent stats dashboard (workstream K).
+home at `/parent`). The parent stats dashboard (workstream K10) lists them too, with add, edit and
+remove, using the same editor (`ParentRewardForm`) and routes.
 
 **Parent notification (H2):** when a target is met and the reward is not marked given, each
 parent device with "Reward news" turned on (parent home, `/parent`) gets one web push, once per
@@ -273,6 +274,19 @@ unlocked words; our words and art are our own).
 - **Safety:** every word is curated data; a validator checks every possible pairing against the
   blocked-word list and a manual review list, so no combination reads as offensive. No free text.
 - Titles can be changed at any time, free.
+
+**Built (R8):** 120 first words and 120 last words in `packages/core/src/catalogue/title-words.ts`,
+each unlocked by one reward and carrying that reward's rarity. The 99 single titles from R1 to R7b
+were migrated: those rewards now give a `titleWord` item for each part (for example level 11 gives
+"Opening" and "Act"), and their names read "Title words: Opening, Act". Secret achievements and 18
+milestones add one word each. `validateTitleWords` (`packages/core/src/titles.ts`) checks the format
+(one word of letters and hyphens, up to 16 characters), that each word is unique in its part, that
+every reward which had a title has words, and every possible first + last pairing against the
+nickname blocked-word list. `REVIEWED_BLOCKED_PAIRS` is the manual review list: pairs that read
+badly together, refused by the picker. The choice is stored as `students.title_first` and
+`title_last` (migration 0019) through `GET` and `PUT /v1/student/rewards/title`, which accept
+only unlocked words. The Rewards page shows the title under the nickname with a picker. The friends
+league is not built yet; it should show the title under each nickname when it is.
 
 ## Secret achievements
 

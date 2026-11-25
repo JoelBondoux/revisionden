@@ -77,14 +77,27 @@ describe('student constraints', () => {
     return res.rows[0]!.id;
   }
 
-  it('rejects a nickname with spaces or symbols', async () => {
+  it.each(['Bad Name!', 'Thing  1', ' Thing', 'Thing ', 'a', 'seventeen_chars_x'])(
+    'rejects the nickname "%s" (symbols, double or outer spaces, wrong length)',
+    async (nickname) => {
+      const familyId = await newFamily();
+      await expect(
+        client.query(
+          `insert into students (family_id, nickname, avatar_code, year_group) values ($1, $2, 'a1', 10)`,
+          [familyId, nickname],
+        ),
+      ).rejects.toThrow(/students_nickname_format/);
+    },
+  );
+
+  it.each(['Thing 1', 'Pixel Fox 7', 'owl_7'])('accepts the nickname "%s"', async (nickname) => {
     const familyId = await newFamily();
     await expect(
       client.query(
-        `insert into students (family_id, nickname, avatar_code, year_group) values ($1, 'Bad Name!', 'a1', 10)`,
-        [familyId],
+        `insert into students (family_id, nickname, avatar_code, year_group) values ($1, $2, 'a1', 10)`,
+        [familyId, nickname],
       ),
-    ).rejects.toThrow(/students_nickname_format/);
+    ).resolves.toBeDefined();
   });
 
   it.each([6, 7, 8, 14])('rejects year group %i (only Years 9 to 13 are allowed)', async (year) => {

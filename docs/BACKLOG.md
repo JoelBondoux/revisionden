@@ -73,6 +73,14 @@
   - Tests: token expires; token cannot be reused; wrong family cannot redeem.
 - [x] **B6 Rate limits and errors.** Consistent JSON errors; rate limit on auth and AI routes.
   - Tests: error shape matches schema; 429 after limit.
+- [ ] **B7 One new device a day, made atomic (follow-up to I5b #96).** Two unknown browsers
+      unlocking the same synced passkey at the same moment can both pass the 24-hour check in
+      `deviceForUnlock` (`apps/api/src/routes/devices.ts`) and each add a device and an alert.
+      Accepted for now by the lead (harmless and visible to parents). The Neon HTTP driver has no
+      interactive transactions, so add a unique constraint instead (for example a new-device claim
+      per credential per day) and insert the claim before the device.
+  - Tests: two concurrent unknown-browser unlocks of one passkey add one device and one
+    `passkey_new_device` event.
 
 ### C. Core domain rules and shared schemas (`packages/core`)
 
@@ -288,6 +296,7 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [x] M3 Polish: Open Graph image and touch icon (original Pip art), theme colour, accessibility pass (axe, WCAG 2.2 AA, light and dark).
 - [x] M5 Links in the app's J7 styles (buttons, tiles, chips, inline links; owner request).
 - [x] M6 Dark theme from the device setting with the app's dark values (J8; owner request).
+- [x] M7 The app's doodle background behind every page (J8), hidden for high contrast and forced colours.
 - [ ] M4 First live deploy (lead): staging, then production once the app is on `app.revisionden.com` and the Cloudflare secrets are set.
 - Tests: page render, every internal link resolves, no third-party origins, policies come from `docs/legal`, production build refuses missing operator details.
 
@@ -295,7 +304,10 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 
 Broken down into tasks when Stage 1 ships, following the same format. Headline order:
 
-1. Predicted grade (the stats dashboards are workstream K).
+1. Predicted grade (the stats dashboards are workstream K). Target grades are built (K8). The
+   predicted grade waits for verified grade boundaries (docs/VERIFICATION.md) and for mocks and
+   school reports; grade scales for subjects other than GCSE Maths (Edexcel 1MA1) need citing
+   before targets can be set for them.
 2. Exams, mocks and assessments entry; study plan generator and calendar (editable by both):
    drag sessions between days; detail panel to edit a session; custom rules created from edits,
    toggled and removed, applied by the generator, with conflict warnings (mockup screen 5).
@@ -306,3 +318,6 @@ Broken down into tasks when Stage 1 ships, following the same format. Headline o
 7. Stage 3: past papers, maths working, essays and Mark my homework, access arrangements,
    A-Level extras.
 8. Stage 4: rewards UI, friends league, skip and gift days UI, mascot kits, interactive lessons.
+   - Friends league: show each student's two-part title under their nickname (R8). The title is
+     `formatTitle` of `students.title_first` and `title_last`; `GET /v1/student/rewards/title`
+     shows the shape (`docs/REWARDS.md` "Two-part titles").

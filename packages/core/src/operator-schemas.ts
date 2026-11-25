@@ -18,11 +18,12 @@ export const OperatorOverviewSchema = z
     openTickets: z.number().int().nonnegative(),
     openContentReports: z.number().int().nonnegative(),
     errorReports24h: z.number().int().nonnegative(),
-    /** Payments (workstream $) and complaints (O4) are not built yet. */
+    /** Payments (workstream $) are not built yet. */
     premiumFamilies: z.null(),
     trials: z.null(),
     freePlaces: z.null(),
-    openComplaints: z.null(),
+    /** Complaints not yet resolved (O4). */
+    openComplaints: z.number().int().nonnegative(),
   })
   .strict();
 export type OperatorOverview = z.infer<typeof OperatorOverviewSchema>;
@@ -38,6 +39,11 @@ export const OperatorFamilySearchSchema = z
     message: 'Search by email or by family id, not both',
   });
 
+/** A tag as shown on a family (O6). */
+export const OperatorTagRefSchema = z
+  .object({ id: uuid, name: z.string(), colour: z.string() })
+  .strict();
+
 export const OperatorFamilySummarySchema = z
   .object({
     id: uuid,
@@ -45,6 +51,8 @@ export const OperatorFamilySummarySchema = z
     lastActiveAt: isoDate,
     parentCount: z.number().int().nonnegative(),
     childCount: z.number().int().nonnegative(),
+    /** Live (not retired) tags on the family (O6). */
+    tags: z.array(OperatorTagRefSchema),
   })
   .strict();
 
@@ -68,6 +76,8 @@ export const OperatorFamilyDetailSchema = z
     /** Plan and trial come with payments (workstream $). */
     plan: z.null(),
     children: z.array(OperatorChildSchema),
+    /** Live (not retired) tags on the family (O6). */
+    tags: z.array(OperatorTagRefSchema),
     /** Internal notes by operators, newest first; never shown to the family. */
     notes: z.array(
       z.object({ id: uuid, text: z.string(), author: z.string(), createdAt: isoDate }).strict(),
@@ -255,3 +265,48 @@ export function dataRequestDueAt(receivedAt: Date): Date {
   due.setUTCDate(Math.min(day, lastDay));
   return due;
 }
+
+/** O4: a formal complaint as AppDeck sees it. */
+export const OperatorComplaintSchema = z
+  .object({
+    id: uuid,
+    familyId: uuid.nullable(),
+    status: z.enum(['new', 'acknowledged', 'resolved', 'escalated']),
+    channel: z.enum(['app', 'email']),
+    summary: z.string(),
+    aboutPersonalData: z.boolean(),
+    receivedAt: isoDate,
+    acknowledgeDueAt: isoDate,
+    resolveDueAt: isoDate,
+    acknowledgedAt: isoDate.nullable(),
+    resolvedAt: isoDate.nullable(),
+    /** From when it can be escalated: 5 working days after acknowledgement (null before). */
+    escalationFrom: isoDate.nullable(),
+    /** Past the date we aim to acknowledge, or to resolve, by and not done yet. */
+    acknowledgeOverdue: z.boolean(),
+    resolveOverdue: z.boolean(),
+    outcome: z.string().nullable(),
+    messages: z.array(OperatorTicketMessageSchema),
+  })
+  .strict();
+
+export const OperatorComplaintListSchema = z
+  .object({ complaints: z.array(OperatorComplaintSchema) })
+  .strict();
+
+/** `POST complaints`: log a complaint that arrived by email. */
+export const OperatorComplaintLogBodySchema = z
+  .object({
+    familyId: uuid.nullable(),
+    summary: z.string().trim().min(3).max(500),
+    aboutPersonalData: z.boolean(),
+    receivedOn: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/)
+      .refine((d) => !Number.isNaN(new Date(`${d}T00:00:00Z`).getTime()), 'Not a date'),
+  })
+  .strict();
+
+export const OperatorComplaintOutcomeBodySchema = z
+  .object({ outcome: z.string().trim().min(3).max(2000) })
+  .strict();

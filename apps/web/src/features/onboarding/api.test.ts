@@ -4,6 +4,17 @@ import { createOnboardingApi, OnboardingApiError } from './api';
 const AVATAR = encodeAvatar(DEFAULT_AVATAR);
 const STUDENT_ID = '11111111-1111-4111-8111-111111111111';
 
+const LINK = {
+  tokenId: 't1',
+  kind: 'qr',
+  token: 'x'.repeat(32),
+  familyId: 'f1',
+  studentId: STUDENT_ID,
+  expiresAt: '2026-11-24T10:10:00.000Z',
+  linkUrl: 'https://dev.revisionden.test/link?token=abc&family=f1',
+  code: 'ABCD-EFGH',
+};
+
 const child = {
   student: { id: STUDENT_ID, nickname: 'Comet_7', avatarCode: AVATAR, yearGroup: 11 },
   enrolments: [],
@@ -45,20 +56,61 @@ describe('onboarding API client', () => {
     expect(JSON.parse(String(init?.body))).toEqual(request);
   });
 
-  it('creates a one-time link code for a child', async () => {
-    const fetch = fakeFetch(201, {
-      token: 'x'.repeat(32),
-      familyId: 'f1',
-      studentId: STUDENT_ID,
-      expiresAt: '2026-11-24T10:10:00.000Z',
-      linkUrl: 'https://dev.revisionden.test/link?token=abc&family=f1',
-    });
+  it('creates a one-time link code for a child, as a QR code or a shared link', async () => {
+    const fetch = fakeFetch(201, LINK);
     const api = createOnboardingApi({ baseUrl: 'https://api.test', fetch });
     const token = await api.createLinkToken(STUDENT_ID);
     expect(token.linkUrl).toContain('/link?token=');
     expect(String(fetch.mock.calls[0]![0])).toBe(
       `https://api.test/v1/students/${STUDENT_ID}/link-tokens`,
     );
+    expect(JSON.parse(String(fetch.mock.calls[0]![1]?.body))).toEqual({ kind: 'qr' });
+    await api.createLinkToken(STUDENT_ID, 'share');
+    expect(JSON.parse(String(fetch.mock.calls[1]![1]?.body))).toEqual({ kind: 'share' });
+  });
+
+  it('checks and cancels a link', async () => {
+    const statusFetch = fakeFetch(200, { status: 'waiting' });
+    const api = createOnboardingApi({ baseUrl: 'https://api.test', fetch: statusFetch });
+    expect(await api.getLinkStatus(STUDENT_ID, 't1')).toBe('waiting');
+    expect(String(statusFetch.mock.calls[0]![0])).toBe(
+      `https://api.test/v1/students/${STUDENT_ID}/link-tokens/t1`,
+    );
+    const del = vi.fn(async () => new Response(null, { status: 204 }));
+    await createOnboardingApi({ baseUrl: 'https://api.test', fetch: del }).cancelLink(
+      STUDENT_ID,
+      't1',
+    );
+    expect((del.mock.calls[0] as unknown as [URL, RequestInit])[1].method).toBe('DELETE');
+  });
+
+  it('lists and removes linked devices', async () => {
+    const list = fakeFetch(200, {
+      devices: [
+        { id: 'd1', deviceType: 'phone', linkedAt: '2026-11-24T10:00:00.000Z', lastUsedAt: null },
+      ],
+    });
+    const api = createOnboardingApi({ baseUrl: 'https://api.test', fetch: list });
+    expect((await api.listDevices(STUDENT_ID))[0]!.deviceType).toBe('phone');
+    const del = vi.fn(async () => new Response(null, { status: 204 }));
+    await createOnboardingApi({ baseUrl: 'https://api.test', fetch: del }).removeDevice(
+      STUDENT_ID,
+      'd1',
+    );
+    expect(String((del.mock.calls[0] as unknown as [URL])[0])).toBe(
+      `https://api.test/v1/students/${STUDENT_ID}/devices/d1`,
+    );
+  });
+
+  it('redeems a typed short code', async () => {
+    const fetch = fakeFetch(200, {
+      challengeId: 'c1',
+      options: { challenge: 'abc' },
+      student: { nickname: 'Comet_7', avatarCode: AVATAR },
+    });
+    const api = createOnboardingApi({ baseUrl: 'https://api.test', fetch });
+    await api.redeemLink({ code: 'ABCD-EFGH' });
+    expect(JSON.parse(String(fetch.mock.calls[0]![1]?.body))).toEqual({ code: 'ABCD-EFGH' });
   });
 
   it('passes on the server’s message and details when a request fails', async () => {
@@ -121,6 +173,52 @@ describe('onboarding API client', () => {
     expect(done.student.id).toBe(STUDENT_ID);
     expect(String(fetch.mock.calls[0]![0])).toBe('https://api.test/v1/device/link');
     expect(String(fetch.mock.calls[1]![0])).toBe('https://api.test/v1/device/link/verify');
+  });
+
+  it('sets a child board or tier with PATCH', async () => {
+    const fetch = fakeFetch(200, {
+      studentId: STUDENT_ID,
+      subjectId: 'gcse-maths',
+      board: 'AQA',
+      tier: 'higher',
+    });
+    const api = createOnboardingApi({ baseUrl: 'https://api.test', fetch });
+    const saved = await api.updateChildSubject(STUDENT_ID, 'gcse-maths', { board: 'AQA' });
+    expect(saved.board).toBe('AQA');
+    const [url, init] = fetch.mock.calls[0]!;
+    expect(String(url)).toBe(`https://api.test/v1/students/${STUDENT_ID}/enrolments/gcse-maths`);
+    expect(init?.method).toBe('PATCH');
+    expect(JSON.parse(String(init?.body))).toEqual({ board: 'AQA' });
+  });
+
+  it('reads and updates the student device subjects', async () => {
+    const list = fakeFetch(200, { enrolments: [], toCheckLater: 0 });
+    const api = createOnboardingApi({ baseUrl: 'https://api.test', fetch: list });
+    expect(await api.getMySubjects()).toEqual({ enrolments: [], toCheckLater: 0 });
+    expect(String(list.mock.calls[0]![0])).toBe('https://api.test/v1/student/subjects');
+
+    const patch = fakeFetch(200, {
+      studentId: STUDENT_ID,
+      subjectId: 'gcse-maths',
+      board: 'OCR',
+      tier: 'none',
+    });
+    const api2 = createOnboardingApi({ baseUrl: 'https://api.test', fetch: patch });
+    await api2.updateMySubject('gcse-maths', { board: 'OCR' });
+    expect(String(patch.mock.calls[0]![0])).toBe('https://api.test/v1/student/subjects/gcse-maths');
+    expect(patch.mock.calls[0]![1]?.method).toBe('PATCH');
+  });
+
+  it('reads and saves the student device avatar', async () => {
+    const read = fakeFetch(200, { avatarCode: AVATAR, earnedRewardIds: [] });
+    const api = createOnboardingApi({ baseUrl: 'https://api.test', fetch: read });
+    expect(await api.getMyAvatar()).toEqual({ avatarCode: AVATAR, earnedRewardIds: [] });
+
+    const save = fakeFetch(200, child.student);
+    const api2 = createOnboardingApi({ baseUrl: 'https://api.test', fetch: save });
+    await api2.saveMyAvatar(AVATAR);
+    expect(String(save.mock.calls[0]![0])).toBe('https://api.test/v1/student/avatar');
+    expect(save.mock.calls[0]![1]?.method).toBe('PUT');
   });
 
   it('unlocks a student device with a passkey already on it', async () => {

@@ -6,6 +6,7 @@ import {
   servableStatuses,
   type LearnItem,
   type MarkResult,
+  type NumericKey,
 } from '@revisionden/core';
 import { items } from '@revisionden/db';
 import { ApiError } from '../errors';
@@ -75,7 +76,8 @@ export function correctAnswerText(row: ItemRow): string {
         const prefix = typeof verify.variable === 'string' ? `${verify.variable} = ` : '';
         return (key.solutions as string[]).map((s) => `${prefix}${s}`).join(' or ');
       }
-      return String(key.expression ?? '');
+      const subject = typeof key.subject === 'string' ? `${key.subject} = ` : '';
+      return `${subject}${String(key.expression ?? '')}`;
     }
     default:
       return b.back ?? '';
@@ -107,7 +109,7 @@ export async function markItem(
       return markShortAnswer(key as { accepted: string[] }, answer);
     case 'numeric':
       if (typeof answer !== 'string') throw wrongShape();
-      return markNumeric(key as { value: string; tolerance?: number }, answer);
+      return markNumeric(key as unknown as NumericKey, answer);
     case 'flashcard':
       if (typeof answer !== 'boolean') throw wrongShape();
       return { correct: answer, score: answer ? 1 : 0 };

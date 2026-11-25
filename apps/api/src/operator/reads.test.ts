@@ -135,7 +135,7 @@ describe('operator overview', () => {
       premiumFamilies: null,
       trials: null,
       freePlaces: null,
-      openComplaints: null,
+      openComplaints: 0,
     });
   });
 });

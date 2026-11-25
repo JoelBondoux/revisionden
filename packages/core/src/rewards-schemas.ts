@@ -12,6 +12,7 @@ export const RewardItemSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('avatar'), layer: z.enum(AVATAR_LAYERS), id: z.string() }),
   z.object({ kind: z.literal('frame'), id: z.string() }),
   z.object({ kind: z.literal('title'), text: z.string() }),
+  z.object({ kind: z.literal('titleWord'), part: z.enum(['first', 'last']), text: z.string() }),
   z.object({ kind: z.literal('theme'), id: z.string() }),
   z.object({ kind: z.literal('pipOutfit'), id: z.string() }),
   z.object({ kind: z.literal('badge'), id: z.string() }),

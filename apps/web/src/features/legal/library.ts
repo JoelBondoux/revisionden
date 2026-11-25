@@ -53,6 +53,11 @@ export const POLICIES: PolicyInfo[] = [
     audience: 'Parents and reviewers',
     summary: "How we meet the ICO Children's Code",
   },
+  {
+    name: 'complaints-policy',
+    audience: 'Parents and carers',
+    summary: 'How to make a complaint and what happens next',
+  },
 ];
 
 export interface PolicyLibrary {

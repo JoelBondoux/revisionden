@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import type { ParentDashboard } from '@revisionden/core';
+import { resetDayLabel, type ParentDashboard } from '@revisionden/core';
 import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { ProgressBar } from '../../components/ProgressBar';
@@ -8,8 +8,10 @@ import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { BarChart } from './BarChart';
 import { DailyLimitPanel } from './DailyLimit';
+import { ParentRewardsCard } from './ParentRewardsCard';
+import { TargetGradesPanel } from './TargetGrades';
 import { WorthALookCard } from './WorthALook';
-import { formatMinutes, signedNote, usd } from './format';
+import { formatMinutes, signedNote } from './format';
 import { NotSetUp, Tile } from './Tile';
 import { useStatsApi, type Child } from './statsApi';
 import './stats.css';
@@ -44,6 +46,9 @@ function ChildDashboard({ choices }: { choices: Child[] }) {
   const asked = params.get('student');
   const [childId, setChildId] = useState(choices.find((c) => c.id === asked)?.id ?? choices[0]!.id);
   const dashboard = useApiResource(() => api.getDashboard(childId), [api, childId]);
+  // Targets saved in the panel below, shown in the subjects table without reloading the page.
+  const [savedTargets, setSavedTargets] = useState<Map<string, string | null>>(new Map());
+  useEffect(() => setSavedTargets(new Map()), [childId]);
   return (
     <>
       <div className="stats-toolbar no-print">
@@ -65,8 +70,15 @@ function ChildDashboard({ choices }: { choices: Child[] }) {
       </div>
       {dashboard.status === 'ready' ? (
         <>
-          <DashboardView data={dashboard.data} />
+          <DashboardView data={dashboard.data} savedTargets={savedTargets} />
           <DailyLimitPanel key={childId} studentId={childId} />
+          <TargetGradesPanel
+            key={`targets-${childId}`}
+            studentId={childId}
+            onSaved={(next) =>
+              setSavedTargets(new Map(next.subjects.map((t) => [t.subjectId, t.parentTarget])))
+            }
+          />
         </>
       ) : (
         <LoadingOrError resource={dashboard} />
@@ -86,7 +98,8 @@ function minutesNote(current: number, previous: number): string {
 }
 
 function grade(predicted: string | null, target: string | null): string {
-  if (predicted === null) return 'Not set up yet';
+  // Predicted grades wait for verified grade boundaries; a target can already be set (K8).
+  if (predicted === null) return target === null ? 'Not set up yet' : `Target ${target}`;
   return target === null ? predicted : `${predicted} (target ${target})`;
 }
 
@@ -97,8 +110,14 @@ const ACTIVITY: Record<ParentDashboard['recentActivity'][number]['kind'], [strin
   flashcards: ['Flashcards', 'review'],
 };
 
-function DashboardView({ data }: { data: ParentDashboard }) {
-  const { tiles, studyTime, healthyHabits: habits, aiSpend } = data;
+function DashboardView({
+  data,
+  savedTargets,
+}: {
+  data: ParentDashboard;
+  savedTargets: ReadonlyMap<string, string | null>;
+}) {
+  const { tiles, studyTime, healthyHabits: habits, aiAllowance } = data;
   const subjectName = new Map(data.subjects.map((s) => [s.subjectId, s.name]));
   const when = new Intl.DateTimeFormat('en-GB', {
     timeZone: data.timeZone,
@@ -167,7 +186,14 @@ function DashboardView({ data }: { data: ParentDashboard }) {
                 <tr key={s.subjectId}>
                   <th scope="row">{s.name}</th>
                   <td>{s.mastery}%</td>
-                  <td>{grade(s.predictedGrade, s.targetGrade)}</td>
+                  <td>
+                    {grade(
+                      s.predictedGrade,
+                      savedTargets.has(s.subjectId)
+                        ? (savedTargets.get(s.subjectId) ?? null)
+                        : s.targetGrade,
+                    )}
+                  </td>
                   <td>{s.change > 0 ? `+${s.change}` : String(s.change)}</td>
                 </tr>
               ))}
@@ -209,30 +235,7 @@ function DashboardView({ data }: { data: ParentDashboard }) {
         )}
       </Card>
 
-      <Card title="Reward">
-        {data.rewards.length === 0 ? (
-          <NotSetUp />
-        ) : (
-          <ul className="stats-list">
-            {data.rewards.map((r) => (
-              <li key={r.title}>
-                <span>
-                  {`${r.title}: ${r.given ? 'given' : r.reached ? 'reached' : r.targetLabel}`}
-                </span>
-                {!r.reached && (
-                  <ProgressBar
-                    label={r.title}
-                    value={r.current}
-                    max={r.goal}
-                    valueText={`${r.current} of ${r.goal} (${r.targetLabel})`}
-                    tone="gold"
-                  />
-                )}
-              </li>
-            ))}
-          </ul>
-        )}
-      </Card>
+      <ParentRewardsCard key={data.student.id} studentId={data.student.id} />
 
       <Card title="Healthy habits">
         <ul className="stats-list">
@@ -242,15 +245,7 @@ function DashboardView({ data }: { data: ParentDashboard }) {
         </ul>
       </Card>
 
-      <Card title="AI marking spend">
-        <ProgressBar
-          label="AI marking spend"
-          value={aiSpend.spentMicroUsd}
-          max={aiSpend.capMicroUsd}
-          valueText={`${usd(aiSpend.spentMicroUsd)} of ${usd(aiSpend.capMicroUsd)}`}
-        />
-        <p className="secondary-text">{`${usd(aiSpend.spentMicroUsd)} of ${usd(aiSpend.capMicroUsd)} this month`}</p>
-      </Card>
+      <AiAllowanceCard allowance={aiAllowance} />
 
       <Card title="Recent activity">
         {data.recentActivity.length === 0 ? (
@@ -271,5 +266,29 @@ function DashboardView({ data }: { data: ParentDashboard }) {
         )}
       </Card>
     </>
+  );
+}
+
+/**
+ * The AI marking allowance (workstream K9): the monthly cap as a percentage used and its reset
+ * date. Families never see money, spend or cost for AI.
+ */
+function AiAllowanceCard({ allowance }: { allowance: ParentDashboard['aiAllowance'] }) {
+  const { percentUsed, usedUp, resetsOn } = allowance;
+  const resetDay = resetDayLabel(resetsOn);
+  return (
+    <Card title="AI marking allowance">
+      <ProgressBar
+        label="AI marking allowance"
+        value={percentUsed}
+        max={100}
+        valueText={`${percentUsed}% used`}
+      />
+      <p className="secondary-text">
+        {usedUp
+          ? `This month’s AI marking allowance is used up. It resets on ${resetDay}.`
+          : `${percentUsed}% used this month. Resets on ${resetDay}.`}
+      </p>
+    </Card>
   );
 }
