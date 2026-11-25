@@ -213,10 +213,10 @@ Tags: #product #rules #limits #defaults
   citation has a verbatim quote from the 1MA1 specification Issue 2 (or, for the quadratic
   formula, the DfE subject content DFE-00233-2013), with page and SHA-256. All pilot content is
   still `draft`. Pipeline run 2026-11-25 (S2, `docs/CONTENT_RUN_1MA1.md`): every step
-  recorded; blind answer and adversarial review by Gemini (`gemini-2.5-pro`). 10 of 11 items pass
-  steps 1 to 6 and wait for the owner (A18-0002 after it was compared by formula, #111); G9 fails
-  grounded writing until decision 0008 is applied (#112); the topic tree's 2 near matches (A22,
-  A25) were confirmed by the owner (#112). Owner's review steps: `docs/REVIEW_GUIDE.md`.
+  recorded; blind answer and adversarial review by Gemini (`gemini-2.5-pro`). All 11 items pass
+  steps 1 to 6 and wait for the owner (G9 under decision 0008 and the A6 proof with individual
+  approval; A18-0002 after it was compared by formula, #111). The topic tree's 2 near matches (A22,
+  A25) were confirmed by the owner. Owner's review steps: `docs/REVIEW_GUIDE.md`.
 - Citation `supports` names only what the quote itself backs. A specification quote backs the
   question being in scope (`question`, `topic`); maths answers are backed by the maths engine,
   not by a citation. Sourcing record: `docs/sourcing/gcse-maths-1ma1-pilot.md`.
