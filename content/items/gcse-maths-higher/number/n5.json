@@ -1,0 +1,764 @@
+[
+  {
+    "id": "gcse-maths-h-n5-0001",
+    "topic": "gcse-maths-h-n5",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n5-lp-product-rule",
+    "expected_seconds": 90,
+    "prompt": "A café offers 4 starters, 6 main courses and 3 desserts. A meal is one starter, one main course and one dessert. How many different meals can be chosen?",
+    "answer": {
+      "expression": "72"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "4*6*3"
+    },
+    "steps": ["4 * 6 * 3", "24 * 3", "72"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 4 × 6 × 3", "A1 for 72"],
+    "hint": "Multiply the number of choices for each course.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N5",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N5 (page 12; PDF page 24)",
+        "quote": "apply systematic listing strategies, including use of the product rule for counting",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N5 (page 12; PDF page 24)",
+        "quote": "if there are m ways of doing one task and for each of these, there are n ways of doing another task, then the total number of ways the two tasks can be done is m × n ways",
+        "retrieved_at": "2026-11-25",
+        "supports": ["hint"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N5). Hint states the product rule, quoted from spec N5 (citation 2). Answer and every step backed by the maths engine. Mark points written by this session.",
+          "at": "2026-11-25T17:22:05Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:22:13Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:23:09Z",
+          "notes": "model answered \"72\"; expected \"72\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:23:18Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n5-0002",
+    "topic": "gcse-maths-h-n5",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-n5-lp-product-rule",
+    "expected_seconds": 60,
+    "prompt": "A code is one letter from A, B, C, D or E followed by two digits, each from 0 to 9. Digits may repeat. How many different codes are possible?",
+    "answer": {
+      "value": "500"
+    },
+    "verify": {
+      "expression": "5*10*10"
+    },
+    "marks": 2,
+    "hint": "Multiply the number of choices for each place in the code.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N5",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N5 (page 12; PDF page 24)",
+        "quote": "apply systematic listing strategies, including use of the product rule for counting",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N5 (page 12; PDF page 24)",
+        "quote": "if there are m ways of doing one task and for each of these, there are n ways of doing another task, then the total number of ways the two tasks can be done is m × n ways",
+        "retrieved_at": "2026-11-25",
+        "supports": ["hint"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N5). Hint states the product rule, quoted from spec N5 (citation 2). Answer backed by the maths engine (5 × 10 × 10).",
+          "at": "2026-11-25T17:22:05Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:22:15Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:23:26Z",
+          "notes": "model answered \"500\"; expected \"500\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:23:35Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n5-0003",
+    "topic": "gcse-maths-h-n5",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-n5-lp-product-rule",
+    "expected_seconds": 70,
+    "prompt": "A 4-digit PIN uses the digits 0 to 9. No digit may be used more than once. How many different PINs are possible?",
+    "answer": {
+      "value": "5040"
+    },
+    "verify": {
+      "expression": "10*9*8*7"
+    },
+    "marks": 2,
+    "hint": "Each time a digit is used there is one fewer choice for the next place.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N5",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N5 (page 12; PDF page 24)",
+        "quote": "apply systematic listing strategies, including use of the product rule for counting",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N5). Answer backed by the maths engine (10 × 9 × 8 × 7); also checked by listing all 4-digit arrangements with itertools.permutations in Python. Hint is procedural.",
+          "at": "2026-11-25T17:22:05Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:22:16Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:23:44Z",
+          "notes": "model answered \"5040\"; expected \"5040\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:23:54Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n5-0004",
+    "topic": "gcse-maths-h-n5",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n5-lp-systematic-listing",
+    "expected_seconds": 45,
+    "prompt": "Three different books are put in a row on a shelf. How many different orders are possible?",
+    "answer": {
+      "value": "6"
+    },
+    "verify": {
+      "expression": "3*2*1"
+    },
+    "marks": 1,
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N5",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N5 (page 12; PDF page 24)",
+        "quote": "apply systematic listing strategies, including use of the product rule for counting",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N5). Answer backed by the maths engine (3 × 2 × 1) and by listing with itertools.permutations in Python.",
+          "at": "2026-11-25T17:22:05Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:22:17Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:24:01Z",
+          "notes": "model answered \"6\"; expected \"6\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:24:06Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n5-0005",
+    "topic": "gcse-maths-h-n5",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-n5-lp-systematic-listing",
+    "expected_seconds": 60,
+    "prompt": "Each of the digits 1, 4 and 7 is used exactly once to make a 3-digit number. How many of these numbers are greater than 400?",
+    "answer": {
+      "value": "4"
+    },
+    "verify": {
+      "expression": "2*2*1"
+    },
+    "marks": 1,
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N5",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N5 (page 12; PDF page 24)",
+        "quote": "apply systematic listing strategies, including use of the product rule for counting",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N5). Answer checked by listing in Python: 417, 471, 714, 741. The maths engine confirms 2 × 2 × 1 = 4.",
+          "at": "2026-11-25T17:22:05Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:22:18Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:24:17Z",
+          "notes": "model answered \"4\"; expected \"4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:24:25Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n5-0006",
+    "topic": "gcse-maths-h-n5",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-n5-lp-systematic-listing",
+    "expected_seconds": 60,
+    "prompt": "Spinner A is numbered 1, 2 and 3. Spinner B is numbered 1, 2, 3 and 4. Both spinners are spun and the two numbers are added. How many of the possible outcomes give a total of 5?",
+    "answer": {
+      "value": "3"
+    },
+    "verify": {
+      "expression": "3"
+    },
+    "marks": 1,
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N5",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N5 (page 12; PDF page 24)",
+        "quote": "apply systematic listing strategies, including use of the product rule for counting",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N5). Answer checked by listing all 12 outcomes in Python: (1, 4), (2, 3), (3, 2). The maths engine only confirms the stated value.",
+          "at": "2026-11-25T17:22:05Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:22:19Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:24:32Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:24:41Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n5-0007",
+    "topic": "gcse-maths-h-n5",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-n5-lp-quick-counting",
+    "expected_seconds": 15,
+    "front": "3 shirts and 5 pairs of trousers: how many different outfits of one shirt and one pair of trousers?",
+    "back": "15",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N5",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N5 (page 12; PDF page 24)",
+        "quote": "apply systematic listing strategies, including use of the product rule for counting",
+        "retrieved_at": "2026-11-25",
+        "supports": ["front"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N5). Front cited to spec N5. Back checked in Python: 3 × 5 = 15 by the product rule (spec N5).",
+          "at": "2026-11-25T17:22:05Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:22:20Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:24:47Z",
+          "notes": "model answered \"15\"; expected \"15\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:24:52Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n5-0008",
+    "topic": "gcse-maths-h-n5",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n5-lp-quick-counting",
+    "expected_seconds": 15,
+    "front": "How many ways can 4 different objects be arranged in a row?",
+    "back": "24",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N5",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N5 (page 12; PDF page 24)",
+        "quote": "apply systematic listing strategies, including use of the product rule for counting",
+        "retrieved_at": "2026-11-25",
+        "supports": ["front"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N5). Front cited to spec N5. Back checked with itertools.permutations in Python: 24.",
+          "at": "2026-11-25T17:22:05Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:22:21Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:24:59Z",
+          "notes": "model answered \"24\"; expected \"24\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:25:17Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n5-0009",
+    "topic": "gcse-maths-h-n5",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-n5-lp-quick-counting",
+    "expected_seconds": 15,
+    "front": "How many ways can 3 different letters be arranged in a row?",
+    "back": "6",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N5",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N5 (page 12; PDF page 24)",
+        "quote": "apply systematic listing strategies, including use of the product rule for counting",
+        "retrieved_at": "2026-11-25",
+        "supports": ["front"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N5). Front cited to spec N5. Back checked with itertools.permutations in Python: 6.",
+          "at": "2026-11-25T17:22:05Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:22:22Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:25:25Z",
+          "notes": "model answered \"6\"; expected \"6\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:25:34Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  }
+]
