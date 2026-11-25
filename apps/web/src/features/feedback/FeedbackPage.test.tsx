@@ -37,6 +37,16 @@ function show(api: FeedbackApi, { path = '/feedback', studentId = null as string
 }
 
 describe('feedback form', () => {
+  it('offers the support email instead, with a note about personal details', () => {
+    show(fakeApi());
+    expect(screen.getByText(/Prefer email\?/)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'help@revisionden.com' })).toHaveAttribute(
+      'href',
+      'mailto:help@revisionden.com',
+    );
+    expect(screen.getByText(/only the personal details we need/i)).toBeInTheDocument();
+  });
+
   it('presets the kind from the link', () => {
     show(fakeApi(), { path: '/feedback?kind=idea' });
     expect(screen.getByRole('radio', { name: 'Idea' })).toBeChecked();

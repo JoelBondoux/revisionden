@@ -13,4 +13,5 @@ export const defaultPolicyLibrary = createPolicyLibrary(files, {
   VITE_CONTACT_EMAIL: import.meta.env.VITE_CONTACT_EMAIL,
   VITE_POSTAL_ADDRESS: import.meta.env.VITE_POSTAL_ADDRESS,
   VITE_POLICY_EFFECTIVE_DATE: import.meta.env.VITE_POLICY_EFFECTIVE_DATE,
+  VITE_SUPPORT_EMAIL: import.meta.env.VITE_SUPPORT_EMAIL,
 });

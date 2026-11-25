@@ -85,7 +85,8 @@ Web build variables for production (GitHub environment `production`, Variables):
 fails without them). `VITE_OPERATOR_NAME` is the agreed value (held by the product owner); `VITE_CONTACT_EMAIL` =
 `privacy@revisionden.com`; leave `VITE_POLICY_EFFECTIVE_DATE` unset until launch.
 `VITE_POSTAL_ADDRESS` is not used. Dev and staging may leave them unset
-and show "to be added".
+and show "to be added". `VITE_SUPPORT_EMAIL` is optional everywhere: the help inbox shown on the
+About page, the feedback form and some policies, `help@revisionden.com` when unset.
 
 ## Deploys from GitHub Actions
 
@@ -129,9 +130,10 @@ Step by step (about 15 minutes):
    `VITE_POLICY_EFFECTIVE_DATE` (for example `2026-12-01`) only when production launches; until
    then the production web build fails on purpose. Setting the same two in `dev` and `staging` is
    optional (they show "to be added" without them).
-6. **Contact inbox.** Make `privacy@revisionden.com` reach you, for example with Cloudflare Email
-   Routing on the `revisionden.com` zone forwarding to your own inbox (a session must not set
-   this up: it needs your inbox address).
+6. **Contact inboxes (done, 2026-11-25).** `privacy@revisionden.com` (privacy and data rights)
+   and `help@revisionden.com` (help and support) forward to the product owner's inbox with
+   Cloudflare Email Routing on the `revisionden.com` zone (a session must not set this up: it
+   needs the owner's inbox address).
 7. **First run.** Actions, "Deploy dev", Run workflow. It should end with "API is on
    <version>; some secrets still missing" until the OAuth secrets are set.
 
