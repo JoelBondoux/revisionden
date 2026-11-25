@@ -19,6 +19,7 @@ import {
 } from '../juice';
 import { markSound, useSound } from '../sound';
 import { useLearnApi } from './learnApi';
+import { NewRewards } from './NewRewards';
 import {
   DailyGoal,
   DraftBanner,
@@ -262,6 +263,7 @@ export function LessonPlayer({
           </p>
         )}
         {result && <Feedback result={result} />}
+        {result && <NewRewards rewards={result.newlyEarned} />}
         {result || unmarked ? (
           <Button block variant={result?.correct ? 'success' : 'primary'} onClick={advance}>
             {isLast ? 'Finish' : 'Continue'}
