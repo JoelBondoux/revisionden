@@ -24,6 +24,7 @@ export * from './stats';
 export * from './stats-schemas';
 export * from './map';
 export * from './error-ref';
+export * from './daily';
 export * from './daily-limit';
 export * from './daily-limit-schemas';
 export * from './secret-stats';

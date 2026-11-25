@@ -33,6 +33,7 @@
     "GET /v1/review/reports",
     "GET /v1/student/bug-hunter",
     "GET /v1/student/cards/due",
+    "GET /v1/student/daily",
     "GET /v1/student/daily-limit",
     "GET /v1/student/feedback",
     "GET /v1/student/feedback/rewards",
