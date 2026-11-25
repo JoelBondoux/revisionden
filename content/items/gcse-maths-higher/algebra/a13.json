@@ -13,7 +13,9 @@
       "A translation 3 units to the right",
       "A translation 3 units to the left"
     ],
-    "answer": { "option": 0 },
+    "answer": {
+      "option": 0
+    },
     "marks": 1,
     "explanation": "Adding 3 to f(x) adds 3 to every y-value, so the graph moves 3 units up.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
@@ -68,6 +70,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:45:27Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -86,7 +96,9 @@
       "A translation 2 units to the right",
       "A translation 2 units to the left"
     ],
-    "answer": { "option": 2 },
+    "answer": {
+      "option": 2
+    },
     "marks": 1,
     "explanation": "The value of f(x - 2) at x is the value f had at x - 2, so each point of the graph moves 2 units to the right.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
@@ -141,6 +153,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:07:58Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -159,7 +179,9 @@
       "A translation 4 units to the right",
       "A translation 4 units to the left"
     ],
-    "answer": { "option": 3 },
+    "answer": {
+      "option": 3
+    },
     "marks": 1,
     "explanation": "The value of f(x + 4) at x is the value f had at x + 4, so each point of the graph moves 4 units to the left.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
@@ -214,6 +236,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:08:20Z",
           "notes": "wrong_answer (answer): The transformation from y = f(x) to y = f(x + 4) is a translation of 4 units to the left. The correct option is D. The selected answer is C, which describes a translation 4 units to the right. The provided explanation is also inconsistent with the answer, as it correctly states that the graph moves '4 units to the left'."
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -226,7 +256,9 @@
     "learning_point": "gcse-maths-h-a13-lp-translations",
     "expected_seconds": 40,
     "prompt": "The point (3, 5) is on the graph of y = f(x). Write down the coordinates of the point it moves to on the graph of y = f(x) - 4.",
-    "answer": { "accepted": ["(3, 1)", "(3,1)"] },
+    "answer": {
+      "accepted": ["(3, 1)", "(3,1)"]
+    },
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
@@ -280,6 +312,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:46:24Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -292,8 +332,14 @@
     "learning_point": "gcse-maths-h-a13-lp-translations",
     "expected_seconds": 90,
     "prompt": "The graph of y = x^2 + 1 is translated 10 units down. Find the x-coordinates where the new graph crosses the x-axis.",
-    "answer": { "solutions": ["3", "-3"] },
-    "verify": { "method": "solve", "equation": "x^2 + 1 - 10 = 0", "variable": "x" },
+    "answer": {
+      "solutions": ["3", "-3"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "x^2 + 1 - 10 = 0",
+      "variable": "x"
+    },
     "steps": ["x^2 + 1 - 10 = 0", "x^2 - 9 = 0", "(x - 3)(x + 3) = 0", "x = 3 or x = -3"],
     "marks": 3,
     "mark_scheme": [
@@ -337,6 +383,38 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:18:52Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:21:27Z",
+          "notes": "model answered \"3, -3\"; expected \"3, -3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:21:42Z",
+          "notes": "wording (steps): The first step, \"x^2 + 1 - 10 = 0\", combines two conceptual steps: deriving the equation of the translated graph and setting y=0 to find the x-intercepts. This is a very condensed step which could be confusing for a student. It would be clearer to first state the new equation, 'y = x^2 - 9', which aligns with the first mark (B1) in the mark scheme, and then show the process of setting y=0."
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -355,7 +433,9 @@
       "A reflection in the line y = x",
       "A translation 1 unit down"
     ],
-    "answer": { "option": 0 },
+    "answer": {
+      "option": 0
+    },
     "marks": 1,
     "explanation": "Every y-value changes sign, so the graph is reflected in the x-axis.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
@@ -410,6 +490,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:47:17Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -428,7 +516,9 @@
       "A reflection in the line y = x",
       "A translation 1 unit down"
     ],
-    "answer": { "option": 1 },
+    "answer": {
+      "option": 1
+    },
     "marks": 1,
     "explanation": "The value at x is the old value at -x, so the graph is reflected in the y-axis.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
@@ -483,6 +573,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:47:32Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -495,7 +593,9 @@
     "learning_point": "gcse-maths-h-a13-lp-reflections",
     "expected_seconds": 40,
     "prompt": "The point (2, -7) is on the graph of y = f(x). Write down the coordinates of the point it moves to on the graph of y = f(-x).",
-    "answer": { "accepted": ["(-2, -7)", "(-2,-7)", "(−2, −7)"] },
+    "answer": {
+      "accepted": ["(-2, -7)", "(-2,-7)", "(−2, −7)"]
+    },
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
@@ -549,6 +649,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:47:43Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -614,6 +722,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:47:57Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -679,6 +795,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:48:12Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -744,6 +868,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:09:20Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }

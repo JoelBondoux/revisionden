@@ -8,7 +8,9 @@
     "expected_seconds": 25,
     "prompt": "Which equation has a reciprocal graph?",
     "options": ["y = x^2", "y = 1/x", "y = 2^x", "y = x^3"],
-    "answer": { "option": 1 },
+    "answer": {
+      "option": 1
+    },
     "marks": 1,
     "explanation": "y = 1/x is the reciprocal function. The others are quadratic, exponential and cubic.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
@@ -62,6 +64,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:41:36Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -75,7 +85,9 @@
     "expected_seconds": 25,
     "prompt": "Which equation has a cubic graph?",
     "options": ["y = 3x + 1", "y = x^2 - 4", "y = x^3 - 2x", "y = 4/x"],
-    "answer": { "option": 2 },
+    "answer": {
+      "option": 2
+    },
     "marks": 1,
     "explanation": "The highest power of x in y = x^3 - 2x is 3, so it is a cubic.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
@@ -129,6 +141,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:42:41Z",
           "notes": "wrong_answer (answer): The question asks for the equation of a cubic graph. The correct option is 'y = x^3 - 2x', which is the third option in the list. The `answer` field specifies `option: 2`. If this refers to the second option in the list (i.e., using a 1-based index), it points to 'y = x^2 - 4', which is a quadratic equation and therefore incorrect. The explanation provided refers to 'y = x^3 - 2x', which is the third option, contradicting the specified answer if 1-based indexing is assumed."
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -142,7 +162,9 @@
     "expected_seconds": 25,
     "prompt": "Which equation has a straight-line graph?",
     "options": ["y = x^2", "y = 5 - 2x", "y = 1/x", "y = 2^x"],
-    "answer": { "option": 1 },
+    "answer": {
+      "option": 1
+    },
     "marks": 1,
     "explanation": "y = 5 - 2x has the form y = mx + c, so its graph is a straight line.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
@@ -196,6 +218,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:42:57Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -209,7 +239,9 @@
     "expected_seconds": 25,
     "prompt": "Which of these graphs passes through the point (0, 1)?",
     "options": ["y = 2^x", "y = x^2 - 1", "y = x^3", "y = 1/x"],
-    "answer": { "option": 0 },
+    "answer": {
+      "option": 0
+    },
     "marks": 1,
     "explanation": "At x = 0: 2^0 = 1, 0^2 - 1 = -1 and 0^3 = 0, and 1/x has no value at x = 0.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
@@ -287,6 +319,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:07:21Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -299,8 +339,12 @@
     "learning_point": "gcse-maths-h-a12-lp-trig-graphs",
     "expected_seconds": 30,
     "prompt": "The graph of y = cos x is drawn for 0° ≤ x ≤ 360°. What is the value of y when x = 180°?",
-    "answer": { "value": "-1" },
-    "verify": { "expression": "cos(pi)" },
+    "answer": {
+      "value": "-1"
+    },
+    "verify": {
+      "expression": "cos(pi)"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for -1"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
@@ -354,6 +398,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:43:35Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -366,8 +426,12 @@
     "learning_point": "gcse-maths-h-a12-lp-trig-graphs",
     "expected_seconds": 30,
     "prompt": "The graph of y = sin x is drawn for 0° ≤ x ≤ 360°. What is the value of y when x = 270°?",
-    "answer": { "value": "-1" },
-    "verify": { "expression": "sin(3pi/2)" },
+    "answer": {
+      "value": "-1"
+    },
+    "verify": {
+      "expression": "sin(3pi/2)"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for -1"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
@@ -421,6 +485,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:43:48Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -433,8 +513,12 @@
     "learning_point": "gcse-maths-h-a12-lp-trig-graphs",
     "expected_seconds": 30,
     "prompt": "The graph of y = tan x is drawn. What is the value of y when x = 45°?",
-    "answer": { "value": "1" },
-    "verify": { "expression": "tan(pi/4)" },
+    "answer": {
+      "value": "1"
+    },
+    "verify": {
+      "expression": "tan(pi/4)"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for 1"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
@@ -488,6 +572,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:44:06Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -501,7 +601,9 @@
     "expected_seconds": 25,
     "prompt": "For which of these angles does y = tan x have no value?",
     "options": ["0°", "45°", "90°", "180°"],
-    "answer": { "option": 2 },
+    "answer": {
+      "option": 2
+    },
     "marks": 1,
     "explanation": "tan x = sin x / cos x and cos 90° = 0, so tan 90° is undefined (the graph has an asymptote there).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
@@ -556,6 +658,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:44:24Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -620,6 +730,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:07:32Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -684,6 +802,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:07:42Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -748,6 +874,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:45:13Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }

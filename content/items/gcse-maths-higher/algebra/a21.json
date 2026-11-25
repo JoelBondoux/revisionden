@@ -7,8 +7,14 @@
     "learning_point": "gcse-maths-h-a21-lp-form-linear",
     "expected_seconds": 60,
     "prompt": "I think of a number, multiply it by 4 and subtract 7. The answer is 25. Form an equation and solve it to find the number.",
-    "answer": { "solutions": ["8"] },
-    "verify": { "method": "solve", "equation": "4n - 7 = 25", "variable": "n" },
+    "answer": {
+      "solutions": ["8"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "4n - 7 = 25",
+      "variable": "n"
+    },
     "steps": ["4n - 7 = 25", "4n = 32", "n = 8"],
     "marks": 3,
     "mark_scheme": [
@@ -67,6 +73,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:11:54Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -79,9 +101,15 @@
     "learning_point": "gcse-maths-h-a21-lp-form-linear",
     "expected_seconds": 90,
     "prompt": "A rectangle is (x + 5) cm long and x cm wide. Its perimeter is 38 cm. Form an equation and solve it to find x.",
-    "answer": { "solutions": ["7"] },
-    "verify": { "method": "solve", "equation": "2(x + 5) + 2x = 38", "variable": "x" },
-    "steps": ["2(x + 5) + 2x = 38", "4x + 10 = 38", "4x = 28", "x = 7"],
+    "answer": {
+      "solutions": ["7"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "2(x + 5) + 2x = 38",
+      "variable": "x"
+    },
+    "steps": ["2(x + 5) + 2x = 38", "2x + 10 + 2x = 38", "4x + 10 = 38", "4x = 28", "x = 7"],
     "marks": 3,
     "mark_scheme": [
       "B1 for 2(x + 5) + 2x = 38 or an equivalent equation",
@@ -114,15 +142,47 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A21). Solutions and every step backed by the maths engine.",
-          "at": "2026-11-25T18:18:48Z"
+          "at": "2026-11-25T18:26:25Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:19:00Z",
+          "at": "2026-11-25T18:26:30Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:27:23Z",
+          "notes": "model answered \"7\"; expected \"7\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:27:34Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -135,8 +195,14 @@
     "learning_point": "gcse-maths-h-a21-lp-form-linear",
     "expected_seconds": 75,
     "prompt": "A sister is 3 years older than her brother. Their ages add up to 41. Let the brother be b years old. Form an equation and solve it to find b.",
-    "answer": { "solutions": ["19"] },
-    "verify": { "method": "solve", "equation": "b + b + 3 = 41", "variable": "b" },
+    "answer": {
+      "solutions": ["19"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "b + b + 3 = 41",
+      "variable": "b"
+    },
     "steps": ["b + b + 3 = 41", "2b + 3 = 41", "2b = 38", "b = 19"],
     "marks": 3,
     "mark_scheme": ["B1 for b + b + 3 = 41", "M1 for 2b = 38", "A1 for 19"],
@@ -191,6 +257,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:46:59Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -203,8 +285,14 @@
     "learning_point": "gcse-maths-h-a21-lp-form-linear",
     "expected_seconds": 100,
     "prompt": "An adult ticket costs £x and a child ticket costs £4 less. Two adult tickets and three child tickets cost £48 altogether. Form an equation and solve it to find x.",
-    "answer": { "solutions": ["12"] },
-    "verify": { "method": "solve", "equation": "2x + 3(x - 4) = 48", "variable": "x" },
+    "answer": {
+      "solutions": ["12"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "2x + 3(x - 4) = 48",
+      "variable": "x"
+    },
     "steps": ["2x + 3(x - 4) = 48", "5x - 12 = 48", "5x = 60", "x = 12"],
     "marks": 3,
     "mark_scheme": [
@@ -263,6 +351,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:13:02Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -275,8 +379,13 @@
     "learning_point": "gcse-maths-h-a21-lp-form-harder",
     "expected_seconds": 120,
     "prompt": "3 pens and 2 rulers cost 390p. 1 pen and 2 rulers cost 190p. Work out the cost of one pen, in pence.",
-    "answer": { "value": "100", "unit": "pence" },
-    "verify": { "expression": "(390 - 190)/2" },
+    "answer": {
+      "value": "100",
+      "unit": "pence"
+    },
+    "verify": {
+      "expression": "(390 - 190)/2"
+    },
     "marks": 3,
     "mark_scheme": [
       "B1 for 3p + 2r = 390 and p + 2r = 190",
@@ -334,6 +443,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:47:46Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -346,8 +471,13 @@
     "learning_point": "gcse-maths-h-a21-lp-form-harder",
     "expected_seconds": 150,
     "prompt": "A rectangle is (x + 3) cm long and x cm wide. Its area is 40 cm^2. Form and solve an equation to find the width of the rectangle.",
-    "answer": { "value": "5", "unit": "cm" },
-    "verify": { "expression": "(-3 + sqrt(9 + 160))/2" },
+    "answer": {
+      "value": "5",
+      "unit": "cm"
+    },
+    "verify": {
+      "expression": "(-3 + sqrt(9 + 160))/2"
+    },
     "marks": 4,
     "mark_scheme": [
       "B1 for x(x + 3) = 40",
@@ -407,6 +537,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:48:07Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -419,8 +565,12 @@
     "learning_point": "gcse-maths-h-a21-lp-form-harder",
     "expected_seconds": 150,
     "prompt": "The product of two consecutive positive integers is 156. Form and solve an equation to find the smaller integer.",
-    "answer": { "value": "12" },
-    "verify": { "expression": "(-1 + sqrt(1 + 4*156))/2" },
+    "answer": {
+      "value": "12"
+    },
+    "verify": {
+      "expression": "(-1 + sqrt(1 + 4*156))/2"
+    },
     "marks": 4,
     "mark_scheme": [
       "B1 for n(n + 1) = 156",
@@ -479,6 +629,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:48:29Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -543,6 +709,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:48:39Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -607,6 +781,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:48:53Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -671,6 +853,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:49:06Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }

@@ -26,9 +26,7 @@
       "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A6 (page 14; PDF page 26)",
       "quote": "know the difference between an equation and an identity; argue mathematically to show algebraic expressions are equivalent, and use algebra to support and construct arguments and proofs",
       "retrieved_at": "2026-11-25",
-      "supports": [
-        "mark_scheme"
-      ],
+      "supports": ["mark_scheme"],
       "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
     }
   ],
@@ -43,6 +41,14 @@
         "tool_version": "1.0.0",
         "at": "2026-11-25T18:06:06Z",
         "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+      },
+      {
+        "name": "schema",
+        "result": "pass",
+        "tool": "revisionden-content-validate",
+        "tool_version": "00.01.002",
+        "notes": "pnpm content:validate: schema, ids and links valid",
+        "at": "2026-11-25T18:29:12Z"
       }
     ]
   }

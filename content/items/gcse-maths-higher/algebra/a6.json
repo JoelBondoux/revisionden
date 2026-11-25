@@ -8,7 +8,9 @@
     "expected_seconds": 25,
     "prompt": "Which of these is true for every value of x (an identity)?",
     "options": ["2(x + 4) = 2x + 4", "(x + 1)^2 = x^2 + 2x + 1", "x^2 = 2x", "3x + 1 = 10"],
-    "answer": { "option": 1 },
+    "answer": {
+      "option": 1
+    },
     "marks": 1,
     "explanation": "(x + 1)^2 = (x + 1)(x + 1) = x^2 + 2x + 1 for every x. 2(x + 4) is 2x + 8, and the other two are equations true only for some values.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
@@ -62,6 +64,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:41:38Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -80,7 +90,9 @@
       "(x + 2)^2 = x^2 + 4",
       "4(x - 1) = 4x - 4"
     ],
-    "answer": { "option": 2 },
+    "answer": {
+      "option": 2
+    },
     "marks": 1,
     "explanation": "(x + 2)^2 = x^2 + 4x + 4, not x^2 + 4, so that statement is only true when x = 0.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
@@ -134,6 +146,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:41:58Z",
           "notes": "wrong_answer (answer): The marked answer is option 2, '(x - 3)(x + 3) = x^2 - 9', which is a valid identity (the difference of two squares). The question asks which statement is NOT an identity. Option 3, '(x + 2)^2 = x^2 + 4', is not an identity because the correct expansion is x^2 + 4x + 4. This is correctly stated in the explanation, which refers to option 3, not option 2."
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -147,7 +167,9 @@
     "expected_seconds": 25,
     "prompt": "(x + 3)^2 - 5 ≡ x^2 + ax + b. Find the values of a and b.",
     "options": ["a = 6, b = 4", "a = 3, b = 4", "a = 6, b = -5", "a = 6, b = 14"],
-    "answer": { "option": 0 },
+    "answer": {
+      "option": 0
+    },
     "marks": 1,
     "explanation": "(x + 3)^2 - 5 = x^2 + 6x + 9 - 5 = x^2 + 6x + 4, so a = 6 and b = 4.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
@@ -201,6 +223,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:42:13Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -213,8 +243,12 @@
     "learning_point": "gcse-maths-h-a6-lp-identity-or-equation",
     "expected_seconds": 45,
     "prompt": "5(x - 2) + 3x ≡ ax + b. Find the value of b.",
-    "answer": { "value": "-10" },
-    "verify": { "expression": "5*(0 - 2) + 3*0" },
+    "answer": {
+      "value": "-10"
+    },
+    "verify": {
+      "expression": "5*(0 - 2) + 3*0"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for -10"],
     "explanation": "5(x - 2) + 3x = 8x - 10, so a = 8 and b = -10.",
@@ -269,6 +303,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:42:30Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -281,8 +331,13 @@
     "learning_point": "gcse-maths-h-a6-lp-show-equivalent",
     "expected_seconds": 120,
     "prompt": "Simplify (x + 4)^2 - (x - 4)^2 to show that (x + 4)^2 - (x - 4)^2 ≡ 16x.",
-    "answer": { "expression": "16x" },
-    "verify": { "method": "expression", "expression": "(x + 4)^2 - (x - 4)^2" },
+    "answer": {
+      "expression": "16x"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "(x + 4)^2 - (x - 4)^2"
+    },
     "steps": [
       "(x + 4)^2 - (x - 4)^2",
       "x^2 + 8x + 16 - (x^2 - 8x + 16)",
@@ -346,6 +401,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:07:09Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -358,8 +429,13 @@
     "learning_point": "gcse-maths-h-a6-lp-show-equivalent",
     "expected_seconds": 60,
     "prompt": "Expand and simplify (n + 1)^2 - n^2",
-    "answer": { "expression": "2n + 1" },
-    "verify": { "method": "expression", "expression": "(n + 1)^2 - n^2" },
+    "answer": {
+      "expression": "2n + 1"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "(n + 1)^2 - n^2"
+    },
     "steps": ["(n + 1)^2 - n^2", "n^2 + 2n + 1 - n^2", "2n + 1"],
     "marks": 2,
     "mark_scheme": [
@@ -417,6 +493,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:19:31Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -429,7 +521,9 @@
     "learning_point": "gcse-maths-h-a6-lp-show-equivalent",
     "expected_seconds": 120,
     "prompt": "Expand and simplify (2n + 3)^2 - (2n - 3)^2",
-    "answer": { "expression": "24n" },
+    "answer": {
+      "expression": "24n"
+    },
     "verify": {
       "method": "expression",
       "expression": "(2n + 3)^2 - (2n - 3)^2",
@@ -493,6 +587,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:08:11Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -576,6 +686,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:08:59Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -659,6 +777,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:09:40Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -742,6 +868,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:10:10Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -807,6 +941,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:45:54Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -872,6 +1014,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:46:06Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -936,6 +1086,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:10:25Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }

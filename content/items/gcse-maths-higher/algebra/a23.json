@@ -7,8 +7,12 @@
     "learning_point": "gcse-maths-h-a23-lp-term-to-term",
     "expected_seconds": 60,
     "prompt": "The first term of a sequence is 5. The rule to get the next term is \"multiply by 2, then subtract 3\". Work out the 4th term.",
-    "answer": { "value": "19" },
-    "verify": { "expression": "2*(2*(2*5 - 3) - 3) - 3" },
+    "answer": {
+      "value": "19"
+    },
+    "verify": {
+      "expression": "2*(2*(2*5 - 3) - 3) - 3"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for 7 and 11", "A1 for 19"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A23",
@@ -62,6 +66,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:53:06Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -74,8 +94,12 @@
     "learning_point": "gcse-maths-h-a23-lp-term-to-term",
     "expected_seconds": 45,
     "prompt": "A sequence starts at 3 and the term-to-term rule is \"add 4\". Work out the 10th term.",
-    "answer": { "value": "39" },
-    "verify": { "expression": "3 + 9*4" },
+    "answer": {
+      "value": "39"
+    },
+    "verify": {
+      "expression": "3 + 9*4"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for 3 + 9 × 4", "A1 for 39"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A23",
@@ -129,6 +153,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:53:20Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -141,8 +181,12 @@
     "learning_point": "gcse-maths-h-a23-lp-term-to-term",
     "expected_seconds": 45,
     "prompt": "A sequence has u_1 = 2 and u_(n+1) = 3u_n - 1. Work out u_3.",
-    "answer": { "value": "14" },
-    "verify": { "expression": "3*(3*2 - 1) - 1" },
+    "answer": {
+      "value": "14"
+    },
+    "verify": {
+      "expression": "3*(3*2 - 1) - 1"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for u_2 = 5", "A1 for 14"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A23",
@@ -196,6 +240,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:53:32Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -208,8 +268,14 @@
     "learning_point": "gcse-maths-h-a23-lp-term-to-term",
     "expected_seconds": 60,
     "prompt": "A sequence has u_1 = 3 and u_(n+1) = 2u_n + k. The second term is 10. Work out k.",
-    "answer": { "solutions": ["4"] },
-    "verify": { "method": "solve", "equation": "2*3 + k = 10", "variable": "k" },
+    "answer": {
+      "solutions": ["4"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "2*3 + k = 10",
+      "variable": "k"
+    },
     "steps": ["2*3 + k = 10", "6 + k = 10", "k = 4"],
     "marks": 2,
     "mark_scheme": ["M1 for 2 × 3 + k = 10", "A1 for k = 4"],
@@ -264,6 +330,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:15:02Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -276,8 +358,12 @@
     "learning_point": "gcse-maths-h-a23-lp-position-to-term",
     "expected_seconds": 30,
     "prompt": "The nth term of a sequence is 4n - 3. Work out the 20th term.",
-    "answer": { "value": "77" },
-    "verify": { "expression": "4*20 - 3" },
+    "answer": {
+      "value": "77"
+    },
+    "verify": {
+      "expression": "4*20 - 3"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for 77"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A23",
@@ -331,6 +417,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:15:17Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -343,8 +445,12 @@
     "learning_point": "gcse-maths-h-a23-lp-position-to-term",
     "expected_seconds": 30,
     "prompt": "The nth term of a sequence is n^2 + 2n. Work out the 5th term.",
-    "answer": { "value": "35" },
-    "verify": { "expression": "5^2 + 2*5" },
+    "answer": {
+      "value": "35"
+    },
+    "verify": {
+      "expression": "5^2 + 2*5"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for 35"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A23",
@@ -398,6 +504,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:15:29Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -410,8 +532,12 @@
     "learning_point": "gcse-maths-h-a23-lp-position-to-term",
     "expected_seconds": 30,
     "prompt": "The nth term of a sequence is 3n^2 - 2. Work out the 4th term.",
-    "answer": { "value": "46" },
-    "verify": { "expression": "3*4^2 - 2" },
+    "answer": {
+      "value": "46"
+    },
+    "verify": {
+      "expression": "3*4^2 - 2"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for 46"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A23",
@@ -465,6 +591,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:15:40Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -477,8 +619,12 @@
     "learning_point": "gcse-maths-h-a23-lp-position-to-term",
     "expected_seconds": 45,
     "prompt": "The nth term of a sequence is (n + 1)/(2n). Work out the 5th term. Give your answer as a fraction in its simplest form.",
-    "answer": { "value": "3/5" },
-    "verify": { "expression": "(5 + 1)/(2*5)" },
+    "answer": {
+      "value": "3/5"
+    },
+    "verify": {
+      "expression": "(5 + 1)/(2*5)"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for 3/5"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A23",
@@ -532,6 +678,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:15:54Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -596,6 +758,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:16:06Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -644,6 +814,30 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:19:03Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:25:11Z",
+          "notes": "model answered \"Add 4\"; expected \"Add 4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:25:21Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -708,6 +902,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:16:44Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }

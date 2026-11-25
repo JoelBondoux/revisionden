@@ -7,8 +7,13 @@
     "learning_point": "gcse-maths-h-a15-lp-gradients",
     "expected_seconds": 45,
     "prompt": "A velocity-time graph is a straight line from (0 s, 4 m/s) to (5 s, 19 m/s). Work out the acceleration.",
-    "answer": { "value": "3", "unit": "m/s^2" },
-    "verify": { "expression": "(19 - 4)/(5 - 0)" },
+    "answer": {
+      "value": "3",
+      "unit": "m/s^2"
+    },
+    "verify": {
+      "expression": "(19 - 4)/(5 - 0)"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for (19 - 4) ÷ 5", "A1 for 3"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
@@ -75,6 +80,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:52:04Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -87,8 +108,13 @@
     "learning_point": "gcse-maths-h-a15-lp-gradients",
     "expected_seconds": 40,
     "prompt": "A distance-time graph is a straight line from (0 hours, 0 km) to (3 hours, 150 km). Work out the speed.",
-    "answer": { "value": "50", "unit": "km/h" },
-    "verify": { "expression": "150/3" },
+    "answer": {
+      "value": "50",
+      "unit": "km/h"
+    },
+    "verify": {
+      "expression": "150/3"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for 150 ÷ 3", "A1 for 50"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
@@ -155,6 +181,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:52:18Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -167,8 +209,12 @@
     "learning_point": "gcse-maths-h-a15-lp-gradients",
     "expected_seconds": 45,
     "prompt": "The depth of water in a tank falls steadily from 80 cm to 20 cm in 12 minutes. A graph of depth against time is a straight line. Work out its gradient, in cm per minute.",
-    "answer": { "value": "-5" },
-    "verify": { "expression": "(20 - 80)/12" },
+    "answer": {
+      "value": "-5"
+    },
+    "verify": {
+      "expression": "(20 - 80)/12"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for (20 - 80) ÷ 12", "A1 for -5"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
@@ -222,6 +268,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:52:36Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -234,8 +296,13 @@
     "learning_point": "gcse-maths-h-a15-lp-areas",
     "expected_seconds": 60,
     "prompt": "A velocity-time graph is a straight line from (0 s, 0 m/s) to (10 s, 20 m/s). Work out the distance travelled in the 10 seconds.",
-    "answer": { "value": "100", "unit": "m" },
-    "verify": { "expression": "(1/2)*10*20" },
+    "answer": {
+      "value": "100",
+      "unit": "m"
+    },
+    "verify": {
+      "expression": "(1/2)*10*20"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for (1/2) × 10 × 20", "A1 for 100"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
@@ -302,6 +369,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:52:54Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -314,8 +397,13 @@
     "learning_point": "gcse-maths-h-a15-lp-areas",
     "expected_seconds": 75,
     "prompt": "A car accelerates steadily from 6 m/s to 14 m/s in 5 seconds. Use the area under its velocity-time graph to work out how far it travels in that time.",
-    "answer": { "value": "50", "unit": "m" },
-    "verify": { "expression": "(1/2)*(6 + 14)*5" },
+    "answer": {
+      "value": "50",
+      "unit": "m"
+    },
+    "verify": {
+      "expression": "(1/2)*(6 + 14)*5"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for (1/2) × (6 + 14) × 5", "A1 for 50"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
@@ -382,6 +470,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:53:12Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -394,8 +498,12 @@
     "learning_point": "gcse-maths-h-a15-lp-areas",
     "expected_seconds": 150,
     "prompt": "Estimate the area under the curve y = x^2 between x = 0 and x = 4 using two trapeziums (strips) of equal width.",
-    "answer": { "value": "24" },
-    "verify": { "expression": "(1/2)*2*(0^2 + 2^2) + (1/2)*2*(2^2 + 4^2)" },
+    "answer": {
+      "value": "24"
+    },
+    "verify": {
+      "expression": "(1/2)*2*(0^2 + 2^2) + (1/2)*2*(2^2 + 4^2)"
+    },
     "marks": 3,
     "mark_scheme": [
       "M1 for the y-values 0, 4 and 16 at x = 0, 2 and 4",
@@ -454,6 +562,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:11:26Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -519,6 +643,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:53:45Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -584,6 +716,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:54:13Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -595,7 +735,7 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a15-lp-graph-meaning-cards",
     "expected_seconds": 15,
-    "front": "A velocity-time graph is a horizontal line. What is the acceleration?",
+    "front": "A velocity-time graph is a horizontal line. What is the acceleration, in m/s^2? (number only)",
     "back": "0",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
     "checked_by": ["author"],
@@ -624,15 +764,39 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Gradient 0 means acceleration 0. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
-          "at": "2026-11-25T18:18:47Z"
+          "at": "2026-11-25T18:26:24Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:18:58Z",
+          "at": "2026-11-25T18:26:28Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:26:52Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:27:00Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }

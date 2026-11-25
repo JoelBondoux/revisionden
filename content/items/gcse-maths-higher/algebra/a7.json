@@ -7,8 +7,12 @@
     "learning_point": "gcse-maths-h-a7-lp-evaluate",
     "expected_seconds": 30,
     "prompt": "f(x) = 3x - 5. Work out f(4).",
-    "answer": { "value": "7" },
-    "verify": { "expression": "3*4 - 5" },
+    "answer": {
+      "value": "7"
+    },
+    "verify": {
+      "expression": "3*4 - 5"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for 7"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
@@ -62,6 +66,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:46:50Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -74,8 +94,12 @@
     "learning_point": "gcse-maths-h-a7-lp-evaluate",
     "expected_seconds": 30,
     "prompt": "g(x) = x^2 + 1. Work out g(-3).",
-    "answer": { "value": "10" },
-    "verify": { "expression": "(-3)^2 + 1" },
+    "answer": {
+      "value": "10"
+    },
+    "verify": {
+      "expression": "(-3)^2 + 1"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for 10"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
@@ -129,6 +153,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:47:04Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -141,8 +181,12 @@
     "learning_point": "gcse-maths-h-a7-lp-evaluate",
     "expected_seconds": 30,
     "prompt": "h(x) = (x + 6)/2. Work out h(-10).",
-    "answer": { "value": "-2" },
-    "verify": { "expression": "(-10 + 6)/2" },
+    "answer": {
+      "value": "-2"
+    },
+    "verify": {
+      "expression": "(-10 + 6)/2"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for -2"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
@@ -196,6 +240,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:47:16Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -208,8 +268,14 @@
     "learning_point": "gcse-maths-h-a7-lp-evaluate",
     "expected_seconds": 60,
     "prompt": "f(x) = 4x + 9. Find the value of a such that f(a) = 1.",
-    "answer": { "solutions": ["-2"] },
-    "verify": { "method": "solve", "equation": "4a + 9 = 1", "variable": "a" },
+    "answer": {
+      "solutions": ["-2"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "4a + 9 = 1",
+      "variable": "a"
+    },
     "steps": ["4a + 9 = 1", "4a = -8", "a = -2"],
     "marks": 2,
     "mark_scheme": ["M1 for 4a + 9 = 1", "A1 for a = -2"],
@@ -264,6 +330,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:47:29Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -276,8 +358,14 @@
     "learning_point": "gcse-maths-h-a7-lp-inverse",
     "expected_seconds": 75,
     "prompt": "f(x) = 2x + 3. Find f^-1(x).",
-    "answer": { "solutions": ["(x - 3)/2"] },
-    "verify": { "method": "solve", "equation": "x = 2y + 3", "variable": "y" },
+    "answer": {
+      "solutions": ["(x - 3)/2"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "x = 2y + 3",
+      "variable": "y"
+    },
     "marks": 2,
     "mark_scheme": [
       "M1 for a correct first step by either method (y - 3 = 2x from y = 2x + 3, or x - 3 = 2y after swapping x and y)",
@@ -298,6 +386,18 @@
         "retrieved_at": "2026-11-25",
         "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A5 (page 14; PDF page 26)",
+        "quote": "rearrange formulae to change the subject",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
     "verification": {
@@ -310,15 +410,47 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). Solutions backed by the maths engine.",
-          "at": "2026-11-25T18:18:47Z"
+          "at": "2026-11-25T18:26:24Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:19:06Z",
-          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+          "at": "2026-11-25T18:26:33Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:26:38Z",
+          "notes": "model answered \"f^-1(x) = (x - 3) / 2\"; expected \"(x - 3)/2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:26:45Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -331,8 +463,14 @@
     "learning_point": "gcse-maths-h-a7-lp-inverse",
     "expected_seconds": 75,
     "prompt": "f(x) = 5x - 1. Find f^-1(x).",
-    "answer": { "solutions": ["(x + 1)/5"] },
-    "verify": { "method": "solve", "equation": "x = 5y - 1", "variable": "y" },
+    "answer": {
+      "solutions": ["(x + 1)/5"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "x = 5y - 1",
+      "variable": "y"
+    },
     "marks": 2,
     "mark_scheme": [
       "M1 for a correct first step by either method (y + 1 = 5x from y = 5x - 1, or x + 1 = 5y after swapping x and y)",
@@ -373,6 +511,38 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:19:07Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:19:57Z",
+          "notes": "model answered \"(x + 1) / 5\"; expected \"(x + 1)/5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:20:17Z",
+          "notes": "wording (answer): The prompt asks to find the function f^-1(x), and the mark scheme explicitly states the accuracy mark is for 'f^-1(x) = (x + 1)/5'. The answer provided should be the full function definition 'f^-1(x) = (x + 1)/5', not just the expression '(x + 1)/5'."
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -385,8 +555,14 @@
     "learning_point": "gcse-maths-h-a7-lp-inverse",
     "expected_seconds": 75,
     "prompt": "f(x) = (x + 4)/3. Find f^-1(x).",
-    "answer": { "solutions": ["3x - 4"] },
-    "verify": { "method": "solve", "equation": "x = (y + 4)/3", "variable": "y" },
+    "answer": {
+      "solutions": ["3x - 4"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "x = (y + 4)/3",
+      "variable": "y"
+    },
     "marks": 2,
     "mark_scheme": [
       "M1 for a correct first step by either method (3y = x + 4 from y = (x + 4)/3, or 3x = y + 4 after swapping x and y)",
@@ -427,6 +603,38 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:19:07Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:20:27Z",
+          "notes": "model answered \"3x - 4\"; expected \"3x - 4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:20:35Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -439,8 +647,12 @@
     "learning_point": "gcse-maths-h-a7-lp-composite",
     "expected_seconds": 45,
     "prompt": "f(x) = 2x + 1 and g(x) = x^2. Work out fg(3).",
-    "answer": { "value": "19" },
-    "verify": { "expression": "2*(3^2) + 1" },
+    "answer": {
+      "value": "19"
+    },
+    "verify": {
+      "expression": "2*(3^2) + 1"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for g(3) = 9", "A1 for 19"],
     "hint": "fg(3) means f(g(3)): work out g(3) first.",
@@ -495,6 +707,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:48:58Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -507,8 +735,12 @@
     "learning_point": "gcse-maths-h-a7-lp-composite",
     "expected_seconds": 45,
     "prompt": "f(x) = 2x + 1 and g(x) = x^2. Work out gf(3).",
-    "answer": { "value": "49" },
-    "verify": { "expression": "(2*3 + 1)^2" },
+    "answer": {
+      "value": "49"
+    },
+    "verify": {
+      "expression": "(2*3 + 1)^2"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for f(3) = 7", "A1 for 49"],
     "hint": "gf(3) means g(f(3)): work out f(3) first.",
@@ -563,6 +795,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:49:13Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -575,8 +823,14 @@
     "learning_point": "gcse-maths-h-a7-lp-composite",
     "expected_seconds": 60,
     "prompt": "f(x) = 3x - 2 and g(x) = x + 4. Find fg(x). Give your answer in its simplest form.",
-    "answer": { "expression": "3x + 10" },
-    "verify": { "method": "expression", "expression": "3(x + 4) - 2", "form": "expanded" },
+    "answer": {
+      "expression": "3x + 10"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "3(x + 4) - 2",
+      "form": "expanded"
+    },
     "steps": ["3(x + 4) - 2", "3x + 12 - 2", "3x + 10"],
     "marks": 2,
     "mark_scheme": ["M1 for 3(x + 4) - 2", "A1 for 3x + 10"],
@@ -631,6 +885,22 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:49:25Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -695,6 +965,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:12:11Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -759,6 +1037,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T18:12:26Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
@@ -824,6 +1110,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:50:07Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:29:12Z"
         }
       ]
     }
