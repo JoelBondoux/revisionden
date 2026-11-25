@@ -66,3 +66,31 @@ for (const path of ['/legal', '/about']) {
     expect(onTop).toBe(true);
   });
 }
+
+test('a signed-out parent on /family is asked to sign in, accessibly', async ({ page }) => {
+  await page.route('**/v1/onboarding/family', (route) =>
+    route.fulfill({
+      status: 401,
+      json: { error: { code: 'unauthorized', message: 'Sign in to continue', ref: 'RD-7K2M9Q' } },
+    }),
+  );
+  await page.goto('/family');
+  await expect(page.getByRole('heading', { name: 'Please sign in' })).toBeVisible();
+  await expectNoSidewaysScroll(page);
+  await expectAccessible(page);
+});
+
+test('a server error on /family shows a reference code, accessibly', async ({ page }) => {
+  await page.route('**/v1/onboarding/family', (route) =>
+    route.fulfill({
+      status: 500,
+      json: {
+        error: { code: 'internal_error', message: 'Something went wrong', ref: 'RD-7K2M9Q' },
+      },
+    }),
+  );
+  await page.goto('/family');
+  await expect(page.getByRole('heading', { name: 'Something went wrong' })).toBeVisible();
+  await expect(page.getByText('RD-7K2M9Q')).toBeVisible();
+  await expectAccessible(page);
+});

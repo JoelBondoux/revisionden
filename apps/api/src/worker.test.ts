@@ -22,7 +22,9 @@ describe('worker entry', () => {
     const worker = createWorker('00.01.000');
     const res = await worker.fetch(new Request('https://api.test/v1/me'), {}, ctx);
     expect(res.status).toBe(500);
-    expect(await res.json()).toMatchObject({ error: { code: 'server_misconfigured' } });
+    expect(await res.json()).toMatchObject({
+      error: { code: 'server_misconfigured', ref: expect.stringMatching(/^RD-[0-9A-Z]{6}$/) },
+    });
   });
 
   it('still answers health with the version when the environment is incomplete', async () => {

@@ -7,7 +7,7 @@ import {
   type StatsPeriod,
   type StudentStats,
 } from '@revisionden/core';
-import { ApiError } from '../../api/client';
+import { apiRequest } from '../../api/client';
 import { defaultBaseUrl } from '../../api/ApiContext';
 
 const ChildrenSchema = z.object({
@@ -31,25 +31,8 @@ export function createStatsApi({
   baseUrl: string;
   fetch?: typeof globalThis.fetch;
 }): StatsApi {
-  const root = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
-
-  async function get<T>(path: string, schema: ZodType<T>): Promise<T> {
-    let response: Response;
-    try {
-      response = await fetch(new URL(`v1/${path}`, root), {
-        credentials: 'include',
-        headers: { Accept: 'application/json' },
-      });
-    } catch {
-      throw new ApiError('network', 'The request could not be sent.');
-    }
-    if (!response.ok) {
-      throw new ApiError('http', `The server replied with ${response.status}.`, response.status);
-    }
-    const parsed = schema.safeParse(await response.json().catch(() => undefined));
-    if (!parsed.success) throw new ApiError('schema', `Unexpected response from ${path}.`);
-    return parsed.data;
-  }
+  const get = <T>(path: string, schema: ZodType<T>): Promise<T> =>
+    apiRequest({ baseUrl, fetch }, `v1/${path}`, schema);
 
   return {
     getMyStats: (period) => get(`student/stats?period=${period}`, StudentStatsSchema),

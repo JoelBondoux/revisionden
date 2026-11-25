@@ -126,4 +126,17 @@ describe('feedback form', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Send' }));
     expect(await screen.findByRole('alert')).toHaveTextContent('Something went wrong');
   });
+
+  it('shows the reference code of a failure the server logged', async () => {
+    const api = fakeApi({
+      send: vi.fn(async () =>
+        Promise.reject(
+          new FeedbackApiError(500, 'internal_error', 'Something went wrong', 'RD-7K2M9Q'),
+        ),
+      ),
+    });
+    show(api, { path: '/feedback?kind=bug' });
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent('RD-7K2M9Q');
+  });
 });

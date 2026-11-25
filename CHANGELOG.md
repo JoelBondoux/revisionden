@@ -7,6 +7,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Signing in with Google now really signs you in, and "Who's revising?" shows your children instead of "Something went wrong". New families go straight to adding a child. If you're signed out, any page shows the sign-in buttons and brings you back where you were. You can sign out from the welcome page or "Who's revising?".
+- When something does go wrong, the app shows a short code (like RD-7K2M9Q). Send it to us and we can find what happened.
 - Reward sounds now grow with the reward: a bright chime for common rewards up to a short fanfare for legendary ones, with lots of variety, a different sound for each school year and special fanfares for finishing GCSEs and A-Levels. Tap to skip a long one, or try them all in Settings.
 - RevisionDen is now online for testing at dev.revisionden.com and staging.revisionden.com, with the app version shown at the bottom of every page.
 - Coming soon: flashcards give XP for finishing a session, not for each card, so there's no point tapping "Good" on everything.
@@ -19,6 +21,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Web app talks to the real API (I): the core client used placeholder paths the API never had (`family`, `students/:id/map`, `lessons/...`) and no cookies, so `/family` failed on staging after sign-in. It now reads `GET /v1/onboarding/family` (shared `OnboardingFamilySchema`) with `credentials: 'include'`; the welcome page starts Better Auth sign-in (`POST /api/auth/sign-in/social`, back to `/family`) instead of jumping to `/family`; a 401 on any screen (and onboarding) shows "Please sign in" with the provider buttons, returning to the same page; a family with no children goes from `/family` to `/onboarding`; sign-out (`POST /api/auth/sign-out`) on the welcome page and `/family`; the welcome page reads `GET /api/auth/get-session` and offers Continue and Sign out when signed in. Placeholder lesson screens removed (`/lesson/:id` opens `/learn/topic/:id`). Map and cards-due call F2's agreed `GET /v1/student/map` and `GET /v1/student/cards/due` (not on the API yet).
 - Parent stats dashboard: a day with only flashcard practice no longer counts as a rest day (K).
 - Opening My stats, the parent dashboard or a child's parent-set rewards no longer uses up the "New!" rewards the student should see on their Rewards page (K, via a read-only `rewardsProgress` in R's rewards routes).
 - GCSE Statistics offers only AQA and Pearson Edexcel in onboarding (checked on the board websites).
@@ -26,6 +29,9 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Error reference codes (I): every API error body has `error.ref` (`RD-` + 6 letters/digits, `makeErrorRef` in core), logged with status, code, method and an id-masked path (no messages or personal data); every "Something went wrong" in the web app shows it; `POST /v1/client-errors` logs codes the web app made itself (strict schema, rate limited).
+- Route contract (I): `apps/api/routes.json` generated from the Hono app (`UPDATE_ROUTES=1` to refresh); web tests fail if any MSW handler (shared or per test) is not a real route; the web/API call table is in `docs/ARCHITECTURE.md`.
+- Deployed smoke test (I): `E2E_BASE_URL=https://staging.revisionden.com pnpm --filter @revisionden/e2e smoke` checks health, sign-in providers, the start of Google sign-in, the family route, policy pages, the Google button and the signed-out `/family` prompt. No sign-in backdoor.
 - Sign-in providers are each optional (G follow-up): the API starts with Google or Microsoft alone (id and secret together, at least one), `GET /v1/auth/providers` lists the configured ones, and the welcome page shows only those buttons (both if the API cannot be asked).
 - Reward sounds (U4): four tiers by rarity (common ~0.5 s, rare ~1 s, epic ~1.5 s, legendary ≤ 3 s) with 4 variations each and no repeat in a row (injected randomness), ladder and level steps that climb in pitch and fullness, a synth voice per year chapter, unique GCSE and A-Level finisher fanfares, one sound for several rewards (the biggest, after any sound still playing), tap to skip legendary, Settings samples (Common, Rare, Epic, Legend); played on the Rewards screen for new rewards. Removed a stale "coming soon: sound effects" line.
 - Deploys (G1, G2, G5): Neon project `revisionden` (London) with `main`, `staging` and `dev` branches migrated to 0005; EU-jurisdiction R2 upload buckets with a 24-hour delete rule; authenticated AI Gateway `revisionden`; API Workers on `api-dev.`, `api-staging.` and `api.revisionden.com` and web Workers on `dev.` and `staging.`; GitHub Actions deploys (`deploy-dev.yml`, `deploy-staging.yml`, `deploy-production.yml` after the release bump, shared `deploy.yml`) that migrate over HTTPS (`db:migrate:deploy`), deploy, and check `/health` (`scripts/check-deploy.mjs`). `/health` now answers `misconfigured` (503) with the version while a secret is missing. Production web builds fail without `VITE_OPERATOR_NAME`, `VITE_CONTACT_EMAIL` or `VITE_POLICY_EFFECTIVE_DATE`. Version footer on every page.

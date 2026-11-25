@@ -58,7 +58,7 @@ export function MapPage() {
   const { studentId } = useStudent();
   const [toast, setToast] = useState<string | null>(null);
   const map = useApiResource(
-    () => (studentId ? api.getTopicMap(studentId) : new Promise<never>(() => {})),
+    () => (studentId ? api.getTopicMap() : new Promise<never>(() => {})),
     [api, studentId],
   );
   const dismissToast = useCallback(() => setToast(null), []);

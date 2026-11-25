@@ -2,64 +2,95 @@ import { http, HttpResponse } from 'msw';
 import { server } from '../mocks/server';
 import { ApiError, createApiClient } from './client';
 
-const client = createApiClient({ baseUrl: 'http://api.test/api' });
+const reports: unknown[] = [];
+const client = createApiClient({ baseUrl: 'http://api.test', random: () => 0 });
+
+beforeEach(() => {
+  reports.length = 0;
+  server.use(
+    http.post('*/v1/client-errors', async ({ request }) => {
+      reports.push(await request.json());
+      return new HttpResponse(null, { status: 204 });
+    }),
+  );
+});
 
 describe('API client', () => {
-  it('returns the family when the response matches the schema', async () => {
+  it("reads the parent's family from GET /v1/onboarding/family with the session cookie", async () => {
+    let seen: Request | undefined;
+    server.use(
+      http.get('*/v1/onboarding/family', ({ request }) => {
+        seen = request;
+        return HttpResponse.json({ children: [] });
+      }),
+    );
+    const fetchSpy = vi.spyOn(globalThis, 'fetch');
+    await client.getFamily();
+    expect(new URL(seen!.url).pathname).toBe('/v1/onboarding/family');
+    expect(fetchSpy.mock.calls[0]?.[1]).toMatchObject({ credentials: 'include' });
+    fetchSpy.mockRestore();
+  });
+
+  it('returns the family when the response matches the shared schema', async () => {
     const family = await client.getFamily();
-    expect(family.students.length).toBeGreaterThan(0);
-    expect(family.students[0]).toEqual(
+    expect(family.children.length).toBeGreaterThan(0);
+    expect(family.children[0]?.student).toEqual(
       expect.objectContaining({ id: expect.any(String), nickname: expect.any(String) }),
     );
   });
 
-  it('rejects a response that fails the schema', async () => {
-    server.use(http.get('*/api/family', () => HttpResponse.json({ students: [{ id: 42 }] })));
-    await expect(client.getFamily()).rejects.toMatchObject({ kind: 'schema' });
+  it('rejects a response that fails the schema with a reference code, and reports it', async () => {
+    server.use(http.get('*/v1/onboarding/family', () => HttpResponse.json({ students: [] })));
+    const error = await client.getFamily().catch((e: unknown) => e);
+    expect(error).toMatchObject({ kind: 'schema', ref: 'RD-000000' });
+    await vi.waitFor(() =>
+      expect(reports).toEqual([
+        { ref: 'RD-000000', kind: 'schema', status: 200, path: '/v1/onboarding/family' },
+      ]),
+    );
   });
 
-  it('rejects with the status when the server returns an error', async () => {
-    server.use(http.get('*/api/family', () => new HttpResponse(null, { status: 500 })));
+  it("keeps the API's reference code and error code when the server returns an error", async () => {
+    server.use(
+      http.get('*/v1/onboarding/family', () =>
+        HttpResponse.json(
+          { error: { code: 'internal_error', message: 'Something went wrong', ref: 'RD-7K2M9Q' } },
+          { status: 500 },
+        ),
+      ),
+    );
     const error = await client.getFamily().catch((e: unknown) => e);
     expect(error).toBeInstanceOf(ApiError);
-    expect(error).toMatchObject({ kind: 'http', status: 500 });
+    expect(error).toMatchObject({
+      kind: 'http',
+      status: 500,
+      code: 'internal_error',
+      ref: 'RD-7K2M9Q',
+    });
+    expect(reports).toEqual([]);
   });
 
-  it('rejects with a network error when the request cannot be made', async () => {
-    server.use(http.get('*/api/family', () => HttpResponse.error()));
-    await expect(client.getFamily()).rejects.toMatchObject({ kind: 'network' });
+  it('makes and reports a reference code for an error with no JSON body', async () => {
+    server.use(http.get('*/v1/onboarding/family', () => new HttpResponse(null, { status: 502 })));
+    const error = await client.getFamily().catch((e: unknown) => e);
+    expect(error).toMatchObject({ kind: 'http', status: 502, ref: 'RD-000000' });
+    await vi.waitFor(() => expect(reports).toHaveLength(1));
   });
 
-  it('fetches the topic map for a student', async () => {
-    const map = await client.getTopicMap('student-1');
+  it('rejects with a network error (no reference) when the request cannot be made', async () => {
+    server.use(http.get('*/v1/onboarding/family', () => HttpResponse.error()));
+    const error = await client.getFamily().catch((e: unknown) => e);
+    expect(error).toMatchObject({ kind: 'network' });
+    expect((error as ApiError).ref).toBeUndefined();
+  });
+
+  it("fetches the student device's topic map", async () => {
+    const map = await client.getTopicMap();
     expect(map.units.length).toBeGreaterThan(0);
   });
 
-  it('fetches how many flashcards are due', async () => {
-    const cards = await client.getCardsDue('student-1');
+  it('fetches how many flashcards are due on the student device', async () => {
+    const cards = await client.getCardsDue();
     expect(cards.due).toBeGreaterThanOrEqual(0);
-  });
-
-  it('fetches a lesson by id', async () => {
-    const lesson = await client.getLesson('standard-form');
-    expect(lesson.items.length).toBeGreaterThan(0);
-  });
-
-  it('sends an answer and returns the marking result', async () => {
-    let received: unknown;
-    server.use(
-      http.post('*/api/lessons/:lessonId/answers', async ({ request }) => {
-        received = await request.json();
-        return HttpResponse.json({
-          correct: true,
-          correctAnswer: '0.0032',
-          explanation: 'Move the point three places left.',
-          xpEarned: 10,
-        });
-      }),
-    );
-    const result = await client.submitAnswer('standard-form', { itemId: 'sf-2', answer: '0.0032' });
-    expect(received).toEqual({ itemId: 'sf-2', answer: '0.0032' });
-    expect(result.correct).toBe(true);
   });
 });

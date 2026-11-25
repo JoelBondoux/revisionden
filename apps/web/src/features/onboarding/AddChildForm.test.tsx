@@ -1,6 +1,7 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AddChildForm } from './AddChildForm';
+import { OnboardingApiError } from './api';
 
 function setup(onSubmit = vi.fn(async () => undefined)) {
   const user = userEvent.setup();
@@ -164,5 +165,15 @@ describe('AddChildForm', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent(
       'Another student in the family has that nickname',
     );
+  });
+
+  it('shows the reference code of a server error', async () => {
+    const onSubmit = vi.fn(async () => {
+      throw new OnboardingApiError('internal_error', 'Something went wrong', 500, [], 'RD-7K2M9Q');
+    });
+    const { user } = setup(onSubmit);
+    await fillBasics(user);
+    await user.click(continueButton());
+    expect(await screen.findByRole('alert')).toHaveTextContent('RD-7K2M9Q');
   });
 });

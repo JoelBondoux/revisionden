@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { Hono } from 'hono';
 import { ApiErrorSchema } from '@revisionden/core';
-import { handleError } from './errors';
+import { createErrorHandler } from './errors';
 import { AVATAR, createTestContext, jsonRequest, type TestContext } from './test/helpers';
 
 describe('consistent JSON errors', () => {
@@ -42,12 +42,16 @@ describe('consistent JSON errors', () => {
     app.get('/boom', () => {
       throw new Error('database password is hunter2');
     });
-    app.onError(handleError);
+    app.onError(createErrorHandler({ log: () => {} }));
     const res = await app.request('/boom');
     expect(res.status).toBe(500);
     const body = await res.json();
     expect(ApiErrorSchema.parse(body)).toEqual({
-      error: { code: 'internal_error', message: 'Something went wrong' },
+      error: {
+        code: 'internal_error',
+        message: 'Something went wrong',
+        ref: expect.stringMatching(/^RD-/),
+      },
     });
     expect(JSON.stringify(body)).not.toContain('hunter2');
   });

@@ -112,3 +112,12 @@
       the button shows "10 min". Settled by workstream F.
 - [x] **Content item ids vs database ids.** Content items have slug ids; `items.id` and core's
       `ItemSchema.id` are uuids. Settled by workstream F with an additive `items.content_id` column.
+- [ ] **Topic map and cards due have no API yet.** The web app's map (`/map`) and Cards badge call
+      `GET /v1/student/map` and `GET /v1/student/cards/due` (`apps/web/src/api/client.ts`), agreed
+      with F2, but `apps/api` has neither, so on staging the map shows "Something went wrong" (with
+      a code) and the badge shows 0. A student device therefore has no way into subject lessons
+      except a direct link. Not settled: F2's lane; no F2 branch or PR exists yet (2026-11-25).
+- [ ] **"Who's revising?" on a parent's device.** `/family` lists the parent's children and
+      picking one opens `/map`, but student routes need the student device cookie, so on a parent
+      device the map asks to sign in. Not settled: product decision (shared device, or send
+      parents to their own tools from `/family`); not changed by I.

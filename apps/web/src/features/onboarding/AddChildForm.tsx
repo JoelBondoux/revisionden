@@ -17,6 +17,7 @@ import {
   type SubjectChoice,
   type TierChoice,
 } from '@revisionden/core';
+import { ErrorRef, refOf } from '../../api/ErrorRef';
 import { Button, Sheet } from '../../components';
 import { AvatarBuilder } from '../avatar/AvatarBuilder';
 import { AvatarSvg } from '../avatar/AvatarSvg';
@@ -56,6 +57,7 @@ export function AddChildForm({
   const [subjects, setSubjects] = useState<SubjectChoice[]>([]);
   const [saving, setSaving] = useState(false);
   const [serverError, setServerError] = useState<string>();
+  const [serverErrorRef, setServerErrorRef] = useState<string>();
 
   const nicknameCheck = validateNickname(nickname);
   const nicknameError =
@@ -91,6 +93,7 @@ export function AddChildForm({
     try {
       await onSubmit({ nickname, avatarCode, yearGroup: yearGroup!, subjects });
     } catch (err) {
+      setServerErrorRef(refOf(err));
       setServerError(err instanceof Error ? err.message : 'Something went wrong');
       setSaving(false);
     }
@@ -196,9 +199,10 @@ export function AddChildForm({
       })}
 
       {serverError && (
-        <p role="alert" className="field__error">
-          {serverError}
-        </p>
+        <div role="alert">
+          <p className="field__error">{serverError}</p>
+          <ErrorRef code={serverErrorRef} />
+        </div>
       )}
 
       <Button type="submit" block disabled={!canContinue}>
