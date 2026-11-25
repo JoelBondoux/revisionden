@@ -45,3 +45,16 @@ describe('practiceKindsTried', () => {
     expect(practiceKindsTried({ lesson: true, flashcardSession: true, planEdit: false })).toBe(2);
   });
 });
+
+describe('weak spots turned strong, at scale', () => {
+  it('stays fast over a long history (only the rolling mastery window is replayed)', () => {
+    const answers = Array.from({ length: 10_000 }, (_, i) => ({
+      topicId: 't',
+      at: i * 60_000,
+      score: 0.5,
+    }));
+    const started = performance.now();
+    expect(weakSpotsTurnedStrong(answers)).toBe(0);
+    expect(performance.now() - started).toBeLessThan(500);
+  });
+});

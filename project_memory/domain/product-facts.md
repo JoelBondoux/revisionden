@@ -535,6 +535,16 @@ Tags: #product #rules #limits #defaults
   start, no penalty, skippable); "Learn it first" links to Oak and BBC Bitesize per topic, checked
   by CI; read aloud with on-device voices preferred; reading comfort settings (dyslexia-friendly
   self-hosted font, larger text, spacing, tint). Detail: `docs/PRODUCT_RULES.md` (Quick wins).
+- 5-a-day (Q3, built): `GET /v1/student/daily`. The first request of the student's UK day picks
+  up to 5 items from topics with at least one attempt in an enrolled subject (never new topics,
+  never extended answers), stores them in `daily_sets` (one per student per day) and returns the
+  same set all day. Choice: each topic's mastery drifts down by the 30-day half-life since it was
+  last practised, then the normal next-item rules (weak spots first, due flashcards first, at most
+  3 in a row per topic), topped up from the same topics if that leaves fewer than 5. Seeded by
+  student and day. Done when every item has an attempt after the set was made. Map card above
+  the next mission while not done; plays at `/learn/daily` in the lesson player (Learn mode,
+  normal XP and combos, counts to the daily goal and streak through XP; the parent's daily limit
+  applies through the normal attempts route, `creditableXp`). No push for it. Migration 0014.
 - Recall checks (Q4, built): `GET /v1/student/recall?topicId=` before a topic lesson (or unit
   challenge) whose topic has been practised. Up to 2 questions the student has answered before
   (no flashcards, no extended answers), from other practised topics first, then the lesson's own
