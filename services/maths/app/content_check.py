@@ -8,6 +8,7 @@ Each check has an ``id`` and a ``kind``:
 - ``expression``: ``expression`` and ``answer``; optional ``form`` (factorised or expanded).
 - ``working``: ``lines`` of a model solution and the ``expected`` final answer.
 - ``formula``: ``expected`` and ``given`` formulas (``x = ...``, ``±`` allowed), for flashcards.
+- ``identity``: an ``equation`` that must hold for every value of its letters (fact checks).
 
 Run it with ``python -m app.content_check`` from ``services/maths``.
 """
@@ -16,9 +17,9 @@ import json
 import sys
 from typing import Callable, TextIO
 
-from sympy import N
+from sympy import N, simplify
 
-from app.equivalence import are_equivalent, parse, solutions_match
+from app.equivalence import are_equivalent, parse, parse_equation, solutions_match
 from app.formula import formulas_match
 from app.working import check_working
 
@@ -60,12 +61,21 @@ def _formula(check: dict) -> str | None:
     return f"{check['given']} is not the same formula as {check['expected']}"
 
 
+def _identity(check: dict) -> str | None:
+    if "=" not in check["equation"]:
+        raise ValueError("an identity needs one = sign")
+    if simplify(parse_equation(check["equation"])) == 0:
+        return None
+    return f"{check['equation']} is not true for every value"
+
+
 KINDS: dict[str, Callable[[dict], str | None]] = {
     "solve": _solve,
     "value": _value,
     "expression": _expression,
     "working": _working,
     "formula": _formula,
+    "identity": _identity,
 }
 
 

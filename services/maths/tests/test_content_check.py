@@ -170,3 +170,20 @@ def test_a_formula_check_accepts_the_subject_repeated_in_each_branch():
         ]
     )
     assert [r["ok"] for r in results] == [True, False]
+
+
+def test_an_identity_check_proves_a_statement_true_for_every_value():
+    results = run_checks(
+        [
+            {"id": "a", "kind": "identity", "equation": "(a + b)^2 = a^2 + 2*a*b + b^2"},
+            {"id": "b", "kind": "identity", "equation": "m * (-1/m) = -1"},
+            {"id": "c", "kind": "identity", "equation": "(a + b)^2 = a^2 + b^2"},
+        ]
+    )
+    assert [r["ok"] for r in results] == [True, True, False]
+    assert "not true for every value" in results[2]["error"]
+
+
+def test_an_identity_check_needs_one_equals_sign():
+    [result] = run_checks([{"id": "q", "kind": "identity", "equation": "a + b"}])
+    assert result["ok"] is False
