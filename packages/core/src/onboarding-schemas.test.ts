@@ -36,3 +36,14 @@ describe('UpdateAvatarRequestSchema', () => {
     );
   });
 });
+
+describe('UpdateSubjectChoiceRequestSchema', () => {
+  it('needs a board or a tier, and nothing else', async () => {
+    const { UpdateSubjectChoiceRequestSchema } = await import('./onboarding-schemas');
+    expect(UpdateSubjectChoiceRequestSchema.safeParse({}).success).toBe(false);
+    expect(UpdateSubjectChoiceRequestSchema.safeParse({ board: 'AQA' }).success).toBe(true);
+    expect(UpdateSubjectChoiceRequestSchema.safeParse({ tier: 'higher', x: 1 }).success).toBe(
+      false,
+    );
+  });
+});

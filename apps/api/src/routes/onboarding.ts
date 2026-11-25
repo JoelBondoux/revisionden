@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { asc, count, eq, inArray } from 'drizzle-orm';
+import { and, asc, count, eq, inArray } from 'drizzle-orm';
 import {
   examSeasonFor,
   levelForYear,
@@ -7,15 +7,17 @@ import {
   REWARDS,
   toCheckLaterCount,
   UpdateAvatarRequestSchema,
+  UpdateSubjectChoiceRequestSchema,
   validateAvatar,
   validateSubjectChoices,
   type Enrolment,
   type OnboardedChild,
   type SubjectProblem,
+  type UpdateSubjectChoiceRequest,
 } from '@revisionden/core';
 import { devices, enrolments, rewards, students, type Database } from '@revisionden/db';
 import type { AppEnv } from '../context';
-import { ApiError } from '../errors';
+import { ApiError, notFound } from '../errors';
 import { requireFamilyStudent } from '../families';
 import { isUniqueViolation, readJson } from '../http';
 import type { Clock } from '../rate-limit';
@@ -168,27 +170,139 @@ export function onboardingRoutes({ db, clock }: { db: Database; clock: Clock }) 
 export function avatarRoutes({ db }: { db: Database }) {
   const app = new Hono<AppEnv>();
 
-  async function earnedRewards(studentId: string) {
-    const rows = await db
-      .select({ rewardId: rewards.rewardId })
-      .from(rewards)
-      .where(eq(rewards.studentId, studentId))
-      .orderBy(asc(rewards.rewardId));
-    return rows.map((r) => r.rewardId);
-  }
-
   app.get('/:id/avatar', async (c) => {
     const student = await requireFamilyStudent(db, c.var.parent.familyId, c.req.param('id'));
     return c.json({
       avatarCode: student.avatarCode,
-      earnedRewardIds: await earnedRewards(student.id),
+      earnedRewardIds: await earnedRewardIds(db, student.id),
     });
   });
 
   app.put('/:id/avatar', async (c) => {
     const student = await requireFamilyStudent(db, c.var.parent.familyId, c.req.param('id'));
     const { avatarCode } = await readJson(c, UpdateAvatarRequestSchema);
-    checkAvatar(avatarCode, await earnedRewards(student.id));
+    checkAvatar(avatarCode, await earnedRewardIds(db, student.id));
+    const [row] = await db
+      .update(students)
+      .set({ avatarCode, updatedAt: new Date() })
+      .where(eq(students.id, student.id))
+      .returning();
+    return c.json(toStudent(row!));
+  });
+
+  return app;
+}
+
+async function earnedRewardIds(db: Database, studentId: string): Promise<string[]> {
+  const rows = await db
+    .select({ rewardId: rewards.rewardId })
+    .from(rewards)
+    .where(eq(rewards.studentId, studentId))
+    .orderBy(asc(rewards.rewardId));
+  return rows.map((r) => r.rewardId);
+}
+
+async function findEnrolment(db: Database, studentId: string, subjectId: string) {
+  const [row] = await db
+    .select()
+    .from(enrolments)
+    .where(and(eq(enrolments.studentId, studentId), eq(enrolments.subjectId, subjectId)));
+  if (!row) throw notFound('Subject not found');
+  return row;
+}
+
+/** Applies a board or tier change after checking it fits the subject and the school year. */
+async function saveChoice(
+  db: Database,
+  yearGroup: number,
+  row: EnrolmentRow,
+  change: UpdateSubjectChoiceRequest,
+) {
+  const next = { board: change.board ?? row.board, tier: change.tier ?? row.tier };
+  const problems = validateSubjectChoices(yearGroup, [
+    { subjectId: row.subjectId, ...next } as Parameters<typeof validateSubjectChoices>[1][number],
+  ]);
+  if (problems.length > 0) {
+    throw new ApiError(
+      400,
+      'invalid_subjects',
+      'That board or tier does not fit this subject',
+      problems.map((p) => `${p.subjectId}: ${SUBJECT_PROBLEMS[p.problem]}`),
+    );
+  }
+  const [saved] = await db
+    .update(enrolments)
+    .set(next)
+    .where(and(eq(enrolments.studentId, row.studentId), eq(enrolments.subjectId, row.subjectId)))
+    .returning();
+  return toEnrolment(saved!);
+}
+
+/** Parent route under /v1/students: set a child's board or tier (for example after Not sure). */
+export function parentSubjectRoutes({ db }: { db: Database }) {
+  const app = new Hono<AppEnv>();
+  app.patch('/:id/enrolments/:subjectId', async (c) => {
+    const student = await requireFamilyStudent(db, c.var.parent.familyId, c.req.param('id'));
+    const change = await readJson(c, UpdateSubjectChoiceRequestSchema);
+    const row = await findEnrolment(db, student.id, c.req.param('subjectId'));
+    return c.json(await saveChoice(db, student.yearGroup, row, change));
+  });
+  return app;
+}
+
+/**
+ * Student routes under /v1/student: their own subjects, where they may only turn a Not sure
+ * board or tier into a real one, and their own avatar.
+ */
+export function studentOnboardingRoutes({ db }: { db: Database }) {
+  const app = new Hono<AppEnv>();
+  const me = async (studentId: string) => {
+    const [row] = await db.select().from(students).where(eq(students.id, studentId));
+    return row!;
+  };
+
+  app.get('/subjects', async (c) => {
+    const rows = await db
+      .select()
+      .from(enrolments)
+      .where(eq(enrolments.studentId, c.var.student.studentId))
+      .orderBy(asc(enrolments.subjectId));
+    const list = rows.map(toEnrolment);
+    return c.json({ enrolments: list, toCheckLater: toCheckLaterCount(list) });
+  });
+
+  app.patch('/subjects/:subjectId', async (c) => {
+    const student = await me(c.var.student.studentId);
+    const change = await readJson(c, UpdateSubjectChoiceRequestSchema);
+    const row = await findEnrolment(db, student.id, c.req.param('subjectId'));
+    const lockedField =
+      (change.board !== undefined && row.board !== 'not_sure') ||
+      (change.tier !== undefined && row.tier !== 'not_sure');
+    if (lockedField) {
+      throw new ApiError(
+        403,
+        'already_set',
+        'This has already been set. Ask a parent if it needs changing.',
+      );
+    }
+    if (change.board === 'not_sure' || change.tier === 'not_sure') {
+      throw new ApiError(400, 'choose_a_value', 'Pick a board or tier, not Not sure');
+    }
+    return c.json(await saveChoice(db, student.yearGroup, row, change));
+  });
+
+  app.get('/avatar', async (c) => {
+    const student = await me(c.var.student.studentId);
+    return c.json({
+      avatarCode: student.avatarCode,
+      earnedRewardIds: await earnedRewardIds(db, student.id),
+    });
+  });
+
+  app.put('/avatar', async (c) => {
+    const student = await me(c.var.student.studentId);
+    const { avatarCode } = await readJson(c, UpdateAvatarRequestSchema);
+    checkAvatar(avatarCode, await earnedRewardIds(db, student.id));
     const [row] = await db
       .update(students)
       .set({ avatarCode, updatedAt: new Date() })
