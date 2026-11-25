@@ -122,4 +122,31 @@ describe('onboarding API client', () => {
     expect(String(fetch.mock.calls[0]![0])).toBe('https://api.test/v1/device/link');
     expect(String(fetch.mock.calls[1]![0])).toBe('https://api.test/v1/device/link/verify');
   });
+
+  it('unlocks a student device with a passkey already on it', async () => {
+    const fetch = vi
+      .fn()
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ challengeId: 'c2', options: { challenge: 'xyz' } }), {
+          status: 200,
+        }),
+      )
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ student: child.student }), { status: 200 }),
+      );
+    const api = createOnboardingApi({ baseUrl: 'https://api.test', fetch });
+    const start = await api.unlockOptions();
+    expect(start).toEqual({ challengeId: 'c2', options: { challenge: 'xyz' } });
+    const done = await api.unlockVerify({
+      challengeId: 'c2',
+      response: { id: 'cred', response: {} },
+    });
+    expect(done.student.id).toBe(STUDENT_ID);
+    const [optionsUrl, optionsInit] = fetch.mock.calls[0]!;
+    expect(String(optionsUrl)).toBe('https://api.test/v1/device/unlock/options');
+    // No credential ids: the browser offers any RevisionDen passkey on this device.
+    expect(optionsInit.body).toBe('{}');
+    expect(optionsInit.credentials).toBe('include');
+    expect(String(fetch.mock.calls[1]![0])).toBe('https://api.test/v1/device/unlock/verify');
+  });
 });
