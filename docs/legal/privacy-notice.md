@@ -1,6 +1,6 @@
 # Privacy notice
 
-Version: 1.2
+Version: 1.3
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -23,6 +23,8 @@ ever seem to say different things, the full text is the one that counts.
   anything that could identify your child first, and we only use paid plans whose terms say
   the content is not used to train the AI. Some of these companies are in the United States (see the
   [list of services we use](processors.md)).
+- **Get help page.** The page listing support services (such as Childline) is private. We do
+  not record, log or show you whether your child opens it or taps a number or link on it.
 - **Who else sees it.** Only the services that run the app for us, and only what each one needs.
 - **How long.** Most data stays until you delete it. You can delete your child's data at any
   time. Accounts nobody uses for 12 months are deleted automatically. See
@@ -122,6 +124,12 @@ home address, phone number, email address, photographs, location, contacts or sc
 database is checked by an automatic test that fails if a column that could hold these is added.
 We do not store the text of students' answers to questions; an answer is used to mark the
 question and then only the result is kept.
+
+4.3A **The Get help page is private.** The app has a Get help page listing UK support services
+(such as Childline, Samaritans and NHS 111). It is built into the app and works offline. Opening
+it, and tapping a phone number, text number or link on it, is not recorded, logged, sent to us or
+any service provider, or shown to parents. The page makes no requests to our servers or to anyone
+else; a link only contacts the service the student chooses to call, text or visit.
 
 4.4 **Data used for a moment but not stored.** To mark some written answers, the text of the
 answer is sent to an AI provider (section 7). To check worked maths, the lines of working are
@@ -321,6 +329,7 @@ in the app on your next visit and ask you to confirm, and students see a plain-E
 
 ## Changes
 
+- 1.3: Adds that the Get help page (support services) is private: its use is not recorded or shown to parents. No change to the data we keep.
 - 1.2: New: the optional, anonymous "Send error report" button (section 9.4), kept for 90 days.
 - 1.1: Wording only: parents sign in with Google or Microsoft, whichever this app offers. No change to the data we keep.
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).
