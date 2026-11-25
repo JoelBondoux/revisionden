@@ -1076,7 +1076,7 @@ export const operatorRequests = pgTable(
     requestId: text('request_id').primaryKey(),
     method: text('method').notNull(),
     path: text('path').notNull(),
-    // SHA-256 of the raw body, to tell a true retry from a reused id.
+    // SHA-256 of the operator email, role and raw body, to tell a true retry from a reused id.
     bodyHash: text('body_hash').notNull(),
     // Null while the change is running.
     responseStatus: integer('response_status'),
