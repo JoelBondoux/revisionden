@@ -66,6 +66,10 @@ export function createWorker(version: string, options: WorkerOptions = {}) {
         app = appFor(env);
       } catch (err) {
         console.error((err as Error).message);
+        // The deploy check reads the version even before every secret is set.
+        if (new URL(request.url).pathname === '/health') {
+          return Response.json({ status: 'misconfigured', version }, { status: 503 });
+        }
         return Response.json(
           errorBody('server_misconfigured', 'The server is not configured correctly'),
           { status: 500 },

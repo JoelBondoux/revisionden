@@ -5,14 +5,14 @@
 
 ## Accounts (owned by the product owner)
 
-| Service                                            | Used for                                     | Status                                     |
-| -------------------------------------------------- | -------------------------------------------- | ------------------------------------------ |
-| GitHub (`JoelBondoux/revisionden`, public for now) | Code, CI                                     | To create                                  |
-| Cloudflare                                         | Domain, web hosting, Workers, R2, AI Gateway | Account exists; revisionden.com registered |
-| Neon                                               | Postgres                                     | Account exists                             |
-| Google Cloud                                       | Cloud Run (maths engine, content jobs)       | Account exists                             |
-| Anthropic API                                      | Live AI                                      | To set up, with monthly limit              |
-| OpenAI or Gemini API                               | Second checker, photo reading                | Optional                                   |
+| Service                                            | Used for                                     | Status                                  |
+| -------------------------------------------------- | -------------------------------------------- | --------------------------------------- |
+| GitHub (`JoelBondoux/revisionden`, public for now) | Code, CI                                     | In use; deploy secrets to add (below)   |
+| Cloudflare                                         | Domain, web hosting, Workers, R2, AI Gateway | In use: Workers, R2 and gateway created |
+| Neon                                               | Postgres                                     | In use: project `revisionden` (London)  |
+| Google Cloud                                       | Cloud Run (maths engine, content jobs)       | Account exists; not set up (G3)         |
+| Anthropic API                                      | Live AI                                      | To set up, with monthly limit           |
+| OpenAI or Gemini API                               | Second checker, photo reading                | Optional                                |
 
 ## Domains
 
@@ -25,14 +25,135 @@ Cloudflare Registrar, auto-renew on.
 | `staging.revisionden.com`, `api-staging.revisionden.com` | Staging     |
 | `dev.revisionden.com`, `api-dev.revisionden.com`         | Development |
 
-## GitHub Actions secrets (added in repository settings, workstream G)
+## What is live (workstream G, 2026-11-25)
 
-| Secret                                                  | Purpose                                            |
-| ------------------------------------------------------- | -------------------------------------------------- |
-| `CLOUDFLARE_API_TOKEN`                                  | Deploy Workers, pages and R2 config (scoped token) |
-| `CLOUDFLARE_ACCOUNT_ID`                                 | Deploy target                                      |
-| `NEON_API_KEY`                                          | Create and migrate Neon branches                   |
-| `GCP_WORKLOAD_IDENTITY_PROVIDER`, `GCP_SERVICE_ACCOUNT` | Deploy to Cloud Run without long-lived keys        |
+Every resource is named `revisionden` or starts `revisionden-` (decision 0003). No ids here.
+
+| Piece          | Development                     | Staging                         | Production                       |
+| -------------- | ------------------------------- | ------------------------------- | -------------------------------- |
+| Neon branch    | `dev`                           | `staging`                       | `main`                           |
+| Migrations     | 0000–0005 applied               | 0000–0005 applied               | 0000–0005 applied                |
+| R2 bucket (EU) | `revisionden-uploads-dev`       | `revisionden-uploads-staging`   | `revisionden-uploads-production` |
+| API Worker     | `revisionden-api-dev`           | `revisionden-api-staging`       | `revisionden-api`                |
+| API host       | `api-dev.revisionden.com`       | `api-staging.revisionden.com`   | `api.revisionden.com`            |
+| Web Worker     | `revisionden-web-dev`           | `revisionden-web-staging`       | `revisionden-web` (not yet)      |
+| Web host       | `dev.revisionden.com`           | `staging.revisionden.com`       | `revisionden.com` (not yet)      |
+| `/health`      | `misconfigured` (OAuth missing) | `misconfigured` (OAuth missing) | `misconfigured` (OAuth missing)  |
+
+- Neon project `revisionden`, region `aws-eu-west-2` (London), Postgres 17, database
+  `revisionden`, owner role `revisionden_owner`. `staging` and `dev` were branched from `main`
+  before any data was added.
+- R2 buckets are in the EU jurisdiction (so wrangler binds them with `jurisdiction = "eu"`), each
+  with the rule `delete-after-24-hours` (objects and unfinished multipart uploads).
+- AI Gateway `revisionden`: authentication on (Cloudflare now requires it for new gateways),
+  logging on, cache off, rate limit 120 a minute. The API sends `cf-aig-collect-log-payload: false`,
+  so prompts and answers are never stored.
+- The production web app is not deployed yet: its build fails until the operator details exist.
+- The first web deploys of dev and staging were made from a cloud session whose network proxy
+  cannot upload Workers static assets, so they bundle the files into the Worker script instead.
+  The first GitHub Actions deploy replaces them with the normal static-assets Worker
+  (`apps/web/wrangler.toml`); nothing else changes.
+- The production API's 15-minute cron did not register on the first deploy (Cloudflare said the
+  trigger update was only partly applied; the account's other projects may already use the free
+  plan's cron triggers). The first production deploy from GitHub Actions retries it; if it fails
+  again, free a cron trigger or move to Workers Paid. Without it, reminders and the 12-month
+  feedback clean-up do not run in production.
+
+## Still needed from the product owner
+
+Generated and already set on each API Worker: `DATABASE_URL`, `BETTER_AUTH_SECRET`,
+`VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `AI_GATEWAY_URL`.
+
+| Worker secret or variable                        | dev | staging | production | Effect until set                                     |
+| ------------------------------------------------ | --- | ------- | ---------- | ---------------------------------------------------- |
+| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`       | ✗   | ✗       | ✗          | Required: every API route except `/health` gives 500 |
+| `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` | ✗   | ✗       | ✗          | Required: as above                                   |
+| `ANTHROPIC_API_KEY`                              | ✗   | ✗       | ✗          | AI routes answer 503                                 |
+| `AI_GATEWAY_TOKEN`                               | ✗   | ✗       | ✗          | AI calls are refused by the authenticated gateway    |
+| `OPERATOR_EMAILS`                                | ✗   | ✗       | ✗          | Nobody can open `/admin/feedback`                    |
+| `MATHS_ENGINE_URL`                               | ✗   | ✗       | ✗          | Worked maths answers get 503 (needs G3)              |
+| `OPENAI_API_KEY` (optional)                      | –   | –       | –          | No second checker                                    |
+
+Set each with
+`pnpm --filter @revisionden/api exec wrangler secret put <NAME> --env <dev|staging|production>`
+(it asks for the value, so it never appears in your shell history). `AI_GATEWAY_TOKEN` is a
+Cloudflare API token with the "AI Gateway: Run" permission (dashboard: AI, AI Gateway,
+`revisionden`, Settings, Authentication, Create authentication token).
+
+Web build variables for production (GitHub environment `production`, Variables):
+`VITE_OPERATOR_NAME`, `VITE_CONTACT_EMAIL`, `VITE_POLICY_EFFECTIVE_DATE` (required: the build
+fails without them). `VITE_OPERATOR_NAME` is the agreed value (held by the product owner); `VITE_CONTACT_EMAIL` =
+`privacy@revisionden.com`; leave `VITE_POLICY_EFFECTIVE_DATE` unset until launch.
+`VITE_POSTAL_ADDRESS` is not used. Dev and staging may leave them unset
+and show "to be added".
+
+## Deploys from GitHub Actions
+
+Workflows: `deploy-dev.yml` (push to `dev`), `deploy-staging.yml` (push to `staging`),
+`deploy-production.yml` (after "Release version bump" succeeds on `main`, or by hand); all call
+`deploy.yml`, which migrates the Neon branch (`db:migrate:deploy`, over HTTPS), deploys the API
+Worker with the version from `VERSION`, builds and deploys the web app, then checks `/health`
+(`scripts/check-deploy.mjs`). Each can also be run by hand from the Actions tab.
+
+Why GitHub Actions and not Cloudflare Workers Builds: Workers Builds would need six build
+triggers (two Workers, three environments) set up by hand in the dashboard, because the shared
+token cannot manage builds, and it has no good place for migrations or the production-after-bump
+order. With Actions the owner adds five secrets once. A session cannot add them: it can neither
+read the Cloudflare token nor write GitHub Actions secrets.
+
+| GitHub secret           | Where                                                | Value                                          |
+| ----------------------- | ---------------------------------------------------- | ---------------------------------------------- |
+| `CLOUDFLARE_API_TOKEN`  | Repository secret                                    | New token just for RevisionDen (step 1)        |
+| `CLOUDFLARE_ACCOUNT_ID` | Repository secret                                    | Cloudflare dashboard, account home, Account ID |
+| `DATABASE_URL`          | Environment secret in `dev`, `staging`, `production` | That Neon branch's pooled connection string    |
+
+Step by step (about 15 minutes):
+
+1. **Cloudflare token.** Dashboard, My Profile, API Tokens, Create Token, "Edit Cloudflare
+   Workers" template. Account resources: your account only. Zone resources: Specific zone,
+   `revisionden.com`. Keep the template's permissions (Workers Scripts, Workers Routes, Workers
+   KV, account settings read, and so on) and add **Account: Workers R2 Storage: Edit** and
+   **Zone: DNS: Edit** (for the custom domains). Name it
+   `revisionden-github-deploy`. Copy the token once.
+2. **GitHub repository secrets.** Repository, Settings, Secrets and variables, Actions, New
+   repository secret: `CLOUDFLARE_API_TOKEN` (the token) and `CLOUDFLARE_ACCOUNT_ID`.
+3. **GitHub environments.** Settings, Environments, New environment: `dev`, `staging`,
+   `production` (the first deploy may already have made them). For `production`, add yourself as
+   a required reviewer if you want to approve each live deploy, and limit it to the `main` branch.
+4. **Database URLs.** Neon console, project `revisionden`, Connect: pick the branch (`dev`,
+   `staging`, `main`), database `revisionden`, role `revisionden_owner`, "Connection pooling" on,
+   copy the URL. In each GitHub environment add the secret `DATABASE_URL` (`main` goes in
+   `production`).
+5. **Production variables.** Environment `production`, Variables: `VITE_OPERATOR_NAME`
+   (the agreed value, held by the product owner) and `VITE_CONTACT_EMAIL` (`privacy@revisionden.com`). Add
+   `VITE_POLICY_EFFECTIVE_DATE` (for example `2026-12-01`) only when production launches; until
+   then the production web build fails on purpose. Setting the same two in `dev` and `staging` is
+   optional (they show "to be added" without them).
+6. **Contact inbox.** Make `privacy@revisionden.com` reach you, for example with Cloudflare Email
+   Routing on the `revisionden.com` zone forwarding to your own inbox (a session must not set
+   this up: it needs your inbox address).
+7. **First run.** Actions, "Deploy dev", Run workflow. It should end with "API is on
+   <version>; some secrets still missing" until the OAuth secrets are set.
+
+## Maths engine on Cloud Run (G3, not set up yet)
+
+`.github/workflows/deploy-maths.yml` deploys `services/maths` to Cloud Run (`europe-west2`,
+London, scale to zero) as `revisionden-maths-dev`, `revisionden-maths-staging` and
+`revisionden-maths`. It only runs by hand and only when the repository variable
+`MATHS_DEPLOY_ENABLED` is `true`. The owner needs to:
+
+1. Create (or pick) a Google Cloud project and enable Cloud Run, Cloud Build and Artifact
+   Registry; add the repository variable `GCP_PROJECT_ID`.
+2. Create a service account `revisionden-deployer` with Cloud Run Admin, Cloud Build Editor,
+   Artifact Registry Writer, Service Account User and Storage Admin (source deploys).
+3. Create a workload identity pool and GitHub provider limited to this repository, allow it to
+   impersonate the service account, and add the secrets `GCP_WORKLOAD_IDENTITY_PROVIDER` and
+   `GCP_SERVICE_ACCOUNT`.
+4. Set `MATHS_DEPLOY_ENABLED` to `true`, run the workflow for each environment, and set the URL
+   it prints as `MATHS_ENGINE_URL` on that API Worker.
+
+The service is public because the API calls it without credentials today; making it private
+(ID tokens from the Worker) is a later change in `apps/api/src/learning/maths-engine.ts`.
 
 ## Worker secrets (set with `wrangler secret put`, per environment)
 
@@ -62,7 +183,7 @@ nothing secret if one is missing; the missing names are written to the Worker lo
 | `API_ORIGIN`        | `https://api-dev.revisionden.com` | `https://api-staging.revisionden.com` | `https://api.revisionden.com`    |
 | `WEB_ORIGIN`        | `https://dev.revisionden.com`     | `https://staging.revisionden.com`     | `https://revisionden.com`        |
 | `PASSKEY_RP_ID`     | `dev.revisionden.com`             | `staging.revisionden.com`             | `revisionden.com`                |
-| `UPLOADS` (R2)      | `revisionden-uploads-dev`         | `revisionden-uploads-staging`         | `revisionden-uploads-production` |
+| `UPLOADS` (R2, EU)  | `revisionden-uploads-dev`         | `revisionden-uploads-staging`         | `revisionden-uploads-production` |
 | `AUTH_RATE_LIMITER` | 30 a minute per address           | same                                  | same                             |
 | `AI_RATE_LIMITER`   | 20 a minute per address           | same                                  | same                             |
 
@@ -81,10 +202,12 @@ Feedback triage (workstream L), set as a secret so no email is in the code:
 | `OPERATOR_EMAILS` | unset   | Comma-separated parent sign-in emails that may use `/admin/feedback`; none when unset |
 
 Web build variables (workstream L), filled into the policies and About page at build:
-`VITE_OPERATOR_NAME`, `VITE_CONTACT_EMAIL` (`privacy@revisionden.com`), `VITE_POLICY_EFFECTIVE_DATE`,
-(`VITE_POSTAL_ADDRESS` optional, not used),
-`VITE_ENVIRONMENT` and `VITE_COMMIT`. Without the operator details the pages say "contact details
-to be added"; production builds must fail without them (workstream G).
+`VITE_OPERATOR_NAME`, `VITE_CONTACT_EMAIL` (`privacy@revisionden.com`), `VITE_POLICY_EFFECTIVE_DATE`
+(`VITE_POSTAL_ADDRESS` optional, not used), `VITE_ENVIRONMENT` and `VITE_COMMIT`, plus
+`VITE_API_URL` (the API host). Without the operator details the pages say "contact details to be
+added"; a production build (`VITE_ENVIRONMENT=production`) fails without `VITE_OPERATOR_NAME`,
+`VITE_CONTACT_EMAIL` and `VITE_POLICY_EFFECTIVE_DATE`
+(`apps/web/src/features/legal/productionGuard.ts`).
 
 **Cron trigger:** every 15 minutes (`[triggers] crons` in `wrangler.toml`) the Worker deletes
 feedback closed more than 12 months ago, then sends due reminders. Reminders do nothing until
@@ -120,19 +243,22 @@ picture is never fetched or stored.
 
 Migrations are generated from `packages/db/src/schema.ts` with
 `pnpm --filter @revisionden/db db:generate` and applied with
-`DATABASE_URL=<branch url> pnpm --filter @revisionden/db db:migrate` (workstream G will run this
-from CI). Made-up seed data: `DATABASE_URL=<dev url> pnpm --filter @revisionden/db db:seed`.
+`DATABASE_URL=<branch url> pnpm --filter @revisionden/db db:migrate`. Deploys run
+`pnpm --filter @revisionden/db db:migrate:deploy` instead, which uses Neon's HTTPS driver (no
+Postgres port or WebSocket needed) and the same migrations table, so the two can be mixed. Made-up seed data: `DATABASE_URL=<dev url> pnpm --filter @revisionden/db db:seed`.
 
 ## One-off set-up steps
 
-1. Create the GitHub repository; push `main`, `staging`, `dev`.
-2. Add branch protection to `main`, `staging`, `dev`: pull requests required, CI must pass.
+1. ~~Create the GitHub repository; push `main`, `staging`, `dev`.~~ Done.
+2. Add branch protection to `main`, `staging`, `dev`: pull requests required, CI must pass
+   (and "End-to-end and accessibility" for `staging` and `main`).
 3. ~~Buy the domains in Cloudflare.~~ Done for revisionden.com (2026-11-24); .co.uk optional.
-4. Create the Neon project in the London region with branches `dev` and `staging` off `main`.
+4. ~~Create the Neon project in the London region with branches `dev` and `staging` off `main`.~~
+   Done (G, 2026-11-25).
 5. Create Google and Microsoft OAuth apps with callback URLs for each environment.
-6. Create the Cloudflare AI Gateway and R2 buckets (one per environment, 24-hour lifecycle rule).
-   In the gateway, keep logging on (we send `cf-aig-collect-log-payload: false`, so prompts and
-   answers are never stored) and set a spend limit as a backstop to the per-child cap.
-7. Create the Cloud Run service per environment (scale to zero) and workload identity for GitHub.
-8. Add the secrets above.
-9. Create the R2 buckets named above and apply the migrations to each Neon branch.
+6. ~~Create the Cloudflare AI Gateway and R2 buckets.~~ Done (G). Still to do in the dashboard:
+   set a spend limit on the gateway as a backstop to the per-child cap, and create the gateway
+   token (`AI_GATEWAY_TOKEN`).
+7. Create the Cloud Run service per environment (see "Maths engine on Cloud Run").
+8. Add the secrets in "Still needed from the product owner" and "Deploys from GitHub Actions".
+9. ~~Create the R2 buckets and apply the migrations to each Neon branch.~~ Done (G).

@@ -151,8 +151,26 @@ Tags: #product #rules #limits #defaults
 
 ## Hosting
 
-- Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Planned hosts: `revisionden.com` and
+- Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Hosts: `revisionden.com` and
   `api.revisionden.com` (production), `staging.` and `api-staging.` (staging), `dev.` and `api-dev.` (development).
+- Live since 2026-11-25 (workstream G): API Workers on all three API hosts; web app on `dev.` and
+  `staging.`. The production web app waits for the operator details (its build fails without them).
+- Workers: `revisionden-api-dev`, `revisionden-api-staging`, `revisionden-api` (API) and
+  `revisionden-web-dev`, `revisionden-web-staging`, `revisionden-web` (web, static assets only).
+- Database: Neon project `revisionden` in London (`aws-eu-west-2`), Postgres 17, database
+  `revisionden`; branch `main` is production, `staging` and `dev` branch off it.
+- Uploads: R2 buckets `revisionden-uploads-<dev|staging|production>` in the EU jurisdiction, each
+  with a rule deleting objects (and unfinished uploads) after 24 hours.
+- AI Gateway `revisionden`: authenticated (Cloudflare requires it for new gateways, so the API
+  needs `AI_GATEWAY_TOKEN`), logging on but the API sends `cf-aig-collect-log-payload: false` so
+  prompts and answers are never stored, cache off, 120 requests a minute.
+- Deploys: GitHub Actions. Push to `dev` deploys dev, push to `staging` deploys staging, and
+  production deploys after the release bump on `main`. Each deploy migrates the database first,
+  then the API, then the web app, then checks `/health` shows the new version.
+- `GET /health` always answers with the version: `ok` (200) when configured, `misconfigured`
+  (503) while a required secret is missing. Dev and staging deploys accept `misconfigured`;
+  production does not.
+- The app shows its version in a small footer on every page (links to About).
 
 ## Verification (no mistakes on the education side)
 
@@ -205,6 +223,8 @@ Tags: #product #rules #limits #defaults
 - Content and verification sessions run in the `revisionden` cloud environment, which can reach
   the exam board sites (Pearson, AQA, OCR, WJEC/Eduqas) and gov.uk. Other sessions use the default
   environment, which cannot.
+- The `revisionden` environment can also reach the three Neon database hosts and the six
+  revisionden.com hosts (added for workstream G, to run migrations and check the live sites).
 
 ## Rewards progression
 

@@ -1,0 +1,17 @@
+name: Deploy dev
+
+# Every push to dev (a merged pull request) deploys https://dev.revisionden.com.
+on:
+  push:
+    branches: [dev]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: dev
+    secrets: inherit
