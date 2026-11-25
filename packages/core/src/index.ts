@@ -15,6 +15,7 @@ export * from './double-marking';
 export * from './onboarding';
 export * from './onboarding-schemas';
 export * from './learning';
+export * from './answer-format';
 export * from './learning-schemas';
 export * from './levels';
 export * from './reward-xp';

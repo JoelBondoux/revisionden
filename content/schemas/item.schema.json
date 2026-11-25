@@ -245,6 +245,12 @@
       "minLength": 1,
       "maxLength": 200
     },
+    "answer_subject": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 20,
+      "description": "What the answer is the value of, such as t or f^-1(x): an answer written \"<subject> = ...\" is read as its right-hand side."
+    },
     "marks": {
       "type": "integer",
       "minimum": 1
@@ -369,7 +375,29 @@
             "tolerance": {
               "type": "number",
               "minimum": 0
+            },
+            "decimal_places": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 10,
+              "description": "The question asks for this many decimal places: only an answer written to exactly this accuracy, with the correctly rounded value, is right."
+            },
+            "significant_figures": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 15,
+              "description": "The question asks for this many significant figures: only an answer written to this accuracy, with the correctly rounded value, is right."
+            },
+            "subject": {
+              "$ref": "#/$defs/answer_subject"
             }
+          },
+          "not": {
+            "anyOf": [
+              { "required": ["decimal_places", "significant_figures"] },
+              { "required": ["tolerance", "decimal_places"] },
+              { "required": ["tolerance", "significant_figures"] }
+            ]
           },
           "additionalProperties": false
         },
@@ -417,6 +445,9 @@
               "properties": {
                 "expression": {
                   "$ref": "#/$defs/maths"
+                },
+                "subject": {
+                  "$ref": "#/$defs/answer_subject"
                 }
               },
               "additionalProperties": false

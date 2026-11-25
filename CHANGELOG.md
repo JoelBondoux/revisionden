@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Questions that say "give your answer to 2 decimal places" (or significant figures) now only accept an answer rounded that way, as in the real exam. And when a question asks you to make t the subject, writing "t = …" is marked right.
 - Build your own title! Rewards now unlock title words. Pick a first word and a last word (like "Cosmic Scholar") on the Rewards page. It shows under your nickname, and you can change it whenever you like.
 - The parent stats page now shows each child's AI marking allowance as a percentage used this month and the date it resets, with no money figures.
 - On the parent stats page you can now add, edit and remove your child's rewards, and see every reward with its progress.
@@ -70,6 +71,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Answer format (S2, S3-A rulings): rounded numeric answers set `answer.decimal_places` or `answer.significant_figures` instead of `tolerance`, so an unrounded value (28.274 for 2 dp) no longer passes marking, the maths engine (rounds the exact decimal half up, so 2.675 gives 2.68) or the blind check (values compared exactly, never with a tolerance), and validation requires the field when the question asks for rounding; numeric and expression answers may declare `answer.subject` (`t`, `f^-1(x)`) so "t = RHS" counts as RHS in marking, the engine (including rearranging by dividing by a letter) and the blind check. Rules in `packages/core/src/answer-format.ts`. Pilot item G17 moved from a tolerance to `decimal_places: 2` and re-checked (engine, schema, Gemini blind answer: pass).
 - Fact-check stage (S2, Codex findings on #116): a cited quote now counts only if the judge confirms it states the fact (not just its topic), otherwise the fact needs the engine proof and blind statement; and each `content:model-check` stage sees the checks recorded earlier in the same run, so one provider can't give both the blind answer and the blind statement.
 - Multiple choice reviews (S2, cross-lane V): the adversarial review prompt now says option numbers count from 0 (also `distractor:N`) and shows the correct option's text, so the reviewer no longer fails correct items as wrong answers; the human review page shows the answer as the correct option ("Option 3: …") with options numbered from 1.
 - Dark theme: mastered-topic checkmarks on the map use `--color-text-on-gold` (dark on gold) instead of the light body text, which gave about 1.3:1 contrast; the theme contrast tests now cover this pair and check the map rule (J8 follow-up).

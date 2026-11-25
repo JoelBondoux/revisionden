@@ -4,8 +4,11 @@ Reads ``{"checks": [...]}`` as JSON on stdin and writes ``{"results": [...]}`` t
 Each check has an ``id`` and a ``kind``:
 
 - ``solve``: ``equation``, optional ``variable`` (default x), ``solutions``.
-- ``value``: ``expression`` and ``answer``; optional ``tolerance`` for rounded answers.
-- ``expression``: ``expression`` and ``answer``; optional ``form`` (factorised or expanded).
+- ``value``: ``expression`` and ``answer``; optional ``tolerance``, or ``decimal_places`` or
+  ``significant_figures`` when the question asks for rounding (the answer must be the value
+  rounded half up to that accuracy).
+- ``expression``: ``expression`` and ``answer``; optional ``form`` (factorised or expanded) and
+  ``subject`` (an answer may read ``<subject> = ...``).
 - ``working``: ``lines`` of a model solution and the ``expected`` final answer.
 - ``formula``: ``expected`` and ``given`` formulas (``x = ...``, ``±`` allowed), for flashcards.
 - ``identity``: an ``equation`` that must hold for every value of its letters (fact checks).
@@ -15,6 +18,7 @@ Run it with ``python -m app.content_check`` from ``services/maths``.
 
 import json
 import sys
+from decimal import ROUND_HALF_UP, Decimal
 from typing import Callable, TextIO
 
 from sympy import N, simplify
@@ -30,9 +34,21 @@ def _solve(check: dict) -> str | None:
     return f"solutions {check['solutions']} do not solve {check['equation']}"
 
 
+def _rounded(value, check: dict) -> Decimal:
+    """The value rounded half up to the check's decimal places or significant figures."""
+    exact = Decimal(str(N(value, 50)))
+    places = check.get("decimal_places")
+    if places is None:
+        figures = check["significant_figures"]
+        places = figures - 1 - exact.adjusted() if exact else figures - 1
+    return exact.quantize(Decimal(1).scaleb(-places), rounding=ROUND_HALF_UP)
+
+
 def _value(check: dict) -> str | None:
     tolerance = check.get("tolerance")
-    if tolerance is None:
+    if "decimal_places" in check or "significant_figures" in check:
+        ok = _rounded(parse(check["expression"], exact=True), check) == Decimal(check["answer"])
+    elif tolerance is None:
         ok = are_equivalent(check["expression"], check["answer"])
     else:
         ok = abs(N(parse(check["expression"]) - parse(check["answer"]))) <= tolerance
@@ -40,7 +56,8 @@ def _value(check: dict) -> str | None:
 
 
 def _expression(check: dict) -> str | None:
-    expected = {"expression": check["expression"], "form": check.get("form")}
+    expected = {"expression": check["expression"], "form": check.get("form"),
+                "subject": check.get("subject")}
     if check_working([check["answer"]], expected).final_answer_correct:
         return None
     return f"{check['answer']} is not {check['expression']} in the required form"
@@ -85,7 +102,7 @@ def run_check(check: dict) -> dict:
         return {"id": check.get("id"), "ok": False, "error": f"unknown check kind {check.get('kind')!r}"}
     try:
         error = kind(check)
-    except (ValueError, KeyError, TypeError) as err:
+    except (ValueError, KeyError, TypeError, ArithmeticError) as err:
         error = f"could not check: {err}"
     return {"id": check.get("id"), "ok": True} if error is None else {
         "id": check.get("id"), "ok": False, "error": error}

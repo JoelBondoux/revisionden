@@ -95,6 +95,24 @@ describe('marking', () => {
     expect(markNumeric({ value: '2sqrt(3)' }, '3').correct).toBe(false);
   });
 
+  it('needs a rounded answer written to the asked accuracy, not just close to it', () => {
+    const key = { value: '28.27', decimal_places: 2 };
+    expect(markNumeric(key, '28.27').correct).toBe(true);
+    expect(markNumeric(key, '28.274').correct).toBe(false);
+    expect(markNumeric(key, '28.3').correct).toBe(false);
+    expect(markNumeric(key, '28.270').correct).toBe(false);
+    const sf = { value: '28.3', significant_figures: 3 };
+    expect(markNumeric(sf, ' 28.3 ').correct).toBe(true);
+    expect(markNumeric(sf, '28.27').correct).toBe(false);
+    expect(markNumeric(sf, '28.30').correct).toBe(false);
+  });
+
+  it('accepts an answer that states the declared subject, such as "t = 4"', () => {
+    expect(markNumeric({ value: '4', subject: 't' }, 't = 4').correct).toBe(true);
+    expect(markNumeric({ value: '4', subject: 't' }, 'u = 4').correct).toBe(false);
+    expect(markNumeric({ value: '4' }, 't = 4').correct).toBe(false);
+  });
+
   it('does not divide by zero in a fraction answer', () => {
     expect(markNumeric({ value: '1' }, '1/0').correct).toBe(false);
   });
