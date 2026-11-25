@@ -11,6 +11,7 @@
     "DELETE /v1/students/:id/parent-rewards/:rewardId",
     "GET /api/auth/*",
     "GET /health",
+    "GET /operator/appdeck/health",
     "GET /v1/admin/error-reports",
     "GET /v1/admin/feedback",
     "GET /v1/auth/providers",

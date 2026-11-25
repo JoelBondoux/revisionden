@@ -59,4 +59,14 @@ describe('privacy schema guard', () => {
       await client.exec('alter table students drop column name');
     }
   });
+
+  it('allows only the operator email on the operator audit log, nothing else email-like', async () => {
+    await client.exec(`alter table operator_audit_log add column parent_email text`);
+    try {
+      const found = await findForbiddenColumns(client);
+      expect(found).toEqual([{ table: 'operator_audit_log', column: 'parent_email' }]);
+    } finally {
+      await client.exec('alter table operator_audit_log drop column parent_email');
+    }
+  });
 });

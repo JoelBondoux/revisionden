@@ -106,6 +106,13 @@
       "when": 1795609275253,
       "tag": "0014_daily_sets",
       "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1795611531776,
+      "tag": "0015_operator_bridge",
+      "breakpoints": true
     }
   ]
 }

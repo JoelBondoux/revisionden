@@ -78,6 +78,15 @@ date per parent sign-in.
   build, the browser family, online or not and the time. No family, student, account, id or text
   (strict schema in `packages/core`, `ErrorReportSchema`). Rate limited; deleted after 90 days.
 
+## Operator console (AppDeck)
+
+- The owner's support console (AppDeck Admin) never reads the database. It calls the signed
+  operator bridge (`/operator/appdeck`, `docs/OPERATOR_CONSOLE.md`), which returns only minimal fields:
+  never answers, a student's own flashcards or free text, homework, AI prompts, push keys, sign-in
+  tokens or anything from Get help.
+- Every operator read of a family and every action is recorded (`operator_audit_log`: operator
+  email and role, action, target id, time; no content), kept 2 years.
+
 ## Own flashcards
 
 A student's own flashcards (up to 300 characters a side) get the same check as feedback before

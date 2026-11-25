@@ -55,6 +55,8 @@ export function createTestClock(start = new Date('2026-11-24T10:00:00Z')): TestC
 export interface TestContextOptions {
   authLimit?: number;
   aiLimit?: number;
+  /** Operator bridge (AppDeck) requests a minute. */
+  operatorLimit?: number;
   verification?: VerificationDeps;
   config?: Partial<AppConfig>;
   aiProviders?: Partial<Record<ProviderName, AiProvider>>;
@@ -86,6 +88,11 @@ export async function createTestContext(options: TestContextOptions = {}) {
     rateLimiters: {
       auth: createMemoryRateLimiter({ limit: options.authLimit ?? 1000, periodMs: 60_000, clock }),
       ai: createMemoryRateLimiter({ limit: options.aiLimit ?? 1000, periodMs: 60_000, clock }),
+      operator: createMemoryRateLimiter({
+        limit: options.operatorLimit ?? 1000,
+        periodMs: 60_000,
+        clock,
+      }),
     },
     verification: options.verification,
     errorLog: options.errorLog ?? (() => {}),
@@ -152,6 +159,7 @@ export async function createTestContext(options: TestContextOptions = {}) {
     db,
     client,
     clock,
+    config,
     auth,
     signInParent,
     signInStudent,

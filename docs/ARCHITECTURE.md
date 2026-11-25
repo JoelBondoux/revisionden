@@ -162,6 +162,8 @@ Source of truth: `packages/db/src/schema.ts`; migrations in `packages/db/migrati
 | `feedback`                  | id, family_id, sender_role, student_id, sender_auth_user_id, kind, text (≤500), device (JSON), status, created_at, updated_at, closed_at, outcome (confirmed, duplicate), duplicate_of, reward_xp, track_step, confirmed_at, reward_seen_at |
 | `error_reports`             | id, ref (unique), screen, api_path, status, build, browser, online, reported_at, created_at (anonymous; deleted after 90 days)                                                                                                              |
 | `policy_acceptances`        | auth_user_id + policy (key), version, accepted_at                                                                                                                                                                                           |
+| `operator_audit_log`        | id, operator_email (staff, from AppDeck), operator_role (agent, manager), action, target_type, target_id (plain id, no foreign key), request_id, outcome (ok, denied), created_at (2 years)                                                 |
+| `operator_requests`         | request_id (key), method, path, body_hash, response_status, response_body (change answers only), created_at (1 day)                                                                                                                         |
 
 No table stores a real name, date of birth, email of a student, photo or school name. The
 schema guard test (`packages/db/src/schema-guard.test.ts`) checks the migrated database and fails
