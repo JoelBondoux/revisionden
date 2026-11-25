@@ -21,6 +21,7 @@ describe('dark theme follows the device', () => {
     ['--site-muted', '#b5b1c8'],
     ['--site-link', '#c4b5ff'],
     ['--site-accent-soft', '#2d2652'],
+    ['--site-link-bar', '#3b3170'],
   ])('uses the app’s dark value for %s', (token, value) => {
     expect(dark.toLowerCase()).toContain(`${token}: ${value};`);
   });
