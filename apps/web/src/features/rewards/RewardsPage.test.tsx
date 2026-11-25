@@ -107,6 +107,14 @@ describe('Student rewards screen', () => {
     expect(within(secrets).getByText('Something about comebacks…')).toBeInTheDocument();
   });
 
+  it('reveals each new reward with its tier and why it was earned', async () => {
+    const newly = sampleRewards().overview.chapter!.steps[0]!;
+    show(fakeApi({ getMyRewards: async () => sampleRewards({ newlyEarned: [newly] }) }));
+    const reveal = (await screen.findByText(/New: Practice amp/)).closest('li')!;
+    expect(reveal).toHaveClass(`reward-reveal--${newly.rarity}`);
+    expect(within(reveal).getByText(/^For: /)).toBeInTheDocument();
+  });
+
   it('offers a retry when loading fails', async () => {
     let calls = 0;
     show(
