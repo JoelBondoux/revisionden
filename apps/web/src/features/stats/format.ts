@@ -27,5 +27,3 @@ export function signedNote(current: number | null, previous: number | null): str
   if (diff === 0) return 'Same as last week';
   return diff > 0 ? `+${diff} on last week` : `-${-diff} on last week`;
 }
-
-export const usd = (micro: number) => `US$${(micro / 1_000_000).toFixed(2)}`;

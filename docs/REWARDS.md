@@ -191,7 +191,8 @@ delete, mark given; editing or deleting a given reward answers 409); target = a 
 reward, a stat reaching a number (level, streak and the rest) or a UK date. The student's
 `/rewards` screen shows them under "From home" with progress and a "Target met" celebration;
 the parent manages them at `/family/:id/rewards` (linked from the family list and the parent
-home at `/parent`). The parent stats dashboard (workstream K) also lists them in its Reward panel.
+home at `/parent`). The parent stats dashboard (workstream K10) lists them too, with add, edit and
+remove, using the same editor (`ParentRewardForm`) and routes.
 
 **Parent notification (H2):** when a target is met and the reward is not marked given, each
 parent device with "Reward news" turned on (parent home, `/parent`) gets one web push, once per

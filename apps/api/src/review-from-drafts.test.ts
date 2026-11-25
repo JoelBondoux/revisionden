@@ -140,3 +140,61 @@ describe('a review batch from draft items', () => {
     expect(res.status).toBe(403);
   });
 });
+
+describe('after a batch fails', () => {
+  const decide = (headers: Record<string, string>, batchId: string, itemId: string, body: object) =>
+    t.app.request(
+      `/v1/review/batches/${batchId}/items/${itemId}/decision`,
+      jsonRequest('POST', body, headers),
+    );
+
+  it('keeps its items out of new batches until they are re-checked and the recheck is done', async () => {
+    const headers = await reviewer();
+    const { id } = (await (await create(headers)).json()) as { id: string };
+    await decide(headers, id, 'test-ready-0001', {
+      decision: 'confirmed_error',
+      notes: 'Fixture error',
+    });
+    // The defective item is quarantined; its siblings still carry the old checks.
+    const blocked = await t.app.request('/v1/review/batches/from-drafts', { headers });
+    expect(await blocked.json()).toEqual({ ready: 0 });
+
+    // Steps 3 to 5 re-run for the proof (fresh check times), but the recheck is still open.
+    const fresh = (names: string[]) =>
+      names.map((name) => ({
+        name,
+        result: 'pass',
+        tool: 't',
+        tool_version: '1',
+        at: '2099-01-01T00:00:00Z',
+      }));
+    const rechecked = {
+      ...proof,
+      verification: {
+        ...proof.verification,
+        checks: [
+          ...fresh(['grounded-writing', 'quote-check', 'schema']),
+          ...fresh(['blind-marking', 'adversarial-review']),
+        ],
+      },
+    };
+    await syncContent(t.db, {
+      topicTrees: [testTopicTree],
+      items: [ready, failing, verifiedItem, rechecked, factFailed],
+      markSchemes: [scheme],
+    });
+    expect(
+      await (await t.app.request('/v1/review/batches/from-drafts', { headers })).json(),
+    ).toEqual({ ready: 0 });
+
+    const { rechecks: requests } = (await (
+      await t.app.request('/v1/review/rechecks?status=pending', { headers })
+    ).json()) as { rechecks: { id: string; scope: string }[] };
+    for (const r of requests.filter((r) => r.scope === 'batch')) {
+      await t.app.request(`/v1/review/rechecks/${r.id}/done`, jsonRequest('POST', {}, headers));
+    }
+    expect(
+      await (await t.app.request('/v1/review/batches/from-drafts', { headers })).json(),
+    ).toEqual({ ready: 1 });
+  });
+});

@@ -207,7 +207,9 @@ describe('GET /v1/students/:id/stats and /dashboard (parent)', () => {
       restDays: 0,
       dailyCapMinutes: 60,
     });
-    expect(body.aiSpend).toEqual({ month: '2026-11', spentMicroUsd: 4200, capMicroUsd: 2_500_000 });
+    expect(body.aiAllowance).toEqual({ percentUsed: 0, usedUp: false, resetsOn: '2026-12-01' });
+    // No money ever reaches a family client.
+    expect(JSON.stringify(body)).not.toMatch(/MicroUsd|spent|cost/i);
     expect(body.recentActivity[0]).toMatchObject({ kind: 'flashcards', count: 1 });
     expect(body.recentActivity[1]).toMatchObject({ kind: 'lesson', subjectId: 'gcse-physics' });
     expect(JSON.stringify(body)).not.toContain('Own card');
