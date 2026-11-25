@@ -52,7 +52,8 @@ reviewed before the app is offered to anyone outside the operator's own family.
 
 ### 2. Who is responsible for your data
 
-2.1 {{OPERATOR_NAME}} is the controller of the personal data described in this notice.
+2.1 {{OPERATOR_NAME}}, a sole trader, is the controller of the personal data described in this
+notice.
 
 2.2 Contact: {{CONTACT_EMAIL}}; post: {{POSTAL_ADDRESS}}. Please use these for any question about
 privacy or to use any of your rights.
@@ -222,9 +223,10 @@ the UK.
 
 8.2 Some processors are based in, or process data in, the United States. In particular, the AI
 model provider (Anthropic) may process the question and answer text in the United States, and
-Cloudflare, Neon, Google and Microsoft are US-based companies. Our internal design principle is to
-keep data in the UK or EU; at the moment this is not true for AI marking, and the decision on
-whether to change provider settings or rely on a transfer safeguard is still open.
+Cloudflare, Neon, Google and Microsoft are US-based companies. We keep stored data (the database
+and uploads) in the UK or EU. The text sent for AI marking, which contains nothing that identifies
+the student, may be processed in the United States; we have decided to accept this and to rely on
+a transfer safeguard for it (see 8.3).
 
 8.3 Where personal data is transferred outside the UK, the UK GDPR requires a safeguard, such as
 UK adequacy regulations (including the UK Extension to the EU-US Data Privacy Framework for

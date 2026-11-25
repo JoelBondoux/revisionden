@@ -9,7 +9,9 @@
 2. No passwords anywhere.
 3. No photos kept: uploads are read, checked by the user and deleted.
 4. The AI never sees who the student is.
-5. Data stays in the UK or EU, encrypted at rest.
+5. Stored data stays in the UK or EU, encrypted at rest. Text sent for AI marking (with nothing
+   that identifies the student) may be processed in the US by the AI provider; accepted by the
+   product owner for now (`project_memory/decisions/0003-owner-decisions-hosting-ai-controller.md`).
 
 ## Accounts
 

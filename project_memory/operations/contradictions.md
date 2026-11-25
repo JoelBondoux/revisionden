@@ -17,15 +17,6 @@
 - [ ] **Parent reward notification.** `docs/REWARDS.md` says the parent gets a notification when a
       parent-set target is met; not built (reminders are workstream H). The student celebration is
       built.
-- [ ] `docs/PRIVACY.md` principle 5 says data stays in the UK or EU, but `docs/AI.md` sends
-      answers, essays and homework photos to Anthropic, OpenAI and Gemini, which may process them
-      in the US. The answers carry no identifying details, but they are still personal data, and a
-      photo of homework may show a name. Not settled: needs a product owner decision (EU/UK
-      processing where offered, or say so in the privacy notice with the UK transfer safeguard).
-      Workstream L must describe whatever is true in `docs/legal/processors.md`.
-      L (2026-11-24): `docs/legal/processors.md` and the privacy notice now say honestly that
-      answer text may be processed in the US and that the safeguard is still to confirm. Still open.
-
 - [ ] **OAuth tokens kept.** `docs/PRIVACY.md` and the policies say only the parent's sign-in
       email is stored, but Better Auth stores `access_token`, `refresh_token` and `id_token` in
       `auth_accounts` (`packages/db/src/schema.ts`, `apps/api/src/auth.ts`); a Google or Microsoft
@@ -65,6 +56,18 @@
       sit in other workstreams' lanes. Pick one set of names.
 
 ## Resolved
+
+- [x] `docs/PRIVACY.md` principle 5 says data stays in the UK or EU, but `docs/AI.md` sends
+      answers, essays and homework photos to Anthropic, OpenAI and Gemini, which may process them
+      in the US. The answers carry no identifying details, but they are still personal data, and a
+      photo of homework may show a name. Not settled: needs a product owner decision (EU/UK
+      processing where offered, or say so in the privacy notice with the UK transfer safeguard).
+      Workstream L must describe whatever is true in `docs/legal/processors.md`.
+      L (2026-11-24): `docs/legal/processors.md` and the privacy notice now say honestly that
+      answer text may be processed in the US and that the safeguard is still to confirm. Still open.
+      Settled 2026-11-25 by the product owner: US processing of AI marking text is accepted for
+      now; stored data stays in the UK or EU. Recorded in decision 0003; PRIVACY.md and the
+      privacy notice updated. The per-provider safeguard is still to confirm before any public release.
 
 - [x] **Feedback device details default.** Spec said on by default; the Children's Code prefers the
       most private default. Lead decision (2026-11-24): off by default for students, on for parents.
