@@ -305,4 +305,5 @@ Tags: #product #rules #limits #defaults
   may be created or changed. New Neon project `revisionden` in London.
 - AI marking text may be processed in the US (accepted for now); stored data stays in the UK or EU.
 - The app is run by a sole trader; name and contact details come from build variables only.
+  Policy contact: `privacy@revisionden.com`; no postal address shown.
   Decision 0003.

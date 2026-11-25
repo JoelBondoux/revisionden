@@ -25,7 +25,8 @@ principle "data stays in the UK or EU" disagreed with AI marking by US providers
    confirmed before the app is offered outside the family. Revisit before any public release.
 3. **Controller.** The app is run by the product owner as a **sole trader** under a trading name.
    The trading name, contact email and postal address are never committed; they are supplied at
-   build time (`VITE_OPERATOR_NAME`, `VITE_CONTACT_EMAIL`, `VITE_POSTAL_ADDRESS`). Whether the ICO
+   build time (`VITE_OPERATOR_NAME`, `VITE_CONTACT_EMAIL`, `VITE_POSTAL_ADDRESS`). Contact email for the policies: `privacy@revisionden.com`; no postal address shown (owner,
+   2026-11-25). Whether the ICO
    data protection fee is due is for the product owner to confirm with the ICO.
 
 ## Consequences
