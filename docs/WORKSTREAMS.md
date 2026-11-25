@@ -29,8 +29,8 @@ Status values: `queued`, `in progress`, `in review` (PR open into `dev`), `merge
 | U   | Sound effects with mute (Web Audio, original)                                         | `apps/web/src/features/sound/**` (plus one-line `play()` calls listed in the PR)                  | merged    | [#17](https://github.com/JoelBondoux/revisionden/pull/17) |
 | K   | Statistics dashboards for student and parent                                          | `packages/core/src/stats*.ts`, `apps/api/src/stats/**`, `apps/web/src/features/stats/**`          | merged    | [#18](https://github.com/JoelBondoux/revisionden/pull/18) |
 | L   | Policies, About page, feedback and policy acceptance                                  | `docs/legal/**`, `apps/web/src/features/{legal,about,feedback}/**`, feedback API routes and table | merged    | [#19](https://github.com/JoelBondoux/revisionden/pull/19) |
-| H2  | Parent notification when a parent-set reward target is met                            | `apps/api/src/notifications/**`, `apps/web/src/features/notifications/**`, migration 0006         | in review | (this PR)                                                 |
-| P   | Parent home page at `/parent`                                                         | `apps/web/src/features/parent/**`, route wiring                                                   | in review | (this PR)                                                 |
+| H2  | Parent notification when a parent-set reward target is met                            | `apps/api/src/notifications/**`, `apps/web/src/features/notifications/**`, migration 0006         | in review | [#27](https://github.com/JoelBondoux/revisionden/pull/27) |
+| P   | Parent home page at `/parent`                                                         | `apps/web/src/features/parent/**`, route wiring                                                   | in review | [#27](https://github.com/JoelBondoux/revisionden/pull/27) |
 
 ## Next (queued)
 
