@@ -107,6 +107,10 @@ export const families = pgTable('families', {
   // The value lastActiveAt had before its latest update, so the app can warn a parent who
   // comes back after a long gap. Null until the second update.
   previousActiveAt: timestamp('previous_active_at', { withTimezone: true }),
+  // A request to delete the whole family waits here until the other parent confirms
+  // (docs/PRODUCT_RULES.md "Two parents"). The position (1 or 2) of the parent who asked.
+  deletionRequestedBy: integer('deletion_requested_by'),
+  deletionRequestedAt: timestamp('deletion_requested_at', { withTimezone: true }),
 });
 
 export const parents = pgTable(
@@ -120,9 +124,70 @@ export const parents = pgTable(
       .notNull()
       .unique()
       .references(() => authUsers.id, { onDelete: 'cascade' }),
+    // "Parent 1" or "Parent 2": how the activity log names a parent (never by name or email).
+    position: integer('position').notNull().default(1),
+    // Important changes by the other parent after this time show as new in the parent home.
+    eventsSeenAt: timestamp('events_seen_at', { withTimezone: true }),
     createdAt: createdAt(),
   },
-  (t) => [index('parents_family_id_idx').on(t.familyId)],
+  (t) => [
+    index('parents_family_id_idx').on(t.familyId),
+    unique('parents_family_position_unique').on(t.familyId, t.position),
+    check('parents_position_range', sql`${t.position} in (1, 2)`),
+  ],
+);
+
+/** One-time invites for a second parent (7 days, single use). Only a hash of the code is kept. */
+export const parentInvites = pgTable(
+  'parent_invites',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    familyId: uuid('family_id')
+      .notNull()
+      .references(() => families.id, { onDelete: 'cascade' }),
+    codeHash: text('code_hash').notNull().unique(),
+    createdByParentId: uuid('created_by_parent_id').references(() => parents.id, {
+      onDelete: 'cascade',
+    }),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    usedAt: timestamp('used_at', { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (t) => [index('parent_invites_family_id_idx').on(t.familyId)],
+);
+
+/** A parent removed by the other parent, kept only until they have seen the notice. */
+export const parentRemovalNotices = pgTable('parent_removal_notices', {
+  authUserId: text('auth_user_id')
+    .primaryKey()
+    .references(() => authUsers.id, { onDelete: 'cascade' }),
+  removedAt: timestamp('removed_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+/**
+ * Family activity log: what changed and which parent did it ("Parent 1" or "Parent 2"). Rows
+ * about a child go with the child (student_id cascades); a removed child is never named.
+ */
+export const familyEvents = pgTable(
+  'family_events',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    // Order of the log (several rows can share a time).
+    seq: integer('seq').generatedAlwaysAsIdentity(),
+    familyId: uuid('family_id')
+      .notNull()
+      .references(() => families.id, { onDelete: 'cascade' }),
+    actorPosition: integer('actor_position'),
+    kind: text('kind').notNull(),
+    studentId: uuid('student_id').references((): AnyPgColumn => students.id, {
+      onDelete: 'cascade',
+    }),
+    // Important changes are pushed to the other parent (if they turned push on).
+    important: boolean('important').notNull().default(false),
+    pushedAt: timestamp('pushed_at', { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (t) => [index('family_events_family_id_idx').on(t.familyId, t.createdAt)],
 );
 
 export const students = pgTable(
@@ -853,6 +918,17 @@ export const feedback = pgTable(
     updatedAt: updatedAt(),
     // Set when the status becomes fixed or will_not_fix; the row is deleted 12 months later.
     closedAt: timestamp('closed_at', { withTimezone: true }),
+    // Bug Hunter (L7): the operator confirms a bug report, or marks it a duplicate of an earlier
+    // confirmed one. reward_xp and track_step record what the student earned (packages/core
+    // bugReward); reward_seen_at is set once the student has seen the thank-you in the app.
+    outcome: text('outcome', { enum: ['confirmed', 'duplicate'] }),
+    duplicateOf: uuid('duplicate_of').references((): AnyPgColumn => feedback.id, {
+      onDelete: 'set null',
+    }),
+    rewardXp: integer('reward_xp').notNull().default(0),
+    trackStep: boolean('track_step').notNull().default(false),
+    confirmedAt: timestamp('confirmed_at', { withTimezone: true }),
+    rewardSeenAt: timestamp('reward_seen_at', { withTimezone: true }),
   },
   (t) => [
     index('feedback_family_id_idx').on(t.familyId),
@@ -864,6 +940,8 @@ export const feedback = pgTable(
       sql`${t.status} in ('new', 'looking_into_it', 'fixed', 'will_not_fix')`,
     ),
     check('feedback_text_length', sql`char_length(${t.text}) <= 500`),
+    check('feedback_outcome_values', sql`${t.outcome} in ('confirmed', 'duplicate')`),
+    index('feedback_student_confirmed_idx').on(t.studentId, t.confirmedAt),
   ],
 );
 
@@ -881,6 +959,46 @@ export const policyAcceptances = pgTable(
     acceptedAt: timestamp('accepted_at', { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [primaryKey({ columns: [t.authUserId, t.policy] })],
+);
+
+// ---------------------------------------------------------------------------------------------
+// Daily limit (workstream K7, docs/PRODUCT_RULES.md "Daily limit (wellbeing)"). Null limits use
+// the defaults for the student's level. Any parent of the family can change it; the app only
+// suggests changes (at most one a week), which the parent accepts, changes or dismisses.
+// ---------------------------------------------------------------------------------------------
+
+const limitRange = (column: unknown) => sql`${column} is null or ${column} between 15 and 360`;
+
+export const dailyLimits = pgTable(
+  'daily_limits',
+  {
+    studentId: uuid('student_id')
+      .primaryKey()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    // School days (Monday to Friday, not holidays). The column avoids the word "school", which
+    // the privacy schema guard reserves for school names.
+    schoolDayMinutes: integer('weekday_minutes'),
+    otherDayMinutes: integer('other_day_minutes'),
+    examSeasonExtra: boolean('exam_season_extra').notNull().default(false),
+    // When a parent last changed it, and when the student last saw the change.
+    changedAt: timestamp('changed_at', { withTimezone: true }),
+    studentSeenAt: timestamp('student_seen_at', { withTimezone: true }),
+    // The weekly suggestion: when it was last worked out, the last rise, and the one waiting.
+    lastSuggestedOn: date('last_suggested_on'),
+    lastRaiseOn: date('last_raise_on'),
+    pendingSuggestion: jsonb('pending_suggestion').$type<{
+      kind: 'raise' | 'ease';
+      change: number;
+      schoolDayMinutes: number;
+      otherDayMinutes: number;
+      reason: string;
+    }>(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [
+    check('daily_limits_weekday_range', limitRange(t.schoolDayMinutes)),
+    check('daily_limits_other_range', limitRange(t.otherDayMinutes)),
+  ],
 );
 
 /** Browser families an error report may name (no versions). */

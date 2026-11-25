@@ -15,6 +15,7 @@ export const RewardItemSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('theme'), id: z.string() }),
   z.object({ kind: z.literal('pipOutfit'), id: z.string() }),
   z.object({ kind: z.literal('badge'), id: z.string() }),
+  z.object({ kind: z.literal('effect'), id: z.string() }),
 ]);
 
 export const RewardCardSchema = z.object({
@@ -69,6 +70,21 @@ export const RewardsOverviewSchema = z.object({
       items: z.array(RewardCardSchema),
     }),
   ),
+  hiddenTracks: z.array(
+    z.object({
+      id: z.string(),
+      name: z.string(),
+      earned: z.number().int(),
+      total: z.number().int(),
+      next: RewardCardSchema.nullable(),
+      steps: z.array(RewardCardSchema),
+    }),
+  ),
+  secrets: z.object({
+    found: z.number().int(),
+    total: z.number().int(),
+    cards: z.array(RewardCardSchema.extend({ hint: z.string().optional() })),
+  }),
 });
 
 const rewardIds = new Set(REWARDS.map((r) => r.id));
@@ -209,6 +225,26 @@ const STAT_WORDS: Record<StatKey, (n: number) => string> = {
   gcseFinished: () => 'Every GCSE sat',
   aLevelExamsSat: (n) => `${n} A-Level exam${n === 1 ? '' : 's'} sat`,
   aLevelFinished: () => 'Every A-Level sat',
+  confirmedBugs: (n) => `${n} confirmed bug${n === 1 ? '' : 's'}`,
+  comebackRuns: (n) => `${n} comeback${n === 1 ? '' : 's'}`,
+  allSubjectsWeeks: (n) => `Every subject in a week, ${n} time${n === 1 ? '' : 's'}`,
+  bestWeakSpotsFixedInDay: (n) => `${n} weak spots fixed in a day`,
+  pacedPapers: (n) => `${n} paper${n === 1 ? '' : 's'} on pace`,
+  bestFlashcardsWeek: (n) => `${n} flashcards in a week`,
+  bestCorrectInDay: (n) => `${n} right answers in a day`,
+  bestCorrectInWeek: (n) => `${n} right answers in a week`,
+  bestTopicsInDay: (n) => `${n} topics in a day`,
+  bestSubjectsInDay: (n) => `${n} subjects in a day`,
+  subjectsPractised: (n) => `${n} subjects practised`,
+  bestTopicAnswers: (n) => `${n} answers in one topic`,
+  itemTypesAnswered: (n) => `${n} answer types right`,
+  fullMarkLongAnswers: (n) => `${n} full-mark long answer${n === 1 ? '' : 's'}`,
+  perfectWorkings: (n) => `${n} perfect worked answers`,
+  bestRewardDayXp: (n) => `${n} XP in a day`,
+  fullWeekends: (n) => `${n} full weekend${n === 1 ? '' : 's'}`,
+  perfectWeeks: (n) => `${n} perfect week${n === 1 ? '' : 's'}`,
+  bestGoalDaysInMonth: (n) => `${n} goal days in a month`,
+  chaptersFilled: (n) => `${n} chapter${n === 1 ? '' : 's'} filled`,
 };
 
 /** The target in words, for the parent and student screens. */

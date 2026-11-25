@@ -14,6 +14,11 @@ Tags: #product #rules #limits #defaults
 - Students have no outside account: nickname (2–16 letters, numbers, underscore), avatar code and
   year group only. Devices linked by a one-time QR token (10 minutes, single use), then a passkey.
 - Nicknames are unique within a family. A family is created the first time a parent signs in.
+- Two parents (B3): a family can have two parents with equal control (Parent 1, Parent 2).
+  Invite code or link 7 days, single use, hashed, 5 a day; either parent removes the other (access
+  ends at once, notice next sign-in); deleting the family needs both when there are two; family
+  activity log names parents only by number, important changes pushed to the other parent and
+  shown as new in the parent home; log kept 12 months. Migration 0012.
 - Year group: Years 9 to 13 only (core schema and database check `students_year_group_range`,
   migration 0006).
 - Google and Microsoft access, refresh and ID tokens are never stored: blanked in Better Auth's
@@ -314,6 +319,11 @@ Tags: #product #rules #limits #defaults
 - Newly earned rewards are saved (and announced as "New!") by `rewardsView`, used by the student's
   `GET /v1/student/rewards` and the parent's full `GET /v1/students/:id/rewards`. The parent's
   `GET /v1/students/:id/parent-rewards` and the stats pages use the read-only `rewardsProgress`.
+- Hidden tracks and secrets (R7): Bug Hunter steps at 1, 2, 3, 5, 8, 12, 20 confirmed bugs
+  (`confirmedBugs` from L's `confirmedBugCount`; L's bug reward XP counts for levels, not
+  chapters); 24 secret achievements shown as
+  "???" until earned, with hints on 9; stats in `packages/core/src/secret-stats.ts`. New reward
+  item kind `effect` (glitch); new avatar item magnifier (held item, appended).
   They are also saved, once each, by an answer (`POST /v1/student/learn/attempts`) and a finished
   flashcard session (`.../sessions/:id/finish`): both return `newlyEarned` (`saveNewRewards`), and
   the lesson, Cards screen and starting-test results show "New reward: …" with the reward sound
@@ -333,7 +343,7 @@ Tags: #product #rules #limits #defaults
   "Not set up yet", never zeros. PDF export is made in the browser with nicknames only.
 - Terms until real dates are entered: autumn 1 Sep–31 Dec, spring 1 Jan–31 Mar, summer
   1 Apr–31 Aug; the school year is 1 Sep–31 Aug. Goal lines: 50 XP a day (Week), 250 XP a week
-  (Term). Daily cap 2 hours (provisional, `DEFAULT_DAILY_CAP_MINUTES`, until wellbeing settings).
+  (Term). Time past the student's daily limit is not counted; healthy habits count days at the limit.
 - Subject mastery averages practised topics; change is replayed from marked answers (period start
   for the student, 4 weeks for the parent). Healthy habits are for this week; quiet hours are the
   reminder quiet hours. A rest day is a finished day with no study at all: answers and flashcard
@@ -461,15 +471,30 @@ Tags: #product #rules #limits #defaults
   +50 XP and a step on the hidden Bug Hunter track (badge, title, avatar item, frame, Pip outfit,
   effect, legendary set at 20). Duplicates +10 XP; at most 3 confirmed-bug rewards a week; parents
   are thanked, not rewarded.
+- Built (L7): the bug button and confirm flow; rules in `packages/core/src/bug-hunter.ts`
+  (`bugReward`). The week is Monday to Sunday, UK time, and the 3-a-week cap counts full and
+  duplicate rewards; past the cap the student is thanked with no XP and no track step. Bug XP is
+  added to total XP but not to the daily goal or streak. Students switch the button off in Settings
+  (`revisionden.bugButton` in local storage). Confirmed count: `confirmedBugCount` in
+  `apps/api/src/feedback/bugHunter.ts`, `GET /v1/student/bug-hunter`,
+  `GET /v1/students/:id/bug-hunter`. The track items are R's.
 - Secret achievements: hidden "???" cards with a found count; learning-based conditions only;
   defined in the catalogue with `secret: true`. Detail: `docs/REWARDS.md`.
 
 ## Daily limit, two parents, hidden tracks (owner, 2026-11-25; planned)
 
 - Daily limit in active study minutes: defaults GCSE 60/90 (school day/other), A-Level 90/120;
-  ceilings GCSE 2h/3h, A-Level 2.5h/3.5h; +30 in exam season with parent consent. Parents set it;
-  the app only suggests (+10 at most fortnightly when the student keeps going without accuracy dips;
-  −10 to −15 on tiredness signs). Detail: `docs/PRODUCT_RULES.md` (Daily limit).
+  ceilings GCSE 2h/3h, A-Level 2.5h/3.5h; +30 in exam season (6 weeks before the first exam to the
+  last) with parent consent. Parents set 15 min to 6 h per day type; the app only suggests, at most
+  weekly (+10 at most fortnightly when the limit is reached on 4 of 14 days with steady late
+  accuracy; −10 for one tiredness sign, −15 for two or more). No XP, rewards or streak credit past
+  the limit; progress responses carry `dailyLimit`, and set complete says "See you tomorrow" when
+  it is reached (300 XP cap kept as a safety net). Confirmed by the owner (2026-11-25): school days
+  are Mon–Fri with holidays counted as school days until dates exist; "kept going" means reaching
+  the limit; "stopped part-way" means a starting test unfinished for over an hour; parents set
+  15 min to 6 h. Either parent can change it (latest change wins); saved limits and accepted
+  suggestions are logged for the other parent. Implemented (K7): `packages/core/src/daily-limit.ts`, `apps/api/src/daily-limit/`,
+  `daily_limits` table. Detail: `docs/PRODUCT_RULES.md` (Daily limit).
 - Two parent accounts with equal control; second invited by link or code (7 days); activity log
   ("Parent 1/2"); both confirm whole-family deletion.
 - Hidden tracks besides Bug Hunter: Fact Checker, Comeback Kid, Explorer, Planner, Pace Setter,
@@ -512,4 +537,54 @@ Tags: #product #rules #limits #defaults
   3 in a row per topic), topped up from the same topics if that leaves fewer than 5. Seeded by
   student and day. Done when every item has an attempt after the set was made. Map card above
   the next mission while not done; plays at `/learn/daily` in the lesson player (Learn mode,
-  normal XP and combos, counts to the daily goal and streak through XP). No push for it.
+  normal XP and combos, counts to the daily goal and streak through XP; the parent's daily limit
+  applies through the normal attempts route, `creditableXp`). No push for it. Migration 0014.
+- Recall checks (Q4, built): `GET /v1/student/recall?topicId=` before a topic lesson (or unit
+  challenge) whose topic has been practised. Up to 2 questions the student has answered before
+  (no flashcards, no extended answers), from other practised topics first, then the lesson's own
+  topic; weak spots first (next-item rules). Shown as "Remember this?" in the lesson player with
+  Skip; answers are normal Learn mode attempts (normal XP when right, wrong ones become
+  flashcards, mastery as any answer). If the call fails the lesson starts as normal.
+  `apps/web/src/features/recall/`, `apps/api/src/routes/recall.ts`.
+- Reading comfort (Q1, built): Settings → Reading comfort, per device in `localStorage` key
+  `revisionden.reading`. Options: dyslexia-friendly font (OpenDyslexic from
+  `@fontsource/opendyslexic`, SIL OFL 1.1, bundled with the app, no font service), text size
+  Normal / Large (112.5%) / Larger (125%), more spacing (line height 1.8, letter 0.12em, word
+  0.16em), tint none / cream / blue. Defaults: all off. Applied app-wide by `data-reading-*`
+  attributes on `<html>` (`apps/web/src/features/reading/`).
+- Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
+  `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
+  board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by
+  `pnpm content:check-links` in `.github/workflows/learn-links.yml` (PRs that change links, pushes
+  to dev, weekly Monday 06:17 UTC); 2xx and 3xx pass. Bundled into the web app at build time;
+  the button shows at the top of a topic lesson only for links with `checked_at` set; plain links
+  opening in a new tab (nothing loaded until tapped). Pilot: Oak KS4 Higher lessons for the 9 GCSE
+  Maths topics with items (n4, n7, a4, a6, a17, a18, r9, g9, g17), URLs found by web search only.
+  All 11 returned 200 in the CI link check on 2026-11-25, so `checked_at` is set and the buttons
+  show. No Bitesize links yet: bbc.co.uk could not be reached from the build environment.
+
+## Operator console (planned)
+
+- Operators use AppDeck Admin (repo `appdeck-admin`) with RevisionDen as a managed app. AppDeck has
+  no database access; it calls a signed operator bridge (HMAC tag `appdeck-revisionden-operator-v1`,
+  per-environment shared secret, 5-minute window, idempotent request ids), and every operator read
+  and change is audited. Agents: support; Managers: money and data. Complaints: acknowledge in 2
+  working days, aim to resolve in 14. Data requests: one calendar month. Family tags (for example
+  Beta tester, Press, Friends & family) are internal; Managers define them and their effects (early
+  access, complimentary Premium, exclude from metrics); Agents apply them. Detail:
+  `docs/OPERATOR_CONSOLE.md`.
+
+## Pricing (agreed 2026-11-25; not live)
+
+- Free app; Premium per child per month £9.99, £4.99, £2.99, then free; annual about £79.99;
+  14-day trial; web only; prices include VAT. Learning, safety and accessibility stay free; offers
+  only to parents; rewards never sold; no adverts. Free school meals: scheme choice and date only,
+  declaration, soft checks, rare spot checks. Detail: `docs/PRICING.md`, decision 0004.
+- Read aloud (Q2, built): Web Speech API only, no audio sent by us. Voice: on-device British
+  English, then any on-device English, then online English. On by default only with an on-device
+  voice; with only online voices it starts off and Settings says the device's speech service may
+  process the text. Speed Slower 0.75 / Normal 1 / Faster 1.25. Saved in `localStorage` key
+  `revisionden.readAloud` (`enabled` null until chosen). Speaker buttons: lesson question (with
+  options and unit), feedback (verdict, answer, explanation), flashcard front or back. Maths read
+  as words (`x^2` "x squared", `8^(2/3)` "8 to the power 2 over 3", `cm^2` "square centimetres",
+  `√`, `π`, `×`, `÷`, `≤`, `≥`). `apps/web/src/features/read-aloud/`. Privacy notice 1.4 (6.4); young people's notice 1.3.

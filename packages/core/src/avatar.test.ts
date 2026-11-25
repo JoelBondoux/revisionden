@@ -122,7 +122,7 @@ describe('validateAvatar', () => {
       topColour: 12,
       eyewear: 9,
       headwear: 13,
-      heldItem: 14,
+      heldItem: 15,
       backgroundColour: 12,
       pattern: 8,
       scene: 11,
@@ -160,6 +160,7 @@ describe('validateAvatar', () => {
         'bobble-hat',
         'lantern',
         'frosty-night',
+        'magnifier',
       ].sort(),
     );
   });

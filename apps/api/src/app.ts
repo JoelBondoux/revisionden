@@ -1,6 +1,7 @@
 import { Hono, type Context, type Next } from 'hono';
 import { cors } from 'hono/cors';
-import type { Database } from '@revisionden/db';
+import { eq } from 'drizzle-orm';
+import { parentRemovalNotices, type Database } from '@revisionden/db';
 import { AUTH_BASE_PATH, type Auth } from './auth';
 import type { AppConfig } from './env';
 import { ClientErrorReportSchema } from '@revisionden/core';
@@ -13,6 +14,8 @@ import { ensureParent } from './families';
 import { studentRoutes } from './routes/students';
 import { familyRoutes, recordActivity, studentActivity } from './routes/family';
 import { familyExport } from './routes/export';
+import { familyParentRoutes, removalNotice, removedFromFamily } from './routes/family-parents';
+import { logFamilyChanges } from './family-events';
 import {
   deviceRoutes,
   parentDeviceRoutes,
@@ -35,14 +38,17 @@ import { learnRoutes } from './routes/learn';
 import { flashcardRoutes } from './routes/flashcards';
 import { studentDailyRoutes } from './routes/daily';
 import { studentMapRoutes } from './routes/map';
+import { studentRecallRoutes } from './routes/recall';
 import { parentRewardRoutes, studentRewardRoutes } from './routes/rewards';
 import type { MathsEngine } from './learning/maths-engine';
 import {
   adminFeedbackRoutes,
+  parentBugHunterRoutes,
   parentFeedbackRoutes,
   studentFeedbackRoutes,
 } from './feedback/routes';
 import { parentStatsRoutes, studentStatsRoutes } from './stats/routes';
+import { parentDailyLimitRoutes, studentDailyLimitRoutes } from './daily-limit/routes';
 import { adminErrorReportRoutes, errorReportRoutes } from './feedback/error-reports';
 import type { StatsAdapters } from './stats/adapters';
 
@@ -101,6 +107,8 @@ export function createApp(deps: AppDeps) {
   };
   app.use(`${AUTH_BASE_PATH}/*`, limit('auth', deps.rateLimiters.auth));
   app.use('/v1/device/*', limit('auth', deps.rateLimiters.auth));
+  // Joining a family with a code is rate-limited like sign-in, so codes cannot be guessed.
+  app.use('/v1/family/join', limit('auth', deps.rateLimiters.auth));
   app.use('/v1/ai/*', limit('ai', deps.rateLimiters.ai));
   app.use('/v1/client-errors', limit('auth', deps.rateLimiters.auth));
   app.use('/v1/error-reports', limit('auth', deps.rateLimiters.auth));
@@ -135,6 +143,9 @@ export function createApp(deps: AppDeps) {
   async function requireParent(c: Context<AppEnv>, next: Next) {
     const session = await deps.auth.api.getSession({ headers: c.req.raw.headers });
     if (!session) throw unauthorized();
+    // A parent the other parent removed loses access at once (routes/family-parents.ts).
+    const removed = await removalNotice(deps.db, session.user.id);
+    if (removed) throw removedFromFamily(removed.removedAt);
     const ctx = await ensureParent(deps.db, session.user.id);
     // Keeps the account from being deleted as unused (routes/family.ts).
     await recordActivity(deps.db, ctx.familyId, deps.clock.now());
@@ -142,6 +153,25 @@ export function createApp(deps: AppDeps) {
     c.set('parentEmail', session.user.email);
     await next();
   }
+  // Logs every successful family change for the activity log (runs after the guard above).
+  parent.use('*', logFamilyChanges(deps));
+  // The notice a removed parent sees once; only a sign-in is needed, not a family.
+  parent.get('/removal-notice', async (c) => {
+    const session = await deps.auth.api.getSession({ headers: c.req.raw.headers });
+    if (!session) throw unauthorized();
+    const notice = await removalNotice(deps.db, session.user.id);
+    return c.json(
+      notice ? { removed: true, removedAt: notice.removedAt.toISOString() } : { removed: false },
+    );
+  });
+  parent.post('/removal-notice/seen', async (c) => {
+    const session = await deps.auth.api.getSession({ headers: c.req.raw.headers });
+    if (!session) throw unauthorized();
+    await deps.db
+      .delete(parentRemovalNotices)
+      .where(eq(parentRemovalNotices.authUserId, session.user.id));
+    return c.body(null, 204);
+  });
   parent.get('/me', (c) => c.json({ familyId: c.var.parent.familyId, email: c.var.parentEmail }));
   parent.route('/students', studentRoutes(deps.db));
   parent.route('/students', parentDeviceRoutes(deps));
@@ -150,10 +180,13 @@ export function createApp(deps: AppDeps) {
   parent.route('/students', avatarRoutes(deps));
   parent.route('/students', parentRewardRoutes(deps));
   parent.route('/students', parentStatsRoutes(deps));
+  parent.route('/students', parentDailyLimitRoutes(deps));
   parent.route('/onboarding', onboardingRoutes(deps));
   parent.route('/', reportRoutes(deps.db, 'parent'));
   parent.route('/', parentFeedbackRoutes(deps));
+  parent.route('/students', parentBugHunterRoutes(deps));
   parent.route('/family', familyRoutes(deps));
+  parent.route('/family', familyParentRoutes(deps));
   parent.route('/', familyExport(deps));
   parent.route('/admin', adminFeedbackRoutes(deps));
   parent.route('/admin', adminErrorReportRoutes(deps));
@@ -176,10 +209,12 @@ export function createApp(deps: AppDeps) {
   app.route('/v1/student/flashcards', flashcardRoutes(deps));
   app.route('/v1/student', studentMapRoutes(deps));
   app.route('/v1/student', studentDailyRoutes(deps));
+  app.route('/v1/student', studentRecallRoutes(deps));
   app.route('/v1/student', reportRoutes(deps.db, 'student'));
   app.route('/v1/student/rewards', studentRewardRoutes(deps));
   app.route('/v1/student', studentFeedbackRoutes(deps));
   app.route('/v1/student', studentStatsRoutes(deps));
+  app.route('/v1/student', studentDailyLimitRoutes(deps));
   app.use('/v1/ai/*', studentAuth(deps));
   app.route('/v1/ai', aiRoutes({ ...deps, gateway }));
   app.route('/v1', parent);

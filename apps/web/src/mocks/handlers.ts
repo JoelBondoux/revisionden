@@ -3,11 +3,13 @@ import { onboardingHandlers } from '../features/onboarding/mocks';
 import { cardsDue, topicMap } from './data';
 import { learnHandlers } from '../features/learn/mocks';
 import { dailyHandlers } from '../features/daily/mocks';
+import { recallHandlers } from '../features/recall/mocks';
 import { rewardsHandlers } from '../features/rewards/mocks';
 import { feedbackHandlers } from '../features/feedback/mocks';
 import { legalHandlers } from '../features/legal/mocks';
-import { statsHandlers } from '../features/stats/mocks';
+import { dailyLimitHandlers, statsHandlers } from '../features/stats/mocks';
 import { familyDataHandlers } from '../features/family-data/mocks';
+import { parentsHandlers } from '../features/parents/mocks';
 
 /**
  * Mock API for development and tests. Every handler uses a real API path exactly (checked by
@@ -36,6 +38,8 @@ export const handlers: RequestHandler[] = [
   ...learnHandlers,
   // Daily 5-a-day (workstream Q).
   ...dailyHandlers,
+  // Recall checks (workstream Q).
+  ...recallHandlers,
   ...rewardsHandlers,
   // Policies, About and feedback (workstream L).
   ...feedbackHandlers,
@@ -43,5 +47,7 @@ export const handlers: RequestHandler[] = [
 
   // Statistics dashboards (workstream K).
   ...statsHandlers,
+  ...dailyLimitHandlers,
   ...familyDataHandlers,
+  ...parentsHandlers,
 ];
