@@ -1,0 +1,273 @@
+/* Game-feel effects (docs/GAME_FEEL.md). Transforms and opacity only. */
+
+.spark-0 {
+  background: var(--arena-spark-0);
+}
+.spark-1 {
+  background: var(--arena-spark-1);
+}
+.spark-2 {
+  background: var(--arena-spark-2);
+}
+.spark-3 {
+  background: var(--arena-spark-3);
+}
+
+/* Particle burst: sits over the chosen option's centre. */
+.burst {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.burst__particle {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  margin: calc(var(--size) / -2);
+  border-radius: 2px;
+  opacity: 0;
+  animation: burst var(--motion-burst) var(--ease-out) forwards;
+}
+
+@keyframes burst {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(0.3) rotate(180deg);
+  }
+}
+
+/* "+XP" floating up. */
+.float-up {
+  position: absolute;
+  inset: 0 0 auto;
+  text-align: center;
+  color: var(--arena-gold);
+  font-weight: var(--font-weight-black);
+  font-size: var(--font-size-lg);
+  pointer-events: none;
+  animation: float-up var(--motion-burst) var(--ease-out) forwards;
+}
+
+@keyframes float-up {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.8);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-48px) scale(1.1);
+  }
+}
+
+/* Wrong answer: a small horizontal shake. */
+.shake {
+  animation: shake var(--motion-shake) ease-in-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+/* COMBO ×n badge. */
+.combo-badge {
+  display: inline-block;
+  margin: 0;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--arena-gold);
+  color: var(--color-text);
+  font-weight: var(--font-weight-black);
+  letter-spacing: 0.04em;
+  animation: pop var(--motion-medium) var(--ease-spring);
+}
+
+@keyframes pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Set-complete stars. */
+.stars {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.star polygon {
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+
+.star--earned polygon {
+  fill: var(--arena-gold);
+  stroke: #c99412;
+}
+
+.star--earned {
+  opacity: 0;
+  animation: pop var(--motion-medium) var(--ease-spring) forwards;
+}
+
+.star--empty polygon {
+  fill: transparent;
+  stroke: var(--arena-text-secondary);
+}
+
+/* Confetti across the screen. */
+.confetti {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.confetti__piece {
+  position: absolute;
+  top: -16px;
+  width: 8px;
+  height: 14px;
+  border-radius: 2px;
+  opacity: 0;
+  animation: confetti 2.4s var(--ease-out) forwards;
+}
+
+@keyframes confetti {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--drift), 100dvh) rotate(var(--spin));
+  }
+}
+
+/* Glowing progress bar with a springy overshoot. */
+.arena-progress {
+  flex: 1;
+  height: 14px;
+  border-radius: var(--radius-pill);
+  background: var(--arena-raised);
+  overflow: hidden;
+}
+
+.arena-progress__fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, var(--arena-option-1), var(--arena-glow));
+  box-shadow: 0 0 12px var(--arena-glow);
+  transform-origin: left center;
+  transition: transform var(--motion-medium) var(--ease-spring);
+}
+
+/* Rolling XP counter. */
+.rolling-number {
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--font-weight-black);
+}
+
+/* Pip with a speech line. */
+.pip-says {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.pip-says__bubble {
+  position: relative;
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+/* The main call to action: pulses gently with a moving shine (about 0.6 times a second). */
+.cta-pulse {
+  position: relative;
+  overflow: hidden;
+  animation: cta-pulse var(--motion-pulse) ease-in-out infinite;
+}
+
+.cta-pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgb(255 255 255 / 35%) 50%, transparent 70%);
+  transform: translateX(-100%);
+  animation: cta-shine calc(var(--motion-pulse) * 2) ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes cta-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+@keyframes cta-shine {
+  0%,
+  60% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-pulse,
+  .cta-pulse::after,
+  .star--earned,
+  .combo-badge {
+    animation: none;
+    opacity: 1;
+  }
+
+  .cta-pulse::after {
+    display: none;
+  }
+
+  .arena-progress__fill {
+    transition: none;
+  }
+}

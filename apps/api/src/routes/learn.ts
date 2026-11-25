@@ -10,6 +10,9 @@ import {
   LearnAttemptRequestSchema,
   STARTING_TEST_SECONDS,
   StartingTestRequestSchema,
+  comboBefore,
+  comboBonusForSequence,
+  comboBonusXp,
   createRng,
   pickStartingTest,
   selectNextItems,
@@ -47,6 +50,9 @@ import {
 import type { MathsEngine } from '../learning/maths-engine';
 import { awardXp, getProgress } from '../learning/progress';
 import { topicAndDescendants } from '../learning/topic-tree';
+
+/** How many recent answers to look back through for a combo (more is never needed in practice). */
+const COMBO_HISTORY = 100;
 
 export interface LearnDeps {
   db: Database;
@@ -245,17 +251,44 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
     return test;
   }
 
+  /**
+   * Test mode combos (docs/GAME_FEEL.md): at the reveal, each answer's combo bonus is added to
+   * that answer's XP, so levels and rewards count it like any XP from answers.
+   */
+  async function awardTestCombo(
+    studentId: string,
+    answered: { id: string; xpEarned: number }[],
+    bonuses: number[],
+    now: Date,
+  ) {
+    let total = 0;
+    for (const [i, row] of answered.entries()) {
+      const bonus = bonuses[i] ?? 0;
+      if (bonus === 0) continue;
+      total += bonus;
+      await db
+        .update(attempts)
+        .set({ xpEarned: row.xpEarned + bonus })
+        .where(eq(attempts.id, row.id));
+    }
+    await awardXp(db, studentId, total, now);
+  }
+
   app.post('/starting-tests/:id/finish', async (c) => {
     const studentId = c.var.student.studentId;
     const test = await ownTest(studentId, c.req.param('id'));
-    await db
-      .update(startingTests)
-      .set({ finishedAt: clock.now() })
-      .where(eq(startingTests.id, test.id));
+    const now = clock.now();
+    const firstFinish = test.finishedAt === null;
+    await db.update(startingTests).set({ finishedAt: now }).where(eq(startingTests.id, test.id));
     const answered = await db
-      .select({ correct: attempts.correct })
+      .select({ id: attempts.id, correct: attempts.correct, xpEarned: attempts.xpEarned })
       .from(attempts)
-      .where(eq(attempts.startingTestId, test.id));
+      .where(eq(attempts.startingTestId, test.id))
+      .orderBy(asc(attempts.createdAt));
+    const combo = comboBonusForSequence(answered.map((a) => a.correct));
+    if (firstFinish && combo.bonusXp > 0) {
+      await awardTestCombo(studentId, answered, combo.bonuses, now);
+    }
     const testTopics = await db
       .selectDistinct({ topicId: topics.id, title: topics.title })
       .from(items)
@@ -273,10 +306,23 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
       answered: answered.length,
       total: test.itemIds.length,
       topics: result,
+      bestCombo: combo.bestCombo,
+      comboBonusXp: combo.bonusXp,
     });
   });
 
   // Attempts -------------------------------------------------------------------------------
+
+  /** Right Learn mode answers in a row just before now (see `comboBefore`). */
+  async function recentCombo(studentId: string, now: Date): Promise<number> {
+    const history = await db
+      .select({ correct: attempts.correct, mode: attempts.mode, at: attempts.createdAt })
+      .from(attempts)
+      .where(eq(attempts.studentId, studentId))
+      .orderBy(desc(attempts.createdAt))
+      .limit(COMBO_HISTORY);
+    return comboBefore(history, now);
+  }
 
   app.post('/attempts', async (c) => {
     const input = await readJson(c, LearnAttemptRequestSchema);
@@ -299,7 +345,11 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
     }
 
     const marked = await markItem(row, input.answer, mathsEngine);
-    const xpEarned = xpForAnswer({ type: row.type as ItemType, score: marked.score });
+    const learning = input.mode === 'learn';
+    // Learn mode combos come from the student's own recent answers (never from the device).
+    const combo = learning && marked.correct ? (await recentCombo(studentId, now)) + 1 : 0;
+    const comboBonus = comboBonusXp(combo);
+    const xpEarned = xpForAnswer({ type: row.type as ItemType, score: marked.score }) + comboBonus;
     const [saved] = await db
       .insert(attempts)
       .values({
@@ -318,7 +368,6 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
     // A flashcard is a self-rating: it never changes mastery (or the predicted grade).
     if (row.type !== 'flashcard') await updateMastery(db, studentId, row.topicId, now);
 
-    const learning = input.mode === 'learn';
     const flashcardAdded =
       learning && !marked.correct && row.type !== 'flashcard'
         ? await addWrongAnswerCard(db, studentId, row, now)
@@ -343,6 +392,8 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
         : null,
       progress,
       flashcardAdded,
+      combo,
+      comboBonusXp: comboBonus,
     };
     return c.json(response);
   });

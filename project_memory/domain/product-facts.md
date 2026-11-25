@@ -66,6 +66,13 @@ Tags: #product #rules #limits #defaults
   and Alien skin). They are now part of the five-year catalogue (see "Rewards progression").
 - XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, worked maths
   20, extended answer 30; part marks earn part.
+- Combo bonus (J4, `packages/core/src/xp.ts`): +5 XP per right answer from the 3rd in a row, added
+  to that answer's `xpEarned`, so reward XP (levels, chapters) and the daily goal count it and the
+  daily reward XP cap still applies. Learn mode: worked out on the server from the student's recent
+  answers (`comboBefore`); a wrong or part-marked answer, a Test mode answer or a gap of more than 5
+  minutes (`ACTIVE_GAP_MS`, the study-session rule) ends a combo. Starting test (Test mode): no
+  combo while answering; at the first `finish` the bonus is added to the answers in order and
+  returned as `bestCombo` and `comboBonusXp`. Attempt responses carry `combo` and `comboBonusXp`.
 - 14 rewards unlock the 15 locked avatar items: one each, except the 100-day streak, which unlocks
   two (crown and Alien skin). `packages/core/src/rewards.ts`, `avatar.ts`.
 - 14 rewards, each unlocking one avatar item: `packages/core/src/rewards.ts`.
@@ -412,6 +419,11 @@ Tags: #product #rules #limits #defaults
   stay light. Combo bonus: +5 XP per right answer from the 3rd in a row (Learn mode; Test mode at the
   reveal). Never lives, timers, pay-to-continue, mystery rewards or streak guilt; after the daily cap
   the call to action becomes "See you tomorrow". Detail: `docs/GAME_FEEL.md`. Workstream J.
+- Settled in J1 (`apps/web/src/features/juice/logic.ts`): stars for a set are 3 for all right, 2 for at
+  least 60% right (3–4 of 5), otherwise 1. A burst is about 20 particles, capped at 24; confetti is
+  capped at 40 pieces. The combo badge shows from 2 in a row. The CTA pulse takes 1.6 s (well under 3
+  flashes a second). Reduced motion removes particles, confetti, float-ups, shakes and pulsing; combo,
+  stars and XP still show as text. Arena colours live in `apps/web/src/design/tokens.ts` (`--arena-*`).
 
 ## Exam practice (planned)
 
