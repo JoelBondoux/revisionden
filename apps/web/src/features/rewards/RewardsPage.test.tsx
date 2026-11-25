@@ -2,7 +2,7 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { RewardsApi } from './rewardsApi';
 import { RewardsScreen } from './RewardsPage';
-import { cinemaTrip, sampleRewards } from './fixtures';
+import { cinemaTrip, sampleRewards, sampleTitle } from './fixtures';
 
 function fakeApi(over: Partial<RewardsApi> = {}): RewardsApi {
   return {
@@ -12,6 +12,8 @@ function fakeApi(over: Partial<RewardsApi> = {}): RewardsApi {
     markGiven: async () => cinemaTrip,
     removeParentReward: async () => undefined,
     updateParentReward: async () => cinemaTrip,
+    getMyTitle: async () => sampleTitle,
+    setMyTitle: async () => sampleTitle,
     ...over,
   };
 }
@@ -19,6 +21,12 @@ function fakeApi(over: Partial<RewardsApi> = {}): RewardsApi {
 const show = (api: RewardsApi) => render(<RewardsScreen api={api} />);
 
 describe('Student rewards screen', () => {
+  it('shows the two-part title card with the nickname', async () => {
+    show(fakeApi());
+    expect(await screen.findByRole('heading', { name: 'Your title' })).toBeInTheDocument();
+    expect(await screen.findByText('Cosmic Scholar')).toBeInTheDocument();
+  });
+
   it('shows the level and progress to the next one', async () => {
     show(fakeApi());
     expect(await screen.findByRole('heading', { name: 'Level 4' })).toBeInTheDocument();
@@ -91,7 +99,9 @@ describe('Student rewards screen', () => {
     );
     const track = await screen.findByRole('region', { name: 'Bug Hunter' });
     expect(within(track).getByText(/1 of 7 unlocked/)).toBeInTheDocument();
-    expect(within(track).getByText(/Next: "Bug Hunter" title/)).toBeInTheDocument();
+    expect(
+      within(track).getByText(/Next: Title words: Bug-Hunting, Bug-Hunter/),
+    ).toBeInTheDocument();
   });
 
   it('shows secret achievements as ??? cards with a found count and vague hints', async () => {

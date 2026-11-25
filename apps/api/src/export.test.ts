@@ -8,6 +8,7 @@ import {
   flashcards,
   parentPushSubscriptions,
   parents,
+  students,
   topics,
 } from '@revisionden/db';
 import { eq } from 'drizzle-orm';
@@ -90,6 +91,20 @@ describe('family data export', () => {
     // Nothing from the other family.
     expect(text).not.toContain(otherKid);
     expect(text).not.toContain('other_kid');
+  });
+
+  it("includes the student's chosen two-part title in their profile (R8)", async () => {
+    const mine = await t.signInParent();
+    const kid = await addStudent(mine.headers, 'export_title');
+    await t.db
+      .update(students)
+      .set({ titleFirst: 'Cosmic', titleLast: 'Scholar' })
+      .where(eq(students.id, kid));
+    const res = await t.app.request('/v1/export', { headers: mine.headers });
+    const data = (await res.json()) as {
+      students: { profile: { titleFirst: string | null; titleLast: string | null } }[];
+    };
+    expect(data.students[0]!.profile).toMatchObject({ titleFirst: 'Cosmic', titleLast: 'Scholar' });
   });
 
   it("lists the parent's own devices with reward news on, without their push keys", async () => {

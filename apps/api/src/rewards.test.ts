@@ -8,6 +8,7 @@ import {
   encodeAvatar,
   DEFAULT_AVATAR,
   AVATAR_CATALOGUE,
+  StudentTitleResponseSchema,
 } from '@revisionden/core';
 import { attempts, feedback, items, rewards, streaks, students, topics } from '@revisionden/db';
 import { createTestContext, jsonRequest, type TestContext } from './test/helpers';
@@ -507,5 +508,54 @@ describe('hidden tracks and secret achievements', () => {
     for (const id of ['fact-checker', 'planner', 'pace-setter', 'perfectionist']) {
       expect(ids).not.toContain(id);
     }
+  });
+});
+
+describe('two-part titles (R8)', () => {
+  async function getTitle(headers: Record<string, string>) {
+    const res = await t.app.request('/v1/student/rewards/title', { headers });
+    expect(res.status).toBe(200);
+    return StudentTitleResponseSchema.parse(await res.json());
+  }
+  const putTitle = (headers: Record<string, string>, body: unknown) =>
+    t.app.request('/v1/student/rewards/title', jsonRequest('PUT', body, headers));
+
+  it('starts with no title and no words for a new student', async () => {
+    const { headers } = await t.familyStudent('r_title_new');
+    const view = await getTitle(headers);
+    expect(view).toMatchObject({ nickname: 'r_title_new', first: null, last: null, title: null });
+    expect(view.words).toEqual({ first: [], last: [] });
+  });
+
+  it('lists unlocked words and saves a chosen pair, free to change any time', async () => {
+    const { studentId, headers } = await t.familyStudent('r_title_pick');
+    await t.db.insert(rewards).values([
+      { studentId, rewardId: 'level-4' },
+      { studentId, rewardId: 'level-7' },
+    ]);
+    const view = await getTitle(headers);
+    expect(view.words.first.map((w) => w.text)).toEqual(['Fresh', 'Quick']);
+    expect(view.words.last.map((w) => w.text)).toEqual(['Starter', 'Learner']);
+
+    const res = await putTitle(headers, { first: 'Quick', last: 'Starter' });
+    expect(res.status).toBe(200);
+    expect(StudentTitleResponseSchema.parse(await res.json()).title).toBe('Quick Starter');
+    expect((await getTitle(headers)).title).toBe('Quick Starter');
+
+    expect((await putTitle(headers, { first: 'Fresh', last: 'Learner' })).status).toBe(200);
+    expect((await putTitle(headers, { first: null, last: null })).status).toBe(200);
+    expect((await getTitle(headers)).title).toBeNull();
+  });
+
+  it('refuses a word the student has not unlocked, and free text', async () => {
+    const { headers } = await t.familyStudent('r_title_locked');
+    const locked = await putTitle(headers, { first: 'Flawless', last: null });
+    expect(locked.status).toBe(400);
+    expect(await locked.json()).toMatchObject({ error: { code: 'title_locked' } });
+    expect((await putTitle(headers, { first: 'anything i like', last: null })).status).toBe(400);
+  });
+
+  it('needs a signed-in student device', async () => {
+    expect((await t.app.request('/v1/student/rewards/title')).status).toBe(401);
   });
 });
