@@ -80,4 +80,30 @@ describe('Title picker (two-part titles)', () => {
     await userEvent.click(await screen.findByRole('button', { name: 'Save title' }));
     expect(await screen.findByRole('alert')).toHaveTextContent("Couldn't save your title");
   });
+
+  it('explains a word pair that does not go together, without calling the server', async () => {
+    const setMyTitle = vi.fn(fakeApi().setMyTitle);
+    render(
+      <TitlePicker
+        api={fakeApi({
+          setMyTitle,
+          getMyTitle: async () =>
+            view({
+              first: null,
+              last: null,
+              title: null,
+              words: { first: [word('Prehistoric', 'first')], last: [word('Senior', 'last')] },
+            }),
+        })}
+      />,
+    );
+    await userEvent.selectOptions(
+      await screen.findByRole('combobox', { name: 'First word' }),
+      'Prehistoric',
+    );
+    await userEvent.selectOptions(screen.getByRole('combobox', { name: 'Last word' }), 'Senior');
+    await userEvent.click(screen.getByRole('button', { name: 'Save title' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent("Those two words don't go together");
+    expect(setMyTitle).not.toHaveBeenCalled();
+  });
 });

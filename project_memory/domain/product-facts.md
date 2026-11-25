@@ -619,7 +619,7 @@ Tags: #product #rules #limits #defaults
   hyphens, up to 16), uniqueness, and every possible pairing against the nickname blocked words;
   `REVIEWED_BLOCKED_PAIRS` is the manual review list the picker refuses. The student picks one of
   each (or none) on the Rewards page; saved as `students.title_first` / `title_last` (migration
-  0019); `GET`/`PUT /v1/student/rewards/title`; free to change any time. Shown under the nickname
+  0019); `GET`/`PUT /v1/student/rewards/title`; free to change any time; included in the family data export. Shown under the nickname
   on the Rewards page; the friends league is not built yet, so it shows there once it is.
 - "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
   NSPCC adult helpline, parent-only). Reached from Settings, the heart link in the student footer,

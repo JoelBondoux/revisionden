@@ -61,6 +61,11 @@ export function titleWordsFor(earnedIds: readonly string[]): {
   };
 }
 
+/** True when the pair is on the manual review list (fine words that read badly together). */
+export function isReviewedPair(first: string, last: string): boolean {
+  return REVIEWED.has(pairKey(first, last));
+}
+
 export type TitleRejection = 'locked' | 'reviewed';
 
 export function chooseTitle(
@@ -73,7 +78,7 @@ export function chooseTitle(
   if (!unlocked(choice.first, words.first) || !unlocked(choice.last, words.last)) {
     return { ok: false, reason: 'locked' };
   }
-  if (choice.first && choice.last && REVIEWED.has(pairKey(choice.first, choice.last))) {
+  if (choice.first && choice.last && isReviewedPair(choice.first, choice.last)) {
     return { ok: false, reason: 'reviewed' };
   }
   return { ok: true };

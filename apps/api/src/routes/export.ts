@@ -191,6 +191,8 @@ export function familyExport({ db, clock }: { db: Database; clock: Clock }) {
           nickname: kid.nickname,
           avatarCode: kid.avatarCode,
           yearGroup: kid.yearGroup,
+          titleFirst: kid.titleFirst,
+          titleLast: kid.titleLast,
           createdAt: kid.createdAt,
           updatedAt: kid.updatedAt,
         },

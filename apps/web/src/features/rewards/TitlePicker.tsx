@@ -4,7 +4,12 @@
  * have unlocked. Curated words only; changing is free and allowed any time.
  */
 import { useEffect, useState } from 'react';
-import type { StudentTitleResponse, TitleChoice } from '@revisionden/core';
+import {
+  isReviewedPair,
+  TITLE_MESSAGES,
+  type StudentTitleResponse,
+  type TitleChoice,
+} from '@revisionden/core';
 import { Button, Card } from '../../components';
 
 export interface TitleApi {
@@ -40,6 +45,11 @@ export function TitlePicker({ api }: { api: TitleApi }) {
 
   async function save() {
     setError(null);
+    // Pairs on the manual review list are refused by the server too; say why up front.
+    if (first && last && isReviewedPair(first, last)) {
+      setError(TITLE_MESSAGES.reviewed);
+      return;
+    }
     try {
       show(await api.setMyTitle({ first: first || null, last: last || null }));
     } catch {

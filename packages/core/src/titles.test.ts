@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { REWARDS } from './catalogue';
-import { TITLE_WORDS, chooseTitle, formatTitle, titleWordsFor, validateTitleWords } from './titles';
+import {
+  TITLE_WORDS,
+  chooseTitle,
+  formatTitle,
+  isReviewedPair,
+  titleWordsFor,
+  validateTitleWords,
+} from './titles';
 
 const firsts = TITLE_WORDS.filter((w) => w.part === 'first');
 const lasts = TITLE_WORDS.filter((w) => w.part === 'last');
@@ -108,5 +115,10 @@ describe('choosing a title', () => {
       ok: false,
       reason: 'reviewed',
     });
+  });
+
+  it('tells the picker which pairs are on the manual review list', () => {
+    expect(isReviewedPair('Prehistoric', 'Senior')).toBe(true);
+    expect(isReviewedPair('Cosmic', 'Scholar')).toBe(false);
   });
 });
