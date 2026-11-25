@@ -510,3 +510,12 @@ Tags: #product #rules #limits #defaults
   Normal / Large (112.5%) / Larger (125%), more spacing (line height 1.8, letter 0.12em, word
   0.16em), tint none / cream / blue. Defaults: all off. Applied app-wide by `data-reading-*`
   attributes on `<html>` (`apps/web/src/features/reading/`).
+
+## Operator console (planned)
+
+- Operators use AppDeck Admin (repo `appdeck-admin`) with RevisionDen as a managed app. AppDeck has
+  no database access; it calls a signed operator bridge (HMAC tag `appdeck-revisionden-operator-v1`,
+  per-environment shared secret, 5-minute window, idempotent request ids), and every operator read
+  and change is audited. Agents: support; Managers: money and data. Complaints: acknowledge in 2
+  working days, aim to resolve in 14. Data requests: one calendar month. Detail:
+  `docs/OPERATOR_CONSOLE.md`.
