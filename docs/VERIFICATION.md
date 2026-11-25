@@ -37,6 +37,12 @@ different places. Stored with the content (`content/`), never shown to students.
 
 Commercial revision sites, forums and AI output are never sources.
 
+**Standard definitions with no official source** (decision 0008). When no official source defines
+a standard term (for example "tangent": the 1MA1 specification only names it), an item may rest on
+the specification point that names the term, cited with its quote, plus a standard definition. It
+must set `needs_human_approval: true` and is approved individually, never through a batch sample.
+An official definition, where one exists, is always cited instead.
+
 **Citation record**
 
 | Field          | Meaning                                                                                                                                                |
@@ -184,11 +190,17 @@ Verified extended answers need a passing `blind-marking` check (not `blind-answe
 exemplars, and a `human-approval` check; review batches always include them in the sample.
 
 **Blind answer and adversarial review (steps 3 and 4).** Providers share one interface
-(`scripts/verify/providers.mjs`) with structured JSON output that is validated before use. The
-blind answer must come from a different provider from the writer (Claude by default, read from
+(`scripts/verify/providers.mjs`) with structured JSON output that is validated before use. To go
+through the authenticated AI Gateway, set `<PROVIDER>_BASE_URL` to the gateway's provider URL and
+`AI_GATEWAY_TOKEN`; the token is sent as `cf-aig-authorization`, with
+`cf-aig-collect-log-payload: false` so prompts and answers are not logged. The token is sent only to
+https addresses on `gateway.ai.cloudflare.com`, never to a provider's own API. The blind answer must come from a different provider from the writer (Claude by default, read from
 the grounded-writing check). It sees no answer, hint or explanation, and passes only on a match
 with high confidence (multiple choice: same option; numeric: within the item tolerance; short
-answers and flashcards: same words ignoring case and end punctuation; worked maths: the same
+answers and flashcards: same words ignoring case and end punctuation; maths flashcards with a
+`back_formula`: the maths engine finds the same formula (`±` gives both branches, a bare right-hand
+side is compared with the expected one, notation is read strictly so `/ 2a` is not `/ (2a)`), and the
+answer states every listed condition such as `a ≠ 0` as a whole clause (`a ≠ 0.5` does not count), otherwise it fails for a person to check; worked maths: the same
 solutions in any order, or the same expression). The reviewer sees the whole item and the
 quoted sources and must report factual errors, a wrong answer, ambiguity, a second correct
 option, content outside the specification, unsupported claims or poor wording; any problem or

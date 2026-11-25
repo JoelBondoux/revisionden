@@ -1,5 +1,5 @@
 /* RevisionDen public site. Colours, type, spacing and radii come from the web app's tokens
-   (apps/web/src/design/tokens.css, prepended at build). Dark mode reuses the arena tokens. */
+   (apps/web/src/design/tokens.css, prepended at build). Dark mode uses the app's dark theme values. */
 :root {
   --site-bg: var(--color-background);
   --site-surface: var(--color-surface);
@@ -11,22 +11,27 @@
   /* Links (J7, docs/GAME_FEEL.md "Links"). */
   --site-link: var(--color-primary-edge);
   --site-link-bar: var(--color-mastery-fill);
+  /* Doodle background ink (J8): the app's 7% violet. */
+  --site-pattern-ink: rgb(108 71 245 / 7%);
   --site-width: 72rem;
   color-scheme: light dark;
 }
 
+/* Dark: the app's dark theme values (J8, owner 2026-11-25), following the device setting only.
+   Buttons keep the brand purple with white text. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --site-bg: var(--arena-bg);
-    --site-surface: var(--arena-raised);
-    --site-text: var(--arena-text);
-    --site-muted: var(--arena-text-secondary);
-    --site-border: #3d2d6b;
-    --site-accent: var(--arena-option-1);
-    --site-accent-soft: #2f2160;
-    --site-link: var(--arena-glow);
-    --site-link-bar: var(--arena-option-1);
-    --focus-ring: 0 0 0 3px var(--arena-bg), 0 0 0 6px var(--arena-glow);
+    --site-bg: #14112a;
+    --site-surface: #1f1b33;
+    --site-text: #eceaf5;
+    --site-muted: #b5b1c8;
+    --site-border: #3a3552;
+    --site-accent: var(--color-primary);
+    --site-accent-soft: #2d2652;
+    --site-link: #c4b5ff;
+    --site-link-bar: #3b3170;
+    --site-pattern-ink: rgb(196 181 255 / 7%);
+    --focus-ring: 0 0 0 3px #14112a, 0 0 0 6px #c4b5ff;
   }
 }
 
@@ -47,6 +52,26 @@ body {
   font-family: var(--font-family);
   font-size: var(--font-size-md);
   line-height: 1.6;
+}
+
+/* The app's line-doodle tile (apps/web/src/design/doodles.svg, J8) as a fixed layer behind
+   everything: decorative only, very low contrast. Colour comes from the theme via the mask. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--site-pattern-ink);
+  -webkit-mask: url('/doodles.svg') 0 0 / 240px 240px repeat;
+  mask: url('/doodles.svg') 0 0 / 240px 240px repeat;
+}
+
+/* No pattern for high contrast or forced colours (Windows High Contrast). */
+@media (prefers-contrast: more), (forced-colors: active) {
+  body::before {
+    display: none;
+  }
 }
 
 a {

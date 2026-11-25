@@ -37,6 +37,16 @@
       "minimum": 1,
       "maximum": 5
     },
+    "learning_point": {
+      "$ref": "#/$defs/id",
+      "description": "Optional finer skill within the topic, e.g. gcse-maths-h-n7-lp-fractional-indices. After a wrong answer the app offers another item with the same learning point (at least 3 per learning point); without one it falls back to the topic."
+    },
+    "expected_seconds": {
+      "type": "integer",
+      "minimum": 5,
+      "maximum": 900,
+      "description": "Optional time a confident student takes. Answers slower than twice this count as shaky. Without it the app uses a guide by item type."
+    },
     "source_ref": {
       "type": "string",
       "minLength": 1,
@@ -437,6 +447,25 @@
         },
         "back": {
           "$ref": "#/$defs/text"
+        },
+        "back_formula": {
+          "type": "object",
+          "description": "Maths flashcards: the back as a formula the maths engine can read (x = ..., +- for ±, sqrt, ^), plus any conditions that must be stated (for example \"a ≠ 0\"). The blind answer is compared with the maths engine and must mention every condition (docs/VERIFICATION.md step 3).",
+          "required": ["formula"],
+          "properties": {
+            "formula": {
+              "type": "string",
+              "minLength": 3
+            },
+            "conditions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "additionalProperties": false
         }
       }
     },
