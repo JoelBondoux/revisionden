@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Coming soon: reward sounds that get bigger and more exciting the bigger the reward.
 - Coming soon: flashcards give XP for finishing a session, not for each card, so there's no point tapping "Good" on everything.
 - Coming soon: a stats page for students and a stats dashboard for parents.
 - Coming soon: rewards you set yourself as a parent, like a cinema trip for a 30-day streak.

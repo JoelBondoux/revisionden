@@ -292,6 +292,9 @@ Tags: #product #rules #limits #defaults
 - Original Web Audio sounds, no files. Header quick mute and Settings (on/off, volume, tap sounds
   off by default), per device; follows the iOS silent switch where possible. No correct/wrong
   sounds in Test mode before submit. Sound is never the only signal. Workstream U.
+- Reward sounds scale with rarity (common, rare, epic, legendary; 4+ variations each, no repeat
+  in a row); milestone ladders and levels climb in pitch and fullness; one sound for several
+  rewards at once; legendary at most 3 s and skippable (owner, 2026-11-25; U4).
 - Defaults: on, medium volume, tap sounds off; saved in `localStorage` key `revisionden.sound`
   (storage errors are ignored). One AudioContext, made at the first tap or key press; paused when
   the app is hidden. Test mode: submit and one reveal for the set; timed papers: only the timer
