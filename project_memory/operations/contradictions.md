@@ -5,6 +5,11 @@
 
 ## Open
 
+- [ ] **School holidays and the daily limit.** `docs/PRODUCT_RULES.md` (Daily limit) gives other
+      days (weekends and holidays) the higher limit, but no school holiday dates are stored, so
+      `dayTypeOf` in `packages/core/src/daily-limit.ts` treats holidays as school days (it takes a
+      `holidays` list that the API passes empty). Not settled: term and holiday dates need the
+      school report or study plan work, or a parent setting.
 - [ ] **AQA's AI clause and our content pipeline.** AQA's copyright policy says it "does not
       permit the use of any AQA material in any manner or for any purposes in connection with the
       training" of AI tools and "will not allow the use of any AQA material" in a third-party work

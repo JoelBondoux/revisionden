@@ -323,7 +323,7 @@ Tags: #product #rules #limits #defaults
   "Not set up yet", never zeros. PDF export is made in the browser with nicknames only.
 - Terms until real dates are entered: autumn 1 Sep–31 Dec, spring 1 Jan–31 Mar, summer
   1 Apr–31 Aug; the school year is 1 Sep–31 Aug. Goal lines: 50 XP a day (Week), 250 XP a week
-  (Term). Daily cap 2 hours (provisional, `DEFAULT_DAILY_CAP_MINUTES`, until wellbeing settings).
+  (Term). Time past the student's daily limit is not counted; healthy habits count days at the limit.
 - Subject mastery averages practised topics; change is replayed from marked answers (period start
   for the student, 4 weeks for the parent). Healthy habits are for this week; quiet hours are the
   reminder quiet hours. A rest day is a finished day with no study at all: answers and flashcard
@@ -444,9 +444,13 @@ Tags: #product #rules #limits #defaults
 ## Daily limit, two parents, hidden tracks (owner, 2026-11-25; planned)
 
 - Daily limit in active study minutes: defaults GCSE 60/90 (school day/other), A-Level 90/120;
-  ceilings GCSE 2h/3h, A-Level 2.5h/3.5h; +30 in exam season with parent consent. Parents set it;
-  the app only suggests (+10 at most fortnightly when the student keeps going without accuracy dips;
-  −10 to −15 on tiredness signs). Detail: `docs/PRODUCT_RULES.md` (Daily limit).
+  ceilings GCSE 2h/3h, A-Level 2.5h/3.5h; +30 in exam season (6 weeks before the first exam to the
+  last) with parent consent. Parents set 15 min to 6 h per day type; the app only suggests, at most
+  weekly (+10 at most fortnightly when the limit is reached on 4 of 14 days with steady late
+  accuracy; −10 for one tiredness sign, −15 for two or more). No XP, rewards or streak credit past
+  the limit; progress responses carry `dailyLimit`. School days are Mon–Fri (holidays not known
+  yet). Implemented (K7): `packages/core/src/daily-limit.ts`, `apps/api/src/daily-limit/`,
+  `daily_limits` table. Detail: `docs/PRODUCT_RULES.md` (Daily limit).
 - Two parent accounts with equal control; second invited by link or code (7 days); activity log
   ("Parent 1/2"); both confirm whole-family deletion.
 - Hidden tracks besides Bug Hunter: Fact Checker, Comeback Kid, Explorer, Planner, Pace Setter,

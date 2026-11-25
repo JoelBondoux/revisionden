@@ -190,6 +190,9 @@ All bodies are validated with the Zod schemas in `packages/core`. Errors always 
 | `GET /v1/student/stats?period=week\|term\|year`                                                                                    | student device  | My stats: tiles, XP chart, mastery, bests                                    |
 | `GET /v1/students/:id/stats?period=…`                                                                                              | parent          | The same stats for their own child                                           |
 | `GET /v1/students/:id/dashboard`                                                                                                   | parent          | Parent stats dashboard for this week                                         |
+| `GET, PUT /v1/students/:id/daily-limit`                                                                                            | parent          | Daily limit per day type, today, suggestion                                  |
+| `POST /v1/students/:id/daily-limit/suggestion`                                                                                     | parent          | Accept or dismiss the weekly suggestion                                      |
+| `GET /v1/student/daily-limit`, `POST .../seen`                                                                                     | student device  | Minutes left today; change notice                                            |
 | `POST /v1/ai/mark-short-answer`                                                                                                    | student device  | Mark a short answer (rules, then AI)                                         |
 | ---------------------------------------------------------------------------------------------------------------------------------- | --------------- | ---------------------------------------------------------                    |
 | ---------------------------------------------------------------------------------------------------------------------------------- | --------------- | ---------------------------------------------------                          |
@@ -249,7 +252,7 @@ The only exceptions are listed in `PENDING_ROUTES` (agreed with another workstre
 | `features/notifications/notificationsApi.ts`      | `GET /v1/notifications/vapid-key`, `POST, DELETE /v1/student/push-subscriptions`                  | yes   |
 |                                                   | `GET, PUT /v1/students/:id/reminder-settings`                                                     | yes   |
 | `public/sw.js` (push text)                        | `GET /v1/student/reminders/latest`                                                                | yes   |
-| `features/stats/statsApi.ts`                      | `GET /v1/student/stats`, `GET /v1/students`, `GET /v1/students/:id/dashboard`                     | yes   |
+| `features/stats/statsApi.ts`                      | `GET /v1/student/stats`, `GET /v1/students`, `GET /v1/students/:id/dashboard`, daily limit routes | yes   |
 | `features/feedback/feedbackApi.ts`                | `GET, POST /v1/student/feedback`, `GET, POST /v1/feedback`                                        | yes   |
 |                                                   | `GET /v1/admin/feedback`, `PATCH /v1/admin/feedback/:id`                                          | yes   |
 | `features/review/reviewApi.ts`                    | `GET /v1/review/{me,reports,batches,batches/:id}`                                                 | yes   |
