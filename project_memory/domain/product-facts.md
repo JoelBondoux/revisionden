@@ -92,8 +92,9 @@ Tags: #product #rules #limits #defaults
 - The web app calls the real API on dev and staging (parent session cookie, or the student
   device cookie). MSW mocks with made-up data are used only in local development and tests, and
   must use real API paths (`apps/api/routes.json`). Parents sign in from the welcome page
-  (Better Auth) and land on "Who's revising?" (`/family`, `GET /v1/onboarding/family`); signed
-  out, screens ask them to sign in. The topic map and Cards badge wait for F2's
+  (Better Auth) and land on "Who's revising?" (`/family`, `GET /v1/onboarding/family`), or on
+  `/onboarding` if they have no children yet. Signed out, any screen shows the sign-in buttons
+  and returns to the same page after sign-in. Sign out is on the welcome page and `/family`. The topic map and Cards badge wait for F2's
   `GET /v1/student/map` and `GET /v1/student/cards/due`.
 - Every "Something went wrong" shows a reference code like `RD-7K2M9Q` (no I, L, O or U), also
   in the API logs with no personal data, so a family can report it. Implemented in

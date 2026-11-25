@@ -10,7 +10,7 @@ import {
   type OnboardChildRequest,
   type OnboardedChild,
 } from '@revisionden/core';
-import type { OnboardingApi } from './api';
+import { OnboardingApiError, type OnboardingApi } from './api';
 import { OnboardingApiProvider } from './OnboardingApiContext';
 import { OnboardingPage } from './OnboardingPage';
 
@@ -76,6 +76,16 @@ async function addChild(
 }
 
 describe('OnboardingPage', () => {
+  it('asks a signed-out parent to sign in, with the sign-in buttons', async () => {
+    const api = fakeApi();
+    api.getFamily = vi.fn(async () =>
+      Promise.reject(new OnboardingApiError('unauthorized', 'Sign in to continue', 401)),
+    );
+    renderPage(api);
+    expect(await screen.findByRole('heading', { name: 'Please sign in' })).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'Continue with Google' })).toBeInTheDocument();
+  });
+
   it('starts with an empty family and Finish switched off', async () => {
     renderPage(fakeApi());
     expect(await screen.findByRole('heading', { name: "Who's studying?" })).toBeInTheDocument();

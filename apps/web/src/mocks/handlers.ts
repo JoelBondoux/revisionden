@@ -18,6 +18,9 @@ export const handlers: RequestHandler[] = [
   http.post('*/api/auth/sign-in/social', () =>
     HttpResponse.json({ url: `${location.origin}/family`, redirect: true }),
   ),
+  // Signed out by default in tests; sign-out always works.
+  http.get('*/api/auth/get-session', () => HttpResponse.json(null)),
+  http.post('*/api/auth/sign-out', () => HttpResponse.json({ success: true })),
   ...onboardingHandlers,
   // Student device topic map and cards due: agreed with workstream F2, not on the API yet.
   http.get('*/v1/student/map', () => HttpResponse.json(topicMap)),

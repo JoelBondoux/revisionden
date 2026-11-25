@@ -234,31 +234,33 @@ MSW mock handlers must use these paths exactly: `apps/web/src/test/apiRoutes.tes
 `afterEach` in `src/test-setup.ts` fail a test whose mocks name a route the API does not have.
 The only exceptions are listed in `PENDING_ROUTES` (agreed with another workstream, not built).
 
-| Web caller (`apps/web/src`)                     | Route                                                                                             | Real? |
-| ----------------------------------------------- | ------------------------------------------------------------------------------------------------- | ----- |
-| `api/signInProviders.ts` (welcome page)         | `GET /v1/auth/providers`                                                                          | yes   |
-| `api/signIn.ts` (welcome page buttons)          | `POST /api/auth/sign-in/social` (Better Auth; back to `/family`)                                  | yes   |
-| `api/client.ts` `getFamily` (`/family`)         | `GET /v1/onboarding/family`                                                                       | yes   |
-| `api/client.ts` `getTopicMap` (`/map`)          | `GET /v1/student/map`                                                                             | F2    |
-| `api/client.ts` `getCardsDue` (Cards tab badge) | `GET /v1/student/cards/due`                                                                       | F2    |
-| `api/client.ts` `reportClientError`             | `POST /v1/client-errors`                                                                          | yes   |
-| `features/onboarding/api.ts`                    | `GET /v1/onboarding/family`, `POST /v1/onboarding/children`                                       | yes   |
-| `features/onboarding/api.ts` (link a device)    | `POST /v1/students/:id/link-tokens`, `POST /v1/device/link`, `.../verify`                         | yes   |
-| `features/legal/acceptance.tsx`                 | `GET, PUT /v1/policy-acceptances`                                                                 | yes   |
-| `features/learn/learnApi.ts` (lessons, tests)   | `GET /v1/student/learn/{lesson,command-words,progress}`                                           | yes   |
-|                                                 | `GET /v1/student/learn/subjects/:id/topics`                                                       | yes   |
-|                                                 | `POST /v1/student/learn/{attempts,starting-tests,starting-tests/:id/finish}`                      | yes   |
-| `features/learn/learnApi.ts` (flashcards)       | `GET, POST /v1/student/flashcards`, `GET .../decks/:topicId`, `POST .../:id/review`               | yes   |
-| `features/rewards/rewardsApi.ts`                | `GET /v1/student/rewards`, `GET /v1/students/:id/rewards`                                         | yes   |
-|                                                 | `POST /v1/students/:id/parent-rewards`, `PATCH, DELETE .../:rewardId`, `POST .../:rewardId/given` | yes   |
-| `features/notifications/notificationsApi.ts`    | `GET /v1/notifications/vapid-key`, `POST, DELETE /v1/student/push-subscriptions`                  | yes   |
-|                                                 | `GET, PUT /v1/students/:id/reminder-settings`                                                     | yes   |
-| `public/sw.js` (push text)                      | `GET /v1/student/reminders/latest`                                                                | yes   |
-| `features/stats/statsApi.ts`                    | `GET /v1/student/stats`, `GET /v1/students`, `GET /v1/students/:id/dashboard`                     | yes   |
-| `features/feedback/feedbackApi.ts`              | `GET, POST /v1/student/feedback`, `GET, POST /v1/feedback`                                        | yes   |
-|                                                 | `GET /v1/admin/feedback`, `PATCH /v1/admin/feedback/:id`                                          | yes   |
-| `features/review/reviewApi.ts`                  | `GET /v1/review/{me,reports,batches,batches/:id}`                                                 | yes   |
-|                                                 | `POST /v1/review/reports/:id/decision`, `POST .../batches/:id/items/:itemId/decision`             | yes   |
+| Web caller (`apps/web/src`)                       | Route                                                                                             | Real? |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ----- |
+| `api/signInProviders.ts` (welcome page)           | `GET /v1/auth/providers`                                                                          | yes   |
+| `api/SignInButtons.tsx` (welcome page, every 401) | `POST /api/auth/sign-in/social` (Better Auth; back to the same page, or `/family`)                | yes   |
+| `api/signIn.ts` `useParentSession` (welcome)      | `GET /api/auth/get-session`                                                                       | yes   |
+| `api/SignOutButton.tsx` (welcome, `/family`)      | `POST /api/auth/sign-out`                                                                         | yes   |
+| `api/client.ts` `getFamily` (`/family`)           | `GET /v1/onboarding/family`                                                                       | yes   |
+| `api/client.ts` `getTopicMap` (`/map`)            | `GET /v1/student/map`                                                                             | F2    |
+| `api/client.ts` `getCardsDue` (Cards tab badge)   | `GET /v1/student/cards/due`                                                                       | F2    |
+| `api/client.ts` `reportClientError`               | `POST /v1/client-errors`                                                                          | yes   |
+| `features/onboarding/api.ts`                      | `GET /v1/onboarding/family`, `POST /v1/onboarding/children`                                       | yes   |
+| `features/onboarding/api.ts` (link a device)      | `POST /v1/students/:id/link-tokens`, `POST /v1/device/link`, `.../verify`                         | yes   |
+| `features/legal/acceptance.tsx`                   | `GET, PUT /v1/policy-acceptances`                                                                 | yes   |
+| `features/learn/learnApi.ts` (lessons, tests)     | `GET /v1/student/learn/{lesson,command-words,progress}`                                           | yes   |
+|                                                   | `GET /v1/student/learn/subjects/:id/topics`                                                       | yes   |
+|                                                   | `POST /v1/student/learn/{attempts,starting-tests,starting-tests/:id/finish}`                      | yes   |
+| `features/learn/learnApi.ts` (flashcards)         | `GET, POST /v1/student/flashcards`, `GET .../decks/:topicId`, `POST .../:id/review`               | yes   |
+| `features/rewards/rewardsApi.ts`                  | `GET /v1/student/rewards`, `GET /v1/students/:id/rewards`                                         | yes   |
+|                                                   | `POST /v1/students/:id/parent-rewards`, `PATCH, DELETE .../:rewardId`, `POST .../:rewardId/given` | yes   |
+| `features/notifications/notificationsApi.ts`      | `GET /v1/notifications/vapid-key`, `POST, DELETE /v1/student/push-subscriptions`                  | yes   |
+|                                                   | `GET, PUT /v1/students/:id/reminder-settings`                                                     | yes   |
+| `public/sw.js` (push text)                        | `GET /v1/student/reminders/latest`                                                                | yes   |
+| `features/stats/statsApi.ts`                      | `GET /v1/student/stats`, `GET /v1/students`, `GET /v1/students/:id/dashboard`                     | yes   |
+| `features/feedback/feedbackApi.ts`                | `GET, POST /v1/student/feedback`, `GET, POST /v1/feedback`                                        | yes   |
+|                                                   | `GET /v1/admin/feedback`, `PATCH /v1/admin/feedback/:id`                                          | yes   |
+| `features/review/reviewApi.ts`                    | `GET /v1/review/{me,reports,batches,batches/:id}`                                                 | yes   |
+|                                                   | `POST /v1/review/reports/:id/decision`, `POST .../batches/:id/items/:itemId/decision`             | yes   |
 
 Removed in I: the wave-1 placeholders `GET family`, `GET students/:id/map`,
 `GET students/:id/cards/due`, `GET lessons/:id` and `POST lessons/:id/answers` (never on the API;
@@ -273,8 +275,8 @@ API routes the web app does not call yet: `GET /health` (deploy check and smoke 
 `GET /v1/student/me`, `POST /v1/student/lock`, `POST /v1/student/items/:itemId/reports`,
 `POST /v1/items/:itemId/reports`, `POST /v1/ai/mark-short-answer`, `POST /v1/review/batches`,
 `GET, POST /v1/review/rechecks`, `POST .../rechecks/:id/done`, `GET /v1/review/recalculations`,
-`POST .../recalculations/:id/done`, and Better Auth's other `/api/auth/*` routes (callback,
-session, sign-out).
+`POST .../recalculations/:id/done`, and Better Auth's callback (`/api/auth/callback/:provider`, reached by the provider, not by app
+code) and its other `/api/auth/*` routes.
 
 **Content in the database.** `pnpm --filter @revisionden/api content:sync` loads `content/` into
 `topics` and `items` (keyed by `items.content_id`), keeping each item's verification status and

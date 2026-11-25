@@ -1,6 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useApi } from '../api/ApiContext';
 import { LoadingOrError } from '../api/LoadingOrError';
+import { SignOutButton } from '../api/SignOutButton';
 import { useApiResource } from '../api/useApiResource';
 import { Avatar } from '../components/Avatar';
 import { useStudent } from '../session/StudentContext';
@@ -19,13 +20,12 @@ export function FamilyPage() {
   return (
     <div className="stack">
       <h1>Who&apos;s revising?</h1>
-      {family.status !== 'ready' ? (
+      {family.status === 'ready' && family.data.children.length === 0 ? (
+        <Navigate to="/onboarding" replace />
+      ) : family.status !== 'ready' ? (
         <LoadingOrError resource={family} />
       ) : (
         <ul className="profile-list">
-          {family.data.children.length === 0 && (
-            <li className="secondary-text">No children added yet.</li>
-          )}
           {family.data.children.map(({ student }) => (
             <li key={student.id}>
               <button type="button" className="profile" onClick={() => choose(student.id)}>
@@ -42,6 +42,7 @@ export function FamilyPage() {
       <Link to="/onboarding" className="secondary-text">
         Parents: add or manage children
       </Link>
+      {family.status === 'ready' && <SignOutButton />}
     </div>
   );
 }

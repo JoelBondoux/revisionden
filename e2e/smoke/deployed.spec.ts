@@ -67,7 +67,7 @@ test.describe('deployed web app', () => {
   }) => {
     await page.goto('/family');
     await expect(page.getByRole('heading', { name: 'Please sign in' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Go to sign in' })).toHaveAttribute('href', '/');
+    await expect(page.getByRole('button', { name: 'Continue with Google' })).toBeVisible();
     await expect(page.getByText('Something went wrong')).toHaveCount(0);
   });
 });

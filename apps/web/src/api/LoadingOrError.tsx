@@ -1,6 +1,7 @@
-import { Button, ButtonLink } from '../components/Button';
+import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { ErrorRef } from './ErrorRef';
+import { SignInPrompt } from './SignInButtons';
 import type { ApiResource } from './useApiResource';
 
 interface LoadingOrErrorProps {
@@ -20,13 +21,7 @@ export function LoadingOrError({ resource }: LoadingOrErrorProps) {
   if (error.kind === 'http' && error.status === 401) {
     return (
       <Card>
-        <div role="alert">
-          <h2>Please sign in</h2>
-          <p>
-            You are signed out. Parents: sign in again. Students: ask a parent to link this device.
-          </p>
-        </div>
-        <ButtonLink to="/">Go to sign in</ButtonLink>
+        <SignInPrompt />
       </Card>
     );
   }

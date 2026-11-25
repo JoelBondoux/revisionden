@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { server } from '../mocks/server';
 import { renderRoute } from '../test/render';
+import { navigation } from '../api/signIn';
 import { WelcomePage } from './WelcomePage';
 
 describe('Welcome screen', () => {
@@ -55,10 +56,10 @@ describe('Welcome screen', () => {
         return HttpResponse.json({ url: 'https://accounts.example/consent', redirect: true });
       }),
     );
-    const redirect = vi.fn();
+    const redirect = vi.spyOn(navigation, 'leaveTo').mockImplementation(() => undefined);
     render(
       <MemoryRouter>
-        <WelcomePage redirect={redirect} />
+        <WelcomePage />
       </MemoryRouter>,
     );
     await userEvent.click(await screen.findByRole('button', { name: /continue with google/i }));
@@ -82,10 +83,10 @@ describe('Welcome screen', () => {
         ),
       ),
     );
-    const redirect = vi.fn();
+    const redirect = vi.spyOn(navigation, 'leaveTo').mockImplementation(() => undefined);
     render(
       <MemoryRouter>
-        <WelcomePage redirect={redirect} />
+        <WelcomePage />
       </MemoryRouter>,
     );
     await userEvent.click(await screen.findByRole('button', { name: /continue with microsoft/i }));
@@ -102,5 +103,20 @@ describe('Welcome screen', () => {
   it('lets a student link this device with a code from a parent', async () => {
     renderRoute('/', { studentId: null });
     expect(await screen.findByText(/ask a parent to show you the qr code/i)).toBeInTheDocument();
+  });
+
+  it('lets a parent who is already signed in carry on, or sign out', async () => {
+    server.use(
+      http.get('*/api/auth/get-session', () =>
+        HttpResponse.json({ session: { id: 's1' }, user: { id: 'u1' } }),
+      ),
+    );
+    renderRoute('/', { studentId: null });
+    expect(await screen.findByRole('link', { name: 'Continue' })).toHaveAttribute(
+      'href',
+      '/family',
+    );
+    expect(screen.getByRole('button', { name: 'Sign out' })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /continue with google/i })).not.toBeInTheDocument();
   });
 });
