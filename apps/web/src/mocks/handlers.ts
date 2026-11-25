@@ -2,11 +2,13 @@ import { http, HttpResponse, type RequestHandler } from 'msw';
 import { onboardingHandlers } from '../features/onboarding/mocks';
 import { cardsDue, topicMap } from './data';
 import { learnHandlers } from '../features/learn/mocks';
+import { recallHandlers } from '../features/recall/mocks';
 import { rewardsHandlers } from '../features/rewards/mocks';
 import { feedbackHandlers } from '../features/feedback/mocks';
 import { legalHandlers } from '../features/legal/mocks';
 import { dailyLimitHandlers, statsHandlers } from '../features/stats/mocks';
 import { familyDataHandlers } from '../features/family-data/mocks';
+import { parentsHandlers } from '../features/parents/mocks';
 
 /**
  * Mock API for development and tests. Every handler uses a real API path exactly (checked by
@@ -33,6 +35,8 @@ export const handlers: RequestHandler[] = [
 
   // Learning loop and flashcards (workstream F).
   ...learnHandlers,
+  // Recall checks (workstream Q).
+  ...recallHandlers,
   ...rewardsHandlers,
   // Policies, About and feedback (workstream L).
   ...feedbackHandlers,
@@ -42,4 +46,5 @@ export const handlers: RequestHandler[] = [
   ...statsHandlers,
   ...dailyLimitHandlers,
   ...familyDataHandlers,
+  ...parentsHandlers,
 ];

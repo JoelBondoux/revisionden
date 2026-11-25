@@ -1,6 +1,6 @@
 # Privacy notice
 
-Version: 1.3
+Version: 1.5
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -13,6 +13,9 @@ ever seem to say different things, the full text is the one that counts.
   {{CONTACT_EMAIL}}.
 - **What we keep about you.** Only the email address you sign in with (with a Google or
   Microsoft account, whichever this app offers), and the records the sign-in needs to work. We do not keep your name or photo.
+  If a second parent joins your family, we keep their sign-in email in the same way.
+- **Two parents.** A family can have two parents with equal control. A family activity log shows
+  what each changed, as "Parent 1" or "Parent 2", never by name.
 - **What we keep about your child.** A nickname, an avatar, their school year, their subjects and
   exam boards, and their revision records: which questions they answered, whether they were right,
   how long they took, their XP, streaks, rewards, flashcards and study plan. We never keep their
@@ -93,7 +96,25 @@ students in Years 9 to 13 (usually aged 13 to 18).
 - feedback or bug reports you choose to send us (see section 9);
 - reports of a mistake in a question (only the question, its version and a reason picked from a
   list; no free text);
-- if you have been given a reviewer role for checking questions, that role.
+- if you have been given a reviewer role for checking questions, that role;
+- if your family has a second parent: the same records about them (their own sign-in email,
+  provider identifier, sessions and policy confirmations), and whether each of you is "Parent 1"
+  or "Parent 2";
+- the family activity log: which changes were made (for example a child added, a reward given or
+  the data downloaded), by "Parent 1" or "Parent 2", and when. It never holds a parent's name or
+  email. Entries about a child are deleted with the child, and entries are kept for 12 months;
+- an invite code for a second parent, stored only as a scrambled (hashed) value, valid for 7 days
+  and usable once;
+- if one parent removes the other, a note that the removed parent was removed and when, kept only
+  until they have seen it in the app.
+
+4.1a **Two parents.** Either parent can invite a second parent, remove the other parent (who then
+loses access at once and sees a notice the next time they sign in), and download or delete the
+family's data. Deleting the whole family account needs both parents to confirm. Each parent is
+told in the app, and by push notification if they turned it on, about important changes the other
+parent makes: children added or removed, rewards given, limits changed, data downloaded and
+requests to delete the family account. These notifications say "Parent 1" or "Parent 2", never a
+name.
 
 We do not store your name or profile picture. The app asks the sign-in provider for a minimum
 profile and blanks the name and picture before anything is saved.
@@ -119,35 +140,35 @@ profile and blanks the name and picture before anything is saved.
   number of tokens and the cost. Never the question, the answer or the AI's reply;
 - feedback the student chooses to send us, and reports of a mistake in a question.
 
-4.3 **What we do not collect.** We do not collect or store a student's real name, date of birth,
-home address, phone number, email address, photographs, location, contacts or school name. The
-database is checked by an automatic test that fails if a column that could hold these is added.
-We do not store the text of students' answers to questions; an answer is used to mark the
-question and then only the result is kept.
+  4.3 **What we do not collect.** We do not collect or store a student's real name, date of birth,
+  home address, phone number, email address, photographs, location, contacts or school name. The
+  database is checked by an automatic test that fails if a column that could hold these is added.
+  We do not store the text of students' answers to questions; an answer is used to mark the
+  question and then only the result is kept.
 
-4.3A **The Get help page is private.** The app has a Get help page listing UK support services
-(such as Childline, Samaritans and NHS 111). It is built into the app and works offline. Opening
-it, and tapping a phone number, text number or link on it, is not recorded, logged, sent to us or
-any service provider, or shown to parents. The page makes no requests to our servers or to anyone
-else; a link only contacts the service the student chooses to call, text or visit.
+  4.3A **The Get help page is private.** The app has a Get help page listing UK support services
+  (such as Childline, Samaritans and NHS 111). It is built into the app and works offline. Opening
+  it, and tapping a phone number, text number or link on it, is not recorded, logged, sent to us or
+  any service provider, or shown to parents. The page makes no requests to our servers or to anyone
+  else; a link only contacts the service the student chooses to call, text or visit.
 
-4.4 **Data used for a moment but not stored.** To mark some written answers, the text of the
-answer is sent to an AI provider (section 7). To check worked maths, the lines of working are
-sent to our maths engine. Neither is stored in our database. Your and your child's internet
-address (IP address) is seen by our hosting provider and used for a moment to limit the number of
-requests (to protect the app from abuse); we do not store it.
+  4.4 **Data used for a moment but not stored.** To mark some written answers, the text of the
+  answer is sent to an AI provider (section 7). To check worked maths, the lines of working are
+  sent to our maths engine. Neither is stored in our database. Your and your child's internet
+  address (IP address) is seen by our hosting provider and used for a moment to limit the number of
+  requests (to protect the app from abuse); we do not store it.
 
-4.5 **Sign-in tokens.** When you sign in, Google or Microsoft give the app some tokens: keys to
-your account with them and a signed message (the "ID token") that can contain the name and
-picture on that account. We use them only for that moment to learn your email address and account
-identifier, and we do not keep any of them: they are blanked before the sign-in record is saved.
-The account identifier is all the app needs to recognise you next time, and we never use your
-Google or Microsoft account for anything else.
+  4.5 **Sign-in tokens.** When you sign in, Google or Microsoft give the app some tokens: keys to
+  your account with them and a signed message (the "ID token") that can contain the name and
+  picture on that account. We use them only for that moment to learn your email address and account
+  identifier, and we do not keep any of them: they are blanked before the sign-in record is saved.
+  The account identifier is all the app needs to recognise you next time, and we never use your
+  Google or Microsoft account for anything else.
 
-4.6 **Features not available yet.** Some features described in our plans are not yet built,
-including reading photos of homework or school reports, marking long answers and essays, and
-friends. Where this notice describes them, it says so. We will update this notice, and tell you
-in the app, before any of them starts collecting data.
+  4.6 **Features not available yet.** Some features described in our plans are not yet built,
+  including reading photos of homework or school reports, marking long answers and essays, and
+  friends. Where this notice describes them, it says so. We will update this notice, and tell you
+  in the app, before any of them starts collecting data.
 
 ### 5. Why we use the data and our lawful bases
 
@@ -208,6 +229,12 @@ Students are told that their parent can see their activity.
 
 6.3 We do not share data with schools, exam boards, advertisers or data brokers. We may disclose
 data if the law requires it, for example to comply with a court order.
+
+6.4 Read aloud uses the speech voices built into the student's device and browser. We do not send
+the text anywhere. Where a device only has online voices, the device's own speech service (for
+example the browser or operating system maker) may process the text it reads: questions, answers,
+explanations and the student's flashcards. In that case read aloud is off until the student turns
+it on, and Settings explains why. It is never used to record the student's voice.
 
 ### 7. AI marking and what the AI provider receives
 
@@ -299,20 +326,21 @@ own data, and our tests check this.
 - not be subject to decisions based solely on automated processing that have legal or similarly
   significant effects (we do not make such decisions).
 
-12.2 **Students' rights.** These rights belong to the student for their own data. A parent may
-use them on a child's behalf. Where a student is mature enough to understand their rights, we will
-usually respond to the student directly and consider their wishes, and we will not let a parent
-use the rights against the student's best interests.
+  12.2 **Students' rights.** These rights belong to the student for their own data. A parent may
+  use them on a child's behalf. Where a student is mature enough to understand their rights, we will
+  usually respond to the student directly and consider their wishes, and we will not let a parent
+  use the rights against the student's best interests.
 
-12.3 **How to use your rights.** In the app, a parent can change or delete a student's profile and
-unlink devices at any time. Deleting a student removes their profile and all their learning
-records. For anything else, contact us at {{CONTACT_EMAIL}}. We will reply within one month, which
-the law lets us extend in some cases; we will tell you if we do. There is normally no charge.
+  12.3 **How to use your rights.** In the app, a parent can change or delete a student's profile and
+  unlink devices at any time. Deleting a student removes their profile and all their learning
+  records. For anything else, contact us at {{CONTACT_EMAIL}}. We will reply within one month, which
+  the law lets us extend in some cases; we will tell you if we do. There is normally no charge.
 
 12.4 In the parent area, "Download your family's data" gives you a file (in the common JSON
 format) with everything we hold about you and your children. It leaves out only security codes
-such as scrambled session codes and device keys. A parent account deletion button is planned but
-not built yet; until then we will delete your account on request.
+such as scrambled session codes and device keys. In the parent home, "Delete the family account"
+deletes the whole family, every child's records and both parents' sign-ins; when there are two
+parents, the other parent must confirm it first.
 
 ### 13. Complaints
 
@@ -329,6 +357,8 @@ in the app on your next visit and ask you to confirm, and students see a plain-E
 
 ## Changes
 
+- 1.5: A family can now have two parents. We keep the second parent's sign-in email in the same way as the first, a family activity log that says "Parent 1" or "Parent 2" (never names), invite codes (hashed, 7 days) and a short note when a parent is removed. Deleting the whole family needs both parents to confirm.
+- 1.4: New 6.4: read aloud uses the device's own speech voices; with only online voices, the device's speech service may process the text, so it starts off. No new data is kept by us.
 - 1.3: Adds that the Get help page (support services) is private: its use is not recorded or shown to parents. No change to the data we keep.
 - 1.2: New: the optional, anonymous "Send error report" button (section 9.4), kept for 90 days.
 - 1.1: Wording only: parents sign in with Google or Microsoft, whichever this app offers. No change to the data we keep.

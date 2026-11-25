@@ -245,3 +245,102 @@ describe('weekly suggestions', () => {
     expect(none.status).toBe(409);
   });
 });
+
+describe('two parents (docs/PRODUCT_RULES.md "Two parents")', () => {
+  /** setUp, plus a second parent who joins the family by invite. */
+  async function withSecondParent() {
+    const family = await setUp();
+    const invite = await ctx.app.request(
+      '/v1/family/invites',
+      jsonRequest('POST', {}, family.parent.headers),
+    );
+    const { code } = (await invite.json()) as { code: string };
+    const second = await ctx.signInParent();
+    const joined = await ctx.app.request(
+      '/v1/family/join',
+      jsonRequest('POST', { code }, second.headers),
+    );
+    expect(joined.status).toBe(200);
+    return { ...family, second };
+  }
+
+  const limitEvents = async (headers: Record<string, string>) => {
+    const res = await ctx.app.request('/v1/family/events', { headers });
+    const { events } = (await res.json()) as { events: { kind: string; by: string }[] };
+    return events.filter((e) => e.kind === 'limit_changed').map((e) => e.by);
+  };
+
+  it('lets either parent change the limit; the latest change wins and is logged', async () => {
+    const { studentId, parent, second } = await withSecondParent();
+    const put = (headers: Record<string, string>, minutes: number) =>
+      ctx.app.request(
+        `/v1/students/${studentId}/daily-limit`,
+        jsonRequest('PUT', { schoolDayMinutes: minutes }, headers),
+      );
+    expect((await put(parent.headers, 50)).status).toBe(200);
+    expect((await put(second.headers, 70)).status).toBe(200);
+    expect((await parentView(studentId, parent.headers)).settings.schoolDayMinutes).toBe(70);
+    expect(await limitEvents(parent.headers)).toEqual(['Parent 2', 'Parent 1']);
+  });
+
+  const answer = (studentId: string, action: string, headers: Record<string, string>) =>
+    ctx.app.request(
+      `/v1/students/${studentId}/daily-limit/suggestion`,
+      jsonRequest('POST', { action }, headers),
+    );
+
+  it('logs a suggestion accepted by either parent as a limit change', async () => {
+    const { studentId, parent, second, itemId } = await withSecondParent();
+    for (let d = 1; d <= 14; d++) await studied(studentId, itemId, 5, NOW - d * DAY);
+    expect((await parentView(studentId, second.headers)).suggestion?.kind).toBe('ease');
+    expect((await answer(studentId, 'accept', second.headers)).status).toBe(200);
+    expect((await parentView(studentId, parent.headers)).settings.schoolDayMinutes).toBe(50);
+    expect(await limitEvents(parent.headers)).toEqual(['Parent 2']);
+  });
+
+  it('does not log a dismissed suggestion', async () => {
+    const { studentId, parent, second, itemId } = await withSecondParent();
+    for (let d = 1; d <= 14; d++) await studied(studentId, itemId, 5, NOW - d * DAY);
+    await parentView(studentId, parent.headers);
+    expect((await answer(studentId, 'dismiss', second.headers)).status).toBe(200);
+    expect(await limitEvents(parent.headers)).toEqual([]);
+  });
+});
+
+describe('flashcard sessions at the limit', () => {
+  it('pays no session XP past the limit and keeps the reward slot', async () => {
+    const { studentId, headers, itemId } = await setUp();
+    await studied(studentId, itemId, 60);
+    for (let i = 1; i <= 5; i++) {
+      await ctx.app.request(
+        '/v1/student/flashcards',
+        jsonRequest('POST', { topicId: 'test-topic-b', front: `Card ${i}`, back: 'Back' }, headers),
+      );
+    }
+    const started = await ctx.app.request('/v1/student/flashcards/sessions', {
+      method: 'POST',
+      headers,
+    });
+    const { id: sessionId } = (await started.json()) as { id: string };
+    const overview = await ctx.app.request('/v1/student/flashcards', { headers });
+    const { due } = (await overview.json()) as { due: { id: string }[] };
+    expect(due.length).toBeGreaterThanOrEqual(5);
+    for (const card of due) {
+      await ctx.app.request(
+        `/v1/student/flashcards/${card.id}/review`,
+        jsonRequest('POST', { rating: 'good', sessionId }, headers),
+      );
+    }
+    const res = await ctx.app.request(`/v1/student/flashcards/sessions/${sessionId}/finish`, {
+      method: 'POST',
+      headers,
+    });
+    expect(res.status).toBe(200);
+    expect(await res.json()).toMatchObject({
+      completed: true,
+      xpEarned: 0,
+      reason: 'daily_limit',
+      rewardedLeftToday: 2,
+    });
+  });
+});

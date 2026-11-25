@@ -111,6 +111,11 @@ formula and its assumptions. Summary of what is built:
 - Rewards never come from time spent or late-night study (22:00 to 05:59 UK time), at most
   300 reward XP count a day, and there are no random draws.
 - Avatar items only unlock from the reward that locks them; locked items are refused when saving.
+- Rewards are celebrated where they are earned (workstream F4, product owner via lead,
+  2026-11-25): an answer or a finished flashcard session saves any new reward once and shows
+  "New reward: …" with the reward sound on that screen (the starting test waits for its results
+  screen). Those rewards are not shown again as "New!" on the Rewards page; the Rewards page
+  announces only rewards first seen there (for example the starting-test milestone).
 - Implemented: `packages/core/src/rewards.ts`, `levels.ts`, `chapters.ts`, `reward-xp.ts`,
   `reward-stats.ts`, `rewards-schemas.ts`; API `apps/api/src/routes/rewards.ts`.
 - Parent-set reward met (workstream H2): the parent gets one notification per reward on each of
@@ -205,9 +210,12 @@ Product owner decision, 2026-11-25: **parent view only**.
   **session, not per card** (product owner, 2026-11-25), so rating every card "Good" earns
   nothing extra:
   - A session ends when the due queue is empty or after 20 cards, whichever comes first. A
+    session for one deck ("All decks", Review) only needs that deck's due cards done. A
     completed session of at least 5 cards earns **20 XP**, whatever the ratings. Fewer than 5
     cards, or leaving early, earns nothing.
   - At most **2 rewarded sessions a day** (40 XP), so flashcards alone cannot reach the daily goal.
+    A session is paid at most once, and the limit holds even when sessions finish at the same
+    moment (each rewarded session takes one of two daily slots, enforced by the database).
   - Cards answered "Again" coming back in the same session do not count twice.
   - Self-ratings only schedule the card (SM-2); they never change topic mastery or the predicted
     grade. The "flashcards reviewed" milestones count cards in completed sessions. Deck cards come from flashcard items in the
@@ -351,6 +359,13 @@ Mockups: screens 19 (student) and 20 (parent).
   Settings.
 - When the operator confirms a student's bug, the student is told in the app and earns the Bug
   Hunter rewards in `REWARDS.md`.
+- Operator triage (`/admin/feedback`) has **Confirm bug** and **Duplicate of…** (an earlier
+  confirmed report) for bug reports. Each report can be confirmed once. Rules:
+  `packages/core/src/bug-hunter.ts`; a week is Monday to Sunday, UK time; the 3-a-week cap counts
+  full and duplicate rewards, and past it the student is thanked with no XP and no track step. The
+  student sees the thank-you once (a toast on their next visit). Bug XP counts towards total XP,
+  not the daily goal or streak. The button's on/off setting is per device
+  (`revisionden.bugButton`). Built in L7.
 
 - Kinds: **bug**, **idea**, **something confusing**, **other**. (Mistakes in a question keep
   using "Report a problem" on the item, which quarantines it.)
@@ -382,7 +397,7 @@ Mockups: screens 19 (student) and 20 (parent).
   downloads `GET /v1/export`: one JSON file with the parent's sign-in email, provider account id,
   policy confirmations, the family, and for each of that parent's own children the profile and
   every record (courses, devices, answers, mastery, exams, reports, plans, rewards, streak, daily
-  XP, starting tests, flashcards, reminders, AI usage, parent-set rewards), plus the family's
+  XP, starting tests, flashcards and flashcard sessions, reminders, AI usage, parent-set rewards), plus the family's
   feedback and question reports. Secrets are left out (session and link-code hashes, passkey keys
   and credential ids, push keys). Never another family's data.
 - **Activity:** any parent or student request marks the family as used (`families.last_active_at`,
@@ -458,7 +473,10 @@ Mockups: screens 19 (student) and 20 (parent).
   `events.ts`), with one-line `play()` calls in lessons, the starting test and flashcards. Reward
   sounds (U4): `rewardSounds.ts` (which sound: tier, step, voice, fanfare, biggest, variation),
   `rewardBank.ts` (synthesis) and `<RewardSound rewards={newlyEarned} />` on the Rewards screen.
-  Prestige stars play legendary even where the catalogue rarity is epic. Gifts, plan and timed
+  Prestige stars play legendary even where the catalogue rarity is epic. Combo chime (U5):
+  `play('correct' | 'partMarks', { step })` raises the chime a whole tone per step, clamped at 6
+  (an octave); the lesson player passes `comboStep(combo - 1)`, so the first right answer is the
+  plain chime. The wrong sound never changes. Gifts, plan and timed
   papers get their calls when those screens are built.
 
 ## App updates (installable app)
@@ -515,7 +533,8 @@ by the product owner on 2026-11-25):
 - ✓ A parent may set any limit from 15 minutes to 6 hours per day type; a limit left unset follows
   the default for the student's level (Years 9 to 11 GCSE, 12 and 13 A-Level).
 - **Reaching the limit**: the answer that takes today's active minutes to the limit, and anything
-  after it, earns no XP (answers, test-mode combos and flashcard reviews). Mastery still updates.
+  after it, earns no XP (answers, test-mode combos and flashcard session XP; a flashcard session
+  finished past the limit keeps its reward slot for another day). Mastery still updates.
   Every progress response carries `dailyLimit` (limit, used, left, reached) for the practice
   screens; the set-complete screen says "Great work today. See you tomorrow" when it is reached
   (or, as a safety net, at the 300 XP reward cap: `pastDailyCap` in `features/juice`). Timed papers may finish past the limit (`creditsPastLimit`; papers are not built yet).
@@ -530,6 +549,9 @@ by the product owner on 2026-11-25):
   going, so reaching the limit counts as their own choice. At most one rise a fortnight.
 - The student sees today's minutes left on My stats, and a one-time notice when a parent changes
   the limit.
+- **Two parents:** either parent can change the limit or answer a suggestion; the latest change
+  wins. Each change (a saved limit or an accepted suggestion, not a dismissal) goes in the family
+  activity log as "changed the daily limit", so the other parent is told.
 - Implemented: `packages/core/src/daily-limit.ts` and `daily-limit-schemas.ts`; API
   `apps/api/src/daily-limit/` (`GET`/`PUT /v1/students/:id/daily-limit`,
   `POST /v1/students/:id/daily-limit/suggestion`, `GET /v1/student/daily-limit`,
@@ -552,6 +574,27 @@ Requested by the product owner on 2026-11-25.
 - Either parent can remove the other; the removed parent sees an in-app notice on next
   sign-in and loses access at once. Students see that two parents can view their progress.
 - The privacy notice must list the second parent's sign-in email as data kept.
+- **How it works (workstream B3):** "Invite a second parent" in the parent home gives a
+  12-character code and a `/join?code=…` link (7 days, used once, stored hashed, 5 a day per
+  family; joining is rate-limited like sign-in). The second parent signs in with their own account
+  and joins; they become Parent 2 (or whichever number is free). A parent whose own account already
+  has children or another parent cannot join until it is deleted. At most two parents.
+- **Equal control:** every parent route works from the family, so both parents pass every guard.
+- **Removing:** either parent removes the other ("Remove Parent 2"). The removed parent is refused
+  at once (`403 removed_from_family`) and sees a notice in the parent home; after OK they start
+  again with an empty family. Nobody removes themselves.
+- **Deleting the family:** "Delete the family account" deletes everything at once when there is
+  one parent; with two, it waits until the other parent confirms ("Confirm deletion") and either
+  can cancel. Deletion removes every child's records and both parents' sign-ins.
+- **Activity log:** every successful parent change is logged as "Parent 1"/"Parent 2" + what
+  changed (children, subjects, avatar, devices, reminders, daily limit, rewards, export, invites,
+  joining, removal, deletion). Important ones (children added or removed, limit changed, reward
+  given, data downloaded, deletion asked or cancelled, parent joined or removed) count as new for
+  the other parent until "Mark as seen", and are pushed to the other parent's devices once by the
+  15-minute cron (not in UK nightly quiet hours, not after a day). Entries about a child go with
+  the child; entries are kept 12 months.
+- Implemented: `apps/api/src/routes/family-parents.ts`, `apps/api/src/family-events.ts`,
+  `apps/web/src/features/parents/`; migration 0012.
 
 ## Get help (support resources)
 
@@ -600,13 +643,25 @@ Requested by the product owner on 2026-11-25.
   older than 4 months; phone numbers in UK format (10 or 11 digits starting 0, 116 numbers,
   Childline's 0800 1111, 111, 999) with a matching `tel:` link; text numbers as UK short codes or
   mobiles with a matching `sms:` link; every topic has at least one service for students.
+- Added 2026-11-25 from the product owner's own check of the official sites (recorded as
+  `confirmed_by` in the data): **Coram Kidscape** (was Kidscape; `coramkidscape.org.uk`): its young
+  people's advice page for students under bullying; for parents only, the **Parent Advice Line**
+  (phone and WhatsApp 0300 102 4481, email, 9am to 9pm Monday to Friday and 10am to 3pm Saturday
+  and Sunday). **Anti-Bullying Alliance**: parents only (website), because its site sends young
+  people with a problem to Childline; students' bullying card lists Childline and Coram Kidscape.
+- **Kooth** (now "Soluna by Kooth"; added 2026-11-25 at the product owner's request): students and
+  parents, under feeling low. Website `https://www.kooth.com/` only, as seen by the build session.
+  The note "Free in some parts of the UK. Check if it's available where you live." is the product
+  owner's (kooth.com did not say it), so the entry has `confirmed_by`. No hours, ages or areas.
+- A service may have a short `note` shown on the page; the validator only allows it with
+  `confirmed_by`, because no checked source backs it.
+- Contacts can also be WhatsApp (UK number, link `https://wa.me/44…` that must match it) and email
+  (`mailto:` link; the address must be on the service's official domain).
 - Recheck each term: open every `source`, confirm each detail, update `checked_at`. Leave out any
   detail that can no longer be confirmed.
 - Left out on 2026-11-25 (could not be confirmed on the service's own site from the build
   environment; recheck by hand): Papyrus HOPELINE247 (`papyrus-uk.org` redirects to an insolvency
-  administrator's page), Mind, Carers Trust and Anti-Bullying Alliance (their sites block automated
-  visits), Kidscape (`kidscape.org.uk` now redirects to `coramkidscape.org.uk`), Kooth (now
-  "Soluna by Kooth"; availability depends on area). Also left out: Samaritans web chat (a pilot,
+  administrator's page), Mind and Carers Trust (their sites block automated visits). These stay out for now (lead, 2026-11-25). Also left out: Samaritans web chat (a pilot,
   "not currently available"), FRANK live chat and email, Switchboard chat and email (could not be
   seen from outside the UK), Beat's email and web chat hours, and Childline's message service. Grief has
   no specialist service yet (none was on the list to check) and young carers' one (Carers Trust)

@@ -13,6 +13,9 @@ export function ParentCanSee() {
         <li>AI marking spend this month</li>
         <li>Your last 10 activities (lessons, flashcards, tests), never your own words or cards</li>
       </ul>
+      <p className="secondary-text">
+        If your family has two parents set up, both of them can see the same things.
+      </p>
     </Card>
   );
 }

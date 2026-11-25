@@ -14,6 +14,7 @@ import {
 import type { Database } from '@revisionden/db';
 import type { AppEnv } from '../context';
 import { ApiError } from '../errors';
+import { recordFamilyEvent } from '../family-events';
 import { requireFamilyStudent } from '../families';
 import { readJson } from '../http';
 import type { Clock } from '../rate-limit';
@@ -61,6 +62,15 @@ export function parentDailyLimitRoutes({ db, clock }: Deps) {
     if (action === 'accept') {
       const next = applySuggestion(ctx.settings, suggestion);
       await saveLimits(db, student.id, next, now, { clearSuggestion: true });
+      // An accepted suggestion changes the limit, so it goes in the family activity log like a
+      // PUT does (that one is logged by logFamilyChanges); a dismissal changes nothing.
+      await recordFamilyEvent(db, {
+        familyId: c.var.parent.familyId,
+        actorPosition: c.var.parent.position,
+        kind: 'limit_changed',
+        studentId: student.id,
+        now,
+      });
     } else {
       await dismissSuggestion(db, student.id, now);
     }

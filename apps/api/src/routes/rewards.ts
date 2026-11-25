@@ -9,6 +9,7 @@
  *   for parent-set real-world rewards under /v1/students/:id/parent-rewards. Once given, a
  *   reward is kept as history: it can no longer be changed or deleted (409).
  */
+import { flashcardSessionStats } from '../learning/flashcard-sessions';
 import { Hono } from 'hono';
 import { and, asc, eq, gte, isNotNull, sql } from 'drizzle-orm';
 import {
@@ -84,7 +85,9 @@ async function loadStats(db: Database, studentId: string, yearGroup: number, now
     .from(dailyXp)
     .where(and(eq(dailyXp.studentId, studentId), gte(dailyXp.xp, DEFAULT_DAILY_GOAL_XP)));
 
-  const xpEvents = answerRows.map((a) => ({ at: a.at, xp: a.xp }));
+  // Flashcard deck XP is paid per completed session, timestamped (F3), so it counts too.
+  const sessions = await flashcardSessionStats(db, studentId);
+  const xpEvents = [...answerRows.map((a) => ({ at: a.at, xp: a.xp })), ...sessions.xpEvents];
   const correct = answerRows.filter((a) => a.correct);
   const stats: Partial<RewardStats> = {
     ...progressionStats({ xpEvents, yearGroup, today: localDate(now) }),
@@ -95,6 +98,7 @@ async function loadStats(db: Database, studentId: string, yearGroup: number, now
     correctAnswers: correct.length,
     bestCorrectRun: bestRun(answerRows.map((a) => a.correct)),
     startingTestsCompleted: tests?.n ?? 0,
+    flashcardsReviewed: sessions.cardsReviewed,
   };
   const seasonProgress = seasonProgressFor({
     now,
@@ -165,39 +169,26 @@ function toParentReward(
   };
 }
 
-/** Loads progress, saves anything newly earned and builds the rewards view. */
-async function rewardsView(
-  db: Database,
-  student: { id: string; yearGroup: number },
-  now: Date,
-): Promise<StudentRewardsResponse> {
-  const { stats, seasonProgress, totalRewardXp } = await loadStats(
-    db,
-    student.id,
-    student.yearGroup,
-    now,
-  );
+type RewardStudent = { id: string; yearGroup: number };
+
+/** Works out rewards earned since last time, saves them once each and returns them as cards. */
+async function earnRewards(db: Database, student: RewardStudent, now: Date) {
+  const loaded = await loadStats(db, student.id, student.yearGroup, now);
   const stored = await db
     .select({ rewardId: rewards.rewardId })
     .from(rewards)
     .where(eq(rewards.studentId, student.id));
   const before = stored.map((r) => r.rewardId);
-  const fresh = evaluateRewards(stats, before, REWARDS, { now, seasonProgress });
+  const fresh = evaluateRewards(loaded.stats, before, REWARDS, {
+    now,
+    seasonProgress: loaded.seasonProgress,
+  });
   const added = await saveEarned(
     db,
     student.id,
     fresh.map((r) => r.id),
     now,
   );
-  const earnedIds = [...before, ...added];
-  const overview = rewardsOverview({
-    stats,
-    earnedIds,
-    totalRewardXp,
-    yearGroup: student.yearGroup,
-    now,
-    seasonProgress,
-  });
   const newlyEarned: RewardCardResponse[] = fresh
     .filter((r) => added.includes(r.id))
     .map((r) => ({
@@ -209,6 +200,45 @@ async function rewardsView(
       current: 1,
       target: 1,
     }));
+  return { ...loaded, earnedIds: [...before, ...added], newlyEarned };
+}
+
+/**
+ * Saves rewards the student has just earned and returns them, for the screens where they are
+ * earned (an answer, a finished flashcard session), so the reward sound plays there (F4).
+ */
+export async function saveNewRewards(
+  db: Database,
+  studentId: string,
+  now: Date,
+): Promise<RewardCardResponse[]> {
+  const [student] = await db
+    .select({ id: students.id, yearGroup: students.yearGroup })
+    .from(students)
+    .where(eq(students.id, studentId));
+  if (!student) throw notFound('Student not found');
+  return (await earnRewards(db, student, now)).newlyEarned;
+}
+
+/** Loads progress, saves anything newly earned and builds the rewards view. */
+async function rewardsView(
+  db: Database,
+  student: RewardStudent,
+  now: Date,
+): Promise<StudentRewardsResponse> {
+  const { stats, seasonProgress, totalRewardXp, earnedIds, newlyEarned } = await earnRewards(
+    db,
+    student,
+    now,
+  );
+  const overview = rewardsOverview({
+    stats,
+    earnedIds,
+    totalRewardXp,
+    yearGroup: student.yearGroup,
+    now,
+    seasonProgress,
+  });
   const parentRows = await db
     .select()
     .from(parentRewards)

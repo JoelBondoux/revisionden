@@ -1,7 +1,8 @@
 // Validates content/support/uk-services.json, the data behind the Get help page
 // (docs/PRODUCT_RULES.md, Get help). On top of the JSON Schema it checks that every detail's
 // source is on the service's own official site, that no check is older than 4 months, and that
-// phone and text numbers are in UK format with matching tel: and sms: links.
+// phone, text and WhatsApp numbers are in UK format with matching tel:, sms: and wa.me links,
+// and email addresses are on the official site with a matching mailto: link.
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -76,11 +77,12 @@ function serviceErrors(s, topicIds, now) {
   };
 
   for (const t of s.topics) if (!topicIds.has(t)) add(`unknown topic "${t}"`);
+  if (s.note && !s.confirmed_by) add('a note needs confirmed_by (who checked it by hand)');
   if (s.age_range) checkSource('age range', s.age_range.source);
   if (s.area) checkSource('area', s.area.source);
 
   for (const c of s.contacts) {
-    const what = `${c.kind} ${c.number ?? c.url}`;
+    const what = `${c.kind} ${c.number ?? c.address ?? c.url}`;
     checkSource(what, c.source);
     if (c.hours) checkSource(`${what} hours`, c.hours.source);
     if (c.kind === 'phone') {
@@ -94,6 +96,15 @@ function serviceErrors(s, topicIds, now) {
         : `sms:${digits(c.number)}`;
       if (c.href !== expected)
         add(`${what}: link must be ${expected}${c.keyword ? ' (with the keyword)' : ''}`);
+    } else if (c.kind === 'whatsapp') {
+      if (!isUkPhoneNumber(c.number)) add(`${what}: WhatsApp number is not in UK format`);
+      const expected = `https://wa.me/44${digits(c.number).slice(1)}`;
+      if (c.href !== expected) add(`${what}: link must be ${expected}`);
+    } else if (c.kind === 'email') {
+      const domain = c.address.split('@')[1];
+      if (!s.official_domains.some((d) => domain === d || domain.endsWith(`.${d}`)))
+        add(`${what}: email address is not on the service's official site`);
+      if (c.href !== `mailto:${c.address}`) add(`${what}: link must be mailto:${c.address}`);
     } else if (!onOfficialSite(c.url, s.official_domains)) {
       add(`${what}: link is not on the service's official site`);
     }

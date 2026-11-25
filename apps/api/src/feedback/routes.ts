@@ -1,5 +1,6 @@
 import { Hono } from 'hono';
-import { and, desc, eq, gt } from 'drizzle-orm';
+import { and, desc, eq, gt, inArray, isNotNull, isNull } from 'drizzle-orm';
+import { bugReward } from '@revisionden/core';
 import { z } from 'zod';
 import {
   FEEDBACK_KINDS,
@@ -18,6 +19,8 @@ import { readJson } from '../http';
 import type { Clock } from '../rate-limit';
 import { isId } from '../validation';
 import { findPersonalData, type StudentProfile } from '../ai/privacy';
+import { requireFamilyStudent } from '../families';
+import { bugHunterSummary, bugRewardsThisWeek } from './bugHunter';
 
 export interface FeedbackDeps {
   db: Database;
@@ -49,6 +52,8 @@ const sendSchema = z
   })
   .strict();
 const statusSchema = z.object({ status: z.enum(FEEDBACK_STATUSES) }).strict();
+const confirmSchema = z.object({ duplicateOf: z.string().optional() }).strict();
+const seenSchema = z.object({ ids: z.array(z.string()).max(50) }).strict();
 const acceptSchema = z
   .object({
     acceptances: z
@@ -111,7 +116,24 @@ function toFeedback(row: typeof feedback.$inferSelect) {
     senderRole: row.senderRole,
     createdAt: row.createdAt.toISOString(),
     updatedAt: row.updatedAt.toISOString(),
+    outcome: row.outcome ?? null,
+    rewardXp: row.rewardXp,
   };
+}
+
+const toAdminFeedback = (row: typeof feedback.$inferSelect) => ({
+  ...toFeedback(row),
+  device: row.device,
+  duplicateOf: row.duplicateOf ?? null,
+});
+
+/** The thank-you the sender sees for a confirmed report (packages/core bugReward). */
+function rewardMessage(row: typeof feedback.$inferSelect): string {
+  if (row.senderRole === 'parent') return 'Thank you for reporting this bug.';
+  if (row.rewardXp === 0) return 'Your bug report helped! Thank you.';
+  return row.outcome === 'duplicate'
+    ? `Thanks for confirming that bug! +${row.rewardXp} XP`
+    : `Your bug report helped! +${row.rewardXp} XP`;
 }
 
 async function sentInLastDay(db: Database, now: Date, sender: ReturnType<typeof eq>) {
@@ -160,6 +182,54 @@ export function studentFeedbackRoutes({ db, clock }: FeedbackDeps) {
     return c.json({ feedback: rows.map(toFeedback) });
   });
 
+  // Thank-yous for confirmed bug reports the student has not seen yet.
+  app.get('/feedback/rewards', async (c) => {
+    const rows = await db
+      .select()
+      .from(feedback)
+      .where(
+        and(
+          eq(feedback.studentId, c.var.student.studentId),
+          isNotNull(feedback.outcome),
+          isNull(feedback.rewardSeenAt),
+        ),
+      )
+      .orderBy(feedback.confirmedAt);
+    return c.json({
+      rewards: rows.map((r) => ({
+        id: r.id,
+        outcome: r.outcome,
+        rewardXp: r.rewardXp,
+        message: rewardMessage(r),
+        confirmedAt: r.confirmedAt?.toISOString() ?? null,
+      })),
+    });
+  });
+
+  app.post('/feedback/rewards/seen', async (c) => {
+    const { ids } = await readJson(c, seenSchema);
+    const valid = ids.filter(isId);
+    if (valid.length > 0) {
+      await db
+        .update(feedback)
+        .set({ rewardSeenAt: clock.now() })
+        .where(and(eq(feedback.studentId, c.var.student.studentId), inArray(feedback.id, valid)));
+    }
+    return c.body(null, 204);
+  });
+
+  app.get('/bug-hunter', async (c) => c.json(await bugHunterSummary(db, c.var.student.studentId)));
+
+  return app;
+}
+
+/** Parent route under /v1/students: one child's Bug Hunter count (own family only). */
+export function parentBugHunterRoutes({ db }: FeedbackDeps) {
+  const app = new Hono<AppEnv>();
+  app.get('/:id/bug-hunter', async (c) => {
+    const student = await requireFamilyStudent(db, c.var.parent.familyId, c.req.param('id'));
+    return c.json(await bugHunterSummary(db, student.id));
+  });
   return app;
 }
 
@@ -258,7 +328,50 @@ export function adminFeedbackRoutes({ db, config, clock }: FeedbackDeps) {
 
   app.get('/feedback', async (c) => {
     const rows = await db.select().from(feedback).orderBy(desc(feedback.createdAt));
-    return c.json({ feedback: rows.map((r) => ({ ...toFeedback(r), device: r.device })) });
+    return c.json({ feedback: rows.map(toAdminFeedback) });
+  });
+
+  // Confirm a bug report, or mark it a duplicate of an earlier confirmed one, and reward the
+  // student who sent it (packages/core bugReward; docs/REWARDS.md, Bug Hunter track).
+  app.post('/feedback/:id/confirm', async (c) => {
+    const id = c.req.param('id');
+    const { duplicateOf } = await readJson(c, confirmSchema);
+    if (!isId(id)) throw notFound('Feedback not found');
+    const [row] = await db.select().from(feedback).where(eq(feedback.id, id));
+    if (!row) throw notFound('Feedback not found');
+    if (row.kind !== 'bug')
+      throw new ApiError(400, 'not_a_bug', 'Only bug reports can be confirmed.');
+    if (row.outcome)
+      throw new ApiError(409, 'already_confirmed', 'This report is already confirmed.');
+    if (duplicateOf !== undefined) {
+      const [original] = isId(duplicateOf)
+        ? await db.select().from(feedback).where(eq(feedback.id, duplicateOf))
+        : [];
+      if (!original || original.outcome !== 'confirmed' || original.createdAt > row.createdAt) {
+        throw new ApiError(400, 'invalid_duplicate', 'Pick an earlier confirmed bug report.');
+      }
+    }
+    const now = clock.now();
+    const reward = bugReward({
+      senderRole: row.senderRole,
+      duplicate: duplicateOf !== undefined,
+      rewardsThisWeek: row.studentId ? await bugRewardsThisWeek(db, row.studentId, now) : 0,
+    });
+    const [updated] = await db
+      .update(feedback)
+      .set({
+        outcome: duplicateOf !== undefined ? 'duplicate' : 'confirmed',
+        duplicateOf: duplicateOf ?? null,
+        rewardXp: reward.xp,
+        trackStep: reward.trackStep,
+        confirmedAt: now,
+        updatedAt: now,
+        ...(row.status === 'new' ? { status: 'looking_into_it' as const } : {}),
+      })
+      .where(and(eq(feedback.id, id), isNull(feedback.outcome)))
+      .returning();
+    if (!updated) throw new ApiError(409, 'already_confirmed', 'This report is already confirmed.');
+    return c.json({ item: toAdminFeedback(updated), message: reward.message });
   });
 
   app.patch('/feedback/:id', async (c) => {
@@ -272,7 +385,7 @@ export function adminFeedbackRoutes({ db, config, clock }: FeedbackDeps) {
       .where(eq(feedback.id, id))
       .returning();
     if (!row) throw notFound('Feedback not found');
-    return c.json({ ...toFeedback(row), device: row.device });
+    return c.json(toAdminFeedback(row));
   });
 
   return app;

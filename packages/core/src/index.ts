@@ -26,3 +26,6 @@ export * from './map';
 export * from './error-ref';
 export * from './daily-limit';
 export * from './daily-limit-schemas';
+export * from './bug-hunter';
+export * from './recall';
+export * from './flashcard-session';

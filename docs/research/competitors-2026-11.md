@@ -358,7 +358,7 @@ a figure. "Family" means one price covering several children.
 **Other things seen:**
 
 - **Grade guarantees.**
-  - Up Learn refunds the course if a student who completed it misses an A*/A grade (or 8+ at GCSE)
+  - Up Learn refunds the course if a student who completed it misses an A\*/A grade (or 8+ at GCSE)
     (https://uplearn.co.uk/guarantee).
   - Seneca sells a +£5.99 a month guarantee add-on.
 - **Scale.** These are each company's own figures:
