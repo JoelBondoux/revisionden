@@ -119,4 +119,10 @@ describe('Welcome screen', () => {
     expect(screen.getByRole('button', { name: 'Sign out' })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /continue with google/i })).not.toBeInTheDocument();
   });
+
+  it('uses the shared link styles for its links (J7)', async () => {
+    renderRoute('/', { studentId: null });
+    expect(await screen.findByRole('link', { name: 'Policies' })).toHaveClass('link-chip');
+    expect(screen.getByRole('link', { name: 'About' })).toHaveClass('link-chip');
+  });
 });
