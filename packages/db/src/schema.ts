@@ -222,6 +222,9 @@ export const enrolments = pgTable(
     // As in core's TierSchema: 'none' when the subject has no tiers.
     tier: text('tier').notNull().default('not_sure'),
     specVersion: text('spec_version'),
+    // Set by a parent (workstream K8); checked against the cited grade scale in
+    // packages/core/src/target-grades.ts. Null until set.
+    targetGrade: text('target_grade'),
     createdAt: createdAt(),
   },
   (t) => [

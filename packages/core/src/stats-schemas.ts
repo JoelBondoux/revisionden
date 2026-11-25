@@ -50,6 +50,10 @@ export const StudentStatsSchema = z
       longestCorrectRun: Count,
       bestWeek: z.object({ weekStart: LocalDate, xp: Count }).nullable(),
     }),
+    /** Target grades a parent has set (workstream K8), read-only for the student. */
+    targets: z.array(
+      z.object({ subjectId: z.string(), name: z.string(), targetGrade: z.string() }),
+    ),
     /** Level progress from the rewards progression (workstream R); null until it lands. */
     level: z
       .object({ level: z.number().int().min(1), xpIntoLevel: Count, xpForNextLevel: Count })

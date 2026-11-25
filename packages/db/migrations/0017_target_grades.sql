@@ -1,0 +1,1 @@
+ALTER TABLE "enrolments" ADD COLUMN "target_grade" text;

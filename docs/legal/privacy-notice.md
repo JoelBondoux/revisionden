@@ -1,6 +1,6 @@
 # Privacy notice
 
-Version: 1.5
+Version: 1.6
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -123,7 +123,7 @@ profile and blanks the name and picture before anything is saved.
 
 - **Profile:** nickname (2 to 16 letters, numbers or underscores, which must not be a real name),
   avatar (saved as a short code describing the drawing), and school year;
-- **Courses:** subjects, exam boards, tiers and specification versions;
+- **Courses:** subjects, exam boards, tiers, specification versions and any target grade a parent sets;
 - **Devices:** for each linked device, the public part of its passkey and technical details the
   passkey needs (an identifier, a counter and how the device connects), when it was linked and
   last used; one-time link codes and sessions are stored only as scrambled (hashed) values;
@@ -357,6 +357,7 @@ in the app on your next visit and ask you to confirm, and students see a plain-E
 
 ## Changes
 
+- 1.6: A parent can set a target grade for each of their child's subjects. We keep it with the child's courses; the child can see it, and it is included in the family data download.
 - 1.5: A family can now have two parents. We keep the second parent's sign-in email in the same way as the first, a family activity log that says "Parent 1" or "Parent 2" (never names), invite codes (hashed, 7 days) and a short note when a parent is removed. Deleting the whole family needs both parents to confirm.
 - 1.4: New 6.4: read aloud uses the device's own speech voices; with only online voices, the device's speech service may process the text, so it starts off. No new data is kept by us.
 - 1.3: Adds that the Get help page (support services) is private: its use is not recorded or shown to parents. No change to the data we keep.

@@ -30,3 +30,4 @@ export * from './secret-stats';
 export * from './bug-hunter';
 export * from './recall';
 export * from './flashcard-session';
+export * from './target-grades';

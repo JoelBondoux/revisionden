@@ -4,6 +4,8 @@
 import { http, HttpResponse, type RequestHandler } from 'msw';
 import {
   DailyLimitSuggestionActionSchema,
+  TargetGradeRequestSchema,
+  type ParentTargetGrades,
   UpdateDailyLimitRequestSchema,
   type DailyLimitToday,
   type ParentDailyLimit,
@@ -62,6 +64,10 @@ export function demoStats(period: StatsPeriod): StudentStats {
       longestCorrectRun: 12,
       bestWeek: { weekStart: '2026-11-16', xp: 260 },
     },
+    targets:
+      targetState.maths === null
+        ? []
+        : [{ subjectId: 'gcse-maths', name: 'Maths', targetGrade: targetState.maths }],
     level: null,
   };
 }
@@ -93,7 +99,7 @@ export function demoDashboard(childId = DEMO_CHILDREN[0]!.id): ParentDashboard {
         mastery: 64,
         change: 4,
         predictedGrade: null,
-        targetGrade: null,
+        targetGrade: targetState.maths,
       },
       {
         subjectId: 'gcse-physics',
@@ -131,7 +137,34 @@ export function demoDashboard(childId = DEMO_CHILDREN[0]!.id): ParentDashboard {
   };
 }
 
+// Target grades (workstream K8) --------------------------------------------------------------
+
+let targetState: { maths: string | null } = { maths: null };
+
+export function resetTargetGradeMocks(options: { mathsTarget?: string } = {}) {
+  targetState = { maths: options.mathsTarget ?? null };
+}
+
+const parentTargets = (): ParentTargetGrades => ({
+  subjects: [
+    {
+      subjectId: 'gcse-maths',
+      name: 'Maths',
+      targetGrade: targetState.maths,
+      grades: ['9', '8', '7', '6', '5', '4', '3', 'U'],
+    },
+    { subjectId: 'gcse-physics', name: 'Physics', targetGrade: null, grades: null },
+  ],
+});
+
 export const statsHandlers: RequestHandler[] = [
+  http.get('*/v1/students/:id/target-grades', () => HttpResponse.json(parentTargets())),
+  http.put('*/v1/students/:id/target-grades/:subjectId', async ({ request, params }) => {
+    const { targetGrade } = TargetGradeRequestSchema.parse(await request.json());
+    if (params.subjectId !== 'gcse-maths') return HttpResponse.json({}, { status: 422 });
+    targetState.maths = targetGrade;
+    return HttpResponse.json(parentTargets());
+  }),
   http.get('*/v1/student/stats', ({ request }) => {
     const period = (new URL(request.url).searchParams.get('period') ?? 'week') as StatsPeriod;
     return HttpResponse.json(demoStats(period));

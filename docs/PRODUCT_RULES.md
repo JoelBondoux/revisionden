@@ -87,6 +87,29 @@
 
 - Built from mock and assessment results, quiz performance and the school's progress indicator.
 - Always shown as an estimate.
+- Not built yet: it needs verified grade boundaries (docs/VERIFICATION.md), and mocks and school
+  reports are not entered yet. Until then the stats dashboards show "Not set up yet" for it.
+
+## Target grades
+
+Agreed with the lead on 2026-11-25 (workstream K8).
+
+- A parent sets or clears a target grade for each of the child's subjects, from the parent stats
+  dashboard ("Target grades"). Either parent can change it; the latest change wins, and each
+  change goes in the family activity log as an important change ("changed {child}'s target
+  grades").
+- The grade must be on the subject's grade scale for its board and tier, best first. A scale is a
+  specification fact, so it is offered only where its official citation is stored
+  (`packages/core/src/target-grades.ts`, `GRADE_SCALES`). Today that is GCSE Maths, Pearson
+  Edexcel 1MA1: higher tier 9 to 3 and U, foundation tier 5 to 1 and U, and 9 to 1 and U while the
+  tier is not chosen (specification page 31). Other subjects and boards, and every A-Level, show
+  "not available yet" until their scale is cited.
+- The student sees their targets, read-only, on My stats. The parent dashboard's subjects table
+  shows the target next to mastery. The target is kept with the child's courses
+  (`enrolments.target_grade`) and is in the family data download.
+- API: `GET /v1/students/:id/target-grades` (each enrolled subject, its target and the grades it
+  can take, or `grades: null`) and `PUT /v1/students/:id/target-grades/:subjectId`
+  (`{ targetGrade }`, null to clear; 422 `grade_not_on_scale` or `no_grade_scale`).
 
 ## AI marking
 

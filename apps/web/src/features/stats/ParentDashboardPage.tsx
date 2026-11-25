@@ -8,6 +8,7 @@ import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { BarChart } from './BarChart';
 import { DailyLimitPanel } from './DailyLimit';
+import { TargetGradesPanel } from './TargetGrades';
 import { formatMinutes, signedNote, usd } from './format';
 import { NotSetUp, Tile } from './Tile';
 import { useStatsApi, type Child } from './statsApi';
@@ -66,6 +67,7 @@ function ChildDashboard({ choices }: { choices: Child[] }) {
         <>
           <DashboardView data={dashboard.data} />
           <DailyLimitPanel key={childId} studentId={childId} />
+          <TargetGradesPanel key={`targets-${childId}`} studentId={childId} />
         </>
       ) : (
         <LoadingOrError resource={dashboard} />
@@ -85,7 +87,8 @@ function minutesNote(current: number, previous: number): string {
 }
 
 function grade(predicted: string | null, target: string | null): string {
-  if (predicted === null) return 'Not set up yet';
+  // Predicted grades wait for verified grade boundaries; a target can already be set (K8).
+  if (predicted === null) return target === null ? 'Not set up yet' : `Target ${target}`;
   return target === null ? predicted : `${predicted} (target ${target})`;
 }
 
