@@ -368,6 +368,9 @@ Tags: #product #rules #limits #defaults
 - Parents confirm the terms and privacy notice in onboarding (version stored in
   `policy_acceptances`); a changed version shows a "We've updated" prompt. A newly linked student
   device shows the young people's notice once (`revisionden.youngPeopleNotice` in local storage).
+- The young people's notice has a friendly view built from the same file: 6 short-version cards,
+  2 to 4 key points per part always visible, "Read more" and "Expand all", original icons and Pip;
+  motion off under reduced motion. Format rules in `docs/LEGAL.md` (Friendly view).
 
 ## Sound
 
@@ -400,3 +403,28 @@ Tags: #product #rules #limits #defaults
 - The app is run by a sole trader; name and contact details come from build variables only.
   Policy contact: `privacy@revisionden.com`; no postal address shown.
   Decision 0003.
+
+## Game feel
+
+- Approved 2026-11-25 (mockup 22): practice screens use a dark "arena" style with particle bursts,
+  combos, rising chimes, a set-complete celebration and a pulsing Next mission button; calm screens
+  stay light. Combo bonus: +5 XP per right answer from the 3rd in a row (Learn mode; Test mode at the
+  reveal). Never lives, timers, pay-to-continue, mystery rewards or streak guilt; after the daily cap
+  the call to action becomes "See you tomorrow". Detail: `docs/GAME_FEEL.md`. Workstream J.
+
+## Exam practice (planned)
+
+- Timed papers sat in real time (exam conditions or practice), each question timed, all marked at
+  the end. Pacing target per question = its marks × (official duration ÷ total marks); flags at
+  1.5× slow and 0.5× rushed with marks lost. Board-style papers from our own verified items first;
+  official past papers only as links to the board's site (never copied). Detail:
+  `docs/EXAM_PRACTICE.md`. Workstream X (queued).
+
+## Bug Hunter and secret achievements (planned)
+
+- Bug icon on every screen opens the bug report sheet. A student's bug confirmed by the operator:
+  +50 XP and a step on the hidden Bug Hunter track (badge, title, avatar item, frame, Pip outfit,
+  effect, legendary set at 20). Duplicates +10 XP; at most 3 confirmed-bug rewards a week; parents
+  are thanked, not rewarded.
+- Secret achievements: hidden "???" cards with a found count; learning-based conditions only;
+  defined in the catalogue with `secret: true`. Detail: `docs/REWARDS.md`.

@@ -206,6 +206,7 @@ Spec: `docs/LEGAL.md` and `PRODUCT_RULES.md` (About page, policies and feedback)
 - [x] L3 About page: version, environment, build date, commit, "What's new" from `CHANGELOG.md`, policy links, open-source licences.
 - [x] L4 Feedback: form, privacy checks, device details toggle, parent view, operator triage at `/admin/feedback`, status updates, rate limit, retention.
 - [x] L5 Policy acceptance in onboarding (version stored) and the "policy changed" prompt.
+- [x] L6 Friendly view of the young people's privacy notice: short-version cards, key points with "Read more", icons, Pip, gentle motion (built from the same file).
 - Tests: placeholder filling and the missing-value message; What's new parsing (versions without the subsection hidden); feedback refuses emails, phone numbers and nicknames; a parent sees only their family's feedback; only the operator role reaches triage; rate limit; acceptance version stored.
 
 ### U. Sound effects (`apps/web/src/features/sound/**`)
@@ -217,6 +218,27 @@ Spec: `PRODUCT_RULES.md` (Sound effects).
 - [ ] U3 Wire `play()` into lessons, flashcards, streaks, rewards, plan and celebrations (one-line calls, listed in the PR), with the Test mode rule. Done: lessons (correct, wrong, part marks, daily goal met, celebration), starting test (submit, reveal, one-minute timer warning), flashcards (flip, rating). Still to wire when those screens exist: level up, reward unlocked, gifts, plan session dropped, timed papers (`mode: 'timed'`).
 - [x] U4 Reward sound tiers (common, rare, epic, legendary) with 4+ variations each, climbing ladders and levels, chapter sound colours, finisher fanfares, one sound for several rewards, skippable legendary.
 - Tests: mute and volume respected; tap sounds off by default; Test mode plays no correct/wrong before submit; nothing plays before first interaction; a fake AudioContext records calls.
+
+### J. Game feel (`apps/web/src/design/**` motion tokens, `apps/web/src/features/juice/**`, practice screens)
+
+Spec: `docs/GAME_FEEL.md`. Mockup 22.
+
+- [ ] J1 Motion and colour tokens (arena theme, easing, durations), reduced-motion switch, effect components (particle burst, float-up text, shake, combo badge, star reveal, confetti, pulsing CTA).
+- [ ] J2 Lesson player and flashcard sessions in the arena style with all effects, wired to U's sounds; Test mode reveal rules.
+- [ ] J3 Set complete screen (stars, tally, daily goal, Next mission, take-a-break line, daily-cap message).
+- [ ] J4 Combo XP bonus in core (+5 from the 3rd in a row, Learn mode; Test mode at reveal), wired through the learn API and R's reward XP.
+- [ ] J5 Light-theme polish: bouncy buttons, entrance motion and reward reveals on map, rewards and stats.
+- Tests: effect components respect reduced motion; no right/wrong effect before submit in Test mode; combo rules (reset on wrong, cap, Learn vs Test); daily-cap message; axe on the arena theme; performance budget check (particles capped).
+
+### X. Exam practice: timed papers (`docs/EXAM_PRACTICE.md`)
+
+- [ ] X1 Paper structure data per board, paper and tier (duration, sections, mark totals), cited and verified; access arrangement extra time.
+- [ ] X2 Board-style paper builder from verified items, matching structure and marks.
+- [ ] X3 Exam player: exam conditions or practice, countdown, per-question timing, review and finish, no feedback until the end.
+- [ ] X4 Results: marks, grade against latest boundaries, pacing chart (time vs target per question), rule-based pacing advice, per-question improvement notes, AI commentary for long answers (double-marked, labelled).
+- [ ] X5 Official past papers as links: guided self-marking with the board's mark scheme, or per-answer photo marking via Mark my homework; legal review first.
+- [ ] X6 Parent dashboard and study plan integration; "Full past papers" milestones.
+- Tests: timing per question with going back, extra time, time running out, pacing flags (1.5× slow, 0.5× rushed with marks lost), grade from boundaries, no feedback before the end, citations present for every duration and total.
 
 ## Stage 2 and later
 

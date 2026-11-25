@@ -330,8 +330,22 @@ Mockups: screens 19 (student) and 20 (parent).
 - One page per policy at `/legal/<name>`: the plain-English summary first, then the full text
   behind a "Read the full text" heading on the same page (not hidden), then the change history.
 - Reachable without signing in. Printable. No tracking.
+- The young people's notice (`/legal/privacy-for-young-people` and `/welcome/privacy` after linking)
+  uses a friendly view: "The short version" as 6 icon cards, then one card per part with its 2 to 4
+  key points always visible and "Read more" (a button with `aria-expanded`) for the full text;
+  "Expand all" at the top; printing shows everything. Original SVG icons and Pip (with a padlock at
+  the top, waving at the end). Cards slide in on scroll and parts open smoothly; no motion under
+  reduced motion, and text is never faded (contrast stays AA). No "Was this clear?" vote: the
+  feedback table has no place for a yes/no answer and a notice version without a migration.
 
 ### Feedback and bug reports
+
+- **Bug icon:** a small bug button sits in a corner of every screen (above the bottom nav, never
+  covering content, hidden during timed papers and Test mode questions). It opens the bug report
+  sheet straight away, with the current screen filled in. Students can turn the icon off in
+  Settings.
+- When the operator confirms a student's bug, the student is told in the app and earns the Bug
+  Hunter rewards in `REWARDS.md`.
 
 - Kinds: **bug**, **idea**, **something confusing**, **other**. (Mistakes in a question keep
   using "Report a problem" on the item, which quarantines it.)
