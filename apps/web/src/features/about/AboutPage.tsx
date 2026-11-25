@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
 import changelogText from '../../../../../CHANGELOG.md?raw';
 import { Card } from '../../components/Card';
+import { BugIcon, DocumentIcon, IdeaIcon, ShieldIcon } from '../../components/icons';
+import { LinkTile, TextLink } from '../../components/links';
 import { usePolicyLibrary } from '../legal/PolicyLibraryContext';
 import { SUPPORT_EMAIL } from '../legal/supportEmail';
 import { buildInfo, type BuildInfo } from './buildInfo';
@@ -59,27 +60,37 @@ export function AboutPage({ info = buildInfo, changelog = changelogText }: About
 
       <Card title="Tell us what you think">
         <p>
-          Need help? Email <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
+          Need help? Email <TextLink href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</TextLink>
         </p>
-        <ul className="link-list">
+        <ul className="link-tiles">
           <li>
-            <Link to="/feedback?kind=bug">Report a bug</Link>
+            <LinkTile
+              to="/feedback?kind=bug"
+              icon={<BugIcon />}
+              title="Report a bug"
+              description="Something broken or wrong"
+            />
           </li>
           <li>
-            <Link to="/feedback?kind=idea">Send an idea</Link>
+            <LinkTile
+              to="/feedback?kind=idea"
+              icon={<IdeaIcon />}
+              title="Send an idea"
+              description="Something you'd like us to add"
+            />
           </li>
         </ul>
       </Card>
 
       <Card title="Policies">
-        <ul className="link-list">
+        <ul className="link-tiles">
           {policies.map((p) => (
             <li key={p.name}>
-              <Link to={`/legal/${p.name}`}>{p.title}</Link>
+              <LinkTile to={`/legal/${p.name}`} icon={<DocumentIcon />} title={p.title} />
             </li>
           ))}
           <li>
-            <Link to="/legal">All policies</Link>
+            <LinkTile to="/legal" icon={<ShieldIcon />} title="All policies" />
           </li>
         </ul>
       </Card>

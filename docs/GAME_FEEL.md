@@ -58,8 +58,9 @@ No plain underlined text links. Use the shared components in `apps/web/src/compo
 - **LinkButton** (primary, secondary or quiet, optional icon): a link that looks like our buttons,
   for the main way on from a screen.
 - **LinkTile** (icon, title, one-line description, chevron): a tappable card for "go to X" lists
-  such as the parent home, settings and stats. Its screen reader name is the title; the description
-  is read as its description.
+  such as the parent home, settings and stats; wrap a list in `<ul className="link-tiles">`. The
+  link's text is the title (its screen reader name, matching what it shows, WCAG 2.5.3), the
+  description is read as its description, and the link stretches over the whole card.
 - **LinkChip**: a small pill link inside a card ("Details", "Change").
 - **TextLink**: only for links inside sentences and long prose (policies). Bold, coloured, a soft
   bar under it and an underline on hover; it stays inline for readability.

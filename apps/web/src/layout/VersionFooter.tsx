@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { TextLink } from '../components/links';
 import { buildInfo, type BuildInfo } from '../features/about/buildInfo';
 import { GetHelpLink } from '../features/help';
 
@@ -18,7 +18,7 @@ export function VersionFooter({
   const label = `RevisionDen version ${version}`;
   return (
     <footer className="version-footer">
-      <Link to="/about">{label}</Link>
+      <TextLink to="/about">{label}</TextLink>
       {environment === 'Live' ? null : ` (${environment})`}
       {showHelp && (
         <>
