@@ -156,6 +156,11 @@ Tags: #product #rules #limits #defaults
   first answer); 120 requests a minute per address. Implemented in
   `packages/core/src/operator-signature.ts` and `apps/api/src/operator/bridge.ts`.
 - Roles from AppDeck: Agent (support) and Manager (also money and data), enforced by the API.
+- AppDeck reads (O2): health, overview, family search by exact parent email or family id only
+  (POST body, no browsing names), family detail (parents' emails, children as nickname + year
+  group only, flags), tickets (a student's ticket text is never sent), error-report groups,
+  content reports, audit log. `apps/api/src/operator/reads.ts`; shapes in
+  `packages/core/src/operator-schemas.ts`.
 - Every operator read of a family and every action goes in `operator_audit_log`, kept 2 years
   (data retention policy 1.3); the scheduled clean-up deletes older entries.
 

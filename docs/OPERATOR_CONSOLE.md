@@ -85,11 +85,28 @@ secret is a test value used nowhere else.
 
 ### Endpoints
 
-| Route                          | Role  | Returns                                                                                     | Audited |
-| ------------------------------ | ----- | ------------------------------------------------------------------------------------------- | ------- |
-| `GET /operator/appdeck/health` | Agent | `data: { status: "ok", environment, version, operator: { email, role } }` (connection test) | no      |
+Paths below are under `/operator/appdeck`. All reads are open to Agent and Manager; every answer
+is the `data` of `{ "success": true, "data": … }`. Shapes are strict Zod schemas in
+`packages/core/src/operator-schemas.ts` (`Operator…Schema`), so an unagreed field fails the tests
+instead of reaching AppDeck. `null` marks figures whose workstream is not built yet (payments:
+Premium, trials, free places, plan; complaints: O4).
 
-Read endpoints come with O2, actions with O3 to O5.
+| Route                  | Input                                                                                                                                 | `data`                                                                                                                                                                                                            | Audited                                                                  |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `GET health`           |                                                                                                                                       | `{ status: "ok", environment, version, operator: { email, role }, errorReportsLastHour, errorReports24h }`                                                                                                        | no                                                                       |
+| `GET overview`         |                                                                                                                                       | `{ families, students, activeStudents7d, activeStudents30d, openTickets, openContentReports, errorReports24h, premiumFamilies, trials, freePlaces, openComplaints }`; active = answered a question in that window | no                                                                       |
+| `POST families/search` | body `{ email }` (exact, any case) **or** `{ familyId }`; anything else 400                                                           | `{ families: [{ id, createdAt, lastActiveAt, parentCount, childCount }] }` (0 or 1). A read: its request id is not replayed and nothing is stored                                                                 | `family.search` (target = family found; the search text is never stored) |
+| `GET families/{id}`    |                                                                                                                                       | `{ id, createdAt, lastActiveAt, deletesAfter, parents: [{ email, joinedAt }], plan, children: [{ nickname, yearGroup }], flags: { inactivityWarning, openTickets, openContentReports } }`                         | `family.view`                                                            |
+| `GET tickets`          | `status=open\|all\|new\|looking_into_it\|fixed\|will_not_fix`, `kind=bug\|idea\|confusing\|other`, `familyId=` (empty values ignored) | `{ tickets: [{ id, familyId, kind, status, senderRole, text, device, createdAt, updatedAt, closedAt }] }`, newest 200; `text` is always `null` when a student sent it                                             | `tickets.list` (target = family when filtered)                           |
+| `GET tickets/{id}`     |                                                                                                                                       | One ticket, same shape                                                                                                                                                                                            | `ticket.view` (target = its family)                                      |
+| `GET error-reports`    | `since=` (default 24 hours, at most 90 days)                                                                                          | Error reports grouped by screen, API path and status (same shape as `GET /v1/admin/error-reports`)                                                                                                                | no                                                                       |
+| `GET content-reports`  | `status=open` (default)`\|no_error\|confirmed_error\|all`                                                                             | `{ reviewQueueUrl, reports: [{ id, itemId, itemVersion, reason, reportedBy, status, quarantined, createdAt, decidedAt }] }`, newest 200                                                                           | no                                                                       |
+| `GET audit`            | `targetType=`, `targetId=`, `before=` (ISO time), `limit=` (1–500, default 100)                                                       | `{ entries: [...], nextBefore }`, newest first                                                                                                                                                                    | no                                                                       |
+
+AppDeck finds an RD code through `GET error-reports` (its groups' `refs`), so tickets have no
+`errorCode` filter. Actions (notes, ticket
+reply, status, confirm bug, duplicate, complaints, discount codes, free places, data requests,
+trial extension, family tags) come with O3 to O6 on AppDeck's paths.
 
 ## What the operator can see and do
 

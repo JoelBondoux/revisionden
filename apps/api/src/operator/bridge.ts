@@ -48,6 +48,8 @@ export interface OperatorBridgeDeps {
   clock: Clock;
   config: AppConfig;
   rateLimiter: RateLimiter;
+  /** Full paths of POST routes that only read (no stored answer, no replay). */
+  readPosts?: readonly string[];
 }
 
 const RequestIdSchema = z.string().regex(/^[A-Za-z0-9._:-]{1,128}$/);
@@ -63,10 +65,12 @@ async function sha256Hex(text: string): Promise<string> {
 
 const isChange = (method: string) => method !== 'GET' && method !== 'HEAD';
 
-/** The signed path: path and query string exactly as requested. */
+/** The signed path: path and query string exactly as requested (a bare `?` included). */
 function signedPath(c: Context): string {
-  const url = new URL(c.req.url);
-  return `${url.pathname}${url.search}`;
+  const url = c.req.url;
+  const path = url.slice(url.indexOf('/', url.indexOf('//') + 2));
+  const hash = path.indexOf('#');
+  return hash === -1 ? path : path.slice(0, hash);
 }
 
 /**
@@ -138,12 +142,13 @@ export function operatorAuth(deps: OperatorBridgeDeps): MiddlewareHandler<AppEnv
       .values({ requestId, method, path, bodyHash, createdAt: deps.clock.now() })
       .onConflictDoNothing({ target: operatorRequests.requestId })
       .returning({ requestId: operatorRequests.requestId });
-    if (!claimed) return replay(c, deps.db, { requestId, method, path, bodyHash });
+    const change = isChange(method) && !(deps.readPosts ?? []).includes(c.req.path);
+    if (!claimed) return replay(c, deps.db, { requestId, method, path, bodyHash, change });
 
     c.set('operator', { email: email.toLowerCase(), role, requestId });
     await next();
 
-    if (!isChange(method)) return;
+    if (!change) return;
     if (c.res.status >= 500) {
       await deps.db.delete(operatorRequests).where(eq(operatorRequests.requestId, requestId));
       return;
@@ -159,9 +164,9 @@ export function operatorAuth(deps: OperatorBridgeDeps): MiddlewareHandler<AppEnv
 async function replay(
   c: Context<AppEnv>,
   db: Database,
-  sent: { requestId: string; method: string; path: string; bodyHash: string },
+  sent: { requestId: string; method: string; path: string; bodyHash: string; change: boolean },
 ) {
-  if (!isChange(sent.method)) {
+  if (!sent.change) {
     throw new ApiError(409, 'operator_request_replayed', 'This request id was already used');
   }
   const [seen] = await db
@@ -204,6 +209,8 @@ export async function audit(
     targetId?: string;
     outcome?: 'ok' | 'denied';
   },
+  /** The request's time; the database clock when not given. */
+  now?: Date,
 ): Promise<void> {
   await db.insert(operatorAuditLog).values({
     operatorEmail: operator.email,
@@ -213,6 +220,7 @@ export async function audit(
     targetId: entry.targetId ?? null,
     requestId: operator.requestId,
     outcome: entry.outcome ?? 'ok',
+    ...(now ? { createdAt: now } : {}),
   });
 }
 
