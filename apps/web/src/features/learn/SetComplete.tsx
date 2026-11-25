@@ -30,7 +30,7 @@ export function SetComplete({
 }: SetCompleteProps) {
   const { play } = useSound();
   useEffect(() => void play('celebration'), [play]);
-  const capped = progress !== null && pastDailyCap(progress.xpToday);
+  const capped = progress !== null && pastDailyCap(progress);
   return (
     <div className="complete set-complete">
       <Confetti />

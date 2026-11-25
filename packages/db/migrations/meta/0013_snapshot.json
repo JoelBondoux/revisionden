@@ -1,5 +1,5 @@
 {
-  "id": "0604345a-2fbc-4c01-bbf4-d687bacc41fb",
+  "id": "f61e3f8b-f5fe-4546-bb36-b812cf9e648e",
   "prevId": "767d1e6d-116a-46eb-9ee9-432e424ad80a",
   "version": "7",
   "dialect": "postgresql",
@@ -565,6 +565,100 @@
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.daily_limits": {
+      "name": "daily_limits",
+      "schema": "",
+      "columns": {
+        "student_id": {
+          "name": "student_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "weekday_minutes": {
+          "name": "weekday_minutes",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "other_day_minutes": {
+          "name": "other_day_minutes",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "exam_season_extra": {
+          "name": "exam_season_extra",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "changed_at": {
+          "name": "changed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "student_seen_at": {
+          "name": "student_seen_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_suggested_on": {
+          "name": "last_suggested_on",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_raise_on": {
+          "name": "last_raise_on",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pending_suggestion": {
+          "name": "pending_suggestion",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "daily_limits_student_id_students_id_fk": {
+          "name": "daily_limits_student_id_students_id_fk",
+          "tableFrom": "daily_limits",
+          "tableTo": "students",
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "daily_limits_weekday_range": {
+          "name": "daily_limits_weekday_range",
+          "value": "\"daily_limits\".\"weekday_minutes\" is null or \"daily_limits\".\"weekday_minutes\" between 15 and 360"
+        },
+        "daily_limits_other_range": {
+          "name": "daily_limits_other_range",
+          "value": "\"daily_limits\".\"other_day_minutes\" is null or \"daily_limits\".\"other_day_minutes\" between 15 and 360"
+        }
+      },
       "isRLSEnabled": false
     },
     "public.daily_xp": {
@@ -2058,193 +2152,6 @@
           "value": "\"mastery\".\"value\" between 0 and 1"
         }
       },
-      "isRLSEnabled": false
-    },
-    "public.operator_audit_log": {
-      "name": "operator_audit_log",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "operator_email": {
-          "name": "operator_email",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "operator_role": {
-          "name": "operator_role",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "action": {
-          "name": "action",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "target_type": {
-          "name": "target_type",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "target_id": {
-          "name": "target_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "request_id": {
-          "name": "request_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "outcome": {
-          "name": "outcome",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "operator_audit_log_created_at_idx": {
-          "name": "operator_audit_log_created_at_idx",
-          "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "operator_audit_log_target_idx": {
-          "name": "operator_audit_log_target_idx",
-          "columns": [
-            {
-              "expression": "target_type",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "target_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {
-        "operator_audit_log_role_values": {
-          "name": "operator_audit_log_role_values",
-          "value": "\"operator_audit_log\".\"operator_role\" in ('agent', 'manager')"
-        },
-        "operator_audit_log_outcome_values": {
-          "name": "operator_audit_log_outcome_values",
-          "value": "\"operator_audit_log\".\"outcome\" in ('ok', 'denied')"
-        }
-      },
-      "isRLSEnabled": false
-    },
-    "public.operator_requests": {
-      "name": "operator_requests",
-      "schema": "",
-      "columns": {
-        "request_id": {
-          "name": "request_id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "method": {
-          "name": "method",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "path": {
-          "name": "path",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "body_hash": {
-          "name": "body_hash",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "response_status": {
-          "name": "response_status",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "response_body": {
-          "name": "response_body",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "operator_requests_created_at_idx": {
-          "name": "operator_requests_created_at_idx",
-          "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
       "isRLSEnabled": false
     },
     "public.parent_invites": {

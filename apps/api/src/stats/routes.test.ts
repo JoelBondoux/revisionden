@@ -205,7 +205,7 @@ describe('GET /v1/students/:id/stats and /dashboard (parent)', () => {
       quietHourSessions: 0,
       daysOverCap: 0,
       restDays: 0,
-      dailyCapMinutes: 120,
+      dailyCapMinutes: 60,
     });
     expect(body.aiSpend).toEqual({ month: '2026-11', spentMicroUsd: 4200, capMicroUsd: 2_500_000 });
     expect(body.recentActivity[0]).toMatchObject({ kind: 'flashcards', count: 1 });

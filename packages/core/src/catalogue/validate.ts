@@ -5,6 +5,7 @@
 import { AVATAR_LAYERS, type AvatarCatalogue } from '../avatar';
 import { CHAPTER_FULL_XP } from '../chapters';
 import { MAX_LEVEL, MAX_PRESTIGE_STARS } from '../levels';
+import { DAILY_REWARD_XP_CAP } from '../reward-xp';
 import {
   RARITIES,
   type Collection,
@@ -45,6 +46,31 @@ export const STAT_MAX: Record<StatKey, number> = {
   gcseFinished: 1,
   aLevelExamsSat: Infinity,
   aLevelFinished: 1,
+  confirmedBugs: Infinity,
+  comebackRuns: Infinity,
+  allSubjectsWeeks: Infinity,
+  bestWeakSpotsFixedInDay: Infinity,
+  pacedPapers: Infinity,
+  bestFlashcardsWeek: Infinity,
+  bestCorrectInDay: Infinity,
+  bestCorrectInWeek: Infinity,
+  bestTopicsInDay: Infinity,
+  bestSubjectsInDay: Infinity,
+  subjectsPractised: Infinity,
+  bestTopicAnswers: Infinity,
+  itemTypesAnswered: 6,
+  fullMarkLongAnswers: Infinity,
+  perfectWorkings: Infinity,
+  bestRewardDayXp: DAILY_REWARD_XP_CAP,
+  fullWeekends: Infinity,
+  perfectWeeks: Infinity,
+  bestGoalDaysInMonth: 31,
+  chaptersFilled: 5,
+  factChecks: Infinity,
+  weakSpotsTurnedStrong: Infinity,
+  practiceKindsTried: 7,
+  plannedWeeks: Infinity,
+  perfectSetsLevel2: Infinity,
 } satisfies Record<keyof RewardStats, number>;
 
 export const REWARD_STAT_KEYS = Object.keys(STAT_MAX) as StatKey[];
@@ -63,6 +89,12 @@ function checkReward(r: Reward, parts: CatalogueParts, problems: string[]) {
   if (!wholeAtLeast(r.giftDays, 0)) {
     problems.push(`${r.id}: gift days must be a whole number of at least 0`);
   }
+  if ((r.secret || r.source === 'hidden') && r.target.kind !== 'stat') {
+    problems.push(`${r.id}: secret and hidden rewards need a stat target`);
+  }
+  if (r.source === 'hidden' && !r.track) problems.push(`${r.id}: hidden rewards need a track`);
+  if (r.source === 'secret' && !r.secret)
+    problems.push(`${r.id}: secret rewards need secret: true`);
   const t = r.target;
   if (t.kind === 'collection') {
     if (!parts.collections.some((c) => c.id === t.collectionId)) {
@@ -127,6 +159,10 @@ export function validateCatalogue(rewards: readonly Reward[], parts: CataloguePa
       .map((r) => r.id);
     for (const m of c.members) {
       if (!seen.has(m)) problems.push(`${c.id}: unknown member ${m}`);
+      const member = rewards.find((r) => r.id === m);
+      if (member && (member.secret || member.track)) {
+        problems.push(`${c.id}: secret or hidden reward ${m} cannot be in a collection`);
+      }
       if (bonusIds.includes(m)) problems.push(`${c.id}: contains its own bonus ${m}`);
     }
   }
