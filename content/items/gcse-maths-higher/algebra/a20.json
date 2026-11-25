@@ -214,22 +214,6 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:43:20Z",
-          "notes": "model answered \"3.1538\"; expected \"3.1538\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:43:27Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -244,6 +228,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:10:37Z",
+          "notes": "model answered \"3.1538\"; expected \"3.1538\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:10:45Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -297,22 +297,6 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:43:35Z",
-          "notes": "model answered \"1.905\"; expected \"1.905\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:43:48Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -327,6 +311,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:10:52Z",
+          "notes": "model answered \"1.905\"; expected \"1.905\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:11:03Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -350,7 +350,6 @@
     "explanation": "f(x) changes sign between x = 2 and x = 3, so the graph of y = f(x) crosses the x-axis between them: there is a solution between 2 and 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -365,10 +364,12 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "needs_human_approval": true,
     "facts": [
       {
         "statement": "If a continuous function f has f(a) and f(b) of opposite signs, then f(x) = 0 has a solution between a and b.",
-        "ask": "If a continuous function f has f(a) and f(b) of opposite signs, what can you say about f(x) = 0 between a and b?"
+        "ask": "If a continuous function f has f(a) and f(b) of opposite signs, what can you say about f(x) = 0 between a and b?",
+        "engine": { "kind": "sign_change", "function": "x^3 - 4x - 1", "interval": ["2", "3"] }
       }
     ],
     "verification": {
@@ -380,7 +381,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). f(2) and f(3) checked with SymPy. Sign-change argument: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). f(2) and f(3) checked with SymPy. Sign-change argument: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Codex review on #123: the sign-change proof covers this function only, not the general theorem, so it keeps individual human approval.",
           "at": "2026-11-25T18:04:51Z"
         },
         {
@@ -417,11 +418,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T19:27:37Z",
-          "notes": "fact 1: no maths engine proof; blind statement matches (\"If f is continuous on [a,b] and f(a) and f(b) have opposite signs (that is, f(a)f(b)<0), then there exists at least one number c in (a,b) such that f(c)=0.\")"
+          "at": "2026-11-25T20:41:58Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"If f is continuous on [a,b] and f(a) and f(b) have opposite signs (so f(a)f(b)<0), then there exists at least one c in (a,b) such that f(c)=0.\")"
         }
       ]
     }
