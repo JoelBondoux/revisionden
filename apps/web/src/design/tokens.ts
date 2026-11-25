@@ -10,6 +10,7 @@ export const tokens = {
   '--color-text': '#2B2B3A',
   '--color-text-secondary': '#5E5E73',
   '--color-text-on-primary': '#FFFFFF',
+  '--color-text-on-gold': '#2B2B3A',
   '--color-border': '#E3E3EA',
   '--color-surface': '#FFFFFF',
   '--color-background': '#F7F6FB',

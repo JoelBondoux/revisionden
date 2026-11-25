@@ -104,7 +104,7 @@
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-pill);
   background: var(--arena-gold);
-  color: var(--color-text);
+  color: var(--color-text-on-gold);
   font-weight: var(--font-weight-black);
   letter-spacing: 0.04em;
   animation: pop var(--motion-medium) var(--ease-spring);

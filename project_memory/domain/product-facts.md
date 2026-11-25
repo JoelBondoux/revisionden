@@ -623,6 +623,17 @@ Tags: #product #rules #limits #defaults
   Normal / Large (112.5%) / Larger (125%), more spacing (line height 1.8, letter 0.12em, word
   0.16em), tint none / cream / blue. Defaults: all off. Applied app-wide by `data-reading-*`
   attributes on `<html>` (`apps/web/src/features/reading/`).
+- Appearance (J8, built): Settings → Appearance, per device in `localStorage` key
+  `revisionden.appearance` (`{theme, palette, pattern}`). Theme `system` (default) / `light` /
+  `dark`; palette `standard` (default) / `colourblind`; pattern `on` (default) / `off`. Applied as
+  `data-theme`, `data-palette`, `data-pattern` on `<html>` by `public/appearance-boot.js` before
+  first paint and by `AppearanceProvider` after (`apps/web/src/features/appearance/`). Colours in
+  `apps/web/src/design/themes.ts` / `themes.css`: dark keeps button colours with white text and
+  uses `--color-primary-edge` (#C4B5FF) for violet text; colour-blind right #1F6FD1 (blue), wrong
+  #B34F00 (orange), checked by simulation (ΔE ≥ 20 for deuteranopia, protanopia, tritanopia) and
+  4.5:1 contrast in all four combinations. Doodle tile `apps/web/src/design/doodles.svg` (original,
+  240px, used as a CSS mask at 7% ink), hidden with `prefers-contrast: more` and forced colours.
+  Text on gold or streak orange uses `--color-text-on-gold`. Get help keeps light colours in dark.
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by
