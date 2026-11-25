@@ -948,6 +948,46 @@ export const policyAcceptances = pgTable(
   (t) => [primaryKey({ columns: [t.authUserId, t.policy] })],
 );
 
+// ---------------------------------------------------------------------------------------------
+// Daily limit (workstream K7, docs/PRODUCT_RULES.md "Daily limit (wellbeing)"). Null limits use
+// the defaults for the student's level. Any parent of the family can change it; the app only
+// suggests changes (at most one a week), which the parent accepts, changes or dismisses.
+// ---------------------------------------------------------------------------------------------
+
+const limitRange = (column: unknown) => sql`${column} is null or ${column} between 15 and 360`;
+
+export const dailyLimits = pgTable(
+  'daily_limits',
+  {
+    studentId: uuid('student_id')
+      .primaryKey()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    // School days (Monday to Friday, not holidays). The column avoids the word "school", which
+    // the privacy schema guard reserves for school names.
+    schoolDayMinutes: integer('weekday_minutes'),
+    otherDayMinutes: integer('other_day_minutes'),
+    examSeasonExtra: boolean('exam_season_extra').notNull().default(false),
+    // When a parent last changed it, and when the student last saw the change.
+    changedAt: timestamp('changed_at', { withTimezone: true }),
+    studentSeenAt: timestamp('student_seen_at', { withTimezone: true }),
+    // The weekly suggestion: when it was last worked out, the last rise, and the one waiting.
+    lastSuggestedOn: date('last_suggested_on'),
+    lastRaiseOn: date('last_raise_on'),
+    pendingSuggestion: jsonb('pending_suggestion').$type<{
+      kind: 'raise' | 'ease';
+      change: number;
+      schoolDayMinutes: number;
+      otherDayMinutes: number;
+      reason: string;
+    }>(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [
+    check('daily_limits_weekday_range', limitRange(t.schoolDayMinutes)),
+    check('daily_limits_other_range', limitRange(t.otherDayMinutes)),
+  ],
+);
+
 /** Browser families an error report may name (no versions). */
 export const ERROR_REPORT_BROWSERS = ['Chrome', 'Edge', 'Firefox', 'Safari', 'Other'] as const;
 

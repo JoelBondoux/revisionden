@@ -5,6 +5,7 @@ import { ProgressBar } from '../../components/ProgressBar';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { BarChart } from './BarChart';
+import { DailyLimitToday } from './DailyLimit';
 import { kindNote } from './format';
 import { NotSetUp, Tile } from './Tile';
 import { useStatsApi } from './statsApi';
@@ -41,6 +42,7 @@ export function MyStatsPage() {
   return (
     <div className="stack stats">
       <h1>My stats</h1>
+      <DailyLimitToday />
       <div role="group" aria-label="Period" className="period-toggle">
         {STATS_PERIODS.map((p) => (
           <button

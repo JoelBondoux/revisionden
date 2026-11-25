@@ -133,8 +133,23 @@ describe('rolling counter', () => {
 });
 
 describe('daily cap', () => {
-  it('is reached at the daily reward XP cap (300 XP), not before', () => {
-    expect(pastDailyCap(299)).toBe(false);
-    expect(pastDailyCap(300)).toBe(true);
+  const limit = (reached: boolean) => ({
+    limitMinutes: 60,
+    usedMinutes: reached ? 60 : 30,
+    leftMinutes: reached ? 0 : 30,
+    reached,
+    dayType: 'school' as const,
+    examSeason: false,
+  });
+
+  it('is reached at the daily limit in minutes (workstream K7)', () => {
+    expect(pastDailyCap({ xpToday: 40, dailyLimit: limit(true) })).toBe(true);
+    expect(pastDailyCap({ xpToday: 40, dailyLimit: limit(false) })).toBe(false);
+  });
+
+  it('keeps the daily reward XP cap (300 XP) as a safety net', () => {
+    expect(pastDailyCap({ xpToday: 299 })).toBe(false);
+    expect(pastDailyCap({ xpToday: 300 })).toBe(true);
+    expect(pastDailyCap({ xpToday: 300, dailyLimit: limit(false) })).toBe(true);
   });
 });

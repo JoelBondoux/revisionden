@@ -13,6 +13,11 @@
       homework marking or plan edit records). Not settled because the data belongs to other
       workstreams.
 
+- [ ] **School holidays and the daily limit.** `docs/PRODUCT_RULES.md` (Daily limit) gives other
+      days (weekends and holidays) the higher limit, but no school holiday dates are stored, so
+      `dayTypeOf` in `packages/core/src/daily-limit.ts` treats holidays as school days (it takes a
+      `holidays` list that the API passes empty). Not settled: term and holiday dates need the
+      school report or study plan work, or a parent setting.
 - [ ] **Secret achievement stats with no data yet.** "Patch Day" (weak spots fixed in a day),
       "On Pace" (timed papers on pace, workstream X) and "Card Shark" (flashcards in a week; deck
       reviews have no timestamped record) are in the catalogue but their stats count as 0 until the
@@ -91,10 +96,16 @@
 
 ## Resolved
 
+- [x] **Daily limit changes in the activity log.** `docs/PRODUCT_RULES.md` ("Two parents") says the
+      other parent is told when a limit changes, but the daily limit (same page, "Daily limit") has
+      no API route yet. B3 logs `PUT /v1/students/:id/daily-limit` as an important change
+      (`apps/api/src/family-events.ts`, `LOGGED_CHANGES`); the limits workstream must use that
+      route (or update the table) when it builds it.
+      Settled (K7): the route is `PUT /v1/students/:id/daily-limit`, so B3's table logs it; an
+      accepted suggestion (`POST .../suggestion`) logs `limit_changed` itself.
 - [x] Bug Hunter count and XP: settled once workstream L's #52 merged. The rewards route reads
       L's `confirmedBugCount` and adds L's `bugRewardXp` to reward XP for levels
       (`apps/api/src/routes/rewards.ts`); nothing is written to `attempts`.
-
 - [x] **Flashcard deck XP and rewards.** `docs/REWARDS.md` says XP from flashcards counts towards
       levels, but deck reviews (`apps/api/src/routes/flashcards.ts`) only add to `daily_xp`, which
       has no time of day, so the late-night rule cannot be checked. Reward XP is therefore built

@@ -7,6 +7,7 @@ import { ProgressBar } from '../../components/ProgressBar';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { BarChart } from './BarChart';
+import { DailyLimitPanel } from './DailyLimit';
 import { formatMinutes, signedNote, usd } from './format';
 import { NotSetUp, Tile } from './Tile';
 import { useStatsApi, type Child } from './statsApi';
@@ -62,7 +63,10 @@ function ChildDashboard({ choices }: { choices: Child[] }) {
         </Button>
       </div>
       {dashboard.status === 'ready' ? (
-        <DashboardView data={dashboard.data} />
+        <>
+          <DashboardView data={dashboard.data} />
+          <DailyLimitPanel key={childId} studentId={childId} />
+        </>
       ) : (
         <LoadingOrError resource={dashboard} />
       )}
@@ -230,7 +234,7 @@ function DashboardView({ data }: { data: ParentDashboard }) {
       <Card title="Healthy habits">
         <ul className="stats-list">
           <li>{`${plural(habits.quietHourSessions, 'session')} in quiet hours`}</li>
-          <li>{`${plural(habits.daysOverCap, 'day')} over the ${formatMinutes(habits.dailyCapMinutes).replace(' h', '-hour')} daily cap`}</li>
+          <li>{`${plural(habits.daysOverCap, 'day')} at the daily limit (${habits.dailyCapMinutes} minutes today)`}</li>
           <li>{`${plural(habits.restDays, 'rest day')} taken`}</li>
         </ul>
       </Card>

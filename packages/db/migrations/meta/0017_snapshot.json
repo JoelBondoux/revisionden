@@ -1,6 +1,6 @@
 {
-  "id": "57ff9465-d621-4477-ad67-dbf86bf98859",
-  "prevId": "767d1e6d-116a-46eb-9ee9-432e424ad80a",
+  "id": "3df892d2-82a2-4ae2-927e-a1aed58c52c0",
+  "prevId": "f61e3f8b-f5fe-4546-bb36-b812cf9e648e",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -565,6 +565,100 @@
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.daily_limits": {
+      "name": "daily_limits",
+      "schema": "",
+      "columns": {
+        "student_id": {
+          "name": "student_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "weekday_minutes": {
+          "name": "weekday_minutes",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "other_day_minutes": {
+          "name": "other_day_minutes",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "exam_season_extra": {
+          "name": "exam_season_extra",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "changed_at": {
+          "name": "changed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "student_seen_at": {
+          "name": "student_seen_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_suggested_on": {
+          "name": "last_suggested_on",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_raise_on": {
+          "name": "last_raise_on",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pending_suggestion": {
+          "name": "pending_suggestion",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "daily_limits_student_id_students_id_fk": {
+          "name": "daily_limits_student_id_students_id_fk",
+          "tableFrom": "daily_limits",
+          "tableTo": "students",
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "daily_limits_weekday_range": {
+          "name": "daily_limits_weekday_range",
+          "value": "\"daily_limits\".\"weekday_minutes\" is null or \"daily_limits\".\"weekday_minutes\" between 15 and 360"
+        },
+        "daily_limits_other_range": {
+          "name": "daily_limits_other_range",
+          "value": "\"daily_limits\".\"other_day_minutes\" is null or \"daily_limits\".\"other_day_minutes\" between 15 and 360"
+        }
+      },
       "isRLSEnabled": false
     },
     "public.daily_xp": {

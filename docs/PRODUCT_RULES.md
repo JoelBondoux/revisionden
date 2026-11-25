@@ -279,7 +279,7 @@ Mockups: screens 19 (student) and 20 (parent).
 - Weak spots: the three weakest topics, 4 weeks ago and now.
 - Latest school report effort scores (for example CBI), shown on the school's own scale.
 - Parent-set reward progress (from `REWARDS.md`).
-- Healthy habits: sessions in quiet hours, days over the daily cap, rest days taken.
+- Healthy habits: sessions in quiet hours, days at the daily limit, rest days taken.
 - AI marking spend this month against the per-child cap.
 - Recent activity: the last 10 events (lessons, flashcards, papers, homework marked, plan edits).
   No free text written by the student is shown.
@@ -288,7 +288,7 @@ Mockups: screens 19 (student) and 20 (parent).
 ### Rules for the numbers
 
 - **Active study time** counts time between answers in a session; a gap of more than 5 minutes
-  ends the session and the gap is not counted. Time past the daily cap is not counted.
+  ends the session and the gap is not counted. Time past the student's daily limit is not counted.
 - **Accuracy** is correct answers ÷ marked answers in the period (part marks count as the
   fraction earned). Unmarked or "check with your teacher" answers are left out.
 - **Plan kept** is sessions completed on their day (or the day they were moved to) ÷ planned
@@ -304,13 +304,12 @@ Mockups: screens 19 (student) and 20 (parent).
   1 January to 31 March, summer 1 April to 31 August. The school year runs 1 September to
   31 August (August counts in the year just ended); the Year chart has 12 months.
 - **Goal lines**: daily goal 50 XP (Week); weekly goal 250 XP, 5 days of the daily goal (Term).
-- **Daily cap** (provisional, until the wellbeing work makes it a parent setting): 2 hours of
-  active study a day.
+- **Daily limit**: each student's own limit for that day (see "Daily limit (wellbeing)").
 - **Subject mastery** averages the topics the student has practised; the change replays topic
   mastery from the marked answers at the start of the period (student) or 4 weeks ago (parent),
   counting topics not practised then as 0. Weak spots are the three lowest practised topics.
 - **Healthy habits** are for this week: sessions that start in the reminder quiet hours (night or
-  school hours, as set by the parent), days past the daily cap, and finished days with no study.
+  school hours, as set by the parent), days past the daily limit, and finished days with no study.
 - **Recent activity** groups back-to-back answers of one kind and subject (gaps up to 5 minutes)
   into lessons, tests, starting tests and flashcard practice. Flashcard reviews show only each
   card's latest review (that is all that is stored).
@@ -522,6 +521,42 @@ counted).
   the limit then pauses other practice for the rest of the day.
 - The XP reward cap (`DAILY_REWARD_XP_CAP`, 300 XP) stays as a safety net alongside the minutes
   limit.
+
+How the rules are settled in code (workstream K7; the four judgement calls marked ✓ were confirmed
+by the product owner on 2026-11-25):
+
+- ✓ **School days** are Monday to Friday; other days are weekends and holidays. School holidays are
+  not known yet (no term dates are entered), so for now holidays count as school days (see
+  `project_memory/operations/contradictions.md`).
+- **Exam season** runs from 6 weeks (42 days) before the student's first exam (`exams`, kind
+  `exam`) to the day of the last exam.
+- ✓ A parent may set any limit from 15 minutes to 6 hours per day type; a limit left unset follows
+  the default for the student's level (Years 9 to 11 GCSE, 12 and 13 A-Level).
+- **Reaching the limit**: the answer that takes today's active minutes to the limit, and anything
+  after it, earns no XP (answers, test-mode combos and flashcard session XP; a flashcard session
+  finished past the limit keeps its reward slot for another day). Mastery still updates.
+  Every progress response carries `dailyLimit` (limit, used, left, reached) for the practice
+  screens; the set-complete screen says "Great work today. See you tomorrow" when it is reached
+  (or, as a safety net, at the 300 XP reward cap: `pastDailyCap` in `features/juice`). Timed papers may finish past the limit (`creditsPastLimit`; papers are not built yet).
+- **Suggestions** are worked out at most once every 7 days, when a parent opens the daily limit
+  panel, and wait there until accepted, changed or dismissed. Easing off: −10 minutes for one
+  tiredness sign, −15 for two or more, never below 15 minutes. Signs: accuracy in the last 15
+  minutes of sessions of 30 minutes or more is more than 10 points below the first 15; ✓ two or more
+  starting tests left unfinished for over an hour (lesson sets are not recorded yet, so these are the sessions we
+  can see stopped part-way); no rest day in the last two weeks. A rise (+10, both day types, never
+  past the ceiling or below a limit set by hand) needs the limit reached on 4 of the last 14 days
+  and late accuracy within 5 points of early accuracy; ✓ the app never prompts a student to keep
+  going, so reaching the limit counts as their own choice. At most one rise a fortnight.
+- The student sees today's minutes left on My stats, and a one-time notice when a parent changes
+  the limit.
+- **Two parents:** either parent can change the limit or answer a suggestion; the latest change
+  wins. Each change (a saved limit or an accepted suggestion, not a dismissal) goes in the family
+  activity log as "changed the daily limit", so the other parent is told.
+- Implemented: `packages/core/src/daily-limit.ts` and `daily-limit-schemas.ts`; API
+  `apps/api/src/daily-limit/` (`GET`/`PUT /v1/students/:id/daily-limit`,
+  `POST /v1/students/:id/daily-limit/suggestion`, `GET /v1/student/daily-limit`,
+  `POST /v1/student/daily-limit/seen`); the `daily_limits` table; web
+  `apps/web/src/features/stats/DailyLimit.tsx`.
 
 ## Two parents (shared parent control)
 
