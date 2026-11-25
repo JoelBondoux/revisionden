@@ -152,7 +152,7 @@ Tags: #product #rules #limits #defaults
   (no database access for AppDeck). Spec and wire format: `docs/OPERATOR_CONSOLE.md`.
 - Requests are signed with HMAC-SHA256 (tag `appdeck-revisionden-operator-v1`) using
   `APPDECK_OPERATOR_SHARED_SECRET` (32+ characters, one per environment); without it the bridge
-  is 404. Refused outside 5 minutes; request ids used once (kept 1 day; a retried change gets the
+  answers 503. Refused outside 5 minutes; request ids used once (kept 1 day; a retried change gets the
   first answer); 120 requests a minute per address. Implemented in
   `packages/core/src/operator-signature.ts` and `apps/api/src/operator/bridge.ts`.
 - Roles from AppDeck: Agent (support) and Manager (also money and data), enforced by the API.

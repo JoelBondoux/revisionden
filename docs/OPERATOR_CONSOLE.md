@@ -47,7 +47,7 @@ text exactly as sent (an empty string for none). JSON as `JSON.stringify` writes
 
 Rules the API enforces:
 
-- No `APPDECK_OPERATOR_SHARED_SECRET` set in that environment: every operator route is 404.
+- No `APPDECK_OPERATOR_SHARED_SECRET` set in that environment: every operator route answers 503 `operator_bridge_off` (not 404, so AppDeck can tell it from "not found").
 - 120 requests a minute per address (`OPERATOR_RATE_LIMITER`), then 429 with `Retry-After: 60`.
 - Missing header, bad signature, bad role or email: 401 `operator_unauthorized`. More than
   5 minutes from the server clock either way: 401 `operator_request_expired`.
@@ -103,7 +103,8 @@ Premium, trials, free places, plan; complaints: O4).
 | `GET content-reports`  | `status=open` (default)`\|no_error\|confirmed_error\|all`                                                                             | `{ reviewQueueUrl, reports: [{ id, itemId, itemVersion, reason, reportedBy, status, quarantined, createdAt, decidedAt }] }`, newest 200                                                                           | no                                                                       |
 | `GET audit`            | `targetType=`, `targetId=`, `before=` (ISO time), `limit=` (1–500, default 100)                                                       | `{ entries: [...], nextBefore }`, newest first                                                                                                                                                                    | no                                                                       |
 
-Not yet: `tickets?errorCode=` (waiting for AppDeck to say what it filters). Actions (notes, ticket
+AppDeck finds an RD code through `GET error-reports` (its groups' `refs`), so tickets have no
+`errorCode` filter. Actions (notes, ticket
 reply, status, confirm bug, duplicate, complaints, discount codes, free places, data requests,
 trial extension, family tags) come with O3 to O6 on AppDeck's paths.
 
