@@ -504,6 +504,13 @@ Tags: #product #rules #limits #defaults
   start, no penalty, skippable); "Learn it first" links to Oak and BBC Bitesize per topic, checked
   by CI; read aloud with on-device voices preferred; reading comfort settings (dyslexia-friendly
   self-hosted font, larger text, spacing, tint). Detail: `docs/PRODUCT_RULES.md` (Quick wins).
+- Recall checks (Q4, built): `GET /v1/student/recall?topicId=` before a topic lesson (or unit
+  challenge) whose topic has been practised. Up to 2 questions the student has answered before
+  (no flashcards, no extended answers), from other practised topics first, then the lesson's own
+  topic; weak spots first (next-item rules). Shown as "Remember this?" in the lesson player with
+  Skip; answers are normal Learn mode attempts (normal XP when right, wrong ones become
+  flashcards, mastery as any answer). If the call fails the lesson starts as normal.
+  `apps/web/src/features/recall/`, `apps/api/src/routes/recall.ts`.
 - Reading comfort (Q1, built): Settings → Reading comfort, per device in `localStorage` key
   `revisionden.reading`. Options: dyslexia-friendly font (OpenDyslexic from
   `@fontsource/opendyslexic`, SIL OFL 1.1, bundled with the app, no font service), text size
@@ -517,3 +524,11 @@ Tags: #product #rules #limits #defaults
   14-day trial; web only; prices include VAT. Learning, safety and accessibility stay free; offers
   only to parents; rewards never sold; no adverts. Free school meals: scheme choice and date only,
   declaration, soft checks, rare spot checks. Detail: `docs/PRICING.md`, decision 0004.
+- Read aloud (Q2, built): Web Speech API only, no audio sent by us. Voice: on-device British
+  English, then any on-device English, then online English. On by default only with an on-device
+  voice; with only online voices it starts off and Settings says the device's speech service may
+  process the text. Speed Slower 0.75 / Normal 1 / Faster 1.25. Saved in `localStorage` key
+  `revisionden.readAloud` (`enabled` null until chosen). Speaker buttons: lesson question (with
+  options and unit), feedback (verdict, answer, explanation), flashcard front or back. Maths read
+  as words (`x^2` "x squared", `8^(2/3)` "8 to the power 2 over 3", `cm^2` "square centimetres",
+  `√`, `π`, `×`, `÷`, `≤`, `≥`). `apps/web/src/features/read-aloud/`. Privacy notice 1.4 (6.4); young people's notice 1.3.

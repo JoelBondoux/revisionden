@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import type { LearnAttemptResponse, LearnItem, Progress } from '@revisionden/core';
 import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { CloseIcon } from '../../components/icons';
+import { ReadAloudButton, itemSpeechText } from '../read-aloud';
 import {
   ArenaProgress,
   ComboBadge,
@@ -30,6 +31,15 @@ import {
 } from './parts';
 import { SetComplete } from './SetComplete';
 
+/** What read aloud says for the feedback box: the verdict, the answer and the explanation. */
+function feedbackSpeech(result: LearnAttemptResponse): string {
+  const feedback = result.feedback;
+  const parts = [result.correct ? 'Correct!' : 'Not quite.'];
+  if (!result.correct && feedback) parts.push(`Answer: ${feedback.correctAnswer}.`);
+  if (feedback?.explanation) parts.push(feedback.explanation);
+  return parts.join(' ');
+}
+
 function Feedback({ result }: { result: LearnAttemptResponse }) {
   const feedback = result.feedback;
   const wrongLine = feedback?.firstWrongLine;
@@ -39,7 +49,10 @@ function Feedback({ result }: { result: LearnAttemptResponse }) {
       role="status"
       aria-label="Answer feedback"
     >
-      <p className="feedback__title">{result.correct ? 'Correct!' : 'Not quite'}</p>
+      <div className="read-aloud-row">
+        <p className="feedback__title">{result.correct ? 'Correct!' : 'Not quite'}</p>
+        <ReadAloudButton text={feedbackSpeech(result)} label="Read the feedback aloud" />
+      </div>
       {result.correct ? (
         <p>
           +{result.xpEarned} XP
@@ -63,6 +76,10 @@ interface LessonPlayerProps {
   draftContent: boolean;
   intro?: string;
   doneHref?: string;
+  /** Called after the last item instead of showing the set complete screen (recall checks). */
+  onFinish?: () => void;
+  /** Extra controls under the intro, such as a Skip button. */
+  aside?: ReactNode;
 }
 
 /** The option a marked multiple choice answer should show as right, if we can tell. */
@@ -93,6 +110,8 @@ export function LessonPlayer({
   draftContent,
   intro,
   doneHref = '/learn',
+  onFinish,
+  aside,
 }: LessonPlayerProps) {
   const api = useLearnApi();
   const { play } = useSound();
@@ -171,6 +190,10 @@ export function LessonPlayer({
 
   function advance() {
     if (isLast) {
+      if (onFinish) {
+        onFinish();
+        return;
+      }
       setDone(true);
       return;
     }
@@ -225,7 +248,9 @@ export function LessonPlayer({
       </div>
       <h1>{title}</h1>
       {intro && <p className="secondary-text">{intro}</p>}
+      {aside}
       {progress && <DailyGoal progress={progress} />}
+      <ReadAloudButton text={itemSpeechText(item)} label="Read the question aloud" />
       <Shake key={item.id} active={result?.correct === false}>
         <ItemInput
           key={item.id}
