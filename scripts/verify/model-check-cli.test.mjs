@@ -79,10 +79,13 @@ test('skips verified items, which are immutable', async () => {
   assert.match(out.lines.join('\n'), /No draft items to check/);
 });
 
-test('needs at least one of --blind or --review', async () => {
+test('needs at least one of --blind, --review or --fact-check', async () => {
   const out = io();
   assert.equal(await run([], { ...out, providerFor: () => null }), 2);
-  assert.match(out.lines.join('\n'), /--blind <provider> and\/or --review <provider>/);
+  assert.match(
+    out.lines.join('\n'),
+    /--blind <provider>, --review <provider> and\/or --fact-check <provider>/,
+  );
 });
 
 test('reports a provider error for an item and carries on', async () => {
@@ -168,4 +171,37 @@ test('extended answers get blind marking of their exemplars instead of a blind a
     saved.verification.checks.map((c) => c.name),
     ['blind-marking'],
   );
+});
+
+test('--fact-check runs the fact-check stage only for items that list facts, and records it', async () => {
+  const withFact = draftItem('fixture-fact', undefined, {
+    facts: [
+      {
+        statement: 'Fixture fact.',
+        ask: 'Fixture question?',
+        engine: { kind: 'identity', equation: 'a + b = b + a' },
+      },
+    ],
+  });
+  const root = await contentDir([item, withFact]);
+  const providers = {
+    openai: fake('openai', { statement: 'Fixture fact.', confidence: 'high', reasoning: '' }),
+    gemini: fake('gemini', { same: true, confidence: 'high', reason: '' }),
+  };
+  const out = io();
+  const code = await run(['--content', root, '--fact-check', 'openai', '--write'], {
+    ...out,
+    providerFor: (name) => providers[name],
+    maths: async (checks) => checks.map((c) => ({ id: c.id, ok: true })),
+  });
+  assert.equal(code, 0);
+  assert.match(out.lines.join('\n'), /pass {2}fixture-fact {2}fact-check/);
+  assert.doesNotMatch(out.lines.join('\n'), /fixture-a {2}fact-check/);
+  const saved = JSON.parse(await readFile(join(root, 'items/f.json'), 'utf8'));
+  assert.deepEqual(saved[0].verification.checks, []);
+  assert.deepEqual(
+    saved[1].verification.checks.map((c) => [c.name, c.result]),
+    [['fact-check', 'pass']],
+  );
+  assert.equal(providers.openai.calls, 1);
 });

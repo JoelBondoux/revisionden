@@ -39,6 +39,33 @@ interface MarkSchemeDetail {
   levels?: { level: number; marks: [number, number]; descriptor: string }[];
 }
 
+/**
+ * What the reviewer reads for one part of an item. Multiple choice options are numbered from 1
+ * and the answer is shown as the correct option itself, never as the zero-based index stored in
+ * content (a reviewer reading {"option": 2} as the second option would approve a wrong answer).
+ */
+function shownLines(key: string, snapshot: Record<string, unknown>): string[] {
+  const value = snapshot[key];
+  const options = Array.isArray(snapshot.options) ? (snapshot.options as string[]) : null;
+  if (key === 'options' && options) return options.map((o, i) => `${i + 1}. ${o}`);
+  const option = (value as { option?: unknown } | undefined)?.option;
+  if (key === 'answer' && options && typeof option === 'number') {
+    return [`Option ${option + 1}: ${options[option] ?? '(missing option)'}`];
+  }
+  return [typeof value === 'string' ? value : JSON.stringify(value)];
+}
+
+function ShownValue({ lines }: { lines: string[] }) {
+  if (lines.length === 1) return <>{lines[0]}</>;
+  return (
+    <ul>
+      {lines.map((line, i) => (
+        <li key={i}>{line}</li>
+      ))}
+    </ul>
+  );
+}
+
 /** The mark scheme lines a reviewer reads: the item's own, then its linked scheme. */
 function markSchemeLines(snapshot: Record<string, unknown>): string[] {
   const own = (snapshot.mark_scheme as string[] | undefined) ?? [];
@@ -141,9 +168,7 @@ function SampledItemCard({
           <div key={k}>
             <dt>{k}</dt>
             <dd>
-              {typeof item.snapshot[k] === 'string'
-                ? (item.snapshot[k] as string)
-                : JSON.stringify(item.snapshot[k])}
+              <ShownValue lines={shownLines(k, item.snapshot)} />
             </dd>
           </div>
         ))}
