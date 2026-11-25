@@ -90,7 +90,6 @@ export interface BuildTopicMapInput {
   /** Mastery 0–100 for topics the student has tried. */
   mastery: ReadonlyMap<string, number>;
   progress: { xpToday: number; dailyGoalXp: number; streakDays: number };
-  dueCards: number;
 }
 
 const capitalise = (word: string) => word.charAt(0).toUpperCase() + word.slice(1);

@@ -53,14 +53,13 @@ describe('subject names', () => {
 });
 
 describe('topic map', () => {
-  const build = (topics: MapTopicInput[], mastery: Record<string, number> = {}, dueCards = 0) =>
+  const build = (topics: MapTopicInput[], mastery: Record<string, number> = {}) =>
     buildTopicMap({
       subjectId: 'gcse-maths',
       tier: 'higher',
       topics,
       mastery: new Map(Object.entries(mastery)),
       progress,
-      dueCards,
     });
 
   it('groups leaf topics under their top-level unit, in specification order', () => {
