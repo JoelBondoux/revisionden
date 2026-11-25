@@ -123,6 +123,7 @@ describe('worker entry', () => {
       const worker = createWorker('00.01.000', {
         runReminders: runner.run,
         runParentRewardNotifications: async () => ({ rewards: 0, pushes: 0, removed: 0 }),
+        runFamilyEventNotifications: async () => ({ events: 0, pushes: 0, removed: 0 }),
         cleanUp: async () => ({ feedbackDeleted: 0 }),
       });
       await worker.scheduled(controller as never, {
@@ -141,6 +142,7 @@ describe('worker entry', () => {
           parentRuns.push(now);
           return { rewards: 0, pushes: 0, removed: 0 };
         },
+        runFamilyEventNotifications: async () => ({ events: 0, pushes: 0, removed: 0 }),
         cleanUp: async () => ({ feedbackDeleted: 0 }),
       };
       await createWorker('00.01.000', options).scheduled(controller as never, fullEnv);
@@ -151,6 +153,27 @@ describe('worker entry', () => {
         VAPID_PRIVATE_KEY: 'priv',
       });
       expect(parentRuns).toEqual([new Date('2026-11-24T19:00:00Z')]);
+    });
+
+    it('tells a parent about the other parent’s important changes, once VAPID keys are set', async () => {
+      const runs: Date[] = [];
+      const options = {
+        runReminders: recordingRunner().run,
+        runParentRewardNotifications: async () => ({ rewards: 0, pushes: 0, removed: 0 }),
+        runFamilyEventNotifications: async ({ now }: { now: Date }) => {
+          runs.push(now);
+          return { events: 0, pushes: 0, removed: 0 };
+        },
+        cleanUp: async () => ({ feedbackDeleted: 0 }),
+      };
+      await createWorker('00.01.000', options).scheduled(controller as never, fullEnv);
+      expect(runs).toHaveLength(0);
+      await createWorker('00.01.000', options).scheduled(controller as never, {
+        ...fullEnv,
+        VAPID_PUBLIC_KEY: 'BPUB',
+        VAPID_PRIVATE_KEY: 'priv',
+      });
+      expect(runs).toEqual([new Date('2026-11-24T19:00:00Z')]);
     });
 
     it('logs instead of throwing when the environment is incomplete', async () => {

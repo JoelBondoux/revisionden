@@ -14,6 +14,11 @@ Tags: #product #rules #limits #defaults
 - Students have no outside account: nickname (2–16 letters, numbers, underscore), avatar code and
   year group only. Devices linked by a one-time QR token (10 minutes, single use), then a passkey.
 - Nicknames are unique within a family. A family is created the first time a parent signs in.
+- Two parents (B3): a family can have two parents with equal control (Parent 1, Parent 2).
+  Invite code or link 7 days, single use, hashed, 5 a day; either parent removes the other (access
+  ends at once, notice next sign-in); deleting the family needs both when there are two; family
+  activity log names parents only by number, important changes pushed to the other parent and
+  shown as new in the parent home; log kept 12 months. Migration 0012.
 - Year group: Years 9 to 13 only (core schema and database check `students_year_group_range`,
   migration 0006).
 - Google and Microsoft access, refresh and ID tokens are never stored: blanked in Better Auth's
@@ -152,7 +157,7 @@ Tags: #product #rules #limits #defaults
   `packages/core/src/operator-signature.ts` and `apps/api/src/operator/bridge.ts`.
 - Roles from AppDeck: Agent (support) and Manager (also money and data), enforced by the API.
 - Every operator read of a family and every action goes in `operator_audit_log`, kept 2 years
-  (data retention policy 1.2); the scheduled clean-up deletes older entries.
+  (data retention policy 1.3); the scheduled clean-up deletes older entries.
 
 ## Content
 
@@ -537,6 +542,16 @@ Tags: #product #rules #limits #defaults
   Normal / Large (112.5%) / Larger (125%), more spacing (line height 1.8, letter 0.12em, word
   0.16em), tint none / cream / blue. Defaults: all off. Applied app-wide by `data-reading-*`
   attributes on `<html>` (`apps/web/src/features/reading/`).
+- Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
+  `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
+  board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by
+  `pnpm content:check-links` in `.github/workflows/learn-links.yml` (PRs that change links, pushes
+  to dev, weekly Monday 06:17 UTC); 2xx and 3xx pass. Bundled into the web app at build time;
+  the button shows at the top of a topic lesson only for links with `checked_at` set; plain links
+  opening in a new tab (nothing loaded until tapped). Pilot: Oak KS4 Higher lessons for the 9 GCSE
+  Maths topics with items (n4, n7, a4, a6, a17, a18, r9, g9, g17), URLs found by web search only.
+  All 11 returned 200 in the CI link check on 2026-11-25, so `checked_at` is set and the buttons
+  show. No Bitesize links yet: bbc.co.uk could not be reached from the build environment.
 
 ## Operator console (planned)
 

@@ -10,6 +10,7 @@ import { createMemoryRateLimiter } from './rate-limit';
 import { runReminders as defaultRunReminders } from './notifications/runner';
 import { runParentRewardNotifications as defaultRunParentRewards } from './notifications/parent-rewards';
 import { createWebPushSender } from './notifications/web-push';
+import { runFamilyEventNotifications as defaultRunFamilyEvents } from './family-events';
 import { createProviders } from './ai/providers';
 import { cleanUpExpiredData as defaultCleanUp } from './cleanup';
 
@@ -26,6 +27,8 @@ export interface WorkerOptions {
   runReminders?: typeof defaultRunReminders;
   /** Injected in tests; defaults to telling parents about met parent-set reward targets. */
   runParentRewardNotifications?: typeof defaultRunParentRewards;
+  /** Injected in tests; defaults to telling a parent about the other parent's important changes. */
+  runFamilyEventNotifications?: typeof defaultRunFamilyEvents;
   /** Injected in tests; defaults to deleting data past its retention period (cleanup.ts). */
   cleanUp?: (deps: { db: Database; now: Date }) => Promise<Record<string, number>>;
 }
@@ -33,6 +36,7 @@ export interface WorkerOptions {
 export function createWorker(version: string, options: WorkerOptions = {}) {
   const runReminders = options.runReminders ?? defaultRunReminders;
   const runParentRewards = options.runParentRewardNotifications ?? defaultRunParentRewards;
+  const runFamilyEvents = options.runFamilyEventNotifications ?? defaultRunFamilyEvents;
   const cleanUp = options.cleanUp ?? defaultCleanUp;
   let cached: { env: unknown; app: App } | undefined;
 
@@ -96,7 +100,7 @@ export function createWorker(version: string, options: WorkerOptions = {}) {
      * Cron trigger (every 15 minutes, see wrangler.toml): deletes data past its retention
      * period (expired link codes, sessions and challenges; feedback 12 months after closing;
      * families unused for 12 months), then sends due reminders, then tells parents about
-     * parent-set reward targets met.
+     * parent-set reward targets met and about the other parent's important changes.
      */
     async scheduled(
       controller: Pick<ScheduledController, 'scheduledTime'>,
@@ -122,6 +126,8 @@ export function createWorker(version: string, options: WorkerOptions = {}) {
       console.log('reminders', JSON.stringify(summary));
       // Parent news (H2) is separate from the child reminders and their 2-a-day limit.
       console.log('parent-rewards', JSON.stringify(await runParentRewards({ db, now, sender })));
+      // Two parents (B3): important changes by one parent are pushed to the other.
+      console.log('family-events', JSON.stringify(await runFamilyEvents({ db, now, sender })));
     },
   };
 }
