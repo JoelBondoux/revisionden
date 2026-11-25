@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Button } from '../../components/Button';
+import { ChatIcon } from '../../components/icons';
+import { LinkButton } from '../../components/links';
 import { Pill, type PillTone } from '../../components/Pill';
 import { NotFoundPage } from '../../pages/NotFoundPage';
 import {
@@ -109,7 +110,9 @@ export function FeedbackListPage({ scope }: { scope: 'family' | 'mine' }) {
             ))}
           </ul>
         ))}
-      <Link to="/feedback">Send feedback</Link>
+      <LinkButton to="/feedback" variant="secondary" icon={<ChatIcon />}>
+        Send feedback
+      </LinkButton>
     </div>
   );
 }

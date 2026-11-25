@@ -1,5 +1,7 @@
 import { useId, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { BackIcon } from '../../components/icons';
+import { LinkButton } from '../../components/links';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { Button } from '../../components/Button';
@@ -34,9 +36,9 @@ export function BatchReviewPage() {
   const decided = items.filter((i) => i.decision).length;
   return (
     <div className="review-page">
-      <p>
-        <Link to="/review">Back to the review queue</Link>
-      </p>
+      <LinkButton to="/review" variant="quiet" icon={<BackIcon />}>
+        Back to the review queue
+      </LinkButton>
       <h1>{title}</h1>
       <p>
         <Pill tone={STATUS_TONE[status]}>{STATUS_LABEL[status]}</Pill> {decided} of {items.length}{' '}

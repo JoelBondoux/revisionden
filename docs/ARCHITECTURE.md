@@ -50,6 +50,10 @@ Decision 0005. `revisionden.com` is the sales site; the app is on `app.revisiond
 - Images: `public/og.png` (Open Graph card, 1200×630) and `public/apple-touch-icon.png` are drawn from
   Pip's shapes and the arena colours by `scripts/make-images.mjs` (Chromium); run it by hand after
   changing the art and commit the PNGs. Original art only: no stock photos, no AI-generated images.
+- Links follow the app's J7 link styles (`docs/GAME_FEEL.md` "Links", owner request): buttons
+  (uppercase, lift and squash), tiles for "go to X" (the policies list), chips (footer), quiet pills
+  (header navigation) and bold inline links with a soft bar inside sentences; no plain underlined
+  links. Styles in `src/site.css`; `src/links.test.ts` checks them.
 - Deployed by `.github/workflows/deploy-www.yml` (staging and production only).
 
 ## Web app (`apps/web`)

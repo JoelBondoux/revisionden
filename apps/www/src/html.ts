@@ -30,7 +30,7 @@ function header(config: SiteConfig, nav: NavItem[], current: string): string {
   const links = nav
     .map((item) => {
       const here = item.path === current ? ' aria-current="page"' : '';
-      return `<li><a href="${item.path}"${here}>${escapeHtml(item.label)}</a></li>`;
+      return `<li><a class="nav-link" href="${item.path}"${here}>${escapeHtml(item.label)}</a></li>`;
     })
     .join('');
   return `<header class="site-header">
@@ -45,7 +45,9 @@ function header(config: SiteConfig, nav: NavItem[], current: string): string {
 
 function footer(nav: NavItem[]): string {
   const links = nav
-    .map((item) => `<li><a href="${item.path}">${escapeHtml(item.label)}</a></li>`)
+    .map(
+      (item) => `<li><a class="link-chip" href="${item.path}">${escapeHtml(item.label)}</a></li>`,
+    )
     .join('');
   return `<footer class="site-footer">
   <nav aria-label="Footer"><ul>${links}</ul></nav>
