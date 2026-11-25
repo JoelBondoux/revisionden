@@ -3,9 +3,10 @@
  * Pages: network first (skipping the browser cache, so a new deploy shows on the next visit),
  * and the newest page is kept for offline use. Built assets: cache first (their names change
  * with every build). API calls and the build check (/version.json) are never cached.
- * Bump VERSION to drop old caches.
+ * The Get help page and the built files it needs are precached on install, so support numbers
+ * can be found with no signal (workstream W). Bump VERSION to drop old caches.
  */
-const VERSION = 'v2';
+const VERSION = 'v3';
 const CACHE = `revisionden-shell-${VERSION}`;
 const SHELL = [
   '/',
@@ -14,13 +15,34 @@ const SHELL = [
   '/icons/icon-192.png',
   '/icons/icon-512.png',
   '/icons/apple-touch-icon.png',
+  '/help',
+  '/parent/help',
 ];
+
+/** Caches the current app page and every built file it links to (scripts, styles). */
+async function precacheBuiltFiles(cache) {
+  try {
+    const page = await fetch('/', { cache: 'no-cache', credentials: 'same-origin' });
+    if (!page.ok) return;
+    const html = await page.clone().text();
+    await cache.put('/', page);
+    const files = [...new Set(html.match(/\/assets\/[^"'\s)>]+/g) ?? [])];
+    await Promise.all(
+      files.map(async (path) => {
+        const response = await fetch(path);
+        if (response.ok) await cache.put(path, response);
+      }),
+    );
+  } catch {
+    // Offline while installing: built files are cached the first time they are used.
+  }
+}
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
       .open(CACHE)
-      .then((cache) => cache.addAll(SHELL))
+      .then((cache) => cache.addAll(SHELL).then(() => precacheBuiltFiles(cache)))
       .then(() => self.skipWaiting()),
   );
 });

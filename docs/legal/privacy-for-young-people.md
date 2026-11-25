@@ -1,6 +1,6 @@
 # Privacy notice for young people
 
-Version: 1.1
+Version: 1.2
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -83,9 +83,13 @@ then only keep the result.
 - Your real name or birthday.
 - Your address, phone number or email.
 - Your photos, location, contacts or school name.
+- Whether you open the Get help page or tap a number on it.
 
 Your real name, birthday, address, phone number, email, photos, location, contacts or school
 name.
+
+The Get help page (support services like Childline) is private. Nothing about it is recorded,
+sent to us or shown to your parent: not opening the page, and not tapping a number or link on it.
 
 ### Why we use it
 
@@ -233,5 +237,6 @@ If we change how we use your information, we'll show you a short note in the app
 
 ## Changes
 
+- 1.2: Says that the Get help page is private: nothing about using it is recorded or shown to your parent. No change to the data we keep.
 - 1.1: Easier to read: a short version at the top and the key points of each part. The meaning has not changed.
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).

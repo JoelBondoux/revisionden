@@ -1,0 +1,550 @@
+{
+  "$schema": "../schemas/support-services.schema.json",
+  "about": "UK support services for the Get help page (docs/PRODUCT_RULES.md, Get help). Every number, URL, opening time and age range was copied from the service's own official page named in its source field, on the date in checked_at. Recheck every term; CI fails when a check is older than 4 months. helps_with is our own plain wording, not quoted from the service.",
+  "topics": [
+    {
+      "id": "emergency",
+      "title": "In danger right now",
+      "intro": "If you or someone else is hurt or in danger, call 999 straight away.",
+      "urgent": true
+    },
+    {
+      "id": "suicidal-thoughts",
+      "title": "Thinking about suicide",
+      "intro": "If you are thinking about ending your life, you are not alone. Talk to someone now.",
+      "urgent": true
+    },
+    {
+      "id": "feeling-low",
+      "title": "Feeling low, worried or anxious",
+      "intro": "Sad, stressed or worried a lot? Talking can really help.",
+      "urgent": false
+    },
+    {
+      "id": "exam-stress",
+      "title": "Exam stress",
+      "intro": "Exams can feel like a lot. You can talk to someone about it.",
+      "urgent": false
+    },
+    {
+      "id": "self-harm",
+      "title": "Self-harm",
+      "intro": "If you hurt yourself, or feel like you want to, you can get support without being judged.",
+      "urgent": false
+    },
+    {
+      "id": "bullying",
+      "title": "Bullying, online or in person",
+      "intro": "Nobody deserves to be bullied. You can get help to make it stop.",
+      "urgent": false
+    },
+    {
+      "id": "abuse",
+      "title": "Abuse or neglect",
+      "intro": "If someone is hurting you, or not looking after you, it is not your fault.",
+      "urgent": false
+    },
+    {
+      "id": "online-safety",
+      "title": "Online safety and nude images",
+      "intro": "Worried about something online, or a nude image of you? You can get help, and it is not your fault.",
+      "urgent": false
+    },
+    {
+      "id": "eating",
+      "title": "Eating and body image",
+      "intro": "Worried about food, eating or how you feel about your body? Help is there.",
+      "urgent": false
+    },
+    {
+      "id": "drugs-alcohol",
+      "title": "Drugs and alcohol",
+      "intro": "Honest, private advice about drugs and drinking.",
+      "urgent": false
+    },
+    {
+      "id": "sexual-health",
+      "title": "Sex, relationships and sexual health",
+      "intro": "Questions about sex, relationships or your body? You can ask in private.",
+      "urgent": false
+    },
+    {
+      "id": "lgbtq",
+      "title": "LGBTQ+",
+      "intro": "Talk to someone who understands, about who you are or anything else.",
+      "urgent": false
+    },
+    {
+      "id": "young-carers",
+      "title": "Looking after someone at home",
+      "intro": "If you help care for someone in your family, you can talk about how it feels for you.",
+      "urgent": false
+    },
+    {
+      "id": "grief",
+      "title": "Grief and loss",
+      "intro": "If someone has died, or you have lost someone, you can talk about it.",
+      "urgent": false
+    },
+    {
+      "id": "crime",
+      "title": "Crime and being a victim",
+      "intro": "If you have been affected by a crime, you can get free support.",
+      "urgent": false
+    },
+    {
+      "id": "health",
+      "title": "Feeling unwell",
+      "intro": "Need medical help but it is not an emergency? NHS 111 can tell you what to do.",
+      "urgent": false
+    }
+  ],
+  "services": [
+    {
+      "id": "emergency-999",
+      "service": "Emergency services (999)",
+      "audiences": ["student", "parent"],
+      "topics": ["emergency", "suicidal-thoughts"],
+      "helps_with": "Call 999 for police, an ambulance or fire if someone is hurt, in danger, or cannot keep themselves safe.",
+      "official_domains": ["nhs.uk"],
+      "contacts": [
+        {
+          "kind": "phone",
+          "number": "999",
+          "href": "tel:999",
+          "source": "https://www.nhs.uk/nhs-services/mental-health-services/where-to-get-urgent-help-for-mental-health/"
+        }
+      ],
+      "checked_at": "2026-11-25"
+    },
+    {
+      "id": "childline",
+      "service": "Childline",
+      "audiences": ["student", "parent"],
+      "topics": [
+        "suicidal-thoughts",
+        "feeling-low",
+        "exam-stress",
+        "self-harm",
+        "bullying",
+        "abuse",
+        "online-safety",
+        "eating",
+        "sexual-health",
+        "lgbtq",
+        "young-carers",
+        "grief"
+      ],
+      "helps_with": "Free, private counselling for young people about anything at all, big or small.",
+      "official_domains": ["childline.org.uk"],
+      "age_range": {
+        "text": "Under 19",
+        "source": "https://www.childline.org.uk/about/about-childline/"
+      },
+      "contacts": [
+        {
+          "kind": "phone",
+          "number": "0800 1111",
+          "href": "tel:08001111",
+          "hours": {
+            "text": "24 hours a day, 7 days a week",
+            "source": "https://www.childline.org.uk/get-support/contacting-childline/"
+          },
+          "source": "https://www.childline.org.uk/get-support/contacting-childline/"
+        },
+        {
+          "kind": "web_chat",
+          "label": "1-2-1 counsellor chat",
+          "url": "https://www.childline.org.uk/get-support/1-2-1-counsellor-chat/",
+          "source": "https://www.childline.org.uk/get-support/1-2-1-counsellor-chat/"
+        },
+        {
+          "kind": "website",
+          "url": "https://www.childline.org.uk/",
+          "source": "https://www.childline.org.uk/"
+        }
+      ],
+      "checked_at": "2026-11-25"
+    },
+    {
+      "id": "report-remove",
+      "service": "Report Remove (Childline and IWF)",
+      "audiences": ["student", "parent"],
+      "topics": ["online-safety"],
+      "helps_with": "Helps you get a nude image or video of yourself taken down from the internet, in private.",
+      "official_domains": ["childline.org.uk"],
+      "age_range": {
+        "text": "Under 18",
+        "source": "https://www.childline.org.uk/info-advice/bullying-abuse-safety/online-mobile-safety/report-remove/"
+      },
+      "contacts": [
+        {
+          "kind": "website",
+          "label": "Start a report",
+          "url": "https://www.childline.org.uk/info-advice/bullying-abuse-safety/online-mobile-safety/report-remove/",
+          "source": "https://www.childline.org.uk/info-advice/bullying-abuse-safety/online-mobile-safety/report-remove/"
+        }
+      ],
+      "checked_at": "2026-11-25"
+    },
+    {
+      "id": "nspcc-helpline",
+      "service": "NSPCC Helpline",
+      "audiences": ["parent"],
+      "topics": ["abuse"],
+      "helps_with": "Advice for any adult who is worried about a child's safety or wellbeing.",
+      "official_domains": ["nspcc.org.uk"],
+      "contacts": [
+        {
+          "kind": "phone",
+          "number": "0808 800 5000",
+          "href": "tel:08088005000",
+          "hours": {
+            "text": "10am to 4pm, Monday to Friday",
+            "source": "https://www.nspcc.org.uk/keeping-children-safe/reporting-abuse/report/"
+          },
+          "source": "https://www.nspcc.org.uk/keeping-children-safe/reporting-abuse/report/"
+        },
+        {
+          "kind": "website",
+          "url": "https://www.nspcc.org.uk/keeping-children-safe/reporting-abuse/report/",
+          "source": "https://www.nspcc.org.uk/keeping-children-safe/reporting-abuse/report/"
+        }
+      ],
+      "checked_at": "2026-11-25"
+    },
+    {
+      "id": "samaritans",
+      "service": "Samaritans",
+      "audiences": ["student", "parent"],
+      "topics": ["suicidal-thoughts", "feeling-low", "self-harm", "grief", "young-carers"],
+      "helps_with": "Someone to listen, without judging you, whatever you are going through.",
+      "official_domains": ["samaritans.org"],
+      "contacts": [
+        {
+          "kind": "phone",
+          "number": "116 123",
+          "href": "tel:116123",
+          "hours": {
+            "text": "24 hours a day",
+            "source": "https://www.samaritans.org/how-we-can-help/contact-samaritan/talk-us-phone/"
+          },
+          "source": "https://www.samaritans.org/how-we-can-help/contact-samaritan/talk-us-phone/"
+        },
+        {
+          "kind": "website",
+          "url": "https://www.samaritans.org/",
+          "source": "https://www.samaritans.org/"
+        }
+      ],
+      "checked_at": "2026-11-25"
+    },
+    {
+      "id": "shout",
+      "service": "Shout",
+      "audiences": ["student", "parent"],
+      "topics": [
+        "suicidal-thoughts",
+        "feeling-low",
+        "exam-stress",
+        "self-harm",
+        "bullying",
+        "abuse"
+      ],
+      "helps_with": "Free support by text message if you are struggling to cope, from a trained volunteer.",
+      "official_domains": ["giveusashout.org"],
+      "contacts": [
+        {
+          "kind": "text",
+          "number": "85258",
+          "keyword": "SHOUT",
+          "href": "sms:85258?&body=SHOUT",
+          "hours": {
+            "text": "24 hours a day, 7 days a week",
+            "source": "https://giveusashout.org/get-help/"
+          },
+          "source": "https://giveusashout.org/get-help/"
+        },
+        {
+          "kind": "website",
+          "url": "https://giveusashout.org/get-help/",
+          "source": "https://giveusashout.org/get-help/"
+        }
+      ],
+      "checked_at": "2026-11-25"
+    },
+    {
+      "id": "the-mix",
+      "service": "The Mix",
+      "audiences": ["student", "parent"],
+      "topics": ["feeling-low", "exam-stress"],
+      "helps_with": "Support for young people: one-to-one chats, groups, counselling and crisis support by text.",
+      "official_domains": ["themix.org.uk"],
+      "age_range": {
+        "text": "25 or under",
+        "source": "https://www.themix.org.uk/get-support/text-shout/"
+      },
+      "contacts": [
+        {
+          "kind": "text",
+          "number": "85258",
+          "keyword": "THEMIX",
+          "href": "sms:85258?&body=THEMIX",
+          "hours": {
+            "text": "24 hours a day, 7 days a week",
+            "source": "https://www.themix.org.uk/get-support/text-shout/"
+          },
+          "source": "https://www.themix.org.uk/get-support/text-shout/"
+        },
+        {
+          "kind": "website",
+          "url": "https://www.themix.org.uk/get-support/",
+          "source": "https://www.themix.org.uk/get-support/"
+        }
+      ],
+      "checked_at": "2026-11-25"
+    },
+    {
+      "id": "youngminds",
+      "service": "YoungMinds",
+      "audiences": ["student", "parent"],
+      "topics": ["feeling-low"],
+      "helps_with": "Clear guides for young people about feelings, mental health and how to get support.",
+      "official_domains": ["youngminds.org.uk"],
+      "contacts": [
+        {
+          "kind": "website",
+          "url": "https://www.youngminds.org.uk/young-person/find-help/",
+          "source": "https://www.youngminds.org.uk/young-person/find-help/"
+        }
+      ],
+      "checked_at": "2026-11-25"
+    },
+    {
+      "id": "beat",
+      "service": "Beat",
+      "audiences": ["student", "parent"],
+      "topics": ["eating"],
+      "helps_with": "Support and information for anyone affected by an eating disorder, and the people around them.",
+      "official_domains": ["beateatingdisorders.org.uk"],
+      "age_range": {
+        "text": "All ages",
+        "source": "https://www.beateatingdisorders.org.uk/get-information-and-support/get-help-for-myself/support-now/"
+      },
+      "contacts": [
+        {
+          "kind": "phone",
+          "label": "England",
+          "number": "0808 801 0677",
+          "href": "tel:08088010677",
+          "hours": {
+            "text": "3pm to 8pm, Monday to Friday",
+            "source": "https://www.beateatingdisorders.org.uk/get-information-and-support/get-help-for-myself/support-now/"
+          },
+          "source": "https://www.beateatingdisorders.org.uk/get-information-and-support/get-help-for-myself/support-now/"
+        },
+        {
+          "kind": "phone",
+          "label": "Scotland",
+          "number": "0808 801 0432",
+          "href": "tel:08088010432",
+          "hours": {
+            "text": "3pm to 8pm, Monday to Friday",
+            "source": "https://www.beateatingdisorders.org.uk/get-information-and-support/get-help-for-myself/support-now/"
+          },
+          "source": "https://www.beateatingdisorders.org.uk/get-information-and-support/get-help-for-myself/support-now/"
+        },
+        {
+          "kind": "phone",
+          "label": "Wales",
+          "number": "0808 801 0433",
+          "href": "tel:08088010433",
+          "hours": {
+            "text": "3pm to 8pm, Monday to Friday",
+            "source": "https://www.beateatingdisorders.org.uk/get-information-and-support/get-help-for-myself/support-now/"
+          },
+          "source": "https://www.beateatingdisorders.org.uk/get-information-and-support/get-help-for-myself/support-now/"
+        },
+        {
+          "kind": "phone",
+          "label": "Northern Ireland",
+          "number": "0808 801 0434",
+          "href": "tel:08088010434",
+          "hours": {
+            "text": "3pm to 8pm, Monday to Friday",
+            "source": "https://www.beateatingdisorders.org.uk/get-information-and-support/get-help-for-myself/support-now/"
+          },
+          "source": "https://www.beateatingdisorders.org.uk/get-information-and-support/get-help-for-myself/support-now/"
+        },
+        {
+          "kind": "web_chat",
+          "label": "One-to-one web chat",
+          "url": "https://www.beateatingdisorders.org.uk/get-information-and-support/get-help-for-myself/support-now/one-to-one-web-chat/",
+          "source": "https://www.beateatingdisorders.org.uk/get-information-and-support/get-help-for-myself/support-now/"
+        }
+      ],
+      "checked_at": "2026-11-25"
+    },
+    {
+      "id": "frank",
+      "service": "FRANK",
+      "audiences": ["student", "parent"],
+      "topics": ["drugs-alcohol"],
+      "helps_with": "Honest, private answers to questions about drugs and alcohol.",
+      "official_domains": ["talktofrank.com"],
+      "contacts": [
+        {
+          "kind": "phone",
+          "number": "0300 123 6600",
+          "href": "tel:03001236600",
+          "hours": {
+            "text": "24 hours a day, 7 days a week",
+            "source": "https://www.talktofrank.com/contact-frank"
+          },
+          "source": "https://www.talktofrank.com/contact-frank"
+        },
+        {
+          "kind": "text",
+          "number": "82111",
+          "href": "sms:82111",
+          "source": "https://www.talktofrank.com/contact-frank"
+        },
+        {
+          "kind": "website",
+          "url": "https://www.talktofrank.com/",
+          "source": "https://www.talktofrank.com/"
+        }
+      ],
+      "checked_at": "2026-11-25"
+    },
+    {
+      "id": "ceop",
+      "service": "CEOP (part of the National Crime Agency)",
+      "audiences": ["student", "parent"],
+      "topics": ["online-safety", "abuse"],
+      "helps_with": "Report it if someone online is making you feel unsafe, scared or worried in a sexual way.",
+      "official_domains": ["ceop.police.uk"],
+      "contacts": [
+        {
+          "kind": "website",
+          "label": "Make a report",
+          "url": "https://www.ceop.police.uk/ceop-reporting/",
+          "source": "https://www.ceop.police.uk/Safety-Centre/How-can-CEOP-help-me-YP/"
+        },
+        {
+          "kind": "website",
+          "url": "https://www.ceop.police.uk/Safety-Centre/How-can-CEOP-help-me-YP/",
+          "source": "https://www.ceop.police.uk/Safety-Centre/How-can-CEOP-help-me-YP/"
+        }
+      ],
+      "checked_at": "2026-11-25"
+    },
+    {
+      "id": "switchboard",
+      "service": "Switchboard",
+      "audiences": ["student", "parent"],
+      "topics": ["lgbtq"],
+      "helps_with": "A support line where every call is answered by an LGBTQIA+ volunteer.",
+      "official_domains": ["switchboard.lgbt"],
+      "contacts": [
+        {
+          "kind": "phone",
+          "number": "0800 0119 100",
+          "href": "tel:08000119100",
+          "hours": {
+            "text": "10am to 10pm, every day of the year",
+            "source": "https://switchboard.lgbt/get-support/help-when-we're-closed"
+          },
+          "source": "https://switchboard.lgbt/contact-us"
+        },
+        {
+          "kind": "website",
+          "url": "https://switchboard.lgbt/",
+          "source": "https://switchboard.lgbt/"
+        }
+      ],
+      "checked_at": "2026-11-25"
+    },
+    {
+      "id": "brook",
+      "service": "Brook",
+      "audiences": ["student", "parent"],
+      "topics": ["sexual-health"],
+      "helps_with": "Free, private advice about sex, relationships and sexual health, and clinics near you.",
+      "official_domains": ["brook.org.uk"],
+      "contacts": [
+        {
+          "kind": "website",
+          "label": "Help and advice",
+          "url": "https://www.brook.org.uk/help-advice/",
+          "source": "https://www.brook.org.uk/get-help/"
+        },
+        {
+          "kind": "website",
+          "label": "Find a service near you",
+          "url": "https://www.brook.org.uk/find-a-service/",
+          "source": "https://www.brook.org.uk/get-help/"
+        }
+      ],
+      "checked_at": "2026-11-25"
+    },
+    {
+      "id": "victim-support",
+      "service": "Victim Support",
+      "audiences": ["student", "parent"],
+      "topics": ["crime"],
+      "helps_with": "Free, private support for anyone affected by a crime, whether or not it was reported to the police.",
+      "official_domains": ["victimsupport.org.uk"],
+      "area": {
+        "text": "England and Wales",
+        "source": "https://www.victimsupport.org.uk/help-and-support/get-help/supportline/"
+      },
+      "contacts": [
+        {
+          "kind": "phone",
+          "number": "0808 168 9111",
+          "href": "tel:08081689111",
+          "hours": {
+            "text": "24 hours a day, every day of the year",
+            "source": "https://www.victimsupport.org.uk/help-and-support/get-help/supportline/"
+          },
+          "source": "https://www.victimsupport.org.uk/help-and-support/get-help/supportline/"
+        },
+        {
+          "kind": "web_chat",
+          "label": "Live chat",
+          "url": "https://www.victimsupport.org.uk/help-and-support/get-help/support-near-you/live-chat/",
+          "hours": {
+            "text": "24 hours a day, 7 days a week",
+            "source": "https://www.victimsupport.org.uk/help-and-support/get-help/support-near-you/live-chat/"
+          },
+          "source": "https://www.victimsupport.org.uk/help-and-support/get-help/support-near-you/live-chat/"
+        }
+      ],
+      "checked_at": "2026-11-25"
+    },
+    {
+      "id": "nhs-111",
+      "service": "NHS 111",
+      "audiences": ["student", "parent"],
+      "topics": ["health", "suicidal-thoughts", "self-harm", "feeling-low"],
+      "helps_with": "Medical help when it is not an emergency. For urgent help with your mental health, call 111 and choose the mental health option.",
+      "official_domains": ["nhs.uk"],
+      "contacts": [
+        {
+          "kind": "phone",
+          "number": "111",
+          "href": "tel:111",
+          "source": "https://www.nhs.uk/nhs-services/urgent-and-emergency-care-services/when-to-use-111/"
+        },
+        {
+          "kind": "website",
+          "label": "111 online",
+          "url": "https://111.nhs.uk/",
+          "source": "https://www.nhs.uk/nhs-services/urgent-and-emergency-care-services/when-to-use-111/"
+        }
+      ],
+      "checked_at": "2026-11-25"
+    }
+  ]
+}
