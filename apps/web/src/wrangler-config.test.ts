@@ -19,9 +19,13 @@ describe('web wrangler config', () => {
   it.each([
     ['dev', 'revisionden-web-dev', 'dev.revisionden.com'],
     ['staging', 'revisionden-web-staging', 'staging.revisionden.com'],
-    ['production', 'revisionden-web', 'revisionden.com'],
+    ['production', 'revisionden-web', 'app.revisionden.com'],
   ])('deploys %s as %s on %s', (env, worker, host) => {
     expect(block(env)).toContain(`name = "${worker}"`);
     expect(block(env)).toContain(`pattern = "${host}", custom_domain = true`);
+  });
+
+  it('leaves the bare revisionden.com to the public site (workstream M)', () => {
+    expect(text).not.toMatch(/pattern = "revisionden\.com"/);
   });
 });

@@ -76,6 +76,37 @@ describe('Student rewards screen', () => {
     expect(note.closest('[role="status"]')).not.toBeNull();
   });
 
+  it('hides the Bug Hunter track until the first confirmed bug, then shows the next step', async () => {
+    show(fakeApi());
+    await screen.findByRole('heading', { name: 'Level 4' });
+    expect(screen.queryByRole('region', { name: 'Bug Hunter' })).not.toBeInTheDocument();
+  });
+
+  it('shows a hidden track once its first step is earned', async () => {
+    show(
+      fakeApi({
+        getMyRewards: async () =>
+          sampleRewards({}, { earnedIds: ['bug-hunter-1'], stats: { confirmedBugs: 1 } }),
+      }),
+    );
+    const track = await screen.findByRole('region', { name: 'Bug Hunter' });
+    expect(within(track).getByText(/1 of 7 unlocked/)).toBeInTheDocument();
+    expect(within(track).getByText(/Next: "Bug Hunter" title/)).toBeInTheDocument();
+  });
+
+  it('shows secret achievements as ??? cards with a found count and vague hints', async () => {
+    show(
+      fakeApi({
+        getMyRewards: async () => sampleRewards({}, { earnedIds: ['secret-first-light'] }),
+      }),
+    );
+    const secrets = await screen.findByRole('region', { name: 'Secret achievements' });
+    expect(within(secrets).getByText(/1 of 24 found/)).toBeInTheDocument();
+    expect(within(secrets).getByText('First Light')).toBeInTheDocument();
+    expect(within(secrets).getAllByText('???').length).toBe(23);
+    expect(within(secrets).getByText('Something about comebacks…')).toBeInTheDocument();
+  });
+
   it('reveals each new reward with its tier and why it was earned', async () => {
     const newly = sampleRewards().overview.chapter!.steps[0]!;
     show(fakeApi({ getMyRewards: async () => sampleRewards({ newlyEarned: [newly] }) }));

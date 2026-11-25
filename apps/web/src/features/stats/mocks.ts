@@ -2,7 +2,16 @@
  * Mock stats API (MSW) for development and tests. Every number and nickname here is made up.
  */
 import { http, HttpResponse, type RequestHandler } from 'msw';
-import type { ParentDashboard, StatsPeriod, StudentStats } from '@revisionden/core';
+import {
+  DailyLimitSuggestionActionSchema,
+  UpdateDailyLimitRequestSchema,
+  type DailyLimitToday,
+  type ParentDailyLimit,
+  type ParentDashboard,
+  type StatsPeriod,
+  type StudentDailyLimit,
+  type StudentStats,
+} from '@revisionden/core';
 
 export const DEMO_CHILDREN = [
   { id: '00000000-0000-4000-8000-0000000000a1', nickname: 'demo_fox' },
@@ -131,4 +140,79 @@ export const statsHandlers: RequestHandler[] = [
   http.get('*/v1/students/:id/dashboard', ({ params }) =>
     HttpResponse.json(demoDashboard(String(params.id))),
   ),
+];
+
+// Daily limit (workstream K7) ----------------------------------------------------------------
+
+type Settings = { schoolDayMinutes: number | null; otherDayMinutes: number | null };
+let limitState: Settings & { examSeasonExtra: boolean; suggestion: ParentDailyLimit['suggestion'] };
+
+export function resetDailyLimitMocks(options: { withSuggestion?: boolean } = {}) {
+  limitState = {
+    schoolDayMinutes: null,
+    otherDayMinutes: null,
+    examSeasonExtra: false,
+    suggestion: options.withSuggestion
+      ? {
+          kind: 'ease',
+          change: -10,
+          schoolDayMinutes: 50,
+          otherDayMinutes: 80,
+          reason: 'No rest days in the last two weeks.',
+        }
+      : null,
+  };
+}
+resetDailyLimitMocks();
+
+const limitToday = (): DailyLimitToday => {
+  const limit = limitState.schoolDayMinutes ?? 60;
+  return {
+    limitMinutes: limit,
+    usedMinutes: 25,
+    leftMinutes: Math.max(0, limit - 25),
+    reached: limit <= 25,
+    dayType: 'school',
+    examSeason: false,
+  };
+};
+
+export const demoStudentLimit = (): StudentDailyLimit => ({ ...limitToday(), changed: null });
+
+const parentLimit = (): ParentDailyLimit => ({
+  settings: {
+    schoolDayMinutes: limitState.schoolDayMinutes ?? 60,
+    otherDayMinutes: limitState.otherDayMinutes ?? 90,
+    examSeasonExtra: limitState.examSeasonExtra,
+  },
+  custom: {
+    school: limitState.schoolDayMinutes !== null,
+    other: limitState.otherDayMinutes !== null,
+  },
+  defaults: { school: 60, other: 90 },
+  ceilings: { school: 120, other: 180 },
+  today: limitToday(),
+  suggestion: limitState.suggestion,
+});
+
+export const dailyLimitHandlers: RequestHandler[] = [
+  http.get('*/v1/student/daily-limit', () => HttpResponse.json(demoStudentLimit())),
+  http.post('*/v1/student/daily-limit/seen', () => new HttpResponse(null, { status: 204 })),
+  http.get('*/v1/students/:id/daily-limit', () => HttpResponse.json(parentLimit())),
+  http.put('*/v1/students/:id/daily-limit', async ({ request }) => {
+    const change = UpdateDailyLimitRequestSchema.parse(await request.json());
+    limitState = { ...limitState, ...change, suggestion: limitState.suggestion };
+    return HttpResponse.json(parentLimit());
+  }),
+  http.post('*/v1/students/:id/daily-limit/suggestion', async ({ request }) => {
+    const { action } = DailyLimitSuggestionActionSchema.parse(await request.json());
+    const suggestion = limitState.suggestion;
+    if (!suggestion) return HttpResponse.json({}, { status: 409 });
+    if (action === 'accept') {
+      limitState.schoolDayMinutes = suggestion.schoolDayMinutes;
+      limitState.otherDayMinutes = suggestion.otherDayMinutes;
+    }
+    limitState.suggestion = null;
+    return HttpResponse.json(parentLimit());
+  }),
 ];

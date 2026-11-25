@@ -2,11 +2,12 @@ import { http, HttpResponse, type RequestHandler } from 'msw';
 import { onboardingHandlers } from '../features/onboarding/mocks';
 import { cardsDue, topicMap } from './data';
 import { learnHandlers } from '../features/learn/mocks';
+import { dailyHandlers } from '../features/daily/mocks';
 import { recallHandlers } from '../features/recall/mocks';
 import { rewardsHandlers } from '../features/rewards/mocks';
 import { feedbackHandlers } from '../features/feedback/mocks';
 import { legalHandlers } from '../features/legal/mocks';
-import { statsHandlers } from '../features/stats/mocks';
+import { dailyLimitHandlers, statsHandlers } from '../features/stats/mocks';
 import { familyDataHandlers } from '../features/family-data/mocks';
 import { parentsHandlers } from '../features/parents/mocks';
 
@@ -35,6 +36,8 @@ export const handlers: RequestHandler[] = [
 
   // Learning loop and flashcards (workstream F).
   ...learnHandlers,
+  // Daily 5-a-day (workstream Q).
+  ...dailyHandlers,
   // Recall checks (workstream Q).
   ...recallHandlers,
   ...rewardsHandlers,
@@ -44,6 +47,7 @@ export const handlers: RequestHandler[] = [
 
   // Statistics dashboards (workstream K).
   ...statsHandlers,
+  ...dailyLimitHandlers,
   ...familyDataHandlers,
   ...parentsHandlers,
 ];

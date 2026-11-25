@@ -30,6 +30,10 @@ import {
   rewardableXp,
   rewardsOverview,
   seasonProgressFor,
+  secretStats,
+  practiceKindsTried,
+  weakSpotsTurnedStrong,
+  type ItemType,
   type ParentReward,
   type RewardCardResponse,
   type RewardStats,
@@ -38,6 +42,8 @@ import {
 import {
   attempts,
   dailyXp,
+  enrolments,
+  items,
   mastery,
   parentRewards,
   rewards,
@@ -52,6 +58,7 @@ import { ApiError, notFound } from '../errors';
 import { requireFamilyStudent } from '../families';
 import { readJson } from '../http';
 import type { Clock } from '../rate-limit';
+import { bugRewardXp, confirmedBugCount } from '../feedback/bugHunter';
 import { isId } from '../validation';
 
 type ParentRewardRow = typeof parentRewards.$inferSelect;
@@ -63,10 +70,25 @@ interface Deps {
 
 async function loadStats(db: Database, studentId: string, yearGroup: number, now: Date) {
   const answerRows = await db
-    .select({ at: attempts.createdAt, xp: attempts.xpEarned, correct: attempts.correct })
+    .select({
+      at: attempts.createdAt,
+      xp: attempts.xpEarned,
+      correct: attempts.correct,
+      score: attempts.score,
+      type: items.type,
+      topicId: items.topicId,
+      subjectId: topics.subjectId,
+      mode: attempts.mode,
+    })
     .from(attempts)
+    .innerJoin(items, eq(items.id, attempts.itemId))
+    .innerJoin(topics, eq(topics.id, items.topicId))
     .where(eq(attempts.studentId, studentId))
     .orderBy(asc(attempts.createdAt));
+  const enrolled = await db
+    .select({ subjectId: enrolments.subjectId })
+    .from(enrolments)
+    .where(eq(enrolments.studentId, studentId));
   const [streak] = await db
     .select({ best: streaks.best })
     .from(streaks)
@@ -89,8 +111,11 @@ async function loadStats(db: Database, studentId: string, yearGroup: number, now
   const sessions = await flashcardSessionStats(db, studentId);
   const xpEvents = [...answerRows.map((a) => ({ at: a.at, xp: a.xp })), ...sessions.xpEvents];
   const correct = answerRows.filter((a) => a.correct);
+  // Bug Hunter XP (workstream L) is given by the operator, so it counts for levels as it stands;
+  // it is not an answer, so it does not fill year chapters.
+  const totalRewardXp = rewardableXp(xpEvents) + (await bugRewardXp(db, studentId));
   const stats: Partial<RewardStats> = {
-    ...progressionStats({ xpEvents, yearGroup, today: localDate(now) }),
+    ...progressionStats({ xpEvents, yearGroup, today: localDate(now), totalRewardXp }),
     ...masteryStats(
       masteryRows.map((m) => ({ subjectId: m.subjectId, masteryPercent: m.value * 100 })),
     ),
@@ -98,14 +123,42 @@ async function loadStats(db: Database, studentId: string, yearGroup: number, now
     correctAnswers: correct.length,
     bestCorrectRun: bestRun(answerRows.map((a) => a.correct)),
     startingTestsCompleted: tests?.n ?? 0,
+    confirmedBugs: await confirmedBugCount(db, studentId),
+    ...secretStats({
+      answers: answerRows.map((a) => ({ ...a, type: a.type as ItemType })),
+      goalDays: goalDays.map((g) => g.day),
+      enrolledSubjects: enrolled.map((e) => e.subjectId),
+    }),
     flashcardsReviewed: sessions.cardsReviewed,
+    // Hidden tracks (R7b). Comeback Kid and part of Explorer come from answers; the rest have
+    // no data source yet and stay at 0 (see project_memory/operations/contradictions.md).
+    // Flashcards are self-ratings and never change mastery (learn.ts), so they are left out.
+    weakSpotsTurnedStrong: weakSpotsTurnedStrong(
+      answerRows
+        .filter((a) => a.type !== 'flashcard')
+        .map((a) => ({
+          topicId: a.topicId,
+          at: a.at.getTime(),
+          score: a.score ?? (a.correct ? 1 : 0),
+        })),
+    ),
+    practiceKindsTried: practiceKindsTried({
+      lesson: answerRows.some((a) => a.mode === 'learn'),
+      flashcardSession: sessions.cardsReviewed > 0,
+      startingTest: (tests?.n ?? 0) > 0,
+      workedMaths: answerRows.some((a) => a.type === 'worked_maths'),
+      // Timed papers (X), homework marking and plan edits (P) have no records yet.
+    }),
+    factChecks: 0, // item_reports has no student id yet (workstream V)
+    plannedWeeks: 0, // no planned sessions yet (workstream P)
+    perfectSetsLevel2: 0, // practice sets are not stored yet
   };
   const seasonProgress = seasonProgressFor({
     now,
     correctAnswersAt: correct.map((a) => a.at),
     goalDays: goalDays.map((g) => g.day),
   });
-  return { stats, seasonProgress, totalRewardXp: rewardableXp(xpEvents) };
+  return { stats, seasonProgress, totalRewardXp };
 }
 
 /** Saves rewards not stored yet; returns the ids actually added (so gift days come once). */

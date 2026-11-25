@@ -96,15 +96,22 @@
     {
       "idx": 13,
       "version": "7",
-      "when": 1795608311232,
-      "tag": "0013_operator_bridge",
+      "when": 1795608183728,
+      "tag": "0013_daily_limits",
       "breakpoints": true
     },
     {
       "idx": 14,
       "version": "7",
-      "when": 1795609281968,
-      "tag": "0014_operator_actions",
+      "when": 1795609275253,
+      "tag": "0014_daily_sets",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1795611531776,
+      "tag": "0015_operator_bridge",
       "breakpoints": true
     }
   ]

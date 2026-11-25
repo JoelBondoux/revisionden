@@ -87,6 +87,34 @@ describe('combo bonus XP in Learn mode (docs/GAME_FEEL.md "XP rule")', () => {
     expect(next).toMatchObject({ combo: 1, comboBonusXp: 0, xpEarned: 10 });
   });
 
+  it('keeps the combo through a wrong recall check answer, which is saved as a recall answer', async () => {
+    const { headers } = await t.familyStudent('recall_kid');
+    const mc = await mcItem(headers);
+    await answer(headers, mc.id, 1);
+    await answer(headers, mc.id, 1);
+    const wrongRecall = await answer(headers, mc.id, 0, { recall: true });
+    expect(wrongRecall).toMatchObject({ correct: false, combo: 0, xpEarned: 0 });
+    expect(wrongRecall.flashcardAdded).toBe(true);
+    const next = await answer(headers, mc.id, 1);
+    expect(next).toMatchObject({ combo: 3, comboBonusXp: 5 });
+    const rightRecall = await answer(headers, mc.id, 1, { recall: true });
+    expect(rightRecall).toMatchObject({ combo: 4, comboBonusXp: 5 });
+  });
+
+  it('only takes recall checks in Learn mode', async () => {
+    const { headers } = await t.familyStudent('recall_test_kid');
+    const mc = await mcItem(headers);
+    const res = await t.app.request(
+      '/v1/student/learn/attempts',
+      jsonRequest(
+        'POST',
+        { itemId: mc.id, answer: 1, timeMs: 1, mode: 'test', recall: true },
+        headers,
+      ),
+    );
+    expect(res.status).toBe(400);
+  });
+
   it('never spans sessions: after more than 5 minutes away the combo starts again', async () => {
     const { headers } = await t.familyStudent('combo_gap_kid');
     const mc = await mcItem(headers);

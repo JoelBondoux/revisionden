@@ -8,6 +8,7 @@ import { and, asc, desc, eq, inArray, isNotNull, ne, sql, type SQL } from 'drizz
 import { z } from 'zod';
 import {
   LearnAttemptRequestSchema,
+  RECALL_MODE,
   STARTING_TEST_SECONDS,
   StartingTestRequestSchema,
   comboBefore,
@@ -50,6 +51,7 @@ import {
 } from '../learning/items';
 import type { MathsEngine } from '../learning/maths-engine';
 import { awardXp, getProgress } from '../learning/progress';
+import { creditableXp } from '../daily-limit/state';
 import { topicAndDescendants } from '../learning/topic-tree';
 
 /** How many recent answers to look back through for a combo (more is never needed in practice). */
@@ -287,7 +289,8 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
       .where(eq(attempts.startingTestId, test.id))
       .orderBy(asc(attempts.createdAt));
     const combo = comboBonusForSequence(answered.map((a) => a.correct));
-    if (firstFinish && combo.bonusXp > 0) {
+    const comboAllowed = (await creditableXp(db, studentId, combo.bonusXp, now)) > 0;
+    if (firstFinish && combo.bonusXp > 0 && comboAllowed) {
       await awardTestCombo(studentId, answered, combo.bonuses, now);
     }
     const testTopics = await db
@@ -335,6 +338,9 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
       .where(and(servable, eq(items.id, input.itemId)));
     if (!row) throw notFound();
 
+    if (input.recall && input.mode !== 'learn') {
+      throw new ApiError(400, 'invalid_request', 'Recall checks use learn mode');
+    }
     if (input.startingTestId) {
       if (input.mode !== 'test') {
         throw new ApiError(400, 'invalid_request', 'Starting test answers use test mode');
@@ -350,7 +356,13 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
     // Learn mode combos come from the student's own recent answers (never from the device).
     const combo = learning && marked.correct ? (await recentCombo(studentId, now)) + 1 : 0;
     const comboBonus = comboBonusXp(combo);
-    const xpEarned = xpForAnswer({ type: row.type as ItemType, score: marked.score }) + comboBonus;
+    // No XP, rewards or streak credit past the daily limit (workstream K7).
+    const xpEarned = await creditableXp(
+      db,
+      studentId,
+      xpForAnswer({ type: row.type as ItemType, score: marked.score }) + comboBonus,
+      now,
+    );
     const [saved] = await db
       .insert(attempts)
       .values({
@@ -360,7 +372,8 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
         score: marked.score,
         timeMs: input.timeMs,
         itemVersion: row.version,
-        mode: input.mode,
+        // A recall check is saved as 'recall' so it never breaks a combo (see comboBefore).
+        mode: input.recall ? RECALL_MODE : input.mode,
         xpEarned,
         startingTestId: input.startingTestId ?? null,
         createdAt: now,
