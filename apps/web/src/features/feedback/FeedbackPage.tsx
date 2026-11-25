@@ -2,7 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
-import { ErrorRef, refOf } from '../../api/ErrorRef';
+import { ErrorRef, refOf, type ErrorDetails } from '../../api/ErrorRef';
 import { useStudent } from '../../session/StudentContext';
 import { buildInfo } from '../about/buildInfo';
 import { SUPPORT_EMAIL } from '../legal/supportEmail';
@@ -57,7 +57,7 @@ export function FeedbackPage() {
   // High-privacy default for children (Children's Code): off for students, on for parents.
   const [includeDevice, setIncludeDevice] = useState(sender === 'parent');
   const [error, setError] = useState<string>();
-  const [errorRef, setErrorRef] = useState<string>();
+  const [errorRef, setErrorRef] = useState<ErrorDetails>();
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
   const device = currentDeviceDetails(route);

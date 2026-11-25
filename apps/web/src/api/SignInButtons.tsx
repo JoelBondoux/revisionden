@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Button } from '../components/Button';
-import { ErrorRef, refOf } from './ErrorRef';
+import { ErrorRef, refOf, type ErrorDetails } from './ErrorRef';
 import { startSignIn } from './signIn';
 import { useSignInProviders, type SignInProvider } from './signInProviders';
 
@@ -13,7 +13,7 @@ export function SignInButtons({ returnTo }: { returnTo?: string }) {
   const location = useLocation();
   const providers = useSignInProviders();
   const [busy, setBusy] = useState(false);
-  const [failure, setFailure] = useState<{ ref: string | undefined } | null>(null);
+  const [failure, setFailure] = useState<{ ref: ErrorDetails | undefined } | null>(null);
   const target = returnTo ?? `${location.pathname}${location.search}`;
 
   const signIn = async (provider: SignInProvider) => {

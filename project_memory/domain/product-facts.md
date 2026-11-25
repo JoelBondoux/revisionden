@@ -129,6 +129,10 @@ Tags: #product #rules #limits #defaults
   "Link a device" (product owner, 2026-11-25). Students use only their own linked device. Signed out, any screen shows the sign-in buttons
   and returns to the same page after sign-in. Sign out is on the welcome page and `/family`. The topic map and Cards badge wait for F2's
   `GET /v1/student/map` and `GET /v1/student/cards/due`.
+- Every error with a reference code has a one-tap "Send error report" button: an anonymous report
+  (code, screen and API path with ids masked, status, build, browser family, online, time) is
+  stored in `error_reports` for 90 days and listed for the operator at `/admin/feedback` (Error
+  reports), `GET /v1/admin/error-reports` and `scripts/error-reports.mjs`. Privacy notice 1.2.
 - Every "Something went wrong" shows a reference code like `RD-7K2M9Q` (no I, L, O or U), also
   in the API logs with no personal data, so a family can report it. Implemented in
   `packages/core/src/error-ref.ts`, `apps/api/src/errors.ts`, `apps/web/src/api/client.ts`.
@@ -445,3 +449,29 @@ Tags: #product #rules #limits #defaults
   are thanked, not rewarded.
 - Secret achievements: hidden "???" cards with a found count; learning-based conditions only;
   defined in the catalogue with `secret: true`. Detail: `docs/REWARDS.md`.
+
+## Daily limit, two parents, hidden tracks (owner, 2026-11-25; planned)
+
+- Daily limit in active study minutes: defaults GCSE 60/90 (school day/other), A-Level 90/120;
+  ceilings GCSE 2h/3h, A-Level 2.5h/3.5h; +30 in exam season with parent consent. Parents set it;
+  the app only suggests (+10 at most fortnightly when the student keeps going without accuracy dips;
+  −10 to −15 on tiredness signs). Detail: `docs/PRODUCT_RULES.md` (Daily limit).
+- Two parent accounts with equal control; second invited by link or code (7 days); activity log
+  ("Parent 1/2"); both confirm whole-family deletion.
+- Hidden tracks besides Bug Hunter: Fact Checker, Comeback Kid, Explorer, Planner, Pace Setter,
+  Perfectionist (`docs/REWARDS.md`).
+
+## Titles and Get help (owner, 2026-11-25; planned)
+
+- Two-part titles: a first word and a last word unlocked separately from rewards (about 120 each);
+  curated, every pairing validated against blocked words; shown under the nickname.
+- "Get help" page: UK support services by topic with tap-to-call links; every number and URL
+  confirmed on the service's own site with source and date (rechecked each term); nothing about its
+  use is recorded or shown to parents; works offline; Quick exit. Detail: `docs/PRODUCT_RULES.md`.
+
+## Quick wins (owner approved 2026-11-25; planned, workstream Q)
+
+- Daily 5-a-day mixed set (5 questions from practised topics); recall checks (2 questions at lesson
+  start, no penalty, skippable); "Learn it first" links to Oak and BBC Bitesize per topic, checked
+  by CI; read aloud with on-device voices preferred; reading comfort settings (dyslexia-friendly
+  self-hosted font, larger text, spacing, tint). Detail: `docs/PRODUCT_RULES.md` (Quick wins).

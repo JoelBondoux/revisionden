@@ -17,7 +17,7 @@ import {
   type SubjectChoice,
   type TierChoice,
 } from '@revisionden/core';
-import { ErrorRef, refOf } from '../../api/ErrorRef';
+import { ErrorRef, refOf, type ErrorDetails } from '../../api/ErrorRef';
 import { Button, Sheet } from '../../components';
 import { AvatarBuilder } from '../avatar/AvatarBuilder';
 import { AvatarSvg } from '../avatar/AvatarSvg';
@@ -57,7 +57,7 @@ export function AddChildForm({
   const [subjects, setSubjects] = useState<SubjectChoice[]>([]);
   const [saving, setSaving] = useState(false);
   const [serverError, setServerError] = useState<string>();
-  const [serverErrorRef, setServerErrorRef] = useState<string>();
+  const [serverErrorRef, setServerErrorRef] = useState<ErrorDetails>();
 
   const nicknameCheck = validateNickname(nickname);
   const nicknameError =
