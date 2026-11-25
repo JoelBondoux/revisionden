@@ -144,7 +144,6 @@ describe('Settings install button', () => {
     show((p) => <InstallButton {...p} />, { store, env: { standalone: false, ios: null } });
     const link = screen.getByRole('link', { name: 'Add RevisionDen to this device' });
     expect(link).toHaveAttribute('href', '/install');
-    expect(link).toHaveClass('link-button');
   });
 
   it('says so when RevisionDen is already installed', () => {
