@@ -1,0 +1,167 @@
+/* Link components (J7). Uses the design tokens; motion is transform and shadow only. */
+
+/* LinkButton: shares .btn; adds a hover lift and the quiet style. */
+.link-button {
+  transition:
+    transform var(--motion-fast) var(--ease-spring),
+    box-shadow var(--motion-fast) var(--ease-out);
+}
+
+.link-button:hover {
+  transform: translateY(-2px);
+}
+
+.link-button:active {
+  transform: translateY(5px) scale(0.97, 0.94);
+  box-shadow: none;
+}
+
+.link-button__icon {
+  display: inline-flex;
+}
+
+.btn--quiet {
+  min-height: var(--tap-target);
+  background: transparent;
+  color: var(--color-primary-edge);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.btn--quiet:hover {
+  background-color: var(--color-primary-soft);
+}
+
+/* LinkTile: a tappable card. */
+.link-tile {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--tap-target);
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-3d-neutral);
+  color: var(--color-text);
+  text-decoration: none;
+  margin-bottom: 5px;
+  transition:
+    transform var(--motion-fast) var(--ease-spring),
+    box-shadow var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out);
+}
+
+.link-tile:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+}
+
+.link-tile:active {
+  transform: translateY(5px) scale(0.99, 0.97);
+  box-shadow: none;
+}
+
+.link-tile:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.link-tile__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-edge);
+}
+
+.link-tile__text {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.link-tile__title {
+  font-weight: var(--font-weight-black);
+}
+
+.link-tile__description {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.link-tile__chevron {
+  flex-shrink: 0;
+  color: var(--color-primary-edge);
+}
+
+/* LinkChip: a small pill link inside cards. */
+.link-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target);
+  padding: 0 var(--space-4);
+  border: 2px solid var(--color-primary-soft);
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-edge);
+  font-weight: var(--font-weight-extrabold);
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+  transition:
+    transform var(--motion-fast) var(--ease-spring),
+    border-color var(--motion-fast) var(--ease-out);
+}
+
+.link-chip:hover {
+  transform: translateY(-1px);
+  border-color: var(--color-primary);
+}
+
+.link-chip:active {
+  transform: scale(0.95);
+}
+
+.link-chip:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+/* TextLink: inline in sentences and policies. Bold and coloured with a soft bar, not underlined. */
+.text-link {
+  color: var(--color-primary-edge);
+  font-weight: var(--font-weight-extrabold);
+  text-decoration: none;
+  border-bottom: 2px solid var(--color-mastery-fill);
+  transition: border-color var(--motion-fast) var(--ease-out);
+}
+
+.text-link:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  border-color: var(--color-primary);
+}
+
+.text-link:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* On the dark arena, links keep enough contrast. */
+.arena .text-link {
+  color: var(--arena-glow);
+  border-color: var(--arena-option-1);
+}
+
+.arena .btn--quiet {
+  color: var(--arena-text);
+}
