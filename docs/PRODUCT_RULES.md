@@ -539,6 +539,27 @@ Requested by the product owner on 2026-11-25.
 - Either parent can remove the other; the removed parent sees an in-app notice on next
   sign-in and loses access at once. Students see that two parents can view their progress.
 - The privacy notice must list the second parent's sign-in email as data kept.
+- **How it works (workstream B3):** "Invite a second parent" in the parent home gives a
+  12-character code and a `/join?code=…` link (7 days, used once, stored hashed, 5 a day per
+  family; joining is rate-limited like sign-in). The second parent signs in with their own account
+  and joins; they become Parent 2 (or whichever number is free). A parent whose own account already
+  has children or another parent cannot join until it is deleted. At most two parents.
+- **Equal control:** every parent route works from the family, so both parents pass every guard.
+- **Removing:** either parent removes the other ("Remove Parent 2"). The removed parent is refused
+  at once (`403 removed_from_family`) and sees a notice in the parent home; after OK they start
+  again with an empty family. Nobody removes themselves.
+- **Deleting the family:** "Delete the family account" deletes everything at once when there is
+  one parent; with two, it waits until the other parent confirms ("Confirm deletion") and either
+  can cancel. Deletion removes every child's records and both parents' sign-ins.
+- **Activity log:** every successful parent change is logged as "Parent 1"/"Parent 2" + what
+  changed (children, subjects, avatar, devices, reminders, daily limit, rewards, export, invites,
+  joining, removal, deletion). Important ones (children added or removed, limit changed, reward
+  given, data downloaded, deletion asked or cancelled, parent joined or removed) count as new for
+  the other parent until "Mark as seen", and are pushed to the other parent's devices once by the
+  15-minute cron (not in UK nightly quiet hours, not after a day). Entries about a child go with
+  the child; entries are kept 12 months.
+- Implemented: `apps/api/src/routes/family-parents.ts`, `apps/api/src/family-events.ts`,
+  `apps/web/src/features/parents/`; migration 0012.
 
 ## Get help (support resources)
 

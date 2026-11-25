@@ -41,6 +41,7 @@ import {
 } from '@revisionden/db';
 import type { AppEnv } from '../context';
 import type { Clock } from '../rate-limit';
+import { listFamilyEvents, recordFamilyEvent } from '../family-events';
 
 type StudentTable = PgTable & { studentId: PgColumn };
 
@@ -89,7 +90,7 @@ export function familyExport({ db, clock }: { db: Database; clock: Clock }) {
   const app = new Hono<AppEnv>();
 
   app.get('/export', async (c) => {
-    const { familyId, authUserId } = c.var.parent;
+    const { familyId, authUserId, position } = c.var.parent;
     const now = clock.now();
 
     const [user] = await db.select().from(authUsers).where(eq(authUsers.id, authUserId));
@@ -137,6 +138,7 @@ export function familyExport({ db, clock }: { db: Database; clock: Clock }) {
       .where(eq(itemReports.familyId, familyId))
       .orderBy(itemReports.createdAt);
 
+    const log = await listFamilyEvents(db, { familyId, position, since: now });
     const body = {
       about:
         'Everything RevisionDen holds about you and your children. Secrets such as sign-in ' +
@@ -168,9 +170,12 @@ export function familyExport({ db, clock }: { db: Database; clock: Clock }) {
       })),
       feedback: familyFeedback.map((row) => without(row, ['familyId', 'senderAuthUserId'])),
       questionReports: reports.map((row) => without(row, ['familyId'])),
+      activityLog: log.events.map(({ by, what, createdAt }) => ({ by, what, at: createdAt })),
     };
 
     const day = now.toISOString().slice(0, 10);
+    // The other parent is told about an export (docs/PRODUCT_RULES.md "Two parents").
+    await recordFamilyEvent(db, { familyId, actorPosition: position, kind: 'data_exported', now });
     c.header('content-disposition', `attachment; filename="revisionden-family-data-${day}.json"`);
     c.header('cache-control', 'no-store');
     return c.body(JSON.stringify(body, null, 2), 200, {
