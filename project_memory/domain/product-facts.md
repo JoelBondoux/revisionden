@@ -428,6 +428,11 @@ Tags: #product #rules #limits #defaults
   capped at 40 pieces. The combo badge shows from 2 in a row. The CTA pulse takes 1.6 s (well under 3
   flashes a second). Reduced motion removes particles, confetti, float-ups, shakes and pulsing; combo,
   stars and XP still show as text. Arena colours live in `apps/web/src/design/tokens.ts` (`--arena-*`).
+- Settled in J5: light-theme motion lives in `apps/web/src/design/motion.css` and applies only to
+  the topic map, rewards and stats (parent area, policies and settings stay calm). The map's Next
+  mission button is the pulsing main call to action. Reward reveals show the tier, the items and the
+  reason from the reward's one catalogue target ("For: 7-day streak"); epic and legendary add a
+  particle burst, legendary a shine. No reason is shown for a reward missing from the catalogue.
 - Settled in J2/J3: lessons, the starting test and flashcard review use the arena. Set complete's
   Next mission goes to the map (`/map`, next mission card). "Or take a break. Your streak is safe for
   today." shows when today's daily goal is met (`progress.goalMet`). The "daily cap" for "See you
