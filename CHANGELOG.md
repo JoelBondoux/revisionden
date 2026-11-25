@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Combo bonus: from your 3rd right answer in a row, each right answer earns 5 extra XP. In the starting test, the bonus is added when you see your results.
 - Your topic map now shows your real progress, and tapping a topic or the next mission starts a lesson.
 - Coming soon: a bug button on every screen. Find a real bug and earn bonus XP and secret Bug Hunter rewards.
 - Coming soon: secret achievements you only discover when you earn them.
@@ -52,6 +53,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Combo XP J4 (J): `COMBO_BONUS_XP`, `comboBonusXp`, `comboBefore`, `comboBonusForSequence` in `packages/core/src/xp.ts`. `POST /v1/student/learn/attempts` adds +5 XP from the 3rd right Learn mode answer in a row (worked out from the student's recent answers; a wrong answer, a Test mode answer or a 5-minute gap ends it) and returns `combo` and `comboBonusXp`. `POST .../starting-tests/:id/finish` applies the bonus to the test's answers in order on the first finish and returns `bestCombo` and `comboBonusXp`. The bonus is stored in each answer's `xp_earned`, so R's reward XP and daily cap count it. New optional fields in `LearnAttemptResponseSchema` and `StartingTestResultSchema`.
 - Research: competitor analysis of UK revision products (features, past-paper licensing, prices) and a ranked gap list (`docs/research/competitors-2026-11.md`).
 - Game feel J1 (J): dark "arena" theme tokens (`--arena-*`, answer colours, neon sparks, all text pairs checked for 4.5:1) and motion tokens (`--motion-*`, `--ease-spring`) in `apps/web/src/design/`, `arena.css` (arena screen, 2×2 answer grid, jelly press), and effect components in `apps/web/src/features/juice/` (particle burst capped at 24, float-up text, shake, COMBO ×n badge, star reveal, confetti capped at 40, rolling counter, springy glowing progress bar, Pip speech line, pulsing CTA class) with a `useReducedMotion` switch that turns particles, shakes, confetti and pulsing off. Not yet used on any screen (J2–J5).
 - Topic map from real data (F2): `GET /v1/student/map` (units, topic states, unit challenge, next mission) and `GET /v1/student/cards/due`; the Map tab and Cards badge call them, map hexes open the lesson player, and the map schemas are shared from `packages/core`.
