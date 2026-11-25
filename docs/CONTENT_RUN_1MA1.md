@@ -9,15 +9,15 @@
 `gcse-maths-ms-consecutive-integers-proof` and the topic tree. Results are recorded in each
 file's `verification.checks`.
 
-| Step                 | Result                                                                                                           |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| 1 Grounded writing   | 10 pass, 1 fail (G9). Audited after writing, since no writer record existed                                      |
-| 2 Quote check        | All 11 items and the mark scheme pass exactly. Topic tree: 95 of 97 exact, 2 near matches (A22, A25)             |
-| 3 Blind answer       | Gemini (`gemini-2.5-pro`): 10 pass (the A6 proof by blind marking, all three exemplars exact), 1 fail (A18-0002) |
-| 4 Adversarial review | Gemini: 11 pass, after fixing A4-0001 (see below)                                                                |
-| 5 Exact checks       | Maths engine passes all 7 maths items. No item has an `exact` block (units, equations)                           |
-| 6 Schema and links   | Pass                                                                                                             |
-| 7 Human approval     | **9 items ready** for the owner. 2 wait for a decision                                                           |
+| Step                 | Result                                                                                                                |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| 1 Grounded writing   | 11 pass (G9 under decision 0008). Audited after writing, since no writer record existed                               |
+| 2 Quote check        | All 11 items and the mark scheme pass exactly. Topic tree: 95 exact, 2 near matches (A22, A25) confirmed by the owner |
+| 3 Blind answer       | Gemini (`gemini-2.5-pro`): 10 pass (the A6 proof by blind marking, all three exemplars exact), 1 fail (A18-0002)      |
+| 4 Adversarial review | Gemini: 11 pass, after fixing A4-0001 (see below)                                                                     |
+| 5 Exact checks       | Maths engine passes all 7 maths items. No item has an `exact` block (units, equations)                                |
+| 6 Schema and links   | Pass                                                                                                                  |
+| 7 Human approval     | **10 items ready** for the owner (A6 and G9 individually). A18-0002 waits for #111                                    |
 
 **Per item**
 
@@ -32,20 +32,16 @@ file's `verification.checks`.
 | `gcse-maths-h-a4-0002`  | worked_maths    | Ready for approval                                                                                                                                                                                                                                         |
 | `gcse-maths-h-n4-0001`  | multiple_choice | Ready (explanation arithmetic checked with SymPy)                                                                                                                                                                                                          |
 | `gcse-maths-h-a6-0001`  | extended_answer | Ready; needs individual approval. Exemplars (top 3, middle 2, low 1 marks) written from the mark scheme; blind marking matched all three                                                                                                                   |
-| `gcse-maths-h-g9-0001`  | short_answer    | **Blocked at step 1**: the answer rests on a definition of a tangent that no quoted official source gives (DfE subject content and the 1MA1 specification only name the word). Steps 3 and 4 pass                                                          |
+| `gcse-maths-h-g9-0001`  | short_answer    | Ready; needs individual approval. No official source defines a tangent, so it rests on the G9 spec point plus a standard definition under decision 0008 (owner, 2026-11-25)                                                                                |
 | `gcse-maths-h-a18-0002` | flashcard       | **Blocked at step 3**: the blind answer gave the right formula in different notation ("x = [-b ± √(b² - 4ac)] / 2a", no "a ≠ 0"); flashcards must match word for word, which a formula almost never does. Not weakened                                     |
 
-**Decisions needed**
+**Decisions (settled by the owner, 2026-11-25)**
 
-1. **Two near-match quotes** (topic tree A22 and A25): a person compares them with the PDF page
-   (`REVIEW_GUIDE.md`). On the rendered page both read word for word as quoted.
-2. **Definitions in maths items (G9).** Either find an official source that states the
-   definition, or rule that a standard definition may rest on the specification point plus
-   individual human approval. This ruling decides how step 2 writes flashcards.
-3. **Formula flashcards (A18-0002).** Options: (a) a V change so maths flashcards are compared by
-   the maths engine (the same formula in any form), keeping word matching for word cards;
-   (b) formula cards always get individual human approval instead of the blind answer;
-   (c) no formula flashcards. Recommended: (a).
+1. **Near-match quotes** (topic tree A22, A25): confirmed word for word; recorded as a human
+   (content-lead) quote check.
+2. **Definitions** (G9): decision 0008, a standard definition may rest on the spec point that names
+   the term, with individual human approval.
+3. **Formula flashcards** (A18-0002): compared by the maths engine (#111); A18-0002 is re-run there.
 
 **How steps 3 and 4 run** (Gemini key saved as an environment network secret for
 `generativelanguage.googleapis.com`, header `x-goog-api-key`; Node's fetch only uses the proxy
@@ -70,7 +66,7 @@ least 3 interchangeable items. Items carry the optional `learning_point` (an id 
 `gcse-maths-h-n7-lp-fractional-indices`) and `expected_seconds` (5 to 900, the time a confident
 student takes) in `content/schemas/item.schema.json`; F5 (#110) syncs and uses them.
 
-**Before starting:** decisions 2 and 3 above are settled, and #109 (create batch
+**Before starting:** #111 (formula flashcards) and #109 (create batch
 from draft items) has merged.
 
 **Six writer sessions, one per area**
@@ -134,6 +130,9 @@ board's site, never guess them. Past papers are cited, never copied: write origi
 Never put board PDFs in the repo. No commercial revision sites. No personal data. Never invent
 a fact, citation or quote. Cite only what a quote really supports; maths answers are backed by
 the maths engine, not by the specification.
+If no official source defines a standard term, follow decision 0008
+(project_memory/decisions/0008-definitions-policy.md): cite the spec point that names it, add the
+standard definition, and set needs_human_approval: true.
 
 Run every item through the pipeline and record results with --write:
   pnpm content:validate                      (schema, links, maths engine)
