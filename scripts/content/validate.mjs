@@ -2,6 +2,7 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import { createValidators } from './schemas.mjs';
+import { learnLinkErrors } from './learn-links.mjs';
 
 const FOLDERS = {
   subjects: 'subjects',
@@ -9,6 +10,7 @@ const FOLDERS = {
   items: 'items',
   markSchemes: 'mark-schemes',
   diagrams: 'diagrams',
+  learnLinks: 'learn-links',
 };
 const SCHEMA_FOR = {
   subjects: 'subject',
@@ -16,6 +18,7 @@ const SCHEMA_FOR = {
   items: 'item',
   markSchemes: 'markScheme',
   diagrams: 'diagram',
+  learnLinks: 'learnLinks',
 };
 const MAX_QUOTE_WORDS = 50;
 const FORBIDDEN_FILES = /\.(pdf|png|jpe?g|gif|webp|bmp|tiff?|heic|docx?)$/i;
@@ -43,6 +46,7 @@ export async function loadContent(root) {
     items: [],
     markSchemes: [],
     diagrams: [],
+    learnLinks: [],
     loadErrors: [],
   };
   for (const path of (await filesUnder(root)).filter((f) => FORBIDDEN_FILES.test(f))) {
@@ -433,7 +437,7 @@ async function mathsErrors(content, checkMaths) {
 export async function validateContent(content, { checkMaths, validators = createValidators() }) {
   const errors = [...(content.loadErrors ?? []), ...schemaErrors(content, validators)];
   if (errors.length) return errors;
-  errors.push(...linkErrors(content), ...citationErrors(content));
+  errors.push(...linkErrors(content), ...citationErrors(content), ...learnLinkErrors(content));
   if (errors.length || !checkMaths) return errors;
   return mathsErrors(content, checkMaths);
 }

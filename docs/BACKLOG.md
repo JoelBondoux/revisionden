@@ -249,9 +249,7 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [ ] Q2 Read aloud: Web Speech API, on-device voices preferred, off by default with only online voices, speed control, maths read sensibly; privacy notice line.
 - [ ] Q3 Daily 5-a-day: core selection (practised topics, spaced repetition and weak spots), API route and a card on the topic map, played in the lesson player.
 - [x] Q4 Recall checks: 2 questions at lesson start on previously practised topics, skippable, no penalty; wrong answers become flashcards.
-- [x] Q1 Reading comfort: dyslexia-friendly self-hosted font (OpenDyslexic, OFL), larger text, spacing and tint in Settings, per device, app-wide.
-- [ ] Q4 Recall checks: 2 questions at lesson start on previously practised topics, skippable, no penalty; wrong answers become flashcards.
-- [ ] Q5 Learn it first: `content/learn-links/*.json` with schema and validator, button on topics with a checked link, CI link check.
+- [x] Q5 Learn it first: `content/learn-links/*.json` with schema and validator, button on topics with a checked link, CI link check. Pilot GCSE Maths Higher Oak links; Bitesize and other subjects later.
 - Tests: settings saved and applied per device; voice choice and default; maths reading; selection with fixed clock and seeded randomness; no penalty for recall; links validated and checked.
 
 ### O. Operator bridge for AppDeck (RevisionDen side) (`docs/OPERATOR_CONSOLE.md`)
