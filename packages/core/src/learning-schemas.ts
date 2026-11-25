@@ -17,6 +17,8 @@ const itemBase = {
   /** True for unverified content, only ever served with the development flag on. */
   draft: z.boolean(),
   hint: text.optional(),
+  /** Set on a lesson's warm-up questions: a learning point coming back on the review ladder (F5). */
+  warmUp: z.literal(true).optional(),
 };
 
 export const LearnItemSchema = z.discriminatedUnion('type', [
@@ -96,6 +98,8 @@ export const LearnAttemptRequestSchema = z
     startingTestId: IdSchema.optional(),
     /** A recall check answer (Q4): Learn mode only; a wrong one never resets the combo. */
     recall: z.boolean().optional(),
+    /** True for a retry in the lesson after a wrong answer: it counts at half weight (F5). */
+    retry: z.boolean().optional(),
   })
   .strict();
 export type LearnAttemptRequest = z.infer<typeof LearnAttemptRequestSchema>;
@@ -142,6 +146,14 @@ export const LearnAttemptResponseSchema = z.object({
   combo: z.number().int().min(0).optional(),
   /** The combo bonus included in xpEarned (+5 from the 3rd in a row). */
   comboBonusXp: z.number().int().min(0).optional(),
+  /**
+   * Learn mode, wrong answer: another question on the same learning point that the student has
+   * not seen in the last 7 days, for the lesson to bring back 2 to 4 questions later; null when
+   * there is none (the lesson then brings the same question back at the end). F5.
+   */
+  similar: LearnItemSchema.nullable().optional(),
+  /** A right answer that took more than twice the expected time: it comes back another day. */
+  shaky: z.boolean().optional(),
   /** Rewards this answer earned, saved once each (play the reward sound and show them). */
   newlyEarned: z.array(RewardCardSchema),
 });
