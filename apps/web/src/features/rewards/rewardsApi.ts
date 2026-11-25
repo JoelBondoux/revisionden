@@ -1,16 +1,18 @@
 import { ApiError, failureRef } from '../../api/client';
 import type { ZodType } from 'zod';
+import type { TitleApi } from './TitlePicker';
 import {
   maskIdsInPath,
   ParentRewardSchema,
   StudentRewardsResponseSchema,
+  StudentTitleResponseSchema,
   type CreateParentRewardRequest,
   type ParentReward,
   type StudentRewardsResponse,
   type UpdateParentRewardRequest,
 } from '@revisionden/core';
 
-export interface RewardsApi {
+export interface RewardsApi extends TitleApi {
   /** The signed-in student's rewards (saves anything newly earned). */
   getMyRewards(): Promise<StudentRewardsResponse>;
   /** A child's rewards, for their parent. */
@@ -72,6 +74,12 @@ export function createRewardsApi(options: {
 
   return {
     getMyRewards: () => read(StudentRewardsResponseSchema, 'v1/student/rewards'),
+    getMyTitle: () => read(StudentTitleResponseSchema, 'v1/student/rewards/title'),
+    setMyTitle: (choice) =>
+      read(StudentTitleResponseSchema, 'v1/student/rewards/title', {
+        method: 'PUT',
+        body: JSON.stringify(choice),
+      }),
     getChildRewards: (id) => read(StudentRewardsResponseSchema, `${child(id)}/rewards`),
     addParentReward: (id, body) =>
       read(ParentRewardSchema, `${child(id)}/parent-rewards`, {

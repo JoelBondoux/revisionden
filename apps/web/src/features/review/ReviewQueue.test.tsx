@@ -126,6 +126,52 @@ describe('Review queue', () => {
     ]);
   });
 
+  it('lets a content lead create a batch from the draft items that are ready', async () => {
+    reviewerApi({ role: 'content-lead' });
+    const created: unknown[] = [];
+    server.use(
+      http.get('*/v1/review/batches/from-drafts', () => HttpResponse.json({ ready: 11 })),
+      http.post('*/v1/review/batches/from-drafts', async ({ request }) => {
+        created.push(await request.json());
+        return HttpResponse.json(
+          { id: BATCH_ID, size: 11, sampleSize: 11, sample: [] },
+          { status: 201 },
+        );
+      }),
+    );
+    renderRoute('/review');
+    const batches = await screen.findByRole('region', { name: 'Batches' });
+    expect(await within(batches).findByText('11 draft items are ready for review.')).toBeVisible();
+    await userEvent.type(within(batches).getByLabelText('Batch name'), 'Pilot');
+    await userEvent.click(
+      within(batches).getByRole('button', { name: 'Create batch from draft items' }),
+    );
+    expect(created).toEqual([{ title: 'Pilot' }]);
+    expect(await screen.findByText('Batch created with 11 items.')).toHaveAttribute(
+      'role',
+      'status',
+    );
+  });
+
+  it('tells a content lead when no draft item is ready yet', async () => {
+    reviewerApi({ role: 'content-lead' });
+    server.use(http.get('*/v1/review/batches/from-drafts', () => HttpResponse.json({ ready: 0 })));
+    renderRoute('/review');
+    expect(await screen.findByText('No draft items are ready for review.')).toBeVisible();
+    expect(
+      screen.queryByRole('button', { name: 'Create batch from draft items' }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('does not offer batch creation to other reviewers', async () => {
+    reviewerApi();
+    renderRoute('/review');
+    await screen.findByRole('region', { name: 'Batches' });
+    expect(
+      screen.queryByRole('button', { name: 'Create batch from draft items' }),
+    ).not.toBeInTheDocument();
+  });
+
   it('tells someone without a reviewer role that the page is not for them', async () => {
     reviewerApi({ role: null });
     renderRoute('/review');
@@ -146,6 +192,99 @@ describe('Batch review', () => {
     expect(within(item).getByText(/fixture quoted words/)).toBeInTheDocument();
     const done = screen.getByRole('article', { name: 'fixture-item-1' });
     expect(within(done).getByText('Approved by subject-specialist')).toBeInTheDocument();
+  });
+
+  it('shows the hint, mark scheme, example answers and the checks the item passed', async () => {
+    reviewerApi();
+    const proof = {
+      ...sampleItem('fixture-proof'),
+      needsHumanApproval: true,
+      snapshot: {
+        prompt: 'Fixture proof question?',
+        hint: 'Fixture hint words',
+        mark_scheme: ['M1 fixture method mark'],
+        mark_scheme_detail: {
+          type: 'points',
+          points: [{ code: 'B1', description: 'Fixture scheme point' }],
+        },
+        exemplars: [{ band: 'top', level: 3, answer: 'Fixture top answer' }],
+        verification: {
+          status: 'draft',
+          version: 1,
+          checks: [
+            { name: 'quote-check', result: 'pass', tool: 't', tool_version: '1', at: 'x' },
+            { name: 'blind-marking', result: 'fail', tool: 't', tool_version: '1', at: 'x' },
+          ],
+        },
+        citations: [],
+      },
+    };
+    const levels = {
+      ...sampleItem('fixture-essay'),
+      snapshot: {
+        prompt: 'Fixture essay?',
+        mark_scheme_detail: {
+          type: 'levels',
+          levels: [{ level: 2, marks: [3, 4], descriptor: 'Fixture level descriptor' }],
+        },
+      },
+    };
+    server.use(
+      http.get(`*/v1/review/batches/${BATCH_ID}`, () =>
+        HttpResponse.json({
+          id: BATCH_ID,
+          title: 'Fixture batch',
+          status: 'in_review',
+          sampleSeed: 42,
+          createdAt: '2026-11-24T09:00:00.000Z',
+          decidedAt: null,
+          items: [proof, levels],
+        }),
+      ),
+    );
+    renderRoute(`/review/batches/${BATCH_ID}`);
+    const item = await screen.findByRole('article', { name: 'fixture-proof' });
+    expect(within(item).getByText('Fixture hint words')).toBeInTheDocument();
+    expect(within(item).getByText('M1 fixture method mark')).toBeInTheDocument();
+    expect(within(item).getByText(/B1: Fixture scheme point/)).toBeInTheDocument();
+    expect(within(item).getByText(/Top \(3\): Fixture top answer/)).toBeInTheDocument();
+    expect(within(item).getByText('quote-check: pass')).toBeInTheDocument();
+    expect(within(item).getByText('blind-marking: FAIL')).toBeInTheDocument();
+    const essay = screen.getByRole('article', { name: 'fixture-essay' });
+    expect(
+      within(essay).getByText(/Level 2 \(3–4 marks\): Fixture level descriptor/),
+    ).toBeInTheDocument();
+  });
+
+  it('shows a multiple choice answer as the correct option itself, not a zero-based number', async () => {
+    reviewerApi();
+    const mc = {
+      ...sampleItem('fixture-mc'),
+      snapshot: {
+        type: 'multiple_choice',
+        prompt: 'Fixture multiple choice?',
+        options: ['alpha', 'beta', 'gamma'],
+        answer: { option: 2 },
+      },
+    };
+    server.use(
+      http.get(`*/v1/review/batches/${BATCH_ID}`, () =>
+        HttpResponse.json({
+          id: BATCH_ID,
+          title: 'Fixture batch',
+          status: 'in_review',
+          sampleSeed: 42,
+          createdAt: '2026-11-24T09:00:00.000Z',
+          decidedAt: null,
+          items: [mc],
+        }),
+      ),
+    );
+    renderRoute(`/review/batches/${BATCH_ID}`);
+    const item = await screen.findByRole('article', { name: 'fixture-mc' });
+    expect(within(item).getByText('Option 3: gamma')).toBeInTheDocument();
+    expect(within(item).getByText('1. alpha')).toBeInTheDocument();
+    expect(within(item).queryByText(/"option"/)).not.toBeInTheDocument();
   });
 
   it('approves an item', async () => {

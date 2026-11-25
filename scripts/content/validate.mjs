@@ -3,6 +3,7 @@ import { readdir, readFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import { createValidators } from './schemas.mjs';
 import { learnLinkErrors } from './learn-links.mjs';
+import { roundingOf, showsRounding } from '../../packages/core/src/answer-format.ts';
 
 const FOLDERS = {
   subjects: 'subjects',
@@ -166,11 +167,36 @@ function linkErrors(content) {
     if (MATHS_TYPES.has(item.type) && !item.checked_by.includes('maths-engine')) {
       fail('checked_by must include maths-engine for maths items');
     }
+    if (item.type === 'numeric') roundingErrors(item).forEach(fail);
     if (item.type === 'worked_maths') {
       const wants = item.verify.method === 'solve' ? 'solutions' : 'expression';
       if (!(wants in item.answer))
         fail(`verify method ${item.verify.method} needs answer.${wants}`);
     }
+  }
+  return errors;
+}
+
+const ASKS_FOR_ROUNDING =
+  /decimal place|significant figure|nearest whole number|\bd\.p\.|\bs\.f\./i;
+
+/** A rounded numeric answer: the question says so, the answer says how, and its value is written so. */
+function roundingErrors(item) {
+  const rounding = roundingOf(item.answer);
+  const asks = ASKS_FOR_ROUNDING.test(item.prompt);
+  if (!rounding) {
+    return asks
+      ? ['the question asks for rounding: set answer.decimal_places or answer.significant_figures']
+      : [];
+  }
+  const errors = [];
+  if (!asks) errors.push('answer asks for rounding but the question does not say what to round to');
+  if (!showsRounding(item.answer.value, rounding)) {
+    const how =
+      rounding.decimal_places !== undefined
+        ? `${rounding.decimal_places} decimal places`
+        : `${rounding.significant_figures} significant figures`;
+    errors.push(`answer.value ${item.answer.value} is not written to ${how}`);
   }
   return errors;
 }
@@ -214,10 +240,22 @@ function verificationErrors(kind, file, data) {
     fail('verified content needs a quote in every citation');
   }
   if (!verification.reviewed_by) fail('verified content needs reviewed_by (a reviewer role)');
-  for (const c of verification.checks.filter((c) => c.result === 'fail')) {
-    fail(`verified content has a failed ${c.name} check`);
-  }
   const passed = (name) => verification.checks.some((c) => c.name === name && c.result === 'pass');
+  // Decision 0009: a fact that fails the fact-check keeps the item for individual review, so a
+  // failed fact-check is allowed only with needs_human_approval and a passing human-approval.
+  const factFailAllowed = data.needs_human_approval === true && passed('human-approval');
+  for (const c of verification.checks.filter((c) => c.result === 'fail')) {
+    if (c.name === 'fact-check') {
+      if (!factFailAllowed) {
+        fail('a failed fact-check needs needs_human_approval and a passing human-approval check');
+      }
+    } else fail(`verified content has a failed ${c.name} check`);
+  }
+  if (kind === 'items' && data.facts?.length) {
+    if (!verification.checks.some((c) => c.name === 'fact-check')) {
+      fail('a verified item with facts needs a fact-check check (decision 0009)');
+    }
+  }
   for (const name of requiredChecks(kind, data)) {
     if (!passed(name)) fail(`verified content needs a passing ${name} check`);
   }
@@ -384,7 +422,9 @@ export function mathsChecks(items) {
         expression: item.verify.expression,
         answer: item.answer.value,
       };
-      if (item.answer.tolerance !== undefined) check.tolerance = item.answer.tolerance;
+      for (const key of ['tolerance', 'decimal_places', 'significant_figures']) {
+        if (item.answer[key] !== undefined) check[key] = item.answer[key];
+      }
       checks.push(check);
     } else if (item.type === 'worked_maths') {
       const { verify, answer } = item;
@@ -406,9 +446,11 @@ export function mathsChecks(items) {
           answer: answer.expression,
         };
         if (verify.form) check.form = verify.form;
+        if (answer.subject) check.subject = answer.subject;
         checks.push(check);
         expected = { expression: verify.expression };
         if (verify.form) expected.form = verify.form;
+        if (answer.subject) expected.subject = answer.subject;
       }
       if (item.steps) {
         checks.push({ id: `${item.id}#steps`, kind: 'working', lines: item.steps, expected });

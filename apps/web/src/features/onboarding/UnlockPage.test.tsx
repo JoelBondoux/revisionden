@@ -1,6 +1,6 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { http, HttpResponse } from 'msw';
+import { delay, http, HttpResponse } from 'msw';
 import { server } from '../../mocks/server';
 import { family } from '../../mocks/data';
 import { renderRoute } from '../../test/render';
@@ -22,11 +22,20 @@ afterEach(() => window.localStorage.clear());
 
 describe('Student passkey unlock', () => {
   it('offers students a passkey unlock on the sign-in page, beside the parent sign-in', async () => {
+    // The parent buttons wait for the provider list; make that slow so the test never races it.
+    server.use(
+      http.get('*/v1/auth/providers', async () => {
+        await delay(200);
+        return HttpResponse.json({ providers: ['google'] });
+      }),
+    );
     renderRoute('/', { studentId: null });
     expect(
       await screen.findByRole('button', { name: "I'm a student: unlock with my passkey" }),
     ).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /continue with google/i })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('button', { name: /continue with google/i }),
+    ).toBeInTheDocument();
   });
 
   it('unlocks with the passkey on this device and lands the student on their topic map', async () => {

@@ -13,6 +13,7 @@ import type { Rng } from './rng';
 import { DAY_MS, reviewCard, type Card } from './spaced-repetition';
 import { recordDay, settleWeek, type StreakState } from './streaks';
 import type { ItemType } from './schemas';
+import { meetsRounding, roundingOf, withoutSubject, type Rounding } from './answer-format';
 
 // ---------------------------------------------------------------------------------------------
 // Content gate
@@ -65,11 +66,18 @@ function parseNumber(text: string): number | null {
   return null;
 }
 
-export function markNumeric(
-  key: { value: string; tolerance?: number },
-  answer: unknown,
-): MarkResult {
-  if (typeof answer !== 'string' || answer.trim() === '') return wrong;
+export interface NumericKey extends Rounding {
+  value: string;
+  tolerance?: number;
+  /** The answer may be written "<subject> = value", for example "t = 4". */
+  subject?: string;
+}
+
+export function markNumeric(key: NumericKey, raw: unknown): MarkResult {
+  if (typeof raw !== 'string' || raw.trim() === '') return wrong;
+  const answer = withoutSubject(raw, key.subject);
+  const rounding = roundingOf(key);
+  if (rounding) return mark(meetsRounding(answer, key.value, rounding));
   const expected = parseNumber(key.value);
   if (expected === null) return mark(squash(answer) === squash(key.value));
   const given = parseNumber(answer);

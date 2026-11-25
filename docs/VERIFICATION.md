@@ -37,6 +37,46 @@ different places. Stored with the content (`content/`), never shown to students.
 
 Commercial revision sites, forums and AI output are never sources.
 
+**Standard definitions with no official source** (decision 0008). When no official source defines
+a standard term (for example "tangent": the 1MA1 specification only names it), an item may rest on
+the specification point that names the term, cited with its quote, plus a standard definition. It
+must set `needs_human_approval: true` and is approved individually, never through a batch sample.
+An official definition, where one exists, is always cited instead.
+
+**Standard facts with no official source** (decision 0009). An item that rests on a standard maths
+fact (not just a definition) that no cited source states lists it in `facts` and must pass the
+**fact-check stage (step 4b)**. A fact passes with an official citation whose quote check passed and whose quote the judge confirms
+states the fact (not just its topic),
+or with both a maths engine proof (`engine`, for example `identity`) and a matching blind
+statement. That statement comes from a third provider (neither the writer nor the blind
+answerer), which answers the neutral `ask` without our wording; another provider judges the
+match, with high confidence throughout. Items whose facts all pass go into normal batches. A fact
+that fails or cannot be proved keeps `needs_human_approval` for individual review. An engine proof
+only proves the check given, so reviewers check that it captures the fact.
+
+**Fact proofs (maths engine, `services/maths/app/facts.py`).** Besides `identity`, a fact's
+`engine` can be one of these kinds (the schema refuses any other). None uses AI:
+
+| Kind             | Fields                                                      | Proves                                                                                                                                                                 |
+| ---------------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `transformation` | `graph` (with `f`, e.g. `f(x - a)`), `image` (`(x + a, y)`) | y = graph is the image of y = f(x) under (x, y) → image: symbolically for an unknown f, then on sampled functions and constants; the image must reach every x          |
+| `implication`    | `given` (inequalities), `then`                              | No counterexample in 4,000 seeded samples, and a symbolic proof (each given written as a positive gap: b = a + p, c = −q); if either step fails the fact is not proved |
+| `sign_change`    | `function` (of x), `interval` (`["1", "2"]`)                | The function is continuous on the interval, changes sign, and a root is found between the ends (root location by the intermediate value theorem, on this function)     |
+| `parallel`       | `lines` (two equations), optional `parallel` (true/false)   | Numeric lines: parallel or not as claimed (gradients and intersection agree). Letter gradients: the lines meet at one point exactly when the gradients differ          |
+| `trig_value`     | `function` (sin, cos, tan), `degrees`, `value`              | The exact value, or `undefined` (tan 90°)                                                                                                                              |
+| `graph_measure`  | `y`, `x`, `measure` (gradient or area), `is`                | By units: gradient is y per x, area is y times x (distance-time gradient = speed; velocity-time area = displacement)                                                   |
+
+**The judge compares meaning, not wording** (S3-A run, 2026-11-25). B is the same as A when it
+states all of A, however worded; it may explain, give an example or an equivalent form, make
+explicit a condition A's words imply ("non-vertical" for lines with a gradient), or add further
+related facts. It is not the same when it contradicts A, states a different fact, leaves out part
+of A or a condition A needs, adds a condition that changes when the fact holds, or covers only a
+narrower case. Unsure means not the same. `pnpm evals fact-judge --golden
+evals/golden/fact-judge.json --judge gemini --live` checks the judge on 20 pairs: 8 recorded
+same-fact pairs from the S3-A run and 12 that differ in meaning. Bars: every different pair refused,
+at least 90% of same pairs accepted. On 2026-11-25, with `gemini-2.5-pro`, the old prompt accepted
+3 of 8 same pairs, and the new one accepted 8 of 8 and refused 12 of 12 (two runs).
+
 **Citation record**
 
 | Field          | Meaning                                                                                                                                                |
@@ -57,15 +97,16 @@ storage exists, so a citation still works if a board moves a document.
 
 ## 3. The pipeline every item passes before release
 
-| Step | Check              | Who or what                                                                                                       | Fails if                                                          |
-| ---- | ------------------ | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
-| 1    | Grounded writing   | Writer model, given only the source excerpts                                                                      | Any claim lacks a citation                                        |
-| 2    | Quote check        | Code                                                                                                              | The quoted text is not found in the source at the stated location |
-| 3    | Blind answer       | A model from a different provider, without seeing the answer                                                      | Its answer differs                                                |
-| 4    | Adversarial review | A third pass told to find errors, ambiguity, a second correct option, or content outside the specification        | Any problem found                                                 |
-| 5    | Exact checks       | Maths engine (all numeric and algebraic answers), unit checks, chemical equation balancing, equation-sheet checks | Any mismatch                                                      |
-| 6    | Schema and links   | Content validator in CI                                                                                           | Missing fields, broken topic links, duplicate IDs                 |
-| 7    | Human approval     | Product owner or a subject teacher, in a review queue                                                             | Rejected, or any earlier step marked uncertain                    |
+| Step | Check              | Who or what                                                                                                       | Fails if                                                             |
+| ---- | ------------------ | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| 1    | Grounded writing   | Writer model, given only the source excerpts                                                                      | Any claim lacks a citation                                           |
+| 2    | Quote check        | Code                                                                                                              | The quoted text is not found in the source at the stated location    |
+| 3    | Blind answer       | A model from a different provider, without seeing the answer                                                      | Its answer differs                                                   |
+| 4    | Adversarial review | A third pass told to find errors, ambiguity, a second correct option, or content outside the specification        | Any problem found                                                    |
+| 4b   | Fact check         | Items with `facts` only: official citation, or maths engine proof plus a third provider's blind statement         | A fact neither cited nor proved and matched (then individual review) |
+| 5    | Exact checks       | Maths engine (all numeric and algebraic answers), unit checks, chemical equation balancing, equation-sheet checks | Any mismatch                                                         |
+| 6    | Schema and links   | Content validator in CI                                                                                           | Missing fields, broken topic links, duplicate IDs                    |
+| 7    | Human approval     | Product owner or a subject teacher, in a review queue                                                             | Rejected, or any earlier step marked uncertain                       |
 
 **Extended answers and essays.** There is no single correct answer to check blind, so step 3
 becomes **blind marking**: the writer also produces three exemplar answers from the mark scheme
@@ -184,15 +225,40 @@ Verified extended answers need a passing `blind-marking` check (not `blind-answe
 exemplars, and a `human-approval` check; review batches always include them in the sample.
 
 **Blind answer and adversarial review (steps 3 and 4).** Providers share one interface
-(`scripts/verify/providers.mjs`) with structured JSON output that is validated before use. The
-blind answer must come from a different provider from the writer (Claude by default, read from
+(`scripts/verify/providers.mjs`) with structured JSON output that is validated before use. To go
+through the authenticated AI Gateway, set `<PROVIDER>_BASE_URL` to the gateway's provider URL and
+`AI_GATEWAY_TOKEN`; the token is sent as `cf-aig-authorization`, with
+`cf-aig-collect-log-payload: false` so prompts and answers are not logged. The token is sent only to
+https addresses on `gateway.ai.cloudflare.com`, never to a provider's own API. The blind answer must come from a different provider from the writer (Claude by default, read from
 the grounded-writing check). It sees no answer, hint or explanation, and passes only on a match
-with high confidence (multiple choice: same option; numeric: within the item tolerance; short
-answers and flashcards: same words ignoring case and end punctuation; worked maths: the same
-solutions in any order, or the same expression). The reviewer sees the whole item and the
+with high confidence (multiple choice: same option; numeric: within the item tolerance, or, when the answer sets `decimal_places` or `significant_figures`, written to exactly that accuracy with the correctly rounded value (see "Answer format" below); short
+answers and flashcards: same words ignoring case and end punctuation; maths flashcards with a
+`back_formula`: the maths engine finds the same formula (`±` gives both branches, a bare right-hand
+side is compared with the expected one, notation is read strictly so `/ 2a` is not `/ (2a)`), and the
+answer states every listed condition such as `a ≠ 0` as a whole clause (`a ≠ 0.5` does not count), otherwise it fails for a person to check; worked maths: the same
+solutions in any order, or the same expression; an answer written `<subject> = …` counts as its right-hand side when the item declares that `answer.subject`). The reviewer sees the whole item and the
 quoted sources and must report factual errors, a wrong answer, ambiguity, a second correct
 option, content outside the specification, unsupported claims or poor wording; any problem or
 an unsure reviewer fails. Tests use recorded fixtures only.
+
+**Answer format (S3-A rulings, 2026-11-25).** One set of rules in `packages/core/src/answer-format.ts`
+serves student marking, content validation and the blind check, and the maths engine applies the same
+ones:
+
+- _Subject._ A numeric or expression answer may declare `answer.subject` (`t`, `f^-1(x)`). An answer
+  written `<subject> = RHS` (spaces ignored) is then read as RHS; another letter, or no declared
+  subject, is not. In a student's working the final line may state the subject; with a letter
+  subject, a rearranging step may multiply or divide by anything without that letter (so
+  `a t = v - u` to `t = (v - u)/a` follows), and a function-notation line such as
+  `f^-1(x) = (x + 3)/2` follows from `y = (x + 3)/2`.
+- _Rounding._ When a question asks for rounding, the numeric answer sets `decimal_places` (0 to 10)
+  or `significant_figures` (1 to 15) instead of `tolerance` (the schema refuses two of these
+  together). A right answer has the correctly rounded value and is written to that accuracy:
+  `28.274` and `28.270` are wrong for 2 decimal places. Whole numbers with trailing zeros may count
+  them or not (4500 is 2, 3 or 4 significant figures). The engine rounds the exact value half up,
+  as UK exams do. Validation fails an item whose question mentions decimal places, significant
+  figures or the nearest whole number without one of these fields, one with a field but no such
+  words, and one whose `answer.value` is not itself written to that accuracy.
 
 **Exact checks (step 5).** An item names the facts to check in an optional `exact` block:
 `quantity` (its `answer.unit` must have that dimension), `chemical_equation` (atoms and charge
@@ -213,6 +279,19 @@ each item) draws its sample with a recorded seed so the draw can be replayed. On
 error fails the batch and files re-check requests for the batch (steps 3 to 5 and a fresh
 sample), its writer prompt and its source. A passed batch is then recorded in each item as a
 `batch-sample` check by the content session.
+
+**Batches from draft items (S2).** Content sync keeps each item's full content record, with its
+linked mark scheme as `mark_scheme_detail`, in `items.review_snapshot` (never served). On
+`/review`, a `content-lead` sees how many drafts are ready and can **Create batch from draft
+items** (`GET, POST /v1/review/batches/from-drafts`): only drafts whose snapshot has every
+automated check passed (grounded writing, quote check, blind answer or blind marking, adversarial
+review, schema, and the maths engine for maths items; `readyForHumanReview` in
+`packages/core`), and not already in a batch under review or passed at that version. An item with
+`facts` also needs a fact-check record; if it failed, the item is batched for individual review
+(`needsIndividualReview`), never sampling. Exact checks the item names (units, chemical equation, equation
+sheet) must pass too. After a batch fails, its items stay out of new batches until the batch's
+recheck is marked done and their steps 3 to 5 checks have re-run since the failure (`recheckedSince`). The batch
+page shows each item's hint, mark scheme, exemplars and checks.
 
 **Reports and quarantine (section 6).** "Report a problem" stores only the item, its version and
 a reason (no free text, so no personal data) and hides the item at once: a row in

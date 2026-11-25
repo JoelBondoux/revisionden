@@ -51,4 +51,4 @@ Manager. They are allowed, and the parents are told (I5b):
 
 Implemented: `apps/web/src/features/onboarding/{StudentUnlock,UnlockPage}.tsx`,
 `apps/web/src/api/{unlock.ts,LoadingOrError.tsx}`, `apps/web/src/session/deviceMarker.ts`,
-`apps/api/src/routes/devices.ts` (`deviceForUnlock`), `packages/db` migration 0017.
+`apps/api/src/routes/devices.ts` (`deviceForUnlock`), `packages/db` migration `0023_device_markers`.

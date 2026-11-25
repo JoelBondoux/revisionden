@@ -518,6 +518,35 @@ test('a verified item needs human approval or a passed batch sample to be releas
   );
 });
 
+const factItem = (checks, extra = {}) => {
+  const v = verified({ maths: true, release: 'batch-sample' });
+  v.checks.push(...checks.map((c) => ({ ...v.checks[0], ...c })));
+  return {
+    ...numericItem,
+    citations: [quotedCitation()],
+    facts: [{ statement: 'Fixture fact.', ask: 'Fixture question about the fact?' }],
+    verification: v,
+    ...extra,
+  };
+};
+
+test('a verified item with facts needs a fact-check (decision 0009)', async () => {
+  assert.match(messages(await check([factItem([])])), /needs a fact-check check/);
+  assert.deepEqual(await check([factItem([{ name: 'fact-check', result: 'pass' }])]), []);
+});
+
+test('a failed fact-check is only released by individual human approval', async () => {
+  const failed = [{ name: 'fact-check', result: 'fail' }];
+  assert.match(
+    messages(await check([factItem(failed)])),
+    /failed fact-check needs needs_human_approval and a passing human-approval check/,
+  );
+  const v = verified({ maths: true });
+  v.checks.push({ ...v.checks[0], name: 'fact-check', result: 'fail' });
+  const approved = { ...factItem(failed), needs_human_approval: true, verification: v };
+  assert.deepEqual(await check([approved]), []);
+});
+
 test('an item that needs human approval cannot be released by batch sampling', async () => {
   const item = {
     ...numericItem,
@@ -688,4 +717,89 @@ test('an exemplar level must be one of the mark scheme levels', async () => {
 test('exemplars belong only to extended answers', async () => {
   const mc = { ...numericItem, exemplars };
   assert.match(messages(await check([mc])), /must NOT have unevaluated properties|exemplars/);
+});
+
+// Answer format: rounded answers and answers that state their subject (S3-A rulings).
+const roundedItem = (answer, prompt = 'Work out 1/3. Give your answer to 2 decimal places.') => ({
+  ...numericItem,
+  prompt,
+  answer,
+});
+const validateItems = (...list) =>
+  validateContent(content({ items: list.map((i) => at('items/a.json', i)) }), {
+    checkMaths: fakeEngine(),
+  });
+
+test('a numeric answer may ask for decimal places or significant figures, not both', async () => {
+  assert.deepEqual(await validateItems(roundedItem({ value: '0.33', decimal_places: 2 })), []);
+  const both = roundedItem({ value: '0.33', decimal_places: 2, significant_figures: 2 });
+  assert.notDeepEqual(await validateItems(both), []);
+});
+
+test('rounding replaces a tolerance, so a rounded answer cannot also have one', async () => {
+  const errors = await validateItems(
+    roundedItem({ value: '0.33', decimal_places: 2, tolerance: 0.005 }),
+  );
+  assert.notDeepEqual(errors, []);
+});
+
+test('a rounded answer value must itself be written to the asked accuracy', async () => {
+  const errors = await validateItems(roundedItem({ value: '0.333', decimal_places: 2 }));
+  assert.match(messages(errors), /answer\.value 0\.333 is not written to 2 decimal places/);
+  const sf = roundedItem(
+    { value: '0.33', significant_figures: 3 },
+    'Work out 1/3. Give your answer to 3 significant figures.',
+  );
+  assert.match(messages(await validateItems(sf)), /is not written to 3 significant figures/);
+});
+
+test('a question that asks for rounding must say how in the answer, and the other way round', async () => {
+  const unsaid = await validateItems(roundedItem({ value: '0.33', tolerance: 0.005 }));
+  assert.match(
+    messages(unsaid),
+    /asks for rounding: set answer\.decimal_places or answer\.significant_figures/,
+  );
+  const silent = roundedItem({ value: '0.33', decimal_places: 2 }, 'Work out 1/3.');
+  assert.match(messages(await validateItems(silent)), /does not say what to round to/);
+});
+
+test('rounding and the declared subject are sent to the maths engine', () => {
+  const rounded = { ...numericItem, answer: { value: '28.3', significant_figures: 3 } };
+  const rearrange = {
+    ...solveItem,
+    answer: { expression: '(v - u)/a', subject: 't' },
+    verify: { method: 'expression', expression: '(v - u)/a' },
+    steps: ['a t = v - u', 't = (v - u)/a'],
+  };
+  const checks = mathsChecks([rounded, rearrange]);
+  assert.equal(checks[0].significant_figures, 3);
+  assert.equal(checks[1].subject, 't');
+  assert.deepEqual(checks[2].expected, { expression: '(v - u)/a', subject: 't' });
+});
+
+test('a fact proof must name a maths engine check kind the engine knows', async () => {
+  const withProof = (kind) => ({
+    ...numericItem,
+    facts: [
+      {
+        statement: 'Fixture fact.',
+        ask: 'Fixture question about the fact?',
+        engine: { kind, graph: 'f(x - a)', image: '(x + a, y)' },
+      },
+    ],
+  });
+  const ok = await validateContent(
+    content({ items: [at('items/a.json', withProof('transformation'))] }),
+    {
+      checkMaths: fakeEngine(),
+    },
+  );
+  assert.deepEqual(ok, []);
+  const typo = await validateContent(
+    content({ items: [at('items/a.json', withProof('transform'))] }),
+    {
+      checkMaths: fakeEngine(),
+    },
+  );
+  assert.notDeepEqual(typo, []);
 });
