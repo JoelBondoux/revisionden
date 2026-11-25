@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Remember this? A lesson on a topic you've practised before starts with 2 quick questions from earlier lessons. There's no penalty: anything you miss becomes a flashcard, and you can skip them.
 - Reading comfort in Settings: a dyslexia-friendly font, larger text, more space between lines and letters, and a cream or blue background tint. Your choice is remembered on this device and used on every screen.
 - Earn a reward while answering questions or reviewing flashcards and you'll see it (and hear its sound) straight away, not only on the Rewards page.
 - Get help now lists Kooth for feeling low (free in some parts of the UK) and Coram Kidscape for bullying. Parents also see its Parent Advice Line (phone, WhatsApp or email) and the Anti-Bullying Alliance.
@@ -67,6 +68,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Recall checks Q4 (Q): `packages/core/src/recall.ts` (`selectRecallItems`, `RECALL_COUNT` 2: only when a lesson topic was practised, from questions answered before, other topics first, no flashcards), `GET /v1/student/recall?topicId=` (`apps/api/src/routes/recall.ts`), web `features/recall/` (`RecallGate` before topic lessons, Skip, MSW mock). `LessonPlayer` gains optional `onFinish` and `aside` props.
 - Reading comfort Q1 (Q): `apps/web/src/features/reading/` (settings in `localStorage` key `revisionden.reading`, `ReadingProvider` sets `data-reading-*` on `<html>`, `reading.css`, Settings card). Self-hosted OpenDyslexic via `@fontsource/opendyslexic` 5.3.0 (OFL-1.1, listed on the About page).
 - Rewards where they are earned (F4): `LearnAttemptResponse` and `FlashcardSessionResult` have `newlyEarned` (saved once each by `saveNewRewards`, shared with the Rewards route); the lesson, Cards screen and starting-test results show "New reward: …" with `RewardSound`.
 - Flashcard sessions (F3): `flashcard_sessions` table (migration 0010), `POST /v1/student/flashcards/sessions` (optional `topicId` for one deck) and `.../sessions/:id/finish` (claimed once; daily reward slots unique per student, so racing finishes can't pay twice or pass 2 a day); the family export includes `flashcardSessions`; reviews need a `sessionId` and no longer return `xpEarned` or `progress`; session XP counts for rewards and the flashcards-reviewed milestones; flashcard self-ratings never change topic mastery. `DECK_REVIEW_XP` removed.

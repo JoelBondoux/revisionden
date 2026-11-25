@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import type { LearnAttemptResponse, LearnItem, Progress } from '@revisionden/core';
 import { Button, ButtonLink } from '../../components/Button';
@@ -63,6 +63,10 @@ interface LessonPlayerProps {
   draftContent: boolean;
   intro?: string;
   doneHref?: string;
+  /** Called after the last item instead of showing the set complete screen (recall checks). */
+  onFinish?: () => void;
+  /** Extra controls under the intro, such as a Skip button. */
+  aside?: ReactNode;
 }
 
 /** The option a marked multiple choice answer should show as right, if we can tell. */
@@ -93,6 +97,8 @@ export function LessonPlayer({
   draftContent,
   intro,
   doneHref = '/learn',
+  onFinish,
+  aside,
 }: LessonPlayerProps) {
   const api = useLearnApi();
   const { play } = useSound();
@@ -171,6 +177,10 @@ export function LessonPlayer({
 
   function advance() {
     if (isLast) {
+      if (onFinish) {
+        onFinish();
+        return;
+      }
       setDone(true);
       return;
     }
@@ -225,6 +235,7 @@ export function LessonPlayer({
       </div>
       <h1>{title}</h1>
       {intro && <p className="secondary-text">{intro}</p>}
+      {aside}
       {progress && <DailyGoal progress={progress} />}
       <Shake key={item.id} active={result?.correct === false}>
         <ItemInput
