@@ -125,12 +125,12 @@ the app does not load fonts or scripts from other websites.
 
 ### 3. International transfers
 
-3.1 Several providers above are based in the United States or may process data there. Our design
-principle is to keep data in the UK or EU. That is not true today for AI marking, where answer
-text may be processed in the United States.
+3.1 Several providers above are based in the United States or may process data there. We keep
+stored data (the database and uploads) in the UK or EU. The text sent for AI marking, which
+contains nothing that identifies the student, may be processed in the United States; we have
+decided to accept this and to rely on a transfer safeguard for it.
 
-3.2 The product owner has not yet decided whether to use UK or EU processing options where a
-provider offers them, or to rely on a transfer safeguard. The UK GDPR allows transfers covered by
+3.2 The UK GDPR allows transfers covered by
 UK adequacy regulations (which include the UK Extension to the EU-US Data Privacy Framework, for
 organisations certified under it), the ICO's International Data Transfer Agreement, or the UK
 Addendum to the EU standard contractual clauses, together with a transfer risk assessment.

@@ -81,7 +81,8 @@ Feedback triage (workstream L), set as a secret so no email is in the code:
 | `OPERATOR_EMAILS` | unset   | Comma-separated parent sign-in emails that may use `/admin/feedback`; none when unset |
 
 Web build variables (workstream L), filled into the policies and About page at build:
-`VITE_OPERATOR_NAME`, `VITE_CONTACT_EMAIL`, `VITE_POSTAL_ADDRESS`, `VITE_POLICY_EFFECTIVE_DATE`,
+`VITE_OPERATOR_NAME`, `VITE_CONTACT_EMAIL` (`privacy@revisionden.com`), `VITE_POLICY_EFFECTIVE_DATE`,
+(`VITE_POSTAL_ADDRESS` optional, not used),
 `VITE_ENVIRONMENT` and `VITE_COMMIT`. Without the operator details the pages say "contact details
 to be added"; production builds must fail without them (workstream G).
 

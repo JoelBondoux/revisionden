@@ -10,7 +10,7 @@ This notice is for parents and carers. There is a shorter version written for st
 ever seem to say different things, the full text is the one that counts.
 
 - **Who we are.** RevisionDen is run by {{OPERATOR_NAME}}. You can contact us at
-  {{CONTACT_EMAIL}} or by post at {{POSTAL_ADDRESS}}.
+  {{CONTACT_EMAIL}}.
 - **What we keep about you.** Only the email address you sign in with (through Google or
   Microsoft), and the records the sign-in needs to work. We do not keep your name or photo.
 - **What we keep about your child.** A nickname, an avatar, their school year, their subjects and
@@ -56,7 +56,7 @@ reviewed before the app is offered to anyone outside the operator's own family.
 2.1 {{OPERATOR_NAME}}, a sole trader, is the controller of the personal data described in this
 notice.
 
-2.2 Contact: {{CONTACT_EMAIL}}; post: {{POSTAL_ADDRESS}}. Please use these for any question about
+2.2 Contact: {{CONTACT_EMAIL}}. Please use this for any question about
 privacy or to use any of your rights.
 
 2.3 We have not appointed a data protection officer. We do not believe we are required to; you

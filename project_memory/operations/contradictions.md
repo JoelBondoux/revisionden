@@ -122,7 +122,7 @@
 - [x] GCSE Statistics boards: checked on the board websites (2026-11-24). Only AQA (8382) and
       Pearson Edexcel offer GCSE Statistics; OCR and WJEC Eduqas list none. Fixed in
       `packages/core/src/onboarding.ts` with a test.
-- [x] Flashcard XP: keep 5 XP for a flashcard answered inside a lesson and 2 XP per deck review, so
+- [x] Flashcard XP (superseded 2026-11-25: deck XP is now 20 per completed session, see PRODUCT_RULES): keep 5 XP for a flashcard answered inside a lesson and 2 XP per deck review, so
       quick deck flipping cannot farm XP. Lead decision; the product owner can change it.
 - [x] Spec reference on flashcards: acceptable. The product owner said citations need not be shown,
       not that they must be hidden; showing the specification point (`source_ref`) is fine. The full

@@ -33,8 +33,7 @@ If the two ever seem different, the longer one is the one that counts.
 ### Who runs RevisionDen
 
 RevisionDen is run by {{OPERATOR_NAME}}. We are the "controller", which means we decide how your
-information is used and we are responsible for looking after it. Contact us at {{CONTACT_EMAIL}}
-or by post at {{POSTAL_ADDRESS}}.
+information is used and we are responsible for looking after it. Contact us at {{CONTACT_EMAIL}}.
 
 ### How your account works
 

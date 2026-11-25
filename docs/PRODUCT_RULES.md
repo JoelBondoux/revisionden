@@ -167,11 +167,19 @@ formula and its assumptions. Summary of what is built:
 - **Wrong answers** in a lesson (Learn mode, not the starting test) become a flashcard due at once,
   once per question.
 - **Flashcard buttons:** Again (SM-2 quality 1, back in 10 minutes), Hard (3), Good (4), Easy (5).
-  Each button shows when the card would come back, worked out by the scheduler. Reviewing a card
-  in a deck earns 2 XP (approved flashcards design). Deck cards come from flashcard items in the
-  student's enrolled subjects; students can add their own cards (front and back up to 300
-  characters) to a topic. Like feedback, an own card holding an email address, a UK mobile number
-  or a nickname from the family is refused ("Please leave out personal details…").
+  Each button shows when the card would come back, worked out by the scheduler. Deck XP is per
+  **session, not per card** (product owner, 2026-11-25), so rating every card "Good" earns
+  nothing extra:
+  - A session ends when the due queue is empty or after 20 cards, whichever comes first. A
+    completed session of at least 5 cards earns **20 XP**, whatever the ratings. Fewer than 5
+    cards, or leaving early, earns nothing.
+  - At most **2 rewarded sessions a day** (40 XP), so flashcards alone cannot reach the daily goal.
+  - Cards answered "Again" coming back in the same session do not count twice.
+  - Self-ratings only schedule the card (SM-2); they never change topic mastery or the predicted
+    grade. The "flashcards reviewed" milestones count cards in completed sessions. Deck cards come from flashcard items in the
+    student's enrolled subjects; students can add their own cards (front and back up to 300
+    characters) to a topic. Like feedback, an own card holding an email address, a UK mobile
+    number or a nickname from the family is refused ("Please leave out personal details…").
 - **Daily goal and streak:** XP is totalled per day in UK time (Europe/London). The first time a
   day's total reaches the daily goal (50 XP) the day counts on the streak, once. On the first goal
   day of a new week, last week is settled (a skip day if the weekly goal was hit). A streak with

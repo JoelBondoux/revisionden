@@ -10,7 +10,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Parents can download all their family's data as one file, from the family list.
 - Accounts nobody uses for 12 months are now deleted automatically; the parent area shows the date, and warns you if you come back after a long break.
 - Your own flashcards can't hold email addresses, phone numbers or family nicknames, to keep personal details out.
-
+- Coming soon: flashcards give XP for finishing a session, not for each card, so there's no point tapping "Good" on everything.
 - Coming soon: a stats page for students and a stats dashboard for parents.
 - Coming soon: rewards you set yourself as a parent, like a cinema trip for a 30-day streak.
 - Sound effects: soft, original sounds for right and wrong answers, finishing a lesson, meeting your daily goal, flashcards and the starting test. Mute them from the speaker button at the top, or change the volume and tap sounds in Settings.

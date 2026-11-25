@@ -48,9 +48,11 @@ never drift apart.
   disagree, it is a bug: fix one in the same PR or record it in
   `project_memory/operations/contradictions.md`. A new kind of data, processor or purpose needs the
   policy updated in the same PR.
-- **No personal details in the repository.** The operator's name, contact email and postal
-  address are placeholders (`{{OPERATOR_NAME}}`, `{{CONTACT_EMAIL}}`, `{{POSTAL_ADDRESS}}`), filled
-  at build from `VITE_OPERATOR_NAME`, `VITE_CONTACT_EMAIL` and `VITE_POSTAL_ADDRESS`. A build
+- **No personal details in the repository.** The operator's name and contact email are
+  placeholders (`{{OPERATOR_NAME}}`, `{{CONTACT_EMAIL}}`), filled at build from
+  `VITE_OPERATOR_NAME` and `VITE_CONTACT_EMAIL`. The contact is `privacy@revisionden.com` and no
+  postal address is shown (product owner, 2026-11-25); `{{POSTAL_ADDRESS}}` is still supported if
+  one is ever added. A build
   without them shows "contact details to be added". `{{EFFECTIVE_DATE}}` comes from
   `VITE_POLICY_EFFECTIVE_DATE` ("date to be added" when unset). Production builds fail without them
   (workstream G).
