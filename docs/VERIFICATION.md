@@ -43,6 +43,16 @@ the specification point that names the term, cited with its quote, plus a standa
 must set `needs_human_approval: true` and is approved individually, never through a batch sample.
 An official definition, where one exists, is always cited instead.
 
+**Standard facts with no official source** (decision 0009). An item that rests on a standard maths
+fact (not just a definition) that no cited source states lists it in `facts` and must pass the
+**fact-check stage (step 4b)**. A fact passes with an official citation whose quote check passed,
+or with both a maths engine proof (`engine`, for example `identity`) and a matching blind
+statement. That statement comes from a third provider (neither the writer nor the blind
+answerer), which answers the neutral `ask` without our wording; another provider judges the
+match, with high confidence throughout. Items whose facts all pass go into normal batches. A fact
+that fails or cannot be proved keeps `needs_human_approval` for individual review. An engine proof
+only proves the equation given, so reviewers check that it captures the fact.
+
 **Citation record**
 
 | Field          | Meaning                                                                                                                                                |
@@ -63,15 +73,16 @@ storage exists, so a citation still works if a board moves a document.
 
 ## 3. The pipeline every item passes before release
 
-| Step | Check              | Who or what                                                                                                       | Fails if                                                          |
-| ---- | ------------------ | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
-| 1    | Grounded writing   | Writer model, given only the source excerpts                                                                      | Any claim lacks a citation                                        |
-| 2    | Quote check        | Code                                                                                                              | The quoted text is not found in the source at the stated location |
-| 3    | Blind answer       | A model from a different provider, without seeing the answer                                                      | Its answer differs                                                |
-| 4    | Adversarial review | A third pass told to find errors, ambiguity, a second correct option, or content outside the specification        | Any problem found                                                 |
-| 5    | Exact checks       | Maths engine (all numeric and algebraic answers), unit checks, chemical equation balancing, equation-sheet checks | Any mismatch                                                      |
-| 6    | Schema and links   | Content validator in CI                                                                                           | Missing fields, broken topic links, duplicate IDs                 |
-| 7    | Human approval     | Product owner or a subject teacher, in a review queue                                                             | Rejected, or any earlier step marked uncertain                    |
+| Step | Check              | Who or what                                                                                                       | Fails if                                                             |
+| ---- | ------------------ | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| 1    | Grounded writing   | Writer model, given only the source excerpts                                                                      | Any claim lacks a citation                                           |
+| 2    | Quote check        | Code                                                                                                              | The quoted text is not found in the source at the stated location    |
+| 3    | Blind answer       | A model from a different provider, without seeing the answer                                                      | Its answer differs                                                   |
+| 4    | Adversarial review | A third pass told to find errors, ambiguity, a second correct option, or content outside the specification        | Any problem found                                                    |
+| 4b   | Fact check         | Items with `facts` only: official citation, or maths engine proof plus a third provider's blind statement         | A fact neither cited nor proved and matched (then individual review) |
+| 5    | Exact checks       | Maths engine (all numeric and algebraic answers), unit checks, chemical equation balancing, equation-sheet checks | Any mismatch                                                         |
+| 6    | Schema and links   | Content validator in CI                                                                                           | Missing fields, broken topic links, duplicate IDs                    |
+| 7    | Human approval     | Product owner or a subject teacher, in a review queue                                                             | Rejected, or any earlier step marked uncertain                       |
 
 **Extended answers and essays.** There is no single correct answer to check blind, so step 3
 becomes **blind marking**: the writer also produces three exemplar answers from the mark scheme

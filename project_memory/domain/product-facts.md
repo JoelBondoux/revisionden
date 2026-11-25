@@ -339,6 +339,9 @@ Tags: #product #rules #limits #defaults
 - Extended answers: blind marking replaces the blind answer (three exemplars, top, middle and low,
   marked by a second provider without the intended levels; all three must match exactly), and
   every one needs individual human approval; review batches always include them.
+- Fact-check stage 4b (decision 0009): items listing `facts` need, per fact, an official citation
+  or a maths engine proof plus a matching blind statement by a third provider (OpenAI, judged by
+  Gemini). Failing facts keep `needs_human_approval`. `pnpm content:model-check --fact-check openai`.
 - Maths flashcards with `back_formula` are blind-answered by formula: the maths engine compares
   the formula (any equivalent form) and every listed condition (e.g. `a ≠ 0`) must be stated.
 - Blind answer must come from a different provider from the writer (Claude by default) and be

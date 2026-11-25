@@ -46,6 +46,8 @@ teenagers. It replaces a paid revision subscription and runs almost entirely on 
   `app.revisionden.com` (`decisions/0005-domains-sales-site.md`).
 - A standard definition with no official source may rest on the spec point that names the term,
   with individual human approval (`decisions/0008-definitions-policy.md`).
+- A standard maths fact with no official source stays in but must pass a fact-check stage (official
+  citation, or engine proof plus a third provider's blind statement) (`decisions/0009-fact-check-stage.md`).
 - Canonical backlog: `docs/BACKLOG.md` (`roadmap/improvement-plan.md` points to it).
 
 ## Maintained Pages
