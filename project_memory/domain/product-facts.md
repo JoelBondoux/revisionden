@@ -273,7 +273,8 @@ Tags: #product #rules #limits #defaults
   `apps/www/public` and remade by hand with `node apps/www/scripts/make-images.mjs` after an art
   change; original art only, no stock photos or AI-generated images.
   Links use the app's J7 styles (buttons, tiles, chips, bold inline links), never plain underlined
-  text (owner, 2026-11-25).
+  text (owner, 2026-11-25). Light or dark follows the device only (no switch), with the app's dark
+  theme colours.
 - Production passkeys use the RP ID `revisionden.com`; OAuth callbacks are on the API host, so the
   move to `app.` needed no change in Google or Microsoft. Dev and staging passkeys use their own
   hosts (`dev.revisionden.com`, `staging.revisionden.com`), so they work only there.
