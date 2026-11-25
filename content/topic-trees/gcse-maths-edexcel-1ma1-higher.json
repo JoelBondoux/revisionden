@@ -12,7 +12,24 @@
   "verification": {
     "status": "draft",
     "version": 1,
-    "checks": []
+    "checks": [
+      {
+        "name": "quote-check",
+        "result": "pass",
+        "tool": "content-lead",
+        "tool_version": "human review 2026-11-25",
+        "at": "2026-11-25T17:04:00Z",
+        "notes": "All 97 citations found in the 1MA1 specification (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b): 95 exact by revisionden-quote-check 1.0.0; citations 38 (A22) and 41 (A25) were near matches (letters, confidence 1.00) and the product owner, as content-lead reviewer, confirmed both word for word (formatting only: bold \"(s)\" in A22, italic n in \"nth\" in A25)."
+      },
+      {
+        "name": "schema",
+        "result": "pass",
+        "tool": "revisionden-content-validate",
+        "tool_version": "00.01.002",
+        "notes": "pnpm content:validate: schema, ids and links valid",
+        "at": "2026-11-25T16:02:20Z"
+      }
+    ]
   },
   "topics": [
     {

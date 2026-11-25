@@ -9,9 +9,11 @@ import { Pill } from '../components/Pill';
 import { ProgressBar } from '../components/ProgressBar';
 import { Toast } from '../components/Toast';
 import { honeycombRows } from '../map/honeycomb';
+import { DailyCard } from '../features/daily';
 import { NextMissionCard } from '../map/NextMissionCard';
 import { ChallengeHex, TopicHex } from '../map/TopicHex';
 import { useStudent } from '../session/StudentContext';
+import { InstallCard } from '../pwa/InstallCard';
 
 /** Hexes in the widest honeycomb row. Three fit a 360px phone; CSS handles the rest. */
 const HEXES_PER_ROW = 3;
@@ -95,7 +97,9 @@ export function MapPage() {
               Daily goal: {map.data.xpToday} / {map.data.dailyGoalXp} XP
             </p>
           </div>
+          <DailyCard />
           {map.data.nextMission && <NextMissionCard mission={map.data.nextMission} />}
+          <InstallCard />
           {map.data.units.map((unit) => (
             <UnitMap key={unit.id} unit={unit} onLocked={setToast} />
           ))}

@@ -191,7 +191,7 @@ delete, mark given; editing or deleting a given reward answers 409); target = a 
 reward, a stat reaching a number (level, streak and the rest) or a UK date. The student's
 `/rewards` screen shows them under "From home" with progress and a "Target met" celebration;
 the parent manages them at `/family/:id/rewards` (linked from the family list and the parent
-home at `/parent`). Not built yet: the panel on the parent stats dashboard (workstream K).
+home at `/parent`). The parent stats dashboard (workstream K) also lists them in its Reward panel.
 
 **Parent notification (H2):** when a target is met and the reward is not marked given, each
 parent device with "Reward news" turned on (parent home, `/parent`) gets one web push, once per
@@ -283,7 +283,7 @@ milestones add one word each. `validateTitleWords` (`packages/core/src/titles.ts
 every reward which had a title has words, and every possible first + last pairing against the
 nickname blocked-word list. `REVIEWED_BLOCKED_PAIRS` is the manual review list: pairs that read
 badly together, refused by the picker. The choice is stored as `students.title_first` and
-`title_last` (migration 0017) through `GET` and `PUT /v1/student/rewards/title`, which accept
+`title_last` (migration 0019) through `GET` and `PUT /v1/student/rewards/title`, which accept
 only unlocked words. The Rewards page shows the title under the nickname with a picker. The friends
 league is not built yet; it should show the title under each nickname when it is.
 

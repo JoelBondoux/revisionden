@@ -36,6 +36,7 @@ import { reviewRoutes, type VerificationDeps } from './routes/review';
 import { avatarRoutes, onboardingRoutes } from './routes/onboarding';
 import { learnRoutes } from './routes/learn';
 import { flashcardRoutes } from './routes/flashcards';
+import { studentDailyRoutes } from './routes/daily';
 import { studentMapRoutes } from './routes/map';
 import { studentRecallRoutes } from './routes/recall';
 import { parentRewardRoutes, studentRewardRoutes } from './routes/rewards';
@@ -48,8 +49,11 @@ import {
 } from './feedback/routes';
 import { parentStatsRoutes, studentStatsRoutes } from './stats/routes';
 import { parentDailyLimitRoutes, studentDailyLimitRoutes } from './daily-limit/routes';
+import { parentTargetGradeRoutes, studentTargetGradeRoutes } from './stats/target-grades';
 import { adminErrorReportRoutes, errorReportRoutes } from './feedback/error-reports';
 import type { StatsAdapters } from './stats/adapters';
+import { OPERATOR_BASE_PATH, operatorRoutes } from './operator/routes';
+import { createMemoryRateLimiter } from './rate-limit';
 
 export interface AppDeps {
   version: string;
@@ -58,7 +62,8 @@ export interface AppDeps {
   auth: Auth;
   clock: Clock;
   passkeys: PasskeyService;
-  rateLimiters: { auth: RateLimiter; ai: RateLimiter };
+  /** `operator` (AppDeck bridge) defaults to 120 a minute in memory when not given. */
+  rateLimiters: { auth: RateLimiter; ai: RateLimiter; operator?: RateLimiter };
   /** Review queue and quarantine hooks (workstream V). */
   verification?: VerificationDeps;
   /** AI providers that are configured (see ai/providers.ts). */
@@ -74,6 +79,9 @@ export interface AppDeps {
   /** Where error reference lines go (Workers logs by default). */
   errorLog?: ErrorLog;
 }
+
+/** AppDeck operator requests allowed a minute from one address. */
+export const OPERATOR_REQUESTS_PER_MINUTE = 120;
 
 export function createApp(deps: AppDeps) {
   const app = new Hono<AppEnv>();
@@ -180,6 +188,7 @@ export function createApp(deps: AppDeps) {
   parent.route('/students', parentRewardRoutes(deps));
   parent.route('/students', parentStatsRoutes(deps));
   parent.route('/students', parentDailyLimitRoutes(deps));
+  parent.route('/students', parentTargetGradeRoutes(deps));
   parent.route('/onboarding', onboardingRoutes(deps));
   parent.route('/', reportRoutes(deps.db, 'parent'));
   parent.route('/', parentFeedbackRoutes(deps));
@@ -196,6 +205,20 @@ export function createApp(deps: AppDeps) {
   );
 
   app.route('/v1/error-reports', errorReportRoutes(deps));
+  // Operator bridge (AppDeck): signed requests only; 404 when no shared secret is set.
+  app.route(
+    OPERATOR_BASE_PATH,
+    operatorRoutes({
+      ...deps,
+      rateLimiter:
+        deps.rateLimiters.operator ??
+        createMemoryRateLimiter({
+          limit: OPERATOR_REQUESTS_PER_MINUTE,
+          periodMs: 60_000,
+          clock: deps.clock,
+        }),
+    }),
+  );
   app.route('/v1/device', deviceRoutes(deps));
   app.route('/v1/notifications', pushKeyRoutes(deps));
   // Student routes: the session middleware runs before every /v1/student route below.
@@ -207,12 +230,14 @@ export function createApp(deps: AppDeps) {
   app.route('/v1/student/learn', learnRoutes(deps));
   app.route('/v1/student/flashcards', flashcardRoutes(deps));
   app.route('/v1/student', studentMapRoutes(deps));
+  app.route('/v1/student', studentDailyRoutes(deps));
   app.route('/v1/student', studentRecallRoutes(deps));
   app.route('/v1/student', reportRoutes(deps.db, 'student'));
   app.route('/v1/student/rewards', studentRewardRoutes(deps));
   app.route('/v1/student', studentFeedbackRoutes(deps));
   app.route('/v1/student', studentStatsRoutes(deps));
   app.route('/v1/student', studentDailyLimitRoutes(deps));
+  app.route('/v1/student', studentTargetGradeRoutes(deps));
   app.use('/v1/ai/*', studentAuth(deps));
   app.route('/v1/ai', aiRoutes({ ...deps, gateway }));
   app.route('/v1', parent);

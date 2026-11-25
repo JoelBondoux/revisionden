@@ -35,6 +35,15 @@ Tags: #product #rules #limits #defaults
   the token up. Tokens and sessions are stored only as hashes.
 - A student device session lasts 12 hours, then the student unlocks again with the passkey.
   Parents can unlink a device, which ends its session.
+- Students unlock on the welcome page ("I'm a student: unlock with my passkey") or at `/unlock`,
+  where a student screen sends them when its API call gets 401; they return to the page they were
+  on (default `/map`). With no passkey on the device the page says "Ask a parent to link this
+  device" and shows no account details. The welcome page (`/`) is the one sign-in page for
+  parents and students; the sales site's "Sign in" goes there
+  (`decisions/0007-student-passkey-unlock.md`). Implemented in
+  `apps/web/src/features/onboarding/StudentUnlock.tsx`.
+- A passkey synced to another device (iCloud Keychain, Google Password Manager) unlocks there
+  too, as the same linked device. Open owner question (`operations/contradictions.md`).
 - Rate limits per address: 30 a minute on sign-in and device routes, 20 a minute on AI routes.
   Implemented in `apps/api`.
 
@@ -46,6 +55,14 @@ Tags: #product #rules #limits #defaults
 - Exam boards and tiers are picked in the app; "not sure" is allowed and reminded later.
 - GCSE Film Studies is offered only by WJEC Eduqas. GCSE Statistics only by AQA and Pearson Edexcel. Boards per subject and tiered GCSEs are listed
   in `docs/PRODUCT_RULES.md` "Onboarding".
+- Most-used board per subject in England (Ofqual market report 2024 to 2025, share of
+  certificates): AQA for GCSE English Language, English Literature, Biology, Chemistry, Physics,
+  Combined Science, Drama, French and A-Level Physics; Pearson Edexcel for GCSE Maths, History and
+  A-Level Maths, Further Maths; OCR for A-Level Computer Science; WJEC Eduqas only for GCSE Film
+  Studies. AI terms: AQA forbids its material in AI-assisted works; Pearson reportedly reserves AI
+  training rights (not confirmed); no AI clause found for OCR or WJEC Eduqas. Figures, quotes and
+  the recommended build order: `docs/research/board-shares-2026-11.md` (research, 2026-11-25; not
+  yet a decision).
 - Onboarding takes Years 9 to 13 (9–11 GCSE, 12–13 A-Level). Exams are worked out from the year:
   Year 11 and 13 sit them next summer (2027 in school year 2026/27), Year 10 and 12 a year later,
   Year 9 two years later.
@@ -124,8 +141,13 @@ Tags: #product #rules #limits #defaults
 - Works offline for the app shell; API calls are never cached. Pages always come fresh from the
   server when online. The app checks `/version.json` on start, on return to the foreground and
   every 15 minutes and shows "A new version of RevisionDen is ready." with Refresh; an API reply
-  that suggests the app is out of date makes it reload by itself once per new build. iPad users get an "Add to Home
-  Screen" help page (`/install`), because iPadOS has no install prompt.
+  that suggests the app is out of date makes it reload by itself once per new build.
+- "Add RevisionDen to this device" (I6): a card with Pip on the topic map and the parent home, and
+  a button in Settings. Chrome, Edge and Android show the browser's own install prompt on tap;
+  iPhone and iPad Safari open a sheet with Share → Add to Home Screen steps (`/install` shows the
+  steps for the device in use); browsers that cannot install get no card. Hidden once installed
+  and for 30 days after "Not now" (local storage `revisionden.installDismissed`). Implemented in
+  `apps/web/src/pwa/InstallCard.tsx`.
 - The web app calls the real API on dev and staging (parent session cookie, or the student
   device cookie). MSW mocks with made-up data are used only in local development and tests, and
   must use real API paths (`apps/api/routes.json`). Parents sign in from the welcome page
@@ -146,6 +168,34 @@ Tags: #product #rules #limits #defaults
   finish); the student scans the QR code to `/link` and sets up a passkey.
 - Avatars are drawn as layered SVG from the avatar code (`apps/web/src/features/avatar`).
 
+## Operator console (AppDeck)
+
+- The owner runs RevisionDen from AppDeck Admin through a signed operator bridge at `/operator/appdeck`
+  (no database access for AppDeck). Spec and wire format: `docs/OPERATOR_CONSOLE.md`.
+- Requests are signed with HMAC-SHA256 (tag `appdeck-revisionden-operator-v1`) using
+  `APPDECK_OPERATOR_SHARED_SECRET` (32+ characters, one per environment); without it the bridge
+  answers 503. Refused outside 5 minutes; request ids used once (kept 1 day; a retried change gets the
+  first answer); 120 requests a minute per address. Implemented in
+  `packages/core/src/operator-signature.ts` and `apps/api/src/operator/bridge.ts`.
+- Roles from AppDeck: Agent (support) and Manager (also money and data), enforced by the API.
+- AppDeck reads (O2): health, overview, family search by exact parent email or family id only
+  (POST body, no browsing names), family detail (parents' emails, children as nickname + year
+  group only, flags), tickets (a student's ticket text is never sent), error-report groups (and
+  an exact lookup of one RD code, `error-reports?code=`),
+  content reports, audit log. `apps/api/src/operator/reads.ts`; shapes in
+  `packages/core/src/operator-schemas.ts`.
+- AppDeck actions (O3, all Agent): internal family notes (≤2000, never shown to the family, in its
+  export), ticket replies (≤5000, shown under the message in the sender's app without the
+  operator's email), ticket status, confirm bug and duplicate (same L7 rules and rewards, shared
+  `confirmFeedback` and `setFeedbackStatus` in `apps/api/src/feedback/routes.ts`).
+- Data requests (O3b): an Agent logs an emailed export or deletion request (due one calendar
+  month later, `dataRequestDueAt` in core); a Manager marks it handled. Handling a deletion runs
+  `deleteFamilies` only for a one-parent family (two parents: 409 `needs_both_parents`, both
+  confirm in the app). Records kept 2 years. Trial and free-place routes answer 503
+  `payments_not_ready` until workstream $.
+- Every operator read of a family and every action goes in `operator_audit_log`, kept 2 years
+  (data retention policy 1.5); the scheduled clean-up deletes older entries.
+
 ## Content
 
 - Content is JSON in `content/`, checked by `pnpm content:validate` (schemas in
@@ -157,10 +207,16 @@ Tags: #product #rules #limits #defaults
   record (`docs/VERIFICATION.md`); verified content needs quotes and every pipeline check, and is
   immutable (edits create a new version). `pnpm content:validate --audit <id>` prints the audit trail.
 - Diagrams are SVG drawn by code from verified data; no AI-generated or raster teaching images.
+- Items may carry `learning_point` (finer skill id; at least 3 items per learning point, for
+  similar-question retries) and `expected_seconds` (5 to 900; slower than twice it is shaky).
 - Pilot: GCSE Maths Higher, Pearson Edexcel 1MA1 (content references N1 to S6). Every pilot
   citation has a verbatim quote from the 1MA1 specification Issue 2 (or, for the quadratic
   formula, the DfE subject content DFE-00233-2013), with page and SHA-256. All pilot content is
-  still `draft`: blind answer, adversarial review and human approval are still to do.
+  still `draft`. Pipeline run 2026-11-25 (S2, `docs/CONTENT_RUN_1MA1.md`): every step
+  recorded; blind answer and adversarial review by Gemini (`gemini-2.5-pro`). All 11 items pass
+  steps 1 to 6 and wait for the owner (G9 under decision 0008 and the A6 proof with individual
+  approval; A18-0002 after it was compared by formula, #111). The topic tree's 2 near matches (A22,
+  A25) were confirmed by the owner. Owner's review steps: `docs/REVIEW_GUIDE.md`.
 - Citation `supports` names only what the quote itself backs. A specification quote backs the
   question being in scope (`question`, `topic`); maths answers are backed by the maths engine,
   not by a citation. Sourcing record: `docs/sourcing/gcse-maths-1ma1-pilot.md`.
@@ -213,8 +269,31 @@ Tags: #product #rules #limits #defaults
 
 ## Hosting
 
-- Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Hosts: `revisionden.com` and
-  `api.revisionden.com` (production), `staging.` and `api-staging.` (staging), `dev.` and `api-dev.` (development).
+- Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Hosts (decision 0005,
+  2026-11-25): `revisionden.com` is the public sales site (`www.` redirects to it, staging copy on
+  `www-staging.`); `app.revisionden.com` and `api.revisionden.com` are the production app and API;
+  `staging.` and `api-staging.` (staging), `dev.` and `api-dev.` (development).
+- Public site (`apps/www`, workstream M): static pages with no client scripts and no third-party
+  requests (self-hosted fonts, strict content security policy). Workers `revisionden-www` and
+  `revisionden-www-staging`. Its policies and design tokens are read from `docs/legal` and the web
+  app at build time. "Sign in" and "Start free" go to `app.revisionden.com` (staging: `staging.`).
+  Until `WWW_LAUNCHED=true` it says the app is in private testing. Pages: home, how it works,
+  pricing (planned prices parsed from `docs/PRICING.md`, "Premium, coming soon", nothing charged),
+  for young people, help and contact, about (operator name from `VITE_OPERATOR_NAME`) and every
+  policy at `/policies/<name>`, with "Draft: not yet in force, being reviewed before launch." while
+  `VITE_POLICY_EFFECTIVE_DATE` is unset.
+  Images: an Open Graph card (`og.png`, 1200×630, used by every page's `og:image`) and an Apple
+  touch icon (180×180), drawn from Pip's shapes and the arena colours. They are committed in
+  `apps/www/public` and remade by hand with `node apps/www/scripts/make-images.mjs` after an art
+  change; original art only, no stock photos or AI-generated images.
+  Links use the app's J7 styles (buttons, tiles, chips, bold inline links), never plain underlined
+  text (owner, 2026-11-25). Light or dark follows the device only (no switch), with the app's dark
+  theme colours. Behind every page sits the app's doodle tile (`apps/web/src/design/doodles.svg`,
+  read at build time, 240px, 7% ink), always on with no switch, hidden for high contrast and forced
+  colours.
+- Production passkeys use the RP ID `revisionden.com`; OAuth callbacks are on the API host, so the
+  move to `app.` needed no change in Google or Microsoft. Dev and staging passkeys use their own
+  hosts (`dev.revisionden.com`, `staging.revisionden.com`), so they work only there.
 - Live since 2026-11-25 (workstream G): API Workers on all three API hosts; web app on `dev.` and
   `staging.`. The production web app waits for the operator details (its build fails without them).
 - Workers: `revisionden-api-dev`, `revisionden-api-staging`, `revisionden-api` (API) and
@@ -260,6 +339,11 @@ Tags: #product #rules #limits #defaults
 - Extended answers: blind marking replaces the blind answer (three exemplars, top, middle and low,
   marked by a second provider without the intended levels; all three must match exactly), and
   every one needs individual human approval; review batches always include them.
+- Fact-check stage 4b (decision 0009): items listing `facts` need, per fact, an official citation
+  or a maths engine proof plus a matching blind statement by a third provider (OpenAI, judged by
+  Gemini). Failing facts keep `needs_human_approval`. `pnpm content:model-check --fact-check openai`.
+- Maths flashcards with `back_formula` are blind-answered by formula: the maths engine compares
+  the formula (any equivalent form) and every listed condition (e.g. `a ≠ 0`) must be stated.
 - Blind answer must come from a different provider from the writer (Claude by default) and be
   highly confident; any adversarial-review problem fails the item. Real models never run in
   tests or CI.
@@ -269,6 +353,11 @@ Tags: #product #rules #limits #defaults
   content-lead, parent-reviewer) in `reviewer_roles`; decisions store the role only. Batch
   samples: 10% of the batch, at least 30, plus every item needing approval; seed recorded; one
   confirmed error fails the batch and re-checks the batch, writer prompt and source.
+- A content lead creates a batch on `/review` with "Create batch from draft items": every draft
+  whose synced snapshot (`items.review_snapshot`, full content record plus mark scheme) has all
+  automated checks passed and is not already in an open or passed batch (an item whose fact-check
+  failed goes in for individual review). The batch page shows
+  hint, mark scheme, exemplars and checks.
 - Report a problem stores only item, version and a reason (no free text) and hides the item at
   once (status `quarantined` in `items`, kept through content syncs; restored on "no error";
   lifted after a confirmed error only when a newer version is synced). A confirmed error queues a score recalculation job and re-checks the item. The
@@ -351,8 +440,17 @@ Tags: #product #rules #limits #defaults
 - Level bar and parent-set rewards come from the rewards progression (same numbers as the Rewards
   page), read with the read-only `rewardsProgress`: it counts earned-but-unseen rewards and saves
   nothing, so the stats pages and the parent's parent-rewards view never use up the student's
-  "New!" rewards (the student's Rewards page, answers and flashcard sessions save and announce them). Plan, school report effort and predicted/target grade panels show "Not set up yet"
-  (adapters in `apps/api/src/stats/adapters.ts`) until those features land.
+  "New!" rewards (the student's Rewards page, answers and flashcard sessions save and announce them). Plan, school report effort and predicted grade panels show "Not set up yet"
+  (adapters in `apps/api/src/stats/adapters.ts`) until those features land; predicted grades wait
+  for verified grade boundaries.
+- Target grades (K8, owner decision 2026-11-25): two per subject, both goals to reach for. The
+  parent's target is set or cleared by either parent on the parent stats dashboard (latest wins,
+  logged as important); the child's own target is set or cleared by the child on My stats (not
+  logged). Each side sees both, with encouraging wording and no red when they differ. Only grades
+  on a cited scale: GCSE Maths Edexcel 1MA1 (higher 9–3 and U, foundation 5–1 and U, 9–1 and U
+  with no tier chosen); every other subject and board says "not available yet".
+  `enrolments.parent_target_grade` and `student_target_grade` (migration 0017). Detail:
+  `docs/PRODUCT_RULES.md` (Statistics dashboards, Target grades).
 - Routes: `/progress` (My stats), `/parent/stats` (parent); API `GET /v1/student/stats`,
   `GET /v1/students/:id/stats`, `GET /v1/students/:id/dashboard`. Implemented in
   `packages/core/src/stats.ts`, `apps/api/src/stats/`, `apps/web/src/features/stats/`.
@@ -393,7 +491,10 @@ Tags: #product #rules #limits #defaults
   needed.
   Operator triage at `/admin/feedback` for sign-in emails in `OPERATOR_EMAILS`. Workstream L.
 - Parents confirm the terms and privacy notice in onboarding (version stored in
-  `policy_acceptances`); a changed version shows a "We've updated" prompt. A newly linked student
+  `policy_acceptances`) on a "Before you start" page that shows each policy's plain-English
+  bullets as cards (word for word, from the policy files; 4 chosen ones first, then "Show all N
+  points") with the full text behind "Show the
+  details"; a changed version shows a "We've updated" prompt. A newly linked student
   device shows the young people's notice once (`revisionden.youngPeopleNotice` in local storage).
 - The young people's notice has a friendly view built from the same file: 6 short-version cards,
   2 to 4 key points per part always visible, "Read more" and "Expand all", original icons and Pip;
@@ -457,6 +558,11 @@ Tags: #product #rules #limits #defaults
   tomorrow" is the daily reward XP cap (`DAILY_REWARD_XP_CAP`, 300 XP today), confirmed by the lead
   on 2026-11-25 for now: the lesson only knows XP, not study minutes.
 
+- Settled in J7 (owner request, 2026-11-25): no plain underlined text links. Navigation uses the
+  link components in `apps/web/src/components/links.tsx` (LinkButton, LinkTile, LinkChip; TextLink
+  only inside sentences and policy prose: bold, coloured, a soft bar, underline on hover). A guard
+  test, `apps/web/src/components/noTextLinks.test.ts`, keeps it that way.
+
 ## Exam practice (planned)
 
 - Timed papers sat in real time (exam conditions or practice), each question timed, all marked at
@@ -513,7 +619,7 @@ Tags: #product #rules #limits #defaults
   hyphens, up to 16), uniqueness, and every possible pairing against the nickname blocked words;
   `REVIEWED_BLOCKED_PAIRS` is the manual review list the picker refuses. The student picks one of
   each (or none) on the Rewards page; saved as `students.title_first` / `title_last` (migration
-  0017); `GET`/`PUT /v1/student/rewards/title`; free to change any time. Shown under the nickname
+  0019); `GET`/`PUT /v1/student/rewards/title`; free to change any time. Shown under the nickname
   on the Rewards page; the friends league is not built yet, so it shows there once it is.
 - "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
   NSPCC adult helpline, parent-only). Reached from Settings, the heart link in the student footer,
@@ -540,12 +646,25 @@ Tags: #product #rules #limits #defaults
   start, no penalty, skippable); "Learn it first" links to Oak and BBC Bitesize per topic, checked
   by CI; read aloud with on-device voices preferred; reading comfort settings (dyslexia-friendly
   self-hosted font, larger text, spacing, tint). Detail: `docs/PRODUCT_RULES.md` (Quick wins).
+- 5-a-day (Q3, built): `GET /v1/student/daily`. The first request of the student's UK day picks
+  up to 5 items from topics with at least one attempt in an enrolled subject (never new topics,
+  never extended answers), stores them in `daily_sets` (one per student per day) and returns the
+  same set all day. Choice: each topic's mastery drifts down by the 30-day half-life since it was
+  last practised, then the normal next-item rules (weak spots first, due flashcards first, at most
+  3 in a row per topic), topped up from the same topics if that leaves fewer than 5. Seeded by
+  student and day. Done when every item has an attempt after the set was made. Map card above
+  the next mission while not done; plays at `/learn/daily` in the lesson player (Learn mode,
+  normal XP and combos, counts to the daily goal and streak through XP; the parent's daily limit
+  applies through the normal attempts route, `creditableXp`). No push for it. Migration 0014.
 - Recall checks (Q4, built): `GET /v1/student/recall?topicId=` before a topic lesson (or unit
   challenge) whose topic has been practised. Up to 2 questions the student has answered before
   (no flashcards, no extended answers), from other practised topics first, then the lesson's own
   topic; weak spots first (next-item rules). Shown as "Remember this?" in the lesson player with
   Skip; answers are normal Learn mode attempts (normal XP when right, wrong ones become
-  flashcards, mastery as any answer). If the call fails the lesson starts as normal.
+  flashcards, mastery as any answer). If the call fails the lesson starts as normal. Recall
+  answers are sent with `recall: true` (Learn mode only) and saved with mode `recall`; a wrong one
+  never resets the combo (`comboBefore` passes over it), a right one still adds to it (owner,
+  2026-11-25).
   `apps/web/src/features/recall/`, `apps/api/src/routes/recall.ts`.
 - Reading comfort (Q1, built): Settings → Reading comfort, per device in `localStorage` key
   `revisionden.reading`. Options: dyslexia-friendly font (OpenDyslexic from
@@ -553,6 +672,17 @@ Tags: #product #rules #limits #defaults
   Normal / Large (112.5%) / Larger (125%), more spacing (line height 1.8, letter 0.12em, word
   0.16em), tint none / cream / blue. Defaults: all off. Applied app-wide by `data-reading-*`
   attributes on `<html>` (`apps/web/src/features/reading/`).
+- Appearance (J8, built): Settings → Appearance, per device in `localStorage` key
+  `revisionden.appearance` (`{theme, palette, pattern}`). Theme `system` (default) / `light` /
+  `dark`; palette `standard` (default) / `colourblind`; pattern `on` (default) / `off`. Applied as
+  `data-theme`, `data-palette`, `data-pattern` on `<html>` by `public/appearance-boot.js` before
+  first paint and by `AppearanceProvider` after (`apps/web/src/features/appearance/`). Colours in
+  `apps/web/src/design/themes.ts` / `themes.css`: dark keeps button colours with white text and
+  uses `--color-primary-edge` (#C4B5FF) for violet text; colour-blind right #1F6FD1 (blue), wrong
+  #B34F00 (orange), checked by simulation (ΔE ≥ 20 for deuteranopia, protanopia, tritanopia) and
+  4.5:1 contrast in all four combinations. Doodle tile `apps/web/src/design/doodles.svg` (original,
+  240px, used as a CSS mask at 7% ink), hidden with `prefers-contrast: more` and forced colours.
+  Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help keeps light colours in dark.
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by

@@ -15,7 +15,7 @@ const reducedMotion = () =>
  * effect only arms itself when the browser can observe scrolling and motion is allowed, so
  * nothing stays hidden in tests, in print or without JavaScript.
  */
-function Reveal({ as: Tag = 'div', className = '', children, ...rest }: RevealProps) {
+export function Reveal({ as: Tag = 'div', className = '', children, ...rest }: RevealProps) {
   const ref = useRef<HTMLElement | null>(null);
   const [state, setState] = useState<'idle' | 'armed' | 'shown'>('idle');
 
@@ -44,7 +44,7 @@ function Reveal({ as: Tag = 'div', className = '', children, ...rest }: RevealPr
   );
 }
 
-interface RevealProps {
+export interface RevealProps {
   as?: 'div' | 'li' | 'section';
   className?: string;
   children: ReactNode;
@@ -52,7 +52,7 @@ interface RevealProps {
 }
 
 /** Pip holding a padlock: "we keep your information safe". Decorative. */
-function PipWithPadlock() {
+export function PipWithPadlock() {
   return (
     <span className="friendly-notice__pip" aria-hidden="true">
       <Pip size={88} />

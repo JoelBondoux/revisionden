@@ -51,6 +51,9 @@ export function comboBonusXp(combo: number): number {
 }
 
 /** A previous answer, as far as combos care. */
+/** The mode saved on a recall check answer: Learn mode, but it never breaks a combo. */
+export const RECALL_MODE = 'recall';
+
 export interface ComboAnswer {
   correct: boolean;
   mode: string | null;
@@ -67,9 +70,12 @@ export function comboBefore(history: readonly ComboAnswer[], now: Date): number 
   let later = now.getTime();
   for (const answer of history) {
     const at = answer.at.getTime();
-    if (later - at > ACTIVE_GAP_MS || answer.mode !== 'learn' || !answer.correct) break;
-    combo += 1;
+    if (later - at > ACTIVE_GAP_MS) break;
     later = at;
+    // Recall checks (Q4) feel safe: a wrong one is passed over; a right one still counts.
+    if (answer.mode === RECALL_MODE && !answer.correct) continue;
+    if ((answer.mode !== 'learn' && answer.mode !== RECALL_MODE) || !answer.correct) break;
+    combo += 1;
   }
   return combo;
 }

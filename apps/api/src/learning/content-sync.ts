@@ -118,10 +118,34 @@ function flattenTopics(tree: ContentTopicTree) {
 
 const excluded = (column: string) => sql.raw(`excluded.${column}`);
 
+/** A mark scheme from content/mark-schemes/ (points or levels). */
+export interface ContentMarkScheme {
+  id: string;
+  [key: string]: unknown;
+}
+
+/**
+ * What a human reviewer sees (workstream S2): the whole content item, with its linked mark
+ * scheme copied in as mark_scheme_detail. Kept server-side for review batches only.
+ */
+export function reviewSnapshot(
+  item: ContentItem,
+  schemes: ReadonlyMap<string, ContentMarkScheme>,
+): Record<string, unknown> {
+  const ref = typeof item.mark_scheme_ref === 'string' ? item.mark_scheme_ref : undefined;
+  const scheme = ref ? schemes.get(ref) : undefined;
+  return scheme ? { ...item, mark_scheme_detail: scheme } : { ...item };
+}
+
 export async function syncContent(
   db: Database,
-  content: { topicTrees: ContentTopicTree[]; items: ContentItem[] },
+  content: {
+    topicTrees: ContentTopicTree[];
+    items: ContentItem[];
+    markSchemes?: ContentMarkScheme[];
+  },
 ): Promise<{ topics: number; items: number }> {
+  const schemes = new Map((content.markSchemes ?? []).map((m) => [m.id, m]));
   const topicRows = content.topicTrees.flatMap(flattenTopics);
   // Parents come before children in the flattened list, so foreign keys hold row by row.
   for (const row of topicRows) {
@@ -154,6 +178,7 @@ export async function syncContent(
     status: item.verification.status,
     difficulty: item.difficulty,
     tags: item.tags ?? [],
+    reviewSnapshot: reviewSnapshot(item, schemes),
   }));
   if (itemRows.length > 0) {
     await db
@@ -172,6 +197,7 @@ export async function syncContent(
           status: excluded('status'),
           difficulty: excluded('difficulty'),
           tags: excluded('tags'),
+          reviewSnapshot: excluded('review_snapshot'),
         },
       });
   }

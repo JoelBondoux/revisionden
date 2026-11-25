@@ -87,6 +87,8 @@
 
 - Built from mock and assessment results, quiz performance and the school's progress indicator.
 - Always shown as an estimate.
+- Not built yet: it needs verified grade boundaries (docs/VERIFICATION.md), and mocks and school
+  reports are not entered yet. Until then the stats dashboards show "Not set up yet" for it.
 
 ## AI marking
 
@@ -188,6 +190,12 @@ Product owner decision, 2026-11-25: **parent view only**.
   feedback (`/feedback/family`) and to the parent home (`/parent`).
 - Students always use their own device, linked by QR code and passkey. A student device behaves
   as before.
+- After the 12-hour device session, the student unlocks with the passkey: on the welcome page
+  ("I'm a student: unlock with my passkey"), or at `/unlock`, where any student screen sends them
+  when its session has run out, and back to that screen afterwards. With no passkey on the device:
+  "Ask a parent to link this device", with no account details shown. Parents and students share
+  one sign-in page, the welcome page (`decisions/0007-student-passkey-unlock.md` in project
+  memory).
 
 ## Learning loop (workstream F)
 
@@ -317,7 +325,29 @@ Mockups: screens 19 (student) and 20 (parent).
   through R's read-only `rewardsProgress` (`apps/api/src/stats/reward-adapters.ts`), so the
   numbers match the Rewards page and reading them never uses up the student's "New!" rewards. Parent-set
   rewards are listed not-yet-given first, without the note to the student.
-- Panels not built yet (study plan, school report effort, predicted and target grades) come from
+- **Target grades** (workstream K8; owner decision 2026-11-25). Each subject has two targets, both
+  goals to reach for:
+  - the **parent's target**, set or cleared by either parent in the "Target grades" panel of the
+    parent stats dashboard. The latest change wins, and each change goes in the family activity
+    log as an important change ("changed {child}'s target grades");
+  - the **child's own target**, set or cleared by the child on My stats. It is not logged as a
+    change for the parents.
+  - The child sees both side by side on My stats; the parents see both in their panel, and the
+    subjects table shows the parent's target. When they differ the tone stays encouraging: no
+    red, "fail" or "below" styling or wording.
+  - Both must be on the subject's grade scale for its board and tier, best first. A scale is a
+    specification fact, so it is offered only where its official citation is stored
+    (`packages/core/src/target-grades.ts`, `GRADE_SCALES`). Today that is GCSE Maths, Pearson
+    Edexcel 1MA1: higher tier 9 to 3 and U, foundation tier 5 to 1 and U, and 9 to 1 and U while
+    the tier is not chosen (specification page 31). Other subjects and boards, and every A-Level,
+    say "not available yet" until their scale is cited.
+  - Kept with the child's courses (`enrolments.parent_target_grade`, `student_target_grade`) and
+    in the family data download.
+  - API: `GET /v1/students/:id/target-grades` (each enrolled subject, both targets and the grades
+    they can take, or `grades: null`); `PUT /v1/students/:id/target-grades/:subjectId` (parent's
+    target) and `PUT /v1/student/target-grades/:subjectId` (child's own), each `{ targetGrade }`,
+    null to clear, 422 `grade_not_on_scale` or `no_grade_scale`. Student stats carry `targets`.
+- Panels not built yet (study plan, school report effort, predicted grades) come from
   adapters in `apps/api/src/stats/adapters.ts` that return null and show "Not set up yet".
 - Implemented: `packages/core/src/stats.ts` (pure functions) and `stats-schemas.ts` (shared
   schemas); API `GET /v1/student/stats?period=week|term|year` (student device),
@@ -492,6 +522,24 @@ So nobody runs an old copy of the app for long after a deploy (decided 2026-11-2
   shape) the app checks at once and, when a newer build exists, reloads by itself, once per new
   build, so it can never get stuck or loop. Without browser storage it only shows the banner.
 - Implemented: `apps/web/public/sw.js`, `apps/web/src/pwa/updates.tsx`, `apps/web/vite.config.ts`.
+
+## Add RevisionDen to this device (I6)
+
+Owner request, 2026-11-25: a clear install button, not only a text link in Settings.
+
+- A card with Pip, "Add RevisionDen to this device", on the child's topic map and the parent home.
+  It is a card in the page, never a pop-up. Settings has the same entry as a button.
+- **Chrome, Edge and Android:** the app keeps the browser's install prompt (`beforeinstallprompt`)
+  and shows it when the button is tapped.
+- **iPhone and iPad Safari** (no install prompt): the button opens a sheet with three illustrated
+  steps (Share, Add to Home Screen, Add), worded for an iPhone or an iPad. `/install` shows the
+  same steps for the device in use (both, plus the Chrome and Edge way, on other devices).
+- **Browsers that cannot install** (for example Firefox on a computer): no card; Settings links to
+  `/install`.
+- Hidden once installed (opened from the Home Screen, `display-mode: standalone`, or the
+  `appinstalled` event), and for 30 days after "Not now" on this device (local storage
+  `revisionden.installDismissed`).
+- Implemented: `apps/web/src/pwa/{install.ts,InstallCard.tsx,IosSteps.tsx,installStore.ts}`.
 
 ## Daily limit (wellbeing)
 
@@ -689,6 +737,8 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   in earlier lessons ("Remember this?").
 - No penalty: wrong answers do not lower mastery more than a normal answer would, earn no XP loss,
   and simply become flashcards. Right answers earn normal XP. They can be skipped.
+- Combos (owner decision, 2026-11-25): a wrong recall answer never resets the combo, because recall
+  checks test older topics and should feel safe. A right one still adds to the combo.
 
 ### Learn it first
 
@@ -709,3 +759,11 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
 - **Reading comfort** settings per device: a dyslexia-friendly font (self-hosted, open licence, no
   third-party font service), larger text, more line and letter spacing, and a soft tinted background
   option. These apply across the app and are remembered on the device.
+- **Appearance** settings per device (Settings → Appearance, next to Reading comfort; students and
+  parents): Theme System (default, follows the device), Light or Dark; Colours Standard or
+  Colour-blind friendly (right is blue and wrong is orange instead of green and red, checked for
+  deuteranopia, protanopia and tritanopia; icons and words always carry the meaning too);
+  Background pattern On (default) or Off. Applied before the first paint, so there is no flash.
+  The doodle pattern is our own original art, very faint, and is never shown in high contrast or
+  forced colours. Get help stays a calm light page in every theme. The sales site follows the
+  device's theme only.

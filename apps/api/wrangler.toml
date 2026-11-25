@@ -30,6 +30,12 @@ name = "AI_RATE_LIMITER"
 namespace_id = "1002"
 simple = { limit = 20, period = 60 }
 
+# AppDeck operator bridge (/v1/operator), per address.
+[[ratelimits]]
+name = "OPERATOR_RATE_LIMITER"
+namespace_id = "1003"
+simple = { limit = 120, period = 60 }
+
 # Reminder cron (web push): checks every 15 minutes which reminders are due.
 [triggers]
 crons = ["*/15 * * * *"]
@@ -66,6 +72,12 @@ name = "AI_RATE_LIMITER"
 namespace_id = "1002"
 simple = { limit = 20, period = 60 }
 
+# AppDeck operator bridge (/v1/operator), per address.
+[[env.dev.ratelimits]]
+name = "OPERATOR_RATE_LIMITER"
+namespace_id = "1003"
+simple = { limit = 120, period = 60 }
+
 # ---------------------------------------------------------------------------------------------
 [env.staging]
 name = "revisionden-api-staging"
@@ -95,6 +107,12 @@ name = "AI_RATE_LIMITER"
 namespace_id = "2002"
 simple = { limit = 20, period = 60 }
 
+# AppDeck operator bridge (/v1/operator), per address.
+[[env.staging.ratelimits]]
+name = "OPERATOR_RATE_LIMITER"
+namespace_id = "2003"
+simple = { limit = 120, period = 60 }
+
 # ---------------------------------------------------------------------------------------------
 [env.production]
 name = "revisionden-api"
@@ -103,7 +121,8 @@ routes = [{ pattern = "api.revisionden.com", custom_domain = true }]
 [env.production.vars]
 ENVIRONMENT = "production"
 API_ORIGIN = "https://api.revisionden.com"
-WEB_ORIGIN = "https://revisionden.com"
+WEB_ORIGIN = "https://app.revisionden.com"
+# The registrable domain: valid for app.revisionden.com and keeps passkeys working across subdomains.
 PASSKEY_RP_ID = "revisionden.com"
 
 [env.production.triggers]
@@ -123,3 +142,9 @@ simple = { limit = 30, period = 60 }
 name = "AI_RATE_LIMITER"
 namespace_id = "3002"
 simple = { limit = 20, period = 60 }
+
+# AppDeck operator bridge (/v1/operator), per address.
+[[env.production.ratelimits]]
+name = "OPERATOR_RATE_LIMITER"
+namespace_id = "3003"
+simple = { limit = 120, period = 60 }

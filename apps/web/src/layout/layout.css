@@ -155,7 +155,7 @@
 .public-header__nav {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-4);
+  gap: var(--space-2);
 }
 
 /* Room for the bug button (L7) below the content, so it never covers anything. It is 48px tall

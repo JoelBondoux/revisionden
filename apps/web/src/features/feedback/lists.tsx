@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Button } from '../../components/Button';
+import { ChatIcon } from '../../components/icons';
+import { LinkButton } from '../../components/links';
 import { Pill, type PillTone } from '../../components/Pill';
 import { NotFoundPage } from '../../pages/NotFoundPage';
 import {
@@ -95,6 +96,13 @@ export function FeedbackListPage({ scope }: { scope: 'family' | 'mine' }) {
                 </div>
                 <p>{item.text ?? <span className="secondary-text">No message</span>}</p>
                 {item.outcome && <p className="feedback__thanks">Confirmed – thank you!</p>}
+                {item.replies.map((reply) => (
+                  <div key={reply.createdAt} className="feedback__reply">
+                    <strong>Reply from RevisionDen</strong>
+                    <p>{reply.body}</p>
+                    <p className="secondary-text">{date(reply.createdAt)}</p>
+                  </div>
+                ))}
                 <p className="secondary-text">
                   {sender(item, scope)} · {date(item.createdAt)}
                 </p>
@@ -102,7 +110,9 @@ export function FeedbackListPage({ scope }: { scope: 'family' | 'mine' }) {
             ))}
           </ul>
         ))}
-      <Link to="/feedback">Send feedback</Link>
+      <LinkButton to="/feedback" variant="secondary" icon={<ChatIcon />}>
+        Send feedback
+      </LinkButton>
     </div>
   );
 }

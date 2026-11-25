@@ -10,6 +10,7 @@ export const tokens = {
   '--color-text': '#2B2B3A',
   '--color-text-secondary': '#5E5E73',
   '--color-text-on-primary': '#FFFFFF',
+  '--color-text-on-gold': '#2B2B3A',
   '--color-border': '#E3E3EA',
   '--color-surface': '#FFFFFF',
   '--color-background': '#F7F6FB',
@@ -125,6 +126,16 @@ export const textPairs: TextPair[] = [
     name: 'primary text on surface',
     foreground: tokens['--color-primary'],
     background: tokens['--color-surface'],
+  },
+  {
+    name: 'link text (quiet buttons, tiles, inline links) on surface',
+    foreground: tokens['--color-primary-edge'],
+    background: tokens['--color-surface'],
+  },
+  {
+    name: 'link text on background',
+    foreground: tokens['--color-primary-edge'],
+    background: tokens['--color-background'],
   },
   {
     name: 'primary text on soft primary',

@@ -227,6 +227,11 @@ export const enrolments = pgTable(
     // As in core's TierSchema: 'none' when the subject has no tiers.
     tier: text('tier').notNull().default('not_sure'),
     specVersion: text('spec_version'),
+    // Target grades (workstream K8), each checked against the cited grade scale in
+    // packages/core/src/target-grades.ts; null until set. One is set by either parent, the
+    // other is the child's own.
+    parentTargetGrade: text('parent_target_grade'),
+    studentTargetGrade: text('student_target_grade'),
     createdAt: createdAt(),
   },
   (t) => [
@@ -348,6 +353,9 @@ export const items = pgTable(
     status: text('status').notNull().default('draft'),
     difficulty: integer('difficulty'),
     tags: jsonb('tags').$type<string[]>(),
+    // Workstream S2. The full content item (citations, checks, exemplars, linked mark scheme as
+    // mark_scheme_detail) as synced, used only to build human review batches. Never served.
+    reviewSnapshot: jsonb('review_snapshot').$type<Record<string, unknown>>(),
   },
   (t) => [
     index('items_topic_id_idx').on(t.topicId),
@@ -492,6 +500,24 @@ export const dailyXp = pgTable(
     xp: integer('xp').notNull().default(0),
   },
   (t) => [primaryKey({ columns: [t.studentId, t.day] })],
+);
+
+/**
+ * A student's daily 5-a-day set (workstream Q): the item ids chosen for one local day, kept so a
+ * reload shows the same set. Done once every item has an attempt since `created_at`.
+ */
+export const dailySets = pgTable(
+  'daily_sets',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    day: date('day').notNull(),
+    itemIds: jsonb('item_ids').$type<string[]>().notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [unique('daily_sets_student_day_unique').on(t.studentId, t.day)],
 );
 
 /** A student's starting test for one subject (about 5 minutes; sets first mastery). */
@@ -1016,5 +1042,128 @@ export const errorReports = pgTable(
       'error_reports_browser_values',
       sql`${t.browser} in ('Chrome', 'Edge', 'Firefox', 'Safari', 'Other')`,
     ),
+  ],
+);
+
+// ---------------------------------------------------------------------------------------------
+// Workstream O: operator bridge for the owner's AppDeck Admin console (docs/OPERATOR_CONSOLE.md).
+// ---------------------------------------------------------------------------------------------
+
+export const OPERATOR_ROLES = ['agent', 'manager'] as const;
+export const OPERATOR_AUDIT_OUTCOMES = ['ok', 'denied'] as const;
+
+/**
+ * Every operator read of a family and every operator action, kept 2 years. The operator's work
+ * email is staff data from AppDeck, never a family's. The target is a plain id (no foreign key),
+ * so the record outlives a deleted family; it never holds the search text or any content.
+ */
+export const operatorAuditLog = pgTable(
+  'operator_audit_log',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    operatorEmail: text('operator_email').notNull(),
+    operatorRole: text('operator_role', { enum: OPERATOR_ROLES }).notNull(),
+    action: text('action').notNull(),
+    targetType: text('target_type'),
+    targetId: text('target_id'),
+    requestId: text('request_id').notNull(),
+    outcome: text('outcome', { enum: OPERATOR_AUDIT_OUTCOMES }).notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('operator_audit_log_created_at_idx').on(t.createdAt),
+    index('operator_audit_log_target_idx').on(t.targetType, t.targetId),
+    check('operator_audit_log_role_values', sql`${t.operatorRole} in ('agent', 'manager')`),
+    check('operator_audit_log_outcome_values', sql`${t.outcome} in ('ok', 'denied')`),
+  ],
+);
+
+/**
+ * Request ids seen from AppDeck, kept 1 day (well past the 5-minute signing window). A read's id
+ * may not be used twice; a change sent again with the same id and body gets the stored answer
+ * instead of running twice. Only change answers are stored, never a read's.
+ */
+export const operatorRequests = pgTable(
+  'operator_requests',
+  {
+    requestId: text('request_id').primaryKey(),
+    method: text('method').notNull(),
+    path: text('path').notNull(),
+    // SHA-256 of the operator email, role and raw body, to tell a true retry from a reused id.
+    bodyHash: text('body_hash').notNull(),
+    // Null while the change is running.
+    responseStatus: integer('response_status'),
+    responseBody: text('response_body'),
+    createdAt: createdAt(),
+  },
+  (t) => [index('operator_requests_created_at_idx').on(t.createdAt)],
+);
+
+/**
+ * O3: internal notes an operator keeps on a family (never shown to the family). The author is
+ * the operator's work email from AppDeck. Deleted with the family; included in the family's
+ * data export.
+ */
+export const operatorNotes = pgTable(
+  'operator_notes',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    familyId: uuid('family_id')
+      .notNull()
+      .references(() => families.id, { onDelete: 'cascade' }),
+    authorEmail: text('author_email').notNull(),
+    text: text('text').notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('operator_notes_family_id_idx').on(t.familyId, t.createdAt),
+    check('operator_notes_text_length', sql`char_length(${t.text}) between 1 and 2000`),
+  ],
+);
+
+/**
+ * O3: replies from RevisionDen support to a ticket (feedback), shown in the sender's app. The
+ * family sees only the text and time, never the operator's email. Deleted with the ticket.
+ */
+export const feedbackReplies = pgTable(
+  'feedback_replies',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    feedbackId: uuid('feedback_id')
+      .notNull()
+      .references(() => feedback.id, { onDelete: 'cascade' }),
+    authorEmail: text('author_email').notNull(),
+    body: text('body').notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('feedback_replies_feedback_id_idx').on(t.feedbackId, t.createdAt),
+    check('feedback_replies_body_length', sql`char_length(${t.body}) between 1 and 5000`),
+  ],
+);
+
+export const DATA_REQUEST_KINDS = ['export', 'deletion'] as const;
+
+/**
+ * O3b: an export or deletion request a family sent by email, logged by an operator, with the
+ * statutory deadline (one calendar month). The family id is a plain id (no foreign key), so the
+ * record of handling a deletion outlives the family. Kept 2 years.
+ */
+export const dataRequests = pgTable(
+  'data_requests',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    familyId: uuid('family_id').notNull(),
+    kind: text('kind', { enum: DATA_REQUEST_KINDS }).notNull(),
+    receivedAt: timestamp('received_at', { withTimezone: true }).notNull(),
+    dueAt: timestamp('due_at', { withTimezone: true }).notNull(),
+    // Work email of the operator who logged it (staff, from AppDeck).
+    loggedBy: text('logged_by').notNull(),
+    handledAt: timestamp('handled_at', { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('data_requests_due_idx').on(t.handledAt, t.dueAt),
+    check('data_requests_kind_values', sql`${t.kind} in ('export', 'deletion')`),
   ],
 );

@@ -1,0 +1,26 @@
+# Cloudflare Worker for the public site (revisionden.com), decision 0005.
+# Static pages from `pnpm --filter @revisionden/www build`, served through a tiny Worker that
+# redirects www to the apex and adds security headers. No IDs or secrets here.
+# Deployed by .github/workflows/deploy-www.yml.
+name = "revisionden-www-staging"
+main = "src/worker.ts"
+compatibility_date = "2026-11-01"
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+not_found_handling = "404-page"
+html_handling = "auto-trailing-slash"
+# The Worker runs first so it can redirect www and set the headers on every page.
+run_worker_first = true
+
+[env.staging]
+name = "revisionden-www-staging"
+routes = [{ pattern = "www-staging.revisionden.com", custom_domain = true }]
+
+[env.production]
+name = "revisionden-www"
+routes = [
+  { pattern = "revisionden.com", custom_domain = true },
+  { pattern = "www.revisionden.com", custom_domain = true },
+]

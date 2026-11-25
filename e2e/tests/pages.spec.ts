@@ -190,3 +190,156 @@ test("the young people's notice shows cards, expands its parts and is accessible
   await expectNoSidewaysScroll(page);
   await expectAccessible(page);
 });
+
+test('Settings offers "Add RevisionDen to this device" as a button, accessibly', async ({
+  page,
+}) => {
+  await page.goto('/settings');
+  // Chrome only offers its install prompt to a real installable site; send the event ourselves.
+  await page.evaluate(() => {
+    const event = new Event('beforeinstallprompt');
+    Object.assign(event, {
+      prompt: async () => undefined,
+      userChoice: Promise.resolve({ outcome: 'dismissed', platform: 'web' }),
+    });
+    window.dispatchEvent(event);
+  });
+  await expect(page.getByRole('button', { name: 'Add RevisionDen to this device' })).toBeVisible();
+  await expectNoSidewaysScroll(page);
+  await expectAccessible(page);
+});
+
+test('the install help shows illustrated iPhone and iPad steps, accessibly', async ({ page }) => {
+  await page.goto('/install');
+  await expect(page.getByRole('list', { name: 'Steps for iPhone' })).toBeVisible();
+  await expect(page.getByRole('list', { name: 'Steps for iPad' })).toBeVisible();
+  await expectNoSidewaysScroll(page);
+  await expectAccessible(page);
+});
+
+/** A virtual passkey device (Chromium only), optionally holding one RevisionDen passkey. */
+async function virtualPasskeyDevice(page: Page, rpId: string, withPasskey: boolean) {
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send('WebAuthn.enable');
+  const { authenticatorId } = await cdp.send('WebAuthn.addVirtualAuthenticator', {
+    options: {
+      protocol: 'ctap2',
+      transport: 'internal',
+      hasResidentKey: true,
+      hasUserVerification: true,
+      isUserVerified: true,
+      automaticPresenceSimulation: true,
+    },
+  });
+  const credentialId = Buffer.from('e2e-passkey-1').toString('base64');
+  if (withPasskey) {
+    const { generateKeyPairSync } = await import('node:crypto');
+    const { privateKey } = generateKeyPairSync('ec', { namedCurve: 'P-256' });
+    await cdp.send('WebAuthn.addCredential', {
+      authenticatorId,
+      credential: {
+        credentialId,
+        isResidentCredential: true,
+        rpId,
+        privateKey: privateKey.export({ format: 'der', type: 'pkcs8' }).toString('base64'),
+        userHandle: Buffer.from('e2e-device').toString('base64'),
+        signCount: 0,
+      },
+    });
+  }
+  return { credentialId: Buffer.from('e2e-passkey-1').toString('base64url') };
+}
+
+async function routeUnlock(page: Page, rpId: string) {
+  let verified: { response?: { id?: string } } | undefined;
+  await page.route('**/v1/device/unlock/options', (route) =>
+    route.fulfill({
+      json: {
+        challengeId: 'c1',
+        options: {
+          challenge: 'ZTJlLWNoYWxsZW5nZQ',
+          rpId,
+          timeout: 5000,
+          userVerification: 'preferred',
+        },
+      },
+    }),
+  );
+  await page.route('**/v1/device/unlock/verify', async (route) => {
+    verified = route.request().postDataJSON() as typeof verified;
+    await route.fulfill({
+      json: {
+        student: {
+          id: '8f6d2b1e-4c3a-4d5e-9f00-000000000001',
+          nickname: 'NovaFox',
+          avatarCode: '10000000000000000000000000000',
+          yearGroup: 11,
+        },
+      },
+    });
+  });
+  return () => verified;
+}
+
+test('a student unlocks with the passkey on this device and lands on the topic map', async ({
+  page,
+  baseURL,
+}) => {
+  const rpId = new URL(baseURL!).hostname;
+  const { credentialId } = await virtualPasskeyDevice(page, rpId, true);
+  const verified = await routeUnlock(page, rpId);
+  await page.goto('/');
+  await page.getByRole('button', { name: "I'm a student: unlock with my passkey" }).click();
+  await expect(page.getByRole('heading', { level: 1, name: 'Topic map' })).toBeVisible();
+  expect(new URL(page.url()).pathname).toBe('/map');
+  expect(verified()?.response?.id).toBe(credentialId);
+});
+
+test('a device with no passkey is told to ask a parent, accessibly', async ({ page, baseURL }) => {
+  const rpId = new URL(baseURL!).hostname;
+  await virtualPasskeyDevice(page, rpId, false);
+  await routeUnlock(page, rpId);
+  await page.goto('/unlock');
+  await expect(page.getByRole('heading', { level: 1, name: 'Unlock RevisionDen' })).toBeVisible();
+  await page.getByRole('button', { name: 'Unlock with my passkey' }).click();
+  await expect(page.getByRole('alert')).toContainText('Ask a parent to link this device.');
+  await expectNoSidewaysScroll(page);
+  await expectAccessible(page);
+});
+
+test('a new parent sees the terms and privacy notice as cards before onboarding, accessibly', async ({
+  page,
+}) => {
+  let stored: unknown;
+  await page.route('**/v1/policy-acceptances', async (route) => {
+    if (route.request().method() === 'PUT') {
+      stored = route.request().postDataJSON();
+      return route.fulfill({ json: { acceptances: [] } });
+    }
+    return route.fulfill({ json: { acceptances: [] } });
+  });
+  await page.goto('/onboarding');
+  await expect(page.getByRole('heading', { level: 1, name: 'Before you start' })).toBeVisible();
+  await expect(page.getByRole('list', { name: 'Terms of use in short' })).toBeVisible();
+  await expect(page.getByRole('list', { name: 'Privacy notice in short' })).toBeVisible();
+  const terms = page.getByRole('list', { name: 'Terms of use in short' });
+  await expect(terms.getByRole('listitem')).toHaveCount(4);
+  await page.getByRole('button', { name: /^Show all \d+ points of the Terms of use$/ }).click();
+  await expect(
+    page.getByRole('button', { name: 'Show fewer points of the Terms of use' }),
+  ).toHaveAttribute('aria-expanded', 'true');
+  expect(await terms.getByRole('listitem').count()).toBeGreaterThan(4);
+  const details = page.getByRole('button', { name: 'Show the details of the Privacy notice' });
+  await expect(details).toHaveAttribute('aria-expanded', 'false');
+  await details.click();
+  await expect(
+    page.getByRole('button', { name: 'Hide the details of the Privacy notice' }),
+  ).toHaveAttribute('aria-expanded', 'true');
+  await expectNoSidewaysScroll(page);
+  await expectAccessible(page);
+  await page
+    .getByRole('checkbox', { name: /I have read the Terms of use and Privacy notice/ })
+    .check();
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await expect.poll(() => stored).toMatchObject({ acceptances: expect.any(Array) });
+});

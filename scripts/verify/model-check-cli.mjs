@@ -3,7 +3,10 @@
 // Pipeline steps 3 and 4: blind answer by a second provider, then adversarial review.
 // Providers: anthropic, openai, gemini. Keys and model ids come from the environment
 // (ANTHROPIC_API_KEY + VERIFY_ANTHROPIC_MODEL, OPENAI_API_KEY + VERIFY_OPENAI_MODEL,
-// GEMINI_API_KEY + VERIFY_GEMINI_MODEL); keep them in .dev.vars, never in git.
+// GEMINI_API_KEY + VERIFY_GEMINI_MODEL); keep them in .dev.vars, never in git. To go through
+// the AI Gateway, set <PROVIDER>_BASE_URL to the gateway URL and AI_GATEWAY_TOKEN.
+// --fact-check <provider> [--fact-judge <provider>] runs step 4b (decision 0009) for items that list
+// `facts`: a third provider states each fact blind and the judge (default gemini) compares it.
 // This calls real models and costs money: it never runs in CI.
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -12,6 +15,8 @@ import { loadContent } from '../content/validate.mjs';
 import { runAdversarialReview } from './adversarial-review.mjs';
 import { runBlindAnswer } from './blind-answer.mjs';
 import { runBlindMarking } from './blind-marking.mjs';
+import { runFactCheck } from './fact-check.mjs';
+import { createPythonChecker } from '../content/maths-engine.mjs';
 import { replaceInFile } from './content-files.mjs';
 import { providerFromEnv } from './providers.mjs';
 import { withCheck } from './record.mjs';
@@ -23,6 +28,7 @@ export async function run(argv, deps = {}) {
     err = console.error,
     now,
     providerFor = (n) => providerFromEnv(n),
+    maths = createPythonChecker({ python: process.env.MATHS_PYTHON ?? 'python3' }),
   } = deps;
   let values;
   try {
@@ -34,14 +40,18 @@ export async function run(argv, deps = {}) {
         blind: { type: 'string' },
         review: { type: 'string' },
         write: { type: 'boolean' },
+        'fact-check': { type: 'string' },
+        'fact-judge': { type: 'string' },
       },
     }));
   } catch (e) {
     err(e.message);
     return 2;
   }
-  if (!values.blind && !values.review) {
-    err('Give --blind <provider> and/or --review <provider> (anthropic, openai or gemini).');
+  if (!values.blind && !values.review && !values['fact-check']) {
+    err(
+      'Give --blind <provider>, --review <provider> and/or --fact-check <provider> (anthropic, openai or gemini).',
+    );
     return 2;
   }
   const steps = [
@@ -54,6 +64,22 @@ export async function run(argv, deps = {}) {
             name: 'adversarial-review',
             run: runAdversarialReview,
             provider: providerFor(values.review),
+          },
+        ]
+      : []),
+    ...(values['fact-check']
+      ? [
+          {
+            name: 'fact-check',
+            onlyFacts: true,
+            run: (item, stater, opts) =>
+              runFactCheck(item, {
+                stater,
+                judge: providerFor(values['fact-judge'] ?? 'gemini'),
+                maths,
+                ...opts,
+              }),
+            provider: providerFor(values['fact-check']),
           },
         ]
       : []),
@@ -79,6 +105,7 @@ export async function run(argv, deps = {}) {
   for (const { file, data } of entries) {
     let updated = data;
     for (const step of steps) {
+      if (step.onlyFacts && !data.facts?.length) continue;
       try {
         const essay = step.name === 'blind-answer' && data.type === 'extended_answer';
         const run = essay ? blindMarking : step.run;

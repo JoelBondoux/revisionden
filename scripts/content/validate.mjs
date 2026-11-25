@@ -214,10 +214,22 @@ function verificationErrors(kind, file, data) {
     fail('verified content needs a quote in every citation');
   }
   if (!verification.reviewed_by) fail('verified content needs reviewed_by (a reviewer role)');
-  for (const c of verification.checks.filter((c) => c.result === 'fail')) {
-    fail(`verified content has a failed ${c.name} check`);
-  }
   const passed = (name) => verification.checks.some((c) => c.name === name && c.result === 'pass');
+  // Decision 0009: a fact that fails the fact-check keeps the item for individual review, so a
+  // failed fact-check is allowed only with needs_human_approval and a passing human-approval.
+  const factFailAllowed = data.needs_human_approval === true && passed('human-approval');
+  for (const c of verification.checks.filter((c) => c.result === 'fail')) {
+    if (c.name === 'fact-check') {
+      if (!factFailAllowed) {
+        fail('a failed fact-check needs needs_human_approval and a passing human-approval check');
+      }
+    } else fail(`verified content has a failed ${c.name} check`);
+  }
+  if (kind === 'items' && data.facts?.length) {
+    if (!verification.checks.some((c) => c.name === 'fact-check')) {
+      fail('a verified item with facts needs a fact-check check (decision 0009)');
+    }
+  }
   for (const name of requiredChecks(kind, data)) {
     if (!passed(name)) fail(`verified content needs a passing ${name} check`);
   }

@@ -8,6 +8,7 @@ import {
   FEEDBACK_STATUSES,
   POLICIES_TO_ACCEPT,
   feedback,
+  feedbackReplies,
   policyAcceptances,
   students,
   type Database,
@@ -179,7 +180,13 @@ export function studentFeedbackRoutes({ db, clock }: FeedbackDeps) {
       .from(feedback)
       .where(eq(feedback.studentId, c.var.student.studentId))
       .orderBy(desc(feedback.createdAt));
-    return c.json({ feedback: rows.map(toFeedback) });
+    const replies = await repliesFor(
+      db,
+      rows.map((r) => r.id),
+    );
+    return c.json({
+      feedback: rows.map((r) => ({ ...toFeedback(r), replies: replies.get(r.id) ?? [] })),
+    });
   });
 
   // Thank-yous for confirmed bug reports the student has not seen yet.
@@ -269,10 +276,15 @@ export function parentFeedbackRoutes({ db, clock }: FeedbackDeps) {
       .leftJoin(students, eq(students.id, feedback.studentId))
       .where(eq(feedback.familyId, c.var.parent.familyId))
       .orderBy(desc(feedback.createdAt));
+    const replies = await repliesFor(
+      db,
+      rows.map(({ row }) => row.id),
+    );
     return c.json({
       feedback: rows.map(({ row, nickname }) => ({
         ...toFeedback(row),
         studentNickname: nickname ?? null,
+        replies: replies.get(row.id) ?? [],
       })),
     });
   });
@@ -334,59 +346,104 @@ export function adminFeedbackRoutes({ db, config, clock }: FeedbackDeps) {
   // Confirm a bug report, or mark it a duplicate of an earlier confirmed one, and reward the
   // student who sent it (packages/core bugReward; docs/REWARDS.md, Bug Hunter track).
   app.post('/feedback/:id/confirm', async (c) => {
-    const id = c.req.param('id');
     const { duplicateOf } = await readJson(c, confirmSchema);
-    if (!isId(id)) throw notFound('Feedback not found');
-    const [row] = await db.select().from(feedback).where(eq(feedback.id, id));
-    if (!row) throw notFound('Feedback not found');
-    if (row.kind !== 'bug')
-      throw new ApiError(400, 'not_a_bug', 'Only bug reports can be confirmed.');
-    if (row.outcome)
-      throw new ApiError(409, 'already_confirmed', 'This report is already confirmed.');
-    if (duplicateOf !== undefined) {
-      const [original] = isId(duplicateOf)
-        ? await db.select().from(feedback).where(eq(feedback.id, duplicateOf))
-        : [];
-      if (!original || original.outcome !== 'confirmed' || original.createdAt > row.createdAt) {
-        throw new ApiError(400, 'invalid_duplicate', 'Pick an earlier confirmed bug report.');
-      }
-    }
-    const now = clock.now();
-    const reward = bugReward({
-      senderRole: row.senderRole,
-      duplicate: duplicateOf !== undefined,
-      rewardsThisWeek: row.studentId ? await bugRewardsThisWeek(db, row.studentId, now) : 0,
-    });
-    const [updated] = await db
-      .update(feedback)
-      .set({
-        outcome: duplicateOf !== undefined ? 'duplicate' : 'confirmed',
-        duplicateOf: duplicateOf ?? null,
-        rewardXp: reward.xp,
-        trackStep: reward.trackStep,
-        confirmedAt: now,
-        updatedAt: now,
-        ...(row.status === 'new' ? { status: 'looking_into_it' as const } : {}),
-      })
-      .where(and(eq(feedback.id, id), isNull(feedback.outcome)))
-      .returning();
-    if (!updated) throw new ApiError(409, 'already_confirmed', 'This report is already confirmed.');
-    return c.json({ item: toAdminFeedback(updated), message: reward.message });
+    const { item, message } = await confirmFeedback(
+      db,
+      clock.now(),
+      c.req.param('id'),
+      duplicateOf,
+    );
+    return c.json({ item: toAdminFeedback(item), message });
   });
 
   app.patch('/feedback/:id', async (c) => {
-    const id = c.req.param('id');
     const { status } = await readJson(c, statusSchema);
-    if (!isId(id)) throw notFound('Feedback not found');
-    const now = clock.now();
-    const [row] = await db
-      .update(feedback)
-      .set({ status, updatedAt: now, closedAt: CLOSED_STATUSES.has(status) ? now : null })
-      .where(eq(feedback.id, id))
-      .returning();
-    if (!row) throw notFound('Feedback not found');
+    const row = await setFeedbackStatus(db, clock.now(), c.req.param('id'), status);
     return c.json(toAdminFeedback(row));
   });
 
   return app;
+}
+
+/**
+ * Confirms a bug report, or marks it a duplicate of an earlier confirmed one, and rewards the
+ * student who sent it (packages/core bugReward; docs/REWARDS.md, Bug Hunter track). Shared by
+ * the operator page (`/v1/admin`) and the AppDeck bridge (`/operator/appdeck`).
+ */
+export async function confirmFeedback(
+  db: Database,
+  now: Date,
+  id: string,
+  duplicateOf?: string,
+): Promise<{ item: typeof feedback.$inferSelect; message: string }> {
+  if (!isId(id)) throw notFound('Feedback not found');
+  const [row] = await db.select().from(feedback).where(eq(feedback.id, id));
+  if (!row) throw notFound('Feedback not found');
+  if (row.kind !== 'bug')
+    throw new ApiError(400, 'not_a_bug', 'Only bug reports can be confirmed.');
+  if (row.outcome)
+    throw new ApiError(409, 'already_confirmed', 'This report is already confirmed.');
+  if (duplicateOf !== undefined) {
+    const [original] = isId(duplicateOf)
+      ? await db.select().from(feedback).where(eq(feedback.id, duplicateOf))
+      : [];
+    if (!original || original.outcome !== 'confirmed' || original.createdAt > row.createdAt) {
+      throw new ApiError(400, 'invalid_duplicate', 'Pick an earlier confirmed bug report.');
+    }
+  }
+  const reward = bugReward({
+    senderRole: row.senderRole,
+    duplicate: duplicateOf !== undefined,
+    rewardsThisWeek: row.studentId ? await bugRewardsThisWeek(db, row.studentId, now) : 0,
+  });
+  const [updated] = await db
+    .update(feedback)
+    .set({
+      outcome: duplicateOf !== undefined ? 'duplicate' : 'confirmed',
+      duplicateOf: duplicateOf ?? null,
+      rewardXp: reward.xp,
+      trackStep: reward.trackStep,
+      confirmedAt: now,
+      updatedAt: now,
+      ...(row.status === 'new' ? { status: 'looking_into_it' as const } : {}),
+    })
+    .where(and(eq(feedback.id, id), isNull(feedback.outcome)))
+    .returning();
+  if (!updated) throw new ApiError(409, 'already_confirmed', 'This report is already confirmed.');
+  return { item: updated, message: reward.message };
+}
+
+/** Sets a ticket's status; fixed and will-not-fix close it (deleted 12 months later). */
+export async function setFeedbackStatus(
+  db: Database,
+  now: Date,
+  id: string,
+  status: (typeof FEEDBACK_STATUSES)[number],
+): Promise<typeof feedback.$inferSelect> {
+  if (!isId(id)) throw notFound('Feedback not found');
+  const [row] = await db
+    .update(feedback)
+    .set({ status, updatedAt: now, closedAt: CLOSED_STATUSES.has(status) ? now : null })
+    .where(eq(feedback.id, id))
+    .returning();
+  if (!row) throw notFound('Feedback not found');
+  return row;
+}
+
+/** Support replies per ticket, oldest first: text and time only (never who wrote them). */
+async function repliesFor(db: Database, ids: string[]) {
+  const map = new Map<string, { body: string; createdAt: string }[]>();
+  if (ids.length === 0) return map;
+  const rows = await db
+    .select()
+    .from(feedbackReplies)
+    .where(inArray(feedbackReplies.feedbackId, ids))
+    .orderBy(feedbackReplies.createdAt);
+  for (const r of rows) {
+    map.set(r.feedbackId, [
+      ...(map.get(r.feedbackId) ?? []),
+      { body: r.body, createdAt: r.createdAt.toISOString() },
+    ]);
+  }
+  return map;
 }

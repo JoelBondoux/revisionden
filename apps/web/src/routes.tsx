@@ -1,6 +1,7 @@
 import { Navigate, useParams, type RouteObject } from 'react-router-dom';
 import { AppLayout, FocusLayout } from './layout/AppLayout';
 import { LinkPage } from './features/onboarding/LinkPage';
+import { UnlockPage } from './features/onboarding/UnlockPage';
 import { OnboardingPage } from './features/onboarding/OnboardingPage';
 import { ComingSoon } from './pages/ComingSoon';
 import { FamilyPage } from './pages/FamilyPage';
@@ -19,6 +20,7 @@ import {
   TopicLessonPage,
 } from './features/learn/pages';
 import { StartingTestPage } from './features/learn/StartingTestPage';
+import { DailyPage } from './features/daily';
 import { ParentRewardsPage, RewardsPage } from './features/rewards';
 import { LegalIndexPage, PolicyPage } from './features/legal/pages';
 import { PolicyGate } from './features/legal/acceptance';
@@ -60,6 +62,8 @@ export const routes: RouteObject[] = [
         ),
       },
       { path: '/link', element: <LinkPage /> },
+      // Student passkey unlock (I5): after the 12-hour device session runs out.
+      { path: '/unlock', element: <UnlockPage /> },
       // Two parents (B3): the second parent joins with the invite code.
       { path: '/join', element: <JoinPage /> },
       { path: '/family/:studentId/rewards', element: <ParentRewardsPage /> },
@@ -74,6 +78,8 @@ export const routes: RouteObject[] = [
       { path: '/review/batches/:batchId', element: <BatchReviewPage /> },
       // Learning loop (workstream F): lessons and the starting test hide the nav.
       { path: '/learn/topic/:topicId', element: <TopicLessonPage /> },
+      // Daily 5-a-day (workstream Q), in the lesson player.
+      { path: '/learn/daily', element: <DailyPage /> },
       { path: '/learn/subject/:subjectId/practice', element: <SubjectPracticePage /> },
       { path: '/learn/subject/:subjectId/start', element: <StartingTestPage /> },
       { path: '/learn/command-words', element: <CommandWordsPage /> },

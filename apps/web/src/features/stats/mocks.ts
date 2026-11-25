@@ -4,6 +4,8 @@
 import { http, HttpResponse, type RequestHandler } from 'msw';
 import {
   DailyLimitSuggestionActionSchema,
+  TargetGradeRequestSchema,
+  type TargetGrades,
   UpdateDailyLimitRequestSchema,
   type DailyLimitToday,
   type ParentDailyLimit,
@@ -62,6 +64,7 @@ export function demoStats(period: StatsPeriod): StudentStats {
       longestCorrectRun: 12,
       bestWeek: { weekStart: '2026-11-16', xp: 260 },
     },
+    targets: demoTargets().subjects,
     level: null,
   };
 }
@@ -93,7 +96,7 @@ export function demoDashboard(childId = DEMO_CHILDREN[0]!.id): ParentDashboard {
         mastery: 64,
         change: 4,
         predictedGrade: null,
-        targetGrade: null,
+        targetGrade: targetState.parent,
       },
       {
         subjectId: 'gcse-physics',
@@ -131,7 +134,52 @@ export function demoDashboard(childId = DEMO_CHILDREN[0]!.id): ParentDashboard {
   };
 }
 
+// Target grades (workstream K8) --------------------------------------------------------------
+
+let targetState: { parent: string | null; student: string | null } = {
+  parent: null,
+  student: null,
+};
+
+export function resetTargetGradeMocks(
+  options: { parentTarget?: string; studentTarget?: string } = {},
+) {
+  targetState = { parent: options.parentTarget ?? null, student: options.studentTarget ?? null };
+}
+
+const demoTargets = (): TargetGrades => ({
+  subjects: [
+    {
+      subjectId: 'gcse-maths',
+      name: 'Maths',
+      parentTarget: targetState.parent,
+      studentTarget: targetState.student,
+      grades: ['9', '8', '7', '6', '5', '4', '3', 'U'],
+    },
+    {
+      subjectId: 'gcse-physics',
+      name: 'Physics',
+      parentTarget: null,
+      studentTarget: null,
+      grades: null,
+    },
+  ],
+});
+
 export const statsHandlers: RequestHandler[] = [
+  http.get('*/v1/students/:id/target-grades', () => HttpResponse.json(demoTargets())),
+  http.put('*/v1/students/:id/target-grades/:subjectId', async ({ request, params }) => {
+    const { targetGrade } = TargetGradeRequestSchema.parse(await request.json());
+    if (params.subjectId !== 'gcse-maths') return HttpResponse.json({}, { status: 422 });
+    targetState.parent = targetGrade;
+    return HttpResponse.json(demoTargets());
+  }),
+  http.put('*/v1/student/target-grades/:subjectId', async ({ request, params }) => {
+    const { targetGrade } = TargetGradeRequestSchema.parse(await request.json());
+    if (params.subjectId !== 'gcse-maths') return HttpResponse.json({}, { status: 422 });
+    targetState.student = targetGrade;
+    return HttpResponse.json(demoTargets());
+  }),
   http.get('*/v1/student/stats', ({ request }) => {
     const period = (new URL(request.url).searchParams.get('period') ?? 'week') as StatsPeriod;
     return HttpResponse.json(demoStats(period));

@@ -208,6 +208,7 @@ Spec: `docs/LEGAL.md` and `PRODUCT_RULES.md` (About page, policies and feedback)
 - [x] L5 Policy acceptance in onboarding (version stored) and the "policy changed" prompt.
 - [x] L6 Friendly view of the young people's privacy notice: short-version cards, key points with "Read more", icons, Pip, gentle motion (built from the same file).
 - [x] L7 Bug button on every screen (hidden in Test mode and timed papers, can be switched off), operator Confirm bug / Duplicate of…, Bug Hunter XP and caps, confirmed-bug count for the rewards track.
+- [x] L8 Friendly "Before you start" acceptance page: the terms and privacy notice as cards built from their plain-English bullets, full text behind "Show the details", links to the full text; acceptance and stored versions unchanged.
 - Tests: placeholder filling and the missing-value message; What's new parsing (versions without the subsection hidden); feedback refuses emails, phone numbers and nicknames; a parent sees only their family's feedback; only the operator role reaches triage; rate limit; acceptance version stored.
 
 ### U. Sound effects (`apps/web/src/features/sound/**`)
@@ -247,9 +248,12 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [x] Q2 Read aloud: Web Speech API, on-device voices preferred, off by default with only online voices, speed control, maths read sensibly; privacy notice line.
 - [ ] Q1 Reading comfort: dyslexia-friendly self-hosted font (OpenDyslexic, OFL), larger text, spacing and tint in Settings, per device, app-wide.
 - [ ] Q2 Read aloud: Web Speech API, on-device voices preferred, off by default with only online voices, speed control, maths read sensibly; privacy notice line.
-- [ ] Q3 Daily 5-a-day: core selection (practised topics, spaced repetition and weak spots), API route and a card on the topic map, played in the lesson player.
+- [x] Q3 Daily 5-a-day: core selection (practised topics, spaced repetition and weak spots), API route and a card on the topic map, played in the lesson player.
 - [x] Q4 Recall checks: 2 questions at lesson start on previously practised topics, skippable, no penalty; wrong answers become flashcards.
 - [x] Q5 Learn it first: `content/learn-links/*.json` with schema and validator, button on topics with a checked link, CI link check. Pilot GCSE Maths Higher Oak links; Bitesize and other subjects later.
+- [x] Q6 Recall checks never reset the combo: a wrong "Remember this?" answer is passed over; a right one still adds to it (owner decision).
+- [ ] Q7 BBC Bitesize links for Learn it first: find and check pages on bbc.co.uk (not reachable from the build environment), board-specific where the page is, and add them to `content/learn-links/`.
+- [ ] Q8 Learn it first beyond the 9 pilot GCSE Maths Higher topics: the rest of the 1MA1 tree, then other subjects and A-Level, each link with a title that clearly matches the topic and a passing CI link check.
 - Tests: settings saved and applied per device; voice choice and default; maths reading; selection with fixed clock and seeded randomness; no penalty for recall; links validated and checked.
 
 ### O. Operator bridge for AppDeck (RevisionDen side) (`docs/OPERATOR_CONSOLE.md`)
@@ -277,11 +281,25 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [ ] $5 Later: school, council and charity codes for free places.
 - Tests: entitlement maths (sibling order, 4th free), gating, trial expiry, webhook idempotency, no upgrade prompts on student screens, FSM rules.
 
+### M. Public sales website (`apps/www`, decision 0005)
+
+- [x] M1 Skeleton: static TypeScript build, Workers `revisionden-www` and `revisionden-www-staging`, www → apex redirect, security headers, self-hosted fonts, reused design tokens, sitemap and robots, `deploy-www.yml`.
+- [x] M2 Pages and content: home (parents first, teen section), how it works, pricing (free now, Premium coming soon from `docs/PRICING.md`), for young people, help and contact, policies from `docs/legal`, about.
+- [x] M3 Polish: Open Graph image and touch icon (original Pip art), theme colour, accessibility pass (axe, WCAG 2.2 AA, light and dark).
+- [x] M5 Links in the app's J7 styles (buttons, tiles, chips, inline links; owner request).
+- [x] M6 Dark theme from the device setting with the app's dark values (J8; owner request).
+- [x] M7 The app's doodle background behind every page (J8), hidden for high contrast and forced colours.
+- [ ] M4 First live deploy (lead): staging, then production once the app is on `app.revisionden.com` and the Cloudflare secrets are set.
+- Tests: page render, every internal link resolves, no third-party origins, policies come from `docs/legal`, production build refuses missing operator details.
+
 ## Stage 2 and later
 
 Broken down into tasks when Stage 1 ships, following the same format. Headline order:
 
-1. Predicted grade (the stats dashboards are workstream K).
+1. Predicted grade (the stats dashboards are workstream K). Target grades are built (K8). The
+   predicted grade waits for verified grade boundaries (docs/VERIFICATION.md) and for mocks and
+   school reports; grade scales for subjects other than GCSE Maths (Edexcel 1MA1) need citing
+   before targets can be set for them.
 2. Exams, mocks and assessments entry; study plan generator and calendar (editable by both):
    drag sessions between days; detail panel to edit a session; custom rules created from edits,
    toggled and removed, applied by the generator, with conflict warnings (mockup screen 5).

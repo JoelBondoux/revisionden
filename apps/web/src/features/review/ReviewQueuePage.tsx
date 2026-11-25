@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { TextLink } from '../../components/links';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { Pill } from '../../components/Pill';
 import { ConfirmError } from './ConfirmError';
+import { CreateBatchFromDrafts } from './CreateBatchFromDrafts';
 import {
   REASON_LABELS,
   useReviewClient,
@@ -27,6 +28,7 @@ export function ReviewQueuePage() {
   const client = useReviewClient();
   const [version, setVersion] = useState(0);
   const [saved, setSaved] = useState(false);
+  const [createdSize, setCreatedSize] = useState<number | null>(null);
   const data = useApiResource(async () => {
     const [me, reports, batches] = await Promise.all([
       client.me(),
@@ -59,6 +61,11 @@ export function ReviewQueuePage() {
           Decision saved.
         </p>
       )}
+      {createdSize !== null && (
+        <p role="status" className="review-saved">
+          Batch created with {createdSize} items.
+        </p>
+      )}
       {data.status !== 'ready' ? (
         <LoadingOrError resource={data} />
       ) : (
@@ -78,13 +85,22 @@ export function ReviewQueuePage() {
             )}
           </Card>
           <Card title="Batches">
+            {data.data.me.role === 'content-lead' && (
+              <CreateBatchFromDrafts
+                key={version}
+                onCreated={(size) => {
+                  setCreatedSize(size);
+                  setVersion((v) => v + 1);
+                }}
+              />
+            )}
             {data.data.batches.length === 0 ? (
               <p>No batches yet.</p>
             ) : (
               <ul className="review-list">
                 {data.data.batches.map((b) => (
                   <li key={b.id}>
-                    <Link to={`/review/batches/${b.id}`}>{b.title}</Link>{' '}
+                    <TextLink to={`/review/batches/${b.id}`}>{b.title}</TextLink>{' '}
                     <Pill tone={STATUS_TONE[b.status]}>{STATUS_LABEL[b.status]}</Pill>
                     <div className="secondary-text">
                       {b.decided} of {b.sampleSize} sampled items decided
