@@ -63,6 +63,12 @@ Tags: #product #rules #limits #defaults
   training rights (not confirmed); no AI clause found for OCR or WJEC Eduqas. Figures, quotes and
   the recommended build order: `docs/research/board-shares-2026-11.md` (research, 2026-11-25; not
   yet a decision).
+- Specialist tools research (2026-11-25, not yet a decision): quick wins are self-hosted and free
+  for paid use (KaTeX, MathLive, pint, ChemPy, RDKit, SmilesDrawer, textstat, on-device Web Speech,
+  the DfE French required-words list under OGL, and public-domain set texts: all 6 AQA Shakespeare
+  plays, all 7 19th-century novels and Animal Farm). Embedded third-party widgets (GeoGebra, Desmos,
+  PhET) break the no-third-parties rule unless self-hosted and need commercial licences for a paid
+  tier; Mathpix's terms are adults-only. Detail: `docs/research/specialist-tools-2026-11.md`.
 - Onboarding takes Years 9 to 13 (9–11 GCSE, 12–13 A-Level). Exams are worked out from the year:
   Year 11 and 13 sit them next summer (2027 in school year 2026/27), Year 10 and 12 a year later,
   Year 9 two years later.
