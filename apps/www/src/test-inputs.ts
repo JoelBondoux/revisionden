@@ -19,6 +19,7 @@ export const testInputs: SiteInputs = {
       .map((name) => [name, read(`docs/legal/${name}`)]),
   ),
   pricingDoc: read('docs/PRICING.md'),
+  doodlesSvg: read('apps/web/src/design/doodles.svg'),
   images: {
     'og.png': readFileSync(join(repoRoot, 'apps/www/public/og.png')),
     'apple-touch-icon.png': readFileSync(join(repoRoot, 'apps/www/public/apple-touch-icon.png')),
