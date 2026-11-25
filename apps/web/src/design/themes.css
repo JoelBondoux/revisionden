@@ -1,0 +1,160 @@
+/*
+ * Themes (workstream J8): dark mode, the colour-blind friendly palette and the doodle background.
+ * features/appearance sets data-theme, data-palette and data-pattern on <html> (and
+ * public/appearance-boot.js does so before first paint). Values mirror design/themes.ts.
+ */
+
+/* ---------- Dark theme ---------- */
+:root[data-theme='dark'] {
+  --color-primary: #6c47f5;
+  --color-primary-edge: #c4b5ff;
+  --color-primary-soft: #2d2652;
+  --color-text: #eceaf5;
+  --color-text-secondary: #b5b1c8;
+  --color-text-on-primary: #ffffff;
+  --color-text-on-gold: #2b2b3a;
+  --color-border: #3a3552;
+  --color-surface: #1f1b33;
+  --color-background: #14112a;
+  --color-success: #0b8457;
+  --color-success-edge: #8be7be;
+  --color-success-soft: #163a2c;
+  --color-warning: #ff7a2f;
+  --color-warning-text: #ffb98a;
+  --color-warning-soft: #3d2615;
+  --color-danger: #c62828;
+  --color-danger-edge: #ff9e9e;
+  --color-gold: #ffc83d;
+  --color-streak: #ff9f1c;
+  --color-locked: #6b6782;
+  --color-locked-soft: #2c2842;
+  --color-mastery-fill: #3b3170;
+  --color-weak: #ff8a4c;
+  --color-challenge: #0e0c1a;
+  --color-pip: #ff7a2f;
+  --color-pip-side: #e35f17;
+  --color-pip-ears: #3a2622;
+  --color-pip-muzzle: #f7f3ee;
+  --shadow-3d-neutral: 0 5px 0 #3a3552;
+  --shadow-card: 0 2px 0 #3a3552;
+  --focus-ring: 0 0 0 3px #14112a, 0 0 0 6px #c4b5ff;
+  --pattern-ink: rgb(196 181 255 / 7%);
+  color-scheme: dark;
+}
+
+/* In dark mode, violet text uses the lighter link colour so it stays readable on dark surfaces. */
+:root[data-theme='dark'] a:not(.btn) {
+  color: var(--color-primary-edge);
+}
+
+:root[data-theme='dark'] .btn--secondary {
+  color: var(--color-primary-edge);
+}
+
+/* Small fixes for parts that used a light-only colour as text. */
+:root[data-theme='dark'] .mission__time {
+  color: var(--color-text-secondary);
+}
+
+:root[data-theme='dark'] .policy-list__title {
+  color: var(--color-primary-edge);
+}
+
+:root[data-theme='dark'] select {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+/* Get help stays a calm, light page in every theme (its own high-contrast colours). */
+:root[data-theme='dark'] .help-main {
+  --color-primary: #6c47f5;
+  --color-primary-edge: #4b2bc9;
+  --color-primary-soft: #eee9fe;
+  --color-text: #2b2b3a;
+  --color-text-secondary: #5e5e73;
+  --color-text-on-primary: #ffffff;
+  --color-text-on-gold: #2b2b3a;
+  --color-border: #e3e3ea;
+  --color-surface: #ffffff;
+  --color-background: #f7f6fb;
+  --color-success: #0b8457;
+  --color-success-edge: #075c3c;
+  --color-success-soft: #e3f5ec;
+  --color-warning: #ff7a2f;
+  --color-warning-text: #b34f00;
+  --color-warning-soft: #fff0e6;
+  --color-danger: #c62828;
+  --color-danger-edge: #8e1b1b;
+  --color-gold: #ffc83d;
+  --color-streak: #ff9f1c;
+  --color-locked: #c4c4cf;
+  --color-locked-soft: #e5e5ec;
+  --color-mastery-fill: #d9cfff;
+  --color-weak: #c2541a;
+  --color-challenge: #2b2b3a;
+  --color-pip: #ff7a2f;
+  --color-pip-side: #e35f17;
+  --color-pip-ears: #3a2622;
+  --color-pip-muzzle: #f7f3ee;
+  color-scheme: light;
+}
+
+/* Reading tints become gentle dark tints in dark mode (text keeps its contrast). */
+:root[data-theme='dark'][data-reading-tint='cream'] {
+  --color-background: #1d1912;
+  --color-surface: #29241a;
+}
+
+:root[data-theme='dark'][data-reading-tint='blue'] {
+  --color-background: #111a26;
+  --color-surface: #1a2535;
+}
+
+/* ---------- Colour-blind friendly palette: right is blue, wrong is orange ---------- */
+:root[data-palette='colourblind'] {
+  --color-success: #1f6fd1;
+  --color-success-edge: #134a8e;
+  --color-success-soft: #e3eefb;
+  --color-danger: #b34f00;
+  --color-danger-edge: #7a3500;
+  --color-weak: #b34f00;
+  --arena-correct: #1f6fd1;
+  --arena-correct-edge: #134a8e;
+  --shadow-3d-success: 0 5px 0 #134a8e;
+  --shadow-3d-danger: 0 5px 0 #7a3500;
+}
+
+:root[data-theme='dark'][data-palette='colourblind'] {
+  --color-success: #1f6fd1;
+  --color-success-edge: #9cc4f5;
+  --color-success-soft: #15304f;
+  --color-danger: #b34f00;
+  --color-danger-edge: #ffb98a;
+  --color-weak: #ff9a57;
+  --arena-correct: #1f6fd1;
+  --arena-correct-edge: #134a8e;
+}
+
+/* ---------- Doodle background ---------- */
+:root {
+  --pattern-ink: rgb(108 71 245 / 7%);
+}
+
+/* A fixed layer behind everything: decorative only, very low contrast, never under text cards. */
+:root[data-pattern='on'] body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--pattern-ink);
+  -webkit-mask: url('./doodles.svg') 0 0 / 240px 240px repeat;
+  mask: url('./doodles.svg') 0 0 / 240px 240px repeat;
+}
+
+/* No pattern for high contrast or forced colours (Windows High Contrast). */
+@media (prefers-contrast: more), (forced-colors: active) {
+  :root[data-pattern='on'] body::before {
+    display: none;
+  }
+}
