@@ -141,3 +141,17 @@ test('--audit for an unknown id exits 1', async () => {
   assert.equal(code, 1);
   assert.match(out.lines.join('\n'), /Nothing found for nope/);
 });
+
+test('a Get help services file with an old check fails validation', async () => {
+  const out = capture();
+  const code = await run(['--content', join(FIXTURES, 'support-stale'), '--no-maths'], {
+    out: out.log,
+    err: out.log,
+    createChecker: () => okEngine,
+  });
+  assert.equal(code, 1);
+  assert.match(
+    out.lines.join('\n'),
+    /support\/uk-services\.json: example-helpline: checked_at 2020-01-01 is older than 4 months/,
+  );
+});

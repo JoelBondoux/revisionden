@@ -125,6 +125,30 @@ describe('Lesson player in the arena (game feel)', () => {
   });
 });
 
+describe('Flashcards inside a lesson', () => {
+  beforeEach(() => stubReducedMotion(false));
+
+  it('keeps the revealed answer on screen after saying whether you knew it', async () => {
+    only(4);
+    renderRoute('/learn/topic/demo-topic-a');
+    await userEvent.click(await screen.findByRole('button', { name: 'Show answer' }));
+    await click('I knew it');
+    await feedback();
+    expect(screen.getByText('Demo back 1')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Show answer' })).not.toBeInTheDocument();
+  });
+
+  it('still shakes after a "Not yet"', async () => {
+    only(4);
+    const { container } = renderRoute('/learn/topic/demo-topic-a');
+    await userEvent.click(await screen.findByRole('button', { name: 'Show answer' }));
+    await click('Not yet');
+    await feedback();
+    expect(container.querySelector('.shake')).not.toBeNull();
+    expect(screen.getByText('Demo back 1')).toBeInTheDocument();
+  });
+});
+
 describe('Combo bonus from the API (J4)', () => {
   beforeEach(() => stubReducedMotion(false));
 

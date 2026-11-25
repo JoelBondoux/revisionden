@@ -552,6 +552,39 @@ Requested by the product owner on 2026-11-25.
 - Parents can see the same page from the parent area, plus the NSPCC adult helpline for worried
   adults.
 
+### How it is built (workstream W, 2026-11-25)
+
+- Pages: `/help` (students, also signed out) and `/parent/help` (parent area; adds a "Worried about a
+  child?" card with the NSPCC Helpline). Links: Settings (Help and information), a small heart
+  "Get help" link in the student footer, the signed-out header, and parent home. The app has no
+  separate profile menu yet; add a link there when one exists.
+- Data: `content/support/uk-services.json`, schema `content/schemas/support-services.schema.json`.
+  Each service has topics, one plain sentence of our own (`helps_with`), its official domains,
+  optional age range and area, contacts (phone as `tel:`, text number with keyword as
+  `sms:<number>?&body=<KEYWORD>`, web chat, website) with optional hours, and `checked_at`. Every
+  contact, hours, age range and area has a `source`: the https URL of the service's own page it was
+  copied from, which must be on one of its official domains.
+- Checks (`scripts/content/support.mjs`, run by `pnpm content:validate` and its tests in CI): schema;
+  sources on the official site; links on the official site; `checked_at` not in the future and not
+  older than 4 months; phone numbers in UK format (10 or 11 digits starting 0, 116 numbers,
+  Childline's 0800 1111, 111, 999) with a matching `tel:` link; text numbers as UK short codes or
+  mobiles with a matching `sms:` link; every topic has at least one service for students.
+- Recheck each term: open every `source`, confirm each detail, update `checked_at`. Leave out any
+  detail that can no longer be confirmed.
+- Left out on 2026-11-25 (could not be confirmed on the service's own site from the build
+  environment; recheck by hand): Papyrus HOPELINE247 (`papyrus-uk.org` redirects to an insolvency
+  administrator's page), Mind, Carers Trust and Anti-Bullying Alliance (their sites block automated
+  visits), Kidscape (`kidscape.org.uk` now redirects to `coramkidscape.org.uk`), Kooth (now
+  "Soluna by Kooth"; availability depends on area). Also left out: Samaritans web chat (a pilot,
+  "not currently available"), FRANK live chat and email, Switchboard chat and email (could not be
+  seen from outside the UK), Beat's email and web chat hours, and Childline's message service. Grief has
+  no specialist service yet (none was on the list to check) and young carers' one (Carers Trust)
+  could not be checked, so both topics list Childline and Samaritans.
+- Privacy: its own layout with no navigation, sounds or API calls; nothing is fetched to show it
+  (the data is built into the app); websites open in a new tab with `rel="noreferrer"`. A unit test
+  and an e2e test check that visiting it makes no API calls and no requests to other sites.
+- Style: calm and light, no game-feel effects (`features/help/help.css`).
+
 ## Quick wins from the competitor research (owner approved 2026-11-25)
 
 From `docs/research/competitors-2026-11.md`. Workstream Q.
