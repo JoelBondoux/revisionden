@@ -6,17 +6,18 @@ import {
   HeartIcon,
   HomeIcon,
   InfoIcon,
-  PhoneIcon,
   ShieldIcon,
   UsersIcon,
 } from '../components/icons';
 import { LinkTile } from '../components/links';
 import { useBugButton } from '../features/feedback/bugButtonContext';
 import { DeviceReminders } from '../features/notifications';
+import { AppearanceSettingsCard } from '../features/appearance';
 import { ReadingSettingsCard } from '../features/reading';
 import { ReadAloudSettingsCard } from '../features/read-aloud';
 import { SoundSettingsCard } from '../features/sound';
 import { ParentCanSee } from '../features/stats/ParentCanSee';
+import { InstallButton } from '../pwa/InstallCard';
 
 export function SettingsPage() {
   const bugButton = useBugButton();
@@ -26,12 +27,7 @@ export function SettingsPage() {
       <Card title="This device">
         <ul className="link-tiles">
           <li>
-            <LinkTile
-              to="/install"
-              icon={<PhoneIcon />}
-              title="Add to Home Screen"
-              description="Open RevisionDen like an app"
-            />
+            <InstallButton />
           </li>
           <li>
             <LinkTile
@@ -64,6 +60,7 @@ export function SettingsPage() {
         </ul>
       </Card>
       <ReadingSettingsCard />
+      <AppearanceSettingsCard />
       <ReadAloudSettingsCard />
       <SoundSettingsCard />
       <DeviceReminders />

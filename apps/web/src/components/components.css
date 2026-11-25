@@ -63,7 +63,7 @@
 
 .btn--gold {
   background: var(--color-gold);
-  color: var(--color-text);
+  color: var(--color-text-on-gold);
   box-shadow: 0 5px 0 #c99412;
 }
 
@@ -132,13 +132,13 @@
 
 .pill--gold {
   background: var(--color-gold);
-  color: var(--color-text);
+  color: var(--color-text-on-gold);
   border-color: transparent;
 }
 
 .pill--streak {
   background: var(--color-streak);
-  color: var(--color-text);
+  color: var(--color-text-on-gold);
   border-color: transparent;
 }
 
