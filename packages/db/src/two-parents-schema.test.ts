@@ -14,7 +14,9 @@ afterAll(async () => {
 });
 
 async function family(): Promise<string> {
-  const res = await client.query<{ id: string }>('insert into families default values returning id');
+  const res = await client.query<{ id: string }>(
+    'insert into families default values returning id',
+  );
   return res.rows[0]!.id;
 }
 
@@ -89,9 +91,10 @@ describe('two parents', () => {
     const id = await user();
     await client.query('insert into parent_removal_notices (auth_user_id) values ($1)', [id]);
     await client.query('delete from auth_users where id = $1', [id]);
-    const left = await client.query('select 1 from parent_removal_notices where auth_user_id = $1', [
-      id,
-    ]);
+    const left = await client.query(
+      'select 1 from parent_removal_notices where auth_user_id = $1',
+      [id],
+    );
     expect(left.rows).toHaveLength(0);
   });
 
@@ -99,7 +102,9 @@ describe('two parents', () => {
     const res = await client.query<{
       deletion_requested_by: number | null;
       deletion_requested_at: Date | null;
-    }>('insert into families default values returning deletion_requested_by, deletion_requested_at');
+    }>(
+      'insert into families default values returning deletion_requested_by, deletion_requested_at',
+    );
     expect(res.rows[0]).toEqual({ deletion_requested_by: null, deletion_requested_at: null });
   });
 });

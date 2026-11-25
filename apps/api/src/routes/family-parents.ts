@@ -54,7 +54,9 @@ export function newInviteCode(
   randomBytes: (n: number) => Uint8Array<ArrayBuffer> = (n) =>
     crypto.getRandomValues(new Uint8Array(n)),
 ) {
-  return Array.from(randomBytes(CODE_LENGTH), (b) => CODE_ALPHABET[b % CODE_ALPHABET.length]).join('');
+  return Array.from(randomBytes(CODE_LENGTH), (b) => CODE_ALPHABET[b % CODE_ALPHABET.length]).join(
+    '',
+  );
 }
 
 async function familyParents(db: Database, familyId: string) {
@@ -66,9 +68,12 @@ async function familyParents(db: Database, familyId: string) {
 }
 
 const inviteNotFound = () =>
-  new ApiError(404, 'invite_not_found', 'That code is not valid or has expired. Ask for a new one.');
-const familyFull = () =>
-  new ApiError(409, 'family_full', 'This family already has two parents.');
+  new ApiError(
+    404,
+    'invite_not_found',
+    'That code is not valid or has expired. Ask for a new one.',
+  );
+const familyFull = () => new ApiError(409, 'family_full', 'This family already has two parents.');
 
 export function familyParentRoutes(deps: FamilyParentDeps) {
   const { db, config, clock } = deps;
@@ -121,7 +126,11 @@ export function familyParentRoutes(deps: FamilyParentDeps) {
       );
     if (!invite) throw inviteNotFound();
     if (invite.familyId === me.familyId) {
-      throw new ApiError(409, 'own_family', 'This code is for your own family. Send it to the other parent.');
+      throw new ApiError(
+        409,
+        'own_family',
+        'This code is for your own family. Send it to the other parent.',
+      );
     }
     // The joining parent's own family (made on first sign-in) must be empty: no children and
     // no other parent. Then it is dropped and they move to the inviting family.

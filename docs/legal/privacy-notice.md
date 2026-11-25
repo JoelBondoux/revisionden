@@ -1,6 +1,6 @@
 # Privacy notice
 
-Version: 1.1
+Version: 1.2
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -13,6 +13,9 @@ ever seem to say different things, the full text is the one that counts.
   {{CONTACT_EMAIL}}.
 - **What we keep about you.** Only the email address you sign in with (with a Google or
   Microsoft account, whichever this app offers), and the records the sign-in needs to work. We do not keep your name or photo.
+  If a second parent joins your family, we keep their sign-in email in the same way.
+- **Two parents.** A family can have two parents with equal control. A family activity log shows
+  what each changed, as "Parent 1" or "Parent 2", never by name.
 - **What we keep about your child.** A nickname, an avatar, their school year, their subjects and
   exam boards, and their revision records: which questions they answered, whether they were right,
   how long they took, their XP, streaks, rewards, flashcards and study plan. We never keep their
@@ -91,7 +94,25 @@ students in Years 9 to 13 (usually aged 13 to 18).
 - feedback or bug reports you choose to send us (see section 9);
 - reports of a mistake in a question (only the question, its version and a reason picked from a
   list; no free text);
-- if you have been given a reviewer role for checking questions, that role.
+- if you have been given a reviewer role for checking questions, that role;
+- if your family has a second parent: the same records about them (their own sign-in email,
+  provider identifier, sessions and policy confirmations), and whether each of you is "Parent 1"
+  or "Parent 2";
+- the family activity log: which changes were made (for example a child added, a reward given or
+  the data downloaded), by "Parent 1" or "Parent 2", and when. It never holds a parent's name or
+  email. Entries about a child are deleted with the child, and entries are kept for 12 months;
+- an invite code for a second parent, stored only as a scrambled (hashed) value, valid for 7 days
+  and usable once;
+- if one parent removes the other, a note that the removed parent was removed and when, kept only
+  until they have seen it in the app.
+
+4.1a **Two parents.** Either parent can invite a second parent, remove the other parent (who then
+loses access at once and sees a notice the next time they sign in), and download or delete the
+family's data. Deleting the whole family account needs both parents to confirm. Each parent is
+told in the app, and by push notification if they turned it on, about important changes the other
+parent makes: children added or removed, rewards given, limits changed, data downloaded and
+requests to delete the family account. These notifications say "Parent 1" or "Parent 2", never a
+name.
 
 We do not store your name or profile picture. The app asks the sign-in provider for a minimum
 profile and blanks the name and picture before anything is saved.
@@ -295,8 +316,9 @@ the law lets us extend in some cases; we will tell you if we do. There is normal
 
 12.4 In the parent area, "Download your family's data" gives you a file (in the common JSON
 format) with everything we hold about you and your children. It leaves out only security codes
-such as scrambled session codes and device keys. A parent account deletion button is planned but
-not built yet; until then we will delete your account on request.
+such as scrambled session codes and device keys. In the parent home, "Delete the family account"
+deletes the whole family, every child's records and both parents' sign-ins; when there are two
+parents, the other parent must confirm it first.
 
 ### 13. Complaints
 
@@ -313,5 +335,6 @@ in the app on your next visit and ask you to confirm, and students see a plain-E
 
 ## Changes
 
+- 1.2: A family can now have two parents. We keep the second parent's sign-in email in the same way as the first, a family activity log that says "Parent 1" or "Parent 2" (never names), invite codes (hashed, 7 days) and a short note when a parent is removed. Deleting the whole family needs both parents to confirm.
 - 1.1: Wording only: parents sign in with Google or Microsoft, whichever this app offers. No change to the data we keep.
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).

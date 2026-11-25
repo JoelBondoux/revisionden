@@ -43,17 +43,25 @@ describe('telling the other parent about important changes', () => {
     await t.db.update(familyEvents).set({ pushedAt: t.clock.now() }); // joining is old news here
     await t.app.request(
       '/v1/students',
-      jsonRequest('POST', { nickname: 'push_kid', avatarCode: AVATAR, yearGroup: 10 }, second.headers),
+      jsonRequest(
+        'POST',
+        { nickname: 'push_kid', avatarCode: AVATAR, yearGroup: 10 },
+        second.headers,
+      ),
     );
     const sender = fakeSender();
     const summary = await runFamilyEventNotifications({ db: t.db, now: t.clock.now(), sender });
     expect(summary).toEqual({ events: 1, pushes: 1, removed: 0 });
-    expect(sender.sent.map((s) => s.endpoint)).toEqual([expect.stringContaining('push.example.com/1/')]);
+    expect(sender.sent.map((s) => s.endpoint)).toEqual([
+      expect.stringContaining('push.example.com/1/'),
+    ]);
 
     const again = await runFamilyEventNotifications({ db: t.db, now: t.clock.now(), sender });
     expect(again.events).toBe(0);
 
-    const latest = await t.app.request('/v1/parent/notifications/latest', { headers: first.headers });
+    const latest = await t.app.request('/v1/parent/notifications/latest', {
+      headers: first.headers,
+    });
     expect(await latest.json()).toEqual({ message: 'Parent 2 added push_kid' });
     // The parent who made the change is not told about it.
     const own = await t.app.request('/v1/parent/notifications/latest', { headers: second.headers });
@@ -64,22 +72,45 @@ describe('telling the other parent about important changes', () => {
   it('does not push changes that are not important', async () => {
     const { familyId } = await family();
     await t.db.update(familyEvents).set({ pushedAt: t.clock.now() });
-    await recordFamilyEvent(t.db, { familyId, actorPosition: 1, kind: 'reward_set', now: t.clock.now() });
-    const summary = await runFamilyEventNotifications({ db: t.db, now: t.clock.now(), sender: fakeSender() });
+    await recordFamilyEvent(t.db, {
+      familyId,
+      actorPosition: 1,
+      kind: 'reward_set',
+      now: t.clock.now(),
+    });
+    const summary = await runFamilyEventNotifications({
+      db: t.db,
+      now: t.clock.now(),
+      sender: fakeSender(),
+    });
     expect(summary.events).toBe(0);
   });
 
   it('waits until morning during the nightly quiet hours', async () => {
     const { familyId } = await family();
     const night = new Date('2026-01-15T23:00:00Z');
-    await recordFamilyEvent(t.db, { familyId, actorPosition: 2, kind: 'data_exported', now: night });
-    const summary = await runFamilyEventNotifications({ db: t.db, now: night, sender: fakeSender() });
+    await recordFamilyEvent(t.db, {
+      familyId,
+      actorPosition: 2,
+      kind: 'data_exported',
+      now: night,
+    });
+    const summary = await runFamilyEventNotifications({
+      db: t.db,
+      now: night,
+      sender: fakeSender(),
+    });
     expect(summary.events).toBe(0);
   });
 
   it('removes push addresses the push service says are gone', async () => {
     const { familyId } = await family();
-    await recordFamilyEvent(t.db, { familyId, actorPosition: 2, kind: 'data_exported', now: t.clock.now() });
+    await recordFamilyEvent(t.db, {
+      familyId,
+      actorPosition: 2,
+      kind: 'data_exported',
+      now: t.clock.now(),
+    });
     const summary = await runFamilyEventNotifications({
       db: t.db,
       now: t.clock.now(),

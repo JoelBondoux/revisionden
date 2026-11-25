@@ -14,6 +14,11 @@ Tags: #product #rules #limits #defaults
 - Students have no outside account: nickname (2–16 letters, numbers, underscore), avatar code and
   year group only. Devices linked by a one-time QR token (10 minutes, single use), then a passkey.
 - Nicknames are unique within a family. A family is created the first time a parent signs in.
+- Two parents (B3): a family can have two parents with equal control (Parent 1, Parent 2).
+  Invite code or link 7 days, single use, hashed, 5 a day; either parent removes the other (access
+  ends at once, notice next sign-in); deleting the family needs both when there are two; family
+  activity log names parents only by number, important changes pushed to the other parent and
+  shown as new in the parent home; log kept 12 months. Migration 0009.
 - Year group: Years 9 to 13 only (core schema and database check `students_year_group_range`,
   migration 0006).
 - Google and Microsoft access, refresh and ID tokens are never stored: blanked in Better Auth's

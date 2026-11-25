@@ -7,6 +7,7 @@ import { feedbackHandlers } from '../features/feedback/mocks';
 import { legalHandlers } from '../features/legal/mocks';
 import { statsHandlers } from '../features/stats/mocks';
 import { familyDataHandlers } from '../features/family-data/mocks';
+import { parentsHandlers } from '../features/parents/mocks';
 
 /**
  * Mock API for development and tests. Every handler uses a real API path exactly (checked by
@@ -40,4 +41,5 @@ export const handlers: RequestHandler[] = [
   // Statistics dashboards (workstream K).
   ...statsHandlers,
   ...familyDataHandlers,
+  ...parentsHandlers,
 ];

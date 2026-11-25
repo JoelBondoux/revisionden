@@ -101,7 +101,10 @@ Source of truth: `packages/db/src/schema.ts`; migrations in `packages/db/migrati
 | `auth_accounts`             | id, user_id, provider_id, account_id (OAuth tokens always blank, no passwords)                                                                  |
 | `auth_verifications`        | id, identifier, value, expires_at (OAuth state)                                                                                                 |
 | `families`                  | id, created_at, last_active_at, previous_active_at (12-month inactive deletion)                                                                 |
-| `parents`                   | id, family_id, auth_user_id (unique)                                                                                                            |
+| `parents`                   | id, family_id, auth_user_id (unique), position (1 or 2, unique per family), events_seen_at                                                      |
+| `parent_invites`            | id, family_id, code_hash (unique), created_by_parent_id, expires_at (7 days), used_at                                                           |
+| `parent_removal_notices`    | auth_user_id (key), removed_at (until the removed parent has seen it)                                                                           |
+| `family_events`             | id, seq, family_id, actor_position (1 or 2), kind, student_id (cascades), important, pushed_at                                                  |
 | `students`                  | id, family_id, nickname (unique per family), avatar_code, year_group (9–13)                                                                     |
 | `enrolments`                | student_id + subject_id (key), board, tier, spec_version                                                                                        |
 | `devices`                   | id, student_id, credential_id, public_key, counter, transports, linked_at                                                                       |
@@ -203,6 +206,12 @@ All bodies are validated with the Zod schemas in `packages/core`. Errors always 
 | `GET, PUT /v1/policy-acceptances`                                                                                                  | parent          | Versions of the terms and privacy notice confirmed                           |
 | `GET /v1/export`                                                                                                                   | parent          | All the parent's and their children's data as a JSON file (secrets left out) |
 | `GET /v1/family/activity`                                                                                                          | parent          | Last use, deletion date if unused, return-after-11-months warning            |
+| `POST /v1/family/invites`                                                                                                          | parent          | Invite code and link for a second parent (7 days, 5 a day)                   |
+| `POST /v1/family/join`                                                                                                             | parent          | Join the family with a code (becomes Parent 2)                               |
+| `GET /v1/family/parents`, `DELETE .../parents/:position`                                                                           | parent          | The parents; remove the other parent                                         |
+| `POST, DELETE /v1/family/deletion`                                                                                                 | parent          | Ask or confirm deleting the family; cancel                                   |
+| `GET /v1/family/events`, `POST .../events/seen`                                                                                    | parent          | Family activity log (Parent 1/2); mark seen                                  |
+| `GET /v1/removal-notice`, `POST .../seen`                                                                                          | parent sign-in  | Notice for a removed parent                                                  |
 
 A parent only ever sees their own family: another family's student answers 404. The QR code
 holds `<web origin>/link?token=…&family=…`. The passkey relying party is the web app's host

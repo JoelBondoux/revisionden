@@ -121,7 +121,11 @@ describe('inviting a second parent', () => {
     const first = await t.signInParent();
     const { code } = await invite(first.headers);
     const other = await t.signInParent();
-    await post('/v1/students', { nickname: 'own_kid', avatarCode: AVATAR, yearGroup: 9 }, other.headers);
+    await post(
+      '/v1/students',
+      { nickname: 'own_kid', avatarCode: AVATAR, yearGroup: 9 },
+      other.headers,
+    );
     const res = await post('/v1/family/join', { code }, other.headers);
     expect(res.status).toBe(409);
     expect(await res.json()).toMatchObject({ error: { code: 'already_in_family' } });
@@ -171,9 +175,19 @@ describe('both parents have equal control', () => {
       ['PATCH', `/v1/students/${id}`, { yearGroup: 11 }, 200],
       ['POST', `/v1/students/${id}/link-tokens`, {}, 201],
       ['PUT', `/v1/students/${id}/reminder-settings`, { streakReminders: false }, 200],
-      ['POST', `/v1/students/${id}/parent-rewards`, { title: 'Cinema trip', target: { kind: 'stat', stat: 'level', atLeast: 2 } }, 201],
+      [
+        'POST',
+        `/v1/students/${id}/parent-rewards`,
+        { title: 'Cinema trip', target: { kind: 'stat', stat: 'level', atLeast: 2 } },
+        201,
+      ],
       ['POST', '/v1/feedback', { kind: 'idea', text: 'two parents is great' }, 201],
-      ['PUT', '/v1/policy-acceptances', { acceptances: [{ policy: 'terms-of-use', version: '1.0' }] }, 200],
+      [
+        'PUT',
+        '/v1/policy-acceptances',
+        { acceptances: [{ policy: 'terms-of-use', version: '1.0' }] },
+        200,
+      ],
       ['POST', '/v1/students', { nickname: 'second_kid', avatarCode: AVATAR, yearGroup: 12 }, 201],
     ];
     for (const [method, path, body, status] of writes) {
@@ -191,14 +205,19 @@ describe('both parents have equal control', () => {
       stranger.headers,
     );
     const { id } = (await theirs.json()) as { id: string };
-    expect((await t.app.request(`/v1/students/${id}`, { headers: second.headers })).status).toBe(404);
+    expect((await t.app.request(`/v1/students/${id}`, { headers: second.headers })).status).toBe(
+      404,
+    );
   });
 });
 
 describe('removing the other parent', () => {
   it('ends their access at once and shows them a notice next time', async () => {
     const { first, second } = await twoParentFamily('remove_kid');
-    const res = await t.app.request('/v1/family/parents/2', { method: 'DELETE', headers: first.headers });
+    const res = await t.app.request('/v1/family/parents/2', {
+      method: 'DELETE',
+      headers: first.headers,
+    });
     expect(res.status).toBe(204);
 
     const blocked = await t.app.request('/v1/students', { headers: second.headers });
@@ -214,14 +233,23 @@ describe('removing the other parent', () => {
     expect(await fresh.json()).toEqual({ students: [] });
 
     const parents = await t.app.request('/v1/family/parents', { headers: first.headers });
-    expect(await parents.json()).toMatchObject({ parents: [{ position: 1, you: true }], canInvite: true });
+    expect(await parents.json()).toMatchObject({
+      parents: [{ position: 1, you: true }],
+      canInvite: true,
+    });
   });
 
   it('lets Parent 2 remove Parent 1 too, but nobody removes themselves', async () => {
     const { first, second } = await twoParentFamily('remove_first_kid');
-    const self = await t.app.request('/v1/family/parents/2', { method: 'DELETE', headers: second.headers });
+    const self = await t.app.request('/v1/family/parents/2', {
+      method: 'DELETE',
+      headers: second.headers,
+    });
     expect(self.status).toBe(400);
-    const res = await t.app.request('/v1/family/parents/1', { method: 'DELETE', headers: second.headers });
+    const res = await t.app.request('/v1/family/parents/1', {
+      method: 'DELETE',
+      headers: second.headers,
+    });
     expect(res.status).toBe(204);
     expect((await t.app.request('/v1/me', { headers: first.headers })).status).toBe(403);
   });
@@ -266,7 +294,10 @@ describe('deleting the whole family', () => {
   it('can be cancelled by either parent', async () => {
     const { first, second, familyId: fam } = await twoParentFamily('cancel_kid');
     await post('/v1/family/deletion', {}, first.headers);
-    const res = await t.app.request('/v1/family/deletion', { method: 'DELETE', headers: second.headers });
+    const res = await t.app.request('/v1/family/deletion', {
+      method: 'DELETE',
+      headers: second.headers,
+    });
     expect(res.status).toBe(204);
     const [row] = await t.db.select().from(families).where(eq(families.id, fam));
     expect(row!.deletionRequestedBy).toBeNull();
@@ -317,15 +348,29 @@ describe('family activity log', () => {
 
   it('counts important changes by the other parent until they are seen', async () => {
     const { first, second } = await twoParentFamily('seen_kid');
-    await post('/v1/students', { nickname: 'new_kid', avatarCode: AVATAR, yearGroup: 9 }, second.headers);
-    const before = (await (await t.app.request('/v1/family/events', { headers: first.headers })).json()) as Events;
+    await post(
+      '/v1/students',
+      { nickname: 'new_kid', avatarCode: AVATAR, yearGroup: 9 },
+      second.headers,
+    );
+    const before = (await (
+      await t.app.request('/v1/family/events', { headers: first.headers })
+    ).json()) as Events;
     expect(before.newFromOtherParent).toBe(2); // joined, added a child
-    expect(before.events[0]).toMatchObject({ kind: 'child_added', what: 'added new_kid', by: 'Parent 2' });
+    expect(before.events[0]).toMatchObject({
+      kind: 'child_added',
+      what: 'added new_kid',
+      by: 'Parent 2',
+    });
     expect((await post('/v1/family/events/seen', {}, first.headers)).status).toBe(204);
-    const after = (await (await t.app.request('/v1/family/events', { headers: first.headers })).json()) as Events;
+    const after = (await (
+      await t.app.request('/v1/family/events', { headers: first.headers })
+    ).json()) as Events;
     expect(after.newFromOtherParent).toBe(0);
     // Your own changes never count as new for you.
-    const mine = (await (await t.app.request('/v1/family/events', { headers: second.headers })).json()) as Events;
+    const mine = (await (
+      await t.app.request('/v1/family/events', { headers: second.headers })
+    ).json()) as Events;
     // Parent 1's invite came before Parent 2 joined, so it is not new for them.
     expect(mine.newFromOtherParent).toBe(0);
   });
@@ -333,7 +378,13 @@ describe('family activity log', () => {
   it('logs an export as important', async () => {
     const { first, second } = await twoParentFamily('export_log_kid');
     await t.app.request('/v1/export', { headers: second.headers });
-    const body = (await (await t.app.request('/v1/family/events', { headers: first.headers })).json()) as Events;
-    expect(body.events[0]).toMatchObject({ kind: 'data_exported', by: 'Parent 2', important: true });
+    const body = (await (
+      await t.app.request('/v1/family/events', { headers: first.headers })
+    ).json()) as Events;
+    expect(body.events[0]).toMatchObject({
+      kind: 'data_exported',
+      by: 'Parent 2',
+      important: true,
+    });
   });
 });

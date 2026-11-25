@@ -29,6 +29,7 @@ import { AdminFeedbackPage, FeedbackListPage } from './features/feedback/lists';
 import { MyStatsPage } from './features/stats/MyStatsPage';
 import { ParentDashboardPage } from './features/stats/ParentDashboardPage';
 import { ParentHomePage, ParentRemindersPage } from './features/parent';
+import { JoinPage } from './features/parents';
 
 function LessonRedirect() {
   const { lessonId = '' } = useParams();
@@ -50,6 +51,8 @@ export const routes: RouteObject[] = [
         ),
       },
       { path: '/link', element: <LinkPage /> },
+      // Two parents (B3): the second parent joins with the invite code.
+      { path: '/join', element: <JoinPage /> },
       { path: '/family/:studentId/rewards', element: <ParentRewardsPage /> },
       // Old topic map links: the lesson player is /learn/topic/:topicId (workstream F).
       { path: '/lesson/:lessonId', element: <LessonRedirect /> },

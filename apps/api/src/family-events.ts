@@ -15,7 +15,11 @@ import {
 } from '@revisionden/db';
 import type { AppEnv } from './context';
 import type { Clock } from './rate-limit';
-import { DEFAULT_REMINDER_SETTINGS, isNightlyQuietTime, localClock } from './notifications/schedule';
+import {
+  DEFAULT_REMINDER_SETTINGS,
+  isNightlyQuietTime,
+  localClock,
+} from './notifications/schedule';
 import type { PushSender } from './notifications/web-push';
 
 interface Kind {

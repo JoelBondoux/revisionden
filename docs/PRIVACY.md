@@ -22,6 +22,10 @@
   no IP address or browser details. The provider's access, refresh and ID tokens are blanked
   before the sign-in record is saved (`apps/api/src/auth.ts`): Better Auth needs only the
   provider's account id to sign a parent in again, and we call no Google or Microsoft API.
+- Second parent (optional): invited by the first with a one-time code (7 days, stored hashed);
+  signs in with their own Google or Microsoft account, so only their sign-in email is kept, with
+  the same token and profile blanking. The family activity log names parents only "Parent 1" or
+  "Parent 2"; a removed parent's notice is kept only until they have seen it.
 - Student: no outside account. Nickname (letters, numbers, underscore; 2–16 characters), layered
   avatar saved as a short code, year group (Years 9 to 13, checked by the API and the database).
   Device linked by one-time QR, then a passkey.
@@ -75,7 +79,8 @@ family (`apps/api/src/routes/flashcards.ts`).
 
 ## Export and deletion
 
-- One button deletes a student's data.
+- One button deletes a student's data. "Delete the family account" deletes everything, including
+  both parents' sign-ins; with two parents, the other must confirm first.
 - Export: a parent can download everything we hold about them and their own children as one JSON
   file (`GET /v1/export`, "Download your family's data" in the parent area). Secrets are left
   out: session and link-code hashes, passkey keys and credential ids, push keys.

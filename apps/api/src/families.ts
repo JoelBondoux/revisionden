@@ -31,7 +31,10 @@ export async function ensureParent(db: Database, authUserId: string): Promise<Pa
   return (await findParent(db, authUserId))!;
 }
 
-export async function findParent(db: Database, authUserId: string): Promise<ParentContext | undefined> {
+export async function findParent(
+  db: Database,
+  authUserId: string,
+): Promise<ParentContext | undefined> {
   const [row] = await db
     .select({ parentId: parents.id, familyId: parents.familyId, position: parents.position })
     .from(parents)

@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Card } from '../../components/Card';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { ChildReminderSettings, ParentRewardNews } from '../notifications';
 import { NotSetUp } from '../stats/Tile';
 import { useStatsApi, type Child } from '../stats/statsApi';
+import { FamilyLog, ParentsPanel, RemovalNotice } from '../parents';
 import './parent.css';
 
 /**
@@ -16,9 +17,11 @@ import './parent.css';
 export function ParentHomePage() {
   const api = useStatsApi();
   const children = useApiResource(() => api.getChildren(), [api]);
+  const navigate = useNavigate();
   return (
     <div className="stack parent-home">
       <h1>Parent home</h1>
+      <RemovalNotice onDone={() => window.location.reload()} />
       {children.status === 'ready' ? (
         children.data.length === 0 ? (
           <Card title="Your children">
@@ -52,6 +55,8 @@ export function ParentHomePage() {
           </ul>
         </Card>
         <ParentRewardNews />
+        <ParentsPanel onDeleted={() => navigate('/', { replace: true })} />
+        <FamilyLog />
         <Card title="Settings and policies">
           <ul className="link-list">
             <li>
