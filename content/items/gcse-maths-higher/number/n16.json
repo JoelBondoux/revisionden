@@ -17,6 +17,7 @@
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N16",
     "checked_by": ["maths-engine", "author"],
+    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -40,7 +41,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Answer backed by the maths engine.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Answer backed by the maths engine. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -104,6 +105,7 @@
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N16",
     "checked_by": ["maths-engine", "author"],
+    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -127,7 +129,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Answer backed by the maths engine.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Answer backed by the maths engine. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -191,6 +193,7 @@
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N16",
     "checked_by": ["maths-engine", "author"],
+    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -214,7 +217,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Answer backed by the maths engine.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Answer backed by the maths engine. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -279,6 +282,7 @@
     "mark_scheme": ["M1 for 8.5 × 5.5", "A1 for 46.75"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N16",
     "checked_by": ["maths-engine", "author"],
+    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -302,7 +306,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Upper bound of a product uses both upper bounds. Answer and every step backed by the maths engine. Mark points written by this session. Changed from worked maths to numeric with unit cm^2 after the blind answer gave \"46.75 cm^2\" (worked-maths answers are compared as text); n16-0005 is now the worked example.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Upper bound of a product uses both upper bounds. Answer and every step backed by the maths engine. Mark points written by this session. Changed from worked maths to numeric with unit cm^2 after the blind answer gave \"46.75 cm^2\" (worked-maths answers are compared as text); n16-0005 is now the worked example. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -377,6 +381,7 @@
     "marks": 2,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N16",
     "checked_by": ["maths-engine", "author"],
+    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -400,7 +405,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Upper bound of a difference is the upper bound of a minus the lower bound of b: 6.25 - 2.35. Answer backed by the maths engine. Changed to worked maths with steps (the worked example for N16). Mark points written by this session.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Upper bound of a difference is the upper bound of a minus the lower bound of b: 6.25 - 2.35. Answer backed by the maths engine. Changed to worked maths with steps (the worked example for N16). Mark points written by this session. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -467,6 +472,7 @@
     "marks": 3,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N16",
     "checked_by": ["maths-engine", "author"],
+    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -490,7 +496,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Lower bound of speed = lower bound of distance ÷ upper bound of time = 99.5 ÷ 12.55 = 7.928..., 7.93 to 3 s.f. (checked in Python). Answer backed by the maths engine within the tolerance.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Lower bound of speed = lower bound of distance ÷ upper bound of time = 99.5 ÷ 12.55 = 7.928..., 7.93 to 3 s.f. (checked in Python). Answer backed by the maths engine within the tolerance. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -547,6 +553,7 @@
     "back": "7.5",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N16",
     "checked_by": ["author"],
+    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -570,7 +577,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Front cited to spec N16. Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. ",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Front cited to spec N16. Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python.  Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -619,6 +626,7 @@
     "back": "3.35",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N16",
     "checked_by": ["author"],
+    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -642,7 +650,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Front cited to spec N16. Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. ",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Front cited to spec N16. Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python.  Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -691,6 +699,7 @@
     "back": "255",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N16",
     "checked_by": ["author"],
+    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -714,7 +723,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Front cited to spec N16. Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. ",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Front cited to spec N16. Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python.  Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually.",
           "at": "2026-11-25T17:29:23Z"
         },
         {

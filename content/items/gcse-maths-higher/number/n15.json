@@ -273,6 +273,7 @@
     "explanation": "Numbers from 8.35 up to (but not including) 8.45 round to 8.4. 8.35 rounds up to 8.4, but 8.45 rounds up to 8.5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["author"],
+    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -296,7 +297,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. 8.35 rounds to 8.4 and 8.45 to 8.5 (ROUND_HALF_UP).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. 8.35 rounds to 8.4 and 8.45 to 8.5 (ROUND_HALF_UP). Decision 0008: the answer rests on the standard definition of an error interval (rounding: lower bound ≤ x < upper bound; truncation: stated value ≤ x < next value), which the 1MA1 spec names (N15) but does not define, so needs_human_approval is set and the owner approves this item individually.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -350,6 +351,7 @@
     "explanation": "Truncating cuts off the digits after the first decimal place. Any number from 5.7 up to (but not including) 5.8 truncates to 5.7.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["author"],
+    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -373,7 +375,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. Checked in Python: truncation of 5.7 and 5.7999 gives 5.7, of 5.8 gives 5.8, of 5.65 gives 5.6.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. Checked in Python: truncation of 5.7 and 5.7999 gives 5.7, of 5.8 gives 5.8, of 5.65 gives 5.6. Decision 0008: the answer rests on the standard definition of an error interval (rounding: lower bound ≤ x < upper bound; truncation: stated value ≤ x < next value), which the 1MA1 spec names (N15) but does not define, so needs_human_approval is set and the owner approves this item individually.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -427,6 +429,7 @@
     "explanation": "Half of 10 g is 5 g, so m is from 295 g up to (but not including) 305 g.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["author"],
+    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -450,7 +453,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. 295 rounds to 300 and 305 to 310 (nearest 10, ROUND_HALF_UP).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. 295 rounds to 300 and 305 to 310 (nearest 10, ROUND_HALF_UP). Decision 0008: the answer rests on the standard definition of an error interval (rounding: lower bound ≤ x < upper bound; truncation: stated value ≤ x < next value), which the 1MA1 spec names (N15) but does not define, so needs_human_approval is set and the owner approves this item individually.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -504,6 +507,7 @@
     "explanation": "n is 2400 correct to 2 significant figures, so n was rounded to the nearest 100. Half of 100 is 50, so n is from 2350 up to (but not including) 2450.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["author"],
+    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -527,7 +531,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. 2350 rounds to 2400 and 2450 to 2500 (2 s.f., ROUND_HALF_UP). Explanation reworded after adversarial review: it is n that was rounded to the nearest 100, not 2400. Explanation now starts from the question's own information (adversarial review, second run).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. 2350 rounds to 2400 and 2450 to 2500 (2 s.f., ROUND_HALF_UP). Explanation reworded after adversarial review: it is n that was rounded to the nearest 100, not 2400. Explanation now starts from the question's own information (adversarial review, second run). Decision 0008: the answer rests on the standard definition of an error interval (rounding: lower bound ≤ x < upper bound; truncation: stated value ≤ x < next value), which the 1MA1 spec names (N15) but does not define, so needs_human_approval is set and the owner approves this item individually.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
