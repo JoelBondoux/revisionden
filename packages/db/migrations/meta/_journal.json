@@ -71,6 +71,13 @@
       "when": 1795596254409,
       "tag": "0009_error_reports",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1795599945964,
+      "tag": "0010_daily_sets",
+      "breakpoints": true
     }
   ]
 }

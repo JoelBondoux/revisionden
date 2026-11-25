@@ -2,6 +2,7 @@ import { http, HttpResponse, type RequestHandler } from 'msw';
 import { onboardingHandlers } from '../features/onboarding/mocks';
 import { cardsDue, topicMap } from './data';
 import { learnHandlers } from '../features/learn/mocks';
+import { dailyHandlers } from '../features/daily/mocks';
 import { rewardsHandlers } from '../features/rewards/mocks';
 import { feedbackHandlers } from '../features/feedback/mocks';
 import { legalHandlers } from '../features/legal/mocks';
@@ -33,6 +34,8 @@ export const handlers: RequestHandler[] = [
 
   // Learning loop and flashcards (workstream F).
   ...learnHandlers,
+  // Daily 5-a-day (workstream Q).
+  ...dailyHandlers,
   ...rewardsHandlers,
   // Policies, About and feedback (workstream L).
   ...feedbackHandlers,

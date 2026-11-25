@@ -27,6 +27,7 @@
     "GET /v1/review/rechecks",
     "GET /v1/review/reports",
     "GET /v1/student/cards/due",
+    "GET /v1/student/daily",
     "GET /v1/student/feedback",
     "GET /v1/student/flashcards",
     "GET /v1/student/flashcards/decks/:topicId",

@@ -240,6 +240,15 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [ ] X6 Parent dashboard and study plan integration; "Full past papers" milestones.
 - Tests: timing per question with going back, extra time, time running out, pacing flags (1.5× slow, 0.5× rushed with marks lost), grade from boundaries, no feedback before the end, citations present for every duration and total.
 
+### Q. Quick wins (`docs/PRODUCT_RULES.md`, Quick wins from the competitor research)
+
+- [ ] Q1 Reading comfort: dyslexia-friendly self-hosted font (OpenDyslexic, OFL), larger text, spacing and tint in Settings, per device, app-wide.
+- [ ] Q2 Read aloud: Web Speech API, on-device voices preferred, off by default with only online voices, speed control, maths read sensibly; privacy notice line.
+- [x] Q3 Daily 5-a-day: core selection (practised topics, spaced repetition and weak spots), API route and a card on the topic map, played in the lesson player.
+- [ ] Q4 Recall checks: 2 questions at lesson start on previously practised topics, skippable, no penalty; wrong answers become flashcards.
+- [ ] Q5 Learn it first: `content/learn-links/*.json` with schema and validator, button on topics with a checked link, CI link check.
+- Tests: settings saved and applied per device; voice choice and default; maths reading; selection with fixed clock and seeded randomness; no penalty for recall; links validated and checked.
+
 ## Stage 2 and later
 
 Broken down into tasks when Stage 1 ships, following the same format. Headline order:
