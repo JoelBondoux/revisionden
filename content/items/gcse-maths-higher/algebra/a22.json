@@ -872,7 +872,6 @@
     "back": "Reverse",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -889,8 +888,14 @@
     ],
     "facts": [
       {
-        "statement": "Multiplying or dividing both sides of an inequality by a negative number reverses the inequality sign.",
-        "ask": "What happens to an inequality when you multiply or divide both sides by a negative number?"
+        "statement": "Multiplying both sides of an inequality by a negative number reverses the inequality sign.",
+        "ask": "What happens to an inequality when you multiply both sides by a negative number?",
+        "engine": { "kind": "implication", "given": ["a < b", "c < 0"], "then": "a c > b c" }
+      },
+      {
+        "statement": "Dividing both sides of an inequality by a negative number reverses the inequality sign.",
+        "ask": "What happens to an inequality when you divide both sides by a negative number?",
+        "engine": { "kind": "implication", "given": ["a < b", "c < 0"], "then": "a/c > b/c" }
       }
     ],
     "verification": {
@@ -902,7 +907,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T18:18:48Z"
         },
         {
@@ -939,11 +944,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T19:27:48Z",
-          "notes": "fact 1: no maths engine proof; blind statement matches (\"When you multiply or divide both sides of an inequality by a negative number, the inequality sign must be reversed. For example, if a < b and c < 0, then ac > bc and a/c > b/c.\")"
+          "at": "2026-11-25T20:42:18Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"When you multiply or divide both sides of an inequality by a negative number, the inequality sign must be reversed. For example, if a < b and c < 0, then ac > bc.\"); fact 2: maths engine proof pass; blind statement matches (\"When you divide both sides of an inequality by a negative number, you must reverse the inequality sign. For example, if a < b and c < 0, then a/c > b/c.\")"
         }
       ]
     }
