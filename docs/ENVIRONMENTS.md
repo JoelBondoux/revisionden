@@ -82,7 +82,9 @@ Cloudflare API token with the "AI Gateway: Run" permission (dashboard: AI, AI Ga
 
 Web build variables for production (GitHub environment `production`, Variables):
 `VITE_OPERATOR_NAME`, `VITE_CONTACT_EMAIL`, `VITE_POLICY_EFFECTIVE_DATE` (required: the build
-fails without them) and `VITE_POSTAL_ADDRESS` (optional). Dev and staging may leave them unset
+fails without them). Agreed values: `VITE_OPERATOR_NAME` = `JoelBondoux.net`, `VITE_CONTACT_EMAIL` =
+`privacy@revisionden.com`; leave `VITE_POLICY_EFFECTIVE_DATE` unset until launch.
+`VITE_POSTAL_ADDRESS` is not used. Dev and staging may leave them unset
 and show "to be added".
 
 ## Deploys from GitHub Actions
@@ -122,10 +124,15 @@ Step by step (about 15 minutes):
    `staging`, `main`), database `revisionden`, role `revisionden_owner`, "Connection pooling" on,
    copy the URL. In each GitHub environment add the secret `DATABASE_URL` (`main` goes in
    `production`).
-5. **Production variables.** Environment `production`, Variables: `VITE_OPERATOR_NAME`,
-   `VITE_CONTACT_EMAIL`, `VITE_POLICY_EFFECTIVE_DATE` (for example `2026-12-01`) and, if wanted,
-   `VITE_POSTAL_ADDRESS`.
-6. **First run.** Actions, "Deploy dev", Run workflow. It should end with "API is on
+5. **Production variables.** Environment `production`, Variables: `VITE_OPERATOR_NAME`
+   (`JoelBondoux.net`) and `VITE_CONTACT_EMAIL` (`privacy@revisionden.com`). Add
+   `VITE_POLICY_EFFECTIVE_DATE` (for example `2026-12-01`) only when production launches; until
+   then the production web build fails on purpose. Setting the same two in `dev` and `staging` is
+   optional (they show "to be added" without them).
+6. **Contact inbox.** Make `privacy@revisionden.com` reach you, for example with Cloudflare Email
+   Routing on the `revisionden.com` zone forwarding to your own inbox (a session must not set
+   this up: it needs your inbox address).
+7. **First run.** Actions, "Deploy dev", Run workflow. It should end with "API is on
    <version>; some secrets still missing" until the OAuth secrets are set.
 
 ## Maths engine on Cloud Run (G3, not set up yet)
@@ -195,11 +202,12 @@ Feedback triage (workstream L), set as a secret so no email is in the code:
 | `OPERATOR_EMAILS` | unset   | Comma-separated parent sign-in emails that may use `/admin/feedback`; none when unset |
 
 Web build variables (workstream L), filled into the policies and About page at build:
-`VITE_OPERATOR_NAME`, `VITE_CONTACT_EMAIL`, `VITE_POSTAL_ADDRESS`, `VITE_POLICY_EFFECTIVE_DATE`,
-`VITE_ENVIRONMENT` and `VITE_COMMIT`, plus `VITE_API_URL` (the API host). Without the operator
-details the pages say "contact details to be added"; a production build
-(`VITE_ENVIRONMENT=production`) fails without `VITE_OPERATOR_NAME`, `VITE_CONTACT_EMAIL` and
-`VITE_POLICY_EFFECTIVE_DATE` (`apps/web/src/features/legal/productionGuard.ts`).
+`VITE_OPERATOR_NAME`, `VITE_CONTACT_EMAIL` (`privacy@revisionden.com`), `VITE_POLICY_EFFECTIVE_DATE`
+(`VITE_POSTAL_ADDRESS` optional, not used), `VITE_ENVIRONMENT` and `VITE_COMMIT`, plus
+`VITE_API_URL` (the API host). Without the operator details the pages say "contact details to be
+added"; a production build (`VITE_ENVIRONMENT=production`) fails without `VITE_OPERATOR_NAME`,
+`VITE_CONTACT_EMAIL` and `VITE_POLICY_EFFECTIVE_DATE`
+(`apps/web/src/features/legal/productionGuard.ts`).
 
 **Cron trigger:** every 15 minutes (`[triggers] crons` in `wrangler.toml`) the Worker deletes
 feedback closed more than 12 months ago, then sends due reminders. Reminders do nothing until
