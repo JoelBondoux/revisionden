@@ -101,3 +101,41 @@
   min-height: var(--tap-target);
   color: var(--color-text);
 }
+
+/* Game feel (workstream J): the arena lesson's top bar, Pip and effects. */
+.lesson__xp {
+  min-width: 7ch;
+  text-align: right;
+  color: var(--arena-gold);
+  white-space: nowrap;
+}
+
+.lesson__pip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.lesson__footer {
+  position: relative;
+}
+
+.lesson__burst {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 0;
+}
+
+.set-complete .stars {
+  margin-bottom: var(--space-4);
+}
+
+.set-complete .complete__stats {
+  margin-bottom: var(--space-4);
+}
+
+.stat--combo {
+  grid-column: 1 / -1;
+  color: var(--arena-gold);
+}

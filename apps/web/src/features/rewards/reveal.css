@@ -1,0 +1,101 @@
+/* Reward reveals (docs/GAME_FEEL.md): a visual tier to match the reward sound. */
+.reward-reveals {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.reward-reveal {
+  position: relative;
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--color-primary-soft);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  overflow: hidden;
+  animation: reveal-pop var(--motion-medium) var(--ease-spring) both;
+}
+
+.reward-reveal p {
+  margin: 0;
+}
+
+.reward-reveal__name {
+  font-weight: var(--font-weight-black);
+  font-size: var(--font-size-lg);
+}
+
+.reward-reveal__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-secondary);
+}
+
+.reward-reveal__why {
+  color: var(--color-text-secondary);
+}
+
+.reward-reveal--rare {
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 0 var(--color-primary-edge);
+}
+
+.reward-reveal--epic {
+  border-color: var(--color-primary-edge);
+  background: var(--color-primary-soft);
+  box-shadow:
+    0 0 0 3px var(--color-mastery-fill),
+    0 4px 0 var(--color-primary-edge);
+}
+
+.reward-reveal--legendary {
+  border-color: var(--color-gold);
+  background: linear-gradient(135deg, #fff7dd 0%, var(--color-surface) 60%);
+  box-shadow:
+    0 0 0 3px var(--color-gold),
+    0 5px 0 #c99412;
+}
+
+.reward-reveal--legendary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgb(255 255 255 / 60%) 50%, transparent 70%);
+  transform: translateX(-100%);
+  animation: reveal-shine 1.2s var(--ease-out) 0.3s both;
+  pointer-events: none;
+}
+
+@keyframes reveal-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes reveal-shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reward-reveal,
+  .reward-reveal--legendary::after {
+    animation: none;
+  }
+
+  .reward-reveal--legendary::after {
+    display: none;
+  }
+}

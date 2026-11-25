@@ -1,0 +1,149 @@
+/*
+ * Light-theme game feel (docs/GAME_FEEL.md "Where it applies"): bouncy buttons, entrance motion
+ * and the pulsing call to action on the topic map, rewards and stats. Calm screens (parent area,
+ * policies, settings) are not listed here and keep subtle motion only. Transforms and opacity only.
+ */
+
+/* Entrance: cards rise in, hexes and stat tiles pop in one after another. */
+.mission,
+.unit,
+.map-summary,
+.rewards > *,
+.stats > * {
+  animation: enter-rise var(--motion-medium) var(--ease-out) both;
+}
+
+.rewards > :nth-child(2),
+.stats > :nth-child(2) {
+  animation-delay: 60ms;
+}
+
+.rewards > :nth-child(3),
+.stats > :nth-child(3) {
+  animation-delay: 120ms;
+}
+
+.rewards > :nth-child(n + 4),
+.stats > :nth-child(n + 4) {
+  animation-delay: 180ms;
+}
+
+.honeycomb .hex,
+.stat-tile {
+  animation: enter-pop var(--motion-medium) var(--ease-spring) both;
+}
+
+.honeycomb__row:nth-child(2) .hex,
+.stat-tile:nth-child(2) {
+  animation-delay: 50ms;
+}
+
+.honeycomb__row:nth-child(3) .hex,
+.stat-tile:nth-child(3) {
+  animation-delay: 100ms;
+}
+
+.honeycomb__row:nth-child(n + 4) .hex,
+.stat-tile:nth-child(n + 4) {
+  animation-delay: 150ms;
+}
+
+@keyframes enter-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes enter-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Bouncy buttons: a springy squash on tap. */
+.mission .btn,
+.rewards .btn,
+.stats .btn,
+.period-toggle__button {
+  transition: transform var(--motion-fast) var(--ease-spring);
+}
+
+.mission .btn:active:not(:disabled),
+.rewards .btn:active:not(:disabled),
+.stats .btn:active:not(:disabled),
+.period-toggle__button:active {
+  transform: translateY(5px) scale(0.97, 0.94);
+}
+
+/* The map's Next mission button is the main call to action, so it pulses too. */
+.mission .btn {
+  position: relative;
+  overflow: hidden;
+  animation: cta-pulse var(--motion-pulse) ease-in-out infinite;
+}
+
+/* The main call to action: pulses gently with a moving shine (about 0.6 times a second). */
+.cta-pulse {
+  position: relative;
+  overflow: hidden;
+  animation: cta-pulse var(--motion-pulse) ease-in-out infinite;
+}
+
+.cta-pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgb(255 255 255 / 35%) 50%, transparent 70%);
+  transform: translateX(-100%);
+  animation: cta-shine calc(var(--motion-pulse) * 2) ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes cta-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+@keyframes cta-shine {
+  0%,
+  60% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mission,
+  .unit,
+  .map-summary,
+  .rewards > *,
+  .stats > *,
+  .honeycomb .hex,
+  .stat-tile,
+  .mission .btn,
+  .cta-pulse,
+  .cta-pulse::after {
+    animation: none;
+  }
+
+  .cta-pulse::after {
+    display: none;
+  }
+}

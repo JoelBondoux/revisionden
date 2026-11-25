@@ -44,6 +44,9 @@ ENVIRONMENT = "development"
 API_ORIGIN = "https://api-dev.revisionden.com"
 WEB_ORIGIN = "https://dev.revisionden.com"
 PASSKEY_RP_ID = "dev.revisionden.com"
+# Dev only: also serve the pilot drafts so the family can try them. The API ignores this outside
+# development, and the config test checks staging and production never set it.
+SERVE_DRAFT_CONTENT = "true"
 
 [env.dev.triggers]
 crons = ["*/15 * * * *"]

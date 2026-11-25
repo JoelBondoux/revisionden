@@ -7,6 +7,9 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- On the test site (dev.revisionden.com) you can now try the first practice questions while they are still being checked; they are marked "DRAFT CONTENT".
+- The topic map, rewards and stats now move a little: cards slide in, hexagons pop up and buttons bounce. New rewards show how special they are, what you get and exactly why you earned it.
+- Lessons have a new game feel: a dark arena with big coloured answer buttons, a burst of colour and floating XP for right answers, a COMBO badge for answers in a row, Pip cheering you on, and a "Lesson complete" celebration with stars and confetti, then Next mission. Turn on reduced motion on your device for a calmer version.
 - When something goes wrong, tap "Send error report" to tell us in one tap. It's anonymous: no names, nothing you typed. We'll get on it.
 - Coming soon: a daily 5-a-day, quick recall checks, links to free lessons for each topic, read aloud, and a dyslexia-friendly reading mode.
 - Coming soon: build your own title from words you unlock, like "Cosmic Scholar".
@@ -20,7 +23,6 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Coming soon: secret achievements you only discover when you earn them.
 - Coming later: timed exam practice. Sit a full paper against the clock, then see your marks, your likely grade and how to pace yourself better.
 - The privacy notice for students is now much easier to read: a short version on six cards, the key points of each part up front, and "Read more" when you want the detail.
-- Coming soon: a new game feel for practice, with colour bursts, combos, rising sounds and a big "set complete" celebration.
 - Parents get a notification on their phone when a child reaches a reward target you set. Turn on "Reward news" on the new parent home.
 - New parent home: one place for the stats dashboard, rewards you set, reminder times, family feedback, settings and policies. Find it from the profile picker or Settings.
 - When you're signed out, About, Policies and Feedback show a simple header (Sign in, Policies, About) instead of the student menu.
@@ -44,6 +46,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Game feel (J): flashcard text was white on white inside the arena panel on the Cards tab; light cards inside the arena now keep dark text (`design/arena.css`). In a lesson, saying whether you knew a flashcard no longer hides the answer you had just revealed (the shake wrapper no longer remounts the card).
 - Public pages (I): without a linked student on the device, `AppLayout` pages (About, Feedback, Settings and the rest) and the policy pages (now under `AppLayout`) show `PublicHeader` (logo, Sign in, Policies, About) instead of the student nav.
 - No third-party requests (I): the deployed smoke test and the local e2e suite fail if a page requests any host other than the web origin and its API host. On staging it finds Cloudflare's zone-injected Web Analytics beacon (`static.cloudflareinsights.com`), which the owner is switching off in the Cloudflare dashboard.
 - Policies: the privacy notice and services page (both now 1.1) say parents sign in with Google or Microsoft, whichever this app offers (a deployment may offer only one).
@@ -60,6 +63,9 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Dev serves the pilot draft questions (`SERVE_DRAFT_CONTENT="true"` in `[env.dev.vars]`), with a config test that staging and production never set it (G).
+- Game feel J5 (J): `apps/web/src/design/motion.css` gives the topic map, rewards and stats entrance motion (cards rise, hexes and stat tiles pop in), springy button presses and a pulsing Next mission button; calm screens are left alone. `.cta-pulse` moved there from `juice.css`. New `RewardReveal` (`features/rewards/`) on the Rewards screen: each new reward shows its tier (common to legendary, matching U's reward sound tiers), what it gives and why (`rewardReason`, from the reward's one stated target; nothing shown if it is not in the catalogue). A stylesheet test checks that game-feel animations use only transform and opacity, switch off for reduced motion and never pulse faster than 3 times a second.
+- Game feel J2/J3 (J): the lesson player, starting test and flashcard review use the arena theme. Lessons: 2×2 answer grid (`ItemInput` takes an `optionMark` for marked options), particle burst and float-up +XP on the chosen option (or above the feedback for typed answers), shake and right-option highlight on a wrong answer, COMBO ×n, Pip line, rolling "XP this lesson" counter, `ArenaProgress`. New `SetComplete` (stars, confetti, XP tally, best combo, daily goal, pulsing Next mission to `/map`, take-a-break line when the daily goal is met, "Great work today. See you tomorrow" from `DAILY_REWARD_XP_CAP` XP today). Starting test: arena look, no right/wrong effects (Test mode rule). Flashcards: arena panel and progress bar only, pending F3. The lesson follows the API's `combo` (J4) when present and shows "Includes +5 XP combo bonus" in the feedback.
 - Error reports (I): "Send error report" on every error with an `RD-` code posts an anonymous report to `POST /v1/error-reports` (strict `ErrorReportSchema`: code, screen and API path with ids masked, status, build, browser family, online, time); `error_reports` table (migration 0009, one row per code, 90-day clean-up); operator list at `/admin/feedback` (filter "Error reports"), `GET /v1/admin/error-reports?since=…` grouped by screen, API path and status, and `scripts/error-reports.mjs` (reads `DATABASE_URL`). Id-free path checks now also refuse full ids. Privacy notice 1.2 and data retention 1.1.
 - Get help page (workstream W): `/help` and `/parent/help` (adds the NSPCC adult helpline), built from `content/support/uk-services.json` with its schema; every contact detail, opening time and age range carries its official source URL; `pnpm content:validate` fails on a missing or off-site source, a check older than 4 months, or a non-UK number. No-API layout, Quick exit (history replace), service worker v3 precaches `/help` and the built files; e2e checks axe and that the page makes no API or third-party requests. Privacy notice and young people's notice 1.2 say the page is private.
 - Combo XP J4 (J): `COMBO_BONUS_XP`, `comboBonusXp`, `comboBefore`, `comboBonusForSequence` in `packages/core/src/xp.ts`. `POST /v1/student/learn/attempts` adds +5 XP from the 3rd right Learn mode answer in a row (worked out from the student's recent answers; a wrong answer, a Test mode answer or a 5-minute gap ends it) and returns `combo` and `comboBonusXp`. `POST .../starting-tests/:id/finish` applies the bonus to the test's answers in order on the first finish and returns `bestCombo` and `comboBonusXp`. The bonus is stored in each answer's `xp_earned`, so R's reward XP and daily cap count it. New optional fields in `LearnAttemptResponseSchema` and `StartingTestResultSchema`.
