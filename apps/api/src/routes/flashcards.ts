@@ -6,14 +6,21 @@
  * - Wrong answers in lessons become cards (see the learn routes).
  * - Students can add their own cards to a topic; like feedback, a card holding an email
  *   address, a UK phone number or a nickname from the family is refused.
- * - Reviews follow SM-2 from packages/core; each card reviewed earns 2 XP.
+ * - Reviews follow SM-2 from packages/core and happen in a session. XP is per completed session
+ *   (20 XP for 5+ cards, at most 2 a day), never per card (packages/core flashcard-session.ts).
  */
 import { Hono } from 'hono';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import {
   CreateFlashcardRequestSchema,
-  DECK_REVIEW_XP,
+  FLASHCARD_SESSION_MAX_CARDS,
+  FLASHCARD_SESSION_MIN_CARDS,
+  FLASHCARD_SESSION_XP,
+  MAX_REWARDED_SESSIONS_PER_DAY,
+  countCardInSession,
+  sessionOutcome,
   FlashcardReviewRequestSchema,
+  FlashcardSessionRequestSchema,
   RATING_QUALITY,
   dueCards,
   previewReviews,
@@ -21,14 +28,16 @@ import {
   type Flashcard,
   type FlashcardDeck,
 } from '@revisionden/core';
-import { flashcards, topics } from '@revisionden/db';
+import { flashcardSessions, flashcards, topics } from '@revisionden/db';
+import { saveNewRewards } from './rewards';
 import type { AppEnv } from '../context';
-import { notFound } from '../errors';
+import { ApiError, notFound } from '../errors';
 import { readJson } from '../http';
 import { isId } from '../validation';
 import { correctAnswerText, servableItem } from '../learning/items';
 import type { ItemBody } from '../learning/content-sync';
 import { awardXp } from '../learning/progress';
+import { claimFinish, rewardedLeftToday, takeRewardSlot } from '../learning/flashcard-sessions';
 import { flashcardStore, toCard, type Loaded } from '../learning/flashcard-store';
 import { containsPersonalData, familyProfiles, personalDetails } from '../feedback/routes';
 import type { LearnDeps } from './learn';
@@ -134,14 +143,93 @@ export function flashcardRoutes({ db, clock, config }: LearnDeps) {
     return c.json(toFlashcard({ card: card!, item: null, topic }, now), 201);
   });
 
+  const sessionFinished = () =>
+    new ApiError(409, 'session_finished', 'That flashcard session has already finished');
+
+  /** One of the student's sessions; 404 for someone else's, 409 once finished. */
+  async function openSession(studentId: string, sessionId: string) {
+    if (!isId(sessionId)) throw notFound();
+    const [session] = await db
+      .select()
+      .from(flashcardSessions)
+      .where(and(eq(flashcardSessions.id, sessionId), eq(flashcardSessions.studentId, studentId)));
+    if (!session) throw notFound();
+    if (session.finishedAt) throw sessionFinished();
+    return session;
+  }
+
+  app.post('/sessions', async (c) => {
+    const studentId = c.var.student.studentId;
+    const now = clock.now();
+    const { topicId } = c.req.header('content-type')?.includes('json')
+      ? await readJson(c, FlashcardSessionRequestSchema)
+      : {};
+    if (topicId) {
+      const [card] = await db
+        .select({ id: flashcards.id })
+        .from(flashcards)
+        .where(and(eq(flashcards.studentId, studentId), eq(flashcards.topicId, topicId)))
+        .limit(1);
+      if (!card) throw notFound('No such deck');
+    }
+    const [session] = await db
+      .insert(flashcardSessions)
+      .values({ studentId, startedAt: now, topicId: topicId ?? null })
+      .returning({ id: flashcardSessions.id });
+    return c.json(
+      {
+        id: session!.id,
+        maxCards: FLASHCARD_SESSION_MAX_CARDS,
+        minCards: FLASHCARD_SESSION_MIN_CARDS,
+        xp: FLASHCARD_SESSION_XP,
+        rewardedLeftToday: await rewardedLeftToday(db, studentId, now),
+      },
+      201,
+    );
+  });
+
+  app.post('/sessions/:id/finish', async (c) => {
+    const studentId = c.var.student.studentId;
+    const session = await openSession(studentId, c.req.param('id'));
+    const now = clock.now();
+    // A one-deck session is complete when that deck has nothing left due.
+    const loaded = await loadCards(
+      studentId,
+      session.topicId ? eq(flashcards.topicId, session.topicId) : undefined,
+    );
+    const dueLeft = dueCards(
+      loaded.map((l) => toCard(l.card)),
+      now.getTime(),
+    ).length;
+    const outcome = sessionOutcome({
+      cardsCounted: session.cardIds.length,
+      dueLeft,
+      rewardedToday: MAX_REWARDED_SESSIONS_PER_DAY - (await rewardedLeftToday(db, studentId, now)),
+    });
+    if (!(await claimFinish(db, session.id, outcome.completed, now))) throw sessionFinished();
+    const xp = outcome.xp > 0 ? await takeRewardSlot(db, studentId, session.id, now) : 0;
+    const progress = await awardXp(db, studentId, xp, now);
+    return c.json({
+      completed: outcome.completed,
+      reason: outcome.xp > 0 && xp === 0 ? 'daily_limit' : outcome.reason,
+      xpEarned: xp,
+      cardsCounted: session.cardIds.length,
+      rewardedLeftToday: await rewardedLeftToday(db, studentId, now),
+      progress,
+      newlyEarned: await saveNewRewards(db, studentId, now),
+    });
+  });
+
   app.post('/:id/review', async (c) => {
     const studentId = c.var.student.studentId;
     const id = c.req.param('id');
     if (!isId(id)) throw notFound();
+    const { rating, sessionId } = await readJson(c, FlashcardReviewRequestSchema);
+    const session = await openSession(studentId, sessionId);
     const [loaded] = await loadCards(studentId, eq(flashcards.id, id));
     if (!loaded) throw notFound();
-    const { rating } = await readJson(c, FlashcardReviewRequestSchema);
     const now = clock.now();
+    // Self-ratings schedule the card only: they never change mastery or XP (XP is per session).
     const next = reviewCard(toCard(loaded.card), RATING_QUALITY[rating], now.getTime());
     const [card] = await db
       .update(flashcards)
@@ -154,12 +242,12 @@ export function flashcardRoutes({ db, clock, config }: LearnDeps) {
       })
       .where(eq(flashcards.id, id))
       .returning();
-    const progress = await awardXp(db, studentId, DECK_REVIEW_XP, now);
+    const cardIds = countCardInSession(session.cardIds, id);
+    await db.update(flashcardSessions).set({ cardIds }).where(eq(flashcardSessions.id, session.id));
     return c.json({
       card: toFlashcard({ ...loaded, card: card! }, now),
-      xpEarned: DECK_REVIEW_XP,
       comesBackSooner: rating === 'again',
-      progress,
+      cardsCounted: cardIds.length,
     });
   });
 

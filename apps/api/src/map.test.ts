@@ -102,10 +102,16 @@ describe('cards due (F2)', () => {
     const overview = (await (await get('/v1/student/flashcards', headers)).json()) as {
       due: { id: string }[];
     };
-    await t.app.request(
+    const session = await t.app.request('/v1/student/flashcards/sessions', {
+      method: 'POST',
+      headers,
+    });
+    const { id: sessionId } = (await session.json()) as { id: string };
+    const res = await t.app.request(
       `/v1/student/flashcards/${overview.due[0]!.id}/review`,
-      jsonRequest('POST', { rating: 'good' }, headers),
+      jsonRequest('POST', { rating: 'good', sessionId }, headers),
     );
+    expect(res.status).toBe(200);
     expect(await due(headers)).toBe(0);
   });
 

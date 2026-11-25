@@ -5,6 +5,7 @@ import {
   comboStep,
   confettiPieces,
   nextCombo,
+  pastDailyCap,
   pipLine,
   rollValue,
   showsComboBadge,
@@ -128,5 +129,12 @@ describe('rolling counter', () => {
 
   it('eases out, so it moves fastest at the start', () => {
     expect(rollValue(0, 100, 0.5)).toBeGreaterThan(50);
+  });
+});
+
+describe('daily cap', () => {
+  it('is reached at the daily reward XP cap (300 XP), not before', () => {
+    expect(pastDailyCap(299)).toBe(false);
+    expect(pastDailyCap(300)).toBe(true);
   });
 });

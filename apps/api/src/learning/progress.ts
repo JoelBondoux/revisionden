@@ -14,6 +14,7 @@ import {
   type StreakState,
 } from '@revisionden/core';
 import { dailyXp, streaks, type Database } from '@revisionden/db';
+import { bugRewardXp } from '../feedback/bugHunter';
 
 const DAY_MS = 86_400_000;
 const addDays = (date: string, days: number) =>
@@ -73,7 +74,8 @@ export async function getProgress(db: Database, studentId: string, now: Date): P
   const streak = streakAsOf(await loadStreak(db, studentId), today);
   return {
     xpToday,
-    totalXp: total?.xp ?? 0,
+    // Bug Hunter XP counts towards the total but not the daily goal or streak.
+    totalXp: (total?.xp ?? 0) + (await bugRewardXp(db, studentId)),
     dailyGoalXp: DEFAULT_DAILY_GOAL_XP,
     goalMet: xpToday >= DEFAULT_DAILY_GOAL_XP,
     streak: { current: streak.current, best: streak.best, skipDays: streak.skipDays },

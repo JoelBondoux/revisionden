@@ -111,6 +111,11 @@ formula and its assumptions. Summary of what is built:
 - Rewards never come from time spent or late-night study (22:00 to 05:59 UK time), at most
   300 reward XP count a day, and there are no random draws.
 - Avatar items only unlock from the reward that locks them; locked items are refused when saving.
+- Rewards are celebrated where they are earned (workstream F4, product owner via lead,
+  2026-11-25): an answer or a finished flashcard session saves any new reward once and shows
+  "New reward: …" with the reward sound on that screen (the starting test waits for its results
+  screen). Those rewards are not shown again as "New!" on the Rewards page; the Rewards page
+  announces only rewards first seen there (for example the starting-test milestone).
 - Implemented: `packages/core/src/rewards.ts`, `levels.ts`, `chapters.ts`, `reward-xp.ts`,
   `reward-stats.ts`, `rewards-schemas.ts`; API `apps/api/src/routes/rewards.ts`.
 - Parent-set reward met (workstream H2): the parent gets one notification per reward on each of
@@ -205,9 +210,12 @@ Product owner decision, 2026-11-25: **parent view only**.
   **session, not per card** (product owner, 2026-11-25), so rating every card "Good" earns
   nothing extra:
   - A session ends when the due queue is empty or after 20 cards, whichever comes first. A
+    session for one deck ("All decks", Review) only needs that deck's due cards done. A
     completed session of at least 5 cards earns **20 XP**, whatever the ratings. Fewer than 5
     cards, or leaving early, earns nothing.
   - At most **2 rewarded sessions a day** (40 XP), so flashcards alone cannot reach the daily goal.
+    A session is paid at most once, and the limit holds even when sessions finish at the same
+    moment (each rewarded session takes one of two daily slots, enforced by the database).
   - Cards answered "Again" coming back in the same session do not count twice.
   - Self-ratings only schedule the card (SM-2); they never change topic mastery or the predicted
     grade. The "flashcards reviewed" milestones count cards in completed sessions. Deck cards come from flashcard items in the
@@ -352,6 +360,13 @@ Mockups: screens 19 (student) and 20 (parent).
   Settings.
 - When the operator confirms a student's bug, the student is told in the app and earns the Bug
   Hunter rewards in `REWARDS.md`.
+- Operator triage (`/admin/feedback`) has **Confirm bug** and **Duplicate of…** (an earlier
+  confirmed report) for bug reports. Each report can be confirmed once. Rules:
+  `packages/core/src/bug-hunter.ts`; a week is Monday to Sunday, UK time; the 3-a-week cap counts
+  full and duplicate rewards, and past it the student is thanked with no XP and no track step. The
+  student sees the thank-you once (a toast on their next visit). Bug XP counts towards total XP,
+  not the daily goal or streak. The button's on/off setting is per device
+  (`revisionden.bugButton`). Built in L7.
 
 - Kinds: **bug**, **idea**, **something confusing**, **other**. (Mistakes in a question keep
   using "Report a problem" on the item, which quarantines it.)
@@ -383,7 +398,7 @@ Mockups: screens 19 (student) and 20 (parent).
   downloads `GET /v1/export`: one JSON file with the parent's sign-in email, provider account id,
   policy confirmations, the family, and for each of that parent's own children the profile and
   every record (courses, devices, answers, mastery, exams, reports, plans, rewards, streak, daily
-  XP, starting tests, flashcards, reminders, AI usage, parent-set rewards), plus the family's
+  XP, starting tests, flashcards and flashcard sessions, reminders, AI usage, parent-set rewards), plus the family's
   feedback and question reports. Secrets are left out (session and link-code hashes, passkey keys
   and credential ids, push keys). Never another family's data.
 - **Activity:** any parent or student request marks the family as used (`families.last_active_at`,
@@ -459,7 +474,10 @@ Mockups: screens 19 (student) and 20 (parent).
   `events.ts`), with one-line `play()` calls in lessons, the starting test and flashcards. Reward
   sounds (U4): `rewardSounds.ts` (which sound: tier, step, voice, fanfare, biggest, variation),
   `rewardBank.ts` (synthesis) and `<RewardSound rewards={newlyEarned} />` on the Rewards screen.
-  Prestige stars play legendary even where the catalogue rarity is epic. Gifts, plan and timed
+  Prestige stars play legendary even where the catalogue rarity is epic. Combo chime (U5):
+  `play('correct' | 'partMarks', { step })` raises the chime a whole tone per step, clamped at 6
+  (an octave); the lesson player passes `comboStep(combo - 1)`, so the first right answer is the
+  plain chime. The wrong sound never changes. Gifts, plan and timed
   papers get their calls when those screens are built.
 
 ## App updates (installable app)
@@ -541,7 +559,7 @@ Requested by the product owner on 2026-11-25.
   15-minute cron (not in UK nightly quiet hours, not after a day). Entries about a child go with
   the child; entries are kept 12 months.
 - Implemented: `apps/api/src/routes/family-parents.ts`, `apps/api/src/family-events.ts`,
-  `apps/web/src/features/parents/`; migration 0010.
+  `apps/web/src/features/parents/`; migration 0012.
 
 ## Get help (support resources)
 
@@ -572,6 +590,51 @@ Requested by the product owner on 2026-11-25.
   it never asks the student to explain themselves.
 - Parents can see the same page from the parent area, plus the NSPCC adult helpline for worried
   adults.
+
+### How it is built (workstream W, 2026-11-25)
+
+- Pages: `/help` (students, also signed out) and `/parent/help` (parent area; adds a "Worried about a
+  child?" card with the NSPCC Helpline). Links: Settings (Help and information), a small heart
+  "Get help" link in the student footer, the signed-out header, and parent home. The app has no
+  separate profile menu yet; add a link there when one exists.
+- Data: `content/support/uk-services.json`, schema `content/schemas/support-services.schema.json`.
+  Each service has topics, one plain sentence of our own (`helps_with`), its official domains,
+  optional age range and area, contacts (phone as `tel:`, text number with keyword as
+  `sms:<number>?&body=<KEYWORD>`, web chat, website) with optional hours, and `checked_at`. Every
+  contact, hours, age range and area has a `source`: the https URL of the service's own page it was
+  copied from, which must be on one of its official domains.
+- Checks (`scripts/content/support.mjs`, run by `pnpm content:validate` and its tests in CI): schema;
+  sources on the official site; links on the official site; `checked_at` not in the future and not
+  older than 4 months; phone numbers in UK format (10 or 11 digits starting 0, 116 numbers,
+  Childline's 0800 1111, 111, 999) with a matching `tel:` link; text numbers as UK short codes or
+  mobiles with a matching `sms:` link; every topic has at least one service for students.
+- Added 2026-11-25 from the product owner's own check of the official sites (recorded as
+  `confirmed_by` in the data): **Coram Kidscape** (was Kidscape; `coramkidscape.org.uk`): its young
+  people's advice page for students under bullying; for parents only, the **Parent Advice Line**
+  (phone and WhatsApp 0300 102 4481, email, 9am to 9pm Monday to Friday and 10am to 3pm Saturday
+  and Sunday). **Anti-Bullying Alliance**: parents only (website), because its site sends young
+  people with a problem to Childline; students' bullying card lists Childline and Coram Kidscape.
+- **Kooth** (now "Soluna by Kooth"; added 2026-11-25 at the product owner's request): students and
+  parents, under feeling low. Website `https://www.kooth.com/` only, as seen by the build session.
+  The note "Free in some parts of the UK. Check if it's available where you live." is the product
+  owner's (kooth.com did not say it), so the entry has `confirmed_by`. No hours, ages or areas.
+- A service may have a short `note` shown on the page; the validator only allows it with
+  `confirmed_by`, because no checked source backs it.
+- Contacts can also be WhatsApp (UK number, link `https://wa.me/44…` that must match it) and email
+  (`mailto:` link; the address must be on the service's official domain).
+- Recheck each term: open every `source`, confirm each detail, update `checked_at`. Leave out any
+  detail that can no longer be confirmed.
+- Left out on 2026-11-25 (could not be confirmed on the service's own site from the build
+  environment; recheck by hand): Papyrus HOPELINE247 (`papyrus-uk.org` redirects to an insolvency
+  administrator's page), Mind and Carers Trust (their sites block automated visits). These stay out for now (lead, 2026-11-25). Also left out: Samaritans web chat (a pilot,
+  "not currently available"), FRANK live chat and email, Switchboard chat and email (could not be
+  seen from outside the UK), Beat's email and web chat hours, and Childline's message service. Grief has
+  no specialist service yet (none was on the list to check) and young carers' one (Carers Trust)
+  could not be checked, so both topics list Childline and Samaritans.
+- Privacy: its own layout with no navigation, sounds or API calls; nothing is fetched to show it
+  (the data is built into the app); websites open in a new tab with `rel="noreferrer"`. A unit test
+  and an e2e test check that visiting it makes no API calls and no requests to other sites.
+- Style: calm and light, no game-feel effects (`features/help/help.css`).
 
 ## Quick wins from the competitor research (owner approved 2026-11-25)
 

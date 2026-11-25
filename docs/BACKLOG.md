@@ -207,6 +207,7 @@ Spec: `docs/LEGAL.md` and `PRODUCT_RULES.md` (About page, policies and feedback)
 - [x] L4 Feedback: form, privacy checks, device details toggle, parent view, operator triage at `/admin/feedback`, status updates, rate limit, retention.
 - [x] L5 Policy acceptance in onboarding (version stored) and the "policy changed" prompt.
 - [x] L6 Friendly view of the young people's privacy notice: short-version cards, key points with "Read more", icons, Pip, gentle motion (built from the same file).
+- [x] L7 Bug button on every screen (hidden in Test mode and timed papers, can be switched off), operator Confirm bug / Duplicate of…, Bug Hunter XP and caps, confirmed-bug count for the rewards track.
 - Tests: placeholder filling and the missing-value message; What's new parsing (versions without the subsection hidden); feedback refuses emails, phone numbers and nicknames; a parent sees only their family's feedback; only the operator role reaches triage; rate limit; acceptance version stored.
 
 ### U. Sound effects (`apps/web/src/features/sound/**`)
@@ -239,6 +240,44 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [ ] X5 Official past papers as links: guided self-marking with the board's mark scheme, or per-answer photo marking via Mark my homework; legal review first.
 - [ ] X6 Parent dashboard and study plan integration; "Full past papers" milestones.
 - Tests: timing per question with going back, extra time, time running out, pacing flags (1.5× slow, 0.5× rushed with marks lost), grade from boundaries, no feedback before the end, citations present for every duration and total.
+
+### Q. Quick wins (`docs/PRODUCT_RULES.md`, Quick wins from the competitor research)
+
+- [x] Q1 Reading comfort: dyslexia-friendly self-hosted font (OpenDyslexic, OFL), larger text, spacing and tint in Settings, per device, app-wide.
+- [x] Q2 Read aloud: Web Speech API, on-device voices preferred, off by default with only online voices, speed control, maths read sensibly; privacy notice line.
+- [ ] Q1 Reading comfort: dyslexia-friendly self-hosted font (OpenDyslexic, OFL), larger text, spacing and tint in Settings, per device, app-wide.
+- [ ] Q2 Read aloud: Web Speech API, on-device voices preferred, off by default with only online voices, speed control, maths read sensibly; privacy notice line.
+- [ ] Q3 Daily 5-a-day: core selection (practised topics, spaced repetition and weak spots), API route and a card on the topic map, played in the lesson player.
+- [x] Q4 Recall checks: 2 questions at lesson start on previously practised topics, skippable, no penalty; wrong answers become flashcards.
+- [x] Q1 Reading comfort: dyslexia-friendly self-hosted font (OpenDyslexic, OFL), larger text, spacing and tint in Settings, per device, app-wide.
+- [ ] Q4 Recall checks: 2 questions at lesson start on previously practised topics, skippable, no penalty; wrong answers become flashcards.
+- [ ] Q5 Learn it first: `content/learn-links/*.json` with schema and validator, button on topics with a checked link, CI link check.
+- Tests: settings saved and applied per device; voice choice and default; maths reading; selection with fixed clock and seeded randomness; no penalty for recall; links validated and checked.
+
+### O. Operator bridge for AppDeck (RevisionDen side) (`docs/OPERATOR_CONSOLE.md`)
+
+- [ ] O1 Signed operator bridge: HMAC verification, timestamps, request ids, rate limit, per-environment secret, audit log table and retention.
+- [ ] O2 Read endpoints: overview metrics, family search (exact email or id), family detail (minimal fields), tickets and error-report groups, content reports, audit log.
+- [ ] O3 Actions: notes, ticket replies shown in the parent or student app, status changes, confirm bug / duplicate, trial and free-place changes, data request handling.
+- [ ] O4 Complaints: new feedback kind, parent "Make a complaint" flow, due dates, complaints policy in `docs/legal/`.
+- [ ] O5 Discount codes model and rules (enforced at checkout with workstream $).
+- [ ] O6 Family tags: tag catalogue, family tag links, effects (early access via feature flags, complimentary Premium flag for $, exclude from metrics), filter by tag, "Beta" badge for the beta programme effect.
+- Tests: signature vectors shared with AppDeck, replay and clock-skew refusal, role checks (Agent vs Manager), minimal fields only (no answers or child free text), audit entries for every read and change.
+
+### AD. RevisionDen in AppDeck (repository `appdeck-admin`)
+
+- [ ] AD1 Add RevisionDen as a managed app with environments, settings and service status.
+- [ ] AD2 Screens: overview, families, tickets, complaints, discount codes, free places, data requests, content reports, audit, family tags.
+- [ ] AD3 Role gating (Agent/Manager) matching the bridge; signed client with the shared test vector.
+
+### $. Payments and Premium (`docs/PRICING.md`)
+
+- [ ] $1 Plans and entitlements in core (per-child pricing, sibling order, trial, annual), feature gates for each Premium feature, neutral "not included" states for students.
+- [ ] $2 Stripe checkout and billing portal for parents (web only), webhooks, VAT-inclusive prices, cancel as easily as subscribe.
+- [ ] $3 Free school meals claims: scheme choice and date, declaration, soft checks, September renewal, operator spot-check flow with no stored proof.
+- [ ] $4 Parent-only upgrade surfaces; privacy notice and terms updates (following `docs/LEGAL.md`).
+- [ ] $5 Later: school, council and charity codes for free places.
+- Tests: entitlement maths (sibling order, 4th free), gating, trial expiry, webhook idempotency, no upgrade prompts on student screens, FSM rules.
 
 ## Stage 2 and later
 

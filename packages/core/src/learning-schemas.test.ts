@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest';
 import {
   CreateFlashcardRequestSchema,
   FlashcardReviewRequestSchema,
+  FlashcardSessionResultSchema,
+  FlashcardSessionSchema,
   FlashcardSchema,
   LearnAttemptRequestSchema,
   LearnAttemptResponseSchema,
@@ -71,6 +73,7 @@ describe('learning schemas', () => {
       feedback: null,
       progress,
       flashcardAdded: false,
+      newlyEarned: [],
     });
     expect(parsed.feedback).toBeNull();
   });
@@ -92,8 +95,14 @@ describe('learning schemas', () => {
   });
 
   it('checks flashcard requests', () => {
-    expect(FlashcardReviewRequestSchema.safeParse({ rating: 'good' }).success).toBe(true);
-    expect(FlashcardReviewRequestSchema.safeParse({ rating: 'perfect' }).success).toBe(false);
+    const sessionId = ID;
+    expect(FlashcardReviewRequestSchema.safeParse({ rating: 'good', sessionId }).success).toBe(
+      true,
+    );
+    expect(FlashcardReviewRequestSchema.safeParse({ rating: 'good' }).success).toBe(false);
+    expect(FlashcardReviewRequestSchema.safeParse({ rating: 'perfect', sessionId }).success).toBe(
+      false,
+    );
     expect(
       CreateFlashcardRequestSchema.safeParse({ topicId: 't', front: 'f', back: 'b' }).success,
     ).toBe(true);
@@ -109,5 +118,45 @@ describe('learning schemas', () => {
   it('needs a subject to start a starting test', () => {
     expect(StartingTestRequestSchema.safeParse({ subjectId: 'gcse-maths' }).success).toBe(true);
     expect(StartingTestRequestSchema.safeParse({}).success).toBe(false);
+  });
+
+  it('describes flashcard sessions: started, reviewed and finished', () => {
+    expect(
+      FlashcardSessionSchema.parse({
+        id: ID,
+        maxCards: 20,
+        minCards: 5,
+        xp: 20,
+        rewardedLeftToday: 2,
+      }),
+    ).toMatchObject({ maxCards: 20 });
+    const progress = {
+      xpToday: 20,
+      totalXp: 20,
+      dailyGoalXp: 50,
+      goalMet: false,
+      streak: { current: 0, best: 0, skipDays: 0 },
+    };
+    expect(
+      FlashcardSessionResultSchema.parse({
+        completed: true,
+        reason: 'rewarded',
+        xpEarned: 20,
+        cardsCounted: 6,
+        rewardedLeftToday: 1,
+        progress,
+        newlyEarned: [],
+      }).reason,
+    ).toBe('rewarded');
+    expect(
+      FlashcardSessionResultSchema.safeParse({
+        completed: true,
+        reason: 'lucky',
+        xpEarned: 20,
+        cardsCounted: 6,
+        rewardedLeftToday: 1,
+        progress,
+      }).success,
+    ).toBe(false);
   });
 });

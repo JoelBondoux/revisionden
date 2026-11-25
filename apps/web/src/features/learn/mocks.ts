@@ -7,11 +7,13 @@ import {
   CreateFlashcardRequestSchema,
   DAY_MS,
   FlashcardReviewRequestSchema,
+  FlashcardSessionRequestSchema,
   LearnAttemptRequestSchema,
   RELEARN_DELAY_MS,
   type Flashcard,
   type LearnItem,
   type Progress,
+  type RewardCardResponse,
 } from '@revisionden/core';
 
 const id = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, '0')}`;
@@ -62,6 +64,8 @@ function card(n: number, front: string, back: string, origin: Flashcard['origin'
 }
 
 interface State {
+  nextRewards: RewardCardResponse[];
+  sessionCards: string[];
   xpToday: number;
   totalXp: number;
   streak: number;
@@ -69,8 +73,35 @@ interface State {
   ownCount: number;
 }
 
-const fresh = (): State => ({ xpToday: 30, totalXp: 230, streak: 4, mine: [], ownCount: 0 });
+const fresh = (): State => ({
+  xpToday: 30,
+  totalXp: 230,
+  streak: 4,
+  mine: [],
+  ownCount: 0,
+  sessionCards: [],
+  nextRewards: [],
+});
 let state = fresh();
+
+type MockReward = Pick<RewardCardResponse, 'id' | 'name' | 'rarity'>;
+
+/** The next answer or finished flashcard session earns these rewards (tests and demos). */
+export function mockNextRewards(rewards: MockReward[]) {
+  state.nextRewards = rewards.map((r) => ({
+    ...r,
+    items: [],
+    earned: true,
+    current: 1,
+    target: 1,
+  }));
+}
+
+function takeRewards() {
+  const earned = state.nextRewards;
+  state.nextRewards = [];
+  return earned;
+}
 
 /** Puts the mock back to its starting point (called after each test). */
 export function resetLearnMocks() {
@@ -186,6 +217,7 @@ export const learnHandlers: RequestHandler[] = [
       progress: progress(),
       flashcardAdded:
         !correct && body.data.mode === 'learn' && typeof body.data.answer !== 'boolean',
+      newlyEarned: takeRewards(),
     });
   }),
 
@@ -209,18 +241,40 @@ export const learnHandlers: RequestHandler[] = [
 
   http.get('*/v1/student/flashcards/decks/:topicId', () => HttpResponse.json(deckCards())),
 
+  http.post('*/v1/student/flashcards/sessions', async ({ request }) => {
+    const body = FlashcardSessionRequestSchema.safeParse(await request.json());
+    if (!body.success) return new HttpResponse(null, { status: 400 });
+    state.sessionCards = [];
+    return HttpResponse.json(
+      { id: id(777), maxCards: 20, minCards: 5, xp: 20, rewardedLeftToday: 2 },
+      { status: 201 },
+    );
+  }),
+
   http.post('*/v1/student/flashcards/:id/review', async ({ params, request }) => {
     const body = FlashcardReviewRequestSchema.safeParse(await request.json());
     if (!body.success) return new HttpResponse(null, { status: 400 });
-    earn(2);
     const reviewed = [...deckCards(), ...state.mine].find((c) => c.id === params.id)!;
+    if (!state.sessionCards.includes(reviewed.id)) state.sessionCards.push(reviewed.id);
     return HttpResponse.json({
       card: reviewed,
-      xpEarned: 2,
       comesBackSooner: body.data.rating === 'again',
-      progress: progress(),
+      cardsCounted: state.sessionCards.length,
     });
   }),
+
+  // The demo deck is small, so a demo session always has too few cards to earn XP.
+  http.post('*/v1/student/flashcards/sessions/:id/finish', () =>
+    HttpResponse.json({
+      completed: true,
+      reason: 'too_few_cards',
+      xpEarned: 0,
+      cardsCounted: state.sessionCards.length,
+      rewardedLeftToday: 2,
+      progress: progress(),
+      newlyEarned: takeRewards(),
+    }),
+  ),
 
   http.post('*/v1/student/flashcards', async ({ request }) => {
     const body = CreateFlashcardRequestSchema.safeParse(await request.json());

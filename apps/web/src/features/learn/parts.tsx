@@ -1,4 +1,4 @@
-import { useId, useState } from 'react';
+import { useId, useState, type ReactNode } from 'react';
 import type { LearnItem, Progress } from '@revisionden/core';
 import { Button } from '../../components/Button';
 import { Pill } from '../../components/Pill';
@@ -55,6 +55,14 @@ interface ItemInputProps {
   onChange: (draft: Draft) => void;
   /** Flashcards in a lesson: the student says whether they knew it. */
   onSelfCheck?: (knewIt: boolean) => void;
+  /** After marking (Learn mode only): how each multiple choice option looks, and any effect in it. */
+  optionMark?: (index: number) => OptionMark;
+}
+
+export interface OptionMark {
+  right?: boolean;
+  /** Shown inside the option, e.g. a particle burst. */
+  extra?: ReactNode;
 }
 
 function FlashcardCheck({
@@ -131,26 +139,40 @@ function TextAnswer({
 }
 
 /** The answer area for each item type. */
-export function ItemInput({ item, draft, disabled, onChange, onSelfCheck }: ItemInputProps) {
+export function ItemInput({
+  item,
+  draft,
+  disabled,
+  onChange,
+  onSelfCheck,
+  optionMark,
+}: ItemInputProps) {
   const text = typeof draft === 'string' ? draft : '';
   switch (item.type) {
     case 'multiple_choice':
       return (
         <fieldset className="question">
           <legend className="question__prompt">{item.prompt}</legend>
-          <div className="options">
-            {item.options.map((option, index) => (
-              <label key={option} className="option">
-                <input
-                  type="radio"
-                  name={item.id}
-                  checked={draft === index}
-                  disabled={disabled}
-                  onChange={() => onChange(index)}
-                />
-                <span>{option}</span>
-              </label>
-            ))}
+          <div className="answer-grid">
+            {item.options.map((option, index) => {
+              const mark = optionMark?.(index);
+              return (
+                <label
+                  key={option}
+                  className={`answer-option${mark?.right ? ' answer-option--right' : ''}`}
+                >
+                  <input
+                    type="radio"
+                    name={item.id}
+                    checked={draft === index}
+                    disabled={disabled}
+                    onChange={() => onChange(index)}
+                  />
+                  <span>{option}</span>
+                  {mark?.extra}
+                </label>
+              );
+            })}
           </div>
         </fieldset>
       );

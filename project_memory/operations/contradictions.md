@@ -19,13 +19,8 @@
       source excerpts and quotes them in citations. Not settled: needs a legal answer or written
       AQA permission before any AQA subject is built; the pilot (Pearson Edexcel 1MA1) is not
       affected. Detail: `docs/research/competitors-2026-11.md` section 3.3.
-- [ ] **Flashcard deck XP and rewards.** `docs/REWARDS.md` says XP from flashcards counts towards
-      levels, but deck reviews (`apps/api/src/routes/flashcards.ts`) only add to `daily_xp`, which
-      has no time of day, so the late-night rule cannot be checked. Reward XP is therefore built
-      from `attempts` only (`apps/api/src/routes/rewards.ts`) and deck reviews do not count yet.
-      Not settled: the fix (a timestamped XP record for deck reviews) is in workstream F's lane.
 - [ ] **Reward stats with no data yet.** Milestones for past papers, mock and assessment grades,
-      exams sat, flashcards reviewed, weak spots fixed, perfect sets, gifting and the friends league
+      exams sat, weak spots fixed, perfect sets, gifting and the friends league
       are in the catalogue, but nothing records those numbers yet, so the rewards route counts them
       as 0 (`apps/api/src/routes/rewards.ts`). They unlock once those features store the numbers.
 - [ ] **OAuth tokens kept.** `docs/PRIVACY.md` and the policies say only the parent's sign-in
@@ -83,6 +78,14 @@
 
 ## Resolved
 
+- [x] **Flashcard deck XP and rewards.** `docs/REWARDS.md` says XP from flashcards counts towards
+      levels, but deck reviews (`apps/api/src/routes/flashcards.ts`) only add to `daily_xp`, which
+      has no time of day, so the late-night rule cannot be checked. Reward XP is therefore built
+      from `attempts` only (`apps/api/src/routes/rewards.ts`) and deck reviews do not count yet.
+      Not settled: the fix (a timestamped XP record for deck reviews) is in workstream F's lane.
+      Settled by F3 (2026-11-25): each completed session is stored with its time in
+      `flashcard_sessions`, and its XP counts for rewards under the same late-night and daily cap
+      rules. Flashcards reviewed now counts too.
 - [x] **Parent reward notification.** `docs/REWARDS.md` says the parent gets a notification when a
       parent-set target is met; not built (reminders are workstream H). The student celebration is
       built. Settled by H2 (2026-11-25): parent devices get one web push per reward

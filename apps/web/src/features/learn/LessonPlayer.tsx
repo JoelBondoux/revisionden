@@ -1,13 +1,44 @@
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import type { LearnAttemptResponse, LearnItem, Progress } from '@revisionden/core';
 import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { CloseIcon } from '../../components/icons';
-import { ProgressBar } from '../../components/ProgressBar';
+import { ReadAloudButton, itemSpeechText } from '../read-aloud';
+import {
+  ArenaProgress,
+  ComboBadge,
+  FloatUp,
+  ParticleBurst,
+  PipSays,
+  RollingNumber,
+  Shake,
+  comboStep,
+  nextCombo,
+  pipLine,
+} from '../juice';
 import { markSound, useSound } from '../sound';
 import { useLearnApi } from './learnApi';
-import { DailyGoal, DraftBanner, ItemInput, toAnswer, type Answer, type Draft } from './parts';
+import { NewRewards } from './NewRewards';
+import {
+  DailyGoal,
+  DraftBanner,
+  ItemInput,
+  toAnswer,
+  type Answer,
+  type Draft,
+  type OptionMark,
+} from './parts';
+import { SetComplete } from './SetComplete';
+
+/** What read aloud says for the feedback box: the verdict, the answer and the explanation. */
+function feedbackSpeech(result: LearnAttemptResponse): string {
+  const feedback = result.feedback;
+  const parts = [result.correct ? 'Correct!' : 'Not quite.'];
+  if (!result.correct && feedback) parts.push(`Answer: ${feedback.correctAnswer}.`);
+  if (feedback?.explanation) parts.push(feedback.explanation);
+  return parts.join(' ');
+}
 
 function Feedback({ result }: { result: LearnAttemptResponse }) {
   const feedback = result.feedback;
@@ -18,9 +49,15 @@ function Feedback({ result }: { result: LearnAttemptResponse }) {
       role="status"
       aria-label="Answer feedback"
     >
-      <p className="feedback__title">{result.correct ? 'Correct!' : 'Not quite'}</p>
+      <div className="read-aloud-row">
+        <p className="feedback__title">{result.correct ? 'Correct!' : 'Not quite'}</p>
+        <ReadAloudButton text={feedbackSpeech(result)} label="Read the feedback aloud" />
+      </div>
       {result.correct ? (
-        <p>+{result.xpEarned} XP</p>
+        <p>
+          +{result.xpEarned} XP
+          {result.comboBonusXp ? ` (Includes +${result.comboBonusXp} XP combo bonus)` : ''}
+        </p>
       ) : (
         feedback && <p>Answer: {feedback.correctAnswer}</p>
       )}
@@ -39,15 +76,42 @@ interface LessonPlayerProps {
   draftContent: boolean;
   intro?: string;
   doneHref?: string;
+  /** Called after the last item instead of showing the set complete screen (recall checks). */
+  onFinish?: () => void;
+  /** Extra controls under the intro, such as a Skip button. */
+  aside?: ReactNode;
 }
 
-/** Runs a lesson in Learn mode: every answer is marked straight away (feedback level 1). */
+/** The option a marked multiple choice answer should show as right, if we can tell. */
+function rightOption(item: LearnItem, result: LearnAttemptResponse, chosen: Draft): number | null {
+  if (item.type !== 'multiple_choice') return null;
+  if (result.correct) return typeof chosen === 'number' ? chosen : null;
+  const index = result.feedback ? item.options.indexOf(result.feedback.correctAnswer) : -1;
+  return index >= 0 ? index : null;
+}
+
+/** The celebration on a right answer: particles burst and the XP floats up. */
+function RightAnswerEffects({ xp }: { xp: number }) {
+  return (
+    <>
+      <ParticleBurst />
+      {xp > 0 && <FloatUp>+{xp} XP</FloatUp>}
+    </>
+  );
+}
+
+/**
+ * Runs a lesson in Learn mode on the dark arena (docs/GAME_FEEL.md): every answer is marked
+ * straight away (feedback level 1) with a burst, shake, combo and Pip's line.
+ */
 export function LessonPlayer({
   title,
   items,
   draftContent,
   intro,
   doneHref = '/learn',
+  onFinish,
+  aside,
 }: LessonPlayerProps) {
   const api = useLearnApi();
   const { play } = useSound();
@@ -58,6 +122,8 @@ export function LessonPlayer({
   const [error, setError] = useState(false);
   const [progress, setProgress] = useState<Progress | null>(null);
   const [totals, setTotals] = useState({ correct: 0, marked: 0, xp: 0 });
+  const [combo, setCombo] = useState(0);
+  const [bestCombo, setBestCombo] = useState(0);
   const [done, setDone] = useState(false);
   const shownAt = useRef(Date.now());
 
@@ -95,11 +161,16 @@ export function LessonPlayer({
         timeMs: Math.max(0, Date.now() - shownAt.current),
         mode: 'learn',
       });
-      play(markSound(marked));
+      // The API counts combos (J4); older responses without it fall back to counting here.
+      const streak = marked.combo ?? nextCombo(combo, marked.correct);
+      // The chime rises a step per right answer in a row (the first one is the plain chime).
+      play(markSound(marked), { step: comboStep(streak - 1) });
       if (marked.progress.goalMet && progress && !progress.goalMet)
         play('streakDay', { delay: 0.4 });
       setResult(marked);
       setProgress(marked.progress);
+      setCombo(streak);
+      setBestCombo((best) => Math.max(best, streak));
       setTotals((t) => ({
         correct: t.correct + (marked.correct ? 1 : 0),
         marked: t.marked + 1,
@@ -119,7 +190,10 @@ export function LessonPlayer({
 
   function advance() {
     if (isLast) {
-      play('celebration');
+      if (onFinish) {
+        onFinish();
+        return;
+      }
       setDone(true);
       return;
     }
@@ -131,62 +205,76 @@ export function LessonPlayer({
 
   if (done) {
     return (
-      <div className="complete">
-        <Card title="Lesson complete">
-          <div className="complete__stats">
-            <div className="stat stat--success">
-              <span className="stat__label">Right answers</span>
-              <span className="stat__value">
-                {totals.correct} of {totals.marked}
-              </span>
-            </div>
-            <div className="stat stat--gold">
-              <span className="stat__label">XP earned</span>
-              <span className="stat__value">+{totals.xp} XP</span>
-            </div>
-          </div>
-          {progress && <DailyGoal progress={progress} />}
-          <ButtonLink to={doneHref} block>
-            Done
-          </ButtonLink>
-        </Card>
+      <div className="arena">
+        <SetComplete
+          correct={totals.correct}
+          marked={totals.marked}
+          xp={totals.xp}
+          bestCombo={bestCombo}
+          progress={progress}
+        />
       </div>
     );
   }
 
   const unmarked = item.type === 'extended_answer';
+  const right = result ? rightOption(item, result, draft) : null;
+  const optionMark = (option: number): OptionMark => ({
+    right: option === right,
+    extra: result?.correct && option === right ? <RightAnswerEffects xp={result.xpEarned} /> : null,
+  });
   return (
-    <form className="lesson" onSubmit={check}>
+    <form className="lesson arena" onSubmit={check}>
       <div className="lesson__top">
         <Link to={doneHref} className="icon-button" aria-label="Leave lesson">
           <CloseIcon />
         </Link>
-        <ProgressBar
+        <ArenaProgress
           label="Lesson progress"
-          tone="success"
           value={index + (result || unmarked ? 1 : 0)}
           max={items.length}
         />
+        <span className="lesson__xp">
+          <RollingNumber value={totals.xp} label="XP this lesson" suffix=" XP" />
+        </span>
       </div>
       {draftContent && <DraftBanner />}
+      <div className="lesson__pip">
+        <PipSays
+          line={pipLine({ index, total: items.length, combo })}
+          mood={combo >= 2 ? 'cheer' : 'happy'}
+        />
+        <ComboBadge combo={combo} />
+      </div>
       <h1>{title}</h1>
       {intro && <p className="secondary-text">{intro}</p>}
+      {aside}
       {progress && <DailyGoal progress={progress} />}
-      <ItemInput
-        key={item.id}
-        item={item}
-        draft={draft}
-        disabled={result !== null || checking}
-        onChange={setDraft}
-        onSelfCheck={(knewIt) => void submit(knewIt)}
-      />
+      <ReadAloudButton text={itemSpeechText(item)} label="Read the question aloud" />
+      <Shake key={item.id} active={result?.correct === false}>
+        <ItemInput
+          key={item.id}
+          item={item}
+          draft={draft}
+          disabled={result !== null || checking}
+          onChange={setDraft}
+          onSelfCheck={(knewIt) => void submit(knewIt)}
+          optionMark={optionMark}
+        />
+      </Shake>
       <div className="lesson__footer">
+        {result?.correct && item.type !== 'multiple_choice' && (
+          <span className="lesson__burst">
+            <RightAnswerEffects xp={result.xpEarned} />
+          </span>
+        )}
         {error && (
           <p role="alert" className="feedback feedback--wrong">
             Couldn&apos;t check that answer. Please try again.
           </p>
         )}
         {result && <Feedback result={result} />}
+        {result && <NewRewards rewards={result.newlyEarned} />}
         {result || unmarked ? (
           <Button block variant={result?.correct ? 'success' : 'primary'} onClick={advance}>
             {isLast ? 'Finish' : 'Continue'}
