@@ -245,7 +245,9 @@ automated check passed (grounded writing, quote check, blind answer or blind mar
 review, schema, and the maths engine for maths items; `readyForHumanReview` in
 `packages/core`), and not already in a batch under review or passed at that version. An item with
 `facts` also needs a fact-check record; if it failed, the item is batched for individual review
-(`needsIndividualReview`), never sampling. The batch
+(`needsIndividualReview`), never sampling. Exact checks the item names (units, chemical equation, equation
+sheet) must pass too. After a batch fails, its items stay out of new batches until the batch's
+recheck is marked done and their steps 3 to 5 checks have re-run since the failure (`recheckedSince`). The batch
 page shows each item's hint, mark scheme, exemplars and checks.
 
 **Reports and quarantine (section 6).** "Report a problem" stores only the item, its version and
