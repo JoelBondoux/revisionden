@@ -70,6 +70,8 @@
     "POST /v1/student/feedback",
     "POST /v1/student/flashcards",
     "POST /v1/student/flashcards/:id/review",
+    "POST /v1/student/flashcards/sessions",
+    "POST /v1/student/flashcards/sessions/:id/finish",
     "POST /v1/student/items/:itemId/reports",
     "POST /v1/student/learn/attempts",
     "POST /v1/student/learn/starting-tests",

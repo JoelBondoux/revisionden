@@ -4,7 +4,7 @@
  * the content gate: verified only, unless the development flag also serves drafts.
  */
 import { Hono } from 'hono';
-import { and, asc, desc, eq, inArray, isNotNull, sql, type SQL } from 'drizzle-orm';
+import { and, asc, desc, eq, inArray, isNotNull, ne, sql, type SQL } from 'drizzle-orm';
 import { z } from 'zod';
 import {
   LearnAttemptRequestSchema,
@@ -78,7 +78,13 @@ async function updateMastery(db: Database, studentId: string, topicId: string, n
     .select({ score: attempts.score, correct: attempts.correct, at: attempts.createdAt })
     .from(attempts)
     .innerJoin(items, eq(items.id, attempts.itemId))
-    .where(and(eq(attempts.studentId, studentId), eq(items.topicId, topicId)))
+    .where(
+      and(
+        eq(attempts.studentId, studentId),
+        eq(items.topicId, topicId),
+        ne(items.type, 'flashcard'),
+      ),
+    )
     .orderBy(desc(attempts.createdAt))
     .limit(MASTERY_WINDOW);
   const value = topicMastery(
@@ -306,7 +312,8 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
         createdAt: now,
       })
       .returning({ id: attempts.id, createdAt: attempts.createdAt });
-    await updateMastery(db, studentId, row.topicId, now);
+    // A flashcard is a self-rating: it never changes mastery (or the predicted grade).
+    if (row.type !== 'flashcard') await updateMastery(db, studentId, row.topicId, now);
 
     const learning = input.mode === 'learn';
     const flashcardAdded =

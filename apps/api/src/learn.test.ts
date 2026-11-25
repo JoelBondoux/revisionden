@@ -289,6 +289,17 @@ describe('answering (feedback level 1: instant feedback)', () => {
     expect(await answer(headers, card.id, true)).toMatchObject({ correct: true, xpEarned: 5 });
   });
 
+  it('never changes topic mastery from a flashcard self-rating', async () => {
+    const { headers } = await t.familyStudent('selfrate_kid');
+    const card = itemByPrompt(await allItems(headers), 'Test front 1');
+    for (let i = 0; i < 3; i++) await answer(headers, card.id, true);
+    const res = await t.app.request(`/v1/student/learn/subjects/${TEST_SUBJECT}/topics`, {
+      headers,
+    });
+    const body = SubjectTopicsResponseSchema.parse(await res.json());
+    expect(body.topics.find((x) => x.topicId === 'test-topic-a')!.mastery).toBe(0);
+  });
+
   it('answers 404 for an item that does not exist', async () => {
     const { headers } = await t.familyStudent('missing_kid');
     const res = await attempt(headers, {
