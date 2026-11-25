@@ -8,6 +8,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 ### What's new
 
 - Two parents: invite a second parent from Parent home with a code or link. You both get the same control, a family activity log shows who changed what (as Parent 1 or Parent 2), and you're told about important changes. Deleting the family account needs both of you.
+- Coming soon: build your own title from words you unlock, like "Cosmic Scholar".
+- Coming soon: a private "Get help" page with UK support services you can call or message.
 - Coming soon: a daily study limit you can set as a parent, with gentle suggestions from the app.
 - Coming soon: invite a second parent to share control of the family.
 - Coming soon: more hidden reward tracks to discover.

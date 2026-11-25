@@ -529,3 +529,33 @@ Requested by the product owner on 2026-11-25.
   the child; entries are kept 12 months.
 - Implemented: `apps/api/src/routes/family-parents.ts`, `apps/api/src/family-events.ts`,
   `apps/web/src/features/parents/`; migration 0009.
+
+## Get help (support resources)
+
+Requested by the product owner on 2026-11-25.
+
+- A **"Get help"** page for students, reachable from Settings, the profile menu and the footer of
+  every student screen, with a small heart icon. Also reachable signed out.
+- It lists UK support services by topic, each with what they help with, how to contact them
+  (tap-to-call `tel:` links, text numbers, web chat links) and opening hours where published.
+  Topics: feeling low or anxious, exam stress, suicidal thoughts (urgent), bullying (including
+  online), abuse or neglect, online safety and nude images, eating and body image, self-harm, drugs
+  and alcohol, sexual health and relationships, LGBTQ+, young carers, grief, crime and victims,
+  physical health (NHS 111) and emergencies (999).
+- Services to consider (each must be confirmed on its own official website): Childline, NSPCC,
+  Samaritans, Shout, Papyrus HOPELINE247, YoungMinds, Kooth, The Mix, Beat, Talk to Frank, CEOP,
+  Childline and IWF Report Remove, Switchboard, Mind, Brook, Anti-Bullying Alliance, Kidscape,
+  Carers Trust, Victim Support, NHS 111.
+- **Verified facts only:** every phone number, text number, URL and opening time is copied from the
+  service's own official page, with that URL and the date checked recorded in the data file. Any
+  detail that cannot be confirmed is left out, never guessed. Rechecked every term; a test fails if
+  an entry has no source or its check is older than 4 months.
+- **Private:** nothing about visiting this page or tapping a link is recorded, logged, shown to
+  parents or sent anywhere (no analytics, no feedback prompts, no activity log). The page works
+  offline (cached) so a number can be found without signal.
+- A **Quick exit** button takes the student straight to a neutral screen (the topic map) and replaces
+  the page in history.
+- At the top: "If you are in danger right now, call 999." Wording is warm, short and non-judgemental;
+  it never asks the student to explain themselves.
+- Parents can see the same page from the parent area, plus the NSPCC adult helpline for worried
+  adults.
