@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { server } from '../../mocks/server';
 import { renderRoute } from '../../test/render';
-import { demoItems } from './mocks';
+import { demoItems, mockNextRewards } from './mocks';
 
 const only = (...indexes: number[]) =>
   server.use(
@@ -46,6 +46,19 @@ describe('Lesson player', () => {
       'aria-valuetext',
       '40 of 50 XP',
     );
+  });
+
+  it('announces a reward the answer earned', async () => {
+    mockNextRewards([{ id: 'streak-7', name: '7-day streak', rarity: 'common' }]);
+    only(0, 1);
+    renderRoute('/learn/topic/demo-topic-a');
+    await userEvent.click(await screen.findByRole('radio', { name: 'Option B' }));
+    await click('Check');
+    expect(await screen.findByRole('status', { name: 'New rewards' })).toHaveTextContent(
+      'New reward: 7-day streak',
+    );
+    await click('Continue');
+    expect(screen.queryByRole('status', { name: 'New rewards' })).not.toBeInTheDocument();
   });
 
   it('shows the right answer and that a flashcard was made after a wrong answer', async () => {

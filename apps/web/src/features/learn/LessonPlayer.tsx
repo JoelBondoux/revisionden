@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import type { LearnAttemptResponse, LearnItem, Progress } from '@revisionden/core';
 import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { CloseIcon } from '../../components/icons';
+import { ReadAloudButton, itemSpeechText } from '../read-aloud';
 import {
   ArenaProgress,
   ComboBadge,
@@ -12,11 +13,13 @@ import {
   PipSays,
   RollingNumber,
   Shake,
+  comboStep,
   nextCombo,
   pipLine,
 } from '../juice';
 import { markSound, useSound } from '../sound';
 import { useLearnApi } from './learnApi';
+import { NewRewards } from './NewRewards';
 import {
   DailyGoal,
   DraftBanner,
@@ -28,6 +31,15 @@ import {
 } from './parts';
 import { SetComplete } from './SetComplete';
 
+/** What read aloud says for the feedback box: the verdict, the answer and the explanation. */
+function feedbackSpeech(result: LearnAttemptResponse): string {
+  const feedback = result.feedback;
+  const parts = [result.correct ? 'Correct!' : 'Not quite.'];
+  if (!result.correct && feedback) parts.push(`Answer: ${feedback.correctAnswer}.`);
+  if (feedback?.explanation) parts.push(feedback.explanation);
+  return parts.join(' ');
+}
+
 function Feedback({ result }: { result: LearnAttemptResponse }) {
   const feedback = result.feedback;
   const wrongLine = feedback?.firstWrongLine;
@@ -37,7 +49,10 @@ function Feedback({ result }: { result: LearnAttemptResponse }) {
       role="status"
       aria-label="Answer feedback"
     >
-      <p className="feedback__title">{result.correct ? 'Correct!' : 'Not quite'}</p>
+      <div className="read-aloud-row">
+        <p className="feedback__title">{result.correct ? 'Correct!' : 'Not quite'}</p>
+        <ReadAloudButton text={feedbackSpeech(result)} label="Read the feedback aloud" />
+      </div>
       {result.correct ? (
         <p>
           +{result.xpEarned} XP
@@ -61,6 +76,10 @@ interface LessonPlayerProps {
   draftContent: boolean;
   intro?: string;
   doneHref?: string;
+  /** Called after the last item instead of showing the set complete screen (recall checks). */
+  onFinish?: () => void;
+  /** Extra controls under the intro, such as a Skip button. */
+  aside?: ReactNode;
 }
 
 /** The option a marked multiple choice answer should show as right, if we can tell. */
@@ -91,6 +110,8 @@ export function LessonPlayer({
   draftContent,
   intro,
   doneHref = '/learn',
+  onFinish,
+  aside,
 }: LessonPlayerProps) {
   const api = useLearnApi();
   const { play } = useSound();
@@ -140,13 +161,14 @@ export function LessonPlayer({
         timeMs: Math.max(0, Date.now() - shownAt.current),
         mode: 'learn',
       });
-      play(markSound(marked));
+      // The API counts combos (J4); older responses without it fall back to counting here.
+      const streak = marked.combo ?? nextCombo(combo, marked.correct);
+      // The chime rises a step per right answer in a row (the first one is the plain chime).
+      play(markSound(marked), { step: comboStep(streak - 1) });
       if (marked.progress.goalMet && progress && !progress.goalMet)
         play('streakDay', { delay: 0.4 });
       setResult(marked);
       setProgress(marked.progress);
-      // The API counts combos (J4); older responses without it fall back to counting here.
-      const streak = marked.combo ?? nextCombo(combo, marked.correct);
       setCombo(streak);
       setBestCombo((best) => Math.max(best, streak));
       setTotals((t) => ({
@@ -168,6 +190,10 @@ export function LessonPlayer({
 
   function advance() {
     if (isLast) {
+      if (onFinish) {
+        onFinish();
+        return;
+      }
       setDone(true);
       return;
     }
@@ -222,8 +248,10 @@ export function LessonPlayer({
       </div>
       <h1>{title}</h1>
       {intro && <p className="secondary-text">{intro}</p>}
+      {aside}
       {progress && <DailyGoal progress={progress} />}
-      <Shake key={`${item.id}-${result ? 'marked' : 'open'}`} active={result?.correct === false}>
+      <ReadAloudButton text={itemSpeechText(item)} label="Read the question aloud" />
+      <Shake key={item.id} active={result?.correct === false}>
         <ItemInput
           key={item.id}
           item={item}
@@ -246,6 +274,7 @@ export function LessonPlayer({
           </p>
         )}
         {result && <Feedback result={result} />}
+        {result && <NewRewards rewards={result.newlyEarned} />}
         {result || unmarked ? (
           <Button block variant={result?.correct ? 'success' : 'primary'} onClick={advance}>
             {isLast ? 'Finish' : 'Continue'}

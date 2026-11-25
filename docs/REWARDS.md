@@ -49,10 +49,16 @@ is `min(750, 300 + 50 × (L − 1))`: 300 XP for level 2, rising by 50 a level u
   about level 24 after Year 9, then about 20 levels a year, and level 100 about 4.8 school years
   in (late in Year 13). Students who practise less still level up, just more slowly.
 
-**Which XP counts** (`packages/core/src/reward-xp.ts`): XP from answers only (never minutes or
-taps); XP earned **late at night (22:00 to 05:59 UK time)** does not count; at most **300 XP a
+**Which XP counts** (`packages/core/src/reward-xp.ts`): XP from answers and completed flashcard
+sessions only (never minutes or taps); XP earned **late at night (22:00 to 05:59 UK time)** does not count; at most **300 XP a
 UK day** counts (five times the daily goal). The XP still shows and still counts for the daily
 goal; it just does not move levels, chapters or seasonal challenges.
+
+**Flashcards and pacing.** A completed flashcard session of 5+ cards earns 20 XP, at most 2 a day
+(40 XP), below the 50 XP daily goal. A student who only did flashcards would earn about
+40 × 250 = 10,000 XP a school year, slower than the 15,000 the curve assumes (60 XP × 250 days),
+so tapping through cards can never outpace real practice. The "flashcards reviewed" milestones
+count cards in completed sessions.
 
 ### 2. Year chapters
 
@@ -211,15 +217,19 @@ Requested by the product owner on 2026-11-25. Rewards students who help make the
   earn a smaller "Thanks for confirming" (+10 XP, no track step). At most 3 confirmed-bug rewards a
   week. Parents' reports are thanked but do not earn student rewards. The operator's decision is
   final; nothing is automatic.
+- Built (L7): the confirm flow, XP and caps (`packages/core/src/bug-hunter.ts`). The catalogue reads
+  the number of confirmed bugs that earned a step from `confirmedBugCount` in
+  `apps/api/src/feedback/bugHunter.ts` (or `GET /v1/student/bug-hunter`). Feedback rows are deleted
+  12 months after they are closed, so the catalogue should record each step once it is earned
+  rather than recount it later.
 
 **Built (R7):** catalogue entries `bug-hunter-1` … `bug-hunter-20` in
 `packages/core/src/catalogue/hidden.ts` (source `hidden`, track `bug-hunter`) on the stat
 `confirmedBugs`; original art for the magnifying glass (avatar held item) and the glitch effect
-(a new `effect` item kind, `apps/web/src/features/rewards/effects.tsx`). The count comes through
-`confirmedBugCount` in `apps/api/src/routes/reward-sources.ts`, which returns 0 until workstream
-L's "Confirm bug" action is on dev, so the track stays hidden until then. The +50 XP is awarded by
-L's flow; reward XP for levels is read from answers, so L's XP must be recorded where reward XP
-is read (see contradictions).
+(a new `effect` item kind, `apps/web/src/features/rewards/effects.tsx`). The count is
+workstream L's `confirmedBugCount` (`apps/api/src/feedback/bugHunter.ts`, duplicates don't
+count), and L's bug reward XP (`bugRewardXp`) is added to reward XP for levels in the rewards
+route. It is not an answer, so it does not fill year chapters or seasonal challenges.
 
 ## More hidden tracks
 

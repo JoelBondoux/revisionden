@@ -101,4 +101,40 @@ describe('learning loop tables (workstream F)', () => {
       expect.arrayContaining(['id', 'student_id', 'subject_id', 'item_ids', 'finished_at']),
     );
   });
+
+  it('records flashcard sessions with the cards counted and the XP paid (F3)', async () => {
+    expect(await columns('flashcard_sessions')).toEqual(
+      expect.arrayContaining([
+        'id',
+        'student_id',
+        'card_ids',
+        'started_at',
+        'finished_at',
+        'completed',
+        'xp_earned',
+        'topic_id',
+        'rewarded_day',
+        'reward_slot',
+      ]),
+    );
+  });
+
+  it('allows each daily reward slot to be taken by one flashcard session only', async () => {
+    const id = await student();
+    const reward = (slot: number) =>
+      client.query(
+        `insert into flashcard_sessions (student_id, rewarded_day, reward_slot, xp_earned)
+         values ($1, '2026-11-25', $2, 20)`,
+        [id, slot],
+      );
+    await reward(1);
+    await reward(2);
+    await expect(reward(1)).rejects.toThrow();
+    await expect(
+      client.query(
+        `insert into flashcard_sessions (student_id, rewarded_day, reward_slot) values ($1, '2026-11-25', 3)`,
+        [id],
+      ),
+    ).rejects.toThrow();
+  });
 });

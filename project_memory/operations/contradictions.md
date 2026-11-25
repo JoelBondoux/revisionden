@@ -5,12 +5,6 @@
 
 ## Open
 
-- [ ] **Bug Hunter count and XP.** `docs/REWARDS.md` says a confirmed bug gives +50 XP and a Bug
-      Hunter step; no confirmed-bug record exists yet (workstream L is building it), so
-      `confirmedBugCount` in `apps/api/src/routes/reward-sources.ts` returns 0 and the track stays
-      hidden. Reward XP for levels is read from `attempts` only, so L's +50 XP will not move levels
-      unless it is recorded where reward XP is read (or the rewards route adds L's bug XP).
-      Not settled: depends on how L stores confirmed bugs.
 - [ ] **Secret achievement stats with no data yet.** "Patch Day" (weak spots fixed in a day),
       "On Pace" (timed papers on pace, workstream X) and "Card Shark" (flashcards in a week; deck
       reviews have no timestamped record) are in the catalogue but their stats count as 0 until the
@@ -25,13 +19,8 @@
       source excerpts and quotes them in citations. Not settled: needs a legal answer or written
       AQA permission before any AQA subject is built; the pilot (Pearson Edexcel 1MA1) is not
       affected. Detail: `docs/research/competitors-2026-11.md` section 3.3.
-- [ ] **Flashcard deck XP and rewards.** `docs/REWARDS.md` says XP from flashcards counts towards
-      levels, but deck reviews (`apps/api/src/routes/flashcards.ts`) only add to `daily_xp`, which
-      has no time of day, so the late-night rule cannot be checked. Reward XP is therefore built
-      from `attempts` only (`apps/api/src/routes/rewards.ts`) and deck reviews do not count yet.
-      Not settled: the fix (a timestamped XP record for deck reviews) is in workstream F's lane.
 - [ ] **Reward stats with no data yet.** Milestones for past papers, mock and assessment grades,
-      exams sat, flashcards reviewed, weak spots fixed, perfect sets, gifting and the friends league
+      exams sat, weak spots fixed, perfect sets, gifting and the friends league
       are in the catalogue, but nothing records those numbers yet, so the rewards route counts them
       as 0 (`apps/api/src/routes/rewards.ts`). They unlock once those features store the numbers.
 - [ ] **OAuth tokens kept.** `docs/PRIVACY.md` and the policies say only the parent's sign-in
@@ -89,6 +78,18 @@
 
 ## Resolved
 
+- [x] Bug Hunter count and XP: settled once workstream L's #52 merged. The rewards route reads
+      L's `confirmedBugCount` and adds L's `bugRewardXp` to reward XP for levels
+      (`apps/api/src/routes/rewards.ts`); nothing is written to `attempts`.
+
+- [x] **Flashcard deck XP and rewards.** `docs/REWARDS.md` says XP from flashcards counts towards
+      levels, but deck reviews (`apps/api/src/routes/flashcards.ts`) only add to `daily_xp`, which
+      has no time of day, so the late-night rule cannot be checked. Reward XP is therefore built
+      from `attempts` only (`apps/api/src/routes/rewards.ts`) and deck reviews do not count yet.
+      Not settled: the fix (a timestamped XP record for deck reviews) is in workstream F's lane.
+      Settled by F3 (2026-11-25): each completed session is stored with its time in
+      `flashcard_sessions`, and its XP counts for rewards under the same late-night and daily cap
+      rules. Flashcards reviewed now counts too.
 - [x] **Parent reward notification.** `docs/REWARDS.md` says the parent gets a notification when a
       parent-set target is met; not built (reminders are workstream H). The student celebration is
       built. Settled by H2 (2026-11-25): parent devices get one web push per reward

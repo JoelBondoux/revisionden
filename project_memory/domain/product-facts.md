@@ -77,14 +77,15 @@ Tags: #product #rules #limits #defaults
   two (crown and Alien skin). `packages/core/src/rewards.ts`, `avatar.ts`.
 - 14 rewards, each unlocking one avatar item: `packages/core/src/rewards.ts`.
 - Only `verified` items reach students. Drafts are served only with `SERVE_DRAFT_CONTENT=true` in
-  development (never staging or production), with a "DRAFT CONTENT" banner; quarantined and
+  development (never staging or production), with a "DRAFT CONTENT" banner; the dev Worker has it on
+  so the family can try the pilot on dev.revisionden.com; quarantined and
   retired items never. Implemented in `packages/core/src/learning.ts` and `apps/api`.
 - Starting test per subject: about 5 minutes (300 s, up to 10 questions, one per topic first),
   Test mode; its answers set first mastery. Lessons are Learn mode at feedback level 1.
 - Wrong lesson answers become flashcards. Flashcard buttons Again/Hard/Good/Easy = SM-2 quality
   1/3/4/5; each shows when the card comes back. Deck XP is per completed session, not per card: 20 XP for a
   session of 5+ cards (ends when the due queue is empty or at 20 cards), whatever the ratings; at
-  most 2 rewarded sessions a day; self-ratings never change mastery (owner, 2026-11-25). Students can add their own cards (up to 300 characters a side); a card with an email, a UK mobile number or a family nickname is refused, as for feedback.
+  most 2 rewarded sessions a day (two reward slots per UK day, unique in the database; a one-deck session only needs that deck done); self-ratings never change mastery (owner, 2026-11-25). Students can add their own cards (up to 300 characters a side); a card with an email, a UK mobile number or a family nickname is refused, as for feedback.
 - XP is totalled per day in UK time; a streak day counts once, the first time the day reaches the
   daily goal. Command-word lessons are items tagged `command-word` (none verified yet).
 - Worked maths answers are checked by the maths engine (`MATHS_ENGINE_URL`); long answers are not
@@ -295,8 +296,9 @@ Tags: #product #rules #limits #defaults
 - Level curve: XP from level L to L + 1 is min(750, 300 + 50 × (L − 1)); level 20 at 12,000 XP,
   level 100 at 72,000 XP; a prestige star every 7,500 XP after that, up to 5. Assumes 60 XP a
   practice day and 250 practice days a school year (`packages/core/src/levels.ts`).
-- Reward XP: only answer XP counts; nothing from 22:00 to 05:59 UK time; at most 300 XP a UK day
-  (`packages/core/src/reward-xp.ts`). Flashcard deck reviews do not count yet (see contradictions).
+- Reward XP: answer XP and completed flashcard-session XP count; nothing from 22:00 to 05:59 UK time; at most 300 XP a UK day
+  (`packages/core/src/reward-xp.ts`). Flashcards alone give at most 40 XP a day (about 10,000 a
+  year), slower than the curve's 15,000, so pacing holds. Sessions: `flashcard_sessions` table.
 - Year chapters: 30 steps each (a step every 400 chapter XP, 12,000 fills a chapter); spill-over
   into earlier unfinished chapters for mid-way joiners; Year 11 and 13 finales on the last exam;
   Year 12+ count as GCSE finished (`packages/core/src/chapters.ts`).
@@ -313,9 +315,14 @@ Tags: #product #rules #limits #defaults
   `GET /v1/student/rewards` and the parent's full `GET /v1/students/:id/rewards`. The parent's
   `GET /v1/students/:id/parent-rewards` and the stats pages use the read-only `rewardsProgress`.
 - Hidden tracks and secrets (R7): Bug Hunter steps at 1, 2, 3, 5, 8, 12, 20 confirmed bugs
-  (`confirmedBugs`, 0 until workstream L's confirm action lands); 24 secret achievements shown as
+  (`confirmedBugs` from L's `confirmedBugCount`; L's bug reward XP counts for levels, not
+  chapters); 24 secret achievements shown as
   "???" until earned, with hints on 9; stats in `packages/core/src/secret-stats.ts`. New reward
   item kind `effect` (glitch); new avatar item magnifier (held item, appended).
+  They are also saved, once each, by an answer (`POST /v1/student/learn/attempts`) and a finished
+  flashcard session (`.../sessions/:id/finish`): both return `newlyEarned` (`saveNewRewards`), and
+  the lesson, Cards screen and starting-test results show "New reward: …" with the reward sound
+  (F4, 2026-11-25). The starting test keeps quiet until its results screen.
 - New avatar items: chapter finale tops (chapter hoodie, bomber jacket, GCSE finisher jacket,
   sixth-form coat, A-Level finisher jacket), rooftop scene, and the Frost Fest drop (bobble hat,
   paper lantern, frosty night scene). Always appended to a layer so saved avatar codes still work.
@@ -339,7 +346,7 @@ Tags: #product #rules #limits #defaults
 - Level bar and parent-set rewards come from the rewards progression (same numbers as the Rewards
   page), read with the read-only `rewardsProgress`: it counts earned-but-unseen rewards and saves
   nothing, so the stats pages and the parent's parent-rewards view never use up the student's
-  "New!" rewards (only the student's own Rewards page saves and announces them). Plan, school report effort and predicted/target grade panels show "Not set up yet"
+  "New!" rewards (the student's Rewards page, answers and flashcard sessions save and announce them). Plan, school report effort and predicted/target grade panels show "Not set up yet"
   (adapters in `apps/api/src/stats/adapters.ts`) until those features land.
 - Routes: `/progress` (My stats), `/parent/stats` (parent); API `GET /v1/student/stats`,
   `GET /v1/students/:id/stats`, `GET /v1/students/:id/dashboard`. Implemented in
@@ -395,13 +402,16 @@ Tags: #product #rules #limits #defaults
 - Reward sounds scale with rarity (common, rare, epic, legendary; 4+ variations each, no repeat
   in a row); milestone ladders and levels climb in pitch and fullness; one sound for several
   rewards at once; legendary at most 3 s and skippable (owner, 2026-11-25; U4).
+- Combo chime (U5): each right answer in a row plays the correct chime a whole tone higher, up to
+  6 steps (an octave); the first right answer is the plain chime, and part marks rise too. Wrong
+  never changes. `PlayOptions.step` in `apps/web/src/features/sound/engine.ts`.
 - Reward sound details (U4, `apps/web/src/features/sound/rewardSounds.ts`, `rewardBank.ts`): tier
   = the reward's rarity, except prestige stars always play legendary (prestige 1 to 3 are epic in
   the catalogue). Ladder step = position in its milestone ladder; level step = level ÷ 10. Each
   step is 1.5 semitones higher (8 steps = an octave) and adds one harmony note (up to 4). Voice per
   chapter id (`chapter-<n>-…`); finisher fanfares for the chapter rewards that need
   `gcseFinished` or `aLevelFinished`. Biggest = tier, then finisher, then step. Played on the
-  Rewards screen for `newlyEarned`; a tap or key press skips legendary.
+  Rewards screen, after an answer and after a flashcard session for `newlyEarned`; a tap or key press skips legendary.
 - Defaults: on, medium volume, tap sounds off; saved in `localStorage` key `revisionden.sound`
   (storage errors are ignored). One AudioContext, made at the first tap or key press; paused when
   the app is hidden. Test mode: submit and one reveal for the set; timed papers: only the timer
@@ -456,6 +466,13 @@ Tags: #product #rules #limits #defaults
   +50 XP and a step on the hidden Bug Hunter track (badge, title, avatar item, frame, Pip outfit,
   effect, legendary set at 20). Duplicates +10 XP; at most 3 confirmed-bug rewards a week; parents
   are thanked, not rewarded.
+- Built (L7): the bug button and confirm flow; rules in `packages/core/src/bug-hunter.ts`
+  (`bugReward`). The week is Monday to Sunday, UK time, and the 3-a-week cap counts full and
+  duplicate rewards; past the cap the student is thanked with no XP and no track step. Bug XP is
+  added to total XP but not to the daily goal or streak. Students switch the button off in Settings
+  (`revisionden.bugButton` in local storage). Confirmed count: `confirmedBugCount` in
+  `apps/api/src/feedback/bugHunter.ts`, `GET /v1/student/bug-hunter`,
+  `GET /v1/students/:id/bug-hunter`. The track items are R's.
 - Secret achievements: hidden "???" cards with a found count; learning-based conditions only;
   defined in the catalogue with `secret: true`. Detail: `docs/REWARDS.md`.
 
@@ -470,13 +487,28 @@ Tags: #product #rules #limits #defaults
 - Hidden tracks besides Bug Hunter: Fact Checker, Comeback Kid, Explorer, Planner, Pace Setter,
   Perfectionist (`docs/REWARDS.md`).
 
-## Titles and Get help (owner, 2026-11-25; planned)
+## Titles (owner, 2026-11-25; planned) and Get help (built, workstream W)
 
 - Two-part titles: a first word and a last word unlocked separately from rewards (about 120 each);
   curated, every pairing validated against blocked words; shown under the nickname.
-- "Get help" page: UK support services by topic with tap-to-call links; every number and URL
-  confirmed on the service's own site with source and date (rechecked each term); nothing about its
-  use is recorded or shown to parents; works offline; Quick exit. Detail: `docs/PRODUCT_RULES.md`.
+- "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
+  NSPCC adult helpline, parent-only). Reached from Settings, the heart link in the student footer,
+  the signed-out header and parent home. There is no separate profile menu yet.
+- Data: `content/support/uk-services.json` (schema `content/schemas/support-services.schema.json`).
+  Every phone, text, link, opening time and age range has the URL of the service's own page it was
+  copied from; `checked_at` per service. `pnpm content:validate` (and `scripts/content/support.test.mjs`)
+  fails on a missing or off-site source, a check older than 4 months, or a non-UK number.
+- Services first checked 2026-11-25: 999 and NHS 111 (nhs.uk), Childline, Report Remove (Childline
+  and IWF), NSPCC Helpline (parents), Samaritans, Shout, The Mix, YoungMinds (website only), Beat,
+  FRANK, CEOP, Switchboard, Brook (website only), Victim Support. Added the same day from the
+  product owner's own check (`confirmed_by`): Coram Kidscape (young people's page; parent-only
+  Parent Advice Line by phone, WhatsApp and email) and Anti-Bullying Alliance (parents only). Left
+  out for now: Papyrus (site redirects to an administrator's page), Mind, Carers Trust (bot checks block automated checking). Kooth ("Soluna by Kooth") was added for
+  students under feeling low: website only, with the owner's note "Free in some parts of the UK.
+  Check if it's available where you live." (a `note` needs `confirmed_by`). See `docs/PRODUCT_RULES.md` (Get help).
+- Private: the page uses its own layout with no API calls (no cards-due badge, no sounds), loads
+  nothing from other sites, and opens websites with `rel="noreferrer"`. Quick exit replaces the
+  history entry and goes to `/map`. Service worker v3 precaches `/help` and the built files.
 
 ## Quick wins (owner approved 2026-11-25; planned, workstream Q)
 
@@ -484,3 +516,42 @@ Tags: #product #rules #limits #defaults
   start, no penalty, skippable); "Learn it first" links to Oak and BBC Bitesize per topic, checked
   by CI; read aloud with on-device voices preferred; reading comfort settings (dyslexia-friendly
   self-hosted font, larger text, spacing, tint). Detail: `docs/PRODUCT_RULES.md` (Quick wins).
+- Recall checks (Q4, built): `GET /v1/student/recall?topicId=` before a topic lesson (or unit
+  challenge) whose topic has been practised. Up to 2 questions the student has answered before
+  (no flashcards, no extended answers), from other practised topics first, then the lesson's own
+  topic; weak spots first (next-item rules). Shown as "Remember this?" in the lesson player with
+  Skip; answers are normal Learn mode attempts (normal XP when right, wrong ones become
+  flashcards, mastery as any answer). If the call fails the lesson starts as normal.
+  `apps/web/src/features/recall/`, `apps/api/src/routes/recall.ts`.
+- Reading comfort (Q1, built): Settings → Reading comfort, per device in `localStorage` key
+  `revisionden.reading`. Options: dyslexia-friendly font (OpenDyslexic from
+  `@fontsource/opendyslexic`, SIL OFL 1.1, bundled with the app, no font service), text size
+  Normal / Large (112.5%) / Larger (125%), more spacing (line height 1.8, letter 0.12em, word
+  0.16em), tint none / cream / blue. Defaults: all off. Applied app-wide by `data-reading-*`
+  attributes on `<html>` (`apps/web/src/features/reading/`).
+
+## Operator console (planned)
+
+- Operators use AppDeck Admin (repo `appdeck-admin`) with RevisionDen as a managed app. AppDeck has
+  no database access; it calls a signed operator bridge (HMAC tag `appdeck-revisionden-operator-v1`,
+  per-environment shared secret, 5-minute window, idempotent request ids), and every operator read
+  and change is audited. Agents: support; Managers: money and data. Complaints: acknowledge in 2
+  working days, aim to resolve in 14. Data requests: one calendar month. Family tags (for example
+  Beta tester, Press, Friends & family) are internal; Managers define them and their effects (early
+  access, complimentary Premium, exclude from metrics); Agents apply them. Detail:
+  `docs/OPERATOR_CONSOLE.md`.
+
+## Pricing (agreed 2026-11-25; not live)
+
+- Free app; Premium per child per month £9.99, £4.99, £2.99, then free; annual about £79.99;
+  14-day trial; web only; prices include VAT. Learning, safety and accessibility stay free; offers
+  only to parents; rewards never sold; no adverts. Free school meals: scheme choice and date only,
+  declaration, soft checks, rare spot checks. Detail: `docs/PRICING.md`, decision 0004.
+- Read aloud (Q2, built): Web Speech API only, no audio sent by us. Voice: on-device British
+  English, then any on-device English, then online English. On by default only with an on-device
+  voice; with only online voices it starts off and Settings says the device's speech service may
+  process the text. Speed Slower 0.75 / Normal 1 / Faster 1.25. Saved in `localStorage` key
+  `revisionden.readAloud` (`enabled` null until chosen). Speaker buttons: lesson question (with
+  options and unit), feedback (verdict, answer, explanation), flashcard front or back. Maths read
+  as words (`x^2` "x squared", `8^(2/3)` "8 to the power 2 over 3", `cm^2` "square centimetres",
+  `√`, `π`, `×`, `÷`, `≤`, `≥`). `apps/web/src/features/read-aloud/`. Privacy notice 1.4 (6.4); young people's notice 1.3.

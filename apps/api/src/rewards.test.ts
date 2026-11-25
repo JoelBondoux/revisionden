@@ -9,7 +9,7 @@ import {
   DEFAULT_AVATAR,
   AVATAR_CATALOGUE,
 } from '@revisionden/core';
-import { attempts, items, rewards, streaks, topics } from '@revisionden/db';
+import { attempts, feedback, items, rewards, streaks, students, topics } from '@revisionden/db';
 import { createTestContext, jsonRequest, type TestContext } from './test/helpers';
 
 let t: TestContext;
@@ -414,9 +414,30 @@ describe('hidden tracks and secret achievements', () => {
     expect(view.newlyEarned.map((r) => r.id)).toContain('secret-polymath');
   });
 
-  it('keeps Bug Hunter hidden until a bug is confirmed (no confirmed bugs are recorded yet)', async () => {
+  it('keeps Bug Hunter hidden until a bug is confirmed', async () => {
     const { headers } = await t.familyStudent('r_bug_none');
     const view = await studentRewards(headers);
     expect(view.overview.hiddenTracks.find((h) => h.id === 'bug-hunter')).toBeUndefined();
+  });
+
+  it('reveals Bug Hunter from confirmed bugs and adds their reward XP to the level', async () => {
+    const { studentId, headers } = await t.familyStudent('r_bug_one');
+    const [student] = await t.db.select().from(students).where(eq(students.id, studentId));
+    await t.db.insert(feedback).values({
+      familyId: student!.familyId,
+      senderRole: 'student',
+      studentId,
+      kind: 'bug',
+      outcome: 'confirmed',
+      rewardXp: 50,
+      trackStep: true,
+      confirmedAt: new Date('2026-11-24T09:00:00Z'),
+    });
+    const view = await studentRewards(headers);
+    expect(view.newlyEarned.map((r) => r.id)).toContain('bug-hunter-1');
+    expect(view.overview.hiddenTracks).toContainEqual(
+      expect.objectContaining({ id: 'bug-hunter', earned: 1 }),
+    );
+    expect(view.overview.level.totalXp).toBe(50);
   });
 });

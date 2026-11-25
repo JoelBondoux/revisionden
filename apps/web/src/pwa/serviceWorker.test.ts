@@ -140,4 +140,48 @@ describe('service worker', () => {
     const response = await worker.dispatch('fetch', new Request('https://app.test/version.json'));
     expect(response).toBeUndefined();
   });
+
+  it('precaches the Get help page and the built files it needs when installed', async () => {
+    const page =
+      '<script type="module" src="/assets/index-abc.js"></script>' +
+      '<link rel="stylesheet" href="/assets/index-def.css">';
+    const worker = loadWorker(async (req) => {
+      const url = typeof req === 'string' ? req : req.url;
+      return new Response(url.endsWith('/') ? page : `body of ${url}`);
+    });
+    await worker.dispatch('install');
+    const cached = [...worker.stores.values()].flatMap((s) => [...s.keys()]);
+    expect(cached).toEqual(
+      expect.arrayContaining([
+        'https://app.test/help',
+        'https://app.test/parent/help',
+        'https://app.test/assets/index-abc.js',
+        'https://app.test/assets/index-def.css',
+      ]),
+    );
+  });
+
+  it('opens Get help offline straight after install', async () => {
+    let online = true;
+    const worker = loadWorker(async (req) => {
+      if (!online) throw new TypeError('offline');
+      const url = typeof req === 'string' ? req : req.url;
+      return new Response(url.endsWith('/') ? 'app page /assets/index-abc.js' : 'script');
+    });
+    await worker.dispatch('install');
+    online = false;
+    const page = await worker.dispatch('fetch', pageVisit('https://app.test/help'));
+    expect(await page!.text()).toContain('app page');
+    const script = await worker.dispatch(
+      'fetch',
+      new Request('https://app.test/assets/index-abc.js'),
+    );
+    expect(await script!.text()).toBe('script');
+  });
+
+  it('still installs when offline (built files are then cached on first use)', async () => {
+    const worker = loadWorker(offline);
+    await worker.dispatch('install');
+    expect(worker.stores.size).toBe(1);
+  });
 });

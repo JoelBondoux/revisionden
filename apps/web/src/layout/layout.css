@@ -157,3 +157,25 @@
   flex-wrap: wrap;
   gap: var(--space-4);
 }
+
+/* Room for the bug button (L7) below the content, so it never covers anything. It is 48px tall
+   and sits 16px from the bottom, or 72px above the bottom navigation on phones. */
+.focus-main.has-bug-button,
+.focus-main.has-bug-button + .version-footer {
+  padding-bottom: calc(var(--tap-target) + var(--space-8) + env(safe-area-inset-bottom));
+}
+
+.app-shell > .app-main.has-bug-button,
+.app-shell > .app-main.has-bug-button + .version-footer {
+  padding-bottom: calc(136px + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 768px) {
+  .app-shell > .app-main.has-bug-button {
+    padding-bottom: calc(var(--tap-target) + var(--space-8) + var(--space-4));
+  }
+
+  .app-shell > .app-main.has-bug-button + .version-footer {
+    padding-bottom: calc(var(--tap-target) + var(--space-6));
+  }
+}

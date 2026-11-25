@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom';
 import { Card } from '../components/Card';
+import { useBugButton } from '../features/feedback/bugButtonContext';
 import { DeviceReminders } from '../features/notifications';
+import { ReadingSettingsCard } from '../features/reading';
+import { ReadAloudSettingsCard } from '../features/read-aloud';
 import { SoundSettingsCard } from '../features/sound';
 import { ParentCanSee } from '../features/stats/ParentCanSee';
 
 export function SettingsPage() {
+  const bugButton = useBugButton();
   return (
     <div className="stack">
       <h1>Settings</h1>
@@ -28,10 +32,26 @@ export function SettingsPage() {
           </li>
         </ul>
       </Card>
+      <ReadingSettingsCard />
+      <ReadAloudSettingsCard />
       <SoundSettingsCard />
       <DeviceReminders />
       <Card title="Help and information">
+        <label className="feedback__toggle">
+          <input
+            type="checkbox"
+            checked={bugButton.shown}
+            onChange={(e) => bugButton.setShown(e.target.checked)}
+          />
+          <span>Show the bug button</span>
+        </label>
+        <p className="secondary-text">
+          The small bug in the corner opens a bug report. Saved on this device.
+        </p>
         <ul className="link-list">
+          <li>
+            <Link to="/help">Get help</Link>
+          </li>
           <li>
             <Link to="/feedback" state={{ from: '/settings' }}>
               Send feedback or report a bug

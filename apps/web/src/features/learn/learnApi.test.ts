@@ -41,8 +41,16 @@ describe('learning API client', () => {
       mode: 'learn',
     });
     expect(result.correct).toBe(true);
-    const review = await api.reviewFlashcard('00000000-0000-4000-8000-000000000101', 'good');
-    expect(review.xpEarned).toBe(2);
+    const session = await api.startFlashcardSession();
+    expect(session.xp).toBe(20);
+    const review = await api.reviewFlashcard(
+      '00000000-0000-4000-8000-000000000101',
+      'good',
+      session.id,
+    );
+    expect(review.cardsCounted).toBe(1);
+    const done = await api.finishFlashcardSession(session.id);
+    expect(done.reason).toBe('too_few_cards');
     const created = await api.createFlashcard({ topicId: 't', front: 'F', back: 'B' });
     expect(created.origin).toBe('own');
     expect((await api.getDeck('demo-topic-a')).length).toBe(2);
