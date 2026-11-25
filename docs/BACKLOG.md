@@ -208,6 +208,7 @@ Spec: `docs/LEGAL.md` and `PRODUCT_RULES.md` (About page, policies and feedback)
 - [x] L5 Policy acceptance in onboarding (version stored) and the "policy changed" prompt.
 - [x] L6 Friendly view of the young people's privacy notice: short-version cards, key points with "Read more", icons, Pip, gentle motion (built from the same file).
 - [x] L7 Bug button on every screen (hidden in Test mode and timed papers, can be switched off), operator Confirm bug / Duplicate of…, Bug Hunter XP and caps, confirmed-bug count for the rewards track.
+- [x] L8 Friendly "Before you start" acceptance page: the terms and privacy notice as cards built from their plain-English bullets, full text behind "Show the details", links to the full text; acceptance and stored versions unchanged.
 - Tests: placeholder filling and the missing-value message; What's new parsing (versions without the subsection hidden); feedback refuses emails, phone numbers and nicknames; a parent sees only their family's feedback; only the operator role reaches triage; rate limit; acceptance version stored.
 
 ### U. Sound effects (`apps/web/src/features/sound/**`)
@@ -285,6 +286,9 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [x] M1 Skeleton: static TypeScript build, Workers `revisionden-www` and `revisionden-www-staging`, www → apex redirect, security headers, self-hosted fonts, reused design tokens, sitemap and robots, `deploy-www.yml`.
 - [x] M2 Pages and content: home (parents first, teen section), how it works, pricing (free now, Premium coming soon from `docs/PRICING.md`), for young people, help and contact, policies from `docs/legal`, about.
 - [x] M3 Polish: Open Graph image and touch icon (original Pip art), theme colour, accessibility pass (axe, WCAG 2.2 AA, light and dark).
+- [x] M5 Links in the app's J7 styles (buttons, tiles, chips, inline links; owner request).
+- [x] M6 Dark theme from the device setting with the app's dark values (J8; owner request).
+- [x] M7 The app's doodle background behind every page (J8), hidden for high contrast and forced colours.
 - [ ] M4 First live deploy (lead): staging, then production once the app is on `app.revisionden.com` and the Cloudflare secrets are set.
 - Tests: page render, every internal link resolves, no third-party origins, policies come from `docs/legal`, production build refuses missing operator details.
 
@@ -292,7 +296,10 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 
 Broken down into tasks when Stage 1 ships, following the same format. Headline order:
 
-1. Predicted grade (the stats dashboards are workstream K).
+1. Predicted grade (the stats dashboards are workstream K). Target grades are built (K8). The
+   predicted grade waits for verified grade boundaries (docs/VERIFICATION.md) and for mocks and
+   school reports; grade scales for subjects other than GCSE Maths (Edexcel 1MA1) need citing
+   before targets can be set for them.
 2. Exams, mocks and assessments entry; study plan generator and calendar (editable by both):
    drag sessions between days; detail panel to edit a session; custom rules created from edits,
    toggled and removed, applied by the generator, with conflict warnings (mockup screen 5).
@@ -303,3 +310,6 @@ Broken down into tasks when Stage 1 ships, following the same format. Headline o
 7. Stage 3: past papers, maths working, essays and Mark my homework, access arrangements,
    A-Level extras.
 8. Stage 4: rewards UI, friends league, skip and gift days UI, mascot kits, interactive lessons.
+   - Friends league: show each student's two-part title under their nickname (R8). The title is
+     `formatTitle` of `students.title_first` and `title_last`; `GET /v1/student/rewards/title`
+     shows the shape (`docs/REWARDS.md` "Two-part titles").

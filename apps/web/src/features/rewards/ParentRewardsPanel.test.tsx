@@ -3,13 +3,15 @@ import userEvent from '@testing-library/user-event';
 import type { CreateParentRewardRequest, ParentReward } from '@revisionden/core';
 import type { RewardsApi } from './rewardsApi';
 import { ParentRewardsPanel } from './ParentRewardsPanel';
-import { cinemaTrip, sampleRewards } from './fixtures';
+import { cinemaTrip, sampleRewards, sampleTitle } from './fixtures';
 
 function memoryApi(initial: ParentReward[] = []) {
   let list = [...initial];
   const added: CreateParentRewardRequest[] = [];
   const api: RewardsApi = {
     getMyRewards: async () => sampleRewards(),
+    getMyTitle: async () => sampleTitle,
+    setMyTitle: async () => sampleTitle,
     getChildRewards: async () => sampleRewards({ parentRewards: list }),
     addParentReward: async (_id, body) => {
       added.push(body);

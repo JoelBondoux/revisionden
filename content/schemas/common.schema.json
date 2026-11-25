@@ -120,6 +120,7 @@
                   "blind-answer",
                   "blind-marking",
                   "adversarial-review",
+                  "fact-check",
                   "maths-engine",
                   "schema",
                   "human-approval",

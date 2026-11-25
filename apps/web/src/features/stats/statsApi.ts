@@ -3,6 +3,10 @@ import { z, type ZodType } from 'zod';
 import {
   ParentDailyLimitSchema,
   ParentDashboardSchema,
+  ParentRewardsResponseSchema,
+  type ParentRewardsResponse,
+  TargetGradesSchema,
+  type TargetGrades,
   StudentDailyLimitSchema,
   StudentStatsSchema,
   type ParentDailyLimit,
@@ -26,12 +30,23 @@ export interface StatsApi {
   /** The signed-in parent's children (nicknames only). */
   getChildren(): Promise<Child[]>;
   getDashboard(studentId: string): Promise<ParentDashboard>;
+  /** A child's parent-set rewards, read-only: never uses up their "New!" rewards (K10). */
+  getParentRewards(studentId: string): Promise<ParentRewardsResponse>;
   /** The student's own daily limit and minutes left (workstream K7). */
   getMyDailyLimit(): Promise<StudentDailyLimit>;
   markDailyLimitSeen(): Promise<void>;
   getDailyLimit(studentId: string): Promise<ParentDailyLimit>;
   saveDailyLimit(studentId: string, change: UpdateDailyLimitRequest): Promise<ParentDailyLimit>;
   answerSuggestion(studentId: string, action: 'accept' | 'dismiss'): Promise<ParentDailyLimit>;
+  /** Target grades per enrolled subject (workstream K8). */
+  getTargetGrades(studentId: string): Promise<TargetGrades>;
+  /** The child's own target (student device session). */
+  saveMyTargetGrade(subjectId: string, targetGrade: string | null): Promise<TargetGrades>;
+  saveTargetGrade(
+    studentId: string,
+    subjectId: string,
+    targetGrade: string | null,
+  ): Promise<TargetGrades>;
 }
 
 /** Client for the stats routes (apps/api/src/stats). Sends the session cookies. */
@@ -50,12 +65,15 @@ export function createStatsApi({
       ...(body === undefined ? {} : { body: JSON.stringify(body) }),
     });
   const limitPath = (id: string) => `students/${encodeURIComponent(id)}/daily-limit`;
+  const targetPath = (id: string) => `students/${encodeURIComponent(id)}/target-grades`;
 
   return {
     getMyStats: (period) => get(`student/stats?period=${period}`, StudentStatsSchema),
     getChildren: async () => (await get('students', ChildrenSchema)).students,
     getDashboard: (id) =>
       get(`students/${encodeURIComponent(id)}/dashboard`, ParentDashboardSchema),
+    getParentRewards: (id) =>
+      get(`students/${encodeURIComponent(id)}/parent-rewards`, ParentRewardsResponseSchema),
     getMyDailyLimit: () => get('student/daily-limit', StudentDailyLimitSchema),
     markDailyLimitSeen: async () =>
       void (await send('POST', 'student/daily-limit/seen', z.unknown())),
@@ -63,6 +81,15 @@ export function createStatsApi({
     saveDailyLimit: (id, change) => send('PUT', limitPath(id), ParentDailyLimitSchema, change),
     answerSuggestion: (id, action) =>
       send('POST', `${limitPath(id)}/suggestion`, ParentDailyLimitSchema, { action }),
+    getTargetGrades: (id) => get(targetPath(id), TargetGradesSchema),
+    saveMyTargetGrade: (subjectId, targetGrade) =>
+      send('PUT', `student/target-grades/${encodeURIComponent(subjectId)}`, TargetGradesSchema, {
+        targetGrade,
+      }),
+    saveTargetGrade: (id, subjectId, targetGrade) =>
+      send('PUT', `${targetPath(id)}/${encodeURIComponent(subjectId)}`, TargetGradesSchema, {
+        targetGrade,
+      }),
   };
 }
 

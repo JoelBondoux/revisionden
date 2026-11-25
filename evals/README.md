@@ -21,6 +21,17 @@ Keys and model ids come from the environment (keep them in `.dev.vars`, never in
 `ANTHROPIC_API_KEY` + `VERIFY_ANTHROPIC_MODEL`, `OPENAI_API_KEY` + `VERIFY_OPENAI_MODEL`,
 `GEMINI_API_KEY` + `VERIFY_GEMINI_MODEL`.
 
+## Fact-check judge
+
+```bash
+pnpm evals fact-judge --golden evals/golden/fact-judge.json --judge gemini --live
+```
+
+Runs the fact-check judge prompt (`scripts/verify/fact-check.mjs`) on pairs of fact statements.
+Every pair that differs in meaning must be refused, and at least 90% of same-fact pairs accepted.
+The set holds pairs recorded in the S3-A fact-check run and pairs written to differ; maths facts
+only.
+
 ## Golden sets
 
 Golden sets live in `evals/golden/` and are written by the sourcing session, not by build

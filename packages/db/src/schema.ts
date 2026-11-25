@@ -201,6 +201,9 @@ export const students = pgTable(
     nickname: text('nickname').notNull(),
     avatarCode: text('avatar_code').notNull(),
     yearGroup: integer('year_group').notNull(),
+    // Two-part title (workstream R8): curated words the student picked, never free text.
+    titleFirst: text('title_first'),
+    titleLast: text('title_last'),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },
@@ -208,6 +211,8 @@ export const students = pgTable(
     unique('students_family_nickname_unique').on(t.familyId, t.nickname),
     check('students_nickname_format', sql`${t.nickname} ~ '^[A-Za-z0-9_]{2,16}$'`),
     check('students_year_group_range', sql`${t.yearGroup} between 9 and 13`),
+    check('students_title_first_format', sql`${t.titleFirst} ~ '^[A-Z][A-Za-z-]{0,15}$'`),
+    check('students_title_last_format', sql`${t.titleLast} ~ '^[A-Z][A-Za-z-]{0,15}$'`),
   ],
 );
 
@@ -223,6 +228,11 @@ export const enrolments = pgTable(
     // As in core's TierSchema: 'none' when the subject has no tiers.
     tier: text('tier').notNull().default('not_sure'),
     specVersion: text('spec_version'),
+    // Target grades (workstream K8), each checked against the cited grade scale in
+    // packages/core/src/target-grades.ts; null until set. One is set by either parent, the
+    // other is the child's own.
+    parentTargetGrade: text('parent_target_grade'),
+    studentTargetGrade: text('student_target_grade'),
     createdAt: createdAt(),
   },
   (t) => [
@@ -344,6 +354,9 @@ export const items = pgTable(
     status: text('status').notNull().default('draft'),
     difficulty: integer('difficulty'),
     tags: jsonb('tags').$type<string[]>(),
+    // Workstream S2. The full content item (citations, checks, exemplars, linked mark scheme as
+    // mark_scheme_detail) as synced, used only to build human review batches. Never served.
+    reviewSnapshot: jsonb('review_snapshot').$type<Record<string, unknown>>(),
   },
   (t) => [
     index('items_topic_id_idx').on(t.topicId),
@@ -1153,6 +1166,105 @@ export const dataRequests = pgTable(
   (t) => [
     index('data_requests_due_idx').on(t.handledAt, t.dueAt),
     check('data_requests_kind_values', sql`${t.kind} in ('export', 'deletion')`),
+  ],
+);
+
+export const COMPLAINT_CHANNELS = ['app', 'email'] as const;
+export const COMPLAINT_STATUSES = ['new', 'acknowledged', 'resolved', 'escalated'] as const;
+
+/**
+ * O4: formal complaints from a parent (in the app) or logged by an operator from an email
+ * (`docs/legal/complaints-policy.md`). Deleted with the family; otherwise 12 months after it is
+ * resolved. An emailed complaint may not match a family (family_id null).
+ */
+export const complaints = pgTable(
+  'complaints',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    familyId: uuid('family_id').references(() => families.id, { onDelete: 'cascade' }),
+    channel: text('channel', { enum: COMPLAINT_CHANNELS }).notNull(),
+    status: text('status', { enum: COMPLAINT_STATUSES }).notNull().default('new'),
+    summary: text('summary').notNull(),
+    aboutPersonalData: boolean('about_personal_data').notNull(),
+    receivedAt: timestamp('received_at', { withTimezone: true }).notNull(),
+    acknowledgeDueAt: timestamp('acknowledge_due_at', { withTimezone: true }).notNull(),
+    resolveDueAt: timestamp('resolve_due_at', { withTimezone: true }).notNull(),
+    acknowledgedAt: timestamp('acknowledged_at', { withTimezone: true }),
+    escalatedAt: timestamp('escalated_at', { withTimezone: true }),
+    resolvedAt: timestamp('resolved_at', { withTimezone: true }),
+    outcome: text('outcome'),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('complaints_family_id_idx').on(t.familyId),
+    index('complaints_status_idx').on(t.status, t.acknowledgeDueAt),
+    check('complaints_channel_values', sql`${t.channel} in ('app', 'email')`),
+    check(
+      'complaints_status_values',
+      sql`${t.status} in ('new', 'acknowledged', 'resolved', 'escalated')`,
+    ),
+    check('complaints_summary_length', sql`char_length(${t.summary}) between 1 and 500`),
+    check('complaints_outcome_length', sql`char_length(${t.outcome}) <= 2000`),
+  ],
+);
+
+/**
+ * O4: the conversation on a complaint. `sender` is the family or support; support messages keep
+ * the operator's work email (staff) for the audit, never shown to the family.
+ */
+export const complaintMessages = pgTable(
+  'complaint_messages',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    complaintId: uuid('complaint_id')
+      .notNull()
+      .references(() => complaints.id, { onDelete: 'cascade' }),
+    sender: text('sender', { enum: ['family', 'operator'] }).notNull(),
+    authorEmail: text('author_email'),
+    body: text('body').notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('complaint_messages_complaint_idx').on(t.complaintId, t.createdAt),
+    check('complaint_messages_sender_values', sql`${t.sender} in ('family', 'operator')`),
+    check('complaint_messages_body_length', sql`char_length(${t.body}) between 1 and 5000`),
+  ],
+);
+
+export const COMPLAINT_REQUEST_TOPICS = [
+  'marking',
+  'unfair',
+  'app_problem',
+  'my_data',
+  'something_else',
+] as const;
+
+/**
+ * O4 (owner, 2026-11-25): a student asks their parents to raise a complaint. Shown to both
+ * parents in the parent area only; never sent to AppDeck. Deleted when a parent dismisses it or
+ * starts the complaint, with the student, and after 90 days.
+ */
+export const complaintRequests = pgTable(
+  'complaint_requests',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    familyId: uuid('family_id')
+      .notNull()
+      .references(() => families.id, { onDelete: 'cascade' }),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    topic: text('topic', { enum: COMPLAINT_REQUEST_TOPICS }).notNull(),
+    note: text('note'),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('complaint_requests_family_idx').on(t.familyId, t.createdAt),
+    check(
+      'complaint_requests_topic_values',
+      sql`${t.topic} in ('marking', 'unfair', 'app_problem', 'my_data', 'something_else')`,
+    ),
+    check('complaint_requests_note_length', sql`char_length(${t.note}) <= 300`),
   ],
 );
 

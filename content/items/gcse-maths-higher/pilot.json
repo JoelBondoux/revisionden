@@ -32,7 +32,56 @@
     "verification": {
       "status": "draft",
       "version": 1,
-      "checks": []
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S2 audit 2026-11-25",
+          "result": "pass",
+          "notes": "Audit after writing (no writer record existed). Question scope cited (spec N7). Answer backed by the maths engine. Hint states 8^(2/3) = (cube root of 8)^2, checked with SymPy (= 4).",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T16:01:30Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T16:37:54Z",
+          "notes": "model answered \"4\"; expected \"4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T16:37:59Z",
+          "notes": "no problems found"
+        }
+      ]
     }
   },
   {
@@ -69,7 +118,56 @@
     "verification": {
       "status": "draft",
       "version": 1,
-      "checks": []
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S2 audit 2026-11-25",
+          "result": "pass",
+          "notes": "Audit after writing (no writer record existed). Question scope cited (spec R9). Answer and mark scheme arithmetic (80 x 1.15 = 80 + 12 = 92) backed by the maths engine.",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T16:01:31Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T16:38:08Z",
+          "notes": "model answered \"£92\"; expected \"92\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T16:38:15Z",
+          "notes": "no problems found"
+        }
+      ]
     }
   },
   {
@@ -81,7 +179,7 @@
     "answer": {
       "value": "28.27",
       "unit": "cm^2",
-      "tolerance": 0.005
+      "decimal_places": 2
     },
     "verify": {
       "expression": "pi * 3^2"
@@ -107,7 +205,56 @@
     "verification": {
       "status": "draft",
       "version": 1,
-      "checks": []
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S2 audit 2026-11-25",
+          "result": "pass",
+          "notes": "Audit after writing (no writer record existed). Question scope cited (spec G17). Answer backed by the maths engine (pi x 9 = 28.274..., 28.27 to 2 dp).",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T16:01:31Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: 28.27 is pi x 3^2 rounded half up to 2 decimal places (answer.decimal_places replaced the tolerance)",
+          "at": "2026-11-25T18:41:16Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:41:16Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T16:38:30Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:41:00Z",
+          "notes": "model answered \"28.27 cm²\"; expected \"28.27\""
+        }
+      ]
     }
   },
   {
@@ -146,7 +293,56 @@
     "verification": {
       "status": "draft",
       "version": 1,
-      "checks": []
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S2 audit 2026-11-25",
+          "result": "pass",
+          "notes": "Audit after writing (no writer record existed). Question scope cited (spec A18). Solutions and steps backed by the maths engine.",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T16:01:31Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T16:38:38Z",
+          "notes": "model answered \"1/3, -2\"; expected \"1/3, -2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T16:38:45Z",
+          "notes": "no problems found"
+        }
+      ]
     }
   },
   {
@@ -189,7 +385,56 @@
     "verification": {
       "status": "draft",
       "version": 1,
-      "checks": []
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S2 audit 2026-11-25",
+          "result": "pass",
+          "notes": "Audit after writing (no writer record existed). Question scope cited (spec A17). Solution and steps backed by the maths engine.",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T16:01:31Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T16:38:51Z",
+          "notes": "model answered \"x = 7\"; expected \"7\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T16:38:59Z",
+          "notes": "no problems found"
+        }
+      ]
     }
   },
   {
@@ -206,11 +451,11 @@
       "expression": "6x^2 + 9x",
       "form": "factorised"
     },
-    "steps": ["6x^2 + 9x", "3x(2x + 3)"],
+    "steps": ["6x^2 + 9x", "(3x)(2x) + (3x)(3)", "3x(2x + 3)"],
     "marks": 2,
     "mark_scheme": [
-      "B1 for a partial factorisation such as 3(2x^2 + 3x) or x(6x + 9)",
-      "B1 for 3x(2x + 3)"
+      "B2 for 3x(2x + 3)",
+      "(B1 for a partial factorisation such as 3(2x^2 + 3x) or x(6x + 9))"
     ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["maths-engine", "author"],
@@ -231,7 +476,56 @@
     "verification": {
       "status": "draft",
       "version": 1,
-      "checks": []
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S2 audit 2026-11-25",
+          "result": "pass",
+          "notes": "Audit after writing (no writer record existed). Question scope cited (spec A4). Factorised form and steps backed by the maths engine.",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T16:01:31Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked (re-run after adding a working step)",
+          "at": "2026-11-25T16:42:54Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T16:42:54Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T16:42:37Z",
+          "notes": "model answered \"3x(2x + 3)\"; expected \"3x(2x + 3)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T16:42:44Z",
+          "notes": "no problems found"
+        }
+      ]
     }
   },
   {
@@ -270,7 +564,56 @@
     "verification": {
       "status": "draft",
       "version": 1,
-      "checks": []
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S2 audit 2026-11-25",
+          "result": "pass",
+          "notes": "Audit after writing (no writer record existed). Question scope cited (spec A4). Expanded form and steps backed by the maths engine.",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T16:01:32Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T16:39:41Z",
+          "notes": "model answered \"2x^2 + 7x - 4\"; expected \"2x^2 + 7x - 4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T16:39:50Z",
+          "notes": "no problems found"
+        }
+      ]
     }
   },
   {
@@ -304,7 +647,48 @@
     "verification": {
       "status": "draft",
       "version": 1,
-      "checks": []
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S2 audit 2026-11-25",
+          "result": "pass",
+          "notes": "Audit after writing (no writer record existed). Question scope cited (spec N4). Explanation claims are arithmetic, checked with SymPy: 51 = 3 x 17, 57 = 3 x 19, 63 = 3^2 x 7 (= 7 x 9), 59 prime. Not a maths-engine item type, so no maths-engine check.",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T16:01:32Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T16:39:58Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:29:12Z",
+          "notes": "no problems found"
+        }
+      ]
     }
   },
   {
@@ -336,8 +720,50 @@
     "verification": {
       "status": "draft",
       "version": 1,
-      "checks": []
-    }
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S2 audit 2026-11-25",
+          "result": "pass",
+          "notes": "Question scope cited (spec G9, which names \"tangent\"). No official source defines a tangent (DfE subject content and the 1MA1 specification checked), so the answer rests on the spec point plus a standard definition under decision 0008 (project_memory/decisions/0008-definitions-policy.md, approved by the product owner 2026-11-25): needs_human_approval is set and a person must approve it individually.",
+          "at": "2026-11-25T17:04:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T16:01:32Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T16:40:22Z",
+          "notes": "model answered \"Tangent\"; expected \"tangent | a tangent\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T16:40:27Z",
+          "notes": "no problems found"
+        }
+      ]
+    },
+    "needs_human_approval": true
   },
   {
     "id": "gcse-maths-h-a18-0002",
@@ -377,7 +803,52 @@
     "verification": {
       "status": "draft",
       "version": 1,
-      "checks": []
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S2 audit 2026-11-25",
+          "result": "pass",
+          "notes": "Audit after writing (no writer record existed). Front cited to spec A18. Back cited to the DfE formulae appendix (page 14, \"The quadratic formula\"); the formula is typeset, so the quote is the plain-words heading and the reviewer compares the formula with the page.",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T16:01:32Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 14 (sha256 647a751b51c71d9ced1c9356aa70b15ceb1a4acb2fd5bc9af49619ead06d0ee6)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:24:56Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:24:29Z",
+          "notes": "model answered \"x = (-b +- sqrt(b^2 - 4*a*c)) / (2*a) where a != 0\"; expected \"x = (-b +- sqrt(b^2 - 4ac)) / (2a)\"; maths engine: same formula"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:24:56Z",
+          "notes": "no problems found"
+        }
+      ]
+    },
+    "back_formula": {
+      "formula": "x = (-b +- sqrt(b^2 - 4ac)) / (2a)",
+      "conditions": ["a ≠ 0"]
     }
   },
   {
@@ -408,7 +879,65 @@
     "verification": {
       "status": "draft",
       "version": 1,
-      "checks": []
-    }
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S2 audit 2026-11-25",
+          "result": "pass",
+          "notes": "Audit after writing (no writer record existed). Question scope cited (spec A6). Mark scheme gcse-maths-ms-consecutive-integers-proof cited to A6; exemplars written from that mark scheme.",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T16:01:32Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T16:02:20Z"
+        },
+        {
+          "name": "blind-marking",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T16:41:04Z",
+          "notes": "top: intended 3 marks, marked 3 marks; middle: intended 2 marks, marked 2 marks; low: intended 1 marks, marked 1 marks"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T16:41:11Z",
+          "notes": "no problems found"
+        }
+      ]
+    },
+    "exemplars": [
+      {
+        "band": "top",
+        "level": 3,
+        "answer": "Let the three consecutive integers be n, n + 1 and n + 2. Their sum is n + (n + 1) + (n + 2) = 3n + 3 = 3(n + 1). Since n + 1 is an integer, 3(n + 1) is a multiple of 3, so the sum of any three consecutive integers is a multiple of 3."
+      },
+      {
+        "band": "middle",
+        "level": 2,
+        "answer": "Call the numbers n, n + 1 and n + 2. Adding them gives n + n + 1 + n + 2 = 3n + 3."
+      },
+      {
+        "band": "low",
+        "level": 1,
+        "answer": "The numbers are n, n + 1 and n + 2. Adding them: n + n + 1 + n + 2 = 3n + 2."
+      }
+    ]
   }
 ]

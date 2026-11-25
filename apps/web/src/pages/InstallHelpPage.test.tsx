@@ -12,14 +12,15 @@ describe('Add to Home Screen help', () => {
     );
     expect(steps.length).toBeGreaterThanOrEqual(3);
     expect(steps[0]).toHaveTextContent(/safari/i);
-    expect(screen.getByText(/add to home screen/i, { selector: 'strong' })).toBeInTheDocument();
+    expect(
+      screen.getAllByText(/add to home screen/i, { selector: 'strong' }).length,
+    ).toBeGreaterThan(0);
   });
 
   it('is linked from Settings', async () => {
     renderRoute('/settings');
-    expect(await screen.findByRole('link', { name: /add to home screen/i })).toHaveAttribute(
-      'href',
-      '/install',
-    );
+    expect(
+      await screen.findByRole('link', { name: 'Add RevisionDen to this device' }),
+    ).toHaveAttribute('href', '/install');
   });
 });

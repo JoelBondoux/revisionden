@@ -1,5 +1,5 @@
 {
-  "id": "97496a00-7d16-497f-89dc-a67af7bcd5d1",
+  "id": "dcb14ff1-3acd-42e9-b173-ce8d239fc4bc",
   "prevId": "a5d78382-6f53-419d-8202-68715d2b601c",
   "version": "7",
   "dialect": "postgresql",
@@ -1053,204 +1053,6 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.discount_codes": {
-      "name": "discount_codes",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "code": {
-          "name": "code",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "kind": {
-          "name": "kind",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "amount": {
-          "name": "amount",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "months": {
-          "name": "months",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "expires_on": {
-          "name": "expires_on",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "max_uses": {
-          "name": "max_uses",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "created_by": {
-          "name": "created_by",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "disabled_at": {
-          "name": "disabled_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "discount_codes_code_unique": {
-          "name": "discount_codes_code_unique",
-          "nullsNotDistinct": false,
-          "columns": ["code"]
-        }
-      },
-      "policies": {},
-      "checkConstraints": {
-        "discount_codes_code_format": {
-          "name": "discount_codes_code_format",
-          "value": "\"discount_codes\".\"code\" ~ '^[A-Z0-9]{6,16}$'"
-        },
-        "discount_codes_kind_values": {
-          "name": "discount_codes_kind_values",
-          "value": "\"discount_codes\".\"kind\" in ('percent', 'fixed')"
-        },
-        "discount_codes_amount_range": {
-          "name": "discount_codes_amount_range",
-          "value": "\"discount_codes\".\"amount\" >= 1 and (\"discount_codes\".\"kind\" <> 'percent' or \"discount_codes\".\"amount\" <= 100)"
-        },
-        "discount_codes_months_positive": {
-          "name": "discount_codes_months_positive",
-          "value": "\"discount_codes\".\"months\" is null or \"discount_codes\".\"months\" >= 1"
-        },
-        "discount_codes_max_uses_positive": {
-          "name": "discount_codes_max_uses_positive",
-          "value": "\"discount_codes\".\"max_uses\" is null or \"discount_codes\".\"max_uses\" >= 1"
-        }
-      },
-      "isRLSEnabled": false
-    },
-    "public.discount_redemptions": {
-      "name": "discount_redemptions",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "code_id": {
-          "name": "code_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "family_id": {
-          "name": "family_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "redeemed_at": {
-          "name": "redeemed_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "ended_at": {
-          "name": "ended_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {
-        "discount_redemptions_code_idx": {
-          "name": "discount_redemptions_code_idx",
-          "columns": [
-            {
-              "expression": "code_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "discount_redemptions_one_active_per_family": {
-          "name": "discount_redemptions_one_active_per_family",
-          "columns": [
-            {
-              "expression": "family_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": true,
-          "where": "\"discount_redemptions\".\"ended_at\" is null",
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "discount_redemptions_code_id_discount_codes_id_fk": {
-          "name": "discount_redemptions_code_id_discount_codes_id_fk",
-          "tableFrom": "discount_redemptions",
-          "tableTo": "discount_codes",
-          "columnsFrom": ["code_id"],
-          "columnsTo": ["id"],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "discount_redemptions_family_id_families_id_fk": {
-          "name": "discount_redemptions_family_id_families_id_fk",
-          "tableFrom": "discount_redemptions",
-          "tableTo": "families",
-          "columnsFrom": ["family_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.enrolments": {
       "name": "enrolments",
       "schema": "",
@@ -1283,6 +1085,18 @@
         },
         "spec_version": {
           "name": "spec_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_target_grade": {
+          "name": "parent_target_grade",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "student_target_grade": {
+          "name": "student_target_grade",
           "type": "text",
           "primaryKey": false,
           "notNull": false
