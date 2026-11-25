@@ -31,6 +31,15 @@ Until workstream G moves it, the app's production Worker is still configured for
 `revisionden.com` (`apps/web/wrangler.toml`); it moves to `app.revisionden.com` before the public
 site's first production deploy.
 
+| Host                                                     | Environment |
+| -------------------------------------------------------- | ----------- |
+| `app.revisionden.com`, `api.revisionden.com`             | Production  |
+| `staging.revisionden.com`, `api-staging.revisionden.com` | Staging     |
+| `dev.revisionden.com`, `api-dev.revisionden.com`         | Development |
+
+The bare `revisionden.com` is the public sales site (workstream M, `apps/www`); the app never
+runs there. G creates nothing on the apex.
+
 ## What is live (workstream G, 2026-11-25)
 
 Every resource is named `revisionden` or starts `revisionden-` (decision 0003). No ids here.
@@ -43,7 +52,7 @@ Every resource is named `revisionden` or starts `revisionden-` (decision 0003). 
 | API Worker     | `revisionden-api-dev`           | `revisionden-api-staging`       | `revisionden-api`                |
 | API host       | `api-dev.revisionden.com`       | `api-staging.revisionden.com`   | `api.revisionden.com`            |
 | Web Worker     | `revisionden-web-dev`           | `revisionden-web-staging`       | `revisionden-web` (not yet)      |
-| Web host       | `dev.revisionden.com`           | `staging.revisionden.com`       | `revisionden.com` (not yet)      |
+| Web host       | `dev.revisionden.com`           | `staging.revisionden.com`       | `app.revisionden.com` (not yet)  |
 | `/health`      | `misconfigured` (OAuth missing) | `misconfigured` (OAuth missing) | `misconfigured` (OAuth missing)  |
 
 - Neon project `revisionden`, region `aws-eu-west-2` (London), Postgres 17, database
@@ -215,7 +224,7 @@ the other is optional. `GET /v1/auth/providers` tells the sign-in page which but
 | ------------------- | --------------------------------- | ------------------------------------- | -------------------------------- |
 | `ENVIRONMENT`       | `development`                     | `staging`                             | `production`                     |
 | `API_ORIGIN`        | `https://api-dev.revisionden.com` | `https://api-staging.revisionden.com` | `https://api.revisionden.com`    |
-| `WEB_ORIGIN`        | `https://dev.revisionden.com`     | `https://staging.revisionden.com`     | `https://revisionden.com`        |
+| `WEB_ORIGIN`        | `https://dev.revisionden.com`     | `https://staging.revisionden.com`     | `https://app.revisionden.com`    |
 | `PASSKEY_RP_ID`     | `dev.revisionden.com`             | `staging.revisionden.com`             | `revisionden.com`                |
 | `UPLOADS` (R2, EU)  | `revisionden-uploads-dev`         | `revisionden-uploads-staging`         | `revisionden-uploads-production` |
 | `AUTH_RATE_LIMITER` | 30 a minute per address           | same                                  | same                             |
@@ -273,6 +282,14 @@ Register these in the Google and Microsoft apps (one app per provider can hold a
 - `https://api-dev.revisionden.com/api/auth/callback/google` (and `/microsoft`)
 - `https://api-staging.revisionden.com/api/auth/callback/google` (and `/microsoft`)
 - `https://api.revisionden.com/api/auth/callback/google` (and `/microsoft`)
+
+The callback is on the API host, not the app host, so moving the production app to
+`app.revisionden.com` changes nothing in Google or Microsoft. After sign-in the API sends the
+browser back to `WEB_ORIGIN`, which is also Better Auth's only trusted origin.
+
+Production passkeys use the RP ID `revisionden.com` (the registrable domain). WebAuthn accepts it
+from `app.revisionden.com`, and passkeys keep working if the app ever moves to another subdomain.
+Dev and staging keep their own host as the RP ID, so their passkeys never mix with production's.
 
 Scopes: email and profile only. The API keeps only the email: the name is blanked and the
 picture is never fetched or stored.
