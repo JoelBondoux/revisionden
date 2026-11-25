@@ -42,6 +42,8 @@ const ALLOWED = new Set([
   'operator_audit_log.operator_email',
   'operator_notes.author_email',
   'feedback_replies.author_email',
+  // A support label such as "Beta tester" (checked to hold no contact details), not a person.
+  'family_tags.name',
 ]);
 
 export async function findForbiddenColumns(client: QueryClient): Promise<ForbiddenColumn[]> {

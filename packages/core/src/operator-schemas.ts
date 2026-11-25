@@ -38,6 +38,11 @@ export const OperatorFamilySearchSchema = z
     message: 'Search by email or by family id, not both',
   });
 
+/** A tag as shown on a family (O6). */
+export const OperatorTagRefSchema = z
+  .object({ id: uuid, name: z.string(), colour: z.string() })
+  .strict();
+
 export const OperatorFamilySummarySchema = z
   .object({
     id: uuid,
@@ -45,6 +50,8 @@ export const OperatorFamilySummarySchema = z
     lastActiveAt: isoDate,
     parentCount: z.number().int().nonnegative(),
     childCount: z.number().int().nonnegative(),
+    /** Live (not retired) tags on the family (O6). */
+    tags: z.array(OperatorTagRefSchema),
   })
   .strict();
 
@@ -68,6 +75,8 @@ export const OperatorFamilyDetailSchema = z
     /** Plan and trial come with payments (workstream $). */
     plan: z.null(),
     children: z.array(OperatorChildSchema),
+    /** Live (not retired) tags on the family (O6). */
+    tags: z.array(OperatorTagRefSchema),
     /** Internal notes by operators, newest first; never shown to the family. */
     notes: z.array(
       z.object({ id: uuid, text: z.string(), author: z.string(), createdAt: isoDate }).strict(),

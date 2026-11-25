@@ -163,3 +163,31 @@ describe('data_requests table (O3b)', () => {
     expect(fks.rows).toEqual([]);
   });
 });
+
+describe('family_tags and family_tag_links tables (O6)', () => {
+  it('keeps tag names unique and colours as #rrggbb, and links a family to a tag once', async () => {
+    const tag = (name: string, colour = '#6c47f5') =>
+      client.query<{ id: string }>(
+        `insert into family_tags (name, colour, description, created_by) values ($1, $2, '', 'manager@example.com') returning id`,
+        [name, colour],
+      );
+    const { rows } = await tag('Beta tester');
+    await expect(tag('Beta tester')).rejects.toThrow(/family_tags_name_unique/);
+    await expect(tag('Press', 'red')).rejects.toThrow(/family_tags_colour_format/);
+    const { rows: fam } = await client.query<{ id: string }>(
+      `insert into families default values returning id`,
+    );
+    const link = () =>
+      client.query(
+        `insert into family_tag_links (family_id, tag_id, added_by) values ($1, $2, 'agent@example.com')`,
+        [fam[0]!.id, rows[0]!.id],
+      );
+    await link();
+    await expect(link()).rejects.toThrow(/family_tag_links_pkey/);
+    await client.query(`delete from families where id = $1`, [fam[0]!.id]);
+    const left = await client.query(`select 1 from family_tag_links where tag_id = $1`, [
+      rows[0]!.id,
+    ]);
+    expect(left.rows).toEqual([]);
+  });
+});

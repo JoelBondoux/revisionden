@@ -87,6 +87,8 @@ date per parent sign-in.
 - Support replies to feedback are shown to the sender without the operator's email. Internal
   support notes about a family are never shown in the app but are in the family's data export
   (text and time only).
+- Family tags (O6) are internal support labels with no personal information; the family sees only
+  the beta programme (a "Beta" badge it can leave). Deleted with the family.
 - Every operator read of a family and every action is recorded (`operator_audit_log`: operator
   email and role, action, target id, time; no content), kept 2 years.
 

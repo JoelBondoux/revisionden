@@ -52,6 +52,7 @@ import { parentDailyLimitRoutes, studentDailyLimitRoutes } from './daily-limit/r
 import { adminErrorReportRoutes, errorReportRoutes } from './feedback/error-reports';
 import type { StatsAdapters } from './stats/adapters';
 import { OPERATOR_BASE_PATH, operatorRoutes } from './operator/routes';
+import { parentProgrammeRoutes } from './operator/tags';
 import { createMemoryRateLimiter } from './rate-limit';
 
 export interface AppDeps {
@@ -192,6 +193,7 @@ export function createApp(deps: AppDeps) {
   parent.route('/', parentFeedbackRoutes(deps));
   parent.route('/students', parentBugHunterRoutes(deps));
   parent.route('/family', familyRoutes(deps));
+  parent.route('/family', parentProgrammeRoutes(deps));
   parent.route('/family', familyParentRoutes(deps));
   parent.route('/', familyExport(deps));
   parent.route('/admin', adminFeedbackRoutes(deps));

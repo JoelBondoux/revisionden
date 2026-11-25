@@ -7,6 +7,7 @@ import { operatorAuth } from './bridge';
 import { OPERATOR_READ_POSTS, operatorReadRoutes } from './reads';
 import { operatorActionRoutes } from './actions';
 import { operatorDataRequestRoutes } from './data-requests';
+import { operatorTagRoutes } from './tags';
 
 export interface OperatorRouteDeps {
   version: string;
@@ -33,6 +34,7 @@ export function operatorRoutes(deps: OperatorRouteDeps) {
   app.route('/', operatorReadRoutes(deps));
   app.route('/', operatorActionRoutes(deps));
   app.route('/', operatorDataRequestRoutes(deps));
+  app.route('/', operatorTagRoutes(deps));
 
   return app;
 }

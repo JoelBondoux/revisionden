@@ -172,6 +172,25 @@ Requested by the product owner on 2026-11-25.
 - Tags never hold personal information (no names or notes in tag names); notes stay in the family's
   internal notes. The privacy notice mentions internal account labels for support.
 
+Built (O6) under `/operator/appdeck`, on the paths AppDeck proposed:
+
+| Route                                    | Role    | Body                                                                                        | `data`                                                                                                                                                     | Audit action        |
+| ---------------------------------------- | ------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `GET tags`                               | Agent   |                                                                                             | `{ tags: [{ id, name, colour, description, effects: { betaProgramme, earlyAccess, complimentaryPremium, excludeFromMetrics }, familyCount, retiredAt }] }` | no                  |
+| `POST tags`                              | Manager | `{ name (1–40), colour "#rrggbb", description (≤200), effects }` (no email or phone number) | `{ tag: <as listed> }`; 409 `tag_taken`                                                                                                                    | `tag.create`        |
+| `POST tags/{id}`                         | Manager | same as create                                                                              | `{ ok: true }` (rename or edit)                                                                                                                            | `tag.edit`          |
+| `POST tags/{id}/retire`                  | Manager | `{}`                                                                                        | `{ ok: true }`: no more effects, not shown on families or addable (409 `tag_retired`); links kept for the record                                           | `tag.retire`        |
+| `POST families/{id}/tags`                | Agent   | `{ tagId }`                                                                                 | `{ ok: true }`                                                                                                                                             | `family.tag_add`    |
+| `POST families/{id}/tags/{tagId}/remove` | Agent   | `{}`                                                                                        | `{ ok: true }`                                                                                                                                             | `family.tag_remove` |
+| `GET families?tag={tagId}`               | Agent   |                                                                                             | `{ families: [{ id, parents: [{ email }], plan, tags }] }` (the only list view, newest 500)                                                                | `families.by_tag`   |
+
+Family detail and search hits carry `tags: [{ id, name, colour }]` (live tags only). Overview numbers
+leave out families with a live "exclude from metrics" tag. Other code reads a family's effects with
+`effectsForFamily` (`apps/api/src/operator/tags.ts`): `earlyAccess` for beta features,
+`complimentaryPremium` for payments ($). The family sees only `GET /v1/family/programmes` →
+`{ beta }` (a "Beta" badge on the parent home) and can leave with `DELETE /v1/family/programmes/beta`,
+which removes the family's beta-programme tags and nothing else.
+
 ## Complaints
 
 - A parent can make a formal complaint from the parent area ("Make a complaint") or by email to

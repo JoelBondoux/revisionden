@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Families trying new features early see a small "Beta" badge on the parent home, and can leave the beta programme with one tap.
 - When RevisionDen support replies to your feedback or bug report, you'll see the reply right under your message.
 - Coming soon: a public RevisionDen website at revisionden.com explaining how it works for parents and young people, with the planned prices and all the policies. The app itself will move to app.revisionden.com.
 - "Remember this?" questions are now completely safe: getting one wrong never breaks your combo.
@@ -79,6 +80,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Family tags O6 (O): `family_tags` and `family_tag_links` tables (placeholder migration 0017); AppDeck `GET/POST /operator/appdeck/tags`, `POST .../tags/:id`, `.../tags/:id/retire` (Manager), `POST .../families/:id/tags`, `.../families/:id/tags/:tagId/remove` and `GET .../families?tag=` (Agent), all audited; family detail and search hits gain `tags`; overview leaves out "exclude from metrics" families; `effectsForFamily` for feature flags and payments; parent `GET /v1/family/programmes` and `DELETE /v1/family/programmes/beta` with a "Beta" badge on the parent home (`apps/web/src/features/programmes`). Rules in `packages/core/src/family-tags.ts`. Data retention policy 1.6.
 - Link components J7 (J): `LinkButton` (primary, secondary, quiet; optional icon; `to` for app routes or `href` for outside and mailto, with `newTab` adding safe `rel` and a spoken hint), `LinkTile` (icon, title, description, chevron; named by its title, described by its description), `LinkChip` and `TextLink` in `apps/web/src/components/links.tsx` with `links.css` (44px targets, focus rings, hover lift and press squash, inline links bold with a soft bar instead of an underline). Two more contrast-checked pairs for link text. Screens are converted in a follow-up.
 - Operator bridge O3b (O): `GET/POST /operator/appdeck/data-requests` and `POST .../data-requests/:id/handled` (Manager; a deletion runs `deleteFamilies` for one-parent families only, else 409 `needs_both_parents`), `data_requests` table (in migration 0016 with O3), `dataRequestDueAt` (one calendar month) in core, 2-year clean-up; Manager trial and free-place routes answer 503 `payments_not_ready` until payments exist. Data retention policy 1.5.
 - Operator bridge O3 (O): `POST /operator/appdeck/{families/:id/notes,tickets/:id/reply,tickets/:id/status,tickets/:id/confirm-bug,tickets/:id/duplicate}` (`apps/api/src/operator/actions.ts`), audited; `operator_notes` and `feedback_replies` tables (migration 0016); family detail gains `notes`, tickets gain `confirmedBug` and `duplicateOf`, ticket detail gains `messages`; L's confirm and status logic shared as `confirmFeedback` and `setFeedbackStatus`; parent and student feedback lists and the family export include support replies (and the export, support notes); web shows "Reply from RevisionDen" under feedback. Data retention policy 1.4.
