@@ -440,3 +440,14 @@ Tags: #product #rules #limits #defaults
   are thanked, not rewarded.
 - Secret achievements: hidden "???" cards with a found count; learning-based conditions only;
   defined in the catalogue with `secret: true`. Detail: `docs/REWARDS.md`.
+
+## Daily limit, two parents, hidden tracks (owner, 2026-11-25; planned)
+
+- Daily limit in active study minutes: defaults GCSE 60/90 (school day/other), A-Level 90/120;
+  ceilings GCSE 2h/3h, A-Level 2.5h/3.5h; +30 in exam season with parent consent. Parents set it;
+  the app only suggests (+10 at most fortnightly when the student keeps going without accuracy dips;
+  −10 to −15 on tiredness signs). Detail: `docs/PRODUCT_RULES.md` (Daily limit).
+- Two parent accounts with equal control; second invited by link or code (7 days); activity log
+  ("Parent 1/2"); both confirm whole-family deletion.
+- Hidden tracks besides Bug Hunter: Fact Checker, Comeback Kid, Explorer, Planner, Pace Setter,
+  Perfectionist (`docs/REWARDS.md`).

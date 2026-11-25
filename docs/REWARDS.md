@@ -212,6 +212,20 @@ Requested by the product owner on 2026-11-25. Rewards students who help make the
   week. Parents' reports are thanked but do not earn student rewards. The operator's decision is
   final; nothing is automatic.
 
+## More hidden tracks
+
+Like Bug Hunter, each track is invisible until its first step is earned, then shows its next step.
+All are learning-based (the principles above); art follows the established style.
+
+| Track             | Steps count                                                                                                                          | Rewards along the way (examples)                      |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------- |
+| **Fact Checker**  | "Report a problem" on a question that the review queue confirms was wrong (rare, so steps at 1, 2, 3, 5, 8)                          | Magnifier badge, "Fact Checker" title, quill item     |
+| **Comeback Kid**  | Weak spots turned into strong topics (below 60 → 80+ mastery), steps at 1, 3, 5, 10, 20, 35                                          | Phoenix badge, rising-flame frame, Pip phoenix outfit |
+| **Explorer**      | First use of each kind of practice: lesson, flashcard session, starting test, timed paper, worked maths, homework marking, plan edit | Compass badge, map frame, explorer hat                |
+| **Planner**       | Weeks where at least 80% of planned sessions were done, steps at 1, 4, 8, 16, 30                                                     | Calendar badge, "On Schedule" title, planner pack     |
+| **Pace Setter**   | Timed papers finished with every question within its target time, steps at 1, 3, 6, 10                                               | Stopwatch badge, "Cool Head" title, pace stripes      |
+| **Perfectionist** | Perfect sets (all right at feedback level 2 or above), steps at 1, 5, 15, 30, 60, 100                                                | Diamond badge, crystal frame, prism avatar effect     |
+
 ## Secret achievements
 
 - A set of achievements whose names and conditions are hidden until earned. The rewards page shows
