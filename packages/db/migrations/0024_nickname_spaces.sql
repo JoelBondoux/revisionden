@@ -1,0 +1,2 @@
+ALTER TABLE "students" DROP CONSTRAINT "students_nickname_format";--> statement-breakpoint
+ALTER TABLE "students" ADD CONSTRAINT "students_nickname_format" CHECK ("students"."nickname" ~ '^[A-Za-z0-9_]+( [A-Za-z0-9_]+)*$' and char_length("students"."nickname") between 2 and 16);

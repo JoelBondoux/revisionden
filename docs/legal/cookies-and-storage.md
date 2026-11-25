@@ -1,6 +1,6 @@
 # Cookies and storage
 
-Version: 1.4
+Version: 1.5
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -36,19 +36,20 @@ policies. We do not set or read those.
 
 ### 3. Other storage on the device
 
-| What                                          | What it is for                                                                                                                          | How long                                      |
-| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| Passkey                                       | Lets a student unlock the app with the device's fingerprint, face or PIN. Stored by the device, not by us; we only keep its public part | Until the student or parent removes it        |
-| Local storage `revisionden.studentId`         | Remembers which student profile is used on this device                                                                                  | Until site data is cleared                    |
-| Local storage `revisionden.youngPeopleNotice` | Remembers that the student has seen the privacy notice for young people (the version number only)                                       | Until site data is cleared                    |
-| Service worker and its cache                  | Lets the app open quickly and work offline. Holds only the app's own files, never your data; API responses are never cached             | Until the app updates or site data is cleared |
-| Push subscription                             | Lets the browser receive reminders, if the student turns them on                                                                        | Until reminders are turned off                |
-| Local storage `revisionden.installDismissed`  | Remembers when "Not now" was tapped on "Add RevisionDen to this device", so the card stays hidden for 30 days (the date only)           | 30 days, or until site data is cleared        |
-| Local storage `revisionden.bugButton`         | Remembers if the student switched the bug button off on this device                                                                     | Until site data is cleared                    |
-| Sound settings (when added)                   | Remembers mute, volume and tap sounds for this device                                                                                   | Until site data is cleared                    |
-| Local storage `revisionden.readAloud`         | Remembers whether read aloud is on and its speed on this device                                                                         | Until site data is cleared                    |
-| Local storage `revisionden.reading`           | Remembers reading comfort choices (font, text size, spacing, tint) on this device                                                       | Until site data is cleared                    |
-| Local storage `revisionden.appearance`        | Remembers appearance choices (theme, colour-blind friendly colours, background pattern) on this device                                  | Until site data is cleared                    |
+| What                                          | What it is for                                                                                                                             | How long                                             |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------- |
+| Passkey                                       | Lets a student unlock the app with the device's fingerprint, face or PIN. Stored by the device, not by us; we only keep its public part    | Until the student or parent removes it               |
+| Local storage `revisionden.studentId`         | Remembers which student profile is used on this device                                                                                     | Until site data is cleared                           |
+| Local storage `revisionden.deviceMarker`      | A random code that tells this device apart from the student's other devices using the same passkey. We keep only a scrambled (hashed) copy | Until site data is cleared or the device is unlinked |
+| Local storage `revisionden.youngPeopleNotice` | Remembers that the student has seen the privacy notice for young people (the version number only)                                          | Until site data is cleared                           |
+| Service worker and its cache                  | Lets the app open quickly and work offline. Holds only the app's own files, never your data; API responses are never cached                | Until the app updates or site data is cleared        |
+| Push subscription                             | Lets the browser receive reminders, if the student turns them on                                                                           | Until reminders are turned off                       |
+| Local storage `revisionden.installDismissed`  | Remembers when "Not now" was tapped on "Add RevisionDen to this device", so the card stays hidden for 30 days (the date only)              | 30 days, or until site data is cleared               |
+| Local storage `revisionden.bugButton`         | Remembers if the student switched the bug button off on this device                                                                        | Until site data is cleared                           |
+| Sound settings (when added)                   | Remembers mute, volume and tap sounds for this device                                                                                      | Until site data is cleared                           |
+| Local storage `revisionden.readAloud`         | Remembers whether read aloud is on and its speed on this device                                                                            | Until site data is cleared                           |
+| Local storage `revisionden.reading`           | Remembers reading comfort choices (font, text size, spacing, tint) on this device                                                          | Until site data is cleared                           |
+| Local storage `revisionden.appearance`        | Remembers appearance choices (theme, colour-blind friendly colours, background pattern) on this device                                     | Until site data is cleared                           |
 
 ### 4. What we do not use
 
@@ -62,6 +63,7 @@ need to sign in, or unlink and link the student's device again.
 
 ## Changes
 
+- 1.5: Added the device code that tells a student's devices apart when their passkey is synced.
 - 1.4: Added the setting that hides "Add RevisionDen to this device" for 30 days after "Not now".
 - 1.3: Added the appearance settings (theme, colours and background pattern) kept on the device.
 - 1.2: Added the setting that remembers if the bug button is switched off on this device.

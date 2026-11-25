@@ -1,5 +1,5 @@
 {
-  "id": "c29b0738-3b8e-402b-a97e-045a2dbe8917",
+  "id": "dcb14ff1-3acd-42e9-b173-ce8d239fc4bc",
   "prevId": "a5d78382-6f53-419d-8202-68715d2b601c",
   "version": "7",
   "dialect": "postgresql",
@@ -177,13 +177,6 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": false
-        },
-        "retry": {
-          "name": "retry",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true,
-          "default": false
         }
       },
       "indexes": {
@@ -1092,6 +1085,18 @@
         },
         "spec_version": {
           "name": "spec_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "parent_target_grade": {
+          "name": "parent_target_grade",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "student_target_grade": {
+          "name": "student_target_grade",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -2277,18 +2282,6 @@
         "tags": {
           "name": "tags",
           "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "learning_point": {
-          "name": "learning_point",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "expected_seconds": {
-          "name": "expected_seconds",
-          "type": "integer",
           "primaryKey": false,
           "notNull": false
         }
@@ -3914,108 +3907,6 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.review_points": {
-      "name": "review_points",
-      "schema": "",
-      "columns": {
-        "student_id": {
-          "name": "student_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "learning_point": {
-          "name": "learning_point",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "topic_id": {
-          "name": "topic_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "rung": {
-          "name": "rung",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 0
-        },
-        "due_day": {
-          "name": "due_day",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "misses": {
-          "name": "misses",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 0
-        },
-        "flagged": {
-          "name": "flagged",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true,
-          "default": false
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "review_points_student_due_idx": {
-          "name": "review_points_student_due_idx",
-          "columns": [
-            {
-              "expression": "student_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "due_day",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "review_points_student_id_students_id_fk": {
-          "name": "review_points_student_id_students_id_fk",
-          "tableFrom": "review_points",
-          "tableTo": "students",
-          "columnsFrom": ["student_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {
-        "review_points_student_id_learning_point_pk": {
-          "name": "review_points_student_id_learning_point_pk",
-          "columns": ["student_id", "learning_point"]
-        }
-      },
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},

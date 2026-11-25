@@ -73,8 +73,14 @@ describe('students', () => {
 
   it('rejects blocked nicknames with a polite message', () => {
     expect(errorsFor(CreateStudentRequestSchema, { ...newStudent, nickname: 'admin' })).toEqual([
-      'nickname: Please choose a different nickname',
+      "nickname: That looks like a real name or a word we don't allow. Try a made-up nickname like Pixel_Fox",
     ]);
+  });
+
+  it('trims spaces at either end of a nickname before it is saved', () => {
+    expect(
+      CreateStudentRequestSchema.parse({ ...newStudent, nickname: '  Thing 1 ' }).nickname,
+    ).toBe('Thing 1');
   });
 
   it('never accepts unknown fields such as a real name', () => {

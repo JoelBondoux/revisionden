@@ -1,9 +1,18 @@
 import { Hono, type Context, type Next } from 'hono';
 import { and, asc, desc, eq, sql } from 'drizzle-orm';
 import { z } from 'zod';
-import { batchOutcome, createRng, drawSample, type ReviewDecision } from '@revisionden/core';
+import {
+  batchOutcome,
+  createRng,
+  drawSample,
+  needsIndividualReview,
+  readyForHumanReview,
+  recheckedSince,
+  type ReviewDecision,
+} from '@revisionden/core';
 import {
   itemReports,
+  items,
   recalculationJobs,
   recheckRequests,
   reviewBatches,
@@ -66,6 +75,8 @@ const CreateBatchSchema = z
       }),
   })
   .strict();
+const FromDraftsSchema = z.object({ title: z.string().trim().min(1).max(200) }).strict();
+type CreateBatchInput = z.infer<typeof CreateBatchSchema>;
 const CreateRecheckSchema = z
   .object({
     scope: z.enum(['batch', 'item', 'writer_prompt', 'source']),
@@ -170,8 +181,7 @@ export function reviewRoutes(db: Database, deps: VerificationDeps & { now: () =>
 
   // ---- Batches ------------------------------------------------------------------------------
 
-  app.post('/batches', async (c) => {
-    const parsed = await readJson(c, CreateBatchSchema);
+  async function createBatch(parsed: CreateBatchInput) {
     // Extended answers always need individual human approval (docs/VERIFICATION.md section 3).
     const input = {
       ...parsed,
@@ -201,10 +211,83 @@ export function reviewRoutes(db: Database, deps: VerificationDeps & { now: () =>
         snapshot: i.snapshot,
       })),
     );
-    return c.json(
-      { id: batch!.id, size: input.items.length, sampleSize: sample.size, sample: [...sample] },
-      201,
+    return {
+      id: batch!.id,
+      size: input.items.length,
+      sampleSize: sample.size,
+      sample: [...sample],
+    };
+  }
+
+  app.post('/batches', async (c) => {
+    return c.json(await createBatch(await readJson(c, CreateBatchSchema)), 201);
+  });
+
+  /**
+   * Draft items ready for a person (workstream S2): every automated check passed in the synced
+   * snapshot, and that version is not already in a batch under review or passed.
+   */
+  async function readyDrafts() {
+    const rows = await db
+      .select({ itemId: items.contentId, version: items.version, snapshot: items.reviewSnapshot })
+      .from(items)
+      .where(eq(items.status, 'draft'))
+      .orderBy(asc(items.contentId));
+    const memberships = await db
+      .select({
+        batchId: reviewBatches.id,
+        status: reviewBatches.status,
+        decidedAt: reviewBatches.decidedAt,
+        itemId: reviewBatchItems.itemId,
+        itemVersion: reviewBatchItems.itemVersion,
+      })
+      .from(reviewBatchItems)
+      .innerJoin(reviewBatches, eq(reviewBatches.id, reviewBatchItems.batchId));
+    const openRechecks = await db
+      .select({ batchId: recheckRequests.scopeValue })
+      .from(recheckRequests)
+      .where(and(eq(recheckRequests.scope, 'batch'), eq(recheckRequests.status, 'pending')));
+    const pendingBatches = new Set(openRechecks.map((r) => r.batchId));
+    const byItem = new Map<string, typeof memberships>();
+    for (const m of memberships) {
+      const key = `${m.itemId}@${m.itemVersion}`;
+      byItem.set(key, [...(byItem.get(key) ?? []), m]);
+    }
+    // An item version is blocked while it is in a batch under review or passed, and after a failed
+    // batch until that batch's recheck is done and steps 3 to 5 have re-run since the failure.
+    const blocked = (key: string, snapshot: Record<string, unknown>) =>
+      (byItem.get(key) ?? []).some((m) =>
+        m.status === 'failed'
+          ? pendingBatches.has(m.batchId) || !m.decidedAt || !recheckedSince(snapshot, m.decidedAt)
+          : true,
+      );
+    return rows.flatMap(({ itemId, version, snapshot }) =>
+      itemId &&
+      snapshot &&
+      readyForHumanReview(snapshot) &&
+      !blocked(`${itemId}@${version}`, snapshot)
+        ? [
+            {
+              itemId,
+              itemVersion: version,
+              needsHumanApproval: needsIndividualReview(snapshot),
+              snapshot,
+            },
+          ]
+        : [],
     );
+  }
+
+  app.get('/batches/from-drafts', async (c) => c.json({ ready: (await readyDrafts()).length }));
+
+  app.post('/batches/from-drafts', async (c) => {
+    if (c.var.reviewerRole !== 'content-lead') {
+      throw new ApiError(403, 'forbidden', 'Only a content lead can create a batch');
+    }
+    const { title } = await readJson(c, FromDraftsSchema);
+    const ready = await readyDrafts();
+    if (ready.length === 0) throw conflict('No draft items are ready for review');
+    return c.json(await createBatch({ title, items: ready }), 201);
   });
 
   app.get('/batches', async (c) => {

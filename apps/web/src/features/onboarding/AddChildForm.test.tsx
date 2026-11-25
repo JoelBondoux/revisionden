@@ -1,5 +1,7 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { decodeAvatar } from '@revisionden/core';
+import { starterCode } from '../avatar/starters';
 import { AddChildForm } from './AddChildForm';
 import { OnboardingApiError } from './api';
 
@@ -33,11 +35,62 @@ describe('AddChildForm', () => {
 
   it('checks the nickname with the shared rules', async () => {
     const { user } = setup();
-    await user.type(screen.getByLabelText('Nickname'), 'a b');
+    await user.type(screen.getByLabelText('Nickname'), 'a!b');
     expect(screen.getByRole('alert')).toHaveTextContent(
-      'Nickname can only use letters, numbers and underscores',
+      'Nickname can only use letters, numbers, spaces and underscores',
     );
-    expect(continueButton()).toBeDisabled();
+  });
+
+  it('allows a nickname with a space', async () => {
+    const { user, onSubmit } = setup();
+    await user.type(screen.getByLabelText('Nickname'), 'Thing 1');
+    await user.click(screen.getByRole('radio', { name: 'Year 10' }));
+    await user.click(continueButton());
+    expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ nickname: 'Thing 1' }));
+  });
+
+  it('keeps Continue tappable and says what is missing next to it', async () => {
+    const { user, onSubmit } = setup();
+    expect(continueButton()).toBeEnabled();
+    await user.click(continueButton());
+    const summary = screen.getByRole('status', { name: 'Before you continue' });
+    expect(
+      within(summary)
+        .getAllByRole('listitem')
+        .map((li) => li.textContent),
+    ).toEqual(["Add a nickname that isn't a real name", 'Choose a school year']);
+    expect(screen.getByLabelText('Nickname')).toHaveFocus();
+    expect(onSubmit).not.toHaveBeenCalled();
+  });
+
+  it('moves to the school year when only the year is missing', async () => {
+    const { user } = setup();
+    await user.type(screen.getByLabelText('Nickname'), 'Comet_7');
+    await user.click(continueButton());
+    const summary = screen.getByRole('status', { name: 'Before you continue' });
+    expect(
+      within(summary)
+        .getAllByRole('listitem')
+        .map((li) => li.textContent),
+    ).toEqual(['Choose a school year']);
+    expect(screen.getByRole('radio', { name: 'Year 9' })).toHaveFocus();
+  });
+
+  it('explains a blocked nickname helpfully', async () => {
+    const { user } = setup();
+    await user.type(screen.getByLabelText('Nickname'), 'admin');
+    await user.click(screen.getByRole('radio', { name: 'Year 9' }));
+    await user.click(continueButton());
+    expect(screen.getByRole('status', { name: 'Before you continue' })).toHaveTextContent(
+      "That looks like a real name or a word we don't allow. Try a made-up nickname like Pixel_Fox",
+    );
+  });
+
+  it('clears the summary once everything is filled in', async () => {
+    const { user } = setup();
+    await user.click(continueButton());
+    await fillBasics(user);
+    expect(screen.queryByRole('status', { name: 'Before you continue' })).toBeNull();
   });
 
   it('offers GCSE Years 9 to 11 and A-Level Years 12 and 13', () => {
@@ -175,5 +228,34 @@ describe('AddChildForm', () => {
     await fillBasics(user);
     await user.click(continueButton());
     expect(await screen.findByRole('alert')).toHaveTextContent('RD-7K2M9Q');
+  });
+
+  it('offers Boy, Girl and Neutral starting looks, with Neutral picked', () => {
+    setup();
+    const looks = screen.getByRole('radiogroup', { name: 'Starting look' });
+    expect(
+      within(looks)
+        .getAllByRole('radio')
+        .map((r) => r.textContent),
+    ).toEqual(['Boy', 'Girl', 'Neutral']);
+    expect(within(looks).getByRole('radio', { name: 'Neutral' })).toBeChecked();
+  });
+
+  it('saves only the avatar code of the chosen look', async () => {
+    const { user, onSubmit } = setup();
+    await user.click(screen.getByRole('radio', { name: 'Girl' }));
+    await fillBasics(user);
+    await user.click(continueButton());
+    const sent = (onSubmit.mock.calls as unknown as [Record<string, unknown>][])[0]![0];
+    expect(sent.avatarCode).toBe(starterCode('girl'));
+    expect(Object.keys(sent).sort()).toEqual(['avatarCode', 'nickname', 'subjects', 'yearGroup']);
+  });
+
+  it('starts from the Neutral look', async () => {
+    const { user, onSubmit } = setup();
+    await fillBasics(user);
+    await user.click(continueButton());
+    const sent = (onSubmit.mock.calls as unknown as [{ avatarCode: string }][])[0]![0];
+    expect(decodeAvatar(sent.avatarCode)).toEqual(decodeAvatar(starterCode('neutral')));
   });
 });

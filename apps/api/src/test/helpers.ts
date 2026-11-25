@@ -57,6 +57,8 @@ export interface TestContextOptions {
   aiLimit?: number;
   /** Operator bridge (AppDeck) requests a minute. */
   operatorLimit?: number;
+  /** Short-code attempts at /link a minute (defaults to the sign-in limit). */
+  linkCodeLimit?: number;
   verification?: VerificationDeps;
   config?: Partial<AppConfig>;
   aiProviders?: Partial<Record<ProviderName, AiProvider>>;
@@ -93,6 +95,15 @@ export async function createTestContext(options: TestContextOptions = {}) {
         periodMs: 60_000,
         clock,
       }),
+      ...(options.linkCodeLimit === undefined
+        ? {}
+        : {
+            linkCode: createMemoryRateLimiter({
+              limit: options.linkCodeLimit,
+              periodMs: 60_000,
+              clock,
+            }),
+          }),
     },
     verification: options.verification,
     errorLog: options.errorLog ?? (() => {}),

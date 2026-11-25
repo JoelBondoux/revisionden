@@ -81,4 +81,27 @@ describe('Topic map screen', () => {
     renderRoute('/map');
     expect(await screen.findByRole('button', { name: 'Try again' })).toBeInTheDocument();
   });
+
+  it('nudges the student to set any exam board or tier left as Not sure', async () => {
+    server.use(
+      http.get('*/v1/student/subjects', () =>
+        HttpResponse.json({
+          enrolments: [
+            {
+              studentId: '8f6d2b1e-4c3a-4d5e-9f00-000000000001',
+              subjectId: 'gcse-maths',
+              board: 'not_sure',
+              tier: 'higher',
+            },
+          ],
+          toCheckLater: 1,
+        }),
+      ),
+    );
+    renderRoute('/map');
+    expect(await screen.findByRole('link', { name: /1 thing to check/ })).toHaveAttribute(
+      'href',
+      '/settings#my-subjects',
+    );
+  });
 });

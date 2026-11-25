@@ -8,7 +8,7 @@
 import { z } from 'zod';
 import { ErrorRefSchema } from './error-ref';
 import { decodeAvatar } from './avatar';
-import { NICKNAME_MESSAGES, validateNickname } from './nickname';
+import { NICKNAME_MESSAGES, normaliseNickname, validateNickname } from './nickname';
 
 export const IdSchema = z.string().uuid();
 
@@ -19,11 +19,14 @@ export const IsoDateSchema = z
 
 export const IsoDateTimeSchema = z.string().datetime();
 
-export const NicknameSchema = z.string().superRefine((value, ctx) => {
-  const result = validateNickname(value);
-  if (!result.ok)
-    ctx.addIssue({ code: z.ZodIssueCode.custom, message: NICKNAME_MESSAGES[result.reason] });
-});
+export const NicknameSchema = z
+  .string()
+  .transform(normaliseNickname)
+  .superRefine((value, ctx) => {
+    const result = validateNickname(value);
+    if (!result.ok)
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: NICKNAME_MESSAGES[result.reason] });
+  });
 
 /** Checks the code's shape only. Locked items are checked by validateAvatar with earned rewards. */
 export const AvatarCodeSchema = z.string().refine(

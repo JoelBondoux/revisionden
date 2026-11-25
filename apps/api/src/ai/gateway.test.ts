@@ -108,7 +108,9 @@ describe('AI gateway', () => {
     const err = await g.run(call(student.id)).catch((e) => e);
     expect(err).toBeInstanceOf(ApiError);
     expect(err).toMatchObject({ status: 429, code: 'ai_limit_reached' });
-    expect(err.message).toMatch(/this month/i);
+    expect(err.message).toBe(
+      "You've used this month's AI marking allowance. It resets on 1 December. Questions marked by the app still work.",
+    );
     expect(fake.requests).toHaveLength(0);
   });
 

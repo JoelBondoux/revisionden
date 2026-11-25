@@ -11,6 +11,8 @@
   /* Links (J7, docs/GAME_FEEL.md "Links"). */
   --site-link: var(--color-primary-edge);
   --site-link-bar: var(--color-mastery-fill);
+  /* Doodle background ink (J8): the app's 7% violet. */
+  --site-pattern-ink: rgb(108 71 245 / 7%);
   --site-width: 72rem;
   color-scheme: light dark;
 }
@@ -28,6 +30,7 @@
     --site-accent-soft: #2d2652;
     --site-link: #c4b5ff;
     --site-link-bar: #3b3170;
+    --site-pattern-ink: rgb(196 181 255 / 7%);
     --focus-ring: 0 0 0 3px #14112a, 0 0 0 6px #c4b5ff;
   }
 }
@@ -49,6 +52,26 @@ body {
   font-family: var(--font-family);
   font-size: var(--font-size-md);
   line-height: 1.6;
+}
+
+/* The app's line-doodle tile (apps/web/src/design/doodles.svg, J8) as a fixed layer behind
+   everything: decorative only, very low contrast. Colour comes from the theme via the mask. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--site-pattern-ink);
+  -webkit-mask: url('/doodles.svg') 0 0 / 240px 240px repeat;
+  mask: url('/doodles.svg') 0 0 / 240px 240px repeat;
+}
+
+/* No pattern for high contrast or forced colours (Windows High Contrast). */
+@media (prefers-contrast: more), (forced-colors: active) {
+  body::before {
+    display: none;
+  }
 }
 
 a {

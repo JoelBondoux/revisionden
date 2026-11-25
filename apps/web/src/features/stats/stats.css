@@ -27,8 +27,7 @@
 }
 
 .period-toggle__button:focus-visible,
-.bar-chart__bar:focus-visible,
-.link-button:focus-visible {
+.bar-chart__bar:focus-visible {
   outline: none;
   box-shadow: var(--focus-ring);
 }
@@ -151,18 +150,6 @@
   text-align: left;
 }
 
-.link-button {
-  min-height: var(--tap-target);
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--color-primary-edge);
-  font: inherit;
-  font-weight: var(--font-weight-bold);
-  text-decoration: underline;
-  cursor: pointer;
-}
-
 .stats-list {
   display: flex;
   flex-direction: column;
@@ -201,8 +188,7 @@
 /* Save as PDF: the browser prints the dashboard; controls and navigation are left out. */
 @media print {
   .no-print,
-  .main-nav,
-  .link-button {
+  .main-nav {
     display: none !important;
   }
 
@@ -247,4 +233,13 @@
   align-items: center;
   gap: var(--space-2);
   min-height: var(--tap-target);
+}
+
+/* Target grades (workstream K8): two goals side by side, never styled as good or bad. */
+.target-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
 }
