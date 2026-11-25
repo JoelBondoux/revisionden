@@ -5,7 +5,7 @@ import { learnHandlers } from '../features/learn/mocks';
 import { rewardsHandlers } from '../features/rewards/mocks';
 import { feedbackHandlers } from '../features/feedback/mocks';
 import { legalHandlers } from '../features/legal/mocks';
-import { statsHandlers } from '../features/stats/mocks';
+import { dailyLimitHandlers, statsHandlers } from '../features/stats/mocks';
 import { familyDataHandlers } from '../features/family-data/mocks';
 
 /**
@@ -39,5 +39,6 @@ export const handlers: RequestHandler[] = [
 
   // Statistics dashboards (workstream K).
   ...statsHandlers,
+  ...dailyLimitHandlers,
   ...familyDataHandlers,
 ];

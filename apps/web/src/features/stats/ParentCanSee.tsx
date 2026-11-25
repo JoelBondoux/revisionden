@@ -7,7 +7,8 @@ export function ParentCanSee() {
       <ul className="link-list">
         <li>Study time, plan sessions kept, accuracy and your streak</li>
         <li>Mastery and change for each subject, and your three weakest topics</li>
-        <li>Sessions in quiet hours, days over the daily cap and rest days</li>
+        <li>Sessions in quiet hours, days at the daily limit and rest days</li>
+        <li>Your daily limit and the minutes you have used today</li>
         <li>Predicted and target grades, school report effort scores and their reward for you</li>
         <li>AI marking spend this month</li>
         <li>Your last 10 activities (lessons, flashcards, tests), never your own words or cards</li>
