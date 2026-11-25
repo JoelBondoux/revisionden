@@ -152,3 +152,10 @@
   grid-column: 1 / -1;
   color: var(--arena-gold);
 }
+
+/* Learning from mistakes (F5): why a question is showing again, or a warm-up. */
+.lesson__comeback {
+  margin: 0;
+  color: var(--arena-gold);
+  font-weight: var(--font-weight-extrabold);
+}

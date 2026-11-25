@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import type { LearnAttemptResponse, LearnItem, Progress } from '@revisionden/core';
+import {
+  insertRetry,
+  type LearnAttemptResponse,
+  type LearnItem,
+  type LessonEntry,
+  type Progress,
+} from '@revisionden/core';
 import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { CloseIcon } from '../../components/icons';
@@ -40,7 +46,7 @@ function feedbackSpeech(result: LearnAttemptResponse): string {
   return parts.join(' ');
 }
 
-function Feedback({ result }: { result: LearnAttemptResponse }) {
+function Feedback({ result, comingBack }: { result: LearnAttemptResponse; comingBack: boolean }) {
   const feedback = result.feedback;
   const wrongLine = feedback?.firstWrongLine;
   return (
@@ -66,6 +72,12 @@ function Feedback({ result }: { result: LearnAttemptResponse }) {
       )}
       {feedback?.explanation && <p>{feedback.explanation}</p>}
       {result.flashcardAdded && <p>Added to your flashcards for another go later.</p>}
+      {comingBack && <p>No worries: we&apos;ll try one like this again in a moment.</p>}
+      {result.shaky && (
+        <p>
+          Nice one. That took a little while, so it&apos;ll come back another day to make it stick.
+        </p>
+      )}
     </div>
   );
 }
@@ -83,6 +95,17 @@ interface LessonPlayerProps {
   /** Recall check answers (Q4): sent as recall, so a wrong one never resets the combo. */
   recall?: boolean;
 }
+
+/** Why a question is showing, for questions that came back (learning from mistakes, F5). */
+function comeBackNote(entry: LessonEntry<LearnItem>): string | null {
+  if (entry.retry === 'similar') return "Here's one like the one you missed.";
+  if (entry.retry === 'again') return "Let's try that one again.";
+  if (entry.item.warmUp) return 'Warm-up: this one came up last time.';
+  return null;
+}
+
+/** Questions that can come back after a wrong answer (not self-rated cards or long answers). */
+const canRetry = (item: LearnItem) => item.type !== 'flashcard' && item.type !== 'extended_answer';
 
 /** The option a marked multiple choice answer should show as right, if we can tell. */
 function rightOption(item: LearnItem, result: LearnAttemptResponse, chosen: Draft): number | null {
@@ -118,6 +141,10 @@ export function LessonPlayer({
 }: LessonPlayerProps) {
   const api = useLearnApi();
   const { play } = useSound();
+  const [queue, setQueue] = useState<LessonEntry<LearnItem>[]>(() =>
+    items.map((item) => ({ item })),
+  );
+  const [comingBack, setComingBack] = useState(false);
   const [index, setIndex] = useState(0);
   const [draft, setDraft] = useState<Draft>(null);
   const [result, setResult] = useState<LearnAttemptResponse | null>(null);
@@ -150,8 +177,9 @@ export function LessonPlayer({
     );
   }
 
-  const item = items[index]!;
-  const isLast = index === items.length - 1;
+  const entry = queue[index]!;
+  const item = entry.item;
+  const isLast = index === queue.length - 1;
   const answer = toAnswer(item, draft);
 
   async function submit(value: Answer) {
@@ -164,7 +192,22 @@ export function LessonPlayer({
         timeMs: Math.max(0, Date.now() - shownAt.current),
         mode: 'learn',
         ...(recall ? { recall: true } : {}),
+        ...(entry.retry ? { retry: true } : {}),
       });
+      // A wrong answer brings a similar question back 2 to 4 questions later, or the same one at
+      // the end (at most 2 a lesson, never a retry of a retry). F5.
+      if (!marked.correct && !recall && canRetry(item)) {
+        const similar = marked.similar;
+        const fresh = similar && !queue.some((e) => e.item.id === similar.id);
+        const next = insertRetry(
+          queue,
+          index,
+          fresh ? { item: similar, similar: true } : { item, similar: false },
+          Math.random,
+        );
+        setQueue(next);
+        setComingBack(next !== queue);
+      }
       // The API counts combos (J4); older responses without it fall back to counting here.
       const streak = marked.combo ?? nextCombo(combo, marked.correct);
       // The chime rises a step per right answer in a row (the first one is the plain chime).
@@ -204,6 +247,7 @@ export function LessonPlayer({
     setIndex(index + 1);
     setDraft(null);
     setResult(null);
+    setComingBack(false);
     shownAt.current = Date.now();
   }
 
@@ -236,7 +280,7 @@ export function LessonPlayer({
         <ArenaProgress
           label="Lesson progress"
           value={index + (result || unmarked ? 1 : 0)}
-          max={items.length}
+          max={queue.length}
         />
         <span className="lesson__xp">
           <RollingNumber value={totals.xp} label="XP this lesson" suffix=" XP" />
@@ -245,7 +289,7 @@ export function LessonPlayer({
       {draftContent && <DraftBanner />}
       <div className="lesson__pip">
         <PipSays
-          line={pipLine({ index, total: items.length, combo })}
+          line={pipLine({ index, total: queue.length, combo })}
           mood={combo >= 2 ? 'cheer' : 'happy'}
         />
         <ComboBadge combo={combo} />
@@ -254,6 +298,7 @@ export function LessonPlayer({
       {intro && <p className="secondary-text">{intro}</p>}
       {aside}
       {progress && <DailyGoal progress={progress} />}
+      {comeBackNote(entry) && <p className="lesson__comeback">{comeBackNote(entry)}</p>}
       <ReadAloudButton text={itemSpeechText(item)} label="Read the question aloud" />
       <Shake key={item.id} active={result?.correct === false}>
         <ItemInput
@@ -277,7 +322,7 @@ export function LessonPlayer({
             Couldn&apos;t check that answer. Please try again.
           </p>
         )}
-        {result && <Feedback result={result} />}
+        {result && <Feedback result={result} comingBack={comingBack} />}
         {result && <NewRewards rewards={result.newlyEarned} />}
         {result || unmarked ? (
           <Button block variant={result?.correct ? 'success' : 'primary'} onClick={advance}>
@@ -285,9 +330,16 @@ export function LessonPlayer({
           </Button>
         ) : (
           item.type !== 'flashcard' && (
-            <Button block type="submit" disabled={answer === null || checking}>
-              Check
-            </Button>
+            <>
+              <Button block type="submit" disabled={answer === null || checking}>
+                Check
+              </Button>
+              {entry.retry && (
+                <Button block variant="secondary" onClick={advance} disabled={checking}>
+                  Skip this one
+                </Button>
+              )}
+            </>
           )
         )}
       </div>

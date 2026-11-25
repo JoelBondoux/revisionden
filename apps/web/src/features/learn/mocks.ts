@@ -37,12 +37,21 @@ export const demoItems: LearnItem[] = [
   { ...topicB, id: id(6), type: 'extended_answer', prompt: 'Demo question 6' },
 ];
 
+/** A made-up question on the same point as demo question 2, for the in-lesson retry. */
+export const demoSimilar: LearnItem & { type: 'short_answer' } = {
+  ...topic,
+  id: id(7),
+  type: 'short_answer',
+  prompt: 'Demo similar question',
+};
+
 const keys: Record<string, { answer: unknown; display: string; xp: number }> = {
   [id(1)]: { answer: 1, display: 'Option B', xp: 10 },
   [id(2)]: { answer: 'demo answer', display: 'demo answer', xp: 15 },
   [id(3)]: { answer: '4', display: '4 cm', xp: 15 },
   [id(4)]: { answer: 'x=2', display: 'x = 2', xp: 20 },
   [id(5)]: { answer: true, display: 'Demo back 1', xp: 5 },
+  [id(7)]: { answer: 'demo answer', display: 'demo answer', xp: 15 },
 };
 
 const nextReviewMs = { again: RELEARN_DELAY_MS, hard: DAY_MS, good: DAY_MS, easy: 4 * DAY_MS };
@@ -64,6 +73,8 @@ function card(n: number, front: string, back: string, origin: Flashcard['origin'
 }
 
 interface State {
+  similar: Record<string, LearnItem>;
+  shaky: boolean;
   nextRewards: RewardCardResponse[];
   sessionCards: string[];
   xpToday: number;
@@ -81,6 +92,8 @@ const fresh = (): State => ({
   ownCount: 0,
   sessionCards: [],
   nextRewards: [],
+  similar: {},
+  shaky: false,
 });
 let state = fresh();
 
@@ -95,6 +108,16 @@ export function mockNextRewards(rewards: MockReward[]) {
     current: 1,
     target: 1,
   }));
+}
+
+/** A wrong answer to `itemId` offers `similar` (learning from mistakes, F5). */
+export function mockSimilar(itemId: string, similar: LearnItem) {
+  state.similar[itemId] = similar;
+}
+
+/** The next right answer is marked shaky (too slow). */
+export function mockNextShaky() {
+  state.shaky = true;
 }
 
 function takeRewards() {
@@ -123,6 +146,12 @@ function earn(xp: number) {
   state.xpToday += xp;
   state.totalXp += xp;
   if (before < 50 && state.xpToday >= 50) state.streak += 1;
+}
+
+function timing(itemId: string, correct: boolean) {
+  const shaky = correct && state.shaky;
+  if (correct) state.shaky = false;
+  return { shaky, similar: correct ? null : (state.similar[itemId] ?? null) };
 }
 
 const squash = (v: unknown) => String(v).replace(/\s+/g, '').toLowerCase();
@@ -217,6 +246,7 @@ export const learnHandlers: RequestHandler[] = [
       progress: progress(),
       flashcardAdded:
         !correct && body.data.mode === 'learn' && typeof body.data.answer !== 'boolean',
+      ...(body.data.mode === 'learn' ? timing(body.data.itemId, correct) : {}),
       newlyEarned: takeRewards(),
     });
   }),
