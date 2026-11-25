@@ -226,6 +226,23 @@ All are learning-based (the principles above); art follows the established style
 | **Pace Setter**   | Timed papers finished with every question within its target time, steps at 1, 3, 6, 10                                               | Stopwatch badge, "Cool Head" title, pace stripes      |
 | **Perfectionist** | Perfect sets (all right at feedback level 2 or above), steps at 1, 5, 15, 30, 60, 100                                                | Diamond badge, crystal frame, prism avatar effect     |
 
+## Two-part titles
+
+Requested by the product owner on 2026-11-25 (inspired by games where players build titles from
+unlocked words; our words and art are our own).
+
+- A title has a **first word** and a **last word**, unlocked separately, for example
+  "Algebra Ace", "Cosmic Scholar", "Unshakeable Explorer". The student picks one of each; the title
+  shows under their nickname on their profile and in the friends league.
+- Words come from rewards across all layers (levels, chapters, milestones, collections, seasons and
+  hidden tracks). Rarer rewards unlock rarer words; hidden tracks unlock their own words (for example
+  "Bug-Hunting", "Exterminator", "Fact-Checking", "Comeback").
+- Aim for about 120 first words and 120 last words over five years, written in a teen voice:
+  playful, a bit epic, never childish, never violent, crude or mean.
+- **Safety:** every word is curated data; a validator checks every possible pairing against the
+  blocked-word list and a manual review list, so no combination reads as offensive. No free text.
+- Titles can be changed at any time, free.
+
 ## Secret achievements
 
 - A set of achievements whose names and conditions are hidden until earned. The rewards page shows

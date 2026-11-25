@@ -1,5 +1,5 @@
 {
-  "id": "6ee2f008-59ec-4595-be7c-6c1b0ee31843",
+  "id": "de8517d2-c7b4-4426-b181-9896876cb58c",
   "prevId": "07f3f3b7-a097-4a07-b168-c01fc7f6e67d",
   "version": "7",
   "dialect": "postgresql",
@@ -567,100 +567,6 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.daily_limits": {
-      "name": "daily_limits",
-      "schema": "",
-      "columns": {
-        "student_id": {
-          "name": "student_id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "weekday_minutes": {
-          "name": "weekday_minutes",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "other_day_minutes": {
-          "name": "other_day_minutes",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "exam_season_extra": {
-          "name": "exam_season_extra",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true,
-          "default": false
-        },
-        "changed_at": {
-          "name": "changed_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "student_seen_at": {
-          "name": "student_seen_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "last_suggested_on": {
-          "name": "last_suggested_on",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "last_raise_on": {
-          "name": "last_raise_on",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "pending_suggestion": {
-          "name": "pending_suggestion",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "daily_limits_student_id_students_id_fk": {
-          "name": "daily_limits_student_id_students_id_fk",
-          "tableFrom": "daily_limits",
-          "tableTo": "students",
-          "columnsFrom": ["student_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {
-        "daily_limits_weekday_range": {
-          "name": "daily_limits_weekday_range",
-          "value": "\"daily_limits\".\"weekday_minutes\" is null or \"daily_limits\".\"weekday_minutes\" between 15 and 360"
-        },
-        "daily_limits_other_range": {
-          "name": "daily_limits_other_range",
-          "value": "\"daily_limits\".\"other_day_minutes\" is null or \"daily_limits\".\"other_day_minutes\" between 15 and 360"
-        }
-      },
-      "isRLSEnabled": false
-    },
     "public.daily_xp": {
       "name": "daily_xp",
       "schema": "",
@@ -970,6 +876,108 @@
         "enrolments_tier_values": {
           "name": "enrolments_tier_values",
           "value": "\"enrolments\".\"tier\" in ('foundation', 'higher', 'none', 'not_sure')"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.error_reports": {
+      "name": "error_reports",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "ref": {
+          "name": "ref",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "screen": {
+          "name": "screen",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "api_path": {
+          "name": "api_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "build": {
+          "name": "build",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "browser": {
+          "name": "browser",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "online": {
+          "name": "online",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reported_at": {
+          "name": "reported_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "error_reports_created_at_idx": {
+          "name": "error_reports_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "error_reports_ref_unique": {
+          "name": "error_reports_ref_unique",
+          "nullsNotDistinct": false,
+          "columns": ["ref"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "error_reports_browser_values": {
+          "name": "error_reports_browser_values",
+          "value": "\"error_reports\".\"browser\" in ('Chrome', 'Edge', 'Firefox', 'Safari', 'Other')"
         }
       },
       "isRLSEnabled": false

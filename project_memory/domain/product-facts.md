@@ -129,6 +129,10 @@ Tags: #product #rules #limits #defaults
   "Link a device" (product owner, 2026-11-25). Students use only their own linked device. Signed out, any screen shows the sign-in buttons
   and returns to the same page after sign-in. Sign out is on the welcome page and `/family`. The topic map and Cards badge wait for F2's
   `GET /v1/student/map` and `GET /v1/student/cards/due`.
+- Every error with a reference code has a one-tap "Send error report" button: an anonymous report
+  (code, screen and API path with ids masked, status, build, browser family, online, time) is
+  stored in `error_reports` for 90 days and listed for the operator at `/admin/feedback` (Error
+  reports), `GET /v1/admin/error-reports` and `scripts/error-reports.mjs`. Privacy notice 1.2.
 - Every "Something went wrong" shows a reference code like `RD-7K2M9Q` (no I, L, O or U), also
   in the API logs with no personal data, so a family can report it. Implemented in
   `packages/core/src/error-ref.ts`, `apps/api/src/errors.ts`, `apps/web/src/api/client.ts`.
@@ -423,6 +427,11 @@ Tags: #product #rules #limits #defaults
   capped at 40 pieces. The combo badge shows from 2 in a row. The CTA pulse takes 1.6 s (well under 3
   flashes a second). Reduced motion removes particles, confetti, float-ups, shakes and pulsing; combo,
   stars and XP still show as text. Arena colours live in `apps/web/src/design/tokens.ts` (`--arena-*`).
+- Settled in J2/J3: lessons, the starting test and flashcard review use the arena. Set complete's
+  Next mission goes to the map (`/map`, next mission card). "Or take a break. Your streak is safe for
+  today." shows when today's daily goal is met (`progress.goalMet`). The "daily cap" for "See you
+  tomorrow" is the daily reward XP cap (`DAILY_REWARD_XP_CAP`, 300 XP today), confirmed by the lead
+  on 2026-11-25 for now: the lesson only knows XP, not study minutes.
 
 ## Exam practice (planned)
 
@@ -448,10 +457,28 @@ Tags: #product #rules #limits #defaults
   last) with parent consent. Parents set 15 min to 6 h per day type; the app only suggests, at most
   weekly (+10 at most fortnightly when the limit is reached on 4 of 14 days with steady late
   accuracy; −10 for one tiredness sign, −15 for two or more). No XP, rewards or streak credit past
-  the limit; progress responses carry `dailyLimit`. School days are Mon–Fri (holidays not known
-  yet). Implemented (K7): `packages/core/src/daily-limit.ts`, `apps/api/src/daily-limit/`,
+  the limit; progress responses carry `dailyLimit`, and set complete says "See you tomorrow" when
+  it is reached (300 XP cap kept as a safety net). Confirmed by the owner (2026-11-25): school days
+  are Mon–Fri with holidays counted as school days until dates exist; "kept going" means reaching
+  the limit; "stopped part-way" means a starting test unfinished for over an hour; parents set
+  15 min to 6 h. Implemented (K7): `packages/core/src/daily-limit.ts`, `apps/api/src/daily-limit/`,
   `daily_limits` table. Detail: `docs/PRODUCT_RULES.md` (Daily limit).
 - Two parent accounts with equal control; second invited by link or code (7 days); activity log
   ("Parent 1/2"); both confirm whole-family deletion.
 - Hidden tracks besides Bug Hunter: Fact Checker, Comeback Kid, Explorer, Planner, Pace Setter,
   Perfectionist (`docs/REWARDS.md`).
+
+## Titles and Get help (owner, 2026-11-25; planned)
+
+- Two-part titles: a first word and a last word unlocked separately from rewards (about 120 each);
+  curated, every pairing validated against blocked words; shown under the nickname.
+- "Get help" page: UK support services by topic with tap-to-call links; every number and URL
+  confirmed on the service's own site with source and date (rechecked each term); nothing about its
+  use is recorded or shown to parents; works offline; Quick exit. Detail: `docs/PRODUCT_RULES.md`.
+
+## Quick wins (owner approved 2026-11-25; planned, workstream Q)
+
+- Daily 5-a-day mixed set (5 questions from practised topics); recall checks (2 questions at lesson
+  start, no penalty, skippable); "Learn it first" links to Oak and BBC Bitesize per topic, checked
+  by CI; read aloud with on-device voices preferred; reading comfort settings (dyslexia-friendly
+  self-hosted font, larger text, spacing, tint). Detail: `docs/PRODUCT_RULES.md` (Quick wins).
