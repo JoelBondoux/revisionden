@@ -1,8 +1,16 @@
 import type { SiteConfig } from './config.ts';
 import { layout, type NavItem, type Page } from './html.ts';
+import { aboutPage } from './pages/about.ts';
+import { helpPage } from './pages/help.ts';
 import { homePage } from './pages/home.ts';
+import { howItWorksPage } from './pages/how-it-works.ts';
 import { notFoundPage } from './pages/not-found.ts';
+import { policiesIndexPage, policyPage } from './pages/policies.ts';
+import { pricingPage } from './pages/pricing.ts';
+import { youngPeoplePage } from './pages/young-people.ts';
 import { pipIconSvg } from './pip.ts';
+import { loadPolicies } from './policies.ts';
+import { readPricing } from './pricing.ts';
 
 /** Files read from the repository at build time (see build.ts). */
 export interface SiteInputs {
@@ -12,6 +20,12 @@ export interface SiteInputs {
   siteCss: string;
   /** Self-hosted font files by file name (from @fontsource/nunito). */
   fonts: Record<string, Uint8Array>;
+  /** docs/LEGAL.md (policy order and audiences). */
+  legalIndex: string;
+  /** docs/legal/*.md by file name: the same policies the app shows. */
+  legalFiles: Record<string, string>;
+  /** docs/PRICING.md: the planned prices (decision 0004). */
+  pricingDoc: string;
 }
 
 export type SiteFiles = Map<string, string | Uint8Array>;
@@ -44,11 +58,31 @@ function robots(config: SiteConfig): string {
 
 /** Every file of the site, by output path. Pure: the caller reads inputs and writes files. */
 export function renderSite(config: SiteConfig, inputs: SiteInputs): SiteFiles {
-  const pages: Page[] = [homePage(config), notFoundPage()];
+  const policies = loadPolicies(
+    { index: inputs.legalIndex, files: inputs.legalFiles },
+    config.policyEnv,
+  );
+  const pages: Page[] = [
+    homePage(config),
+    howItWorksPage(config),
+    pricingPage(config, readPricing(inputs.pricingDoc)),
+    youngPeoplePage(config),
+    helpPage(config),
+    aboutPage(config),
+    policiesIndexPage(policies, !config.policyEnv.VITE_POLICY_EFFECTIVE_DATE),
+    ...policies.map(policyPage),
+    notFoundPage(),
+  ];
   const nav: NavItem[] = pages.flatMap((page) =>
     page.nav ? [{ path: page.path, label: page.nav }] : [],
   );
-  const footerNav: NavItem[] = [{ path: '/', label: 'Home' }, ...nav];
+  const footerNav: NavItem[] = [
+    { path: '/', label: 'Home' },
+    ...nav,
+    { path: '/about', label: 'About' },
+    { path: '/policies', label: 'Policies' },
+    { path: '/policies/privacy-for-young-people', label: 'Privacy for young people' },
+  ];
   const files: SiteFiles = new Map();
   for (const page of pages) files.set(page.file, layout(page, config, nav, footerNav));
   files.set('styles.css', `${inputs.tokensCss}\n${fontFaces(inputs.fonts)}\n${inputs.siteCss}`);

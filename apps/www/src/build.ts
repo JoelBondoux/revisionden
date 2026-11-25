@@ -31,6 +31,13 @@ export function readInputs(): SiteInputs {
     tokensCss: readFileSync(join(repoRoot, 'apps/web/src/design/tokens.css'), 'utf8'),
     siteCss: readFileSync(join(here, 'site.css'), 'utf8'),
     fonts: readFonts(),
+    legalIndex: readFileSync(join(repoRoot, 'docs/LEGAL.md'), 'utf8'),
+    legalFiles: Object.fromEntries(
+      readdirSync(join(repoRoot, 'docs/legal'))
+        .filter((name) => name.endsWith('.md'))
+        .map((name) => [name, readFileSync(join(repoRoot, 'docs/legal', name), 'utf8')]),
+    ),
+    pricingDoc: readFileSync(join(repoRoot, 'docs/PRICING.md'), 'utf8'),
   };
 }
 

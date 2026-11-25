@@ -1,16 +1,9 @@
 import type { SiteConfig } from './config.ts';
 import { pip } from './pip.ts';
 
-const ESCAPES: Record<string, string> = {
-  '&': '&amp;',
-  '<': '&lt;',
-  '>': '&gt;',
-  '"': '&quot;',
-  "'": '&#39;',
-};
+import { escapeHtml } from './escape.ts';
 
-/** Escapes text for HTML content and attribute values. */
-export const escapeHtml = (text: string) => text.replace(/[&<>"']/g, (c) => ESCAPES[c]!);
+export { escapeHtml };
 
 /** A page of the site: its address, head details and the HTML inside <main>. */
 export interface Page {
