@@ -188,6 +188,12 @@ Product owner decision, 2026-11-25: **parent view only**.
   feedback (`/feedback/family`) and to the parent home (`/parent`).
 - Students always use their own device, linked by QR code and passkey. A student device behaves
   as before.
+- After the 12-hour device session, the student unlocks with the passkey: on the welcome page
+  ("I'm a student: unlock with my passkey"), or at `/unlock`, where any student screen sends them
+  when its session has run out, and back to that screen afterwards. With no passkey on the device:
+  "Ask a parent to link this device", with no account details shown. Parents and students share
+  one sign-in page, the welcome page (`decisions/0007-student-passkey-unlock.md` in project
+  memory).
 
 ## Learning loop (workstream F)
 
@@ -729,3 +735,11 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
 - **Reading comfort** settings per device: a dyslexia-friendly font (self-hosted, open licence, no
   third-party font service), larger text, more line and letter spacing, and a soft tinted background
   option. These apply across the app and are remembered on the device.
+- **Appearance** settings per device (Settings → Appearance, next to Reading comfort; students and
+  parents): Theme System (default, follows the device), Light or Dark; Colours Standard or
+  Colour-blind friendly (right is blue and wrong is orange instead of green and red, checked for
+  deuteranopia, protanopia and tritanopia; icons and words always carry the meaning too);
+  Background pattern On (default) or Off. Applied before the first paint, so there is no flash.
+  The doodle pattern is our own original art, very faint, and is never shown in high contrast or
+  forced colours. Get help stays a calm light page in every theme. The sales site follows the
+  device's theme only.

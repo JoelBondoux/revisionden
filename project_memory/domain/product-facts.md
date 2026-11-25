@@ -35,6 +35,15 @@ Tags: #product #rules #limits #defaults
   the token up. Tokens and sessions are stored only as hashes.
 - A student device session lasts 12 hours, then the student unlocks again with the passkey.
   Parents can unlink a device, which ends its session.
+- Students unlock on the welcome page ("I'm a student: unlock with my passkey") or at `/unlock`,
+  where a student screen sends them when its API call gets 401; they return to the page they were
+  on (default `/map`). With no passkey on the device the page says "Ask a parent to link this
+  device" and shows no account details. The welcome page (`/`) is the one sign-in page for
+  parents and students; the sales site's "Sign in" goes there
+  (`decisions/0007-student-passkey-unlock.md`). Implemented in
+  `apps/web/src/features/onboarding/StudentUnlock.tsx`.
+- A passkey synced to another device (iCloud Keychain, Google Password Manager) unlocks there
+  too, as the same linked device. Open owner question (`operations/contradictions.md`).
 - Rate limits per address: 30 a minute on sign-in and device routes, 20 a minute on AI routes.
   Implemented in `apps/api`.
 
@@ -266,7 +275,8 @@ Tags: #product #rules #limits #defaults
   Links use the app's J7 styles (buttons, tiles, chips, bold inline links), never plain underlined
   text (owner, 2026-11-25).
 - Production passkeys use the RP ID `revisionden.com`; OAuth callbacks are on the API host, so the
-  move to `app.` needed no change in Google or Microsoft.
+  move to `app.` needed no change in Google or Microsoft. Dev and staging passkeys use their own
+  hosts (`dev.revisionden.com`, `staging.revisionden.com`), so they work only there.
 - Live since 2026-11-25 (workstream G): API Workers on all three API hosts; web app on `dev.` and
   `staging.`. The production web app waits for the operator details (its build fails without them).
 - Workers: `revisionden-api-dev`, `revisionden-api-staging`, `revisionden-api` (API) and
@@ -618,6 +628,17 @@ Tags: #product #rules #limits #defaults
   Normal / Large (112.5%) / Larger (125%), more spacing (line height 1.8, letter 0.12em, word
   0.16em), tint none / cream / blue. Defaults: all off. Applied app-wide by `data-reading-*`
   attributes on `<html>` (`apps/web/src/features/reading/`).
+- Appearance (J8, built): Settings → Appearance, per device in `localStorage` key
+  `revisionden.appearance` (`{theme, palette, pattern}`). Theme `system` (default) / `light` /
+  `dark`; palette `standard` (default) / `colourblind`; pattern `on` (default) / `off`. Applied as
+  `data-theme`, `data-palette`, `data-pattern` on `<html>` by `public/appearance-boot.js` before
+  first paint and by `AppearanceProvider` after (`apps/web/src/features/appearance/`). Colours in
+  `apps/web/src/design/themes.ts` / `themes.css`: dark keeps button colours with white text and
+  uses `--color-primary-edge` (#C4B5FF) for violet text; colour-blind right #1F6FD1 (blue), wrong
+  #B34F00 (orange), checked by simulation (ΔE ≥ 20 for deuteranopia, protanopia, tritanopia) and
+  4.5:1 contrast in all four combinations. Doodle tile `apps/web/src/design/doodles.svg` (original,
+  240px, used as a CSS mask at 7% ink), hidden with `prefers-contrast: more` and forced colours.
+  Text on gold or streak orange uses `--color-text-on-gold`. Get help keeps light colours in dark.
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by

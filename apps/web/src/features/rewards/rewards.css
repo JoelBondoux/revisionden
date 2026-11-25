@@ -42,7 +42,7 @@
 
 .rewards__step--earned {
   background: var(--color-gold);
-  color: var(--color-text);
+  color: var(--color-text-on-gold);
 }
 
 .rewards__list {
