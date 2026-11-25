@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { createNotificationsApi, NotificationsApiError } from './notificationsApi';
+import {
+  createNotificationsApi,
+  createParentPushApi,
+  NotificationsApiError,
+} from './notificationsApi';
 
 function fakeFetch(status: number, body: unknown) {
   const calls: { url: string; init: RequestInit }[] = [];
@@ -59,5 +63,27 @@ describe('notifications API client', () => {
     const { fetch } = fakeFetch(503, { error: { code: 'push_unavailable' } });
     const api = createNotificationsApi({ baseUrl: 'https://api.example.com/', fetch });
     await expect(api.getVapidKey()).rejects.toBeInstanceOf(NotificationsApiError);
+  });
+});
+
+describe('parent push API client', () => {
+  it("saves and deletes the parent device's subscription on the parent routes", async () => {
+    const { calls, fetch } = fakeFetch(201, { subscribed: true });
+    const api = createParentPushApi({ baseUrl: 'https://api.example.com/', fetch });
+    const sub = { endpoint: 'https://push.example.com/x', keys: { p256dh: 'p', auth: 'a' } };
+    await api.saveSubscription(sub);
+    await api.deleteSubscription(sub.endpoint);
+    expect(calls.map((c) => [c.init.method, c.url])).toEqual([
+      ['POST', 'https://api.example.com/v1/parent/push-subscriptions'],
+      ['DELETE', 'https://api.example.com/v1/parent/push-subscriptions'],
+    ]);
+    expect(calls[0]!.init.credentials).toBe('include');
+  });
+
+  it('reads the same public VAPID key', async () => {
+    const { calls, fetch } = fakeFetch(200, { publicKey: 'BPUB' });
+    const api = createParentPushApi({ baseUrl: 'https://api.example.com', fetch });
+    expect(await api.getVapidKey()).toBe('BPUB');
+    expect(calls[0]!.url).toBe('https://api.example.com/v1/notifications/vapid-key');
   });
 });

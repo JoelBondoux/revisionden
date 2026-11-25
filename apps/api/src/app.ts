@@ -16,6 +16,7 @@ import {
   studentSessionRoutes,
 } from './routes/devices';
 import {
+  parentNotificationRoutes,
   parentReminderRoutes,
   pushKeyRoutes,
   studentNotificationRoutes,
@@ -106,6 +107,7 @@ export function createApp(deps: AppDeps) {
   parent.use('/feedback', requireParent);
   parent.use('/policy-acceptances', requireParent);
   parent.use('/admin/*', requireParent);
+  parent.use('/parent/*', requireParent);
   async function requireParent(c: Context<AppEnv>, next: Next) {
     const session = await deps.auth.api.getSession({ headers: c.req.raw.headers });
     if (!session) throw unauthorized();
@@ -125,6 +127,7 @@ export function createApp(deps: AppDeps) {
   parent.route('/', reportRoutes(deps.db, 'parent'));
   parent.route('/', parentFeedbackRoutes(deps));
   parent.route('/admin', adminFeedbackRoutes(deps));
+  parent.route('/parent', parentNotificationRoutes(deps));
   parent.route(
     '/review',
     reviewRoutes(deps.db, { ...deps.verification, now: () => deps.clock.now() }),

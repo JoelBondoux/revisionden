@@ -36,6 +36,7 @@ export function FamilyPage() {
           ))}
         </ul>
       )}
+      <Link to="/parent">Parent home</Link>
       <Link to="/onboarding" className="secondary-text">
         Parents: add or manage children
       </Link>

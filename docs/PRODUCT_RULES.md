@@ -107,6 +107,19 @@ formula and its assumptions. Summary of what is built:
 - Avatar items only unlock from the reward that locks them; locked items are refused when saving.
 - Implemented: `packages/core/src/rewards.ts`, `levels.ts`, `chapters.ts`, `reward-xp.ts`,
   `reward-stats.ts`, `rewards-schemas.ts`; API `apps/api/src/routes/rewards.ts`.
+- Parent-set reward met (workstream H2): the parent gets one notification per reward on each of
+  their devices with "Reward news" on, while it is not marked given. Not counted in the child's
+  2 reminders a day; waits for the end of the child's nightly quiet hours (not school hours).
+  Text: "<nickname> reached a reward target: <title>" (fetched by the service worker, never in
+  the push itself).
+
+## Parent home (workstream P)
+
+- `/parent` is the parent's way in: a student switcher (when there is more than one child) with
+  that child's "Rewards you set" and "Reminder times" (`/parent/reminders/:id`), and cards for the
+  stats dashboard, add or manage children, family feedback, Reward news for this device, app
+  settings and policies. Linked from the profile picker (`/family`, where a parent lands after
+  signing in) and from Settings. Focus suggestions and data export get cards once they exist.
 
 ## Nickname and avatar
 

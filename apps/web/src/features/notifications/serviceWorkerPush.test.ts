@@ -9,11 +9,13 @@ type Listener = (event: Record<string, unknown>) => void;
 function loadWorker(
   fetchImpl: (url: string, init?: RequestInit) => Promise<Response>,
   apiBase?: string,
+  audience?: 'student' | 'parent',
 ) {
   const listeners: Record<string, Listener> = {};
-  const config = new Map<string, Response>(
-    apiBase ? [['/reminder-api', new Response(apiBase)]] : [],
-  );
+  const config = new Map<string, Response>([
+    ...(apiBase ? ([['/reminder-api', new Response(apiBase)]] as const) : []),
+    ...(audience ? ([['/push-audience', new Response(audience)]] as const) : []),
+  ]);
   const caches = {
     open: async () => ({
       match: async (key: string) => config.get(key)?.clone(),
@@ -79,5 +81,41 @@ describe('service worker reminders', () => {
     await sw.dispatch('notificationclick', { notification: { close } });
     expect(close).toHaveBeenCalled();
     expect(sw.openWindow).toHaveBeenCalledWith('/learn');
+  });
+});
+
+describe('service worker on a parent device', () => {
+  it('shows the latest reward news for the parent, fetched from the API', async () => {
+    const fetch = vi.fn(
+      async () =>
+        new Response(JSON.stringify({ message: 'demo_fox reached a reward target: Cinema trip' })),
+    );
+    const sw = loadWorker(fetch, 'https://api.example.com/', 'parent');
+    await sw.dispatch('push');
+    expect(fetch).toHaveBeenCalledWith('https://api.example.com/v1/parent/notifications/latest', {
+      credentials: 'include',
+    });
+    expect(sw.showNotification).toHaveBeenCalledWith(
+      'RevisionDen',
+      expect.objectContaining({
+        body: 'demo_fox reached a reward target: Cinema trip',
+        tag: 'parent-reward',
+      }),
+    );
+  });
+
+  it('falls back to generic parent text with no nickname when signed out or offline', async () => {
+    const sw = loadWorker(async () => new Response('{}', { status: 401 }), undefined, 'parent');
+    await sw.dispatch('push');
+    expect(sw.showNotification).toHaveBeenCalledWith(
+      'RevisionDen',
+      expect.objectContaining({ body: 'A reward target you set has been reached.' }),
+    );
+  });
+
+  it('opens the parent home when tapped', async () => {
+    const sw = loadWorker(async () => new Response('{}'), undefined, 'parent');
+    await sw.dispatch('notificationclick', { notification: { close: vi.fn() } });
+    expect(sw.openWindow).toHaveBeenCalledWith('/parent');
   });
 });

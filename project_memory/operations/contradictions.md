@@ -14,9 +14,6 @@
       exams sat, flashcards reviewed, weak spots fixed, perfect sets, gifting and the friends league
       are in the catalogue, but nothing records those numbers yet, so the rewards route counts them
       as 0 (`apps/api/src/routes/rewards.ts`). They unlock once those features store the numbers.
-- [ ] **Parent reward notification.** `docs/REWARDS.md` says the parent gets a notification when a
-      parent-set target is met; not built (reminders are workstream H). The student celebration is
-      built.
 - [ ] **OAuth tokens kept.** `docs/PRIVACY.md` and the policies say only the parent's sign-in
       email is stored, but Better Auth stores `access_token`, `refresh_token` and `id_token` in
       `auth_accounts` (`packages/db/src/schema.ts`, `apps/api/src/auth.ts`); a Google or Microsoft
@@ -56,6 +53,12 @@
       sit in other workstreams' lanes. Pick one set of names.
 
 ## Resolved
+
+- [x] **Parent reward notification.** `docs/REWARDS.md` says the parent gets a notification when a
+      parent-set target is met; not built (reminders are workstream H). The student celebration is
+      built. Settled by H2 (2026-11-25): parent devices get one web push per reward
+      (`apps/api/src/notifications/parent-rewards.ts`, migration 0006); not counted in the 2-a-day
+      limit, respects the child's nightly quiet hours.
 
 - [x] `docs/PRIVACY.md` principle 5 says data stays in the UK or EU, but `docs/AI.md` sends
       answers, essays and homework photos to Anthropic, OpenAI and Gemini, which may process them

@@ -490,6 +490,25 @@ export const pushSubscriptions = pgTable(
 );
 
 /**
+ * Web push subscriptions on a parent's own devices (workstream H2), turned on from the parent
+ * home. Used only to tell the parent a parent-set reward target was met. No payload is sent.
+ */
+export const parentPushSubscriptions = pgTable(
+  'parent_push_subscriptions',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    parentId: uuid('parent_id')
+      .notNull()
+      .references(() => parents.id, { onDelete: 'cascade' }),
+    endpoint: text('endpoint').notNull().unique(),
+    p256dh: text('p256dh').notNull(),
+    auth: text('auth').notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [index('parent_push_subscriptions_parent_id_idx').on(t.parentId)],
+);
+
+/**
  * Reminder settings per student, set by the parent. Times are local "HH:MM" in `time_zone`.
  * Quiet hours (no reminders): every night, and on weekdays during the daytime window (school
  * hours by default). At most two reminders a day (fixed in apps/api).
@@ -722,6 +741,8 @@ export const parentRewards = pgTable(
     targetDate: date('target_date'),
     createdAt: createdAt(),
     givenAt: timestamp('given_at', { withTimezone: true }),
+    // When the parent was told the target was met (workstream H2); set once, so they are told once.
+    reachedNotifiedAt: timestamp('reached_notified_at', { withTimezone: true }),
   },
   (t) => [
     index('parent_rewards_student_idx').on(t.studentId),

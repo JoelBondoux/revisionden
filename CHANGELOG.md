@@ -7,6 +7,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Parents get a notification on their phone when a child reaches a reward target you set. Turn on "Reward news" on the new parent home.
+- New parent home: one place for the stats dashboard, rewards you set, reminder times, family feedback, settings and policies. Find it from the profile picker or Settings.
 - Coming soon: a stats page for students and a stats dashboard for parents.
 - Coming soon: rewards you set yourself as a parent, like a cinema trip for a 30-day streak.
 - Sound effects: soft, original sounds for right and wrong answers, finishing a lesson, meeting your daily goal, flashcards and the starting test. Mute them from the speaker button at the top, or change the volume and tap sounds in Settings.
@@ -24,6 +26,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Parent reward notification (H2): `parent_push_subscriptions` table and `parent_rewards.reached_notified_at` (migration 0006), `POST, DELETE /v1/parent/push-subscriptions`, `GET /v1/parent/notifications/latest`, a cron step (`runParentRewardNotifications`) that reads the read-only `rewardsProgress`, sends once per reward, respects the child's nightly quiet hours and is not counted in the 2-a-day reminder limit; the service worker shows parent text and opens `/parent` on parent devices.
+- Parent home (P): `/parent` with student switcher, rewards you set, reminder times (`/parent/reminders/:id`, the existing reminder settings form), stats dashboard, manage children, family feedback, Reward news toggle, settings and policies; linked from `/family` and Settings.
 - Sound effects (U1–U3): Web Audio sound bank (one synthesised sound per event, no audio files), `SoundProvider` and `useSound().play()`, header quick mute, Settings Sound section (on/off, volume, tap sounds; saved per device), iOS ambient audio session, nothing before the first tap or in the background, Test mode rule; wired into lessons, starting test and flashcards.
 - Five-year rewards progression (R): level curve 1 to 100 with prestige stars, a 369-reward catalogue as data (levels, year chapters, milestone ladders, collections, 2026/27 seasonal drops) with a validator, healthy-limit rules (no late-night or time-based rewards, daily cap), student `/rewards` screen, and parent-set real-world rewards (`/family/:id/rewards`, `parent_rewards` table, migration 0004).
 - New original avatar art: five chapter finale tops, rooftop scene, and the Frost Fest drop (bobble hat, paper lantern, frosty night scene).

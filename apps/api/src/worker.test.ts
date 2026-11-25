@@ -88,6 +88,7 @@ describe('worker entry', () => {
       const runner = recordingRunner();
       const worker = createWorker('00.01.000', {
         runReminders: runner.run,
+        runParentRewardNotifications: async () => ({ rewards: 0, pushes: 0, removed: 0 }),
         cleanUp: async () => ({ feedbackDeleted: 0 }),
       });
       await worker.scheduled(controller as never, {
@@ -96,6 +97,26 @@ describe('worker entry', () => {
         VAPID_PRIVATE_KEY: 'priv',
       });
       expect(runner.calls).toEqual([{ now: new Date('2026-11-24T19:00:00Z') }]);
+    });
+
+    it('tells parents about met reward targets in the same run, once VAPID keys are set', async () => {
+      const parentRuns: Date[] = [];
+      const options = {
+        runReminders: recordingRunner().run,
+        runParentRewardNotifications: async ({ now }: { now: Date }) => {
+          parentRuns.push(now);
+          return { rewards: 0, pushes: 0, removed: 0 };
+        },
+        cleanUp: async () => ({ feedbackDeleted: 0 }),
+      };
+      await createWorker('00.01.000', options).scheduled(controller as never, fullEnv);
+      expect(parentRuns).toHaveLength(0);
+      await createWorker('00.01.000', options).scheduled(controller as never, {
+        ...fullEnv,
+        VAPID_PUBLIC_KEY: 'BPUB',
+        VAPID_PRIVATE_KEY: 'priv',
+      });
+      expect(parentRuns).toEqual([new Date('2026-11-24T19:00:00Z')]);
     });
 
     it('logs instead of throwing when the environment is incomplete', async () => {

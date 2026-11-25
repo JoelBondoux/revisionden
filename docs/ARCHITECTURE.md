@@ -106,46 +106,47 @@ push to each device. The service worker then fetches the text and shows the noti
 
 Source of truth: `packages/db/src/schema.ts`; migrations in `packages/db/migrations`.
 
-| Table                | Key fields                                                                                                                                      |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `auth_users`         | id, email, email_verified, name (always blank), image (always null)                                                                             |
-| `auth_sessions`      | id, token, user_id, expires_at (IP address and user agent not kept)                                                                             |
-| `auth_accounts`      | id, user_id, provider_id, account_id, OAuth tokens (no passwords)                                                                               |
-| `auth_verifications` | id, identifier, value, expires_at (OAuth state)                                                                                                 |
-| `families`           | id, created_at                                                                                                                                  |
-| `parents`            | id, family_id, auth_user_id (unique)                                                                                                            |
-| `students`           | id, family_id, nickname (unique per family), avatar_code, year_group (7–13)                                                                     |
-| `enrolments`         | student_id + subject_id (key), board, tier, spec_version                                                                                        |
-| `devices`            | id, student_id, credential_id, public_key, counter, transports, linked_at                                                                       |
-| `device_link_tokens` | id, token_hash, family_id, student_id, expires_at, used_at                                                                                      |
-| `passkey_challenges` | id, kind (register, unlock), challenge, student_id, expires_at, used_at                                                                         |
-| `student_sessions`   | id, token_hash, student_id, device_id, expires_at                                                                                               |
-| `topics`             | id (text), subject_id, board, spec_ref, title, parent_topic_id                                                                                  |
-| `items`              | id, topic_id, type, body (JSON), answer (JSON), source_ref, checked_by, content_id (unique), version, status, difficulty, tags                  |
-| `attempts`           | id, student_id, item_id, correct, score, time_ms, created_at, item_version, mode, xp_earned, starting_test_id                                   |
-| `mastery`            | student_id + topic_id (key), value (0–1), updated_at                                                                                            |
-| `exams`              | id, student_id, kind (exam, mock, assessment), subject_id, date, result                                                                         |
-| `school_reports`     | id, student_id, date, values (JSON)                                                                                                             |
-| `plans`              | id, student_id, week_start (unique per student), sessions (JSON), edited_by                                                                     |
-| `rewards`            | student_id + reward_id (key), earned_at                                                                                                         |
-| `parent_rewards`     | id, student_id, title, note, target_kind (reward, stat, date), reward_id, stat, at_least, target_date, given_at                                 |
-| `streaks`            | student_id (key), current, best, skip_days, gift_days, skips_in_a_row, last_date, last_settled_week                                             |
-| `daily_xp`           | student_id + day (key, UK date), xp                                                                                                             |
-| `starting_tests`     | id, student_id, subject_id, item_ids (JSON), started (created_at), finished_at                                                                  |
-| `flashcards`         | id, student_id, item_id (null for own cards), topic_id, origin (deck, wrong_answer, own), front, back, repetitions, interval_days, ease, due_at |
-| `push_subscriptions` | id, student_id, device_id, endpoint (unique), p256dh, auth                                                                                      |
-| `reminder_settings`  | student_id (key), on/off switches, quiet and weekday quiet times, time zone                                                                     |
-| `reminder_log`       | id, student_id, kind (streak, session), local_date, message, sent_at                                                                            |
-| `ai_usage`           | id, student_id, job, provider, model, tokens, cost_micro_usd (no prompts)                                                                       |
-| `reviewer_roles`     | auth_user_id (key), role (subject-specialist, content-lead, parent-reviewer)                                                                    |
-| `item_reports`       | id, item_id, item_version, reason, reported_by, family_id, status, decided_by_role                                                              |
-| `quarantined_items`  | item_id (key), item_version, cause (report, confirmed_error, batch_failed)                                                                      |
-| `review_batches`     | id, title, writer_prompt, source_url, status, sample_seed                                                                                       |
-| `review_batch_items` | batch_id + item_id (key), item_version, in_sample, snapshot (JSON), decision, decided_by_role                                                   |
-| `recheck_requests`   | id, scope (batch, item, writer_prompt, source), scope_value, cause, status                                                                      |
-| `recalculation_jobs` | id, item_id, item_version, status                                                                                                               |
-| `feedback`           | id, family_id, sender_role, student_id, sender_auth_user_id, kind, text (≤500), device (JSON), status, created_at, updated_at, closed_at        |
-| `policy_acceptances` | auth_user_id + policy (key), version, accepted_at                                                                                               |
+| Table                       | Key fields                                                                                                                                      |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `auth_users`                | id, email, email_verified, name (always blank), image (always null)                                                                             |
+| `auth_sessions`             | id, token, user_id, expires_at (IP address and user agent not kept)                                                                             |
+| `auth_accounts`             | id, user_id, provider_id, account_id, OAuth tokens (no passwords)                                                                               |
+| `auth_verifications`        | id, identifier, value, expires_at (OAuth state)                                                                                                 |
+| `families`                  | id, created_at                                                                                                                                  |
+| `parents`                   | id, family_id, auth_user_id (unique)                                                                                                            |
+| `students`                  | id, family_id, nickname (unique per family), avatar_code, year_group (7–13)                                                                     |
+| `enrolments`                | student_id + subject_id (key), board, tier, spec_version                                                                                        |
+| `devices`                   | id, student_id, credential_id, public_key, counter, transports, linked_at                                                                       |
+| `device_link_tokens`        | id, token_hash, family_id, student_id, expires_at, used_at                                                                                      |
+| `passkey_challenges`        | id, kind (register, unlock), challenge, student_id, expires_at, used_at                                                                         |
+| `student_sessions`          | id, token_hash, student_id, device_id, expires_at                                                                                               |
+| `topics`                    | id (text), subject_id, board, spec_ref, title, parent_topic_id                                                                                  |
+| `items`                     | id, topic_id, type, body (JSON), answer (JSON), source_ref, checked_by, content_id (unique), version, status, difficulty, tags                  |
+| `attempts`                  | id, student_id, item_id, correct, score, time_ms, created_at, item_version, mode, xp_earned, starting_test_id                                   |
+| `mastery`                   | student_id + topic_id (key), value (0–1), updated_at                                                                                            |
+| `exams`                     | id, student_id, kind (exam, mock, assessment), subject_id, date, result                                                                         |
+| `school_reports`            | id, student_id, date, values (JSON)                                                                                                             |
+| `plans`                     | id, student_id, week_start (unique per student), sessions (JSON), edited_by                                                                     |
+| `rewards`                   | student_id + reward_id (key), earned_at                                                                                                         |
+| `parent_rewards`            | id, student_id, title, note, target_kind (reward, stat, date), reward_id, stat, at_least, target_date, given_at, reached_notified_at            |
+| `streaks`                   | student_id (key), current, best, skip_days, gift_days, skips_in_a_row, last_date, last_settled_week                                             |
+| `daily_xp`                  | student_id + day (key, UK date), xp                                                                                                             |
+| `starting_tests`            | id, student_id, subject_id, item_ids (JSON), started (created_at), finished_at                                                                  |
+| `flashcards`                | id, student_id, item_id (null for own cards), topic_id, origin (deck, wrong_answer, own), front, back, repetitions, interval_days, ease, due_at |
+| `push_subscriptions`        | id, student_id, device_id, endpoint (unique), p256dh, auth                                                                                      |
+| `parent_push_subscriptions` | id, parent_id, endpoint (unique), p256dh, auth (parent's own devices; reward news only)                                                         |
+| `reminder_settings`         | student_id (key), on/off switches, quiet and weekday quiet times, time zone                                                                     |
+| `reminder_log`              | id, student_id, kind (streak, session), local_date, message, sent_at                                                                            |
+| `ai_usage`                  | id, student_id, job, provider, model, tokens, cost_micro_usd (no prompts)                                                                       |
+| `reviewer_roles`            | auth_user_id (key), role (subject-specialist, content-lead, parent-reviewer)                                                                    |
+| `item_reports`              | id, item_id, item_version, reason, reported_by, family_id, status, decided_by_role                                                              |
+| `quarantined_items`         | item_id (key), item_version, cause (report, confirmed_error, batch_failed)                                                                      |
+| `review_batches`            | id, title, writer_prompt, source_url, status, sample_seed                                                                                       |
+| `review_batch_items`        | batch_id + item_id (key), item_version, in_sample, snapshot (JSON), decision, decided_by_role                                                   |
+| `recheck_requests`          | id, scope (batch, item, writer_prompt, source), scope_value, cause, status                                                                      |
+| `recalculation_jobs`        | id, item_id, item_version, status                                                                                                               |
+| `feedback`                  | id, family_id, sender_role, student_id, sender_auth_user_id, kind, text (≤500), device (JSON), status, created_at, updated_at, closed_at        |
+| `policy_acceptances`        | auth_user_id + policy (key), version, accepted_at                                                                                               |
 
 No table stores a real name, date of birth, email of a student, photo or school name. The
 schema guard test (`packages/db/src/schema-guard.test.ts`) checks the migrated database and fails

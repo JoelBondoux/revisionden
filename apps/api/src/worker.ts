@@ -7,6 +7,7 @@ import { createPasskeyService } from './passkeys';
 import { createMathsEngineClient } from './learning/maths-engine';
 import { createMemoryRateLimiter } from './rate-limit';
 import { runReminders as defaultRunReminders } from './notifications/runner';
+import { runParentRewardNotifications as defaultRunParentRewards } from './notifications/parent-rewards';
 import { createWebPushSender } from './notifications/web-push';
 import { createProviders } from './ai/providers';
 import { cleanUpExpiredData as defaultCleanUp } from './feedback/retention';
@@ -22,12 +23,15 @@ type App = ReturnType<typeof createApp>;
 export interface WorkerOptions {
   /** Injected in tests; defaults to the real reminder runner. */
   runReminders?: typeof defaultRunReminders;
+  /** Injected in tests; defaults to telling parents about met parent-set reward targets. */
+  runParentRewardNotifications?: typeof defaultRunParentRewards;
   /** Injected in tests; defaults to deleting data past its retention period. */
   cleanUp?: typeof defaultCleanUp;
 }
 
 export function createWorker(version: string, options: WorkerOptions = {}) {
   const runReminders = options.runReminders ?? defaultRunReminders;
+  const runParentRewards = options.runParentRewardNotifications ?? defaultRunParentRewards;
   const cleanUp = options.cleanUp ?? defaultCleanUp;
   let cached: { env: unknown; app: App } | undefined;
 
@@ -76,7 +80,8 @@ export function createWorker(version: string, options: WorkerOptions = {}) {
 
     /**
      * Cron trigger (every 15 minutes, see wrangler.toml): deletes data past its retention
-     * period (feedback 12 months after closing), then sends due reminders.
+     * period (feedback 12 months after closing), then sends due reminders, then tells parents
+     * about parent-set reward targets met.
      */
     async scheduled(
       controller: Pick<ScheduledController, 'scheduledTime'>,
@@ -93,16 +98,15 @@ export function createWorker(version: string, options: WorkerOptions = {}) {
       const db = createNeonDatabase(config.databaseUrl);
       console.log('clean-up', JSON.stringify(await cleanUp({ db, now })));
       if (!config.push) return;
-      const summary = await runReminders({
-        db,
-        now,
-        sender: createWebPushSender({
-          keys: config.push.keys,
-          subject: config.webOrigin,
-          clock: { now: () => new Date() },
-        }),
+      const sender = createWebPushSender({
+        keys: config.push.keys,
+        subject: config.webOrigin,
+        clock: { now: () => new Date() },
       });
+      const summary = await runReminders({ db, now, sender });
       console.log('reminders', JSON.stringify(summary));
+      // Parent news (H2) is separate from the child reminders and their 2-a-day limit.
+      console.log('parent-rewards', JSON.stringify(await runParentRewards({ db, now, sender })));
     },
   };
 }

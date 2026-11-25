@@ -43,6 +43,13 @@
       "when": 1795561775962,
       "tag": "0005_feedback_policies",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1795583479572,
+      "tag": "0006_parent_reward_notifications",
+      "breakpoints": true
     }
   ]
 }
