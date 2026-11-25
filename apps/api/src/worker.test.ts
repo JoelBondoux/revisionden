@@ -33,6 +33,30 @@ describe('worker entry', () => {
     expect(await res.json()).toEqual({ status: 'misconfigured', version: '00.01.000' });
   });
 
+  it('reports ok with only Google sign-in set up', async () => {
+    const worker = createWorker('00.01.000');
+    const env = {
+      ENVIRONMENT: 'development',
+      DATABASE_URL: 'postgres://user:pass@db.example.com/revisionden',
+      BETTER_AUTH_SECRET: 'x'.repeat(32),
+      API_ORIGIN: 'https://api-dev.revisionden.test',
+      WEB_ORIGIN: 'https://dev.revisionden.test',
+      GOOGLE_CLIENT_ID: 'g',
+      GOOGLE_CLIENT_SECRET: 'g',
+      AI_GATEWAY_URL: 'https://gateway.example.com/v1/x',
+      UPLOADS: {},
+    };
+    const res = await worker.fetch(new Request('https://api.test/health'), env, ctx);
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ status: 'ok', version: '00.01.000' });
+    const providers = await worker.fetch(
+      new Request('https://api.test/v1/auth/providers'),
+      env,
+      ctx,
+    );
+    expect(await providers.json()).toEqual({ providers: ['google'] });
+  });
+
   it('serves health once the environment is complete', async () => {
     const worker = createWorker('00.01.000');
     const env = {

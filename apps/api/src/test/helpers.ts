@@ -22,6 +22,7 @@ export const TEST_CONFIG: AppConfig = {
   webOrigin: 'https://dev.revisionden.test',
   google: { clientId: 'test-google-id', clientSecret: 'test-google-secret' },
   microsoft: { clientId: 'test-ms-id', clientSecret: 'test-ms-secret' },
+  signInProviders: ['google', 'microsoft'],
   aiGatewayUrl: 'https://gateway.example.com/v1/test',
   passkeyRpId: 'dev.revisionden.test',
   serveDraftContent: false,

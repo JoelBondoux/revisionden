@@ -64,15 +64,15 @@ Every resource is named `revisionden` or starts `revisionden-` (decision 0003). 
 Generated and already set on each API Worker: `DATABASE_URL`, `BETTER_AUTH_SECRET`,
 `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `AI_GATEWAY_URL`.
 
-| Worker secret or variable                        | dev | staging | production | Effect until set                                     |
-| ------------------------------------------------ | --- | ------- | ---------- | ---------------------------------------------------- |
-| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`       | ✗   | ✗       | ✗          | Required: every API route except `/health` gives 500 |
-| `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` | ✗   | ✗       | ✗          | Required: as above                                   |
-| `ANTHROPIC_API_KEY`                              | ✗   | ✗       | ✗          | AI routes answer 503                                 |
-| `AI_GATEWAY_TOKEN`                               | ✗   | ✗       | ✗          | AI calls are refused by the authenticated gateway    |
-| `OPERATOR_EMAILS`                                | ✗   | ✗       | ✗          | Nobody can open `/admin/feedback`                    |
-| `MATHS_ENGINE_URL`                               | ✗   | ✗       | ✗          | Worked maths answers get 503 (needs G3)              |
-| `OPENAI_API_KEY` (optional)                      | –   | –       | –          | No second checker                                    |
+| Worker secret or variable                        | dev | staging | production | Effect until set                                                                    |
+| ------------------------------------------------ | --- | ------- | ---------- | ----------------------------------------------------------------------------------- |
+| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`       | ✗   | ✗       | ✗          | One provider required: until one is set, every API route except `/health` gives 500 |
+| `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` | ✗   | ✗       | ✗          | Optional once Google is set: the sign-in page hides it                              |
+| `ANTHROPIC_API_KEY`                              | ✗   | ✗       | ✗          | AI routes answer 503                                                                |
+| `AI_GATEWAY_TOKEN`                               | ✗   | ✗       | ✗          | AI calls are refused by the authenticated gateway                                   |
+| `OPERATOR_EMAILS`                                | ✗   | ✗       | ✗          | Nobody can open `/admin/feedback`                                                   |
+| `MATHS_ENGINE_URL`                               | ✗   | ✗       | ✗          | Worked maths answers get 503 (needs G3)                                             |
+| `OPENAI_API_KEY` (optional)                      | –   | –       | –          | No second checker                                                                   |
 
 Set each with
 `pnpm --filter @revisionden/api exec wrangler secret put <NAME> --env <dev|staging|production>`
@@ -166,14 +166,18 @@ nothing secret if one is missing; the missing names are written to the Worker lo
 | ------------------------------------------------ | ----------- | --------------------------------------------------------------------- |
 | `DATABASE_URL`                                   | B (now)     | Neon connection string for that environment's branch (London)         |
 | `BETTER_AUTH_SECRET`                             | B (now)     | At least 32 random characters: `openssl rand -base64 32`; one per env |
-| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`       | B (now)     | Google OAuth web client                                               |
-| `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` | B (now)     | Microsoft Entra app, "personal and work accounts" (`common` tenant)   |
+| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`       | B (now)     | Google OAuth web client. Id and secret together                       |
+| `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` | B (now)     | Microsoft Entra app (`common` tenant). Optional if Google is set      |
 | `AI_GATEWAY_URL`                                 | B (now)     | `https://gateway.ai.cloudflare.com/v1/<account id>/<gateway>`         |
 | `ANTHROPIC_API_KEY`                              | H (now)     | Live AI (Claude). Optional: AI routes answer 503 until it is set      |
 | `OPENAI_API_KEY`                                 | H (now)     | Optional second checker through the gateway (see `AI_CHECKER_MODEL`)  |
 | `AI_GATEWAY_TOKEN`                               | H (now)     | Optional: only if the AI Gateway is set to "authenticated"            |
 | `MATHS_ENGINE_URL`                               | F (now)     | Cloud Run maths engine; without it worked maths answers get a 503     |
 | `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`          | H (now)     | Web push. Both or neither; reminders stay off until set (see below)   |
+
+At least one sign-in provider (Google or Microsoft, each with its id and secret) is needed;
+the other is optional. `GET /v1/auth/providers` tells the sign-in page which buttons to show, and
+`/health` says `ok` once one provider and the generated secrets are set.
 
 ## Worker variables and bindings (in `apps/api/wrangler.toml`, not secret)
 

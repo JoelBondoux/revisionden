@@ -9,6 +9,8 @@ Tags: #product #rules #limits #defaults
 
 - One parent account per family; signs in with Google or Microsoft. Apple sign-in deferred (needs
   a paid Apple developer membership).
+- Each sign-in provider is optional, but at least one must be set up; the welcome page shows only
+  the configured ones (`GET /v1/auth/providers`). The owner is starting with Google only.
 - Students have no outside account: nickname (2–16 letters, numbers, underscore), avatar code and
   year group only. Devices linked by a one-time QR token (10 minutes, single use), then a passkey.
 - Nicknames are unique within a family. A family is created the first time a parent signs in.

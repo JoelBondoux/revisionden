@@ -14,6 +14,7 @@ const normalise = (value: string) => value.trim().toLowerCase().replace(/\s+/g, 
 
 /** Mock API used in development and tests until the real API (workstream B) is ready. */
 export const handlers: RequestHandler[] = [
+  http.get('*/v1/auth/providers', () => HttpResponse.json({ providers: ['google', 'microsoft'] })),
   ...onboardingHandlers,
   http.get('*/api/family', () => HttpResponse.json(family)),
 
