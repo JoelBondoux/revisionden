@@ -61,6 +61,6 @@ Status values: `queued`, `in progress`, `in review` (PR open into `dev`), `merge
 
 ## S3 content writers (GCSE Maths Higher, 1MA1)
 
-| ID   | Area   | Owns these paths                            | Status                                                 |
-| ---- | ------ | ------------------------------------------- | ------------------------------------------------------ |
-| S3-N | Number | `content/items/gcse-maths-higher/number/**` | in progress: N1 to N16, based on S2 #108; PR to follow |
+| ID   | Area   | Owns these paths                            | Status                                                                                    |
+| ---- | ------ | ------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| S3-N | Number | `content/items/gcse-maths-higher/number/**` | in review: [#115](https://github.com/JoelBondoux/revisionden/pull/115), N1 to N16 drafted |
