@@ -1,6 +1,6 @@
 # Privacy notice
 
-Version: 1.3
+Version: 1.4
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -209,6 +209,12 @@ Students are told that their parent can see their activity.
 6.3 We do not share data with schools, exam boards, advertisers or data brokers. We may disclose
 data if the law requires it, for example to comply with a court order.
 
+6.4 Read aloud uses the speech voices built into the student's device and browser. We do not send
+the text anywhere. Where a device only has online voices, the device's own speech service (for
+example the browser or operating system maker) may process the text it reads: questions, answers,
+explanations and the student's flashcards. In that case read aloud is off until the student turns
+it on, and Settings explains why. It is never used to record the student's voice.
+
 ### 7. AI marking and what the AI provider receives
 
 7.1 Short written answers are marked first by fixed rules. Only if the rules cannot decide, the
@@ -329,6 +335,7 @@ in the app on your next visit and ask you to confirm, and students see a plain-E
 
 ## Changes
 
+- 1.4: New 6.4: read aloud uses the device's own speech voices; with only online voices, the device's speech service may process the text, so it starts off. No new data is kept by us.
 - 1.3: Adds that the Get help page (support services) is private: its use is not recorded or shown to parents. No change to the data we keep.
 - 1.2: New: the optional, anonymous "Send error report" button (section 9.4), kept for 90 days.
 - 1.1: Wording only: parents sign in with Google or Microsoft, whichever this app offers. No change to the data we keep.

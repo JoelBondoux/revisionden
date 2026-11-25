@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Read aloud: tap the speaker button to hear a question, the feedback and explanation, or a flashcard, with your device's own voice. Maths is read properly ("x squared"). Turn it on or off and change the speed in Settings.
 - Remember this? A lesson on a topic you've practised before starts with 2 quick questions from earlier lessons. There's no penalty: anything you miss becomes a flashcard, and you can skip them.
 - Reading comfort in Settings: a dyslexia-friendly font, larger text, more space between lines and letters, and a cream or blue background tint. Your choice is remembered on this device and used on every screen.
 - Earn a reward while answering questions or reviewing flashcards and you'll see it (and hear its sound) straight away, not only on the Rewards page.
@@ -68,6 +69,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Read aloud Q2 (Q): `apps/web/src/features/read-aloud/` (Web Speech API; `chooseVoice` prefers on-device `en-GB`, then on-device English, then online; on by default only with an on-device voice; speed 0.75/1/1.25; `mathsToSpeech` and `itemSpeechText`; `localStorage` key `revisionden.readAloud`). Buttons in the lesson player (question, feedback) and flashcards; Settings card. Privacy notice 1.4 (6.4), young people's notice 1.3, cookies and storage 1.1.
 - Recall checks Q4 (Q): `packages/core/src/recall.ts` (`selectRecallItems`, `RECALL_COUNT` 2: only when a lesson topic was practised, from questions answered before, other topics first, no flashcards), `GET /v1/student/recall?topicId=` (`apps/api/src/routes/recall.ts`), web `features/recall/` (`RecallGate` before topic lessons, Skip, MSW mock). `LessonPlayer` gains optional `onFinish` and `aside` props.
 - Reading comfort Q1 (Q): `apps/web/src/features/reading/` (settings in `localStorage` key `revisionden.reading`, `ReadingProvider` sets `data-reading-*` on `<html>`, `reading.css`, Settings card). Self-hosted OpenDyslexic via `@fontsource/opendyslexic` 5.3.0 (OFL-1.1, listed on the About page).
 - Rewards where they are earned (F4): `LearnAttemptResponse` and `FlashcardSessionResult` have `newlyEarned` (saved once each by `saveNewRewards`, shared with the Rewards route); the lesson, Cards screen and starting-test results show "New reward: …" with `RewardSound`.

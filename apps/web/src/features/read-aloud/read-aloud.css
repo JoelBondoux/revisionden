@@ -1,0 +1,40 @@
+/* Read aloud (workstream Q). */
+.read-aloud-button {
+  flex: none;
+}
+
+.read-aloud-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.read-aloud-settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.read-aloud-settings__row,
+.read-aloud-settings__choices label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+}
+
+.read-aloud-settings__choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.read-aloud-settings__choices legend {
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
