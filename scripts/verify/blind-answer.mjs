@@ -156,8 +156,16 @@ async function formulaVerdict(item, answer, maths) {
   const given = formulaPart.replace(/[\s,;]+$/, '').trim();
   const { formula, conditions = [] } = item.back_formula;
   const [result] = await maths([{ id: item.id, kind: 'formula', expected: formula, given }]);
-  const stated = condition(rest.join(' '));
-  const missing = conditions.filter((c) => !stated.includes(condition(c)));
+  // Each stated condition is a whole clause ("a != 0", "b > 1"), so "a != 0.5" never counts as
+  // "a ≠ 0": clauses are split on commas, semicolons and "and", then compared whole.
+  const stated = new Set(
+    rest
+      .join(' ')
+      .split(/,|;|\band\b/i)
+      .map((c) => condition(c).replace(/\.$/, ''))
+      .filter(Boolean),
+  );
+  const missing = conditions.filter((c) => !stated.has(condition(c)));
   const notes = [
     `maths engine: ${result?.ok ? 'same formula' : 'not the same formula'}`,
     ...missing.map((c) => `does not state "${c}": a person must check`),

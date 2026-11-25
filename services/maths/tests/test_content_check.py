@@ -158,3 +158,15 @@ def test_a_formula_check_needs_a_subject_in_the_expected_formula():
     [result] = run_checks([{"id": "q", "kind": "formula", "expected": "2a", "given": "2a"}])
     assert result["ok"] is False
     assert "subject" in result["error"]
+
+
+def test_a_formula_check_accepts_the_subject_repeated_in_each_branch():
+    results = run_checks(
+        [
+            {"id": "a", "kind": "formula", "expected": QUADRATIC,
+             "given": "x = (-b + sqrt(b^2 - 4ac))/(2a) or x = (-b - sqrt(b^2 - 4ac))/(2a)"},
+            {"id": "b", "kind": "formula", "expected": QUADRATIC,
+             "given": "x = (-b + sqrt(b^2 - 4ac))/(2a) or y = (-b - sqrt(b^2 - 4ac))/(2a)"},
+        ]
+    )
+    assert [r["ok"] for r in results] == [True, False]

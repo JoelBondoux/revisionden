@@ -38,38 +38,39 @@ def _normalise(text: str) -> str:
     return re.sub(r"[a-zA-Z]+", _letters_apart, text)
 
 
-def _branches(rhs: str) -> list[str]:
-    """Each right-hand side the text stands for: "a or b" and "p +- q" give two each."""
-    parts = [p.strip() for p in re.split(r"\bor\b", rhs) if p.strip()]
-    out: list[str] = []
-    for part in parts:
+def _alternatives(text: str) -> list[tuple[str | None, str]]:
+    """(subject, right-hand side) for each "... or ..." part and each side of ±.
+
+    A part may repeat the subject ("x = p or x = q") or leave it out ("x = p or q"); a part with
+    no subject takes the one before it. A right-hand side given alone has no subject.
+    """
+    out: list[tuple[str | None, str]] = []
+    subject: str | None = None
+    for part in [p.strip() for p in re.split(r"\bor\b", _normalise(text)) if p.strip()]:
+        sides = part.split("=")
+        if len(sides) > 2:
+            raise ValueError(f"Write each part with at most one = sign: {text!r}")
+        if len(sides) == 2:
+            subject, part = sides[0].strip(), sides[1].strip()
         if "+-" in part:
-            out += [part.replace("+-", "+"), part.replace("+-", "-")]
+            out += [(subject, part.replace("+-", "+")), (subject, part.replace("+-", "-"))]
         else:
-            out.append(part)
+            out.append((subject, part))
     return out
-
-
-def _split(text: str) -> tuple[str | None, list[str]]:
-    """(subject, right-hand sides). A right-hand side given alone has no subject."""
-    sides = _normalise(text).split("=")
-    if len(sides) == 1:
-        return None, _branches(sides[0])
-    if len(sides) != 2:
-        raise ValueError(f"Write the formula with at most one = sign: {text!r}")
-    return sides[0].strip(), _branches(sides[1])
 
 
 def formulas_match(expected: str, given: str) -> bool:
     """True when both formulas have the same subject and the same right-hand side(s)."""
-    want_lhs, want = _split(expected)
-    got_lhs, got = _split(given)
-    if want_lhs is None:
-        raise ValueError(f"The expected formula needs a subject (x = ...): {expected!r}")
-    if got_lhs is not None and simplify(parse(want_lhs) - parse(got_lhs)) != 0:
-        return False
-    want_exprs = [parse(w) for w in want]
-    got_exprs = [parse(g) for g in got]
+    want = _alternatives(expected)
+    got = _alternatives(given)
+    if any(subject is None for subject, _ in want) or len({s for s, _ in want}) != 1:
+        raise ValueError(f"The expected formula needs one subject (x = ...): {expected!r}")
+    subject = parse(want[0][0])
+    for got_subject, _ in got:
+        if got_subject is not None and simplify(parse(got_subject) - subject) != 0:
+            return False
+    want_exprs = [parse(w) for _, w in want]
+    got_exprs = [parse(g) for _, g in got]
 
     def same(a, b) -> bool:
         return simplify(a - b) == 0

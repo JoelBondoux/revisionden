@@ -209,6 +209,33 @@ test('a formula flashcard fails for a person to check when the answer leaves out
   assert.match(r.check.notes, /does not state "m ≠ 0": a person must check/);
 });
 
+test('a condition must be stated exactly, not as part of a different condition', async () => {
+  for (const answer of [
+    'y = m*x + c where m != 0.5',
+    'y = m*x + c where m != 05',
+    'y = m*x + c where km != 0',
+  ]) {
+    const { maths } = fakeMaths('y = m*x + c');
+    const r = await runBlindAnswer(
+      formulaCard,
+      fakeProvider({ answer, confidence: 'high', reasoning: '' }),
+      { now: AT, maths },
+    );
+    assert.equal(r.result, 'fail', answer);
+  }
+  const { maths } = fakeMaths('y = m*x + c');
+  const ok = await runBlindAnswer(
+    formulaCard,
+    fakeProvider({
+      answer: 'y = m*x + c where c > 1 and m ≠ 0.',
+      confidence: 'high',
+      reasoning: '',
+    }),
+    { now: AT, maths },
+  );
+  assert.equal(ok.result, 'pass');
+});
+
 test('worked maths solutions match as a set, in any order', async () => {
   const item = draftItem('fixture-solve', undefined, {
     type: 'worked_maths',

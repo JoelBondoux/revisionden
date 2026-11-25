@@ -200,7 +200,7 @@ with high confidence (multiple choice: same option; numeric: within the item tol
 answers and flashcards: same words ignoring case and end punctuation; maths flashcards with a
 `back_formula`: the maths engine finds the same formula (`±` gives both branches, a bare right-hand
 side is compared with the expected one, notation is read strictly so `/ 2a` is not `/ (2a)`), and the
-answer states every listed condition such as `a ≠ 0`, otherwise it fails for a person to check; worked maths: the same
+answer states every listed condition such as `a ≠ 0` as a whole clause (`a ≠ 0.5` does not count), otherwise it fails for a person to check; worked maths: the same
 solutions in any order, or the same expression). The reviewer sees the whole item and the
 quoted sources and must report factual errors, a wrong answer, ambiguity, a second correct
 option, content outside the specification, unsupported claims or poor wording; any problem or
