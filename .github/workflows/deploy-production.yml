@@ -22,3 +22,13 @@ jobs:
       # The release commit is the newest commit on main, not the commit that started the run.
       ref: main
     secrets: inherit
+
+  # The public website (apps/www) on https://revisionden.com (decision 0005). Its own job, so it
+  # can go live before the web app's production build has its policy effective date.
+  www:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    uses: ./.github/workflows/deploy-www.yml
+    with:
+      environment: production
+      ref: main
+    secrets: inherit
