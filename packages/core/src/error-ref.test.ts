@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest';
 import {
   ApiErrorSchema,
   ClientErrorReportSchema,
+  ErrorReportSchema,
+  ErrorReportSummarySchema,
   ERROR_REF_ALPHABET,
   ErrorRefSchema,
   makeErrorRef,
@@ -47,6 +49,12 @@ describe('client error reports', () => {
     );
     expect(ClientErrorReportSchema.safeParse({ ...base, path: '/v1/a b' }).success).toBe(false);
     expect(
+      ClientErrorReportSchema.safeParse({
+        ...base,
+        path: '/v1/students/3f2b1c9e-1111-4a2b-9c3d-123456789abc/map',
+      }).success,
+    ).toBe(false);
+    expect(
       ClientErrorReportSchema.safeParse({ ...base, path: '/v1/x', message: 'hi' }).success,
     ).toBe(false);
   });
@@ -60,5 +68,59 @@ describe('client error reports', () => {
     );
     expect(maskIdsInPath('/v1/student/learn/lesson?topicId=n1')).toBe('/v1/student/learn/lesson');
     expect(maskIdsInPath('/v1/students/Sam_99/rewards')).toBe('/v1/students/:id/rewards');
+  });
+});
+
+describe('error reports (Send error report button)', () => {
+  const report = {
+    ref: 'RD-VDMW5E',
+    screen: '/map',
+    apiPath: '/v1/student/map',
+    status: 404,
+    build: '00.01.002-48657ff',
+    browser: 'Safari',
+    online: true,
+    at: '2026-11-25T08:00:00.000Z',
+  };
+
+  it('accepts the code, screen, failing API call, build, browser, online and time', () => {
+    expect(ErrorReportSchema.parse(report)).toEqual(report);
+    const minimal = { ...report, apiPath: undefined, status: undefined };
+    delete minimal.apiPath;
+    delete minimal.status;
+    expect(ErrorReportSchema.parse(minimal)).toEqual(minimal);
+  });
+
+  it('refuses ids, free text and anything extra, so a report stays anonymous', () => {
+    expect(
+      ErrorReportSchema.safeParse({ ...report, screen: '/family/Sam_1/rewards' }).success,
+    ).toBe(false);
+    expect(
+      ErrorReportSchema.safeParse({ ...report, browser: 'Chrome 131 on Sam’s iPad' }).success,
+    ).toBe(false);
+    expect(ErrorReportSchema.safeParse({ ...report, nickname: 'sam' }).success).toBe(false);
+    expect(ErrorReportSchema.safeParse({ ...report, build: 'sam@example.com' }).success).toBe(
+      false,
+    );
+  });
+
+  it('describes the grouped summary the operator reads', () => {
+    const summary = {
+      since: '2026-11-24T00:00:00.000Z',
+      total: 2,
+      groups: [
+        {
+          screen: '/map',
+          apiPath: '/v1/student/map',
+          status: 404,
+          count: 2,
+          refs: ['RD-VDMW5E', 'RD-7K2M9Q'],
+          builds: ['00.01.002-48657ff'],
+          firstSeen: '2026-11-25T08:00:00.000Z',
+          lastSeen: '2026-11-25T08:05:00.000Z',
+        },
+      ],
+    };
+    expect(ErrorReportSummarySchema.parse(summary)).toEqual(summary);
   });
 });

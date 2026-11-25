@@ -401,6 +401,19 @@ Mockups: screens 19 (student) and 20 (parent).
 - Implemented: `apps/api/src/cleanup.ts`, `apps/api/src/routes/{family,export}.ts`,
   `apps/api/src/auth.ts`, `apps/web/src/features/family-data/`; migration 0006.
 
+### Error reports (workstream I)
+
+- Every error that shows a reference code (`RD-XXXXXX`) also shows **Send error report**. One tap,
+  no typing; then "Thanks, we're on it." If it cannot be sent, the button stays to try again.
+- The report is anonymous: the code, the screen and the failing API path (ids replaced by
+  `:id`), the status, the app build, the browser family, online or not, and the time. Never the
+  nickname, ids, free text or answers (`POST /v1/error-reports`, strict schema).
+- One stored report per code; rate limited (30 a minute per address); deleted after 90 days.
+- The operator sees them grouped by screen, API path and status at `/admin/feedback` (filter
+  "Error reports") and from `GET /v1/admin/error-reports?since=…` or
+  `DATABASE_URL=… node scripts/error-reports.mjs`. The API logs a line with the same code, so a
+  report matches the API's own error line.
+
 ## Sound effects (workstream U)
 
 - Short, original sounds made in the browser with the Web Audio API (no audio files, no
@@ -462,3 +475,118 @@ So nobody runs an old copy of the app for long after a deploy (decided 2026-11-2
   shape) the app checks at once and, when a newer build exists, reloads by itself, once per new
   build, so it can never get stuck or loop. Without browser storage it only shows the banner.
 - Implemented: `apps/web/public/sw.js`, `apps/web/src/pwa/updates.tsx`, `apps/web/vite.config.ts`.
+
+## Daily limit (wellbeing)
+
+Requested by the product owner on 2026-11-25. One daily limit per student, in **active study
+minutes** (the same measure as the stats dashboards: time between answers, gaps over 5 minutes not
+counted).
+
+- **Defaults** (a starting point, not a target): GCSE 60 minutes on school days and 90 at weekends
+  and in holidays; A-Level 90 and 120. Exam season (from 6 weeks before the student's first exam)
+  adds 30 minutes, if the parent agrees.
+- **Hard ceiling** the app never suggests going past: GCSE 2 hours on school days and 3 on other
+  days; A-Level 2.5 and 3.5. A parent may set a lower or higher limit by hand.
+- **Parent control:** either parent can change the limit at any time (per day type) from the parent
+  area. The student sees their limit and how much is left; they can always stop early with no
+  penalty.
+- **Suggestions, never pushes.** Once a week the app may suggest a change to the parent; it never
+  changes the limit by itself.
+  - **Suggest a small rise** (+10 minutes, at most once a fortnight) only when, over the last 2
+    weeks, the student reached the limit on at least 4 days, accuracy in the last 15 minutes of
+    sessions stayed within 5 points of the first 15, and they chose to keep going (not prompted).
+  - **Suggest easing off** (−10 to −15 minutes) when accuracy drops by more than 10 points late in
+    sessions (tiredness), sessions keep being abandoned part-way, or rest days are being skipped.
+  - Suggestions say why in plain words ("Accuracy dips after about 40 minutes"); the parent accepts,
+    changes or dismisses them. The student is told when their limit changes.
+- **At the limit:** practice screens show "Great work today. See you tomorrow"; no XP, rewards or
+  streak credit past it (the existing healthy-limits rule). Timed papers may finish past the limit;
+  the limit then pauses other practice for the rest of the day.
+- The XP reward cap (`DAILY_REWARD_XP_CAP`, 300 XP) stays as a safety net alongside the minutes
+  limit.
+
+## Two parents (shared parent control)
+
+Requested by the product owner on 2026-11-25.
+
+- A family can have **two parent accounts with equal control**. The first parent invites the
+  second from the parent area with a one-time link or code (valid 7 days); the second signs in with
+  their own Google or Microsoft account (only their sign-in email is kept, as for the first).
+- Both parents can do everything: add or remove children, settings, limits, focus, rewards,
+  feedback, export and deletion. Deleting the whole family needs both parents to confirm (or one
+  parent after the other is removed).
+- A family activity log shows what changed and by which parent ("Parent 1", "Parent 2"; no names),
+  and the other parent is notified of important changes (limits, children added or removed,
+  rewards given, exports, deletion requests).
+- Either parent can remove the other; the removed parent sees an in-app notice on next
+  sign-in and loses access at once. Students see that two parents can view their progress.
+- The privacy notice must list the second parent's sign-in email as data kept.
+
+## Get help (support resources)
+
+Requested by the product owner on 2026-11-25.
+
+- A **"Get help"** page for students, reachable from Settings, the profile menu and the footer of
+  every student screen, with a small heart icon. Also reachable signed out.
+- It lists UK support services by topic, each with what they help with, how to contact them
+  (tap-to-call `tel:` links, text numbers, web chat links) and opening hours where published.
+  Topics: feeling low or anxious, exam stress, suicidal thoughts (urgent), bullying (including
+  online), abuse or neglect, online safety and nude images, eating and body image, self-harm, drugs
+  and alcohol, sexual health and relationships, LGBTQ+, young carers, grief, crime and victims,
+  physical health (NHS 111) and emergencies (999).
+- Services to consider (each must be confirmed on its own official website): Childline, NSPCC,
+  Samaritans, Shout, Papyrus HOPELINE247, YoungMinds, Kooth, The Mix, Beat, Talk to Frank, CEOP,
+  Childline and IWF Report Remove, Switchboard, Mind, Brook, Anti-Bullying Alliance, Kidscape,
+  Carers Trust, Victim Support, NHS 111.
+- **Verified facts only:** every phone number, text number, URL and opening time is copied from the
+  service's own official page, with that URL and the date checked recorded in the data file. Any
+  detail that cannot be confirmed is left out, never guessed. Rechecked every term; a test fails if
+  an entry has no source or its check is older than 4 months.
+- **Private:** nothing about visiting this page or tapping a link is recorded, logged, shown to
+  parents or sent anywhere (no analytics, no feedback prompts, no activity log). The page works
+  offline (cached) so a number can be found without signal.
+- A **Quick exit** button takes the student straight to a neutral screen (the topic map) and replaces
+  the page in history.
+- At the top: "If you are in danger right now, call 999." Wording is warm, short and non-judgemental;
+  it never asks the student to explain themselves.
+- Parents can see the same page from the parent area, plus the NSPCC adult helpline for worried
+  adults.
+
+## Quick wins from the competitor research (owner approved 2026-11-25)
+
+From `docs/research/competitors-2026-11.md`. Workstream Q.
+
+### Daily 5-a-day
+
+- Each day a student gets a short mixed set of **5 questions** from topics they have already
+  practised, chosen by spaced repetition and weak spots (never brand-new topics), across their
+  subjects. Takes about 5–8 minutes.
+- Learn mode, normal XP and combos; finishing it counts as a lesson for the streak and daily goal.
+  It appears at the top of the topic map until done; it never nags (no push just for 5-a-day).
+
+### Recall checks
+
+- At the start of a lesson on a topic practised before, 2 quick recall questions on things learned
+  in earlier lessons ("Remember this?").
+- No penalty: wrong answers do not lower mastery more than a normal answer would, earn no XP loss,
+  and simply become flashcards. Right answers earn normal XP. They can be skipped.
+
+### Learn it first
+
+- Each topic can link to free official lessons: Oak National Academy lessons and BBC Bitesize pages
+  that match the topic (and, later, our own verified notes).
+- Links only (open in a new tab on tap; nothing loaded from those sites until then), stored as data
+  per topic with the page title, URL, and the date checked. A CI job checks every link still works
+  (HTTP status) and fails on broken links. A topic shows the button only when it has a checked link.
+- Links point at the right level (GCSE or A-Level) and the student's board where the page is
+  board-specific.
+
+### Read aloud and reading comfort
+
+- **Read aloud** button on questions, answers, explanations and flashcards, using the device's own
+  speech voices (Web Speech API), preferring voices that run on the device (`localService`); where
+  only online voices exist the setting explains that the device's speech service may process the
+  text, and it stays off by default. Speed control. Maths is read sensibly (for example "x squared").
+- **Reading comfort** settings per device: a dyslexia-friendly font (self-hosted, open licence, no
+  third-party font service), larger text, more line and letter spacing, and a soft tinted background
+  option. These apply across the app and are remembered on the device.

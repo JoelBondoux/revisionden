@@ -43,6 +43,22 @@ function fakeApi(overrides: Partial<FeedbackApi> = {}): FeedbackApi {
     listFamily: vi.fn(async () => items),
     listAll: vi.fn(async () => items),
     setStatus: vi.fn(async (id, status) => ({ ...items.find((i) => i.id === id)!, status })),
+    errorReports: vi.fn(async () => ({
+      since: '2026-11-24T08:00:00.000Z',
+      total: 2,
+      groups: [
+        {
+          screen: '/map',
+          apiPath: '/v1/student/map',
+          status: 404,
+          count: 2,
+          refs: ['RD-VDMW5E', 'RD-7K2M9Q'],
+          builds: ['00.01.002-48657ff'],
+          firstSeen: '2026-11-25T07:50:00.000Z',
+          lastSeen: '2026-11-25T08:00:00.000Z',
+        },
+      ],
+    })),
     ...overrides,
   };
 }
@@ -135,5 +151,23 @@ describe('operator triage', () => {
     const selects = await screen.findAllByRole('combobox', { name: 'Status' });
     await userEvent.selectOptions(selects[1]!, 'new');
     expect(await screen.findByRole('alert')).toHaveTextContent('Could not save');
+  });
+
+  describe('operator error reports', () => {
+    it('lists error reports grouped by screen and failing API call, behind a filter', async () => {
+      const api = fakeApi();
+      show(api, <AdminFeedbackPage />);
+      await screen.findAllByRole('listitem');
+      expect(api.errorReports).not.toHaveBeenCalled();
+      await userEvent.click(screen.getByRole('button', { name: 'Error reports' }));
+      const group = await screen.findByRole('listitem', { name: /\/map/ });
+      expect(group).toHaveTextContent('2 reports');
+      expect(group).toHaveTextContent('/v1/student/map');
+      expect(group).toHaveTextContent('404');
+      expect(group).toHaveTextContent('RD-VDMW5E');
+      expect(group).toHaveTextContent('00.01.002-48657ff');
+      await userEvent.click(screen.getByRole('button', { name: 'Feedback' }));
+      expect(await screen.findByText(/appVersion: 00.01.002/)).toBeInTheDocument();
+    });
   });
 });
