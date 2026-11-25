@@ -295,13 +295,20 @@ Tags: #product #rules #limits #defaults
 - Reward sounds scale with rarity (common, rare, epic, legendary; 4+ variations each, no repeat
   in a row); milestone ladders and levels climb in pitch and fullness; one sound for several
   rewards at once; legendary at most 3 s and skippable (owner, 2026-11-25; U4).
+- Reward sound details (U4, `apps/web/src/features/sound/rewardSounds.ts`, `rewardBank.ts`): tier
+  = the reward's rarity, except prestige stars always play legendary (prestige 1 to 3 are epic in
+  the catalogue). Ladder step = position in its milestone ladder; level step = level ÷ 10. Each
+  step is 1.5 semitones higher (8 steps = an octave) and adds one harmony note (up to 4). Voice per
+  chapter id (`chapter-<n>-…`); finisher fanfares for the chapter rewards that need
+  `gcseFinished` or `aLevelFinished`. Biggest = tier, then finisher, then step. Played on the
+  Rewards screen for `newlyEarned`; a tap or key press skips legendary.
 - Defaults: on, medium volume, tap sounds off; saved in `localStorage` key `revisionden.sound`
   (storage errors are ignored). One AudioContext, made at the first tap or key press; paused when
   the app is hidden. Test mode: submit and one reveal for the set; timed papers: only the timer
   warning (once, at 1 minute left). Implemented in `apps/web/src/features/sound/`.
 - Wired so far: lessons (correct, wrong, part marks, daily goal met, lesson complete), starting
-  test (submit, reveal, timer warning) and flashcards (flip, rating). Level up, rewards, gifts and
-  plan sounds exist in the bank but wait for their screens.
+  test (submit, reveal, timer warning), flashcards (flip, rating) and the Rewards screen (new
+  rewards, U4). Gifts and plan sounds exist in the bank but wait for their screens.
 
 ## Owner decisions (2026-11-25)
 

@@ -7,12 +7,11 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
-- Coming soon: reward sounds that get bigger and more exciting the bigger the reward.
+- Reward sounds now grow with the reward: a bright chime for common rewards up to a short fanfare for legendary ones, with lots of variety, a different sound for each school year and special fanfares for finishing GCSEs and A-Levels. Tap to skip a long one, or try them all in Settings.
 - Coming soon: flashcards give XP for finishing a session, not for each card, so there's no point tapping "Good" on everything.
 - Coming soon: a stats page for students and a stats dashboard for parents.
 - Coming soon: rewards you set yourself as a parent, like a cinema trip for a 30-day streak.
 - Sound effects: soft, original sounds for right and wrong answers, finishing a lesson, meeting your daily goal, flashcards and the starting test. Mute them from the speaker button at the top, or change the volume and tap sounds in Settings.
-- Coming soon: sound effects, with a mute button.
 - Read our privacy notice, terms and other policies in plain English, at any time, even signed out.
 - New About page shows the app version and what's new.
 - Send us a bug, an idea or something confusing from Settings, and see what happens to it.
@@ -26,6 +25,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Reward sounds (U4): four tiers by rarity (common ~0.5 s, rare ~1 s, epic ~1.5 s, legendary ≤ 3 s) with 4 variations each and no repeat in a row (injected randomness), ladder and level steps that climb in pitch and fullness, a synth voice per year chapter, unique GCSE and A-Level finisher fanfares, one sound for several rewards (the biggest, after any sound still playing), tap to skip legendary, Settings samples (Common, Rare, Epic, Legend); played on the Rewards screen for new rewards. Removed a stale "coming soon: sound effects" line.
 - Sound effects (U1–U3): Web Audio sound bank (one synthesised sound per event, no audio files), `SoundProvider` and `useSound().play()`, header quick mute, Settings Sound section (on/off, volume, tap sounds; saved per device), iOS ambient audio session, nothing before the first tap or in the background, Test mode rule; wired into lessons, starting test and flashcards.
 - Five-year rewards progression (R): level curve 1 to 100 with prestige stars, a 369-reward catalogue as data (levels, year chapters, milestone ladders, collections, 2026/27 seasonal drops) with a validator, healthy-limit rules (no late-night or time-based rewards, daily cap), student `/rewards` screen, and parent-set real-world rewards (`/family/:id/rewards`, `parent_rewards` table, migration 0004).
 - New original avatar art: five chapter finale tops, rooftop scene, and the Frost Fest drop (bobble hat, paper lantern, frosty night scene).

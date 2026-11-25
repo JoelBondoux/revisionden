@@ -6,7 +6,7 @@ import type { SoundEvent } from './events';
  * smooth envelopes, so nothing buzzes; "wrong" is low and quiet, never a buzzer.
  */
 
-interface ParamLike {
+export interface ParamLike {
   value: number;
   setValueAtTime(value: number, time: number): unknown;
   linearRampToValueAtTime(value: number, time: number): unknown;
@@ -27,9 +27,10 @@ export interface SynthContext {
   createGain(): AudioNodeLike & { gain: ParamLike };
 }
 
-export type SoundFn = (ctx: SynthContext, out: AudioNodeLike, at: number) => void;
+/** Plays a sound starting at `at` and returns when it ends (context time, in seconds). */
+export type SoundFn = (ctx: SynthContext, out: AudioNodeLike, at: number) => number;
 
-interface Note {
+export interface Note {
   /** Pitch in hertz. */
   freq: number;
   /** Start, in seconds after the sound begins. */
@@ -44,7 +45,7 @@ interface Note {
 }
 
 /** One note with a quick soft attack and a smooth exponential fade (a gentle bell or pluck). */
-function note(ctx: SynthContext, out: AudioNodeLike, start: number, n: Note) {
+export function note(ctx: SynthContext, out: AudioNodeLike, start: number, n: Note): number {
   const osc = ctx.createOscillator();
   const env = ctx.createGain();
   const t0 = start + n.at;
@@ -58,6 +59,7 @@ function note(ctx: SynthContext, out: AudioNodeLike, start: number, n: Note) {
   osc.connect(env).connect(out);
   osc.start(t0);
   osc.stop(end + 0.02);
+  return end + 0.02;
 }
 
 /** A bell-like note: the pitch plus a quiet triangle an octave up for shimmer. */
@@ -70,9 +72,8 @@ function bell(freq: number, at: number, dur: number, peak = 0.55): Note[] {
 
 const sound =
   (...notes: Note[]): SoundFn =>
-  (ctx, out, at) => {
-    for (const n of notes) note(ctx, out, at, n);
-  };
+  (ctx, out, at) =>
+    notes.reduce((end, n) => Math.max(end, note(ctx, out, at, n)), at);
 
 // Pitches (hertz), equal temperament.
 const G3 = 196.0;
