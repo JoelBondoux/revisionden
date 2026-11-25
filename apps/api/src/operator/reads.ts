@@ -13,6 +13,7 @@ import {
   eq,
   gte,
   inArray,
+  isNull,
   lt,
   notInArray,
   or,
@@ -22,6 +23,7 @@ import {
 import { z } from 'zod';
 import {
   ERROR_REPORT_RETENTION_DAYS,
+  ErrorRefSchema,
   OperatorFamilySearchSchema,
   type OperatorFamilyDetail,
   type OperatorOverview,
@@ -361,6 +363,44 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
 
   app.get('/error-reports', async (c) => {
     const at = now().getTime();
+    const rawCode = c.req.query('code');
+    if (rawCode !== undefined) {
+      // Exact lookup of one RD code over the whole 90 days: the group that holds it, with the
+      // code among its refs (AppDeck knows the answer is exact from the echoed `code`).
+      const code = rawCode.trim().toUpperCase();
+      if (!ErrorRefSchema.safeParse(code).success) badRequest('code must be a reference code');
+      const since = new Date(at - ERROR_REPORT_RETENTION_DAYS * DAY_MS);
+      const [hit] = await db
+        .select()
+        .from(errorReports)
+        .where(and(eq(errorReports.ref, code), gte(errorReports.createdAt, since)));
+      if (!hit) throw notFound('No error report with that code');
+      const rows = await db
+        .select({
+          ref: errorReports.ref,
+          screen: errorReports.screen,
+          apiPath: errorReports.apiPath,
+          status: errorReports.status,
+          build: errorReports.build,
+          createdAt: errorReports.createdAt,
+        })
+        .from(errorReports)
+        .where(
+          and(
+            gte(errorReports.createdAt, since),
+            eq(errorReports.screen, hit.screen),
+            hit.apiPath === null
+              ? isNull(errorReports.apiPath)
+              : eq(errorReports.apiPath, hit.apiPath),
+            hit.status === null ? isNull(errorReports.status) : eq(errorReports.status, hit.status),
+          ),
+        )
+        .orderBy(desc(errorReports.createdAt));
+      const summary = groupErrorReports(rows, since);
+      const group = summary.groups[0]!;
+      if (!group.refs.includes(code)) group.refs = [code, ...group.refs.slice(0, -1)];
+      return ok(c, { code, ...summary, groups: [group] });
+    }
     const raw = c.req.query('since');
     const asked = raw ? new Date(raw) : new Date(at - DAY_MS);
     if (Number.isNaN(asked.getTime())) badRequest('since must be a date and time');
@@ -431,6 +471,7 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
         .string()
         .regex(/^[^~]+(~[0-9a-f-]{36})?$/)
         .refine((v) => !Number.isNaN(new Date(v.split('~')[0]!).getTime()))
+        .refine((v) => !v.includes('~') || isUuid(v.split('~')[1]!))
         .optional(),
       limit: z.coerce.number().int().min(1).max(500).default(100),
     })
