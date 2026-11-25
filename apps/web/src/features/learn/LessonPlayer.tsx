@@ -39,7 +39,10 @@ function Feedback({ result }: { result: LearnAttemptResponse }) {
     >
       <p className="feedback__title">{result.correct ? 'Correct!' : 'Not quite'}</p>
       {result.correct ? (
-        <p>+{result.xpEarned} XP</p>
+        <p>
+          +{result.xpEarned} XP
+          {result.comboBonusXp ? ` (Includes +${result.comboBonusXp} XP combo bonus)` : ''}
+        </p>
       ) : (
         feedback && <p>Answer: {feedback.correctAnswer}</p>
       )}
@@ -142,7 +145,8 @@ export function LessonPlayer({
         play('streakDay', { delay: 0.4 });
       setResult(marked);
       setProgress(marked.progress);
-      const streak = nextCombo(combo, marked.correct);
+      // The API counts combos (J4); older responses without it fall back to counting here.
+      const streak = marked.combo ?? nextCombo(combo, marked.correct);
       setCombo(streak);
       setBestCombo((best) => Math.max(best, streak));
       setTotals((t) => ({

@@ -72,6 +72,9 @@
   (`apps/web/src/features/learn/SetComplete.tsx`). The "daily cap" for "See you tomorrow" is the
   daily reward XP cap (300 XP today), confirmed by the lead on 2026-11-25, until the study-time
   cap reaches the web app.
+- J4: combo XP in `packages/core/src/xp.ts` and the learn API (Learn mode per answer; starting
+  test at the reveal), stored in each answer's XP so rewards count it. The lesson shows the API's
+  combo and the bonus in its feedback. Still to show: best combo at the starting test reveal.
 - Waiting on others: the chime rising a step per combo needs a pitch step in U's sound bank;
   star notes use the existing celebration sound. Flashcard sessions get the full treatment once
   F3 (flashcard sessions, #45) is on dev (J2b or with J4).

@@ -125,6 +125,41 @@ describe('Lesson player in the arena (game feel)', () => {
   });
 });
 
+describe('Combo bonus from the API (J4)', () => {
+  beforeEach(() => stubReducedMotion(false));
+
+  it('shows the combo bonus in the feedback and follows the server combo', async () => {
+    only(1);
+    server.use(
+      http.post('*/v1/student/learn/attempts', () =>
+        HttpResponse.json({
+          id: '00000000-0000-4000-8000-000000000500',
+          itemId: demoItems[1]!.id,
+          correct: true,
+          score: 1,
+          xpEarned: 20,
+          createdAt: '2026-11-24T10:00:00.000Z',
+          feedback: { correctAnswer: 'demo answer' },
+          progress: {
+            xpToday: 50,
+            totalXp: 250,
+            dailyGoalXp: 50,
+            goalMet: true,
+            streak: { current: 4, best: 4, skipDays: 0 },
+          },
+          flashcardAdded: false,
+          combo: 3,
+          comboBonusXp: 5,
+        }),
+      ),
+    );
+    renderRoute('/learn/topic/demo-topic-a');
+    await answerText('demo answer');
+    expect(await feedback()).toHaveTextContent('Includes +5 XP combo bonus');
+    expect(screen.getByText('COMBO ×3')).toBeInTheDocument();
+  });
+});
+
 describe('Lesson player with reduced motion', () => {
   beforeEach(() => stubReducedMotion(true));
 
