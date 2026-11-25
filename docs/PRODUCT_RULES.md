@@ -401,6 +401,19 @@ Mockups: screens 19 (student) and 20 (parent).
 - Implemented: `apps/api/src/cleanup.ts`, `apps/api/src/routes/{family,export}.ts`,
   `apps/api/src/auth.ts`, `apps/web/src/features/family-data/`; migration 0006.
 
+### Error reports (workstream I)
+
+- Every error that shows a reference code (`RD-XXXXXX`) also shows **Send error report**. One tap,
+  no typing; then "Thanks, we're on it." If it cannot be sent, the button stays to try again.
+- The report is anonymous: the code, the screen and the failing API path (ids replaced by
+  `:id`), the status, the app build, the browser family, online or not, and the time. Never the
+  nickname, ids, free text or answers (`POST /v1/error-reports`, strict schema).
+- One stored report per code; rate limited (30 a minute per address); deleted after 90 days.
+- The operator sees them grouped by screen, API path and status at `/admin/feedback` (filter
+  "Error reports") and from `GET /v1/admin/error-reports?since=…` or
+  `DATABASE_URL=… node scripts/error-reports.mjs`. The API logs a line with the same code, so a
+  report matches the API's own error line.
+
 ## Sound effects (workstream U)
 
 - Short, original sounds made in the browser with the Web Audio API (no audio files, no

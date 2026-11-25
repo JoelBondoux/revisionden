@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- When something goes wrong, tap "Send error report" to tell us in one tap. It's anonymous: no names, nothing you typed. We'll get on it.
 - Coming soon: a daily 5-a-day, quick recall checks, links to free lessons for each topic, read aloud, and a dyslexia-friendly reading mode.
 - Coming soon: build your own title from words you unlock, like "Cosmic Scholar".
 - Coming soon: a private "Get help" page with UK support services you can call or message.
@@ -59,6 +60,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Error reports (I): "Send error report" on every error with an `RD-` code posts an anonymous report to `POST /v1/error-reports` (strict `ErrorReportSchema`: code, screen and API path with ids masked, status, build, browser family, online, time); `error_reports` table (migration 0009, one row per code, 90-day clean-up); operator list at `/admin/feedback` (filter "Error reports"), `GET /v1/admin/error-reports?since=…` grouped by screen, API path and status, and `scripts/error-reports.mjs` (reads `DATABASE_URL`). Id-free path checks now also refuse full ids. Privacy notice 1.2 and data retention 1.1.
 - Combo XP J4 (J): `COMBO_BONUS_XP`, `comboBonusXp`, `comboBefore`, `comboBonusForSequence` in `packages/core/src/xp.ts`. `POST /v1/student/learn/attempts` adds +5 XP from the 3rd right Learn mode answer in a row (worked out from the student's recent answers; a wrong answer, a Test mode answer or a 5-minute gap ends it) and returns `combo` and `comboBonusXp`. `POST .../starting-tests/:id/finish` applies the bonus to the test's answers in order on the first finish and returns `bestCombo` and `comboBonusXp`. The bonus is stored in each answer's `xp_earned`, so R's reward XP and daily cap count it. New optional fields in `LearnAttemptResponseSchema` and `StartingTestResultSchema`.
 - Research: competitor analysis of UK revision products (features, past-paper licensing, prices) and a ranked gap list (`docs/research/competitors-2026-11.md`).
 - Game feel J1 (J): dark "arena" theme tokens (`--arena-*`, answer colours, neon sparks, all text pairs checked for 4.5:1) and motion tokens (`--motion-*`, `--ease-spring`) in `apps/web/src/design/`, `arena.css` (arena screen, 2×2 answer grid, jelly press), and effect components in `apps/web/src/features/juice/` (particle burst capped at 24, float-up text, shake, COMBO ×n badge, star reveal, confetti capped at 40, rolling counter, springy glowing progress bar, Pip speech line, pulsing CTA class) with a `useReducedMotion` switch that turns particles, shakes, confetti and pulsing off. Not yet used on any screen (J2–J5).

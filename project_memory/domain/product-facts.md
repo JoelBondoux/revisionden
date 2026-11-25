@@ -129,6 +129,10 @@ Tags: #product #rules #limits #defaults
   "Link a device" (product owner, 2026-11-25). Students use only their own linked device. Signed out, any screen shows the sign-in buttons
   and returns to the same page after sign-in. Sign out is on the welcome page and `/family`. The topic map and Cards badge wait for F2's
   `GET /v1/student/map` and `GET /v1/student/cards/due`.
+- Every error with a reference code has a one-tap "Send error report" button: an anonymous report
+  (code, screen and API path with ids masked, status, build, browser family, online, time) is
+  stored in `error_reports` for 90 days and listed for the operator at `/admin/feedback` (Error
+  reports), `GET /v1/admin/error-reports` and `scripts/error-reports.mjs`. Privacy notice 1.2.
 - Every "Something went wrong" shows a reference code like `RD-7K2M9Q` (no I, L, O or U), also
   in the API logs with no personal data, so a family can report it. Implemented in
   `packages/core/src/error-ref.ts`, `apps/api/src/errors.ts`, `apps/web/src/api/client.ts`.
