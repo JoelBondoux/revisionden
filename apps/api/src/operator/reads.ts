@@ -5,7 +5,19 @@
  * homework, prompts, tokens or push keys. Every read of a family is audited.
  */
 import { Hono } from 'hono';
-import { and, count, countDistinct, desc, eq, gte, inArray, lt, sql, type SQL } from 'drizzle-orm';
+import {
+  and,
+  count,
+  countDistinct,
+  desc,
+  eq,
+  gte,
+  inArray,
+  lt,
+  or,
+  sql,
+  type SQL,
+} from 'drizzle-orm';
 import { z } from 'zod';
 import {
   ERROR_REPORT_RETENTION_DAYS,
@@ -405,7 +417,12 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
     .object({
       targetType: z.string().min(1).max(40).optional(),
       targetId: z.string().min(1).max(128).optional(),
-      before: z.string().datetime().optional(),
+      // `nextBefore` from the previous page: `<time>~<id>` (a plain time is accepted too).
+      before: z
+        .string()
+        .regex(/^[^~]+(~[0-9a-f-]{36})?$/)
+        .refine((v) => !Number.isNaN(new Date(v.split('~')[0]!).getTime()))
+        .optional(),
       limit: z.coerce.number().int().min(1).max(500).default(100),
     })
     .strict();
@@ -417,17 +434,32 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
     const filters: SQL[] = [];
     if (q.targetType) filters.push(eq(operatorAuditLog.targetType, q.targetType));
     if (q.targetId) filters.push(eq(operatorAuditLog.targetId, q.targetId));
-    if (q.before) filters.push(lt(operatorAuditLog.createdAt, new Date(q.before)));
+    if (q.before) {
+      const [time, id] = q.before.split('~');
+      const at = new Date(time!);
+      filters.push(
+        id
+          ? or(
+              lt(operatorAuditLog.createdAt, at),
+              and(eq(operatorAuditLog.createdAt, at), lt(operatorAuditLog.id, id)),
+            )!
+          : lt(operatorAuditLog.createdAt, at),
+      );
+    }
     const rows = await db
       .select()
       .from(operatorAuditLog)
       .where(filters.length ? and(...filters) : undefined)
-      .orderBy(desc(operatorAuditLog.createdAt))
+      .orderBy(desc(operatorAuditLog.createdAt), desc(operatorAuditLog.id))
       .limit(q.limit + 1);
     const page = rows.slice(0, q.limit);
     return ok(c, {
       entries: page.map((r) => ({ ...r, createdAt: r.createdAt.toISOString() })),
-      nextBefore: rows.length > q.limit ? page[page.length - 1]!.createdAt.toISOString() : null,
+      // Time and id together, so entries that share a time are never skipped.
+      nextBefore:
+        rows.length > q.limit
+          ? `${page[page.length - 1]!.createdAt.toISOString()}~${page[page.length - 1]!.id}`
+          : null,
     });
   });
 
