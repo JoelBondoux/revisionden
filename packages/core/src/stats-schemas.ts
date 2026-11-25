@@ -5,6 +5,7 @@
  * No free text written by the student appears anywhere here.
  */
 import { z } from 'zod';
+import { SubjectTargetSchema } from './target-grades';
 import { STATS_PERIODS } from './stats';
 
 const LocalDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
@@ -50,6 +51,8 @@ export const StudentStatsSchema = z
       longestCorrectRun: Count,
       bestWeek: z.object({ weekStart: LocalDate, xp: Count }).nullable(),
     }),
+    /** Both targets per enrolled subject (workstream K8): the parent's and the child's own. */
+    targets: z.array(SubjectTargetSchema),
     /** Level progress from the rewards progression (workstream R); null until it lands. */
     level: z
       .object({ level: z.number().int().min(1), xpIntoLevel: Count, xpForNextLevel: Count })
@@ -133,11 +136,14 @@ export const ParentDashboardSchema = z
       restDays: Count,
       dailyCapMinutes: Count,
     }),
-    aiSpend: z.object({
-      month: z.string().regex(/^\d{4}-\d{2}$/),
-      spentMicroUsd: Count,
-      capMicroUsd: Count,
-    }),
+    /** The AI marking allowance (workstream K9): never money, only a share used and the reset date. */
+    aiAllowance: z
+      .object({
+        percentUsed: z.number().int().min(0).max(100),
+        usedUp: z.boolean(),
+        resetsOn: LocalDate,
+      })
+      .strict(),
     recentActivity: z.array(ActivityEntrySchema).max(10),
   })
   .strict();

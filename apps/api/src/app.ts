@@ -54,9 +54,12 @@ import {
 } from './feedback/routes';
 import { parentStatsRoutes, studentStatsRoutes } from './stats/routes';
 import { parentDailyLimitRoutes, studentDailyLimitRoutes } from './daily-limit/routes';
+import { parentTargetGradeRoutes, studentTargetGradeRoutes } from './stats/target-grades';
 import { adminErrorReportRoutes, errorReportRoutes } from './feedback/error-reports';
 import type { StatsAdapters } from './stats/adapters';
+import { parentComplaintRoutes, studentComplaintRequestRoutes } from './complaints/routes';
 import { OPERATOR_BASE_PATH, operatorRoutes } from './operator/routes';
+import { parentProgrammeRoutes } from './operator/tags';
 import { createMemoryRateLimiter } from './rate-limit';
 
 export interface AppDeps {
@@ -151,6 +154,10 @@ export function createApp(deps: AppDeps) {
   parent.use('/parent/*', requireParent);
   parent.use('/family/*', requireParent);
   parent.use('/export', requireParent);
+  parent.use('/complaints', requireParent);
+  parent.use('/complaints/*', requireParent);
+  parent.use('/complaint-requests', requireParent);
+  parent.use('/complaint-requests/*', requireParent);
   async function requireParent(c: Context<AppEnv>, next: Next) {
     const session = await deps.auth.api.getSession({ headers: c.req.raw.headers });
     if (!session) throw unauthorized();
@@ -193,13 +200,16 @@ export function createApp(deps: AppDeps) {
   parent.route('/students', parentRewardRoutes(deps));
   parent.route('/students', parentStatsRoutes(deps));
   parent.route('/students', parentDailyLimitRoutes(deps));
+  parent.route('/students', parentTargetGradeRoutes(deps));
   parent.route('/onboarding', onboardingRoutes(deps));
   parent.route('/', reportRoutes(deps.db, 'parent'));
   parent.route('/', parentFeedbackRoutes(deps));
   parent.route('/students', parentBugHunterRoutes(deps));
   parent.route('/family', familyRoutes(deps));
+  parent.route('/family', parentProgrammeRoutes(deps));
   parent.route('/family', familyParentRoutes(deps));
   parent.route('/', familyExport(deps));
+  parent.route('/', parentComplaintRoutes(deps));
   parent.route('/admin', adminFeedbackRoutes(deps));
   parent.route('/admin', adminErrorReportRoutes(deps));
   parent.route('/parent', parentNotificationRoutes(deps));
@@ -241,7 +251,9 @@ export function createApp(deps: AppDeps) {
   app.route('/v1/student/rewards', studentRewardRoutes(deps));
   app.route('/v1/student', studentFeedbackRoutes(deps));
   app.route('/v1/student', studentStatsRoutes(deps));
+  app.route('/v1/student', studentComplaintRequestRoutes(deps));
   app.route('/v1/student', studentDailyLimitRoutes(deps));
+  app.route('/v1/student', studentTargetGradeRoutes(deps));
   app.use('/v1/ai/*', studentAuth(deps));
   app.route('/v1/ai', aiRoutes({ ...deps, gateway }));
   app.route('/v1', parent);

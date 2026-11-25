@@ -1,6 +1,6 @@
 # Community rules
 
-Version: 1.1
+Version: 1.2
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -76,7 +76,7 @@ students until it is checked.
 
 6.1 Do not:
 
-- try to get around the app's security, rate limits or AI spending limit;
+- try to get around the app's security, rate limits or the monthly AI marking allowance for each child;
 - try to see another family's data;
 - use automated tools to answer questions or earn XP;
 - use another student's profile or device, or link a device that is not yours;
@@ -97,5 +97,6 @@ at {{SUPPORT_EMAIL}}.
 
 ## Changes
 
+- 1.2: Wording only: the AI limit is called the monthly AI marking allowance for each child.
 - 1.1: Ask for help at our help inbox, {{SUPPORT_EMAIL}}. Security problems still go to {{CONTACT_EMAIL}}.
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).

@@ -8,7 +8,8 @@ import {
   StudentAvatarSchema,
   StudentSubjectsSchema,
 } from '@revisionden/core';
-import { rewards } from '@revisionden/db';
+import { enrolments, rewards } from '@revisionden/db';
+import { and, eq } from 'drizzle-orm';
 import { AVATAR, createTestContext, jsonRequest, type TestContext } from './test/helpers';
 
 let t: TestContext;
@@ -189,6 +190,62 @@ describe('student sets their own Not sure board or tier', () => {
   it('needs a signed-in student device', async () => {
     const res = await patch('/v1/student/subjects/gcse-maths', { board: 'AQA' }, {});
     expect(res.status).toBe(401);
+  });
+});
+
+async function setTargets(
+  ctx: { parent: Headers; student: Headers; id: string },
+  parentTarget: string,
+  studentTarget: string,
+) {
+  const put = (path: string, targetGrade: string, headers: Headers) =>
+    t.app.request(path, jsonRequest('PUT', { targetGrade }, headers));
+  expect(
+    (await put(`/v1/students/${ctx.id}/target-grades/gcse-maths`, parentTarget, ctx.parent)).status,
+  ).toBe(200);
+  expect(
+    (await put('/v1/student/target-grades/gcse-maths', studentTarget, ctx.student)).status,
+  ).toBe(200);
+}
+
+/** The targets as stored, not as read back (the read already hides off-scale ones). */
+async function mathsTargets(id: string) {
+  const [row] = await t.db
+    .select()
+    .from(enrolments)
+    .where(and(eq(enrolments.studentId, id), eq(enrolments.subjectId, 'gcse-maths')));
+  return { parent: row!.parentTargetGrade, student: row!.studentTargetGrade };
+}
+
+describe('target grades when the board or tier changes', () => {
+  it('clears a target that is not on the new tier and keeps one that is (parent change)', async () => {
+    const ctx = await setup();
+    await patch(`/v1/students/${ctx.id}/enrolments/gcse-maths`, { board: 'Edexcel' }, ctx.parent);
+    await setTargets(ctx, '9', '2');
+    const res = await patch(
+      `/v1/students/${ctx.id}/enrolments/gcse-maths`,
+      { tier: 'foundation' },
+      ctx.parent,
+    );
+    expect(res.status).toBe(200);
+    expect(await mathsTargets(ctx.id)).toEqual({ parent: null, student: '2' });
+  });
+
+  it('clears a target that is not on the new tier and keeps one that is (student change)', async () => {
+    const ctx = await setup();
+    await patch(`/v1/students/${ctx.id}/enrolments/gcse-maths`, { board: 'Edexcel' }, ctx.parent);
+    await setTargets(ctx, '7', '1');
+    const res = await patch('/v1/student/subjects/gcse-maths', { tier: 'higher' }, ctx.student);
+    expect(res.status).toBe(200);
+    expect(await mathsTargets(ctx.id)).toEqual({ parent: '7', student: null });
+  });
+
+  it('clears both targets when the new board has no grade scale yet', async () => {
+    const ctx = await setup();
+    await patch(`/v1/students/${ctx.id}/enrolments/gcse-maths`, { board: 'Edexcel' }, ctx.parent);
+    await setTargets(ctx, '5', '4');
+    await patch(`/v1/students/${ctx.id}/enrolments/gcse-maths`, { board: 'AQA' }, ctx.parent);
+    expect(await mathsTargets(ctx.id)).toEqual({ parent: null, student: null });
   });
 });
 

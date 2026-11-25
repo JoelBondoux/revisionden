@@ -65,3 +65,13 @@ def test_solutions_endpoint_checks_answers_and_rejects_bad_input():
     assert ok.json() == {"correct": True}
     bad = client.post("/solutions", json={"expression": "exit()", "answers": ["1"]})
     assert bad.status_code == 400
+
+
+def test_check_working_accepts_a_declared_subject():
+    response = client.post(
+        "/check-working",
+        json={"lines": ["a t = v - u", "t = (v - u)/a"],
+              "expected": {"expression": "(v - u)/a", "subject": "t"}},
+    )
+    assert response.status_code == 200
+    assert response.json()["final_answer_correct"] is True

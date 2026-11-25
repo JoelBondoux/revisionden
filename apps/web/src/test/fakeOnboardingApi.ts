@@ -13,6 +13,8 @@ export function fakeOnboardingApi(overrides: Partial<OnboardingApi> = {}): Onboa
     updateMySubject: vi.fn(),
     getMyAvatar: vi.fn(async () => ({ avatarCode: '1' + '0'.repeat(28), earnedRewardIds: [] })),
     saveMyAvatar: vi.fn(),
+    unlockOptions: vi.fn(),
+    unlockVerify: vi.fn(),
     ...overrides,
   };
 }

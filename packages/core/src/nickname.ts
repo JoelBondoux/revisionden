@@ -94,6 +94,14 @@ function isBlocked(nickname: string, extraBlocked: string[]): boolean {
   return parts.some((part) => BLOCKED_STANDALONE.includes(part));
 }
 
+/**
+ * Whether text contains a blocked word, by the nickname rules (spaces and hyphens count as word
+ * breaks). Used by the two-part title validator (R8) to check every word pairing.
+ */
+export function containsBlockedWord(text: string): boolean {
+  return isBlocked(text.replace(/[\s-]+/g, '_'), []);
+}
+
 /** The nickname as it is checked and saved: spaces at either end removed. */
 export function normaliseNickname(raw: string): string {
   return raw.trim();

@@ -9,7 +9,7 @@ import { MILESTONE_REWARDS } from './milestones';
 import { SEASONS, SEASON_REWARDS } from './seasons';
 import type { Collection, Reward, RewardItem } from './types';
 
-const itemKey = (item: RewardItem) => (item.kind === 'title' ? item.text : item.id);
+const itemKey = (item: RewardItem) => ('text' in item ? item.text : item.id);
 const SOURCES = [...LEVEL_REWARDS, ...CHAPTER_REWARDS, ...MILESTONE_REWARDS];
 
 /** The id of the reward that gives this item; an unknown item makes a `missing:` id the validator reports. */

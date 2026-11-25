@@ -15,6 +15,8 @@ import {
   inArray,
   isNull,
   lt,
+  ne,
+  notInArray,
   or,
   sql,
   type SQL,
@@ -31,6 +33,7 @@ import {
 import {
   attempts,
   authUsers,
+  complaints,
   errorReports,
   families,
   feedback,
@@ -54,6 +57,7 @@ import {
 } from '../cleanup';
 import type { Clock } from '../rate-limit';
 import { audit, ok } from './bridge';
+import { familiesExcludedFromMetrics, liveTagsFor } from './tags';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 const HOUR_MS = 60 * 60 * 1000;
@@ -127,24 +131,38 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
 
   app.get('/overview', async (c) => {
     const at = now().getTime();
+    // Test and press accounts (a live "exclude from metrics" tag) are left out (O6).
+    const excluded = await familiesExcludedFromMetrics(db);
+    const keepFamily = excluded.length ? notInArray(families.id, excluded) : undefined;
+    const keepStudent = excluded.length ? notInArray(students.familyId, excluded) : undefined;
     const activeSince = (days: number) =>
       db
         .select({ n: countDistinct(attempts.studentId) })
         .from(attempts)
-        .where(gte(attempts.createdAt, new Date(at - days * DAY_MS)));
-    const [[fam], [kids], [active7], [active30], [tickets], [reports], errors24h] =
-      await Promise.all([
-        db.select({ n: count() }).from(families),
-        db.select({ n: count() }).from(students),
-        activeSince(7),
-        activeSince(30),
-        db
-          .select({ n: count() })
-          .from(feedback)
-          .where(inArray(feedback.status, [...OPEN_TICKET_STATUSES])),
-        db.select({ n: count() }).from(itemReports).where(eq(itemReports.status, 'open')),
-        countErrorReportsSince(DAY_MS),
-      ]);
+        .innerJoin(students, eq(students.id, attempts.studentId))
+        .where(and(gte(attempts.createdAt, new Date(at - days * DAY_MS)), keepStudent));
+    const [
+      [fam],
+      [kids],
+      [active7],
+      [active30],
+      [tickets],
+      [reports],
+      errors24h,
+      [complaintCount],
+    ] = await Promise.all([
+      db.select({ n: count() }).from(families).where(keepFamily),
+      db.select({ n: count() }).from(students).where(keepStudent),
+      activeSince(7),
+      activeSince(30),
+      db
+        .select({ n: count() })
+        .from(feedback)
+        .where(inArray(feedback.status, [...OPEN_TICKET_STATUSES])),
+      db.select({ n: count() }).from(itemReports).where(eq(itemReports.status, 'open')),
+      countErrorReportsSince(DAY_MS),
+      db.select({ n: count() }).from(complaints).where(ne(complaints.status, 'resolved')),
+    ]);
     const overview: OperatorOverview = {
       families: fam!.n,
       students: kids!.n,
@@ -156,7 +174,7 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
       premiumFamilies: null,
       trials: null,
       freePlaces: null,
-      openComplaints: null,
+      openComplaints: complaintCount!.n,
     };
     return ok(c, overview);
   });
@@ -203,6 +221,7 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
           lastActiveAt: row!.lastActiveAt.toISOString(),
           parentCount: parentCount!.n,
           childCount: childCount!.n,
+          tags: (await liveTagsFor(db, [familyId])).get(familyId) ?? [],
         },
       ],
     });
@@ -251,6 +270,7 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
       plan: null,
       // Only a child's nickname and year group reach AppDeck.
       children: childRows,
+      tags: (await liveTagsFor(db, [id])).get(id) ?? [],
       notes: noteRows.map((n) => ({
         id: n.id,
         text: n.text,

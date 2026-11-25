@@ -8,6 +8,7 @@ import { itemWords, longDate, RarityPill } from './parts';
 import { RewardSound } from '../sound';
 import { RewardReveal } from './RewardReveal';
 import { createRewardsApi, type RewardsApi } from './rewardsApi';
+import { TitlePicker } from './TitlePicker';
 import './rewards.css';
 
 /** The student rewards screen: level, this year's chapter, milestones, collections and drops. */
@@ -39,6 +40,8 @@ export function RewardsScreen({ api }: { api: RewardsApi }) {
           ))}
         </div>
       )}
+
+      <TitlePicker api={api} />
 
       <section className="rewards__level" aria-labelledby="rewards-level">
         <h1 id="rewards-level">Level {level.level}</h1>

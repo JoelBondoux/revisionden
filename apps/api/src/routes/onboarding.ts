@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import { and, asc, count, eq, inArray } from 'drizzle-orm';
 import {
   examSeasonFor,
+  isAllowedTarget,
   levelForYear,
   OnboardChildRequestSchema,
   REWARDS,
@@ -230,9 +231,16 @@ async function saveChoice(
       problems.map((p) => `${p.subjectId}: ${SUBJECT_PROBLEMS[p.problem]}`),
     );
   }
+  // A target grade that is not on the new board and tier's scale is cleared (K8).
+  const keep = (grade: string | null) =>
+    grade !== null && isAllowedTarget({ subjectId: row.subjectId, ...next }, grade) ? grade : null;
   const [saved] = await db
     .update(enrolments)
-    .set(next)
+    .set({
+      ...next,
+      parentTargetGrade: keep(row.parentTargetGrade),
+      studentTargetGrade: keep(row.studentTargetGrade),
+    })
     .where(and(eq(enrolments.studentId, row.studentId), eq(enrolments.subjectId, row.subjectId)))
     .returning();
   return toEnrolment(saved!);

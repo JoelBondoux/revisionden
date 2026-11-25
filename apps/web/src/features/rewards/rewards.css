@@ -42,7 +42,7 @@
 
 .rewards__step--earned {
   background: var(--color-gold);
-  color: var(--color-text);
+  color: var(--color-text-on-gold);
 }
 
 .rewards__list {
@@ -118,4 +118,23 @@
 .rewards__secret--found {
   background: var(--color-primary-soft);
   color: var(--color-text);
+}
+
+/* Two-part title (R8) */
+.rewards__nickname {
+  font-weight: 700;
+  margin: 0;
+}
+.rewards__title-text {
+  margin: 0;
+  color: var(--color-text-secondary, inherit);
+  font-style: italic;
+}
+.rewards__title-form {
+  display: grid;
+  gap: 0.5rem;
+}
+.rewards__title-form label {
+  display: grid;
+  gap: 0.25rem;
 }

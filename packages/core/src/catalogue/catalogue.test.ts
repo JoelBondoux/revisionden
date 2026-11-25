@@ -143,7 +143,7 @@ describe('the real catalogue', () => {
     expect(REWARDS.find((r) => r.id === 'subject-master')!.rarity).toBe('legendary');
   });
 
-  it('has the six hobby collections from REWARDS.md, each with a bonus item and a title', () => {
+  it('has the six hobby collections from REWARDS.md, each with a bonus item and title words', () => {
     for (const name of [
       'Gig kit',
       'Skate crew',
@@ -157,7 +157,7 @@ describe('the real catalogue', () => {
       const bonus = REWARDS.filter(
         (r) => r.target.kind === 'collection' && r.target.collectionId === set.id,
       );
-      expect(bonus.flatMap((r) => r.items.map((i) => i.kind))).toContain('title');
+      expect(bonus.flatMap((r) => r.items.map((i) => i.kind))).toContain('titleWord');
       expect(bonus.flatMap((r) => r.items).length).toBeGreaterThanOrEqual(2);
     }
   });
