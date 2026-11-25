@@ -511,3 +511,9 @@ Tags: #product #rules #limits #defaults
   Skip; answers are normal Learn mode attempts (normal XP when right, wrong ones become
   flashcards, mastery as any answer). If the call fails the lesson starts as normal.
   `apps/web/src/features/recall/`, `apps/api/src/routes/recall.ts`.
+- Reading comfort (Q1, built): Settings → Reading comfort, per device in `localStorage` key
+  `revisionden.reading`. Options: dyslexia-friendly font (OpenDyslexic from
+  `@fontsource/opendyslexic`, SIL OFL 1.1, bundled with the app, no font service), text size
+  Normal / Large (112.5%) / Larger (125%), more spacing (line height 1.8, letter 0.12em, word
+  0.16em), tint none / cream / blue. Defaults: all off. Applied app-wide by `data-reading-*`
+  attributes on `<html>` (`apps/web/src/features/reading/`).
