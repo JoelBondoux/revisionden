@@ -550,7 +550,10 @@ Tags: #product #rules #limits #defaults
   (no flashcards, no extended answers), from other practised topics first, then the lesson's own
   topic; weak spots first (next-item rules). Shown as "Remember this?" in the lesson player with
   Skip; answers are normal Learn mode attempts (normal XP when right, wrong ones become
-  flashcards, mastery as any answer). If the call fails the lesson starts as normal.
+  flashcards, mastery as any answer). If the call fails the lesson starts as normal. Recall
+  answers are sent with `recall: true` (Learn mode only) and saved with mode `recall`; a wrong one
+  never resets the combo (`comboBefore` passes over it), a right one still adds to it (owner,
+  2026-11-25).
   `apps/web/src/features/recall/`, `apps/api/src/routes/recall.ts`.
 - Reading comfort (Q1, built): Settings → Reading comfort, per device in `localStorage` key
   `revisionden.reading`. Options: dyslexia-friendly font (OpenDyslexic from
