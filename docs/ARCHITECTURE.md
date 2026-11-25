@@ -135,6 +135,7 @@ Source of truth: `packages/db/src/schema.ts`; migrations in `packages/db/migrati
 | `recheck_requests`          | id, scope (batch, item, writer_prompt, source), scope_value, cause, status                                                                      |
 | `recalculation_jobs`        | id, item_id, item_version, status                                                                                                               |
 | `feedback`                  | id, family_id, sender_role, student_id, sender_auth_user_id, kind, text (≤500), device (JSON), status, created_at, updated_at, closed_at        |
+| `error_reports`             | id, ref (unique), screen, api_path, status, build, browser, online, reported_at, created_at (anonymous; deleted after 90 days)                  |
 | `policy_acceptances`        | auth_user_id + policy (key), version, accepted_at                                                                                               |
 
 No table stores a real name, date of birth, email of a student, photo or school name. The
@@ -153,6 +154,8 @@ All bodies are validated with the Zod schemas in `packages/core`. Errors always 
 | `/api/auth/*`                                                                                                                      | anyone          | Better Auth: Google, Microsoft, sign-out                                     |
 | `GET /v1/auth/providers`                                                                                                           | anyone          | `{ providers }`: the sign-in providers that are set up                       |
 | `POST /v1/client-errors`                                                                                                           | anyone          | Log a web app error reference (204; rate limited)                            |
+| `POST /v1/error-reports`                                                                                                           | anyone          | Store an anonymous error report (202; rate limited)                          |
+| `GET /v1/admin/error-reports?since=…`                                                                                              | operator        | Error reports grouped by screen, API path and status                         |
 | `GET /v1/me`                                                                                                                       | parent          | Family id and sign-in email                                                  |
 | `GET, POST /v1/students`                                                                                                           | parent          | List (`{ students }`) or create                                              |
 | `GET, PATCH, DELETE /v1/students/:id`                                                                                              | parent          | One student                                                                  |
@@ -240,6 +243,8 @@ The only exceptions are listed in `PENDING_ROUTES` (agreed with another workstre
 | `api/client.ts` `getTopicMap` (`/map`)            | `GET /v1/student/map`                                                                                                                    | yes   |
 | `api/client.ts` `getCardsDue` (Cards tab badge)   | `GET /v1/student/cards/due`                                                                                                              | yes   |
 | `api/client.ts` `reportClientError`               | `POST /v1/client-errors`                                                                                                                 | yes   |
+| `api/ErrorRef.tsx` "Send error report"            | `POST /v1/error-reports`                                                                                                                 | yes   |
+| `features/feedback` operator "Error reports"      | `GET /v1/admin/error-reports`                                                                                                            | yes   |
 | `features/onboarding/api.ts`                      | `GET /v1/onboarding/family`, `POST /v1/onboarding/children`                                                                              | yes   |
 | `features/onboarding/api.ts` (link a device)      | `POST /v1/students/:id/link-tokens`, `POST /v1/device/link`, `.../verify`                                                                | yes   |
 | `features/legal/acceptance.tsx`                   | `GET, PUT /v1/policy-acceptances`                                                                                                        | yes   |
