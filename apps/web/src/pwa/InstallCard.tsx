@@ -1,5 +1,6 @@
 import { useState, useSyncExternalStore } from 'react';
-import { Button, LinkButton, Sheet } from '../components';
+import { Button, LinkTile, Sheet } from '../components';
+import { PhoneIcon } from '../components/icons';
 import { Card } from '../components/Card';
 import { Pip } from '../components/Pip';
 import {
@@ -127,8 +128,11 @@ export function InstallButton(props: InstallProps) {
     );
   }
   return (
-    <LinkButton to="/install" variant="secondary">
-      {INSTALL_TITLE}
-    </LinkButton>
+    <LinkTile
+      to="/install"
+      icon={<PhoneIcon />}
+      title={INSTALL_TITLE}
+      description="Open RevisionDen like an app"
+    />
   );
 }
