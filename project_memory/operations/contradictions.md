@@ -5,6 +5,15 @@
 
 ## Open
 
+- [ ] **AQA's AI clause and our content pipeline.** AQA's copyright policy says it "does not
+      permit the use of any AQA material in any manner or for any purposes in connection with the
+      training" of AI tools and "will not allow the use of any AQA material" in a third-party work
+      partly "generated or produced using Artificial Intelligence"
+      (https://www.aqa.org.uk/about-us/who-we-are/our-standards/copyright-and-intellectual-property-policy,
+      checked 2026-11-25). `docs/CONTENT_PLAN.md` writes items in AI working sessions from official
+      source excerpts and quotes them in citations. Not settled: needs a legal answer or written
+      AQA permission before any AQA subject is built; the pilot (Pearson Edexcel 1MA1) is not
+      affected. Detail: `docs/research/competitors-2026-11.md` section 3.3.
 - [ ] **Flashcard deck XP and rewards.** `docs/REWARDS.md` says XP from flashcards counts towards
       levels, but deck reviews (`apps/api/src/routes/flashcards.ts`) only add to `daily_xp`, which
       has no time of day, so the late-night rule cannot be checked. Reward XP is therefore built

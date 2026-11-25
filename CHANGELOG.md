@@ -52,6 +52,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Research: competitor analysis of UK revision products (features, past-paper licensing, prices) and a ranked gap list (`docs/research/competitors-2026-11.md`).
 - Game feel J1 (J): dark "arena" theme tokens (`--arena-*`, answer colours, neon sparks, all text pairs checked for 4.5:1) and motion tokens (`--motion-*`, `--ease-spring`) in `apps/web/src/design/`, `arena.css` (arena screen, 2×2 answer grid, jelly press), and effect components in `apps/web/src/features/juice/` (particle burst capped at 24, float-up text, shake, COMBO ×n badge, star reveal, confetti capped at 40, rolling counter, springy glowing progress bar, Pip speech line, pulsing CTA class) with a `useReducedMotion` switch that turns particles, shakes, confetti and pulsing off. Not yet used on any screen (J2–J5).
 - Topic map from real data (F2): `GET /v1/student/map` (units, topic states, unit challenge, next mission) and `GET /v1/student/cards/due`; the Map tab and Cards badge call them, map hexes open the lesson player, and the map schemas are shared from `packages/core`.
 - Friendly view of the young people's privacy notice (L6): short-version cards, key points with accessible "Read more" and "Expand all", original SVG icons and Pip, reduced-motion aware, print expands all; built from `docs/legal/privacy-for-young-people.md` (now 1.1) with comment hints; e2e axe test.
