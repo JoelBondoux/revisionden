@@ -49,7 +49,60 @@ export const ClientErrorReportSchema = z
     kind: z.enum(['http', 'schema']),
     status: z.number().int().min(0).max(599).optional(),
     /** The request path with ids masked (`maskIdsInPath`); no query string. */
-    path: z.string().regex(/^\/[a-z0-9/:._-]{0,120}$/, 'Not an id-free path'),
+    path: z
+      .string()
+      .regex(/^\/[a-z0-9/:._-]{0,120}$/, 'Not an id-free path')
+      .refine((p) => maskIdsInPath(p) === p, 'Not an id-free path'),
   })
   .strict();
 export type ClientErrorReport = z.infer<typeof ClientErrorReportSchema>;
+
+/** A path with ids masked (`maskIdsInPath`) and no query string. */
+const IdFreePathSchema = z
+  .string()
+  .regex(/^\/[a-z0-9/:._-]{0,120}$/, 'Not an id-free path')
+  .refine((path) => maskIdsInPath(path) === path, 'Not an id-free path');
+
+export const BROWSER_FAMILIES = ['Chrome', 'Edge', 'Firefox', 'Safari', 'Other'] as const;
+
+/** How long stored error reports are kept. */
+export const ERROR_REPORT_RETENTION_DAYS = 90;
+
+/**
+ * Sent by the "Send error report" button (`POST /v1/error-reports`). One tap, no typing: the
+ * reference code, the screen and the failing API call (ids masked), the app build, the browser
+ * family, online or not, and the time. Strict, so it can never carry a nickname, an id or text.
+ */
+export const ErrorReportSchema = z
+  .object({
+    ref: ErrorRefSchema,
+    screen: IdFreePathSchema,
+    apiPath: IdFreePathSchema.optional(),
+    status: z.number().int().min(0).max(599).optional(),
+    build: z.string().regex(/^[0-9A-Za-z.+-]{1,40}$/, 'Not a build id'),
+    browser: z.enum(BROWSER_FAMILIES),
+    online: z.boolean(),
+    at: z.string().datetime(),
+  })
+  .strict();
+export type ErrorReport = z.infer<typeof ErrorReportSchema>;
+
+/** `GET /v1/admin/error-reports?since=…`: reports grouped by screen, API path and status. */
+export const ErrorReportSummarySchema = z.object({
+  since: z.string().datetime(),
+  total: z.number().int().min(0),
+  groups: z.array(
+    z.object({
+      screen: z.string(),
+      apiPath: z.string().nullable(),
+      status: z.number().int().nullable(),
+      count: z.number().int().min(1),
+      /** Up to 20 reference codes, newest first, to match the server log lines. */
+      refs: z.array(ErrorRefSchema),
+      builds: z.array(z.string()),
+      firstSeen: z.string().datetime(),
+      lastSeen: z.string().datetime(),
+    }),
+  ),
+});
+export type ErrorReportSummary = z.infer<typeof ErrorReportSummarySchema>;

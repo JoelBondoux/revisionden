@@ -14,6 +14,7 @@ export {
   MAX_PARTICLES,
   comboStep,
   nextCombo,
+  pastDailyCap,
   pipLine,
   showsComboBadge,
   starsForSet,

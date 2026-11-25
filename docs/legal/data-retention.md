@@ -1,6 +1,6 @@
 # How long we keep data
 
-Version: 1.0
+Version: 1.1
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -54,6 +54,7 @@ the family account for 12 months (section 3).
 | Reminder settings and reminder log                                                           | Until the student is deleted                                                                                        | In-app delete                                                                         |
 | AI usage (tokens and cost only)                                                              | Until the student is deleted                                                                                        | In-app delete                                                                         |
 | Reports of a mistake in a question                                                           | Kept as part of the content audit trail; linked to the family until the family account is deleted                   | With the family account                                                               |
+| Error reports (anonymous, sent with "Send error report")                                     | 90 days                                                                                                             | Deleted automatically by a scheduled clean-up                                         |
 | Feedback and bug reports                                                                     | 12 months after we mark it fixed or will not fix; open feedback is kept until closed                                | Deleted automatically by a scheduled clean-up                                         |
 | Uploaded photos (homework, school reports), when available                                   | Deleted as soon as the user confirms what was read, and always within 24 hours                                      | Storage rule deletes after 24 hours (feature not built yet)                           |
 | Information stored on your device                                                            | See [cookies and storage](cookies-and-storage.md)                                                                   | Clearing the browser's site data removes it                                           |
@@ -82,4 +83,5 @@ to keep it, and tell you if anything cannot be deleted and why.
 
 ## Changes
 
+- 1.1: Added anonymous error reports, deleted after 90 days.
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).
