@@ -459,7 +459,10 @@ Mockups: screens 19 (student) and 20 (parent).
   `events.ts`), with one-line `play()` calls in lessons, the starting test and flashcards. Reward
   sounds (U4): `rewardSounds.ts` (which sound: tier, step, voice, fanfare, biggest, variation),
   `rewardBank.ts` (synthesis) and `<RewardSound rewards={newlyEarned} />` on the Rewards screen.
-  Prestige stars play legendary even where the catalogue rarity is epic. Gifts, plan and timed
+  Prestige stars play legendary even where the catalogue rarity is epic. Combo chime (U5):
+  `play('correct' | 'partMarks', { step })` raises the chime a whole tone per step, clamped at 6
+  (an octave); the lesson player passes `comboStep(combo - 1)`, so the first right answer is the
+  plain chime. The wrong sound never changes. Gifts, plan and timed
   papers get their calls when those screens are built.
 
 ## App updates (installable app)
