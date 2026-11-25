@@ -14,6 +14,7 @@ const family = {
   plan: null,
   children: [{ nickname: 'test_kid', yearGroup: 11 }],
   flags: { inactivityWarning: false, openTickets: 0, openContentReports: 0 },
+  tags: [],
   notes: [],
 };
 

@@ -1,6 +1,6 @@
 # Privacy notice
 
-Version: 1.7
+Version: 1.8
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -95,6 +95,9 @@ students in Years 9 to 13 (usually aged 13 to 18).
   for 12 months can be deleted);
 - feedback or bug reports you choose to send us (see section 9);
 - complaints you make, your messages about them and our replies (see section 13);
+- labels our support team puts on your account (for example "Beta tester"; never personal
+  information). The only one you see is the beta programme, which you can leave from the parent
+  home;
 - reports of a mistake in a question (only the question, its version and a reason picked from a
   list; no free text);
 - if you have been given a reviewer role for checking questions, that role;
@@ -366,6 +369,7 @@ in the app on your next visit and ask you to confirm, and students see a plain-E
 
 ## Changes
 
+- 1.8: Labels our support team can put on your account (for example "Beta tester"), never personal information; kept while the account exists or until removed. You can leave the beta programme from the parent home.
 - 1.7: Complaints: a parent can make a formal complaint in the app, kept 12 months after it is resolved. A student can ask a parent to raise something (a topic and an optional short note), seen only by the family's parents and deleted after 90 days at most.
 - 1.6: Target grades: for each subject a parent can set a target grade and the child can set their own. We keep both with the child's courses; each of you can see both, and they are included in the family data download.
 - 1.5: A family can now have two parents. We keep the second parent's sign-in email in the same way as the first, a family activity log that says "Parent 1" or "Parent 2" (never names), invite codes (hashed, 7 days) and a short note when a parent is removed. Deleting the whole family needs both parents to confirm.

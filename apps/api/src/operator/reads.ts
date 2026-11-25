@@ -16,6 +16,7 @@ import {
   isNull,
   lt,
   ne,
+  notInArray,
   or,
   sql,
   type SQL,
@@ -56,6 +57,7 @@ import {
 } from '../cleanup';
 import type { Clock } from '../rate-limit';
 import { audit, ok } from './bridge';
+import { familiesExcludedFromMetrics, liveTagsFor } from './tags';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 const HOUR_MS = 60 * 60 * 1000;
@@ -129,11 +131,16 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
 
   app.get('/overview', async (c) => {
     const at = now().getTime();
+    // Test and press accounts (a live "exclude from metrics" tag) are left out (O6).
+    const excluded = await familiesExcludedFromMetrics(db);
+    const keepFamily = excluded.length ? notInArray(families.id, excluded) : undefined;
+    const keepStudent = excluded.length ? notInArray(students.familyId, excluded) : undefined;
     const activeSince = (days: number) =>
       db
         .select({ n: countDistinct(attempts.studentId) })
         .from(attempts)
-        .where(gte(attempts.createdAt, new Date(at - days * DAY_MS)));
+        .innerJoin(students, eq(students.id, attempts.studentId))
+        .where(and(gte(attempts.createdAt, new Date(at - days * DAY_MS)), keepStudent));
     const [
       [fam],
       [kids],
@@ -144,8 +151,8 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
       errors24h,
       [complaintCount],
     ] = await Promise.all([
-      db.select({ n: count() }).from(families),
-      db.select({ n: count() }).from(students),
+      db.select({ n: count() }).from(families).where(keepFamily),
+      db.select({ n: count() }).from(students).where(keepStudent),
       activeSince(7),
       activeSince(30),
       db
@@ -214,6 +221,7 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
           lastActiveAt: row!.lastActiveAt.toISOString(),
           parentCount: parentCount!.n,
           childCount: childCount!.n,
+          tags: (await liveTagsFor(db, [familyId])).get(familyId) ?? [],
         },
       ],
     });
@@ -262,6 +270,7 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
       plan: null,
       // Only a child's nickname and year group reach AppDeck.
       children: childRows,
+      tags: (await liveTagsFor(db, [id])).get(id) ?? [],
       notes: noteRows.map((n) => ({
         id: n.id,
         text: n.text,

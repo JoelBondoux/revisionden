@@ -7,6 +7,7 @@ import { operatorAuth } from './bridge';
 import { OPERATOR_READ_POSTS, operatorReadRoutes } from './reads';
 import { operatorActionRoutes } from './actions';
 import { operatorDataRequestRoutes } from './data-requests';
+import { operatorTagRoutes } from './tags';
 import { operatorDiscountCodeRoutes } from './discount-codes';
 import { operatorComplaintRoutes } from './complaints';
 
@@ -35,6 +36,7 @@ export function operatorRoutes(deps: OperatorRouteDeps) {
   app.route('/', operatorReadRoutes(deps));
   app.route('/', operatorActionRoutes(deps));
   app.route('/', operatorDataRequestRoutes(deps));
+  app.route('/', operatorTagRoutes(deps));
   app.route('/', operatorDiscountCodeRoutes(deps));
   app.route('/', operatorComplaintRoutes(deps));
 

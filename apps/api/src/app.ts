@@ -54,6 +54,7 @@ import { adminErrorReportRoutes, errorReportRoutes } from './feedback/error-repo
 import type { StatsAdapters } from './stats/adapters';
 import { parentComplaintRoutes, studentComplaintRequestRoutes } from './complaints/routes';
 import { OPERATOR_BASE_PATH, operatorRoutes } from './operator/routes';
+import { parentProgrammeRoutes } from './operator/tags';
 import { createMemoryRateLimiter } from './rate-limit';
 
 export interface AppDeps {
@@ -199,6 +200,7 @@ export function createApp(deps: AppDeps) {
   parent.route('/', parentFeedbackRoutes(deps));
   parent.route('/students', parentBugHunterRoutes(deps));
   parent.route('/family', familyRoutes(deps));
+  parent.route('/family', parentProgrammeRoutes(deps));
   parent.route('/family', familyParentRoutes(deps));
   parent.route('/', familyExport(deps));
   parent.route('/', parentComplaintRoutes(deps));

@@ -21,6 +21,7 @@ import { ChildReminderSettings, ParentRewardNews } from '../notifications';
 import { NotSetUp } from '../stats/Tile';
 import { useStatsApi, type Child } from '../stats/statsApi';
 import { FamilyLog, ParentsPanel, RemovalNotice } from '../parents';
+import { BetaBadge } from '../programmes/BetaBadge';
 import { InstallCard } from '../../pwa/InstallCard';
 import './parent.css';
 
@@ -36,6 +37,7 @@ export function ParentHomePage() {
   return (
     <div className="stack parent-home">
       <h1>Parent home</h1>
+      <BetaBadge />
       <RemovalNotice onDone={() => window.location.reload()} />
       {children.status === 'ready' ? (
         children.data.length === 0 ? (

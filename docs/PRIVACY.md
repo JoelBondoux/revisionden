@@ -87,6 +87,8 @@ date per parent sign-in.
 - Support replies to feedback are shown to the sender without the operator's email. Internal
   support notes about a family are never shown in the app but are in the family's data export
   (text and time only).
+- Family tags (O6) are internal support labels with no personal information; the family sees only
+  the beta programme (a "Beta" badge it can leave). Deleted with the family.
 - Complaints (O4): a parent's complaint text (≤500, no email, phone or nickname) and messages are
   kept 12 months after it is resolved, deleted with the family, and in the family export. Staff
   are never named to the family.

@@ -199,6 +199,11 @@ Tags: #product #rules #limits #defaults
   `deleteFamilies` only for a one-parent family (two parents: 409 `needs_both_parents`, both
   confirm in the app). Records kept 2 years. Trial and free-place routes answer 503
   `payments_not_ready` until workstream $.
+- Family tags (O6): Managers create, edit and retire tags (name ≤40, colour, description ≤200,
+  effects: beta programme, early access, complimentary Premium, exclude from metrics); Agents add
+  and remove them and list a tag's families (the only list view). Retired tags have no effects.
+  Families see only the beta programme: a "Beta" badge on the parent home and "Leave the beta
+  programme" (`/v1/family/programmes`). `effectsForFamily` gives other code a family's effects.
 - Discount codes (O5): Managers create (6–16 letters and digits, any case, stored upper case;
   percent 1–100 or a fixed amount in pence; months or forever; optional last UK day and maximum
   uses) and disable them in AppDeck; Agents can see them. One active code per family; never with

@@ -1324,3 +1324,51 @@ export const discountRedemptions = pgTable(
       .where(sql`${t.endedAt} is null`),
   ],
 );
+
+/**
+ * O6: internal family tags (`docs/OPERATOR_CONSOLE.md` "Family tags"). Never personal
+ * information. A retired tag keeps its links for the record but has no effects and is no longer
+ * shown on families.
+ */
+export const familyTags = pgTable(
+  'family_tags',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    name: text('name').notNull().unique('family_tags_name_unique'),
+    colour: text('colour').notNull(),
+    description: text('description').notNull().default(''),
+    betaProgramme: boolean('beta_programme').notNull().default(false),
+    earlyAccess: boolean('early_access').notNull().default(false),
+    complimentaryPremium: boolean('complimentary_premium').notNull().default(false),
+    excludeFromMetrics: boolean('exclude_from_metrics').notNull().default(false),
+    // Work email of the Manager who created it (staff, from AppDeck).
+    createdBy: text('created_by').notNull(),
+    retiredAt: timestamp('retired_at', { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    check('family_tags_name_length', sql`char_length(${t.name}) between 1 and 40`),
+    check('family_tags_colour_format', sql`${t.colour} ~ '^#[0-9a-f]{6}$'`),
+    check('family_tags_description_length', sql`char_length(${t.description}) <= 200`),
+  ],
+);
+
+/** O6: which tags are on which family. Deleted with the family. */
+export const familyTagLinks = pgTable(
+  'family_tag_links',
+  {
+    familyId: uuid('family_id')
+      .notNull()
+      .references(() => families.id, { onDelete: 'cascade' }),
+    tagId: uuid('tag_id')
+      .notNull()
+      .references(() => familyTags.id),
+    // Work email of the operator who added it (staff, from AppDeck).
+    addedBy: text('added_by').notNull(),
+    addedAt: timestamp('added_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.familyId, t.tagId], name: 'family_tag_links_pkey' }),
+    index('family_tag_links_tag_idx').on(t.tagId),
+  ],
+);
