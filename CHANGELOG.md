@@ -91,6 +91,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Research: specialist engines, libraries and services per subject, with licences, costs, privacy and a ranked shortlist (`docs/research/specialist-tools-2026-11.md`).
 - S2 review batches: content sync stores each item's full record and mark scheme in `items.review_snapshot` (migration `0018_review_snapshot`); content leads get **Create batch from draft items** on `/review` (`GET, POST /v1/review/batches/from-drafts`), taking only drafts whose automated checks all passed (`readyForHumanReview` in `packages/core`); an item whose fact-check failed (decision 0009) is batched for individual review (`needsIndividualReview`).
 - Fact-check stage (S2, decision 0009): items can list the standard maths `facts` they rest on; `pnpm content:model-check --fact-check openai` checks each against an official citation, or a maths-engine proof (new `identity` check kind) plus a third provider's blind statement judged by Gemini. The validator needs a `fact-check` record on verified items with facts; a failed one only passes with individual human approval.
 - Formula flashcards (S2, cross-lane V): a flashcard's optional `back_formula` (formula plus conditions) makes the blind answer compare formulas with the maths engine (new `formula` check kind in `services/maths`, `±` and bare right-hand sides handled) and require every condition such as `a ≠ 0`, instead of matching words.
