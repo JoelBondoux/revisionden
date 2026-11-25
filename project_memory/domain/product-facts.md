@@ -61,8 +61,9 @@ Tags: #product #rules #limits #defaults
 - Starting test per subject: about 5 minutes (300 s, up to 10 questions, one per topic first),
   Test mode; its answers set first mastery. Lessons are Learn mode at feedback level 1.
 - Wrong lesson answers become flashcards. Flashcard buttons Again/Hard/Good/Easy = SM-2 quality
-  1/3/4/5; each shows when the card comes back. Reviewing a deck card earns 2 XP (see
-  contradictions). Students can add their own cards (up to 300 characters a side).
+  1/3/4/5; each shows when the card comes back. Deck XP is per completed session, not per card: 20 XP for a
+  session of 5+ cards (ends when the due queue is empty or at 20 cards), whatever the ratings; at
+  most 2 rewarded sessions a day; self-ratings never change mastery (owner, 2026-11-25). Students can add their own cards (up to 300 characters a side).
 - XP is totalled per day in UK time; a streak day counts once, the first time the day reaches the
   daily goal. Command-word lessons are items tagged `command-word` (none verified yet).
 - Worked maths answers are checked by the maths engine (`MATHS_ENGINE_URL`); long answers are not
