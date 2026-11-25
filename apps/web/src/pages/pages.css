@@ -274,7 +274,7 @@
 .hex--mastered .hex__shape {
   --hex-border: #c99412;
   --hex-fill: var(--color-gold);
-  color: var(--color-text);
+  color: var(--color-text-on-gold);
 }
 
 .hex--in-progress .hex__shape {
