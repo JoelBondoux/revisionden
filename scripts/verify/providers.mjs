@@ -39,9 +39,20 @@ async function post(provider, fetch, url, headers, body) {
 const trim = (url) => url.replace(/\/+$/, '');
 
 // Our Cloudflare AI Gateway is authenticated: with a token, send it and ask the gateway not to
-// keep prompts or answers in its logs (the same headers the API sends).
-const gatewayHeaders = (token) =>
-  token ? { 'cf-aig-authorization': `Bearer ${token}`, 'cf-aig-collect-log-payload': 'false' } : {};
+// keep prompts or answers in its logs (the same headers the API sends). The token is a Cloudflare
+// credential, so it only ever goes to the gateway itself, never to a provider's own API.
+const GATEWAY_HOST = 'gateway.ai.cloudflare.com';
+function gatewayHeaders(token, baseUrl) {
+  if (!token) return {};
+  let url;
+  try {
+    url = new URL(baseUrl);
+  } catch {
+    return {};
+  }
+  if (url.protocol !== 'https:' || url.hostname !== GATEWAY_HOST) return {};
+  return { 'cf-aig-authorization': `Bearer ${token}`, 'cf-aig-collect-log-payload': 'false' };
+}
 
 export function createAnthropicProvider({
   apiKey,
@@ -59,7 +70,11 @@ export function createAnthropicProvider({
         'anthropic',
         fetch,
         `${trim(baseUrl)}/v1/messages`,
-        { 'x-api-key': apiKey, 'anthropic-version': '2023-06-01', ...gatewayHeaders(gatewayToken) },
+        {
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          ...gatewayHeaders(gatewayToken, baseUrl),
+        },
         {
           model,
           max_tokens: maxTokens,
@@ -94,7 +109,7 @@ export function createOpenAIProvider({
         'openai',
         fetch,
         `${trim(baseUrl)}/v1/chat/completions`,
-        { authorization: `Bearer ${apiKey}`, ...gatewayHeaders(gatewayToken) },
+        { authorization: `Bearer ${apiKey}`, ...gatewayHeaders(gatewayToken, baseUrl) },
         {
           model,
           messages: [
@@ -132,7 +147,7 @@ export function createGeminiProvider({
         'gemini',
         fetch,
         url,
-        { 'x-goog-api-key': apiKey, ...gatewayHeaders(gatewayToken) },
+        { 'x-goog-api-key': apiKey, ...gatewayHeaders(gatewayToken, baseUrl) },
         {
           systemInstruction: { parts: [{ text: system }] },
           contents: [{ role: 'user', parts: [{ text: prompt }] }],
