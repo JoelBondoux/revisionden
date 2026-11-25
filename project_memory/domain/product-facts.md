@@ -255,7 +255,12 @@ Tags: #product #rules #limits #defaults
 - Quick feedback: Claude Haiku 5.5. Long answers and homework: Claude Opus 5.5. Maths: no AI.
 - Question banks are written in subscription working sessions; live AI is capped per child.
 - AI spend cap: US$2.50 per child per calendar month (UTC) by default (`AI_MONTHLY_CAP_USD`),
-  checked before every call; every billed attempt counts. Up to 3 attempts per call.
+  checked before every call; every billed attempt counts. Up to 3 attempts per call. Families
+  never see money for AI (K9, owner 2026-11-25): the parent dashboard shows an "AI marking
+  allowance" as a percentage used and "Resets on 1 <next month>" (used up at 100%). No money in
+  any family-facing API response or the family export (`allowanceUsedPercent` instead); the
+  used-up message is "You've used this month's AI marking allowance. It resets on 1 <month>.".
+  Policies: ai-and-marking 1.1, acceptable-use 1.2. The cost figures stay operator-only.
 - Short answers: rules first (accepted answers and official mark-point wording, not when the
   answer contains a negation), then Claude Haiku 5.5 only for the remaining mark points, citing
   each point and quoting the student's words. Unsure → "Check with your teacher", never a guess.
