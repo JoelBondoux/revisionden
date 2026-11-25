@@ -121,6 +121,9 @@ later. Later years' drops are added as data each term.
 
 ## Rarity
 
+Each rarity has its own reward sound, bigger as the rarity rises (`PRODUCT_RULES.md`, sound
+effects).
+
 | Rarity    | Typical source                                                  | Share of items |
 | --------- | --------------------------------------------------------------- | -------------- |
 | Common    | Levels, early milestones                                        | About 50%      |
