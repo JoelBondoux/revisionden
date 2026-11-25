@@ -27,14 +27,14 @@ export const OperatorOverviewSchema = z
   .strict();
 export type OperatorOverview = z.infer<typeof OperatorOverviewSchema>;
 
-/** Exactly one of an exact parent sign-in email or a family id; no browsing by name. */
-export const OperatorFamilySearchQuerySchema = z
+/** `POST families/search` body: exactly one of an exact parent sign-in email or a family id. */
+export const OperatorFamilySearchSchema = z
   .object({
     email: z.string().trim().toLowerCase().pipe(z.string().email().max(254)).optional(),
-    id: uuid.optional(),
+    familyId: uuid.optional(),
   })
   .strict()
-  .refine((q) => (q.email === undefined) !== (q.id === undefined), {
+  .refine((q) => (q.email === undefined) !== (q.familyId === undefined), {
     message: 'Search by email or by family id, not both',
   });
 
@@ -52,16 +52,9 @@ export const OperatorFamilySearchResultSchema = z
   .object({ families: z.array(OperatorFamilySummarySchema).max(1) })
   .strict();
 
+/** AppDeck gets only a child's nickname and year group. */
 export const OperatorChildSchema = z
-  .object({
-    id: uuid,
-    nickname: z.string(),
-    yearGroup: z.number().int(),
-    subjects: z.array(z.string()),
-    linkedDevices: z.number().int().nonnegative(),
-    /** Last question answered; null if none yet. */
-    lastActiveAt: isoDate.nullable(),
-  })
+  .object({ nickname: z.string(), yearGroup: z.number().int() })
   .strict();
 
 export const OperatorFamilyDetailSchema = z
@@ -167,11 +160,13 @@ export const OperatorAuditLogSchema = z
   })
   .strict();
 
-export const OperatorStatusSchema = z
+/** `GET health`: connection check, build and error-report rate for the environment. */
+export const OperatorHealthSchema = z
   .object({
+    status: z.literal('ok'),
     environment: z.enum(['development', 'staging', 'production']),
     version: z.string(),
-    database: z.literal('ok'),
+    operator: z.object({ email: z.string(), role: z.enum(['agent', 'manager']) }).strict(),
     errorReportsLastHour: z.number().int().nonnegative(),
     errorReports24h: z.number().int().nonnegative(),
   })

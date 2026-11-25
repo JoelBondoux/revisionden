@@ -6,8 +6,9 @@ import {
   OperatorFamilyDetailSchema,
   OperatorFamilySearchResultSchema,
   OperatorOverviewSchema,
-  OperatorStatusSchema,
+  OperatorHealthSchema,
   OperatorTicketListSchema,
+  OperatorTicketSchema,
   type OperatorTicket,
 } from '@revisionden/core';
 import {
@@ -18,6 +19,7 @@ import {
   itemReports,
   items,
   operatorAuditLog,
+  operatorRequests,
   parents,
   quarantinedItems,
   topics,
@@ -36,10 +38,26 @@ afterEach(async () => {
   await t.close();
 });
 
-async function get(path: string, role = 'agent') {
-  const res = await t.app.request(...(await signedOperatorRequest({ clock: t.clock, path, role })));
-  return { status: res.status, body: (await res.json()) as unknown };
+/** Sends a signed request; a 2xx body must be AppDeck's envelope, and `body` is its `data`. */
+async function call(
+  path: string,
+  method: string,
+  body?: unknown,
+  extra: { requestId?: string } = {},
+) {
+  const res = await t.app.request(
+    ...(await signedOperatorRequest({ clock: t.clock, path, method, body, ...extra })),
+  );
+  const json = (await res.json()) as { success?: boolean; data?: unknown };
+  if (res.status >= 200 && res.status < 300) {
+    expect(json.success).toBe(true);
+    return { status: res.status, body: json.data };
+  }
+  return { status: res.status, body: json as unknown };
 }
+const get = (path: string) => call(path, 'GET');
+const search = (body: unknown, extra: { requestId?: string } = {}) =>
+  call('/operator/appdeck/families/search', 'POST', body, extra);
 
 /** A family with one parent and one child; returns ids and the parent's sign-in email. */
 async function makeFamily(nickname = 'test_kid', subjects: string[] = []) {
@@ -104,7 +122,7 @@ describe('operator overview', () => {
       createdAt: new Date(now - 60_000),
     });
 
-    const { status, body } = await get('/v1/operator/overview');
+    const { status, body } = await get('/operator/appdeck/overview');
     expect(status).toBe(200);
     expect(OperatorOverviewSchema.parse(body)).toEqual({
       families: 2,
@@ -125,9 +143,7 @@ describe('operator overview', () => {
 describe('operator family search', () => {
   it('finds a family by the exact parent sign-in email, in any letter case, and audits it', async () => {
     const f = await makeFamily();
-    const { status, body } = await get(
-      `/v1/operator/families?email=${encodeURIComponent(f.email.toUpperCase())}`,
-    );
+    const { status, body } = await search({ email: f.email.toUpperCase() });
     expect(status).toBe(200);
     const result = OperatorFamilySearchResultSchema.parse(body);
     expect(result.families).toEqual([
@@ -146,37 +162,47 @@ describe('operator family search', () => {
 
   it('does not match part of an email', async () => {
     const f = await makeFamily();
-    const { body } = await get(`/v1/operator/families?email=x${encodeURIComponent(f.email)}`);
+    const { body } = await search({ email: `x${f.email}` });
     expect(OperatorFamilySearchResultSchema.parse(body).families).toEqual([]);
   });
 
   it('finds a family by id', async () => {
     const f = await makeFamily();
-    const { body } = await get(`/v1/operator/families?id=${f.familyId}`);
+    const { body } = await search({ familyId: f.familyId });
     expect(OperatorFamilySearchResultSchema.parse(body).families[0]!.id).toBe(f.familyId);
   });
 
   it('audits a search that found nothing, without a target', async () => {
-    await get('/v1/operator/families?email=nobody%40example.com');
+    await search({ email: 'nobody@example.com' });
     expect(await auditRows()).toEqual([
       expect.objectContaining({ action: 'family.search', targetType: null, targetId: null }),
     ]);
   });
 
   it('refuses a search by name, by part of an email or by both email and id', async () => {
-    for (const query of [
-      'name=kid',
-      'email=parent1',
-      `email=a%40example.com&id=${crypto.randomUUID()}`,
-      '',
-    ]) {
-      expect((await get(`/v1/operator/families?${query}`)).status, query).toBe(400);
+    const bad = [
+      { name: 'kid' },
+      { email: 'parent1' },
+      { email: 'a@example.com', familyId: crypto.randomUUID() },
+      {},
+    ];
+    for (const body of bad) {
+      expect((await search(body)).status, JSON.stringify(body)).toBe(400);
     }
+  });
+
+  it('treats a search as a read: the same request id twice is refused and nothing is stored', async () => {
+    const f = await makeFamily();
+    expect((await search({ email: f.email }, { requestId: 'search-0001' })).status).toBe(200);
+    const again = await search({ email: f.email }, { requestId: 'search-0001' });
+    expect(again.status).toBe(409);
+    const [stored] = await t.db.select().from(operatorRequests);
+    expect(stored!.responseBody).toBeNull();
   });
 });
 
 describe('operator family detail', () => {
-  it('shows only minimal fields: parents, children as nickname, year and subjects, flags', async () => {
+  it('shows only minimal fields: parents, children as nickname and year group, flags', async () => {
     const f = await makeFamily('test_kid', ['gcse-maths']);
     await answerAt(f.studentId, new Date(t.clock.now().getTime() - DAY));
     await t.db.insert(feedback).values({
@@ -186,20 +212,12 @@ describe('operator family detail', () => {
       status: 'looking_into_it',
     });
 
-    const { status, body } = await get(`/v1/operator/families/${f.familyId}`);
+    const { status, body } = await get(`/operator/appdeck/families/${f.familyId}`);
     expect(status).toBe(200);
     const family = OperatorFamilyDetailSchema.parse(body);
     expect(family.parents).toEqual([{ email: f.email, joinedAt: expect.any(String) }]);
-    expect(family.children).toEqual([
-      {
-        id: f.studentId,
-        nickname: 'test_kid',
-        yearGroup: 11,
-        subjects: ['gcse-maths'],
-        linkedDevices: 1,
-        lastActiveAt: new Date(t.clock.now().getTime() - DAY).toISOString(),
-      },
-    ]);
+    // AppDeck gets only a child's nickname and year group.
+    expect(family.children).toEqual([{ nickname: 'test_kid', yearGroup: 11 }]);
     expect(family.plan).toBeNull();
     expect(family.flags).toEqual({
       inactivityWarning: false,
@@ -223,15 +241,15 @@ describe('operator family detail', () => {
       .set({ lastActiveAt: lastActive })
       .where(eq(families.id, f.familyId));
     const family = OperatorFamilyDetailSchema.parse(
-      (await get(`/v1/operator/families/${f.familyId}`)).body,
+      (await get(`/operator/appdeck/families/${f.familyId}`)).body,
     );
     expect(family.flags.inactivityWarning).toBe(true);
     expect(family.deletesAfter).toBe('2026-12-01T10:00:00.000Z');
   });
 
   it('answers 404 for an unknown or malformed family id', async () => {
-    expect((await get(`/v1/operator/families/${crypto.randomUUID()}`)).status).toBe(404);
-    expect((await get('/v1/operator/families/not-an-id')).status).toBe(404);
+    expect((await get(`/operator/appdeck/families/${crypto.randomUUID()}`)).status).toBe(404);
+    expect((await get('/operator/appdeck/families/not-an-id')).status).toBe(404);
   });
 });
 
@@ -259,7 +277,7 @@ describe('operator tickets', () => {
       },
     ]);
 
-    const { status, body } = await get('/v1/operator/tickets');
+    const { status, body } = await get('/operator/appdeck/tickets');
     expect(status).toBe(200);
     const { tickets } = OperatorTicketListSchema.parse(body);
     expect(tickets.map((x: OperatorTicket) => [x.senderRole, x.text])).toEqual([
@@ -280,11 +298,11 @@ describe('operator tickets', () => {
       { familyId: b.familyId, senderRole: 'parent', kind: 'bug', status: 'looking_into_it' },
     ]);
     const open = OperatorTicketListSchema.parse(
-      (await get('/v1/operator/tickets?status=open')).body,
+      (await get('/operator/appdeck/tickets?status=open')).body,
     );
     expect(open.tickets.map((x) => x.status).sort()).toEqual(['looking_into_it', 'new']);
     const familyA = OperatorTicketListSchema.parse(
-      (await get(`/v1/operator/tickets?familyId=${a.familyId}`)).body,
+      (await get(`/operator/appdeck/tickets?familyId=${a.familyId}`)).body,
     );
     expect(familyA.tickets).toHaveLength(2);
     expect(await auditRows()).toContainEqual(
@@ -294,7 +312,34 @@ describe('operator tickets', () => {
         targetId: a.familyId,
       }),
     );
-    expect((await get('/v1/operator/tickets?status=lost')).status).toBe(400);
+    expect((await get('/operator/appdeck/tickets?status=lost')).status).toBe(400);
+  });
+
+  it('filters by kind and shows one ticket, audited against its family', async () => {
+    const f = await makeFamily();
+    const [bug] = await t.db
+      .insert(feedback)
+      .values([
+        { familyId: f.familyId, senderRole: 'parent', kind: 'bug', text: 'Map broken' },
+        { familyId: f.familyId, senderRole: 'parent', kind: 'idea', text: 'Dark mode' },
+      ])
+      .returning({ id: feedback.id });
+    const bugs = OperatorTicketListSchema.parse(
+      (await get('/operator/appdeck/tickets?kind=bug')).body,
+    );
+    expect(bugs.tickets.map((x) => x.kind)).toEqual(['bug']);
+
+    const one = await get(`/operator/appdeck/tickets/${bug!.id}`);
+    expect(one.status).toBe(200);
+    expect(OperatorTicketSchema.parse(one.body)).toMatchObject({ id: bug!.id, text: 'Map broken' });
+    expect(await auditRows()).toContainEqual(
+      expect.objectContaining({
+        action: 'ticket.view',
+        targetType: 'family',
+        targetId: f.familyId,
+      }),
+    );
+    expect((await get(`/operator/appdeck/tickets/${crypto.randomUUID()}`)).status).toBe(404);
   });
 });
 
@@ -314,7 +359,7 @@ describe('operator error reports and content reports', () => {
         createdAt: new Date(now - (i + 1) * 60_000),
       })),
     );
-    const { status, body } = await get('/v1/operator/error-reports');
+    const { status, body } = await get('/operator/appdeck/error-reports');
     expect(status).toBe(200);
     expect(body).toMatchObject({ total: 2, groups: [{ screen: '/map', count: 2 }] });
   });
@@ -343,14 +388,14 @@ describe('operator error reports and content reports', () => {
       .values({ itemId: 'item-1', itemVersion: 2, cause: 'report' });
 
     const list = OperatorContentReportListSchema.parse(
-      (await get('/v1/operator/content-reports')).body,
+      (await get('/operator/appdeck/content-reports')).body,
     );
     expect(list.reviewQueueUrl).toBe('https://dev.revisionden.test/review');
     expect(list.reports).toEqual([
       expect.objectContaining({ itemId: 'item-1', quarantined: true, status: 'open' }),
     ]);
     const all = OperatorContentReportListSchema.parse(
-      (await get('/v1/operator/content-reports?status=all')).body,
+      (await get('/operator/appdeck/content-reports?status=all')).body,
     );
     expect(all.reports).toHaveLength(2);
   });
@@ -360,13 +405,13 @@ describe('operator audit log and service status', () => {
   it('lists audit entries newest first, by target, a page at a time', async () => {
     const f = await makeFamily();
     for (let i = 0; i < 3; i += 1) {
-      await get(`/v1/operator/families/${f.familyId}`);
+      await get(`/operator/appdeck/families/${f.familyId}`);
       t.clock.advance(1000);
     }
-    await get('/v1/operator/tickets');
+    await get('/operator/appdeck/tickets');
 
     const page1 = OperatorAuditLogSchema.parse(
-      (await get(`/v1/operator/audit-log?targetType=family&targetId=${f.familyId}&limit=2`)).body,
+      (await get(`/operator/appdeck/audit?targetType=family&targetId=${f.familyId}&limit=2`)).body,
     );
     expect(page1.entries).toHaveLength(2);
     expect(page1.entries.every((e) => e.action === 'family.view')).toBe(true);
@@ -374,7 +419,7 @@ describe('operator audit log and service status', () => {
     const page2 = OperatorAuditLogSchema.parse(
       (
         await get(
-          `/v1/operator/audit-log?targetType=family&targetId=${f.familyId}&limit=2&before=${encodeURIComponent(page1.nextBefore!)}`,
+          `/operator/appdeck/audit?targetType=family&targetId=${f.familyId}&limit=2&before=${encodeURIComponent(page1.nextBefore!)}`,
         )
       ).body,
     );
@@ -393,10 +438,11 @@ describe('operator audit log and service status', () => {
       reportedAt: new Date(now),
       createdAt: new Date(now - 2 * 60 * 60 * 1000),
     });
-    expect(OperatorStatusSchema.parse((await get('/v1/operator/status')).body)).toEqual({
+    expect(OperatorHealthSchema.parse((await get('/operator/appdeck/health')).body)).toEqual({
+      status: 'ok',
       environment: 'development',
       version: '00.01.000',
-      database: 'ok',
+      operator: { email: 'agent@example.com', role: 'agent' },
       errorReportsLastHour: 0,
       errorReports24h: 1,
     });

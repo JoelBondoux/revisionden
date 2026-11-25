@@ -1,26 +1,15 @@
 /**
- * O2: the operator bridge's read routes for AppDeck (`docs/OPERATOR_CONSOLE.md`). Minimal fields
- * only (strict schemas in `packages/core/src/operator-schemas.ts`): never answers, a student's
- * own words, avatars, homework, prompts, tokens or push keys. Every read of a family is audited.
+ * O2: the operator bridge's read routes for AppDeck (`docs/OPERATOR_CONSOLE.md`), on the paths
+ * AppDeck's client uses. Minimal fields only (strict schemas in
+ * `packages/core/src/operator-schemas.ts`): never answers, a student's own words, avatars,
+ * homework, prompts, tokens or push keys. Every read of a family is audited.
  */
 import { Hono } from 'hono';
-import {
-  and,
-  count,
-  countDistinct,
-  desc,
-  eq,
-  gte,
-  inArray,
-  lt,
-  max,
-  sql,
-  type SQL,
-} from 'drizzle-orm';
+import { and, count, countDistinct, desc, eq, gte, inArray, lt, sql, type SQL } from 'drizzle-orm';
 import { z } from 'zod';
 import {
   ERROR_REPORT_RETENTION_DAYS,
-  OperatorFamilySearchQuerySchema,
+  OperatorFamilySearchSchema,
   type OperatorFamilyDetail,
   type OperatorOverview,
   type OperatorTicket,
@@ -28,8 +17,6 @@ import {
 import {
   attempts,
   authUsers,
-  devices,
-  enrolments,
   errorReports,
   families,
   feedback,
@@ -50,13 +37,16 @@ import {
   monthsBefore,
 } from '../cleanup';
 import type { Clock } from '../rate-limit';
-import { audit } from './bridge';
+import { audit, ok } from './bridge';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 const HOUR_MS = 60 * 60 * 1000;
 const OPEN_TICKET_STATUSES = ['new', 'looking_into_it'] as const;
 const TICKET_LIMIT = 200;
 const CONTENT_REPORT_LIMIT = 200;
+
+/** POST routes under the bridge that only read: their request ids are not replayed or stored. */
+export const OPERATOR_READ_POSTS = ['/families/search'] as const;
 
 export interface OperatorReadDeps {
   version: string;
@@ -67,43 +57,75 @@ export interface OperatorReadDeps {
 
 const isUuid = (id: string) => z.string().uuid().safeParse(id).success;
 
-function badQuery(message: string): never {
+function badRequest(message: string): never {
   throw new ApiError(400, 'invalid_request', message);
 }
 
-/** Query parameters as a plain object (first value of each). */
+/** Query parameters as a plain object (first value of each); empty ones are left out. */
 function queryOf(url: string): Record<string, string> {
-  return Object.fromEntries(new URL(url).searchParams.entries());
+  return Object.fromEntries([...new URL(url).searchParams.entries()].filter(([, v]) => v !== ''));
+}
+
+type FeedbackRow = typeof feedback.$inferSelect;
+
+function toTicket(r: FeedbackRow): OperatorTicket {
+  return {
+    id: r.id,
+    familyId: r.familyId,
+    kind: r.kind,
+    status: r.status,
+    senderRole: r.senderRole,
+    // A student's own words never leave RevisionDen.
+    text: r.senderRole === 'parent' ? r.text : null,
+    device: r.device ?? null,
+    createdAt: r.createdAt.toISOString(),
+    updatedAt: r.updatedAt.toISOString(),
+    closedAt: r.closedAt?.toISOString() ?? null,
+  };
 }
 
 export function operatorReadRoutes(deps: OperatorReadDeps) {
   const { db, clock, config } = deps;
   const app = new Hono<AppEnv>();
   const now = () => clock.now();
+  const countErrorReportsSince = async (ms: number) => {
+    const [row] = await db
+      .select({ n: count() })
+      .from(errorReports)
+      .where(gte(errorReports.createdAt, new Date(now().getTime() - ms)));
+    return row!.n;
+  };
+
+  app.get('/health', async (c) =>
+    ok(c, {
+      status: 'ok',
+      environment: config.environment,
+      version: deps.version,
+      operator: { email: c.var.operator.email, role: c.var.operator.role },
+      errorReportsLastHour: await countErrorReportsSince(HOUR_MS),
+      errorReports24h: await countErrorReportsSince(DAY_MS),
+    }),
+  );
 
   app.get('/overview', async (c) => {
     const at = now().getTime();
-    const [[fam], [kids], [active7], [active30], [tickets], [reports], [errors]] =
+    const activeSince = (days: number) =>
+      db
+        .select({ n: countDistinct(attempts.studentId) })
+        .from(attempts)
+        .where(gte(attempts.createdAt, new Date(at - days * DAY_MS)));
+    const [[fam], [kids], [active7], [active30], [tickets], [reports], errors24h] =
       await Promise.all([
         db.select({ n: count() }).from(families),
         db.select({ n: count() }).from(students),
-        db
-          .select({ n: countDistinct(attempts.studentId) })
-          .from(attempts)
-          .where(gte(attempts.createdAt, new Date(at - 7 * DAY_MS))),
-        db
-          .select({ n: countDistinct(attempts.studentId) })
-          .from(attempts)
-          .where(gte(attempts.createdAt, new Date(at - 30 * DAY_MS))),
+        activeSince(7),
+        activeSince(30),
         db
           .select({ n: count() })
           .from(feedback)
           .where(inArray(feedback.status, [...OPEN_TICKET_STATUSES])),
         db.select({ n: count() }).from(itemReports).where(eq(itemReports.status, 'open')),
-        db
-          .select({ n: count() })
-          .from(errorReports)
-          .where(gte(errorReports.createdAt, new Date(at - DAY_MS))),
+        countErrorReportsSince(DAY_MS),
       ]);
     const overview: OperatorOverview = {
       families: fam!.n,
@@ -112,34 +134,34 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
       activeStudents30d: active30!.n,
       openTickets: tickets!.n,
       openContentReports: reports!.n,
-      errorReports24h: errors!.n,
+      errorReports24h: errors24h,
       premiumFamilies: null,
       trials: null,
       freePlaces: null,
       openComplaints: null,
     };
-    return c.json(overview);
+    return ok(c, overview);
   });
 
-  app.get('/families', async (c) => {
-    const parsed = OperatorFamilySearchQuerySchema.safeParse(queryOf(c.req.url));
-    if (!parsed.success) badQuery('Search by an exact parent sign-in email or a family id');
-    const q = parsed.data;
-    let familyId: string | undefined;
-    if (q.id) {
-      const [row] = await db
-        .select({ id: families.id })
-        .from(families)
-        .where(eq(families.id, q.id));
-      familyId = row?.id;
-    } else {
-      const [row] = await db
-        .select({ id: parents.familyId })
-        .from(parents)
-        .innerJoin(authUsers, eq(authUsers.id, parents.authUserId))
-        .where(eq(sql`lower(${authUsers.email})`, q.email!));
-      familyId = row?.id;
+  // A read sent as POST, so the email stays out of URLs and logs (see OPERATOR_READ_POSTS).
+  app.post('/families/search', async (c) => {
+    let raw: unknown;
+    try {
+      raw = await c.req.json();
+    } catch {
+      badRequest('The request body must be JSON');
     }
+    const parsed = OperatorFamilySearchSchema.safeParse(raw);
+    if (!parsed.success) badRequest('Search by an exact parent sign-in email or a family id');
+    const q = parsed.data;
+    const [found] = q.familyId
+      ? await db.select({ id: families.id }).from(families).where(eq(families.id, q.familyId))
+      : await db
+          .select({ id: parents.familyId })
+          .from(parents)
+          .innerJoin(authUsers, eq(authUsers.id, parents.authUserId))
+          .where(eq(sql`lower(${authUsers.email})`, q.email!));
+    const familyId = found?.id;
     await audit(
       db,
       c.var.operator,
@@ -149,13 +171,13 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
       },
       now(),
     );
-    if (!familyId) return c.json({ families: [] });
+    if (!familyId) return ok(c, { families: [] });
     const [[row], [parentCount], [childCount]] = await Promise.all([
       db.select().from(families).where(eq(families.id, familyId)),
       db.select({ n: count() }).from(parents).where(eq(parents.familyId, familyId)),
       db.select({ n: count() }).from(students).where(eq(students.familyId, familyId)),
     ]);
-    return c.json({
+    return ok(c, {
       families: [
         {
           id: row!.id,
@@ -182,7 +204,7 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
         .where(eq(parents.familyId, id))
         .orderBy(parents.createdAt),
       db
-        .select({ id: students.id, nickname: students.nickname, yearGroup: students.yearGroup })
+        .select({ nickname: students.nickname, yearGroup: students.yearGroup })
         .from(students)
         .where(eq(students.familyId, id))
         .orderBy(students.createdAt),
@@ -195,27 +217,6 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
         .from(itemReports)
         .where(and(eq(itemReports.familyId, id), eq(itemReports.status, 'open'))),
     ]);
-    const childIds = childRows.map((s) => s.id);
-    const [subjectRows, deviceRows, lastRows] =
-      childIds.length === 0
-        ? [[], [], []]
-        : await Promise.all([
-            db
-              .select({ studentId: enrolments.studentId, subjectId: enrolments.subjectId })
-              .from(enrolments)
-              .where(inArray(enrolments.studentId, childIds))
-              .orderBy(enrolments.subjectId),
-            db
-              .select({ studentId: devices.studentId, n: count() })
-              .from(devices)
-              .where(inArray(devices.studentId, childIds))
-              .groupBy(devices.studentId),
-            db
-              .select({ studentId: attempts.studentId, last: max(attempts.createdAt) })
-              .from(attempts)
-              .where(inArray(attempts.studentId, childIds))
-              .groupBy(attempts.studentId),
-          ]);
 
     const detail: OperatorFamilyDetail = {
       id: family.id,
@@ -224,17 +225,8 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
       deletesAfter: monthsBefore(family.lastActiveAt, -INACTIVE_DELETE_AFTER_MONTHS).toISOString(),
       parents: parentRows.map((p) => ({ email: p.email, joinedAt: p.joinedAt.toISOString() })),
       plan: null,
-      children: childRows.map((s) => {
-        const last = lastRows.find((r) => r.studentId === s.id)?.last ?? null;
-        return {
-          id: s.id,
-          nickname: s.nickname,
-          yearGroup: s.yearGroup,
-          subjects: subjectRows.filter((r) => r.studentId === s.id).map((r) => r.subjectId),
-          linkedDevices: deviceRows.find((r) => r.studentId === s.id)?.n ?? 0,
-          lastActiveAt: last ? new Date(last).toISOString() : null,
-        };
-      }),
+      // Only a child's nickname and year group reach AppDeck.
+      children: childRows,
       flags: {
         inactivityWarning:
           family.lastActiveAt.getTime() <=
@@ -249,7 +241,7 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
       { action: 'family.view', targetType: 'family', targetId: id },
       now(),
     );
-    return c.json(detail);
+    return ok(c, detail);
   });
 
   const TicketQuery = z
@@ -257,17 +249,19 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
       status: z
         .enum(['open', 'all', 'new', 'looking_into_it', 'fixed', 'will_not_fix'])
         .default('all'),
+      kind: z.enum(['bug', 'idea', 'confusing', 'other']).optional(),
       familyId: z.string().uuid().optional(),
     })
     .strict();
 
   app.get('/tickets', async (c) => {
     const parsed = TicketQuery.safeParse(queryOf(c.req.url));
-    if (!parsed.success) badQuery('Unknown ticket filter');
-    const { status, familyId } = parsed.data;
+    if (!parsed.success) badRequest('Unknown ticket filter');
+    const { status, kind, familyId } = parsed.data;
     const filters: SQL[] = [];
     if (status === 'open') filters.push(inArray(feedback.status, [...OPEN_TICKET_STATUSES]));
     else if (status !== 'all') filters.push(eq(feedback.status, status));
+    if (kind) filters.push(eq(feedback.kind, kind));
     if (familyId) filters.push(eq(feedback.familyId, familyId));
     const rows = await db
       .select()
@@ -275,33 +269,37 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
       .where(filters.length ? and(...filters) : undefined)
       .orderBy(desc(feedback.createdAt))
       .limit(TICKET_LIMIT);
-    const tickets: OperatorTicket[] = rows.map((r) => ({
-      id: r.id,
-      familyId: r.familyId,
-      kind: r.kind,
-      status: r.status,
-      senderRole: r.senderRole,
-      // A student's own words never leave RevisionDen.
-      text: r.senderRole === 'parent' ? r.text : null,
-      device: r.device ?? null,
-      createdAt: r.createdAt.toISOString(),
-      updatedAt: r.updatedAt.toISOString(),
-      closedAt: r.closedAt?.toISOString() ?? null,
-    }));
     await audit(
       db,
       c.var.operator,
-      { action: 'tickets.list', ...(familyId ? { targetType: 'family', targetId: familyId } : {}) },
+      {
+        action: 'tickets.list',
+        ...(familyId ? { targetType: 'family', targetId: familyId } : {}),
+      },
       now(),
     );
-    return c.json({ tickets });
+    return ok(c, { tickets: rows.map(toTicket) });
+  });
+
+  app.get('/tickets/:id', async (c) => {
+    const id = c.req.param('id');
+    if (!isUuid(id)) throw notFound('Ticket not found');
+    const [row] = await db.select().from(feedback).where(eq(feedback.id, id));
+    if (!row) throw notFound('Ticket not found');
+    await audit(
+      db,
+      c.var.operator,
+      { action: 'ticket.view', targetType: 'family', targetId: row.familyId },
+      now(),
+    );
+    return ok(c, toTicket(row));
   });
 
   app.get('/error-reports', async (c) => {
     const at = now().getTime();
     const raw = c.req.query('since');
     const asked = raw ? new Date(raw) : new Date(at - DAY_MS);
-    if (Number.isNaN(asked.getTime())) badQuery('since must be a date and time');
+    if (Number.isNaN(asked.getTime())) badRequest('since must be a date and time');
     const since = new Date(Math.max(asked.getTime(), at - ERROR_REPORT_RETENTION_DAYS * DAY_MS));
     const rows = await db
       .select({
@@ -315,13 +313,13 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
       .from(errorReports)
       .where(gte(errorReports.createdAt, since))
       .orderBy(desc(errorReports.createdAt));
-    return c.json(groupErrorReports(rows, since));
+    return ok(c, groupErrorReports(rows, since));
   });
 
   app.get('/content-reports', async (c) => {
-    const status = c.req.query('status') ?? 'open';
+    const status = c.req.query('status') || 'open';
     if (!['open', 'no_error', 'confirmed_error', 'all'].includes(status)) {
-      badQuery('Unknown content report filter');
+      badRequest('Unknown content report filter');
     }
     const rows = await db
       .select({
@@ -344,7 +342,7 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
       )
       .orderBy(desc(itemReports.createdAt))
       .limit(CONTENT_REPORT_LIMIT);
-    return c.json({
+    return ok(c, {
       reviewQueueUrl: `${config.webOrigin}/review`,
       reports: rows.map((r) => ({
         id: r.id,
@@ -369,9 +367,9 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
     })
     .strict();
 
-  app.get('/audit-log', async (c) => {
+  app.get('/audit', async (c) => {
     const parsed = AuditQuery.safeParse(queryOf(c.req.url));
-    if (!parsed.success) badQuery('Unknown audit log filter');
+    if (!parsed.success) badRequest('Unknown audit log filter');
     const q = parsed.data;
     const filters: SQL[] = [];
     if (q.targetType) filters.push(eq(operatorAuditLog.targetType, q.targetType));
@@ -384,30 +382,9 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
       .orderBy(desc(operatorAuditLog.createdAt))
       .limit(q.limit + 1);
     const page = rows.slice(0, q.limit);
-    return c.json({
+    return ok(c, {
       entries: page.map((r) => ({ ...r, createdAt: r.createdAt.toISOString() })),
       nextBefore: rows.length > q.limit ? page[page.length - 1]!.createdAt.toISOString() : null,
-    });
-  });
-
-  app.get('/status', async (c) => {
-    const at = now().getTime();
-    const [[hour], [day]] = await Promise.all([
-      db
-        .select({ n: count() })
-        .from(errorReports)
-        .where(gte(errorReports.createdAt, new Date(at - HOUR_MS))),
-      db
-        .select({ n: count() })
-        .from(errorReports)
-        .where(gte(errorReports.createdAt, new Date(at - DAY_MS))),
-    ]);
-    return c.json({
-      environment: config.environment,
-      version: deps.version,
-      database: 'ok',
-      errorReportsLastHour: hour!.n,
-      errorReports24h: day!.n,
     });
   });
 

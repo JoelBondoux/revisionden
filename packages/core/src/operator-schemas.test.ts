@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   OperatorFamilyDetailSchema,
-  OperatorFamilySearchQuerySchema,
+  OperatorFamilySearchSchema,
   OperatorTicketSchema,
 } from './operator-schemas';
 
@@ -12,16 +12,7 @@ const family = {
   deletesAfter: '2027-11-24T10:00:00.000Z',
   parents: [{ email: 'parent@example.com', joinedAt: '2026-11-01T10:00:00.000Z' }],
   plan: null,
-  children: [
-    {
-      id: '00000000-0000-4000-8000-000000000002',
-      nickname: 'test_kid',
-      yearGroup: 11,
-      subjects: ['gcse-maths'],
-      linkedDevices: 1,
-      lastActiveAt: null,
-    },
-  ],
+  children: [{ nickname: 'test_kid', yearGroup: 11 }],
   flags: { inactivityWarning: false, openTickets: 0, openContentReports: 0 },
 };
 
@@ -61,15 +52,17 @@ describe('operator response shapes (AppDeck bridge)', () => {
   });
 
   it('searches by exactly one of email or family id', () => {
-    expect(OperatorFamilySearchQuerySchema.parse({ email: ' Parent@Example.com ' })).toEqual({
+    expect(OperatorFamilySearchSchema.parse({ email: ' Parent@Example.com ' })).toEqual({
       email: 'parent@example.com',
     });
-    expect(OperatorFamilySearchQuerySchema.parse({ id: family.id })).toEqual({ id: family.id });
-    expect(() => OperatorFamilySearchQuerySchema.parse({})).toThrow();
+    expect(OperatorFamilySearchSchema.parse({ familyId: family.id })).toEqual({
+      familyId: family.id,
+    });
+    expect(() => OperatorFamilySearchSchema.parse({})).toThrow();
     expect(() =>
-      OperatorFamilySearchQuerySchema.parse({ email: 'parent@example.com', id: family.id }),
+      OperatorFamilySearchSchema.parse({ email: 'parent@example.com', familyId: family.id }),
     ).toThrow();
-    expect(() => OperatorFamilySearchQuerySchema.parse({ email: 'parent' })).toThrow();
-    expect(() => OperatorFamilySearchQuerySchema.parse({ id: 'not-an-id' })).toThrow();
+    expect(() => OperatorFamilySearchSchema.parse({ email: 'parent' })).toThrow();
+    expect(() => OperatorFamilySearchSchema.parse({ familyId: 'not-an-id' })).toThrow();
   });
 });

@@ -45,7 +45,7 @@ import {
 import { parentStatsRoutes, studentStatsRoutes } from './stats/routes';
 import { adminErrorReportRoutes, errorReportRoutes } from './feedback/error-reports';
 import type { StatsAdapters } from './stats/adapters';
-import { operatorRoutes } from './operator/routes';
+import { OPERATOR_BASE_PATH, operatorRoutes } from './operator/routes';
 import { createMemoryRateLimiter } from './rate-limit';
 
 export interface AppDeps {
@@ -172,7 +172,7 @@ export function createApp(deps: AppDeps) {
   app.route('/v1/error-reports', errorReportRoutes(deps));
   // Operator bridge (AppDeck): signed requests only; 404 when no shared secret is set.
   app.route(
-    '/operator/appdeck',
+    OPERATOR_BASE_PATH,
     operatorRoutes({
       ...deps,
       rateLimiter:

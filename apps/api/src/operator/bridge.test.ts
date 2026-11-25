@@ -40,6 +40,8 @@ describe('operator bridge: signed requests from AppDeck', () => {
         environment: 'development',
         version: '00.01.000',
         operator: { email: 'agent@example.com', role: 'agent' },
+        errorReportsLastHour: 0,
+        errorReports24h: 0,
       },
     });
   });
