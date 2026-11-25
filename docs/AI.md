@@ -27,10 +27,12 @@ spend tracking, per-child monthly cap, provider fallback).
   limits, overload, server errors, network errors and replies that fail validation. Refusals
   and bad requests are not retried.
 - Per-child monthly cap (default US$2.50, `AI_MONTHLY_CAP_USD`), checked before every call;
-  when reached the student sees "You've used all your AI marking for this month. It comes back
-  on the 1st." Every billed attempt is recorded in `ai_usage` (tokens and cost only).
+  families only ever see it as an allowance, never money (K9). When it is used up the student
+  sees "You've used this month's AI marking allowance. It resets on 1 <month>. Questions marked
+  by the app still work." Every billed attempt is recorded in `ai_usage` (tokens and cost only).
 - A request containing the student's profile fields or other personal data is refused before
-  it is sent. Parents see this month's spend at `GET /v1/students/:id/ai-usage`.
+  it is sent. Parents see this month's allowance used (a percentage and the reset date, no money) at
+  `GET /v1/students/:id/ai-usage`; the raw cost stays in operator routes.
 
 ## Short-answer marking (`POST /v1/ai/mark-short-answer`)
 

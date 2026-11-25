@@ -1,5 +1,5 @@
 import { Hono, type Context, type Next } from 'hono';
-import { and, asc, desc, eq, inArray, sql } from 'drizzle-orm';
+import { and, asc, desc, eq, sql } from 'drizzle-orm';
 import { z } from 'zod';
 import {
   batchOutcome,
@@ -7,6 +7,7 @@ import {
   drawSample,
   needsIndividualReview,
   readyForHumanReview,
+  recheckedSince,
   type ReviewDecision,
 } from '@revisionden/core';
 import {
@@ -232,14 +233,39 @@ export function reviewRoutes(db: Database, deps: VerificationDeps & { now: () =>
       .from(items)
       .where(eq(items.status, 'draft'))
       .orderBy(asc(items.contentId));
-    const taken = await db
-      .select({ itemId: reviewBatchItems.itemId, itemVersion: reviewBatchItems.itemVersion })
+    const memberships = await db
+      .select({
+        batchId: reviewBatches.id,
+        status: reviewBatches.status,
+        decidedAt: reviewBatches.decidedAt,
+        itemId: reviewBatchItems.itemId,
+        itemVersion: reviewBatchItems.itemVersion,
+      })
       .from(reviewBatchItems)
-      .innerJoin(reviewBatches, eq(reviewBatches.id, reviewBatchItems.batchId))
-      .where(inArray(reviewBatches.status, ['in_review', 'passed']));
-    const takenKeys = new Set(taken.map((r) => `${r.itemId}@${r.itemVersion}`));
+      .innerJoin(reviewBatches, eq(reviewBatches.id, reviewBatchItems.batchId));
+    const openRechecks = await db
+      .select({ batchId: recheckRequests.scopeValue })
+      .from(recheckRequests)
+      .where(and(eq(recheckRequests.scope, 'batch'), eq(recheckRequests.status, 'pending')));
+    const pendingBatches = new Set(openRechecks.map((r) => r.batchId));
+    const byItem = new Map<string, typeof memberships>();
+    for (const m of memberships) {
+      const key = `${m.itemId}@${m.itemVersion}`;
+      byItem.set(key, [...(byItem.get(key) ?? []), m]);
+    }
+    // An item version is blocked while it is in a batch under review or passed, and after a failed
+    // batch until that batch's recheck is done and steps 3 to 5 have re-run since the failure.
+    const blocked = (key: string, snapshot: Record<string, unknown>) =>
+      (byItem.get(key) ?? []).some((m) =>
+        m.status === 'failed'
+          ? pendingBatches.has(m.batchId) || !m.decidedAt || !recheckedSince(snapshot, m.decidedAt)
+          : true,
+      );
     return rows.flatMap(({ itemId, version, snapshot }) =>
-      itemId && snapshot && readyForHumanReview(snapshot) && !takenKeys.has(`${itemId}@${version}`)
+      itemId &&
+      snapshot &&
+      readyForHumanReview(snapshot) &&
+      !blocked(`${itemId}@${version}`, snapshot)
         ? [
             {
               itemId,

@@ -51,10 +51,10 @@ test('the blind statement prompt asks the neutral question, never our wording', 
   assert.doesNotMatch(prompt, /Fixture fact statement/);
 });
 
-test('a fact passes on an official citation whose quote check passed, with no model calls', async () => {
+test('a fact passes on an official citation only when the judge confirms the quote states it', async () => {
   const stater = fakeProvider('openai', [stated('x')]);
   const judge = fakeProvider('gemini', [judged(true)]);
-  const { maths } = fakeMaths(true);
+  const { maths, calls } = fakeMaths(true);
   const checks = [{ name: 'quote-check', result: 'pass', tool: 't', tool_version: '1', at: 'x' }];
   const r = await runFactCheck(item([{ ...fact, citation: 1 }], checks), {
     stater,
@@ -64,7 +64,25 @@ test('a fact passes on an official citation whose quote check passed, with no mo
   });
   assert.equal(r.result, 'pass');
   assert.equal(stater.requests.length, 0);
-  assert.match(r.check.notes, /fact 1: official \(citation 1\)/);
+  assert.equal(calls.length, 0);
+  assert.match(judge.requests[0].prompt, /solve linear equations/);
+  assert.match(judge.requests[0].prompt, /Fixture fact statement\./);
+  assert.match(r.check.notes, /fact 1: official \(citation 1, the quote states it\)/);
+});
+
+test('a cited quote that does not state the fact falls back to proof and blind statement', async () => {
+  const stater = fakeProvider('openai', [stated('Same fact.')]);
+  const judge = fakeProvider('gemini', [judged(false), judged(true)]);
+  const checks = [{ name: 'quote-check', result: 'pass', tool: 't', tool_version: '1', at: 'x' }];
+  const r = await runFactCheck(item([{ ...fact, citation: 1 }], checks), {
+    stater,
+    judge,
+    maths: fakeMaths(true).maths,
+    now: AT,
+  });
+  assert.equal(stater.requests.length, 1);
+  assert.equal(r.result, 'pass');
+  assert.match(r.check.notes, /citation 1 does not state it; maths engine proof pass/);
 });
 
 test('a citation counts only once the quote check has passed', async () => {

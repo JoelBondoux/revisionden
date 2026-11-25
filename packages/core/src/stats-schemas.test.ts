@@ -55,7 +55,7 @@ const sampleDashboard: ParentDashboard = {
   effortScores: null,
   rewards: [],
   healthyHabits: { quietHourSessions: 0, daysOverCap: 0, restDays: 1, dailyCapMinutes: 120 },
-  aiSpend: { month: '2026-11', spentMicroUsd: 10_000, capMicroUsd: 2_500_000 },
+  aiAllowance: { percentUsed: 0, usedUp: false, resetsOn: '2026-12-01' },
   recentActivity: [
     { kind: 'lesson', at: '2026-11-24T16:00:00.000Z', count: 8, subjectId: 'gcse-maths' },
   ],

@@ -39,7 +39,10 @@ describe('BarChart', () => {
     expect(within(table).getAllByRole('row')).toHaveLength(4);
     expect(within(table).getByRole('cell', { name: '35 XP' })).toBeInTheDocument();
     expect(table.closest('.visually-hidden')).not.toBeNull();
-    await userEvent.click(screen.getByRole('button', { name: 'Show table' }));
+    const toggle = screen.getByRole('button', { name: 'Show table' });
+    // A real button, not plain underlined text (J7).
+    expect(toggle).toHaveClass('btn', 'btn--secondary');
+    await userEvent.click(toggle);
     expect(table.closest('.visually-hidden')).toBeNull();
     expect(screen.getByRole('button', { name: 'Show chart' })).toBeInTheDocument();
   });
