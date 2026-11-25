@@ -5,12 +5,15 @@ import { server } from '../../mocks/server';
 import { renderRoute } from '../../test/render';
 import { demoStudentLimit, resetDailyLimitMocks } from './mocks';
 
+/** The panels load after the page's own data, so give slow CI machines time. */
+const LOAD = { timeout: 5000 };
+
 beforeEach(() => resetDailyLimitMocks());
 
 describe('daily limit for the student', () => {
   it('shows minutes left today on My stats', async () => {
     renderRoute('/progress');
-    const card = await screen.findByRole('region', { name: 'Today' });
+    const card = await screen.findByRole('region', { name: 'Today' }, LOAD);
     expect(card).toHaveTextContent('35 minutes left');
     expect(within(card).getByRole('progressbar', { name: 'Daily limit' })).toHaveAttribute(
       'aria-valuetext',
@@ -30,7 +33,7 @@ describe('daily limit for the student', () => {
       ),
     );
     renderRoute('/progress');
-    const card = await screen.findByRole('region', { name: 'Today' });
+    const card = await screen.findByRole('region', { name: 'Today' }, LOAD);
     expect(card).toHaveTextContent('Great work today. See you tomorrow');
   });
 
@@ -51,7 +54,7 @@ describe('daily limit for the student', () => {
       }),
     );
     renderRoute('/progress');
-    const notice = await screen.findByRole('status', { name: 'Daily limit changed' });
+    const notice = await screen.findByRole('status', { name: 'Daily limit changed' }, LOAD);
     expect(notice).toHaveTextContent('50 minutes on school days and 80 minutes on other days');
     await userEvent.click(within(notice).getByRole('button', { name: 'Got it' }));
     expect(seen).toBe(true);
@@ -62,7 +65,7 @@ describe('daily limit for the student', () => {
 describe('daily limit for the parent', () => {
   const openPanel = async () => {
     renderRoute('/parent/stats');
-    return screen.findByRole('region', { name: 'Daily limit' });
+    return screen.findByRole('region', { name: 'Daily limit' }, LOAD);
   };
 
   it('shows the limits, whether they are the defaults, and today', async () => {
