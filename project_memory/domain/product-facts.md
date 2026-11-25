@@ -40,7 +40,7 @@ Tags: #product #rules #limits #defaults
   on (default `/map`). With no passkey on the device the page says "Ask a parent to link this
   device" and shows no account details. The welcome page (`/`) is the one sign-in page for
   parents and students; the sales site's "Sign in" goes there
-  (`decisions/0006-student-passkey-unlock.md`). Implemented in
+  (`decisions/0007-student-passkey-unlock.md`). Implemented in
   `apps/web/src/features/onboarding/StudentUnlock.tsx`.
 - A passkey synced to another device (iCloud Keychain, Google Password Manager) unlocks there
   too, as the same linked device. Open owner question (`operations/contradictions.md`).

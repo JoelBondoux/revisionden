@@ -11,7 +11,7 @@
       unlocks on the child's other devices too, as the same `devices` row
       (`apps/api/src/routes/devices.ts` matches `devices.credential_id`). Not settled: the owner
       should choose to allow it, refuse synced passkeys at linking, or allow it and tell the
-      parent (options in `project_memory/decisions/0006-student-passkey-unlock.md`).
+      parent (options in `project_memory/decisions/0007-student-passkey-unlock.md`).
 
 - [ ] **Hidden tracks with no data yet (R7b).** Fact Checker (`factChecks`: `item_reports` has a
       family id but no student id, workstream V), Planner (`plannedWeeks`: no planned sessions,

@@ -1,4 +1,4 @@
-# 0006: Student passkey unlock and one sign-in page
+# 0007: Student passkey unlock and one sign-in page
 
 - Status: accepted for the sign-in page and unlock flow (lead, 2026-11-25); the synced-passkey
   question below is open for the product owner.
