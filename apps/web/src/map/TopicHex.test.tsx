@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
-import type { Topic } from '../api/schemas';
+import type { MapTopic as Topic } from '@revisionden/core';
 import { ChallengeHex, TopicHex } from './TopicHex';
 
 function renderHex(topic: Topic, onLocked = vi.fn()) {
@@ -20,7 +20,7 @@ describe('TopicHex', () => {
     renderHex({ ...base, status: 'mastered', mastery: 100 });
     const hex = screen.getByRole('link', { name: 'Surds, mastered' });
     expect(hex).toHaveClass('hex--mastered');
-    expect(hex).toHaveAttribute('href', '/lesson/surds');
+    expect(hex).toHaveAttribute('href', '/learn/topic/surds');
   });
 
   it('shows an in-progress topic with its mastery level and percentage', () => {
@@ -75,7 +75,7 @@ describe('ChallengeHex', () => {
     );
     expect(screen.getByRole('link', { name: 'Number challenge' })).toHaveAttribute(
       'href',
-      '/lesson/number-challenge',
+      '/learn/topic/number-challenge',
     );
   });
 });

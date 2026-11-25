@@ -136,20 +136,14 @@
 ### F. Learning loop (`apps/web/src/features/learn`, `apps/api` learn routes)
 
 - [x] F1 Starting test per subject (about 5 minutes) sets initial mastery.
-- [ ] F2 Learning path from mastery; lesson player for each item type; instant feedback.
-      Lesson player, instant feedback and a subject page with mastery are done; the learning path
-      map (workstream A's screen) still reads mock data and links to the old mock lessons.
+- [x] F2 Learning path from mastery; lesson player for each item type; instant feedback.
+      The topic map (A2) reads `GET /v1/student/map` and the Cards badge `GET /v1/student/cards/due`;
+      map hexes, unit challenges and the next mission open the lesson player.
 - [x] F3 Flashcards with spaced repetition.
 - [x] F4 XP, daily goal and streak shown and updated.
 - [ ] F5 Exam technique basics: command word lessons. The lesson screen and API are done
       (items tagged `command-word`); verified command-word items are still to be written through
       the content pipeline.
-- [ ] F3 Flashcards with spaced repetition. Design: mockup screen 18 (card flips in 3D from
-      question to answer; Again, Hard, Good and Easy buttons showing the next review time; Due
-      today, All decks and My cards tabs; deck-done summary with XP). The Cards tab and its due
-      badge already exist (A7); the page itself is a placeholder.
-- [ ] F4 XP, daily goal and streak shown and updated.
-- [ ] F5 Exam technique basics: command word lessons.
 - Tests: API integration for attempt recording; Playwright "complete a lesson and see XP".
 
 ### G. Deploy pipelines and end-to-end (`.github/workflows/deploy-*.yml`, `e2e/`)
