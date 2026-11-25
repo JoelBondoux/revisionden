@@ -85,7 +85,7 @@ Tags: #product #rules #limits #defaults
 - Wrong lesson answers become flashcards. Flashcard buttons Again/Hard/Good/Easy = SM-2 quality
   1/3/4/5; each shows when the card comes back. Deck XP is per completed session, not per card: 20 XP for a
   session of 5+ cards (ends when the due queue is empty or at 20 cards), whatever the ratings; at
-  most 2 rewarded sessions a day; self-ratings never change mastery (owner, 2026-11-25). Students can add their own cards (up to 300 characters a side); a card with an email, a UK mobile number or a family nickname is refused, as for feedback.
+  most 2 rewarded sessions a day (two reward slots per UK day, unique in the database; a one-deck session only needs that deck done); self-ratings never change mastery (owner, 2026-11-25). Students can add their own cards (up to 300 characters a side); a card with an email, a UK mobile number or a family nickname is refused, as for feedback.
 - XP is totalled per day in UK time; a streak day counts once, the first time the day reaches the
   daily goal. Command-word lessons are items tagged `command-word` (none verified yet).
 - Worked maths answers are checked by the maths engine (`MATHS_ENGINE_URL`); long answers are not
@@ -296,8 +296,9 @@ Tags: #product #rules #limits #defaults
 - Level curve: XP from level L to L + 1 is min(750, 300 + 50 × (L − 1)); level 20 at 12,000 XP,
   level 100 at 72,000 XP; a prestige star every 7,500 XP after that, up to 5. Assumes 60 XP a
   practice day and 250 practice days a school year (`packages/core/src/levels.ts`).
-- Reward XP: only answer XP counts; nothing from 22:00 to 05:59 UK time; at most 300 XP a UK day
-  (`packages/core/src/reward-xp.ts`). Flashcard deck reviews do not count yet (see contradictions).
+- Reward XP: answer XP and completed flashcard-session XP count; nothing from 22:00 to 05:59 UK time; at most 300 XP a UK day
+  (`packages/core/src/reward-xp.ts`). Flashcards alone give at most 40 XP a day (about 10,000 a
+  year), slower than the curve's 15,000, so pacing holds. Sessions: `flashcard_sessions` table.
 - Year chapters: 30 steps each (a step every 400 chapter XP, 12,000 fills a chapter); spill-over
   into earlier unfinished chapters for mid-way joiners; Year 11 and 13 finales on the last exam;
   Year 12+ count as GCSE finished (`packages/core/src/chapters.ts`).

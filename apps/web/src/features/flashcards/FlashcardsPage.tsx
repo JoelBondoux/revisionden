@@ -1,5 +1,12 @@
-import { useState, type FormEvent } from 'react';
-import { formatReviewDelay, type Flashcard, type FlashcardsOverview } from '@revisionden/core';
+import { useCallback, useEffect, useState, type FormEvent } from 'react';
+import {
+  FLASHCARD_SESSION_MAX_CARDS,
+  formatReviewDelay,
+  type Flashcard,
+  type FlashcardSession,
+  type FlashcardSessionResult,
+  type FlashcardsOverview,
+} from '@revisionden/core';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { Button, ButtonLink } from '../../components/Button';
@@ -44,21 +51,74 @@ function FlipCard({ card, flipped }: { card: Flashcard; flipped: boolean }) {
 
 const cardsText = (n: number) => `${n} card${n === 1 ? '' : 's'}`;
 
-/** Reviews a list of cards one by one, then shows the deck-done summary. */
-function ReviewSession({ cards, onExit }: { cards: Flashcard[]; onExit?: () => void }) {
+const OUTCOME_TEXT: Record<FlashcardSessionResult['reason'], string> = {
+  rewarded: '',
+  too_few_cards: 'Review at least 5 cards in one session to earn 20 XP.',
+  daily_limit: "You've already earned today's flashcard XP. These cards still help you remember!",
+  left_early: 'Finish every due card (or 20 cards) in one go to earn 20 XP.',
+};
+
+/**
+ * Reviews cards in one session (at most 20). A card rated Again comes back once before the
+ * session ends. XP is paid per completed session, never per card (F3).
+ */
+function ReviewSession({
+  cards,
+  topicId,
+  onExit,
+}: {
+  cards: Flashcard[];
+  /** Set when reviewing one deck: the session is complete when that deck is done. */
+  topicId?: string;
+  onExit?: () => void;
+}) {
   const api = useLearnApi();
   const { play } = useSound();
+  const [session, setSession] = useState<FlashcardSession | null>(null);
+  const [queue, setQueue] = useState(() => cards.slice(0, FLASHCARD_SESSION_MAX_CARDS));
+  const [cameBack, setCameBack] = useState<string[]>([]);
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState(false);
-  const [xp, setXp] = useState(0);
+  const [error, setError] = useState<'start' | 'review' | 'finish' | null>(null);
   const [sooner, setSooner] = useState(0);
+  const [result, setResult] = useState<FlashcardSessionResult | null>(null);
 
-  if (index >= cards.length) {
+  const start = useCallback(async () => {
+    setError(null);
+    try {
+      setSession(await api.startFlashcardSession(topicId));
+    } catch {
+      setError('start');
+    }
+  }, [api, topicId]);
+
+  useEffect(() => {
+    void start();
+  }, [start]);
+
+  async function finish(id: string) {
+    setBusy(true);
+    setError(null);
+    try {
+      const done = await api.finishFlashcardSession(id);
+      if (done.xpEarned > 0) play('celebration');
+      setResult(done);
+    } catch {
+      setError('finish');
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  if (result) {
     return (
       <Card title="Deck done!" className="deck-done">
-        <p className="deck-done__xp">+{xp} XP</p>
+        {result.xpEarned > 0 ? (
+          <p className="deck-done__xp">+{result.xpEarned} XP</p>
+        ) : (
+          <p>{OUTCOME_TEXT[result.reason]}</p>
+        )}
         <p>
           {sooner === 0
             ? 'No cards come back sooner.'
@@ -73,20 +133,52 @@ function ReviewSession({ cards, onExit }: { cards: Flashcard[]; onExit?: () => v
     );
   }
 
-  const card = cards[index]!;
+  if (error === 'start' || error === 'finish') {
+    return (
+      <Card>
+        <p role="alert" className="feedback feedback--wrong">
+          Couldn&apos;t save your session. Please try again.
+        </p>
+        <Button onClick={() => (error === 'start' ? void start() : void finish(session!.id))}>
+          Try again
+        </Button>
+      </Card>
+    );
+  }
+
+  if (!session) {
+    return (
+      <p role="status" className="secondary-text">
+        Getting your cards ready…
+      </p>
+    );
+  }
+
+  const card = queue[index]!;
 
   async function rate(rating: FlashcardRating) {
     setBusy(true);
-    setError(false);
+    setError(null);
     try {
-      const result = await api.reviewFlashcard(card.id, rating);
+      const reviewed = await api.reviewFlashcard(card.id, rating, session!.id);
       play('cardRated');
-      setXp((x) => x + result.xpEarned);
-      if (result.comesBackSooner) setSooner((s) => s + 1);
-      setIndex((i) => i + 1);
+      if (reviewed.comesBackSooner) setSooner((s) => s + 1);
+      // A card rated Again comes back once in this session (it is only counted once).
+      const nextQueue =
+        rating === 'again' && !cameBack.includes(card.id) ? [...queue, card] : queue;
+      if (nextQueue !== queue) {
+        setQueue(nextQueue);
+        setCameBack((ids) => [...ids, card.id]);
+      }
       setFlipped(false);
+      if (index + 1 >= nextQueue.length) {
+        setBusy(false);
+        await finish(session!.id);
+      } else {
+        setIndex(index + 1);
+      }
     } catch {
-      setError(true);
+      setError('review');
     } finally {
       setBusy(false);
     }
@@ -101,15 +193,20 @@ function ReviewSession({ cards, onExit }: { cards: Flashcard[]; onExit?: () => v
       <ArenaProgress
         label="Deck progress"
         value={index}
-        max={cards.length}
-        valueText={`${index} of ${cardsText(cards.length)}`}
+        max={queue.length}
+        valueText={`${index} of ${cardsText(queue.length)}`}
       />
+      <p className="secondary-text session-hint">
+        {session.rewardedLeftToday > 0
+          ? `Finish the session for ${session.xp} XP (at least ${session.minCards} cards).`
+          : "You've had today's 2 rewarded sessions. Keep going: every card helps you remember."}
+      </p>
       <FlipCard card={card} flipped={flipped} />
       <ReadAloudButton
         text={flipped ? [card.back, card.sourceRef].filter(Boolean).join('. ') : card.front}
         label="Read the card aloud"
       />
-      {error && (
+      {error === 'review' && (
         <p role="alert" className="feedback feedback--wrong">
           Couldn&apos;t save that. Please try again.
         </p>
@@ -143,14 +240,22 @@ function ReviewSession({ cards, onExit }: { cards: Flashcard[]; onExit?: () => v
 
 function DecksPanel({ overview }: { overview: FlashcardsOverview }) {
   const api = useLearnApi();
-  const [session, setSession] = useState<Flashcard[] | null>(null);
+  const [session, setSession] = useState<{ topicId: string; cards: Flashcard[] } | null>(null);
   const [error, setError] = useState(false);
-  if (session) return <ReviewSession cards={session} onExit={() => setSession(null)} />;
+  if (session) {
+    return (
+      <ReviewSession
+        cards={session.cards}
+        topicId={session.topicId}
+        onExit={() => setSession(null)}
+      />
+    );
+  }
   if (overview.decks.length === 0) return <p>No decks yet. They appear as you learn.</p>;
   async function open(topicId: string) {
     setError(false);
     try {
-      setSession(await api.getDeck(topicId));
+      setSession({ topicId, cards: await api.getDeck(topicId) });
     } catch {
       setError(true);
     }
