@@ -33,6 +33,8 @@ export const testTopicTree: ContentTopicTree = {
       children: [
         { id: 'test-topic-a', title: 'Test topic A', spec_ref: ['T1'], citations },
         { id: 'test-topic-b', title: 'Test topic B', spec_ref: ['T2'], citations },
+        // No items at all: shows as locked on the topic map (F2).
+        { id: 'test-topic-c', title: 'Test topic C', spec_ref: ['T3'], citations },
       ],
     },
   ],

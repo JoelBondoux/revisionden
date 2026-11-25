@@ -64,15 +64,15 @@ the last one. Each stage ends with a `[minor]` release to `main`.
 
 ### Stage 3: Exam practice (target 00.04.000)
 
-| Feature                         | Acceptance criteria                                                                                                                |
-| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| Past papers                     | Linked from exam board sites or uploaded; sat in the app with a timer                                                              |
-| Show your working (maths)       | Write, type steps or photo; each line checked by the maths engine; method marks shown                                              |
-| Long written answers and essays | Marked by skill against the mark scheme; labelled as marked by AI                                                                  |
-| Mark my homework                | Photo of homework; student confirms the transcription; feedback by skill; never rewrites the work; teacher mark can be added later |
-| Exam technique in practice      | Timed papers; mark scheme language                                                                                                 |
-| Access arrangements             | Extra time, read-aloud, dyslexia-friendly font                                                                                     |
-| A-Level extras                  | Coursework (NEA) deadlines; UCAS predicted grades                                                                                  |
+| Feature                         | Acceptance criteria                                                                                                                                             |
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Past papers                     | Timed papers with per-question pacing and end-of-paper marking: board-style papers built from our verified items, official papers as links (`EXAM_PRACTICE.md`) |
+| Show your working (maths)       | Write, type steps or photo; each line checked by the maths engine; method marks shown                                                                           |
+| Long written answers and essays | Marked by skill against the mark scheme; labelled as marked by AI                                                                                               |
+| Mark my homework                | Photo of homework; student confirms the transcription; feedback by skill; never rewrites the work; teacher mark can be added later                              |
+| Exam technique in practice      | Timed papers; mark scheme language                                                                                                                              |
+| Access arrangements             | Extra time, read-aloud, dyslexia-friendly font                                                                                                                  |
+| A-Level extras                  | Coursework (NEA) deadlines; UCAS predicted grades                                                                                                               |
 
 ### Stage 4: Motivation and friends (target 00.05.000)
 

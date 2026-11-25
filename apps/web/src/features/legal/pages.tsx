@@ -1,15 +1,46 @@
 import { Link, useParams } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { NotFoundPage } from '../../pages/NotFoundPage';
+import { FriendlyNotice } from './FriendlyNotice';
+import { parseFriendlyNotice } from './friendlyNotice';
 import { Markdown } from './Markdown';
 import { usePolicyLibrary } from './PolicyLibraryContext';
 import './legal.css';
+
+/** The policy shown as cards and short parts (docs/LEGAL.md, "Friendly view"). */
+export const FRIENDLY_NOTICE = 'privacy-for-young-people';
 
 /** One policy: plain English first, then the full text (on the same page), then changes. */
 export function PolicyPage() {
   const { name = '' } = useParams();
   const policy = usePolicyLibrary().get(name);
   if (!policy) return <NotFoundPage />;
+
+  if (name === FRIENDLY_NOTICE) {
+    return (
+      <article className="policy policy--friendly stack">
+        <p className="policy__back no-print">
+          <Link to="/legal">All policies</Link>
+        </p>
+        <header>
+          <h1>{policy.title}</h1>
+          <p className="secondary-text">
+            Version {policy.version} · Effective date: {policy.effectiveDate}
+          </p>
+        </header>
+        <FriendlyNotice content={parseFriendlyNotice(policy)} />
+        <section aria-labelledby="changes">
+          <h2 id="changes">Changes</h2>
+          <Markdown text={policy.changes} headingOffset={1} />
+        </section>
+        <p className="no-print">
+          <Button variant="secondary" onClick={() => window.print()}>
+            Print
+          </Button>
+        </p>
+      </article>
+    );
+  }
 
   return (
     <article className="policy stack">

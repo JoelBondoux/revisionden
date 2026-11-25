@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import type { Topic, UnitChallenge } from '../api/schemas';
+import type { MapTopic as Topic, UnitChallenge } from '@revisionden/core';
 import { CheckIcon, CrownIcon, LockIcon, WrenchIcon } from '../components/icons';
 
 type OnLocked = (message: string) => void;
@@ -75,7 +75,7 @@ export function TopicHex({ topic, onLocked }: { topic: Topic; onLocked: OnLocked
     );
   }
   return (
-    <Link to={`/lesson/${topic.lessonId}`} className={className} aria-label={label}>
+    <Link to={`/learn/topic/${topic.lessonId}`} className={className} aria-label={label}>
       {content}
     </Link>
   );
@@ -123,7 +123,7 @@ export function ChallengeHex({ unitTitle, challenge, onLocked }: ChallengeHexPro
   }
   return (
     <Link
-      to={`/lesson/${challenge.lessonId}`}
+      to={`/learn/topic/${challenge.lessonId}`}
       className="hex hex--challenge hex--unlocked"
       aria-label={`${unitTitle} challenge`}
     >
