@@ -202,7 +202,8 @@ Tags: #product #rules #limits #defaults
 - Discount codes (O5): Managers create (6–16 letters and digits, any case, stored upper case;
   percent 1–100 or a fixed amount in pence; months or forever; optional last UK day and maximum
   uses) and disable them in AppDeck; Agents can see them. One active code per family; never with
-  a free school meals place. Checkout (workstream $) applies them with `checkCodeForFamily`.
+  a free school meals place. Checkout (workstream $) applies them with `checkCodeForFamily`. A use stays counted after the
+  family is deleted (the redemption keeps no family).
 - Complaints (O4): a parent makes one at `/complaints` ("Make a complaint" on the parent home;
   3 a day per family; summary 3–500 characters with no email, phone or child nickname) or support
   logs an emailed one. Acknowledge by the end of the 2nd UK working day (weekends and England and

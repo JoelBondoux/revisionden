@@ -37,10 +37,20 @@ describe('discount codes (O5, docs/OPERATOR_CONSOLE.md)', () => {
       { code: 'PERCENT1', kind: 'percent', amount: 101 },
       { code: 'ZEROOFF1', kind: 'fixed', amount: 0 },
       { code: 'BADDATE1', kind: 'fixed', amount: 100, expiresAt: '31/12/2026' },
+      { code: 'BADDATE2', kind: 'fixed', amount: 100, expiresAt: '2026-02-29' },
+      { code: 'BADDATE3', kind: 'fixed', amount: 100, expiresAt: '2026-04-31' },
       { code: 'NOUSES01', kind: 'fixed', amount: 100, maxUses: 0 },
     ]) {
       expect(() => DiscountCodeCreateSchema.parse(bad), JSON.stringify(bad)).toThrow();
     }
+    expect(
+      DiscountCodeCreateSchema.parse({
+        code: 'LEAPDAY1',
+        kind: 'fixed',
+        amount: 100,
+        expiresAt: '2028-02-29',
+      }).expiresAt,
+    ).toBe('2028-02-29');
   });
 
   it('lets a family use a live code', () => {

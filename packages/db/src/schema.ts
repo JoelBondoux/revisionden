@@ -1302,7 +1302,10 @@ export const discountCodes = pgTable(
   ],
 );
 
-/** O5: a family using a code. One active code per family at a time (ended_at null). */
+/**
+ * O5: a family using a code. One active code per family at a time (ended_at null). When the family
+ * is deleted the row stays with no family, so a capped code's use is still counted.
+ */
 export const discountRedemptions = pgTable(
   'discount_redemptions',
   {
@@ -1310,9 +1313,7 @@ export const discountRedemptions = pgTable(
     codeId: uuid('code_id')
       .notNull()
       .references(() => discountCodes.id),
-    familyId: uuid('family_id')
-      .notNull()
-      .references(() => families.id, { onDelete: 'cascade' }),
+    familyId: uuid('family_id').references(() => families.id, { onDelete: 'set null' }),
     redeemedAt: timestamp('redeemed_at', { withTimezone: true }).notNull().defaultNow(),
     endedAt: timestamp('ended_at', { withTimezone: true }),
   },

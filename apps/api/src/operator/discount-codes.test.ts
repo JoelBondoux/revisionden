@@ -91,6 +91,31 @@ describe('discount codes in AppDeck (O5)', () => {
 });
 
 describe('checking a code for a family at checkout (for workstream $)', () => {
+  it('still counts a use after the family that used it is deleted', async () => {
+    const { deleteFamilies } = await import('../cleanup');
+    await call('POST', '/discount-codes', { ...winter, expiresAt: undefined, maxUses: 1 });
+    const first = await t.familyStudent('test_kid');
+    const [p1] = await t.db
+      .select()
+      .from(parents)
+      .where(eq(parents.authUserId, first.parent.userId));
+    const [code] = await t.db.select().from(discountCodes);
+    await t.db.insert(discountRedemptions).values({ codeId: code!.id, familyId: p1!.familyId });
+    await deleteFamilies(t.db, [p1!.familyId]);
+
+    const second = await t.familyStudent('other_kid');
+    const [p2] = await t.db
+      .select()
+      .from(parents)
+      .where(eq(parents.authUserId, second.parent.userId));
+    expect(await checkCodeForFamily(t.db, 'WINTER26', p2!.familyId, t.clock.now())).toEqual({
+      ok: false,
+      reason: 'used_up',
+    });
+    const left = await t.db.select().from(discountRedemptions);
+    expect(left.map((r) => r.familyId)).toEqual([null]);
+  });
+
   it('finds a live code in any case, and applies the one-code-per-family rule', async () => {
     await call('POST', '/discount-codes', { ...winter, expiresAt: undefined, maxUses: 1 });
     const { parent } = await t.familyStudent('test_kid');

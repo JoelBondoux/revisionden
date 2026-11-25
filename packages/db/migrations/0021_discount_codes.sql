@@ -20,12 +20,12 @@ CREATE TABLE "discount_codes" (
 CREATE TABLE "discount_redemptions" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"code_id" uuid NOT NULL,
-	"family_id" uuid NOT NULL,
+	"family_id" uuid,
 	"redeemed_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"ended_at" timestamp with time zone
 );
 --> statement-breakpoint
 ALTER TABLE "discount_redemptions" ADD CONSTRAINT "discount_redemptions_code_id_discount_codes_id_fk" FOREIGN KEY ("code_id") REFERENCES "public"."discount_codes"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "discount_redemptions" ADD CONSTRAINT "discount_redemptions_family_id_families_id_fk" FOREIGN KEY ("family_id") REFERENCES "public"."families"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "discount_redemptions" ADD CONSTRAINT "discount_redemptions_family_id_families_id_fk" FOREIGN KEY ("family_id") REFERENCES "public"."families"("id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint
 CREATE INDEX "discount_redemptions_code_idx" ON "discount_redemptions" USING btree ("code_id");--> statement-breakpoint
 CREATE UNIQUE INDEX "discount_redemptions_one_active_per_family" ON "discount_redemptions" USING btree ("family_id") WHERE "discount_redemptions"."ended_at" is null;

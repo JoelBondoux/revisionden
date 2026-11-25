@@ -1,5 +1,5 @@
 {
-  "id": "b3e12ee6-b6f0-471e-8cb1-62ea752047fc",
+  "id": "5f51f9e3-a628-42f3-8e83-90ed949d0ab7",
   "prevId": "69e02e48-f919-43b4-8000-ca2cedb0b13d",
   "version": "7",
   "dialect": "postgresql",
@@ -1533,7 +1533,7 @@
           "name": "family_id",
           "type": "uuid",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "redeemed_at": {
           "name": "redeemed_at",
@@ -1598,7 +1598,7 @@
           "tableTo": "families",
           "columnsFrom": ["family_id"],
           "columnsTo": ["id"],
-          "onDelete": "cascade",
+          "onDelete": "set null",
           "onUpdate": "no action"
         }
       },

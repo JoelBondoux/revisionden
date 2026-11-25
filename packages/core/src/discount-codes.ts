@@ -11,7 +11,11 @@ export const normaliseDiscountCode = (code: string) => code.trim().toUpperCase()
 const ymd = z
   .string()
   .regex(/^\d{4}-\d{2}-\d{2}$/)
-  .refine((d) => !Number.isNaN(new Date(`${d}T00:00:00Z`).getTime()), 'Not a date');
+  // A real calendar day: JavaScript rolls 2026-02-29 into March, so compare it back.
+  .refine((d) => {
+    const parsed = new Date(`${d}T00:00:00Z`);
+    return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === d;
+  }, 'Not a date');
 
 /** `POST discount-codes`: `amount` is a percentage, or pence when `kind` is fixed. */
 export const DiscountCodeCreateSchema = z
