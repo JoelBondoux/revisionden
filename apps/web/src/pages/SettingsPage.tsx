@@ -1,5 +1,16 @@
-import { Link } from 'react-router-dom';
 import { Card } from '../components/Card';
+import {
+  ChatIcon,
+  CrownIcon,
+  DocumentIcon,
+  HeartIcon,
+  HomeIcon,
+  InfoIcon,
+  PhoneIcon,
+  ShieldIcon,
+  UsersIcon,
+} from '../components/icons';
+import { LinkTile } from '../components/links';
 import { useBugButton } from '../features/feedback/bugButtonContext';
 import { DeviceReminders } from '../features/notifications';
 import { ReadingSettingsCard } from '../features/reading';
@@ -13,22 +24,42 @@ export function SettingsPage() {
     <div className="stack">
       <h1>Settings</h1>
       <Card title="This device">
-        <ul className="link-list">
+        <ul className="link-tiles">
           <li>
-            <Link to="/install">Add to Home Screen</Link>
+            <LinkTile
+              to="/install"
+              icon={<PhoneIcon />}
+              title="Add to Home Screen"
+              description="Open RevisionDen like an app"
+            />
           </li>
           <li>
-            <Link to="/family">Switch profile</Link>
+            <LinkTile
+              to="/family"
+              icon={<UsersIcon />}
+              title="Switch profile"
+              description="Choose who is revising"
+            />
           </li>
           <li>
-            <Link to="/rewards">My rewards</Link>
+            <LinkTile
+              to="/rewards"
+              icon={<CrownIcon />}
+              title="My rewards"
+              description="Your level, chapter and collections"
+            />
           </li>
         </ul>
       </Card>
       <Card title="Parents">
-        <ul className="link-list">
+        <ul className="link-tiles">
           <li>
-            <Link to="/parent">Parent home</Link>
+            <LinkTile
+              to="/parent"
+              icon={<HomeIcon />}
+              title="Parent home"
+              description="Stats, rewards you set and reminders"
+            />
           </li>
         </ul>
       </Card>
@@ -48,26 +79,55 @@ export function SettingsPage() {
         <p className="secondary-text">
           The small bug in the corner opens a bug report. Saved on this device.
         </p>
-        <ul className="link-list">
+        <ul className="link-tiles">
           <li>
-            <Link to="/help">Get help</Link>
+            <LinkTile
+              to="/help"
+              icon={<HeartIcon />}
+              title="Get help"
+              description="People to talk to, any time"
+            />
           </li>
           <li>
-            <Link to="/feedback" state={{ from: '/settings' }}>
-              Send feedback or report a bug
-            </Link>
+            <LinkTile
+              to="/feedback"
+              state={{ from: '/settings' }}
+              icon={<ChatIcon />}
+              title="Send feedback or report a bug"
+              description="Tell us what to fix or add"
+            />
           </li>
           <li>
-            <Link to="/feedback/mine">Your feedback</Link>
+            <LinkTile
+              to="/feedback/mine"
+              icon={<DocumentIcon />}
+              title="Your feedback"
+              description="What you sent and what happened"
+            />
           </li>
           <li>
-            <Link to="/feedback/family">Your family&apos;s feedback (parents)</Link>
+            <LinkTile
+              to="/feedback/family"
+              icon={<UsersIcon />}
+              title="Your family's feedback (parents)"
+              description="Everything your family sent"
+            />
           </li>
           <li>
-            <Link to="/legal">Policies</Link>
+            <LinkTile
+              to="/legal"
+              icon={<ShieldIcon />}
+              title="Policies"
+              description="Privacy and terms in plain English"
+            />
           </li>
           <li>
-            <Link to="/about">About RevisionDen</Link>
+            <LinkTile
+              to="/about"
+              icon={<InfoIcon />}
+              title="About RevisionDen"
+              description="Version and what's new"
+            />
           </li>
         </ul>
       </Card>

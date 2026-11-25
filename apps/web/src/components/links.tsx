@@ -9,9 +9,9 @@ import './links.css';
 
 type Destination =
   /** A route inside the app. */
-  | { to: string; href?: never; newTab?: never }
+  | { to: string; href?: never; newTab?: never; state?: unknown }
   /** An outside address or a mailto: link. */
-  | { href: string; to?: never; newTab?: boolean };
+  | { href: string; to?: never; newTab?: boolean; state?: never };
 
 type AnchorProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'children'>;
 
@@ -26,7 +26,7 @@ function AnyLink({
 }: AnchorProps & { dest: Destination; children: ReactNode }) {
   if (dest.to !== undefined) {
     return (
-      <Link to={dest.to} className={className} {...rest}>
+      <Link to={dest.to} state={dest.state} className={className} {...rest}>
         {children}
       </Link>
     );
@@ -40,8 +40,13 @@ function AnyLink({
   );
 }
 
-const destOf = (p: { to?: string; href?: string; newTab?: boolean }): Destination =>
-  p.to !== undefined ? { to: p.to } : { href: p.href!, newTab: p.newTab };
+const destOf = (p: {
+  to?: string;
+  href?: string;
+  newTab?: boolean;
+  state?: unknown;
+}): Destination =>
+  p.to !== undefined ? { to: p.to, state: p.state } : { href: p.href!, newTab: p.newTab };
 
 const cx = (...names: (string | false | undefined)[]) => names.filter(Boolean).join(' ');
 
@@ -60,6 +65,7 @@ export function LinkButton({
   to,
   href,
   newTab,
+  state,
   variant = 'primary',
   icon,
   block = false,
@@ -69,12 +75,12 @@ export function LinkButton({
 }: LinkButtonProps) {
   return (
     <AnyLink
-      dest={destOf({ to, href, newTab })}
-      className={cx('btn', `btn--${variant}`, 'link-button', block && 'btn--block', className)}
+      dest={destOf({ to, href, newTab, state } as Parameters<typeof destOf>[0])}
+      className={cx('btn', `btn--${variant}`, 'btn-link', block && 'btn--block', className)}
       {...rest}
     >
       {icon && (
-        <span className="link-button__icon" aria-hidden="true">
+        <span className="btn-link__icon" aria-hidden="true">
           {icon}
         </span>
       )}
@@ -91,39 +97,38 @@ type LinkTileProps = AnchorProps &
   };
 
 /**
- * A tappable card for "go to X": icon, title, one-line description and a chevron. Its accessible
- * name is the title alone; the description is read as its description.
+ * A tappable card for "go to X": icon, title, one-line description and a chevron. The link's own
+ * text is the title (its accessible name, matching what it shows, WCAG 2.5.3); the description is
+ * its accessible description. The link is stretched over the whole card, so any part of it taps.
  */
 export function LinkTile({
   to,
   href,
   newTab,
+  state,
   title,
   description,
   icon,
   className,
   ...rest
 }: LinkTileProps) {
-  const id = useId();
-  const titleId = `${id}-title`;
-  const descId = `${id}-desc`;
+  const descId = `${useId()}-desc`;
   return (
-    <AnyLink
-      dest={destOf({ to, href, newTab })}
-      className={cx('link-tile', className)}
-      aria-labelledby={titleId}
-      aria-describedby={description ? descId : undefined}
-      {...rest}
-    >
+    <span className={cx('link-tile', className)}>
       {icon && (
         <span className="link-tile__icon" aria-hidden="true">
           {icon}
         </span>
       )}
       <span className="link-tile__text">
-        <span className="link-tile__title" id={titleId}>
+        <AnyLink
+          dest={destOf({ to, href, newTab, state } as Parameters<typeof destOf>[0])}
+          className="link-tile__link"
+          aria-describedby={description ? descId : undefined}
+          {...rest}
+        >
           {title}
-        </span>
+        </AnyLink>
         {description && (
           <span className="link-tile__description" id={descId}>
             {description}
@@ -145,16 +150,28 @@ export function LinkTile({
       >
         <polyline points="9 5 16 12 9 19" />
       </svg>
-    </AnyLink>
+    </span>
   );
 }
 
 type SimpleLinkProps = AnchorProps & Destination & { children: ReactNode };
 
 /** A small pill-shaped link for use inside cards ("Details", "Change"). */
-export function LinkChip({ to, href, newTab, className, children, ...rest }: SimpleLinkProps) {
+export function LinkChip({
+  to,
+  href,
+  newTab,
+  state,
+  className,
+  children,
+  ...rest
+}: SimpleLinkProps) {
   return (
-    <AnyLink dest={destOf({ to, href, newTab })} className={cx('link-chip', className)} {...rest}>
+    <AnyLink
+      dest={destOf({ to, href, newTab, state } as Parameters<typeof destOf>[0])}
+      className={cx('link-chip', className)}
+      {...rest}
+    >
       {children}
     </AnyLink>
   );
@@ -164,9 +181,21 @@ export function LinkChip({ to, href, newTab, className, children, ...rest }: Sim
  * A link inside a sentence or long prose (policies). Stays inline for readability, but is bold and
  * coloured with a soft bar under it, and underlines on hover: never plain underlined text.
  */
-export function TextLink({ to, href, newTab, className, children, ...rest }: SimpleLinkProps) {
+export function TextLink({
+  to,
+  href,
+  newTab,
+  state,
+  className,
+  children,
+  ...rest
+}: SimpleLinkProps) {
   return (
-    <AnyLink dest={destOf({ to, href, newTab })} className={cx('text-link', className)} {...rest}>
+    <AnyLink
+      dest={destOf({ to, href, newTab, state } as Parameters<typeof destOf>[0])}
+      className={cx('text-link', className)}
+      {...rest}
+    >
       {children}
     </AnyLink>
   );

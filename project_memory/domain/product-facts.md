@@ -158,7 +158,8 @@ Tags: #product #rules #limits #defaults
 - Roles from AppDeck: Agent (support) and Manager (also money and data), enforced by the API.
 - AppDeck reads (O2): health, overview, family search by exact parent email or family id only
   (POST body, no browsing names), family detail (parents' emails, children as nickname + year
-  group only, flags), tickets (a student's ticket text is never sent), error-report groups,
+  group only, flags), tickets (a student's ticket text is never sent), error-report groups (and
+  an exact lookup of one RD code, `error-reports?code=`),
   content reports, audit log. `apps/api/src/operator/reads.ts`; shapes in
   `packages/core/src/operator-schemas.ts`.
 - AppDeck actions (O3, all Agent): internal family notes (≤2000, never shown to the family, in its
@@ -439,7 +440,10 @@ Tags: #product #rules #limits #defaults
   needed.
   Operator triage at `/admin/feedback` for sign-in emails in `OPERATOR_EMAILS`. Workstream L.
 - Parents confirm the terms and privacy notice in onboarding (version stored in
-  `policy_acceptances`); a changed version shows a "We've updated" prompt. A newly linked student
+  `policy_acceptances`) on a "Before you start" page that shows each policy's plain-English
+  bullets as cards (word for word, from the policy files; 4 chosen ones first, then "Show all N
+  points") with the full text behind "Show the
+  details"; a changed version shows a "We've updated" prompt. A newly linked student
   device shows the young people's notice once (`revisionden.youngPeopleNotice` in local storage).
 - The young people's notice has a friendly view built from the same file: 6 short-version cards,
   2 to 4 key points per part always visible, "Read more" and "Expand all", original icons and Pip;
@@ -502,6 +506,11 @@ Tags: #product #rules #limits #defaults
   today." shows when today's daily goal is met (`progress.goalMet`). The "daily cap" for "See you
   tomorrow" is the daily reward XP cap (`DAILY_REWARD_XP_CAP`, 300 XP today), confirmed by the lead
   on 2026-11-25 for now: the lesson only knows XP, not study minutes.
+
+- Settled in J7 (owner request, 2026-11-25): no plain underlined text links. Navigation uses the
+  link components in `apps/web/src/components/links.tsx` (LinkButton, LinkTile, LinkChip; TextLink
+  only inside sentences and policy prose: bold, coloured, a soft bar, underline on hover). A guard
+  test, `apps/web/src/components/noTextLinks.test.ts`, keeps it that way.
 
 ## Exam practice (planned)
 
