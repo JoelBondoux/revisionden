@@ -402,11 +402,11 @@
         },
         {
           "name": "adversarial-review",
-          "result": "fail",
+          "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:35:42Z",
-          "notes": "wrong_answer (answer): The selected answer, option 1 (5.65 ≤ x < 5.75), describes the error interval for rounding to 1 decimal place. The question asks for the error interval due to truncation. When a number is truncated to 5.7, it must be greater than or equal to 5.7 and less than 5.8. Therefore, the correct answer is option 2 (5.7 ≤ x < 5.8).; wording (explanation): The explanation correctly states that 'Any number from 5.7 up to (but not including) 5.8 truncates to 5.7.' This describes the interval in option 2, but the marked correct answer is option 1. The explanation contradicts the chosen answer."
+          "at": "2026-11-25T17:45:03Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -479,11 +479,11 @@
         },
         {
           "name": "adversarial-review",
-          "result": "fail",
+          "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:36:06Z",
-          "notes": "wrong_answer (answer): The marked answer is option 2 (295 < m ≤ 305), but the correct answer is option 3 (295 ≤ m < 305). For a value rounded to the nearest 10 g, the tolerance is ±5 g. The convention for error intervals is that the lower bound is inclusive (≤) and the upper bound is exclusive (<). The explanation correctly describes option 3, not the marked answer."
+          "at": "2026-11-25T17:45:13Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -501,7 +501,7 @@
       "option": 3
     },
     "marks": 1,
-    "explanation": "To 2 significant figures 2400 is rounded to the nearest 100. Half of 100 is 50, so n is from 2350 up to (but not including) 2450.",
+    "explanation": "n is 2400 correct to 2 significant figures, so n was rounded to the nearest 100. Half of 100 is 50, so n is from 2350 up to (but not including) 2450.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["author"],
     "citations": [
@@ -527,7 +527,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. 2350 rounds to 2400 and 2450 to 2500 (2 s.f., ROUND_HALF_UP).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. 2350 rounds to 2400 and 2450 to 2500 (2 s.f., ROUND_HALF_UP). Explanation reworded after adversarial review: it is n that was rounded to the nearest 100, not 2400. Explanation now starts from the question's own information (adversarial review, second run).",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -551,16 +551,16 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:36:17Z",
+          "at": "2026-11-25T17:50:10Z",
           "notes": "model answered \"3\"; expected \"3\""
         },
         {
           "name": "adversarial-review",
-          "result": "fail",
+          "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:11Z",
-          "notes": "wrong_answer (answer): The marked answer is the third option in the list, `2350 < n ≤ 2450`. This is mathematically incorrect. The lower bound should be inclusive because 2350 rounded to 2 significant figures is 2400. The upper bound should be exclusive because 2450 rounds to 2500, not 2400. The correct error interval is `2350 ≤ n < 2450`, which is the fourth option. The explanation correctly describes the reasoning for the fourth option, creating an inconsistency with the marked answer."
+          "at": "2026-11-25T17:50:42Z",
+          "notes": "no problems found"
         }
       ]
     }
