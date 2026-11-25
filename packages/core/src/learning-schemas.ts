@@ -4,6 +4,7 @@
  * are the exception (the back is the answer the student checks themselves against).
  */
 import { z } from 'zod';
+import { RewardCardSchema } from './rewards-schemas';
 import { IdSchema, IsoDateTimeSchema, ModeSchema } from './schemas';
 
 const text = z.string().min(1);
@@ -133,6 +134,8 @@ export const LearnAttemptResponseSchema = z.object({
   combo: z.number().int().min(0).optional(),
   /** The combo bonus included in xpEarned (+5 from the 3rd in a row). */
   comboBonusXp: z.number().int().min(0).optional(),
+  /** Rewards this answer earned, saved once each (play the reward sound and show them). */
+  newlyEarned: z.array(RewardCardSchema),
 });
 export type LearnAttemptResponse = z.infer<typeof LearnAttemptResponseSchema>;
 
@@ -219,6 +222,8 @@ export const FlashcardSessionResultSchema = z.object({
   cardsCounted: z.number().int().min(0),
   rewardedLeftToday: z.number().int().min(0),
   progress: ProgressSchema,
+  /** Rewards this session earned, saved once each. */
+  newlyEarned: z.array(RewardCardSchema),
 });
 export type FlashcardSessionResult = z.infer<typeof FlashcardSessionResultSchema>;
 
