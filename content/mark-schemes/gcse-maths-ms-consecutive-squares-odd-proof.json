@@ -4,7 +4,7 @@
   "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6 (mark points written for RevisionDen in the board's M/A/B style)",
   "points": [
     {
-      "code": "M1",
+      "code": "B1",
       "description": "Writes two consecutive integers algebraically and expands (n + 1)^2 = n^2 + 2n + 1"
     },
     { "code": "M1", "description": "Simplifies the difference of the squares to 2n + 1" },
@@ -33,7 +33,7 @@
         "result": "pass",
         "tool": "revisionden-quote-check",
         "tool_version": "1.0.0",
-        "at": "2026-11-25T17:21:51Z",
+        "at": "2026-11-25T18:06:05Z",
         "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
       }
     ]

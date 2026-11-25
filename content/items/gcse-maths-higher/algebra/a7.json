@@ -46,6 +46,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:03Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:46:44Z",
+          "notes": "model answered \"7\"; expected \"7\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:46:50Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -97,6 +113,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:04Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:46:57Z",
+          "notes": "model answered \"10\"; expected \"10\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:04Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -148,6 +180,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:04Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:11Z",
+          "notes": "model answered \"-2\"; expected \"-2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:16Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -200,6 +248,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:05Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:22Z",
+          "notes": "model answered \"-2\"; expected \"-2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:29Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -216,7 +280,7 @@
     "verify": { "method": "solve", "equation": "x = 2y + 3", "variable": "y" },
     "marks": 2,
     "mark_scheme": [
-      "M1 for writing x = 2y + 3 (or y = 2x + 3) and rearranging one step",
+      "M1 for a correct first step of the rearrangement, for example x - 3 = 2y",
       "A1 for f^-1(x) = (x - 3)/2"
     ],
     "hint": "Write y = 2x + 3, swap x and y, then make y the subject.",
@@ -246,14 +310,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). Solutions backed by the maths engine.",
-          "at": "2026-11-25T17:21:07Z"
+          "at": "2026-11-25T18:04:50Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:24:06Z",
+          "at": "2026-11-25T18:05:56Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -271,7 +335,7 @@
     "verify": { "method": "solve", "equation": "x = 5y - 1", "variable": "y" },
     "marks": 2,
     "mark_scheme": [
-      "M1 for writing x = 5y - 1 (or y = 5x - 1) and rearranging one step",
+      "M1 for a correct first step of the rearrangement, for example x + 1 = 5y",
       "A1 for f^-1(x) = (x + 1)/5"
     ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
@@ -300,14 +364,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). Solutions backed by the maths engine.",
-          "at": "2026-11-25T17:21:07Z"
+          "at": "2026-11-25T18:04:50Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:24:06Z",
+          "at": "2026-11-25T18:05:57Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -325,7 +389,7 @@
     "verify": { "method": "solve", "equation": "x = (y + 4)/3", "variable": "y" },
     "marks": 2,
     "mark_scheme": [
-      "M1 for writing x = (y + 4)/3 (or y = (x + 4)/3) and rearranging one step",
+      "M1 for a correct first step of the rearrangement, for example 3x = y + 4",
       "A1 for f^-1(x) = 3x - 4"
     ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
@@ -354,14 +418,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). Solutions backed by the maths engine.",
-          "at": "2026-11-25T17:21:07Z"
+          "at": "2026-11-25T18:04:50Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:24:07Z",
+          "at": "2026-11-25T18:05:57Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -415,6 +479,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:08Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:48:52Z",
+          "notes": "model answered \"19\"; expected \"19\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:48:58Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -467,6 +547,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:08Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:49:04Z",
+          "notes": "model answered \"49\"; expected \"49\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:49:13Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -519,6 +615,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:09Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:49:19Z",
+          "notes": "model answered \"3x + 10\"; expected \"3x + 10\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:49:25Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -530,7 +642,7 @@
     "difficulty": 1,
     "learning_point": "gcse-maths-h-a7-lp-function-cards",
     "expected_seconds": 15,
-    "front": "f(x) = x + 7. Write down f^-1(x).",
+    "front": "f(x) = x + 7. Complete: f^-1(x) = ...",
     "back": "x - 7",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
     "checked_by": ["author"],
@@ -558,14 +670,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). Checked with SymPy: f(x - 7) = x.",
-          "at": "2026-11-25T17:20:52Z"
+          "at": "2026-11-25T18:04:50Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:24:10Z",
+          "at": "2026-11-25T18:05:58Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -578,7 +690,7 @@
     "difficulty": 1,
     "learning_point": "gcse-maths-h-a7-lp-function-cards",
     "expected_seconds": 15,
-    "front": "f(x) = 4x. Write down f^-1(x).",
+    "front": "f(x) = 4x. Complete: f^-1(x) = ...",
     "back": "x/4",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
     "checked_by": ["author"],
@@ -606,14 +718,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). Checked with SymPy: f(x/4) = x.",
-          "at": "2026-11-25T17:20:52Z"
+          "at": "2026-11-25T18:04:50Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:24:10Z",
+          "at": "2026-11-25T18:05:59Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -664,6 +776,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:11Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:50:00Z",
+          "notes": "model answered \"g\"; expected \"g\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:50:07Z",
+          "notes": "no problems found"
         }
       ]
     }

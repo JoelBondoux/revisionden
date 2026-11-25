@@ -46,6 +46,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:51Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:42:53Z",
+          "notes": "model answered \"5\"; expected \"5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:43:00Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -97,6 +113,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:52Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:43:05Z",
+          "notes": "model answered \"2.6\"; expected \"2.6\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:43:12Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -148,6 +180,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:53Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:43:20Z",
+          "notes": "model answered \"3.1538\"; expected \"3.1538\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:43:27Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -199,6 +247,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:53Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:43:35Z",
+          "notes": "model answered \"1.905\"; expected \"1.905\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:43:48Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -219,7 +283,7 @@
     ],
     "answer": { "option": 0 },
     "marks": 1,
-    "explanation": "f changes sign between x = 2 and x = 3 and f is continuous, so f(x) = 0 somewhere between them.",
+    "explanation": "f(x) changes sign between x = 2 and x = 3, so the graph of y = f(x) crosses the x-axis between them: there is a solution between 2 and 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -247,14 +311,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). f(2) and f(3) checked with SymPy. Sign-change argument: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
-          "at": "2026-11-25T17:29:17Z"
+          "at": "2026-11-25T18:04:51Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:29:54Z",
+          "at": "2026-11-25T18:05:33Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -307,6 +371,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:55Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:44:27Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:44:38Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -318,7 +398,7 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a20-lp-sign-change",
     "expected_seconds": 30,
-    "prompt": "f(x) = x^3 - 4x - 1. Work out f(2).",
+    "prompt": "To show that x^3 - 4x - 1 = 0 has a solution between x = 2 and x = 3, you look for a change of sign. Let f(x) = x^3 - 4x - 1. Work out f(2).",
     "answer": { "value": "-1" },
     "verify": { "expression": "2^3 - 4*2 - 1" },
     "marks": 1,
@@ -349,14 +429,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). Answer backed by the maths engine.",
-          "at": "2026-11-25T17:29:17Z"
+          "at": "2026-11-25T18:04:51Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:29:55Z",
+          "at": "2026-11-25T18:05:33Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -406,6 +486,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:56Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:45:01Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:45:08Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -455,6 +551,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:57Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:45:15Z",
+          "notes": "model answered \"Iteration\"; expected \"Iteration\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:45:22Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -503,6 +615,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:58Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:45:28Z",
+          "notes": "model answered \"4\"; expected \"4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:45:35Z",
+          "notes": "no problems found"
         }
       ]
     }

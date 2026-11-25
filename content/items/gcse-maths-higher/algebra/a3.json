@@ -8,7 +8,9 @@
     "expected_seconds": 25,
     "prompt": "Which of these is an equation?",
     "options": ["5x - 2", "5x - 2 = 13", "5x - 2 > 13", "5x - 2x"],
-    "answer": { "option": 1 },
+    "answer": {
+      "option": 1
+    },
     "marks": 1,
     "explanation": "An equation has an equals sign and is true only for particular values (here x = 3). The others are expressions or an inequality.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
@@ -76,7 +78,9 @@
     "expected_seconds": 25,
     "prompt": "Which of these is an expression?",
     "options": ["4y + 3 = 11", "4y + 3", "4y + 3 < 11", "y = 4"],
-    "answer": { "option": 1 },
+    "answer": {
+      "option": 1
+    },
     "marks": 1,
     "explanation": "An expression is a collection of terms with no equals or inequality sign.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
@@ -144,7 +148,9 @@
     "expected_seconds": 25,
     "prompt": "Which of these is an inequality?",
     "options": ["2n + 1 = 9", "2n + 1", "2n + 1 ≥ 9", "2n ≡ n + n"],
-    "answer": { "option": 2 },
+    "answer": {
+      "option": 2
+    },
     "marks": 1,
     "explanation": "An inequality compares two sides with <, >, ≤ or ≥.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
@@ -212,7 +218,9 @@
     "expected_seconds": 25,
     "prompt": "Which of these is an identity (true for every value of x)?",
     "options": ["3x = 12", "x + x + x = 3x", "x^2 = 9", "2x + 1 = 7"],
-    "answer": { "option": 1 },
+    "answer": {
+      "option": 1
+    },
     "marks": 1,
     "explanation": "x + x + x is 3x for every value of x. The others are equations, true only for some values.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
@@ -279,8 +287,14 @@
     "learning_point": "gcse-maths-h-a3-lp-classify",
     "expected_seconds": 60,
     "prompt": "Expand and simplify 3(x + 2) - x",
-    "answer": { "expression": "2x + 6" },
-    "verify": { "method": "expression", "expression": "3(x + 2) - x", "form": "expanded" },
+    "answer": {
+      "expression": "2x + 6"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "3(x + 2) - x",
+      "form": "expanded"
+    },
     "steps": ["3(x + 2) - x", "3x + 6 - x", "2x + 6"],
     "marks": 2,
     "mark_scheme": ["M1 for 3x + 6 - x", "A1 for 2x + 6"],
@@ -371,7 +385,9 @@
     "learning_point": "gcse-maths-h-a3-lp-terms-factors",
     "expected_seconds": 30,
     "prompt": "How many terms are in the expression 4x^2 - 3x + 7?",
-    "answer": { "accepted": ["3", "three", "3 terms"] },
+    "answer": {
+      "accepted": ["3", "three", "3 terms"]
+    },
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
     "checked_by": ["author"],
@@ -438,7 +454,9 @@
     "expected_seconds": 25,
     "prompt": "Which of these is a factor of 6xy?",
     "options": ["6x + y", "3y", "xy^2", "12x"],
-    "answer": { "option": 1 },
+    "answer": {
+      "option": 1
+    },
     "marks": 1,
     "explanation": "6xy = 3y × 2x, so 3y is a factor. 6xy ÷ xy^2 = 6/y and 6xy ÷ 12x = y/2 leave a fraction, and 6x + y does not divide 6xy exactly, so none of those is a factor.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
@@ -505,7 +523,9 @@
     "learning_point": "gcse-maths-h-a3-lp-terms-factors",
     "expected_seconds": 30,
     "prompt": "Write down the term in x in the expression 5x^2 - 8x + 2.",
-    "answer": { "accepted": ["-8x", "−8x"] },
+    "answer": {
+      "accepted": ["-8x", "−8x"]
+    },
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
     "checked_by": ["author"],

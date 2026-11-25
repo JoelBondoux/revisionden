@@ -566,8 +566,8 @@
     "difficulty": 1,
     "learning_point": "gcse-maths-h-a11-lp-quadratic-cards",
     "expected_seconds": 15,
-    "front": "The y-coordinate where y = x^2 + 4x - 7 crosses the y-axis",
-    "back": "-7",
+    "front": "The coordinates of the turning point of y = (x + 2)^2 - 5",
+    "back": "(-2, -5)",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
     "checked_by": ["author"],
     "citations": [
@@ -578,7 +578,7 @@
         "document_ref": "1MA1 Issue 2 (June 2015)",
         "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A11 (page 14; PDF page 26)",
-        "quote": "identify and interpret roots, intercepts, turning points of quadratic functions graphically",
+        "quote": "deduce roots algebraically and turning points by completing the square",
         "retrieved_at": "2026-11-25",
         "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
@@ -593,32 +593,16 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). Put x = 0: y = -7.",
-          "at": "2026-11-25T17:23:37Z"
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). Follows from (x + 2)^2 ≥ 0 with equality at x = -2.",
+          "at": "2026-11-25T18:04:50Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:24:41Z",
+          "at": "2026-11-25T18:05:09Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
-        },
-        {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:40:43Z",
-          "notes": "model answered \"-7\"; expected \"-7\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "fail",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:41:04Z",
-          "notes": "unsupported_claim (front): The cited specification point A11 requires students to \"identify and interpret... intercepts... of quadratic functions graphically\". This item requires finding the intercept from an equation, which is an algebraic method, not a graphical one.; wording (front): The phrasing is imprecise. An equation is a statement; its graph is the geometric object that crosses the y-axis. The question should refer to the 'graph of y = x^2 + 4x - 7' or ask for the 'y-intercept'."
         }
       ]
     }

@@ -113,6 +113,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:43Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:41:44Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:42:41Z",
+          "notes": "wrong_answer (answer): The question asks for the equation of a cubic graph. The correct option is 'y = x^3 - 2x', which is the third option in the list. The `answer` field specifies `option: 2`. If this refers to the second option in the list (i.e., using a 1-based index), it points to 'y = x^2 - 4', which is a quadratic equation and therefore incorrect. The explanation provided refers to 'y = x^3 - 2x', which is the third option, contradicting the specified answer if 1-based indexing is assumed."
         }
       ]
     }
@@ -164,6 +180,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:43Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:42:50Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:42:57Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -194,6 +226,30 @@
         "retrieved_at": "2026-11-25",
         "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A12 (page 14; PDF page 26)",
+        "quote": "recognise, sketch and interpret graphs of linear functions, quadratic",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A12 (page 14; PDF page 26)",
+        "quote": "simple cubic functions, the reciprocal function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
     "verification": {
@@ -206,15 +262,15 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Values at x = 0 checked with SymPy.",
-          "at": "2026-11-25T17:23:37Z"
+          "at": "2026-11-25T18:04:50Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:24:44Z",
-          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+          "at": "2026-11-25T18:05:10Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 3: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
     }
@@ -266,6 +322,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:45Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:43:29Z",
+          "notes": "model answered \"-1\"; expected \"-1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:43:35Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -317,6 +389,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:46Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:43:42Z",
+          "notes": "model answered \"-1\"; expected \"-1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:43:48Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -368,6 +456,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:46Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:43:54Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:44:06Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -420,6 +524,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:47Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:44:15Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:44:24Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -431,11 +551,10 @@
     "difficulty": 1,
     "learning_point": "gcse-maths-h-a12-lp-graph-cards",
     "expected_seconds": 15,
-    "front": "The name for the U-shaped curve of a quadratic graph such as y = x^2 (one word)",
-    "back": "Parabola",
+    "front": "The value of y on the graph of y = x^3 when x = -2",
+    "back": "-8",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -444,7 +563,7 @@
         "document_ref": "1MA1 Issue 2 (June 2015)",
         "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A12 (page 14; PDF page 26)",
-        "quote": "recognise, sketch and interpret graphs of linear functions, quadratic",
+        "quote": "simple cubic functions, the reciprocal function",
         "retrieved_at": "2026-11-25",
         "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
@@ -459,15 +578,15 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Standard name; the specification names quadratic functions. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
-          "at": "2026-11-25T17:23:37Z"
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Checked: (-2)^3 = -8.",
+          "at": "2026-11-25T18:04:50Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:24:48Z",
+          "at": "2026-11-25T18:05:11Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -481,7 +600,7 @@
     "learning_point": "gcse-maths-h-a12-lp-graph-cards",
     "expected_seconds": 15,
     "front": "The value of x for which y = 1/x is undefined",
-    "back": "0",
+    "back": "x = 0",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
     "checked_by": ["author"],
     "citations": [
@@ -508,14 +627,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Division by zero is undefined.",
-          "at": "2026-11-25T17:23:37Z"
+          "at": "2026-11-25T18:04:50Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:24:49Z",
+          "at": "2026-11-25T18:05:12Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -565,6 +684,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:49Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:44:57Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:45:13Z",
+          "notes": "no problems found"
         }
       ]
     }

@@ -47,6 +47,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:26Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:58:19Z",
+          "notes": "model answered \"6\"; expected \"6\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:58:26Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -99,6 +115,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:27Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:58:34Z",
+          "notes": "model answered \"4\"; expected \"4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:58:40Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -115,7 +147,7 @@
     "verify": { "method": "solve", "equation": "7x - 4 = 3x + 20", "variable": "x" },
     "steps": ["7x - 4 = 3x + 20", "4x - 4 = 20", "4x = 24", "x = 6"],
     "marks": 2,
-    "mark_scheme": ["M1 for collecting the x terms on one side, 4x = 24", "A1 for x = 6"],
+    "mark_scheme": ["M1 for 4x - 4 = 20 or 4x = 24", "A1 for x = 6"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -142,14 +174,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Solutions and every step backed by the maths engine.",
-          "at": "2026-11-25T17:29:17Z"
+          "at": "2026-11-25T18:04:51Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:29:27Z",
+          "at": "2026-11-25T18:05:24Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -215,6 +247,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:28Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:59:10Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:59:18Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -267,6 +315,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:29Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:59:22Z",
+          "notes": "model answered \"x = -3\"; expected \"-3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:59:29Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -319,6 +383,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:30Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:59:34Z",
+          "notes": "model answered \"x = 4\"; expected \"4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:59:45Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -371,6 +451,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:30Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:59:51Z",
+          "notes": "model answered \"x = -7\"; expected \"-7\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:59:58Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -385,7 +481,13 @@
     "prompt": "Solve 5(x + 2) - 3(x - 4) = 30",
     "answer": { "solutions": ["4"] },
     "verify": { "method": "solve", "equation": "5(x + 2) - 3(x - 4) = 30", "variable": "x" },
-    "steps": ["5(x + 2) - 3(x - 4) = 30", "5x + 10 - 3x + 12 = 30", "2x + 22 = 30", "x = 4"],
+    "steps": [
+      "5(x + 2) - 3(x - 4) = 30",
+      "5x + 10 - 3x + 12 = 30",
+      "2x + 22 = 30",
+      "2x = 8",
+      "x = 4"
+    ],
     "marks": 3,
     "mark_scheme": ["M1 for 5x + 10 - 3x + 12", "M1 for 2x = 8", "A1 for x = 4"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
@@ -414,14 +516,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Solutions and every step backed by the maths engine.",
-          "at": "2026-11-25T17:29:17Z"
+          "at": "2026-11-25T18:04:51Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:29:31Z",
+          "at": "2026-11-25T18:05:25Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -471,6 +573,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:32Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:00:20Z",
+          "notes": "model answered \"x = -5\"; expected \"x = -5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:00:26Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -519,6 +637,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:33Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:00:32Z",
+          "notes": "model answered \"x = 6\"; expected \"x = 6\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:00:38Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -567,6 +701,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:33Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:00:44Z",
+          "notes": "model answered \"x = 20\"; expected \"x = 20\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:00:49Z",
+          "notes": "no problems found"
         }
       ]
     }

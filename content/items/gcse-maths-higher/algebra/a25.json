@@ -7,7 +7,7 @@
     "learning_point": "gcse-maths-h-a25-lp-linear-nth",
     "expected_seconds": 45,
     "prompt": "Find an expression for the nth term of the sequence 5, 8, 11, 14, ...",
-    "answer": { "accepted": ["3n + 2", "3n+2"] },
+    "answer": { "accepted": ["3n + 2", "3n+2", "2 + 3n", "2+3n"] },
     "marks": 2,
     "explanation": "The terms go up by 3, so start with 3n: 3, 6, 9, ... Add 2.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
@@ -36,14 +36,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A25). Checked: 3n + 2 gives 5, 8, 11, 14 for n = 1 to 4.",
-          "at": "2026-11-25T17:34:26Z"
+          "at": "2026-11-25T18:04:52Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:35:19Z",
+          "at": "2026-11-25T18:05:50Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -94,6 +94,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:35:19Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:59:12Z",
+          "notes": "model answered \"24 - 4n\"; expected \"24 - 4n | -4n + 24 | 24-4n | −4n + 24 | -4n+24\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:59:18Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -145,6 +161,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:35:20Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:59:25Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:59:33Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -195,6 +227,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:35:21Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:59:41Z",
+          "notes": "model answered \"n² + n\"; expected \"n^2 + n | n² + n | n(n + 1) | n^2+n\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:59:50Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -244,6 +292,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:35:22Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:00:00Z",
+          "notes": "model answered \"n² + 3\"; expected \"n^2 + 3 | n² + 3 | n^2+3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:00:09Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -295,6 +359,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:35:22Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:00:21Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:00:31Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -306,7 +386,7 @@
     "difficulty": 4,
     "learning_point": "gcse-maths-h-a25-lp-quadratic-nth",
     "expected_seconds": 120,
-    "prompt": "The nth term of a quadratic sequence is an^2 + b. The 1st term is 5 and the 3rd term is 21. Use b = 5 - a to work out a.",
+    "prompt": "The nth term of a quadratic sequence is an^2 + b. The 1st term is 5 and the 3rd term is 21. Work out a.",
     "answer": { "solutions": ["2"] },
     "verify": { "method": "solve", "equation": "9a + (5 - a) = 21", "variable": "a" },
     "steps": ["9a + (5 - a) = 21", "8a + 5 = 21", "8a = 16", "a = 2"],
@@ -338,14 +418,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A25). Solutions and every step backed by the maths engine.",
-          "at": "2026-11-25T17:34:26Z"
+          "at": "2026-11-25T18:04:52Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:35:23Z",
+          "at": "2026-11-25T18:05:51Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -395,6 +475,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:35:24Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:01:15Z",
+          "notes": "model answered \"2n\"; expected \"2n\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:01:20Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -443,6 +539,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:35:25Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:01:27Z",
+          "notes": "model answered \"n^2\"; expected \"n^2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:01:33Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -491,6 +603,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:35:25Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:01:43Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:01:51Z",
+          "notes": "no problems found"
         }
       ]
     }

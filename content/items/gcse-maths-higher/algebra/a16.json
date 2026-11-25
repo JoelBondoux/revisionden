@@ -46,6 +46,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:28Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:55:11Z",
+          "notes": "model answered \"7\"; expected \"7\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:55:17Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -61,7 +77,7 @@
     "answer": { "value": "4.47", "tolerance": 0.005 },
     "verify": { "expression": "sqrt(20)" },
     "marks": 1,
-    "mark_scheme": ["B1 for 4.47 (or 2√5)"],
+    "mark_scheme": ["B1 for 4.47"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -88,14 +104,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Answer backed by the maths engine.",
-          "at": "2026-11-25T17:26:22Z"
+          "at": "2026-11-25T18:04:51Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:27:28Z",
+          "at": "2026-11-25T18:05:22Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -109,7 +125,15 @@
     "learning_point": "gcse-maths-h-a16-lp-circle-equation",
     "expected_seconds": 30,
     "prompt": "Write down the equation of the circle with centre (0, 0) and radius 6.",
-    "answer": { "accepted": ["x^2 + y^2 = 36", "x^2+y^2=36", "x² + y² = 36"] },
+    "answer": {
+      "accepted": [
+        "x^2 + y^2 = 36",
+        "x^2+y^2=36",
+        "x² + y² = 36",
+        "x^2 + y^2 = 6^2",
+        "y^2 + x^2 = 36"
+      ]
+    },
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
     "checked_by": ["author"],
@@ -137,14 +161,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). x^2 + y^2 = r^2 with r = 6.",
-          "at": "2026-11-25T17:26:22Z"
+          "at": "2026-11-25T18:04:51Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:27:29Z",
+          "at": "2026-11-25T18:05:23Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -197,6 +221,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:30Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:56:06Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:56:14Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -248,6 +288,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:31Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:56:19Z",
+          "notes": "model answered \"4/3\"; expected \"4/3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:56:28Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -301,6 +357,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:31Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:56:37Z",
+          "notes": "model answered \"-3/4\"; expected \"-3/4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:56:45Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -358,6 +430,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:32Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:56:55Z",
+          "notes": "model answered \"10/3\"; expected \"10/3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:57:07Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -369,8 +457,8 @@
     "difficulty": 5,
     "learning_point": "gcse-maths-h-a16-lp-tangents",
     "expected_seconds": 150,
-    "prompt": "Find the equation of the tangent to the circle x^2 + y^2 = 25 at the point (3, 4). Give your answer in the form ax + by = c.",
-    "answer": { "accepted": ["3x + 4y = 25", "3x+4y=25"] },
+    "prompt": "Find the equation of the tangent to the circle x^2 + y^2 = 25 at the point (3, 4). Give your answer in the form ax + by = c, where a, b and c are integers with no common factor and a > 0.",
+    "answer": { "accepted": ["3x + 4y = 25", "3x+4y=25", "4y + 3x = 25"] },
     "marks": 3,
     "explanation": "Radius gradient 4/3, so tangent gradient -3/4: y - 4 = -(3/4)(x - 3), which gives 4y - 16 = -3x + 9, so 3x + 4y = 25.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
@@ -400,14 +488,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Checked: gradient -3/4 through (3, 4) gives 3x + 4y = 25, and 3 × 3 + 4 × 4 = 25. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
-          "at": "2026-11-25T17:26:22Z"
+          "at": "2026-11-25T18:04:51Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:27:33Z",
+          "at": "2026-11-25T18:05:23Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -457,6 +545,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:34Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:57:39Z",
+          "notes": "model answered \"9\"; expected \"9\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:57:45Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -505,6 +609,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:35Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:57:51Z",
+          "notes": "model answered \"(0, 0)\"; expected \"(0, 0)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:57:56Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -554,6 +674,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:35Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:58:01Z",
+          "notes": "model answered \"perpendicular\"; expected \"Perpendicular\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:58:12Z",
+          "notes": "no problems found"
         }
       ]
     }

@@ -52,6 +52,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:04Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:45:20Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:45:27Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -72,7 +88,7 @@
     ],
     "answer": { "option": 2 },
     "marks": 1,
-    "explanation": "f(x - 2) takes the value f had 2 units earlier, so the graph moves 2 units to the right.",
+    "explanation": "The value of f(x - 2) at x is the value f had at x - 2, so each point of the graph moves 2 units to the right.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -100,14 +116,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x + 2, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
-          "at": "2026-11-25T17:26:22Z"
+          "at": "2026-11-25T18:04:51Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:27:05Z",
+          "at": "2026-11-25T18:05:12Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -129,7 +145,7 @@
     ],
     "answer": { "option": 3 },
     "marks": 1,
-    "explanation": "f(x + 4) takes the value f has 4 units later, so the graph moves 4 units to the left.",
+    "explanation": "The value of f(x + 4) at x is the value f had at x + 4, so each point of the graph moves 4 units to the left.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -157,14 +173,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x - 4, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
-          "at": "2026-11-25T17:26:22Z"
+          "at": "2026-11-25T18:04:51Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:27:05Z",
+          "at": "2026-11-25T18:05:13Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -216,6 +232,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:06Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:46:16Z",
+          "notes": "model answered \"(3, 1)\"; expected \"(3, 1) | (3,1)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:46:24Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -232,7 +264,11 @@
     "verify": { "method": "solve", "equation": "x^2 + 1 - 10 = 0", "variable": "x" },
     "steps": ["x^2 + 1 - 10 = 0", "x^2 - 9 = 0", "(x - 3)(x + 3) = 0", "x = 3 or x = -3"],
     "marks": 3,
-    "mark_scheme": ["B1 for y = x^2 - 9", "M1 for x^2 - 9 = 0", "A1 for x = 3 and x = -3"],
+    "mark_scheme": [
+      "B1 for the new graph y = x^2 - 9 (or x^2 + 1 - 10 = 0)",
+      "M1 for x^2 - 9 = 0",
+      "A1 for x = 3 and x = -3"
+    ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -260,14 +296,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Solutions and every step backed by the maths engine. The new equation y = x^2 - 9 uses the translation rule y = f(x) - 10: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
-          "at": "2026-11-25T17:26:22Z"
+          "at": "2026-11-25T18:04:51Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:27:07Z",
+          "at": "2026-11-25T18:05:14Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -326,6 +362,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:08Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:08Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:17Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -383,6 +435,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:08Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:24Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:32Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -433,6 +501,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:09Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:38Z",
+          "notes": "model answered \"(-2, -7)\"; expected \"(-2, -7) | (-2,-7) | (−2, −7)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:43Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -482,6 +566,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:10Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:51Z",
+          "notes": "model answered \"up\"; expected \"Up\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:57Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -531,6 +631,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:11Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:48:05Z",
+          "notes": "model answered \"right\"; expected \"Right\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:48:12Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -542,8 +658,8 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a13-lp-transformation-cards",
     "expected_seconds": 15,
-    "front": "y = -f(x) is a reflection of y = f(x) in which axis? (x or y)",
-    "back": "x",
+    "front": "y = -f(x) is a reflection of y = f(x) in which axis? (x-axis or y-axis)",
+    "back": "x-axis",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -571,14 +687,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
-          "at": "2026-11-25T17:26:22Z"
+          "at": "2026-11-25T18:04:51Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:27:12Z",
+          "at": "2026-11-25T18:05:15Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]

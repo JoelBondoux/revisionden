@@ -59,6 +59,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:20Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:51:58Z",
+          "notes": "model answered \"3 m/s²\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:52:04Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -123,6 +139,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:21Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:52:11Z",
+          "notes": "model answered \"50 km/h\"; expected \"50\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:52:18Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -174,6 +206,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:22Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:52:27Z",
+          "notes": "model answered \"-5\"; expected \"-5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:52:36Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -238,6 +286,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:23Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:52:44Z",
+          "notes": "model answered \"100 m\"; expected \"100\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:52:54Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -302,6 +366,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:24Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:53:03Z",
+          "notes": "model answered \"50 m\"; expected \"50\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:53:12Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -322,7 +402,7 @@
       "M1 for (1/2) × 2 × (0 + 4) + (1/2) × 2 × (4 + 16)",
       "A1 for 24"
     ],
-    "explanation": "Strips of width 2: (1/2) × 2 × (0 + 4) + (1/2) × 2 × (4 + 16) = 4 + 20 = 24. (It is an overestimate: the true area is 64/3.)",
+    "explanation": "Strips of width 2: (1/2) × 2 × (0 + 4) + (1/2) × 2 × (4 + 16) = 4 + 20 = 24.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -349,14 +429,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Answer backed by the maths engine.",
-          "at": "2026-11-25T17:26:22Z"
+          "at": "2026-11-25T18:04:51Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:27:25Z",
+          "at": "2026-11-25T18:05:20Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -407,6 +487,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:25Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:53:40Z",
+          "notes": "model answered \"Acceleration\"; expected \"Acceleration\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:53:45Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -456,6 +552,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:27:26Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:53:51Z",
+          "notes": "model answered \"Speed\"; expected \"Speed\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:54:13Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -467,7 +579,7 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a15-lp-graph-meaning-cards",
     "expected_seconds": 15,
-    "front": "On a velocity-time graph, what does the area under the graph represent? (two words)",
+    "front": "On a velocity-time graph for an object moving in one direction, what does the area under the graph represent? (two words)",
     "back": "Distance travelled",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
     "checked_by": ["author"],
@@ -496,14 +608,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
-          "at": "2026-11-25T17:26:22Z"
+          "at": "2026-11-25T18:04:51Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:27:27Z",
+          "at": "2026-11-25T18:05:21Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]

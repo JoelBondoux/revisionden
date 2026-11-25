@@ -7,32 +7,17 @@
     "learning_point": "gcse-maths-h-a21-lp-form-linear",
     "expected_seconds": 60,
     "prompt": "I think of a number, multiply it by 4 and subtract 7. The answer is 25. Form an equation and solve it to find the number.",
-    "answer": {
-      "solutions": [
-        "8"
-      ]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "4n - 7 = 25",
-      "variable": "n"
-    },
-    "steps": [
-      "4n - 7 = 25",
-      "4n = 32",
-      "n = 8"
-    ],
+    "answer": { "solutions": ["8"] },
+    "verify": { "method": "solve", "equation": "4n - 7 = 25", "variable": "n" },
+    "steps": ["4n - 7 = 25", "4n = 32", "n = 8"],
     "marks": 3,
     "mark_scheme": [
-      "B1 for 4n - 7 = 25",
+      "B1 for 4n - 7 = 25 (any letter, or an equivalent equation)",
       "M1 for 4n = 32",
       "A1 for 8"
     ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
-    "checked_by": [
-      "maths-engine",
-      "author"
-    ],
+    "checked_by": ["maths-engine", "author"],
     "citations": [
       {
         "source_type": "specification",
@@ -43,9 +28,7 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A21 (page 15; PDF page 27)",
         "quote": "translate simple situations or procedures into algebraic expressions or formulae; derive an equation (or two simultaneous equations), solve the equation(s) and interpret the solution",
         "retrieved_at": "2026-11-25",
-        "supports": [
-          "question"
-        ],
+        "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -59,14 +42,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A21). Solutions and every step backed by the maths engine.",
-          "at": "2026-11-25T17:31:58Z"
+          "at": "2026-11-25T18:04:52Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:33:05Z",
+          "at": "2026-11-25T18:05:34Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -80,33 +63,17 @@
     "learning_point": "gcse-maths-h-a21-lp-form-linear",
     "expected_seconds": 90,
     "prompt": "A rectangle is (x + 5) cm long and x cm wide. Its perimeter is 38 cm. Form an equation and solve it to find x.",
-    "answer": {
-      "solutions": [
-        "7"
-      ]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "2(x + 5) + 2x = 38",
-      "variable": "x"
-    },
-    "steps": [
-      "2(x + 5) + 2x = 38",
-      "4x + 10 = 38",
-      "4x = 28",
-      "x = 7"
-    ],
+    "answer": { "solutions": ["7"] },
+    "verify": { "method": "solve", "equation": "2(x + 5) + 2x = 38", "variable": "x" },
+    "steps": ["2(x + 5) + 2x = 38", "4x + 10 = 38", "4x = 28", "x = 7"],
     "marks": 3,
     "mark_scheme": [
-      "B1 for 2(x + 5) + 2x = 38",
-      "M1 for 4x = 28",
+      "B1 for 2(x + 5) + 2x = 38 or an equivalent equation",
+      "M1 for 4x + 10 = 38 or 4x = 28",
       "A1 for x = 7"
     ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
-    "checked_by": [
-      "maths-engine",
-      "author"
-    ],
+    "checked_by": ["maths-engine", "author"],
     "citations": [
       {
         "source_type": "specification",
@@ -117,9 +84,7 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A21 (page 15; PDF page 27)",
         "quote": "translate simple situations or procedures into algebraic expressions or formulae; derive an equation (or two simultaneous equations), solve the equation(s) and interpret the solution",
         "retrieved_at": "2026-11-25",
-        "supports": [
-          "question"
-        ],
+        "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -133,14 +98,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A21). Solutions and every step backed by the maths engine.",
-          "at": "2026-11-25T17:31:58Z"
+          "at": "2026-11-25T18:04:52Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:33:06Z",
+          "at": "2026-11-25T18:05:35Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -154,33 +119,13 @@
     "learning_point": "gcse-maths-h-a21-lp-form-linear",
     "expected_seconds": 75,
     "prompt": "A sister is 3 years older than her brother. Their ages add up to 41. Let the brother be b years old. Form an equation and solve it to find b.",
-    "answer": {
-      "solutions": [
-        "19"
-      ]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "b + b + 3 = 41",
-      "variable": "b"
-    },
-    "steps": [
-      "b + b + 3 = 41",
-      "2b + 3 = 41",
-      "2b = 38",
-      "b = 19"
-    ],
+    "answer": { "solutions": ["19"] },
+    "verify": { "method": "solve", "equation": "b + b + 3 = 41", "variable": "b" },
+    "steps": ["b + b + 3 = 41", "2b + 3 = 41", "2b = 38", "b = 19"],
     "marks": 3,
-    "mark_scheme": [
-      "B1 for b + b + 3 = 41",
-      "M1 for 2b = 38",
-      "A1 for 19"
-    ],
+    "mark_scheme": ["B1 for b + b + 3 = 41", "M1 for 2b = 38", "A1 for 19"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
-    "checked_by": [
-      "maths-engine",
-      "author"
-    ],
+    "checked_by": ["maths-engine", "author"],
     "citations": [
       {
         "source_type": "specification",
@@ -191,9 +136,7 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A21 (page 15; PDF page 27)",
         "quote": "translate simple situations or procedures into algebraic expressions or formulae; derive an equation (or two simultaneous equations), solve the equation(s) and interpret the solution",
         "retrieved_at": "2026-11-25",
-        "supports": [
-          "question"
-        ],
+        "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -216,6 +159,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:33:07Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:46:52Z",
+          "notes": "model answered \"19\"; expected \"19\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:46:59Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -228,33 +187,17 @@
     "learning_point": "gcse-maths-h-a21-lp-form-linear",
     "expected_seconds": 100,
     "prompt": "An adult ticket costs £x and a child ticket costs £4 less. Two adult tickets and three child tickets cost £48 altogether. Form an equation and solve it to find x.",
-    "answer": {
-      "solutions": [
-        "12"
-      ]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "2x + 3(x - 4) = 48",
-      "variable": "x"
-    },
-    "steps": [
-      "2x + 3(x - 4) = 48",
-      "5x - 12 = 48",
-      "5x = 60",
-      "x = 12"
-    ],
+    "answer": { "solutions": ["12"] },
+    "verify": { "method": "solve", "equation": "2x + 3(x - 4) = 48", "variable": "x" },
+    "steps": ["2x + 3(x - 4) = 48", "5x - 12 = 48", "5x = 60", "x = 12"],
     "marks": 3,
     "mark_scheme": [
-      "B1 for 2x + 3(x - 4) = 48",
-      "M1 for 5x = 60",
+      "B1 for 2x + 3(x - 4) = 48 or an equivalent equation",
+      "M1 for 5x - 12 = 48 or 5x = 60",
       "A1 for 12"
     ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
-    "checked_by": [
-      "maths-engine",
-      "author"
-    ],
+    "checked_by": ["maths-engine", "author"],
     "citations": [
       {
         "source_type": "specification",
@@ -265,9 +208,7 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A21 (page 15; PDF page 27)",
         "quote": "translate simple situations or procedures into algebraic expressions or formulae; derive an equation (or two simultaneous equations), solve the equation(s) and interpret the solution",
         "retrieved_at": "2026-11-25",
-        "supports": [
-          "question"
-        ],
+        "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -281,14 +222,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A21). Solutions and every step backed by the maths engine.",
-          "at": "2026-11-25T17:31:58Z"
+          "at": "2026-11-25T18:04:52Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:33:07Z",
+          "at": "2026-11-25T18:05:35Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -302,13 +243,8 @@
     "learning_point": "gcse-maths-h-a21-lp-form-harder",
     "expected_seconds": 120,
     "prompt": "3 pens and 2 rulers cost 390p. 1 pen and 2 rulers cost 190p. Work out the cost of one pen, in pence.",
-    "answer": {
-      "value": "100",
-      "unit": "pence"
-    },
-    "verify": {
-      "expression": "(390 - 190)/2"
-    },
+    "answer": { "value": "100", "unit": "pence" },
+    "verify": { "expression": "(390 - 190)/2" },
     "marks": 3,
     "mark_scheme": [
       "B1 for 3p + 2r = 390 and p + 2r = 190",
@@ -316,10 +252,7 @@
       "A1 for 100"
     ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
-    "checked_by": [
-      "maths-engine",
-      "author"
-    ],
+    "checked_by": ["maths-engine", "author"],
     "citations": [
       {
         "source_type": "specification",
@@ -330,9 +263,7 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A21 (page 15; PDF page 27)",
         "quote": "translate simple situations or procedures into algebraic expressions or formulae; derive an equation (or two simultaneous equations), solve the equation(s) and interpret the solution",
         "retrieved_at": "2026-11-25",
-        "supports": [
-          "question"
-        ],
+        "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -355,6 +286,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:33:08Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:38Z",
+          "notes": "model answered \"100p\"; expected \"100\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:46Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -367,13 +314,8 @@
     "learning_point": "gcse-maths-h-a21-lp-form-harder",
     "expected_seconds": 150,
     "prompt": "A rectangle is (x + 3) cm long and x cm wide. Its area is 40 cm^2. Form and solve an equation to find the width of the rectangle.",
-    "answer": {
-      "value": "5",
-      "unit": "cm"
-    },
-    "verify": {
-      "expression": "(-3 + sqrt(9 + 160))/2"
-    },
+    "answer": { "value": "5", "unit": "cm" },
+    "verify": { "expression": "(-3 + sqrt(9 + 160))/2" },
     "marks": 4,
     "mark_scheme": [
       "B1 for x(x + 3) = 40",
@@ -383,10 +325,7 @@
     ],
     "explanation": "x(x + 3) = 40 gives x^2 + 3x - 40 = 0, so (x + 8)(x - 5) = 0. A width cannot be negative, so x = 5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
-    "checked_by": [
-      "maths-engine",
-      "author"
-    ],
+    "checked_by": ["maths-engine", "author"],
     "citations": [
       {
         "source_type": "specification",
@@ -397,9 +336,7 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A21 (page 15; PDF page 27)",
         "quote": "translate simple situations or procedures into algebraic expressions or formulae; derive an equation (or two simultaneous equations), solve the equation(s) and interpret the solution",
         "retrieved_at": "2026-11-25",
-        "supports": [
-          "question"
-        ],
+        "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -422,6 +359,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:33:09Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:54Z",
+          "notes": "model answered \"5 cm\"; expected \"5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:48:07Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -434,12 +387,8 @@
     "learning_point": "gcse-maths-h-a21-lp-form-harder",
     "expected_seconds": 150,
     "prompt": "The product of two consecutive positive integers is 156. Form and solve an equation to find the smaller integer.",
-    "answer": {
-      "value": "12"
-    },
-    "verify": {
-      "expression": "(-1 + sqrt(1 + 4*156))/2"
-    },
+    "answer": { "value": "12" },
+    "verify": { "expression": "(-1 + sqrt(1 + 4*156))/2" },
     "marks": 4,
     "mark_scheme": [
       "B1 for n(n + 1) = 156",
@@ -448,10 +397,7 @@
       "A1 for 12 (rejecting -13)"
     ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
-    "checked_by": [
-      "maths-engine",
-      "author"
-    ],
+    "checked_by": ["maths-engine", "author"],
     "citations": [
       {
         "source_type": "specification",
@@ -462,9 +408,7 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A21 (page 15; PDF page 27)",
         "quote": "translate simple situations or procedures into algebraic expressions or formulae; derive an equation (or two simultaneous equations), solve the equation(s) and interpret the solution",
         "retrieved_at": "2026-11-25",
-        "supports": [
-          "question"
-        ],
+        "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -487,6 +431,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:33:09Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:48:15Z",
+          "notes": "model answered \"12\"; expected \"12\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:48:29Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -501,9 +461,7 @@
     "front": "Write \"five less than n\" as an expression",
     "back": "n - 5",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
-    "checked_by": [
-      "author"
-    ],
+    "checked_by": ["author"],
     "citations": [
       {
         "source_type": "specification",
@@ -514,9 +472,7 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A21 (page 15; PDF page 27)",
         "quote": "translate simple situations or procedures into algebraic expressions or formulae; derive an equation (or two simultaneous equations), solve the equation(s) and interpret the solution",
         "retrieved_at": "2026-11-25",
-        "supports": [
-          "question"
-        ],
+        "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -539,6 +495,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:33:10Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:48:35Z",
+          "notes": "model answered \"n - 5\"; expected \"n - 5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:48:39Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -553,9 +525,7 @@
     "front": "Write \"double x, then add 3\" as an expression",
     "back": "2x + 3",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
-    "checked_by": [
-      "author"
-    ],
+    "checked_by": ["author"],
     "citations": [
       {
         "source_type": "specification",
@@ -566,9 +536,7 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A21 (page 15; PDF page 27)",
         "quote": "translate simple situations or procedures into algebraic expressions or formulae; derive an equation (or two simultaneous equations), solve the equation(s) and interpret the solution",
         "retrieved_at": "2026-11-25",
-        "supports": [
-          "question"
-        ],
+        "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -591,6 +559,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:33:11Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:48:46Z",
+          "notes": "model answered \"2x + 3\"; expected \"2x + 3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:48:53Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -605,9 +589,7 @@
     "front": "The cost, in pence, of y pens at 35p each",
     "back": "35y",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
-    "checked_by": [
-      "author"
-    ],
+    "checked_by": ["author"],
     "citations": [
       {
         "source_type": "specification",
@@ -618,9 +600,7 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A21 (page 15; PDF page 27)",
         "quote": "translate simple situations or procedures into algebraic expressions or formulae; derive an equation (or two simultaneous equations), solve the equation(s) and interpret the solution",
         "retrieved_at": "2026-11-25",
-        "supports": [
-          "question"
-        ],
+        "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -643,6 +623,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:33:12Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:49:00Z",
+          "notes": "model answered \"35y\"; expected \"35y\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:49:06Z",
+          "notes": "no problems found"
         }
       ]
     }

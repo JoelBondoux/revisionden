@@ -222,7 +222,11 @@
       "x = 5 or x = 3"
     ],
     "marks": 3,
-    "mark_scheme": ["M1 for (x - 4)^2 - 1", "M1 for x - 4 = ±1", "A1 for x = 3 and x = 5"],
+    "mark_scheme": [
+      "M1 for (x - 4)^2 - 1 = 0 or (x - 4)^2 = 1",
+      "M1 for x - 4 = ±1",
+      "A1 for x = 3 and x = 5"
+    ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -249,31 +253,15 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Solutions and every step backed by the maths engine.",
-          "at": "2026-11-25T17:29:17Z"
+          "at": "2026-11-25T18:04:51Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:29:36Z",
+          "at": "2026-11-25T18:05:26Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
-        },
-        {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:36:35Z",
-          "notes": "model answered \"3, 5\"; expected \"3, 5\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "fail",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:02Z",
-          "notes": "factual_error (mark_scheme[0]): The mark is for a step in solving an equation, but it is awarded for the expression '(x - 4)^2 - 1'. A mark for solving an equation should be awarded for a complete, correct equation, such as '(x - 4)^2 - 1 = 0' or '(x - 4)^2 = 1'. Awarding a mark for an expression disconnected from the equation is poor practice."
         }
       ]
     }
@@ -289,7 +277,11 @@
     "answer": { "value": "0.32", "tolerance": 0.005 },
     "verify": { "expression": "-3 + sqrt(11)" },
     "marks": 3,
-    "mark_scheme": ["M1 for (x + 3)^2 - 11", "M1 for x = -3 ± √11", "A1 for 0.32"],
+    "mark_scheme": [
+      "M1 for (x + 3)^2 - 11 = 0 or (x + 3)^2 = 11",
+      "M1 for x = -3 ± √11",
+      "A1 for 0.32"
+    ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -316,31 +308,15 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Answer backed by the maths engine.",
-          "at": "2026-11-25T17:29:17Z"
+          "at": "2026-11-25T18:04:51Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:29:37Z",
+          "at": "2026-11-25T18:05:26Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
-        },
-        {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:12Z",
-          "notes": "model answered \"0.32\"; expected \"0.32\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "fail",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:31Z",
-          "notes": "wording (mark_scheme): The first mark point, \"M1 for (x + 3)^2 - 11\", describes an expression, whereas the student is asked to solve an equation. A more precise mark point would be for a correct step in solving the equation, such as sight of `(x+3)^2 - 11 = 0` or `(x+3)^2 = 11`."
         }
       ]
     }
@@ -420,7 +396,7 @@
     "learning_point": "gcse-maths-h-a18-lp-formula",
     "expected_seconds": 120,
     "prompt": "Use the quadratic formula to solve 2x^2 + 3x - 4 = 0. Give the positive solution correct to 2 decimal places.",
-    "answer": { "value": "0.85", "tolerance": 0.005 },
+    "answer": { "value": "0.85", "tolerance": 0.001399993896484375 },
     "verify": { "expression": "(-3 + sqrt(41))/4" },
     "marks": 3,
     "mark_scheme": [
@@ -466,31 +442,15 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Answer backed by the maths engine.",
-          "at": "2026-11-25T17:29:17Z"
+          "at": "2026-11-25T18:04:51Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:29:39Z",
+          "at": "2026-11-25T18:05:27Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 14 (sha256 647a751b51c71d9ced1c9356aa70b15ceb1a4acb2fd5bc9af49619ead06d0ee6)"
-        },
-        {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:56Z",
-          "notes": "model answered \"0.85\"; expected \"0.85\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:38:04Z",
-          "notes": "no problems found"
         }
       ]
     }
@@ -503,7 +463,7 @@
     "learning_point": "gcse-maths-h-a18-lp-formula",
     "expected_seconds": 120,
     "prompt": "Use the quadratic formula to solve x^2 - 3x - 5 = 0. Give the negative solution correct to 2 decimal places.",
-    "answer": { "value": "-1.19", "tolerance": 0.005 },
+    "answer": { "value": "-1.19", "tolerance": 0.003200531005859375 },
     "verify": { "expression": "(3 - sqrt(29))/2" },
     "marks": 3,
     "mark_scheme": [
@@ -549,31 +509,15 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Answer backed by the maths engine.",
-          "at": "2026-11-25T17:29:17Z"
+          "at": "2026-11-25T18:04:51Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:29:40Z",
+          "at": "2026-11-25T18:05:28Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 14 (sha256 647a751b51c71d9ced1c9356aa70b15ceb1a4acb2fd5bc9af49619ead06d0ee6)"
-        },
-        {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:38:12Z",
-          "notes": "model answered \"-1.19\"; expected \"-1.19\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:38:28Z",
-          "notes": "no problems found"
         }
       ]
     }
@@ -586,7 +530,7 @@
     "learning_point": "gcse-maths-h-a18-lp-formula",
     "expected_seconds": 120,
     "prompt": "Use the quadratic formula to solve 3x^2 - x - 1 = 0. Give the positive solution correct to 2 decimal places.",
-    "answer": { "value": "0.77", "tolerance": 0.005 },
+    "answer": { "value": "0.77", "tolerance": 0.00299835205078125 },
     "verify": { "expression": "(1 + sqrt(13))/6" },
     "marks": 3,
     "mark_scheme": [
@@ -632,31 +576,15 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Answer backed by the maths engine.",
-          "at": "2026-11-25T17:29:17Z"
+          "at": "2026-11-25T18:04:51Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:29:41Z",
+          "at": "2026-11-25T18:05:29Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 14 (sha256 647a751b51c71d9ced1c9356aa70b15ceb1a4acb2fd5bc9af49619ead06d0ee6)"
-        },
-        {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:38:38Z",
-          "notes": "model answered \"0.77\"; expected \"0.77\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "fail",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:02Z",
-          "notes": "wrong_answer (answer): The question requires an answer correct to 2 decimal places. The exact positive solution is (1+√13)/6 ≈ 0.7676, which rounds to 0.77. The provided answer object, with value 0.77 and tolerance 0.005, creates an acceptance range of [0.765, 0.775]. However, a value at the upper boundary, such as 0.775, rounds to 0.78, not 0.77. The tolerance range is therefore too inclusive and would incorrectly mark certain answers as correct."
         }
       ]
     }

@@ -118,6 +118,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:23:54Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:41:47Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:41:58Z",
+          "notes": "wrong_answer (answer): The marked answer is option 2, '(x - 3)(x + 3) = x^2 - 9', which is a valid identity (the difference of two squares). The question asks which statement is NOT an identity. Option 3, '(x + 2)^2 = x^2 + 4', is not an identity because the correct expansion is x^2 + 4x + 4. This is correctly stated in the explanation, which refers to option 3, not option 2."
         }
       ]
     }
@@ -169,6 +185,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:23:55Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:42:05Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:42:13Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -221,6 +253,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:23:56Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:42:21Z",
+          "notes": "model answered \"-10\"; expected \"-10\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:42:30Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -243,8 +291,8 @@
     ],
     "marks": 3,
     "mark_scheme": [
-      "M1 for expanding one bracket correctly",
-      "M1 for both expansions with the subtraction applied to every term",
+      "M1 for expanding one bracket correctly, or for using the difference of two squares: ((x + 4) - (x - 4))((x + 4) + (x - 4))",
+      "M1 for both expansions with the subtraction applied to every term, or for 8 × 2x",
       "A1 for 16x"
     ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
@@ -273,14 +321,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A6). Answer and every step backed by the maths engine.",
-          "at": "2026-11-25T17:20:52Z"
+          "at": "2026-11-25T18:04:50Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:23:56Z",
+          "at": "2026-11-25T18:05:53Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -298,7 +346,10 @@
     "verify": { "method": "expression", "expression": "(n + 1)^2 - n^2" },
     "steps": ["(n + 1)^2 - n^2", "n^2 + 2n + 1 - n^2", "2n + 1"],
     "marks": 2,
-    "mark_scheme": ["M1 for n^2 + 2n + 1", "A1 for 2n + 1"],
+    "mark_scheme": [
+      "M1 for n^2 + 2n + 1, or for using the difference of two squares: ((n + 1) - n)((n + 1) + n)",
+      "A1 for 2n + 1"
+    ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -325,14 +376,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A6). Answer and every step backed by the maths engine.",
-          "at": "2026-11-25T17:20:52Z"
+          "at": "2026-11-25T18:04:50Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:23:57Z",
+          "at": "2026-11-25T18:05:53Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -355,8 +406,8 @@
     "steps": ["(2n + 3)^2 - (2n - 3)^2", "4n^2 + 12n + 9 - (4n^2 - 12n + 9)", "24n"],
     "marks": 3,
     "mark_scheme": [
-      "M1 for 4n^2 + 12n + 9 or 4n^2 - 12n + 9",
-      "M1 for subtracting every term of the second expansion",
+      "M1 for 4n^2 + 12n + 9 or 4n^2 - 12n + 9, or for using the difference of two squares: ((2n + 3) - (2n - 3))((2n + 3) + (2n - 3))",
+      "M1 for subtracting every term of the second expansion, or for 6 × 4n",
       "A1 for 24n"
     ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
@@ -385,14 +436,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A6). Answer and every step (expanded form) backed by the maths engine.",
-          "at": "2026-11-25T17:20:52Z"
+          "at": "2026-11-25T18:04:50Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:23:58Z",
+          "at": "2026-11-25T18:05:54Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -644,6 +695,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:01Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:45:49Z",
+          "notes": "model answered \"≡\"; expected \"≡\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:45:54Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -693,6 +760,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:01Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:46:01Z",
+          "notes": "model answered \"Equation\"; expected \"Equation\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:46:06Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -704,7 +787,7 @@
     "difficulty": 1,
     "learning_point": "gcse-maths-h-a6-lp-identity-cards",
     "expected_seconds": 15,
-    "front": "Is x^2 + 2x ≡ x(x + 2) true for every value of x? (yes or no)",
+    "front": "Is x^2 + 2x = x(x + 2) true for every value of x? (yes or no)",
     "back": "Yes",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
     "checked_by": ["author"],
@@ -732,14 +815,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A6). Checked with SymPy: x(x + 2) - (x^2 + 2x) = 0.",
-          "at": "2026-11-25T17:20:52Z"
+          "at": "2026-11-25T18:04:50Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:24:02Z",
+          "at": "2026-11-25T18:05:55Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]

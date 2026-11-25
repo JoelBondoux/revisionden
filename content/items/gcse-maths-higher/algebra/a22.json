@@ -45,6 +45,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:35:10Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:49:12Z",
+          "notes": "model answered \"x < 7\"; expected \"x < 7 | x<7\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:49:18Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -95,6 +111,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:35:10Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:49:22Z",
+          "notes": "model answered \"x ≤ 3\"; expected \"x ≤ 3 | x<=3 | x <= 3 | x≤3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:49:28Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -106,7 +138,7 @@
     "difficulty": 3,
     "learning_point": "gcse-maths-h-a22-lp-linear",
     "expected_seconds": 90,
-    "prompt": "n is an integer and -3 < 2n + 1 ≤ 7. List all the possible values of n.",
+    "prompt": "n is an integer and -3 < 2n + 1 ≤ 7. List all the possible values of n, from smallest to largest.",
     "answer": { "accepted": ["-1, 0, 1, 2, 3", "-1,0,1,2,3", "−1, 0, 1, 2, 3"] },
     "marks": 3,
     "explanation": "Subtract 1: -4 < 2n ≤ 6. Divide by 2: -2 < n ≤ 3, so n = -1, 0, 1, 2 or 3.",
@@ -136,14 +168,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Checked by testing integers: -1, 0, 1, 2, 3.",
-          "at": "2026-11-25T17:34:39Z"
+          "at": "2026-11-25T18:04:52Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:35:11Z",
+          "at": "2026-11-25T18:05:36Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -171,7 +203,7 @@
         "document_ref": "1MA1 Issue 2 (June 2015)",
         "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A22 (page 15; PDF page 27)",
-        "quote": "represent the solution set on a number line",
+        "quote": "using set notation and on a graph",
         "retrieved_at": "2026-11-25",
         "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
@@ -199,14 +231,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Checked with SymPy: solution set x > 4. Set-builder notation is standard.",
-          "at": "2026-11-25T17:34:39Z"
+          "at": "2026-11-25T18:04:52Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:35:12Z",
+          "at": "2026-11-25T18:05:37Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -234,7 +266,7 @@
         "document_ref": "1MA1 Issue 2 (June 2015)",
         "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A22 (page 15; PDF page 27)",
-        "quote": "represent the solution set on a number line",
+        "quote": "solve linear inequalities in one or two variable(s)",
         "retrieved_at": "2026-11-25",
         "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
@@ -246,7 +278,7 @@
         "document_ref": "1MA1 Issue 2 (June 2015)",
         "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A22 (page 15; PDF page 27)",
-        "quote": "solve linear inequalities in one",
+        "quote": "using set notation and on a graph",
         "retrieved_at": "2026-11-25",
         "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
@@ -262,15 +294,15 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Each point tested against both inequalities.",
-          "at": "2026-11-25T17:34:39Z"
+          "at": "2026-11-25T18:04:52Z"
         },
         {
           "name": "quote-check",
-          "result": "pass",
+          "result": "fail",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:35:13Z",
-          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+          "at": "2026-11-25T18:05:38Z",
+          "notes": "citation 1: found on page 27; near match (letters, confidence 1.00): a reviewer must confirm it (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
     }
@@ -322,6 +354,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:35:13Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:51:00Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:51:08Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -373,6 +421,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:35:14Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:51:16Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:51:25Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -424,6 +488,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:35:15Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:51:30Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:51:41Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -435,7 +515,7 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a22-lp-quadratic",
     "expected_seconds": 60,
-    "prompt": "To solve x^2 + 2x - 15 > 0, first find the critical values: solve x^2 + 2x - 15 = 0.",
+    "prompt": "Solve x^2 + 2x - 15 = 0. (Its solutions are the critical values you need to solve the inequality x^2 + 2x - 15 > 0.)",
     "answer": { "solutions": ["3", "-5"] },
     "verify": { "method": "solve", "equation": "x^2 + 2x - 15 = 0", "variable": "x" },
     "steps": ["x^2 + 2x - 15 = 0", "(x - 3)(x + 5) = 0", "x = 3 or x = -5"],
@@ -467,14 +547,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Solutions and every step backed by the maths engine.",
-          "at": "2026-11-25T17:34:26Z"
+          "at": "2026-11-25T18:04:52Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:35:16Z",
+          "at": "2026-11-25T18:05:39Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -524,6 +604,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:35:16Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:52:13Z",
+          "notes": "model answered \"x > 5\"; expected \"x > 5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:52:18Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -572,6 +668,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:35:17Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:52:25Z",
+          "notes": "model answered \"2, 3\"; expected \"2, 3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:52:33Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -583,7 +695,7 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a22-lp-inequality-cards",
     "expected_seconds": 15,
-    "front": "When you divide both sides of an inequality by a negative number, what must you do to the inequality sign? (one word)",
+    "front": "When you divide both sides of an inequality by a negative number, should you keep or reverse the inequality sign?",
     "back": "Reverse",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
     "checked_by": ["author"],
@@ -612,14 +724,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
-          "at": "2026-11-25T17:34:39Z"
+          "at": "2026-11-25T18:04:52Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:35:18Z",
+          "at": "2026-11-25T18:05:40Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
