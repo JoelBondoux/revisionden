@@ -126,6 +126,52 @@ describe('Review queue', () => {
     ]);
   });
 
+  it('lets a content lead create a batch from the draft items that are ready', async () => {
+    reviewerApi({ role: 'content-lead' });
+    const created: unknown[] = [];
+    server.use(
+      http.get('*/v1/review/batches/from-drafts', () => HttpResponse.json({ ready: 11 })),
+      http.post('*/v1/review/batches/from-drafts', async ({ request }) => {
+        created.push(await request.json());
+        return HttpResponse.json(
+          { id: BATCH_ID, size: 11, sampleSize: 11, sample: [] },
+          { status: 201 },
+        );
+      }),
+    );
+    renderRoute('/review');
+    const batches = await screen.findByRole('region', { name: 'Batches' });
+    expect(await within(batches).findByText('11 draft items are ready for review.')).toBeVisible();
+    await userEvent.type(within(batches).getByLabelText('Batch name'), 'Pilot');
+    await userEvent.click(
+      within(batches).getByRole('button', { name: 'Create batch from draft items' }),
+    );
+    expect(created).toEqual([{ title: 'Pilot' }]);
+    expect(await screen.findByText('Batch created with 11 items.')).toHaveAttribute(
+      'role',
+      'status',
+    );
+  });
+
+  it('tells a content lead when no draft item is ready yet', async () => {
+    reviewerApi({ role: 'content-lead' });
+    server.use(http.get('*/v1/review/batches/from-drafts', () => HttpResponse.json({ ready: 0 })));
+    renderRoute('/review');
+    expect(await screen.findByText('No draft items are ready for review.')).toBeVisible();
+    expect(
+      screen.queryByRole('button', { name: 'Create batch from draft items' }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('does not offer batch creation to other reviewers', async () => {
+    reviewerApi();
+    renderRoute('/review');
+    await screen.findByRole('region', { name: 'Batches' });
+    expect(
+      screen.queryByRole('button', { name: 'Create batch from draft items' }),
+    ).not.toBeInTheDocument();
+  });
+
   it('tells someone without a reviewer role that the page is not for them', async () => {
     reviewerApi({ role: null });
     renderRoute('/review');
