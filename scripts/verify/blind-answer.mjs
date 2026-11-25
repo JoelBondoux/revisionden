@@ -1,6 +1,12 @@
 // Pipeline step 3 (docs/VERIFICATION.md): a model from a DIFFERENT provider answers the item
 // without seeing the answer. The step passes only if its answer matches, with high confidence.
+import { createPythonChecker } from '../content/maths-engine.mjs';
 import { stamp } from './record.mjs';
+import {
+  meetsRounding,
+  roundingOf,
+  withoutSubject,
+} from '../../packages/core/src/answer-format.ts';
 
 export const ANSWER_SCHEMA = {
   type: 'object',
@@ -20,12 +26,18 @@ const SYSTEM =
 
 const HOW = {
   multiple_choice: 'Reply with the number of the correct option only (for example "2").',
-  numeric: 'Reply with the number (and unit if needed).',
+  numeric:
+    'Reply with the number (and unit if needed), written to the accuracy the question asks for.',
   short_answer: 'Reply with a short answer: a word, phrase or value.',
   flashcard: 'Reply with what belongs on the back of this flashcard, as briefly as possible.',
   worked_maths:
     'Reply with the final answer only: all solutions separated by commas, or the expression.',
 };
+
+const HOW_FORMULA =
+  'Reply with the formula in plain calculator notation: sqrt() for roots, ^ for powers, * for ' +
+  'multiplication, +- for ±, and brackets around every numerator and denominator. Then write ' +
+  '"where" and any conditions that must hold (for example "where b != 0").';
 
 /** The prompt sent to the second model. It never contains the answer, explanation or hint. */
 export function blindAnswerPrompt(item) {
@@ -35,17 +47,22 @@ export function blindAnswerPrompt(item) {
   if (item.type === 'multiple_choice') {
     lines.push('Options:', ...item.options.map((o, i) => `${i}. ${o}`));
   }
-  lines.push('', HOW[item.type]);
+  lines.push('', item.back_formula ? HOW_FORMULA : HOW[item.type]);
   return { system: SYSTEM, prompt: lines.join('\n') };
 }
 
 const NUMBER = /-?\d+(?:\.\d+)?(?:\s*\/\s*-?\d+(?:\.\d+)?)?/;
-function toNumber(text) {
+/** The first number in the text as written ("1,250.0 cm" gives "1250.0"), or null. */
+function numberText(text) {
   const m = String(text)
     .replace(/,(?=\d{3})/g, '')
     .match(NUMBER);
-  if (!m) return null;
-  const [a, b] = m[0].split('/').map((s) => Number(s.trim()));
+  return m ? m[0] : null;
+}
+function toNumber(text) {
+  const n = numberText(text);
+  if (n === null) return null;
+  const [a, b] = n.split('/').map((s) => Number(s.trim()));
   return b === undefined ? a : a / b;
 }
 const isPlainNumber = (text) => /^\s*-?\d+(\.\d+)?(\s*\/\s*-?\d+(\.\d+)?)?\s*$/.test(String(text));
@@ -83,14 +100,20 @@ function expectation(item) {
         expected: String(item.answer.option),
         matches: (a) => toNumber(a) === item.answer.option,
       };
-    case 'numeric':
+    case 'numeric': {
+      const rounding = roundingOf(item.answer);
+      const value = item.answer.value;
       return {
-        expected: item.answer.value,
-        matches: (a) =>
-          isPlainNumber(item.answer.value)
-            ? closeEnough(a, item.answer.value, item.answer.tolerance)
-            : tight(a) === tight(item.answer.value),
+        expected: value,
+        matches: (raw) => {
+          const a = withoutSubject(String(raw), item.answer.subject);
+          if (rounding) return meetsRounding(numberText(a) ?? '', value, rounding);
+          return isPlainNumber(value)
+            ? closeEnough(a, value, item.answer.tolerance)
+            : tight(a) === tight(value);
+        },
       };
+    }
     case 'short_answer':
       return {
         expected: item.answer.accepted.join(' | '),
@@ -115,7 +138,8 @@ function expectation(item) {
       }
       return {
         expected: item.answer.expression,
-        matches: (a) => tight(a) === tight(item.answer.expression),
+        matches: (a) =>
+          tight(withoutSubject(String(a), item.answer.subject)) === tight(item.answer.expression),
       };
     default:
       return null;
@@ -134,6 +158,39 @@ export function writerProviderOf(item) {
   return PROVIDER_HINTS.find(([, re]) => re.test(tool))?.[0] ?? 'anthropic';
 }
 
+// Conditions match ignoring spaces and case, with ≠, != and =/= read the same.
+const condition = (s) =>
+  s
+    .toLowerCase()
+    .replace(/!=|=\/=/g, '≠')
+    .replace(/\s+/g, '');
+
+/**
+ * Maths flashcards (back_formula): the maths engine compares the formula part of the answer, and
+ * the answer must state every condition. { ok, notes }.
+ */
+async function formulaVerdict(item, answer, maths) {
+  const [formulaPart, ...rest] = String(answer).split(/\bwhere\b/i);
+  const given = formulaPart.replace(/[\s,;]+$/, '').trim();
+  const { formula, conditions = [] } = item.back_formula;
+  const [result] = await maths([{ id: item.id, kind: 'formula', expected: formula, given }]);
+  // Each stated condition is a whole clause ("a != 0", "b > 1"), so "a != 0.5" never counts as
+  // "a ≠ 0": clauses are split on commas, semicolons and "and", then compared whole.
+  const stated = new Set(
+    rest
+      .join(' ')
+      .split(/,|;|\band\b/i)
+      .map((c) => condition(c).replace(/\.$/, ''))
+      .filter(Boolean),
+  );
+  const missing = conditions.filter((c) => !stated.has(condition(c)));
+  const notes = [
+    `maths engine: ${result?.ok ? 'same formula' : 'not the same formula'}`,
+    ...missing.map((c) => `does not state "${c}": a person must check`),
+  ];
+  return { ok: Boolean(result?.ok) && missing.length === 0, notes };
+}
+
 const record = (provider, modelVersion, result, notes, now) => ({
   name: 'blind-answer',
   result,
@@ -144,7 +201,14 @@ const record = (provider, modelVersion, result, notes, now) => ({
 });
 
 /** Runs the blind answer for one item: { id, result, check } (check is the record entry). */
-export async function runBlindAnswer(item, provider, { now = () => new Date() } = {}) {
+export async function runBlindAnswer(
+  item,
+  provider,
+  {
+    now = () => new Date(),
+    maths = createPythonChecker({ python: process.env.MATHS_PYTHON }),
+  } = {},
+) {
   const writer = writerProviderOf(item);
   if (provider.provider === writer) {
     throw new Error(
@@ -165,10 +229,12 @@ export async function runBlindAnswer(item, provider, { now = () => new Date() } 
     schema: ANSWER_SCHEMA,
     schemaName: 'blind_answer',
   });
-  const matches = want.matches(output.answer);
+  const formula = item.back_formula ? await formulaVerdict(item, output.answer, maths) : null;
+  const matches = formula ? formula.ok : want.matches(output.answer);
   const sure = output.confidence === 'high';
   const notes = [
-    `model answered "${output.answer}"; expected "${want.expected}"`,
+    `model answered "${output.answer}"; expected "${formula ? item.back_formula.formula : want.expected}"`,
+    ...(formula ? formula.notes : []),
     ...(sure ? [] : [`confidence ${output.confidence}`]),
   ].join('; ');
   const result = matches && sure ? 'pass' : 'fail';

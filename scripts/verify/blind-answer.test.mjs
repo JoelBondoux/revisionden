@@ -107,6 +107,64 @@ test('numeric answers given as fractions are compared by value', async () => {
   assert.equal(r.result, 'pass');
 });
 
+const blind = (item, answer) =>
+  runBlindAnswer(item, fakeProvider({ answer, confidence: 'high', reasoning: '' }), { now: AT });
+
+test('a rounded numeric answer must be written to the asked accuracy, not just be close', async () => {
+  const item = draftItem('fixture-round', undefined, {
+    type: 'numeric',
+    prompt: 'Fixture? Give your answer to 2 decimal places.',
+    answer: { value: '28.27', unit: 'cm^2', decimal_places: 2 },
+    verify: { expression: 'pi * 3^2' },
+  });
+  assert.equal((await blind(item, '28.27 cm²')).result, 'pass');
+  assert.equal((await blind(item, '28.274')).result, 'fail');
+  assert.equal((await blind(item, '28.3')).result, 'fail');
+  const sf = draftItem('fixture-sf', undefined, {
+    type: 'numeric',
+    prompt: 'Fixture? Give your answer to 3 significant figures.',
+    answer: { value: '1250', significant_figures: 3 },
+    verify: { expression: '1250' },
+  });
+  assert.equal((await blind(sf, '1,250')).result, 'pass');
+  assert.equal((await blind(sf, '1249.6')).result, 'fail');
+  assert.equal((await blind(sf, '1250.0')).result, 'fail'); // right value, 5 sf
+  assert.equal((await blind(item, '28.270')).result, 'fail');
+});
+
+test('the blind model is asked to round as the question says', () => {
+  const { prompt } = blindAnswerPrompt(mc);
+  assert.doesNotMatch(prompt, /accuracy the question asks/);
+  const item = { ...mc, type: 'numeric', options: undefined };
+  assert.match(blindAnswerPrompt(item).prompt, /accuracy the question asks/);
+});
+
+test('an answer stating the declared subject matches, such as "t = (v - u)/a"', async () => {
+  const item = draftItem('fixture-subject', undefined, {
+    type: 'worked_maths',
+    prompt: 'Make t the subject of v = u + at.',
+    answer: { expression: '(v - u)/a', subject: 't' },
+    verify: { method: 'expression', expression: '(v - u)/a' },
+  });
+  assert.equal((await blind(item, 't = (v - u)/a')).result, 'pass');
+  assert.equal((await blind(item, '(v-u)/a')).result, 'pass');
+  assert.equal((await blind(item, 'u = (v - u)/a')).result, 'fail');
+  const inverse = draftItem('fixture-inverse', undefined, {
+    type: 'worked_maths',
+    prompt: 'f(x) = 2x - 3. Find f^-1(x).',
+    answer: { expression: '(x + 3)/2', subject: 'f^-1(x)' },
+    verify: { method: 'expression', expression: '(x + 3)/2' },
+  });
+  assert.equal((await blind(inverse, 'f^-1(x) = (x + 3)/2')).result, 'pass');
+  const numeric = draftItem('fixture-t', undefined, {
+    type: 'numeric',
+    prompt: 'Find t.',
+    answer: { value: '4', subject: 't' },
+    verify: { expression: '4' },
+  });
+  assert.equal((await blind(numeric, 't = 4')).result, 'pass');
+});
+
 test('short answers match any accepted answer, ignoring case, spacing and end punctuation', async () => {
   const item = draftItem('fixture-short', undefined, {
     answer: { accepted: ['Fixture Answer', 'other'] },
@@ -143,6 +201,97 @@ test('flashcards compare the model answer to the back of the card', async () => 
     { now: AT },
   );
   assert.equal(r.result, 'pass');
+});
+
+const formulaCard = draftItem('fixture-formula-card', undefined, {
+  type: 'flashcard',
+  front: 'Fixture formula front',
+  back: 'SECRET BACK',
+  back_formula: { formula: 'y = m*x + c', conditions: ['m ≠ 0'] },
+  prompt: undefined,
+  answer: undefined,
+  marks: undefined,
+});
+
+/** A fake maths engine: records each check and says ok when given === the listed answer. */
+function fakeMaths(okFor) {
+  const calls = [];
+  const maths = async (checks) => {
+    calls.push(...checks);
+    return checks.map((c) => ({ id: c.id, ok: c.given === okFor }));
+  };
+  return { maths, calls };
+}
+
+test('a formula flashcard asks for calculator notation and conditions, never showing the back', () => {
+  const { prompt } = blindAnswerPrompt(formulaCard);
+  assert.match(prompt, /Fixture formula front/);
+  assert.match(prompt, /calculator notation/);
+  assert.match(prompt, /where/);
+  assert.doesNotMatch(prompt, /SECRET|m\*x/);
+});
+
+test('a formula flashcard passes when the maths engine finds the same formula and every condition is stated', async () => {
+  const { maths, calls } = fakeMaths('y = c + x*m');
+  const r = await runBlindAnswer(
+    formulaCard,
+    fakeProvider({ answer: 'y = c + x*m, where m != 0', confidence: 'high', reasoning: '' }),
+    { now: AT, maths },
+  );
+  assert.deepEqual(calls, [
+    { id: 'fixture-formula-card', kind: 'formula', expected: 'y = m*x + c', given: 'y = c + x*m' },
+  ]);
+  assert.equal(r.result, 'pass');
+  assert.match(r.check.notes, /maths engine: same formula/);
+});
+
+test('a formula flashcard fails when the maths engine finds a different formula', async () => {
+  const { maths } = fakeMaths('nothing matches');
+  const r = await runBlindAnswer(
+    formulaCard,
+    fakeProvider({ answer: 'y = m*x - c where m ≠ 0', confidence: 'high', reasoning: '' }),
+    { now: AT, maths },
+  );
+  assert.equal(r.result, 'fail');
+  assert.match(r.check.notes, /maths engine: not the same formula/);
+});
+
+test('a formula flashcard fails for a person to check when the answer leaves out a condition', async () => {
+  const { maths } = fakeMaths('y = m*x + c');
+  const r = await runBlindAnswer(
+    formulaCard,
+    fakeProvider({ answer: 'y = m*x + c', confidence: 'high', reasoning: '' }),
+    { now: AT, maths },
+  );
+  assert.equal(r.result, 'fail');
+  assert.match(r.check.notes, /does not state "m ≠ 0": a person must check/);
+});
+
+test('a condition must be stated exactly, not as part of a different condition', async () => {
+  for (const answer of [
+    'y = m*x + c where m != 0.5',
+    'y = m*x + c where m != 05',
+    'y = m*x + c where km != 0',
+  ]) {
+    const { maths } = fakeMaths('y = m*x + c');
+    const r = await runBlindAnswer(
+      formulaCard,
+      fakeProvider({ answer, confidence: 'high', reasoning: '' }),
+      { now: AT, maths },
+    );
+    assert.equal(r.result, 'fail', answer);
+  }
+  const { maths } = fakeMaths('y = m*x + c');
+  const ok = await runBlindAnswer(
+    formulaCard,
+    fakeProvider({
+      answer: 'y = m*x + c where c > 1 and m ≠ 0.',
+      confidence: 'high',
+      reasoning: '',
+    }),
+    { now: AT, maths },
+  );
+  assert.equal(ok.result, 'pass');
 });
 
 test('worked maths solutions match as a set, in any order', async () => {

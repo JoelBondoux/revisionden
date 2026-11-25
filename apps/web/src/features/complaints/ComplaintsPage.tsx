@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { TextLink } from '../../components/links';
 import { Button } from '../../components/Button';
 import { Pill, type PillTone } from '../../components/Pill';
 import {
@@ -93,7 +93,7 @@ export function ComplaintsPage({ api: given }: { api?: ComplaintsApi }) {
         If something has gone wrong and you want a formal answer, tell us here. We aim to reply
         within 2 working days and to sort it out within 14 days. If it takes longer, we tell you why
         and when to expect an answer. Read our{' '}
-        <Link to="/legal/complaints-policy">complaints policy</Link>.
+        <TextLink to="/legal/complaints-policy">complaints policy</TextLink>.
       </p>
 
       {requests.length > 0 && (

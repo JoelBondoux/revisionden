@@ -1,0 +1,1029 @@
+[
+  {
+    "id": "gcse-maths-h-a13-0101",
+    "topic": "gcse-maths-h-a13",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a13-lp-translations",
+    "expected_seconds": 25,
+    "prompt": "Which describes how the graph of y = f(x) + 3 is related to the graph of y = f(x)?",
+    "options": [
+      "A translation 3 units up",
+      "A translation 3 units down",
+      "A translation 3 units to the right",
+      "A translation 3 units to the left"
+    ],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "Adding 3 to f(x) adds 3 to every y-value, so the graph moves 3 units up.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The graph of y = f(x) + a is the graph of y = f(x) translated a units up (down if a is negative).",
+        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x, y + 3). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:04Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:45:20Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:45:27Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:36:57Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: up if a > 0 and down if a < 0.\")"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0102",
+    "topic": "gcse-maths-h-a13",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a13-lp-translations",
+    "expected_seconds": 25,
+    "prompt": "Which describes how the graph of y = f(x - 2) is related to the graph of y = f(x)?",
+    "options": [
+      "A translation 2 units up",
+      "A translation 2 units down",
+      "A translation 2 units to the right",
+      "A translation 2 units to the left"
+    ],
+    "answer": {
+      "option": 2
+    },
+    "marks": 1,
+    "explanation": "The value of f(x - 2) at x is the value f had at x - 2, so each point of the graph moves 2 units to the right.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The graph of y = f(x - a) is the graph of y = f(x) translated a units to the right (to the left if a is negative).",
+        "ask": "How is the graph of y = f(x - a) obtained from the graph of y = f(x)?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x + 2, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "at": "2026-11-25T18:04:51Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:05:12Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:07:50Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:07:58Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:37:46Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x-a) is obtained by translating the graph of y = f(x) horizontally by a units in the positive x-direction (to the right). This applies for any real constant a.\")"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0103",
+    "topic": "gcse-maths-h-a13",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a13-lp-translations",
+    "expected_seconds": 25,
+    "prompt": "Which describes how the graph of y = f(x + 4) is related to the graph of y = f(x)?",
+    "options": [
+      "A translation 4 units up",
+      "A translation 4 units down",
+      "A translation 4 units to the right",
+      "A translation 4 units to the left"
+    ],
+    "answer": {
+      "option": 3
+    },
+    "marks": 1,
+    "explanation": "The value of f(x + 4) at x is the value f had at x + 4, so each point of the graph moves 4 units to the left.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The graph of y = f(x - a) is the graph of y = f(x) translated a units to the right (to the left if a is negative).",
+        "ask": "How is the graph of y = f(x - a) obtained from the graph of y = f(x)?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x - 4, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "at": "2026-11-25T18:04:51Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:05:13Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:08:07Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:32:45Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:38:01Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x-a) is obtained by translating the graph of y = f(x) horizontally by a units to the right, for any real constant a. If a is negative, this is equivalently a shift to the left by |a| units.\")"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0104",
+    "topic": "gcse-maths-h-a13",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a13-lp-translations",
+    "expected_seconds": 40,
+    "prompt": "The point (3, 5) is on the graph of y = f(x). Write down the coordinates of the point it moves to on the graph of y = f(x) - 4.",
+    "answer": {
+      "accepted": ["(3, 1)", "(3,1)"]
+    },
+    "marks": 1,
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The graph of y = f(x) + a is the graph of y = f(x) translated a units up (down if a is negative).",
+        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). (x, y) maps to (x, y - 4): (3, 5) to (3, 1). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:06Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:46:16Z",
+          "notes": "model answered \"(3, 1)\"; expected \"(3, 1) | (3,1)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:46:24Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:37:10Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: upwards if a > 0 and downwards if a < 0.\")"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0105",
+    "topic": "gcse-maths-h-a13",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a13-lp-translations",
+    "expected_seconds": 90,
+    "prompt": "The graph of y = x^2 + 1 is translated 10 units down. Find the x-coordinates where the new graph crosses the x-axis.",
+    "answer": {
+      "solutions": ["3", "-3"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "x^2 + 1 - 10 = 0",
+      "variable": "x"
+    },
+    "steps": ["x^2 + 1 - 10 = 0", "x^2 - 9 = 0", "(x - 3)(x + 3) = 0", "x = 3 or x = -3"],
+    "marks": 3,
+    "mark_scheme": [
+      "B1 for the new graph y = x^2 - 9",
+      "M1 for (x - 3)(x + 3) = 0 or x^2 = 9",
+      "A1 for x = 3 and x = -3"
+    ],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "facts": [
+      {
+        "statement": "The graph of y = f(x) + a is the graph of y = f(x) translated a units up (down if a is negative).",
+        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Solutions and every step backed by the maths engine. The new equation y = x^2 - 9 uses the translation rule y = f(x) - 10: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Lead ruling 2026-11-25: the last adversarial-review finding is left for the owner to judge (see that check); needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "at": "2026-11-25T18:18:47Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:18:52Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:21:27Z",
+          "notes": "model answered \"3, -3\"; expected \"3, -3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:21:42Z",
+          "notes": "wording (steps): The first step, \"x^2 + 1 - 10 = 0\", combines two conceptual steps: deriving the equation of the translated graph and setting y=0 to find the x-intercepts. This is a very condensed step which could be confusing for a student. It would be clearer to first state the new equation, 'y = x^2 - 9', which aligns with the first mark (B1) in the mark scheme, and then show the process of setting y=0."
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:37:20Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: upwards if a > 0 and downwards if a < 0.\")"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0106",
+    "topic": "gcse-maths-h-a13",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a13-lp-reflections",
+    "expected_seconds": 25,
+    "prompt": "Which describes how the graph of y = -f(x) is related to the graph of y = f(x)?",
+    "options": [
+      "A reflection in the x-axis",
+      "A reflection in the y-axis",
+      "A reflection in the line y = x",
+      "A translation 1 unit down"
+    ],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "Every y-value changes sign, so the graph is reflected in the x-axis.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The graph of y = -f(x) is the reflection of the graph of y = f(x) in the x-axis.",
+        "ask": "How is the graph of y = -f(x) obtained from the graph of y = f(x)?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x, -y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:08Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:08Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:17Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:38:29Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = -f(x) is obtained by reflecting the graph of y = f(x) in the x-axis. Equivalently, each point (x, y) maps to (x, -y).\")"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0107",
+    "topic": "gcse-maths-h-a13",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a13-lp-reflections",
+    "expected_seconds": 25,
+    "prompt": "Which describes how the graph of y = f(-x) is related to the graph of y = f(x)?",
+    "options": [
+      "A reflection in the x-axis",
+      "A reflection in the y-axis",
+      "A reflection in the line y = x",
+      "A translation 1 unit down"
+    ],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "The value at x is the old value at -x, so the graph is reflected in the y-axis.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The graph of y = f(-x) is the reflection of the graph of y = f(x) in the y-axis.",
+        "ask": "How is the graph of y = f(-x) obtained from the graph of y = f(x)?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (-x, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:08Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:24Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:32Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:38:56Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(-x) is obtained by reflecting the graph of y = f(x) in the y-axis. Equivalently, each point (x, y) on y = f(x) moves to (-x, y), provided x is in the domain of f.\")"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0108",
+    "topic": "gcse-maths-h-a13",
+    "type": "short_answer",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a13-lp-reflections",
+    "expected_seconds": 40,
+    "prompt": "The point (2, -7) is on the graph of y = f(x). Write down the coordinates of the point it moves to on the graph of y = f(-x).",
+    "answer": {
+      "accepted": ["(-2, -7)", "(-2,-7)", "(−2, −7)", "(−2,−7)"]
+    },
+    "marks": 1,
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The graph of y = f(-x) is the reflection of the graph of y = f(x) in the y-axis.",
+        "ask": "How is the graph of y = f(-x) obtained from the graph of y = f(x)?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). (x, y) maps to (-x, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T18:55:48Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:56:02Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:01:15Z",
+          "notes": "model answered \"(-2, -7)\"; expected \"(-2, -7) | (-2,-7) | (−2, −7) | (−2,−7)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:01:21Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0109",
+    "topic": "gcse-maths-h-a13",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a13-lp-transformation-cards",
+    "expected_seconds": 15,
+    "front": "y = f(x) + a, with a > 0, moves the graph of y = f(x) which way? (one word: left, right, up or down)",
+    "back": "Up",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The graph of y = f(x) + a is the graph of y = f(x) translated a units up (down if a is negative).",
+        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:10Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:51Z",
+          "notes": "model answered \"up\"; expected \"Up\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:47:57Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:37:31Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: upwards if a > 0 and downwards if a < 0.\")"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0110",
+    "topic": "gcse-maths-h-a13",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a13-lp-transformation-cards",
+    "expected_seconds": 15,
+    "front": "y = f(x - a), with a > 0, moves the graph of y = f(x) which way? (one word: left, right, up or down)",
+    "back": "Right",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The graph of y = f(x - a) is the graph of y = f(x) translated a units to the right (to the left if a is negative).",
+        "ask": "How is the graph of y = f(x - a) obtained from the graph of y = f(x)?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:11Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:48:05Z",
+          "notes": "model answered \"right\"; expected \"Right\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:48:12Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:38:15Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x - a) is obtained by translating the graph of y = f(x) horizontally by a units to the right, provided a is a real constant.\")"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0111",
+    "topic": "gcse-maths-h-a13",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a13-lp-transformation-cards",
+    "expected_seconds": 15,
+    "front": "y = -f(x) is a reflection of y = f(x) in which axis? (x-axis or y-axis)",
+    "back": "x-axis",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The graph of y = -f(x) is the reflection of the graph of y = f(x) in the x-axis.",
+        "ask": "How is the graph of y = -f(x) obtained from the graph of y = f(x)?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "at": "2026-11-25T18:04:51Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:05:15Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:09:13Z",
+          "notes": "model answered \"x-axis\"; expected \"x-axis\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:09:20Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:38:42Z",
+          "notes": "fact 1: no maths engine proof; blind statement differs (\"The graph of y = -f(x) is obtained by reflecting the graph of y = f(x) in the x-axis. Equivalently, each point (x, y) maps to (x, -y).\")"
+        }
+      ]
+    }
+  }
+]

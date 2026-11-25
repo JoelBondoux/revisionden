@@ -9,7 +9,7 @@ import { requireFamilyStudent } from '../families';
 import { readJson } from '../http';
 import type { Clock } from '../rate-limit';
 import { isId } from '../validation';
-import { monthStart, type AiGateway } from './gateway';
+import { aiAllowanceFor, monthStart, type AiGateway } from './gateway';
 import { toShortAnswerQuestion } from './items';
 import { MAX_ANSWER_LENGTH, markShortAnswer } from './marking';
 
@@ -46,7 +46,11 @@ export function aiRoutes({ db, gateway }: AiRouteDeps) {
   return app;
 }
 
-/** Parent route under /v1/students: this month's AI spend for one student. */
+/**
+ * Parent route under /v1/students: this month's AI marking allowance for one student, as a share
+ * used and the reset date. No money ever goes to a family client (K9); the raw cost stays in
+ * operator routes.
+ */
 export function parentAiUsageRoutes({ db, config, clock }: AiRouteDeps) {
   const app = new Hono<AppEnv>();
   app.get('/:id/ai-usage', async (c) => {
@@ -56,11 +60,13 @@ export function parentAiUsageRoutes({ db, config, clock }: AiRouteDeps) {
       .select({ calls: count(), spent: sum(aiUsage.costMicroUsd) })
       .from(aiUsage)
       .where(and(eq(aiUsage.studentId, student.id), gte(aiUsage.createdAt, start)));
+    const allowance = aiAllowanceFor(start, Number(row?.spent ?? 0), config.ai.monthlyCapMicroUsd);
     return c.json({
       month: start.toISOString().slice(0, 7),
       calls: Number(row?.calls ?? 0),
-      spentMicroUsd: Number(row?.spent ?? 0),
-      capMicroUsd: config.ai.monthlyCapMicroUsd,
+      allowanceUsedPercent: allowance.percentUsed,
+      usedUp: allowance.usedUp,
+      resetsOn: allowance.resetsOn,
     });
   });
   return app;

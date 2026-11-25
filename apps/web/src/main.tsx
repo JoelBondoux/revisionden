@@ -6,6 +6,8 @@ import './layout/layout.css';
 import './pages/pages.css';
 import { App } from './App';
 import { registerServiceWorker } from './pwa/register';
+// Catch the browser's install prompt as early as possible (it fires once).
+import './pwa/installStore';
 
 /** Until the real API (workstream B) is live, development uses the MSW mock API. */
 async function startMocks() {

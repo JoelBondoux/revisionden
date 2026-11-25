@@ -1,6 +1,7 @@
 import { Navigate, useParams, type RouteObject } from 'react-router-dom';
 import { AppLayout, FocusLayout } from './layout/AppLayout';
 import { LinkPage } from './features/onboarding/LinkPage';
+import { UnlockPage } from './features/onboarding/UnlockPage';
 import { OnboardingPage } from './features/onboarding/OnboardingPage';
 import { ComingSoon } from './pages/ComingSoon';
 import { FamilyPage } from './pages/FamilyPage';
@@ -63,6 +64,8 @@ export const routes: RouteObject[] = [
         ),
       },
       { path: '/link', element: <LinkPage /> },
+      // Student passkey unlock (I5): after the 12-hour device session runs out.
+      { path: '/unlock', element: <UnlockPage /> },
       // Two parents (B3): the second parent joins with the invite code.
       { path: '/join', element: <JoinPage /> },
       { path: '/family/:studentId/rewards', element: <ParentRewardsPage /> },

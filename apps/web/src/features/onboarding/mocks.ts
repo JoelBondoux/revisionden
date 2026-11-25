@@ -41,4 +41,12 @@ export const onboardingHandlers: RequestHandler[] = [
       { status: 201 },
     );
   }),
+
+  // Student passkey unlock (I5): any passkey answers; the mock device belongs to the first child.
+  http.post('*/v1/device/unlock/options', () =>
+    HttpResponse.json({ challengeId: 'mock-unlock', options: { challenge: 'mock-challenge' } }),
+  ),
+  http.post('*/v1/device/unlock/verify', () =>
+    HttpResponse.json({ student: family.children[0]!.student }),
+  ),
 ];

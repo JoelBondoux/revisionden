@@ -1,5 +1,7 @@
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Button } from '../../components/Button';
+import { BackIcon, DocumentIcon } from '../../components/icons';
+import { LinkButton, LinkTile } from '../../components/links';
 import { NotFoundPage } from '../../pages/NotFoundPage';
 import { FriendlyNotice } from './FriendlyNotice';
 import { parseFriendlyNotice } from './friendlyNotice';
@@ -20,7 +22,9 @@ export function PolicyPage() {
     return (
       <article className="policy policy--friendly stack">
         <p className="policy__back no-print">
-          <Link to="/legal">All policies</Link>
+          <LinkButton to="/legal" variant="quiet" icon={<BackIcon />}>
+            All policies
+          </LinkButton>
         </p>
         <header>
           <h1>{policy.title}</h1>
@@ -45,7 +49,9 @@ export function PolicyPage() {
   return (
     <article className="policy stack">
       <p className="policy__back no-print">
-        <Link to="/legal">All policies</Link>
+        <LinkButton to="/legal" variant="quiet" icon={<BackIcon />}>
+          All policies
+        </LinkButton>
       </p>
       <header>
         <h1>{policy.title}</h1>
@@ -87,10 +93,12 @@ export function LegalIndexPage() {
       <ul className="policy-list">
         {policies.map((p) => (
           <li key={p.name}>
-            <Link to={`/legal/${p.name}`} className="policy-list__link">
-              <span className="policy-list__title">{p.title}</span>
-              <span className="secondary-text">{p.summary}</span>
-            </Link>
+            <LinkTile
+              to={`/legal/${p.name}`}
+              icon={<DocumentIcon />}
+              title={p.title}
+              description={p.summary}
+            />
             <span className="policy-list__audience">{p.audience}</span>
           </li>
         ))}

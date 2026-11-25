@@ -24,7 +24,9 @@ Each policy is one Markdown file in `docs/legal/`, shown in the app at `/legal/<
 4. **Changes**: a short history in plain English.
 
 The same file is the source for the repository and the app (imported at build), so they can
-never drift apart.
+never drift apart. The public site (`apps/www`, decision 0005) renders the same files at
+`revisionden.com/policies/<name>` and reads the order and "Who it is for" from the table below;
+its build fails if a file in `docs/legal` is missing from that table.
 
 ## The policies
 
@@ -58,6 +60,28 @@ normally on GitHub:
   fails if the file uses an unknown icon or a part has fewer than 2 or more than 4 key points.
 
 The parent notice and the other policies keep the plain layout for now.
+
+## Accepting the terms and privacy notice (L8)
+
+A new parent's "Before you start" step (`BeforeYouStart.tsx`) shows the Terms of use and the
+Privacy notice in the same friendly style, built from their own files (one source, no extra
+hints, so the policies do not change version):
+
+- Every top-level bullet of a policy's "In plain English" section becomes a card, word for word.
+  A bold start ending in a full stop (`**Who we are.** …`) becomes the card's label. Text before
+  the bullets is shown above the cards. A test checks every card against the policy text.
+- Only 4 cards show at first, chosen in code (`FEATURED_POINTS`, product owner 2026-11-25):
+  Terms: the parent is in charge; a revision helper, not a teacher; AI marks are a guide; no
+  promises about grades. Privacy: what we keep about your child; what we keep about you; AI
+  marking; your rights. "Show all N points" (`aria-expanded`, `aria-controls` on the list) shows
+  the rest in place, in policy order; a test fails if a chosen point stops matching one card.
+- Icons are chosen in code from the label (or, for unlabelled cards, only from strong words such
+  as "AI"); they are decoration and add nothing to what the policy says.
+- "Show the details" opens the policy's full text in place (`aria-expanded`, `aria-controls`);
+  "Read the full …" links to `/legal/<name>`. Cards slide in gently, never with motion when the
+  device asks for reduced motion.
+- Then the "I have read the Terms of use and Privacy notice" checkbox and Continue. What is
+  stored is unchanged: the two policy versions in `policy_acceptances`.
 
 ## Rules
 

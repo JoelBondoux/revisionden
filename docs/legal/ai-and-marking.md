@@ -1,6 +1,6 @@
 # AI and marking
 
-Version: 1.0
+Version: 1.1
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -64,9 +64,9 @@ and what it keeps, is set out in [services we use](processors.md).
 
 ### 4. Limits
 
-4.1 Each student has a monthly AI spending limit (by default US$2.50 a calendar month). When it is
-reached the student sees "You've used all your AI marking for this month. It comes back on the
-1st." Parents can see this month's AI use for each child.
+4.1 Each child has a monthly AI marking allowance. When it is used up the student sees "You've
+used this month's AI marking allowance. It resets on 1 <month>." (with the month named).
+Parents can see how much of this month's allowance each child has used, and when it resets.
 
 4.2 AI can make mistakes. It may misread an answer or apply a mark point wrongly. That is why the
 label is always shown, why the AI must quote the student's words, and why uncertain results are
@@ -101,4 +101,5 @@ our verification process, including official citations and human approval. See
 
 ## Changes
 
+- 1.1: AI use is described as a monthly AI marking allowance for each child, with no money figures, and the message a student sees when it is used up has new wording.
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).

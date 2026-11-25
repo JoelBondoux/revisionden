@@ -39,3 +39,8 @@ Tags: #tooling #ci
   local check, build a throwaway Dockerfile copy that trusts `/root/.ccr/ca-bundle.crt` via
   `PIP_CERT`; do not commit that change. The Docker daemon may also need starting
   (`sudo dockerd &`).
+- **`pnpm content:model-check` sends the placeholder key in Claude cloud sessions.** Node's
+  built-in fetch ignores `HTTPS_PROXY`, so its calls skip the proxy that swaps in the network
+  secret, and Google answers "API key not valid" even though `curl` works. Run it with
+  `NODE_USE_ENV_PROXY=1` (Node 22.21+). Also check the secret's host is spelled exactly
+  (`generativelanguage.googleapis.com`): a typo there gives the same error.

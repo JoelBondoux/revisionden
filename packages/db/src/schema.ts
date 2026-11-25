@@ -200,6 +200,9 @@ export const students = pgTable(
     nickname: text('nickname').notNull(),
     avatarCode: text('avatar_code').notNull(),
     yearGroup: integer('year_group').notNull(),
+    // Two-part title (workstream R8): curated words the student picked, never free text.
+    titleFirst: text('title_first'),
+    titleLast: text('title_last'),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },
@@ -207,6 +210,8 @@ export const students = pgTable(
     unique('students_family_nickname_unique').on(t.familyId, t.nickname),
     check('students_nickname_format', sql`${t.nickname} ~ '^[A-Za-z0-9_]{2,16}$'`),
     check('students_year_group_range', sql`${t.yearGroup} between 9 and 13`),
+    check('students_title_first_format', sql`${t.titleFirst} ~ '^[A-Z][A-Za-z-]{0,15}$'`),
+    check('students_title_last_format', sql`${t.titleLast} ~ '^[A-Z][A-Za-z-]{0,15}$'`),
   ],
 );
 
@@ -222,6 +227,11 @@ export const enrolments = pgTable(
     // As in core's TierSchema: 'none' when the subject has no tiers.
     tier: text('tier').notNull().default('not_sure'),
     specVersion: text('spec_version'),
+    // Target grades (workstream K8), each checked against the cited grade scale in
+    // packages/core/src/target-grades.ts; null until set. One is set by either parent, the
+    // other is the child's own.
+    parentTargetGrade: text('parent_target_grade'),
+    studentTargetGrade: text('student_target_grade'),
     createdAt: createdAt(),
   },
   (t) => [
@@ -343,6 +353,9 @@ export const items = pgTable(
     status: text('status').notNull().default('draft'),
     difficulty: integer('difficulty'),
     tags: jsonb('tags').$type<string[]>(),
+    // Workstream S2. The full content item (citations, checks, exemplars, linked mark scheme as
+    // mark_scheme_detail) as synced, used only to build human review batches. Never served.
+    reviewSnapshot: jsonb('review_snapshot').$type<Record<string, unknown>>(),
   },
   (t) => [
     index('items_topic_id_idx').on(t.topicId),
@@ -1076,7 +1089,7 @@ export const operatorRequests = pgTable(
     requestId: text('request_id').primaryKey(),
     method: text('method').notNull(),
     path: text('path').notNull(),
-    // SHA-256 of the raw body, to tell a true retry from a reused id.
+    // SHA-256 of the operator email, role and raw body, to tell a true retry from a reused id.
     bodyHash: text('body_hash').notNull(),
     // Null while the change is running.
     responseStatus: integer('response_status'),

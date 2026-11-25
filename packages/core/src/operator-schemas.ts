@@ -184,8 +184,8 @@ export const OperatorAuditEntrySchema = z
 export const OperatorAuditLogSchema = z
   .object({
     entries: z.array(OperatorAuditEntrySchema),
-    /** Pass as `before` for the next (older) page; null on the last page. */
-    nextBefore: isoDate.nullable(),
+    /** Pass as `before` for the next (older) page (`<time>~<id>`); null on the last page. */
+    nextBefore: z.string().nullable(),
   })
   .strict();
 

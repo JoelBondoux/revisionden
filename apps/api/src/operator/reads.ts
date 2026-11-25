@@ -13,14 +13,17 @@ import {
   eq,
   gte,
   inArray,
+  isNull,
   lt,
   ne,
+  or,
   sql,
   type SQL,
 } from 'drizzle-orm';
 import { z } from 'zod';
 import {
   ERROR_REPORT_RETENTION_DAYS,
+  ErrorRefSchema,
   OperatorFamilySearchSchema,
   type OperatorFamilyDetail,
   type OperatorOverview,
@@ -362,6 +365,44 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
 
   app.get('/error-reports', async (c) => {
     const at = now().getTime();
+    const rawCode = c.req.query('code');
+    if (rawCode !== undefined) {
+      // Exact lookup of one RD code over the whole 90 days: the group that holds it, with the
+      // code among its refs (AppDeck knows the answer is exact from the echoed `code`).
+      const code = rawCode.trim().toUpperCase();
+      if (!ErrorRefSchema.safeParse(code).success) badRequest('code must be a reference code');
+      const since = new Date(at - ERROR_REPORT_RETENTION_DAYS * DAY_MS);
+      const [hit] = await db
+        .select()
+        .from(errorReports)
+        .where(and(eq(errorReports.ref, code), gte(errorReports.createdAt, since)));
+      if (!hit) throw notFound('No error report with that code');
+      const rows = await db
+        .select({
+          ref: errorReports.ref,
+          screen: errorReports.screen,
+          apiPath: errorReports.apiPath,
+          status: errorReports.status,
+          build: errorReports.build,
+          createdAt: errorReports.createdAt,
+        })
+        .from(errorReports)
+        .where(
+          and(
+            gte(errorReports.createdAt, since),
+            eq(errorReports.screen, hit.screen),
+            hit.apiPath === null
+              ? isNull(errorReports.apiPath)
+              : eq(errorReports.apiPath, hit.apiPath),
+            hit.status === null ? isNull(errorReports.status) : eq(errorReports.status, hit.status),
+          ),
+        )
+        .orderBy(desc(errorReports.createdAt));
+      const summary = groupErrorReports(rows, since);
+      const group = summary.groups[0]!;
+      if (!group.refs.includes(code)) group.refs = [code, ...group.refs.slice(0, -1)];
+      return ok(c, { code, ...summary, groups: [group] });
+    }
     const raw = c.req.query('since');
     const asked = raw ? new Date(raw) : new Date(at - DAY_MS);
     if (Number.isNaN(asked.getTime())) badRequest('since must be a date and time');
@@ -427,7 +468,13 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
     .object({
       targetType: z.string().min(1).max(40).optional(),
       targetId: z.string().min(1).max(128).optional(),
-      before: z.string().datetime().optional(),
+      // `nextBefore` from the previous page: `<time>~<id>` (a plain time is accepted too).
+      before: z
+        .string()
+        .regex(/^[^~]+(~[0-9a-f-]{36})?$/)
+        .refine((v) => !Number.isNaN(new Date(v.split('~')[0]!).getTime()))
+        .refine((v) => !v.includes('~') || isUuid(v.split('~')[1]!))
+        .optional(),
       limit: z.coerce.number().int().min(1).max(500).default(100),
     })
     .strict();
@@ -439,17 +486,32 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
     const filters: SQL[] = [];
     if (q.targetType) filters.push(eq(operatorAuditLog.targetType, q.targetType));
     if (q.targetId) filters.push(eq(operatorAuditLog.targetId, q.targetId));
-    if (q.before) filters.push(lt(operatorAuditLog.createdAt, new Date(q.before)));
+    if (q.before) {
+      const [time, id] = q.before.split('~');
+      const at = new Date(time!);
+      filters.push(
+        id
+          ? or(
+              lt(operatorAuditLog.createdAt, at),
+              and(eq(operatorAuditLog.createdAt, at), lt(operatorAuditLog.id, id)),
+            )!
+          : lt(operatorAuditLog.createdAt, at),
+      );
+    }
     const rows = await db
       .select()
       .from(operatorAuditLog)
       .where(filters.length ? and(...filters) : undefined)
-      .orderBy(desc(operatorAuditLog.createdAt))
+      .orderBy(desc(operatorAuditLog.createdAt), desc(operatorAuditLog.id))
       .limit(q.limit + 1);
     const page = rows.slice(0, q.limit);
     return ok(c, {
       entries: page.map((r) => ({ ...r, createdAt: r.createdAt.toISOString() })),
-      nextBefore: rows.length > q.limit ? page[page.length - 1]!.createdAt.toISOString() : null,
+      // Time and id together, so entries that share a time are never skipped.
+      nextBefore:
+        rows.length > q.limit
+          ? `${page[page.length - 1]!.createdAt.toISOString()}~${page[page.length - 1]!.id}`
+          : null,
     });
   });
 

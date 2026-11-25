@@ -1,5 +1,5 @@
 import { useMemo, useState, type FormEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { TextLink } from '../../components/links';
 import { COMPLAINT_REQUEST_TOPICS, type ComplaintRequestTopic } from '@revisionden/core';
 import { Button } from '../../components/Button';
 import {
@@ -47,8 +47,8 @@ export function AskParentPage({
         raise it with us. They will see your message in their parent area.
       </p>
       <p>
-        If you feel unsafe, upset or worried about something, <Link to="/help">Get help</Link> has
-        people you can talk to straight away.
+        If you feel unsafe, upset or worried about something,{' '}
+        <TextLink to="/help">Get help</TextLink> has people you can talk to straight away.
       </p>
       <form className="stack" onSubmit={(e) => void submit(e)}>
         <fieldset className="stack">

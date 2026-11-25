@@ -1,3 +1,4 @@
+import { Button } from '../../components/Button';
 import { useId, useState } from 'react';
 
 export interface ChartBar {
@@ -119,9 +120,9 @@ export function BarChart({ title, buckets, unit, reference, format }: BarChartPr
           </tbody>
         </table>
       </div>
-      <button type="button" className="link-button" onClick={() => setShowTable((s) => !s)}>
+      <Button variant="secondary" className="no-print" onClick={() => setShowTable((s) => !s)}>
         {showTable ? 'Show chart' : 'Show table'}
-      </button>
+      </Button>
     </div>
   );
 }

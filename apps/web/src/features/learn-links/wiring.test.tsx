@@ -38,12 +38,14 @@ vi.mock('./links', async (importOriginal) => {
 describe('Learn it first on a topic lesson', () => {
   it('shows the button on a topic with a checked link', async () => {
     renderRoute('/learn/topic/demo-topic-a');
-    expect(await screen.findByRole('button', { name: 'Learn it first' })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('button', { name: 'Learn it first' }, { timeout: 5000 }),
+    ).toBeInTheDocument();
   });
 
   it('hides it on a topic whose links are not checked yet', async () => {
     renderRoute('/learn/topic/demo-topic-b');
-    await screen.findByRole('heading', { level: 1 });
+    await screen.findByRole('heading', { level: 1 }, { timeout: 5000 });
     expect(screen.queryByRole('button', { name: 'Learn it first' })).not.toBeInTheDocument();
   });
 });

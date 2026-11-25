@@ -35,6 +35,8 @@ function fakeApi(create: OnboardingApi['createLinkToken']): OnboardingApi {
     createLinkToken: create,
     redeemLink: vi.fn(),
     verifyLink: vi.fn(),
+    unlockOptions: vi.fn(),
+    unlockVerify: vi.fn(),
   };
 }
 

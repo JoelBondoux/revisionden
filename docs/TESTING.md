@@ -62,6 +62,7 @@ cd services/maths && pip install -r requirements-dev.txt && python -m pytest -q
 pnpm --filter @revisionden/web build && pnpm --filter @revisionden/e2e e2e   # end-to-end + axe
 E2E_BASE_URL=https://dev.revisionden.com pnpm --filter @revisionden/e2e e2e  # against a live site
 E2E_BASE_URL=https://staging.revisionden.com pnpm --filter @revisionden/e2e smoke  # deployed smoke
+E2E_BASE_URL=https://staging.revisionden.com E2E_WWW_URL=https://www-staging.revisionden.com pnpm --filter @revisionden/e2e smoke  # plus the public site
 UPDATE_ROUTES=1 pnpm --filter @revisionden/api test   # refresh apps/api/routes.json after a route change
 ```
 
@@ -76,7 +77,9 @@ route exists and refuses a signed-out request with a reference code, policy page
 button, the signed-out `/family` prompt, and that `/`, `/family`, `/legal`, a policy and `/about`
 request nothing from third parties (only the web origin and its API host; it caught Cloudflare's
 injected Web Analytics beacon on staging, 2026-11-25). The local suite checks the same for the
-built app. It signs nobody in: there is no test backdoor.
+built app. It signs nobody in: there is no test backdoor. With `E2E_WWW_URL` set it also checks the
+public site (`apps/www`) requests nothing from other origins and sends its content security policy;
+`apps/www`'s own tests check every built page for third-party resources and broken links.
 Still checked by a person after each staging deploy: signing in with Google and landing on
 "Who's revising?", adding a child, linking a device with the QR code and passkey, and the
 student using the app on that device.
@@ -85,3 +88,6 @@ End-to-end tests (`e2e/tests`) run at phone (390×844), tablet (820×1180) and d
 in Chromium, fail on any axe WCAG 2.2 A/AA violation or sideways scrolling, and always run with
 `--trace off` (turn traces on only to debug one test). Without `E2E_BASE_URL` they serve the built
 app with `vite preview`. CI: `.github/workflows/e2e.yml`.
+Passkey tests use Chromium's virtual authenticator (CDP `WebAuthn.addVirtualAuthenticator`):
+one holding a generated passkey for the page's host checks the real unlock prompt, and an empty
+one checks the "Ask a parent to link this device" message. The API is stubbed with `page.route`.
