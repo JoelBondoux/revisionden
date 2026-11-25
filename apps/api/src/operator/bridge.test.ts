@@ -137,12 +137,13 @@ describe('operator bridge: signed requests from AppDeck', () => {
 });
 
 describe('operator bridge: switched off and rate limited', () => {
-  it('does not exist when no shared secret is set for the environment', async () => {
+  it('answers 503 (switched off) when no shared secret is set for the environment', async () => {
     t = await createTestContext();
     const res = await t.app.request(
       ...(await signedOperatorRequest({ clock: t.clock, path: '/operator/appdeck/health' })),
     );
-    expect(res.status).toBe(404);
+    expect(res.status).toBe(503);
+    expect(await errorCode(res)).toBe('operator_bridge_off');
   });
 
   it('limits how many requests arrive a minute', async () => {

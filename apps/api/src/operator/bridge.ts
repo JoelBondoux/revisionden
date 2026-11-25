@@ -17,7 +17,7 @@ import {
 import { operatorAuditLog, operatorRequests, type Database } from '@revisionden/db';
 import type { AppEnv } from '../context';
 import type { AppConfig } from '../env';
-import { ApiError, notFound } from '../errors';
+import { ApiError } from '../errors';
 import { clientKey, RETRY_AFTER_SECONDS, type Clock, type RateLimiter } from '../rate-limit';
 
 /** Headers AppDeck sends with every operator request. */
@@ -70,14 +70,16 @@ function signedPath(c: Context): string {
 }
 
 /**
- * Checks an AppDeck request and sets `c.var.operator`. Off (404) when the environment has no
+ * Checks an AppDeck request and sets `c.var.operator`. Off (503) when the environment has no
  * shared secret. Change answers are stored so a retry with the same request id and body gets
  * the same answer without running twice; a crash (5xx) frees the id for a retry.
  */
 export function operatorAuth(deps: OperatorBridgeDeps): MiddlewareHandler<AppEnv> {
   return async (c, next) => {
     const bridge = deps.config.operatorBridge;
-    if (!bridge) throw notFound();
+    if (!bridge) {
+      throw new ApiError(503, 'operator_bridge_off', 'The operator bridge is not set up here');
+    }
 
     const { success } = await deps.rateLimiter.limit({
       key: `operator:${clientKey(c.req.raw.headers)}`,
