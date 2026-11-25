@@ -72,7 +72,7 @@ describe("young people's notice page", () => {
     );
     expect(screen.getByRole('heading', { level: 1, name: 'Your privacy' })).toBeInTheDocument();
     expect(screen.getByText('We never ask for your real name.')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Read the full notice' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Open this notice on its own page' })).toHaveAttribute(
       'href',
       '/legal/privacy-for-young-people',
     );

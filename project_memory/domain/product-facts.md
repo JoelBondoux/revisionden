@@ -363,6 +363,9 @@ Tags: #product #rules #limits #defaults
 - Parents confirm the terms and privacy notice in onboarding (version stored in
   `policy_acceptances`); a changed version shows a "We've updated" prompt. A newly linked student
   device shows the young people's notice once (`revisionden.youngPeopleNotice` in local storage).
+- The young people's notice has a friendly view built from the same file: 6 short-version cards,
+  2 to 4 key points per part always visible, "Read more" and "Expand all", original icons and Pip;
+  motion off under reduced motion. Format rules in `docs/LEGAL.md` (Friendly view).
 
 ## Sound
 

@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- The privacy notice for students is now much easier to read: a short version on six cards, the key points of each part up front, and "Read more" when you want the detail.
 - Parents get a notification on their phone when a child reaches a reward target you set. Turn on "Reward news" on the new parent home.
 - New parent home: one place for the stats dashboard, rewards you set, reminder times, family feedback, settings and policies. Find it from the profile picker or Settings.
 - When you're signed out, About, Policies and Feedback show a simple header (Sign in, Policies, About) instead of the student menu.
@@ -46,6 +47,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Friendly view of the young people's privacy notice (L6): short-version cards, key points with accessible "Read more" and "Expand all", original SVG icons and Pip, reduced-motion aware, print expands all; built from `docs/legal/privacy-for-young-people.md` (now 1.1) with comment hints; e2e axe test.
 - Parent reward notification (H2): the family export (`GET /v1/export`) lists the parent's reward-news devices without their push keys; `parent_push_subscriptions` table and `parent_rewards.reached_notified_at` (migration 0007), `POST, DELETE /v1/parent/push-subscriptions`, `GET /v1/parent/notifications/latest`, a cron step (`runParentRewardNotifications`) that reads the read-only `rewardsProgress`, sends once per reward, respects the child's nightly quiet hours and is not counted in the 2-a-day reminder limit; the service worker shows parent text and opens `/parent` on parent devices.
 - Parent home (P): tapping a child on "Who's revising?" now opens `/parent?student=<id>` (that child preselected) instead of `/parent/stats`. `/parent` has a student switcher, rewards you set, reminder times (`/parent/reminders/:id`, the existing reminder settings form), stats dashboard, manage children, family feedback, download your family's data (to the B2 panel on `/onboarding`), Reward news toggle, settings and policies; linked from `/family` and Settings.
 - Privacy fixes (B2): `GET /v1/export` (parent's and own children's data as JSON, secrets left out) and a "Download your family's data" panel on the onboarding family list; family activity (`families.last_active_at`, `previous_active_at`, migration 0006), 12-month inactive deletion and `GET /v1/family/activity` with a return-after-11-months warning; the 15-minute cron (`apps/api/src/cleanup.ts`) also deletes expired link codes, student and parent sessions, passkey challenges and sign-in checks.

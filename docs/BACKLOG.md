@@ -212,6 +212,7 @@ Spec: `docs/LEGAL.md` and `PRODUCT_RULES.md` (About page, policies and feedback)
 - [x] L3 About page: version, environment, build date, commit, "What's new" from `CHANGELOG.md`, policy links, open-source licences.
 - [x] L4 Feedback: form, privacy checks, device details toggle, parent view, operator triage at `/admin/feedback`, status updates, rate limit, retention.
 - [x] L5 Policy acceptance in onboarding (version stored) and the "policy changed" prompt.
+- [x] L6 Friendly view of the young people's privacy notice: short-version cards, key points with "Read more", icons, Pip, gentle motion (built from the same file).
 - Tests: placeholder filling and the missing-value message; What's new parsing (versions without the subsection hidden); feedback refuses emails, phone numbers and nicknames; a parent sees only their family's feedback; only the operator role reaches triage; rate limit; acceptance version stored.
 
 ### U. Sound effects (`apps/web/src/features/sound/**`)
