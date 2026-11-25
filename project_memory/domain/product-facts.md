@@ -331,6 +331,10 @@ Tags: #product #rules #limits #defaults
   content-lead, parent-reviewer) in `reviewer_roles`; decisions store the role only. Batch
   samples: 10% of the batch, at least 30, plus every item needing approval; seed recorded; one
   confirmed error fails the batch and re-checks the batch, writer prompt and source.
+- A content lead creates a batch on `/review` with "Create batch from draft items": every draft
+  whose synced snapshot (`items.review_snapshot`, full content record plus mark scheme) has all
+  automated checks passed and is not already in an open or passed batch. The batch page shows
+  hint, mark scheme, exemplars and checks.
 - Report a problem stores only item, version and a reason (no free text) and hides the item at
   once (status `quarantined` in `items`, kept through content syncs; restored on "no error";
   lifted after a confirmed error only when a newer version is synced). A confirmed error queues a score recalculation job and re-checks the item. The

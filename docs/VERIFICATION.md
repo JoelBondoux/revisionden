@@ -214,6 +214,15 @@ error fails the batch and files re-check requests for the batch (steps 3 to 5 an
 sample), its writer prompt and its source. A passed batch is then recorded in each item as a
 `batch-sample` check by the content session.
 
+**Batches from draft items (S2).** Content sync keeps each item's full content record, with its
+linked mark scheme as `mark_scheme_detail`, in `items.review_snapshot` (never served). On
+`/review`, a `content-lead` sees how many drafts are ready and can **Create batch from draft
+items** (`GET, POST /v1/review/batches/from-drafts`): only drafts whose snapshot has every
+automated check passed (grounded writing, quote check, blind answer or blind marking, adversarial
+review, schema, and the maths engine for maths items; `readyForHumanReview` in
+`packages/core`), and not already in a batch under review or passed at that version. The batch
+page shows each item's hint, mark scheme, exemplars and checks.
+
 **Reports and quarantine (section 6).** "Report a problem" stores only the item, its version and
 a reason (no free text, so no personal data) and hides the item at once: a row in
 `quarantined_items` and status `quarantined` in `items`, which the learning loop's content gate

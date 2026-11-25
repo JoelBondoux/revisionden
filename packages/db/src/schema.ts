@@ -343,6 +343,9 @@ export const items = pgTable(
     status: text('status').notNull().default('draft'),
     difficulty: integer('difficulty'),
     tags: jsonb('tags').$type<string[]>(),
+    // Workstream S2. The full content item (citations, checks, exemplars, linked mark scheme as
+    // mark_scheme_detail) as synced, used only to build human review batches. Never served.
+    reviewSnapshot: jsonb('review_snapshot').$type<Record<string, unknown>>(),
   },
   (t) => [
     index('items_topic_id_idx').on(t.topicId),
