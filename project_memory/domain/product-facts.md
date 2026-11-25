@@ -639,7 +639,7 @@ Tags: #product #rules #limits #defaults
   #B34F00 (orange), checked by simulation (ΔE ≥ 20 for deuteranopia, protanopia, tritanopia) and
   4.5:1 contrast in all four combinations. Doodle tile `apps/web/src/design/doodles.svg` (original,
   240px, used as a CSS mask at 7% ink), hidden with `prefers-contrast: more` and forced colours.
-  Text on gold or streak orange uses `--color-text-on-gold`. Get help keeps light colours in dark.
+  Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help keeps light colours in dark.
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by
