@@ -213,8 +213,11 @@ Tags: #product #rules #limits #defaults
 
 ## Hosting
 
-- Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Hosts: `revisionden.com` and
-  `api.revisionden.com` (production), `staging.` and `api-staging.` (staging), `dev.` and `api-dev.` (development).
+- Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Hosts: `app.revisionden.com`
+  and `api.revisionden.com` (production; owner decision 2026-11-25), `staging.` and `api-staging.` (staging), `dev.` and `api-dev.` (development).
+- The bare `revisionden.com` is the public sales site (workstream M, `apps/www`), not the app.
+- Production passkeys use the RP ID `revisionden.com`; OAuth callbacks are on the API host, so the
+  move to `app.` needed no change in Google or Microsoft.
 - Live since 2026-11-25 (workstream G): API Workers on all three API hosts; web app on `dev.` and
   `staging.`. The production web app waits for the operator details (its build fails without them).
 - Workers: `revisionden-api-dev`, `revisionden-api-staging`, `revisionden-api` (API) and

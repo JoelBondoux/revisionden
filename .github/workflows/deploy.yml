@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.environment }}
-      url: ${{ inputs.environment == 'production' && 'https://revisionden.com' || format('https://{0}.revisionden.com', inputs.environment) }}
+      url: ${{ inputs.environment == 'production' && 'https://app.revisionden.com' || format('https://{0}.revisionden.com', inputs.environment) }}
     concurrency:
       group: deploy-${{ inputs.environment }}
       cancel-in-progress: false
