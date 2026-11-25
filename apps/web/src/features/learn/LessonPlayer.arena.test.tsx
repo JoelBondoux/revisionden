@@ -172,6 +172,7 @@ describe('Combo bonus from the API (J4)', () => {
             streak: { current: 4, best: 4, skipDays: 0 },
           },
           flashcardAdded: false,
+          newlyEarned: [],
           combo: 3,
           comboBonusXp: 5,
         }),

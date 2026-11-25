@@ -73,6 +73,7 @@ describe('learning schemas', () => {
       feedback: null,
       progress,
       flashcardAdded: false,
+      newlyEarned: [],
     });
     expect(parsed.feedback).toBeNull();
   });
@@ -144,6 +145,7 @@ describe('learning schemas', () => {
         cardsCounted: 6,
         rewardedLeftToday: 1,
         progress,
+        newlyEarned: [],
       }).reason,
     ).toBe('rewarded');
     expect(

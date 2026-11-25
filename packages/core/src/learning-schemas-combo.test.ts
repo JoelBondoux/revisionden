@@ -19,6 +19,7 @@ const attempt = {
   feedback: null,
   progress,
   flashcardAdded: false,
+  newlyEarned: [],
 };
 
 describe('combo fields in learn responses (J4)', () => {
