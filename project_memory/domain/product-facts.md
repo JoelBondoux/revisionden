@@ -459,3 +459,10 @@ Tags: #product #rules #limits #defaults
 - "Get help" page: UK support services by topic with tap-to-call links; every number and URL
   confirmed on the service's own site with source and date (rechecked each term); nothing about its
   use is recorded or shown to parents; works offline; Quick exit. Detail: `docs/PRODUCT_RULES.md`.
+
+## Quick wins (owner approved 2026-11-25; planned, workstream Q)
+
+- Daily 5-a-day mixed set (5 questions from practised topics); recall checks (2 questions at lesson
+  start, no penalty, skippable); "Learn it first" links to Oak and BBC Bitesize per topic, checked
+  by CI; read aloud with on-device voices preferred; reading comfort settings (dyslexia-friendly
+  self-hosted font, larger text, spacing, tint). Detail: `docs/PRODUCT_RULES.md` (Quick wins).

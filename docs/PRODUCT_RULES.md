@@ -538,3 +538,42 @@ Requested by the product owner on 2026-11-25.
   it never asks the student to explain themselves.
 - Parents can see the same page from the parent area, plus the NSPCC adult helpline for worried
   adults.
+
+## Quick wins from the competitor research (owner approved 2026-11-25)
+
+From `docs/research/competitors-2026-11.md`. Workstream Q.
+
+### Daily 5-a-day
+
+- Each day a student gets a short mixed set of **5 questions** from topics they have already
+  practised, chosen by spaced repetition and weak spots (never brand-new topics), across their
+  subjects. Takes about 5–8 minutes.
+- Learn mode, normal XP and combos; finishing it counts as a lesson for the streak and daily goal.
+  It appears at the top of the topic map until done; it never nags (no push just for 5-a-day).
+
+### Recall checks
+
+- At the start of a lesson on a topic practised before, 2 quick recall questions on things learned
+  in earlier lessons ("Remember this?").
+- No penalty: wrong answers do not lower mastery more than a normal answer would, earn no XP loss,
+  and simply become flashcards. Right answers earn normal XP. They can be skipped.
+
+### Learn it first
+
+- Each topic can link to free official lessons: Oak National Academy lessons and BBC Bitesize pages
+  that match the topic (and, later, our own verified notes).
+- Links only (open in a new tab on tap; nothing loaded from those sites until then), stored as data
+  per topic with the page title, URL, and the date checked. A CI job checks every link still works
+  (HTTP status) and fails on broken links. A topic shows the button only when it has a checked link.
+- Links point at the right level (GCSE or A-Level) and the student's board where the page is
+  board-specific.
+
+### Read aloud and reading comfort
+
+- **Read aloud** button on questions, answers, explanations and flashcards, using the device's own
+  speech voices (Web Speech API), preferring voices that run on the device (`localService`); where
+  only online voices exist the setting explains that the device's speech service may process the
+  text, and it stays off by default. Speed control. Maths is read sensibly (for example "x squared").
+- **Reading comfort** settings per device: a dyslexia-friendly font (self-hosted, open licence, no
+  third-party font service), larger text, more line and letter spacing, and a soft tinted background
+  option. These apply across the app and are remembered on the device.
