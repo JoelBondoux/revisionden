@@ -2,6 +2,8 @@ import { createContext, useContext } from 'react';
 import type { ZodType } from 'zod';
 import {
   FlashcardReviewResponseSchema,
+  FlashcardSessionResultSchema,
+  FlashcardSessionSchema,
   FlashcardSchema,
   FlashcardsOverviewSchema,
   LearnAttemptResponseSchema,
@@ -13,6 +15,8 @@ import {
   type CreateFlashcardRequest,
   type Flashcard,
   type FlashcardReviewResponse,
+  type FlashcardSession,
+  type FlashcardSessionResult,
   type FlashcardsOverview,
   type LearnAttemptRequest,
   type LearnAttemptResponse,
@@ -37,7 +41,15 @@ export interface LearnApi {
   submitAttempt(attempt: LearnAttemptRequest): Promise<LearnAttemptResponse>;
   getFlashcards(): Promise<FlashcardsOverview>;
   getDeck(topicId: string): Promise<Flashcard[]>;
-  reviewFlashcard(id: string, rating: FlashcardRating): Promise<FlashcardReviewResponse>;
+  /** Starts a review session: deck XP is paid per completed session (F3). */
+  /** Starts a review session; with a topic id, for that one deck. */
+  startFlashcardSession(topicId?: string): Promise<FlashcardSession>;
+  reviewFlashcard(
+    id: string,
+    rating: FlashcardRating,
+    sessionId: string,
+  ): Promise<FlashcardReviewResponse>;
+  finishFlashcardSession(sessionId: string): Promise<FlashcardSessionResult>;
   createFlashcard(card: CreateFlashcardRequest): Promise<Flashcard>;
 }
 
@@ -80,8 +92,15 @@ export function createLearnApi({
     submitAttempt: (attempt) => request('learn/attempts', LearnAttemptResponseSchema, attempt),
     getFlashcards: () => request('flashcards', FlashcardsOverviewSchema),
     getDeck: (topicId) => request(`flashcards/decks/${enc(topicId)}`, FlashcardSchema.array()),
-    reviewFlashcard: (id, rating) =>
-      request(`flashcards/${enc(id)}/review`, FlashcardReviewResponseSchema, { rating }),
+    startFlashcardSession: (topicId) =>
+      request('flashcards/sessions', FlashcardSessionSchema, topicId ? { topicId } : {}),
+    reviewFlashcard: (id, rating, sessionId) =>
+      request(`flashcards/${enc(id)}/review`, FlashcardReviewResponseSchema, {
+        rating,
+        sessionId,
+      }),
+    finishFlashcardSession: (sessionId) =>
+      request(`flashcards/sessions/${enc(sessionId)}/finish`, FlashcardSessionResultSchema, {}),
     createFlashcard: (card) => request('flashcards', FlashcardSchema, card),
   };
 }

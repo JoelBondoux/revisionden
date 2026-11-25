@@ -9,6 +9,7 @@
  *   for parent-set real-world rewards under /v1/students/:id/parent-rewards. Once given, a
  *   reward is kept as history: it can no longer be changed or deleted (409).
  */
+import { flashcardSessionStats } from '../learning/flashcard-sessions';
 import { Hono } from 'hono';
 import { and, asc, eq, gte, isNotNull, sql } from 'drizzle-orm';
 import {
@@ -84,7 +85,9 @@ async function loadStats(db: Database, studentId: string, yearGroup: number, now
     .from(dailyXp)
     .where(and(eq(dailyXp.studentId, studentId), gte(dailyXp.xp, DEFAULT_DAILY_GOAL_XP)));
 
-  const xpEvents = answerRows.map((a) => ({ at: a.at, xp: a.xp }));
+  // Flashcard deck XP is paid per completed session, timestamped (F3), so it counts too.
+  const sessions = await flashcardSessionStats(db, studentId);
+  const xpEvents = [...answerRows.map((a) => ({ at: a.at, xp: a.xp })), ...sessions.xpEvents];
   const correct = answerRows.filter((a) => a.correct);
   const stats: Partial<RewardStats> = {
     ...progressionStats({ xpEvents, yearGroup, today: localDate(now) }),
@@ -95,6 +98,7 @@ async function loadStats(db: Database, studentId: string, yearGroup: number, now
     correctAnswers: correct.length,
     bestCorrectRun: bestRun(answerRows.map((a) => a.correct)),
     startingTestsCompleted: tests?.n ?? 0,
+    flashcardsReviewed: sessions.cardsReviewed,
   };
   const seasonProgress = seasonProgressFor({
     now,
