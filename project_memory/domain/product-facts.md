@@ -90,7 +90,6 @@ Tags: #product #rules #limits #defaults
 - Learning screens: `/learn/subject/:id` (topics, mastery, weak spots), `/learn/subject/:id/start`
   (starting test), `/learn/subject/:id/practice`, `/learn/topic/:id`, `/learn/command-words`,
   `/cards` (flashcards: Due today, All decks, My cards; 3D flip card, reduced motion respected).
-- Installable PWA. Main nav tabs: Learn, Cards, Plan, Papers, Progress (bottom bar on phones, side
 - Installable PWA. Main nav tabs: Map, Cards, Plan, Papers, Progress (bottom bar on phones, side
   rail from 768px wide). Welcome and lessons hide the nav to keep focus. Only a linked student
   device gets the student nav: elsewhere (signed out, or a parent) About, Policies, Feedback and
@@ -101,6 +100,12 @@ Tags: #product #rules #limits #defaults
   (gold, tick), in progress (violet, fill level shows mastery %), weak spot (orange, pulsing
   glow), locked (grey). Each unit ends in a challenge that unlocks at 80% unit mastery. A Next
   mission card suggests what to do next. The Cards tab shows how many flashcards are due.
+- Topic map data (F2, `GET /v1/student/map`): units are the top-level topics of the subject's tree,
+  leaf topics in specification order. Locked = no item may be served yet; mastered at 80%; weak
+  spot = tried and below 60%; otherwise in progress (including not tried). Unit mastery averages
+  its open topics. Next mission: weakest weak spot, else first topic not mastered, else review
+  the weakest mastered topic (5 minutes). A unit id opens its challenge lesson (all its topics).
+  Implemented in `packages/core/src/map.ts`.
 - Mascot: Pip, an angular geometric fox (orange `#FF7A2F`). Brand violet `#6C47F5`; font Nunito,
   self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
 - Works offline for the app shell; API calls are never cached. Pages always come fresh from the
@@ -406,6 +411,11 @@ Tags: #product #rules #limits #defaults
   stay light. Combo bonus: +5 XP per right answer from the 3rd in a row (Learn mode; Test mode at the
   reveal). Never lives, timers, pay-to-continue, mystery rewards or streak guilt; after the daily cap
   the call to action becomes "See you tomorrow". Detail: `docs/GAME_FEEL.md`. Workstream J.
+- Settled in J1 (`apps/web/src/features/juice/logic.ts`): stars for a set are 3 for all right, 2 for at
+  least 60% right (3–4 of 5), otherwise 1. A burst is about 20 particles, capped at 24; confetti is
+  capped at 40 pieces. The combo badge shows from 2 in a row. The CTA pulse takes 1.6 s (well under 3
+  flashes a second). Reduced motion removes particles, confetti, float-ups, shakes and pulsing; combo,
+  stars and XP still show as text. Arena colours live in `apps/web/src/design/tokens.ts` (`--arena-*`).
 
 ## Exam practice (planned)
 
