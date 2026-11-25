@@ -54,13 +54,7 @@ but not character for character. It never passes these on its own; a person must
 word what is printed (ignore bold, italics and line breaks). Then tell the lead "confirmed" or
 "not the same, because …". Near matches are confirmed with the lead, not in the review queue.
 
-**Open now (pilot topic list, spec page 15, PDF page 27 of the
-[1MA1 specification](https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf)):**
-
-| Topic | Quote to compare                                                                                                                                                                  | Why it was flagged                   |
-| ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
-| A22   | "solve linear inequalities in one or two variable(s), and quadratic inequalities in one variable; represent the solution set on a number line, using set notation and on a graph" | Mixed bold and plain text, "**(s)**" |
-| A25   | "deduce expressions to calculate the nth term of linear and quadratic sequences"                                                                                                  | The "n" in "nth" is in italics       |
+The two pilot near matches (topic list A22 and A25) were confirmed on 2026-11-25. None are open now.
 
 ## If you are unsure
 

@@ -37,6 +37,12 @@ different places. Stored with the content (`content/`), never shown to students.
 
 Commercial revision sites, forums and AI output are never sources.
 
+**Standard definitions with no official source** (decision 0008). When no official source defines
+a standard term (for example "tangent": the 1MA1 specification only names it), an item may rest on
+the specification point that names the term, cited with its quote, plus a standard definition. It
+must set `needs_human_approval: true` and is approved individually, never through a batch sample.
+An official definition, where one exists, is always cited instead.
+
 **Citation record**
 
 | Field          | Meaning                                                                                                                                                |
