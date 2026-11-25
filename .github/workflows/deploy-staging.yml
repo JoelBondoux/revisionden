@@ -15,3 +15,10 @@ jobs:
     with:
       environment: staging
     secrets: inherit
+
+  # The public website (apps/www) on https://www-staging.revisionden.com (decision 0005).
+  www:
+    uses: ./.github/workflows/deploy-www.yml
+    with:
+      environment: staging
+    secrets: inherit
