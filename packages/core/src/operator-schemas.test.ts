@@ -69,3 +69,18 @@ describe('operator response shapes (AppDeck bridge)', () => {
     expect(() => OperatorFamilySearchSchema.parse({ familyId: 'not-an-id' })).toThrow();
   });
 });
+
+describe('data request deadline', () => {
+  it('is one calendar month after the day it arrived, clamped to the end of a shorter month', async () => {
+    const { dataRequestDueAt } = await import('./operator-schemas');
+    expect(dataRequestDueAt(new Date('2026-11-20T00:00:00Z')).toISOString()).toBe(
+      '2026-12-20T00:00:00.000Z',
+    );
+    expect(dataRequestDueAt(new Date('2026-01-31T00:00:00Z')).toISOString()).toBe(
+      '2026-02-28T00:00:00.000Z',
+    );
+    expect(dataRequestDueAt(new Date('2027-12-31T00:00:00Z')).toISOString()).toBe(
+      '2028-01-31T00:00:00.000Z',
+    );
+  });
+});

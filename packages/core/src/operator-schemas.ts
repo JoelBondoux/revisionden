@@ -211,3 +211,47 @@ export const OperatorTicketStatusBodySchema = z
   .object({ status: z.enum(['new', 'looking_into_it', 'fixed', 'will_not_fix']) })
   .strict();
 export const OperatorDuplicateBodySchema = z.object({ duplicateOf: uuid }).strict();
+
+/** O3b: an export or deletion request a family sent by email. */
+export const OperatorDataRequestSchema = z
+  .object({
+    id: uuid,
+    familyId: uuid,
+    kind: z.enum(['export', 'deletion']),
+    receivedAt: isoDate,
+    /** One calendar month after it arrived (UK GDPR). */
+    dueAt: isoDate,
+    status: z.enum(['open', 'handled']),
+    handledAt: isoDate.nullable(),
+  })
+  .strict();
+
+export const OperatorDataRequestListSchema = z
+  .object({ requests: z.array(OperatorDataRequestSchema) })
+  .strict();
+
+/** `POST data-requests`: log an emailed request; `receivedOn` is the day it arrived. */
+export const OperatorDataRequestBodySchema = z
+  .object({
+    familyId: uuid,
+    kind: z.enum(['export', 'deletion']),
+    receivedOn: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/)
+      .refine((d) => !Number.isNaN(new Date(`${d}T00:00:00Z`).getTime()), 'Not a date'),
+  })
+  .strict();
+
+/**
+ * The statutory deadline for a data request: the same day one calendar month later, or the last
+ * day of that month when it is shorter (31 January is due 28 February).
+ */
+export function dataRequestDueAt(receivedAt: Date): Date {
+  const due = new Date(receivedAt);
+  const day = due.getUTCDate();
+  due.setUTCDate(1);
+  due.setUTCMonth(due.getUTCMonth() + 1);
+  const lastDay = new Date(Date.UTC(due.getUTCFullYear(), due.getUTCMonth() + 1, 0)).getUTCDate();
+  due.setUTCDate(Math.min(day, lastDay));
+  return due;
+}

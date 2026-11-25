@@ -1070,3 +1070,29 @@ export const feedbackReplies = pgTable(
     check('feedback_replies_body_length', sql`char_length(${t.body}) between 1 and 5000`),
   ],
 );
+
+export const DATA_REQUEST_KINDS = ['export', 'deletion'] as const;
+
+/**
+ * O3b: an export or deletion request a family sent by email, logged by an operator, with the
+ * statutory deadline (one calendar month). The family id is a plain id (no foreign key), so the
+ * record of handling a deletion outlives the family. Kept 2 years.
+ */
+export const dataRequests = pgTable(
+  'data_requests',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    familyId: uuid('family_id').notNull(),
+    kind: text('kind', { enum: DATA_REQUEST_KINDS }).notNull(),
+    receivedAt: timestamp('received_at', { withTimezone: true }).notNull(),
+    dueAt: timestamp('due_at', { withTimezone: true }).notNull(),
+    // Work email of the operator who logged it (staff, from AppDeck).
+    loggedBy: text('logged_by').notNull(),
+    handledAt: timestamp('handled_at', { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('data_requests_due_idx').on(t.handledAt, t.dueAt),
+    check('data_requests_kind_values', sql`${t.kind} in ('export', 'deletion')`),
+  ],
+);
