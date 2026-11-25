@@ -393,6 +393,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:47Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:41:24Z",
+          "notes": "model answered \"-4, 3\"; expected \"3, -4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:41:45Z",
+          "notes": "wording (steps): The transition from step 2 (\"2x^2 + 2x + 1 = 25\") to step 3 (\"x^2 + x - 12 = 0\") is too abrupt for a worked example. It combines two distinct operations (subtracting 25 from both sides to make the RHS zero, and then dividing the entire equation by the common factor of 2) without showing the intermediate step \"2x^2 + 2x - 24 = 0\". This could confuse students."
         }
       ]
     }
