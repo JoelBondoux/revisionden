@@ -35,6 +35,15 @@ Tags: #product #rules #limits #defaults
   the token up. Tokens and sessions are stored only as hashes.
 - A student device session lasts 12 hours, then the student unlocks again with the passkey.
   Parents can unlink a device, which ends its session.
+- Students unlock on the welcome page ("I'm a student: unlock with my passkey") or at `/unlock`,
+  where a student screen sends them when its API call gets 401; they return to the page they were
+  on (default `/map`). With no passkey on the device the page says "Ask a parent to link this
+  device" and shows no account details. The welcome page (`/`) is the one sign-in page for
+  parents and students; the sales site's "Sign in" goes there
+  (`decisions/0007-student-passkey-unlock.md`). Implemented in
+  `apps/web/src/features/onboarding/StudentUnlock.tsx`.
+- A passkey synced to another device (iCloud Keychain, Google Password Manager) unlocks there
+  too, as the same linked device. Open owner question (`operations/contradictions.md`).
 - Rate limits per address: 30 a minute on sign-in and device routes, 20 a minute on AI routes.
   Implemented in `apps/api`.
 
@@ -124,8 +133,13 @@ Tags: #product #rules #limits #defaults
 - Works offline for the app shell; API calls are never cached. Pages always come fresh from the
   server when online. The app checks `/version.json` on start, on return to the foreground and
   every 15 minutes and shows "A new version of RevisionDen is ready." with Refresh; an API reply
-  that suggests the app is out of date makes it reload by itself once per new build. iPad users get an "Add to Home
-  Screen" help page (`/install`), because iPadOS has no install prompt.
+  that suggests the app is out of date makes it reload by itself once per new build.
+- "Add RevisionDen to this device" (I6): a card with Pip on the topic map and the parent home, and
+  a button in Settings. Chrome, Edge and Android show the browser's own install prompt on tap;
+  iPhone and iPad Safari open a sheet with Share → Add to Home Screen steps (`/install` shows the
+  steps for the device in use); browsers that cannot install get no card. Hidden once installed
+  and for 30 days after "Not now" (local storage `revisionden.installDismissed`). Implemented in
+  `apps/web/src/pwa/InstallCard.tsx`.
 - The web app calls the real API on dev and staging (parent session cookie, or the student
   device cookie). MSW mocks with made-up data are used only in local development and tests, and
   must use real API paths (`apps/api/routes.json`). Parents sign in from the welcome page
@@ -264,7 +278,8 @@ Tags: #product #rules #limits #defaults
   read at build time, 240px, 7% ink), always on with no switch, hidden for high contrast and forced
   colours.
 - Production passkeys use the RP ID `revisionden.com`; OAuth callbacks are on the API host, so the
-  move to `app.` needed no change in Google or Microsoft.
+  move to `app.` needed no change in Google or Microsoft. Dev and staging passkeys use their own
+  hosts (`dev.revisionden.com`, `staging.revisionden.com`), so they work only there.
 - Live since 2026-11-25 (workstream G): API Workers on all three API hosts; web app on `dev.` and
   `staging.`. The production web app waits for the operator details (its build fails without them).
 - Workers: `revisionden-api-dev`, `revisionden-api-staging`, `revisionden-api` (API) and
