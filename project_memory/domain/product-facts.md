@@ -74,6 +74,14 @@ Tags: #product #rules #limits #defaults
   365, 1,000 days), added once when the reward is saved (`GET /v1/student/rewards`), only
   given away (arrive as a skip day for the friend), +20 XP for gifting. Implemented in
   `packages/core/src/streaks.ts` and `xp.ts`.
+- Learning from mistakes (F5, 2026-11-25): a wrong Learn mode answer brings a similar question
+  (same learning point: the item's `learning_point` tag or its topic; not seen for 7 days) 2 to 4
+  questions later, else the same question at the end; at most 2 a lesson, skippable, no penalty.
+  A right answer slower than 2x the expected time (item `expected_seconds`, else flashcard 15 s,
+  multiple choice 20, numeric 40, short answer 45, worked maths 120) is shaky. Wrong or shaky
+  points go on the review ladder (`review_points`: next day, 3 days, 7 days; each right answer on
+  time climbs a rung, the 7-day one clears it, a slip restarts). Lessons and the 5-a-day open with
+  up to 2 warm-ups on due points. Retries count at half weight for mastery. Migration 0025.
 - XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, working 20,
   long answer 30; part marks earn part.
 - The 14 original rewards keep their ids and avatar items (the 100-day streak unlocks two: crown

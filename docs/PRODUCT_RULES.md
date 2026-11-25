@@ -208,7 +208,8 @@ Product owner decision, 2026-11-25: **parent view only**.
 - **Lessons** run in Learn mode at feedback level 1: every answer is marked at once with the right
   answer, the explanation and, for maths working, the first line that goes wrong (maths engine,
   no AI). Long answers are shown with a "marked by AI soon" note and are not marked yet.
-- **Mastery** of a topic is recomputed from the student's last 30 attempts after every answer.
+- **Mastery** of a topic is recomputed from the student's last 30 attempts after every answer;
+  a retry after a wrong answer counts at half weight (see Learning from mistakes).
 - **Wrong answers** in a lesson (Learn mode, not the starting test) become a flashcard due at once,
   once per question.
 - **Flashcard buttons:** Again (SM-2 quality 1, back in 10 minutes), Hard (3), Good (4), Easy (5).
@@ -243,6 +244,36 @@ Product owner decision, 2026-11-25: **parent view only**.
   `packages/core/src/map.ts` and `apps/api/src/routes/map.ts`.
 - Implemented: `packages/core/src/learning.ts`, `apps/api/src/routes/learn.ts`,
   `apps/api/src/routes/flashcards.ts`.
+
+## Learning from mistakes (workstream F5, owner request 2026-11-25)
+
+A wrong or very slow answer is not just marked and forgotten: the learning point comes back.
+
+- **Learning point:** an item's optional `learning_point` tag in `content/`, or its topic when it
+  has none. Content writers should give each learning point at least 3 items.
+- **In-lesson retry:** after a wrong answer (Learn mode, not flashcards, long answers or recall
+  checks), a similar question (another item on the same learning point, not answered in the last
+  7 days, closest difficulty first) comes back 2 to 4 questions later. With no similar question,
+  the same question comes back at the end: "Let's try that one again." At most **2 retries a
+  lesson**, a retry is never retried, there is no penalty, and a retry can build a combo as
+  usual. A question that came back can be skipped ("Skip this one"); the lesson finishes once
+  every retry is answered or skipped.
+- **Slow = shaky:** a right answer that takes more than **twice the expected time** still scores
+  in full, but its learning point is shaky. Expected time is the item's `expected_seconds` when
+  set, else a rough guide by type (owner, 2026-11-25): flashcard 15 s, multiple choice 20 s,
+  numeric 40 s, short answer 45 s, worked maths 120 s. Long answers are never timed.
+- **Review ladder:** a learning point with a wrong or shaky answer comes back the next day, then
+  after 3 days, then after 7 days (`review_points`). Each right answer on time, on or after the
+  day it is due, climbs a rung; a right answer at the 7-day rung takes it off the ladder. A
+  right answer before it is due (such as the retry in the same lesson) changes nothing; a wrong
+  or slow answer starts it again from the next day.
+- **Where it comes back:** lessons and the 5-a-day open with up to **2 warm-up** questions on due
+  learning points from the same subject ("Warm-up: this one came up last time"), preferring a
+  question not seen for 7 days.
+- **Mastery:** first attempts count as before; a retry counts at **half weight**, because it shows
+  learning but is easier just after seeing the answer.
+- Implemented: `packages/core/src/mistakes.ts`, `apps/api/src/learning/mistakes.ts`, the attempts,
+  lesson and daily routes, `apps/web/src/features/learn/LessonPlayer.tsx`. Migration 0025.
 
 ## Flashcards and mastery
 
@@ -403,7 +434,7 @@ Mockups: screens 19 (student) and 20 (parent).
   downloads `GET /v1/export`: one JSON file with the parent's sign-in email, provider account id,
   policy confirmations, the family, and for each of that parent's own children the profile and
   every record (courses, devices, answers, mastery, exams, reports, plans, rewards, streak, daily
-  XP, starting tests, flashcards and flashcard sessions, reminders, AI usage, parent-set rewards), plus the family's
+  XP, starting tests, flashcards and flashcard sessions, the review ladder, reminders, AI usage, parent-set rewards), plus the family's
   feedback and question reports. Secrets are left out (session and link-code hashes, passkey keys
   and credential ids, push keys). Never another family's data.
 - **Activity:** any parent or student request marks the family as used (`families.last_active_at`,
