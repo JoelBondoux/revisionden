@@ -4,7 +4,7 @@ import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
-import { ProgressBar } from '../../components/ProgressBar';
+import { ArenaProgress } from '../juice';
 import { subjectLabel, useLearnApi, type FlashcardRating } from '../learn/learnApi';
 import { DraftBanner } from '../learn/parts';
 import { useSound } from '../sound';
@@ -92,12 +92,12 @@ function ReviewSession({ cards, onExit }: { cards: Flashcard[]; onExit?: () => v
   }
 
   return (
-    <div className="review">
+    <div className="review arena">
       <header className="deck-header">
         <span className="deck-header__subject">{subjectLabel(card.subjectId)}</span>
         <h2 className="deck-header__topic">{card.topicTitle}</h2>
       </header>
-      <ProgressBar
+      <ArenaProgress
         label="Deck progress"
         value={index}
         max={cards.length}
