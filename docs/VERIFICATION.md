@@ -45,7 +45,8 @@ An official definition, where one exists, is always cited instead.
 
 **Standard facts with no official source** (decision 0009). An item that rests on a standard maths
 fact (not just a definition) that no cited source states lists it in `facts` and must pass the
-**fact-check stage (step 4b)**. A fact passes with an official citation whose quote check passed,
+**fact-check stage (step 4b)**. A fact passes with an official citation whose quote check passed and whose quote the judge confirms
+states the fact (not just its topic),
 or with both a maths engine proof (`engine`, for example `identity`) and a matching blind
 statement. That statement comes from a third provider (neither the writer nor the blind
 answerer), which answers the neutral `ask` without our wording; another provider judges the
