@@ -51,6 +51,23 @@
   ("Remember this?", Q4) never resets the combo; a right one still adds to it. All daily caps and healthy limits
   still apply.
 
+## Links (J7, owner request 2026-11-25)
+
+No plain underlined text links. Use the shared components in `apps/web/src/components/links.tsx`:
+
+- **LinkButton** (primary, secondary or quiet, optional icon): a link that looks like our buttons,
+  for the main way on from a screen.
+- **LinkTile** (icon, title, one-line description, chevron): a tappable card for "go to X" lists
+  such as the parent home, settings and stats. Its screen reader name is the title; the description
+  is read as its description.
+- **LinkChip**: a small pill link inside a card ("Details", "Change").
+- **TextLink**: only for links inside sentences and long prose (policies). Bold, coloured, a soft
+  bar under it and an underline on hover; it stays inline for readability.
+
+All render real links (router `Link` or `<a>`), keep a 3px focus ring and a 44px target, lift on
+hover and squash on press (transform only; off with reduced motion). Outside links that open a new
+tab say so to screen readers.
+
 ## Never (Children's Code and `REWARDS.md`)
 
 - No lives or energy that run out and block learning; no waiting timers; no pay-to-continue.
