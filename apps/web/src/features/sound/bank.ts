@@ -28,7 +28,13 @@ export interface SynthContext {
 }
 
 /** Plays a sound starting at `at` and returns when it ends (context time, in seconds). */
-export type SoundFn = (ctx: SynthContext, out: AudioNodeLike, at: number) => number;
+export type SoundFn = (
+  ctx: SynthContext,
+  out: AudioNodeLike,
+  at: number,
+  /** Pitch multiplier, 1 = as written (combo steps raise it). */
+  pitch?: number,
+) => number;
 
 export interface Note {
   /** Pitch in hertz. */
@@ -72,8 +78,19 @@ function bell(freq: number, at: number, dur: number, peak = 0.55): Note[] {
 
 const sound =
   (...notes: Note[]): SoundFn =>
-  (ctx, out, at) =>
-    notes.reduce((end, n) => Math.max(end, note(ctx, out, at, n)), at);
+  (ctx, out, at, pitch = 1) =>
+    notes.reduce(
+      (end, n) =>
+        Math.max(
+          end,
+          note(ctx, out, at, {
+            ...n,
+            freq: n.freq * pitch,
+            glideTo: n.glideTo && n.glideTo * pitch,
+          }),
+        ),
+      at,
+    );
 
 // Pitches (hertz), equal temperament.
 const G3 = 196.0;

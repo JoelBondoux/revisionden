@@ -397,6 +397,9 @@ Tags: #product #rules #limits #defaults
 - Reward sounds scale with rarity (common, rare, epic, legendary; 4+ variations each, no repeat
   in a row); milestone ladders and levels climb in pitch and fullness; one sound for several
   rewards at once; legendary at most 3 s and skippable (owner, 2026-11-25; U4).
+- Combo chime (U5): each right answer in a row plays the correct chime a whole tone higher, up to
+  6 steps (an octave); the first right answer is the plain chime, and part marks rise too. Wrong
+  never changes. `PlayOptions.step` in `apps/web/src/features/sound/engine.ts`.
 - Reward sound details (U4, `apps/web/src/features/sound/rewardSounds.ts`, `rewardBank.ts`): tier
   = the reward's rarity, except prestige stars always play legendary (prestige 1 to 3 are epic in
   the catalogue). Ladder step = position in its milestone ladder; level step = level ÷ 10. Each
