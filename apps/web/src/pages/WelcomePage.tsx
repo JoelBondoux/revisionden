@@ -1,5 +1,5 @@
-import { Link, useSearchParams } from 'react-router-dom';
-import { ButtonLink } from '../components/Button';
+import { useSearchParams } from 'react-router-dom';
+import { LinkButton, LinkChip } from '../components/links';
 import { Card } from '../components/Card';
 import { Pip } from '../components/Pip';
 import { useParentSession } from '../api/signIn';
@@ -22,9 +22,9 @@ export function WelcomePage() {
         {session === 'signed-in' ? (
           <div className="stack">
             <p>You are signed in.</p>
-            <ButtonLink to="/family" block>
+            <LinkButton to="/family" block>
               Continue
-            </ButtonLink>
+            </LinkButton>
             <SignOutButton />
           </div>
         ) : (
@@ -44,7 +44,7 @@ export function WelcomePage() {
         </div>
       </Card>
       <footer className="welcome__footer secondary-text">
-        <Link to="/legal">Policies</Link> · <Link to="/about">About</Link>
+        <LinkChip to="/legal">Policies</LinkChip> <LinkChip to="/about">About</LinkChip>
       </footer>
     </div>
   );

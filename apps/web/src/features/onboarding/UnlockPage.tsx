@@ -1,4 +1,5 @@
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import { TextLink } from '../../components/links';
 import { Pip } from '../../components/Pip';
 import { StudentUnlock } from './StudentUnlock';
 
@@ -15,7 +16,7 @@ export function UnlockPage() {
       <p>Use your face, fingerprint or screen lock to carry on revising.</p>
       <StudentUnlock label="Unlock with my passkey" returnTo={params.get('returnTo')} />
       <p className="secondary-text">
-        Not a student? <Link to="/">Parents sign in here</Link>.
+        Not a student? <TextLink to="/">Parents sign in here</TextLink>.
       </p>
     </div>
   );

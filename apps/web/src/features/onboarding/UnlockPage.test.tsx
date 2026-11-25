@@ -194,4 +194,11 @@ describe('Student passkey unlock', () => {
     await waitFor(() => expect(router.state.location.pathname).toBe('/map'));
     expect(verifyBody).not.toHaveProperty('deviceMarker');
   });
+
+  it('uses the shared link styles, never plain underlined links (J7)', async () => {
+    renderRoute('/unlock', { studentId: null });
+    const parents = await screen.findByRole('link', { name: 'Parents sign in here' });
+    expect(parents).toHaveAttribute('href', '/');
+    expect(parents).toHaveClass('text-link');
+  });
 });
