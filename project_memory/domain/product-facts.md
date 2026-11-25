@@ -281,7 +281,8 @@ Tags: #product #rules #limits #defaults
   `apps/www/public` and remade by hand with `node apps/www/scripts/make-images.mjs` after an art
   change; original art only, no stock photos or AI-generated images.
   Links use the app's J7 styles (buttons, tiles, chips, bold inline links), never plain underlined
-  text (owner, 2026-11-25).
+  text (owner, 2026-11-25). Light or dark follows the device only (no switch), with the app's dark
+  theme colours.
 - Production passkeys use the RP ID `revisionden.com`; OAuth callbacks are on the API host, so the
   move to `app.` needed no change in Google or Microsoft. Dev and staging passkeys use their own
   hosts (`dev.revisionden.com`, `staging.revisionden.com`), so they work only there.
@@ -646,7 +647,7 @@ Tags: #product #rules #limits #defaults
   #B34F00 (orange), checked by simulation (ΔE ≥ 20 for deuteranopia, protanopia, tritanopia) and
   4.5:1 contrast in all four combinations. Doodle tile `apps/web/src/design/doodles.svg` (original,
   240px, used as a CSS mask at 7% ink), hidden with `prefers-contrast: more` and forced colours.
-  Text on gold or streak orange uses `--color-text-on-gold`. Get help keeps light colours in dark.
+  Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help keeps light colours in dark.
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by
