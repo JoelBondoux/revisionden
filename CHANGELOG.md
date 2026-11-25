@@ -66,6 +66,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Multiple choice reviews (S2, cross-lane V): the adversarial review prompt now says option numbers count from 0 (also `distractor:N`) and shows the correct option's text, so the reviewer no longer fails correct items as wrong answers; the human review page shows the answer as the correct option ("Option 3: …") with options numbered from 1.
 - Dark theme: mastered-topic checkmarks on the map use `--color-text-on-gold` (dark on gold) instead of the light body text, which gave about 1.3:1 contrast; the theme contrast tests now cover this pair and check the map rule (J8 follow-up).
 - Flaky web test (I5): the unlock test waited for the student button but not for the parent sign-in buttons, which load after the provider list; it now waits for both, with the provider list made slow on purpose.
 - Operator bridge (O, review follow-up to #71/#72): a change retried with the same request id by a different operator or role is refused (409) instead of getting the stored answer; the audit log's `nextBefore` is now `<time>~<id>`, so entries that share a time are never skipped between pages.
