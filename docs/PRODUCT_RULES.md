@@ -210,9 +210,12 @@ Product owner decision, 2026-11-25: **parent view only**.
   **session, not per card** (product owner, 2026-11-25), so rating every card "Good" earns
   nothing extra:
   - A session ends when the due queue is empty or after 20 cards, whichever comes first. A
+    session for one deck ("All decks", Review) only needs that deck's due cards done. A
     completed session of at least 5 cards earns **20 XP**, whatever the ratings. Fewer than 5
     cards, or leaving early, earns nothing.
   - At most **2 rewarded sessions a day** (40 XP), so flashcards alone cannot reach the daily goal.
+    A session is paid at most once, and the limit holds even when sessions finish at the same
+    moment (each rewarded session takes one of two daily slots, enforced by the database).
   - Cards answered "Again" coming back in the same session do not count twice.
   - Self-ratings only schedule the card (SM-2); they never change topic mastery or the predicted
     grade. The "flashcards reviewed" milestones count cards in completed sessions. Deck cards come from flashcard items in the
@@ -388,7 +391,7 @@ Mockups: screens 19 (student) and 20 (parent).
   downloads `GET /v1/export`: one JSON file with the parent's sign-in email, provider account id,
   policy confirmations, the family, and for each of that parent's own children the profile and
   every record (courses, devices, answers, mastery, exams, reports, plans, rewards, streak, daily
-  XP, starting tests, flashcards, reminders, AI usage, parent-set rewards), plus the family's
+  XP, starting tests, flashcards and flashcard sessions, reminders, AI usage, parent-set rewards), plus the family's
   feedback and question reports. Secrets are left out (session and link-code hashes, passkey keys
   and credential ids, push keys). Never another family's data.
 - **Activity:** any parent or student request marks the family as used (`families.last_active_at`,

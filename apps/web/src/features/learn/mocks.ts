@@ -7,6 +7,7 @@ import {
   CreateFlashcardRequestSchema,
   DAY_MS,
   FlashcardReviewRequestSchema,
+  FlashcardSessionRequestSchema,
   LearnAttemptRequestSchema,
   RELEARN_DELAY_MS,
   type Flashcard,
@@ -240,7 +241,9 @@ export const learnHandlers: RequestHandler[] = [
 
   http.get('*/v1/student/flashcards/decks/:topicId', () => HttpResponse.json(deckCards())),
 
-  http.post('*/v1/student/flashcards/sessions', () => {
+  http.post('*/v1/student/flashcards/sessions', async ({ request }) => {
+    const body = FlashcardSessionRequestSchema.safeParse(await request.json());
+    if (!body.success) return new HttpResponse(null, { status: 400 });
     state.sessionCards = [];
     return HttpResponse.json(
       { id: id(777), maxCards: 20, minCards: 5, xp: 20, rewardedLeftToday: 2 },

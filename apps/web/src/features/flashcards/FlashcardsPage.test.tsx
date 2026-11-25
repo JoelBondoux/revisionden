@@ -188,7 +188,13 @@ describe('Flashcards screen', () => {
     expect(await screen.findByText(/Finish the session for 20 XP/)).toBeInTheDocument();
   });
 
-  it('lists all decks and reviews one', async () => {
+  it('lists all decks and reviews one in a session for that deck', async () => {
+    const bodies: unknown[] = [];
+    server.events.on('request:start', async ({ request }) => {
+      if (request.method === 'POST' && request.url.endsWith('/flashcards/sessions')) {
+        bodies.push(await request.clone().json());
+      }
+    });
     await openCards();
     await userEvent.click(screen.getByRole('tab', { name: 'All decks' }));
     const deck = within(screen.getByRole('tabpanel')).getByRole('listitem');
@@ -196,6 +202,8 @@ describe('Flashcards screen', () => {
     expect(deck).toHaveTextContent('2 due of 2');
     await userEvent.click(within(deck).getByRole('button', { name: 'Review Demo topic A' }));
     expect(await screen.findByTestId('flip-card')).toBeInTheDocument();
+    await vi.waitFor(() => expect(bodies).toEqual([{}, { topicId: 'demo-topic-a' }]));
+    server.events.removeAllListeners();
   });
 
   it('lets a student add their own card', async () => {

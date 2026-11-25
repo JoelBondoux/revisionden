@@ -34,8 +34,11 @@ async function overview(headers: H) {
   return FlashcardsOverviewSchema.parse(await res.json());
 }
 
-async function startSession(headers: H): Promise<string> {
-  const res = await t.app.request('/v1/student/flashcards/sessions', { method: 'POST', headers });
+async function startSession(headers: H, topicId?: string): Promise<string> {
+  const res = await t.app.request(
+    '/v1/student/flashcards/sessions',
+    topicId ? jsonRequest('POST', { topicId }, headers) : { method: 'POST', headers },
+  );
   expect(res.status).toBe(201);
   return FlashcardSessionSchema.parse(await res.json()).id;
 }
@@ -271,6 +274,54 @@ describe('reviewing cards in a session', () => {
     headers = await t.signInStudent(studentId);
     const res = await t.app.request('/v1/student/flashcards/sessions', { method: 'POST', headers });
     expect(FlashcardSessionSchema.parse(await res.json()).rewardedLeftToday).toBe(2);
+  });
+
+  it('completes a one-deck session when that deck is done, even with other decks due', async () => {
+    const { headers } = await student('deck_scope_kid');
+    await addOwnCards(headers, 5, 'Deck B');
+    const sessionId = await startSession(headers, 'test-topic-b');
+    const all = (await overview(headers)).due;
+    const deckB = all.filter((c) => c.topicId === 'test-topic-b');
+    expect(deckB).toHaveLength(5);
+    expect(all.length).toBeGreaterThan(deckB.length);
+    for (const card of deckB) await review(headers, card.id, 'good', sessionId);
+    expect(await finished(headers, sessionId)).toMatchObject({ reason: 'rewarded', xpEarned: 20 });
+  });
+
+  it('refuses a session for a deck the student does not have', async () => {
+    const { headers } = await student('deck_none_kid');
+    const res = await t.app.request(
+      '/v1/student/flashcards/sessions',
+      jsonRequest('POST', { topicId: 'no-such-topic' }, headers),
+    );
+    expect(res.status).toBe(404);
+  });
+
+  it('pays a session once when it is finished twice at the same time', async () => {
+    const { headers } = await student('twice_kid');
+    await addOwnCards(headers, 5, 'Twice');
+    const sessionId = await startSession(headers);
+    await reviewAllDue(headers, sessionId);
+    const statuses = (await Promise.all([finish(headers, sessionId), finish(headers, sessionId)]))
+      .map((r) => r.status)
+      .sort();
+    expect(statuses).toEqual([200, 409]);
+    expect(await xpToday(headers)).toBe(20);
+  });
+
+  it('keeps the daily limit when several sessions finish at the same time', async () => {
+    const { headers } = await student('rush_kid');
+    const sessions: string[] = [];
+    for (const round of [1, 2, 3]) {
+      await addOwnCards(headers, 5, `Rush ${round}`);
+      const sessionId = await startSession(headers);
+      await reviewAllDue(headers, sessionId);
+      sessions.push(sessionId);
+    }
+    const results = await Promise.all(sessions.map((id) => finished(headers, id)));
+    expect(results.map((r) => r.xpEarned).sort()).toEqual([0, 20, 20]);
+    expect(results.find((r) => r.xpEarned === 0)!.reason).toBe('daily_limit');
+    expect(await xpToday(headers)).toBe(40);
   });
 
   it('refuses reviews and finishes on a finished or someone else’s session', async () => {
