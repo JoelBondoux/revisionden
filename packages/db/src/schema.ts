@@ -246,6 +246,8 @@ export const topics = pgTable(
     parentTopicId: text('parent_topic_id').references((): AnyPgColumn => topics.id, {
       onDelete: 'cascade',
     }),
+    // Added by workstream F2: order in the topic tree (specification order) for the topic map.
+    position: integer('position').notNull().default(0),
   },
   (t) => [index('topics_subject_board_idx').on(t.subjectId, t.board)],
 );

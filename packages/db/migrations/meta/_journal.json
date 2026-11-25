@@ -43,6 +43,13 @@
       "when": 1795561775962,
       "tag": "0005_feedback_policies",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1795583090998,
+      "tag": "0006_topic_position",
+      "breakpoints": true
     }
   ]
 }
