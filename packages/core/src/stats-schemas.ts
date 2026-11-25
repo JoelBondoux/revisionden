@@ -133,11 +133,14 @@ export const ParentDashboardSchema = z
       restDays: Count,
       dailyCapMinutes: Count,
     }),
-    aiSpend: z.object({
-      month: z.string().regex(/^\d{4}-\d{2}$/),
-      spentMicroUsd: Count,
-      capMicroUsd: Count,
-    }),
+    /** The AI marking allowance (workstream K9): never money, only a share used and the reset date. */
+    aiAllowance: z
+      .object({
+        percentUsed: z.number().int().min(0).max(100),
+        usedUp: z.boolean(),
+        resetsOn: LocalDate,
+      })
+      .strict(),
     recentActivity: z.array(ActivityEntrySchema).max(10),
   })
   .strict();

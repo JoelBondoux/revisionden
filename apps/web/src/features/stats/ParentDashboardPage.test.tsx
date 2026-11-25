@@ -139,7 +139,7 @@ describe('Parent stats dashboard', () => {
       http.get('*/v1/students/:id/dashboard', () =>
         HttpResponse.json({
           ...demoDashboard(),
-          aiSpend: { month: '2026-12', spentMicroUsd: 2_500_000, capMicroUsd: 2_500_000 },
+          aiAllowance: { percentUsed: 100, usedUp: true, resetsOn: '2027-01-01' },
         }),
       ),
     );

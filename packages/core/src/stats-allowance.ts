@@ -27,3 +27,18 @@ export function aiAllowance(use: AiUse): AiAllowance {
   const next = month === 12 ? { y: year + 1, m: 1 } : { y: year, m: month + 1 };
   return { percentUsed, usedUp, resetsOn: `${next.y}-${String(next.m).padStart(2, '0')}-01` };
 }
+
+/** "1 December" for a reset date (YYYY-MM-DD, the 1st of a month), for families to read. */
+export function resetDayLabel(resetsOn: string): string {
+  return new Intl.DateTimeFormat('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    timeZone: 'UTC',
+  }).format(new Date(`${resetsOn}T00:00:00Z`));
+}
+
+/** One AI call's share of the monthly allowance, to one decimal place (for the family export). */
+export function allowanceSharePercent(costMicroUsd: number, capMicroUsd: number): number {
+  if (capMicroUsd <= 0) return 100;
+  return Math.round((costMicroUsd / capMicroUsd) * 1000) / 10;
+}

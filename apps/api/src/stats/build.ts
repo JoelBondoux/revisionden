@@ -90,7 +90,7 @@ export async function buildDashboard(
   student: { id: string; nickname: string },
   data: StudentStatsData,
   now: Date,
-  aiSpend: ParentDashboard['aiSpend'],
+  aiAllowance: ParentDashboard['aiAllowance'],
   adapters: StatsAdapters,
 ): Promise<ParentDashboard> {
   const tz = data.settings.timeZone;
@@ -154,7 +154,7 @@ export async function buildDashboard(
       restDays: restDays(activeDays, week, today),
       dailyCapMinutes: limit(today),
     },
-    aiSpend,
+    aiAllowance,
     recentActivity: groupActivity(data.activity).map((e) => ({
       ...e,
       at: new Date(e.at).toISOString(),

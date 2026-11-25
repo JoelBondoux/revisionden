@@ -47,3 +47,19 @@ describe('AI marking allowance (no money shown to families)', () => {
     });
   });
 });
+
+describe('allowance wording helpers', () => {
+  it('names the reset day in UK English', async () => {
+    const { resetDayLabel } = await import('./stats-allowance');
+    expect(resetDayLabel('2026-12-01')).toBe('1 December');
+    expect(resetDayLabel('2027-01-01')).toBe('1 January');
+  });
+
+  it('gives one call’s share of the allowance to one decimal place', async () => {
+    const { allowanceSharePercent } = await import('./stats-allowance');
+    expect(allowanceSharePercent(25_000, 2_500_000)).toBe(1);
+    expect(allowanceSharePercent(1_200, 2_500_000)).toBe(0);
+    expect(allowanceSharePercent(3_750, 2_500_000)).toBe(0.2);
+    expect(allowanceSharePercent(10, 0)).toBe(100);
+  });
+});

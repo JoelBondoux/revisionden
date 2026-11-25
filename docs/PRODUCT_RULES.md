@@ -96,8 +96,8 @@
 - Students confirm the transcription of photographed work before marking.
 - Each child has a monthly AI marking allowance (the cost cap, set by the operator). Families see
   it only as an allowance, never as money: a percentage used and the date it resets (Statistics
-  dashboards). When it is used up the student sees "You've used all your AI marking for this
-  month. It comes back on the 1st. Questions marked by the app still work."
+  dashboards). When it is used up the student sees "You've used this month's AI marking
+  allowance. It resets on 1 <month>. Questions marked by the app still work."
 
 ## Rewards (avatar unlocks)
 
@@ -289,9 +289,11 @@ Mockups: screens 19 (student) and 20 (parent).
   month's AI marking allowance is used up. It resets on 1 <month>." Families never see money,
   spend or cost for AI. The month is the cap's own calendar month (UTC, `monthStart` in
   `apps/api/src/ai/gateway.ts`). The percentage is rounded down, so 100% only shows once it is
-  really used up (`aiAllowance` in `packages/core/src/stats-allowance.ts`). The API keeps its
-  cost fields (`aiSpend.spentMicroUsd`, `capMicroUsd`) for this sum; the web app shows only the
-  allowance.
+  really used up (`aiAllowance` in `packages/core/src/stats-allowance.ts`). No money leaves the
+  API to a family client: the dashboard carries `aiAllowance` (`percentUsed`, `usedUp`,
+  `resetsOn`), `GET /v1/students/:id/ai-usage` returns `allowanceUsedPercent`, `usedUp` and
+  `resetsOn`, and the family data download shows each AI call's `allowanceUsedPercent` instead
+  of its cost. The raw cost stays in the database and operator routes only.
 - Recent activity: the last 10 events (lessons, flashcards, papers, homework marked, plan edits).
   No free text written by the student is shown.
 - **Save as PDF**: made in the browser, nicknames only, nothing stored on the server.

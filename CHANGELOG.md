@@ -202,7 +202,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Changed
 
-- AI marking allowance (K9): the parent dashboard's "AI marking spend" card (US$ figures) is now "AI marking allowance" with a percentage used and the reset date (`aiAllowance` in `packages/core/src/stats-allowance.ts`); "What your parent can see" says "How much of your AI marking allowance you have used this month". The API's cost fields are unchanged and operator-only.
+- AI marking allowance (K9): the parent dashboard's "AI marking spend" card (US$ figures) is now "AI marking allowance" with a percentage used and the reset date (`aiAllowance` in `packages/core/src/stats-allowance.ts`); no money leaves the API to a family client: the dashboard carries `aiAllowance`, `GET /v1/students/:id/ai-usage` returns `allowanceUsedPercent`/`usedUp`/`resetsOn`, and the family export shows `allowanceUsedPercent` per AI call instead of its cost (B2 cross-lane); the used-up message reads "You've used this month's AI marking allowance. It resets on 1 <month>."; policies ai-and-marking 1.1 and acceptable-use 1.2 (L cross-lane); "What your parent can see" says "How much of your AI marking allowance you have used this month". The raw cost stays operator-only.
 - Project memory: the public site's Open Graph card and touch icon (and how to remake them) recorded in product facts; duplicate hosting lines left by the domain move merged into one (workstream M).
 - Item type names are the content schema names everywhere (`worked_maths`, `extended_answer`); the mapping in core is removed.
 - One item JSON format in the `items` table for the content sync and AI marking (`body.marks` added; marking reads `answer.key` and `answer.markScheme`), with a round-trip test.
