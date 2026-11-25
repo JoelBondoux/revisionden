@@ -7,6 +7,8 @@ export interface ParentContext {
   parentId: string;
   familyId: string;
   authUserId: string;
+  /** 1 or 2: "Parent 1" or "Parent 2" in the family activity log. */
+  position: number;
 }
 
 /** Finds the parent's family, creating it on first sign-in. Safe if two requests race. */
@@ -20,16 +22,18 @@ export async function ensureParent(db: Database, authUserId: string): Promise<Pa
     .values({ familyId: family!.id, authUserId })
     .onConflictDoNothing()
     .returning({ id: parents.id, familyId: parents.familyId });
-  if (inserted[0]) return { parentId: inserted[0].id, familyId: inserted[0].familyId, authUserId };
+  if (inserted[0]) {
+    return { parentId: inserted[0].id, familyId: inserted[0].familyId, authUserId, position: 1 };
+  }
 
   // Another request created the parent first: drop our unused family and use theirs.
   await db.delete(families).where(eq(families.id, family!.id));
   return (await findParent(db, authUserId))!;
 }
 
-async function findParent(db: Database, authUserId: string): Promise<ParentContext | undefined> {
+export async function findParent(db: Database, authUserId: string): Promise<ParentContext | undefined> {
   const [row] = await db
-    .select({ parentId: parents.id, familyId: parents.familyId })
+    .select({ parentId: parents.id, familyId: parents.familyId, position: parents.position })
     .from(parents)
     .where(eq(parents.authUserId, authUserId));
   return row && { ...row, authUserId };

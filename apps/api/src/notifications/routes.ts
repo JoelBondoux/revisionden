@@ -18,6 +18,7 @@ import { readJson } from '../http';
 import type { Clock } from '../rate-limit';
 import { loadReminderSettings } from './runner';
 import { parentRewardMessage } from './parent-rewards';
+import { latestFamilyEventMessage } from '../family-events';
 import { MAX_REMINDERS_PER_DAY } from './schedule';
 
 export interface NotificationDeps {
@@ -157,7 +158,8 @@ export function parentReminderRoutes({ db }: NotificationDeps) {
 
 /**
  * Parent device routes under /v1/parent (the parent session is checked by the caller): push on
- * the parent's own devices, used only to say a parent-set reward target was met.
+ * the parent's own devices, used to say a parent-set reward target was met and to tell a parent
+ * about important changes the other parent made.
  */
 export function parentNotificationRoutes({ db, clock }: NotificationDeps) {
   const app = new Hono<AppEnv>();
@@ -193,7 +195,11 @@ export function parentNotificationRoutes({ db, clock }: NotificationDeps) {
   app.get('/notifications/latest', async (c) => {
     const since = new Date(clock.now().getTime() - LATEST_REMINDER_MS);
     const [row] = await db
-      .select({ nickname: students.nickname, title: parentRewards.title })
+      .select({
+        nickname: students.nickname,
+        title: parentRewards.title,
+        notifiedAt: parentRewards.reachedNotifiedAt,
+      })
       .from(parentRewards)
       .innerJoin(students, eq(students.id, parentRewards.studentId))
       .where(
@@ -204,6 +210,11 @@ export function parentNotificationRoutes({ db, clock }: NotificationDeps) {
       )
       .orderBy(desc(parentRewards.reachedNotifiedAt))
       .limit(1);
+    // Important changes by the other parent are pushed too (family-events.ts, workstream B3).
+    const change = await latestFamilyEventMessage(db, c.var.parent, since);
+    if (change && (!row?.notifiedAt || change.at > row.notifiedAt)) {
+      return c.json({ message: change.message });
+    }
     return c.json({ message: row ? parentRewardMessage(row.nickname, row.title) : null });
   });
 
