@@ -6,7 +6,8 @@
 
 ## Status
 
-All eleven policies are written as version 1.0 drafts (workstream L, 2026-11-24). Pages:
+All twelve policies are written as version 1.0 drafts (workstream L, 2026-11-24; the complaints
+policy by L for workstream O4, 2026-11-25). Pages:
 `/legal` (index) and `/legal/<name>`, built from these files by `apps/web/src/features/legal`.
 Open points for the product owner and a solicitor are in the L pull request and in
 `project_memory/operations/contradictions.md`.
@@ -29,19 +30,20 @@ its build fails if a file in `docs/legal` is missing from that table.
 
 ## The policies
 
-| File                          | Who it is for          | What it covers                                                                  |
-| ----------------------------- | ---------------------- | ------------------------------------------------------------------------------- |
-| `privacy-notice.md`           | Parents and carers     | Full UK GDPR privacy notice: who we are, data, purposes, lawful bases, sharing  |
-| `privacy-for-young-people.md` | Students               | The same notice written for 13 to 18 year olds (Children's Code transparency)   |
-| `data-retention.md`           | Everyone               | How long each kind of data is kept and how it is deleted                        |
-| `processors.md`               | Everyone               | Every service that handles data for us, what it receives, where, and safeguards |
-| `cookies-and-storage.md`      | Everyone               | Cookies, local storage, passkeys and push keys (all strictly necessary)         |
-| `terms-of-use.md`             | Parents (and students) | The agreement for using the app, parental responsibility, liability             |
-| `acceptable-use.md`           | Students and parents   | Community rules: nicknames, friends, gifting, feedback text, misuse             |
-| `ai-and-marking.md`           | Everyone               | Where AI is used, what it receives, its limits, "Marked by AI", human checks    |
-| `content-accuracy.md`         | Everyone               | How questions are verified and cited, reporting a mistake, what happens next    |
-| `accessibility-statement.md`  | Everyone               | Accessibility standard (WCAG 2.2 AA), known gaps, how to ask for help           |
-| `childrens-code.md`           | Parents, reviewers     | How each of the ICO Children's Code's 15 standards is met                       |
+| File                          | Who it is for          | What it covers                                                                       |
+| ----------------------------- | ---------------------- | ------------------------------------------------------------------------------------ |
+| `privacy-notice.md`           | Parents and carers     | Full UK GDPR privacy notice: who we are, data, purposes, lawful bases, sharing       |
+| `privacy-for-young-people.md` | Students               | The same notice written for 13 to 18 year olds (Children's Code transparency)        |
+| `data-retention.md`           | Everyone               | How long each kind of data is kept and how it is deleted                             |
+| `processors.md`               | Everyone               | Every service that handles data for us, what it receives, where, and safeguards      |
+| `cookies-and-storage.md`      | Everyone               | Cookies, local storage, passkeys and push keys (all strictly necessary)              |
+| `terms-of-use.md`             | Parents (and students) | The agreement for using the app, parental responsibility, liability                  |
+| `acceptable-use.md`           | Students and parents   | Community rules: nicknames, friends, gifting, feedback text, misuse                  |
+| `ai-and-marking.md`           | Everyone               | Where AI is used, what it receives, its limits, "Marked by AI", human checks         |
+| `content-accuracy.md`         | Everyone               | How questions are verified and cited, reporting a mistake, what happens next         |
+| `accessibility-statement.md`  | Everyone               | Accessibility standard (WCAG 2.2 AA), known gaps, how to ask for help                |
+| `childrens-code.md`           | Parents, reviewers     | How each of the ICO Children's Code's 15 standards is met                            |
+| `complaints-policy.md`        | Parents and carers     | Making a formal complaint, timescales (2 working days, 14 days), escalation, the ICO |
 
 ## Friendly view (young people's notice, L6)
 
@@ -58,6 +60,28 @@ normally on GitHub:
   fails if the file uses an unknown icon or a part has fewer than 2 or more than 4 key points.
 
 The parent notice and the other policies keep the plain layout for now.
+
+## Accepting the terms and privacy notice (L8)
+
+A new parent's "Before you start" step (`BeforeYouStart.tsx`) shows the Terms of use and the
+Privacy notice in the same friendly style, built from their own files (one source, no extra
+hints, so the policies do not change version):
+
+- Every top-level bullet of a policy's "In plain English" section becomes a card, word for word.
+  A bold start ending in a full stop (`**Who we are.** …`) becomes the card's label. Text before
+  the bullets is shown above the cards. A test checks every card against the policy text.
+- Only 4 cards show at first, chosen in code (`FEATURED_POINTS`, product owner 2026-11-25):
+  Terms: the parent is in charge; a revision helper, not a teacher; AI marks are a guide; no
+  promises about grades. Privacy: what we keep about your child; what we keep about you; AI
+  marking; your rights. "Show all N points" (`aria-expanded`, `aria-controls` on the list) shows
+  the rest in place, in policy order; a test fails if a chosen point stops matching one card.
+- Icons are chosen in code from the label (or, for unlabelled cards, only from strong words such
+  as "AI"); they are decoration and add nothing to what the policy says.
+- "Show the details" opens the policy's full text in place (`aria-expanded`, `aria-controls`);
+  "Read the full …" links to `/legal/<name>`. Cards slide in gently, never with motion when the
+  device asks for reduced motion.
+- Then the "I have read the Terms of use and Privacy notice" checkbox and Continue. What is
+  stored is unchanged: the two policy versions in `policy_acceptances`.
 
 ## Rules
 

@@ -1,0 +1,819 @@
+[
+  {
+    "id": "gcse-maths-h-a10-0101",
+    "topic": "gcse-maths-h-a10",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a10-lp-from-equation",
+    "expected_seconds": 30,
+    "prompt": "Write down the gradient of the line 2y = 6x + 8.",
+    "answer": {
+      "value": "3"
+    },
+    "verify": {
+      "expression": "6/2"
+    },
+    "marks": 1,
+    "mark_scheme": ["B1 for 3"],
+    "explanation": "Divide by 2: y = 3x + 4, so the gradient is 3.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A10 (page 14; PDF page 26)",
+        "quote": "identify and interpret gradients and intercepts of linear functions graphically and algebraically",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A10). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:27Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:35:41Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:35:47Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a10-0102",
+    "topic": "gcse-maths-h-a10",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a10-lp-from-equation",
+    "expected_seconds": 30,
+    "prompt": "Write down the gradient of the line 3x + y = 7.",
+    "answer": {
+      "value": "-3"
+    },
+    "verify": {
+      "expression": "-3"
+    },
+    "marks": 1,
+    "mark_scheme": ["B1 for -3"],
+    "explanation": "Rearrange: y = -3x + 7, so the gradient is -3.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A10 (page 14; PDF page 26)",
+        "quote": "identify and interpret gradients and intercepts of linear functions graphically and algebraically",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A10). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:28Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:35:54Z",
+          "notes": "model answered \"-3\"; expected \"-3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:01Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a10-0103",
+    "topic": "gcse-maths-h-a10",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a10-lp-from-equation",
+    "expected_seconds": 40,
+    "prompt": "Find the y-coordinate where the line 4y - 2x = 12 crosses the y-axis.",
+    "answer": {
+      "value": "3"
+    },
+    "verify": {
+      "expression": "12/4"
+    },
+    "marks": 1,
+    "mark_scheme": ["B1 for 3"],
+    "explanation": "Put x = 0: 4y = 12, so y = 3.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A10 (page 14; PDF page 26)",
+        "quote": "identify and interpret gradients and intercepts of linear functions graphically and algebraically",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A10). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:29Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:08Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:16Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a10-0104",
+    "topic": "gcse-maths-h-a10",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a10-lp-from-equation",
+    "expected_seconds": 45,
+    "prompt": "Find the x-coordinate where the line y = 3x - 6 crosses the x-axis.",
+    "answer": {
+      "solutions": ["2"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "3x - 6 = 0",
+      "variable": "x"
+    },
+    "steps": ["3x - 6 = 0", "3x = 6", "x = 2"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 3x - 6 = 0", "A1 for x = 2"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A10 (page 14; PDF page 26)",
+        "quote": "identify and interpret gradients and intercepts of linear functions graphically and algebraically",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A10). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:29Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:22Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:28Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a10-0105",
+    "topic": "gcse-maths-h-a10",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a10-lp-interpret",
+    "expected_seconds": 25,
+    "prompt": "A taxi fare is C = 2.5d + 4 pounds for a journey of d miles. What does the 2.5 represent?",
+    "options": [
+      "The fixed charge in pounds",
+      "The cost per mile in pounds",
+      "The length of the journey in miles",
+      "The total cost in pounds"
+    ],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "2.5 is the gradient: C goes up by £2.50 for each extra mile.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A10 (page 14; PDF page 26)",
+        "quote": "identify and interpret gradients and intercepts of linear functions graphically and algebraically",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A10). Interpretation of the gradient as rate of change of C with d.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:30Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:36Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:32:26Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a10-0106",
+    "topic": "gcse-maths-h-a10",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a10-lp-interpret",
+    "expected_seconds": 25,
+    "prompt": "A taxi fare is C = 2.5d + 4 pounds for a journey of d miles. What does the 4 represent?",
+    "options": [
+      "The fixed charge in pounds",
+      "The cost per mile in pounds",
+      "The length of the journey in miles",
+      "The total cost in pounds"
+    ],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "4 is the intercept: the cost when d = 0, a fixed charge of £4.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A10 (page 14; PDF page 26)",
+        "quote": "identify and interpret gradients and intercepts of linear functions graphically and algebraically",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A10). Interpretation of the intercept as the value of C when d = 0.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:31Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:52Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:01Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a10-0107",
+    "topic": "gcse-maths-h-a10",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a10-lp-interpret",
+    "expected_seconds": 25,
+    "prompt": "The volume of water in a tank after t minutes is V = 200 - 8t litres. What does the -8 tell you?",
+    "options": [
+      "The tank loses 8 litres each minute",
+      "The tank starts with 8 litres",
+      "The tank gains 8 litres each minute",
+      "The tank is empty after 8 minutes"
+    ],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "The gradient -8 means V falls by 8 litres for every minute. (The tank is empty after 25 minutes.)",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A10 (page 14; PDF page 26)",
+        "quote": "identify and interpret gradients and intercepts of linear functions graphically and algebraically",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A10). Interpretation of a negative gradient; 200 - 8 × 25 = 0 checked.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:31Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:10Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:19Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a10-0108",
+    "topic": "gcse-maths-h-a10",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a10-lp-gradient-cards",
+    "expected_seconds": 15,
+    "front": "In y = mx + c, does m give the gradient or the y-intercept?",
+    "back": "Gradient",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A10 (page 14; PDF page 26)",
+        "quote": "identify and interpret gradients and intercepts of linear functions graphically and algebraically",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A10). Standard meaning of m in y = mx + c. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T18:04:50Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:05:08Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:06:33Z",
+          "notes": "model answered \"Gradient\"; expected \"Gradient\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:06:37Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a10-0109",
+    "topic": "gcse-maths-h-a10",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a10-lp-gradient-cards",
+    "expected_seconds": 15,
+    "front": "In y = mx + c, c is the value of y where the line crosses which axis?",
+    "back": "The y-axis",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A10 (page 14; PDF page 26)",
+        "quote": "identify and interpret gradients and intercepts of linear functions graphically and algebraically",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A10). Put x = 0 in y = mx + c to get y = c.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:33Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:42Z",
+          "notes": "model answered \"The y-axis\"; expected \"The y-axis\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:54Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a10-0110",
+    "topic": "gcse-maths-h-a10",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a10-lp-gradient-cards",
+    "expected_seconds": 15,
+    "front": "The gradient of the line x + 2y = 10",
+    "back": "-1/2",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A10 (page 14; PDF page 26)",
+        "quote": "identify and interpret gradients and intercepts of linear functions graphically and algebraically",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A10). Rearranged with SymPy: y = 5 - x/2.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:34Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:38:01Z",
+          "notes": "model answered \"-1/2\"; expected \"-1/2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:38:06Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  }
+]

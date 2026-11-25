@@ -15,6 +15,7 @@ import {
   inArray,
   isNull,
   lt,
+  ne,
   notInArray,
   or,
   sql,
@@ -32,6 +33,7 @@ import {
 import {
   attempts,
   authUsers,
+  complaints,
   errorReports,
   families,
   feedback,
@@ -139,19 +141,28 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
         .from(attempts)
         .innerJoin(students, eq(students.id, attempts.studentId))
         .where(and(gte(attempts.createdAt, new Date(at - days * DAY_MS)), keepStudent));
-    const [[fam], [kids], [active7], [active30], [tickets], [reports], errors24h] =
-      await Promise.all([
-        db.select({ n: count() }).from(families).where(keepFamily),
-        db.select({ n: count() }).from(students).where(keepStudent),
-        activeSince(7),
-        activeSince(30),
-        db
-          .select({ n: count() })
-          .from(feedback)
-          .where(inArray(feedback.status, [...OPEN_TICKET_STATUSES])),
-        db.select({ n: count() }).from(itemReports).where(eq(itemReports.status, 'open')),
-        countErrorReportsSince(DAY_MS),
-      ]);
+    const [
+      [fam],
+      [kids],
+      [active7],
+      [active30],
+      [tickets],
+      [reports],
+      errors24h,
+      [complaintCount],
+    ] = await Promise.all([
+      db.select({ n: count() }).from(families).where(keepFamily),
+      db.select({ n: count() }).from(students).where(keepStudent),
+      activeSince(7),
+      activeSince(30),
+      db
+        .select({ n: count() })
+        .from(feedback)
+        .where(inArray(feedback.status, [...OPEN_TICKET_STATUSES])),
+      db.select({ n: count() }).from(itemReports).where(eq(itemReports.status, 'open')),
+      countErrorReportsSince(DAY_MS),
+      db.select({ n: count() }).from(complaints).where(ne(complaints.status, 'resolved')),
+    ]);
     const overview: OperatorOverview = {
       families: fam!.n,
       students: kids!.n,
@@ -163,7 +174,7 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
       premiumFamilies: null,
       trials: null,
       freePlaces: null,
-      openComplaints: null,
+      openComplaints: complaintCount!.n,
     };
     return ok(c, overview);
   });

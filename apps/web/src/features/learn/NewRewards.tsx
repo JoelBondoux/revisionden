@@ -1,5 +1,6 @@
 import type { RewardCardResponse } from '@revisionden/core';
-import { Link } from 'react-router-dom';
+import { CrownIcon } from '../../components/icons';
+import { LinkButton } from '../../components/links';
 import { RewardSound } from '../sound';
 
 /**
@@ -14,7 +15,9 @@ export function NewRewards({ rewards }: { rewards: readonly RewardCardResponse[]
       {rewards.map((r) => (
         <p key={r.id}>New reward: {r.name}</p>
       ))}
-      <Link to="/rewards">See your rewards</Link>
+      <LinkButton to="/rewards" variant="secondary" icon={<CrownIcon />}>
+        See your rewards
+      </LinkButton>
     </div>
   );
 }

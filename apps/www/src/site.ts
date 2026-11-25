@@ -28,6 +28,8 @@ export interface SiteInputs {
   pricingDoc: string;
   /** apps/www/public: og.png and apple-touch-icon.png (made by scripts/make-images.mjs). */
   images: Record<string, Uint8Array>;
+  /** apps/web/src/design/doodles.svg: the app's doodle background tile (J8). */
+  doodlesSvg: string;
 }
 
 export type SiteFiles = Map<string, string | Uint8Array>;
@@ -90,6 +92,7 @@ export function renderSite(config: SiteConfig, inputs: SiteInputs): SiteFiles {
   files.set('styles.css', `${inputs.tokensCss}\n${fontFaces(inputs.fonts)}\n${inputs.siteCss}`);
   for (const [name, bytes] of Object.entries(inputs.fonts)) files.set(`fonts/${name}`, bytes);
   files.set('icon.svg', pipIconSvg());
+  files.set('doodles.svg', inputs.doodlesSvg);
   for (const [name, bytes] of Object.entries(inputs.images)) files.set(name, bytes);
   files.set('sitemap.xml', sitemap(config, pages));
   files.set('robots.txt', robots(config));

@@ -164,6 +164,104 @@ describe('data_requests table (O3b)', () => {
   });
 });
 
+describe('complaints and complaint_messages tables (O4)', () => {
+  it('keeps a complaint with its channel, status and deadlines, and its messages', async () => {
+    const { rows: fam } = await client.query<{ id: string }>(
+      `insert into families default values returning id`,
+    );
+    const { rows } = await client.query<{ id: string }>(
+      `insert into complaints (family_id, channel, summary, about_personal_data, received_at, acknowledge_due_at, resolve_due_at)
+       values ($1, 'app', 'The timer is unfair', false, now(), now(), now()) returning id`,
+      [fam[0]!.id],
+    );
+    await client.query(
+      `insert into complaint_messages (complaint_id, sender, body) values ($1, 'family', 'More detail')`,
+      [rows[0]!.id],
+    );
+    await expect(
+      client.query(
+        `insert into complaints (channel, summary, about_personal_data, received_at, acknowledge_due_at, resolve_due_at)
+         values ('post', 'x', false, now(), now(), now())`,
+      ),
+    ).rejects.toThrow(/complaints_channel_values/);
+    await expect(
+      client.query(
+        `insert into complaints (channel, summary, about_personal_data, received_at, acknowledge_due_at, resolve_due_at, status)
+         values ('email', 'x', false, now(), now(), now(), 'lost')`,
+      ),
+    ).rejects.toThrow(/complaints_status_values/);
+    // Deleting the family deletes its complaints and their messages, like everything else.
+    await client.query(`delete from families where id = $1`, [fam[0]!.id]);
+    const left = await client.query(`select 1 from complaint_messages where complaint_id = $1`, [
+      rows[0]!.id,
+    ]);
+    expect(left.rows).toEqual([]);
+  });
+});
+
+describe('complaint_requests table (a student asks a parent to raise something)', () => {
+  it('keeps the topic and an optional short note, and goes with the student', async () => {
+    const { rows: fam } = await client.query<{ id: string }>(
+      `insert into families default values returning id`,
+    );
+    const { rows: kid } = await client.query<{ id: string }>(
+      `insert into students (family_id, nickname, avatar_code, year_group) values ($1, 'req_kid', 'a', 10) returning id`,
+      [fam[0]!.id],
+    );
+    await client.query(
+      `insert into complaint_requests (family_id, student_id, topic, note) values ($1, $2, 'marking', 'Question 3')`,
+      [fam[0]!.id, kid[0]!.id],
+    );
+    await expect(
+      client.query(
+        `insert into complaint_requests (family_id, student_id, topic) values ($1, $2, 'teacher')`,
+        [fam[0]!.id, kid[0]!.id],
+      ),
+    ).rejects.toThrow(/complaint_requests_topic_values/);
+    await expect(
+      client.query(
+        `insert into complaint_requests (family_id, student_id, topic, note) values ($1, $2, 'unfair', $3)`,
+        [fam[0]!.id, kid[0]!.id, 'x'.repeat(301)],
+      ),
+    ).rejects.toThrow(/complaint_requests_note_length/);
+    await client.query(`delete from students where id = $1`, [kid[0]!.id]);
+    const left = await client.query(`select 1 from complaint_requests where family_id = $1`, [
+      fam[0]!.id,
+    ]);
+    expect(left.rows).toEqual([]);
+  });
+});
+
+describe('discount_codes and discount_redemptions tables (O5)', () => {
+  it('keeps codes unique, checks their kind and amount, and allows one active code per family', async () => {
+    const insert = (code: string, kind = 'percent', amount = 20) =>
+      client.query<{ id: string }>(
+        `insert into discount_codes (code, kind, amount, created_by) values ($1, $2, $3, 'manager@example.com') returning id`,
+        [code, kind, amount],
+      );
+    const { rows } = await insert('WINTER26');
+    await expect(insert('WINTER26')).rejects.toThrow(/discount_codes_code_unique/);
+    await expect(insert('LOWERx12')).rejects.toThrow(/discount_codes_code_format/);
+    await expect(insert('PERCENT2', 'percent', 150)).rejects.toThrow(/discount_codes_amount_range/);
+    await expect(insert('KINDBAD1', 'free', 10)).rejects.toThrow(/discount_codes_kind_values/);
+
+    const { rows: fam } = await client.query<{ id: string }>(
+      `insert into families default values returning id`,
+    );
+    const redeem = () =>
+      client.query(`insert into discount_redemptions (code_id, family_id) values ($1, $2)`, [
+        rows[0]!.id,
+        fam[0]!.id,
+      ]);
+    await redeem();
+    await expect(redeem()).rejects.toThrow(/discount_redemptions_one_active_per_family/);
+    await client.query(`update discount_redemptions set ended_at = now() where family_id = $1`, [
+      fam[0]!.id,
+    ]);
+    await redeem();
+  });
+});
+
 describe('family_tags and family_tag_links tables (O6)', () => {
   it('keeps tag names unique and colours as #rrggbb, and links a family to a tag once', async () => {
     const tag = (name: string, colour = '#6c47f5') =>

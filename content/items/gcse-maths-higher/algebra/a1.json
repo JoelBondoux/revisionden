@@ -1,0 +1,960 @@
+[
+  {
+    "id": "gcse-maths-h-a1-0101",
+    "topic": "gcse-maths-h-a1",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a1-lp-index-notation",
+    "expected_seconds": 25,
+    "prompt": "Which expression means a × a × b?",
+    "options": ["2ab", "a^2b", "ab^2", "2a + b"],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "a × a is written a^2, so a × a × b is a^2b.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1 (page 13; PDF page 25)",
+        "quote": "use and interpret algebraic manipulation, including:",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). Options checked with SymPy: only option 1 (a^2b) equals a*a*b.",
+          "at": "2026-11-25T17:17:06Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:18:20Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:18:27Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:34:41Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a1-0102",
+    "topic": "gcse-maths-h-a1",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a1-lp-index-notation",
+    "expected_seconds": 25,
+    "prompt": "Which expression means n × n × n?",
+    "options": ["3n", "n + 3", "n^3", "3 + n^3"],
+    "answer": {
+      "option": 2
+    },
+    "marks": 1,
+    "explanation": "Multiplying n by itself three times is n cubed, written n^3. 3n means n + n + n.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1 (page 13; PDF page 25)",
+        "quote": "use and interpret algebraic manipulation, including:",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). Options checked with SymPy: only option 2 (n^3) equals n*n*n.",
+          "at": "2026-11-25T17:17:06Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:18:40Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:34:42Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:30:57Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a1-0103",
+    "topic": "gcse-maths-h-a1",
+    "type": "short_answer",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a1-lp-index-notation",
+    "expected_seconds": 30,
+    "prompt": "Write p × p × p × q in index notation. Use ^ for powers.",
+    "answer": {
+      "accepted": ["p^3q", "p^3 q", "p^3 × q", "qp^3", "q p^3", "q × p^3", "p^3×q", "q×p^3"]
+    },
+    "marks": 1,
+    "explanation": "p × p × p is p^3, so the product is p^3q.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1 (page 13; PDF page 25)",
+        "quote": "use and interpret algebraic manipulation, including:",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). Accepted answers checked with SymPy: each equals p*p*p*q. Lead ruling 2026-11-25: the last adversarial-review finding is left for the owner to judge (see that check); needs individual human approval.",
+          "at": "2026-11-25T18:55:46Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:56:00Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:56:22Z",
+          "notes": "model answered \"p^3q\"; expected \"p^3q | p^3 q | p^3 × q | qp^3 | q p^3 | q × p^3 | p^3×q | q×p^3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:56:38Z",
+          "notes": "second_correct_option (answer): The list of accepted answers does not include forms where the variable q is explicitly written with a power of 1, such as 'p^3q^1'. Since q is equivalent to q^1, this is a mathematically correct representation in index notation and should be accepted. Variants such as 'q^1p^3' and forms with spaces or multiplication signs should also be included."
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a1-0104",
+    "topic": "gcse-maths-h-a1",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a1-lp-index-notation",
+    "expected_seconds": 40,
+    "prompt": "Simplify 2x × 5x. Use ^ for powers.",
+    "answer": {
+      "expression": "10x^2"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "2x * 5x"
+    },
+    "steps": ["2x * 5x", "2 * 5 * x * x", "10x^2"],
+    "marks": 1,
+    "mark_scheme": ["B1 for 10x^2"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1 (page 13; PDF page 25)",
+        "quote": "use and interpret algebraic manipulation, including:",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). Answer and every step backed by the maths engine.",
+          "at": "2026-11-25T17:17:06Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:19:19Z",
+          "notes": "model answered \"10x^2\"; expected \"10x^2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:19:25Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:34:44Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a1-0105",
+    "topic": "gcse-maths-h-a1",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a1-lp-products-and-brackets",
+    "expected_seconds": 25,
+    "prompt": "Which expression means y + y + y + y?",
+    "options": ["y^4", "4y", "4 + y", "y + 4"],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "Adding four lots of y gives 4 × y, written 4y. y^4 means y × y × y × y.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1 (page 13; PDF page 25)",
+        "quote": "use and interpret algebraic manipulation, including:",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). Options checked with SymPy: only option 1 (4y) equals y+y+y+y.",
+          "at": "2026-11-25T17:17:06Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:19:33Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:19:42Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:34:44Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a1-0106",
+    "topic": "gcse-maths-h-a1",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a1-lp-products-and-brackets",
+    "expected_seconds": 25,
+    "prompt": "Which expression means m ÷ 4?",
+    "options": ["m/4", "4/m", "4m", "m - 4"],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "Division is written as a fraction: m ÷ 4 is m/4.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1 (page 13; PDF page 25)",
+        "quote": "use and interpret algebraic manipulation, including:",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). Options checked with SymPy: only option 0 (m/4) equals m/4.",
+          "at": "2026-11-25T17:17:06Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:19:49Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:19:57Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:34:45Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a1-0107",
+    "topic": "gcse-maths-h-a1",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a1-lp-products-and-brackets",
+    "expected_seconds": 25,
+    "prompt": "Which expression means \"add 3 to n, then multiply the result by 5\"?",
+    "options": ["5n + 3", "5(n + 3)", "n + 15", "3(n + 5)"],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "The addition happens first, so it goes in a bracket: 5(n + 3). 5n + 3 multiplies first and then adds.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1 (page 13; PDF page 25)",
+        "quote": "use and interpret algebraic manipulation, including:",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1 (page 13; PDF page 25)",
+        "quote": "brackets",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). Options checked with SymPy: only option 1 (5(n + 3)) equals 5*(n+3).",
+          "at": "2026-11-25T17:17:06Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:20:06Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:20:13Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:34:46Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a1-0108",
+    "topic": "gcse-maths-h-a1",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a1-lp-products-and-brackets",
+    "expected_seconds": 25,
+    "prompt": "Which is 0.5x written with its coefficient as a fraction?",
+    "options": ["x/5", "(1/2)x", "5x", "x + 1/2"],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "0.5 = 1/2, so 0.5x is (1/2)x, which can also be written x/2.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1 (page 13; PDF page 25)",
+        "quote": "use and interpret algebraic manipulation, including:",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1 (page 13; PDF page 25)",
+        "quote": "coefficients written as fractions rather than as decimals",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). Options checked with SymPy: only option 1 ((1/2)x) equals 0.5*x.",
+          "at": "2026-11-25T17:17:06Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:20:21Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:20:35Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:34:47Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a1-0109",
+    "topic": "gcse-maths-h-a1",
+    "type": "worked_maths",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a1-lp-products-and-brackets",
+    "expected_seconds": 30,
+    "prompt": "Simplify y + y + y + 2y",
+    "answer": {
+      "expression": "5y"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "y + y + y + 2y"
+    },
+    "steps": ["y + y + y + 2y", "3y + 2y", "5y"],
+    "marks": 1,
+    "mark_scheme": ["B1 for 5y"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1 (page 13; PDF page 25)",
+        "quote": "use and interpret algebraic manipulation, including:",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). Answer and every step backed by the maths engine.",
+          "at": "2026-11-25T17:32:27Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:34:48Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:08Z",
+          "notes": "model answered \"5y\"; expected \"5y\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:14Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a1-0110",
+    "topic": "gcse-maths-h-a1",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a1-lp-notation-cards",
+    "expected_seconds": 15,
+    "front": "In the term 7x, what is the number 7 called?",
+    "back": "Coefficient",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1 (page 13; PDF page 25)",
+        "quote": "coefficients written as fractions rather than as decimals",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). The specification names coefficients but does not define them. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:17:06Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:20:59Z",
+          "notes": "model answered \"Coefficient\"; expected \"Coefficient\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:21:15Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:34:48Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a1-0111",
+    "topic": "gcse-maths-h-a1",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a1-lp-notation-cards",
+    "expected_seconds": 15,
+    "front": "Write a × a × a in index notation (use ^ for powers)",
+    "back": "a^3",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1 (page 13; PDF page 25)",
+        "quote": "use and interpret algebraic manipulation, including:",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). Back checked with SymPy: a^3 equals a*a*a.",
+          "at": "2026-11-25T17:17:06Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:21:21Z",
+          "notes": "model answered \"a^3\"; expected \"a^3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:21:27Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:34:49Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a1-0112",
+    "topic": "gcse-maths-h-a1",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a1-lp-notation-cards",
+    "expected_seconds": 15,
+    "front": "Write a ÷ b as an algebraic fraction (use / for the fraction line)",
+    "back": "a/b",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1 (page 13; PDF page 25)",
+        "quote": "use and interpret algebraic manipulation, including:",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). Back checked with SymPy: a/b is a divided by b.",
+          "at": "2026-11-25T17:17:06Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:21:34Z",
+          "notes": "model answered \"a/b\"; expected \"a/b\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:21:39Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:34:50Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  }
+]

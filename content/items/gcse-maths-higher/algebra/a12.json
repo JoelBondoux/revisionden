@@ -1,0 +1,881 @@
+[
+  {
+    "id": "gcse-maths-h-a12-0101",
+    "topic": "gcse-maths-h-a12",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a12-lp-recognise",
+    "expected_seconds": 25,
+    "prompt": "Which equation has a reciprocal graph?",
+    "options": ["y = x^2", "y = 1/x", "y = 2^x", "y = x^3"],
+    "answer": { "option": 1 },
+    "marks": 1,
+    "explanation": "y = 1/x is the reciprocal function. The others are quadratic, exponential and cubic.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A12 (page 14; PDF page 26)",
+        "quote": "simple cubic functions, the reciprocal function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Classification by the form of each equation.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:42Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:41:29Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:41:36Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a12-0102",
+    "topic": "gcse-maths-h-a12",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a12-lp-recognise",
+    "expected_seconds": 25,
+    "prompt": "Which equation has a cubic graph?",
+    "options": ["y = 3x + 1", "y = x^2 - 4", "y = x^3 - 2x", "y = 4/x"],
+    "answer": { "option": 2 },
+    "marks": 1,
+    "explanation": "The highest power of x in y = x^3 - 2x is 3, so it is a cubic.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A12 (page 14; PDF page 26)",
+        "quote": "simple cubic functions, the reciprocal function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Classification by the highest power of x.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:43Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:41:44Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:32:35Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a12-0103",
+    "topic": "gcse-maths-h-a12",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a12-lp-recognise",
+    "expected_seconds": 25,
+    "prompt": "Which equation has a straight-line graph?",
+    "options": ["y = x^2", "y = 5 - 2x", "y = 1/x", "y = 2^x"],
+    "answer": { "option": 1 },
+    "marks": 1,
+    "explanation": "y = 5 - 2x has the form y = mx + c, so its graph is a straight line.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A12 (page 14; PDF page 26)",
+        "quote": "recognise, sketch and interpret graphs of linear functions, quadratic",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Classification by the form of each equation.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:43Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:42:50Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:42:57Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a12-0104",
+    "topic": "gcse-maths-h-a12",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a12-lp-recognise",
+    "expected_seconds": 25,
+    "prompt": "Which of these graphs passes through the point (0, 1)?",
+    "options": ["y = 2^x", "y = x^2 - 1", "y = x^3", "y = 1/x"],
+    "answer": { "option": 0 },
+    "marks": 1,
+    "explanation": "At x = 0: 2^0 = 1, 0^2 - 1 = -1 and 0^3 = 0, and 1/x has no value at x = 0.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A12 (page 14; PDF page 26)",
+        "quote": "for positive values of k, and the",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A12 (page 14; PDF page 26)",
+        "quote": "recognise, sketch and interpret graphs of linear functions, quadratic",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A12 (page 14; PDF page 26)",
+        "quote": "simple cubic functions, the reciprocal function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Values at x = 0 checked with SymPy.",
+          "at": "2026-11-25T18:04:50Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:05:10Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 3: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:07:02Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:07:21Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a12-0105",
+    "topic": "gcse-maths-h-a12",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a12-lp-trig-graphs",
+    "expected_seconds": 30,
+    "prompt": "The graph of y = cos x is drawn for 0° ≤ x ≤ 360°. What is the value of y when x = 180°?",
+    "answer": { "value": "-1" },
+    "verify": { "expression": "cos(pi)" },
+    "marks": 1,
+    "mark_scheme": ["B1 for -1"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A12 (page 14; PDF page 26)",
+        "quote": "trigonometric functions (with arguments in degrees)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:45Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:43:29Z",
+          "notes": "model answered \"-1\"; expected \"-1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:43:35Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a12-0106",
+    "topic": "gcse-maths-h-a12",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a12-lp-trig-graphs",
+    "expected_seconds": 30,
+    "prompt": "The graph of y = sin x is drawn for 0° ≤ x ≤ 360°. What is the value of y when x = 270°?",
+    "answer": { "value": "-1" },
+    "verify": { "expression": "sin(3pi/2)" },
+    "marks": 1,
+    "mark_scheme": ["B1 for -1"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A12 (page 14; PDF page 26)",
+        "quote": "trigonometric functions (with arguments in degrees)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:46Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:43:42Z",
+          "notes": "model answered \"-1\"; expected \"-1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:43:48Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a12-0107",
+    "topic": "gcse-maths-h-a12",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a12-lp-trig-graphs",
+    "expected_seconds": 30,
+    "prompt": "The graph of y = tan x is drawn. What is the value of y when x = 45°?",
+    "answer": { "value": "1" },
+    "verify": { "expression": "tan(pi/4)" },
+    "marks": 1,
+    "mark_scheme": ["B1 for 1"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A12 (page 14; PDF page 26)",
+        "quote": "trigonometric functions (with arguments in degrees)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:46Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:43:54Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:44:06Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a12-0108",
+    "topic": "gcse-maths-h-a12",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a12-lp-trig-graphs",
+    "expected_seconds": 25,
+    "prompt": "For which of these angles does y = tan x have no value?",
+    "options": ["0°", "45°", "90°", "180°"],
+    "answer": { "option": 2 },
+    "marks": 1,
+    "explanation": "tan x = sin x / cos x and cos 90° = 0, so tan 90° is undefined (the graph has an asymptote there).",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A12 (page 14; PDF page 26)",
+        "quote": "trigonometric functions (with arguments in degrees)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "tan x = sin x / cos x, and cos 90° = 0, so tan 90° is undefined.",
+        "ask": "For which angle between 0° and 180° is tan x undefined, and why?",
+        "engine": { "kind": "trig_value", "function": "tan", "degrees": 90, "value": "undefined" }
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Checked with SymPy: tan(0) = 0, tan(pi/4) = 1, tan(pi) = 0 and cos(pi/2) = 0. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:47Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:44:15Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:44:24Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T20:37:46Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"Between 0° and 180°, \u0000tan x is undefined at x = 90^\u0000 only. This is because \\(\\tan x = \\frac{\\sin x}{\\cos x}\\), and at \\(90^\\circ\\), \\(\\cos 90^\\circ = 0\\), so the expression would involve division by zero.\")"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a12-0109",
+    "topic": "gcse-maths-h-a12",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a12-lp-graph-cards",
+    "expected_seconds": 15,
+    "front": "The value of y on the graph of y = x^3 when x = -2",
+    "back": "-8",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A12 (page 14; PDF page 26)",
+        "quote": "simple cubic functions, the reciprocal function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Checked: (-2)^3 = -8.",
+          "at": "2026-11-25T18:04:50Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:05:11Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:07:27Z",
+          "notes": "model answered \"-8\"; expected \"-8\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:07:32Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a12-0110",
+    "topic": "gcse-maths-h-a12",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a12-lp-graph-cards",
+    "expected_seconds": 15,
+    "front": "The value of x for which y = 1/x is undefined",
+    "back": "x = 0",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A12 (page 14; PDF page 26)",
+        "quote": "simple cubic functions, the reciprocal function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Division by zero is undefined.",
+          "at": "2026-11-25T18:04:50Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:05:12Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:07:39Z",
+          "notes": "model answered \"x = 0\"; expected \"x = 0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:07:42Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a12-0111",
+    "topic": "gcse-maths-h-a12",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a12-lp-graph-cards",
+    "expected_seconds": 15,
+    "front": "The value of y = k^x at x = 0, for any positive k",
+    "back": "1",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A12 (page 14; PDF page 26)",
+        "quote": "for positive values of k, and the",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). k^0 = 1 for k > 0 (law of indices).",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:49Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:44:57Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:45:13Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  }
+]

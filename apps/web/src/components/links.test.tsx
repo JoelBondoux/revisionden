@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -21,7 +21,7 @@ describe('LinkButton', () => {
     inRouter(<LinkButton to="/stats">See your stats</LinkButton>);
     const link = screen.getByRole('link', { name: 'See your stats' });
     expect(link).toHaveAttribute('href', '/stats');
-    expect(link).toHaveClass('btn', 'btn--primary', 'link-button');
+    expect(link).toHaveClass('btn', 'btn--primary', 'btn-link');
   });
 
   it.each(['primary', 'secondary', 'quiet'] as const)('has a %s style', (variant) => {
@@ -40,7 +40,7 @@ describe('LinkButton', () => {
       </LinkButton>,
     );
     const link = screen.getByRole('link', { name: 'Map' });
-    expect(link.querySelector('.link-button__icon')).toHaveAttribute('aria-hidden', 'true');
+    expect(link.querySelector('.btn-link__icon')).toHaveAttribute('aria-hidden', 'true');
   });
 
   it('navigates inside the app', async () => {
@@ -90,18 +90,27 @@ describe('LinkTile', () => {
         description="XP, accuracy and streaks by week"
       />,
     );
-    const tile = screen.getByRole('link', { name: 'Stats dashboard' });
-    expect(tile).toHaveAttribute('href', '/stats');
-    expect(tile).toHaveClass('link-tile');
-    expect(tile).toHaveAccessibleDescription('XP, accuracy and streaks by week');
+    const link = screen.getByRole('link', { name: 'Stats dashboard' });
+    expect(link).toHaveAttribute('href', '/stats');
+    expect(link).toHaveAccessibleDescription('XP, accuracy and streaks by week');
+    // The visible link text is exactly its name (WCAG 2.5.3); the whole card is still the target.
+    expect(link).toHaveTextContent(/^Stats dashboard$/);
+    const tile = link.closest('.link-tile')!;
     expect(tile.querySelector('.link-tile__chevron')).toHaveAttribute('aria-hidden', 'true');
     expect(tile.querySelector('.link-tile__icon')).toHaveAttribute('aria-hidden', 'true');
   });
 
   it('works without a description or icon', () => {
     inRouter(<LinkTile to="/stats" title="Stats" />);
-    const tile = screen.getByRole('link', { name: 'Stats' });
-    expect(tile).not.toHaveAttribute('aria-describedby');
+    const link = screen.getByRole('link', { name: 'Stats' });
+    expect(link).not.toHaveAttribute('aria-describedby');
+    expect(link.closest('.link-tile')).not.toBeNull();
+  });
+
+  it('tells screen readers when a tile opens a new tab', () => {
+    render(<LinkTile href="https://example.com/guide" newTab title="Guide" />);
+    const link = screen.getByRole('link', { name: 'Guide (opens in a new tab)' });
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer');
   });
 
   it('can link outside the app', () => {
@@ -150,6 +159,16 @@ describe('link styles', () => {
     return found?.[2] ?? '';
   };
 
+  it('keeps tiles and chips readable inside the dark arena (beats the arena link colour)', () => {
+    expect(rule('.arena .link-tile a.link-tile__link')).toMatch(/color: var\(--color-text\)/);
+    expect(rule('.arena a.link-chip.link-chip')).toMatch(/color: var\(--color-primary-edge\)/);
+  });
+
+  it('stretches a tile link over the whole card so any part of it is tappable', () => {
+    expect(rule('.link-tile__link::after')).toMatch(/position: absolute/);
+    expect(rule('.link-tile__link::after')).toMatch(/inset: 0/);
+  });
+
   it('gives every link a target of at least 44px', () => {
     for (const selector of ['.link-tile', '.link-chip', '.btn--quiet']) {
       expect(rule(selector), selector).toMatch(
@@ -160,7 +179,7 @@ describe('link styles', () => {
 
   it('shows a clear focus ring on every link style', () => {
     for (const selector of [
-      '.link-tile:focus-visible',
+      '.link-tile:focus-within',
       '.link-chip:focus-visible',
       '.text-link:focus-visible',
     ]) {
@@ -184,6 +203,33 @@ describe('link styles', () => {
           part.trim().split(/\s+/)[0],
         );
       }
+    }
+  });
+});
+
+describe('class names', () => {
+  it('do not clash with classes other screens already use', () => {
+    const ours = [
+      'btn-link',
+      'btn-link__icon',
+      'link-tile',
+      'link-chip',
+      'text-link',
+      'link-tiles',
+    ];
+    const css: string[] = [];
+    const walk = (dir: string) => {
+      for (const name of readdirSync(dir)) {
+        const path = join(dir, name);
+        if (statSync(path).isDirectory()) walk(path);
+        else if (name.endsWith('.css') && !path.endsWith(join('components', 'links.css')))
+          css.push(readFileSync(path, 'utf8'));
+      }
+    };
+    walk(join(__dirname, '..'));
+    for (const cls of ours) {
+      const defined = css.some((text) => new RegExp(`\\.${cls}(?![\\w-])`).test(text));
+      expect(defined, cls).toBe(false);
     }
   });
 });

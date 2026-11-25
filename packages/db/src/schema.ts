@@ -23,6 +23,7 @@ import {
   text,
   timestamp,
   unique,
+  uniqueIndex,
   uuid,
 } from 'drizzle-orm/pg-core';
 
@@ -200,6 +201,9 @@ export const students = pgTable(
     nickname: text('nickname').notNull(),
     avatarCode: text('avatar_code').notNull(),
     yearGroup: integer('year_group').notNull(),
+    // Two-part title (workstream R8): curated words the student picked, never free text.
+    titleFirst: text('title_first'),
+    titleLast: text('title_last'),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },
@@ -207,6 +211,8 @@ export const students = pgTable(
     unique('students_family_nickname_unique').on(t.familyId, t.nickname),
     check('students_nickname_format', sql`${t.nickname} ~ '^[A-Za-z0-9_]{2,16}$'`),
     check('students_year_group_range', sql`${t.yearGroup} between 9 and 13`),
+    check('students_title_first_format', sql`${t.titleFirst} ~ '^[A-Z][A-Za-z-]{0,15}$'`),
+    check('students_title_last_format', sql`${t.titleLast} ~ '^[A-Z][A-Za-z-]{0,15}$'`),
   ],
 );
 
@@ -222,6 +228,11 @@ export const enrolments = pgTable(
     // As in core's TierSchema: 'none' when the subject has no tiers.
     tier: text('tier').notNull().default('not_sure'),
     specVersion: text('spec_version'),
+    // Target grades (workstream K8), each checked against the cited grade scale in
+    // packages/core/src/target-grades.ts; null until set. One is set by either parent, the
+    // other is the child's own.
+    parentTargetGrade: text('parent_target_grade'),
+    studentTargetGrade: text('student_target_grade'),
     createdAt: createdAt(),
   },
   (t) => [
@@ -343,6 +354,9 @@ export const items = pgTable(
     status: text('status').notNull().default('draft'),
     difficulty: integer('difficulty'),
     tags: jsonb('tags').$type<string[]>(),
+    // Workstream S2. The full content item (citations, checks, exemplars, linked mark scheme as
+    // mark_scheme_detail) as synced, used only to build human review batches. Never served.
+    reviewSnapshot: jsonb('review_snapshot').$type<Record<string, unknown>>(),
   },
   (t) => [
     index('items_topic_id_idx').on(t.topicId),
@@ -1152,6 +1166,162 @@ export const dataRequests = pgTable(
   (t) => [
     index('data_requests_due_idx').on(t.handledAt, t.dueAt),
     check('data_requests_kind_values', sql`${t.kind} in ('export', 'deletion')`),
+  ],
+);
+
+export const COMPLAINT_CHANNELS = ['app', 'email'] as const;
+export const COMPLAINT_STATUSES = ['new', 'acknowledged', 'resolved', 'escalated'] as const;
+
+/**
+ * O4: formal complaints from a parent (in the app) or logged by an operator from an email
+ * (`docs/legal/complaints-policy.md`). Deleted with the family; otherwise 12 months after it is
+ * resolved. An emailed complaint may not match a family (family_id null).
+ */
+export const complaints = pgTable(
+  'complaints',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    familyId: uuid('family_id').references(() => families.id, { onDelete: 'cascade' }),
+    channel: text('channel', { enum: COMPLAINT_CHANNELS }).notNull(),
+    status: text('status', { enum: COMPLAINT_STATUSES }).notNull().default('new'),
+    summary: text('summary').notNull(),
+    aboutPersonalData: boolean('about_personal_data').notNull(),
+    receivedAt: timestamp('received_at', { withTimezone: true }).notNull(),
+    acknowledgeDueAt: timestamp('acknowledge_due_at', { withTimezone: true }).notNull(),
+    resolveDueAt: timestamp('resolve_due_at', { withTimezone: true }).notNull(),
+    acknowledgedAt: timestamp('acknowledged_at', { withTimezone: true }),
+    escalatedAt: timestamp('escalated_at', { withTimezone: true }),
+    resolvedAt: timestamp('resolved_at', { withTimezone: true }),
+    outcome: text('outcome'),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('complaints_family_id_idx').on(t.familyId),
+    index('complaints_status_idx').on(t.status, t.acknowledgeDueAt),
+    check('complaints_channel_values', sql`${t.channel} in ('app', 'email')`),
+    check(
+      'complaints_status_values',
+      sql`${t.status} in ('new', 'acknowledged', 'resolved', 'escalated')`,
+    ),
+    check('complaints_summary_length', sql`char_length(${t.summary}) between 1 and 500`),
+    check('complaints_outcome_length', sql`char_length(${t.outcome}) <= 2000`),
+  ],
+);
+
+/**
+ * O4: the conversation on a complaint. `sender` is the family or support; support messages keep
+ * the operator's work email (staff) for the audit, never shown to the family.
+ */
+export const complaintMessages = pgTable(
+  'complaint_messages',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    complaintId: uuid('complaint_id')
+      .notNull()
+      .references(() => complaints.id, { onDelete: 'cascade' }),
+    sender: text('sender', { enum: ['family', 'operator'] }).notNull(),
+    authorEmail: text('author_email'),
+    body: text('body').notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('complaint_messages_complaint_idx').on(t.complaintId, t.createdAt),
+    check('complaint_messages_sender_values', sql`${t.sender} in ('family', 'operator')`),
+    check('complaint_messages_body_length', sql`char_length(${t.body}) between 1 and 5000`),
+  ],
+);
+
+export const COMPLAINT_REQUEST_TOPICS = [
+  'marking',
+  'unfair',
+  'app_problem',
+  'my_data',
+  'something_else',
+] as const;
+
+/**
+ * O4 (owner, 2026-11-25): a student asks their parents to raise a complaint. Shown to both
+ * parents in the parent area only; never sent to AppDeck. Deleted when a parent dismisses it or
+ * starts the complaint, with the student, and after 90 days.
+ */
+export const complaintRequests = pgTable(
+  'complaint_requests',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    familyId: uuid('family_id')
+      .notNull()
+      .references(() => families.id, { onDelete: 'cascade' }),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    topic: text('topic', { enum: COMPLAINT_REQUEST_TOPICS }).notNull(),
+    note: text('note'),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('complaint_requests_family_idx').on(t.familyId, t.createdAt),
+    check(
+      'complaint_requests_topic_values',
+      sql`${t.topic} in ('marking', 'unfair', 'app_problem', 'my_data', 'something_else')`,
+    ),
+    check('complaint_requests_note_length', sql`char_length(${t.note}) <= 300`),
+  ],
+);
+
+/**
+ * O5: discount codes, created by a Manager in AppDeck (`docs/OPERATOR_CONSOLE.md`). Stored in
+ * upper case. Applied at checkout by payments (workstream $), which records redemptions.
+ */
+export const discountCodes = pgTable(
+  'discount_codes',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    code: text('code').notNull().unique('discount_codes_code_unique'),
+    kind: text('kind', { enum: ['percent', 'fixed'] }).notNull(),
+    // A percentage (1–100), or pence when the kind is fixed.
+    amount: integer('amount').notNull(),
+    // How many months it lasts; null for forever.
+    months: integer('months'),
+    // The last UK day it can be used; null for no expiry.
+    expiresOn: date('expires_on'),
+    maxUses: integer('max_uses'),
+    // Work email of the Manager who created it (staff, from AppDeck).
+    createdBy: text('created_by').notNull(),
+    disabledAt: timestamp('disabled_at', { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    check('discount_codes_code_format', sql`${t.code} ~ '^[A-Z0-9]{6,16}$'`),
+    check('discount_codes_kind_values', sql`${t.kind} in ('percent', 'fixed')`),
+    check(
+      'discount_codes_amount_range',
+      sql`${t.amount} >= 1 and (${t.kind} <> 'percent' or ${t.amount} <= 100)`,
+    ),
+    check('discount_codes_months_positive', sql`${t.months} is null or ${t.months} >= 1`),
+    check('discount_codes_max_uses_positive', sql`${t.maxUses} is null or ${t.maxUses} >= 1`),
+  ],
+);
+
+/**
+ * O5: a family using a code. One active code per family at a time (ended_at null). When the family
+ * is deleted the row stays with no family, so a capped code's use is still counted.
+ */
+export const discountRedemptions = pgTable(
+  'discount_redemptions',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    codeId: uuid('code_id')
+      .notNull()
+      .references(() => discountCodes.id),
+    familyId: uuid('family_id').references(() => families.id, { onDelete: 'set null' }),
+    redeemedAt: timestamp('redeemed_at', { withTimezone: true }).notNull().defaultNow(),
+    endedAt: timestamp('ended_at', { withTimezone: true }),
+  },
+  (t) => [
+    index('discount_redemptions_code_idx').on(t.codeId),
+    uniqueIndex('discount_redemptions_one_active_per_family')
+      .on(t.familyId)
+      .where(sql`${t.endedAt} is null`),
   ],
 );
 

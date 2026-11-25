@@ -6,7 +6,8 @@
  * - level: level curve from the rewards progression (workstream R, docs/REWARDS.md)
  * - plan: the study plan (sessions kept, weekly planned minutes)
  * - effortScores: the latest school report's effort scores
- * - grades: predicted and target grades per subject
+ * - grades: predicted and target grades per subject (targets: workstream K8, target-grades.ts;
+ *   predicted stays null until verified grade boundaries exist)
  */
 import type { ParentDashboard, StudentStats } from '@revisionden/core';
 
@@ -18,6 +19,8 @@ export interface StatsAdapters {
     weekStart: string,
   ): Promise<{ kept: NonNullable<ParentDashboard['tiles']['planKept']>; minutes: number } | null>;
   effortScores(studentId: string): Promise<ParentDashboard['effortScores']>;
+  /** Both target grades per enrolled subject (workstream K8). */
+  targets(studentId: string): Promise<StudentStats['targets']>;
   grades(
     studentId: string,
     subjectId: string,
@@ -29,6 +32,7 @@ export const NOT_SET_UP: StatsAdapters = {
   level: async () => null,
   plan: async () => null,
   effortScores: async () => null,
+  targets: async () => [],
   grades: async () => ({ predictedGrade: null, targetGrade: null }),
 };
 

@@ -45,7 +45,8 @@
 }
 
 .learn-first__title {
-  text-decoration: underline;
+  color: var(--color-primary-edge);
+  font-weight: var(--font-weight-black);
 }
 
 .learn-first__provider {

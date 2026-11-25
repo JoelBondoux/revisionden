@@ -1,0 +1,796 @@
+[
+  {
+    "id": "gcse-maths-h-a8-0101",
+    "topic": "gcse-maths-h-a8",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a8-lp-read-points",
+    "expected_seconds": 25,
+    "prompt": "Which point is 3 units to the left of the y-axis and 2 units below the x-axis?",
+    "options": ["(3, -2)", "(-3, -2)", "(-2, -3)", "(-3, 2)"],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "Left of the y-axis means a negative x-coordinate and below the x-axis means a negative y-coordinate: (-3, -2).",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A8 (page 14; PDF page 26)",
+        "quote": "work with coordinates in all four quadrants",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Coordinate convention (x, y); option 1 is the only one with x = -3 and y = -2.",
+          "at": "2026-11-25T17:20:52Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:12Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:50:14Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:50:22Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a8-0102",
+    "topic": "gcse-maths-h-a8",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a8-lp-read-points",
+    "expected_seconds": 25,
+    "prompt": "Which of these points lies on the x-axis?",
+    "options": ["(0, -4)", "(-4, 0)", "(-4, -4)", "(4, 4)"],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "Every point on the x-axis has y-coordinate 0, so (-4, 0) is on it. (0, -4) is on the y-axis.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A8 (page 14; PDF page 26)",
+        "quote": "work with coordinates in all four quadrants",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Only option 1 has y-coordinate 0.",
+          "at": "2026-11-25T17:20:52Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:12Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:50:29Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:50:38Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a8-0103",
+    "topic": "gcse-maths-h-a8",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a8-lp-read-points",
+    "expected_seconds": 30,
+    "prompt": "Three corners of a rectangle are at (-2, 3), (5, 3) and (5, -1). Write down the coordinates of the fourth corner.",
+    "answer": {
+      "accepted": ["(-2, -1)", "(-2,-1)", "(−2, −1)", "(−2,−1)"]
+    },
+    "marks": 1,
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A8 (page 14; PDF page 26)",
+        "quote": "work with coordinates in all four quadrants",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Sides of this rectangle are parallel to the axes: the fourth corner shares x = -2 with (-2, 3) and y = -1 with (5, -1).",
+          "at": "2026-11-25T18:55:47Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:56:15Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:59:49Z",
+          "notes": "model answered \"(-2, -1)\"; expected \"(-2, -1) | (-2,-1) | (−2, −1) | (−2,−1)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:00:18Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a8-0104",
+    "topic": "gcse-maths-h-a8",
+    "type": "numeric",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a8-lp-axis-distances",
+    "expected_seconds": 30,
+    "prompt": "A is the point (-3, 4) and B is the point (5, 4). How many units apart are A and B?",
+    "answer": {
+      "value": "8"
+    },
+    "verify": {
+      "expression": "5 - (-3)"
+    },
+    "marks": 1,
+    "mark_scheme": ["B1 for 8"],
+    "explanation": "Both points have y = 4, so count along: from x = -3 to x = 5 is 8 units.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A8 (page 14; PDF page 26)",
+        "quote": "work with coordinates in all four quadrants",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Answer backed by the maths engine.",
+          "at": "2026-11-25T18:04:50Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:06:00Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:12:33Z",
+          "notes": "model answered \"8\"; expected \"8\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:12:40Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a8-0105",
+    "topic": "gcse-maths-h-a8",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a8-lp-axis-distances",
+    "expected_seconds": 30,
+    "prompt": "P is the point (2, -6) and Q is the point (2, 3). How many units apart are P and Q?",
+    "answer": {
+      "value": "9"
+    },
+    "verify": {
+      "expression": "3 - (-6)"
+    },
+    "marks": 1,
+    "mark_scheme": ["B1 for 9"],
+    "explanation": "Both points have x = 2, so count up: from y = -6 to y = 3 is 9 units.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A8 (page 14; PDF page 26)",
+        "quote": "work with coordinates in all four quadrants",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Answer backed by the maths engine.",
+          "at": "2026-11-25T18:04:50Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:06:00Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:12:47Z",
+          "notes": "model answered \"9\"; expected \"9\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:12:57Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a8-0106",
+    "topic": "gcse-maths-h-a8",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a8-lp-axis-distances",
+    "expected_seconds": 40,
+    "prompt": "Start at the point (-4, -1). Move 6 units to the right and 5 units up. Write down the coordinates of the point you reach.",
+    "answer": {
+      "accepted": ["(2, 4)", "(2,4)"]
+    },
+    "marks": 1,
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A8 (page 14; PDF page 26)",
+        "quote": "work with coordinates in all four quadrants",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Arithmetic checked: (-4 + 6, -1 + 5) = (2, 4).",
+          "at": "2026-11-25T18:04:50Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:06:01Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:13:03Z",
+          "notes": "model answered \"(2, 4)\"; expected \"(2, 4) | (2,4)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:13:12Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a8-0107",
+    "topic": "gcse-maths-h-a8",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a8-lp-axis-distances",
+    "expected_seconds": 60,
+    "prompt": "The points (k, 2) and (5, 2) are 9 units apart, and k is negative. Work out k.",
+    "answer": {
+      "solutions": ["-4"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "5 - k = 9",
+      "variable": "k"
+    },
+    "steps": ["5 - k = 9", "-k = 4", "k = -4"],
+    "marks": 2,
+    "mark_scheme": [
+      "M1 for 5 - k = 9 or an equivalent equation such as k - 5 = -9",
+      "A1 for k = -4"
+    ],
+    "explanation": "k is negative, so (k, 2) is to the left of (5, 2) and the distance is 5 - k: 5 - k = 9 gives k = -4.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A8 (page 14; PDF page 26)",
+        "quote": "work with coordinates in all four quadrants",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Solutions and every step backed by the maths engine. Lead ruling 2026-11-25: the last adversarial-review finding is left for the owner to judge (see that check); needs individual human approval.",
+          "at": "2026-11-25T18:28:24Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:28:27Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:28:34Z",
+          "notes": "model answered \"-4\"; expected \"-4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:29:02Z",
+          "notes": "wording (mark_scheme): The M1 mark is for '5 - k = 9 or an equivalent equation such as k - 5 = -9'. This is too restrictive as it does not explicitly credit other valid methods. For example, a student might start with the distance formula to get sqrt((5-k)^2) = 9, or set up the absolute value equation |5 - k| = 9. These methods are valid but do not result in an equation that is algebraically equivalent to '5 - k = 9', so may not be awarded a mark under a strict interpretation of the scheme."
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a8-0108",
+    "topic": "gcse-maths-h-a8",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a8-lp-coordinate-cards",
+    "expected_seconds": 15,
+    "front": "The coordinates of the origin",
+    "back": "(0, 0)",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A8 (page 14; PDF page 26)",
+        "quote": "work with coordinates in all four quadrants",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Standard coordinate convention. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:20:52Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:17Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:52:42Z",
+          "notes": "model answered \"(0, 0)\"; expected \"(0, 0)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:52:47Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a8-0109",
+    "topic": "gcse-maths-h-a8",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a8-lp-coordinate-cards",
+    "expected_seconds": 15,
+    "front": "The x-coordinate of every point on the y-axis",
+    "back": "0",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A8 (page 14; PDF page 26)",
+        "quote": "work with coordinates in all four quadrants",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Standard coordinate convention. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:20:52Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:17Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:52:54Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:52:59Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a8-0110",
+    "topic": "gcse-maths-h-a8",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a8-lp-coordinate-cards",
+    "expected_seconds": 15,
+    "front": "Is the y-coordinate of a point below the x-axis positive or negative?",
+    "back": "Negative",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A8 (page 14; PDF page 26)",
+        "quote": "work with coordinates in all four quadrants",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Standard coordinate convention. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:20:52Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:18Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:53:06Z",
+          "notes": "model answered \"Negative\"; expected \"Negative\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:53:11Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  }
+]
