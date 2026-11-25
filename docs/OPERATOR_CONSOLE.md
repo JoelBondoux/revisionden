@@ -27,21 +27,22 @@ operatorEmail, operatorRole, requestId, rawBody]` with a shared secret
 
 ## Wire format (O1, built)
 
-Every operator route is under `/v1/operator` on the RevisionDen API host of that environment.
-AppDeck sends these headers with every request:
+Every operator route is under `/operator/appdeck` on the RevisionDen API host of that environment
+(the same pattern AppDeck's HireLine client uses). AppDeck sends these headers (lower case) with
+every request:
 
-| Header                     | Value                                                                       |
-| -------------------------- | --------------------------------------------------------------------------- |
-| `X-AppDeck-Timestamp`      | Whole Unix seconds (for example `1795600800`)                               |
-| `X-AppDeck-Request-Id`     | Unique per request: 1–128 of `A-Z a-z 0-9 . _ : -` (a UUID is ideal)        |
-| `X-AppDeck-Operator-Email` | The signed-in operator's work email                                         |
-| `X-AppDeck-Operator-Role`  | `agent` or `manager` (any letter case; signed exactly as sent)              |
-| `X-AppDeck-Signature`      | Lower-case hex HMAC-SHA256 of the payload below with the environment secret |
+| Header                     | Value                                                                                          |
+| -------------------------- | ---------------------------------------------------------------------------------------------- |
+| `x-appdeck-timestamp`      | Unix **milliseconds** as a string (`String(Date.now())`, e.g. `1795600800000`)                 |
+| `x-appdeck-request-id`     | Unique per request: 1–128 of `A-Z a-z 0-9 . _ : -` (a UUID is ideal)                           |
+| `x-appdeck-operator-email` | The signed-in operator's work email                                                            |
+| `x-appdeck-operator-role`  | `agent` or `manager` (any letter case; signed exactly as sent)                                 |
+| `x-appdeck-signature`      | `sha256=` then the lower-case hex HMAC-SHA256 of the payload below with the environment secret |
 
 Signed payload: the JSON text of
 `["appdeck-revisionden-operator-v1", timestamp, METHOD, path, operatorEmail, operatorRole, requestId, rawBody]`,
 where `METHOD` is upper case, `path` is the path **and query string** exactly as requested
-(`/v1/operator/families?id=…`), the header values are exactly as sent, and `rawBody` is the body
+(`/operator/appdeck/tickets?status=open`), the header values are exactly as sent, and `rawBody` is the body
 text exactly as sent (an empty string for none). JSON as `JSON.stringify` writes it (no spaces).
 
 Rules the API enforces:
@@ -52,11 +53,13 @@ Rules the API enforces:
   5 minutes from the server clock either way: 401 `operator_request_expired`.
 - Request ids are used once (kept 1 day). A read (GET) sent again: 409
   `operator_request_replayed`. A change (POST, PATCH, DELETE) sent again with the same id, method,
-  path and body gets the first answer again with `X-AppDeck-Replayed: true` and does not run
+  path and body gets the first answer again with `x-appdeck-replayed: true` and does not run
   twice; with a different body: 409 `operator_request_conflict`; still running: 409
   `operator_request_in_progress`. A change that failed with a 5xx can be retried with its id.
 - An Agent calling a Manager action: 403 `operator_forbidden` (the refusal is audited).
-- Errors use the API's shared shape: `{ "error": { "code", "message", "ref" } }`.
+- Success (2xx) answers are `{ "success": true, "data": … }`; a change answers `data: { "ok": true }`
+  unless stated. Errors are told apart by HTTP status (400, 401, 403, 404, 409, 429, 503) and use
+  the API's shared shape: `{ "error": { "code", "message", "ref" } }`.
 
 Audit log (`operator_audit_log`, 2 years): operator email and role, action, target type and id,
 request id, outcome (`ok` or `denied`), time. The target is a plain id, so entries outlive a
@@ -67,24 +70,24 @@ deleted family; search text and content are never recorded.
 Also checked by `packages/core/src/operator-signature.test.ts` (`OPERATOR_TEST_VECTOR`). The
 secret is a test value used nowhere else.
 
-| Input          | Value                                                                                                                                                                                             |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Secret         | `revisionden-operator-test-vector-secret-0001`                                                                                                                                                    |
-| Timestamp      | `1795600800`                                                                                                                                                                                      |
-| Method         | `POST`                                                                                                                                                                                            |
-| Path           | `/v1/operator/families/00000000-0000-4000-8000-000000000001/notes`                                                                                                                                |
-| Operator email | `operator@example.com`                                                                                                                                                                            |
-| Operator role  | `agent`                                                                                                                                                                                           |
-| Request id     | `req-0001`                                                                                                                                                                                        |
-| Raw body       | `{"note":"Test note"}`                                                                                                                                                                            |
-| Signed payload | `["appdeck-revisionden-operator-v1","1795600800","POST","/v1/operator/families/00000000-0000-4000-8000-000000000001/notes","operator@example.com","agent","req-0001","{\"note\":\"Test note\"}"]` |
-| Signature      | `a83dae3e05e726fc32810568b530376f5bdd43bb58457f0918d1e4c7a1169874`                                                                                                                                |
+| Input          | Value                                                                                                                                                                                                     |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Secret         | `revisionden-operator-test-vector-secret-0001`                                                                                                                                                            |
+| Timestamp      | `1795600800000`                                                                                                                                                                                           |
+| Method         | `POST`                                                                                                                                                                                                    |
+| Path           | `/operator/appdeck/families/00000000-0000-4000-8000-000000000001/notes`                                                                                                                                   |
+| Operator email | `operator@example.com`                                                                                                                                                                                    |
+| Operator role  | `agent`                                                                                                                                                                                                   |
+| Request id     | `req-0001`                                                                                                                                                                                                |
+| Raw body       | `{"note":"Test note"}`                                                                                                                                                                                    |
+| Signed payload | `["appdeck-revisionden-operator-v1","1795600800000","POST","/operator/appdeck/families/00000000-0000-4000-8000-000000000001/notes","operator@example.com","agent","req-0001","{\"note\":\"Test note\"}"]` |
+| Signature      | `sha256=64618da6da442da5b05657dd5ebf56a50665dd4a15462dc3350d47db8db9bcbd`                                                                                                                                 |
 
 ### Endpoints
 
-| Route                   | Role  | Returns                                                                 | Audited |
-| ----------------------- | ----- | ----------------------------------------------------------------------- | ------- |
-| `GET /v1/operator/ping` | Agent | `{ environment, version, operator: { email, role } }` (connection test) | no      |
+| Route                          | Role  | Returns                                                                                     | Audited |
+| ------------------------------ | ----- | ------------------------------------------------------------------------------------------- | ------- |
+| `GET /operator/appdeck/health` | Agent | `data: { status: "ok", environment, version, operator: { email, role } }` (connection test) | no      |
 
 Read endpoints come with O2, actions with O3 to O5.
 

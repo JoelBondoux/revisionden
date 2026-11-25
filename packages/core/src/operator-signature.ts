@@ -16,10 +16,10 @@ export const OPERATOR_SECRET_MIN_LENGTH = 32;
 export type OperatorRole = 'agent' | 'manager';
 
 export interface OperatorSignedFields {
-  /** Whole Unix seconds, as sent in the header. */
+  /** Unix milliseconds (`String(Date.now())`), as sent in the header. */
   timestamp: string;
   method: string;
-  /** Path and query string exactly as requested, e.g. `/v1/operator/families?id=…`. */
+  /** Path and query string exactly as requested, e.g. `/operator/appdeck/tickets?status=open`. */
   path: string;
   operatorEmail: string;
   /** The role header exactly as sent (`agent` or `manager`, any letter case). */
@@ -60,15 +60,17 @@ function toHex(bytes: Uint8Array): string {
   return Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
 }
 
-/** Lower-case hex HMAC-SHA256 of the signing payload. */
+const SIGNATURE_PREFIX = 'sha256=';
+
+/** The `x-appdeck-signature` value: `sha256=` and the lower-case hex HMAC-SHA256 of the payload. */
 export async function signOperatorRequest(
   secret: string,
   fields: OperatorSignedFields,
 ): Promise<string> {
-  return toHex(await hmacSha256(secret, operatorSigningPayload(fields)));
+  return `${SIGNATURE_PREFIX}${toHex(await hmacSha256(secret, operatorSigningPayload(fields)))}`;
 }
 
-/** True when `signature` (hex, any case) is right for these fields. Constant-time compare. */
+/** True when the header value (`sha256=` and hex in any case) is right. Constant-time compare. */
 export async function verifyOperatorSignature(
   secret: string,
   fields: OperatorSignedFields,
@@ -76,7 +78,7 @@ export async function verifyOperatorSignature(
 ): Promise<boolean> {
   const expected = await signOperatorRequest(secret, fields);
   const given = signature.toLowerCase();
-  if (!/^[0-9a-f]{64}$/.test(given)) return false;
+  if (!/^sha256=[0-9a-f]{64}$/.test(given)) return false;
   let diff = 0;
   for (let i = 0; i < expected.length; i += 1) {
     diff |= expected.charCodeAt(i) ^ given.charCodeAt(i);
@@ -84,10 +86,10 @@ export async function verifyOperatorSignature(
   return diff === 0;
 }
 
-/** `ok` within 5 minutes of `now`; `expired` outside; `invalid` if not whole Unix seconds. */
+/** `ok` within 5 minutes of `now`; `expired` outside; `invalid` if not whole Unix milliseconds. */
 export function checkOperatorTimestamp(timestamp: string, now: Date): 'ok' | 'expired' | 'invalid' {
-  if (!/^\d{1,11}$/.test(timestamp)) return 'invalid';
-  const skew = Math.abs(now.getTime() - Number(timestamp) * 1000);
+  if (!/^\d{1,14}$/.test(timestamp)) return 'invalid';
+  const skew = Math.abs(now.getTime() - Number(timestamp));
   return skew <= OPERATOR_MAX_SKEW_MS ? 'ok' : 'expired';
 }
 
@@ -104,15 +106,15 @@ export function parseOperatorRole(value: string): OperatorRole | null {
 export const OPERATOR_TEST_VECTOR = {
   secret: 'revisionden-operator-test-vector-secret-0001',
   fields: {
-    timestamp: '1795600800',
+    timestamp: '1795600800000',
     method: 'POST',
-    path: '/v1/operator/families/00000000-0000-4000-8000-000000000001/notes',
+    path: '/operator/appdeck/families/00000000-0000-4000-8000-000000000001/notes',
     operatorEmail: 'operator@example.com',
     operatorRole: 'agent',
     requestId: 'req-0001',
     rawBody: '{"note":"Test note"}',
   },
-  signature: 'a83dae3e05e726fc32810568b530376f5bdd43bb58457f0918d1e4c7a1169874',
+  signature: 'sha256=64618da6da442da5b05657dd5ebf56a50665dd4a15462dc3350d47db8db9bcbd',
 } as const satisfies {
   secret: string;
   fields: OperatorSignedFields;

@@ -28,20 +28,24 @@ describe('operator bridge: signed requests from AppDeck', () => {
     const res = await t.app.request(
       ...(await signedOperatorRequest({
         clock: t.clock,
-        path: '/v1/operator/ping',
+        path: '/operator/appdeck/health',
         email: 'Agent@Example.com',
       })),
     );
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({
-      environment: 'development',
-      version: '00.01.000',
-      operator: { email: 'agent@example.com', role: 'agent' },
+      success: true,
+      data: {
+        status: 'ok',
+        environment: 'development',
+        version: '00.01.000',
+        operator: { email: 'agent@example.com', role: 'agent' },
+      },
     });
   });
 
   it('refuses a request with no signature headers', async () => {
-    const res = await t.app.request('/v1/operator/ping');
+    const res = await t.app.request('/operator/appdeck/health');
     expect(res.status).toBe(401);
     expect(await errorCode(res)).toBe('operator_unauthorized');
   });
@@ -50,7 +54,7 @@ describe('operator bridge: signed requests from AppDeck', () => {
     const res = await t.app.request(
       ...(await signedOperatorRequest({
         clock: t.clock,
-        path: '/v1/operator/ping',
+        path: '/operator/appdeck/health',
         secret: `${TEST_OPERATOR_SECRET}-wrong`,
       })),
     );
@@ -61,18 +65,18 @@ describe('operator bridge: signed requests from AppDeck', () => {
   it('signs the query string too, so a changed search is refused', async () => {
     const [, init] = await signedOperatorRequest({
       clock: t.clock,
-      path: '/v1/operator/ping?id=one',
+      path: '/operator/appdeck/health?id=one',
     });
-    const res = await t.app.request('/v1/operator/ping?id=two', init);
+    const res = await t.app.request('/operator/appdeck/health?id=two', init);
     expect(res.status).toBe(401);
   });
 
   it('refuses a request signed more than 5 minutes ago', async () => {
-    const old = String(Math.floor(t.clock.now().getTime() / 1000) - 301);
+    const old = String(t.clock.now().getTime() - 301_000);
     const res = await t.app.request(
       ...(await signedOperatorRequest({
         clock: t.clock,
-        path: '/v1/operator/ping',
+        path: '/operator/appdeck/health',
         timestamp: old,
       })),
     );
@@ -80,11 +84,23 @@ describe('operator bridge: signed requests from AppDeck', () => {
     expect(await errorCode(res)).toBe('operator_request_expired');
   });
 
+  it('refuses a timestamp sent in seconds instead of milliseconds', async () => {
+    const seconds = String(Math.floor(t.clock.now().getTime() / 1000));
+    const res = await t.app.request(
+      ...(await signedOperatorRequest({
+        clock: t.clock,
+        path: '/operator/appdeck/health',
+        timestamp: seconds,
+      })),
+    );
+    expect(await errorCode(res)).toBe('operator_request_expired');
+  });
+
   it('refuses a role other than Agent or Manager, even when signed', async () => {
     const res = await t.app.request(
       ...(await signedOperatorRequest({
         clock: t.clock,
-        path: '/v1/operator/ping',
+        path: '/operator/appdeck/health',
         role: 'owner',
       })),
     );
@@ -93,13 +109,17 @@ describe('operator bridge: signed requests from AppDeck', () => {
 
   it('refuses an operator email that is not an email address', async () => {
     const res = await t.app.request(
-      ...(await signedOperatorRequest({ clock: t.clock, path: '/v1/operator/ping', email: 'x' })),
+      ...(await signedOperatorRequest({
+        clock: t.clock,
+        path: '/operator/appdeck/health',
+        email: 'x',
+      })),
     );
     expect(res.status).toBe(401);
   });
 
   it('refuses a read sent again with the same request id (no replays)', async () => {
-    const call = { clock: t.clock, path: '/v1/operator/ping', requestId: 'read-once-0001' };
+    const call = { clock: t.clock, path: '/operator/appdeck/health', requestId: 'read-once-0001' };
     expect((await t.app.request(...(await signedOperatorRequest(call)))).status).toBe(200);
     const again = await t.app.request(...(await signedOperatorRequest(call)));
     expect(again.status).toBe(409);
@@ -108,7 +128,7 @@ describe('operator bridge: signed requests from AppDeck', () => {
 
   it('does not store what a read returned', async () => {
     await t.app.request(
-      ...(await signedOperatorRequest({ clock: t.clock, path: '/v1/operator/ping' })),
+      ...(await signedOperatorRequest({ clock: t.clock, path: '/operator/appdeck/health' })),
     );
     const rows = await t.db.select().from(operatorRequests);
     expect(rows).toHaveLength(1);
@@ -120,7 +140,7 @@ describe('operator bridge: switched off and rate limited', () => {
   it('does not exist when no shared secret is set for the environment', async () => {
     t = await createTestContext();
     const res = await t.app.request(
-      ...(await signedOperatorRequest({ clock: t.clock, path: '/v1/operator/ping' })),
+      ...(await signedOperatorRequest({ clock: t.clock, path: '/operator/appdeck/health' })),
     );
     expect(res.status).toBe(404);
   });
@@ -129,7 +149,7 @@ describe('operator bridge: switched off and rate limited', () => {
     t = await createTestContext({ ...bridgeOn, operatorLimit: 2 });
     const ping = async () =>
       t.app.request(
-        ...(await signedOperatorRequest({ clock: t.clock, path: '/v1/operator/ping' })),
+        ...(await signedOperatorRequest({ clock: t.clock, path: '/operator/appdeck/health' })),
       );
     expect((await ping()).status).toBe(200);
     expect((await ping()).status).toBe(200);
@@ -260,7 +280,7 @@ describe('operator records retention', () => {
     const request = (createdAt: Date, requestId: string) => ({
       requestId,
       method: 'GET',
-      path: '/v1/operator/ping',
+      path: '/operator/appdeck/health',
       bodyHash: 'h',
       createdAt,
     });

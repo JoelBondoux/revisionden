@@ -143,7 +143,7 @@ Tags: #product #rules #limits #defaults
 
 ## Operator console (AppDeck)
 
-- The owner runs RevisionDen from AppDeck Admin through a signed operator bridge at `/v1/operator`
+- The owner runs RevisionDen from AppDeck Admin through a signed operator bridge at `/operator/appdeck`
   (no database access for AppDeck). Spec and wire format: `docs/OPERATOR_CONSOLE.md`.
 - Requests are signed with HMAC-SHA256 (tag `appdeck-revisionden-operator-v1`) using
   `APPDECK_OPERATOR_SHARED_SECRET` (32+ characters, one per environment); without it the bridge

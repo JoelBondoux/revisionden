@@ -171,7 +171,7 @@ export function createApp(deps: AppDeps) {
   app.route('/v1/error-reports', errorReportRoutes(deps));
   // Operator bridge (AppDeck): signed requests only; 404 when no shared secret is set.
   app.route(
-    '/v1/operator',
+    '/operator/appdeck',
     operatorRoutes({
       ...deps,
       rateLimiter:

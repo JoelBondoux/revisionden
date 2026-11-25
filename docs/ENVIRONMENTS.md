@@ -64,16 +64,16 @@ Every resource is named `revisionden` or starts `revisionden-` (decision 0003). 
 Generated and already set on each API Worker: `DATABASE_URL`, `BETTER_AUTH_SECRET`,
 `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `AI_GATEWAY_URL`.
 
-| Worker secret or variable                        | dev | staging | production | Effect until set                                                                        |
-| ------------------------------------------------ | --- | ------- | ---------- | --------------------------------------------------------------------------------------- |
-| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`       | ✗   | ✗       | ✗          | One provider required: until one is set, every API route except `/health` gives 500     |
-| `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` | ✗   | ✗       | ✗          | Optional once Google is set: the sign-in page hides it                                  |
-| `ANTHROPIC_API_KEY`                              | ✗   | ✗       | ✗          | AI routes answer 503                                                                    |
-| `AI_GATEWAY_TOKEN`                               | ✗   | ✗       | ✗          | AI calls are refused by the authenticated gateway                                       |
-| `OPERATOR_EMAILS`                                | ✗   | ✗       | ✗          | Nobody can open `/admin/feedback`                                                       |
-| `APPDECK_OPERATOR_SHARED_SECRET`                 | ✗   | ✗       | ✗          | The AppDeck operator bridge (`/v1/operator`) answers 404; set the same value in AppDeck |
-| `MATHS_ENGINE_URL`                               | ✗   | ✗       | ✗          | Worked maths answers get 503 (needs G3)                                                 |
-| `OPENAI_API_KEY` (optional)                      | –   | –       | –          | No second checker                                                                       |
+| Worker secret or variable                        | dev | staging | production | Effect until set                                                                             |
+| ------------------------------------------------ | --- | ------- | ---------- | -------------------------------------------------------------------------------------------- |
+| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`       | ✗   | ✗       | ✗          | One provider required: until one is set, every API route except `/health` gives 500          |
+| `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` | ✗   | ✗       | ✗          | Optional once Google is set: the sign-in page hides it                                       |
+| `ANTHROPIC_API_KEY`                              | ✗   | ✗       | ✗          | AI routes answer 503                                                                         |
+| `AI_GATEWAY_TOKEN`                               | ✗   | ✗       | ✗          | AI calls are refused by the authenticated gateway                                            |
+| `OPERATOR_EMAILS`                                | ✗   | ✗       | ✗          | Nobody can open `/admin/feedback`                                                            |
+| `APPDECK_OPERATOR_SHARED_SECRET`                 | ✗   | ✗       | ✗          | The AppDeck operator bridge (`/operator/appdeck`) answers 404; set the same value in AppDeck |
+| `MATHS_ENGINE_URL`                               | ✗   | ✗       | ✗          | Worked maths answers get 503 (needs G3)                                                      |
+| `OPENAI_API_KEY` (optional)                      | –   | –       | –          | No second checker                                                                            |
 
 Set each with
 `pnpm --filter @revisionden/api exec wrangler secret put <NAME> --env <dev|staging|production>`
