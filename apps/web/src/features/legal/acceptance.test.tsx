@@ -158,12 +158,12 @@ describe('PolicyGate', () => {
 describe('legal API client', () => {
   it('reads and stores policy acceptances', async () => {
     server.use(
-      http.get('https://app.example/api/v1/policy-acceptances', () =>
+      http.get('*/v1/policy-acceptances', () =>
         HttpResponse.json({
           acceptances: [{ policy: 'terms-of-use', version: '1.0', acceptedAt: at }],
         }),
       ),
-      http.put('https://app.example/api/v1/policy-acceptances', async ({ request }) => {
+      http.put('*/v1/policy-acceptances', async ({ request }) => {
         const body = (await request.json()) as {
           acceptances: { policy: string; version: string }[];
         };
@@ -180,12 +180,7 @@ describe('legal API client', () => {
   });
 
   it('fails on an error reply', async () => {
-    server.use(
-      http.get(
-        'https://app.example/api/v1/policy-acceptances',
-        () => new HttpResponse(null, { status: 401 }),
-      ),
-    );
+    server.use(http.get('*/v1/policy-acceptances', () => new HttpResponse(null, { status: 401 })));
     await expect(createLegalApi({ baseUrl: 'https://app.example/api/' }).list()).rejects.toThrow(
       '401',
     );

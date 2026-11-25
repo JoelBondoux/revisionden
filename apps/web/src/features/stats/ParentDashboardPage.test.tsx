@@ -22,6 +22,12 @@ describe('Parent stats dashboard', () => {
     expect(screen.getByRole('table', { name: 'Study time, last 8 weeks' })).toBeInTheDocument();
   });
 
+  it('opens on the child chosen on "Who\'s revising?"', async () => {
+    renderRoute('/parent/stats?student=00000000-0000-4000-8000-0000000000a2');
+    expect(await screen.findByRole('heading', { level: 2, name: 'demo_owl' })).toBeInTheDocument();
+    expect(screen.getByLabelText('Student')).toHaveValue('00000000-0000-4000-8000-0000000000a2');
+  });
+
   it('switches between children', async () => {
     await open();
     expect(screen.getByRole('heading', { level: 2, name: 'demo_fox' })).toBeInTheDocument();

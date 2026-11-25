@@ -21,7 +21,7 @@ const NO_PROVIDER_TOKENS = {
   refreshTokenExpiresAt: null,
 };
 
-/** Better Auth for parents: Google and Microsoft only, no passwords, minimal stored profile. */
+/** Better Auth for parents: Google and/or Microsoft (whichever is configured), no passwords, minimal stored profile. */
 export function createAuth({ db, config }: { db: Database; config: AppConfig }) {
   return betterAuth({
     appName: 'RevisionDen',
@@ -38,19 +38,24 @@ export function createAuth({ db, config }: { db: Database; config: AppConfig }) 
     account: { modelName: 'authAccounts' },
     verification: { modelName: 'authVerifications' },
     emailAndPassword: { enabled: false },
+    // Only the providers that are configured (docs/ENVIRONMENTS.md); the other one is refused.
     socialProviders: {
-      google: {
-        clientId: config.google.clientId,
-        clientSecret: config.google.clientSecret,
-        prompt: 'select_account',
-      },
-      microsoft: {
-        clientId: config.microsoft.clientId,
-        clientSecret: config.microsoft.clientSecret,
-        tenantId: 'common',
-        prompt: 'select_account',
-        disableProfilePhoto: true,
-      },
+      ...(config.google && {
+        google: {
+          clientId: config.google.clientId,
+          clientSecret: config.google.clientSecret,
+          prompt: 'select_account' as const,
+        },
+      }),
+      ...(config.microsoft && {
+        microsoft: {
+          clientId: config.microsoft.clientId,
+          clientSecret: config.microsoft.clientSecret,
+          tenantId: 'common',
+          prompt: 'select_account' as const,
+          disableProfilePhoto: true,
+        },
+      }),
     },
     databaseHooks: {
       // Store only the parent's sign-in email: blank the provider's name, drop the picture.

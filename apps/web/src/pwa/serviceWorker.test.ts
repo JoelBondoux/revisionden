@@ -11,7 +11,7 @@ interface FakeEvent {
 
 const source = readFileSync(join(__dirname, '..', '..', 'public', 'sw.js'), 'utf8');
 
-function loadWorker(fetchImpl: (req: Request) => Promise<Response>) {
+function loadWorker(fetchImpl: (req: Request, init?: RequestInit) => Promise<Response>) {
   const listeners: Record<string, Listener> = {};
   const stores = new Map<string, Map<string, Response>>();
   const caches = {
@@ -23,8 +23,8 @@ function loadWorker(fetchImpl: (req: Request) => Promise<Response>) {
           for (const url of urls)
             store.set(new URL(url, 'https://app.test').href, new Response(url));
         },
-        put: async (req: Request, res: Response) => {
-          store.set(req.url, res);
+        put: async (req: Request | string, res: Response) => {
+          store.set(typeof req === 'string' ? new URL(req, 'https://app.test').href : req.url, res);
         },
         match: async (req: Request | string) =>
           store.get(typeof req === 'string' ? new URL(req, 'https://app.test').href : req.url),
@@ -117,5 +117,27 @@ describe('service worker', () => {
     await worker.dispatch('activate');
     expect([...worker.stores.keys()].some((k) => k.endsWith('-old'))).toBe(false);
     expect(worker.stores.size).toBe(1);
+  });
+
+  it('skips the browser cache for page visits and keeps the newest page for offline use', async () => {
+    const inits: (RequestInit | undefined)[] = [];
+    let online = true;
+    const worker = loadWorker(async (_req, init) => {
+      inits.push(init);
+      if (!online) throw new TypeError('offline');
+      return new Response('new build page');
+    });
+    await worker.dispatch('install');
+    await worker.dispatch('fetch', pageVisit('https://app.test/family'));
+    expect(inits.at(-1)).toMatchObject({ cache: 'no-cache' });
+    online = false;
+    const response = await worker.dispatch('fetch', pageVisit('https://app.test/family'));
+    expect(await response!.text()).toBe('new build page');
+  });
+
+  it('never answers the build check (version.json) from a cache', async () => {
+    const worker = loadWorker(async () => new Response('{}'));
+    const response = await worker.dispatch('fetch', new Request('https://app.test/version.json'));
+    expect(response).toBeUndefined();
   });
 });

@@ -37,6 +37,16 @@ function show(api: FeedbackApi, { path = '/feedback', studentId = null as string
 }
 
 describe('feedback form', () => {
+  it('offers the support email instead, with a note about personal details', () => {
+    show(fakeApi());
+    expect(screen.getByText(/Prefer email\?/)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'help@revisionden.com' })).toHaveAttribute(
+      'href',
+      'mailto:help@revisionden.com',
+    );
+    expect(screen.getByText(/only the personal details we need/i)).toBeInTheDocument();
+  });
+
   it('presets the kind from the link', () => {
     show(fakeApi(), { path: '/feedback?kind=idea' });
     expect(screen.getByRole('radio', { name: 'Idea' })).toBeChecked();
@@ -125,5 +135,18 @@ describe('feedback form', () => {
     show(api, { path: '/feedback?kind=bug' });
     await userEvent.click(screen.getByRole('button', { name: 'Send' }));
     expect(await screen.findByRole('alert')).toHaveTextContent('Something went wrong');
+  });
+
+  it('shows the reference code of a failure the server logged', async () => {
+    const api = fakeApi({
+      send: vi.fn(async () =>
+        Promise.reject(
+          new FeedbackApiError(500, 'internal_error', 'Something went wrong', 'RD-7K2M9Q'),
+        ),
+      ),
+    });
+    show(api, { path: '/feedback?kind=bug' });
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent('RD-7K2M9Q');
   });
 });

@@ -150,6 +150,20 @@ formula and its assumptions. Summary of what is built:
 - Implemented: `packages/core/src/onboarding.ts`, `apps/api/src/routes/onboarding.ts`,
   `apps/web/src/features/onboarding/`.
 
+### "Who's revising?" (`/family`, parents only)
+
+Product owner decision, 2026-11-25: **parent view only**.
+
+- After sign-in a parent lands on `/family`, which lists their children (a family with none goes
+  to `/onboarding`).
+- Tapping a child opens the parent's view of that child: the stats dashboard with that child
+  chosen (`/parent/stats?student=<id>`). It never opens student screens.
+- Each child also shows "Rewards you set" (`/family/:id/rewards`) and "Link a device"
+  (`/onboarding?link=<id>`, straight to that child's QR code). The page links to family
+  feedback (`/feedback/family`).
+- Students always use their own device, linked by QR code and passkey. A student device behaves
+  as before.
+
 ## Learning loop (workstream F)
 
 - **Content gate.** Students only ever see items whose verification status is `verified`.
@@ -361,13 +375,49 @@ Mockups: screens 19 (student) and 20 (parent).
   or while the app is in the background.
 - **Test mode**: no correct or wrong sound before the student submits; the reveal plays once for
   the whole set. Timed papers play only the timer warning.
+- **Reward sounds grow with the reward** (product owner, 2026-11-25). Bigger rewards sound
+  bigger, and there is enough variety to stay fresh over five years:
+  - Four tiers follow the reward's rarity (`REWARDS.md`): **common** (a bright chime, about
+    0.5 s), **rare** (a two-part motif, about 1 s), **epic** (a rising run with shimmer, about
+    1.5 s) and **legendary** (a short fanfare with harmony and a low hit, at most 3 s).
+  - Each tier has at least **4 variations**; the same one never plays twice in a row (randomness
+    injected, so tests are repeatable).
+  - **Ladders climb:** each step of a milestone ladder (for example streak 7, 30, 60, 100 … 1,000
+    days) plays its tier's sound a step higher and a little fuller than the step before, so the
+    100-day streak sounds bigger than the 30-day one.
+  - **Levels:** the level-up sound rises gently every 10 levels; every 10th level plays the rare
+    sound; prestige stars play legendary.
+  - **Year chapters** each have their own sound colour (a different synth voice), so Year 11
+    rewards sound different from Year 9; the GCSE and A-Level finisher sets get unique fanfares.
+  - Several rewards at once play only the biggest one, once (never a pile-up), after the lesson's
+    own result sound.
+  - Legendary sounds can be skipped with a tap; all reward sounds follow mute and volume, and never
+    play in Test mode before submit.
 - Sound is never the only signal: every sound has a matching visual. Reduced motion does not mute
   sound; the two settings are separate.
 - Volume levels (master gain): low 0.12, medium 0.25, high 0.45. Settings key on the device:
   `revisionden.sound`; if the browser cannot save, the choice still applies until the app closes.
-  The Settings section has a "Play a sample" button. The starting test timer turns orange at
+  The Settings section has a "Play a sample" button and Common, Rare, Epic and Legend reward
+  samples (each tap plays another variation). The starting test timer turns orange at
   1 minute left, alongside the warning sound.
 - Implemented: `apps/web/src/features/sound/**` (`SoundProvider`, `useSound().play(event, { mode })`,
   `MuteButton`, `SoundSettingsCard`, the synthesised sound bank in `bank.ts`, the Test mode rule in
-  `events.ts`), with one-line `play()` calls in lessons, the starting test and flashcards. Level up,
-  rewards, gifts, plan and timed papers get their calls when those screens are built.
+  `events.ts`), with one-line `play()` calls in lessons, the starting test and flashcards. Reward
+  sounds (U4): `rewardSounds.ts` (which sound: tier, step, voice, fanfare, biggest, variation),
+  `rewardBank.ts` (synthesis) and `<RewardSound rewards={newlyEarned} />` on the Rewards screen.
+  Prestige stars play legendary even where the catalogue rarity is epic. Gifts, plan and timed
+  papers get their calls when those screens are built.
+
+## App updates (installable app)
+
+So nobody runs an old copy of the app for long after a deploy (decided 2026-11-25):
+
+- Opening or reloading the app always fetches the newest page from the server; the offline copy
+  is only used when there is no connection, and is replaced by the newest page each visit.
+- Every build publishes its id at `/version.json` (version and commit). The app checks it when it
+  starts, when it comes back to the foreground and every 15 minutes. When a newer build is
+  deployed it shows "A new version of RevisionDen is ready." with a Refresh button.
+- If an API reply suggests the app is out of date (an unknown route, or a reply in an unexpected
+  shape) the app checks at once and, when a newer build exists, reloads by itself, once per new
+  build, so it can never get stuck or loop. Without browser storage it only shows the banner.
+- Implemented: `apps/web/public/sw.js`, `apps/web/src/pwa/updates.tsx`, `apps/web/vite.config.ts`.

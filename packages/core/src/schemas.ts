@@ -6,6 +6,7 @@
  * name) are rejected, never silently stored.
  */
 import { z } from 'zod';
+import { ErrorRefSchema } from './error-ref';
 import { decodeAvatar } from './avatar';
 import { NICKNAME_MESSAGES, validateNickname } from './nickname';
 
@@ -165,6 +166,8 @@ export const ApiErrorSchema = z.object({
     code: z.string().min(1),
     message: z.string(),
     details: z.array(z.string()).optional(),
+    /** Reference code for the owner to find the logged error (`makeErrorRef`). */
+    ref: ErrorRefSchema.optional(),
   }),
 });
 export type ApiError = z.infer<typeof ApiErrorSchema>;

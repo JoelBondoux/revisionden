@@ -5,6 +5,7 @@ import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { Card, Pill, ProgressBar } from '../../components';
 import { itemWords, longDate, RarityPill } from './parts';
+import { RewardSound } from '../sound';
 import { createRewardsApi, type RewardsApi } from './rewardsApi';
 import './rewards.css';
 
@@ -30,6 +31,7 @@ export function RewardsScreen({ api }: { api: RewardsApi }) {
     <div className="stack rewards">
       {newlyEarned.length + metFromHome.length > 0 && (
         <div role="status" className="rewards__new">
+          <RewardSound rewards={newlyEarned} />
           {newlyEarned.map((r) => (
             <p key={r.id}>New: {r.name}</p>
           ))}

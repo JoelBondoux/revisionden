@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import type { ParentDashboard } from '@revisionden/core';
 import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
@@ -36,7 +37,10 @@ export function ParentDashboardPage() {
 
 function ChildDashboard({ choices }: { choices: Child[] }) {
   const api = useStatsApi();
-  const [childId, setChildId] = useState(choices[0]!.id);
+  // "Who's revising?" opens this page with ?student=<id> for the child the parent tapped.
+  const [params] = useSearchParams();
+  const asked = params.get('student');
+  const [childId, setChildId] = useState(choices.find((c) => c.id === asked)?.id ?? choices[0]!.id);
   const dashboard = useApiResource(() => api.getDashboard(childId), [api, childId]);
   return (
     <>

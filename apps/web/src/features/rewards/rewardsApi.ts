@@ -1,3 +1,4 @@
+import { ApiError, failureRef } from '../../api/client';
 import type { ZodType } from 'zod';
 import {
   ParentRewardSchema,
@@ -38,11 +39,25 @@ export function createRewardsApi(options: {
       ...init,
       headers: { Accept: 'application/json', 'Content-Type': 'application/json', ...init.headers },
     });
-    if (!res.ok) throw new Error(`The server replied with ${res.status}.`);
+    if (!res.ok) {
+      const json: unknown = await res.json().catch(() => undefined);
+      throw new ApiError(
+        'http',
+        `The server replied with ${res.status}.`,
+        res.status,
+        failureRef(options, res, json),
+      );
+    }
     return res;
   }
-  const read = async <T>(schema: ZodType<T>, path: string, init?: RequestInit) =>
-    schema.parse(await (await send(path, init)).json());
+  const read = async <T>(schema: ZodType<T>, path: string, init?: RequestInit) => {
+    const res = await send(path, init);
+    const json: unknown = await res.json().catch(() => undefined);
+    const parsed = schema.safeParse(json);
+    if (parsed.success) return parsed.data;
+    const ref = failureRef(options, res, json, 'schema');
+    throw new ApiError('schema', `Unexpected response from ${path}.`, res.status, ref);
+  };
   const child = (id: string) => `v1/students/${encodeURIComponent(id)}`;
 
   return {

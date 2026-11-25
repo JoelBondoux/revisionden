@@ -3,7 +3,9 @@ import { cors } from 'hono/cors';
 import type { Database } from '@revisionden/db';
 import { AUTH_BASE_PATH, type Auth } from './auth';
 import type { AppConfig } from './env';
-import { ApiError, handleError, notFound, toSharedErrorShape, unauthorized } from './errors';
+import { ClientErrorReportSchema } from '@revisionden/core';
+import { ApiError, createErrorReporting, notFound, unauthorized, type ErrorLog } from './errors';
+import { readJson } from './http';
 import type { PasskeyService } from './passkeys';
 import { clientKey, RETRY_AFTER_SECONDS, type Clock, type RateLimiter } from './rate-limit';
 import type { AppEnv } from './context';
@@ -58,10 +60,15 @@ export interface AppDeps {
   mathsEngine?: MathsEngine;
   /** Sources for dashboard panels owned by other workstreams; unset ones show "Not set up yet". */
   statsAdapters?: Partial<StatsAdapters>;
+  /** Randomness for error reference codes; tests pass a fixed one. */
+  random?: () => number;
+  /** Where error reference lines go (Workers logs by default). */
+  errorLog?: ErrorLog;
 }
 
 export function createApp(deps: AppDeps) {
   const app = new Hono<AppEnv>();
+  const reporting = createErrorReporting({ random: deps.random, log: deps.errorLog });
   const gateway = createAiGateway({
     db: deps.db,
     clock: deps.clock,
@@ -91,12 +98,21 @@ export function createApp(deps: AppDeps) {
   app.use(`${AUTH_BASE_PATH}/*`, limit('auth', deps.rateLimiters.auth));
   app.use('/v1/device/*', limit('auth', deps.rateLimiters.auth));
   app.use('/v1/ai/*', limit('ai', deps.rateLimiters.ai));
+  app.use('/v1/client-errors', limit('auth', deps.rateLimiters.auth));
 
   app.on(['GET', 'POST'], `${AUTH_BASE_PATH}/*`, async (c) =>
-    toSharedErrorShape(await deps.auth.handler(c.req.raw)),
+    reporting.toSharedErrorShape(await deps.auth.handler(c.req.raw), c),
   );
 
   app.get('/health', (c) => c.json({ status: 'ok', version: deps.version }));
+  // Public: which sign-in buttons the web app should show.
+  app.get('/v1/auth/providers', (c) => c.json({ providers: deps.config.signInProviders }));
+  // Public: the web app reports an error it showed with a reference code (no personal data).
+  app.post('/v1/client-errors', async (c) => {
+    const report = await readJson(c, ClientErrorReportSchema);
+    (deps.errorLog ?? ((line) => console.warn(JSON.stringify(line))))({ source: 'web', ...report });
+    return c.body(null, 204);
+  });
 
   // Parent routes: a Better Auth session is required, and the family is created on first use.
   const parent = new Hono<AppEnv>();
@@ -160,6 +176,6 @@ export function createApp(deps: AppDeps) {
   app.notFound(() => {
     throw notFound();
   });
-  app.onError(handleError);
+  app.onError(reporting.onError);
   return app;
 }

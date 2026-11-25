@@ -1,9 +1,11 @@
 /*
  * RevisionDen service worker: caches the app shell so the app opens offline.
- * Pages: network first, falling back to the cached shell. Built assets: cache first.
- * API calls are never cached. Bump VERSION to drop old caches.
+ * Pages: network first (skipping the browser cache, so a new deploy shows on the next visit),
+ * and the newest page is kept for offline use. Built assets: cache first (their names change
+ * with every build). API calls and the build check (/version.json) are never cached.
+ * Bump VERSION to drop old caches.
  */
-const VERSION = 'v1';
+const VERSION = 'v2';
 const CACHE = `revisionden-shell-${VERSION}`;
 const SHELL = [
   '/',
@@ -40,7 +42,12 @@ self.addEventListener('activate', (event) => {
 
 async function networkFirstPage(request) {
   try {
-    return await fetch(request);
+    const response = await fetch(request.url, { cache: 'no-cache', credentials: 'same-origin' });
+    if (response.ok) {
+      const cache = await caches.open(CACHE);
+      await cache.put('/', response.clone());
+    }
+    return response;
   } catch {
     const cache = await caches.open(CACHE);
     return (await cache.match('/')) || Response.error();
@@ -62,7 +69,7 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
   if (request.method !== 'GET' || url.origin !== self.location.origin) return;
-  if (url.pathname.startsWith('/api/')) return;
+  if (url.pathname.startsWith('/api/') || url.pathname === '/version.json') return;
 
   if (request.mode === 'navigate') {
     event.respondWith(networkFirstPage(request));

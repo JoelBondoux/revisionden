@@ -1,6 +1,8 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
+  /** Help inbox shown in the app; defaults to help@revisionden.com. */
+  readonly VITE_SUPPORT_EMAIL?: string;
   /** Base address of the API, e.g. https://api-dev.revisionden.com. Defaults to /api. */
   readonly VITE_API_URL?: string;
   /** Set to "false" to turn off the mock API in development. */
@@ -25,4 +27,6 @@ interface ImportMeta {
 declare const __APP_VERSION__: string;
 declare const __BUILD_DATE__: string;
 declare const __COMMIT__: string;
+/** Version and commit of this build; also written to /version.json. */
+declare const __BUILD_ID__: string;
 declare const __LICENCES__: { name: string; version: string; licence: string }[];

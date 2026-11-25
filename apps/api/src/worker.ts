@@ -2,6 +2,7 @@ import { createNeonDatabase, type Database } from '@revisionden/db';
 import { createApp } from './app';
 import { createAuth } from './auth';
 import { parseEnv } from './env';
+import { makeErrorRef } from '@revisionden/core';
 import { errorBody } from './errors';
 import { createPasskeyService } from './passkeys';
 import { createMathsEngineClient } from './learning/maths-engine';
@@ -65,9 +66,21 @@ export function createWorker(version: string, options: WorkerOptions = {}) {
       try {
         app = appFor(env);
       } catch (err) {
+        const ref = makeErrorRef(Math.random);
+        // The message names missing settings only, never a value.
+        console.error(JSON.stringify({ ref, status: 500, code: 'server_misconfigured' }));
         console.error((err as Error).message);
+        // The deploy check reads the version even before every secret is set.
+        if (new URL(request.url).pathname === '/health') {
+          return Response.json({ status: 'misconfigured', version }, { status: 503 });
+        }
         return Response.json(
-          errorBody('server_misconfigured', 'The server is not configured correctly'),
+          errorBody(
+            'server_misconfigured',
+            'The server is not configured correctly',
+            undefined,
+            ref,
+          ),
           { status: 500 },
         );
       }

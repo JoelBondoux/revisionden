@@ -53,8 +53,13 @@ function cookieHeader(setCookies: string[]): string {
   return setCookies.map((c) => c.split(';')[0]).join('; ');
 }
 
-async function signInWith(provider: 'google' | 'microsoft', tokenEndpoint: string, claims: object) {
-  const start = await t.app.request(
+async function signInWith(
+  provider: 'google' | 'microsoft',
+  tokenEndpoint: string,
+  claims: object,
+  ctx: TestContext = t,
+) {
+  const start = await ctx.app.request(
     '/api/auth/sign-in/social',
     jsonRequest(
       'POST',
@@ -68,7 +73,7 @@ async function signInWith(provider: 'google' | 'microsoft', tokenEndpoint: strin
   expect(state).toBeTruthy();
 
   const calls = stubProvider(tokenEndpoint, claims);
-  const callback = await t.app.request(
+  const callback = await ctx.app.request(
     `/api/auth/callback/${provider}?code=test-code&state=${state}`,
     { headers: { cookie: cookieHeader(cookiesFrom(start)) } },
   );
@@ -177,5 +182,35 @@ describe('parent sign-in', () => {
     );
     expect(out.status).toBe(200);
     expect((await t.app.request('/v1/me', { headers })).status).toBe(401);
+  });
+});
+
+describe('parent sign-in with only one provider configured', () => {
+  it('keeps no tokens when Microsoft is the only provider', async () => {
+    const solo = await createTestContext({
+      config: { google: undefined, signInProviders: ['microsoft'] },
+    });
+    try {
+      const { callback } = await signInWith(
+        'microsoft',
+        'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+        { sub: 'ms-solo-1', oid: 'ms-solo-1', email: 'solo@example.com', email_verified: true },
+        solo,
+      );
+      expect(callback.status).toBe(302);
+      const rows = await solo.db
+        .select()
+        .from(authAccounts)
+        .where(eq(authAccounts.accountId, 'ms-solo-1'));
+      expect(rows).toHaveLength(1);
+      expect(rows[0]).toMatchObject({
+        providerId: 'microsoft',
+        accessToken: null,
+        refreshToken: null,
+        idToken: null,
+      });
+    } finally {
+      await solo.close();
+    }
   });
 });

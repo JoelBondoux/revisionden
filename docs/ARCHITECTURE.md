@@ -41,7 +41,7 @@
 | `src/pages`                  | One component per screen; `src/routes.tsx` maps paths to screens                             |
 | `src/api`                    | Typed API client (every response checked with Zod), `useApiResource`, retry UI               |
 | `src/mocks`                  | MSW handlers and made-up demo data, used by tests and by `pnpm dev`                          |
-| `src/pwa`                    | Service worker registration and the offline banner                                           |
+| `src/pwa`                    | Service worker registration, the offline banner and the update banner (`/version.json`)      |
 | `src/session`                | Which student is using this device (a convenience until device linking lands)                |
 | `src/features/learn`         | Lesson player, starting test, subject page, command words, learning API client and mocks (F) |
 | `src/features/flashcards`    | Cards tab: due cards, all decks, my cards, 3D flip card (F)                                  |
@@ -159,8 +159,10 @@ All bodies are validated with the Zod schemas in `packages/core`. Errors always 
 
 | Route                                                                                                                              | Who             | What                                                                         |
 | ---------------------------------------------------------------------------------------------------------------------------------- | --------------- | ---------------------------------------------------------------------------- |
-| `GET /health`                                                                                                                      | anyone          | `{ status, version }`                                                        |
+| `GET /health`                                                                                                                      | anyone          | `{ status, version }`; 503 `misconfigured` if unset                          |
 | `/api/auth/*`                                                                                                                      | anyone          | Better Auth: Google, Microsoft, sign-out                                     |
+| `GET /v1/auth/providers`                                                                                                           | anyone          | `{ providers }`: the sign-in providers that are set up                       |
+| `POST /v1/client-errors`                                                                                                           | anyone          | Log a web app error reference (204; rate limited)                            |
 | `GET /v1/me`                                                                                                                       | parent          | Family id and sign-in email                                                  |
 | `GET, POST /v1/students`                                                                                                           | parent          | List (`{ students }`) or create                                              |
 | `GET, PATCH, DELETE /v1/students/:id`                                                                                              | parent          | One student                                                                  |
@@ -216,6 +218,67 @@ holds `<web origin>/link?token=…&family=…`. The passkey relying party is the
 (`PASSKEY_RP_ID`). Student sessions use the `__Host-rd_student` cookie (HttpOnly, Secure,
 SameSite=Lax) and last 12 hours. Sign-in, device and AI routes are rate limited per address
 (30 and 20 requests a minute) and answer 429 with `Retry-After`.
+
+**Error reference codes.** Every error response has a short code in its body
+(`error.ref`, for example `RD-7K2M9Q`, `makeErrorRef` in core). The API logs one line per error
+with the code, status, error code, method and the path with ids masked; never a message, body,
+id or email. The web app shows the code with every "Something went wrong" ("send us this code").
+When the API gave no code (a gateway page, or a response in the wrong shape) the web app makes
+one and sends it to `POST /v1/client-errors` (strict: code, kind, status, id-free path), so the
+code is in the Workers logs either way. Search the Workers logs for the code to find the error.
+
+## Web calls and API routes (workstream I)
+
+The real routes are listed in `apps/api/routes.json`, generated from the Hono app
+(`apps/api/src/route-manifest.test.ts`; refresh with `UPDATE_ROUTES=1 pnpm --filter
+@revisionden/api test`). Every web request sends the session cookie (`credentials: 'include'`).
+MSW mock handlers must use these paths exactly: `apps/web/src/test/apiRoutes.test.ts` and an
+`afterEach` in `src/test-setup.ts` fail a test whose mocks name a route the API does not have.
+The only exceptions are listed in `PENDING_ROUTES` (agreed with another workstream, not built).
+
+| Web caller (`apps/web/src`)                       | Route                                                                                             | Real? |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ----- |
+| `api/signInProviders.ts` (welcome page)           | `GET /v1/auth/providers`                                                                          | yes   |
+| `api/SignInButtons.tsx` (welcome page, every 401) | `POST /api/auth/sign-in/social` (Better Auth; back to the same page, or `/family`)                | yes   |
+| `api/signIn.ts` `useParentSession` (welcome)      | `GET /api/auth/get-session`                                                                       | yes   |
+| `api/SignOutButton.tsx` (welcome, `/family`)      | `POST /api/auth/sign-out`                                                                         | yes   |
+| `api/client.ts` `getFamily` (`/family`)           | `GET /v1/onboarding/family`                                                                       | yes   |
+| `api/client.ts` `getTopicMap` (`/map`)            | `GET /v1/student/map`                                                                             | F2    |
+| `api/client.ts` `getCardsDue` (Cards tab badge)   | `GET /v1/student/cards/due`                                                                       | F2    |
+| `api/client.ts` `reportClientError`               | `POST /v1/client-errors`                                                                          | yes   |
+| `features/onboarding/api.ts`                      | `GET /v1/onboarding/family`, `POST /v1/onboarding/children`                                       | yes   |
+| `features/onboarding/api.ts` (link a device)      | `POST /v1/students/:id/link-tokens`, `POST /v1/device/link`, `.../verify`                         | yes   |
+| `features/legal/acceptance.tsx`                   | `GET, PUT /v1/policy-acceptances`                                                                 | yes   |
+| `features/learn/learnApi.ts` (lessons, tests)     | `GET /v1/student/learn/{lesson,command-words,progress}`                                           | yes   |
+|                                                   | `GET /v1/student/learn/subjects/:id/topics`                                                       | yes   |
+|                                                   | `POST /v1/student/learn/{attempts,starting-tests,starting-tests/:id/finish}`                      | yes   |
+| `features/learn/learnApi.ts` (flashcards)         | `GET, POST /v1/student/flashcards`, `GET .../decks/:topicId`, `POST .../:id/review`               | yes   |
+| `features/rewards/rewardsApi.ts`                  | `GET /v1/student/rewards`, `GET /v1/students/:id/rewards`                                         | yes   |
+|                                                   | `POST /v1/students/:id/parent-rewards`, `PATCH, DELETE .../:rewardId`, `POST .../:rewardId/given` | yes   |
+| `features/notifications/notificationsApi.ts`      | `GET /v1/notifications/vapid-key`, `POST, DELETE /v1/student/push-subscriptions`                  | yes   |
+|                                                   | `GET, PUT /v1/students/:id/reminder-settings`                                                     | yes   |
+| `public/sw.js` (push text)                        | `GET /v1/student/reminders/latest`                                                                | yes   |
+| `features/stats/statsApi.ts`                      | `GET /v1/student/stats`, `GET /v1/students`, `GET /v1/students/:id/dashboard`                     | yes   |
+| `features/feedback/feedbackApi.ts`                | `GET, POST /v1/student/feedback`, `GET, POST /v1/feedback`                                        | yes   |
+|                                                   | `GET /v1/admin/feedback`, `PATCH /v1/admin/feedback/:id`                                          | yes   |
+| `features/review/reviewApi.ts`                    | `GET /v1/review/{me,reports,batches,batches/:id}`                                                 | yes   |
+|                                                   | `POST /v1/review/reports/:id/decision`, `POST .../batches/:id/items/:itemId/decision`             | yes   |
+
+Removed in I: the wave-1 placeholders `GET family`, `GET students/:id/map`,
+`GET students/:id/cards/due`, `GET lessons/:id` and `POST lessons/:id/answers` (never on the API;
+served only by MSW). `/lesson/:id` links now open the lesson player at `/learn/topic/:id`.
+
+API routes the web app does not call yet: `GET /health` (deploy check and smoke test),
+`GET /v1/me`, `POST /v1/students`, `GET, PATCH, DELETE /v1/students/:id`,
+`GET, POST /v1/students/:id/enrolments`, `DELETE .../enrolments/:subjectId` (onboarding uses
+`POST /v1/onboarding/children` instead), `GET, DELETE /v1/students/:id/devices[/:deviceId]`,
+`GET, PUT /v1/students/:id/avatar`, `GET /v1/students/:id/stats`, `GET /v1/students/:id/ai-usage`,
+`GET /v1/students/:id/parent-rewards` (H2 reads it), `POST /v1/device/unlock/{options,verify}`,
+`GET /v1/student/me`, `POST /v1/student/lock`, `POST /v1/student/items/:itemId/reports`,
+`POST /v1/items/:itemId/reports`, `POST /v1/ai/mark-short-answer`, `POST /v1/review/batches`,
+`GET, POST /v1/review/rechecks`, `POST .../rechecks/:id/done`, `GET /v1/review/recalculations`,
+`POST .../recalculations/:id/done`, and Better Auth's callback (`/api/auth/callback/:provider`, reached by the provider, not by app
+code) and its other `/api/auth/*` routes.
 
 **Content in the database.** `pnpm --filter @revisionden/api content:sync` loads `content/` into
 `topics` and `items` (keyed by `items.content_id`), keeping each item's verification status and

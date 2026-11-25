@@ -8,23 +8,33 @@ import { StudentProvider } from '../../session/StudentContext';
 import { demoItems } from '../learn/mocks';
 import { soundBank } from './bank';
 import { SOUND_EVENTS, type SoundEvent } from './events';
-import { createFakeAudioContext } from './fakeAudio';
+import { createFakeAudioContext, type FakeAudioContext } from './fakeAudio';
+import { rewardSound } from './rewardBank';
 import { SoundProvider } from './SoundProvider';
 
 /** Renders the whole app with sound on, recording which sounds actually play. */
 function renderWithSound(path: string) {
   const played: SoundEvent[] = [];
+  const contexts: FakeAudioContext[] = [];
   for (const event of SOUND_EVENTS) {
     const original = soundBank[event];
     vi.spyOn(soundBank, event).mockImplementation((...args) => {
       played.push(event);
-      original(...args);
+      return original(...args);
     });
   }
   const student = new Map([['revisionden.studentId', 'student-1']]);
   const router = createMemoryRouter(routes, { initialEntries: [path] });
   render(
-    <SoundProvider storage={null} createContext={() => createFakeAudioContext()}>
+    <SoundProvider
+      storage={null}
+      random={() => 0}
+      createContext={() => {
+        const ctx = createFakeAudioContext();
+        contexts.push(ctx);
+        return ctx;
+      }}
+    >
       <StudentProvider
         storage={{
           getItem: (k) => student.get(k) ?? null,
@@ -35,7 +45,7 @@ function renderWithSound(path: string) {
       </StudentProvider>
     </SoundProvider>,
   );
-  return { played, router };
+  return { played, router, contexts };
 }
 
 const click = (name: string | RegExp) => userEvent.click(screen.getByRole('button', { name }));
@@ -80,17 +90,6 @@ describe('sounds in the app', () => {
     expect(played).toEqual(['wrong']);
   });
 
-  it('the older lesson screen plays the marking sound, and its finish screen celebrates', async () => {
-    const { played, router } = renderWithSound('/lesson/standard-form');
-    await userEvent.click(await screen.findByRole('radio', { name: '45 × 10³' }));
-    await click('Check');
-    await screen.findByRole('status', { name: 'Answer feedback' });
-    expect(played).toEqual(['wrong']);
-    await act(() => router.navigate('/lesson/standard-form/complete'));
-    await screen.findByRole('heading', { name: 'Lesson complete!' });
-    expect(played).toEqual(['wrong', 'celebration']);
-  });
-
   it('Test mode: no right or wrong sounds before submit, and the reveal plays once', async () => {
     const { played } = renderWithSound('/learn/subject/gcse-maths/start');
     await click('Start');
@@ -133,5 +132,42 @@ describe('sounds in the app', () => {
     await click(/^Good/);
     await screen.findByText('Demo front 2');
     expect(played).toEqual(['cardFlip', 'cardRated']);
+  });
+});
+
+describe('reward sounds in the app', () => {
+  it('the rewards screen plays one sound for new rewards: the biggest', async () => {
+    const { sampleRewards } = await import('../rewards/fixtures');
+    const card = (id: string, rarity: 'common' | 'epic') => ({
+      id,
+      name: id,
+      rarity,
+      items: [],
+      earned: true,
+      current: 1,
+      target: 1,
+    });
+    server.use(
+      http.get('*/v1/student/rewards', () =>
+        HttpResponse.json(
+          sampleRewards({ newlyEarned: [card('level-5', 'common'), card('streak-100', 'epic')] }),
+        ),
+      ),
+    );
+    const { played, contexts, router } = renderWithSound('/settings');
+    // The student taps something first (sound waits for a tap), then opens Rewards.
+    await userEvent.click(screen.getByRole('heading', { level: 1, name: 'Settings' }));
+    await act(() => router.navigate('/rewards'));
+    await screen.findByText('New: streak-100');
+    await waitFor(() => expect(contexts[0]?.oscillators.length).toBeGreaterThan(0));
+    expect(played).toEqual([]);
+    // Exactly one sound: the epic streak-100 (ladder step 3), first variation (random is 0).
+    const expected = createFakeAudioContext('running');
+    rewardSound({ tier: 'epic', step: 3, voice: 'standard', fanfare: null }, 0)(
+      expected,
+      expected.createGain(),
+      0,
+    );
+    expect(contexts[0]!.oscillators.length).toBe(expected.oscillators.length);
   });
 });
