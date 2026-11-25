@@ -183,6 +183,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:29Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:08Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:16Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -235,6 +251,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:29Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:22Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:28Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -291,6 +323,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:30Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:36Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:45Z",
+          "notes": "wrong_answer (answer): The marked answer is option 1, 'The fixed charge in pounds'. However, the correct answer is option 2, 'The cost per mile in pounds'. In the linear equation C = 2.5d + 4, the coefficient of d (2.5) represents the gradient, which is the rate of change of cost per mile. The fixed charge is represented by the constant term, 4. The explanation provided correctly describes the meaning of 2.5, which corresponds to option 2, not option 1."
         }
       ]
     }
@@ -347,6 +395,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:31Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:52Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:01Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -403,6 +467,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:31Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:10Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:19Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -452,6 +532,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:32Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:26Z",
+          "notes": "model answered \"gradient\"; expected \"Gradient\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:35Z",
+          "notes": "second_correct_option (front): The word 'slope' is a common synonym for 'gradient' and would also be a correct one-word answer. The question's constraint '(one word)' implies a single unique answer, which is not the case."
         }
       ]
     }
@@ -500,6 +596,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:33Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:42Z",
+          "notes": "model answered \"The y-axis\"; expected \"The y-axis\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:54Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -548,6 +660,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:34Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:38:01Z",
+          "notes": "model answered \"-1/2\"; expected \"-1/2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:38:06Z",
+          "notes": "no problems found"
         }
       ]
     }

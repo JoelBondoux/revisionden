@@ -115,6 +115,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:35Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:35:59Z",
+          "notes": "model answered \"x = 3, x = 0.5\"; expected \"1/2, 3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:11Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -168,6 +184,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:35Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:21Z",
+          "notes": "model answered \"0, 5\"; expected \"0, 5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:29Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -226,6 +258,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:36Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:35Z",
+          "notes": "model answered \"3, 5\"; expected \"3, 5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:02Z",
+          "notes": "factual_error (mark_scheme[0]): The mark is for a step in solving an equation, but it is awarded for the expression '(x - 4)^2 - 1'. A mark for solving an equation should be awarded for a complete, correct equation, such as '(x - 4)^2 - 1 = 0' or '(x - 4)^2 = 1'. Awarding a mark for an expression disconnected from the equation is poor practice."
         }
       ]
     }
@@ -277,6 +325,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:37Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:12Z",
+          "notes": "model answered \"0.32\"; expected \"0.32\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:31Z",
+          "notes": "wording (mark_scheme): The first mark point, \"M1 for (x + 3)^2 - 11\", describes an expression, whereas the student is asked to solve an equation. A more precise mark point would be for a correct step in solving the equation, such as sight of `(x+3)^2 - 11 = 0` or `(x+3)^2 = 11`."
         }
       ]
     }
@@ -328,6 +392,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:38Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:37Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:46Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -395,6 +475,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:39Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 14 (sha256 647a751b51c71d9ced1c9356aa70b15ceb1a4acb2fd5bc9af49619ead06d0ee6)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:56Z",
+          "notes": "model answered \"0.85\"; expected \"0.85\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:38:04Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -462,6 +558,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:40Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 14 (sha256 647a751b51c71d9ced1c9356aa70b15ceb1a4acb2fd5bc9af49619ead06d0ee6)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:38:12Z",
+          "notes": "model answered \"-1.19\"; expected \"-1.19\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:38:28Z",
+          "notes": "no problems found"
         }
       ]
     }

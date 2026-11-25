@@ -251,6 +251,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:34:53Z",
           "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:23Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:34Z",
+          "notes": "wording (explanation): The explanation mentions 'SymPy'. This is a reference to a symbolic mathematics Python library. It is specialist jargon that is completely inappropriate for a GCSE student and will cause confusion."
         }
       ]
     }
@@ -303,6 +319,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:34:54Z",
           "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:39Z",
+          "notes": "model answered \"2x + 6\"; expected \"2x + 6\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:53Z",
+          "notes": "wording (prompt): The prompt contains two instructions: \"Simplify 3(x + 2) - x\" and \"so show that 3(x + 2) - x = 2x + 6 for every value of x.\" The process for both is the same, making the instructions redundant. This could confuse a student into thinking that two separate tasks are required, or that an additional step is needed to complete the 'show that' part beyond the simplification."
         }
       ]
     }
@@ -421,6 +453,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:34:55Z",
           "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:04Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:25Z",
+          "notes": "wrong_answer (answer): The marked answer is the first option (\"6x + y\"), but the correct answer is the second option (\"3y\"). The explanation confirms that \"3y\" is the correct factor, which contradicts the provided answer."
         }
       ]
     }
@@ -666,6 +714,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:34:58Z",
           "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:32Z",
+          "notes": "model answered \"term\"; expected \"Term\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:39Z",
+          "notes": "no problems found"
         }
       ]
     }
