@@ -456,13 +456,26 @@ Tags: #product #rules #limits #defaults
 - Hidden tracks besides Bug Hunter: Fact Checker, Comeback Kid, Explorer, Planner, Pace Setter,
   Perfectionist (`docs/REWARDS.md`).
 
-## Titles and Get help (owner, 2026-11-25; planned)
+## Titles (owner, 2026-11-25; planned) and Get help (built, workstream W)
 
 - Two-part titles: a first word and a last word unlocked separately from rewards (about 120 each);
   curated, every pairing validated against blocked words; shown under the nickname.
-- "Get help" page: UK support services by topic with tap-to-call links; every number and URL
-  confirmed on the service's own site with source and date (rechecked each term); nothing about its
-  use is recorded or shown to parents; works offline; Quick exit. Detail: `docs/PRODUCT_RULES.md`.
+- "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
+  NSPCC adult helpline, parent-only). Reached from Settings, the heart link in the student footer,
+  the signed-out header and parent home. There is no separate profile menu yet.
+- Data: `content/support/uk-services.json` (schema `content/schemas/support-services.schema.json`).
+  Every phone, text, link, opening time and age range has the URL of the service's own page it was
+  copied from; `checked_at` per service. `pnpm content:validate` (and `scripts/content/support.test.mjs`)
+  fails on a missing or off-site source, a check older than 4 months, or a non-UK number.
+- Services first checked 2026-11-25: 999 and NHS 111 (nhs.uk), Childline, Report Remove (Childline
+  and IWF), NSPCC Helpline (parents), Samaritans, Shout, The Mix, YoungMinds (website only), Beat,
+  FRANK, CEOP, Switchboard, Brook (website only), Victim Support. Left out because their own site
+  could not be confirmed: Papyrus (site redirects to an administrator's page), Mind, Carers Trust,
+  Anti-Bullying Alliance (bot checks block automated checking), Kidscape (moved to another domain),
+  Kooth (now "Soluna by Kooth"; area-dependent). See `docs/PRODUCT_RULES.md` (Get help).
+- Private: the page uses its own layout with no API calls (no cards-due badge, no sounds), loads
+  nothing from other sites, and opens websites with `rel="noreferrer"`. Quick exit replaces the
+  history entry and goes to `/map`. Service worker v3 precaches `/help` and the built files.
 
 ## Quick wins (owner approved 2026-11-25; planned, workstream Q)
 
