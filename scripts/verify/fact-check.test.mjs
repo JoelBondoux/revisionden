@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { factStatementPrompt, runFactCheck } from './fact-check.mjs';
+import { JUDGE_SYSTEM, factJudgePrompt, factStatementPrompt, runFactCheck } from './fact-check.mjs';
 import { draftItem, quoted } from './test-content.mjs';
 
 // Made-up facts for tests only; not RevisionDen educational content.
@@ -221,4 +221,25 @@ test('an item without facts has nothing to fact-check', async () => {
     }),
     /has no facts to check/,
   );
+});
+
+test('the judge compares meaning, not wording: implied conditions and extra explanation are fine', () => {
+  assert.match(JUDGE_SYSTEM, /meaning, not wording/);
+  assert.match(JUDGE_SYSTEM, /non-vertical/);
+  assert.match(JUDGE_SYSTEM, /explanation|example/);
+  assert.match(JUDGE_SYSTEM, /further related facts/);
+});
+
+test('the judge still refuses a contradiction, a missing part or condition, or a narrower case', () => {
+  for (const rule of [/contradicts/, /leaves out part of A|leaves out a condition/, /narrower/]) {
+    assert.match(JUDGE_SYSTEM, rule);
+  }
+  assert.match(JUDGE_SYSTEM, /If you are unsure/);
+});
+
+test('the judge prompt shows both statements, ours as A', () => {
+  const { system, prompt } = factJudgePrompt('OUR FACT', 'THEIR FACT');
+  assert.equal(system, JUDGE_SYSTEM);
+  assert.ok(prompt.indexOf('OUR FACT') < prompt.indexOf('THEIR FACT'));
+  assert.match(prompt, /Statement A[\s\S]*Statement B/);
 });

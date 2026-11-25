@@ -164,10 +164,22 @@
           "engine": {
             "type": "object",
             "required": ["kind"],
-            "description": "Optional maths engine check that proves the fact (for example kind identity with an equation).",
+            "description": "Optional maths engine check that proves the fact (services/maths app/content_check.py and app/facts.py; fields per kind in docs/VERIFICATION.md step 4b). For example {\"kind\": \"transformation\", \"graph\": \"f(x - a)\", \"image\": \"(x + a, y)\"}.",
             "properties": {
               "kind": {
-                "type": "string"
+                "enum": [
+                  "identity",
+                  "value",
+                  "solve",
+                  "expression",
+                  "formula",
+                  "transformation",
+                  "implication",
+                  "sign_change",
+                  "parallel",
+                  "trig_value",
+                  "graph_measure"
+                ]
               }
             }
           },

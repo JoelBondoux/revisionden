@@ -43,7 +43,14 @@
     "facts": [
       {
         "statement": "The gradient of a velocity-time graph is the acceleration.",
-        "ask": "What does the gradient of a velocity-time graph represent?"
+        "ask": "What does the gradient of a velocity-time graph represent?",
+        "engine": {
+          "kind": "graph_measure",
+          "y": "velocity",
+          "x": "time",
+          "measure": "gradient",
+          "is": "acceleration"
+        }
       }
     ],
     "verification": {
@@ -153,7 +160,14 @@
     "facts": [
       {
         "statement": "The gradient of a distance-time graph is the speed.",
-        "ask": "What does the gradient of a distance-time graph represent?"
+        "ask": "What does the gradient of a distance-time graph represent?",
+        "engine": {
+          "kind": "graph_measure",
+          "y": "distance",
+          "x": "time",
+          "measure": "gradient",
+          "is": "speed"
+        }
       }
     ],
     "verification": {
@@ -346,7 +360,14 @@
     "facts": [
       {
         "statement": "The area under a velocity-time graph is the distance travelled (for motion in one direction).",
-        "ask": "What does the area under a velocity-time graph represent?"
+        "ask": "What does the area under a velocity-time graph represent?",
+        "engine": {
+          "kind": "graph_measure",
+          "y": "velocity",
+          "x": "time",
+          "measure": "area",
+          "is": "distance"
+        }
       }
     ],
     "verification": {
@@ -456,7 +477,14 @@
     "facts": [
       {
         "statement": "The area under a velocity-time graph is the distance travelled (for motion in one direction).",
-        "ask": "What does the area under a velocity-time graph represent?"
+        "ask": "What does the area under a velocity-time graph represent?",
+        "engine": {
+          "kind": "graph_measure",
+          "y": "velocity",
+          "x": "time",
+          "measure": "area",
+          "is": "distance"
+        }
       }
     ],
     "verification": {
@@ -639,7 +667,14 @@
     "facts": [
       {
         "statement": "The gradient of a velocity-time graph is the acceleration.",
-        "ask": "What does the gradient of a velocity-time graph represent?"
+        "ask": "What does the gradient of a velocity-time graph represent?",
+        "engine": {
+          "kind": "graph_measure",
+          "y": "velocity",
+          "x": "time",
+          "measure": "gradient",
+          "is": "acceleration"
+        }
       }
     ],
     "verification": {
@@ -726,7 +761,14 @@
     "facts": [
       {
         "statement": "The gradient of a distance-time graph is the speed.",
-        "ask": "What does the gradient of a distance-time graph represent?"
+        "ask": "What does the gradient of a distance-time graph represent?",
+        "engine": {
+          "kind": "graph_measure",
+          "y": "distance",
+          "x": "time",
+          "measure": "gradient",
+          "is": "speed"
+        }
       }
     ],
     "verification": {
@@ -813,7 +855,14 @@
     "facts": [
       {
         "statement": "The gradient of a velocity-time graph is the acceleration.",
-        "ask": "What does the gradient of a velocity-time graph represent?"
+        "ask": "What does the gradient of a velocity-time graph represent?",
+        "engine": {
+          "kind": "graph_measure",
+          "y": "velocity",
+          "x": "time",
+          "measure": "gradient",
+          "is": "acceleration"
+        }
       }
     ],
     "verification": {

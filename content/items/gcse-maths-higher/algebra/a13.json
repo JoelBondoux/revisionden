@@ -38,7 +38,8 @@
     "facts": [
       {
         "statement": "The graph of y = f(x) + a is the graph of y = f(x) translated a units up (down if a is negative).",
-        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "f(x) + a", "image": "(x, y + a)" }
       }
     ],
     "verification": {
@@ -135,7 +136,8 @@
     "facts": [
       {
         "statement": "The graph of y = f(x - a) is the graph of y = f(x) translated a units to the right (to the left if a is negative).",
-        "ask": "How is the graph of y = f(x - a) obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = f(x - a) obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "f(x - a)", "image": "(x + a, y)" }
       }
     ],
     "verification": {
@@ -232,7 +234,8 @@
     "facts": [
       {
         "statement": "The graph of y = f(x - a) is the graph of y = f(x) translated a units to the right (to the left if a is negative).",
-        "ask": "How is the graph of y = f(x - a) obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = f(x - a) obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "f(x - a)", "image": "(x + a, y)" }
       }
     ],
     "verification": {
@@ -322,7 +325,8 @@
     "facts": [
       {
         "statement": "The graph of y = f(x) + a is the graph of y = f(x) translated a units up (down if a is negative).",
-        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "f(x) + a", "image": "(x, y + a)" }
       }
     ],
     "verification": {
@@ -423,7 +427,8 @@
     "facts": [
       {
         "statement": "The graph of y = f(x) + a is the graph of y = f(x) translated a units up (down if a is negative).",
-        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "f(x) + a", "image": "(x, y + a)" }
       }
     ],
     "verification": {
@@ -528,7 +533,8 @@
     "facts": [
       {
         "statement": "The graph of y = -f(x) is the reflection of the graph of y = f(x) in the x-axis.",
-        "ask": "How is the graph of y = -f(x) obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = -f(x) obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "-f(x)", "image": "(x, -y)" }
       }
     ],
     "verification": {
@@ -625,7 +631,8 @@
     "facts": [
       {
         "statement": "The graph of y = f(-x) is the reflection of the graph of y = f(x) in the y-axis.",
-        "ask": "How is the graph of y = f(-x) obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = f(-x) obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "f(-x)", "image": "(-x, y)" }
       }
     ],
     "verification": {
@@ -715,7 +722,8 @@
     "facts": [
       {
         "statement": "The graph of y = f(-x) is the reflection of the graph of y = f(x) in the y-axis.",
-        "ask": "How is the graph of y = f(-x) obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = f(-x) obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "f(-x)", "image": "(-x, y)" }
       }
     ],
     "verification": {
@@ -794,7 +802,8 @@
     "facts": [
       {
         "statement": "The graph of y = f(x) + a is the graph of y = f(x) translated a units up (down if a is negative).",
-        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "f(x) + a", "image": "(x, y + a)" }
       }
     ],
     "verification": {
@@ -881,7 +890,8 @@
     "facts": [
       {
         "statement": "The graph of y = f(x - a) is the graph of y = f(x) translated a units to the right (to the left if a is negative).",
-        "ask": "How is the graph of y = f(x - a) obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = f(x - a) obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "f(x - a)", "image": "(x + a, y)" }
       }
     ],
     "verification": {
@@ -968,7 +978,8 @@
     "facts": [
       {
         "statement": "The graph of y = -f(x) is the reflection of the graph of y = f(x) in the x-axis.",
-        "ask": "How is the graph of y = -f(x) obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = -f(x) obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "-f(x)", "image": "(x, -y)" }
       }
     ],
     "verification": {

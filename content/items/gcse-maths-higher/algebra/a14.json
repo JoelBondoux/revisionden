@@ -664,7 +664,14 @@
     "facts": [
       {
         "statement": "A horizontal line on a distance-time graph means the object is stationary.",
-        "ask": "What does a horizontal line on a distance-time graph mean?"
+        "ask": "What does a horizontal line on a distance-time graph mean?",
+        "engine": {
+          "kind": "graph_measure",
+          "y": "distance",
+          "x": "time",
+          "measure": "gradient",
+          "is": "speed"
+        }
       }
     ],
     "verification": {
@@ -823,7 +830,14 @@
     "facts": [
       {
         "statement": "The gradient of a distance-time graph is the speed.",
-        "ask": "What does the gradient of a distance-time graph represent?"
+        "ask": "What does the gradient of a distance-time graph represent?",
+        "engine": {
+          "kind": "graph_measure",
+          "y": "distance",
+          "x": "time",
+          "measure": "gradient",
+          "is": "speed"
+        }
       }
     ],
     "verification": {

@@ -627,10 +627,7 @@
       {
         "statement": "tan x = sin x / cos x, and cos 90° = 0, so tan 90° is undefined.",
         "ask": "For which angle between 0° and 180° is tan x undefined, and why?",
-        "engine": {
-          "kind": "identity",
-          "equation": "cos(pi/2) = 0"
-        }
+        "engine": { "kind": "trig_value", "function": "tan", "degrees": 90, "value": "undefined" }
       }
     ],
     "verification": {

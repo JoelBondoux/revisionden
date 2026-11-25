@@ -52,7 +52,30 @@ statement. That statement comes from a third provider (neither the writer nor th
 answerer), which answers the neutral `ask` without our wording; another provider judges the
 match, with high confidence throughout. Items whose facts all pass go into normal batches. A fact
 that fails or cannot be proved keeps `needs_human_approval` for individual review. An engine proof
-only proves the equation given, so reviewers check that it captures the fact.
+only proves the check given, so reviewers check that it captures the fact.
+
+**Fact proofs (maths engine, `services/maths/app/facts.py`).** Besides `identity`, a fact's
+`engine` can be one of these kinds (the schema refuses any other). None uses AI:
+
+| Kind             | Fields                                                      | Proves                                                                                                                                                                 |
+| ---------------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `transformation` | `graph` (with `f`, e.g. `f(x - a)`), `image` (`(x + a, y)`) | y = graph is the image of y = f(x) under (x, y) → image: symbolically for an unknown f, then on sampled functions and constants; the image must reach every x          |
+| `implication`    | `given` (inequalities), `then`                              | No counterexample in 4,000 seeded samples, and a symbolic proof (each given written as a positive gap: b = a + p, c = −q); if either step fails the fact is not proved |
+| `sign_change`    | `function` (of x), `interval` (`["1", "2"]`)                | The function is continuous on the interval, changes sign, and a root is found between the ends (root location by the intermediate value theorem, on this function)     |
+| `parallel`       | `lines` (two equations), optional `parallel` (true/false)   | Numeric lines: parallel or not as claimed (gradients and intersection agree). Letter gradients: the lines meet at one point exactly when the gradients differ          |
+| `trig_value`     | `function` (sin, cos, tan), `degrees`, `value`              | The exact value, or `undefined` (tan 90°)                                                                                                                              |
+| `graph_measure`  | `y`, `x`, `measure` (gradient or area), `is`                | By units: gradient is y per x, area is y times x (distance-time gradient = speed; velocity-time area = displacement)                                                   |
+
+**The judge compares meaning, not wording** (S3-A run, 2026-11-25). B is the same as A when it
+states all of A, however worded; it may explain, give an example or an equivalent form, make
+explicit a condition A's words imply ("non-vertical" for lines with a gradient), or add further
+related facts. It is not the same when it contradicts A, states a different fact, leaves out part
+of A or a condition A needs, adds a condition that changes when the fact holds, or covers only a
+narrower case. Unsure means not the same. `pnpm evals fact-judge --golden
+evals/golden/fact-judge.json --judge gemini --live` checks the judge on 20 pairs: 8 recorded
+same-fact pairs from the S3-A run and 12 that differ in meaning. Bars: every different pair refused,
+at least 90% of same pairs accepted. On 2026-11-25, with `gemini-2.5-pro`, the old prompt accepted
+3 of 8 same pairs, and the new one accepted 8 of 8 and refused 12 of 12 (two runs).
 
 **Citation record**
 

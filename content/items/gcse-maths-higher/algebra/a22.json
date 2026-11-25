@@ -889,8 +889,14 @@
     ],
     "facts": [
       {
-        "statement": "Multiplying or dividing both sides of an inequality by a negative number reverses the inequality sign.",
-        "ask": "What happens to an inequality when you multiply or divide both sides by a negative number?"
+        "statement": "Multiplying both sides of an inequality by a negative number reverses the inequality sign.",
+        "ask": "What happens to an inequality when you multiply both sides by a negative number?",
+        "engine": { "kind": "implication", "given": ["a < b", "c < 0"], "then": "a c > b c" }
+      },
+      {
+        "statement": "Dividing both sides of an inequality by a negative number reverses the inequality sign.",
+        "ask": "What happens to an inequality when you divide both sides by a negative number?",
+        "engine": { "kind": "implication", "given": ["a < b", "c < 0"], "then": "a/c > b/c" }
       }
     ],
     "verification": {

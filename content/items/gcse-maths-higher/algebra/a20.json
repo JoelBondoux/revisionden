@@ -368,7 +368,8 @@
     "facts": [
       {
         "statement": "If a continuous function f has f(a) and f(b) of opposite signs, then f(x) = 0 has a solution between a and b.",
-        "ask": "If a continuous function f has f(a) and f(b) of opposite signs, what can you say about f(x) = 0 between a and b?"
+        "ask": "If a continuous function f has f(a) and f(b) of opposite signs, what can you say about f(x) = 0 between a and b?",
+        "engine": { "kind": "sign_change", "function": "x^3 - 4x - 1", "interval": ["2", "3"] }
       }
     ],
     "verification": {
