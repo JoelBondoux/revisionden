@@ -432,6 +432,11 @@ Tags: #product #rules #limits #defaults
   mission button is the pulsing main call to action. Reward reveals show the tier, the items and the
   reason from the reward's one catalogue target ("For: 7-day streak"); epic and legendary add a
   particle burst, legendary a shine. No reason is shown for a reward missing from the catalogue.
+- Settled in J2/J3: lessons, the starting test and flashcard review use the arena. Set complete's
+  Next mission goes to the map (`/map`, next mission card). "Or take a break. Your streak is safe for
+  today." shows when today's daily goal is met (`progress.goalMet`). The "daily cap" for "See you
+  tomorrow" is the daily reward XP cap (`DAILY_REWARD_XP_CAP`, 300 XP today), confirmed by the lead
+  on 2026-11-25 for now: the lesson only knows XP, not study minutes.
 
 ## Exam practice (planned)
 
