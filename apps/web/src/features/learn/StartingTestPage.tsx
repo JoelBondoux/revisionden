@@ -10,6 +10,7 @@ import { ErrorRef, refOf, type ErrorDetails } from '../../api/ErrorRef';
 import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { ProgressBar } from '../../components/ProgressBar';
+import { ArenaProgress } from '../juice';
 import { useSound } from '../sound';
 import { useLearnApi } from './learnApi';
 import { NewRewards } from './NewRewards';
@@ -24,7 +25,7 @@ function Results({ result, timeUp, earned, subjectId }: Outcome & { subjectId: s
   const { play } = useSound();
   useEffect(() => void play('reveal', { mode: 'test' }), [play]);
   return (
-    <div className="complete">
+    <div className="complete arena">
       <Card title="Your starting point">
         {timeUp && <p>Time is up, so we marked what you answered.</p>}
         <p>
@@ -139,9 +140,9 @@ function Runner({
   }
 
   return (
-    <div className="lesson">
+    <div className="lesson arena">
       <div className="lesson__top">
-        <ProgressBar label="Test progress" tone="success" value={index} max={test.items.length} />
+        <ArenaProgress label="Test progress" value={index} max={test.items.length} />
         <span className={`timer${secondsLeft <= 60 ? ' timer--warning' : ''}`} aria-live="off">
           {clockText(secondsLeft)}
         </span>
@@ -171,7 +172,8 @@ function Runner({
 
 /**
  * The starting test for a subject (about 5 minutes, Test mode: no feedback until the end).
- * Its answers set the first mastery for each topic.
+ * Its answers set the first mastery for each topic. Arena look, but no right or wrong effects
+ * until the reveal (docs/GAME_FEEL.md).
  */
 export function StartingTestPage() {
   const { subjectId = '' } = useParams();
@@ -199,7 +201,7 @@ export function StartingTestPage() {
   if (outcome) return <Results {...outcome} subjectId={subjectId} />;
   if (test) return <Runner test={test} onFinished={onFinished} />;
   return (
-    <div className="lesson">
+    <div className="lesson arena">
       <h1>Starting test</h1>
       <Card>
         <p>
