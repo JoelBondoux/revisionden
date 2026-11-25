@@ -7,21 +7,14 @@
     "learning_point": "gcse-maths-h-r8-lp-ratio-functions",
     "expected_seconds": 25,
     "prompt": "For every point on a line, y : x = 3 : 1. Which is the equation of the line?",
-    "options": [
-      "y = 3x",
-      "y = x + 3",
-      "y = x/3",
-      "x = 3y"
-    ],
+    "options": ["y = 3x", "y = x + 3", "y = x/3", "x = 3y"],
     "answer": {
       "option": 0
     },
     "marks": 1,
     "explanation": "y : x = 3 : 1 means y = 3x for every point.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R8",
-    "checked_by": [
-      "author"
-    ],
+    "checked_by": ["author"],
     "citations": [
       {
         "source_type": "specification",
@@ -32,9 +25,7 @@
         "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R8 (page 16; PDF page 28)",
         "quote": "relate ratios to fractions and to linear functions",
         "retrieved_at": "2026-11-25",
-        "supports": [
-          "question"
-        ],
+        "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -70,15 +61,11 @@
     "expected_seconds": 30,
     "prompt": "Red and blue beads are in the ratio 2 : 3. What fraction of the beads are red?",
     "answer": {
-      "accepted": [
-        "2/5"
-      ]
+      "accepted": ["2/5"]
     },
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R8",
-    "checked_by": [
-      "author"
-    ],
+    "checked_by": ["author"],
     "citations": [
       {
         "source_type": "specification",
@@ -89,9 +76,7 @@
         "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R8 (page 16; PDF page 28)",
         "quote": "relate ratios to fractions and to linear functions",
         "retrieved_at": "2026-11-25",
-        "supports": [
-          "question"
-        ],
+        "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -133,15 +118,9 @@
       "expression": "10/4"
     },
     "marks": 2,
-    "mark_scheme": [
-      "M1 for 10 = 4k",
-      "A1 for 2.5"
-    ],
+    "mark_scheme": ["M1 for 10 = 4k", "A1 for 2.5"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R8",
-    "checked_by": [
-      "maths-engine",
-      "author"
-    ],
+    "checked_by": ["maths-engine", "author"],
     "citations": [
       {
         "source_type": "specification",
@@ -152,9 +131,7 @@
         "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R8 (page 16; PDF page 28)",
         "quote": "relate ratios to fractions and to linear functions",
         "retrieved_at": "2026-11-25",
-        "supports": [
-          "question"
-        ],
+        "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -189,21 +166,14 @@
     "learning_point": "gcse-maths-h-r8-lp-ratio-functions",
     "expected_seconds": 25,
     "prompt": "For which equation is the ratio y : x the same for every point (with x ≠ 0)?",
-    "options": [
-      "y = 4x",
-      "y = 4x + 1",
-      "y = x^2",
-      "y = 4/x"
-    ],
+    "options": ["y = 4x", "y = 4x + 1", "y = x^2", "y = 4/x"],
     "answer": {
       "option": 0
     },
     "marks": 1,
     "explanation": "For y = 4x, y/x = 4 always. For the others y/x changes as x changes.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R8",
-    "checked_by": [
-      "author"
-    ],
+    "checked_by": ["author"],
     "citations": [
       {
         "source_type": "specification",
@@ -214,9 +184,7 @@
         "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R8 (page 16; PDF page 28)",
         "quote": "relate ratios to fractions and to linear functions",
         "retrieved_at": "2026-11-25",
-        "supports": [
-          "question"
-        ],
+        "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -252,30 +220,18 @@
     "expected_seconds": 45,
     "prompt": "The ratio of y to x is 5 : 2 and x = 14. Solve y/14 = 5/2 to find y.",
     "answer": {
-      "solutions": [
-        "35"
-      ]
+      "solutions": ["35"]
     },
     "verify": {
       "method": "solve",
       "equation": "y/14 = 5/2",
       "variable": "y"
     },
-    "steps": [
-      "y/14 = 5/2",
-      "y = 14*5/2",
-      "y = 35"
-    ],
+    "steps": ["y/14 = 5/2", "y = 14*5/2", "y = 35"],
     "marks": 2,
-    "mark_scheme": [
-      "M1 for 14 ÷ 2 × 5",
-      "A1 for 35"
-    ],
+    "mark_scheme": ["M1 for 14 ÷ 2 × 5", "A1 for 35"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R8",
-    "checked_by": [
-      "maths-engine",
-      "author"
-    ],
+    "checked_by": ["maths-engine", "author"],
     "citations": [
       {
         "source_type": "specification",
@@ -286,9 +242,7 @@
         "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R8 (page 16; PDF page 28)",
         "quote": "relate ratios to fractions and to linear functions",
         "retrieved_at": "2026-11-25",
-        "supports": [
-          "question"
-        ],
+        "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -325,9 +279,7 @@
     "front": "A : B = 1 : 4. What fraction of the total is A?",
     "back": "1/5",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R8",
-    "checked_by": [
-      "author"
-    ],
+    "checked_by": ["author"],
     "citations": [
       {
         "source_type": "specification",
@@ -338,9 +290,7 @@
         "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R8 (page 16; PDF page 28)",
         "quote": "relate ratios to fractions and to linear functions",
         "retrieved_at": "2026-11-25",
-        "supports": [
-          "question"
-        ],
+        "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -377,9 +327,7 @@
     "front": "y = 6x. The ratio y : x is n : 1. What is n?",
     "back": "6",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R8",
-    "checked_by": [
-      "author"
-    ],
+    "checked_by": ["author"],
     "citations": [
       {
         "source_type": "specification",
@@ -390,9 +338,7 @@
         "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R8 (page 16; PDF page 28)",
         "quote": "relate ratios to fractions and to linear functions",
         "retrieved_at": "2026-11-25",
-        "supports": [
-          "question"
-        ],
+        "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -429,9 +375,7 @@
     "front": "3/8 of a class are boys. Write boys : girls as 3 : n. What is n?",
     "back": "5",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R8",
-    "checked_by": [
-      "author"
-    ],
+    "checked_by": ["author"],
     "citations": [
       {
         "source_type": "specification",
@@ -442,9 +386,7 @@
         "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R8 (page 16; PDF page 28)",
         "quote": "relate ratios to fractions and to linear functions",
         "retrieved_at": "2026-11-25",
-        "supports": [
-          "question"
-        ],
+        "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
