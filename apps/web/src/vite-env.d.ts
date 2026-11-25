@@ -1,6 +1,8 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
+  /** Help inbox shown in the app; defaults to help@revisionden.com. */
+  readonly VITE_SUPPORT_EMAIL?: string;
   /** Base address of the API, e.g. https://api-dev.revisionden.com. Defaults to /api. */
   readonly VITE_API_URL?: string;
   /** Set to "false" to turn off the mock API in development. */

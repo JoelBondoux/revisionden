@@ -9,6 +9,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 - After an update, the app now shows "A new version of RevisionDen is ready" with a Refresh button, so you're never stuck on an old version.
 - On "Who's revising?", tapping a child now opens your view of them (their stats), with quick links to the rewards you set and to link their device. Students use the app on their own device.
+- Need help? Email help@revisionden.com. You'll find it on the About page and the feedback screen.
 - Signing in with Google now really signs you in, and "Who's revising?" shows your children instead of "Something went wrong". New families go straight to adding a child. If you're signed out, any page shows the sign-in buttons and brings you back where you were. You can sign out from the welcome page or "Who's revising?".
 - When something does go wrong, the app shows a short code (like RD-7K2M9Q). Send it to us and we can find what happened.
 - Reward sounds now grow with the reward: a bright chime for common rewards up to a short fanfare for legendary ones, with lots of variety, a different sound for each school year and special fanfares for finishing GCSEs and A-Levels. Tap to skip a long one, or try them all in Settings.
@@ -33,6 +34,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Support email (L): `help@revisionden.com` from `VITE_SUPPORT_EMAIL` (default in the repo) on the About page, the feedback form and as `{{SUPPORT_EMAIL}}` in the accessibility statement and community rules (both now 1.1); privacy@ stays the privacy contact.
 - Error reference codes (I): every API error body has `error.ref` (`RD-` + 6 letters/digits, `makeErrorRef` in core), logged with status, code, method and an id-masked path (no messages or personal data); every "Something went wrong" in the web app shows it; `POST /v1/client-errors` logs codes the web app made itself (strict schema, rate limited).
 - Route contract (I): `apps/api/routes.json` generated from the Hono app (`UPDATE_ROUTES=1` to refresh); web tests fail if any MSW handler (shared or per test) is not a real route; the web/API call table is in `docs/ARCHITECTURE.md`.
 - Deployed smoke test (I): `E2E_BASE_URL=https://staging.revisionden.com pnpm --filter @revisionden/e2e smoke` checks health, sign-in providers, the start of Google sign-in, the family route, policy pages, the Google button and the signed-out `/family` prompt. No sign-in backdoor.

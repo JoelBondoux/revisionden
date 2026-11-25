@@ -1,3 +1,5 @@
+import { supportEmail } from './supportEmail';
+
 /** A policy file from docs/legal, split into its parts (layout in docs/LEGAL.md). */
 export interface Policy {
   title: string;
@@ -14,6 +16,7 @@ export interface PolicyEnv {
   VITE_CONTACT_EMAIL?: string;
   VITE_POSTAL_ADDRESS?: string;
   VITE_POLICY_EFFECTIVE_DATE?: string;
+  VITE_SUPPORT_EMAIL?: string;
 }
 
 export const MISSING_CONTACT = 'contact details to be added';
@@ -53,13 +56,17 @@ export function parsePolicy(markdown: string): Policy {
 
 const value = (v: string | undefined, fallback: string) => (v && v.trim() ? v.trim() : fallback);
 
-/** Replaces {{OPERATOR_NAME}}, {{CONTACT_EMAIL}}, {{POSTAL_ADDRESS}} and {{EFFECTIVE_DATE}}. */
+/**
+ * Replaces {{OPERATOR_NAME}}, {{CONTACT_EMAIL}}, {{POSTAL_ADDRESS}}, {{EFFECTIVE_DATE}} and
+ * {{SUPPORT_EMAIL}} (help@revisionden.com unless VITE_SUPPORT_EMAIL is set).
+ */
 export function fillPlaceholders(text: string, env: PolicyEnv): string {
   const values: Record<string, string> = {
     OPERATOR_NAME: value(env.VITE_OPERATOR_NAME, MISSING_CONTACT),
     CONTACT_EMAIL: value(env.VITE_CONTACT_EMAIL, MISSING_CONTACT),
     POSTAL_ADDRESS: value(env.VITE_POSTAL_ADDRESS, MISSING_CONTACT),
     EFFECTIVE_DATE: value(env.VITE_POLICY_EFFECTIVE_DATE, MISSING_DATE),
+    SUPPORT_EMAIL: supportEmail(env.VITE_SUPPORT_EMAIL),
   };
   return text.replace(/\{\{([A-Z_]+)\}\}/g, (match, name: string) => values[name] ?? match);
 }

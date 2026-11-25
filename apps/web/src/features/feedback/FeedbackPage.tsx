@@ -5,6 +5,7 @@ import { Card } from '../../components/Card';
 import { ErrorRef, refOf } from '../../api/ErrorRef';
 import { useStudent } from '../../session/StudentContext';
 import { buildInfo } from '../about/buildInfo';
+import { SUPPORT_EMAIL } from '../legal/supportEmail';
 import {
   collectDeviceDetails,
   findPersonalDetails,
@@ -111,6 +112,10 @@ export function FeedbackPage() {
         so we can hide it straight away.
       </p>
       {sender === 'student' && <p className="feedback__note">Your parent can see what you send.</p>}
+      <p className="secondary-text">
+        Prefer email? <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>. Please include only
+        the personal details we need to help you.
+      </p>
 
       <fieldset className="feedback__kinds">
         <legend className="field__label">What is it about?</legend>
