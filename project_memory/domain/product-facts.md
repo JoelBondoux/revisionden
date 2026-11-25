@@ -11,7 +11,7 @@ Tags: #product #rules #limits #defaults
   a paid Apple developer membership).
 - Each sign-in provider is optional, but at least one must be set up; the welcome page shows only
   the configured ones (`GET /v1/auth/providers`). The owner is starting with Google only.
-- Students have no outside account: nickname (2–16 letters, numbers, underscore), avatar code and
+- Students have no outside account: nickname (2–16 letters, numbers, underscores and single spaces between words, trimmed at the ends), avatar code and
   year group only. Devices linked by a one-time QR token (10 minutes, single use), then a passkey.
 - Nicknames are unique within a family. A family is created the first time a parent signs in.
 - Two parents (B3): a family can have two parents with equal control (Parent 1, Parent 2).
@@ -46,6 +46,11 @@ Tags: #product #rules #limits #defaults
 - Exam boards and tiers are picked in the app; "not sure" is allowed and reminded later.
 - GCSE Film Studies is offered only by WJEC Eduqas. GCSE Statistics only by AQA and Pearson Edexcel. Boards per subject and tiered GCSEs are listed
   in `docs/PRODUCT_RULES.md` "Onboarding".
+- "Not sure" boards and tiers never block onboarding. They show on the finish screen, in Parent
+  home ("Things to check: N", parent can set them) and in the student's Settings > My subjects
+  (student can only turn Not sure into a value), with a nudge on the student's home until set.
+- New children start from a Boy, Girl or Neutral look (Neutral preselected); only the avatar code
+  is stored, never a gender. A newly linked device offers "Make it yours" (with "Maybe later").
 - Onboarding takes Years 9 to 13 (9–11 GCSE, 12–13 A-Level). Exams are worked out from the year:
   Year 11 and 13 sit them next summer (2027 in school year 2026/27), Year 10 and 12 a year later,
   Year 9 two years later.

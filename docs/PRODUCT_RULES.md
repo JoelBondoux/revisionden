@@ -134,9 +134,15 @@ formula and its assumptions. Summary of what is built:
 
 ## Nickname and avatar
 
-- Nickname: 2–16 letters (A–Z), numbers and underscores, not on the block list. Strong words are
-  blocked anywhere (number swaps such as `sh1t` and underscores are seen through); short words
-  that hide inside ordinary words (for example "ass" in "class") only when they stand alone.
+- Nickname: letters (A–Z), numbers, underscores and single spaces between words ("Thing 1").
+  Spaces at the start and end are trimmed before checking and saving; no double spaces; 2–16
+  characters after trimming (also enforced by a database check). Not on the block list. Strong
+  words are blocked anywhere (number swaps such as `sh1t`, underscores and spaces are seen
+  through, so "f u c k" and "a d m i n" are caught); short words that hide inside ordinary words
+  (for example "ass" in "class") only when they stand alone between spaces or underscores.
+  Uniqueness within the family and display are unchanged.
+- The AI privacy filter and the feedback and flashcard checks match a nickname however its words
+  are spaced or joined ("Thing 1", "thing 1", "Thing_1").
   Names pretending to be staff (admin, teacher, moderator) are blocked.
 - Avatar code: version `1` then two base-36 characters per layer, in this order: skin, eyes,
   mouth, facial hair, hair style, hair colour, top, top colour, eyewear, headwear, held item,
@@ -165,7 +171,21 @@ formula and its assumptions. Summary of what is built:
   "Not sure" is always offered. A subject with one board has it picked already.
 - Tiered GCSEs (Foundation, Higher or Not sure): Maths, Statistics, Combined Science, Biology,
   Chemistry, Physics, French, Spanish, German. Other subjects have no tier.
-- Each board or tier left as "Not sure" counts as one thing to check later.
+- Each board or tier left as "Not sure" counts as one thing to check later. "Not sure" never
+  blocks the parent. The items are shown on the finish screen, in Parent home as "Things to
+  check: N" (the parent can set each one; `PATCH /v1/students/:id/enrolments/:subjectId`), and on
+  the student's device in Settings > My subjects, where the student can set Not sure boards and
+  tiers for their own subjects only, and only from Not sure to a real value
+  (`GET /v1/student/subjects`, `PATCH /v1/student/subjects/:subjectId`). The student's home shows
+  a gentle nudge until they are all set.
+- Continue on the Add a child form is always tappable. If something is missing, a short summary
+  appears next to it ("Add a nickname that isn't a real name", "Choose a school year") and the
+  first problem is focused. A blocked nickname says: "That looks like a real name or a word we
+  don't allow. Try a made-up nickname like Pixel_Fox".
+- Starting look: Boy, Girl or Neutral (Neutral preselected), plus Edit avatar. Only the avatar
+  code is stored, never a gender. On the child's first open on a newly linked device, "Make it
+  yours" shows the avatar builder with "Maybe later" (`GET`/`PUT /v1/student/avatar`; locked items
+  still need their reward).
 - Final exams are in the summer: Years 11 and 13 at the end of the current school year (which
   starts in September), Years 10 and 12 a year later, Year 9 two years later.
 - A new child has earned no rewards, so their avatar cannot use locked items.
