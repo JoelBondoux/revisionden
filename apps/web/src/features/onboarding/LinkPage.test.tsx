@@ -5,6 +5,7 @@ import { DEFAULT_AVATAR, encodeAvatar } from '@revisionden/core';
 import { StudentProvider } from '../../session/StudentContext';
 import type { OnboardingApi } from './api';
 import { OnboardingApiError } from './api';
+import { fakeOnboardingApi } from '../../test/fakeOnboardingApi';
 import { LinkPage } from './LinkPage';
 import { OnboardingApiProvider } from './OnboardingApiContext';
 
@@ -16,10 +17,7 @@ const STUDENT = {
 };
 
 function fakeApi(overrides: Partial<OnboardingApi> = {}): OnboardingApi {
-  return {
-    getFamily: vi.fn(),
-    addChild: vi.fn(),
-    createLinkToken: vi.fn(),
+  return fakeOnboardingApi({
     redeemLink: vi.fn(async () => ({
       challengeId: 'challenge-1',
       options: { challenge: 'abc' },
@@ -27,7 +25,7 @@ function fakeApi(overrides: Partial<OnboardingApi> = {}): OnboardingApi {
     })),
     verifyLink: vi.fn(async () => ({ deviceId: 'device-1', student: STUDENT })),
     ...overrides,
-  };
+  });
 }
 
 function renderLink(
@@ -38,7 +36,7 @@ function renderLink(
   const storage = new Map<string, string>();
   const router = createMemoryRouter(
     [
-      { path: '/link', element: <LinkPage register={register} /> },
+      { path: '/link', element: <LinkPage register={register} deviceType={() => 'phone'} /> },
       { path: '/learn', element: <h1>Learn</h1> },
       // A newly linked device shows the young people's privacy notice first (workstream L).
       { path: '/welcome/privacy', element: <h1>Privacy notice for young people</h1> },
@@ -75,6 +73,7 @@ describe('LinkPage (student device)', () => {
     expect(api.verifyLink).toHaveBeenCalledWith({
       challengeId: 'challenge-1',
       response: { id: 'cred-1', response: {} },
+      deviceType: 'phone',
     });
     expect(
       await screen.findByRole('heading', { name: 'Privacy notice for young people' }),
@@ -98,11 +97,65 @@ describe('LinkPage (student device)', () => {
     );
   });
 
-  it('needs a code in the link', async () => {
-    renderLink(fakeApi(), undefined, '/link');
-    expect(await screen.findByRole('alert')).toHaveTextContent(
-      'This link is missing its code. Scan the QR code again.',
+  it('lets the student type the short code from a parent instead', async () => {
+    const api = fakeApi();
+    const user = userEvent.setup();
+    renderLink(api, undefined, '/link');
+    expect(await screen.findByRole('heading', { name: 'Link this device' })).toBeInTheDocument();
+    await user.type(screen.getByLabelText('Code from your parent'), 'abcd efgh');
+    await user.click(screen.getByRole('button', { name: 'Continue' }));
+    expect(api.redeemLink).toHaveBeenCalledWith({ code: 'ABCDEFGH' });
+    expect(await screen.findByRole('heading', { name: 'Hi Comet_7!' })).toBeInTheDocument();
+  });
+
+  it('explains a code that cannot be right without asking the server', async () => {
+    const api = fakeApi();
+    const user = userEvent.setup();
+    renderLink(api, undefined, '/link');
+    await user.type(await screen.findByLabelText('Code from your parent'), 'ABC');
+    await user.click(screen.getByRole('button', { name: 'Continue' }));
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'That does not look like a code. It has 8 letters and numbers, like ABCD-EFGH.',
     );
+    expect(api.redeemLink).not.toHaveBeenCalled();
+  });
+
+  it('says when a typed code has expired, and lets the student try another', async () => {
+    const api = fakeApi({
+      redeemLink: vi
+        .fn()
+        .mockRejectedValueOnce(
+          new OnboardingApiError(
+            'invalid_link_token',
+            'This code has expired or was already used. Ask a parent for a new one.',
+            400,
+          ),
+        )
+        .mockResolvedValueOnce({
+          challengeId: 'challenge-1',
+          options: { challenge: 'abc' },
+          student: { nickname: STUDENT.nickname, avatarCode: STUDENT.avatarCode },
+        }),
+    });
+    const user = userEvent.setup();
+    renderLink(api, undefined, '/link');
+    await user.type(await screen.findByLabelText('Code from your parent'), 'ABCD-EFGH');
+    await user.click(screen.getByRole('button', { name: 'Continue' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'This code has expired or was already used.',
+    );
+    await user.clear(screen.getByLabelText('Code from your parent'));
+    await user.type(screen.getByLabelText('Code from your parent'), 'WXYZ-2345');
+    await user.click(screen.getByRole('button', { name: 'Continue' }));
+    expect(await screen.findByRole('heading', { name: 'Hi Comet_7!' })).toBeInTheDocument();
+  });
+
+  it('tells the server what kind of device this is, and nothing more', async () => {
+    const api = fakeApi();
+    const user = userEvent.setup();
+    renderLink(api);
+    await user.click(await screen.findByRole('button', { name: 'Set up passkey' }));
+    expect(api.verifyLink).toHaveBeenCalledWith(expect.objectContaining({ deviceType: 'phone' }));
   });
 
   it('lets the student try again if the passkey set-up is cancelled', async () => {

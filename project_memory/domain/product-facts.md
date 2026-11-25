@@ -33,6 +33,12 @@ Tags: #product #rules #limits #defaults
   challenges and sign-in checks (`apps/api/src/cleanup.ts`).
 - The link token is redeemed with the family id from the QR code; a wrong family id does not use
   the token up. Tokens and sessions are stored only as hashes.
+- Parents can also "Send a link instead": a shared link lasts 24 hours (the QR code 10 minutes),
+  with no nickname in the link or message. Each link has an 8-character short code (no
+  look-alikes, stored hashed) the child can type at `/link`; code attempts are rate-limited per
+  address. Parents can cancel a link, see "Waiting for <nickname>'s device…", and are pushed
+  "<nickname>'s device is set up". Parent home lists each child's devices (type, date linked) with
+  Remove.
 - A student device session lasts 12 hours, then the student unlocks again with the passkey.
   Parents can unlink a device, which ends its session.
 - Rate limits per address: 30 a minute on sign-in and device routes, 20 a minute on AI routes.

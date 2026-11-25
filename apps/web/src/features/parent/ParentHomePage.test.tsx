@@ -140,4 +140,9 @@ describe('Parent home: two parents', () => {
       await screen.findByText(/The other parent removed you from the family/),
     ).toBeInTheDocument();
   });
+
+  it("lists each child's linked devices", async () => {
+    renderRoute('/parent');
+    expect(await screen.findByRole('heading', { name: 'Linked devices' })).toBeInTheDocument();
+  });
 });
