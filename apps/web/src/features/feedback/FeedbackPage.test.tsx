@@ -15,6 +15,7 @@ function fakeApi(overrides: Partial<FeedbackApi> = {}): FeedbackApi {
     confirm: vi.fn(),
     listRewards: vi.fn(async () => []),
     markRewardsSeen: vi.fn(async () => {}),
+    errorReports: vi.fn(),
     ...overrides,
   };
 }

@@ -46,6 +46,9 @@ export function SettingsPage() {
         </p>
         <ul className="link-list">
           <li>
+            <Link to="/help">Get help</Link>
+          </li>
+          <li>
             <Link to="/feedback" state={{ from: '/settings' }}>
               Send feedback or report a bug
             </Link>

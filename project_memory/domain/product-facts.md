@@ -66,18 +66,26 @@ Tags: #product #rules #limits #defaults
   and Alien skin). They are now part of the five-year catalogue (see "Rewards progression").
 - XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, worked maths
   20, extended answer 30; part marks earn part.
+- Combo bonus (J4, `packages/core/src/xp.ts`): +5 XP per right answer from the 3rd in a row, added
+  to that answer's `xpEarned`, so reward XP (levels, chapters) and the daily goal count it and the
+  daily reward XP cap still applies. Learn mode: worked out on the server from the student's recent
+  answers (`comboBefore`); a wrong or part-marked answer, a Test mode answer or a gap of more than 5
+  minutes (`ACTIVE_GAP_MS`, the study-session rule) ends a combo. Starting test (Test mode): no
+  combo while answering; at the first `finish` the bonus is added to the answers in order and
+  returned as `bestCombo` and `comboBonusXp`. Attempt responses carry `combo` and `comboBonusXp`.
 - 14 rewards unlock the 15 locked avatar items: one each, except the 100-day streak, which unlocks
   two (crown and Alien skin). `packages/core/src/rewards.ts`, `avatar.ts`.
 - 14 rewards, each unlocking one avatar item: `packages/core/src/rewards.ts`.
 - Only `verified` items reach students. Drafts are served only with `SERVE_DRAFT_CONTENT=true` in
-  development (never staging or production), with a "DRAFT CONTENT" banner; quarantined and
+  development (never staging or production), with a "DRAFT CONTENT" banner; the dev Worker has it on
+  so the family can try the pilot on dev.revisionden.com; quarantined and
   retired items never. Implemented in `packages/core/src/learning.ts` and `apps/api`.
 - Starting test per subject: about 5 minutes (300 s, up to 10 questions, one per topic first),
   Test mode; its answers set first mastery. Lessons are Learn mode at feedback level 1.
 - Wrong lesson answers become flashcards. Flashcard buttons Again/Hard/Good/Easy = SM-2 quality
   1/3/4/5; each shows when the card comes back. Deck XP is per completed session, not per card: 20 XP for a
   session of 5+ cards (ends when the due queue is empty or at 20 cards), whatever the ratings; at
-  most 2 rewarded sessions a day; self-ratings never change mastery (owner, 2026-11-25). Students can add their own cards (up to 300 characters a side); a card with an email, a UK mobile number or a family nickname is refused, as for feedback.
+  most 2 rewarded sessions a day (two reward slots per UK day, unique in the database; a one-deck session only needs that deck done); self-ratings never change mastery (owner, 2026-11-25). Students can add their own cards (up to 300 characters a side); a card with an email, a UK mobile number or a family nickname is refused, as for feedback.
 - XP is totalled per day in UK time; a streak day counts once, the first time the day reaches the
   daily goal. Command-word lessons are items tagged `command-word` (none verified yet).
 - Worked maths answers are checked by the maths engine (`MATHS_ENGINE_URL`); long answers are not
@@ -90,7 +98,6 @@ Tags: #product #rules #limits #defaults
 - Learning screens: `/learn/subject/:id` (topics, mastery, weak spots), `/learn/subject/:id/start`
   (starting test), `/learn/subject/:id/practice`, `/learn/topic/:id`, `/learn/command-words`,
   `/cards` (flashcards: Due today, All decks, My cards; 3D flip card, reduced motion respected).
-- Installable PWA. Main nav tabs: Learn, Cards, Plan, Papers, Progress (bottom bar on phones, side
 - Installable PWA. Main nav tabs: Map, Cards, Plan, Papers, Progress (bottom bar on phones, side
   rail from 768px wide). Welcome and lessons hide the nav to keep focus. Only a linked student
   device gets the student nav: elsewhere (signed out, or a parent) About, Policies, Feedback and
@@ -101,6 +108,12 @@ Tags: #product #rules #limits #defaults
   (gold, tick), in progress (violet, fill level shows mastery %), weak spot (orange, pulsing
   glow), locked (grey). Each unit ends in a challenge that unlocks at 80% unit mastery. A Next
   mission card suggests what to do next. The Cards tab shows how many flashcards are due.
+- Topic map data (F2, `GET /v1/student/map`): units are the top-level topics of the subject's tree,
+  leaf topics in specification order. Locked = no item may be served yet; mastered at 80%; weak
+  spot = tried and below 60%; otherwise in progress (including not tried). Unit mastery averages
+  its open topics. Next mission: weakest weak spot, else first topic not mastered, else review
+  the weakest mastered topic (5 minutes). A unit id opens its challenge lesson (all its topics).
+  Implemented in `packages/core/src/map.ts`.
 - Mascot: Pip, an angular geometric fox (orange `#FF7A2F`). Brand violet `#6C47F5`; font Nunito,
   self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
 - Works offline for the app shell; API calls are never cached. Pages always come fresh from the
@@ -117,6 +130,10 @@ Tags: #product #rules #limits #defaults
   "Link a device" (product owner, 2026-11-25). Students use only their own linked device. Signed out, any screen shows the sign-in buttons
   and returns to the same page after sign-in. Sign out is on the welcome page and `/family`. The topic map and Cards badge wait for F2's
   `GET /v1/student/map` and `GET /v1/student/cards/due`.
+- Every error with a reference code has a one-tap "Send error report" button: an anonymous report
+  (code, screen and API path with ids masked, status, build, browser family, online, time) is
+  stored in `error_reports` for 90 days and listed for the operator at `/admin/feedback` (Error
+  reports), `GET /v1/admin/error-reports` and `scripts/error-reports.mjs`. Privacy notice 1.2.
 - Every "Something went wrong" shows a reference code like `RD-7K2M9Q` (no I, L, O or U), also
   in the API logs with no personal data, so a family can report it. Implemented in
   `packages/core/src/error-ref.ts`, `apps/api/src/errors.ts`, `apps/web/src/api/client.ts`.
@@ -279,8 +296,9 @@ Tags: #product #rules #limits #defaults
 - Level curve: XP from level L to L + 1 is min(750, 300 + 50 × (L − 1)); level 20 at 12,000 XP,
   level 100 at 72,000 XP; a prestige star every 7,500 XP after that, up to 5. Assumes 60 XP a
   practice day and 250 practice days a school year (`packages/core/src/levels.ts`).
-- Reward XP: only answer XP counts; nothing from 22:00 to 05:59 UK time; at most 300 XP a UK day
-  (`packages/core/src/reward-xp.ts`). Flashcard deck reviews do not count yet (see contradictions).
+- Reward XP: answer XP and completed flashcard-session XP count; nothing from 22:00 to 05:59 UK time; at most 300 XP a UK day
+  (`packages/core/src/reward-xp.ts`). Flashcards alone give at most 40 XP a day (about 10,000 a
+  year), slower than the curve's 15,000, so pacing holds. Sessions: `flashcard_sessions` table.
 - Year chapters: 30 steps each (a step every 400 chapter XP, 12,000 fills a chapter); spill-over
   into earlier unfinished chapters for mid-way joiners; Year 11 and 13 finales on the last exam;
   Year 12+ count as GCSE finished (`packages/core/src/chapters.ts`).
@@ -375,6 +393,9 @@ Tags: #product #rules #limits #defaults
 - Reward sounds scale with rarity (common, rare, epic, legendary; 4+ variations each, no repeat
   in a row); milestone ladders and levels climb in pitch and fullness; one sound for several
   rewards at once; legendary at most 3 s and skippable (owner, 2026-11-25; U4).
+- Combo chime (U5): each right answer in a row plays the correct chime a whole tone higher, up to
+  6 steps (an octave); the first right answer is the plain chime, and part marks rise too. Wrong
+  never changes. `PlayOptions.step` in `apps/web/src/features/sound/engine.ts`.
 - Reward sound details (U4, `apps/web/src/features/sound/rewardSounds.ts`, `rewardBank.ts`): tier
   = the reward's rarity, except prestige stars always play legendary (prestige 1 to 3 are epic in
   the catalogue). Ladder step = position in its milestone ladder; level step = level ÷ 10. Each
@@ -406,6 +427,21 @@ Tags: #product #rules #limits #defaults
   stay light. Combo bonus: +5 XP per right answer from the 3rd in a row (Learn mode; Test mode at the
   reveal). Never lives, timers, pay-to-continue, mystery rewards or streak guilt; after the daily cap
   the call to action becomes "See you tomorrow". Detail: `docs/GAME_FEEL.md`. Workstream J.
+- Settled in J1 (`apps/web/src/features/juice/logic.ts`): stars for a set are 3 for all right, 2 for at
+  least 60% right (3–4 of 5), otherwise 1. A burst is about 20 particles, capped at 24; confetti is
+  capped at 40 pieces. The combo badge shows from 2 in a row. The CTA pulse takes 1.6 s (well under 3
+  flashes a second). Reduced motion removes particles, confetti, float-ups, shakes and pulsing; combo,
+  stars and XP still show as text. Arena colours live in `apps/web/src/design/tokens.ts` (`--arena-*`).
+- Settled in J5: light-theme motion lives in `apps/web/src/design/motion.css` and applies only to
+  the topic map, rewards and stats (parent area, policies and settings stay calm). The map's Next
+  mission button is the pulsing main call to action. Reward reveals show the tier, the items and the
+  reason from the reward's one catalogue target ("For: 7-day streak"); epic and legendary add a
+  particle burst, legendary a shine. No reason is shown for a reward missing from the catalogue.
+- Settled in J2/J3: lessons, the starting test and flashcard review use the arena. Set complete's
+  Next mission goes to the map (`/map`, next mission card). "Or take a break. Your streak is safe for
+  today." shows when today's daily goal is met (`progress.goalMet`). The "daily cap" for "See you
+  tomorrow" is the daily reward XP cap (`DAILY_REWARD_XP_CAP`, 300 XP today), confirmed by the lead
+  on 2026-11-25 for now: the lesson only knows XP, not study minutes.
 
 ## Exam practice (planned)
 
@@ -430,3 +466,44 @@ Tags: #product #rules #limits #defaults
   `GET /v1/students/:id/bug-hunter`. The track items are R's.
 - Secret achievements: hidden "???" cards with a found count; learning-based conditions only;
   defined in the catalogue with `secret: true`. Detail: `docs/REWARDS.md`.
+
+## Daily limit, two parents, hidden tracks (owner, 2026-11-25; planned)
+
+- Daily limit in active study minutes: defaults GCSE 60/90 (school day/other), A-Level 90/120;
+  ceilings GCSE 2h/3h, A-Level 2.5h/3.5h; +30 in exam season with parent consent. Parents set it;
+  the app only suggests (+10 at most fortnightly when the student keeps going without accuracy dips;
+  −10 to −15 on tiredness signs). Detail: `docs/PRODUCT_RULES.md` (Daily limit).
+- Two parent accounts with equal control; second invited by link or code (7 days); activity log
+  ("Parent 1/2"); both confirm whole-family deletion.
+- Hidden tracks besides Bug Hunter: Fact Checker, Comeback Kid, Explorer, Planner, Pace Setter,
+  Perfectionist (`docs/REWARDS.md`).
+
+## Titles (owner, 2026-11-25; planned) and Get help (built, workstream W)
+
+- Two-part titles: a first word and a last word unlocked separately from rewards (about 120 each);
+  curated, every pairing validated against blocked words; shown under the nickname.
+- "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
+  NSPCC adult helpline, parent-only). Reached from Settings, the heart link in the student footer,
+  the signed-out header and parent home. There is no separate profile menu yet.
+- Data: `content/support/uk-services.json` (schema `content/schemas/support-services.schema.json`).
+  Every phone, text, link, opening time and age range has the URL of the service's own page it was
+  copied from; `checked_at` per service. `pnpm content:validate` (and `scripts/content/support.test.mjs`)
+  fails on a missing or off-site source, a check older than 4 months, or a non-UK number.
+- Services first checked 2026-11-25: 999 and NHS 111 (nhs.uk), Childline, Report Remove (Childline
+  and IWF), NSPCC Helpline (parents), Samaritans, Shout, The Mix, YoungMinds (website only), Beat,
+  FRANK, CEOP, Switchboard, Brook (website only), Victim Support. Added the same day from the
+  product owner's own check (`confirmed_by`): Coram Kidscape (young people's page; parent-only
+  Parent Advice Line by phone, WhatsApp and email) and Anti-Bullying Alliance (parents only). Left
+  out for now: Papyrus (site redirects to an administrator's page), Mind, Carers Trust (bot checks block automated checking). Kooth ("Soluna by Kooth") was added for
+  students under feeling low: website only, with the owner's note "Free in some parts of the UK.
+  Check if it's available where you live." (a `note` needs `confirmed_by`). See `docs/PRODUCT_RULES.md` (Get help).
+- Private: the page uses its own layout with no API calls (no cards-due badge, no sounds), loads
+  nothing from other sites, and opens websites with `rel="noreferrer"`. Quick exit replaces the
+  history entry and goes to `/map`. Service worker v3 precaches `/help` and the built files.
+
+## Quick wins (owner approved 2026-11-25; planned, workstream Q)
+
+- Daily 5-a-day mixed set (5 questions from practised topics); recall checks (2 questions at lesson
+  start, no penalty, skippable); "Learn it first" links to Oak and BBC Bitesize per topic, checked
+  by CI; read aloud with on-device voices preferred; reading comfort settings (dyslexia-friendly
+  self-hosted font, larger text, spacing, tint). Detail: `docs/PRODUCT_RULES.md` (Quick wins).

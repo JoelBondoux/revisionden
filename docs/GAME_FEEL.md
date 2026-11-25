@@ -64,3 +64,18 @@
 - `prefers-reduced-motion` turns off particles, shakes, confetti and pulsing (state changes still
   shown with colour and text); screen readers get the result text through a live region.
 - Contrast meets WCAG 2.2 AA on the dark arena background.
+
+## Build status (workstream J)
+
+- J1: tokens (`apps/web/src/design/tokens.ts`, `arena.css`) and effects (`apps/web/src/features/juice/`).
+- J2–J3: lessons, the starting test (no right/wrong effects) and set complete
+  (`apps/web/src/features/learn/SetComplete.tsx`). The "daily cap" for "See you tomorrow" is the
+  daily reward XP cap (300 XP today), confirmed by the lead on 2026-11-25, until the study-time
+  cap reaches the web app.
+- J4: combo XP in `packages/core/src/xp.ts` and the learn API (Learn mode per answer; starting
+  test at the reveal), stored in each answer's XP so rewards count it. The lesson shows the API's
+  combo and the bonus in its feedback. Still to show: best combo at the starting test reveal.
+- The chime rises a step per combo (U5): `play('correct', { step: comboStep(combo - 1) })`, a
+  whole tone per step up to 6 (an octave). Waiting on others: star notes use the existing
+  celebration sound. Flashcard sessions get the full treatment once
+  F3 (flashcard sessions, #45) is on dev (J2b or with J4).

@@ -49,10 +49,16 @@ is `min(750, 300 + 50 × (L − 1))`: 300 XP for level 2, rising by 50 a level u
   about level 24 after Year 9, then about 20 levels a year, and level 100 about 4.8 school years
   in (late in Year 13). Students who practise less still level up, just more slowly.
 
-**Which XP counts** (`packages/core/src/reward-xp.ts`): XP from answers only (never minutes or
-taps); XP earned **late at night (22:00 to 05:59 UK time)** does not count; at most **300 XP a
+**Which XP counts** (`packages/core/src/reward-xp.ts`): XP from answers and completed flashcard
+sessions only (never minutes or taps); XP earned **late at night (22:00 to 05:59 UK time)** does not count; at most **300 XP a
 UK day** counts (five times the daily goal). The XP still shows and still counts for the daily
 goal; it just does not move levels, chapters or seasonal challenges.
+
+**Flashcards and pacing.** A completed flashcard session of 5+ cards earns 20 XP, at most 2 a day
+(40 XP), below the 50 XP daily goal. A student who only did flashcards would earn about
+40 × 250 = 10,000 XP a school year, slower than the 15,000 the curve assumes (60 XP × 250 days),
+so tapping through cards can never outpace real practice. The "flashcards reviewed" milestones
+count cards in completed sessions.
 
 ### 2. Year chapters
 
@@ -216,6 +222,37 @@ Requested by the product owner on 2026-11-25. Rewards students who help make the
   `apps/api/src/feedback/bugHunter.ts` (or `GET /v1/student/bug-hunter`). Feedback rows are deleted
   12 months after they are closed, so the catalogue should record each step once it is earned
   rather than recount it later.
+
+## More hidden tracks
+
+Like Bug Hunter, each track is invisible until its first step is earned, then shows its next step.
+All are learning-based (the principles above); art follows the established style.
+
+| Track             | Steps count                                                                                                                          | Rewards along the way (examples)                      |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------- |
+| **Fact Checker**  | "Report a problem" on a question that the review queue confirms was wrong (rare, so steps at 1, 2, 3, 5, 8)                          | Magnifier badge, "Fact Checker" title, quill item     |
+| **Comeback Kid**  | Weak spots turned into strong topics (below 60 → 80+ mastery), steps at 1, 3, 5, 10, 20, 35                                          | Phoenix badge, rising-flame frame, Pip phoenix outfit |
+| **Explorer**      | First use of each kind of practice: lesson, flashcard session, starting test, timed paper, worked maths, homework marking, plan edit | Compass badge, map frame, explorer hat                |
+| **Planner**       | Weeks where at least 80% of planned sessions were done, steps at 1, 4, 8, 16, 30                                                     | Calendar badge, "On Schedule" title, planner pack     |
+| **Pace Setter**   | Timed papers finished with every question within its target time, steps at 1, 3, 6, 10                                               | Stopwatch badge, "Cool Head" title, pace stripes      |
+| **Perfectionist** | Perfect sets (all right at feedback level 2 or above), steps at 1, 5, 15, 30, 60, 100                                                | Diamond badge, crystal frame, prism avatar effect     |
+
+## Two-part titles
+
+Requested by the product owner on 2026-11-25 (inspired by games where players build titles from
+unlocked words; our words and art are our own).
+
+- A title has a **first word** and a **last word**, unlocked separately, for example
+  "Algebra Ace", "Cosmic Scholar", "Unshakeable Explorer". The student picks one of each; the title
+  shows under their nickname on their profile and in the friends league.
+- Words come from rewards across all layers (levels, chapters, milestones, collections, seasons and
+  hidden tracks). Rarer rewards unlock rarer words; hidden tracks unlock their own words (for example
+  "Bug-Hunting", "Exterminator", "Fact-Checking", "Comeback").
+- Aim for about 120 first words and 120 last words over five years, written in a teen voice:
+  playful, a bit epic, never childish, never violent, crude or mean.
+- **Safety:** every word is curated data; a validator checks every possible pairing against the
+  blocked-word list and a manual review list, so no combination reads as offensive. No free text.
+- Titles can be changed at any time, free.
 
 ## Secret achievements
 

@@ -23,12 +23,13 @@ export const handlers: RequestHandler[] = [
   http.get('*/api/auth/get-session', () => HttpResponse.json(null)),
   http.post('*/api/auth/sign-out', () => HttpResponse.json({ success: true })),
   ...onboardingHandlers,
-  // Student device topic map and cards due: agreed with workstream F2, not on the API yet.
+  // Student device topic map and cards due (F2).
   http.get('*/v1/student/map', () => HttpResponse.json(topicMap)),
   http.get('*/v1/student/cards/due', () => HttpResponse.json(cardsDue)),
 
   // Error reports from the web app (reference codes).
   http.post('*/v1/client-errors', () => new HttpResponse(null, { status: 204 })),
+  http.post('*/v1/error-reports', () => HttpResponse.json({ received: true }, { status: 202 })),
 
   // Learning loop and flashcards (workstream F).
   ...learnHandlers,

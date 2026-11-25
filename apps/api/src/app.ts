@@ -33,6 +33,7 @@ import { reviewRoutes, type VerificationDeps } from './routes/review';
 import { avatarRoutes, onboardingRoutes } from './routes/onboarding';
 import { learnRoutes } from './routes/learn';
 import { flashcardRoutes } from './routes/flashcards';
+import { studentMapRoutes } from './routes/map';
 import { parentRewardRoutes, studentRewardRoutes } from './routes/rewards';
 import type { MathsEngine } from './learning/maths-engine';
 import {
@@ -42,6 +43,7 @@ import {
   studentFeedbackRoutes,
 } from './feedback/routes';
 import { parentStatsRoutes, studentStatsRoutes } from './stats/routes';
+import { adminErrorReportRoutes, errorReportRoutes } from './feedback/error-reports';
 import type { StatsAdapters } from './stats/adapters';
 
 export interface AppDeps {
@@ -101,6 +103,7 @@ export function createApp(deps: AppDeps) {
   app.use('/v1/device/*', limit('auth', deps.rateLimiters.auth));
   app.use('/v1/ai/*', limit('ai', deps.rateLimiters.ai));
   app.use('/v1/client-errors', limit('auth', deps.rateLimiters.auth));
+  app.use('/v1/error-reports', limit('auth', deps.rateLimiters.auth));
 
   app.on(['GET', 'POST'], `${AUTH_BASE_PATH}/*`, async (c) =>
     reporting.toSharedErrorShape(await deps.auth.handler(c.req.raw), c),
@@ -154,12 +157,14 @@ export function createApp(deps: AppDeps) {
   parent.route('/family', familyRoutes(deps));
   parent.route('/', familyExport(deps));
   parent.route('/admin', adminFeedbackRoutes(deps));
+  parent.route('/admin', adminErrorReportRoutes(deps));
   parent.route('/parent', parentNotificationRoutes(deps));
   parent.route(
     '/review',
     reviewRoutes(deps.db, { ...deps.verification, now: () => deps.clock.now() }),
   );
 
+  app.route('/v1/error-reports', errorReportRoutes(deps));
   app.route('/v1/device', deviceRoutes(deps));
   app.route('/v1/notifications', pushKeyRoutes(deps));
   // Student routes: the session middleware runs before every /v1/student route below.
@@ -170,6 +175,7 @@ export function createApp(deps: AppDeps) {
   // Mounted after the student routes, so their session check runs first.
   app.route('/v1/student/learn', learnRoutes(deps));
   app.route('/v1/student/flashcards', flashcardRoutes(deps));
+  app.route('/v1/student', studentMapRoutes(deps));
   app.route('/v1/student', reportRoutes(deps.db, 'student'));
   app.route('/v1/student/rewards', studentRewardRoutes(deps));
   app.route('/v1/student', studentFeedbackRoutes(deps));

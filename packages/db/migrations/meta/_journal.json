@@ -61,8 +61,29 @@
     {
       "idx": 8,
       "version": "7",
-      "when": 1795595895204,
-      "tag": "0008_bug_hunter",
+      "when": 1795593414810,
+      "tag": "0008_topic_position",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1795596254409,
+      "tag": "0009_error_reports",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1795600452007,
+      "tag": "0010_flashcard_sessions",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1795604158661,
+      "tag": "0011_bug_hunter",
       "breakpoints": true
     }
   ]

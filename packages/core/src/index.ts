@@ -22,5 +22,7 @@ export * from './reward-stats';
 export * from './rewards-schemas';
 export * from './stats';
 export * from './stats-schemas';
+export * from './map';
 export * from './error-ref';
 export * from './bug-hunter';
+export * from './flashcard-session';

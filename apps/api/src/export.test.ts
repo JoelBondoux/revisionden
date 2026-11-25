@@ -3,6 +3,7 @@ import {
   authAccounts,
   authUsers,
   feedback,
+  flashcardSessions,
   flashcards,
   parentPushSubscriptions,
   parents,
@@ -50,6 +51,7 @@ describe('family data export', () => {
         front: `front for ${studentId}`,
         back: 'back',
       });
+      await t.db.insert(flashcardSessions).values({ studentId, completed: true, xpEarned: 20 });
     }
     await t.db.insert(authAccounts).values({
       id: 'export-acct',
@@ -69,7 +71,11 @@ describe('family data export', () => {
     const data = JSON.parse(text) as {
       exportedAt: string;
       parent: { email: string; signIns: { providerId: string; accountId: string }[] };
-      students: { profile: { id: string; nickname: string }; flashcards: { front: string }[] }[];
+      students: {
+        profile: { id: string; nickname: string };
+        flashcards: { front: string }[];
+        flashcardSessions: { xpEarned: number }[];
+      }[];
     };
 
     expect(data.exportedAt).toBe('2026-11-24T10:00:00.000Z');
@@ -79,6 +85,7 @@ describe('family data export', () => {
     ]);
     expect(data.students.map((s) => s.profile.nickname)).toEqual(['export_kid']);
     expect(data.students[0]!.flashcards.map((f) => f.front)).toEqual([`front for ${myKid}`]);
+    expect(data.students[0]!.flashcardSessions.map((s) => s.xpEarned)).toEqual([20]);
     // Nothing from the other family.
     expect(text).not.toContain(otherKid);
     expect(text).not.toContain('other_kid');

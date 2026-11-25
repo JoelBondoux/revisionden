@@ -131,3 +131,9 @@
   display: grid;
   gap: var(--space-2);
 }
+
+.feedback-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}

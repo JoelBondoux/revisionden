@@ -21,7 +21,7 @@ describe('NextMissionCard', () => {
     expect(card).toHaveTextContent('8 min');
     expect(screen.getByRole('link', { name: 'Go: Fix weak spot: Surds' })).toHaveAttribute(
       'href',
-      '/lesson/surds',
+      '/learn/topic/surds',
     );
     expect(screen.getByRole('link', { name: /go/i })).toHaveClass('btn--gold');
   });

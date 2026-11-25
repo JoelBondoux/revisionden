@@ -38,6 +38,7 @@
 | `src/design`                 | Design tokens (`tokens.ts`, mirrored as CSS variables in `tokens.css`), base styles          |
 | `src/components`             | Shared components (Button, Pill, ProgressBar, Card, BottomNav, Toast, Sheet, Avatar, Pip)    |
 | `src/layout`                 | `AppLayout` (main nav: bottom bar on phones, side rail from 768px) and `FocusLayout`         |
+| `src/map`                    | Topic map pieces: honeycomb row layout, topic and challenge hexes, Next mission card         |
 | `src/pages`                  | One component per screen; `src/routes.tsx` maps paths to screens                             |
 | `src/api`                    | Typed API client (every response checked with Zod), `useApiResource`, retry UI               |
 | `src/mocks`                  | MSW handlers and made-up demo data, used by tests and by `pnpm dev`                          |
@@ -54,19 +55,6 @@
 - **Learning routes (F):** `/learn/subject/:subjectId` (topics and mastery), `/learn/subject/:subjectId/start`
   (starting test), `/learn/subject/:subjectId/practice` (mixed lesson), `/learn/topic/:topicId`, `/learn/command-words`;
   `/cards` is the flashcards screen. They call `/v1/student/...` with the device cookie.
-- **Routes:** `/` welcome, `/family`, `/learn` (path), `/lesson/:id`, `/lesson/:id/complete`,
-  | Folder           | What it holds                                                                             |
-  | ---------------- | ----------------------------------------------------------------------------------------- |
-  | `src/design`     | Design tokens (`tokens.ts`, mirrored as CSS variables in `tokens.css`), base styles       |
-  | `src/components` | Shared components (Button, Pill, ProgressBar, Card, BottomNav, Toast, Sheet, Avatar, Pip) |
-  | `src/layout`     | `AppLayout` (main nav: bottom bar on phones, side rail from 768px) and `FocusLayout`      |
-  | `src/map`        | Topic map pieces: honeycomb row layout, topic and challenge hexes, Next mission card      |
-  | `src/pages`      | One component per screen; `src/routes.tsx` maps paths to screens                          |
-  | `src/api`        | Typed API client (every response checked with Zod), `useApiResource`, retry UI            |
-  | `src/mocks`      | MSW handlers and made-up demo data, used by tests and by `pnpm dev`                       |
-  | `src/pwa`        | Service worker registration and the offline banner                                        |
-  | `src/session`    | Which student is using this device (a convenience until device linking lands)             |
-  | `public/`        | Web app manifest, icons, `sw.js` (app shell cache) and the MSW worker for development     |
 - **Routes:** `/` welcome, `/family`, `/map` (topic map; `/learn` redirects there), `/lesson/:id`, `/lesson/:id/complete`,
   `/cards`, `/plan`, `/papers`, `/progress`, `/settings`, `/install`, `/about`, `/feedback`,
   `/feedback/family`, `/feedback/mine`; signed out: `/legal`, `/legal/:name`, `/welcome/privacy`;
@@ -133,6 +121,7 @@ Source of truth: `packages/db/src/schema.ts`; migrations in `packages/db/migrati
 | `daily_xp`                  | student_id + day (key, UK date), xp                                                                                                                                                                                                         |
 | `starting_tests`            | id, student_id, subject_id, item_ids (JSON), started (created_at), finished_at                                                                                                                                                              |
 | `flashcards`                | id, student_id, item_id (null for own cards), topic_id, origin (deck, wrong_answer, own), front, back, repetitions, interval_days, ease, due_at                                                                                             |
+| `flashcard_sessions`        | id, student_id, card_ids (JSON, distinct cards counted), started_at, finished_at, completed, xp_earned, topic_id (one-deck session), rewarded_day + reward_slot (unique per student; 1 or 2)                                                |
 | `push_subscriptions`        | id, student_id, device_id, endpoint (unique), p256dh, auth                                                                                                                                                                                  |
 | `parent_push_subscriptions` | id, parent_id, endpoint (unique), p256dh, auth (parent's own devices; reward news only)                                                                                                                                                     |
 | `reminder_settings`         | student_id (key), on/off switches, quiet and weekday quiet times, time zone                                                                                                                                                                 |
@@ -146,6 +135,7 @@ Source of truth: `packages/db/src/schema.ts`; migrations in `packages/db/migrati
 | `recheck_requests`          | id, scope (batch, item, writer_prompt, source), scope_value, cause, status                                                                                                                                                                  |
 | `recalculation_jobs`        | id, item_id, item_version, status                                                                                                                                                                                                           |
 | `feedback`                  | id, family_id, sender_role, student_id, sender_auth_user_id, kind, text (≤500), device (JSON), status, created_at, updated_at, closed_at, outcome (confirmed, duplicate), duplicate_of, reward_xp, track_step, confirmed_at, reward_seen_at |
+| `error_reports`             | id, ref (unique), screen, api_path, status, build, browser, online, reported_at, created_at (anonymous; deleted after 90 days)                                                                                                              |
 | `policy_acceptances`        | auth_user_id + policy (key), version, accepted_at                                                                                                                                                                                           |
 
 No table stores a real name, date of birth, email of a student, photo or school name. The
@@ -164,6 +154,8 @@ All bodies are validated with the Zod schemas in `packages/core`. Errors always 
 | `/api/auth/*`                                                                                                                      | anyone          | Better Auth: Google, Microsoft, sign-out                                     |
 | `GET /v1/auth/providers`                                                                                                           | anyone          | `{ providers }`: the sign-in providers that are set up                       |
 | `POST /v1/client-errors`                                                                                                           | anyone          | Log a web app error reference (204; rate limited)                            |
+| `POST /v1/error-reports`                                                                                                           | anyone          | Store an anonymous error report (202; rate limited)                          |
+| `GET /v1/admin/error-reports?since=…`                                                                                              | operator        | Error reports grouped by screen, API path and status                         |
 | `GET /v1/me`                                                                                                                       | parent          | Family id and sign-in email                                                  |
 | `GET, POST /v1/students`                                                                                                           | parent          | List (`{ students }`) or create                                              |
 | `GET, PATCH, DELETE /v1/students/:id`                                                                                              | parent          | One student                                                                  |
@@ -181,8 +173,8 @@ All bodies are validated with the Zod schemas in `packages/core`. Errors always 
 | `GET /v1/student/learn/lesson?topicId=…` or `?subjectId=…`                                                                         | student device  | Lesson items (no answers); mixed by mastery for a subject                    |
 | `GET /v1/student/learn/command-words`                                                                                              | student device  | Command-word lesson                                                          |
 | `GET /v1/student/learn/subjects/:id/topics`                                                                                        | student device  | Topics with mastery; starting test done?                                     |
-| `POST /v1/student/learn/starting-tests`, `POST .../:id/finish`                                                                     | student device  | Start the starting test; finish and see mastery                              |
-| `POST /v1/student/learn/attempts`                                                                                                  | student device  | Mark an answer; XP, mastery, streak, feedback                                |
+| `POST /v1/student/learn/starting-tests`, `POST .../:id/finish`                                                                     | student device  | Start the starting test; finish and see mastery and combo bonus              |
+| `POST /v1/student/learn/attempts`                                                                                                  | student device  | Mark an answer; XP (with combo), mastery, streak, feedback                   |
 | `GET /v1/student/learn/progress`                                                                                                   | student device  | XP today, total, daily goal, streak                                          |
 | `GET, POST /v1/student/flashcards`                                                                                                 | student device  | Due cards, decks, own cards; add own card                                    |
 | `GET /v1/student/flashcards/decks/:topicId`                                                                                        | student device  | One deck's cards                                                             |
@@ -191,7 +183,11 @@ All bodies are validated with the Zod schemas in `packages/core`. Errors always 
 | `GET, POST /v1/students/:id/parent-rewards`                                                                                        | parent          | List with progress; add one to any target                                    |
 | `PATCH, DELETE /v1/students/:id/parent-rewards/:rewardId`                                                                          | parent          | Edit or delete it until given (then 409)                                     |
 | `POST /v1/students/:id/parent-rewards/:rewardId/given`                                                                             | parent          | Mark it as given                                                             |
-| `POST /v1/student/flashcards/:id/review`                                                                                           | student device  | Rate a card (again, hard, good, easy)                                        |
+| `POST /v1/student/flashcards/sessions`                                                                                             | student device  | Start a review session (optional `topicId` for one deck)                     |
+| `POST /v1/student/flashcards/sessions/:id/finish`                                                                                  | student device  | Finish a session: 20 XP if 5+ cards and completed, 2 a day                   |
+| `POST /v1/student/flashcards/:id/review`                                                                                           | student device  | Rate a card in an open session (again, hard, good, easy); no XP              |
+| `GET /v1/student/map?subjectId=…`                                                                                                  | student device  | Topic map (F2): units, topic states, unit challenge, next mission            |
+| `GET /v1/student/cards/due`                                                                                                        | student device  | How many flashcards are due (Cards tab badge, F2)                            |
 | `GET /v1/notifications/vapid-key`                                                                                                  | anyone          | Public key for web push (503 if off)                                         |
 | `POST, DELETE /v1/student/push-subscriptions`                                                                                      | student device  | Turn reminders on or off for this device                                     |
 | `GET /v1/student/reminders/latest`                                                                                                 | student device  | Latest reminder text (for the worker)                                        |
@@ -240,33 +236,35 @@ MSW mock handlers must use these paths exactly: `apps/web/src/test/apiRoutes.tes
 `afterEach` in `src/test-setup.ts` fail a test whose mocks name a route the API does not have.
 The only exceptions are listed in `PENDING_ROUTES` (agreed with another workstream, not built).
 
-| Web caller (`apps/web/src`)                       | Route                                                                                             | Real? |
-| ------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ----- |
-| `api/signInProviders.ts` (welcome page)           | `GET /v1/auth/providers`                                                                          | yes   |
-| `api/SignInButtons.tsx` (welcome page, every 401) | `POST /api/auth/sign-in/social` (Better Auth; back to the same page, or `/family`)                | yes   |
-| `api/signIn.ts` `useParentSession` (welcome)      | `GET /api/auth/get-session`                                                                       | yes   |
-| `api/SignOutButton.tsx` (welcome, `/family`)      | `POST /api/auth/sign-out`                                                                         | yes   |
-| `api/client.ts` `getFamily` (`/family`)           | `GET /v1/onboarding/family`                                                                       | yes   |
-| `api/client.ts` `getTopicMap` (`/map`)            | `GET /v1/student/map`                                                                             | F2    |
-| `api/client.ts` `getCardsDue` (Cards tab badge)   | `GET /v1/student/cards/due`                                                                       | F2    |
-| `api/client.ts` `reportClientError`               | `POST /v1/client-errors`                                                                          | yes   |
-| `features/onboarding/api.ts`                      | `GET /v1/onboarding/family`, `POST /v1/onboarding/children`                                       | yes   |
-| `features/onboarding/api.ts` (link a device)      | `POST /v1/students/:id/link-tokens`, `POST /v1/device/link`, `.../verify`                         | yes   |
-| `features/legal/acceptance.tsx`                   | `GET, PUT /v1/policy-acceptances`                                                                 | yes   |
-| `features/learn/learnApi.ts` (lessons, tests)     | `GET /v1/student/learn/{lesson,command-words,progress}`                                           | yes   |
-|                                                   | `GET /v1/student/learn/subjects/:id/topics`                                                       | yes   |
-|                                                   | `POST /v1/student/learn/{attempts,starting-tests,starting-tests/:id/finish}`                      | yes   |
-| `features/learn/learnApi.ts` (flashcards)         | `GET, POST /v1/student/flashcards`, `GET .../decks/:topicId`, `POST .../:id/review`               | yes   |
-| `features/rewards/rewardsApi.ts`                  | `GET /v1/student/rewards`, `GET /v1/students/:id/rewards`                                         | yes   |
-|                                                   | `POST /v1/students/:id/parent-rewards`, `PATCH, DELETE .../:rewardId`, `POST .../:rewardId/given` | yes   |
-| `features/notifications/notificationsApi.ts`      | `GET /v1/notifications/vapid-key`, `POST, DELETE /v1/student/push-subscriptions`                  | yes   |
-|                                                   | `GET, PUT /v1/students/:id/reminder-settings`                                                     | yes   |
-| `public/sw.js` (push text)                        | `GET /v1/student/reminders/latest`                                                                | yes   |
-| `features/stats/statsApi.ts`                      | `GET /v1/student/stats`, `GET /v1/students`, `GET /v1/students/:id/dashboard`                     | yes   |
-| `features/feedback/feedbackApi.ts`                | `GET, POST /v1/student/feedback`, `GET, POST /v1/feedback`                                        | yes   |
-|                                                   | `GET /v1/admin/feedback`, `PATCH /v1/admin/feedback/:id`                                          | yes   |
-| `features/review/reviewApi.ts`                    | `GET /v1/review/{me,reports,batches,batches/:id}`                                                 | yes   |
-|                                                   | `POST /v1/review/reports/:id/decision`, `POST .../batches/:id/items/:itemId/decision`             | yes   |
+| Web caller (`apps/web/src`)                       | Route                                                                                                                                    | Real? |
+| ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| `api/signInProviders.ts` (welcome page)           | `GET /v1/auth/providers`                                                                                                                 | yes   |
+| `api/SignInButtons.tsx` (welcome page, every 401) | `POST /api/auth/sign-in/social` (Better Auth; back to the same page, or `/family`)                                                       | yes   |
+| `api/signIn.ts` `useParentSession` (welcome)      | `GET /api/auth/get-session`                                                                                                              | yes   |
+| `api/SignOutButton.tsx` (welcome, `/family`)      | `POST /api/auth/sign-out`                                                                                                                | yes   |
+| `api/client.ts` `getFamily` (`/family`)           | `GET /v1/onboarding/family`                                                                                                              | yes   |
+| `api/client.ts` `getTopicMap` (`/map`)            | `GET /v1/student/map`                                                                                                                    | yes   |
+| `api/client.ts` `getCardsDue` (Cards tab badge)   | `GET /v1/student/cards/due`                                                                                                              | yes   |
+| `api/client.ts` `reportClientError`               | `POST /v1/client-errors`                                                                                                                 | yes   |
+| `api/ErrorRef.tsx` "Send error report"            | `POST /v1/error-reports`                                                                                                                 | yes   |
+| `features/feedback` operator "Error reports"      | `GET /v1/admin/error-reports`                                                                                                            | yes   |
+| `features/onboarding/api.ts`                      | `GET /v1/onboarding/family`, `POST /v1/onboarding/children`                                                                              | yes   |
+| `features/onboarding/api.ts` (link a device)      | `POST /v1/students/:id/link-tokens`, `POST /v1/device/link`, `.../verify`                                                                | yes   |
+| `features/legal/acceptance.tsx`                   | `GET, PUT /v1/policy-acceptances`                                                                                                        | yes   |
+| `features/learn/learnApi.ts` (lessons, tests)     | `GET /v1/student/learn/{lesson,command-words,progress}`                                                                                  | yes   |
+|                                                   | `GET /v1/student/learn/subjects/:id/topics`                                                                                              | yes   |
+|                                                   | `POST /v1/student/learn/{attempts,starting-tests,starting-tests/:id/finish}`                                                             | yes   |
+| `features/learn/learnApi.ts` (flashcards)         | `GET, POST /v1/student/flashcards`, `GET .../decks/:topicId`, `POST .../sessions`, `POST .../sessions/:id/finish`, `POST .../:id/review` | yes   |
+| `features/rewards/rewardsApi.ts`                  | `GET /v1/student/rewards`, `GET /v1/students/:id/rewards`                                                                                | yes   |
+|                                                   | `POST /v1/students/:id/parent-rewards`, `PATCH, DELETE .../:rewardId`, `POST .../:rewardId/given`                                        | yes   |
+| `features/notifications/notificationsApi.ts`      | `GET /v1/notifications/vapid-key`, `POST, DELETE /v1/student/push-subscriptions`                                                         | yes   |
+|                                                   | `GET, PUT /v1/students/:id/reminder-settings`                                                                                            | yes   |
+| `public/sw.js` (push text)                        | `GET /v1/student/reminders/latest`                                                                                                       | yes   |
+| `features/stats/statsApi.ts`                      | `GET /v1/student/stats`, `GET /v1/students`, `GET /v1/students/:id/dashboard`                                                            | yes   |
+| `features/feedback/feedbackApi.ts`                | `GET, POST /v1/student/feedback`, `GET, POST /v1/feedback`                                                                               | yes   |
+|                                                   | `GET /v1/admin/feedback`, `PATCH /v1/admin/feedback/:id`                                                                                 | yes   |
+| `features/review/reviewApi.ts`                    | `GET /v1/review/{me,reports,batches,batches/:id}`                                                                                        | yes   |
+|                                                   | `POST /v1/review/reports/:id/decision`, `POST .../batches/:id/items/:itemId/decision`                                                    | yes   |
 
 Removed in I: the wave-1 placeholders `GET family`, `GET students/:id/map`,
 `GET students/:id/cards/due`, `GET lessons/:id` and `POST lessons/:id/answers` (never on the API;

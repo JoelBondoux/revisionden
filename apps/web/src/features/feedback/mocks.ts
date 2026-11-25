@@ -34,6 +34,13 @@ export const feedbackHandlers: RequestHandler[] = [
       }),
     }),
   ),
+  http.get('*/v1/admin/error-reports', () =>
+    HttpResponse.json({
+      since: new Date(Date.now() - 86_400_000).toISOString(),
+      total: 0,
+      groups: [],
+    }),
+  ),
   // The demo parent is not an operator: triage answers 404, as the real API does.
   http.get('*/v1/admin/feedback', notOperator),
   http.post('*/v1/admin/feedback/:id/confirm', notOperator),

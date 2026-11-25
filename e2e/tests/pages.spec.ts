@@ -93,6 +93,15 @@ test('a server error on /family shows a reference code, accessibly', async ({ pa
   await expect(page.getByRole('heading', { name: 'Something went wrong' })).toBeVisible();
   await expect(page.getByText('RD-7K2M9Q')).toBeVisible();
   await expectAccessible(page);
+  let sent: unknown;
+  await page.route('**/v1/error-reports', async (route) => {
+    sent = route.request().postDataJSON();
+    await route.fulfill({ status: 202, json: { received: true } });
+  });
+  await page.getByRole('button', { name: 'Send error report' }).click();
+  await expect(page.getByText("Thanks, we're on it.")).toBeVisible();
+  expect(sent).toMatchObject({ ref: 'RD-7K2M9Q', screen: '/family', status: 500 });
+  await expectAccessible(page);
 });
 
 test("a parent's family list links to each child's parent view, accessibly", async ({ page }) => {
@@ -121,7 +130,7 @@ test("a parent's family list links to each child's parent view, accessibly", asy
   await page.goto('/family');
   await expect(page.getByRole('link', { name: /^NovaFox/ })).toHaveAttribute(
     'href',
-    `/parent/stats?student=${id}`,
+    `/parent?student=${id}`,
   );
   await expect(page.getByRole('link', { name: 'Link a device for NovaFox' })).toBeVisible();
   await expectNoSidewaysScroll(page);

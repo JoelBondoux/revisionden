@@ -70,6 +70,9 @@ export const StartingTestResultSchema = z.object({
   answered: z.number().int().min(0),
   total: z.number().int().min(0),
   topics: z.array(TopicMasterySchema),
+  /** Test mode combos are shown at the reveal (docs/GAME_FEEL.md): the best run and its bonus. */
+  bestCombo: z.number().int().min(0).optional(),
+  comboBonusXp: z.number().int().min(0).optional(),
 });
 export type StartingTestResult = z.infer<typeof StartingTestResultSchema>;
 
@@ -126,6 +129,10 @@ export const LearnAttemptResponseSchema = z.object({
   progress: ProgressSchema,
   /** True when a wrong answer was turned into a flashcard. */
   flashcardAdded: z.boolean(),
+  /** Learn mode: right answers in a row, this one included (0 in Test mode until the reveal). */
+  combo: z.number().int().min(0).optional(),
+  /** The combo bonus included in xpEarned (+5 from the 3rd in a row). */
+  comboBonusXp: z.number().int().min(0).optional(),
 });
 export type LearnAttemptResponse = z.infer<typeof LearnAttemptResponseSchema>;
 
@@ -175,16 +182,45 @@ export const FlashcardsOverviewSchema = z.object({
 });
 export type FlashcardsOverview = z.infer<typeof FlashcardsOverviewSchema>;
 
-export const FlashcardReviewRequestSchema = z.object({ rating: FlashcardRatingSchema }).strict();
+// Flashcard sessions: deck XP is per completed session, not per card (see flashcard-session.ts).
+
+export const FlashcardSessionSchema = z.object({
+  id: IdSchema,
+  maxCards: z.number().int().positive(),
+  minCards: z.number().int().positive(),
+  /** XP for a completed session of at least minCards cards. */
+  xp: z.number().int().min(0),
+  /** Rewarded sessions still possible today (UK day). */
+  rewardedLeftToday: z.number().int().min(0),
+});
+export type FlashcardSession = z.infer<typeof FlashcardSessionSchema>;
+
+/** Optional deck scope: completion is then checked within that topic's cards only. */
+export const FlashcardSessionRequestSchema = z.object({ topicId: text.optional() }).strict();
+export type FlashcardSessionRequest = z.infer<typeof FlashcardSessionRequestSchema>;
+
+export const FlashcardReviewRequestSchema = z
+  .object({ rating: FlashcardRatingSchema, sessionId: IdSchema })
+  .strict();
 
 export const FlashcardReviewResponseSchema = z.object({
   card: FlashcardSchema,
-  xpEarned: z.number().int().min(0),
   /** True when the card comes back today (rated Again). */
   comesBackSooner: z.boolean(),
-  progress: ProgressSchema,
+  /** Different cards counted in this session so far (Again repeats count once). */
+  cardsCounted: z.number().int().min(0),
 });
 export type FlashcardReviewResponse = z.infer<typeof FlashcardReviewResponseSchema>;
+
+export const FlashcardSessionResultSchema = z.object({
+  completed: z.boolean(),
+  reason: z.enum(['rewarded', 'left_early', 'too_few_cards', 'daily_limit']),
+  xpEarned: z.number().int().min(0),
+  cardsCounted: z.number().int().min(0),
+  rewardedLeftToday: z.number().int().min(0),
+  progress: ProgressSchema,
+});
+export type FlashcardSessionResult = z.infer<typeof FlashcardSessionResultSchema>;
 
 const cardText = z
   .string()

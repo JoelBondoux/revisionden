@@ -33,7 +33,7 @@ describe('Topic map screen', () => {
     expect(mission).toHaveTextContent('Fix weak spot: Surds');
     expect(within(mission).getByRole('link', { name: /go/i })).toHaveAttribute(
       'href',
-      '/lesson/surds',
+      '/learn/topic/surds',
     );
   });
 

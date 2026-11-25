@@ -77,8 +77,11 @@ describe('content sync', () => {
     expect(topicRows.map((r) => r.id).sort()).toEqual([
       'test-topic-a',
       'test-topic-b',
+      'test-topic-c',
       'test-unit',
     ]);
+    const order = [...topicRows].sort((x, y) => x.position - y.position).map((r) => r.id);
+    expect(order).toEqual(['test-unit', 'test-topic-a', 'test-topic-b', 'test-topic-c']);
     const [mc] = await t.db.select().from(items).where(eq(items.contentId, 'test-mc-0001'));
     expect(mc).toMatchObject({ type: 'multiple_choice', status: 'verified', version: 1 });
     const [work] = await t.db.select().from(items).where(eq(items.contentId, 'test-work-0001'));
@@ -90,7 +93,7 @@ describe('content sync', () => {
       i.id === 'test-short-0001' ? { ...i, verification: { ...i.verification, version: 2 } } : i,
     );
     const result = await syncContent(t.db, { topicTrees: [testTopicTree], items: changed });
-    expect(result).toEqual({ topics: 3, items: testItems.length });
+    expect(result).toEqual({ topics: 4, items: testItems.length });
     const rows = await t.db.select().from(items).where(eq(items.contentId, 'test-short-0001'));
     expect(rows).toHaveLength(1);
     expect(rows[0]!.version).toBe(2);
@@ -289,6 +292,17 @@ describe('answering (feedback level 1: instant feedback)', () => {
     expect(await answer(headers, card.id, true)).toMatchObject({ correct: true, xpEarned: 5 });
   });
 
+  it('never changes topic mastery from a flashcard self-rating', async () => {
+    const { headers } = await t.familyStudent('selfrate_kid');
+    const card = itemByPrompt(await allItems(headers), 'Test front 1');
+    for (let i = 0; i < 3; i++) await answer(headers, card.id, true);
+    const res = await t.app.request(`/v1/student/learn/subjects/${TEST_SUBJECT}/topics`, {
+      headers,
+    });
+    const body = SubjectTopicsResponseSchema.parse(await res.json());
+    expect(body.topics.find((x) => x.topicId === 'test-topic-a')!.mastery).toBe(0);
+  });
+
   it('answers 404 for an item that does not exist', async () => {
     const { headers } = await t.familyStudent('missing_kid');
     const res = await attempt(headers, {
@@ -319,10 +333,11 @@ describe('mastery, XP, daily goal and streak', () => {
     let headers = first;
     const short = itemByPrompt(await allItems(headers), 'Test question 2');
     let last;
-    for (let i = 0; i < 3; i++) last = await answer(headers, short.id, 'test answer');
-    expect(last!.progress).toMatchObject({ xpToday: 45, goalMet: false });
+    for (let i = 0; i < 2; i++) last = await answer(headers, short.id, 'test answer');
+    expect(last!.progress).toMatchObject({ xpToday: 30, goalMet: false });
+    // The 3rd right answer in a row earns the +5 combo bonus (docs/GAME_FEEL.md).
     last = await answer(headers, short.id, 'test answer');
-    expect(last.progress).toMatchObject({ xpToday: 60, goalMet: true });
+    expect(last.progress).toMatchObject({ xpToday: 50, goalMet: true });
     expect(last.progress.streak).toMatchObject({ current: 1, best: 1 });
     last = await answer(headers, short.id, 'test answer');
     expect(last.progress.streak.current).toBe(1);
@@ -332,7 +347,7 @@ describe('mastery, XP, daily goal and streak', () => {
     const next = ProgressSchema.parse(
       await (await get('/v1/student/learn/progress', headers)).json(),
     );
-    expect(next).toMatchObject({ xpToday: 0, totalXp: 75, goalMet: false });
+    expect(next).toMatchObject({ xpToday: 0, totalXp: 70, goalMet: false });
     expect(next.streak.current).toBe(1);
     for (let i = 0; i < 4; i++) last = await answer(headers, short.id, 'test answer');
     expect(last.progress.streak.current).toBe(2);

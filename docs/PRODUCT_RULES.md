@@ -35,6 +35,12 @@
 - Details settled in code:
   - XP per correct answer: flashcard 5, multiple choice 10, short answer 15, numeric 15, worked
     maths 20, extended answer 30. Part marks earn part of it (rounded). Wrong answers earn 0.
+  - Combo bonus (`docs/GAME_FEEL.md`): +5 XP per right answer from the 3rd right answer in a row,
+    added to that answer's XP (so levels and rewards count it, with the usual daily cap). Learn
+    mode: the API counts the run from the student's own recent answers; a wrong or part-marked
+    answer, a Test mode answer or a gap of more than 5 minutes ends it. Test mode (the starting
+    test): no combo while answering; at the reveal (`finish`) the same bonus is added to the answers
+    in order, once.
   - Daily goal defaults to 50 XP. Weekly goal defaults to the daily goal met on 5 days; each week
     hit earns 1 skip day (paid once per week).
   - A skip day keeps the streak but does not add to it. A day with no activity counts as missed.
@@ -199,9 +205,12 @@ Product owner decision, 2026-11-25: **parent view only**.
   **session, not per card** (product owner, 2026-11-25), so rating every card "Good" earns
   nothing extra:
   - A session ends when the due queue is empty or after 20 cards, whichever comes first. A
+    session for one deck ("All decks", Review) only needs that deck's due cards done. A
     completed session of at least 5 cards earns **20 XP**, whatever the ratings. Fewer than 5
     cards, or leaving early, earns nothing.
   - At most **2 rewarded sessions a day** (40 XP), so flashcards alone cannot reach the daily goal.
+    A session is paid at most once, and the limit holds even when sessions finish at the same
+    moment (each rewarded session takes one of two daily slots, enforced by the database).
   - Cards answered "Again" coming back in the same session do not count twice.
   - Self-ratings only schedule the card (SM-2); they never change topic mastery or the predicted
     grade. The "flashcards reviewed" milestones count cards in completed sessions. Deck cards come from flashcard items in the
@@ -214,6 +223,13 @@ Product owner decision, 2026-11-25: **parent view only**.
   missed days shows as lapsed (or kept by skip days) before anything is saved.
 - **Command-word lessons** (exam technique basics) are items tagged `command-word` in `content/`.
   None are verified yet, so the lesson says nothing is ready.
+- **Topic map (F2):** units are the top-level topics of a subject's tree; each shows its leaf
+  topics in specification order. A topic is locked while none of its items may be served,
+  mastered at 80% or more, a weak spot when tried and below 60%, otherwise in progress. Unit
+  mastery is the average of its open topics and its challenge unlocks at 80% (the challenge lesson
+  draws on every topic in the unit). The next mission is the weakest weak spot, else the first
+  topic not yet mastered, else a review of the weakest mastered topic. Implemented in
+  `packages/core/src/map.ts` and `apps/api/src/routes/map.ts`.
 - Implemented: `packages/core/src/learning.ts`, `apps/api/src/routes/learn.ts`,
   `apps/api/src/routes/flashcards.ts`.
 
@@ -377,7 +393,7 @@ Mockups: screens 19 (student) and 20 (parent).
   downloads `GET /v1/export`: one JSON file with the parent's sign-in email, provider account id,
   policy confirmations, the family, and for each of that parent's own children the profile and
   every record (courses, devices, answers, mastery, exams, reports, plans, rewards, streak, daily
-  XP, starting tests, flashcards, reminders, AI usage, parent-set rewards), plus the family's
+  XP, starting tests, flashcards and flashcard sessions, reminders, AI usage, parent-set rewards), plus the family's
   feedback and question reports. Secrets are left out (session and link-code hashes, passkey keys
   and credential ids, push keys). Never another family's data.
 - **Activity:** any parent or student request marks the family as used (`families.last_active_at`,
@@ -394,6 +410,19 @@ Mockups: screens 19 (student) and 20 (parent).
 - **Sign-in tokens:** the Google or Microsoft access, refresh and ID tokens are never kept.
 - Implemented: `apps/api/src/cleanup.ts`, `apps/api/src/routes/{family,export}.ts`,
   `apps/api/src/auth.ts`, `apps/web/src/features/family-data/`; migration 0006.
+
+### Error reports (workstream I)
+
+- Every error that shows a reference code (`RD-XXXXXX`) also shows **Send error report**. One tap,
+  no typing; then "Thanks, we're on it." If it cannot be sent, the button stays to try again.
+- The report is anonymous: the code, the screen and the failing API path (ids replaced by
+  `:id`), the status, the app build, the browser family, online or not, and the time. Never the
+  nickname, ids, free text or answers (`POST /v1/error-reports`, strict schema).
+- One stored report per code; rate limited (30 a minute per address); deleted after 90 days.
+- The operator sees them grouped by screen, API path and status at `/admin/feedback` (filter
+  "Error reports") and from `GET /v1/admin/error-reports?since=…` or
+  `DATABASE_URL=… node scripts/error-reports.mjs`. The API logs a line with the same code, so a
+  report matches the API's own error line.
 
 ## Sound effects (workstream U)
 
@@ -440,7 +469,10 @@ Mockups: screens 19 (student) and 20 (parent).
   `events.ts`), with one-line `play()` calls in lessons, the starting test and flashcards. Reward
   sounds (U4): `rewardSounds.ts` (which sound: tier, step, voice, fanfare, biggest, variation),
   `rewardBank.ts` (synthesis) and `<RewardSound rewards={newlyEarned} />` on the Rewards screen.
-  Prestige stars play legendary even where the catalogue rarity is epic. Gifts, plan and timed
+  Prestige stars play legendary even where the catalogue rarity is epic. Combo chime (U5):
+  `play('correct' | 'partMarks', { step })` raises the chime a whole tone per step, clamped at 6
+  (an octave); the lesson player passes `comboStep(combo - 1)`, so the first right answer is the
+  plain chime. The wrong sound never changes. Gifts, plan and timed
   papers get their calls when those screens are built.
 
 ## App updates (installable app)
@@ -456,3 +488,163 @@ So nobody runs an old copy of the app for long after a deploy (decided 2026-11-2
   shape) the app checks at once and, when a newer build exists, reloads by itself, once per new
   build, so it can never get stuck or loop. Without browser storage it only shows the banner.
 - Implemented: `apps/web/public/sw.js`, `apps/web/src/pwa/updates.tsx`, `apps/web/vite.config.ts`.
+
+## Daily limit (wellbeing)
+
+Requested by the product owner on 2026-11-25. One daily limit per student, in **active study
+minutes** (the same measure as the stats dashboards: time between answers, gaps over 5 minutes not
+counted).
+
+- **Defaults** (a starting point, not a target): GCSE 60 minutes on school days and 90 at weekends
+  and in holidays; A-Level 90 and 120. Exam season (from 6 weeks before the student's first exam)
+  adds 30 minutes, if the parent agrees.
+- **Hard ceiling** the app never suggests going past: GCSE 2 hours on school days and 3 on other
+  days; A-Level 2.5 and 3.5. A parent may set a lower or higher limit by hand.
+- **Parent control:** either parent can change the limit at any time (per day type) from the parent
+  area. The student sees their limit and how much is left; they can always stop early with no
+  penalty.
+- **Suggestions, never pushes.** Once a week the app may suggest a change to the parent; it never
+  changes the limit by itself.
+  - **Suggest a small rise** (+10 minutes, at most once a fortnight) only when, over the last 2
+    weeks, the student reached the limit on at least 4 days, accuracy in the last 15 minutes of
+    sessions stayed within 5 points of the first 15, and they chose to keep going (not prompted).
+  - **Suggest easing off** (−10 to −15 minutes) when accuracy drops by more than 10 points late in
+    sessions (tiredness), sessions keep being abandoned part-way, or rest days are being skipped.
+  - Suggestions say why in plain words ("Accuracy dips after about 40 minutes"); the parent accepts,
+    changes or dismisses them. The student is told when their limit changes.
+- **At the limit:** practice screens show "Great work today. See you tomorrow"; no XP, rewards or
+  streak credit past it (the existing healthy-limits rule). Timed papers may finish past the limit;
+  the limit then pauses other practice for the rest of the day.
+- The XP reward cap (`DAILY_REWARD_XP_CAP`, 300 XP) stays as a safety net alongside the minutes
+  limit.
+
+## Two parents (shared parent control)
+
+Requested by the product owner on 2026-11-25.
+
+- A family can have **two parent accounts with equal control**. The first parent invites the
+  second from the parent area with a one-time link or code (valid 7 days); the second signs in with
+  their own Google or Microsoft account (only their sign-in email is kept, as for the first).
+- Both parents can do everything: add or remove children, settings, limits, focus, rewards,
+  feedback, export and deletion. Deleting the whole family needs both parents to confirm (or one
+  parent after the other is removed).
+- A family activity log shows what changed and by which parent ("Parent 1", "Parent 2"; no names),
+  and the other parent is notified of important changes (limits, children added or removed,
+  rewards given, exports, deletion requests).
+- Either parent can remove the other; the removed parent sees an in-app notice on next
+  sign-in and loses access at once. Students see that two parents can view their progress.
+- The privacy notice must list the second parent's sign-in email as data kept.
+
+## Get help (support resources)
+
+Requested by the product owner on 2026-11-25.
+
+- A **"Get help"** page for students, reachable from Settings, the profile menu and the footer of
+  every student screen, with a small heart icon. Also reachable signed out.
+- It lists UK support services by topic, each with what they help with, how to contact them
+  (tap-to-call `tel:` links, text numbers, web chat links) and opening hours where published.
+  Topics: feeling low or anxious, exam stress, suicidal thoughts (urgent), bullying (including
+  online), abuse or neglect, online safety and nude images, eating and body image, self-harm, drugs
+  and alcohol, sexual health and relationships, LGBTQ+, young carers, grief, crime and victims,
+  physical health (NHS 111) and emergencies (999).
+- Services to consider (each must be confirmed on its own official website): Childline, NSPCC,
+  Samaritans, Shout, Papyrus HOPELINE247, YoungMinds, Kooth, The Mix, Beat, Talk to Frank, CEOP,
+  Childline and IWF Report Remove, Switchboard, Mind, Brook, Anti-Bullying Alliance, Kidscape,
+  Carers Trust, Victim Support, NHS 111.
+- **Verified facts only:** every phone number, text number, URL and opening time is copied from the
+  service's own official page, with that URL and the date checked recorded in the data file. Any
+  detail that cannot be confirmed is left out, never guessed. Rechecked every term; a test fails if
+  an entry has no source or its check is older than 4 months.
+- **Private:** nothing about visiting this page or tapping a link is recorded, logged, shown to
+  parents or sent anywhere (no analytics, no feedback prompts, no activity log). The page works
+  offline (cached) so a number can be found without signal.
+- A **Quick exit** button takes the student straight to a neutral screen (the topic map) and replaces
+  the page in history.
+- At the top: "If you are in danger right now, call 999." Wording is warm, short and non-judgemental;
+  it never asks the student to explain themselves.
+- Parents can see the same page from the parent area, plus the NSPCC adult helpline for worried
+  adults.
+
+### How it is built (workstream W, 2026-11-25)
+
+- Pages: `/help` (students, also signed out) and `/parent/help` (parent area; adds a "Worried about a
+  child?" card with the NSPCC Helpline). Links: Settings (Help and information), a small heart
+  "Get help" link in the student footer, the signed-out header, and parent home. The app has no
+  separate profile menu yet; add a link there when one exists.
+- Data: `content/support/uk-services.json`, schema `content/schemas/support-services.schema.json`.
+  Each service has topics, one plain sentence of our own (`helps_with`), its official domains,
+  optional age range and area, contacts (phone as `tel:`, text number with keyword as
+  `sms:<number>?&body=<KEYWORD>`, web chat, website) with optional hours, and `checked_at`. Every
+  contact, hours, age range and area has a `source`: the https URL of the service's own page it was
+  copied from, which must be on one of its official domains.
+- Checks (`scripts/content/support.mjs`, run by `pnpm content:validate` and its tests in CI): schema;
+  sources on the official site; links on the official site; `checked_at` not in the future and not
+  older than 4 months; phone numbers in UK format (10 or 11 digits starting 0, 116 numbers,
+  Childline's 0800 1111, 111, 999) with a matching `tel:` link; text numbers as UK short codes or
+  mobiles with a matching `sms:` link; every topic has at least one service for students.
+- Added 2026-11-25 from the product owner's own check of the official sites (recorded as
+  `confirmed_by` in the data): **Coram Kidscape** (was Kidscape; `coramkidscape.org.uk`): its young
+  people's advice page for students under bullying; for parents only, the **Parent Advice Line**
+  (phone and WhatsApp 0300 102 4481, email, 9am to 9pm Monday to Friday and 10am to 3pm Saturday
+  and Sunday). **Anti-Bullying Alliance**: parents only (website), because its site sends young
+  people with a problem to Childline; students' bullying card lists Childline and Coram Kidscape.
+- **Kooth** (now "Soluna by Kooth"; added 2026-11-25 at the product owner's request): students and
+  parents, under feeling low. Website `https://www.kooth.com/` only, as seen by the build session.
+  The note "Free in some parts of the UK. Check if it's available where you live." is the product
+  owner's (kooth.com did not say it), so the entry has `confirmed_by`. No hours, ages or areas.
+- A service may have a short `note` shown on the page; the validator only allows it with
+  `confirmed_by`, because no checked source backs it.
+- Contacts can also be WhatsApp (UK number, link `https://wa.me/44…` that must match it) and email
+  (`mailto:` link; the address must be on the service's official domain).
+- Recheck each term: open every `source`, confirm each detail, update `checked_at`. Leave out any
+  detail that can no longer be confirmed.
+- Left out on 2026-11-25 (could not be confirmed on the service's own site from the build
+  environment; recheck by hand): Papyrus HOPELINE247 (`papyrus-uk.org` redirects to an insolvency
+  administrator's page), Mind and Carers Trust (their sites block automated visits). These stay out for now (lead, 2026-11-25). Also left out: Samaritans web chat (a pilot,
+  "not currently available"), FRANK live chat and email, Switchboard chat and email (could not be
+  seen from outside the UK), Beat's email and web chat hours, and Childline's message service. Grief has
+  no specialist service yet (none was on the list to check) and young carers' one (Carers Trust)
+  could not be checked, so both topics list Childline and Samaritans.
+- Privacy: its own layout with no navigation, sounds or API calls; nothing is fetched to show it
+  (the data is built into the app); websites open in a new tab with `rel="noreferrer"`. A unit test
+  and an e2e test check that visiting it makes no API calls and no requests to other sites.
+- Style: calm and light, no game-feel effects (`features/help/help.css`).
+
+## Quick wins from the competitor research (owner approved 2026-11-25)
+
+From `docs/research/competitors-2026-11.md`. Workstream Q.
+
+### Daily 5-a-day
+
+- Each day a student gets a short mixed set of **5 questions** from topics they have already
+  practised, chosen by spaced repetition and weak spots (never brand-new topics), across their
+  subjects. Takes about 5–8 minutes.
+- Learn mode, normal XP and combos; finishing it counts as a lesson for the streak and daily goal.
+  It appears at the top of the topic map until done; it never nags (no push just for 5-a-day).
+
+### Recall checks
+
+- At the start of a lesson on a topic practised before, 2 quick recall questions on things learned
+  in earlier lessons ("Remember this?").
+- No penalty: wrong answers do not lower mastery more than a normal answer would, earn no XP loss,
+  and simply become flashcards. Right answers earn normal XP. They can be skipped.
+
+### Learn it first
+
+- Each topic can link to free official lessons: Oak National Academy lessons and BBC Bitesize pages
+  that match the topic (and, later, our own verified notes).
+- Links only (open in a new tab on tap; nothing loaded from those sites until then), stored as data
+  per topic with the page title, URL, and the date checked. A CI job checks every link still works
+  (HTTP status) and fails on broken links. A topic shows the button only when it has a checked link.
+- Links point at the right level (GCSE or A-Level) and the student's board where the page is
+  board-specific.
+
+### Read aloud and reading comfort
+
+- **Read aloud** button on questions, answers, explanations and flashcards, using the device's own
+  speech voices (Web Speech API), preferring voices that run on the device (`localService`); where
+  only online voices exist the setting explains that the device's speech service may process the
+  text, and it stays off by default. Speed control. Maths is read sensibly (for example "x squared").
+- **Reading comfort** settings per device: a dyslexia-friendly font (self-hosted, open licence, no
+  third-party font service), larger text, more line and letter spacing, and a soft tinted background
+  option. These apply across the app and are remembered on the device.

@@ -216,3 +216,39 @@ describe('sound engine: reward sounds', () => {
     expect(engine.sampleReward('common')).toMatchObject({ tier: 'common' });
   });
 });
+
+describe('sound engine: combo steps', () => {
+  function firstPitch(step?: number, event: 'correct' | 'partMarks' | 'wrong' = 'correct') {
+    const contexts: FakeAudioContext[] = [];
+    const engine = createSoundEngine({
+      createContext: () => {
+        const ctx = createFakeAudioContext();
+        contexts.push(ctx);
+        return ctx;
+      },
+      settings: () => DEFAULT_SOUND_SETTINGS,
+      isHidden: () => false,
+    });
+    engine.unlock();
+    engine.play(event, step === undefined ? {} : { step });
+    return contexts[0]!.oscillators[0]!.frequencies[0]!;
+  }
+
+  it('raises the correct chime a little for each combo step', () => {
+    const pitches = [0, 1, 2, 3, 4, 5, 6].map((s) => firstPitch(s));
+    for (let i = 1; i < pitches.length; i++) expect(pitches[i]).toBeGreaterThan(pitches[i - 1]!);
+    expect(firstPitch()).toBe(pitches[0]);
+    // A whole tone per step: six steps reach an octave.
+    expect(pitches[6]! / pitches[0]!).toBeCloseTo(2, 5);
+  });
+
+  it('stops rising at 6 steps and ignores negative steps', () => {
+    expect(firstPitch(9)).toBe(firstPitch(6));
+    expect(firstPitch(-2)).toBe(firstPitch(0));
+  });
+
+  it('also lifts part marks, but never the wrong sound', () => {
+    expect(firstPitch(3, 'partMarks')).toBeGreaterThan(firstPitch(0, 'partMarks'));
+    expect(firstPitch(3, 'wrong')).toBe(firstPitch(0, 'wrong'));
+  });
+});

@@ -6,9 +6,41 @@ import { renderRoute } from '../../test/render';
 
 const click = (name: string | RegExp) => userEvent.click(screen.getByRole('button', { name }));
 
+/** Opens the Cards tab and waits for the review session to show its first card. */
 async function openCards() {
   renderRoute('/cards');
-  return screen.findByRole('tab', { name: 'Due today (2)' });
+  const tab = await screen.findByRole('tab', { name: 'Due today (2)' });
+  await screen.findByTestId('flip-card');
+  return tab;
+}
+
+const SESSION_ID = '00000000-0000-4000-8000-000000000777';
+
+function finishResult(over: Record<string, unknown>) {
+  return {
+    completed: true,
+    reason: 'rewarded',
+    xpEarned: 20,
+    cardsCounted: 6,
+    rewardedLeftToday: 1,
+    progress: {
+      xpToday: 50,
+      totalXp: 250,
+      dailyGoalXp: 50,
+      goalMet: true,
+      streak: { current: 4, best: 9, skipDays: 1 },
+    },
+    ...over,
+  };
+}
+
+async function reviewBothCards(open = true) {
+  if (open) await openCards();
+  for (const front of ['Demo front 1', 'Demo front 2']) {
+    await screen.findByText(front);
+    await click('Show answer');
+    await click(/^Good/);
+  }
 }
 
 describe('Flashcards screen', () => {
@@ -46,19 +78,96 @@ describe('Flashcards screen', () => {
     expect(screen.getByRole('button', { name: 'Easy, back in 4 days' })).toBeInTheDocument();
   });
 
-  it('ends the deck with XP and how many cards come back sooner', async () => {
+  it('tells you a finished session earns 20 XP', async () => {
+    await openCards();
+    expect(await screen.findByText(/Finish the session for 20 XP/)).toBeInTheDocument();
+  });
+
+  it('brings a card rated Again back in the same session, then sums up', async () => {
     await openCards();
     await click('Show answer');
     await click(/^Again/);
     await screen.findByText('Demo front 2');
     await click('Show answer');
     await click(/^Good/);
+    // The card rated Again comes back once before the session ends.
+    expect(await screen.findByText('Demo front 1')).toBeInTheDocument();
+    await click('Show answer');
+    await click(/^Good/);
     const done = await screen.findByRole('region', { name: 'Deck done!' });
-    expect(done).toHaveTextContent('+4 XP');
     expect(done).toHaveTextContent('1 card comes back sooner');
+    expect(done).toHaveTextContent(/at least 5 cards/);
   });
 
-  it('lists all decks and reviews one', async () => {
+  it('shows the 20 XP when a completed session is rewarded', async () => {
+    server.use(
+      http.post('*/v1/student/flashcards/sessions/:id/finish', () =>
+        HttpResponse.json(finishResult({ reason: 'rewarded', xpEarned: 20 })),
+      ),
+    );
+    await reviewBothCards();
+    const done = await screen.findByRole('region', { name: 'Deck done!' });
+    expect(done).toHaveTextContent('+20 XP');
+  });
+
+  it('explains when today’s rewarded sessions are used up', async () => {
+    server.use(
+      http.post('*/v1/student/flashcards/sessions', () =>
+        HttpResponse.json(
+          { id: SESSION_ID, maxCards: 20, minCards: 5, xp: 20, rewardedLeftToday: 0 },
+          { status: 201 },
+        ),
+      ),
+      http.post('*/v1/student/flashcards/sessions/:id/finish', () =>
+        HttpResponse.json(finishResult({ reason: 'daily_limit', xpEarned: 0 })),
+      ),
+    );
+    await openCards();
+    expect(await screen.findByText(/today's 2 rewarded sessions/)).toBeInTheDocument();
+    await reviewBothCards(false);
+    const done = await screen.findByRole('region', { name: 'Deck done!' });
+    expect(done).toHaveTextContent(/today's flashcard XP/);
+  });
+
+  it('says that finishing every due card is needed when you stop early', async () => {
+    server.use(
+      http.post('*/v1/student/flashcards/sessions/:id/finish', () =>
+        HttpResponse.json(finishResult({ reason: 'left_early', xpEarned: 0, completed: false })),
+      ),
+    );
+    await reviewBothCards();
+    expect(await screen.findByRole('region', { name: 'Deck done!' })).toHaveTextContent(
+      /every due card/,
+    );
+  });
+
+  it('asks you to try again when the session cannot be saved', async () => {
+    server.use(
+      http.post('*/v1/student/flashcards/sessions/:id/finish', () => HttpResponse.error()),
+    );
+    await reviewBothCards();
+    expect(await screen.findByRole('alert')).toHaveTextContent(/try again/);
+    server.resetHandlers();
+    await click('Try again');
+    expect(await screen.findByRole('region', { name: 'Deck done!' })).toBeInTheDocument();
+  });
+
+  it('asks you to try again when a session cannot start', async () => {
+    server.use(http.post('*/v1/student/flashcards/sessions', () => HttpResponse.error()));
+    renderRoute('/cards');
+    expect(await screen.findByRole('alert')).toHaveTextContent(/try again/);
+    server.resetHandlers();
+    await click('Try again');
+    expect(await screen.findByText(/Finish the session for 20 XP/)).toBeInTheDocument();
+  });
+
+  it('lists all decks and reviews one in a session for that deck', async () => {
+    const bodies: unknown[] = [];
+    server.events.on('request:start', async ({ request }) => {
+      if (request.method === 'POST' && request.url.endsWith('/flashcards/sessions')) {
+        bodies.push(await request.clone().json());
+      }
+    });
     await openCards();
     await userEvent.click(screen.getByRole('tab', { name: 'All decks' }));
     const deck = within(screen.getByRole('tabpanel')).getByRole('listitem');
@@ -66,6 +175,8 @@ describe('Flashcards screen', () => {
     expect(deck).toHaveTextContent('2 due of 2');
     await userEvent.click(within(deck).getByRole('button', { name: 'Review Demo topic A' }));
     expect(await screen.findByTestId('flip-card')).toBeInTheDocument();
+    await vi.waitFor(() => expect(bodies).toEqual([{}, { topicId: 'demo-topic-a' }]));
+    server.events.removeAllListeners();
   });
 
   it('lets a student add their own card', async () => {

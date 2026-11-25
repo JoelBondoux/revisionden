@@ -15,6 +15,7 @@ import {
   type Database,
 } from '@revisionden/db';
 import { deleteExpiredFeedback } from './feedback/retention';
+import { deleteExpiredErrorReports } from './feedback/error-reports';
 
 /** Accounts nobody has used for this many months are deleted. */
 export const INACTIVE_DELETE_AFTER_MONTHS = 12;
@@ -85,6 +86,7 @@ export async function deleteInactiveAccounts(db: Database, now: Date) {
 /** Everything the scheduled clean-up deletes because its retention period is over. */
 export async function cleanUpExpiredData({ db, now }: { db: Database; now: Date }) {
   const feedbackDeleted = await deleteExpiredFeedback(db, now);
+  const errorReportsDeleted = await deleteExpiredErrorReports(db, now);
   const linkTokensDeleted = await count(
     db
       .delete(deviceLinkTokens)
@@ -117,6 +119,7 @@ export async function cleanUpExpiredData({ db, now }: { db: Database; now: Date 
   );
   return {
     feedbackDeleted,
+    errorReportsDeleted,
     linkTokensDeleted,
     studentSessionsDeleted,
     parentSessionsDeleted,

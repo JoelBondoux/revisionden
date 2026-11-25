@@ -252,6 +252,8 @@ export const topics = pgTable(
     parentTopicId: text('parent_topic_id').references((): AnyPgColumn => topics.id, {
       onDelete: 'cascade',
     }),
+    // Added by workstream F2: order in the topic tree (specification order) for the topic map.
+    position: integer('position').notNull().default(0),
   },
   (t) => [index('topics_subject_board_idx').on(t.subjectId, t.board)],
 );
@@ -436,6 +438,40 @@ export const startingTests = pgTable(
     finishedAt: timestamp('finished_at', { withTimezone: true }),
   },
   (t) => [index('starting_tests_student_id_idx').on(t.studentId)],
+);
+
+/**
+ * A flashcard review session (workstream F3). Deck XP is paid per completed session, not per
+ * card: card_ids counts each card once (at most 20); xp_earned and finished_at are set when the
+ * session is finished, so reward XP can apply the late-night and daily rules to it.
+ */
+export const flashcardSessions = pgTable(
+  'flashcard_sessions',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    cardIds: jsonb('card_ids').$type<string[]>().notNull().default([]),
+    startedAt: timestamp('started_at', { withTimezone: true }).notNull().defaultNow(),
+    finishedAt: timestamp('finished_at', { withTimezone: true }),
+    completed: boolean('completed').notNull().default(false),
+    xpEarned: integer('xp_earned').notNull().default(0),
+    /** Set when the session reviews one deck: completion is checked within that deck only. */
+    topicId: text('topic_id'),
+    /**
+     * A rewarded session takes one of the student's daily reward slots (UK day, slot 1 or 2).
+     * The unique key means two finishes at the same time can never both take the same slot,
+     * so the 2-a-day limit holds without a transaction (the Neon HTTP driver has none).
+     */
+    rewardedDay: date('rewarded_day'),
+    rewardSlot: integer('reward_slot'),
+  },
+  (t) => [
+    index('flashcard_sessions_student_started_idx').on(t.studentId, t.startedAt),
+    unique('flashcard_sessions_reward_slot').on(t.studentId, t.rewardedDay, t.rewardSlot),
+    check('flashcard_sessions_reward_slot_range', sql`${t.rewardSlot} between 1 and 2`),
+  ],
 );
 
 /**
@@ -840,4 +876,35 @@ export const policyAcceptances = pgTable(
     acceptedAt: timestamp('accepted_at', { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [primaryKey({ columns: [t.authUserId, t.policy] })],
+);
+
+/** Browser families an error report may name (no versions). */
+export const ERROR_REPORT_BROWSERS = ['Chrome', 'Edge', 'Firefox', 'Safari', 'Other'] as const;
+
+/**
+ * Error reports sent with the "Send error report" button (workstream I). Anonymous: no family,
+ * student, account or free text; screen and API path have ids masked. Deleted after 90 days.
+ */
+export const errorReports = pgTable(
+  'error_reports',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    ref: text('ref').notNull().unique('error_reports_ref_unique'),
+    screen: text('screen').notNull(),
+    apiPath: text('api_path'),
+    status: integer('status'),
+    build: text('build').notNull(),
+    browser: text('browser', { enum: ERROR_REPORT_BROWSERS }).notNull(),
+    online: boolean('online').notNull(),
+    // When the error happened, by the device's clock.
+    reportedAt: timestamp('reported_at', { withTimezone: true }).notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('error_reports_created_at_idx').on(t.createdAt),
+    check(
+      'error_reports_browser_values',
+      sql`${t.browser} in ('Chrome', 'Edge', 'Firefox', 'Safari', 'Other')`,
+    ),
+  ],
 );

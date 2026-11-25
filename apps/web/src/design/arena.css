@@ -1,0 +1,171 @@
+/*
+ * The dark "arena" theme for practice screens (docs/GAME_FEEL.md, mockup 22). Wrap a screen in
+ * `.arena`. Transforms and opacity only for motion; reduced motion is handled in base.css.
+ */
+body:has(.arena:not(.review)) {
+  background:
+    radial-gradient(120% 50% at 50% 0%, var(--arena-raised) 0%, transparent 70%) no-repeat,
+    var(--arena-bg);
+}
+
+body:has(.arena:not(.review)) footer,
+body:has(.arena:not(.review)) footer a {
+  color: var(--arena-text-secondary);
+}
+
+.arena {
+  color: var(--arena-text);
+}
+
+/* An arena panel inside a light page (the Cards tab), until that page goes fully immersive. */
+.arena.review {
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--arena-bg);
+}
+
+.arena h1,
+.arena h2,
+.arena legend {
+  color: var(--arena-text);
+}
+
+.arena .secondary-text {
+  color: var(--arena-text-secondary);
+}
+
+.arena a:not(.btn) {
+  color: var(--arena-glow);
+}
+
+.arena .icon-button {
+  color: var(--arena-text);
+}
+
+.arena .card {
+  background: var(--arena-raised);
+  color: var(--arena-text);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* Chunky press-down "jelly" on tap. */
+.arena .btn {
+  transition: transform var(--motion-fast) var(--ease-spring);
+}
+
+.arena .btn:active:not(:disabled) {
+  transform: translateY(5px) scale(0.97, 0.94);
+}
+
+.arena .btn--secondary {
+  background: var(--arena-raised);
+  color: var(--arena-text);
+  border-color: var(--arena-option-1);
+  box-shadow: 0 5px 0 var(--arena-option-1-edge);
+}
+
+/* 2 × 2 chunky coloured answer buttons. */
+.answer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.answer-option {
+  position: relative;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 88px;
+  padding: var(--space-3);
+  border: 3px solid transparent;
+  border-radius: var(--radius-lg);
+  color: var(--arena-text);
+  font-weight: var(--font-weight-black);
+  text-align: center;
+  cursor: pointer;
+  transition: transform var(--motion-fast) var(--ease-spring);
+}
+
+.answer-option:nth-child(4n + 1) {
+  background: var(--arena-option-1);
+  box-shadow: 0 6px 0 var(--arena-option-1-edge);
+}
+
+.answer-option:nth-child(4n + 2) {
+  background: var(--arena-option-2);
+  box-shadow: 0 6px 0 var(--arena-option-2-edge);
+}
+
+.answer-option:nth-child(4n + 3) {
+  background: var(--arena-option-3);
+  box-shadow: 0 6px 0 var(--arena-option-3-edge);
+}
+
+.answer-option:nth-child(4n + 4) {
+  background: var(--arena-option-4);
+  box-shadow: 0 6px 0 var(--arena-option-4-edge);
+}
+
+.answer-option:active {
+  transform: translateY(6px) scale(0.97, 0.94);
+  box-shadow: none;
+}
+
+.answer-option:has(input:checked) {
+  border-color: var(--arena-text);
+}
+
+.answer-option:has(input:focus-visible) {
+  box-shadow: var(--focus-ring);
+}
+
+.answer-option--right {
+  background: var(--arena-correct) !important;
+  box-shadow: 0 6px 0 var(--arena-correct-edge) !important;
+  border-color: var(--arena-glow);
+}
+
+.answer-option--dim {
+  opacity: 0.55;
+}
+
+.answer-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Light parts inside the arena keep dark text; labels use the arena's secondary colour. */
+.arena .field__input,
+.arena .flip-card__face {
+  color: var(--color-text);
+}
+
+.arena .field__label,
+.arena .deck-header__subject,
+.arena .stat__label,
+.arena.lesson h1 {
+  color: var(--arena-text-secondary);
+}
+
+.arena .card .secondary-text {
+  color: var(--arena-text-secondary);
+}
+
+.arena .question__reveal {
+  color: var(--arena-glow);
+}
+
+.arena .stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  border-radius: var(--radius-md);
+  background: var(--arena-bg);
+}
