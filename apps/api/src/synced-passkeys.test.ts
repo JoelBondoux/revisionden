@@ -184,4 +184,16 @@ describe('synced passkeys', () => {
     expect((await unlock(passkey, marker)).res.status).toBe(200);
     expect((await unlock(passkey, laptop.body.deviceMarker)).res.status).toBe(200);
   });
+
+  it('keeps one signature counter for a synced passkey, so a cloned passkey is still caught', async () => {
+    const { headers, studentId } = await family('Titan_9');
+    const { passkey, marker } = await link(headers, studentId);
+    await unlock(passkey); // the laptop: a second row for the same passkey
+    await unlock(passkey, marker); // then the phone again
+    const rows = await t.db.select().from(devices).where(eq(devices.studentId, studentId));
+    expect(rows).toHaveLength(2);
+    // Every row holds the newest counter, whichever device unlocked last.
+    expect(new Set(rows.map((r) => r.counter)).size).toBe(1);
+    expect(rows[0]!.counter).toBeGreaterThan(0);
+  });
 });

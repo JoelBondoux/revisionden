@@ -342,10 +342,13 @@ export function deviceRoutes({ db, clock, passkeys }: DeviceDeps) {
     });
     if (!result) throw passkeyNotVerified();
     const { device, marker } = await deviceForUnlock(rows, deviceMarker);
+    // The counter belongs to the passkey, not the device: keep it the same on every row, so a
+    // cloned passkey with an older counter is still refused whichever device unlocked last.
     await db
       .update(devices)
-      .set({ counter: result.newCounter, lastUsedAt: now() })
-      .where(eq(devices.id, device.id));
+      .set({ counter: result.newCounter })
+      .where(eq(devices.credentialId, device.credentialId));
+    await db.update(devices).set({ lastUsedAt: now() }).where(eq(devices.id, device.id));
     await startSession(c, device.studentId, device.id);
     const [student] = await db.select().from(students).where(eq(students.id, device.studentId));
     return c.json({ student: toStudent(student!), ...(marker ? { deviceMarker: marker } : {}) });
