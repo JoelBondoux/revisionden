@@ -1027,3 +1027,46 @@ export const operatorRequests = pgTable(
   },
   (t) => [index('operator_requests_created_at_idx').on(t.createdAt)],
 );
+
+/**
+ * O3: internal notes an operator keeps on a family (never shown to the family). The author is
+ * the operator's work email from AppDeck. Deleted with the family; included in the family's
+ * data export.
+ */
+export const operatorNotes = pgTable(
+  'operator_notes',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    familyId: uuid('family_id')
+      .notNull()
+      .references(() => families.id, { onDelete: 'cascade' }),
+    authorEmail: text('author_email').notNull(),
+    text: text('text').notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('operator_notes_family_id_idx').on(t.familyId, t.createdAt),
+    check('operator_notes_text_length', sql`char_length(${t.text}) between 1 and 2000`),
+  ],
+);
+
+/**
+ * O3: replies from RevisionDen support to a ticket (feedback), shown in the sender's app. The
+ * family sees only the text and time, never the operator's email. Deleted with the ticket.
+ */
+export const feedbackReplies = pgTable(
+  'feedback_replies',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    feedbackId: uuid('feedback_id')
+      .notNull()
+      .references(() => feedback.id, { onDelete: 'cascade' }),
+    authorEmail: text('author_email').notNull(),
+    body: text('body').notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('feedback_replies_feedback_id_idx').on(t.feedbackId, t.createdAt),
+    check('feedback_replies_body_length', sql`char_length(${t.body}) between 1 and 5000`),
+  ],
+);

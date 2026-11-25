@@ -93,3 +93,53 @@ describe('operator_requests table (request ids, workstream O)', () => {
     ]);
   });
 });
+
+describe('operator_notes and feedback_replies tables (O3)', () => {
+  async function family() {
+    const { rows } = await client.query<{ id: string }>(
+      `insert into families default values returning id`,
+    );
+    return rows[0]!.id;
+  }
+
+  it('keeps internal notes on a family, at most 2000 characters, deleted with the family', async () => {
+    const id = await family();
+    await client.query(
+      `insert into operator_notes (family_id, author_email, text) values ($1, 'agent@example.com', 'Called back')`,
+      [id],
+    );
+    await expect(
+      client.query(
+        `insert into operator_notes (family_id, author_email, text) values ($1, 'agent@example.com', $2)`,
+        [id, 'x'.repeat(2001)],
+      ),
+    ).rejects.toThrow(/operator_notes_text_length/);
+    await client.query(`delete from families where id = $1`, [id]);
+    const { rows } = await client.query(`select 1 from operator_notes where family_id = $1`, [id]);
+    expect(rows).toEqual([]);
+  });
+
+  it('keeps replies to a ticket, at most 5000 characters, deleted with the ticket', async () => {
+    const id = await family();
+    const { rows } = await client.query<{ id: string }>(
+      `insert into feedback (family_id, sender_role, kind) values ($1, 'parent', 'bug') returning id`,
+      [id],
+    );
+    const ticket = rows[0]!.id;
+    await client.query(
+      `insert into feedback_replies (feedback_id, author_email, body) values ($1, 'agent@example.com', 'Fixed now')`,
+      [ticket],
+    );
+    await expect(
+      client.query(
+        `insert into feedback_replies (feedback_id, author_email, body) values ($1, 'a@example.com', $2)`,
+        [ticket, 'x'.repeat(5001)],
+      ),
+    ).rejects.toThrow(/feedback_replies_body_length/);
+    await client.query(`delete from feedback where id = $1`, [ticket]);
+    const left = await client.query(`select 1 from feedback_replies where feedback_id = $1`, [
+      ticket,
+    ]);
+    expect(left.rows).toEqual([]);
+  });
+});

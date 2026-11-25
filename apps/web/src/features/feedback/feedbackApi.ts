@@ -26,6 +26,8 @@ const feedbackSchema = z.object({
   // Bug Hunter (L7): set when the operator confirms a bug. Missing means not confirmed yet.
   outcome: z.enum(FEEDBACK_OUTCOMES).nullable().default(null),
   rewardXp: z.number().int().nonnegative().default(0),
+  // Workstream O: replies from RevisionDen support (text and time only), oldest first.
+  replies: z.array(z.object({ body: z.string(), createdAt: z.string() })).default([]),
 });
 const triageSchema = feedbackSchema.extend({
   device: z.record(z.string(), z.unknown()).nullable(),

@@ -20,8 +20,10 @@ import {
   errorReports,
   families,
   feedback,
+  feedbackReplies,
   itemReports,
   operatorAuditLog,
+  operatorNotes,
   parents,
   quarantinedItems,
   students,
@@ -81,6 +83,8 @@ function toTicket(r: FeedbackRow): OperatorTicket {
     createdAt: r.createdAt.toISOString(),
     updatedAt: r.updatedAt.toISOString(),
     closedAt: r.closedAt?.toISOString() ?? null,
+    confirmedBug: r.outcome === 'confirmed',
+    duplicateOf: r.duplicateOf ?? null,
   };
 }
 
@@ -196,7 +200,7 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
     const [family] = await db.select().from(families).where(eq(families.id, id));
     if (!family) throw notFound('Family not found');
 
-    const [parentRows, childRows, [tickets], [reports]] = await Promise.all([
+    const [parentRows, childRows, [tickets], [reports], noteRows] = await Promise.all([
       db
         .select({ email: authUsers.email, joinedAt: parents.createdAt })
         .from(parents)
@@ -216,6 +220,12 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
         .select({ n: count() })
         .from(itemReports)
         .where(and(eq(itemReports.familyId, id), eq(itemReports.status, 'open'))),
+      db
+        .select()
+        .from(operatorNotes)
+        .where(eq(operatorNotes.familyId, id))
+        .orderBy(desc(operatorNotes.createdAt))
+        .limit(200),
     ]);
 
     const detail: OperatorFamilyDetail = {
@@ -227,6 +237,12 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
       plan: null,
       // Only a child's nickname and year group reach AppDeck.
       children: childRows,
+      notes: noteRows.map((n) => ({
+        id: n.id,
+        text: n.text,
+        author: n.authorEmail,
+        createdAt: n.createdAt.toISOString(),
+      })),
       flags: {
         inactivityWarning:
           family.lastActiveAt.getTime() <=
@@ -292,7 +308,34 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
       { action: 'ticket.view', targetType: 'family', targetId: row.familyId },
       now(),
     );
-    return ok(c, toTicket(row));
+    const replies = await db
+      .select()
+      .from(feedbackReplies)
+      .where(eq(feedbackReplies.feedbackId, id))
+      .orderBy(feedbackReplies.createdAt);
+    const ticket = toTicket(row);
+    return ok(c, {
+      ...ticket,
+      messages: [
+        // The family's own words appear only when a parent sent them.
+        ...(ticket.text !== null
+          ? [
+              {
+                id: row.id,
+                from: 'family' as const,
+                body: ticket.text,
+                createdAt: ticket.createdAt,
+              },
+            ]
+          : []),
+        ...replies.map((m) => ({
+          id: m.id,
+          from: 'operator' as const,
+          body: m.body,
+          createdAt: m.createdAt.toISOString(),
+        })),
+      ],
+    });
   });
 
   app.get('/error-reports', async (c) => {

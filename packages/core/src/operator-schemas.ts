@@ -68,6 +68,10 @@ export const OperatorFamilyDetailSchema = z
     /** Plan and trial come with payments (workstream $). */
     plan: z.null(),
     children: z.array(OperatorChildSchema),
+    /** Internal notes by operators, newest first; never shown to the family. */
+    notes: z.array(
+      z.object({ id: uuid, text: z.string(), author: z.string(), createdAt: isoDate }).strict(),
+    ),
     flags: z
       .object({
         /** The family has not been used for 11 months or more. */
@@ -90,8 +94,7 @@ const ticketDevice = z
   })
   .strict();
 
-/** Feedback as a ticket. A student's own words are never sent: `text` is null for them. */
-export const OperatorTicketSchema = z
+const ticketFields = z
   .object({
     id: uuid,
     familyId: uuid,
@@ -103,13 +106,38 @@ export const OperatorTicketSchema = z
     createdAt: isoDate,
     updatedAt: isoDate,
     closedAt: isoDate.nullable(),
+    /** Confirmed as a bug (Bug Hunter); a duplicate has `duplicateOf` instead. */
+    confirmedBug: z.boolean(),
+    duplicateOf: uuid.nullable(),
   })
-  .strict()
-  .refine((t) => t.senderRole === 'parent' || t.text === null, {
-    message: "A student's ticket text is never sent to AppDeck",
-    path: ['text'],
-  });
+  .strict();
+
+const noStudentText = <T extends { senderRole: string; text: string | null }>(t: T) =>
+  t.senderRole === 'parent' || t.text === null;
+const noStudentTextMessage = {
+  message: "A student's ticket text is never sent to AppDeck",
+  path: ['text'],
+};
+
+/** Feedback as a ticket. A student's own words are never sent: `text` is null for them. */
+export const OperatorTicketSchema = ticketFields.refine(noStudentText, noStudentTextMessage);
 export type OperatorTicket = z.infer<typeof OperatorTicketSchema>;
+
+export const OperatorTicketMessageSchema = z
+  .object({
+    id: uuid,
+    /** `family`: a parent's own ticket text (never a student's); `operator`: a support reply. */
+    from: z.enum(['family', 'operator']),
+    body: z.string(),
+    createdAt: isoDate,
+  })
+  .strict();
+
+/** `GET tickets/{id}`: the ticket and its conversation. */
+export const OperatorTicketDetailSchema = ticketFields
+  .extend({ messages: z.array(OperatorTicketMessageSchema) })
+  .strict()
+  .refine(noStudentText, noStudentTextMessage);
 
 export const OperatorTicketListSchema = z
   .object({ tickets: z.array(OperatorTicketSchema) })
@@ -171,3 +199,15 @@ export const OperatorHealthSchema = z
     errorReports24h: z.number().int().nonnegative(),
   })
   .strict();
+
+/** Change bodies (O3). */
+export const OperatorNoteBodySchema = z
+  .object({ text: z.string().trim().min(1).max(2000) })
+  .strict();
+export const OperatorReplyBodySchema = z
+  .object({ text: z.string().trim().min(1).max(5000) })
+  .strict();
+export const OperatorTicketStatusBodySchema = z
+  .object({ status: z.enum(['new', 'looking_into_it', 'fixed', 'will_not_fix']) })
+  .strict();
+export const OperatorDuplicateBodySchema = z.object({ duplicateOf: uuid }).strict();

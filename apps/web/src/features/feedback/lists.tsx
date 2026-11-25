@@ -95,6 +95,13 @@ export function FeedbackListPage({ scope }: { scope: 'family' | 'mine' }) {
                 </div>
                 <p>{item.text ?? <span className="secondary-text">No message</span>}</p>
                 {item.outcome && <p className="feedback__thanks">Confirmed – thank you!</p>}
+                {item.replies.map((reply) => (
+                  <div key={reply.createdAt} className="feedback__reply">
+                    <strong>Reply from RevisionDen</strong>
+                    <p>{reply.body}</p>
+                    <p className="secondary-text">{date(reply.createdAt)}</p>
+                  </div>
+                ))}
                 <p className="secondary-text">
                   {sender(item, scope)} · {date(item.createdAt)}
                 </p>

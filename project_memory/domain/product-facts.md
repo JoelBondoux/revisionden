@@ -161,8 +161,12 @@ Tags: #product #rules #limits #defaults
   group only, flags), tickets (a student's ticket text is never sent), error-report groups,
   content reports, audit log. `apps/api/src/operator/reads.ts`; shapes in
   `packages/core/src/operator-schemas.ts`.
+- AppDeck actions (O3, all Agent): internal family notes (≤2000, never shown to the family, in its
+  export), ticket replies (≤5000, shown under the message in the sender's app without the
+  operator's email), ticket status, confirm bug and duplicate (same L7 rules and rewards, shared
+  `confirmFeedback` and `setFeedbackStatus` in `apps/api/src/feedback/routes.ts`).
 - Every operator read of a family and every action goes in `operator_audit_log`, kept 2 years
-  (data retention policy 1.3); the scheduled clean-up deletes older entries.
+  (data retention policy 1.4); the scheduled clean-up deletes older entries.
 
 ## Content
 

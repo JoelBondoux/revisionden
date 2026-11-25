@@ -14,6 +14,7 @@ const family = {
   plan: null,
   children: [{ nickname: 'test_kid', yearGroup: 11 }],
   flags: { inactivityWarning: false, openTickets: 0, openContentReports: 0 },
+  notes: [],
 };
 
 describe('operator response shapes (AppDeck bridge)', () => {
@@ -43,6 +44,8 @@ describe('operator response shapes (AppDeck bridge)', () => {
       createdAt: family.createdAt,
       updatedAt: family.createdAt,
       closedAt: null,
+      confirmedBug: false,
+      duplicateOf: null,
     };
     expect(() => OperatorTicketSchema.parse(ticket)).toThrow();
     expect(OperatorTicketSchema.parse({ ...ticket, text: null }).text).toBeNull();
