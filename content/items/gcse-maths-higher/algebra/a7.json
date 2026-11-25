@@ -73,7 +73,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -81,7 +81,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -160,7 +160,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -168,7 +168,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -247,7 +247,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -255,7 +255,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -337,7 +337,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -345,7 +345,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -353,27 +353,24 @@
   {
     "id": "gcse-maths-h-a7-0105",
     "topic": "gcse-maths-h-a7",
-    "type": "worked_maths",
+    "type": "multiple_choice",
     "difficulty": 3,
     "learning_point": "gcse-maths-h-a7-lp-inverse",
-    "expected_seconds": 75,
-    "prompt": "f(x) = 2x + 3. Find f^-1(x).",
-    "answer": {
-      "solutions": ["(x - 3)/2"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "x = 2y + 3",
-      "variable": "y"
-    },
-    "marks": 2,
-    "mark_scheme": [
-      "M1 for a correct first step by either method (y - 3 = 2x from y = 2x + 3, or x - 3 = 2y after swapping x and y)",
-      "A1 for f^-1(x) = (x - 3)/2"
+    "expected_seconds": 60,
+    "prompt": "f(x) = 2x + 3. Which of these is f^-1(x)?",
+    "options": [
+      "f^-1(x) = (x - 3)/2",
+      "f^-1(x) = (x + 3)/2",
+      "f^-1(x) = 2x - 3",
+      "f^-1(x) = 1/(2x + 3)"
     ],
-    "hint": "Write y = 2x + 3, swap x and y, then make y the subject.",
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "Write x = 2y + 3 and make y the subject: y = (x - 3)/2. (1/(2x + 3) is the reciprocal, not the inverse.)",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
-    "checked_by": ["maths-engine", "author"],
+    "checked_by": ["author"],
     "citations": [
       {
         "source_type": "specification",
@@ -409,31 +406,31 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). Solutions backed by the maths engine.",
-          "at": "2026-11-25T18:26:24Z"
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). Options checked with SymPy: only option 0 solves x = 2*y + 3 for y.",
+          "at": "2026-11-25T18:55:47Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:26:33Z",
+          "at": "2026-11-25T18:56:13Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
           "name": "blind-answer",
-          "result": "fail",
+          "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:26:38Z",
-          "notes": "model answered \"f^-1(x) = (x - 3) / 2\"; expected \"(x - 3)/2\""
+          "at": "2026-11-25T18:58:45Z",
+          "notes": "model answered \"0\"; expected \"0\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:26:45Z",
+          "at": "2026-11-25T18:58:57Z",
           "notes": "no problems found"
         },
         {
@@ -442,15 +439,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
-        },
-        {
-          "name": "maths-engine",
-          "result": "pass",
-          "tool": "revisionden-maths-engine",
-          "tool_version": "sympy 1.13.3",
-          "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -458,26 +447,24 @@
   {
     "id": "gcse-maths-h-a7-0106",
     "topic": "gcse-maths-h-a7",
-    "type": "worked_maths",
+    "type": "multiple_choice",
     "difficulty": 3,
     "learning_point": "gcse-maths-h-a7-lp-inverse",
-    "expected_seconds": 75,
-    "prompt": "f(x) = 5x - 1. Find f^-1(x).",
-    "answer": {
-      "solutions": ["(x + 1)/5"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "x = 5y - 1",
-      "variable": "y"
-    },
-    "marks": 2,
-    "mark_scheme": [
-      "M1 for a correct first step by either method (y + 1 = 5x from y = 5x - 1, or x + 1 = 5y after swapping x and y)",
-      "A1 for f^-1(x) = (x + 1)/5"
+    "expected_seconds": 60,
+    "prompt": "f(x) = 5x - 1. Which of these is f^-1(x)?",
+    "options": [
+      "f^-1(x) = (x - 1)/5",
+      "f^-1(x) = 5x + 1",
+      "f^-1(x) = (x + 1)/5",
+      "f^-1(x) = x/5 - 1"
     ],
+    "answer": {
+      "option": 2
+    },
+    "marks": 1,
+    "explanation": "Write x = 5y - 1 and make y the subject: y = (x + 1)/5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
-    "checked_by": ["maths-engine", "author"],
+    "checked_by": ["author"],
     "citations": [
       {
         "source_type": "specification",
@@ -501,15 +488,15 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). Solutions backed by the maths engine.",
-          "at": "2026-11-25T18:18:47Z"
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). Options checked with SymPy: only option 2 solves x = 5*y - 1 for y.",
+          "at": "2026-11-25T18:55:47Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:19:07Z",
+          "at": "2026-11-25T18:56:14Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -517,107 +504,15 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:19:57Z",
-          "notes": "model answered \"(x + 1) / 5\"; expected \"(x + 1)/5\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "fail",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:20:17Z",
-          "notes": "wording (answer): The prompt asks to find the function f^-1(x), and the mark scheme explicitly states the accuracy mark is for 'f^-1(x) = (x + 1)/5'. The answer provided should be the full function definition 'f^-1(x) = (x + 1)/5', not just the expression '(x + 1)/5'."
-        },
-        {
-          "name": "schema",
-          "result": "pass",
-          "tool": "revisionden-content-validate",
-          "tool_version": "00.01.002",
-          "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
-        },
-        {
-          "name": "maths-engine",
-          "result": "pass",
-          "tool": "revisionden-maths-engine",
-          "tool_version": "sympy 1.13.3",
-          "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:46:27Z"
-        }
-      ]
-    }
-  },
-  {
-    "id": "gcse-maths-h-a7-0107",
-    "topic": "gcse-maths-h-a7",
-    "type": "worked_maths",
-    "difficulty": 3,
-    "learning_point": "gcse-maths-h-a7-lp-inverse",
-    "expected_seconds": 75,
-    "prompt": "f(x) = (x + 4)/3. Find f^-1(x).",
-    "answer": {
-      "solutions": ["3x - 4"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "x = (y + 4)/3",
-      "variable": "y"
-    },
-    "marks": 2,
-    "mark_scheme": [
-      "M1 for a correct first step by either method (3y = x + 4 from y = (x + 4)/3, or 3x = y + 4 after swapping x and y)",
-      "A1 for f^-1(x) = 3x - 4"
-    ],
-    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
-    "checked_by": ["maths-engine", "author"],
-    "citations": [
-      {
-        "source_type": "specification",
-        "publisher": "Pearson Edexcel",
-        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
-        "document_ref": "1MA1 Issue 2 (June 2015)",
-        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
-        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A7 (page 14; PDF page 26)",
-        "quote": "interpret the reverse process as the ‘inverse function’",
-        "retrieved_at": "2026-11-25",
-        "supports": ["question"],
-        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
-      }
-    ],
-    "verification": {
-      "status": "draft",
-      "version": 1,
-      "checks": [
-        {
-          "name": "grounded-writing",
-          "tool": "anthropic:content-session",
-          "tool_version": "S3-A writer 2026-11-25",
-          "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). Solutions backed by the maths engine.",
-          "at": "2026-11-25T18:18:47Z"
-        },
-        {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-25T18:19:07Z",
-          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
-        },
-        {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:20:27Z",
-          "notes": "model answered \"3x - 4\"; expected \"3x - 4\""
+          "at": "2026-11-25T18:59:04Z",
+          "notes": "model answered \"2\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:20:35Z",
+          "at": "2026-11-25T18:59:12Z",
           "notes": "no problems found"
         },
         {
@@ -626,15 +521,89 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a7-0107",
+    "topic": "gcse-maths-h-a7",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a7-lp-inverse",
+    "expected_seconds": 60,
+    "prompt": "f(x) = (x + 4)/3. Which of these is f^-1(x)?",
+    "options": [
+      "f^-1(x) = 3x + 4",
+      "f^-1(x) = (x - 4)/3",
+      "f^-1(x) = 3(x + 4)",
+      "f^-1(x) = 3x - 4"
+    ],
+    "answer": {
+      "option": 3
+    },
+    "marks": 1,
+    "explanation": "Write x = (y + 4)/3 and make y the subject: 3x = y + 4, so y = 3x - 4.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A7 (page 14; PDF page 26)",
+        "quote": "interpret the reverse process as the ‘inverse function’",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). Options checked with SymPy: only option 3 solves x = (y + 4)/3 for y.",
+          "at": "2026-11-25T18:55:47Z"
         },
         {
-          "name": "maths-engine",
+          "name": "quote-check",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
-          "tool_version": "sympy 1.13.3",
-          "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:46:27Z"
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:56:15Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:59:19Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:59:30Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -714,7 +683,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -722,7 +691,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -802,7 +771,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -810,7 +779,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -892,7 +861,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -900,7 +869,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -972,7 +941,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -1044,7 +1013,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -1117,7 +1086,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }

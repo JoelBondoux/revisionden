@@ -72,7 +72,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -142,7 +142,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "adversarial-review",
@@ -220,7 +220,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "adversarial-review",
@@ -306,7 +306,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -412,7 +412,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -420,7 +420,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -434,7 +434,7 @@
     "expected_seconds": 30,
     "prompt": "How many terms are in the expression 4x^2 - 3x + 7?",
     "answer": {
-      "accepted": ["3", "three", "3 terms"]
+      "accepted": ["3", "three", "3 terms", "3terms"]
     },
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
@@ -464,31 +464,31 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A3). The terms are 4x^2, -3x and 7 (standard meaning of a term). The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
-          "at": "2026-11-25T17:17:06Z"
-        },
-        {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:26:38Z",
-          "notes": "model answered \"3\"; expected \"3 | three | 3 terms\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:26:44Z",
-          "notes": "no problems found"
+          "at": "2026-11-25T18:55:46Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:34:55Z",
+          "at": "2026-11-25T18:56:09Z",
           "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:56:45Z",
+          "notes": "model answered \"3\"; expected \"3 | three | 3 terms | 3terms\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:56:50Z",
+          "notes": "no problems found"
         },
         {
           "name": "schema",
@@ -496,7 +496,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -574,7 +574,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -650,7 +650,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -723,7 +723,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -796,7 +796,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -869,7 +869,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }

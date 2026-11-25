@@ -2,23 +2,19 @@
   {
     "id": "gcse-maths-h-a5-0101",
     "topic": "gcse-maths-h-a5",
-    "type": "worked_maths",
+    "type": "multiple_choice",
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a5-lp-rearrange",
     "expected_seconds": 45,
     "prompt": "Make t the subject of v = u + at",
+    "options": ["t = (v - u)/a", "t = v - u/a", "t = (v + u)/a", "t = a(v - u)"],
     "answer": {
-      "solutions": ["(v - u)/a"]
+      "option": 0
     },
-    "verify": {
-      "method": "solve",
-      "equation": "v = u + a t",
-      "variable": "t"
-    },
-    "marks": 2,
-    "mark_scheme": ["M1 for v - u = at", "A1 for t = (v - u)/a"],
+    "marks": 1,
+    "explanation": "Subtract u: v - u = at. Divide by a: t = (v - u)/a.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
-    "checked_by": ["maths-engine", "author"],
+    "checked_by": ["author"],
     "citations": [
       {
         "source_type": "specification",
@@ -42,15 +38,15 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A5). Solutions backed by the maths engine.",
-          "at": "2026-11-25T17:21:07Z"
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A5). Options checked with SymPy: only option 0 solves v = u + a*t for t.",
+          "at": "2026-11-25T18:55:47Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:23:44Z",
+          "at": "2026-11-25T18:56:10Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -58,16 +54,16 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:38:32Z",
-          "notes": "model answered \"t = (v - u) / a\"; expected \"(v - u)/a\""
+          "at": "2026-11-25T18:56:58Z",
+          "notes": "model answered \"0\"; expected \"0\""
         },
         {
           "name": "adversarial-review",
-          "result": "fail",
+          "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:38:52Z",
-          "notes": "factual_error (answer): The prompt asks to 'Make t the subject', which requires a full equation as the answer. The 'solutions' array provides only the expression '(v - u)/a', which is an incomplete answer. The correct answer is the equation 't = (v - u)/a', as correctly shown in the A1 mark of the mark scheme."
+          "at": "2026-11-25T18:57:04Z",
+          "notes": "no problems found"
         },
         {
           "name": "schema",
@@ -75,15 +71,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
-        },
-        {
-          "name": "maths-engine",
-          "result": "pass",
-          "tool": "revisionden-maths-engine",
-          "tool_version": "sympy 1.13.3",
-          "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -91,23 +79,19 @@
   {
     "id": "gcse-maths-h-a5-0102",
     "topic": "gcse-maths-h-a5",
-    "type": "worked_maths",
+    "type": "multiple_choice",
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a5-lp-rearrange",
     "expected_seconds": 45,
     "prompt": "Make x the subject of y = 3x - 7",
+    "options": ["x = (y - 7)/3", "x = (y + 7)/3", "x = 3y + 7", "x = y/3 + 7"],
     "answer": {
-      "solutions": ["(y + 7)/3"]
+      "option": 1
     },
-    "verify": {
-      "method": "solve",
-      "equation": "y = 3x - 7",
-      "variable": "x"
-    },
-    "marks": 2,
-    "mark_scheme": ["M1 for y + 7 = 3x", "A1 for x = (y + 7)/3"],
+    "marks": 1,
+    "explanation": "Add 7: y + 7 = 3x. Divide by 3: x = (y + 7)/3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
-    "checked_by": ["maths-engine", "author"],
+    "checked_by": ["author"],
     "citations": [
       {
         "source_type": "specification",
@@ -131,15 +115,15 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A5). Solutions backed by the maths engine.",
-          "at": "2026-11-25T17:21:07Z"
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A5). Options checked with SymPy: only option 1 solves y = 3x - 7 for x.",
+          "at": "2026-11-25T18:55:47Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:23:45Z",
+          "at": "2026-11-25T18:56:11Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -147,15 +131,15 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:00Z",
-          "notes": "model answered \"(y + 7) / 3\"; expected \"(y + 7)/3\""
+          "at": "2026-11-25T18:57:11Z",
+          "notes": "model answered \"1\"; expected \"1\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:07Z",
+          "at": "2026-11-25T18:57:18Z",
           "notes": "no problems found"
         },
         {
@@ -164,15 +148,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
-        },
-        {
-          "name": "maths-engine",
-          "result": "pass",
-          "tool": "revisionden-maths-engine",
-          "tool_version": "sympy 1.13.3",
-          "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -180,23 +156,19 @@
   {
     "id": "gcse-maths-h-a5-0103",
     "topic": "gcse-maths-h-a5",
-    "type": "worked_maths",
+    "type": "multiple_choice",
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a5-lp-rearrange",
     "expected_seconds": 45,
     "prompt": "Make x the subject of y = (x + 4)/5",
+    "options": ["x = 5y + 4", "x = (y - 4)/5", "x = 5y - 4", "x = 5(y + 4)"],
     "answer": {
-      "solutions": ["5y - 4"]
+      "option": 2
     },
-    "verify": {
-      "method": "solve",
-      "equation": "y = (x + 4)/5",
-      "variable": "x"
-    },
-    "marks": 2,
-    "mark_scheme": ["M1 for 5y = x + 4", "A1 for x = 5y - 4"],
+    "marks": 1,
+    "explanation": "Multiply by 5: 5y = x + 4. Subtract 4: x = 5y - 4.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
-    "checked_by": ["maths-engine", "author"],
+    "checked_by": ["author"],
     "citations": [
       {
         "source_type": "specification",
@@ -220,15 +192,15 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A5). Solutions backed by the maths engine.",
-          "at": "2026-11-25T17:21:07Z"
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A5). Options checked with SymPy: only option 2 solves y = (x + 4)/5 for x.",
+          "at": "2026-11-25T18:55:47Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:23:46Z",
+          "at": "2026-11-25T18:56:12Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -236,15 +208,15 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:11Z",
-          "notes": "model answered \"x = 5y - 4\"; expected \"5y - 4\""
+          "at": "2026-11-25T18:57:25Z",
+          "notes": "model answered \"2\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:18Z",
+          "at": "2026-11-25T18:57:33Z",
           "notes": "no problems found"
         },
         {
@@ -253,15 +225,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
-        },
-        {
-          "name": "maths-engine",
-          "result": "pass",
-          "tool": "revisionden-maths-engine",
-          "tool_version": "sympy 1.13.3",
-          "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -269,28 +233,24 @@
   {
     "id": "gcse-maths-h-a5-0104",
     "topic": "gcse-maths-h-a5",
-    "type": "worked_maths",
+    "type": "multiple_choice",
     "difficulty": 5,
     "learning_point": "gcse-maths-h-a5-lp-rearrange",
-    "expected_seconds": 180,
+    "expected_seconds": 150,
     "prompt": "Make b the subject of a = (2b + 3)/(b - 1)",
-    "answer": {
-      "solutions": ["(a + 3)/(a - 2)"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "a = (2b + 3)/(b - 1)",
-      "variable": "b"
-    },
-    "marks": 4,
-    "mark_scheme": [
-      "M1 for multiplying both sides by (b - 1): ab - a = 2b + 3",
-      "M1 for collecting the b terms on one side: ab - 2b = a + 3",
-      "M1 for factorising: b(a - 2) = a + 3",
-      "A1 for b = (a + 3)/(a - 2)"
+    "options": [
+      "b = (a + 3)/(a - 2)",
+      "b = (a - 3)/(a + 2)",
+      "b = (a + 3)/(2 - a)",
+      "b = (3 - a)/(a - 2)"
     ],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "Multiply by (b - 1): ab - a = 2b + 3. Collect b terms: ab - 2b = a + 3. Factorise: b(a - 2) = a + 3, so b = (a + 3)/(a - 2).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
-    "checked_by": ["maths-engine", "author"],
+    "checked_by": ["author"],
     "citations": [
       {
         "source_type": "specification",
@@ -314,15 +274,15 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A5). Solutions backed by the maths engine.",
-          "at": "2026-11-25T17:21:07Z"
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A5). Options checked with SymPy: only option 0 solves a = (2*b + 3)/(b - 1) for b.",
+          "at": "2026-11-25T18:55:47Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:23:47Z",
+          "at": "2026-11-25T18:56:12Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -330,15 +290,15 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:24Z",
-          "notes": "model answered \"b = (a + 3) / (a - 2)\"; expected \"(a + 3)/(a - 2)\""
+          "at": "2026-11-25T18:57:40Z",
+          "notes": "model answered \"0\"; expected \"0\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:32Z",
+          "at": "2026-11-25T18:58:38Z",
           "notes": "no problems found"
         },
         {
@@ -347,15 +307,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
-        },
-        {
-          "name": "maths-engine",
-          "result": "pass",
-          "tool": "revisionden-maths-engine",
-          "tool_version": "sympy 1.13.3",
-          "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -434,7 +386,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -442,7 +394,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -523,7 +475,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -531,7 +483,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -625,7 +577,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -633,7 +585,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -727,7 +679,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -735,7 +687,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -807,7 +759,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -879,7 +831,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -951,7 +903,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }

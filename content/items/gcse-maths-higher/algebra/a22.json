@@ -70,7 +70,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -146,7 +146,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -160,7 +160,7 @@
     "expected_seconds": 90,
     "prompt": "n is an integer and -3 < 2n + 1 ≤ 7. List all the possible values of n, from smallest to largest.",
     "answer": {
-      "accepted": ["-1, 0, 1, 2, 3", "-1,0,1,2,3", "−1, 0, 1, 2, 3"]
+      "accepted": ["-1, 0, 1, 2, 3", "-1,0,1,2,3", "−1, 0, 1, 2, 3", "−1,0,1,2,3"]
     },
     "marks": 3,
     "explanation": "Subtract 1: -4 < 2n ≤ 6. Divide by 2: -2 < n ≤ 3, so the possible values of n are -1, 0, 1, 2 and 3.",
@@ -190,14 +190,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Checked by testing integers: -1, 0, 1, 2, 3.",
-          "at": "2026-11-25T18:18:48Z"
+          "at": "2026-11-25T18:55:49Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:19:00Z",
+          "at": "2026-11-25T18:56:06Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -205,15 +205,15 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:24:22Z",
-          "notes": "model answered \"-1, 0, 1, 2, 3\"; expected \"-1, 0, 1, 2, 3 | -1,0,1,2,3 | −1, 0, 1, 2, 3\""
+          "at": "2026-11-25T19:02:57Z",
+          "notes": "model answered \"-1, 0, 1, 2, 3\"; expected \"-1, 0, 1, 2, 3 | -1,0,1,2,3 | −1, 0, 1, 2, 3 | −1,0,1,2,3\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:24:34Z",
+          "at": "2026-11-25T19:03:16Z",
           "notes": "no problems found"
         },
         {
@@ -222,7 +222,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -311,7 +311,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -400,7 +400,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -477,7 +477,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -554,7 +554,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -631,7 +631,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -726,7 +726,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -734,7 +734,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -806,7 +806,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -878,7 +878,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -957,7 +957,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "fact-check",

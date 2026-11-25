@@ -71,7 +71,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -148,7 +148,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -162,7 +162,7 @@
     "expected_seconds": 30,
     "prompt": "Three corners of a rectangle are at (-2, 3), (5, 3) and (5, -1). Write down the coordinates of the fourth corner.",
     "answer": {
-      "accepted": ["(-2, -1)", "(-2,-1)", "(−2, −1)"]
+      "accepted": ["(-2, -1)", "(-2,-1)", "(−2, −1)", "(−2,−1)"]
     },
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
@@ -191,14 +191,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Sides of this rectangle are parallel to the axes: the fourth corner shares x = -2 with (-2, 3) and y = -1 with (5, -1).",
-          "at": "2026-11-25T17:20:52Z"
+          "at": "2026-11-25T18:55:47Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:24:13Z",
+          "at": "2026-11-25T18:56:15Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -206,15 +206,15 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:50:57Z",
-          "notes": "model answered \"(-2, -1)\"; expected \"(-2, -1) | (-2,-1) | (−2, −1)\""
+          "at": "2026-11-25T18:59:49Z",
+          "notes": "model answered \"(-2, -1)\"; expected \"(-2, -1) | (-2,-1) | (−2, −1) | (−2,−1)\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:51:14Z",
+          "at": "2026-11-25T19:00:18Z",
           "notes": "no problems found"
         },
         {
@@ -223,7 +223,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -303,7 +303,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -311,7 +311,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -391,7 +391,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -399,7 +399,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -474,7 +474,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -561,7 +561,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -569,7 +569,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -642,7 +642,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -715,7 +715,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -788,7 +788,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }

@@ -76,7 +76,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -84,7 +84,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -166,7 +166,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -174,7 +174,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -255,7 +255,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -263,7 +263,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -277,7 +277,7 @@
     "expected_seconds": 60,
     "prompt": "Write x^2 + 6x + 11 in the form (x + a)^2 + b.",
     "answer": {
-      "accepted": ["(x + 3)^2 + 2", "(x+3)^2+2", "(x + 3)² + 2"]
+      "accepted": ["(x + 3)^2 + 2", "(x+3)^2+2", "(x + 3)² + 2", "(x+3)²+2"]
     },
     "marks": 2,
     "explanation": "Half of 6 is 3: (x + 3)^2 = x^2 + 6x + 9, so x^2 + 6x + 11 = (x + 3)^2 + 2.",
@@ -307,14 +307,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). Checked with SymPy: (x + 3)^2 + 2 = x^2 + 6x + 11.",
-          "at": "2026-11-25T17:23:37Z"
+          "at": "2026-11-25T18:55:47Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:24:37Z",
+          "at": "2026-11-25T18:56:00Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -322,15 +322,15 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:03Z",
-          "notes": "model answered \"(x + 3)^2 + 2\"; expected \"(x + 3)^2 + 2 | (x+3)^2+2 | (x + 3)² + 2\""
+          "at": "2026-11-25T19:00:38Z",
+          "notes": "model answered \"(x + 3)^2 + 2\"; expected \"(x + 3)^2 + 2 | (x+3)^2+2 | (x + 3)² + 2 | (x+3)²+2\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:09Z",
+          "at": "2026-11-25T19:00:45Z",
           "notes": "no problems found"
         },
         {
@@ -339,7 +339,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -426,7 +426,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -440,7 +440,7 @@
     "expected_seconds": 90,
     "prompt": "By completing the square, find the coordinates of the turning point of y = x^2 - 8x + 10.",
     "answer": {
-      "accepted": ["(4, -6)", "(4,-6)", "(4, −6)"]
+      "accepted": ["(4, -6)", "(4,-6)", "(4, −6)", "(4,−6)"]
     },
     "marks": 3,
     "explanation": "x^2 - 8x + 10 = (x - 4)^2 - 16 + 10 = (x - 4)^2 - 6, so the turning point is (4, -6).",
@@ -470,14 +470,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). Checked with SymPy: x^2 - 8x + 10 = (x - 4)^2 - 6, minimum at (4, -6).",
-          "at": "2026-11-25T17:23:37Z"
+          "at": "2026-11-25T18:55:47Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:24:38Z",
+          "at": "2026-11-25T18:56:01Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -485,15 +485,15 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:36Z",
-          "notes": "model answered \"(4, -6)\"; expected \"(4, -6) | (4,-6) | (4, −6)\""
+          "at": "2026-11-25T19:00:52Z",
+          "notes": "model answered \"(4, -6)\"; expected \"(4, -6) | (4,-6) | (4, −6) | (4,−6)\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:45Z",
+          "at": "2026-11-25T19:01:08Z",
           "notes": "no problems found"
         },
         {
@@ -502,7 +502,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -596,7 +596,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -668,7 +668,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -740,7 +740,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -812,7 +812,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }

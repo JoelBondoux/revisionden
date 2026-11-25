@@ -71,7 +71,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -140,7 +140,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "adversarial-review",
@@ -162,7 +162,7 @@
     "expected_seconds": 30,
     "prompt": "Write p × p × p × q in index notation. Use ^ for powers.",
     "answer": {
-      "accepted": ["p^3q", "p^3 q", "p^3 × q", "qp^3", "q p^3", "q × p^3"]
+      "accepted": ["p^3q", "p^3 q", "p^3 × q", "qp^3", "q p^3", "q × p^3", "p^3×q", "q×p^3"]
     },
     "marks": 1,
     "explanation": "p × p × p is p^3, so the product is p^3q.",
@@ -182,6 +182,7 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "needs_human_approval": true,
     "verification": {
       "status": "draft",
       "version": 1,
@@ -191,15 +192,15 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). Accepted answers checked with SymPy: each equals p*p*p*q.",
-          "at": "2026-11-25T17:39:10Z"
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). Accepted answers checked with SymPy: each equals p*p*p*q. Lead ruling 2026-11-25: the last adversarial-review finding is left for the owner to judge (see that check); needs individual human approval.",
+          "at": "2026-11-25T18:55:46Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:39:12Z",
+          "at": "2026-11-25T18:56:00Z",
           "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -207,16 +208,16 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:18Z",
-          "notes": "model answered \"p^3q\"; expected \"p^3q | p^3 q | p^3 × q | qp^3 | q p^3 | q × p^3\""
+          "at": "2026-11-25T18:56:22Z",
+          "notes": "model answered \"p^3q\"; expected \"p^3q | p^3 q | p^3 × q | qp^3 | q p^3 | q × p^3 | p^3×q | q×p^3\""
         },
         {
           "name": "adversarial-review",
-          "result": "pass",
+          "result": "fail",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:27Z",
-          "notes": "no problems found"
+          "at": "2026-11-25T18:56:38Z",
+          "notes": "second_correct_option (answer): The list of accepted answers does not include forms where the variable q is explicitly written with a power of 1, such as 'p^3q^1'. Since q is equivalent to q^1, this is a mathematically correct representation in index notation and should be accepted. Variants such as 'q^1p^3' and forms with spaces or multiplication signs should also be included."
         },
         {
           "name": "schema",
@@ -224,7 +225,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -305,7 +306,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -313,7 +314,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -390,7 +391,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -467,7 +468,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -556,7 +557,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -645,7 +646,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -726,7 +727,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         },
         {
           "name": "maths-engine",
@@ -734,7 +735,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -807,7 +808,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -879,7 +880,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -951,7 +952,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:46:27Z"
+          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
