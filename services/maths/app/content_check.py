@@ -12,6 +12,8 @@ Each check has an ``id`` and a ``kind``:
 - ``working``: ``lines`` of a model solution and the ``expected`` final answer.
 - ``formula``: ``expected`` and ``given`` formulas (``x = ...``, ``±`` allowed), for flashcards.
 - ``identity``: an ``equation`` that must hold for every value of its letters (fact checks).
+- Fact proofs (``app/facts.py``): ``transformation``, ``implication``, ``sign_change``,
+  ``parallel``, ``trig_value`` and ``graph_measure``.
 
 Run it with ``python -m app.content_check`` from ``services/maths``.
 """
@@ -23,6 +25,7 @@ from typing import Callable, TextIO
 
 from sympy import N, simplify
 
+from app import facts
 from app.equivalence import are_equivalent, parse, parse_equation, solutions_match
 from app.formula import formulas_match
 from app.working import check_working
@@ -93,6 +96,7 @@ KINDS: dict[str, Callable[[dict], str | None]] = {
     "working": _working,
     "formula": _formula,
     "identity": _identity,
+    **facts.KINDS,
 }
 
 

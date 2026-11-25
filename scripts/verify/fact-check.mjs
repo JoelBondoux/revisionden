@@ -35,17 +35,30 @@ const STATER_SYSTEM =
   'standard mathematical fact, precisely, including any conditions it needs. Say "low" ' +
   'confidence if you are not sure or the question is ambiguous.';
 
-const JUDGE_SYSTEM =
-  'You compare two statements of a maths fact. Say they are the same only if they state the same ' +
-  'mathematical fact with the same conditions; wording may differ. Any difference in meaning, a ' +
-  'missing or extra condition, or doubt means not the same.';
+// The judge compares meaning, not wording (S3-A run, 2026-11-25: it had refused equivalent
+// statements of parallel lines and tan 90° that only added an implied condition). It still
+// refuses anything that changes the fact.
+export const JUDGE_SYSTEM = [
+  'You compare two statements of a maths fact, A and B. Judge their meaning, not wording.',
+  'They are the same when B states the whole of fact A. B may word it differently, use symbols, ' +
+    'add an explanation, a reason or an example, give an equivalent form, or state a condition ' +
+    "that A's own words already imply: for example 'non-vertical' for lines that have a " +
+    "gradient, 'a ≠ 0' when A divides by a, 'for real constants', or the range of angles or " +
+    'values A is about. B may also go on to state further related facts: that does not matter ' +
+    'as long as B states all of A and nothing in B contradicts A.',
+  'They are not the same when B contradicts A, states a different fact, leaves out part of A, ' +
+    'leaves out a condition A needs, adds a condition that changes when the fact holds, or only ' +
+    'covers a narrower case than A (one example, or one of the cases A names).',
+  'If you are unsure, they are not the same.',
+].join(' ');
 
 /** The neutral question sent to the third provider. It never contains our statement. */
 export function factStatementPrompt(fact) {
   return { system: STATER_SYSTEM, prompt: fact.ask };
 }
 
-const judgePrompt = (ours, theirs) => ({
+/** The judge's prompt for our statement (A) and the blind statement (B). */
+export const factJudgePrompt = (ours, theirs) => ({
   system: JUDGE_SYSTEM,
   prompt: `Statement A:\n${ours}\n\nStatement B:\n${theirs}\n\nDo A and B state the same fact?`,
 });
@@ -123,7 +136,7 @@ export async function runFactCheck(item, { stater, judge, maths, now = () => new
     });
     versions.add(s.modelVersion);
     const j = await judge.complete({
-      ...judgePrompt(fact.statement, s.output.statement),
+      ...factJudgePrompt(fact.statement, s.output.statement),
       schema: JUDGE_SCHEMA,
       schemaName: 'fact_judgement',
     });

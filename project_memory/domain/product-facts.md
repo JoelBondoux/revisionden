@@ -374,6 +374,9 @@ Tags: #product #rules #limits #defaults
 - Fact-check stage 4b (decision 0009): items listing `facts` need, per fact, an official citation
   or a maths engine proof plus a matching blind statement by a third provider (OpenAI, judged by
   Gemini). Failing facts keep `needs_human_approval`. `pnpm content:model-check --fact-check openai`.
+  Engine fact proofs: `identity`, `transformation`, `implication`, `sign_change`, `parallel`,
+  `trig_value`, `graph_measure` (`services/maths/app/facts.py`). The judge compares meaning, not
+  wording; `pnpm evals fact-judge` must refuse every different-fact pair.
 - Maths flashcards with `back_formula` are blind-answered by formula: the maths engine compares
   the formula (any equivalent form) and every listed condition (e.g. `a ≠ 0`) must be stated.
 - Blind answer must come from a different provider from the writer (Claude by default) and be
