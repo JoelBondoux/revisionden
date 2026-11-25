@@ -50,27 +50,14 @@
   gap: var(--space-3);
 }
 
+/* Each policy is a link tile (J7) with who it is for underneath. */
 .policy-list li {
-  background: var(--color-surface);
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-3) var(--space-4);
-}
-
-.policy-list__link {
   display: flex;
   flex-direction: column;
-  min-height: var(--tap-target);
-  color: var(--color-text);
-  text-decoration: none;
-}
-
-.policy-list__title {
-  font-weight: var(--font-weight-extrabold);
-  color: var(--color-primary);
 }
 
 .policy-list__audience {
+  padding-inline: var(--space-4);
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
 }

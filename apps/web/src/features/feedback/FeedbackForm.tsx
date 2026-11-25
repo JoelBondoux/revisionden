@@ -126,8 +126,8 @@ export function FeedbackForm({ initialKind, route, variant = 'page', onClose }: 
       </p>
       {sender === 'student' && <p className="feedback__note">Your parent can see what you send.</p>}
       <p className="secondary-text">
-        Prefer email? <TextLink href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</TextLink>. Please include only
-        the personal details we need to help you.
+        Prefer email? <TextLink href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</TextLink>. Please
+        include only the personal details we need to help you.
       </p>
 
       <fieldset className="feedback__kinds">

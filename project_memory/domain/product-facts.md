@@ -501,6 +501,11 @@ Tags: #product #rules #limits #defaults
   tomorrow" is the daily reward XP cap (`DAILY_REWARD_XP_CAP`, 300 XP today), confirmed by the lead
   on 2026-11-25 for now: the lesson only knows XP, not study minutes.
 
+- Settled in J7 (owner request, 2026-11-25): no plain underlined text links. Navigation uses the
+  link components in `apps/web/src/components/links.tsx` (LinkButton, LinkTile, LinkChip; TextLink
+  only inside sentences and policy prose: bold, coloured, a soft bar, underline on hover). A guard
+  test, `apps/web/src/components/noTextLinks.test.ts`, keeps it that way.
+
 ## Exam practice (planned)
 
 - Timed papers sat in real time (exam conditions or practice), each question timed, all marked at
