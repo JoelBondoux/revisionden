@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { contrastRatio, textPairs, tokens } from './tokens';
+import { arenaTextPairs, contrastRatio, textPairs, tokens } from './tokens';
 
 const tokensCss = readFileSync(join(__dirname, 'tokens.css'), 'utf8').toLowerCase();
 
@@ -100,5 +100,42 @@ describe('contrast check', () => {
 
   it.each(textPairs)('$name reaches at least 4.5 to 1', ({ foreground, background }) => {
     expect(contrastRatio(foreground, background)).toBeGreaterThanOrEqual(4.5);
+  });
+});
+
+describe('arena theme (practice screens, mockup 22)', () => {
+  it('has a deep purple background, chunky answer colours and neon sparks', () => {
+    for (const name of [
+      '--arena-bg',
+      '--arena-raised',
+      '--arena-text',
+      '--arena-text-secondary',
+      '--arena-option-1',
+      '--arena-option-2',
+      '--arena-option-3',
+      '--arena-option-4',
+      '--arena-correct',
+      '--arena-glow',
+      '--arena-spark-0',
+      '--arena-spark-3',
+    ] as const) {
+      expect(tokens, name).toHaveProperty([name]);
+    }
+  });
+
+  it.each(arenaTextPairs)('$name reaches at least 4.5 to 1', ({ foreground, background }) => {
+    expect(contrastRatio(foreground, background)).toBeGreaterThanOrEqual(4.5);
+  });
+});
+
+describe('motion tokens', () => {
+  it('matches the timings in the game feel guide', () => {
+    expect(tokens['--motion-shake']).toBe('400ms');
+    expect(tokens['--motion-burst']).toBe('800ms');
+    expect(tokens['--ease-spring']).toMatch(/^cubic-bezier\(/);
+  });
+
+  it('never pulses faster than 3 times a second (WCAG 2.3.1)', () => {
+    expect(Number.parseInt(tokens['--motion-pulse'], 10)).toBeGreaterThanOrEqual(334);
   });
 });
