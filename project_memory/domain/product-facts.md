@@ -263,6 +263,8 @@ Tags: #product #rules #limits #defaults
   touch icon (180×180), drawn from Pip's shapes and the arena colours. They are committed in
   `apps/www/public` and remade by hand with `node apps/www/scripts/make-images.mjs` after an art
   change; original art only, no stock photos or AI-generated images.
+  Links use the app's J7 styles (buttons, tiles, chips, bold inline links), never plain underlined
+  text (owner, 2026-11-25).
 - Production passkeys use the RP ID `revisionden.com`; OAuth callbacks are on the API host, so the
   move to `app.` needed no change in Google or Microsoft.
 - Live since 2026-11-25 (workstream G): API Workers on all three API hosts; web app on `dev.` and
@@ -509,6 +511,11 @@ Tags: #product #rules #limits #defaults
   today." shows when today's daily goal is met (`progress.goalMet`). The "daily cap" for "See you
   tomorrow" is the daily reward XP cap (`DAILY_REWARD_XP_CAP`, 300 XP today), confirmed by the lead
   on 2026-11-25 for now: the lesson only knows XP, not study minutes.
+
+- Settled in J7 (owner request, 2026-11-25): no plain underlined text links. Navigation uses the
+  link components in `apps/web/src/components/links.tsx` (LinkButton, LinkTile, LinkChip; TextLink
+  only inside sentences and policy prose: bold, coloured, a soft bar, underline on hover). A guard
+  test, `apps/web/src/components/noTextLinks.test.ts`, keeps it that way.
 
 ## Exam practice (planned)
 

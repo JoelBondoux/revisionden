@@ -5,7 +5,7 @@ import { useApiResource } from '../../api/useApiResource';
 import { ButtonLink } from '../../components/Button';
 import { Pill } from '../../components/Pill';
 import { ProgressBar } from '../../components/ProgressBar';
-import { Link } from 'react-router-dom';
+import { TextLink } from '../../components/links';
 import { LearnItFirst, checkedLinksFor, learnLinksByTopic } from '../learn-links';
 import { RecallGate } from '../recall';
 import { LessonPlayer } from './LessonPlayer';
@@ -95,7 +95,7 @@ export function SubjectPage() {
             {topics.data.topics.map((topic) => (
               <li key={topic.topicId} className="topic-list__item">
                 <div className="topic-list__head">
-                  <Link to={`/learn/topic/${topic.topicId}`}>{topic.title}</Link>
+                  <TextLink to={`/learn/topic/${topic.topicId}`}>{topic.title}</TextLink>
                   {topic.mastery < WEAK_SPOT_THRESHOLD && <Pill tone="warning">Weak spot</Pill>}
                 </div>
                 <ProgressBar
