@@ -296,7 +296,10 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 
 Broken down into tasks when Stage 1 ships, following the same format. Headline order:
 
-1. Predicted grade (the stats dashboards are workstream K).
+1. Predicted grade (the stats dashboards are workstream K). Target grades are built (K8). The
+   predicted grade waits for verified grade boundaries (docs/VERIFICATION.md) and for mocks and
+   school reports; grade scales for subjects other than GCSE Maths (Edexcel 1MA1) need citing
+   before targets can be set for them.
 2. Exams, mocks and assessments entry; study plan generator and calendar (editable by both):
    drag sessions between days; detail panel to edit a session; custom rules created from edits,
    toggled and removed, applied by the generator, with conflict warnings (mockup screen 5).

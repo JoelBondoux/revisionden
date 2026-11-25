@@ -82,6 +82,7 @@ export async function buildStudentStats(
       longestCorrectRun: longestCorrectRun(data.answers),
       bestWeek: bestWeekXp(data.days),
     },
+    targets: await adapters.targets(studentId),
     level: await adapters.level(studentId, allXp),
   };
 }

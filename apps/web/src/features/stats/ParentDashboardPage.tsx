@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import type { ParentDashboard } from '@revisionden/core';
 import { Button } from '../../components/Button';
@@ -8,6 +8,7 @@ import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { BarChart } from './BarChart';
 import { DailyLimitPanel } from './DailyLimit';
+import { TargetGradesPanel } from './TargetGrades';
 import { formatMinutes, signedNote, usd } from './format';
 import { NotSetUp, Tile } from './Tile';
 import { useStatsApi, type Child } from './statsApi';
@@ -43,6 +44,9 @@ function ChildDashboard({ choices }: { choices: Child[] }) {
   const asked = params.get('student');
   const [childId, setChildId] = useState(choices.find((c) => c.id === asked)?.id ?? choices[0]!.id);
   const dashboard = useApiResource(() => api.getDashboard(childId), [api, childId]);
+  // Targets saved in the panel below, shown in the subjects table without reloading the page.
+  const [savedTargets, setSavedTargets] = useState<Map<string, string | null>>(new Map());
+  useEffect(() => setSavedTargets(new Map()), [childId]);
   return (
     <>
       <div className="stats-toolbar no-print">
@@ -64,8 +68,15 @@ function ChildDashboard({ choices }: { choices: Child[] }) {
       </div>
       {dashboard.status === 'ready' ? (
         <>
-          <DashboardView data={dashboard.data} />
+          <DashboardView data={dashboard.data} savedTargets={savedTargets} />
           <DailyLimitPanel key={childId} studentId={childId} />
+          <TargetGradesPanel
+            key={`targets-${childId}`}
+            studentId={childId}
+            onSaved={(next) =>
+              setSavedTargets(new Map(next.subjects.map((t) => [t.subjectId, t.parentTarget])))
+            }
+          />
         </>
       ) : (
         <LoadingOrError resource={dashboard} />
@@ -85,7 +96,8 @@ function minutesNote(current: number, previous: number): string {
 }
 
 function grade(predicted: string | null, target: string | null): string {
-  if (predicted === null) return 'Not set up yet';
+  // Predicted grades wait for verified grade boundaries; a target can already be set (K8).
+  if (predicted === null) return target === null ? 'Not set up yet' : `Target ${target}`;
   return target === null ? predicted : `${predicted} (target ${target})`;
 }
 
@@ -96,7 +108,13 @@ const ACTIVITY: Record<ParentDashboard['recentActivity'][number]['kind'], [strin
   flashcards: ['Flashcards', 'review'],
 };
 
-function DashboardView({ data }: { data: ParentDashboard }) {
+function DashboardView({
+  data,
+  savedTargets,
+}: {
+  data: ParentDashboard;
+  savedTargets: ReadonlyMap<string, string | null>;
+}) {
   const { tiles, studyTime, healthyHabits: habits, aiSpend } = data;
   const subjectName = new Map(data.subjects.map((s) => [s.subjectId, s.name]));
   const when = new Intl.DateTimeFormat('en-GB', {
@@ -166,7 +184,14 @@ function DashboardView({ data }: { data: ParentDashboard }) {
                 <tr key={s.subjectId}>
                   <th scope="row">{s.name}</th>
                   <td>{s.mastery}%</td>
-                  <td>{grade(s.predictedGrade, s.targetGrade)}</td>
+                  <td>
+                    {grade(
+                      s.predictedGrade,
+                      savedTargets.has(s.subjectId)
+                        ? (savedTargets.get(s.subjectId) ?? null)
+                        : s.targetGrade,
+                    )}
+                  </td>
                   <td>{s.change > 0 ? `+${s.change}` : String(s.change)}</td>
                 </tr>
               ))}

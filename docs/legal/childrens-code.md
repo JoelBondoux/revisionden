@@ -1,6 +1,6 @@
 # How we follow the Children's Code
 
-Version: 1.0
+Version: 1.1
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -61,7 +61,7 @@ is offered beyond the operator's family.
 
 - **Met:** no data is used for marketing, advertising or to encourage longer use. Streaks have skip
   days so missing a day is not punished, at most two reminders a day are sent, and none during
-  quiet hours. The student's own statistics view (not built yet) is specified never to use red or
+  quiet hours. The student's own statistics view (My stats, `/progress`) never uses red or
   "worse" wording.
 - **To do:** review streaks and rewards against the ICO's guidance on features that encourage
   extended use, as part of the DPIA.
@@ -138,4 +138,5 @@ is offered beyond the operator's family.
 
 ## Changes
 
+- 1.1: Wording only: the student's own statistics view is now built, so it is no longer described as "not built yet".
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).

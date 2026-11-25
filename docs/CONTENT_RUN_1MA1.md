@@ -9,15 +9,15 @@
 `gcse-maths-ms-consecutive-integers-proof` and the topic tree. Results are recorded in each
 file's `verification.checks`.
 
-| Step                 | Result                                                                                                                |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| 1 Grounded writing   | 11 pass (G9 under decision 0008). Audited after writing, since no writer record existed                               |
-| 2 Quote check        | All 11 items and the mark scheme pass exactly. Topic tree: 95 exact, 2 near matches (A22, A25) confirmed by the owner |
-| 3 Blind answer       | Gemini (`gemini-2.5-pro`): 10 pass (the A6 proof by blind marking, all three exemplars exact), 1 fail (A18-0002)      |
-| 4 Adversarial review | Gemini: 11 pass, after fixing A4-0001 (see below)                                                                     |
-| 5 Exact checks       | Maths engine passes all 7 maths items. No item has an `exact` block (units, equations)                                |
-| 6 Schema and links   | Pass                                                                                                                  |
-| 7 Human approval     | **10 items ready** for the owner (A6 and G9 individually). A18-0002 waits for #111                                    |
+| Step                 | Result                                                                                                                   |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| 1 Grounded writing   | 11 pass (G9 under decision 0008). Audited after writing, since no writer record existed                                  |
+| 2 Quote check        | All 11 items and the mark scheme pass exactly. Topic tree: 95 exact, 2 near matches (A22, A25) confirmed by the owner    |
+| 3 Blind answer       | Gemini (`gemini-2.5-pro`): 11 pass (the A6 proof by blind marking, all three exemplars exact; A18-0002 by formula, #111) |
+| 4 Adversarial review | Gemini: 11 pass, after fixing A4-0001 (see below)                                                                        |
+| 5 Exact checks       | Maths engine passes all 7 maths items. No item has an `exact` block (units, equations)                                   |
+| 6 Schema and links   | Pass                                                                                                                     |
+| 7 Human approval     | **All 11 items ready** for the owner (A6 and G9 individually)                                                            |
 
 **Per item**
 
@@ -33,7 +33,7 @@ file's `verification.checks`.
 | `gcse-maths-h-n4-0001`  | multiple_choice | Ready (explanation arithmetic checked with SymPy)                                                                                                                                                                                                          |
 | `gcse-maths-h-a6-0001`  | extended_answer | Ready; needs individual approval. Exemplars (top 3, middle 2, low 1 marks) written from the mark scheme; blind marking matched all three                                                                                                                   |
 | `gcse-maths-h-g9-0001`  | short_answer    | Ready; needs individual approval. No official source defines a tangent, so it rests on the G9 spec point plus a standard definition under decision 0008 (owner, 2026-11-25)                                                                                |
-| `gcse-maths-h-a18-0002` | flashcard       | **Blocked at step 3**: the blind answer gave the right formula in different notation ("x = [-b ± √(b² - 4ac)] / 2a", no "a ≠ 0"); flashcards must match word for word, which a formula almost never does. Not weakened                                     |
+| `gcse-maths-h-a18-0002` | flashcard       | Ready (#111): `back_formula` added, so the blind answer is compared by the maths engine. Gemini gave "x = (-b +- sqrt(b^2 - 4*a*c)) / (2*a) where a != 0": same formula, condition stated. Review re-run: no problems                                      |
 
 **Decisions (settled by the owner, 2026-11-25)**
 
@@ -41,7 +41,7 @@ file's `verification.checks`.
    (content-lead) quote check.
 2. **Definitions** (G9): decision 0008, a standard definition may rest on the spec point that names
    the term, with individual human approval.
-3. **Formula flashcards** (A18-0002): compared by the maths engine (#111); A18-0002 is re-run there.
+3. **Formula flashcards** (A18-0002): compared by the maths engine (#111); A18-0002 re-run there and passes.
 
 **How steps 3 and 4 run** (Gemini key saved as an environment network secret for
 `generativelanguage.googleapis.com`, header `x-goog-api-key`; Node's fetch only uses the proxy
@@ -55,7 +55,7 @@ NODE_USE_ENV_PROXY=1 GEMINI_API_KEY=dummy VERIFY_GEMINI_MODEL=gemini-2.5-pro \
 **Review queue**
 
 - The batch page shows hint, mark scheme, exemplars and checks (S2, #108).
-- "Create batch from draft items" for content leads on `/review` (S2, #109, migration 0026).
+- "Create batch from draft items" for content leads on `/review` (S2, #109, migration 0018).
 - A reviewer role is a database row (`reviewer_roles`); the lead adds the owner's on dev.
 - Topic trees and near-match quotes are not in the queue; they are confirmed with the lead.
 
@@ -133,6 +133,13 @@ the maths engine, not by the specification.
 If no official source defines a standard term, follow decision 0008
 (project_memory/decisions/0008-definitions-policy.md): cite the spec point that names it, add the
 standard definition, and set needs_human_approval: true.
+If an item rests on a standard maths fact that no cited source states, follow decision 0009: list
+it in facts (statement, a neutral ask, an engine check such as identity where the maths engine can
+prove it, or citation N if an official quote states it) and run
+  NODE_USE_ENV_PROXY=1 OPENAI_API_KEY=proxy-injected VERIFY_OPENAI_MODEL=gpt-5.4-2026-03-05 \
+    GEMINI_API_KEY=dummy VERIFY_GEMINI_MODEL=gemini-2.5-pro \
+    pnpm content:model-check --fact-check openai --write
+A fact that fails keeps needs_human_approval: true.
 
 Run every item through the pipeline and record results with --write:
   pnpm content:validate                      (schema, links, maths engine)

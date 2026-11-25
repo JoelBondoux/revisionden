@@ -125,6 +125,17 @@ test('difficulty must be 1 to 5', () => {
   assert.equal(v.item({ ...samples.flashcard, difficulty: 6 }), false);
 });
 
+test('a maths flashcard may give its formula and conditions for the maths engine', () => {
+  const card = {
+    ...samples.flashcard,
+    back_formula: { formula: 'x = (-b +- sqrt(b^2 - 4ac)) / (2a)', conditions: ['a ≠ 0'] },
+  };
+  assert.equal(v.item(card), true);
+  assert.equal(v.item({ ...card, back_formula: { conditions: ['a ≠ 0'] } }), false);
+  assert.equal(v.item({ ...card, back_formula: { formula: 'x = 1', extra: 1 } }), false);
+  assert.equal(v.item({ ...samples.numeric, back_formula: card.back_formula }), false);
+});
+
 test('an item may name its learning point and expected time (for similar-question retries)', () => {
   const item = {
     ...samples.flashcard,
@@ -136,6 +147,34 @@ test('an item may name its learning point and expected time (for similar-questio
   assert.equal(v.item({ ...item, expected_seconds: 2 }), false);
   assert.equal(v.item({ ...item, expected_seconds: 901 }), false);
   assert.equal(v.item({ ...item, expected_seconds: 12.5 }), false);
+});
+
+test('an item may list the standard facts it rests on, for the fact-check stage', () => {
+  const fact = {
+    statement: 'The product of the gradients of two perpendicular lines is -1.',
+    ask: 'What is the product of the gradients of two perpendicular lines?',
+    engine: { kind: 'identity', equation: 'm * (-1/m) = -1' },
+    citation: 1,
+  };
+  assert.equal(v.item({ ...samples.short_answer, facts: [fact] }), true);
+  assert.equal(v.item({ ...samples.short_answer, facts: [] }), false);
+  assert.equal(v.item({ ...samples.short_answer, facts: [{ statement: 'x' }] }), false);
+  assert.equal(v.item({ ...samples.short_answer, facts: [{ ...fact, citation: 0 }] }), false);
+  assert.equal(v.item({ ...samples.short_answer, facts: [{ ...fact, extra: 1 }] }), false);
+});
+
+test('fact-check is a pipeline check name', () => {
+  const item = structuredClone(samples.short_answer);
+  item.verification.checks = [
+    {
+      name: 'fact-check',
+      result: 'pass',
+      tool: 't',
+      tool_version: '1',
+      at: '2026-11-25T00:00:00Z',
+    },
+  ];
+  assert.equal(v.item(item), true);
 });
 
 test('item ids are lowercase words joined by hyphens', () => {

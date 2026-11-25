@@ -102,3 +102,88 @@ def test_main_returns_an_error_code_for_bad_json():
     stdout = io.StringIO()
     assert main(io.StringIO("not json"), stdout) == 2
     assert "error" in json.loads(stdout.getvalue())
+
+
+QUADRATIC = "x = (-b +- sqrt(b^2 - 4ac)) / (2a)"
+
+
+def test_a_formula_check_accepts_the_same_formula_written_another_way():
+    given = [
+        "x = (-b ± √(b² - 4ac)) / (2a)",
+        "x = [-b ± sqrt(b^2 - 4*a*c)] / (2*a)",
+        "x = (-b - sqrt(b^2 - 4ac)) / (2a) or (-b + sqrt(b^2 - 4ac)) / (2a)",
+    ]
+    results = run_checks(
+        [{"id": str(i), "kind": "formula", "expected": QUADRATIC, "given": g}
+         for i, g in enumerate(given)]
+    )
+    assert [r["ok"] for r in results] == [True, True, True]
+
+
+def test_a_formula_check_rejects_a_different_formula():
+    given = [
+        "x = (-b + sqrt(b^2 - 4ac)) / (2a)",  # only one of the two solutions
+        "x = (-b +- sqrt(b^2 + 4ac)) / (2a)",  # wrong sign under the root
+        "y = (-b +- sqrt(b^2 - 4ac)) / (2a)",  # a different subject
+        "x = (-b +- sqrt(b^2 - 4ac)) / 2a",  # strictly this divides by 2, then times a
+    ]
+    results = run_checks(
+        [{"id": str(i), "kind": "formula", "expected": QUADRATIC, "given": g}
+         for i, g in enumerate(given)]
+    )
+    assert [r["ok"] for r in results] == [False, False, False, False]
+    assert all("not the same formula" in r["error"] for r in results)
+
+
+def test_a_formula_check_reports_text_it_cannot_read():
+    [result] = run_checks(
+        [{"id": "q", "kind": "formula", "expected": QUADRATIC, "given": "the quadratic formula"}]
+    )
+    assert result["ok"] is False
+
+
+def test_a_formula_check_accepts_the_right_hand_side_alone():
+    results = run_checks(
+        [
+            {"id": "a", "kind": "formula", "expected": QUADRATIC,
+             "given": "(-b +- sqrt(b^2 - 4*a*c)) / (2*a)"},
+            {"id": "b", "kind": "formula", "expected": QUADRATIC,
+             "given": "(-b + sqrt(b^2 - 4*a*c)) / (2*a)"},
+        ]
+    )
+    assert [r["ok"] for r in results] == [True, False]
+
+
+def test_a_formula_check_needs_a_subject_in_the_expected_formula():
+    [result] = run_checks([{"id": "q", "kind": "formula", "expected": "2a", "given": "2a"}])
+    assert result["ok"] is False
+    assert "subject" in result["error"]
+
+
+def test_a_formula_check_accepts_the_subject_repeated_in_each_branch():
+    results = run_checks(
+        [
+            {"id": "a", "kind": "formula", "expected": QUADRATIC,
+             "given": "x = (-b + sqrt(b^2 - 4ac))/(2a) or x = (-b - sqrt(b^2 - 4ac))/(2a)"},
+            {"id": "b", "kind": "formula", "expected": QUADRATIC,
+             "given": "x = (-b + sqrt(b^2 - 4ac))/(2a) or y = (-b - sqrt(b^2 - 4ac))/(2a)"},
+        ]
+    )
+    assert [r["ok"] for r in results] == [True, False]
+
+
+def test_an_identity_check_proves_a_statement_true_for_every_value():
+    results = run_checks(
+        [
+            {"id": "a", "kind": "identity", "equation": "(a + b)^2 = a^2 + 2*a*b + b^2"},
+            {"id": "b", "kind": "identity", "equation": "m * (-1/m) = -1"},
+            {"id": "c", "kind": "identity", "equation": "(a + b)^2 = a^2 + b^2"},
+        ]
+    )
+    assert [r["ok"] for r in results] == [True, True, False]
+    assert "not true for every value" in results[2]["error"]
+
+
+def test_an_identity_check_needs_one_equals_sign():
+    [result] = run_checks([{"id": "q", "kind": "identity", "equation": "a + b"}])
+    assert result["ok"] is False

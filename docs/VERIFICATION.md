@@ -43,6 +43,17 @@ the specification point that names the term, cited with its quote, plus a standa
 must set `needs_human_approval: true` and is approved individually, never through a batch sample.
 An official definition, where one exists, is always cited instead.
 
+**Standard facts with no official source** (decision 0009). An item that rests on a standard maths
+fact (not just a definition) that no cited source states lists it in `facts` and must pass the
+**fact-check stage (step 4b)**. A fact passes with an official citation whose quote check passed and whose quote the judge confirms
+states the fact (not just its topic),
+or with both a maths engine proof (`engine`, for example `identity`) and a matching blind
+statement. That statement comes from a third provider (neither the writer nor the blind
+answerer), which answers the neutral `ask` without our wording; another provider judges the
+match, with high confidence throughout. Items whose facts all pass go into normal batches. A fact
+that fails or cannot be proved keeps `needs_human_approval` for individual review. An engine proof
+only proves the equation given, so reviewers check that it captures the fact.
+
 **Citation record**
 
 | Field          | Meaning                                                                                                                                                |
@@ -63,15 +74,16 @@ storage exists, so a citation still works if a board moves a document.
 
 ## 3. The pipeline every item passes before release
 
-| Step | Check              | Who or what                                                                                                       | Fails if                                                          |
-| ---- | ------------------ | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
-| 1    | Grounded writing   | Writer model, given only the source excerpts                                                                      | Any claim lacks a citation                                        |
-| 2    | Quote check        | Code                                                                                                              | The quoted text is not found in the source at the stated location |
-| 3    | Blind answer       | A model from a different provider, without seeing the answer                                                      | Its answer differs                                                |
-| 4    | Adversarial review | A third pass told to find errors, ambiguity, a second correct option, or content outside the specification        | Any problem found                                                 |
-| 5    | Exact checks       | Maths engine (all numeric and algebraic answers), unit checks, chemical equation balancing, equation-sheet checks | Any mismatch                                                      |
-| 6    | Schema and links   | Content validator in CI                                                                                           | Missing fields, broken topic links, duplicate IDs                 |
-| 7    | Human approval     | Product owner or a subject teacher, in a review queue                                                             | Rejected, or any earlier step marked uncertain                    |
+| Step | Check              | Who or what                                                                                                       | Fails if                                                             |
+| ---- | ------------------ | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| 1    | Grounded writing   | Writer model, given only the source excerpts                                                                      | Any claim lacks a citation                                           |
+| 2    | Quote check        | Code                                                                                                              | The quoted text is not found in the source at the stated location    |
+| 3    | Blind answer       | A model from a different provider, without seeing the answer                                                      | Its answer differs                                                   |
+| 4    | Adversarial review | A third pass told to find errors, ambiguity, a second correct option, or content outside the specification        | Any problem found                                                    |
+| 4b   | Fact check         | Items with `facts` only: official citation, or maths engine proof plus a third provider's blind statement         | A fact neither cited nor proved and matched (then individual review) |
+| 5    | Exact checks       | Maths engine (all numeric and algebraic answers), unit checks, chemical equation balancing, equation-sheet checks | Any mismatch                                                         |
+| 6    | Schema and links   | Content validator in CI                                                                                           | Missing fields, broken topic links, duplicate IDs                    |
+| 7    | Human approval     | Product owner or a subject teacher, in a review queue                                                             | Rejected, or any earlier step marked uncertain                       |
 
 **Extended answers and essays.** There is no single correct answer to check blind, so step 3
 becomes **blind marking**: the writer also produces three exemplar answers from the mark scheme
@@ -197,7 +209,10 @@ through the authenticated AI Gateway, set `<PROVIDER>_BASE_URL` to the gateway's
 https addresses on `gateway.ai.cloudflare.com`, never to a provider's own API. The blind answer must come from a different provider from the writer (Claude by default, read from
 the grounded-writing check). It sees no answer, hint or explanation, and passes only on a match
 with high confidence (multiple choice: same option; numeric: within the item tolerance; short
-answers and flashcards: same words ignoring case and end punctuation; worked maths: the same
+answers and flashcards: same words ignoring case and end punctuation; maths flashcards with a
+`back_formula`: the maths engine finds the same formula (`±` gives both branches, a bare right-hand
+side is compared with the expected one, notation is read strictly so `/ 2a` is not `/ (2a)`), and the
+answer states every listed condition such as `a ≠ 0` as a whole clause (`a ≠ 0.5` does not count), otherwise it fails for a person to check; worked maths: the same
 solutions in any order, or the same expression). The reviewer sees the whole item and the
 quoted sources and must report factual errors, a wrong answer, ambiguity, a second correct
 option, content outside the specification, unsupported claims or poor wording; any problem or
@@ -222,6 +237,17 @@ each item) draws its sample with a recorded seed so the draw can be replayed. On
 error fails the batch and files re-check requests for the batch (steps 3 to 5 and a fresh
 sample), its writer prompt and its source. A passed batch is then recorded in each item as a
 `batch-sample` check by the content session.
+
+**Batches from draft items (S2).** Content sync keeps each item's full content record, with its
+linked mark scheme as `mark_scheme_detail`, in `items.review_snapshot` (never served). On
+`/review`, a `content-lead` sees how many drafts are ready and can **Create batch from draft
+items** (`GET, POST /v1/review/batches/from-drafts`): only drafts whose snapshot has every
+automated check passed (grounded writing, quote check, blind answer or blind marking, adversarial
+review, schema, and the maths engine for maths items; `readyForHumanReview` in
+`packages/core`), and not already in a batch under review or passed at that version. An item with
+`facts` also needs a fact-check record; if it failed, the item is batched for individual review
+(`needsIndividualReview`), never sampling. The batch
+page shows each item's hint, mark scheme, exemplars and checks.
 
 **Reports and quarantine (section 6).** "Report a problem" stores only the item, its version and
 a reason (no free text, so no personal data) and hides the item at once: a row in

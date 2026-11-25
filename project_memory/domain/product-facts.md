@@ -213,10 +213,10 @@ Tags: #product #rules #limits #defaults
   citation has a verbatim quote from the 1MA1 specification Issue 2 (or, for the quadratic
   formula, the DfE subject content DFE-00233-2013), with page and SHA-256. All pilot content is
   still `draft`. Pipeline run 2026-11-25 (S2, `docs/CONTENT_RUN_1MA1.md`): every step
-  recorded; blind answer and adversarial review by Gemini (`gemini-2.5-pro`). 10 of 11 items pass
-  steps 1 to 6 and wait for the owner (G9 under decision 0008, with individual approval);
-  A18-0002 fails the blind answer until formula flashcards (#111) land. The topic tree's 2 near
-  matches (A22, A25) were confirmed by the owner. Owner's review steps: `docs/REVIEW_GUIDE.md`.
+  recorded; blind answer and adversarial review by Gemini (`gemini-2.5-pro`). All 11 items pass
+  steps 1 to 6 and wait for the owner (G9 under decision 0008 and the A6 proof with individual
+  approval; A18-0002 after it was compared by formula, #111). The topic tree's 2 near matches (A22,
+  A25) were confirmed by the owner. Owner's review steps: `docs/REVIEW_GUIDE.md`.
 - Citation `supports` names only what the quote itself backs. A specification quote backs the
   question being in scope (`question`, `topic`); maths answers are backed by the maths engine,
   not by a citation. Sourcing record: `docs/sourcing/gcse-maths-1ma1-pilot.md`.
@@ -339,6 +339,11 @@ Tags: #product #rules #limits #defaults
 - Extended answers: blind marking replaces the blind answer (three exemplars, top, middle and low,
   marked by a second provider without the intended levels; all three must match exactly), and
   every one needs individual human approval; review batches always include them.
+- Fact-check stage 4b (decision 0009): items listing `facts` need, per fact, an official citation
+  or a maths engine proof plus a matching blind statement by a third provider (OpenAI, judged by
+  Gemini). Failing facts keep `needs_human_approval`. `pnpm content:model-check --fact-check openai`.
+- Maths flashcards with `back_formula` are blind-answered by formula: the maths engine compares
+  the formula (any equivalent form) and every listed condition (e.g. `a ≠ 0`) must be stated.
 - Blind answer must come from a different provider from the writer (Claude by default) and be
   highly confident; any adversarial-review problem fails the item. Real models never run in
   tests or CI.
@@ -348,6 +353,11 @@ Tags: #product #rules #limits #defaults
   content-lead, parent-reviewer) in `reviewer_roles`; decisions store the role only. Batch
   samples: 10% of the batch, at least 30, plus every item needing approval; seed recorded; one
   confirmed error fails the batch and re-checks the batch, writer prompt and source.
+- A content lead creates a batch on `/review` with "Create batch from draft items": every draft
+  whose synced snapshot (`items.review_snapshot`, full content record plus mark scheme) has all
+  automated checks passed and is not already in an open or passed batch (an item whose fact-check
+  failed goes in for individual review). The batch page shows
+  hint, mark scheme, exemplars and checks.
 - Report a problem stores only item, version and a reason (no free text) and hides the item at
   once (status `quarantined` in `items`, kept through content syncs; restored on "no error";
   lifted after a confirmed error only when a newer version is synced). A confirmed error queues a score recalculation job and re-checks the item. The
@@ -430,8 +440,17 @@ Tags: #product #rules #limits #defaults
 - Level bar and parent-set rewards come from the rewards progression (same numbers as the Rewards
   page), read with the read-only `rewardsProgress`: it counts earned-but-unseen rewards and saves
   nothing, so the stats pages and the parent's parent-rewards view never use up the student's
-  "New!" rewards (the student's Rewards page, answers and flashcard sessions save and announce them). Plan, school report effort and predicted/target grade panels show "Not set up yet"
-  (adapters in `apps/api/src/stats/adapters.ts`) until those features land.
+  "New!" rewards (the student's Rewards page, answers and flashcard sessions save and announce them). Plan, school report effort and predicted grade panels show "Not set up yet"
+  (adapters in `apps/api/src/stats/adapters.ts`) until those features land; predicted grades wait
+  for verified grade boundaries.
+- Target grades (K8, owner decision 2026-11-25): two per subject, both goals to reach for. The
+  parent's target is set or cleared by either parent on the parent stats dashboard (latest wins,
+  logged as important); the child's own target is set or cleared by the child on My stats (not
+  logged). Each side sees both, with encouraging wording and no red when they differ. Only grades
+  on a cited scale: GCSE Maths Edexcel 1MA1 (higher 9–3 and U, foundation 5–1 and U, 9–1 and U
+  with no tier chosen); every other subject and board says "not available yet".
+  `enrolments.parent_target_grade` and `student_target_grade` (migration 0017). Detail:
+  `docs/PRODUCT_RULES.md` (Statistics dashboards, Target grades).
 - Routes: `/progress` (My stats), `/parent/stats` (parent); API `GET /v1/student/stats`,
   `GET /v1/students/:id/stats`, `GET /v1/students/:id/dashboard`. Implemented in
   `packages/core/src/stats.ts`, `apps/api/src/stats/`, `apps/web/src/features/stats/`.
