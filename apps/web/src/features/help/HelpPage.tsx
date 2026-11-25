@@ -119,6 +119,7 @@ function ServiceEntry({ service }: { service: SupportService }) {
     <li className="help-service">
       <h3>{service.service}</h3>
       <p>{service.helps_with}</p>
+      {service.note && <p className="help-note">{service.note}</p>}
       {(service.age_range || service.area) && (
         <p className="help-meta">
           {service.age_range && <>For: {service.age_range.text}. </>}

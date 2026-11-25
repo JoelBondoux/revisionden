@@ -67,6 +67,7 @@ export interface SupportService {
   contacts: Contact[];
   checked_at: string;
   confirmed_by?: string;
+  note?: string;
 }
 
 export interface HelpTopic {

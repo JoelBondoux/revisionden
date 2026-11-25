@@ -107,6 +107,17 @@ describe('Get help page', () => {
     expect(screen.queryByText(/0300 102 4481/)).not.toBeInTheDocument();
   });
 
+  it('shows Kooth under feeling low with a note that it is only free in some areas', () => {
+    renderRoute('/help');
+    const low = screen.getByRole('region', { name: 'Feeling low, worried or anxious' });
+    expect(within(low).getByText('Kooth (Soluna by Kooth)')).toBeInTheDocument();
+    expect(
+      within(low).getByText(
+        "Free in some parts of the UK. Check if it's available where you live.",
+      ),
+    ).toBeInTheDocument();
+  });
+
   it('works when signed out', () => {
     renderRoute('/help', { studentId: null });
     expect(screen.getByRole('heading', { level: 1, name: 'Get help' })).toBeInTheDocument();

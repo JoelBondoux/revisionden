@@ -77,6 +77,7 @@ function serviceErrors(s, topicIds, now) {
   };
 
   for (const t of s.topics) if (!topicIds.has(t)) add(`unknown topic "${t}"`);
+  if (s.note && !s.confirmed_by) add('a note needs confirmed_by (who checked it by hand)');
   if (s.age_range) checkSource('age range', s.age_range.source);
   if (s.area) checkSource('area', s.area.source);
 

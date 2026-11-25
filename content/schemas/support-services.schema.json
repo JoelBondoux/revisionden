@@ -147,6 +147,12 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 80
+        },
+        "note": {
+          "description": "A short extra note shown with the service. Only allowed with confirmed_by: it is not backed by a source the build session saw.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
         }
       }
     },

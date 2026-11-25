@@ -394,6 +394,24 @@
       "checked_at": "2026-11-25"
     },
     {
+      "id": "kooth",
+      "service": "Kooth (Soluna by Kooth)",
+      "audiences": ["student", "parent"],
+      "topics": ["feeling-low"],
+      "helps_with": "An app and website where you can chat to a professional, talk with others and try self-care activities.",
+      "official_domains": ["kooth.com"],
+      "note": "Free in some parts of the UK. Check if it's available where you live.",
+      "contacts": [
+        {
+          "kind": "website",
+          "url": "https://www.kooth.com/",
+          "source": "https://www.kooth.com/"
+        }
+      ],
+      "checked_at": "2026-11-25",
+      "confirmed_by": "product owner (availability note)"
+    },
+    {
       "id": "beat",
       "service": "Beat",
       "audiences": ["student", "parent"],

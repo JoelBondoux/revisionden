@@ -236,3 +236,22 @@ test('the real file lists Coram Kidscape for students and parents', () => {
   assert.deepEqual(byId['coram-kidscape-parent-advice-line'].audiences, ['parent']);
   assert.deepEqual(byId['anti-bullying-alliance'].audiences, ['parent']);
 });
+
+test('a note is allowed only when someone has confirmed it by hand', () => {
+  const note = 'Free in some parts of the UK.';
+  const unconfirmed = messages(file([service({ note })]));
+  assert.ok(unconfirmed.some((m) => /note.*confirmed_by/.test(m)));
+  assert.deepEqual(messages(file([service({ note, confirmed_by: 'product owner' })])), []);
+});
+
+test('the real file lists Kooth for students under feeling low, with its availability note', () => {
+  const data = JSON.parse(readFileSync(SUPPORT_FILE, 'utf8'));
+  const kooth = data.services.find((s) => s.id === 'kooth');
+  assert.ok(kooth.audiences.includes('student'));
+  assert.ok(kooth.topics.includes('feeling-low'));
+  assert.equal(kooth.note, "Free in some parts of the UK. Check if it's available where you live.");
+  assert.deepEqual(
+    kooth.contacts.map((c) => c.kind),
+    ['website'],
+  );
+});
