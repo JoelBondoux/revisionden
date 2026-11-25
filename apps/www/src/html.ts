@@ -72,12 +72,19 @@ export function layout(
 <title>${escapeHtml(title)}</title>
 <meta name="description" content="${escapeHtml(page.description)}">${canonical}${robots}
 <meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#6c47f5">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="RevisionDen">
 <meta property="og:title" content="${escapeHtml(title)}">
 <meta property="og:description" content="${escapeHtml(page.description)}">
 <meta property="og:url" content="${url}">
+<meta property="og:image" content="${config.siteUrl}/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Pip the fox, the RevisionDen mascot, next to the words: Revision that finds the gaps">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/styles.css">
 </head>
 <body>

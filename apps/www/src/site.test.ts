@@ -43,6 +43,12 @@ describe('the built site', () => {
         '<meta name="viewport" content="width=device-width, initial-scale=1">',
       );
       expect(html, path).toMatch(/<meta property="og:title" content="[^"]+">/);
+      expect(html, path).toContain(
+        '<meta property="og:image" content="https://revisionden.com/og.png">',
+      );
+      expect(html, path).toContain('<meta property="og:image:width" content="1200">');
+      expect(html, path).toContain('<link rel="apple-touch-icon" href="/apple-touch-icon.png">');
+      expect(html, path).toMatch(/<meta name="theme-color" content="#6c47f5"/);
       if (path !== '404.html')
         expect(html, path).toMatch(
           /<link rel="canonical" href="https:\/\/revisionden\.com\/[^"]*">/,
@@ -129,5 +135,17 @@ describe('the built site', () => {
     const html = text(renderSite(launched, inputs), 'index.html');
     expect(html).toContain('Free to use.');
     expect(html).not.toContain('in private testing');
+  });
+
+  it('ships the Open Graph card and touch icon as PNGs of the right size', () => {
+    const size = (path: string) => {
+      const png = files.get(path);
+      if (!(png instanceof Uint8Array)) throw new Error(`${path} is missing`);
+      const view = new DataView(png.buffer, png.byteOffset, png.byteLength);
+      expect(view.getUint32(0)).toBe(0x89504e47); // PNG signature
+      return [view.getUint32(16), view.getUint32(20)];
+    };
+    expect(size('og.png')).toEqual([1200, 630]);
+    expect(size('apple-touch-icon.png')).toEqual([180, 180]);
   });
 });

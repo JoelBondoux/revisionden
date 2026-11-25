@@ -38,6 +38,11 @@ export function readInputs(): SiteInputs {
         .map((name) => [name, readFileSync(join(repoRoot, 'docs/legal', name), 'utf8')]),
     ),
     pricingDoc: readFileSync(join(repoRoot, 'docs/PRICING.md'), 'utf8'),
+    images: Object.fromEntries(
+      readdirSync(join(here, '..', 'public'))
+        .filter((name) => name.endsWith('.png'))
+        .map((name) => [name, readFileSync(join(here, '..', 'public', name))]),
+    ),
   };
 }
 
