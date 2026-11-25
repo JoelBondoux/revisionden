@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- No more plain underlined links: Settings, the parent home, "Who's revising?", About, Get help, policies and feedback now use tappable cards and buttons with an icon and a short description. Links inside the policies stay in the text but are bold and coloured, so they are easy to spot.
 - New parents now see the Terms of use and Privacy notice as easy-to-read cards before they start: the 4 most important points first, the rest and the full text one tap away.
 - When RevisionDen support replies to your feedback or bug report, you'll see the reply right under your message.
 - Coming soon: a public RevisionDen website at revisionden.com explaining how it works for parents and young people, with the planned prices and all the policies. The app itself will move to app.revisionden.com.
@@ -80,6 +81,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Link conversion J7 (J): Settings, parent home, reminder times, "Who's revising?", About, Get help, the policy list and pages, policy prose (`Markdown` renders `TextLink`), feedback, new-reward links, the topic list, reminder and young people's notice links, the review queue, the signed-out header (chips) and the version footer use `LinkTile`, `LinkButton`, `LinkChip` or `TextLink`; 15 new line icons. A guard test (`components/noTextLinks.test.ts`) fails on any raw `<Link>`/`<a>` that is not a link component or a listed, already-styled control. The stats page (K), the acceptance page (L) and the welcome page (I) are converted by their owners. "Learn it first" titles are no longer underlined.
 - Friendly policy acceptance (L8): "Before you start" shows the Terms of use and Privacy notice as cards built word for word from their "In plain English" bullets (`acceptanceSummary.ts`, `BeforeYouStart.tsx`), 4 chosen cards first then "Show all N points", the full text behind "Show the details" and links to `/legal/<name>`; stored acceptance versions unchanged; e2e and axe check at phone, tablet and desktop.
 - Operator bridge (O): `GET /operator/appdeck/error-reports?code=RD-XXXXXX` looks up one reference code over the full 90 days and returns the group that holds it (the code echoed, and always among the group's refs), or 404; the audit log's `before` cursor now checks its id part (a malformed one is a 400, not a server error; Codex finding on #87).
 - Link components J7 (J): `LinkButton` (primary, secondary, quiet; optional icon; `to` for app routes or `href` for outside and mailto, with `newTab` adding safe `rel` and a spoken hint), `LinkTile` (icon, title, description, chevron; named by its title, described by its description), `LinkChip` and `TextLink` in `apps/web/src/components/links.tsx` with `links.css` (44px targets, focus rings, hover lift and press squash, inline links bold with a soft bar instead of an underline). Two more contrast-checked pairs for link text. Screens are converted in a follow-up.

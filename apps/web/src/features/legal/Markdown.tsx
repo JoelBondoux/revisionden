@@ -1,5 +1,5 @@
 import { Fragment, type ReactNode } from 'react';
-import { Link } from 'react-router-dom';
+import { TextLink } from '../../components/links';
 
 /**
  * A small, safe Markdown renderer for the policy files. It builds React elements only (never
@@ -34,17 +34,18 @@ function inline(text: string): ReactNode[] {
       const href = policyHref(link[2]!);
       const label = inline(link[1]!);
       if (!href) return <Fragment key={i}>{label}</Fragment>;
+      // Links stay inline in the prose, styled as clear bold links (J7), never plain underlines.
       if (href.startsWith('/')) {
         return (
-          <Link key={i} to={href}>
+          <TextLink key={i} to={href}>
             {label}
-          </Link>
+          </TextLink>
         );
       }
       return (
-        <a key={i} href={href} rel="noreferrer">
+        <TextLink key={i} href={href} rel="noreferrer">
           {label}
-        </a>
+        </TextLink>
       );
     }
     if (

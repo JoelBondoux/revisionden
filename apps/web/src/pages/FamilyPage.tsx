@@ -4,6 +4,8 @@ import { LoadingOrError } from '../api/LoadingOrError';
 import { SignOutButton } from '../api/SignOutButton';
 import { useApiResource } from '../api/useApiResource';
 import { Avatar } from '../components/Avatar';
+import { ChatIcon, HomeIcon, UsersIcon } from '../components/icons';
+import { LinkChip, LinkTile } from '../components/links';
 
 /**
  * The signed-in parent's children. Tapping a child opens the parent home with that child chosen
@@ -35,31 +37,50 @@ export function FamilyPage() {
                   </span>
                 </Link>
                 <span className="profile__actions">
-                  <Link
+                  <LinkChip
                     to={`/family/${id}/rewards`}
                     aria-label={`Rewards you set for ${student.nickname}`}
                   >
                     Rewards you set
-                  </Link>
-                  <Link
+                  </LinkChip>
+                  <LinkChip
                     to={`/onboarding?link=${id}`}
                     aria-label={`Link a device for ${student.nickname}`}
                   >
                     Link a device
-                  </Link>
+                  </LinkChip>
                 </span>
               </li>
             );
           })}
         </ul>
       )}
-      <Link to="/parent">Parent home</Link>
-      <Link to="/feedback/family" className="secondary-text">
-        Family feedback
-      </Link>
-      <Link to="/onboarding" className="secondary-text">
-        Parents: add or manage children
-      </Link>
+      <ul className="link-tiles">
+        <li>
+          <LinkTile
+            to="/parent"
+            icon={<HomeIcon />}
+            title="Parent home"
+            description="Stats, rewards you set and reminders"
+          />
+        </li>
+        <li>
+          <LinkTile
+            to="/feedback/family"
+            icon={<ChatIcon />}
+            title="Family feedback"
+            description="What your family has sent us"
+          />
+        </li>
+        <li>
+          <LinkTile
+            to="/onboarding"
+            icon={<UsersIcon />}
+            title="Parents: add or manage children"
+            description="Profiles, subjects and device links"
+          />
+        </li>
+      </ul>
       {family.status === 'ready' && <SignOutButton />}
     </div>
   );
