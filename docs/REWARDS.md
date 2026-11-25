@@ -49,10 +49,16 @@ is `min(750, 300 + 50 × (L − 1))`: 300 XP for level 2, rising by 50 a level u
   about level 24 after Year 9, then about 20 levels a year, and level 100 about 4.8 school years
   in (late in Year 13). Students who practise less still level up, just more slowly.
 
-**Which XP counts** (`packages/core/src/reward-xp.ts`): XP from answers only (never minutes or
-taps); XP earned **late at night (22:00 to 05:59 UK time)** does not count; at most **300 XP a
+**Which XP counts** (`packages/core/src/reward-xp.ts`): XP from answers and completed flashcard
+sessions only (never minutes or taps); XP earned **late at night (22:00 to 05:59 UK time)** does not count; at most **300 XP a
 UK day** counts (five times the daily goal). The XP still shows and still counts for the daily
 goal; it just does not move levels, chapters or seasonal challenges.
+
+**Flashcards and pacing.** A completed flashcard session of 5+ cards earns 20 XP, at most 2 a day
+(40 XP), below the 50 XP daily goal. A student who only did flashcards would earn about
+40 × 250 = 10,000 XP a school year, slower than the 15,000 the curve assumes (60 XP × 250 days),
+so tapping through cards can never outpace real practice. The "flashcards reviewed" milestones
+count cards in completed sessions.
 
 ### 2. Year chapters
 

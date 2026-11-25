@@ -279,8 +279,9 @@ Tags: #product #rules #limits #defaults
 - Level curve: XP from level L to L + 1 is min(750, 300 + 50 × (L − 1)); level 20 at 12,000 XP,
   level 100 at 72,000 XP; a prestige star every 7,500 XP after that, up to 5. Assumes 60 XP a
   practice day and 250 practice days a school year (`packages/core/src/levels.ts`).
-- Reward XP: only answer XP counts; nothing from 22:00 to 05:59 UK time; at most 300 XP a UK day
-  (`packages/core/src/reward-xp.ts`). Flashcard deck reviews do not count yet (see contradictions).
+- Reward XP: answer XP and completed flashcard-session XP count; nothing from 22:00 to 05:59 UK time; at most 300 XP a UK day
+  (`packages/core/src/reward-xp.ts`). Flashcards alone give at most 40 XP a day (about 10,000 a
+  year), slower than the curve's 15,000, so pacing holds. Sessions: `flashcard_sessions` table.
 - Year chapters: 30 steps each (a step every 400 chapter XP, 12,000 fills a chapter); spill-over
   into earlier unfinished chapters for mid-way joiners; Year 11 and 13 finales on the last exam;
   Year 12+ count as GCSE finished (`packages/core/src/chapters.ts`).
