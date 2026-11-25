@@ -46,6 +46,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:23:44Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:38:32Z",
+          "notes": "model answered \"t = (v - u) / a\"; expected \"(v - u)/a\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:38:52Z",
+          "notes": "factual_error (answer): The prompt asks to 'Make t the subject', which requires a full equation as the answer. The 'solutions' array provides only the expression '(v - u)/a', which is an incomplete answer. The correct answer is the equation 't = (v - u)/a', as correctly shown in the A1 mark of the mark scheme."
         }
       ]
     }
@@ -97,6 +113,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:23:45Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:00Z",
+          "notes": "model answered \"(y + 7) / 3\"; expected \"(y + 7)/3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:07Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -148,6 +180,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:23:46Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:11Z",
+          "notes": "model answered \"x = 5y - 4\"; expected \"5y - 4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:18Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -204,6 +252,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:23:47Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:24Z",
+          "notes": "model answered \"b = (a + 3) / (a - 2)\"; expected \"(a + 3)/(a - 2)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:32Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -255,6 +319,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:23:48Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:40Z",
+          "notes": "model answered \"28\"; expected \"28\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:48Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -306,6 +386,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:23:48Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:55Z",
+          "notes": "model answered \"28.3 cm²\"; expected \"28.3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:40:15Z",
+          "notes": "wording (mark_scheme): The A1 mark is for \"28.3 (or 28.27...)\". The question explicitly instructs students to \"Give your answer correct to 1 decimal place.\" Therefore, the final accuracy mark should only be awarded for the correctly rounded answer, 28.3. Allowing an unrounded or incorrectly rounded answer for the final mark contradicts the question's instructions."
         }
       ]
     }
@@ -370,6 +466,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:23:49Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:40:20Z",
+          "notes": "model answered \"6\"; expected \"6\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:40:29Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -434,6 +546,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:23:50Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:40:34Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:40:42Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -482,6 +610,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:23:51Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:40:50Z",
+          "notes": "model answered \"x = y - 5\"; expected \"x = y - 5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:40:56Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -530,6 +674,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:23:52Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:41:02Z",
+          "notes": "model answered \"x = y/4\"; expected \"x = y/4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:41:08Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -578,6 +738,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:23:52Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:41:14Z",
+          "notes": "model answered \"x = 3y\"; expected \"x = 3y\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:41:20Z",
+          "notes": "no problems found"
         }
       ]
     }

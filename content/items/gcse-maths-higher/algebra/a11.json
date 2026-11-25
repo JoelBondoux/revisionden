@@ -115,6 +115,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:35Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:38:31Z",
+          "notes": "model answered \"4, -4\"; expected \"4, -4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:38:38Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -166,6 +182,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:36Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:38:45Z",
+          "notes": "model answered \"-1, 7\"; expected \"-1, 7\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:38:54Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -216,6 +248,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:37Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:03Z",
+          "notes": "model answered \"(x + 3)^2 + 2\"; expected \"(x + 3)^2 + 2 | (x+3)^2+2 | (x + 3)² + 2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:09Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -277,6 +325,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:38Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:16Z",
+          "notes": "model answered \"(4, 3)\"; expected \"(4, 3) | (4,3)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:26Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -327,6 +391,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:38Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:36Z",
+          "notes": "model answered \"(4, -6)\"; expected \"(4, -6) | (4,-6) | (4, −6)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:45Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -395,6 +475,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:39Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:54Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:40:03Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -443,6 +539,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:40Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:40:12Z",
+          "notes": "model answered \"(a, b)\"; expected \"(a, b)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:40:36Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -491,6 +603,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:41Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:40:43Z",
+          "notes": "model answered \"-7\"; expected \"-7\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:41:04Z",
+          "notes": "unsupported_claim (front): The cited specification point A11 requires students to \"identify and interpret... intercepts... of quadratic functions graphically\". This item requires finding the intercept from an equation, which is an algebraic method, not a graphical one.; wording (front): The phrasing is imprecise. An equation is a statement; its graph is the geometric object that crosses the y-axis. The question should refer to the 'graph of y = x^2 + 4x - 7' or ask for the 'y-intercept'."
         }
       ]
     }
@@ -539,6 +667,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:41Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:41:14Z",
+          "notes": "model answered \"-5\"; expected \"-5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:41:22Z",
+          "notes": "no problems found"
         }
       ]
     }

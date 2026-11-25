@@ -641,6 +641,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:41Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 14 (sha256 647a751b51c71d9ced1c9356aa70b15ceb1a4acb2fd5bc9af49619ead06d0ee6)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:38:38Z",
+          "notes": "model answered \"0.77\"; expected \"0.77\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:02Z",
+          "notes": "wrong_answer (answer): The question requires an answer correct to 2 decimal places. The exact positive solution is (1+√13)/6 ≈ 0.7676, which rounds to 0.77. The provided answer object, with value 0.77 and tolerance 0.005, creates an acceptance range of [0.765, 0.775]. However, a value at the upper boundary, such as 0.775, rounds to 0.78, not 0.77. The tolerance range is therefore too inclusive and would incorrectly mark certain answers as correct."
         }
       ]
     }
@@ -689,6 +705,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:41Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:09Z",
+          "notes": "model answered \"8\"; expected \"8\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:26Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -737,6 +769,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:42Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:34Z",
+          "notes": "model answered \"9\"; expected \"9\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:39Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -785,6 +833,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:43Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:45Z",
+          "notes": "model answered \"-8\"; expected \"-8\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:52Z",
+          "notes": "no problems found"
         }
       ]
     }

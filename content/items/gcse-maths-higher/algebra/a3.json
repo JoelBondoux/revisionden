@@ -214,7 +214,7 @@
     "options": ["3x = 12", "x + x + x = 3x", "x^2 = 9", "2x + 1 = 7"],
     "answer": { "option": 1 },
     "marks": 1,
-    "explanation": "x + x + x is 3x for every value of x. The others are equations, true only for some values. Checked with SymPy: x + x + x - 3x = 0.",
+    "explanation": "x + x + x is 3x for every value of x. The others are equations, true only for some values.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -242,14 +242,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A3). Classification rests on standard definitions of the terms the specification names. Identity checked with SymPy. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
-          "at": "2026-11-25T17:32:27Z"
+          "at": "2026-11-25T17:39:10Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:34:53Z",
+          "at": "2026-11-25T17:39:28Z",
           "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -257,16 +257,16 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:36:23Z",
+          "at": "2026-11-25T17:39:37Z",
           "notes": "model answered \"1\"; expected \"1\""
         },
         {
           "name": "adversarial-review",
-          "result": "fail",
+          "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:36:34Z",
-          "notes": "wording (explanation): The explanation mentions 'SymPy'. This is a reference to a symbolic mathematics Python library. It is specialist jargon that is completely inappropriate for a GCSE student and will cause confusion."
+          "at": "2026-11-25T17:39:44Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -278,7 +278,7 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a3-lp-classify",
     "expected_seconds": 60,
-    "prompt": "Simplify 3(x + 2) - x, and so show that 3(x + 2) - x = 2x + 6 for every value of x.",
+    "prompt": "Expand and simplify 3(x + 2) - x",
     "answer": { "expression": "2x + 6" },
     "verify": { "method": "expression", "expression": "3(x + 2) - x", "form": "expanded" },
     "steps": ["3(x + 2) - x", "3x + 6 - x", "2x + 6"],
@@ -298,6 +298,30 @@
         "retrieved_at": "2026-11-25",
         "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
+        "quote": "multiplying a single term over a bracket",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
+        "quote": "collecting like terms",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
     "verification": {
@@ -310,31 +334,31 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A3). Answer and every step (expanded form) backed by the maths engine.",
-          "at": "2026-11-25T17:32:27Z"
+          "at": "2026-11-25T17:41:10Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T17:34:54Z",
-          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+          "at": "2026-11-25T17:41:12Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 3: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:36:39Z",
+          "at": "2026-11-25T17:41:20Z",
           "notes": "model answered \"2x + 6\"; expected \"2x + 6\""
         },
         {
           "name": "adversarial-review",
-          "result": "fail",
+          "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:36:53Z",
-          "notes": "wording (prompt): The prompt contains two instructions: \"Simplify 3(x + 2) - x\" and \"so show that 3(x + 2) - x = 2x + 6 for every value of x.\" The process for both is the same, making the instructions redundant. This could confuse a student into thinking that two separate tasks are required, or that an additional step is needed to complete the 'show that' part beyond the simplification."
+          "at": "2026-11-25T17:41:27Z",
+          "notes": "no problems found"
         }
       ]
     }

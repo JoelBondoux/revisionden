@@ -7,14 +7,30 @@
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 60,
     "prompt": "Expand and simplify 3(2x - 5) - 2(x - 4)",
-    "answer": { "expression": "4x - 7" },
-    "verify": { "method": "expression", "expression": "3(2x - 5) - 2(x - 4)", "form": "expanded" },
-    "steps": ["3(2x - 5) - 2(x - 4)", "6x - 15 - 2x + 8", "4x - 7"],
+    "answer": {
+      "expression": "4x - 7"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "3(2x - 5) - 2(x - 4)",
+      "form": "expanded"
+    },
+    "steps": [
+      "3(2x - 5) - 2(x - 4)",
+      "6x - 15 - 2x + 8",
+      "4x - 7"
+    ],
     "marks": 2,
-    "mark_scheme": ["M1 for 6x - 15 or -2x + 8", "A1 for 4x - 7"],
+    "mark_scheme": [
+      "M1 for 6x - 15 or -2x + 8",
+      "A1 for 4x - 7"
+    ],
     "hint": "Take care: -2 × -4 = +8.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
-    "checked_by": ["maths-engine", "author"],
+    "checked_by": [
+      "maths-engine",
+      "author"
+    ],
     "citations": [
       {
         "source_type": "specification",
@@ -25,7 +41,9 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
         "quote": "multiplying a single term over a bracket",
         "retrieved_at": "2026-11-25",
-        "supports": ["question"],
+        "supports": [
+          "question"
+        ],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       },
       {
@@ -37,7 +55,9 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
         "quote": "collecting like terms",
         "retrieved_at": "2026-11-25",
-        "supports": ["question"],
+        "supports": [
+          "question"
+        ],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -88,13 +108,29 @@
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 60,
     "prompt": "Expand and simplify (x + 5)(x - 3). Use ^ for powers.",
-    "answer": { "expression": "x^2 + 2x - 15" },
-    "verify": { "method": "expression", "expression": "(x + 5)(x - 3)", "form": "expanded" },
-    "steps": ["(x + 5)(x - 3)", "x^2 - 3x + 5x - 15", "x^2 + 2x - 15"],
+    "answer": {
+      "expression": "x^2 + 2x - 15"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "(x + 5)(x - 3)",
+      "form": "expanded"
+    },
+    "steps": [
+      "(x + 5)(x - 3)",
+      "x^2 - 3x + 5x - 15",
+      "x^2 + 2x - 15"
+    ],
     "marks": 2,
-    "mark_scheme": ["M1 for at least three of the four terms correct", "A1 for x^2 + 2x - 15"],
+    "mark_scheme": [
+      "M1 for at least three of the four terms correct",
+      "A1 for x^2 + 2x - 15"
+    ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
-    "checked_by": ["maths-engine", "author"],
+    "checked_by": [
+      "maths-engine",
+      "author"
+    ],
     "citations": [
       {
         "source_type": "specification",
@@ -105,7 +141,9 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
         "quote": "expanding products of two or more binomials",
         "retrieved_at": "2026-11-25",
-        "supports": ["question"],
+        "supports": [
+          "question"
+        ],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -156,8 +194,14 @@
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 150,
     "prompt": "Expand and simplify (x + 2)(x + 3)(x - 1). Use ^ for powers.",
-    "answer": { "expression": "x^3 + 4x^2 + x - 6" },
-    "verify": { "method": "expression", "expression": "(x + 2)(x + 3)(x - 1)", "form": "expanded" },
+    "answer": {
+      "expression": "x^3 + 4x^2 + x - 6"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "(x + 2)(x + 3)(x - 1)",
+      "form": "expanded"
+    },
     "steps": [
       "(x + 2)(x + 3)(x - 1)",
       "(x^2 + 5x + 6)(x - 1)",
@@ -171,7 +215,10 @@
       "A1 for x^3 + 4x^2 + x - 6"
     ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
-    "checked_by": ["maths-engine", "author"],
+    "checked_by": [
+      "maths-engine",
+      "author"
+    ],
     "citations": [
       {
         "source_type": "specification",
@@ -182,7 +229,9 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
         "quote": "expanding products of two or more binomials",
         "retrieved_at": "2026-11-25",
-        "supports": ["question"],
+        "supports": [
+          "question"
+        ],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -233,12 +282,21 @@
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 25,
     "prompt": "Which is the expansion of (2x - 3)^2?",
-    "options": ["4x^2 - 9", "4x^2 + 9", "4x^2 - 12x + 9", "4x^2 - 6x + 9"],
-    "answer": { "option": 2 },
+    "options": [
+      "4x^2 - 9",
+      "4x^2 + 9",
+      "4x^2 - 12x + 9",
+      "4x^2 - 6x + 9"
+    ],
+    "answer": {
+      "option": 2
+    },
     "marks": 1,
     "explanation": "(2x - 3)^2 = (2x - 3)(2x - 3) = 4x^2 - 6x - 6x + 9 = 4x^2 - 12x + 9.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
-    "checked_by": ["author"],
+    "checked_by": [
+      "author"
+    ],
     "citations": [
       {
         "source_type": "specification",
@@ -249,7 +307,9 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
         "quote": "expanding products of two or more binomials",
         "retrieved_at": "2026-11-25",
-        "supports": ["question"],
+        "supports": [
+          "question"
+        ],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -300,12 +360,21 @@
     "learning_point": "gcse-maths-h-a4-lp-factorise",
     "expected_seconds": 25,
     "prompt": "Factorise x^2 + 7x + 12",
-    "options": ["(x + 3)(x + 4)", "(x + 2)(x + 6)", "(x + 1)(x + 12)", "(x - 3)(x - 4)"],
-    "answer": { "option": 0 },
+    "options": [
+      "(x + 3)(x + 4)",
+      "(x + 2)(x + 6)",
+      "(x + 1)(x + 12)",
+      "(x - 3)(x - 4)"
+    ],
+    "answer": {
+      "option": 0
+    },
     "marks": 1,
     "explanation": "3 × 4 = 12 and 3 + 4 = 7, so x^2 + 7x + 12 = (x + 3)(x + 4).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
-    "checked_by": ["author"],
+    "checked_by": [
+      "author"
+    ],
     "citations": [
       {
         "source_type": "specification",
@@ -316,7 +385,9 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
         "quote": "simplify and manipulate algebraic expressions (including those involving surds and algebraic fractions) by:",
         "retrieved_at": "2026-11-25",
-        "supports": ["question"],
+        "supports": [
+          "question"
+        ],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -367,12 +438,21 @@
     "learning_point": "gcse-maths-h-a4-lp-factorise",
     "expected_seconds": 25,
     "prompt": "Factorise x^2 - 49",
-    "options": ["(x - 7)^2", "(x + 7)(x - 7)", "(x - 49)(x + 1)", "x(x - 49)"],
-    "answer": { "option": 1 },
+    "options": [
+      "(x - 7)^2",
+      "(x + 7)(x - 7)",
+      "(x - 49)(x + 1)",
+      "x(x - 49)"
+    ],
+    "answer": {
+      "option": 1
+    },
     "marks": 1,
     "explanation": "x^2 - 49 is a difference of two squares, x^2 - 7^2 = (x + 7)(x - 7).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
-    "checked_by": ["author"],
+    "checked_by": [
+      "author"
+    ],
     "citations": [
       {
         "source_type": "specification",
@@ -383,7 +463,9 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
         "quote": "including the difference of two squares",
         "retrieved_at": "2026-11-25",
-        "supports": ["question"],
+        "supports": [
+          "question"
+        ],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -434,12 +516,21 @@
     "learning_point": "gcse-maths-h-a4-lp-factorise",
     "expected_seconds": 25,
     "prompt": "Factorise 2x^2 + 7x + 3",
-    "options": ["(2x + 1)(x + 3)", "(2x + 3)(x + 1)", "(2x + 7)(x + 3)", "(x + 1)(x + 3)"],
-    "answer": { "option": 0 },
+    "options": [
+      "(2x + 1)(x + 3)",
+      "(2x + 3)(x + 1)",
+      "(2x + 7)(x + 3)",
+      "(x + 1)(x + 3)"
+    ],
+    "answer": {
+      "option": 0
+    },
     "marks": 1,
     "explanation": "(2x + 1)(x + 3) = 2x^2 + 6x + x + 3 = 2x^2 + 7x + 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
-    "checked_by": ["author"],
+    "checked_by": [
+      "author"
+    ],
     "citations": [
       {
         "source_type": "specification",
@@ -450,7 +541,9 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
         "quote": "simplify and manipulate algebraic expressions (including those involving surds and algebraic fractions) by:",
         "retrieved_at": "2026-11-25",
-        "supports": ["question"],
+        "supports": [
+          "question"
+        ],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -501,14 +594,23 @@
     "learning_point": "gcse-maths-h-a4-lp-factorise",
     "expected_seconds": 45,
     "prompt": "Factorise fully 6x^2 - 15x",
-    "answer": { "expression": "3x(2x - 5)" },
-    "verify": { "method": "expression", "expression": "6x^2 - 15x", "form": "factorised" },
+    "answer": {
+      "expression": "3x(2x - 5)"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "6x^2 - 15x",
+      "form": "factorised"
+    },
     "marks": 2,
     "mark_scheme": [
       "B2 for 3x(2x - 5) (B1 for a partial factorisation such as 3(2x^2 - 5x) or x(6x - 15))"
     ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
-    "checked_by": ["maths-engine", "author"],
+    "checked_by": [
+      "maths-engine",
+      "author"
+    ],
     "citations": [
       {
         "source_type": "specification",
@@ -519,7 +621,9 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
         "quote": "taking out common factors",
         "retrieved_at": "2026-11-25",
-        "supports": ["question"],
+        "supports": [
+          "question"
+        ],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -570,12 +674,21 @@
     "learning_point": "gcse-maths-h-a4-lp-indices",
     "expected_seconds": 25,
     "prompt": "Simplify x^5 × x^3",
-    "options": ["x^15", "x^8", "x^2", "2x^8"],
-    "answer": { "option": 1 },
+    "options": [
+      "x^15",
+      "x^8",
+      "x^2",
+      "2x^8"
+    ],
+    "answer": {
+      "option": 1
+    },
     "marks": 1,
     "explanation": "Add the powers when multiplying: x^(5 + 3) = x^8.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
-    "checked_by": ["author"],
+    "checked_by": [
+      "author"
+    ],
     "citations": [
       {
         "source_type": "specification",
@@ -586,7 +699,9 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
         "quote": "simplifying expressions involving sums, products and powers, including the laws of indices",
         "retrieved_at": "2026-11-25",
-        "supports": ["question"],
+        "supports": [
+          "question"
+        ],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -637,12 +752,21 @@
     "learning_point": "gcse-maths-h-a4-lp-indices",
     "expected_seconds": 25,
     "prompt": "Simplify (y^4)^3",
-    "options": ["y^7", "y^12", "y^64", "3y^4"],
-    "answer": { "option": 1 },
+    "options": [
+      "y^7",
+      "y^12",
+      "y^64",
+      "3y^4"
+    ],
+    "answer": {
+      "option": 1
+    },
     "marks": 1,
     "explanation": "Multiply the powers: y^(4 × 3) = y^12.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
-    "checked_by": ["author"],
+    "checked_by": [
+      "author"
+    ],
     "citations": [
       {
         "source_type": "specification",
@@ -653,7 +777,9 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
         "quote": "simplifying expressions involving sums, products and powers, including the laws of indices",
         "retrieved_at": "2026-11-25",
-        "supports": ["question"],
+        "supports": [
+          "question"
+        ],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -704,12 +830,21 @@
     "learning_point": "gcse-maths-h-a4-lp-indices",
     "expected_seconds": 25,
     "prompt": "Simplify 12a^6 ÷ 3a^2",
-    "options": ["4a^3", "9a^4", "4a^4", "4a^8"],
-    "answer": { "option": 2 },
+    "options": [
+      "4a^3",
+      "9a^4",
+      "4a^4",
+      "4a^8"
+    ],
+    "answer": {
+      "option": 2
+    },
     "marks": 1,
     "explanation": "Divide the numbers and subtract the powers: (12 ÷ 3)a^(6 - 2) = 4a^4.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
-    "checked_by": ["author"],
+    "checked_by": [
+      "author"
+    ],
     "citations": [
       {
         "source_type": "specification",
@@ -720,7 +855,9 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
         "quote": "simplifying expressions involving sums, products and powers, including the laws of indices",
         "retrieved_at": "2026-11-25",
-        "supports": ["question"],
+        "supports": [
+          "question"
+        ],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -773,7 +910,9 @@
     "front": "The name for an expression such as x^2 - 25, which factorises to (x + 5)(x - 5)",
     "back": "Difference of two squares",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
-    "checked_by": ["author"],
+    "checked_by": [
+      "author"
+    ],
     "needs_human_approval": true,
     "citations": [
       {
@@ -785,7 +924,9 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
         "quote": "including the difference of two squares",
         "retrieved_at": "2026-11-25",
-        "supports": ["question"],
+        "supports": [
+          "question"
+        ],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -838,7 +979,9 @@
     "front": "x^0, for any x ≠ 0",
     "back": "1",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
-    "checked_by": ["author"],
+    "checked_by": [
+      "author"
+    ],
     "citations": [
       {
         "source_type": "specification",
@@ -849,7 +992,9 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
         "quote": "simplifying expressions involving sums, products and powers, including the laws of indices",
         "retrieved_at": "2026-11-25",
-        "supports": ["question"],
+        "supports": [
+          "question"
+        ],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -902,7 +1047,9 @@
     "front": "Collect like terms: 2a + 3b - a + b",
     "back": "a + 4b",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
-    "checked_by": ["author"],
+    "checked_by": [
+      "author"
+    ],
     "citations": [
       {
         "source_type": "specification",
@@ -913,7 +1060,9 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
         "quote": "collecting like terms",
         "retrieved_at": "2026-11-25",
-        "supports": ["question"],
+        "supports": [
+          "question"
+        ],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],

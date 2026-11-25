@@ -45,6 +45,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:44Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:40:00Z",
+          "notes": "model answered \"x = 3, y = 2\"; expected \"x = 3, y = 2 | x = 3 and y = 2 | x=3, y=2 | x = 3; y = 2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:40:13Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -95,6 +111,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:44Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:40:23Z",
+          "notes": "model answered \"x = 2, y = 1\"; expected \"x = 2, y = 1 | x = 2 and y = 1 | x=2, y=1 | x = 2; y = 1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:40:32Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -146,6 +178,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:45Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:40:38Z",
+          "notes": "model answered \"7\"; expected \"7\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:40:44Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -198,6 +246,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:46Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:40:52Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:41:00Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -250,6 +314,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:29:47Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:41:06Z",
+          "notes": "model answered \"-1, 2\"; expected \"2, -1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:41:18Z",
+          "notes": "no problems found"
         }
       ]
     }
