@@ -312,6 +312,8 @@ export const deviceLinkTokens = pgTable(
     // SHA-256 of the short code a child can type at /link; the code itself is never stored.
     codeHash: text('code_hash').unique(),
     cancelledAt: timestamp('cancelled_at', { withTimezone: true }),
+    // When the device that used this link finished setting up its passkey.
+    linkedAt: timestamp('linked_at', { withTimezone: true }),
     createdAt: createdAt(),
   },
   (t) => [
@@ -327,6 +329,10 @@ export const passkeyChallenges = pgTable('passkey_challenges', {
   challenge: text('challenge').notNull(),
   // Set for registration (the student being linked); null for unlock.
   studentId: uuid('student_id').references(() => students.id, { onDelete: 'cascade' }),
+  // Registration only: the link that started it, so cancelling the link stops the set-up too.
+  linkTokenId: uuid('link_token_id').references(() => deviceLinkTokens.id, {
+    onDelete: 'cascade',
+  }),
   expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
   usedAt: timestamp('used_at', { withTimezone: true }),
   createdAt: createdAt(),

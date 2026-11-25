@@ -1,6 +1,6 @@
 import { Hono, type MiddlewareHandler } from 'hono';
 import { deleteCookie, getCookie, setCookie } from 'hono/cookie';
-import { and, asc, desc, eq, gt, gte, inArray, isNull } from 'drizzle-orm';
+import { and, asc, desc, eq, gt, inArray, isNull } from 'drizzle-orm';
 import { z } from 'zod';
 import {
   CreateLinkTokenRequestSchema,
@@ -158,14 +158,8 @@ export function parentDeviceRoutes({ db, config, clock }: DeviceDeps) {
     const row = await ownToken(c.var.parent.familyId, c.req.param('id'), c.req.param('tokenId'));
     let status: LinkStatus = 'waiting';
     if (row.cancelledAt) status = 'cancelled';
-    else if (row.usedAt) {
-      const [device] = await db
-        .select({ id: devices.id })
-        .from(devices)
-        .where(and(eq(devices.studentId, row.studentId), gte(devices.linkedAt, row.usedAt)))
-        .limit(1);
-      status = device ? 'linked' : 'waiting';
-    } else if (row.expiresAt <= clock.now()) status = 'expired';
+    else if (row.linkedAt) status = 'linked';
+    else if (!row.usedAt && row.expiresAt <= clock.now()) status = 'expired';
     return c.json({ status });
   });
 
@@ -217,6 +211,7 @@ export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) 
     kind: 'register' | 'unlock',
     challenge: string,
     studentId?: string,
+    linkTokenId?: string,
   ) {
     const [row] = await db
       .insert(passkeyChallenges)
@@ -224,6 +219,7 @@ export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) 
         kind,
         challenge,
         studentId: studentId ?? null,
+        linkTokenId: linkTokenId ?? null,
         expiresAt: new Date(now().getTime() + CHALLENGE_TTL_MS),
       })
       .returning({ id: passkeyChallenges.id });
@@ -247,6 +243,7 @@ export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) 
       .returning({
         challenge: passkeyChallenges.challenge,
         studentId: passkeyChallenges.studentId,
+        linkTokenId: passkeyChallenges.linkTokenId,
       });
     if (!row) throw invalidChallenge();
     return row;
@@ -386,7 +383,7 @@ export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) 
           gt(deviceLinkTokens.expiresAt, now()),
         ),
       )
-      .returning({ studentId: deviceLinkTokens.studentId });
+      .returning({ id: deviceLinkTokens.id, studentId: deviceLinkTokens.studentId });
     if (!used) throw invalidLinkToken();
 
     const [student] = await db.select().from(students).where(eq(students.id, used.studentId));
@@ -394,7 +391,7 @@ export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) 
       userId: student!.id,
       userName: student!.nickname,
     });
-    const challengeId = await createChallenge('register', options.challenge, student!.id);
+    const challengeId = await createChallenge('register', options.challenge, student!.id, used.id);
     return c.json({
       challengeId,
       options,
@@ -405,6 +402,14 @@ export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) 
   app.post('/link/verify', async (c) => {
     const { challengeId, response, deviceType } = await readJson(c, linkVerifySchema);
     const challenge = await consumeChallenge(challengeId, 'register');
+    // A link the parent cancelled stops working even if its set-up had already started.
+    if (challenge.linkTokenId) {
+      const [token] = await db
+        .select({ cancelledAt: deviceLinkTokens.cancelledAt })
+        .from(deviceLinkTokens)
+        .where(eq(deviceLinkTokens.id, challenge.linkTokenId));
+      if (!token || token.cancelledAt) throw invalidLinkToken();
+    }
     const credential = await passkeys.verifyRegistration({
       response: response as never,
       expectedChallenge: challenge.challenge,
@@ -422,6 +427,12 @@ export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) 
         linkedAt: now(),
       })
       .returning({ id: devices.id });
+    if (challenge.linkTokenId) {
+      await db
+        .update(deviceLinkTokens)
+        .set({ linkedAt: now() })
+        .where(eq(deviceLinkTokens.id, challenge.linkTokenId));
+    }
     const deviceMarker = await issueMarker(device!.id, challenge.studentId!);
     await startSession(c, challenge.studentId!, device!.id);
     const [student] = await db.select().from(students).where(eq(students.id, challenge.studentId!));

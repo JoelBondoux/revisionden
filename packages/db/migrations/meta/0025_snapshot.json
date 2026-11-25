@@ -1,5 +1,5 @@
 {
-  "id": "134b4f47-7950-4ea0-88ae-22b697cf703f",
+  "id": "1745d0c9-a9e8-4403-944e-388ad2ac34b1",
   "prevId": "8e5f8359-087a-4064-98dd-4f25cfddbd26",
   "version": "7",
   "dialect": "postgresql",
@@ -1272,6 +1272,12 @@
         },
         "cancelled_at": {
           "name": "cancelled_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "linked_at": {
+          "name": "linked_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": false
@@ -4001,6 +4007,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "link_token_id": {
+          "name": "link_token_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
         "expires_at": {
           "name": "expires_at",
           "type": "timestamp with time zone",
@@ -4028,6 +4040,15 @@
           "tableFrom": "passkey_challenges",
           "tableTo": "students",
           "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "passkey_challenges_link_token_id_device_link_tokens_id_fk": {
+          "name": "passkey_challenges_link_token_id_device_link_tokens_id_fk",
+          "tableFrom": "passkey_challenges",
+          "tableTo": "device_link_tokens",
+          "columnsFrom": ["link_token_id"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"

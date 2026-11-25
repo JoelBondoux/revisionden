@@ -181,6 +181,38 @@ describe('waiting for the device, and cancelling', () => {
     ).toBe(400);
   });
 
+  it('stops a set-up that had already started when the link is cancelled', async () => {
+    const { headers, studentId } = await family();
+    const link = await makeLink(headers, studentId, 'share');
+    const redeemed = await redeemCode(link.code);
+    expect(redeemed.status).toBe(200);
+    await t.app.request(`/v1/students/${studentId}/link-tokens/${link.tokenId}`, {
+      method: 'DELETE',
+      headers,
+    });
+    const verified = await verify(redeemed, 'phone');
+    expect(verified.status).toBe(400);
+    expect(verified.headers.getSetCookie().some((c) => c.startsWith('__Host-rd_student='))).toBe(
+      false,
+    );
+    const list = DeviceListSchema.parse(
+      await (await t.app.request(`/v1/students/${studentId}/devices`, { headers })).json(),
+    );
+    expect(list.devices).toHaveLength(0);
+  });
+
+  it('shows linked only for the link whose device finished setting up', async () => {
+    const { headers, studentId } = await family();
+    const abandoned = await makeLink(headers, studentId, 'share');
+    const used = await makeLink(headers, studentId);
+    expect((await redeemCode(abandoned.code)).status).toBe(200);
+    expect((await verify(await redeemCode(used.code), 'phone')).status).toBe(201);
+    expect((await status(headers, studentId, used.tokenId)).body).toEqual({ status: 'linked' });
+    expect((await status(headers, studentId, abandoned.tokenId)).body).toEqual({
+      status: 'waiting',
+    });
+  });
+
   it('keeps other families out', async () => {
     const { headers, studentId } = await family();
     const other = await family();

@@ -238,7 +238,9 @@ Product owner decision, 2026-11-25: **parent view only**.
   Codes and tokens are single use and stored only as hashes. Code attempts at `/link` have their
   own rate limit per address.
 - The parent sees "Waiting for <nickname>'s device…" and "Cancel this link" (a cancelled link no
-  longer works). The screen updates once the device has set up its passkey, and parents with
+  longer works, even on a device that had already opened it and not yet finished its passkey).
+  The screen updates once the device that used that link has set up its passkey (each link
+  records its own set-up, so another device or link never marks it done), and parents with
   push on are told "<nickname>'s device is set up" (a family event with no parent as the actor,
   so both parents hear).
 - The parent home lists each child's linked devices: device type (phone, tablet or computer, as

@@ -36,7 +36,7 @@ Tags: #product #rules #limits #defaults
 - Parents can also "Send a link instead": a shared link lasts 24 hours (the QR code 10 minutes),
   with no nickname in the link or message. Each link has an 8-character short code (no
   look-alikes, stored hashed) the child can type at `/link`; code attempts are rate-limited per
-  address. Parents can cancel a link, see "Waiting for <nickname>'s device…", and are pushed
+  address. Parents can cancel a link (it also stops a set-up already under way), see "Waiting for <nickname>'s device…", and are pushed
   "<nickname>'s device is set up". Parent home lists each child's devices (type, date linked) with
   Remove.
 - A student device session lasts 12 hours, then the student unlocks again with the passkey.
