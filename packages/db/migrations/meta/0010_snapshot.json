@@ -1,5 +1,5 @@
 {
-  "id": "52654aa6-a480-49b5-8798-63bb1c8db12d",
+  "id": "2b7d5e91-e837-4d7c-b758-c98b0433a212",
   "prevId": "de8517d2-c7b4-4426-b181-9896876cb58c",
   "version": "7",
   "dialect": "postgresql",
@@ -563,67 +563,6 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.daily_sets": {
-      "name": "daily_sets",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "student_id": {
-          "name": "student_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "day": {
-          "name": "day",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "item_ids": {
-          "name": "item_ids",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "daily_sets_student_id_students_id_fk": {
-          "name": "daily_sets_student_id_students_id_fk",
-          "tableFrom": "daily_sets",
-          "tableTo": "students",
-          "columnsFrom": ["student_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "daily_sets_student_day_unique": {
-          "name": "daily_sets_student_day_unique",
-          "nullsNotDistinct": false,
-          "columns": ["student_id", "day"]
-        }
-      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -1320,6 +1259,127 @@
         "feedback_text_length": {
           "name": "feedback_text_length",
           "value": "char_length(\"feedback\".\"text\") <= 500"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.flashcard_sessions": {
+      "name": "flashcard_sessions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "student_id": {
+          "name": "student_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "card_ids": {
+          "name": "card_ids",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'[]'::jsonb"
+        },
+        "started_at": {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "finished_at": {
+          "name": "finished_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "completed": {
+          "name": "completed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "xp_earned": {
+          "name": "xp_earned",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "topic_id": {
+          "name": "topic_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rewarded_day": {
+          "name": "rewarded_day",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reward_slot": {
+          "name": "reward_slot",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "flashcard_sessions_student_started_idx": {
+          "name": "flashcard_sessions_student_started_idx",
+          "columns": [
+            {
+              "expression": "student_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "started_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "flashcard_sessions_student_id_students_id_fk": {
+          "name": "flashcard_sessions_student_id_students_id_fk",
+          "tableFrom": "flashcard_sessions",
+          "tableTo": "students",
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "flashcard_sessions_reward_slot": {
+          "name": "flashcard_sessions_reward_slot",
+          "nullsNotDistinct": false,
+          "columns": ["student_id", "rewarded_day", "reward_slot"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "flashcard_sessions_reward_slot_range": {
+          "name": "flashcard_sessions_reward_slot_range",
+          "value": "\"flashcard_sessions\".\"reward_slot\" between 1 and 2"
         }
       },
       "isRLSEnabled": false
