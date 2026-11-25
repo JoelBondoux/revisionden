@@ -42,6 +42,8 @@ teenagers. It replaces a paid revision subscription and runs almost entirely on 
 - Branch flow `feature/*` → `dev` → `staging` → `main`; version `xx.xx.xxx` bumped on every push to
   `main` (`docs/BRANCHING.md`).
 - The repository has no root README or GitHub description while it is public (`docs/PRIVACY.md`).
+- Domains: `revisionden.com` is the public sales site (`apps/www`), the app is on
+  `app.revisionden.com` (`decisions/0005-domains-sales-site.md`).
 - Canonical backlog: `docs/BACKLOG.md` (`roadmap/improvement-plan.md` points to it).
 
 ## Maintained Pages
