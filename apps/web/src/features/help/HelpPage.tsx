@@ -1,5 +1,7 @@
 import { useId, type ReactNode } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { BackIcon } from '../../components/icons';
+import { LinkButton, TextLink } from '../../components/links';
 import {
   helpTopics,
   lastChecked,
@@ -30,7 +32,7 @@ export function HelpPage({ audience }: { audience: Audience }) {
       </div>
       <h1>Get help</h1>
       <p className="help-danger">
-        If you are in danger right now, call <a href="tel:999">999</a>.
+        If you are in danger right now, call <TextLink href="tel:999">999</TextLink>.
       </p>
       <p>
         {audience === 'parent'
@@ -48,7 +50,9 @@ export function HelpPage({ audience }: { audience: Audience }) {
         <ul>
           {topics.map((t) => (
             <li key={t.id}>
-              <a href={`#help-${t.id}`}>{t.title}</a>
+              <a className="help-topic" href={`#help-${t.id}`}>
+                {t.title}
+              </a>
             </li>
           ))}
         </ul>
@@ -66,9 +70,13 @@ export function HelpPage({ audience }: { audience: Audience }) {
         Every number and link was checked on the service&apos;s own website on{' '}
         {formatDate(lastChecked())}.
       </p>
-      <Link to={audience === 'parent' ? '/parent' : '/map'}>
+      <LinkButton
+        to={audience === 'parent' ? '/parent' : '/map'}
+        variant="quiet"
+        icon={<BackIcon />}
+      >
         {audience === 'parent' ? 'Back to parent home' : 'Back to the app'}
-      </Link>
+      </LinkButton>
     </div>
   );
 }
