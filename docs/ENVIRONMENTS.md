@@ -64,15 +64,16 @@ Every resource is named `revisionden` or starts `revisionden-` (decision 0003). 
 Generated and already set on each API Worker: `DATABASE_URL`, `BETTER_AUTH_SECRET`,
 `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `AI_GATEWAY_URL`.
 
-| Worker secret or variable                        | dev | staging | production | Effect until set                                                                    |
-| ------------------------------------------------ | --- | ------- | ---------- | ----------------------------------------------------------------------------------- |
-| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`       | ✗   | ✗       | ✗          | One provider required: until one is set, every API route except `/health` gives 500 |
-| `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` | ✗   | ✗       | ✗          | Optional once Google is set: the sign-in page hides it                              |
-| `ANTHROPIC_API_KEY`                              | ✗   | ✗       | ✗          | AI routes answer 503                                                                |
-| `AI_GATEWAY_TOKEN`                               | ✗   | ✗       | ✗          | AI calls are refused by the authenticated gateway                                   |
-| `OPERATOR_EMAILS`                                | ✗   | ✗       | ✗          | Nobody can open `/admin/feedback`                                                   |
-| `MATHS_ENGINE_URL`                               | ✗   | ✗       | ✗          | Worked maths answers get 503 (needs G3)                                             |
-| `OPENAI_API_KEY` (optional)                      | –   | –       | –          | No second checker                                                                   |
+| Worker secret or variable                        | dev | staging | production | Effect until set                                                                        |
+| ------------------------------------------------ | --- | ------- | ---------- | --------------------------------------------------------------------------------------- |
+| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`       | ✗   | ✗       | ✗          | One provider required: until one is set, every API route except `/health` gives 500     |
+| `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` | ✗   | ✗       | ✗          | Optional once Google is set: the sign-in page hides it                                  |
+| `ANTHROPIC_API_KEY`                              | ✗   | ✗       | ✗          | AI routes answer 503                                                                    |
+| `AI_GATEWAY_TOKEN`                               | ✗   | ✗       | ✗          | AI calls are refused by the authenticated gateway                                       |
+| `OPERATOR_EMAILS`                                | ✗   | ✗       | ✗          | Nobody can open `/admin/feedback`                                                       |
+| `APPDECK_OPERATOR_SHARED_SECRET`                 | ✗   | ✗       | ✗          | The AppDeck operator bridge (`/v1/operator`) answers 404; set the same value in AppDeck |
+| `MATHS_ENGINE_URL`                               | ✗   | ✗       | ✗          | Worked maths answers get 503 (needs G3)                                                 |
+| `OPENAI_API_KEY` (optional)                      | –   | –       | –          | No second checker                                                                       |
 
 Set each with
 `pnpm --filter @revisionden/api exec wrangler secret put <NAME> --env <dev|staging|production>`
@@ -176,6 +177,7 @@ nothing secret if one is missing; the missing names are written to the Worker lo
 | `AI_GATEWAY_TOKEN`                               | H (now)     | Optional: only if the AI Gateway is set to "authenticated"            |
 | `MATHS_ENGINE_URL`                               | F (now)     | Cloud Run maths engine; without it worked maths answers get a 503     |
 | `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`          | H (now)     | Web push. Both or neither; reminders stay off until set (see below)   |
+| `APPDECK_OPERATOR_SHARED_SECRET`                 | O (now)     | AppDeck operator bridge; 32+ characters, a different one per env      |
 
 At least one sign-in provider (Google or Microsoft, each with its id and secret) is needed;
 the other is optional. `GET /v1/auth/providers` tells the sign-in page which buttons to show, and
@@ -183,15 +185,16 @@ the other is optional. `GET /v1/auth/providers` tells the sign-in page which but
 
 ## Worker variables and bindings (in `apps/api/wrangler.toml`, not secret)
 
-| Name                | dev                               | staging                               | production                       |
-| ------------------- | --------------------------------- | ------------------------------------- | -------------------------------- |
-| `ENVIRONMENT`       | `development`                     | `staging`                             | `production`                     |
-| `API_ORIGIN`        | `https://api-dev.revisionden.com` | `https://api-staging.revisionden.com` | `https://api.revisionden.com`    |
-| `WEB_ORIGIN`        | `https://dev.revisionden.com`     | `https://staging.revisionden.com`     | `https://revisionden.com`        |
-| `PASSKEY_RP_ID`     | `dev.revisionden.com`             | `staging.revisionden.com`             | `revisionden.com`                |
-| `UPLOADS` (R2, EU)  | `revisionden-uploads-dev`         | `revisionden-uploads-staging`         | `revisionden-uploads-production` |
-| `AUTH_RATE_LIMITER` | 30 a minute per address           | same                                  | same                             |
-| `AI_RATE_LIMITER`   | 20 a minute per address           | same                                  | same                             |
+| Name                    | dev                                | staging                               | production                       |
+| ----------------------- | ---------------------------------- | ------------------------------------- | -------------------------------- |
+| `ENVIRONMENT`           | `development`                      | `staging`                             | `production`                     |
+| `API_ORIGIN`            | `https://api-dev.revisionden.com`  | `https://api-staging.revisionden.com` | `https://api.revisionden.com`    |
+| `WEB_ORIGIN`            | `https://dev.revisionden.com`      | `https://staging.revisionden.com`     | `https://revisionden.com`        |
+| `PASSKEY_RP_ID`         | `dev.revisionden.com`              | `staging.revisionden.com`             | `revisionden.com`                |
+| `UPLOADS` (R2, EU)      | `revisionden-uploads-dev`          | `revisionden-uploads-staging`         | `revisionden-uploads-production` |
+| `AUTH_RATE_LIMITER`     | 30 a minute per address            | same                                  | same                             |
+| `AI_RATE_LIMITER`       | 20 a minute per address            | same                                  | same                             |
+| `OPERATOR_RATE_LIMITER` | 120 a minute per address (AppDeck) | same                                  | same                             |
 
 Optional AI settings (workstream H), set as plain variables when needed:
 

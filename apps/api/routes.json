@@ -18,6 +18,7 @@
     "GET /v1/me",
     "GET /v1/notifications/vapid-key",
     "GET /v1/onboarding/family",
+    "GET /v1/operator/ping",
     "GET /v1/parent/notifications/latest",
     "GET /v1/policy-acceptances",
     "GET /v1/review/batches",

@@ -10,6 +10,7 @@ import {
   devices,
   families,
   parents,
+  operatorAuditLog,
   passkeyChallenges,
   studentSessions,
   students,
@@ -147,6 +148,19 @@ describe('scheduled clean-up', () => {
 });
 
 describe('inactive accounts', () => {
+  it('deletes operator audit entries older than 2 years (AppDeck bridge)', async () => {
+    await db.insert(operatorAuditLog).values({
+      operatorEmail: 'agent@example.com',
+      operatorRole: 'agent',
+      action: 'family.view',
+      requestId: 'cleanup-old',
+      outcome: 'ok',
+      createdAt: new Date('2024-11-25T11:59:00Z'),
+    });
+    const result = await cleanUpExpiredData({ db, now: NOW });
+    expect(result.operatorAuditDeleted).toBe(1);
+  });
+
   it('deletes a family unused for more than 12 months, with its students and parent sign-in', async () => {
     const old = await family(new Date('2025-11-25T11:59:59Z'));
     const result = await cleanUpExpiredData({ db, now: NOW });

@@ -895,3 +895,57 @@ export const errorReports = pgTable(
     ),
   ],
 );
+
+// ---------------------------------------------------------------------------------------------
+// Workstream O: operator bridge for the owner's AppDeck Admin console (docs/OPERATOR_CONSOLE.md).
+// ---------------------------------------------------------------------------------------------
+
+export const OPERATOR_ROLES = ['agent', 'manager'] as const;
+export const OPERATOR_AUDIT_OUTCOMES = ['ok', 'denied'] as const;
+
+/**
+ * Every operator read of a family and every operator action, kept 2 years. The operator's work
+ * email is staff data from AppDeck, never a family's. The target is a plain id (no foreign key),
+ * so the record outlives a deleted family; it never holds the search text or any content.
+ */
+export const operatorAuditLog = pgTable(
+  'operator_audit_log',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    operatorEmail: text('operator_email').notNull(),
+    operatorRole: text('operator_role', { enum: OPERATOR_ROLES }).notNull(),
+    action: text('action').notNull(),
+    targetType: text('target_type'),
+    targetId: text('target_id'),
+    requestId: text('request_id').notNull(),
+    outcome: text('outcome', { enum: OPERATOR_AUDIT_OUTCOMES }).notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('operator_audit_log_created_at_idx').on(t.createdAt),
+    index('operator_audit_log_target_idx').on(t.targetType, t.targetId),
+    check('operator_audit_log_role_values', sql`${t.operatorRole} in ('agent', 'manager')`),
+    check('operator_audit_log_outcome_values', sql`${t.outcome} in ('ok', 'denied')`),
+  ],
+);
+
+/**
+ * Request ids seen from AppDeck, kept 1 day (well past the 5-minute signing window). A read's id
+ * may not be used twice; a change sent again with the same id and body gets the stored answer
+ * instead of running twice. Only change answers are stored, never a read's.
+ */
+export const operatorRequests = pgTable(
+  'operator_requests',
+  {
+    requestId: text('request_id').primaryKey(),
+    method: text('method').notNull(),
+    path: text('path').notNull(),
+    // SHA-256 of the raw body, to tell a true retry from a reused id.
+    bodyHash: text('body_hash').notNull(),
+    // Null while the change is running.
+    responseStatus: integer('response_status'),
+    responseBody: text('response_body'),
+    createdAt: createdAt(),
+  },
+  (t) => [index('operator_requests_created_at_idx').on(t.createdAt)],
+);

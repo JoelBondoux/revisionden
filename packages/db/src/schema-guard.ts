@@ -29,7 +29,8 @@ const FORBIDDEN = [
  * Columns allowed despite matching: the parent's Better Auth records. `email` and
  * `email_verified` are the parent's sign-in email; `name` and `image` are required by Better Auth
  * and always stored blank; `ip_address` is required too but IP tracking is switched off, so it
- * stays empty. Nothing about a student may ever be added here.
+ * stays empty. `operator_audit_log.operator_email` is the work email of the owner's support
+ * staff (from AppDeck), never a family's. Nothing about a student may ever be added here.
  */
 const ALLOWED = new Set([
   'auth_users.name',
@@ -37,6 +38,7 @@ const ALLOWED = new Set([
   'auth_users.email_verified',
   'auth_users.image',
   'auth_sessions.ip_address',
+  'operator_audit_log.operator_email',
 ]);
 
 export async function findForbiddenColumns(client: QueryClient): Promise<ForbiddenColumn[]> {

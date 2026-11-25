@@ -44,6 +44,8 @@ import {
 import { parentStatsRoutes, studentStatsRoutes } from './stats/routes';
 import { adminErrorReportRoutes, errorReportRoutes } from './feedback/error-reports';
 import type { StatsAdapters } from './stats/adapters';
+import { operatorRoutes } from './operator/routes';
+import { createMemoryRateLimiter } from './rate-limit';
 
 export interface AppDeps {
   version: string;
@@ -52,7 +54,8 @@ export interface AppDeps {
   auth: Auth;
   clock: Clock;
   passkeys: PasskeyService;
-  rateLimiters: { auth: RateLimiter; ai: RateLimiter };
+  /** `operator` (AppDeck bridge) defaults to 120 a minute in memory when not given. */
+  rateLimiters: { auth: RateLimiter; ai: RateLimiter; operator?: RateLimiter };
   /** Review queue and quarantine hooks (workstream V). */
   verification?: VerificationDeps;
   /** AI providers that are configured (see ai/providers.ts). */
@@ -68,6 +71,9 @@ export interface AppDeps {
   /** Where error reference lines go (Workers logs by default). */
   errorLog?: ErrorLog;
 }
+
+/** AppDeck operator requests allowed a minute from one address. */
+export const OPERATOR_REQUESTS_PER_MINUTE = 120;
 
 export function createApp(deps: AppDeps) {
   const app = new Hono<AppEnv>();
@@ -163,6 +169,20 @@ export function createApp(deps: AppDeps) {
   );
 
   app.route('/v1/error-reports', errorReportRoutes(deps));
+  // Operator bridge (AppDeck): signed requests only; 404 when no shared secret is set.
+  app.route(
+    '/v1/operator',
+    operatorRoutes({
+      ...deps,
+      rateLimiter:
+        deps.rateLimiters.operator ??
+        createMemoryRateLimiter({
+          limit: OPERATOR_REQUESTS_PER_MINUTE,
+          periodMs: 60_000,
+          clock: deps.clock,
+        }),
+    }),
+  );
   app.route('/v1/device', deviceRoutes(deps));
   app.route('/v1/notifications', pushKeyRoutes(deps));
   // Student routes: the session middleware runs before every /v1/student route below.

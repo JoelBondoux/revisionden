@@ -58,6 +58,7 @@ export function createWorker(version: string, options: WorkerOptions = {}) {
         ai:
           config.raw.AI_RATE_LIMITER ??
           createMemoryRateLimiter({ limit: 20, periodMs: 60_000, clock: systemClock }),
+        ...(config.raw.OPERATOR_RATE_LIMITER ? { operator: config.raw.OPERATOR_RATE_LIMITER } : {}),
       },
     });
     cached = { env, app };

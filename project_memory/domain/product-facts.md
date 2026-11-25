@@ -141,6 +141,19 @@ Tags: #product #rules #limits #defaults
   finish); the student scans the QR code to `/link` and sets up a passkey.
 - Avatars are drawn as layered SVG from the avatar code (`apps/web/src/features/avatar`).
 
+## Operator console (AppDeck)
+
+- The owner runs RevisionDen from AppDeck Admin through a signed operator bridge at `/v1/operator`
+  (no database access for AppDeck). Spec and wire format: `docs/OPERATOR_CONSOLE.md`.
+- Requests are signed with HMAC-SHA256 (tag `appdeck-revisionden-operator-v1`) using
+  `APPDECK_OPERATOR_SHARED_SECRET` (32+ characters, one per environment); without it the bridge
+  is 404. Refused outside 5 minutes; request ids used once (kept 1 day; a retried change gets the
+  first answer); 120 requests a minute per address. Implemented in
+  `packages/core/src/operator-signature.ts` and `apps/api/src/operator/bridge.ts`.
+- Roles from AppDeck: Agent (support) and Manager (also money and data), enforced by the API.
+- Every operator read of a family and every action goes in `operator_audit_log`, kept 2 years
+  (data retention policy 1.2); the scheduled clean-up deletes older entries.
+
 ## Content
 
 - Content is JSON in `content/`, checked by `pnpm content:validate` (schemas in

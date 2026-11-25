@@ -29,6 +29,7 @@ describe('wrangler config', () => {
       expect(env.ratelimits.map((r) => r.name).sort()).toEqual([
         'AI_RATE_LIMITER',
         'AUTH_RATE_LIMITER',
+        'OPERATOR_RATE_LIMITER',
       ]);
     },
   );
@@ -58,6 +59,7 @@ describe('wrangler config', () => {
       'BETTER_AUTH_SECRET',
       'GOOGLE_CLIENT_SECRET',
       'MICROSOFT_CLIENT_SECRET',
+      'APPDECK_OPERATOR_SHARED_SECRET',
       'GOOGLE_CLIENT_ID',
       'MICROSOFT_CLIENT_ID',
       // Contains the Cloudflare account id, so it is a secret too.

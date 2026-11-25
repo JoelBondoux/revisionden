@@ -128,6 +128,20 @@ describe('environment validation', () => {
     ).toEqual(['ops@example.com', 'second@example.com']);
   });
 
+  it('keeps the AppDeck operator bridge off until its shared secret is set', () => {
+    expect(parseEnv(complete).operatorBridge).toBeUndefined();
+    const secret = 'a-shared-secret-of-at-least-32-characters';
+    expect(
+      parseEnv({ ...complete, APPDECK_OPERATOR_SHARED_SECRET: secret }).operatorBridge,
+    ).toEqual({ secret });
+  });
+
+  it('refuses an AppDeck shared secret shorter than 32 characters', () => {
+    expect(() => parseEnv({ ...complete, APPDECK_OPERATOR_SHARED_SECRET: 'too-short' })).toThrow(
+      /APPDECK_OPERATOR_SHARED_SECRET/,
+    );
+  });
+
   it('reads the VAPID keys, AI keys, cap and second-checker model when set', () => {
     const config = parseEnv({
       ...complete,

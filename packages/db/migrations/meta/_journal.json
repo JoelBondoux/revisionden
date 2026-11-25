@@ -78,6 +78,13 @@
       "when": 1795600452007,
       "tag": "0010_flashcard_sessions",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1795605335076,
+      "tag": "0011_operator_bridge",
+      "breakpoints": true
     }
   ]
 }
