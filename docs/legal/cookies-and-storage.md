@@ -1,6 +1,6 @@
 # Cookies and storage
 
-Version: 1.0
+Version: 1.1
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -44,6 +44,8 @@ policies. We do not set or read those.
 | Service worker and its cache                  | Lets the app open quickly and work offline. Holds only the app's own files, never your data; API responses are never cached             | Until the app updates or site data is cleared |
 | Push subscription                             | Lets the browser receive reminders, if the student turns them on                                                                        | Until reminders are turned off                |
 | Sound settings (when added)                   | Remembers mute, volume and tap sounds for this device                                                                                   | Until site data is cleared                    |
+| Local storage `revisionden.readAloud`         | Remembers whether read aloud is on and its speed on this device                                                                         | Until site data is cleared                    |
+| Local storage `revisionden.reading`           | Remembers reading comfort choices (font, text size, spacing, tint) on this device                                                       | Until site data is cleared                    |
 
 ### 4. What we do not use
 
@@ -57,4 +59,5 @@ need to sign in, or unlink and link the student's device again.
 
 ## Changes
 
+- 1.1: Added the read aloud and reading comfort settings kept on the device.
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).

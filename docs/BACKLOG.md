@@ -243,8 +243,12 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 ### Q. Quick wins (`docs/PRODUCT_RULES.md`, Quick wins from the competitor research)
 
 - [x] Q1 Reading comfort: dyslexia-friendly self-hosted font (OpenDyslexic, OFL), larger text, spacing and tint in Settings, per device, app-wide.
+- [x] Q2 Read aloud: Web Speech API, on-device voices preferred, off by default with only online voices, speed control, maths read sensibly; privacy notice line.
+- [ ] Q1 Reading comfort: dyslexia-friendly self-hosted font (OpenDyslexic, OFL), larger text, spacing and tint in Settings, per device, app-wide.
 - [ ] Q2 Read aloud: Web Speech API, on-device voices preferred, off by default with only online voices, speed control, maths read sensibly; privacy notice line.
 - [ ] Q3 Daily 5-a-day: core selection (practised topics, spaced repetition and weak spots), API route and a card on the topic map, played in the lesson player.
+- [x] Q4 Recall checks: 2 questions at lesson start on previously practised topics, skippable, no penalty; wrong answers become flashcards.
+- [x] Q1 Reading comfort: dyslexia-friendly self-hosted font (OpenDyslexic, OFL), larger text, spacing and tint in Settings, per device, app-wide.
 - [ ] Q4 Recall checks: 2 questions at lesson start on previously practised topics, skippable, no penalty; wrong answers become flashcards.
 - [ ] Q5 Learn it first: `content/learn-links/*.json` with schema and validator, button on topics with a checked link, CI link check.
 - Tests: settings saved and applied per device; voice choice and default; maths reading; selection with fixed clock and seeded randomness; no penalty for recall; links validated and checked.
@@ -264,6 +268,15 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [ ] AD1 Add RevisionDen as a managed app with environments, settings and service status.
 - [ ] AD2 Screens: overview, families, tickets, complaints, discount codes, free places, data requests, content reports, audit, family tags.
 - [ ] AD3 Role gating (Agent/Manager) matching the bridge; signed client with the shared test vector.
+
+### $. Payments and Premium (`docs/PRICING.md`)
+
+- [ ] $1 Plans and entitlements in core (per-child pricing, sibling order, trial, annual), feature gates for each Premium feature, neutral "not included" states for students.
+- [ ] $2 Stripe checkout and billing portal for parents (web only), webhooks, VAT-inclusive prices, cancel as easily as subscribe.
+- [ ] $3 Free school meals claims: scheme choice and date, declaration, soft checks, September renewal, operator spot-check flow with no stored proof.
+- [ ] $4 Parent-only upgrade surfaces; privacy notice and terms updates (following `docs/LEGAL.md`).
+- [ ] $5 Later: school, council and charity codes for free places.
+- Tests: entitlement maths (sibling order, 4th free), gating, trial expiry, webhook idempotency, no upgrade prompts on student screens, FSM rules.
 
 ## Stage 2 and later
 

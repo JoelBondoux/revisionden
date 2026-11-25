@@ -34,6 +34,7 @@ import { avatarRoutes, onboardingRoutes } from './routes/onboarding';
 import { learnRoutes } from './routes/learn';
 import { flashcardRoutes } from './routes/flashcards';
 import { studentMapRoutes } from './routes/map';
+import { studentRecallRoutes } from './routes/recall';
 import { parentRewardRoutes, studentRewardRoutes } from './routes/rewards';
 import type { MathsEngine } from './learning/maths-engine';
 import {
@@ -174,6 +175,7 @@ export function createApp(deps: AppDeps) {
   app.route('/v1/student/learn', learnRoutes(deps));
   app.route('/v1/student/flashcards', flashcardRoutes(deps));
   app.route('/v1/student', studentMapRoutes(deps));
+  app.route('/v1/student', studentRecallRoutes(deps));
   app.route('/v1/student', reportRoutes(deps.db, 'student'));
   app.route('/v1/student/rewards', studentRewardRoutes(deps));
   app.route('/v1/student', studentFeedbackRoutes(deps));
