@@ -13,8 +13,10 @@ import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { ArenaProgress } from '../juice';
 import { subjectLabel, useLearnApi, type FlashcardRating } from '../learn/learnApi';
+import { NewRewards } from '../learn/NewRewards';
 import { DraftBanner } from '../learn/parts';
 import { useSound } from '../sound';
+import { ReadAloudButton } from '../read-aloud';
 import './flashcards.css';
 
 const RATINGS: {
@@ -118,6 +120,7 @@ function ReviewSession({
         ) : (
           <p>{OUTCOME_TEXT[result.reason]}</p>
         )}
+        <NewRewards rewards={result.newlyEarned} />
         <p>
           {sooner === 0
             ? 'No cards come back sooner.'
@@ -201,6 +204,10 @@ function ReviewSession({
           : "You've had today's 2 rewarded sessions. Keep going: every card helps you remember."}
       </p>
       <FlipCard card={card} flipped={flipped} />
+      <ReadAloudButton
+        text={flipped ? [card.back, card.sourceRef].filter(Boolean).join('. ') : card.front}
+        label="Read the card aloud"
+      />
       {error === 'review' && (
         <p role="alert" className="feedback feedback--wrong">
           Couldn&apos;t save that. Please try again.

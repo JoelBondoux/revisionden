@@ -25,4 +25,5 @@ export * from './stats-schemas';
 export * from './map';
 export * from './error-ref';
 export * from './bug-hunter';
+export * from './recall';
 export * from './flashcard-session';

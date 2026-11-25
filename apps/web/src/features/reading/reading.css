@@ -1,0 +1,81 @@
+/* Reading comfort (workstream Q). ReadingProvider sets these data attributes on <html>. */
+
+/* Dyslexia-friendly font: OpenDyslexic, self-hosted from @fontsource (SIL Open Font Licence). */
+:root[data-reading-font='dyslexic'] {
+  --font-family: 'OpenDyslexic', 'Nunito', system-ui, sans-serif;
+}
+
+:root[data-reading-font='dyslexic'] body,
+:root[data-reading-font='dyslexic'] button,
+:root[data-reading-font='dyslexic'] input,
+:root[data-reading-font='dyslexic'] select,
+:root[data-reading-font='dyslexic'] textarea {
+  font-family: var(--font-family);
+}
+
+/* Larger text: every size in the design is in rem, so scaling the root scales the app. */
+:root[data-reading-size='large'] {
+  font-size: 112.5%;
+}
+
+:root[data-reading-size='larger'] {
+  font-size: 125%;
+}
+
+/* More line, letter and word spacing (WCAG 1.4.12 text spacing values). */
+:root[data-reading-spacing='wide'] body {
+  line-height: 1.8;
+  letter-spacing: 0.12em;
+  word-spacing: 0.16em;
+}
+
+:root[data-reading-spacing='wide'] p,
+:root[data-reading-spacing='wide'] li {
+  margin-bottom: 1em;
+}
+
+/* Soft tints behind the text; body text keeps at least 4.5:1 contrast on both. */
+:root[data-reading-tint='cream'] {
+  --color-background: #f8f0d8;
+  --color-surface: #fdf8ea;
+}
+
+:root[data-reading-tint='blue'] {
+  --color-background: #dfeaf6;
+  --color-surface: #eef4fb;
+}
+
+.reading-settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.reading-settings__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+}
+
+.reading-settings__choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.reading-settings__choices legend {
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+.reading-settings__choices label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+}

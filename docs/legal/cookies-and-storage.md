@@ -1,6 +1,6 @@
 # Cookies and storage
 
-Version: 1.1
+Version: 1.2
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -45,6 +45,8 @@ policies. We do not set or read those.
 | Push subscription                             | Lets the browser receive reminders, if the student turns them on                                                                        | Until reminders are turned off                |
 | Local storage `revisionden.bugButton`         | Remembers if the student switched the bug button off on this device                                                                     | Until site data is cleared                    |
 | Sound settings (when added)                   | Remembers mute, volume and tap sounds for this device                                                                                   | Until site data is cleared                    |
+| Local storage `revisionden.readAloud`         | Remembers whether read aloud is on and its speed on this device                                                                         | Until site data is cleared                    |
+| Local storage `revisionden.reading`           | Remembers reading comfort choices (font, text size, spacing, tint) on this device                                                       | Until site data is cleared                    |
 
 ### 4. What we do not use
 
@@ -58,5 +60,6 @@ need to sign in, or unlink and link the student's device again.
 
 ## Changes
 
-- 1.1: Added the setting that remembers if the bug button is switched off on this device.
+- 1.2: Added the setting that remembers if the bug button is switched off on this device.
+- 1.1: Added the read aloud and reading comfort settings kept on the device.
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).

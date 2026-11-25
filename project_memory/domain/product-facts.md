@@ -314,6 +314,10 @@ Tags: #product #rules #limits #defaults
 - Newly earned rewards are saved (and announced as "New!") by `rewardsView`, used by the student's
   `GET /v1/student/rewards` and the parent's full `GET /v1/students/:id/rewards`. The parent's
   `GET /v1/students/:id/parent-rewards` and the stats pages use the read-only `rewardsProgress`.
+  They are also saved, once each, by an answer (`POST /v1/student/learn/attempts`) and a finished
+  flashcard session (`.../sessions/:id/finish`): both return `newlyEarned` (`saveNewRewards`), and
+  the lesson, Cards screen and starting-test results show "New reward: …" with the reward sound
+  (F4, 2026-11-25). The starting test keeps quiet until its results screen.
 - New avatar items: chapter finale tops (chapter hoodie, bomber jacket, GCSE finisher jacket,
   sixth-form coat, A-Level finisher jacket), rooftop scene, and the Frost Fest drop (bobble hat,
   paper lantern, frosty night scene). Always appended to a layer so saved avatar codes still work.
@@ -337,7 +341,7 @@ Tags: #product #rules #limits #defaults
 - Level bar and parent-set rewards come from the rewards progression (same numbers as the Rewards
   page), read with the read-only `rewardsProgress`: it counts earned-but-unseen rewards and saves
   nothing, so the stats pages and the parent's parent-rewards view never use up the student's
-  "New!" rewards (only the student's own Rewards page saves and announces them). Plan, school report effort and predicted/target grade panels show "Not set up yet"
+  "New!" rewards (the student's Rewards page, answers and flashcard sessions save and announce them). Plan, school report effort and predicted/target grade panels show "Not set up yet"
   (adapters in `apps/api/src/stats/adapters.ts`) until those features land.
 - Routes: `/progress` (My stats), `/parent/stats` (parent); API `GET /v1/student/stats`,
   `GET /v1/students/:id/stats`, `GET /v1/students/:id/dashboard`. Implemented in
@@ -402,7 +406,7 @@ Tags: #product #rules #limits #defaults
   step is 1.5 semitones higher (8 steps = an octave) and adds one harmony note (up to 4). Voice per
   chapter id (`chapter-<n>-…`); finisher fanfares for the chapter rewards that need
   `gcseFinished` or `aLevelFinished`. Biggest = tier, then finisher, then step. Played on the
-  Rewards screen for `newlyEarned`; a tap or key press skips legendary.
+  Rewards screen, after an answer and after a flashcard session for `newlyEarned`; a tap or key press skips legendary.
 - Defaults: on, medium volume, tap sounds off; saved in `localStorage` key `revisionden.sound`
   (storage errors are ignored). One AudioContext, made at the first tap or key press; paused when
   the app is hidden. Test mode: submit and one reveal for the set; timed papers: only the timer
@@ -507,3 +511,42 @@ Tags: #product #rules #limits #defaults
   start, no penalty, skippable); "Learn it first" links to Oak and BBC Bitesize per topic, checked
   by CI; read aloud with on-device voices preferred; reading comfort settings (dyslexia-friendly
   self-hosted font, larger text, spacing, tint). Detail: `docs/PRODUCT_RULES.md` (Quick wins).
+- Recall checks (Q4, built): `GET /v1/student/recall?topicId=` before a topic lesson (or unit
+  challenge) whose topic has been practised. Up to 2 questions the student has answered before
+  (no flashcards, no extended answers), from other practised topics first, then the lesson's own
+  topic; weak spots first (next-item rules). Shown as "Remember this?" in the lesson player with
+  Skip; answers are normal Learn mode attempts (normal XP when right, wrong ones become
+  flashcards, mastery as any answer). If the call fails the lesson starts as normal.
+  `apps/web/src/features/recall/`, `apps/api/src/routes/recall.ts`.
+- Reading comfort (Q1, built): Settings → Reading comfort, per device in `localStorage` key
+  `revisionden.reading`. Options: dyslexia-friendly font (OpenDyslexic from
+  `@fontsource/opendyslexic`, SIL OFL 1.1, bundled with the app, no font service), text size
+  Normal / Large (112.5%) / Larger (125%), more spacing (line height 1.8, letter 0.12em, word
+  0.16em), tint none / cream / blue. Defaults: all off. Applied app-wide by `data-reading-*`
+  attributes on `<html>` (`apps/web/src/features/reading/`).
+
+## Operator console (planned)
+
+- Operators use AppDeck Admin (repo `appdeck-admin`) with RevisionDen as a managed app. AppDeck has
+  no database access; it calls a signed operator bridge (HMAC tag `appdeck-revisionden-operator-v1`,
+  per-environment shared secret, 5-minute window, idempotent request ids), and every operator read
+  and change is audited. Agents: support; Managers: money and data. Complaints: acknowledge in 2
+  working days, aim to resolve in 14. Data requests: one calendar month. Family tags (for example
+  Beta tester, Press, Friends & family) are internal; Managers define them and their effects (early
+  access, complimentary Premium, exclude from metrics); Agents apply them. Detail:
+  `docs/OPERATOR_CONSOLE.md`.
+
+## Pricing (agreed 2026-11-25; not live)
+
+- Free app; Premium per child per month £9.99, £4.99, £2.99, then free; annual about £79.99;
+  14-day trial; web only; prices include VAT. Learning, safety and accessibility stay free; offers
+  only to parents; rewards never sold; no adverts. Free school meals: scheme choice and date only,
+  declaration, soft checks, rare spot checks. Detail: `docs/PRICING.md`, decision 0004.
+- Read aloud (Q2, built): Web Speech API only, no audio sent by us. Voice: on-device British
+  English, then any on-device English, then online English. On by default only with an on-device
+  voice; with only online voices it starts off and Settings says the device's speech service may
+  process the text. Speed Slower 0.75 / Normal 1 / Faster 1.25. Saved in `localStorage` key
+  `revisionden.readAloud` (`enabled` null until chosen). Speaker buttons: lesson question (with
+  options and unit), feedback (verdict, answer, explanation), flashcard front or back. Maths read
+  as words (`x^2` "x squared", `8^(2/3)` "8 to the power 2 over 3", `cm^2` "square centimetres",
+  `√`, `π`, `×`, `÷`, `≤`, `≥`). `apps/web/src/features/read-aloud/`. Privacy notice 1.4 (6.4); young people's notice 1.3.

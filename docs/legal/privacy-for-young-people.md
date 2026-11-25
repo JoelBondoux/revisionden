@@ -1,6 +1,6 @@
 # Privacy notice for young people
 
-Version: 1.2
+Version: 1.3
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -173,6 +173,9 @@ deleted straight away (and always within 24 hours).
 - **The companies that run the app for us**, like the hosting company and the database, but only
   what each one needs to do its job. They're listed in [services we use](processors.md).
 - Nobody else. There's no chat and no way for other students to see your work.
+- **Read aloud** uses the voices on your device, and we don't send the text anywhere. If your
+  device only has online voices, its speech service may get the text it reads out, so read aloud
+  starts off and Settings tells you.
 
 ### How long we keep it
 
@@ -237,6 +240,7 @@ If we change how we use your information, we'll show you a short note in the app
 
 ## Changes
 
+- 1.3: Added how read aloud works. Nothing new is kept about you.
 - 1.2: Says that the Get help page is private: nothing about using it is recorded or shown to your parent. No change to the data we keep.
 - 1.1: Easier to read: a short version at the top and the key points of each part. The meaning has not changed.
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).
