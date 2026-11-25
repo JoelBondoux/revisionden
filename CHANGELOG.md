@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Combo bonus: from your 3rd right answer in a row, each right answer earns 5 extra XP. In the starting test, the bonus is added when you see your results.
 - Coming soon: a new game feel for practice, with colour bursts, combos, rising sounds and a big "set complete" celebration.
 - Parents get a notification on their phone when a child reaches a reward target you set. Turn on "Reward news" on the new parent home.
 - New parent home: one place for the stats dashboard, rewards you set, reminder times, family feedback, settings and policies. Find it from the profile picker or Settings.
@@ -47,6 +48,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Combo XP J4 (J): `COMBO_BONUS_XP`, `comboBonusXp`, `comboBefore`, `comboBonusForSequence` in `packages/core/src/xp.ts`. `POST /v1/student/learn/attempts` adds +5 XP from the 3rd right Learn mode answer in a row (worked out from the student's recent answers; a wrong answer, a Test mode answer or a 5-minute gap ends it) and returns `combo` and `comboBonusXp`. `POST .../starting-tests/:id/finish` applies the bonus to the test's answers in order on the first finish and returns `bestCombo` and `comboBonusXp`. The bonus is stored in each answer's `xp_earned`, so R's reward XP and daily cap count it. New optional fields in `LearnAttemptResponseSchema` and `StartingTestResultSchema`.
 - Parent reward notification (H2): the family export (`GET /v1/export`) lists the parent's reward-news devices without their push keys; `parent_push_subscriptions` table and `parent_rewards.reached_notified_at` (migration 0007), `POST, DELETE /v1/parent/push-subscriptions`, `GET /v1/parent/notifications/latest`, a cron step (`runParentRewardNotifications`) that reads the read-only `rewardsProgress`, sends once per reward, respects the child's nightly quiet hours and is not counted in the 2-a-day reminder limit; the service worker shows parent text and opens `/parent` on parent devices.
 - Parent home (P): tapping a child on "Who's revising?" now opens `/parent?student=<id>` (that child preselected) instead of `/parent/stats`. `/parent` has a student switcher, rewards you set, reminder times (`/parent/reminders/:id`, the existing reminder settings form), stats dashboard, manage children, family feedback, download your family's data (to the B2 panel on `/onboarding`), Reward news toggle, settings and policies; linked from `/family` and Settings.
 - Privacy fixes (B2): `GET /v1/export` (parent's and own children's data as JSON, secrets left out) and a "Download your family's data" panel on the onboarding family list; family activity (`families.last_active_at`, `previous_active_at`, migration 0006), 12-month inactive deletion and `GET /v1/family/activity` with a return-after-11-months warning; the 15-minute cron (`apps/api/src/cleanup.ts`) also deletes expired link codes, student and parent sessions, passkey challenges and sign-in checks.
