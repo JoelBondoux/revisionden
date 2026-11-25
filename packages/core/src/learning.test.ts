@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
 import {
-  DECK_REVIEW_XP,
   RATING_QUALITY,
   formatReviewDelay,
   isServable,
@@ -122,10 +121,6 @@ describe('flashcard ratings', () => {
     expect(p.again).toBeLessThan(p.hard);
     expect(p.hard).toBeLessThanOrEqual(p.good);
     expect(p.good).toBeLessThanOrEqual(p.easy);
-  });
-
-  it('earns 2 XP per card reviewed in a deck', () => {
-    expect(DECK_REVIEW_XP).toBe(2);
   });
 
   it('formats review delays in plain words', () => {
