@@ -22,6 +22,8 @@ import {
   exams,
   families,
   feedback,
+  feedbackReplies,
+  operatorNotes,
   flashcardSessions,
   flashcards,
   itemReports,
@@ -134,6 +136,30 @@ export function familyExport({ db, clock }: { db: Database; clock: Clock }) {
       .from(feedback)
       .where(and(eq(feedback.familyId, familyId), or(...sentBy)))
       .orderBy(feedback.createdAt);
+    // Support replies to that feedback and support notes about the family (workstream O):
+    // text and time only, never which member of staff wrote them.
+    const replies =
+      familyFeedback.length > 0
+        ? await db
+            .select({
+              feedbackId: feedbackReplies.feedbackId,
+              body: feedbackReplies.body,
+              createdAt: feedbackReplies.createdAt,
+            })
+            .from(feedbackReplies)
+            .where(
+              inArray(
+                feedbackReplies.feedbackId,
+                familyFeedback.map((f) => f.id),
+              ),
+            )
+            .orderBy(feedbackReplies.createdAt)
+        : [];
+    const supportNotes = await db
+      .select({ text: operatorNotes.text, createdAt: operatorNotes.createdAt })
+      .from(operatorNotes)
+      .where(eq(operatorNotes.familyId, familyId))
+      .orderBy(operatorNotes.createdAt);
     const reports = await db
       .select()
       .from(itemReports)
@@ -170,7 +196,13 @@ export function familyExport({ db, clock }: { db: Database; clock: Clock }) {
         },
         ...records.get(kid.id),
       })),
-      feedback: familyFeedback.map((row) => without(row, ['familyId', 'senderAuthUserId'])),
+      feedback: familyFeedback.map((row) => ({
+        ...without(row, ['familyId', 'senderAuthUserId']),
+        replies: replies
+          .filter((r) => r.feedbackId === row.id)
+          .map(({ body, createdAt }) => ({ body, createdAt })),
+      })),
+      supportNotes,
       questionReports: reports.map((row) => without(row, ['familyId'])),
       activityLog: log.events.map(({ by, what, createdAt }) => ({ by, what, at: createdAt })),
     };

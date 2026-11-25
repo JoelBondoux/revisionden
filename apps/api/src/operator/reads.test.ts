@@ -8,7 +8,7 @@ import {
   OperatorOverviewSchema,
   OperatorHealthSchema,
   OperatorTicketListSchema,
-  OperatorTicketSchema,
+  OperatorTicketDetailSchema,
   type OperatorTicket,
 } from '@revisionden/core';
 import {
@@ -331,7 +331,10 @@ describe('operator tickets', () => {
 
     const one = await get(`/operator/appdeck/tickets/${bug!.id}`);
     expect(one.status).toBe(200);
-    expect(OperatorTicketSchema.parse(one.body)).toMatchObject({ id: bug!.id, text: 'Map broken' });
+    expect(OperatorTicketDetailSchema.parse(one.body)).toMatchObject({
+      id: bug!.id,
+      text: 'Map broken',
+    });
     expect(await auditRows()).toContainEqual(
       expect.objectContaining({
         action: 'ticket.view',
