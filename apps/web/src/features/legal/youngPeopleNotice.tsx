@@ -1,6 +1,7 @@
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Button } from '../../components/Button';
-import { Markdown } from './Markdown';
+import { FriendlyNotice } from './FriendlyNotice';
+import { parseFriendlyNotice } from './friendlyNotice';
 import { usePolicyLibrary } from './PolicyLibraryContext';
 import { defaultPolicyLibrary } from './policyFiles';
 import './legal.css';
@@ -57,11 +58,9 @@ export function YoungPeopleNoticePage({ storage = browserStorage() }: { storage?
   return (
     <article className="policy stack">
       <h1>{notice.title}</h1>
-      <div className="policy__summary">
-        <Markdown text={notice.plainEnglish} headingOffset={1} />
-      </div>
+      <FriendlyNotice content={parseFriendlyNotice(notice)} />
       <p>
-        <Link to={`/legal/${NOTICE}`}>Read the full notice</Link>
+        <Link to={`/legal/${NOTICE}`}>Open this notice on its own page</Link>
       </p>
       <Button block onClick={done}>
         Got it

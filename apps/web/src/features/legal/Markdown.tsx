@@ -69,8 +69,13 @@ const isRuleRow = (row: string) => /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)*\|
 
 type HeadingTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
+/** Removes HTML comments (they carry hints such as icon names, never text to show). */
+export function stripComments(text: string): string {
+  return text.replace(/<!--[\s\S]*?-->\s?/g, '');
+}
+
 export function Markdown({ text, headingOffset = 0 }: { text: string; headingOffset?: number }) {
-  const lines = text.split(/\r?\n/);
+  const lines = stripComments(text).split(/\r?\n/);
   const blocks: ReactNode[] = [];
   let i = 0;
   const key = () => blocks.length;

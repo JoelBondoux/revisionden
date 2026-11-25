@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useApi } from '../api/ApiContext';
 import { LoadingOrError } from '../api/LoadingOrError';
-import type { Unit } from '../api/schemas';
+import type { MapUnit as Unit } from '@revisionden/core';
 import { useApiResource } from '../api/useApiResource';
 import { FlameIcon } from '../components/icons';
 import { Pill } from '../components/Pill';

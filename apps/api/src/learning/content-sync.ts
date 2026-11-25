@@ -107,6 +107,7 @@ function flattenTopics(tree: ContentTopicTree) {
         title: node.title,
         specRef: node.spec_ref?.join(', ') ?? null,
         parentTopicId,
+        position: rows.length,
       });
       walk(node.children ?? [], node.id);
     }
@@ -135,6 +136,7 @@ export async function syncContent(
           title: excluded('title'),
           specRef: excluded('spec_ref'),
           parentTopicId: excluded('parent_topic_id'),
+          position: excluded('position'),
         },
       });
   }

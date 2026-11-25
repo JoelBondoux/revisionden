@@ -136,20 +136,14 @@
 ### F. Learning loop (`apps/web/src/features/learn`, `apps/api` learn routes)
 
 - [x] F1 Starting test per subject (about 5 minutes) sets initial mastery.
-- [ ] F2 Learning path from mastery; lesson player for each item type; instant feedback.
-      Lesson player, instant feedback and a subject page with mastery are done; the learning path
-      map (workstream A's screen) still reads mock data and links to the old mock lessons.
+- [x] F2 Learning path from mastery; lesson player for each item type; instant feedback.
+      The topic map (A2) reads `GET /v1/student/map` and the Cards badge `GET /v1/student/cards/due`;
+      map hexes, unit challenges and the next mission open the lesson player.
 - [x] F3 Flashcards with spaced repetition.
 - [x] F4 XP, daily goal and streak shown and updated.
 - [ ] F5 Exam technique basics: command word lessons. The lesson screen and API are done
       (items tagged `command-word`); verified command-word items are still to be written through
       the content pipeline.
-- [ ] F3 Flashcards with spaced repetition. Design: mockup screen 18 (card flips in 3D from
-      question to answer; Again, Hard, Good and Easy buttons showing the next review time; Due
-      today, All decks and My cards tabs; deck-done summary with XP). The Cards tab and its due
-      badge already exist (A7); the page itself is a placeholder.
-- [ ] F4 XP, daily goal and streak shown and updated.
-- [ ] F5 Exam technique basics: command word lessons.
 - Tests: API integration for attempt recording; Playwright "complete a lesson and see XP".
 
 ### G. Deploy pipelines and end-to-end (`.github/workflows/deploy-*.yml`, `e2e/`)
@@ -212,6 +206,7 @@ Spec: `docs/LEGAL.md` and `PRODUCT_RULES.md` (About page, policies and feedback)
 - [x] L3 About page: version, environment, build date, commit, "What's new" from `CHANGELOG.md`, policy links, open-source licences.
 - [x] L4 Feedback: form, privacy checks, device details toggle, parent view, operator triage at `/admin/feedback`, status updates, rate limit, retention.
 - [x] L5 Policy acceptance in onboarding (version stored) and the "policy changed" prompt.
+- [x] L6 Friendly view of the young people's privacy notice: short-version cards, key points with "Read more", icons, Pip, gentle motion (built from the same file).
 - Tests: placeholder filling and the missing-value message; What's new parsing (versions without the subsection hidden); feedback refuses emails, phone numbers and nicknames; a parent sees only their family's feedback; only the operator role reaches triage; rate limit; acceptance version stored.
 
 ### U. Sound effects (`apps/web/src/features/sound/**`)
@@ -234,6 +229,16 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [ ] J4 Combo XP bonus in core (+5 from the 3rd in a row, Learn mode; Test mode at reveal), wired through the learn API and R's reward XP.
 - [ ] J5 Light-theme polish: bouncy buttons, entrance motion and reward reveals on map, rewards and stats.
 - Tests: effect components respect reduced motion; no right/wrong effect before submit in Test mode; combo rules (reset on wrong, cap, Learn vs Test); daily-cap message; axe on the arena theme; performance budget check (particles capped).
+
+### X. Exam practice: timed papers (`docs/EXAM_PRACTICE.md`)
+
+- [ ] X1 Paper structure data per board, paper and tier (duration, sections, mark totals), cited and verified; access arrangement extra time.
+- [ ] X2 Board-style paper builder from verified items, matching structure and marks.
+- [ ] X3 Exam player: exam conditions or practice, countdown, per-question timing, review and finish, no feedback until the end.
+- [ ] X4 Results: marks, grade against latest boundaries, pacing chart (time vs target per question), rule-based pacing advice, per-question improvement notes, AI commentary for long answers (double-marked, labelled).
+- [ ] X5 Official past papers as links: guided self-marking with the board's mark scheme, or per-answer photo marking via Mark my homework; legal review first.
+- [ ] X6 Parent dashboard and study plan integration; "Full past papers" milestones.
+- Tests: timing per question with going back, extra time, time running out, pacing flags (1.5× slow, 0.5× rushed with marks lost), grade from boundaries, no feedback before the end, citations present for every duration and total.
 
 ## Stage 2 and later
 

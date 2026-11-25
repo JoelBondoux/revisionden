@@ -214,6 +214,13 @@ Product owner decision, 2026-11-25: **parent view only**.
   missed days shows as lapsed (or kept by skip days) before anything is saved.
 - **Command-word lessons** (exam technique basics) are items tagged `command-word` in `content/`.
   None are verified yet, so the lesson says nothing is ready.
+- **Topic map (F2):** units are the top-level topics of a subject's tree; each shows its leaf
+  topics in specification order. A topic is locked while none of its items may be served,
+  mastered at 80% or more, a weak spot when tried and below 60%, otherwise in progress. Unit
+  mastery is the average of its open topics and its challenge unlocks at 80% (the challenge lesson
+  draws on every topic in the unit). The next mission is the weakest weak spot, else the first
+  topic not yet mastered, else a review of the weakest mastered topic. Implemented in
+  `packages/core/src/map.ts` and `apps/api/src/routes/map.ts`.
 - Implemented: `packages/core/src/learning.ts`, `apps/api/src/routes/learn.ts`,
   `apps/api/src/routes/flashcards.ts`.
 
@@ -323,8 +330,22 @@ Mockups: screens 19 (student) and 20 (parent).
 - One page per policy at `/legal/<name>`: the plain-English summary first, then the full text
   behind a "Read the full text" heading on the same page (not hidden), then the change history.
 - Reachable without signing in. Printable. No tracking.
+- The young people's notice (`/legal/privacy-for-young-people` and `/welcome/privacy` after linking)
+  uses a friendly view: "The short version" as 6 icon cards, then one card per part with its 2 to 4
+  key points always visible and "Read more" (a button with `aria-expanded`) for the full text;
+  "Expand all" at the top; printing shows everything. Original SVG icons and Pip (with a padlock at
+  the top, waving at the end). Cards slide in on scroll and parts open smoothly; no motion under
+  reduced motion, and text is never faded (contrast stays AA). No "Was this clear?" vote: the
+  feedback table has no place for a yes/no answer and a notice version without a migration.
 
 ### Feedback and bug reports
+
+- **Bug icon:** a small bug button sits in a corner of every screen (above the bottom nav, never
+  covering content, hidden during timed papers and Test mode questions). It opens the bug report
+  sheet straight away, with the current screen filled in. Students can turn the icon off in
+  Settings.
+- When the operator confirms a student's bug, the student is told in the app and earns the Bug
+  Hunter rewards in `REWARDS.md`.
 
 - Kinds: **bug**, **idea**, **something confusing**, **other**. (Mistakes in a question keep
   using "Report a problem" on the item, which quarantines it.)

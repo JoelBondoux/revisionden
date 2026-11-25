@@ -1,0 +1,260 @@
+/* Friendly view of the young people's privacy notice (docs/LEGAL.md, "Friendly view"). */
+
+.friendly-notice {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.friendly-notice__intro {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  background: var(--color-primary-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+
+.friendly-notice__intro p {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  line-height: 1.5;
+}
+
+.friendly-notice__pip {
+  position: relative;
+  flex: none;
+}
+
+.friendly-notice__padlock {
+  position: absolute;
+  right: -6px;
+  bottom: 2px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-primary);
+  box-shadow: var(--shadow-card);
+}
+
+.friendly-notice__short h2,
+.notice-part__title {
+  margin: 0 0 var(--space-3);
+}
+
+/* The short version: 5 or 6 cards, one sentence each. */
+.notice-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 560px) {
+  .notice-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .notice-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.notice-card {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-3d-neutral);
+  padding: var(--space-4);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.4;
+}
+
+.notice-card__icon,
+.notice-part__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+}
+
+.notice-card__icon {
+  width: 52px;
+  height: 52px;
+}
+
+.notice-card--0 .notice-card__icon {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-edge);
+}
+
+.notice-card--1 .notice-card__icon {
+  background: var(--color-warning-soft);
+  color: var(--color-warning-text);
+}
+
+.notice-card--2 .notice-card__icon {
+  background: var(--color-success-soft);
+  color: var(--color-success-edge);
+}
+
+.friendly-notice__toolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.notice-toggle-all,
+.notice-part__toggle {
+  min-height: var(--tap-target);
+  border-radius: var(--radius-pill);
+  font: inherit;
+  font-weight: var(--font-weight-extrabold);
+  cursor: pointer;
+}
+
+.notice-toggle-all {
+  padding: 0 var(--space-4);
+  border: 2px solid var(--color-primary);
+  background: var(--color-surface);
+  color: var(--color-primary-edge);
+}
+
+/* One part of the notice: key points always visible, the rest behind "Read more". */
+.notice-part {
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  line-height: 1.6;
+}
+
+.notice-part__title {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  font-size: var(--font-size-lg);
+}
+
+.notice-part__icon {
+  width: 44px;
+  height: 44px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-edge);
+}
+
+.notice-part__points {
+  margin: 0;
+  padding-left: var(--space-6);
+  font-weight: var(--font-weight-bold);
+}
+
+.notice-part__points li + li {
+  margin-top: var(--space-1);
+}
+
+.notice-part__points p {
+  margin: 0;
+}
+
+.notice-part__more {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 2px dashed var(--color-border);
+}
+
+.notice-part__more:not([hidden]) {
+  animation: notice-open 0.25s ease-out;
+}
+
+.notice-part__toggle {
+  margin-top: var(--space-3);
+  padding: 0 var(--space-3);
+  border: none;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-edge);
+}
+
+.friendly-notice__end {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-extrabold);
+  font-size: var(--font-size-lg);
+}
+
+.friendly-notice__wave svg {
+  transform-origin: 50% 90%;
+  animation: notice-wave 1.6s ease-in-out 0.4s 2;
+}
+
+/* Slide in on scroll (armed only when motion is allowed, see FriendlyNotice.tsx). Only the
+   position moves: the text is never faded, so it always keeps its full contrast. */
+.reveal {
+  transform: translateY(16px);
+}
+
+.reveal--in {
+  transform: none;
+  transition: transform 0.45s ease-out;
+}
+
+@keyframes notice-open {
+  from {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes notice-wave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-8deg);
+  }
+  75% {
+    transform: rotate(8deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transform: none;
+  }
+
+  .notice-part__more:not([hidden]),
+  .friendly-notice__wave svg {
+    animation: none;
+  }
+}
+
+/* Printing shows everything, without the buttons. */
+@media print {
+  .reveal {
+    transform: none !important;
+  }
+
+  [data-notice-more][hidden] {
+    display: block !important;
+  }
+
+  .notice-card,
+  .notice-part {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+}
+
+.policy--friendly {
+  max-width: 980px;
+}

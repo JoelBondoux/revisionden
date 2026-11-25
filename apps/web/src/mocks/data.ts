@@ -4,7 +4,7 @@ import {
   type OnboardedChild,
   type OnboardingFamily,
 } from '@revisionden/core';
-import type { CardsDue, TopicMap } from '../api/schemas';
+import type { CardsDue, TopicMap } from '@revisionden/core';
 
 /* Made-up demo data. Never put real names, schools or answers here. */
 

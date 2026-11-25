@@ -70,7 +70,8 @@
 - J1: tokens (`apps/web/src/design/tokens.ts`, `arena.css`) and effects (`apps/web/src/features/juice/`).
 - J2–J3: lessons, the starting test (no right/wrong effects) and set complete
   (`apps/web/src/features/learn/SetComplete.tsx`). The "daily cap" for "See you tomorrow" is the
-  daily reward XP cap (300 XP today) until the study-time cap reaches the web app.
+  daily reward XP cap (300 XP today), confirmed by the lead on 2026-11-25, until the study-time
+  cap reaches the web app.
 - Waiting on others: the chime rising a step per combo needs a pitch step in U's sound bank;
   star notes use the existing celebration sound. Flashcard sessions get the full treatment once
-  F3 (flashcard sessions) is merged.
+  F3 (flashcard sessions, #45) is on dev (J2b or with J4).
