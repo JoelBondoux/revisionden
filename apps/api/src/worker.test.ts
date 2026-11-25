@@ -20,9 +20,17 @@ const ctx = { waitUntil: () => undefined, passThroughOnException: () => undefine
 describe('worker entry', () => {
   it('fails fast with a JSON 500 when bindings are missing', async () => {
     const worker = createWorker('00.01.000');
-    const res = await worker.fetch(new Request('https://api.test/health'), {}, ctx);
+    const res = await worker.fetch(new Request('https://api.test/v1/me'), {}, ctx);
     expect(res.status).toBe(500);
     expect(await res.json()).toMatchObject({ error: { code: 'server_misconfigured' } });
+  });
+
+  it('still answers health with the version when the environment is incomplete', async () => {
+    const worker = createWorker('00.01.000');
+    const res = await worker.fetch(new Request('https://api.test/health'), {}, ctx);
+    expect(res.status).toBe(503);
+    // Names nothing secret: the missing keys are only written to the Worker log.
+    expect(await res.json()).toEqual({ status: 'misconfigured', version: '00.01.000' });
   });
 
   it('serves health once the environment is complete', async () => {

@@ -1,0 +1,17 @@
+name: Deploy staging
+
+# Every push to staging deploys https://staging.revisionden.com.
+on:
+  push:
+    branches: [staging]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: staging
+    secrets: inherit

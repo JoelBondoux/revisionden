@@ -91,3 +91,28 @@
   min-height: var(--tap-target);
   font-weight: var(--font-weight-extrabold);
 }
+
+/* Version footer (G5). In the app shell it sits above the fixed bottom navigation on phones and
+   beside the side navigation on wider screens. */
+.version-footer {
+  padding: var(--space-3) var(--space-4);
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+}
+
+.version-footer a {
+  color: inherit;
+}
+
+.app-shell > .version-footer {
+  margin-top: -72px;
+  padding-bottom: calc(96px + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 768px) {
+  .app-shell > .version-footer {
+    margin: 0 0 0 200px;
+    padding-bottom: var(--space-4);
+  }
+}

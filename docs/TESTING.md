@@ -59,4 +59,11 @@ pnpm test:coverage   # with coverage gates
 pnpm test:scripts    # repo scripts, scripts/verify and the evals harness (fakes only)
 UPDATE_SNAPSHOTS=1 node --test scripts/verify/audit.test.mjs   # refresh the audit snapshot
 cd services/maths && pip install -r requirements-dev.txt && python -m pytest -q
+pnpm --filter @revisionden/web build && pnpm --filter @revisionden/e2e e2e   # end-to-end + axe
+E2E_BASE_URL=https://dev.revisionden.com pnpm --filter @revisionden/e2e e2e  # against a live site
 ```
+
+End-to-end tests (`e2e/tests`) run at phone (390×844), tablet (820×1180) and desktop (1280×800)
+in Chromium, fail on any axe WCAG 2.2 A/AA violation or sideways scrolling, and always run with
+`--trace off` (turn traces on only to debug one test). Without `E2E_BASE_URL` they serve the built
+app with `vite preview`. CI: `.github/workflows/e2e.yml`.

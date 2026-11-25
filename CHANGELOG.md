@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- RevisionDen is now online for testing at dev.revisionden.com and staging.revisionden.com, with the app version shown at the bottom of every page.
 - Coming soon: a stats page for students and a stats dashboard for parents.
 - Coming soon: rewards you set yourself as a parent, like a cinema trip for a 30-day streak.
 - Sound effects: soft, original sounds for right and wrong answers, finishing a lesson, meeting your daily goal, flashcards and the starting test. Mute them from the speaker button at the top, or change the volume and tap sounds in Settings.
@@ -24,6 +25,9 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Deploys (G1, G2, G5): Neon project `revisionden` (London) with `main`, `staging` and `dev` branches migrated to 0005; EU-jurisdiction R2 upload buckets with a 24-hour delete rule; authenticated AI Gateway `revisionden`; API Workers on `api-dev.`, `api-staging.` and `api.revisionden.com` and web Workers on `dev.` and `staging.`; GitHub Actions deploys (`deploy-dev.yml`, `deploy-staging.yml`, `deploy-production.yml` after the release bump, shared `deploy.yml`) that migrate over HTTPS (`db:migrate:deploy`), deploy, and check `/health` (`scripts/check-deploy.mjs`). `/health` now answers `misconfigured` (503) with the version while a secret is missing. Production web builds fail without `VITE_OPERATOR_NAME`, `VITE_CONTACT_EMAIL` or `VITE_POLICY_EFFECTIVE_DATE`. Version footer on every page.
+- End-to-end and accessibility (G4): Playwright + axe suite in `e2e/` at phone, tablet and desktop sizes, run on pull requests into `staging` and `main` (`e2e.yml`).
+- Cloud Run deploy for the maths engine (G3), written and disabled until Google Cloud is set up (`deploy-maths.yml`).
 - Sound effects (U1–U3): Web Audio sound bank (one synthesised sound per event, no audio files), `SoundProvider` and `useSound().play()`, header quick mute, Settings Sound section (on/off, volume, tap sounds; saved per device), iOS ambient audio session, nothing before the first tap or in the background, Test mode rule; wired into lessons, starting test and flashcards.
 - Five-year rewards progression (R): level curve 1 to 100 with prestige stars, a 369-reward catalogue as data (levels, year chapters, milestone ladders, collections, 2026/27 seasonal drops) with a validator, healthy-limit rules (no late-night or time-based rewards, daily cap), student `/rewards` screen, and parent-set real-world rewards (`/family/:id/rewards`, `parent_rewards` table, migration 0004).
 - New original avatar art: five chapter finale tops, rooftop scene, and the Frost Fest drop (bobble hat, paper lantern, frosty night scene).
