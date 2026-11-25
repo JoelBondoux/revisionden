@@ -59,6 +59,14 @@ describe('rounded answers', () => {
     expect(meetsRounding('4500', '4500', { significant_figures: 5 })).toBe(false);
   });
 
+  it('compares rounded values exactly, however small or precise', () => {
+    expect(meetsRounding('0.000000002', '0.000000001', { significant_figures: 1 })).toBe(false);
+    expect(meetsRounding('1.0000000001', '1.0000000000', { decimal_places: 10 })).toBe(false);
+    expect(meetsRounding('-0.50', '-0.50', { decimal_places: 2 })).toBe(true);
+    expect(meetsRounding('0.50', '-0.50', { decimal_places: 2 })).toBe(false);
+    expect(meetsRounding('4500', '4500', { significant_figures: 2 })).toBe(true);
+  });
+
   it('does not accept a fraction or words where a rounded decimal is asked for', () => {
     expect(meetsRounding('1/2', '0.50', { decimal_places: 2 })).toBe(false);
     expect(meetsRounding('about 0.50', '0.50', { decimal_places: 2 })).toBe(false);
