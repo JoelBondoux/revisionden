@@ -475,3 +475,12 @@ Tags: #product #rules #limits #defaults
   start, no penalty, skippable); "Learn it first" links to Oak and BBC Bitesize per topic, checked
   by CI; read aloud with on-device voices preferred; reading comfort settings (dyslexia-friendly
   self-hosted font, larger text, spacing, tint). Detail: `docs/PRODUCT_RULES.md` (Quick wins).
+- Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
+  `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
+  board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by
+  `pnpm content:check-links` in `.github/workflows/learn-links.yml` (PRs that change links, pushes
+  to dev, weekly Monday 06:17 UTC); 2xx and 3xx pass. Bundled into the web app at build time;
+  the button shows at the top of a topic lesson only for links with `checked_at` set; plain links
+  opening in a new tab (nothing loaded until tapped). Pilot: Oak KS4 Higher lessons for the 9 GCSE
+  Maths topics with items (n4, n7, a4, a6, a17, a18, r9, g9, g17), URLs found by web search only.
+  No Bitesize links yet: bbc.co.uk could not be reached from the build environment.

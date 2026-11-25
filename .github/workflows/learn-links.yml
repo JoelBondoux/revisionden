@@ -1,0 +1,35 @@
+name: Learn it first links
+
+# Requests every link in content/learn-links/ and fails on anything other than 2xx or 3xx
+# (scripts/content/check-links.mjs). Runs when the links change, and weekly to catch pages that
+# have been moved or removed.
+on:
+  pull_request:
+    branches: [dev, staging, main]
+    paths:
+      - 'content/learn-links/**'
+      - 'scripts/content/check-links.mjs'
+      - 'scripts/content/learn-links.mjs'
+      - '.github/workflows/learn-links.yml'
+  push:
+    branches: [dev]
+    paths:
+      - 'content/learn-links/**'
+  schedule:
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-links:
+    name: Check Learn it first links
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - run: node scripts/content/check-links.mjs
