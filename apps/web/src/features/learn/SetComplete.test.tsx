@@ -54,6 +54,35 @@ describe('Set complete', () => {
     expect(screen.queryByText(/take a break/)).not.toBeInTheDocument();
   });
 
+  it('at the daily limit in minutes, says see you tomorrow even with little XP today', () => {
+    const dailyLimit = {
+      limitMinutes: 60,
+      usedMinutes: 60,
+      leftMinutes: 0,
+      reached: true,
+      dayType: 'school' as const,
+      examSeason: false,
+    };
+    show({ progress: progress({ xpToday: 40, dailyLimit }) });
+    expect(screen.queryByRole('link', { name: 'Next mission' })).not.toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Great work today. See you tomorrow' }),
+    ).toBeInTheDocument();
+  });
+
+  it('offers another mission while minutes are left', () => {
+    const dailyLimit = {
+      limitMinutes: 60,
+      usedMinutes: 20,
+      leftMinutes: 40,
+      reached: false,
+      dayType: 'school' as const,
+      examSeason: false,
+    };
+    show({ progress: progress({ dailyLimit }) });
+    expect(screen.getByRole('link', { name: 'Next mission' })).toBeInTheDocument();
+  });
+
   it('works without progress (it could not be loaded)', () => {
     show({ progress: null });
     expect(screen.getByRole('link', { name: 'Next mission' })).toBeInTheDocument();

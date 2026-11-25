@@ -270,7 +270,8 @@ export function studySessions(times: readonly number[], gapMs = ACTIVE_GAP_MS): 
 export function activeStudy(
   times: readonly number[],
   timeZone: string,
-  dailyCapMinutes: number,
+  /** The daily limit in minutes, the same every day or looked up per local day. */
+  dailyCapMinutes: number | ((day: string) => number),
 ): { days: StudyDay[] } {
   const sorted = [...times].sort((a, b) => a - b);
   const raw = new Map<string, number>();
@@ -280,10 +281,11 @@ export function activeStudy(
     const day = localDate(new Date(sorted[i]!), timeZone);
     raw.set(day, (raw.get(day) ?? 0) + gap);
   }
-  const capMs = dailyCapMinutes * MINUTE_MS;
+  const capOf = (day: string) =>
+    (typeof dailyCapMinutes === 'number' ? dailyCapMinutes : dailyCapMinutes(day)) * MINUTE_MS;
   const days = [...raw]
     .sort(([a], [b]) => a.localeCompare(b))
-    .map(([day, ms]) => ({ day, ms: Math.min(ms, capMs), overCap: ms > capMs }));
+    .map(([day, ms]) => ({ day, ms: Math.min(ms, capOf(day)), overCap: ms > capOf(day) }));
   return { days };
 }
 

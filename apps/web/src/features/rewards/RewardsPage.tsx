@@ -127,6 +127,40 @@ export function RewardsScreen({ api }: { api: RewardsApi }) {
         </Card>
       ))}
 
+      {overview.hiddenTracks.map((track) => (
+        <Card key={track.id} title={track.name}>
+          <p className="secondary-text">
+            Hidden track · {track.earned} of {track.total} unlocked
+          </p>
+          {track.next && (
+            <p>
+              Next: {track.next.name} ({track.next.current} of {track.next.target})
+            </p>
+          )}
+        </Card>
+      ))}
+
+      <Card title="Secret achievements">
+        <p className="secondary-text">
+          {overview.secrets.found} of {overview.secrets.total} found
+        </p>
+        <ul className="rewards__secrets">
+          {overview.secrets.cards.map((secret) => (
+            <li
+              key={secret.id}
+              className={
+                secret.earned ? 'rewards__secret rewards__secret--found' : 'rewards__secret'
+              }
+            >
+              <strong>{secret.name}</strong>
+              {!secret.earned && secret.hint && (
+                <span className="secondary-text">{secret.hint}</span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </Card>
+
       <Card title="Collections">
         <ul className="rewards__list">
           {overview.collections.map((set) => (

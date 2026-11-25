@@ -1,6 +1,6 @@
 {
-  "id": "359447a3-3cff-47d4-a154-b5ee2f2cb190",
-  "prevId": "2161c9fa-4b4c-4a3e-b6ed-f5870bb99a07",
+  "id": "fc1eef63-75a2-415f-9a6f-ff28dfa43efe",
+  "prevId": "f7931faa-a1a6-48d9-b458-631714cd07f6",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -567,6 +567,161 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.daily_limits": {
+      "name": "daily_limits",
+      "schema": "",
+      "columns": {
+        "student_id": {
+          "name": "student_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "weekday_minutes": {
+          "name": "weekday_minutes",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "other_day_minutes": {
+          "name": "other_day_minutes",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "exam_season_extra": {
+          "name": "exam_season_extra",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "changed_at": {
+          "name": "changed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "student_seen_at": {
+          "name": "student_seen_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_suggested_on": {
+          "name": "last_suggested_on",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_raise_on": {
+          "name": "last_raise_on",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pending_suggestion": {
+          "name": "pending_suggestion",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "daily_limits_student_id_students_id_fk": {
+          "name": "daily_limits_student_id_students_id_fk",
+          "tableFrom": "daily_limits",
+          "tableTo": "students",
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "daily_limits_weekday_range": {
+          "name": "daily_limits_weekday_range",
+          "value": "\"daily_limits\".\"weekday_minutes\" is null or \"daily_limits\".\"weekday_minutes\" between 15 and 360"
+        },
+        "daily_limits_other_range": {
+          "name": "daily_limits_other_range",
+          "value": "\"daily_limits\".\"other_day_minutes\" is null or \"daily_limits\".\"other_day_minutes\" between 15 and 360"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.daily_sets": {
+      "name": "daily_sets",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "student_id": {
+          "name": "student_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "day": {
+          "name": "day",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "item_ids": {
+          "name": "item_ids",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "daily_sets_student_id_students_id_fk": {
+          "name": "daily_sets_student_id_students_id_fk",
+          "tableFrom": "daily_sets",
+          "tableTo": "students",
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "daily_sets_student_day_unique": {
+          "name": "daily_sets_student_day_unique",
+          "nullsNotDistinct": false,
+          "columns": ["student_id", "day"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.daily_xp": {
       "name": "daily_xp",
       "schema": "",
@@ -612,96 +767,6 @@
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.data_requests": {
-      "name": "data_requests",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "family_id": {
-          "name": "family_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "kind": {
-          "name": "kind",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "received_at": {
-          "name": "received_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "due_at": {
-          "name": "due_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "logged_by": {
-          "name": "logged_by",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "handled_at": {
-          "name": "handled_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "data_requests_due_idx": {
-          "name": "data_requests_due_idx",
-          "columns": [
-            {
-              "expression": "handled_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "due_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {
-        "data_requests_kind_values": {
-          "name": "data_requests_kind_values",
-          "value": "\"data_requests\".\"kind\" in ('export', 'deletion')"
-        }
-      },
       "isRLSEnabled": false
     },
     "public.device_link_tokens": {
@@ -1559,88 +1624,6 @@
       },
       "isRLSEnabled": false
     },
-    "public.feedback_replies": {
-      "name": "feedback_replies",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "feedback_id": {
-          "name": "feedback_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "author_email": {
-          "name": "author_email",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "body": {
-          "name": "body",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "feedback_replies_feedback_id_idx": {
-          "name": "feedback_replies_feedback_id_idx",
-          "columns": [
-            {
-              "expression": "feedback_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "feedback_replies_feedback_id_feedback_id_fk": {
-          "name": "feedback_replies_feedback_id_feedback_id_fk",
-          "tableFrom": "feedback_replies",
-          "tableTo": "feedback",
-          "columnsFrom": ["feedback_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {
-        "feedback_replies_body_length": {
-          "name": "feedback_replies_body_length",
-          "value": "char_length(\"feedback_replies\".\"body\") between 1 and 5000"
-        }
-      },
-      "isRLSEnabled": false
-    },
     "public.flashcard_sessions": {
       "name": "flashcard_sessions",
       "schema": "",
@@ -2343,88 +2326,6 @@
         "operator_audit_log_outcome_values": {
           "name": "operator_audit_log_outcome_values",
           "value": "\"operator_audit_log\".\"outcome\" in ('ok', 'denied')"
-        }
-      },
-      "isRLSEnabled": false
-    },
-    "public.operator_notes": {
-      "name": "operator_notes",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "family_id": {
-          "name": "family_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "author_email": {
-          "name": "author_email",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "text": {
-          "name": "text",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "operator_notes_family_id_idx": {
-          "name": "operator_notes_family_id_idx",
-          "columns": [
-            {
-              "expression": "family_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "operator_notes_family_id_families_id_fk": {
-          "name": "operator_notes_family_id_families_id_fk",
-          "tableFrom": "operator_notes",
-          "tableTo": "families",
-          "columnsFrom": ["family_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {
-        "operator_notes_text_length": {
-          "name": "operator_notes_text_length",
-          "value": "char_length(\"operator_notes\".\"text\") between 1 and 2000"
         }
       },
       "isRLSEnabled": false

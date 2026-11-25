@@ -121,7 +121,8 @@ routes = [{ pattern = "api.revisionden.com", custom_domain = true }]
 [env.production.vars]
 ENVIRONMENT = "production"
 API_ORIGIN = "https://api.revisionden.com"
-WEB_ORIGIN = "https://revisionden.com"
+WEB_ORIGIN = "https://app.revisionden.com"
+# The registrable domain: valid for app.revisionden.com and keeps passkeys working across subdomains.
 PASSKEY_RP_ID = "revisionden.com"
 
 [env.production.triggers]

@@ -489,6 +489,24 @@ export const dailyXp = pgTable(
   (t) => [primaryKey({ columns: [t.studentId, t.day] })],
 );
 
+/**
+ * A student's daily 5-a-day set (workstream Q): the item ids chosen for one local day, kept so a
+ * reload shows the same set. Done once every item has an attempt since `created_at`.
+ */
+export const dailySets = pgTable(
+  'daily_sets',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    day: date('day').notNull(),
+    itemIds: jsonb('item_ids').$type<string[]>().notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [unique('daily_sets_student_day_unique').on(t.studentId, t.day)],
+);
+
 /** A student's starting test for one subject (about 5 minutes; sets first mastery). */
 export const startingTests = pgTable(
   'starting_tests',
@@ -941,6 +959,46 @@ export const policyAcceptances = pgTable(
     acceptedAt: timestamp('accepted_at', { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [primaryKey({ columns: [t.authUserId, t.policy] })],
+);
+
+// ---------------------------------------------------------------------------------------------
+// Daily limit (workstream K7, docs/PRODUCT_RULES.md "Daily limit (wellbeing)"). Null limits use
+// the defaults for the student's level. Any parent of the family can change it; the app only
+// suggests changes (at most one a week), which the parent accepts, changes or dismisses.
+// ---------------------------------------------------------------------------------------------
+
+const limitRange = (column: unknown) => sql`${column} is null or ${column} between 15 and 360`;
+
+export const dailyLimits = pgTable(
+  'daily_limits',
+  {
+    studentId: uuid('student_id')
+      .primaryKey()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    // School days (Monday to Friday, not holidays). The column avoids the word "school", which
+    // the privacy schema guard reserves for school names.
+    schoolDayMinutes: integer('weekday_minutes'),
+    otherDayMinutes: integer('other_day_minutes'),
+    examSeasonExtra: boolean('exam_season_extra').notNull().default(false),
+    // When a parent last changed it, and when the student last saw the change.
+    changedAt: timestamp('changed_at', { withTimezone: true }),
+    studentSeenAt: timestamp('student_seen_at', { withTimezone: true }),
+    // The weekly suggestion: when it was last worked out, the last rise, and the one waiting.
+    lastSuggestedOn: date('last_suggested_on'),
+    lastRaiseOn: date('last_raise_on'),
+    pendingSuggestion: jsonb('pending_suggestion').$type<{
+      kind: 'raise' | 'ease';
+      change: number;
+      schoolDayMinutes: number;
+      otherDayMinutes: number;
+      reason: string;
+    }>(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [
+    check('daily_limits_weekday_range', limitRange(t.schoolDayMinutes)),
+    check('daily_limits_other_range', limitRange(t.otherDayMinutes)),
+  ],
 );
 
 /** Browser families an error report may name (no versions). */

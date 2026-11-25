@@ -36,6 +36,7 @@ import { readJson } from '../http';
 import { isId } from '../validation';
 import { correctAnswerText, servableItem } from '../learning/items';
 import type { ItemBody } from '../learning/content-sync';
+import { creditableXp } from '../daily-limit/state';
 import { awardXp } from '../learning/progress';
 import { claimFinish, rewardedLeftToday, takeRewardSlot } from '../learning/flashcard-sessions';
 import { flashcardStore, toCard, type Loaded } from '../learning/flashcard-store';
@@ -207,7 +208,9 @@ export function flashcardRoutes({ db, clock, config }: LearnDeps) {
       rewardedToday: MAX_REWARDED_SESSIONS_PER_DAY - (await rewardedLeftToday(db, studentId, now)),
     });
     if (!(await claimFinish(db, session.id, outcome.completed, now))) throw sessionFinished();
-    const xp = outcome.xp > 0 ? await takeRewardSlot(db, studentId, session.id, now) : 0;
+    // No XP past the daily limit (workstream K7): the reward slot is kept for another day.
+    const allowed = outcome.xp > 0 ? await creditableXp(db, studentId, outcome.xp, now) : 0;
+    const xp = allowed > 0 ? await takeRewardSlot(db, studentId, session.id, now) : 0;
     const progress = await awardXp(db, studentId, xp, now);
     return c.json({
       completed: outcome.completed,

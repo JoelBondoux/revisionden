@@ -98,7 +98,8 @@ export async function buildDashboard(
   const week = periodRange('week', today);
   const lastWeek = previousPeriod(week);
   const times = data.answers.map((a) => a.at);
-  const study = activeStudy(times, tz, DEFAULT_DAILY_CAP_MINUTES).days;
+  const limit = data.limitOn ?? (() => DEFAULT_DAILY_CAP_MINUTES);
+  const study = activeStudy(times, tz, limit).days;
   const thisWeek = answerTotals(data.answers, week, tz);
   const priorWeek = answerTotals(data.answers, lastWeek, tz);
   const plan = await adapters.plan(student.id, week.start);
@@ -151,7 +152,7 @@ export async function buildDashboard(
       quietHourSessions: quietSessions(sessions, isQuiet),
       daysOverCap: study.filter((d) => d.overCap && d.day >= week.start && d.day < week.end).length,
       restDays: restDays(activeDays, week, today),
-      dailyCapMinutes: DEFAULT_DAILY_CAP_MINUTES,
+      dailyCapMinutes: limit(today),
     },
     aiSpend,
     recentActivity: groupActivity(data.activity).map((e) => ({
