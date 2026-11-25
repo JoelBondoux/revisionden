@@ -7,6 +7,7 @@ Each check has an ``id`` and a ``kind``:
 - ``value``: ``expression`` and ``answer``; optional ``tolerance`` for rounded answers.
 - ``expression``: ``expression`` and ``answer``; optional ``form`` (factorised or expanded).
 - ``working``: ``lines`` of a model solution and the ``expected`` final answer.
+- ``formula``: ``expected`` and ``given`` formulas (``x = ...``, ``±`` allowed), for flashcards.
 
 Run it with ``python -m app.content_check`` from ``services/maths``.
 """
@@ -18,6 +19,7 @@ from typing import Callable, TextIO
 from sympy import N
 
 from app.equivalence import are_equivalent, parse, solutions_match
+from app.formula import formulas_match
 from app.working import check_working
 
 
@@ -52,11 +54,18 @@ def _working(check: dict) -> str | None:
     return None
 
 
+def _formula(check: dict) -> str | None:
+    if formulas_match(check["expected"], check["given"]):
+        return None
+    return f"{check['given']} is not the same formula as {check['expected']}"
+
+
 KINDS: dict[str, Callable[[dict], str | None]] = {
     "solve": _solve,
     "value": _value,
     "expression": _expression,
     "working": _working,
+    "formula": _formula,
 }
 
 

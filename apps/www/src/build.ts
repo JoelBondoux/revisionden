@@ -38,6 +38,7 @@ export function readInputs(): SiteInputs {
         .map((name) => [name, readFileSync(join(repoRoot, 'docs/legal', name), 'utf8')]),
     ),
     pricingDoc: readFileSync(join(repoRoot, 'docs/PRICING.md'), 'utf8'),
+    doodlesSvg: readFileSync(join(repoRoot, 'apps/web/src/design/doodles.svg'), 'utf8'),
     images: Object.fromEntries(
       readdirSync(join(here, '..', 'public'))
         .filter((name) => name.endsWith('.png'))

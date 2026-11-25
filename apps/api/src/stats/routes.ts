@@ -17,6 +17,7 @@ import { NOT_SET_UP, type StatsAdapters } from './adapters';
 import { buildDashboard, buildStudentStats } from './build';
 import { loadStatsData } from './load';
 import { rewardAdapters } from './reward-adapters';
+import { targetGradeAdapters, targetGrades } from './target-grades';
 
 export interface StatsDeps {
   db: Database;
@@ -28,6 +29,8 @@ export interface StatsDeps {
 const adaptersOf = (deps: StatsDeps): StatsAdapters => ({
   ...NOT_SET_UP,
   ...rewardAdapters(deps),
+  ...targetGradeAdapters(deps),
+  targets: async (studentId) => (await targetGrades(deps.db, studentId)).subjects,
   ...deps.statsAdapters,
 });
 

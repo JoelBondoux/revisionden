@@ -125,6 +125,30 @@ test('difficulty must be 1 to 5', () => {
   assert.equal(v.item({ ...samples.flashcard, difficulty: 6 }), false);
 });
 
+test('a maths flashcard may give its formula and conditions for the maths engine', () => {
+  const card = {
+    ...samples.flashcard,
+    back_formula: { formula: 'x = (-b +- sqrt(b^2 - 4ac)) / (2a)', conditions: ['a ≠ 0'] },
+  };
+  assert.equal(v.item(card), true);
+  assert.equal(v.item({ ...card, back_formula: { conditions: ['a ≠ 0'] } }), false);
+  assert.equal(v.item({ ...card, back_formula: { formula: 'x = 1', extra: 1 } }), false);
+  assert.equal(v.item({ ...samples.numeric, back_formula: card.back_formula }), false);
+});
+
+test('an item may name its learning point and expected time (for similar-question retries)', () => {
+  const item = {
+    ...samples.flashcard,
+    learning_point: 'gcse-maths-h-n7-lp-fractional-indices',
+    expected_seconds: 40,
+  };
+  assert.equal(v.item(item), true);
+  assert.equal(v.item({ ...item, learning_point: 'Not An Id' }), false);
+  assert.equal(v.item({ ...item, expected_seconds: 2 }), false);
+  assert.equal(v.item({ ...item, expected_seconds: 901 }), false);
+  assert.equal(v.item({ ...item, expected_seconds: 12.5 }), false);
+});
+
 test('item ids are lowercase words joined by hyphens', () => {
   assert.equal(v.item({ ...samples.flashcard, id: 'Bad ID' }), false);
 });

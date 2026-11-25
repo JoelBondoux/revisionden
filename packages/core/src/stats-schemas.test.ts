@@ -26,6 +26,7 @@ const sampleStudentStats: StudentStats = {
     longestCorrectRun: 12,
     bestWeek: { weekStart: '2026-11-16', xp: 300 },
   },
+  targets: [],
   level: null,
 };
 

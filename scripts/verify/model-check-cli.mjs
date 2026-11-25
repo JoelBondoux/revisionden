@@ -3,7 +3,8 @@
 // Pipeline steps 3 and 4: blind answer by a second provider, then adversarial review.
 // Providers: anthropic, openai, gemini. Keys and model ids come from the environment
 // (ANTHROPIC_API_KEY + VERIFY_ANTHROPIC_MODEL, OPENAI_API_KEY + VERIFY_OPENAI_MODEL,
-// GEMINI_API_KEY + VERIFY_GEMINI_MODEL); keep them in .dev.vars, never in git.
+// GEMINI_API_KEY + VERIFY_GEMINI_MODEL); keep them in .dev.vars, never in git. To go through
+// the AI Gateway, set <PROVIDER>_BASE_URL to the gateway URL and AI_GATEWAY_TOKEN.
 // This calls real models and costs money: it never runs in CI.
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';

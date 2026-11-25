@@ -20,3 +20,9 @@ Tags: #content #citations #verification
   (they load dynamically), so a script that scrapes the page for PDFs finds only the
   specification and teaching guides. Do not guess document URLs; get them from a browser or the
   board's search.
+- **Multiple choice option numbers count from 0, and readers assume 1.** The adversarial review
+  sent `"answer": {"option": 1}` with no note, so Gemini often read it as the first option and
+  failed correct items as "wrong answer" (found by S3-A). The review prompt now says options and
+  `distractor:N` count from 0 and shows `correct_option_text`; the human review page shows the
+  answer as "Option 3: …" with options numbered from 1. Anywhere an option index reaches a model
+  or a person, show the option text too.
