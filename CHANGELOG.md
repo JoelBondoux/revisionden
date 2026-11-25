@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- The parent stats page now shows each child's AI marking allowance as a percentage used this month and the date it resets, with no money figures.
 - When RevisionDen support replies to your feedback or bug report, you'll see the reply right under your message.
 - Coming soon: a public RevisionDen website at revisionden.com explaining how it works for parents and young people, with the planned prices and all the policies. The app itself will move to app.revisionden.com.
 - "Remember this?" questions are now completely safe: getting one wrong never breaks your combo.
@@ -201,6 +202,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Changed
 
+- AI marking allowance (K9): the parent dashboard's "AI marking spend" card (US$ figures) is now "AI marking allowance" with a percentage used and the reset date (`aiAllowance` in `packages/core/src/stats-allowance.ts`); "What your parent can see" says "How much of your AI marking allowance you have used this month". The API's cost fields are unchanged and operator-only.
 - Project memory: the public site's Open Graph card and touch icon (and how to remake them) recorded in product facts; duplicate hosting lines left by the domain move merged into one (workstream M).
 - Item type names are the content schema names everywhere (`worked_maths`, `extended_answer`); the mapping in core is removed.
 - One item JSON format in the `items` table for the content sync and AI marking (`body.marks` added; marking reads `answer.key` and `answer.markScheme`), with a round-trip test.

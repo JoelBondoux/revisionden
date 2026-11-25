@@ -34,3 +34,4 @@ export * from './flashcard-session';
 export * from './operator-signature';
 export * from './operator-schemas';
 export * from './track-stats';
+export * from './stats-allowance';
