@@ -3,8 +3,10 @@
  * - XP per correct answer depends on the answer type; part marks earn part of it.
  * - Double XP on the parent's focus subject or topic that week.
  * - Gifting a day to a friend earns 20 XP.
+ * - Combo bonus: +5 XP per right answer from the 3rd in a row (docs/GAME_FEEL.md).
  */
 import type { ItemType } from './schemas';
+import { ACTIVE_GAP_MS } from './stats';
 
 export const XP_PER_CORRECT: Record<ItemType, number> = {
   flashcard: 5,
@@ -35,4 +37,58 @@ export function xpForAnswer({ type, score, focus = false }: AnswerXpInput): numb
 
 export function dailyGoalMet(xpToday: number, goalXp: number = DEFAULT_DAILY_GOAL_XP): boolean {
   return xpToday >= goalXp;
+}
+
+// Combo bonus (docs/GAME_FEEL.md "XP rule") -----------------------------------------------
+
+/** Extra XP for each right answer from the COMBO_BONUS_FROM-th in a row. */
+export const COMBO_BONUS_XP = 5;
+export const COMBO_BONUS_FROM = 3;
+
+/** The bonus for an answer that makes a combo of `combo` right answers in a row (this one included). */
+export function comboBonusXp(combo: number): number {
+  return combo >= COMBO_BONUS_FROM ? COMBO_BONUS_XP : 0;
+}
+
+/** A previous answer, as far as combos care. */
+export interface ComboAnswer {
+  correct: boolean;
+  mode: string | null;
+  at: Date;
+}
+
+/**
+ * Right Learn mode answers in a row just before an answer given at `now`, from the student's
+ * history (newest first). Combos never span sessions: a gap of more than ACTIVE_GAP_MS (5 minutes,
+ * the same rule as study sessions) ends one, and so does a wrong answer or an answer in Test mode.
+ */
+export function comboBefore(history: readonly ComboAnswer[], now: Date): number {
+  let combo = 0;
+  let later = now.getTime();
+  for (const answer of history) {
+    const at = answer.at.getTime();
+    if (later - at > ACTIVE_GAP_MS || answer.mode !== 'learn' || !answer.correct) break;
+    combo += 1;
+    later = at;
+  }
+  return combo;
+}
+
+export interface SequenceComboBonus {
+  /** The bonus for each answer, in order. */
+  bonuses: number[];
+  bonusXp: number;
+  bestCombo: number;
+}
+
+/** Test mode: the combo bonus for answers in the order given, applied at the reveal. */
+export function comboBonusForSequence(corrects: readonly boolean[]): SequenceComboBonus {
+  let combo = 0;
+  let bestCombo = 0;
+  const bonuses = corrects.map((correct) => {
+    combo = correct ? combo + 1 : 0;
+    bestCombo = Math.max(bestCombo, combo);
+    return comboBonusXp(combo);
+  });
+  return { bonuses, bonusXp: bonuses.reduce((a, b) => a + b, 0), bestCombo };
 }

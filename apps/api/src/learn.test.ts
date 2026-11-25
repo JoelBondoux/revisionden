@@ -322,10 +322,11 @@ describe('mastery, XP, daily goal and streak', () => {
     let headers = first;
     const short = itemByPrompt(await allItems(headers), 'Test question 2');
     let last;
-    for (let i = 0; i < 3; i++) last = await answer(headers, short.id, 'test answer');
-    expect(last!.progress).toMatchObject({ xpToday: 45, goalMet: false });
+    for (let i = 0; i < 2; i++) last = await answer(headers, short.id, 'test answer');
+    expect(last!.progress).toMatchObject({ xpToday: 30, goalMet: false });
+    // The 3rd right answer in a row earns the +5 combo bonus (docs/GAME_FEEL.md).
     last = await answer(headers, short.id, 'test answer');
-    expect(last.progress).toMatchObject({ xpToday: 60, goalMet: true });
+    expect(last.progress).toMatchObject({ xpToday: 50, goalMet: true });
     expect(last.progress.streak).toMatchObject({ current: 1, best: 1 });
     last = await answer(headers, short.id, 'test answer');
     expect(last.progress.streak.current).toBe(1);
@@ -335,7 +336,7 @@ describe('mastery, XP, daily goal and streak', () => {
     const next = ProgressSchema.parse(
       await (await get('/v1/student/learn/progress', headers)).json(),
     );
-    expect(next).toMatchObject({ xpToday: 0, totalXp: 75, goalMet: false });
+    expect(next).toMatchObject({ xpToday: 0, totalXp: 70, goalMet: false });
     expect(next.streak.current).toBe(1);
     for (let i = 0; i < 4; i++) last = await answer(headers, short.id, 'test answer');
     expect(last.progress.streak.current).toBe(2);

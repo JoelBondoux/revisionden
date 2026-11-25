@@ -35,6 +35,12 @@
 - Details settled in code:
   - XP per correct answer: flashcard 5, multiple choice 10, short answer 15, numeric 15, worked
     maths 20, extended answer 30. Part marks earn part of it (rounded). Wrong answers earn 0.
+  - Combo bonus (`docs/GAME_FEEL.md`): +5 XP per right answer from the 3rd right answer in a row,
+    added to that answer's XP (so levels and rewards count it, with the usual daily cap). Learn
+    mode: the API counts the run from the student's own recent answers; a wrong or part-marked
+    answer, a Test mode answer or a gap of more than 5 minutes ends it. Test mode (the starting
+    test): no combo while answering; at the reveal (`finish`) the same bonus is added to the answers
+    in order, once.
   - Daily goal defaults to 50 XP. Weekly goal defaults to the daily goal met on 5 days; each week
     hit earns 1 skip day (paid once per week).
   - A skip day keeps the streak but does not add to it. A day with no activity counts as missed.
