@@ -367,6 +367,45 @@ describe('operator error reports and content reports', () => {
     expect(body).toMatchObject({ total: 2, groups: [{ screen: '/map', count: 2 }] });
   });
 
+  it('finds the group holding one RD code exactly, in any letter case, over 90 days', async () => {
+    const now = t.clock.now().getTime();
+    const report = (ref: string, screen: string, daysAgo: number) => ({
+      ref,
+      screen,
+      apiPath: '/v1/student/map',
+      status: 500,
+      build: 'b',
+      browser: 'Chrome' as const,
+      online: true,
+      reportedAt: new Date(now),
+      createdAt: new Date(now - daysAgo * 24 * 60 * 60 * 1000),
+    });
+    // 25 reports in one group, so the code is beyond the group's sampled refs.
+    await t.db
+      .insert(errorReports)
+      .values([
+        report('RD-7K2M9Q', '/map', 40),
+        ...Array.from({ length: 24 }, (_, i) =>
+          report(`RD-${String(i).padStart(6, 'A')}`, '/map', 1),
+        ),
+        report('RD-BBBBBB', '/cards', 2),
+      ]);
+
+    const { status, body } = await get('/operator/appdeck/error-reports?code=rd-7k2m9q');
+    expect(status).toBe(200);
+    expect(body).toMatchObject({
+      code: 'RD-7K2M9Q',
+      groups: [{ screen: '/map', count: 25 }],
+    });
+    const group = (body as { groups: { refs: string[] }[] }).groups[0]!;
+    expect(group.refs).toContain('RD-7K2M9Q');
+  });
+
+  it('answers 404 for an unknown code and 400 for something that is not a code', async () => {
+    expect((await get('/operator/appdeck/error-reports?code=RD-ZZZZZZ')).status).toBe(404);
+    expect((await get('/operator/appdeck/error-reports?code=hello')).status).toBe(400);
+  });
+
   it('lists open content reports with whether the question is hidden, and the review queue link', async () => {
     const f = await makeFamily();
     await t.db.insert(itemReports).values([
@@ -428,6 +467,11 @@ describe('operator audit log and service status', () => {
     );
     expect(page2.entries).toHaveLength(1);
     expect(page2.nextBefore).toBeNull();
+  });
+
+  it('refuses a malformed cursor with a 400, not a server error', async () => {
+    const bad = encodeURIComponent('2026-11-25T12:00:00.000Z~------------------------------------');
+    expect((await get(`/operator/appdeck/audit?before=${bad}`)).status).toBe(400);
   });
 
   it('pages through entries that share a time without skipping any', async () => {
