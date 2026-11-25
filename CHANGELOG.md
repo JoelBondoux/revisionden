@@ -64,6 +64,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Dark theme: mastered-topic checkmarks on the map use `--color-text-on-gold` (dark on gold) instead of the light body text, which gave about 1.3:1 contrast; the theme contrast tests now cover this pair and check the map rule (J8 follow-up).
 - Operator bridge (O, review follow-up to #71/#72): a change retried with the same request id by a different operator or role is refused (409) instead of getting the stored answer; the audit log's `nextBefore` is now `<time>~<id>`, so entries that share a time are never skipped between pages.
 - Game feel (J): flashcard text was white on white inside the arena panel on the Cards tab; light cards inside the arena now keep dark text (`design/arena.css`). In a lesson, saying whether you knew a flashcard no longer hides the answer you had just revealed (the shake wrapper no longer remounts the card).
 - Public pages (I): without a linked student on the device, `AppLayout` pages (About, Feedback, Settings and the rest) and the policy pages (now under `AppLayout`) show `PublicHeader` (logo, Sign in, Policies, About) instead of the student nav.
