@@ -332,6 +332,25 @@ describe('a student asks a parent to raise something (owner, 2026-11-25)', () =>
     expect(await requests(f.parentHeaders)).toEqual([]);
   });
 
+  it('accepts the pre-filled summary when a parent starts a complaint from a request', async () => {
+    const { complaintSummaryFromRequest } = await import('@revisionden/core');
+    const f = await family();
+    await ask(f.studentHeaders, { topic: 'marking' });
+    const [request] = await requests(f.parentHeaders);
+    const nicknamed = await complain(f.parentHeaders, {
+      summary: 'Raised for test_kid: a mark seemed wrong.',
+      aboutPersonalData: false,
+      fromRequestId: request!.id,
+    });
+    expect(nicknamed.status).toBe(400);
+    const started = await complain(f.parentHeaders, {
+      summary: complaintSummaryFromRequest('marking'),
+      aboutPersonalData: false,
+      fromRequestId: request!.id,
+    });
+    expect(started.status).toBe(201);
+  });
+
   it('deletes requests nobody acted on after 90 days', async () => {
     const { deleteExpiredComplaintRequests } = await import('./routes');
     const f = await family();

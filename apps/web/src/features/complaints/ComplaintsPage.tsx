@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react';
+import { complaintSummaryFromRequest } from '@revisionden/core';
 import { TextLink } from '../../components/links';
 import { Button } from '../../components/Button';
 import { Pill, type PillTone } from '../../components/Pill';
@@ -109,7 +110,7 @@ export function ComplaintsPage({ api: given }: { api?: ComplaintsApi }) {
                 <div className="feedback-list__meta">
                   <Button
                     onClick={() => {
-                      setSummary(`Raised for ${r.nickname}: ${r.topicLabel}.`);
+                      setSummary(complaintSummaryFromRequest(r.topic));
                       setFromRequest(r.id);
                     }}
                   >

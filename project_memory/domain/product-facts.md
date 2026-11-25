@@ -605,7 +605,7 @@ Tags: #product #rules #limits #defaults
 - Settled in J7 (owner request, 2026-11-25): no plain underlined text links. Navigation uses the
   link components in `apps/web/src/components/links.tsx` (LinkButton, LinkTile, LinkChip; TextLink
   only inside sentences and policy prose: bold, coloured, a soft bar, underline on hover). A guard
-  test, `apps/web/src/components/noTextLinks.test.ts`, keeps it that way.
+  test, `apps/web/src/components/noTextLinks.test.ts`, keeps it that way across the whole web app (no exclusions since 2026-11-25).
 
 ## Exam practice (planned)
 

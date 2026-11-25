@@ -118,6 +118,14 @@ export const COMPLAINT_REQUEST_TOPICS = {
 } as const;
 export type ComplaintRequestTopic = keyof typeof COMPLAINT_REQUEST_TOPICS;
 
+/**
+ * The summary a parent starts with when they raise a child's request. Only the topic: a nickname
+ * would be refused as personal details, and the child's note stays in the family.
+ */
+export function complaintSummaryFromRequest(topic: ComplaintRequestTopic): string {
+  return `Raised for my child: ${COMPLAINT_REQUEST_TOPICS[topic]}.`;
+}
+
 export const ComplaintRequestCreateSchema = z
   .object({
     topic: z.enum(

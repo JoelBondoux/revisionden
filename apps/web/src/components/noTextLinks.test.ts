@@ -25,13 +25,6 @@ const STYLED_CLASSES = [
   'main-nav__link', // bottom/side navigation
 ];
 
-/** Files owned by other workstreams that convert their own links (see docs/GAME_FEEL.md "Links"). */
-const OWNED_ELSEWHERE = [
-  'features/stats/', // K
-  'features/legal/acceptance.tsx', // L
-  'pages/WelcomePage.tsx', // I
-];
-
 const LINK_COMPONENTS = new Set(['components/links.tsx', 'components/Button.tsx']);
 
 /** Links whose class is built in a variable from one of the styled classes above. */
@@ -55,7 +48,7 @@ function rawLinks(): RawLink[] {
   const found: RawLink[] = [];
   for (const path of sourceFiles(SRC)) {
     const file = relative(SRC, path);
-    if (LINK_COMPONENTS.has(file) || OWNED_ELSEWHERE.some((p) => file.startsWith(p))) continue;
+    if (LINK_COMPONENTS.has(file)) continue;
     const text = readFileSync(path, 'utf8');
     for (const match of text.matchAll(/<(Link|NavLink|a)(\s[^>]*)?>/gs)) {
       const attrs = match[2] ?? '';

@@ -39,11 +39,17 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "needs_human_approval": true,
     "facts": [
       {
         "statement": "The gradient of a velocity-time graph is the acceleration.",
-        "ask": "What does the gradient of a velocity-time graph represent?"
+        "ask": "What does the gradient of a velocity-time graph represent?",
+        "engine": {
+          "kind": "graph_measure",
+          "y": "velocity",
+          "x": "time",
+          "measure": "gradient",
+          "is": "acceleration"
+        }
       }
     ],
     "verification": {
@@ -55,7 +61,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Answer backed by the maths engine. Gradient of a velocity-time graph = acceleration: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Answer backed by the maths engine. Gradient of a velocity-time graph = acceleration: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -100,11 +106,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:40:16Z",
-          "notes": "fact 1: no maths engine proof; blind statement differs (\"The gradient of a velocity–time graph represents the acceleration, i.e. the rate of change of velocity with respect to time. For a curved graph, the gradient at a point gives the instantaneous acceleration; for a straight-line section, the constant gradient gives the constant acceleration over that interval.\")"
+          "at": "2026-11-25T20:40:56Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The gradient of a velocity–time graph represents the acceleration: the rate of change of velocity with respect to time. A positive gradient means positive acceleration, a negative gradient means deceleration (negative acceleration), and zero gradient means constant velocity.\")"
         }
       ]
     }
@@ -149,11 +155,17 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "needs_human_approval": true,
     "facts": [
       {
         "statement": "The gradient of a distance-time graph is the speed.",
-        "ask": "What does the gradient of a distance-time graph represent?"
+        "ask": "What does the gradient of a distance-time graph represent?",
+        "engine": {
+          "kind": "graph_measure",
+          "y": "distance",
+          "x": "time",
+          "measure": "gradient",
+          "is": "speed"
+        }
       }
     ],
     "verification": {
@@ -165,7 +177,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Answer backed by the maths engine. Gradient of a distance-time graph = speed: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Answer backed by the maths engine. Gradient of a distance-time graph = speed: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -210,11 +222,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T19:27:09Z",
-          "notes": "fact 1: no maths engine proof; blind statement differs (\"On a distance–time graph, the gradient represents the speed: \u0007average speed over a section if the graph is curved, and constant speed if the section is a straight line. A positive gradient means moving away from the start, zero means stationary, and a negative gradient means the distance from the start is decreasing (if such values are used).\")"
+          "at": "2026-11-25T20:40:35Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The gradient of a distance–time graph represents the speed of the object. On a straight-line section it gives the constant speed, and on a curve the gradient at a point gives the instantaneous speed.\")"
         }
       ]
     }
@@ -346,7 +358,14 @@
     "facts": [
       {
         "statement": "The area under a velocity-time graph is the distance travelled (for motion in one direction).",
-        "ask": "What does the area under a velocity-time graph represent?"
+        "ask": "What does the area under a velocity-time graph represent?",
+        "engine": {
+          "kind": "graph_measure",
+          "y": "velocity",
+          "x": "time",
+          "measure": "area",
+          "is": "distance"
+        }
       }
     ],
     "verification": {
@@ -406,8 +425,8 @@
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:40:56Z",
-          "notes": "fact 1: no maths engine proof; blind statement differs (\"The signed area under a velocity–time graph between two times represents the displacement over that time interval. If the graph stays above the time axis, this is also the distance travelled; if it goes below, areas below the axis count as negative displacement.\")"
+          "at": "2026-11-25T20:43:05Z",
+          "notes": "fact 1: maths engine proof pass; blind statement differs (\"The area under a velocity–time graph between two times represents the displacement over that time interval. If the graph is below the time axis, that area counts as negative displacement; the total distance travelled is the area under a speed–time graph, or the sum of the absolute areas on a velocity–time graph.\")"
         }
       ]
     }
@@ -456,7 +475,14 @@
     "facts": [
       {
         "statement": "The area under a velocity-time graph is the distance travelled (for motion in one direction).",
-        "ask": "What does the area under a velocity-time graph represent?"
+        "ask": "What does the area under a velocity-time graph represent?",
+        "engine": {
+          "kind": "graph_measure",
+          "y": "velocity",
+          "x": "time",
+          "measure": "area",
+          "is": "distance"
+        }
       }
     ],
     "verification": {
@@ -468,7 +494,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Answer backed by the maths engine. Area under a velocity-time graph = distance travelled: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Answer backed by the maths engine. Area under a velocity-time graph = distance travelled: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Codex review on #123: the matching blind statement assumed positive velocity, narrower than \"motion in one direction\", and the units proof cannot settle the sign, so it keeps individual human approval.",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -513,11 +539,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:41:09Z",
-          "notes": "fact 1: no maths engine proof; blind statement differs (\"The area under a velocity–time graph over a given time interval represents the displacement over that interval. If the graph lies below the time axis, that area counts as negative displacement; the total distance travelled is the area under a speed–time graph, or the sum of the absolute areas on a velocity–time graph.\")"
+          "at": "2026-11-25T20:41:47Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The area under a velocity–time graph represents the displacement over that time interval. If velocity stays positive, this area also equals the distance travelled; if velocity is negative or changes sign, you must use signed area for displacement.\")"
         }
       ]
     }
@@ -621,7 +647,6 @@
     "back": "Acceleration",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -639,7 +664,14 @@
     "facts": [
       {
         "statement": "The gradient of a velocity-time graph is the acceleration.",
-        "ask": "What does the gradient of a velocity-time graph represent?"
+        "ask": "What does the gradient of a velocity-time graph represent?",
+        "engine": {
+          "kind": "graph_measure",
+          "y": "velocity",
+          "x": "time",
+          "measure": "gradient",
+          "is": "acceleration"
+        }
       }
     ],
     "verification": {
@@ -651,7 +683,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -688,11 +720,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:40:31Z",
-          "notes": "fact 1: no maths engine proof; blind statement differs (\"The gradient of a velocity–time graph represents the acceleration, i.e. the rate of change of velocity with respect to time. For a straight-line segment this gives the constant acceleration on that interval; for a curved graph, the gradient at a point gives the instantaneous acceleration.\")"
+          "at": "2026-11-25T20:41:08Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The gradient of a velocity–time graph represents the acceleration, i.e. the rate of change of velocity with respect to time. A positive gradient means positive acceleration, a negative gradient means deceleration (negative acceleration), and a zero gradient means constant velocity.\")"
         }
       ]
     }
@@ -708,7 +740,6 @@
     "back": "Speed",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -726,7 +757,14 @@
     "facts": [
       {
         "statement": "The gradient of a distance-time graph is the speed.",
-        "ask": "What does the gradient of a distance-time graph represent?"
+        "ask": "What does the gradient of a distance-time graph represent?",
+        "engine": {
+          "kind": "graph_measure",
+          "y": "distance",
+          "x": "time",
+          "measure": "gradient",
+          "is": "speed"
+        }
       }
     ],
     "verification": {
@@ -738,7 +776,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -775,11 +813,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T19:27:23Z",
-          "notes": "fact 1: no maths engine proof; blind statement differs (\"The gradient of a distance–time graph represents the object's speed: \tgradient = change in distance \u0000f7 change in time. This is valid when distance is plotted on the vertical axis and time on the horizontal axis; on a curved graph, the gradient of the tangent at a point gives the instantaneous speed.\")"
+          "at": "2026-11-25T20:40:46Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The gradient of a distance–time graph represents the object's speed: \u000bgradient = change in distance \u0000f7 change in time. On a straight-line section it gives the constant speed on that interval, and on a curved graph the gradient of the tangent at a point gives the instantaneous speed.\")"
         }
       ]
     }
@@ -795,7 +833,6 @@
     "back": "0",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -813,7 +850,14 @@
     "facts": [
       {
         "statement": "The gradient of a velocity-time graph is the acceleration.",
-        "ask": "What does the gradient of a velocity-time graph represent?"
+        "ask": "What does the gradient of a velocity-time graph represent?",
+        "engine": {
+          "kind": "graph_measure",
+          "y": "velocity",
+          "x": "time",
+          "measure": "gradient",
+          "is": "acceleration"
+        }
       }
     ],
     "verification": {
@@ -825,7 +869,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Gradient 0 means acceleration 0. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Gradient 0 means acceleration 0. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T18:26:24Z"
         },
         {
@@ -862,11 +906,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:40:42Z",
-          "notes": "fact 1: no maths engine proof; blind statement differs (\"The gradient of a velocity–time graph represents the acceleration (rate of change of velocity with respect to time). A positive gradient means positive acceleration, a negative gradient means deceleration/negative acceleration, and zero gradient means constant velocity.\")"
+          "at": "2026-11-25T20:41:19Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The gradient of a velocity–time graph represents the acceleration, i.e. the rate of change of velocity with respect to time. This is true provided the graph shows velocity against time and the gradient is taken over the interval in question (or at a point for instantaneous acceleration).\")"
         }
       ]
     }
