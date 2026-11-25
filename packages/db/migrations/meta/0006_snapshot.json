@@ -1,5 +1,5 @@
 {
-  "id": "3f22c4d8-db56-44d6-890f-d75fdd79bfc4",
+  "id": "f8749b94-f407-413e-9415-52cb70447f9c",
   "prevId": "73924108-8644-4c4e-81f5-1104c55ba1a1",
   "version": "7",
   "dialect": "postgresql",
@@ -973,6 +973,19 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "last_active_at": {
+          "name": "last_active_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "previous_active_at": {
+          "name": "previous_active_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -1618,89 +1631,6 @@
       },
       "isRLSEnabled": false
     },
-    "public.parent_push_subscriptions": {
-      "name": "parent_push_subscriptions",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "parent_id": {
-          "name": "parent_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "endpoint": {
-          "name": "endpoint",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "p256dh": {
-          "name": "p256dh",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "auth": {
-          "name": "auth",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "parent_push_subscriptions_parent_id_idx": {
-          "name": "parent_push_subscriptions_parent_id_idx",
-          "columns": [
-            {
-              "expression": "parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "parent_push_subscriptions_parent_id_parents_id_fk": {
-          "name": "parent_push_subscriptions_parent_id_parents_id_fk",
-          "tableFrom": "parent_push_subscriptions",
-          "tableTo": "parents",
-          "columnsFrom": ["parent_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "parent_push_subscriptions_endpoint_unique": {
-          "name": "parent_push_subscriptions_endpoint_unique",
-          "nullsNotDistinct": false,
-          "columns": ["endpoint"]
-        }
-      },
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.parent_rewards": {
       "name": "parent_rewards",
       "schema": "",
@@ -1769,12 +1699,6 @@
         },
         "given_at": {
           "name": "given_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "reached_notified_at": {
-          "name": "reached_notified_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": false
@@ -3186,7 +3110,7 @@
         },
         "students_year_group_range": {
           "name": "students_year_group_range",
-          "value": "\"students\".\"year_group\" between 7 and 13"
+          "value": "\"students\".\"year_group\" between 9 and 13"
         }
       },
       "isRLSEnabled": false

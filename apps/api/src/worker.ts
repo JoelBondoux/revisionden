@@ -1,4 +1,4 @@
-import { createNeonDatabase } from '@revisionden/db';
+import { createNeonDatabase, type Database } from '@revisionden/db';
 import { createApp } from './app';
 import { createAuth } from './auth';
 import { parseEnv } from './env';
@@ -11,7 +11,7 @@ import { runReminders as defaultRunReminders } from './notifications/runner';
 import { runParentRewardNotifications as defaultRunParentRewards } from './notifications/parent-rewards';
 import { createWebPushSender } from './notifications/web-push';
 import { createProviders } from './ai/providers';
-import { cleanUpExpiredData as defaultCleanUp } from './feedback/retention';
+import { cleanUpExpiredData as defaultCleanUp } from './cleanup';
 
 const systemClock = { now: () => new Date() };
 
@@ -26,8 +26,8 @@ export interface WorkerOptions {
   runReminders?: typeof defaultRunReminders;
   /** Injected in tests; defaults to telling parents about met parent-set reward targets. */
   runParentRewardNotifications?: typeof defaultRunParentRewards;
-  /** Injected in tests; defaults to deleting data past its retention period. */
-  cleanUp?: typeof defaultCleanUp;
+  /** Injected in tests; defaults to deleting data past its retention period (cleanup.ts). */
+  cleanUp?: (deps: { db: Database; now: Date }) => Promise<Record<string, number>>;
 }
 
 export function createWorker(version: string, options: WorkerOptions = {}) {
@@ -93,8 +93,9 @@ export function createWorker(version: string, options: WorkerOptions = {}) {
 
     /**
      * Cron trigger (every 15 minutes, see wrangler.toml): deletes data past its retention
-     * period (feedback 12 months after closing), then sends due reminders, then tells parents
-     * about parent-set reward targets met.
+     * period (expired link codes, sessions and challenges; feedback 12 months after closing;
+     * families unused for 12 months), then sends due reminders, then tells parents about
+     * parent-set reward targets met.
      */
     async scheduled(
       controller: Pick<ScheduledController, 'scheduledTime'>,

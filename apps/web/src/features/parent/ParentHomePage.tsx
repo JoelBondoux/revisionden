@@ -10,7 +10,8 @@ import './parent.css';
 
 /**
  * Parent home (workstream P): the parent's way in to everything that is theirs. Shows nicknames
- * only. Links to pages that exist today; focus suggestions and data export are not built yet.
+ * only. Links to pages that exist today; focus suggestions are not built yet. The data export
+ * download is on the onboarding family list (workstream B2).
  */
 export function ParentHomePage() {
   const api = useStatsApi();
@@ -44,6 +45,9 @@ export function ParentHomePage() {
             </li>
             <li>
               <Link to="/feedback/family">Family feedback</Link>
+            </li>
+            <li>
+              <Link to="/onboarding">Download your family&apos;s data</Link>
             </li>
           </ul>
         </Card>

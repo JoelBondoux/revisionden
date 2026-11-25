@@ -27,6 +27,10 @@ describe('Parent home', () => {
     );
     expect(screen.getByRole('link', { name: 'App settings' })).toHaveAttribute('href', '/settings');
     expect(screen.getByRole('link', { name: 'Policies' })).toHaveAttribute('href', '/legal');
+    expect(screen.getByRole('link', { name: "Download your family's data" })).toHaveAttribute(
+      'href',
+      '/onboarding',
+    );
   });
 
   it("links to the chosen child's rewards and reminder times, with a student switcher", async () => {

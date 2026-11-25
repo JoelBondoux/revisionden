@@ -189,7 +189,7 @@ home at `/parent`). Not built yet: the panel on the parent stats dashboard (work
 
 **Parent notification (H2):** when a target is met and the reward is not marked given, each
 parent device with "Reward news" turned on (parent home, `/parent`) gets one web push, once per
-reward (`parent_rewards.reached_notified_at`, migration 0006). The push has no payload; the
+reward (`parent_rewards.reached_notified_at`, migration 0007). The push has no payload; the
 service worker fetches "<nickname> reached a reward target: <title>" from
 `GET /v1/parent/notifications/latest`. It waits out the nightly quiet hours and time zone set for
 that child; the weekday school-hours window and the child's reminder switch do not apply. It is

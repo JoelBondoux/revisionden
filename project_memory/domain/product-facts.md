@@ -14,6 +14,18 @@ Tags: #product #rules #limits #defaults
 - Students have no outside account: nickname (2–16 letters, numbers, underscore), avatar code and
   year group only. Devices linked by a one-time QR token (10 minutes, single use), then a passkey.
 - Nicknames are unique within a family. A family is created the first time a parent signs in.
+- Year group: Years 9 to 13 only (core schema and database check `students_year_group_range`,
+  migration 0006).
+- Google and Microsoft access, refresh and ID tokens are never stored: blanked in Better Auth's
+  account hook (`apps/api/src/auth.ts`). Only the provider account id is kept.
+- Export: a parent downloads all their and their own children's data as JSON (`GET /v1/export`,
+  "Download your family's data" on the onboarding family list); secrets left out.
+- Inactive accounts: a family unused (no parent or student request) for over 12 calendar months
+  is deleted automatically with everything in it, including the parents' sign-in records. Use is
+  recorded at most hourly in `families.last_active_at`. A parent returning after 11 months or
+  more sees a warning (`GET /v1/family/activity`); no emails.
+- The 15-minute cron also deletes expired link codes, student and parent sessions, passkey
+  challenges and sign-in checks (`apps/api/src/cleanup.ts`).
 - The link token is redeemed with the family id from the QR code; a wrong family id does not use
   the token up. Tokens and sessions are stored only as hashes.
 - A student device session lasts 12 hours, then the student unlocks again with the passkey.
@@ -65,7 +77,7 @@ Tags: #product #rules #limits #defaults
 - Wrong lesson answers become flashcards. Flashcard buttons Again/Hard/Good/Easy = SM-2 quality
   1/3/4/5; each shows when the card comes back. Deck XP is per completed session, not per card: 20 XP for a
   session of 5+ cards (ends when the due queue is empty or at 20 cards), whatever the ratings; at
-  most 2 rewarded sessions a day; self-ratings never change mastery (owner, 2026-11-25). Students can add their own cards (up to 300 characters a side).
+  most 2 rewarded sessions a day; self-ratings never change mastery (owner, 2026-11-25). Students can add their own cards (up to 300 characters a side); a card with an email, a UK mobile number or a family nickname is refused, as for feedback.
 - XP is totalled per day in UK time; a streak day counts once, the first time the day reaches the
   daily goal. Command-word lessons are items tagged `command-word` (none verified yet).
 - Worked maths answers are checked by the maths engine (`MATHS_ENGINE_URL`); long answers are not
@@ -320,10 +332,10 @@ Tags: #product #rules #limits #defaults
 ## Parent home
 
 - `/parent` (workstream P): student switcher, per-child "Rewards you set" and "Reminder times"
-  (`/parent/reminders/:id`), stats dashboard, add or manage children, family feedback, Reward
-  news, app settings and policies. Tapping a child on `/family` (where a parent lands after
+  (`/parent/reminders/:id`), stats dashboard, add or manage children, family feedback, download your family's data
+  (`/onboarding`), Reward news, app settings and policies. Tapping a child on `/family` (where a parent lands after
   signing in) opens `/parent?student=<id>` with that child chosen; also linked from `/family`
-  and Settings. No focus-suggestions or export page exists yet, so neither has a card.
+  and Settings. No focus-suggestions page exists yet, so it has no card.
 
 ## Policies, About and feedback
 
