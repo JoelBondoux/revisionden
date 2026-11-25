@@ -333,6 +333,13 @@ Mockups: screens 19 (student) and 20 (parent).
 
 ### Feedback and bug reports
 
+- **Bug icon:** a small bug button sits in a corner of every screen (above the bottom nav, never
+  covering content, hidden during timed papers and Test mode questions). It opens the bug report
+  sheet straight away, with the current screen filled in. Students can turn the icon off in
+  Settings.
+- When the operator confirms a student's bug, the student is told in the app and earns the Bug
+  Hunter rewards in `REWARDS.md`.
+
 - Kinds: **bug**, **idea**, **something confusing**, **other**. (Mistakes in a question keep
   using "Report a problem" on the item, which quarantines it.)
 - Optional text up to 500 characters. Before saving, the same checks as the AI privacy filter

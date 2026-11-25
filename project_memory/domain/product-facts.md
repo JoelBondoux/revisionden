@@ -414,3 +414,12 @@ Tags: #product #rules #limits #defaults
   1.5× slow and 0.5× rushed with marks lost. Board-style papers from our own verified items first;
   official past papers only as links to the board's site (never copied). Detail:
   `docs/EXAM_PRACTICE.md`. Workstream X (queued).
+
+## Bug Hunter and secret achievements (planned)
+
+- Bug icon on every screen opens the bug report sheet. A student's bug confirmed by the operator:
+  +50 XP and a step on the hidden Bug Hunter track (badge, title, avatar item, frame, Pip outfit,
+  effect, legendary set at 20). Duplicates +10 XP; at most 3 confirmed-bug rewards a week; parents
+  are thanked, not rewarded.
+- Secret achievements: hidden "???" cards with a found count; learning-based conditions only;
+  defined in the catalogue with `secret: true`. Detail: `docs/REWARDS.md`.
