@@ -70,11 +70,11 @@ export function LinkButton({
   return (
     <AnyLink
       dest={destOf({ to, href, newTab })}
-      className={cx('btn', `btn--${variant}`, 'link-button', block && 'btn--block', className)}
+      className={cx('btn', `btn--${variant}`, 'btn-link', block && 'btn--block', className)}
       {...rest}
     >
       {icon && (
-        <span className="link-button__icon" aria-hidden="true">
+        <span className="btn-link__icon" aria-hidden="true">
           {icon}
         </span>
       )}

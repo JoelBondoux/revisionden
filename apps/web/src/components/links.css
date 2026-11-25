@@ -1,22 +1,22 @@
 /* Link components (J7). Uses the design tokens; motion is transform and shadow only. */
 
 /* LinkButton: shares .btn; adds a hover lift and the quiet style. */
-.link-button {
+.btn-link {
   transition:
     transform var(--motion-fast) var(--ease-spring),
     box-shadow var(--motion-fast) var(--ease-out);
 }
 
-.link-button:hover {
+.btn-link:hover {
   transform: translateY(-2px);
 }
 
-.link-button:active {
+.btn-link:active {
   transform: translateY(5px) scale(0.97, 0.94);
   box-shadow: none;
 }
 
-.link-button__icon {
+.btn-link__icon {
   display: inline-flex;
 }
 

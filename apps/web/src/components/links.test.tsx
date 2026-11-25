@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -21,7 +21,7 @@ describe('LinkButton', () => {
     inRouter(<LinkButton to="/stats">See your stats</LinkButton>);
     const link = screen.getByRole('link', { name: 'See your stats' });
     expect(link).toHaveAttribute('href', '/stats');
-    expect(link).toHaveClass('btn', 'btn--primary', 'link-button');
+    expect(link).toHaveClass('btn', 'btn--primary', 'btn-link');
   });
 
   it.each(['primary', 'secondary', 'quiet'] as const)('has a %s style', (variant) => {
@@ -40,7 +40,7 @@ describe('LinkButton', () => {
       </LinkButton>,
     );
     const link = screen.getByRole('link', { name: 'Map' });
-    expect(link.querySelector('.link-button__icon')).toHaveAttribute('aria-hidden', 'true');
+    expect(link.querySelector('.btn-link__icon')).toHaveAttribute('aria-hidden', 'true');
   });
 
   it('navigates inside the app', async () => {
@@ -184,6 +184,33 @@ describe('link styles', () => {
           part.trim().split(/\s+/)[0],
         );
       }
+    }
+  });
+});
+
+describe('class names', () => {
+  it('do not clash with classes other screens already use', () => {
+    const ours = [
+      'btn-link',
+      'btn-link__icon',
+      'link-tile',
+      'link-chip',
+      'text-link',
+      'link-tiles',
+    ];
+    const css: string[] = [];
+    const walk = (dir: string) => {
+      for (const name of readdirSync(dir)) {
+        const path = join(dir, name);
+        if (statSync(path).isDirectory()) walk(path);
+        else if (name.endsWith('.css') && !path.endsWith(join('components', 'links.css')))
+          css.push(readFileSync(path, 'utf8'));
+      }
+    };
+    walk(join(__dirname, '..'));
+    for (const cls of ours) {
+      const defined = css.some((text) => new RegExp(`\\.${cls}(?![\\w-])`).test(text));
+      expect(defined, cls).toBe(false);
     }
   });
 });
