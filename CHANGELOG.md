@@ -67,6 +67,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Operator bridge O2 (O): read routes `GET /v1/operator/{overview,families,families/:id,tickets,error-reports,content-reports,audit-log,status}` (`apps/api/src/operator/reads.ts`) with strict response schemas (`packages/core/src/operator-schemas.ts`); family search, family view and ticket lists are audited; a student's ticket text is never returned. The signed path now keeps a bare `?`.
 - Operator bridge O1 (O): signed AppDeck requests at `/v1/operator` (`operatorAuth`, `requireManager`, `audit` in `apps/api/src/operator/bridge.ts`; signature, 5-minute window and published test vector in `packages/core/src/operator-signature.ts`); `operator_audit_log` (2 years) and `operator_requests` (request ids, 1 day) tables (migration 0011, number to confirm with the lead); `APPDECK_OPERATOR_SHARED_SECRET` and `OPERATOR_RATE_LIMITER` (120 a minute); `GET /v1/operator/ping`. Data retention policy 1.2.
 - Reading comfort Q1 (Q): `apps/web/src/features/reading/` (settings in `localStorage` key `revisionden.reading`, `ReadingProvider` sets `data-reading-*` on `<html>`, `reading.css`, Settings card). Self-hosted OpenDyslexic via `@fontsource/opendyslexic` 5.3.0 (OFL-1.1, listed on the About page).
 - Rewards where they are earned (F4): `LearnAttemptResponse` and `FlashcardSessionResult` have `newlyEarned` (saved once each by `saveNewRewards`, shared with the Rewards route); the lesson, Cards screen and starting-test results show "New reward: …" with `RewardSound`.

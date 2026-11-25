@@ -26,3 +26,4 @@ export * from './map';
 export * from './error-ref';
 export * from './flashcard-session';
 export * from './operator-signature';
+export * from './operator-schemas';

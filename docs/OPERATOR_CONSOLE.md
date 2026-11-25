@@ -82,11 +82,24 @@ secret is a test value used nowhere else.
 
 ### Endpoints
 
-| Route                   | Role  | Returns                                                                 | Audited |
-| ----------------------- | ----- | ----------------------------------------------------------------------- | ------- |
-| `GET /v1/operator/ping` | Agent | `{ environment, version, operator: { email, role } }` (connection test) | no      |
+All reads are open to Agent and Manager. Response shapes are strict Zod schemas in
+`packages/core/src/operator-schemas.ts` (`Operator…Schema`), so an unagreed field fails the
+tests instead of reaching AppDeck. `null` marks figures whose workstream is not built yet
+(payments: Premium, trials, free places, plan; complaints: O4).
 
-Read endpoints come with O2, actions with O3 to O5.
+| Route                              | Query                                                                           | Returns                                                                                                                                                                                                                              | Audited                                                                  |
+| ---------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
+| `GET /v1/operator/ping`            |                                                                                 | `{ environment, version, operator: { email, role } }` (connection test)                                                                                                                                                              | no                                                                       |
+| `GET /v1/operator/overview`        |                                                                                 | `{ families, students, activeStudents7d, activeStudents30d, openTickets, openContentReports, errorReports24h, premiumFamilies, trials, freePlaces, openComplaints }`; active = answered a question in that window                    | no                                                                       |
+| `GET /v1/operator/families`        | `email=` (exact, any case) **or** `id=`                                         | `{ families: [{ id, createdAt, lastActiveAt, parentCount, childCount }] }` (0 or 1); anything else is 400                                                                                                                            | `family.search` (target = family found; the search text is never stored) |
+| `GET /v1/operator/families/:id`    |                                                                                 | `{ id, createdAt, lastActiveAt, deletesAfter, parents: [{ email, joinedAt }], plan, children: [{ id, nickname, yearGroup, subjects, linkedDevices, lastActiveAt }], flags: { inactivityWarning, openTickets, openContentReports } }` | `family.view`                                                            |
+| `GET /v1/operator/tickets`         | `status=open\|all\|new\|looking_into_it\|fixed\|will_not_fix`, `familyId=`      | `{ tickets: [{ id, familyId, kind, status, senderRole, text, device, createdAt, updatedAt, closedAt }] }`, newest 200; `text` is always `null` when a student sent it                                                                | `tickets.list` (target = family when filtered)                           |
+| `GET /v1/operator/error-reports`   | `since=` (default 24 hours, at most 90 days)                                    | Error reports grouped by screen, API path and status (same shape as `GET /v1/admin/error-reports`)                                                                                                                                   | no                                                                       |
+| `GET /v1/operator/content-reports` | `status=open` (default)`\|no_error\|confirmed_error\|all`                       | `{ reviewQueueUrl, reports: [{ id, itemId, itemVersion, reason, reportedBy, status, quarantined, createdAt, decidedAt }] }`, newest 200                                                                                              | no                                                                       |
+| `GET /v1/operator/audit-log`       | `targetType=`, `targetId=`, `before=` (ISO time), `limit=` (1–500, default 100) | `{ entries: [...], nextBefore }`, newest first                                                                                                                                                                                       | no                                                                       |
+| `GET /v1/operator/status`          |                                                                                 | `{ environment, version, database, errorReportsLastHour, errorReports24h }`                                                                                                                                                          | no                                                                       |
+
+Actions come with O3 to O5.
 
 ## What the operator can see and do
 

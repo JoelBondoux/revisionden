@@ -4,6 +4,7 @@ import type { AppEnv } from '../context';
 import type { AppConfig } from '../env';
 import type { Clock, RateLimiter } from '../rate-limit';
 import { operatorAuth } from './bridge';
+import { operatorReadRoutes } from './reads';
 
 export interface OperatorRouteDeps {
   version: string;
@@ -26,6 +27,8 @@ export function operatorRoutes(deps: OperatorRouteDeps) {
       operator: { email: c.var.operator.email, role: c.var.operator.role },
     }),
   );
+
+  app.route('/', operatorReadRoutes(deps));
 
   return app;
 }

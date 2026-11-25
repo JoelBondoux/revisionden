@@ -1,0 +1,178 @@
+/**
+ * Answers of the operator bridge's read routes (`docs/OPERATOR_CONSOLE.md`, O2). Strict, so a
+ * field nobody agreed to (an answer, an avatar, a child's own words) fails the API's tests
+ * instead of reaching AppDeck. `null` where a figure belongs to a workstream not built yet.
+ */
+import { z } from 'zod';
+
+const isoDate = z.string().datetime();
+const uuid = z.string().uuid();
+
+export const OperatorOverviewSchema = z
+  .object({
+    families: z.number().int().nonnegative(),
+    students: z.number().int().nonnegative(),
+    /** Students who answered at least one question in the last 7 and 30 days. */
+    activeStudents7d: z.number().int().nonnegative(),
+    activeStudents30d: z.number().int().nonnegative(),
+    openTickets: z.number().int().nonnegative(),
+    openContentReports: z.number().int().nonnegative(),
+    errorReports24h: z.number().int().nonnegative(),
+    /** Payments (workstream $) and complaints (O4) are not built yet. */
+    premiumFamilies: z.null(),
+    trials: z.null(),
+    freePlaces: z.null(),
+    openComplaints: z.null(),
+  })
+  .strict();
+export type OperatorOverview = z.infer<typeof OperatorOverviewSchema>;
+
+/** Exactly one of an exact parent sign-in email or a family id; no browsing by name. */
+export const OperatorFamilySearchQuerySchema = z
+  .object({
+    email: z.string().trim().toLowerCase().pipe(z.string().email().max(254)).optional(),
+    id: uuid.optional(),
+  })
+  .strict()
+  .refine((q) => (q.email === undefined) !== (q.id === undefined), {
+    message: 'Search by email or by family id, not both',
+  });
+
+export const OperatorFamilySummarySchema = z
+  .object({
+    id: uuid,
+    createdAt: isoDate,
+    lastActiveAt: isoDate,
+    parentCount: z.number().int().nonnegative(),
+    childCount: z.number().int().nonnegative(),
+  })
+  .strict();
+
+export const OperatorFamilySearchResultSchema = z
+  .object({ families: z.array(OperatorFamilySummarySchema).max(1) })
+  .strict();
+
+export const OperatorChildSchema = z
+  .object({
+    id: uuid,
+    nickname: z.string(),
+    yearGroup: z.number().int(),
+    subjects: z.array(z.string()),
+    linkedDevices: z.number().int().nonnegative(),
+    /** Last question answered; null if none yet. */
+    lastActiveAt: isoDate.nullable(),
+  })
+  .strict();
+
+export const OperatorFamilyDetailSchema = z
+  .object({
+    id: uuid,
+    createdAt: isoDate,
+    lastActiveAt: isoDate,
+    /** When the account is deleted if nobody uses it (12 months after last use). */
+    deletesAfter: isoDate,
+    parents: z.array(z.object({ email: z.string(), joinedAt: isoDate }).strict()),
+    /** Plan and trial come with payments (workstream $). */
+    plan: z.null(),
+    children: z.array(OperatorChildSchema),
+    flags: z
+      .object({
+        /** The family has not been used for 11 months or more. */
+        inactivityWarning: z.boolean(),
+        openTickets: z.number().int().nonnegative(),
+        openContentReports: z.number().int().nonnegative(),
+      })
+      .strict(),
+  })
+  .strict();
+export type OperatorFamilyDetail = z.infer<typeof OperatorFamilyDetailSchema>;
+
+const ticketDevice = z
+  .object({
+    appVersion: z.string().optional(),
+    route: z.string().optional(),
+    browserFamily: z.string().optional(),
+    screenSize: z.string().optional(),
+    online: z.boolean().optional(),
+  })
+  .strict();
+
+/** Feedback as a ticket. A student's own words are never sent: `text` is null for them. */
+export const OperatorTicketSchema = z
+  .object({
+    id: uuid,
+    familyId: uuid,
+    kind: z.enum(['bug', 'idea', 'confusing', 'other']),
+    status: z.enum(['new', 'looking_into_it', 'fixed', 'will_not_fix']),
+    senderRole: z.enum(['student', 'parent']),
+    text: z.string().nullable(),
+    device: ticketDevice.nullable(),
+    createdAt: isoDate,
+    updatedAt: isoDate,
+    closedAt: isoDate.nullable(),
+  })
+  .strict()
+  .refine((t) => t.senderRole === 'parent' || t.text === null, {
+    message: "A student's ticket text is never sent to AppDeck",
+    path: ['text'],
+  });
+export type OperatorTicket = z.infer<typeof OperatorTicketSchema>;
+
+export const OperatorTicketListSchema = z
+  .object({ tickets: z.array(OperatorTicketSchema) })
+  .strict();
+
+export const OperatorContentReportSchema = z
+  .object({
+    id: uuid,
+    itemId: z.string(),
+    itemVersion: z.number().int(),
+    reason: z.string(),
+    reportedBy: z.enum(['student', 'parent']),
+    status: z.enum(['open', 'no_error', 'confirmed_error']),
+    /** The question is hidden from students until a reviewer decides. */
+    quarantined: z.boolean(),
+    createdAt: isoDate,
+    decidedAt: isoDate.nullable(),
+  })
+  .strict();
+
+export const OperatorContentReportListSchema = z
+  .object({
+    /** The review queue in the RevisionDen web app, for the "Open review queue" link. */
+    reviewQueueUrl: z.string().url(),
+    reports: z.array(OperatorContentReportSchema),
+  })
+  .strict();
+
+export const OperatorAuditEntrySchema = z
+  .object({
+    id: uuid,
+    operatorEmail: z.string(),
+    operatorRole: z.enum(['agent', 'manager']),
+    action: z.string(),
+    targetType: z.string().nullable(),
+    targetId: z.string().nullable(),
+    requestId: z.string(),
+    outcome: z.enum(['ok', 'denied']),
+    createdAt: isoDate,
+  })
+  .strict();
+
+export const OperatorAuditLogSchema = z
+  .object({
+    entries: z.array(OperatorAuditEntrySchema),
+    /** Pass as `before` for the next (older) page; null on the last page. */
+    nextBefore: isoDate.nullable(),
+  })
+  .strict();
+
+export const OperatorStatusSchema = z
+  .object({
+    environment: z.enum(['development', 'staging', 'production']),
+    version: z.string(),
+    database: z.literal('ok'),
+    errorReportsLastHour: z.number().int().nonnegative(),
+    errorReports24h: z.number().int().nonnegative(),
+  })
+  .strict();

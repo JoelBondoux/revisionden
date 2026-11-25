@@ -63,10 +63,12 @@ async function sha256Hex(text: string): Promise<string> {
 
 const isChange = (method: string) => method !== 'GET' && method !== 'HEAD';
 
-/** The signed path: path and query string exactly as requested. */
+/** The signed path: path and query string exactly as requested (a bare `?` included). */
 function signedPath(c: Context): string {
-  const url = new URL(c.req.url);
-  return `${url.pathname}${url.search}`;
+  const url = c.req.url;
+  const path = url.slice(url.indexOf('/', url.indexOf('//') + 2));
+  const hash = path.indexOf('#');
+  return hash === -1 ? path : path.slice(0, hash);
 }
 
 /**
@@ -197,6 +199,8 @@ export async function audit(
     targetId?: string;
     outcome?: 'ok' | 'denied';
   },
+  /** The request's time; the database clock when not given. */
+  now?: Date,
 ): Promise<void> {
   await db.insert(operatorAuditLog).values({
     operatorEmail: operator.email,
@@ -206,6 +210,7 @@ export async function audit(
     targetId: entry.targetId ?? null,
     requestId: operator.requestId,
     outcome: entry.outcome ?? 'ok',
+    ...(now ? { createdAt: now } : {}),
   });
 }
 
