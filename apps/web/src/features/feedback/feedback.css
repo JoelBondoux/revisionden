@@ -81,6 +81,57 @@
   align-items: center;
 }
 
+/* ---------- Bug button (L7): a corner button above the bottom nav, never over content ---------- */
+.bug-button {
+  position: fixed;
+  right: var(--space-4);
+  bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
+  z-index: 15;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--tap-target) + var(--space-1));
+  height: calc(var(--tap-target) + var(--space-1));
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+}
+
+.bug-button:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.bug-button:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Phones in the student app: sit just above the bottom navigation. */
+.app-shell .bug-button {
+  bottom: calc(72px + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 768px) {
+  .app-shell .bug-button {
+    bottom: var(--space-4);
+  }
+}
+
+.feedback__thanks {
+  margin: 0;
+  color: var(--color-success);
+  font-weight: var(--font-weight-extrabold);
+}
+
+.feedback__confirm {
+  display: grid;
+  gap: var(--space-2);
+}
+
 .feedback-filter {
   display: flex;
   flex-wrap: wrap;

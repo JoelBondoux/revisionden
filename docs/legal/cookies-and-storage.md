@@ -1,6 +1,6 @@
 # Cookies and storage
 
-Version: 1.1
+Version: 1.2
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -43,6 +43,7 @@ policies. We do not set or read those.
 | Local storage `revisionden.youngPeopleNotice` | Remembers that the student has seen the privacy notice for young people (the version number only)                                       | Until site data is cleared                    |
 | Service worker and its cache                  | Lets the app open quickly and work offline. Holds only the app's own files, never your data; API responses are never cached             | Until the app updates or site data is cleared |
 | Push subscription                             | Lets the browser receive reminders, if the student turns them on                                                                        | Until reminders are turned off                |
+| Local storage `revisionden.bugButton`         | Remembers if the student switched the bug button off on this device                                                                     | Until site data is cleared                    |
 | Sound settings (when added)                   | Remembers mute, volume and tap sounds for this device                                                                                   | Until site data is cleared                    |
 | Local storage `revisionden.readAloud`         | Remembers whether read aloud is on and its speed on this device                                                                         | Until site data is cleared                    |
 | Local storage `revisionden.reading`           | Remembers reading comfort choices (font, text size, spacing, tint) on this device                                                       | Until site data is cleared                    |
@@ -59,5 +60,6 @@ need to sign in, or unlink and link the student's device again.
 
 ## Changes
 
+- 1.2: Added the setting that remembers if the bug button is switched off on this device.
 - 1.1: Added the read aloud and reading comfort settings kept on the device.
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).

@@ -12,6 +12,9 @@ function fakeApi(overrides: Partial<FeedbackApi> = {}): FeedbackApi {
     listFamily: vi.fn(async () => []),
     listAll: vi.fn(async () => []),
     setStatus: vi.fn(),
+    confirm: vi.fn(),
+    listRewards: vi.fn(async () => []),
+    markRewardsSeen: vi.fn(async () => {}),
     errorReports: vi.fn(),
     ...overrides,
   };
