@@ -256,12 +256,13 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [ ] O3 Actions: notes, ticket replies shown in the parent or student app, status changes, confirm bug / duplicate, trial and free-place changes, data request handling.
 - [ ] O4 Complaints: new feedback kind, parent "Make a complaint" flow, due dates, complaints policy in `docs/legal/`.
 - [ ] O5 Discount codes model and rules (enforced at checkout with workstream $).
+- [ ] O6 Family tags: tag catalogue, family tag links, effects (early access via feature flags, complimentary Premium flag for $, exclude from metrics), filter by tag, "Beta" badge for the beta programme effect.
 - Tests: signature vectors shared with AppDeck, replay and clock-skew refusal, role checks (Agent vs Manager), minimal fields only (no answers or child free text), audit entries for every read and change.
 
 ### AD. RevisionDen in AppDeck (repository `appdeck-admin`)
 
 - [ ] AD1 Add RevisionDen as a managed app with environments, settings and service status.
-- [ ] AD2 Screens: overview, families, tickets, complaints, discount codes, free places, data requests, content reports, audit.
+- [ ] AD2 Screens: overview, families, tickets, complaints, discount codes, free places, data requests, content reports, audit, family tags.
 - [ ] AD3 Role gating (Agent/Manager) matching the bridge; signed client with the shared test vector.
 
 ## Stage 2 and later

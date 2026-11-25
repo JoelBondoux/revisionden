@@ -517,5 +517,7 @@ Tags: #product #rules #limits #defaults
   no database access; it calls a signed operator bridge (HMAC tag `appdeck-revisionden-operator-v1`,
   per-environment shared secret, 5-minute window, idempotent request ids), and every operator read
   and change is audited. Agents: support; Managers: money and data. Complaints: acknowledge in 2
-  working days, aim to resolve in 14. Data requests: one calendar month. Detail:
+  working days, aim to resolve in 14. Data requests: one calendar month. Family tags (for example
+  Beta tester, Press, Friends & family) are internal; Managers define them and their effects (early
+  access, complimentary Premium, exclude from metrics); Agents apply them. Detail:
   `docs/OPERATOR_CONSOLE.md`.
