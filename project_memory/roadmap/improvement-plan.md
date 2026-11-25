@@ -22,6 +22,11 @@
 - [ ] F2 topic map API endpoints: waiting for the product owner's go-ahead.
 - [ ] Follow-ups queued: H2 (reward-met notification), B2 (privacy fixes found by L), P (parent home page), T (vitest 4), S2.
 
+## Next
+
+- [ ] X exam practice: timed papers marked at the end with pacing commentary (`docs/EXAM_PRACTICE.md`);
+      board-style papers from our own verified items first, official past papers as links later.
+
 ## Blocked
 
 - [x] G deploys unblocked 2026-11-25: reuse the existing keys (decision 0003).
