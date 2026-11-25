@@ -45,7 +45,8 @@ An official definition, where one exists, is always cited instead.
 
 **Standard facts with no official source** (decision 0009). An item that rests on a standard maths
 fact (not just a definition) that no cited source states lists it in `facts` and must pass the
-**fact-check stage (step 4b)**. A fact passes with an official citation whose quote check passed,
+**fact-check stage (step 4b)**. A fact passes with an official citation whose quote check passed and whose quote the judge confirms
+states the fact (not just its topic),
 or with both a maths engine proof (`engine`, for example `identity`) and a matching blind
 statement. That statement comes from a third provider (neither the writer nor the blind
 answerer), which answers the neutral `ask` without our wording; another provider judges the
@@ -236,6 +237,19 @@ each item) draws its sample with a recorded seed so the draw can be replayed. On
 error fails the batch and files re-check requests for the batch (steps 3 to 5 and a fresh
 sample), its writer prompt and its source. A passed batch is then recorded in each item as a
 `batch-sample` check by the content session.
+
+**Batches from draft items (S2).** Content sync keeps each item's full content record, with its
+linked mark scheme as `mark_scheme_detail`, in `items.review_snapshot` (never served). On
+`/review`, a `content-lead` sees how many drafts are ready and can **Create batch from draft
+items** (`GET, POST /v1/review/batches/from-drafts`): only drafts whose snapshot has every
+automated check passed (grounded writing, quote check, blind answer or blind marking, adversarial
+review, schema, and the maths engine for maths items; `readyForHumanReview` in
+`packages/core`), and not already in a batch under review or passed at that version. An item with
+`facts` also needs a fact-check record; if it failed, the item is batched for individual review
+(`needsIndividualReview`), never sampling. Exact checks the item names (units, chemical equation, equation
+sheet) must pass too. After a batch fails, its items stay out of new batches until the batch's
+recheck is marked done and their steps 3 to 5 checks have re-run since the failure (`recheckedSince`). The batch
+page shows each item's hint, mark scheme, exemplars and checks.
 
 **Reports and quarantine (section 6).** "Report a problem" stores only the item, its version and
 a reason (no free text, so no personal data) and hides the item at once: a row in

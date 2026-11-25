@@ -205,3 +205,25 @@ test('--fact-check runs the fact-check stage only for items that list facts, and
   );
   assert.equal(providers.openai.calls, 1);
 });
+
+test('the fact-check sees the blind answer recorded earlier in the same run', async () => {
+  const withFact = draftItem('fixture-fact', undefined, {
+    answer: { accepted: ['fixture answer'] },
+    facts: [{ statement: 'Fixture fact.', ask: 'Fixture question?' }],
+  });
+  const root = await contentDir([withFact]);
+  const providers = {
+    openai: fake('openai', { answer: 'fixture answer', confidence: 'high', reasoning: '' }),
+    gemini: fake('gemini', { same: true, confidence: 'high', reason: '' }),
+  };
+  const out = io();
+  await run(['--content', root, '--blind', 'openai', '--fact-check', 'openai'], {
+    ...out,
+    providerFor: (name) => providers[name],
+    maths: async (checks) => checks.map((c) => ({ id: c.id, ok: true })),
+  });
+  assert.match(
+    out.lines.join('\n'),
+    /ERROR fixture-fact {2}fact-check {2}.*different provider from the blind answer/,
+  );
+});
