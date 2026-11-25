@@ -175,16 +175,41 @@ export const FlashcardsOverviewSchema = z.object({
 });
 export type FlashcardsOverview = z.infer<typeof FlashcardsOverviewSchema>;
 
-export const FlashcardReviewRequestSchema = z.object({ rating: FlashcardRatingSchema }).strict();
+// Flashcard sessions: deck XP is per completed session, not per card (see flashcard-session.ts).
+
+export const FlashcardSessionSchema = z.object({
+  id: IdSchema,
+  maxCards: z.number().int().positive(),
+  minCards: z.number().int().positive(),
+  /** XP for a completed session of at least minCards cards. */
+  xp: z.number().int().min(0),
+  /** Rewarded sessions still possible today (UK day). */
+  rewardedLeftToday: z.number().int().min(0),
+});
+export type FlashcardSession = z.infer<typeof FlashcardSessionSchema>;
+
+export const FlashcardReviewRequestSchema = z
+  .object({ rating: FlashcardRatingSchema, sessionId: IdSchema })
+  .strict();
 
 export const FlashcardReviewResponseSchema = z.object({
   card: FlashcardSchema,
-  xpEarned: z.number().int().min(0),
   /** True when the card comes back today (rated Again). */
   comesBackSooner: z.boolean(),
-  progress: ProgressSchema,
+  /** Different cards counted in this session so far (Again repeats count once). */
+  cardsCounted: z.number().int().min(0),
 });
 export type FlashcardReviewResponse = z.infer<typeof FlashcardReviewResponseSchema>;
+
+export const FlashcardSessionResultSchema = z.object({
+  completed: z.boolean(),
+  reason: z.enum(['rewarded', 'left_early', 'too_few_cards', 'daily_limit']),
+  xpEarned: z.number().int().min(0),
+  cardsCounted: z.number().int().min(0),
+  rewardedLeftToday: z.number().int().min(0),
+  progress: ProgressSchema,
+});
+export type FlashcardSessionResult = z.infer<typeof FlashcardSessionResultSchema>;
 
 const cardText = z
   .string()

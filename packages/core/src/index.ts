@@ -23,3 +23,4 @@ export * from './rewards-schemas';
 export * from './stats';
 export * from './stats-schemas';
 export * from './error-ref';
+export * from './flashcard-session';
