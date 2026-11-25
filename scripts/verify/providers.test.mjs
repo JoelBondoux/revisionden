@@ -145,6 +145,8 @@ test('providers are configured from environment variables, and a missing key is 
   assert.throws(() => providerFromEnv('mystery', env), /unknown provider mystery/);
 });
 
+const GATEWAY = 'https://gateway.ai.cloudflare.com/v1/fixture-account/revisionden/provider';
+
 test('with an AI gateway token, every provider sends it as cf-aig-authorization and asks the gateway not to log payloads', async () => {
   const cases = [
     [createAnthropicProvider, 'anthropic-tool-use'],
@@ -153,7 +155,13 @@ test('with an AI gateway token, every provider sends it as cf-aig-authorization 
   ];
   for (const [create, name] of cases) {
     const { fetch, calls } = recorder(fixture(name));
-    const p = create({ apiKey: 'k', model: 'm', fetch, gatewayToken: 'gw-token' });
+    const p = create({
+      apiKey: 'k',
+      model: 'm',
+      fetch,
+      gatewayToken: 'gw-token',
+      baseUrl: GATEWAY,
+    });
     await p.complete(REQUEST);
     const headers = calls[0].init.headers;
     assert.equal(headers['cf-aig-authorization'], 'Bearer gw-token', name);
@@ -168,9 +176,33 @@ test('without a gateway token, no gateway headers are sent', async () => {
   assert.equal(calls[0].init.headers['cf-aig-collect-log-payload'], undefined);
 });
 
-test('providerFromEnv passes AI_GATEWAY_TOKEN to the provider', async () => {
-  const { fetch, calls } = recorder(fixture('gemini-generate'));
+test('the gateway token is never sent anywhere but the Cloudflare AI Gateway', async () => {
+  for (const baseUrl of [
+    undefined,
+    'https://gateway.example/anthropic',
+    'http://gateway.ai.cloudflare.com/v1/x',
+  ]) {
+    const { fetch, calls } = recorder(fixture('anthropic-tool-use'));
+    const p = createAnthropicProvider({
+      apiKey: 'k',
+      model: 'm',
+      fetch,
+      gatewayToken: 'gw',
+      baseUrl,
+    });
+    await p.complete(REQUEST);
+    assert.equal(calls[0].init.headers['cf-aig-authorization'], undefined, String(baseUrl));
+  }
+});
+
+test('providerFromEnv passes AI_GATEWAY_TOKEN only to a provider routed through the gateway', async () => {
   const env = { GEMINI_API_KEY: 'k', VERIFY_GEMINI_MODEL: 'm', AI_GATEWAY_TOKEN: 'gw' };
-  await providerFromEnv('gemini', env, fetch).complete(REQUEST);
-  assert.equal(calls[0].init.headers['cf-aig-authorization'], 'Bearer gw');
+  const direct = recorder(fixture('gemini-generate'));
+  await providerFromEnv('gemini', env, direct.fetch).complete(REQUEST);
+  assert.equal(direct.calls[0].init.headers['cf-aig-authorization'], undefined);
+  const viaGateway = recorder(fixture('gemini-generate'));
+  await providerFromEnv('gemini', { ...env, GEMINI_BASE_URL: GATEWAY }, viaGateway.fetch).complete(
+    REQUEST,
+  );
+  assert.equal(viaGateway.calls[0].init.headers['cf-aig-authorization'], 'Bearer gw');
 });
