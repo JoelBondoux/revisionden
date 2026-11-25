@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { missingChecks, needsIndividualReview, readyForHumanReview } from './review-readiness';
+import {
+  missingChecks,
+  needsIndividualReview,
+  readyForHumanReview,
+  recheckedSince,
+} from './review-readiness';
 
 const check = (name: string, result = 'pass') => ({ name, result });
 const automated = [
@@ -90,5 +95,53 @@ describe('items resting on standard facts (decision 0009)', () => {
   it('marks needs_human_approval items for individual review', () => {
     expect(needsIndividualReview({ needs_human_approval: true })).toBe(true);
     expect(needsIndividualReview({ type: 'short_answer' })).toBe(false);
+  });
+});
+
+describe('exact checks the item declares', () => {
+  it('needs units, chemical-equation and equation-sheet checks when its exact block names them', () => {
+    const item = {
+      type: 'short_answer',
+      exact: {
+        quantity: 'x',
+        chemical_equation: 'y',
+        equation_sheet: { sheet: 's', equation: 'e' },
+      },
+      verification: { status: 'draft', checks: automated.map((n) => check(n)) },
+    };
+    expect(missingChecks(item)).toEqual(['units', 'chemical-equation', 'equation-sheet']);
+    item.verification.checks.push(check('units'), check('chemical-equation', 'fail'));
+    expect(missingChecks(item)).toEqual(['chemical-equation', 'equation-sheet']);
+  });
+});
+
+describe('rechecked since a failed batch', () => {
+  const at = (name: string, when: string) => ({ name, result: 'pass', at: when });
+  const record = (checks: { name: string; result: string; at: string }[]) => ({
+    type: 'numeric',
+    verification: { status: 'draft', checks },
+  });
+  const failedAt = new Date('2026-11-25T12:00:00Z');
+
+  it('is fresh only when every step 3 to 5 check ran after the batch failed', () => {
+    const fresh = record([
+      at('quote-check', '2026-11-20T00:00:00Z'),
+      at('blind-answer', '2026-11-25T13:00:00Z'),
+      at('adversarial-review', '2026-11-25T13:01:00Z'),
+      at('maths-engine', '2026-11-25T13:02:00Z'),
+    ]);
+    expect(recheckedSince(fresh, failedAt)).toBe(true);
+    const stale = record([
+      at('blind-answer', '2026-11-25T13:00:00Z'),
+      at('adversarial-review', '2026-11-24T09:00:00Z'),
+    ]);
+    expect(recheckedSince(stale, failedAt)).toBe(false);
+  });
+
+  it('is not fresh with no step 3 to 5 checks or an unreadable time', () => {
+    expect(recheckedSince(record([at('quote-check', '2026-11-26T00:00:00Z')]), failedAt)).toBe(
+      false,
+    );
+    expect(recheckedSince(record([at('blind-answer', 'not a time')]), failedAt)).toBe(false);
   });
 });
