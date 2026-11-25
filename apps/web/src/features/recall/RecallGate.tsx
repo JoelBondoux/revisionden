@@ -30,6 +30,7 @@ export function RecallGate({ topicId, children }: RecallGateProps) {
       items={recall.data.items}
       draftContent={recall.data.draftContent}
       doneHref="/map"
+      recall
       onFinish={() => setFinished(true)}
       aside={
         <Button

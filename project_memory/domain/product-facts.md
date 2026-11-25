@@ -222,6 +222,11 @@ Tags: #product #rules #limits #defaults
   `revisionden-www-staging`. Its policies and design tokens are read from `docs/legal` and the web
   app at build time. "Sign in" and "Start free" go to `app.revisionden.com` (staging: `staging.`).
   Until `WWW_LAUNCHED=true` it says the app is in private testing.
+- Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Hosts: `app.revisionden.com`
+  and `api.revisionden.com` (production; owner decision 2026-11-25), `staging.` and `api-staging.` (staging), `dev.` and `api-dev.` (development).
+- The bare `revisionden.com` is the public sales site (workstream M, `apps/www`), not the app.
+- Production passkeys use the RP ID `revisionden.com`; OAuth callbacks are on the API host, so the
+  move to `app.` needed no change in Google or Microsoft.
 - Live since 2026-11-25 (workstream G): API Workers on all three API hosts; web app on `dev.` and
   `staging.`. The production web app waits for the operator details (its build fails without them).
 - Workers: `revisionden-api-dev`, `revisionden-api-staging`, `revisionden-api` (API) and
@@ -554,7 +559,10 @@ Tags: #product #rules #limits #defaults
   (no flashcards, no extended answers), from other practised topics first, then the lesson's own
   topic; weak spots first (next-item rules). Shown as "Remember this?" in the lesson player with
   Skip; answers are normal Learn mode attempts (normal XP when right, wrong ones become
-  flashcards, mastery as any answer). If the call fails the lesson starts as normal.
+  flashcards, mastery as any answer). If the call fails the lesson starts as normal. Recall
+  answers are sent with `recall: true` (Learn mode only) and saved with mode `recall`; a wrong one
+  never resets the combo (`comboBefore` passes over it), a right one still adds to it (owner,
+  2026-11-25).
   `apps/web/src/features/recall/`, `apps/api/src/routes/recall.ts`.
 - Reading comfort (Q1, built): Settings → Reading comfort, per device in `localStorage` key
   `revisionden.reading`. Options: dyslexia-friendly font (OpenDyslexic from

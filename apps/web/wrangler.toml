@@ -19,4 +19,5 @@ routes = [{ pattern = "staging.revisionden.com", custom_domain = true }]
 
 [env.production]
 name = "revisionden-web"
-routes = [{ pattern = "revisionden.com", custom_domain = true }]
+# The app lives on app.revisionden.com; the bare domain is the public site (workstream M).
+routes = [{ pattern = "app.revisionden.com", custom_domain = true }]

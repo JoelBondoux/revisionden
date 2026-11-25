@@ -132,12 +132,15 @@ async function loadStats(db: Database, studentId: string, yearGroup: number, now
     flashcardsReviewed: sessions.cardsReviewed,
     // Hidden tracks (R7b). Comeback Kid and part of Explorer come from answers; the rest have
     // no data source yet and stay at 0 (see project_memory/operations/contradictions.md).
+    // Flashcards are self-ratings and never change mastery (learn.ts), so they are left out.
     weakSpotsTurnedStrong: weakSpotsTurnedStrong(
-      answerRows.map((a) => ({
-        topicId: a.topicId,
-        at: a.at.getTime(),
-        score: a.score ?? (a.correct ? 1 : 0),
-      })),
+      answerRows
+        .filter((a) => a.type !== 'flashcard')
+        .map((a) => ({
+          topicId: a.topicId,
+          at: a.at.getTime(),
+          score: a.score ?? (a.correct ? 1 : 0),
+        })),
     ),
     practiceKindsTried: practiceKindsTried({
       lesson: answerRows.some((a) => a.mode === 'learn'),
