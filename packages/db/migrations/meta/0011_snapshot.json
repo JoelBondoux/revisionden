@@ -1,5 +1,5 @@
 {
-  "id": "3034f000-2369-4f67-abdb-699ddabf3520",
+  "id": "679aa25e-fbcf-45dc-a5b4-ab82fc0dced6",
   "prevId": "2b7d5e91-e837-4d7c-b758-c98b0433a212",
   "version": "7",
   "dialect": "postgresql",
@@ -1177,6 +1177,44 @@
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": false
+        },
+        "outcome": {
+          "name": "outcome",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "duplicate_of": {
+          "name": "duplicate_of",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reward_xp": {
+          "name": "reward_xp",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "track_step": {
+          "name": "track_step",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "confirmed_at": {
+          "name": "confirmed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reward_seen_at": {
+          "name": "reward_seen_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {
@@ -1200,6 +1238,27 @@
           "columns": [
             {
               "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "feedback_student_confirmed_idx": {
+          "name": "feedback_student_confirmed_idx",
+          "columns": [
+            {
+              "expression": "student_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "confirmed_at",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -1238,6 +1297,15 @@
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
+        },
+        "feedback_duplicate_of_feedback_id_fk": {
+          "name": "feedback_duplicate_of_feedback_id_fk",
+          "tableFrom": "feedback",
+          "tableTo": "feedback",
+          "columnsFrom": ["duplicate_of"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -1259,6 +1327,10 @@
         "feedback_text_length": {
           "name": "feedback_text_length",
           "value": "char_length(\"feedback\".\"text\") <= 500"
+        },
+        "feedback_outcome_values": {
+          "name": "feedback_outcome_values",
+          "value": "\"feedback\".\"outcome\" in ('confirmed', 'duplicate')"
         }
       },
       "isRLSEnabled": false
@@ -1852,193 +1924,6 @@
           "value": "\"mastery\".\"value\" between 0 and 1"
         }
       },
-      "isRLSEnabled": false
-    },
-    "public.operator_audit_log": {
-      "name": "operator_audit_log",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "operator_email": {
-          "name": "operator_email",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "operator_role": {
-          "name": "operator_role",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "action": {
-          "name": "action",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "target_type": {
-          "name": "target_type",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "target_id": {
-          "name": "target_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "request_id": {
-          "name": "request_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "outcome": {
-          "name": "outcome",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "operator_audit_log_created_at_idx": {
-          "name": "operator_audit_log_created_at_idx",
-          "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "operator_audit_log_target_idx": {
-          "name": "operator_audit_log_target_idx",
-          "columns": [
-            {
-              "expression": "target_type",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "target_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {
-        "operator_audit_log_role_values": {
-          "name": "operator_audit_log_role_values",
-          "value": "\"operator_audit_log\".\"operator_role\" in ('agent', 'manager')"
-        },
-        "operator_audit_log_outcome_values": {
-          "name": "operator_audit_log_outcome_values",
-          "value": "\"operator_audit_log\".\"outcome\" in ('ok', 'denied')"
-        }
-      },
-      "isRLSEnabled": false
-    },
-    "public.operator_requests": {
-      "name": "operator_requests",
-      "schema": "",
-      "columns": {
-        "request_id": {
-          "name": "request_id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "method": {
-          "name": "method",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "path": {
-          "name": "path",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "body_hash": {
-          "name": "body_hash",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "response_status": {
-          "name": "response_status",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "response_body": {
-          "name": "response_body",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "operator_requests_created_at_idx": {
-          "name": "operator_requests_created_at_idx",
-          "columns": [
-            {
-              "expression": "created_at",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
       "isRLSEnabled": false
     },
     "public.parent_push_subscriptions": {

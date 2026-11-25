@@ -835,6 +835,17 @@ export const feedback = pgTable(
     updatedAt: updatedAt(),
     // Set when the status becomes fixed or will_not_fix; the row is deleted 12 months later.
     closedAt: timestamp('closed_at', { withTimezone: true }),
+    // Bug Hunter (L7): the operator confirms a bug report, or marks it a duplicate of an earlier
+    // confirmed one. reward_xp and track_step record what the student earned (packages/core
+    // bugReward); reward_seen_at is set once the student has seen the thank-you in the app.
+    outcome: text('outcome', { enum: ['confirmed', 'duplicate'] }),
+    duplicateOf: uuid('duplicate_of').references((): AnyPgColumn => feedback.id, {
+      onDelete: 'set null',
+    }),
+    rewardXp: integer('reward_xp').notNull().default(0),
+    trackStep: boolean('track_step').notNull().default(false),
+    confirmedAt: timestamp('confirmed_at', { withTimezone: true }),
+    rewardSeenAt: timestamp('reward_seen_at', { withTimezone: true }),
   },
   (t) => [
     index('feedback_family_id_idx').on(t.familyId),
@@ -846,6 +857,8 @@ export const feedback = pgTable(
       sql`${t.status} in ('new', 'looking_into_it', 'fixed', 'will_not_fix')`,
     ),
     check('feedback_text_length', sql`char_length(${t.text}) <= 500`),
+    check('feedback_outcome_values', sql`${t.outcome} in ('confirmed', 'duplicate')`),
+    index('feedback_student_confirmed_idx').on(t.studentId, t.confirmedAt),
   ],
 );
 
