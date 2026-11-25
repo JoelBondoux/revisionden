@@ -21,6 +21,8 @@ export class ApiError extends Error {
     readonly ref?: string,
     /** The API's error code, for example `unauthorized`. */
     readonly code?: string,
+    /** The API path that failed, with ids masked (for error reports). */
+    readonly apiPath?: string,
   ) {
     super(message);
     this.name = 'ApiError';
@@ -122,10 +124,11 @@ export async function apiRequest<T>(
     throw new ApiError('network', 'The request could not be sent.');
   }
   const json: unknown = await response.json().catch(() => undefined);
+  const apiPath = maskIdsInPath(url.pathname);
   const fail = (kind: 'http' | 'schema', message: string) => {
     const ref = makeErrorRef(random);
     reportClientError(options, { ref, kind, status: response.status, url });
-    return new ApiError(kind, message, response.status, ref);
+    return new ApiError(kind, message, response.status, ref, undefined, apiPath);
   };
   if (!response.ok) {
     const body = ApiErrorSchema.safeParse(json);
@@ -141,11 +144,12 @@ export async function apiRequest<T>(
         response.status,
         body.data.error.ref,
         body.data.error.code,
+        apiPath,
       );
     }
     const error = fail('http', message);
     throw body.success
-      ? new ApiError('http', message, response.status, error.ref, body.data.error.code)
+      ? new ApiError('http', message, response.status, error.ref, body.data.error.code, apiPath)
       : error;
   }
   const parsed = schema.safeParse(json);

@@ -828,3 +828,34 @@ export const policyAcceptances = pgTable(
   },
   (t) => [primaryKey({ columns: [t.authUserId, t.policy] })],
 );
+
+/** Browser families an error report may name (no versions). */
+export const ERROR_REPORT_BROWSERS = ['Chrome', 'Edge', 'Firefox', 'Safari', 'Other'] as const;
+
+/**
+ * Error reports sent with the "Send error report" button (workstream I). Anonymous: no family,
+ * student, account or free text; screen and API path have ids masked. Deleted after 90 days.
+ */
+export const errorReports = pgTable(
+  'error_reports',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    ref: text('ref').notNull().unique('error_reports_ref_unique'),
+    screen: text('screen').notNull(),
+    apiPath: text('api_path'),
+    status: integer('status'),
+    build: text('build').notNull(),
+    browser: text('browser', { enum: ERROR_REPORT_BROWSERS }).notNull(),
+    online: boolean('online').notNull(),
+    // When the error happened, by the device's clock.
+    reportedAt: timestamp('reported_at', { withTimezone: true }).notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('error_reports_created_at_idx').on(t.createdAt),
+    check(
+      'error_reports_browser_values',
+      sql`${t.browser} in ('Chrome', 'Edge', 'Firefox', 'Safari', 'Other')`,
+    ),
+  ],
+);
