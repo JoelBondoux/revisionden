@@ -15,7 +15,11 @@ describe('Get help data', () => {
       .filter((s) => s.audiences.includes('student'))
       .map((s) => s.id);
     expect(studentIds).not.toContain('nspcc-helpline');
-    expect(parentOnlyServices().map((s) => s.id)).toEqual(['nspcc-helpline']);
+    expect(parentOnlyServices().map((s) => s.id)).toEqual([
+      'nspcc-helpline',
+      'coram-kidscape-parent-advice-line',
+      'anti-bullying-alliance',
+    ]);
   });
 
   it('reports the oldest check date', () => {
@@ -76,6 +80,31 @@ describe('Get help page', () => {
       'href',
       'tel:08088005000',
     );
+  });
+
+  it('adds the Coram Kidscape Parent Advice Line and WhatsApp for parents', () => {
+    renderRoute('/parent/help', { studentId: null });
+    const adults = screen.getByRole('region', { name: 'Worried about a child?' });
+    expect(within(adults).getByRole('link', { name: 'Call 0300 102 4481' })).toHaveAttribute(
+      'href',
+      'tel:03001024481',
+    );
+    expect(within(adults).getByRole('link', { name: /WhatsApp 0300 102 4481/ })).toHaveAttribute(
+      'href',
+      'https://wa.me/443001024481',
+    );
+    expect(
+      within(adults).getByRole('link', { name: 'Email pal@coramkidscape.org.uk' }),
+    ).toHaveAttribute('href', 'mailto:pal@coramkidscape.org.uk');
+  });
+
+  it('points students with bullying to Childline and Coram Kidscape, not the parent-only lines', () => {
+    renderRoute('/help');
+    const bullying = screen.getByRole('region', { name: 'Bullying, online or in person' });
+    expect(within(bullying).getByText('Childline')).toBeInTheDocument();
+    expect(within(bullying).getByText('Coram Kidscape')).toBeInTheDocument();
+    expect(screen.queryByText('Anti-Bullying Alliance')).not.toBeInTheDocument();
+    expect(screen.queryByText(/0300 102 4481/)).not.toBeInTheDocument();
   });
 
   it('works when signed out', () => {

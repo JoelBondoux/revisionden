@@ -32,6 +32,22 @@ export type Contact =
       source: string;
     }
   | {
+      kind: 'whatsapp';
+      label?: string;
+      number: string;
+      href: string;
+      hours?: SourcedText;
+      source: string;
+    }
+  | {
+      kind: 'email';
+      label?: string;
+      address: string;
+      href: string;
+      hours?: SourcedText;
+      source: string;
+    }
+  | {
       kind: 'web_chat' | 'website';
       label?: string;
       url: string;
@@ -50,6 +66,7 @@ export interface SupportService {
   area?: SourcedText;
   contacts: Contact[];
   checked_at: string;
+  confirmed_by?: string;
 }
 
 export interface HelpTopic {

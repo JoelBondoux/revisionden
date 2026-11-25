@@ -153,6 +153,21 @@ function ContactLink({ contact: c, service }: { contact: Contact; service: strin
       </a>
     );
   }
+  if (c.kind === 'email') {
+    return (
+      <a className="help-action" href={c.href}>
+        Email {c.address}
+      </a>
+    );
+  }
+  if (c.kind === 'whatsapp') {
+    return (
+      <a className="help-action help-action--web" href={c.href} target="_blank" rel="noreferrer">
+        WhatsApp {c.number}
+        <span className="visually-hidden"> (opens in a new tab)</span>
+      </a>
+    );
+  }
   const text = c.label ?? (c.kind === 'web_chat' ? 'Chat online' : `${service} website`);
   return (
     <a className="help-action help-action--web" href={c.url} target="_blank" rel="noreferrer">

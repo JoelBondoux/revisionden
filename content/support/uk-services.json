@@ -1,6 +1,6 @@
 {
   "$schema": "../schemas/support-services.schema.json",
-  "about": "UK support services for the Get help page (docs/PRODUCT_RULES.md, Get help). Every number, URL, opening time and age range was copied from the service's own official page named in its source field, on the date in checked_at. Recheck every term; CI fails when a check is older than 4 months. helps_with is our own plain wording, not quoted from the service.",
+  "about": "UK support services for the Get help page (docs/PRODUCT_RULES.md, Get help). Every number, URL, opening time and age range was copied from the service's own official page named in its source field, on the date in checked_at. Where confirmed_by is set, that person checked the official page by hand instead of the build session. Recheck every term; CI fails when a check is older than 4 months. helps_with is our own plain wording, not quoted from the service.",
   "topics": [
     {
       "id": "emergency",
@@ -212,6 +212,79 @@
         }
       ],
       "checked_at": "2026-11-25"
+    },
+    {
+      "id": "coram-kidscape",
+      "service": "Coram Kidscape",
+      "audiences": ["student", "parent"],
+      "topics": ["bullying"],
+      "helps_with": "Advice for young people who are being bullied, and what you can do about it.",
+      "official_domains": ["coramkidscape.org.uk"],
+      "contacts": [
+        {
+          "kind": "website",
+          "label": "Advice for young people",
+          "url": "https://coramkidscape.org.uk/advice/advice-for-young-people/",
+          "source": "https://coramkidscape.org.uk/advice/advice-for-young-people/"
+        }
+      ],
+      "checked_at": "2026-11-25",
+      "confirmed_by": "product owner, from the official site"
+    },
+    {
+      "id": "coram-kidscape-parent-advice-line",
+      "service": "Coram Kidscape Parent Advice Line",
+      "audiences": ["parent"],
+      "topics": ["bullying"],
+      "helps_with": "Advice for parents and carers who are worried that their child is being bullied.",
+      "official_domains": ["coramkidscape.org.uk"],
+      "contacts": [
+        {
+          "kind": "phone",
+          "number": "0300 102 4481",
+          "href": "tel:03001024481",
+          "hours": {
+            "text": "9am to 9pm Monday to Friday, 10am to 3pm Saturday and Sunday",
+            "source": "https://coramkidscape.org.uk/"
+          },
+          "source": "https://coramkidscape.org.uk/"
+        },
+        {
+          "kind": "whatsapp",
+          "number": "0300 102 4481",
+          "href": "https://wa.me/443001024481",
+          "hours": {
+            "text": "9am to 9pm Monday to Friday, 10am to 3pm Saturday and Sunday",
+            "source": "https://coramkidscape.org.uk/"
+          },
+          "source": "https://coramkidscape.org.uk/"
+        },
+        {
+          "kind": "email",
+          "address": "pal@coramkidscape.org.uk",
+          "href": "mailto:pal@coramkidscape.org.uk",
+          "source": "https://coramkidscape.org.uk/"
+        }
+      ],
+      "checked_at": "2026-11-25",
+      "confirmed_by": "product owner, from the official site"
+    },
+    {
+      "id": "anti-bullying-alliance",
+      "service": "Anti-Bullying Alliance",
+      "audiences": ["parent"],
+      "topics": ["bullying"],
+      "helps_with": "Information for parents and carers about bullying and how to help a child who is bullied.",
+      "official_domains": ["anti-bullyingalliance.org.uk"],
+      "contacts": [
+        {
+          "kind": "website",
+          "url": "https://anti-bullyingalliance.org.uk/",
+          "source": "https://anti-bullyingalliance.org.uk/"
+        }
+      ],
+      "checked_at": "2026-11-25",
+      "confirmed_by": "product owner, from the official site"
     },
     {
       "id": "samaritans",
