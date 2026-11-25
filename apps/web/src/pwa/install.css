@@ -1,0 +1,35 @@
+/* "Add RevisionDen to this device" card (I6). Transforms and opacity only. */
+.install-card__body {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.install-card__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.install-steps li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.install-steps__icon {
+  display: inline-flex;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .install-card {
+    animation: enter-pop var(--motion-medium) var(--ease-spring) both;
+  }
+}
