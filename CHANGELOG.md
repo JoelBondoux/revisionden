@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Coming later: timed exam practice. Sit a full paper against the clock, then see your marks, your likely grade and how to pace yourself better.
 - The privacy notice for students is now much easier to read: a short version on six cards, the key points of each part up front, and "Read more" when you want the detail.
 - Coming soon: a new game feel for practice, with colour bursts, combos, rising sounds and a big "set complete" celebration.
 - Parents get a notification on their phone when a child reaches a reward target you set. Turn on "Reward news" on the new parent home.

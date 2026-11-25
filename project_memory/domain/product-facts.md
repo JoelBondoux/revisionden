@@ -406,3 +406,11 @@ Tags: #product #rules #limits #defaults
   stay light. Combo bonus: +5 XP per right answer from the 3rd in a row (Learn mode; Test mode at the
   reveal). Never lives, timers, pay-to-continue, mystery rewards or streak guilt; after the daily cap
   the call to action becomes "See you tomorrow". Detail: `docs/GAME_FEEL.md`. Workstream J.
+
+## Exam practice (planned)
+
+- Timed papers sat in real time (exam conditions or practice), each question timed, all marked at
+  the end. Pacing target per question = its marks × (official duration ÷ total marks); flags at
+  1.5× slow and 0.5× rushed with marks lost. Board-style papers from our own verified items first;
+  official past papers only as links to the board's site (never copied). Detail:
+  `docs/EXAM_PRACTICE.md`. Workstream X (queued).
