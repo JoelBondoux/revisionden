@@ -51,6 +51,37 @@ export interface RewardStats {
   aLevelExamsSat: number;
   /** 1 once the last A-Level exam is sat. */
   aLevelFinished: number;
+  /** Bug reports the operator confirmed (one per distinct bug; workstream L). */
+  confirmedBugs: number;
+  // Secret achievement stats (see secret-stats.ts). All learning-based, none time-of-day.
+  /** Five right in a row straight after three wrong in a row. */
+  comebackRuns: number;
+  /** Weeks in which every enrolled subject was practised. */
+  allSubjectsWeeks: number;
+  bestWeakSpotsFixedInDay: number;
+  /** Timed papers with every question on pace (workstream X). */
+  pacedPapers: number;
+  bestFlashcardsWeek: number;
+  bestCorrectInDay: number;
+  bestCorrectInWeek: number;
+  bestTopicsInDay: number;
+  bestSubjectsInDay: number;
+  subjectsPractised: number;
+  /** Most answers given in a single topic. */
+  bestTopicAnswers: number;
+  /** Different answer types (of 6) answered correctly. */
+  itemTypesAnswered: number;
+  fullMarkLongAnswers: number;
+  perfectWorkings: number;
+  /** Most reward XP counted on one day (capped at the daily reward cap). */
+  bestRewardDayXp: number;
+  /** Weekends with the daily goal met on both Saturday and Sunday. */
+  fullWeekends: number;
+  /** Monday-to-Sunday weeks with the daily goal met every day. */
+  perfectWeeks: number;
+  bestGoalDaysInMonth: number;
+  /** Year chapters filled to the end. */
+  chaptersFilled: number;
 }
 
 export type StatKey = keyof RewardStats;
@@ -58,7 +89,8 @@ export type StatKey = keyof RewardStats;
 export type Rarity = 'common' | 'rare' | 'epic' | 'legendary';
 export const RARITIES: readonly Rarity[] = ['common', 'rare', 'epic', 'legendary'];
 
-export type RewardSource = 'level' | 'chapter' | 'milestone' | 'collection' | 'season';
+export type RewardSource =
+  'level' | 'chapter' | 'milestone' | 'collection' | 'season' | 'hidden' | 'secret';
 
 /** What the student gets. Avatar items point at a layer item in AVATAR_CATALOGUE. */
 export type RewardItem =
@@ -67,7 +99,9 @@ export type RewardItem =
   | { kind: 'title'; text: string }
   | { kind: 'theme'; id: string }
   | { kind: 'pipOutfit'; id: string }
-  | { kind: 'badge'; id: string };
+  | { kind: 'badge'; id: string }
+  /** An effect drawn over the avatar (for example the glitch effect). */
+  | { kind: 'effect'; id: string };
 
 export type UnlockTarget =
   | { kind: 'stat'; stat: StatKey; atLeast: number }
@@ -85,6 +119,12 @@ export interface Reward {
   items: readonly RewardItem[];
   /** Gift days that come with this reward (they can only be given to friends). */
   giftDays: number;
+  /** Hidden track id: the track stays invisible until its first step is earned. */
+  track?: string;
+  /** Secret achievement: shown as "???" until earned. */
+  secret?: boolean;
+  /** Optional vague hint for a secret achievement. */
+  hint?: string;
 }
 
 export interface Collection {

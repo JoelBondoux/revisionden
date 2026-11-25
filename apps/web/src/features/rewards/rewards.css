@@ -96,3 +96,26 @@
   color: var(--color-danger);
   font-weight: var(--font-weight-bold);
 }
+
+.rewards__secrets {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rewards__secret {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border-radius: 12px;
+  background: var(--color-locked-soft);
+  color: var(--color-text-secondary);
+}
+
+.rewards__secret--found {
+  background: var(--color-primary-soft);
+  color: var(--color-text);
+}

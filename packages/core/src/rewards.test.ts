@@ -16,8 +16,11 @@ import {
 } from './rewards';
 
 const now = new Date('2026-11-24T12:00:00Z');
+/** Ids of rewards earned, leaving out secret achievements (tested on their own below). */
 const ids = (stats: Partial<RewardStats>, earned: string[] = []) =>
-  evaluateRewards(stats, earned, REWARDS, { now }).map((r) => r.id);
+  evaluateRewards(stats, earned, REWARDS, { now })
+    .filter((r) => !r.secret)
+    .map((r) => r.id);
 const byId = (id: string) => REWARDS.find((r) => r.id === id)!;
 
 describe('evaluateRewards: the original 14 rewards', () => {
@@ -271,5 +274,77 @@ describe('rewardsOverview', () => {
       now,
     });
     expect(view.chapter).toMatchObject({ earned: 30, next: null });
+  });
+});
+
+describe('evaluateRewards: secret achievements', () => {
+  it('unlocks a secret when its stat is reached, once', () => {
+    const got = evaluateRewards({ bestCorrectRun: 10 }, [], REWARDS, { now }).filter(
+      (r) => r.secret,
+    );
+    expect(got.map((r) => r.id)).toEqual(['secret-combo-ten']);
+    expect(
+      evaluateRewards({ bestCorrectRun: 10 }, ['secret-combo-ten'], REWARDS, { now }).filter(
+        (r) => r.secret,
+      ),
+    ).toEqual([]);
+  });
+});
+
+describe('rewardsOverview: hidden tracks and secret achievements', () => {
+  const base = { totalRewardXp: 0, yearGroup: 10, now };
+
+  it('keeps a hidden track invisible until its first step is earned', () => {
+    expect(rewardsOverview({ ...base, stats: {}, earnedIds: [] }).hiddenTracks).toEqual([]);
+    const view = rewardsOverview({
+      ...base,
+      stats: { confirmedBugs: 2 },
+      earnedIds: ['bug-hunter-1', 'bug-hunter-2'],
+    });
+    expect(view.hiddenTracks).toEqual([
+      expect.objectContaining({
+        id: 'bug-hunter',
+        name: 'Bug Hunter',
+        earned: 2,
+        total: 7,
+        next: expect.objectContaining({ id: 'bug-hunter-3', current: 2, target: 3 }),
+      }),
+    ]);
+  });
+
+  it('shows secret achievements as ??? until found, with a found count and vague hints', () => {
+    const view = rewardsOverview({ ...base, stats: {}, earnedIds: ['secret-first-light'] });
+    expect(view.secrets.found).toBe(1);
+    expect(view.secrets.total).toBeGreaterThanOrEqual(22);
+    const found = view.secrets.cards.find((c) => c.id === 'secret-first-light')!;
+    expect(found).toMatchObject({ name: 'First Light', earned: true });
+    const locked = view.secrets.cards.filter((c) => !c.earned);
+    for (const card of locked) {
+      expect(card.name).toBe('???');
+      expect(card.id).toMatch(/^secret-hidden-\d+$/);
+      expect(card.items).toEqual([]);
+    }
+    expect(locked.some((c) => c.hint === 'Something about comebacks…')).toBe(true);
+  });
+
+  it('never puts secret or hidden rewards in the next milestones', () => {
+    const view = rewardsOverview({
+      ...base,
+      stats: { confirmedBugs: 1 },
+      earnedIds: ['bug-hunter-1'],
+    });
+    for (const m of view.nextMilestones) expect(m.id).not.toMatch(/^(secret|bug-hunter)/);
+  });
+});
+
+describe('progressionStats: chapters filled and best reward day', () => {
+  it('counts full chapters and the best reward XP in one day', () => {
+    const days = Array.from({ length: 41 }, (_, i) => ({
+      at: new Date(Date.UTC(2026, 8, 1 + i, 12)),
+      xp: 300,
+    }));
+    const stats = progressionStats({ xpEvents: days, yearGroup: 9, today: '2026-11-24' });
+    expect(stats.chaptersFilled).toBe(1);
+    expect(stats.bestRewardDayXp).toBe(300);
   });
 });

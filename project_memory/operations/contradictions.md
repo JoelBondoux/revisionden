@@ -10,6 +10,10 @@
       `dayTypeOf` in `packages/core/src/daily-limit.ts` treats holidays as school days (it takes a
       `holidays` list that the API passes empty). Not settled: term and holiday dates need the
       school report or study plan work, or a parent setting.
+- [ ] **Secret achievement stats with no data yet.** "Patch Day" (weak spots fixed in a day),
+      "On Pace" (timed papers on pace, workstream X) and "Card Shark" (flashcards in a week; deck
+      reviews have no timestamped record) are in the catalogue but their stats count as 0 until the
+      data exists (`packages/core/src/catalogue/hidden.ts`).
 - [ ] **AQA's AI clause and our content pipeline.** AQA's copyright policy says it "does not
       permit the use of any AQA material in any manner or for any purposes in connection with the
       training" of AI tools and "will not allow the use of any AQA material" in a third-party work
@@ -85,6 +89,9 @@
       route (or update the table) when it builds it.
       Settled (K7): the route is `PUT /v1/students/:id/daily-limit`, so B3's table logs it; an
       accepted suggestion (`POST .../suggestion`) logs `limit_changed` itself.
+- [x] Bug Hunter count and XP: settled once workstream L's #52 merged. The rewards route reads
+      L's `confirmedBugCount` and adds L's `bugRewardXp` to reward XP for levels
+      (`apps/api/src/routes/rewards.ts`); nothing is written to `attempts`.
 - [x] **Flashcard deck XP and rewards.** `docs/REWARDS.md` says XP from flashcards counts towards
       levels, but deck reviews (`apps/api/src/routes/flashcards.ts`) only add to `daily_xp`, which
       has no time of day, so the late-night rule cannot be checked. Reward XP is therefore built
