@@ -733,3 +733,11 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
 - **Reading comfort** settings per device: a dyslexia-friendly font (self-hosted, open licence, no
   third-party font service), larger text, more line and letter spacing, and a soft tinted background
   option. These apply across the app and are remembered on the device.
+- **Appearance** settings per device (Settings → Appearance, next to Reading comfort; students and
+  parents): Theme System (default, follows the device), Light or Dark; Colours Standard or
+  Colour-blind friendly (right is blue and wrong is orange instead of green and red, checked for
+  deuteranopia, protanopia and tritanopia; icons and words always carry the meaning too);
+  Background pattern On (default) or Off. Applied before the first paint, so there is no flash.
+  The doodle pattern is our own original art, very faint, and is never shown in high contrast or
+  forced colours. Get help stays a calm light page in every theme. The sales site follows the
+  device's theme only.
