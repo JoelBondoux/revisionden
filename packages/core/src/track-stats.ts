@@ -2,7 +2,7 @@
  * Stats for the hidden tracks added in R7b (see docs/REWARDS.md "More hidden tracks"). Pure:
  * the API loads records and passes them in. All learning-based; none measure time spent.
  */
-import { topicMastery, WEAK_SPOT_THRESHOLD } from './mastery';
+import { MASTERY_WINDOW, topicMastery, WEAK_SPOT_THRESHOLD } from './mastery';
 
 /** A topic is "strong" from this mastery (the Comeback Kid line). */
 export const STRONG_TOPIC_MASTERY = 80;
@@ -20,14 +20,19 @@ export interface TopicAnswer {
 /** Topics that were a weak spot (below 60, after 3+ answers) and later reached 80+ mastery. */
 export function weakSpotsTurnedStrong(answers: readonly TopicAnswer[]): number {
   const byTopic = new Map<string, TopicAnswer[]>();
-  for (const a of answers) byTopic.set(a.topicId, [...(byTopic.get(a.topicId) ?? []), a]);
+  for (const a of answers) {
+    const list = byTopic.get(a.topicId);
+    if (list) list.push(a);
+    else byTopic.set(a.topicId, [a]);
+  }
   let count = 0;
   for (const list of byTopic.values()) {
     const sorted = [...list].sort((a, b) => a.at - b.at);
     let wasWeak = false;
     for (let i = 0; i < sorted.length; i++) {
+      // Mastery only uses the latest MASTERY_WINDOW answers, so replay just that window.
       const mastery = topicMastery(
-        sorted.slice(0, i + 1).map((a) => ({ at: a.at, score: a.score })),
+        sorted.slice(Math.max(0, i + 1 - MASTERY_WINDOW), i + 1),
         sorted[i]!.at,
       );
       if (i + 1 >= WEAK_SPOT_MIN_ANSWERS && mastery < WEAK_SPOT_THRESHOLD) wasWeak = true;

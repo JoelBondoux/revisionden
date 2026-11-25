@@ -29,6 +29,26 @@ describe('combo bonus XP (docs/GAME_FEEL.md "XP rule")', () => {
   });
 });
 
+const recall = (correct: boolean, minutesAgo: number): ComboAnswer => ({
+  correct,
+  mode: 'recall',
+  at: ago(minutesAgo),
+});
+
+describe('combo and recall checks (docs/PRODUCT_RULES.md "Recall checks")', () => {
+  it('a wrong recall check answer does not reset the combo', () => {
+    expect(comboBefore([recall(false, 1), learn(true, 2), learn(true, 3)], now)).toBe(2);
+  });
+
+  it('a right recall check answer still adds to the combo', () => {
+    expect(comboBefore([learn(true, 1), recall(true, 2), learn(true, 3)], now)).toBe(3);
+  });
+
+  it('still ends the combo after more than 5 minutes away', () => {
+    expect(comboBefore([recall(false, 1), learn(true, 10)], now)).toBe(0);
+  });
+});
+
 describe('comboBefore: right answers in a row just before this one, from the history', () => {
   it('counts back through right Learn mode answers, newest first', () => {
     expect(comboBefore([learn(true, 1), learn(true, 2), learn(false, 3)], now)).toBe(2);
