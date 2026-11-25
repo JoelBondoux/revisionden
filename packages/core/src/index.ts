@@ -24,5 +24,6 @@ export * from './stats';
 export * from './stats-schemas';
 export * from './map';
 export * from './error-ref';
+export * from './recall';
 export * from './flashcard-session';
 export * from './operator-signature';

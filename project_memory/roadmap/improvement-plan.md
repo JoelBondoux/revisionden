@@ -27,6 +27,8 @@
 - [ ] X exam practice: timed papers marked at the end with pacing commentary (`docs/EXAM_PRACTICE.md`);
       board-style papers from our own verified items first, official past papers as links later.
 
+- [ ] $ payments and Premium (`docs/PRICING.md`, decision 0004), before any public release.
+
 ## Blocked
 
 - [x] G deploys unblocked 2026-11-25: reuse the existing keys (decision 0003).

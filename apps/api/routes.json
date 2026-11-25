@@ -37,6 +37,7 @@
     "GET /v1/student/learn/subjects/:subjectId/topics",
     "GET /v1/student/map",
     "GET /v1/student/me",
+    "GET /v1/student/recall",
     "GET /v1/student/reminders/latest",
     "GET /v1/student/rewards",
     "GET /v1/student/stats",

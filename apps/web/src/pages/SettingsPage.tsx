@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Card } from '../components/Card';
 import { DeviceReminders } from '../features/notifications';
 import { ReadingSettingsCard } from '../features/reading';
+import { ReadAloudSettingsCard } from '../features/read-aloud';
 import { SoundSettingsCard } from '../features/sound';
 import { ParentCanSee } from '../features/stats/ParentCanSee';
 
@@ -30,6 +31,7 @@ export function SettingsPage() {
         </ul>
       </Card>
       <ReadingSettingsCard />
+      <ReadAloudSettingsCard />
       <SoundSettingsCard />
       <DeviceReminders />
       <Card title="Help and information">

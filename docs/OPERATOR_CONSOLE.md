@@ -96,6 +96,7 @@ Read endpoints come with O2, actions with O3 to O5.
 | Area                         | View                                                                                                                                                                                                    | Actions (role)                                                                                                 |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | **Overview**                 | Families, active students (7 and 30 days), Premium families, trials, free places, open tickets, complaints                                                                                              | none                                                                                                           |
+| **Family tags**              | Tag list with counts; families with a tag                                                                                                                                                               | Manager: create, rename, retire tags and set effects. Agent: add or remove tags on a family                    |
 | **Families**                 | Search by exact parent sign-in email or family id only (no browsing names). Family: created, parents (sign-in emails), plan and trial, children as nickname + year group + subjects, last active, flags | Agent: add an internal note. Manager: extend trial, grant or end a free place, comp Premium                    |
 | **Tickets**                  | Bug reports, ideas, confusing, other; error reports grouped by RD code; status, device details, history                                                                                                 | Agent: reply (shown in the family's app), change status, confirm bug / mark duplicate (Bug Hunter)             |
 | **Complaints**               | Formal complaints (new feedback kind "complaint"), with dates due                                                                                                                                       | Agent: acknowledge, reply, resolve with outcome. Manager: escalate, record a refund or goodwill                |
@@ -108,6 +109,26 @@ Read endpoints come with O2, actions with O3 to O5.
 
 Never shown in AppDeck: answers, flashcards a student wrote, homework photos (deleted anyway), AI
 prompts, push keys, sign-in tokens, or anything from the Get help page (which records nothing).
+
+## Family tags
+
+Requested by the product owner on 2026-11-25.
+
+- Operators can tag a family with labels such as **Beta tester**, **Press**, **Friends & family**,
+  **School partner** or **VIP support**. A family can have several tags.
+- **Managers** create, rename and retire tags (name, colour, short description, and optional
+  effects below); **Agents** can add or remove existing tags on a family. Every change is audited.
+- **Tags are internal.** Families never see them, with one exception: a tag with the
+  "beta programme" effect shows the family a small "Beta" badge and lets them leave the programme.
+- **Optional effects** a Manager can switch on per tag:
+  - **Early access:** turns on features marked as beta for that family (feature flags in RevisionDen).
+  - **Complimentary Premium:** Premium free while the tag is on (applied with workstream $).
+  - **Exclude from metrics:** left out of overview numbers (for test and press accounts).
+- **Filter by tag:** the families screen can list families with a given tag (showing family id,
+  parent sign-in emails, plan and tags only). This is the only list view; other lookups stay exact
+  search.
+- Tags never hold personal information (no names or notes in tag names); notes stay in the family's
+  internal notes. The privacy notice mentions internal account labels for support.
 
 ## Complaints
 
