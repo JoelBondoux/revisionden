@@ -36,8 +36,9 @@ one question of each item: **would I be happy for my child to see this exactly a
 **One confirmed error sends the whole batch back** to be re-checked, so only confirm a real
 error. For a style niggle (wording you'd like improved), approve it and tell the lead.
 
-The batch page does not yet show hints, mark schemes or example answers. For the proof question
-(A6), ask the lead for its mark scheme and three example answers before you decide.
+Each item also shows its hint, mark scheme, example answers (for proofs and essays: a top,
+middle and low answer with the marks each should get) and the automatic checks it passed. Every
+check should say "pass". If one says "FAIL", confirm an error and tell the lead.
 
 ## Near-match quotes
 

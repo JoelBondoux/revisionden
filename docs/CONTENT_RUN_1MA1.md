@@ -52,7 +52,8 @@ file's `verification.checks`.
 
 - No button or script creates a review batch: `POST /v1/review/batches` needs a signed-in
   reviewer and a snapshot of each item.
-- The batch page does not show hints, mark schemes, exemplars or the checks that passed.
+- ~~The batch page does not show hints, mark schemes, exemplars or the checks that passed.~~
+  Fixed in S2: it shows them (the linked mark scheme from `mark_scheme_detail` in the snapshot).
 - A reviewer role is a database row only (`reviewer_roles`); the owner needs one on dev.
 - Topic trees and near-match quotes are not in the queue; they are confirmed with the lead.
 
