@@ -23,7 +23,9 @@ Each policy is one Markdown file in `docs/legal/`, shown in the app at `/legal/<
 4. **Changes**: a short history in plain English.
 
 The same file is the source for the repository and the app (imported at build), so they can
-never drift apart.
+never drift apart. The public site (`apps/www`, decision 0005) renders the same files at
+`revisionden.com/policies/<name>` and reads the order and "Who it is for" from the table below;
+its build fails if a file in `docs/legal` is missing from that table.
 
 ## The policies
 

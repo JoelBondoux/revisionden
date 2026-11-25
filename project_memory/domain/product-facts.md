@@ -231,9 +231,23 @@ Tags: #product #rules #limits #defaults
 
 ## Hosting
 
-- Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Hosts: `app.revisionden.com`
-  and `api.revisionden.com` (production; owner decision 2026-11-25), `staging.` and `api-staging.` (staging), `dev.` and `api-dev.` (development).
-- The bare `revisionden.com` is the public sales site (workstream M, `apps/www`), not the app.
+- Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Hosts (decision 0005,
+  2026-11-25): `revisionden.com` is the public sales site (`www.` redirects to it, staging copy on
+  `www-staging.`); `app.revisionden.com` and `api.revisionden.com` are the production app and API;
+  `staging.` and `api-staging.` (staging), `dev.` and `api-dev.` (development).
+- Public site (`apps/www`, workstream M): static pages with no client scripts and no third-party
+  requests (self-hosted fonts, strict content security policy). Workers `revisionden-www` and
+  `revisionden-www-staging`. Its policies and design tokens are read from `docs/legal` and the web
+  app at build time. "Sign in" and "Start free" go to `app.revisionden.com` (staging: `staging.`).
+  Until `WWW_LAUNCHED=true` it says the app is in private testing. Pages: home, how it works,
+  pricing (planned prices parsed from `docs/PRICING.md`, "Premium, coming soon", nothing charged),
+  for young people, help and contact, about (operator name from `VITE_OPERATOR_NAME`) and every
+  policy at `/policies/<name>`, with "Draft: not yet in force, being reviewed before launch." while
+  `VITE_POLICY_EFFECTIVE_DATE` is unset.
+  Images: an Open Graph card (`og.png`, 1200×630, used by every page's `og:image`) and an Apple
+  touch icon (180×180), drawn from Pip's shapes and the arena colours. They are committed in
+  `apps/www/public` and remade by hand with `node apps/www/scripts/make-images.mjs` after an art
+  change; original art only, no stock photos or AI-generated images.
 - Production passkeys use the RP ID `revisionden.com`; OAuth callbacks are on the API host, so the
   move to `app.` needed no change in Google or Microsoft.
 - Live since 2026-11-25 (workstream G): API Workers on all three API hosts; web app on `dev.` and
