@@ -1,13 +1,15 @@
 import { createContext, useContext } from 'react';
 import { failureRef } from '../../api/client';
-import { z, type ZodType } from 'zod';
+import { z, type ZodType, type ZodTypeDef } from 'zod';
 import { defaultBaseUrl } from '../../api/ApiContext';
 import type { DeviceDetails } from './details';
 
 export const FEEDBACK_KINDS = ['bug', 'idea', 'confusing', 'other'] as const;
 export const FEEDBACK_STATUSES = ['new', 'looking_into_it', 'fixed', 'will_not_fix'] as const;
+export const FEEDBACK_OUTCOMES = ['confirmed', 'duplicate'] as const;
 export type FeedbackKind = (typeof FEEDBACK_KINDS)[number];
 export type FeedbackStatus = (typeof FEEDBACK_STATUSES)[number];
+export type FeedbackOutcome = (typeof FEEDBACK_OUTCOMES)[number];
 export type Sender = 'student' | 'parent';
 
 // TODO(workstream C): use the shared schemas from packages/core once they exist.
@@ -20,12 +22,26 @@ const feedbackSchema = z.object({
   studentNickname: z.string().nullable().optional(),
   createdAt: z.string(),
   updatedAt: z.string(),
+  // Bug Hunter (L7): set when the operator confirms a bug. Missing means not confirmed yet.
+  outcome: z.enum(FEEDBACK_OUTCOMES).nullable().default(null),
+  rewardXp: z.number().int().nonnegative().default(0),
 });
 const triageSchema = feedbackSchema.extend({
   device: z.record(z.string(), z.unknown()).nullable(),
+  duplicateOf: z.string().nullable().default(null),
 });
+const rewardSchema = z.object({
+  id: z.string(),
+  outcome: z.enum(FEEDBACK_OUTCOMES),
+  rewardXp: z.number().int().nonnegative(),
+  message: z.string(),
+  confirmedAt: z.string(),
+});
+const confirmSchema = z.object({ item: triageSchema, message: z.string() });
 export type Feedback = z.infer<typeof feedbackSchema>;
 export type TriageFeedback = z.infer<typeof triageSchema>;
+export type FeedbackReward = z.infer<typeof rewardSchema>;
+export type ConfirmResult = z.infer<typeof confirmSchema>;
 
 export interface FeedbackRequest {
   kind: FeedbackKind;
@@ -52,6 +68,11 @@ export interface FeedbackApi {
   listFamily(): Promise<Feedback[]>;
   listAll(): Promise<TriageFeedback[]>;
   setStatus(id: string, status: FeedbackStatus): Promise<TriageFeedback>;
+  /** Operator: confirms a bug, or confirms it as a duplicate of an earlier confirmed one. */
+  confirm(id: string, duplicateOf?: string): Promise<ConfirmResult>;
+  /** Student: confirmed bug reports the student has not been told about yet. */
+  listRewards(): Promise<FeedbackReward[]>;
+  markRewardsSeen(ids: readonly string[]): Promise<void>;
 }
 
 const errorBody = z.object({ error: z.object({ code: z.string(), message: z.string() }) });
@@ -64,7 +85,11 @@ export function createFeedbackApi(options: {
   const fetch = options.fetch ?? ((...args) => globalThis.fetch(...args));
   const root = options.baseUrl.endsWith('/') ? options.baseUrl : `${options.baseUrl}/`;
 
-  async function request<T>(path: string, schema: ZodType<T>, init: RequestInit = {}): Promise<T> {
+  async function request<T>(
+    path: string,
+    schema: ZodType<T, ZodTypeDef, unknown>,
+    init: RequestInit = {},
+  ): Promise<T> {
     let res: Response;
     try {
       res = await fetch(new URL(`v1/${path}`, root), {
@@ -111,6 +136,19 @@ export function createFeedbackApi(options: {
         method: 'PATCH',
         body: JSON.stringify({ status }),
       }),
+    confirm: (id, duplicateOf) =>
+      request(`admin/feedback/${encodeURIComponent(id)}/confirm`, confirmSchema, {
+        method: 'POST',
+        body: JSON.stringify(duplicateOf ? { duplicateOf } : {}),
+      }),
+    listRewards: async () =>
+      (await request('student/feedback/rewards', z.object({ rewards: rewardSchema.array() })))
+        .rewards,
+    markRewardsSeen: async (ids) =>
+      void (await request('student/feedback/rewards/seen', z.unknown(), {
+        method: 'POST',
+        body: JSON.stringify({ ids }),
+      })),
   };
 }
 
@@ -136,4 +174,8 @@ export const STATUS_LABELS: Record<FeedbackStatus, string> = {
   looking_into_it: 'Looking into it',
   fixed: 'Fixed',
   will_not_fix: "Won't fix",
+};
+export const OUTCOME_LABELS: Record<FeedbackOutcome, string> = {
+  confirmed: 'Confirmed',
+  duplicate: 'Duplicate',
 };

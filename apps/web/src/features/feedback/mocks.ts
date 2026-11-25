@@ -11,8 +11,13 @@ const demo = [
     studentNickname: 'demo_kid',
     createdAt: '2026-11-20T10:00:00.000Z',
     updatedAt: '2026-11-21T10:00:00.000Z',
+    outcome: 'confirmed',
+    rewardXp: 50,
   },
 ];
+
+const notOperator = () =>
+  HttpResponse.json({ error: { code: 'not_found', message: 'Not found' } }, { status: 404 });
 
 const sent = () => new HttpResponse(null, { status: 201 });
 
@@ -30,7 +35,9 @@ export const feedbackHandlers: RequestHandler[] = [
     }),
   ),
   // The demo parent is not an operator: triage answers 404, as the real API does.
-  http.get('*/v1/admin/feedback', () =>
-    HttpResponse.json({ error: { code: 'not_found', message: 'Not found' } }, { status: 404 }),
-  ),
+  http.get('*/v1/admin/feedback', notOperator),
+  http.post('*/v1/admin/feedback/:id/confirm', notOperator),
+  // Bug Hunter (L7): nothing new to tell the demo student; seen always works.
+  http.get('*/v1/student/feedback/rewards', () => HttpResponse.json({ rewards: [] })),
+  http.post('*/v1/student/feedback/rewards/seen', () => new HttpResponse(null, { status: 204 })),
 ];

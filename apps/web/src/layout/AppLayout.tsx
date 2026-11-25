@@ -2,6 +2,9 @@ import { Outlet } from 'react-router-dom';
 import { useApi } from '../api/ApiContext';
 import { useApiResource } from '../api/useApiResource';
 import { BottomNav } from '../components/BottomNav';
+import { BugButton } from '../features/feedback/BugButton';
+import { BugButtonProvider, useBugButtonVisible } from '../features/feedback/bugButtonContext';
+import { RewardNotices } from '../features/feedback/RewardNotices';
 import { MuteButton } from '../features/sound';
 import { OfflineBanner } from '../pwa/OfflineBanner';
 import { useStudent } from '../session/StudentContext';
@@ -19,8 +22,21 @@ function useCardsDue(): number {
   return cards.status === 'ready' ? cards.data.due : 0;
 }
 
+/** Extra bottom padding on the main area while the bug button is showing. */
+function useMainClass(base: string): string {
+  return useBugButtonVisible() ? `${base} has-bug-button` : base;
+}
+
 /** Layout for the main app pages: content plus the main navigation. */
 export function AppLayout() {
+  return (
+    <BugButtonProvider>
+      <AppPages />
+    </BugButtonProvider>
+  );
+}
+
+function AppPages() {
   const { studentId } = useStudent();
   // Only a student's linked device gets the student app nav; anyone else (signed out, or a
   // parent) gets the small public header on these pages.
@@ -30,6 +46,7 @@ export function AppLayout() {
 
 function StudentLayout() {
   const cardsDue = useCardsDue();
+  const mainClass = useMainClass('app-main');
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main">
@@ -37,19 +54,22 @@ function StudentLayout() {
       </a>
       <OfflineBanner />
       <BottomNav cardsDue={cardsDue} />
-      <main id="main" className="app-main" tabIndex={-1}>
+      <main id="main" className={mainClass} tabIndex={-1}>
         <header className="sound-header">
           <MuteButton />
         </header>
         <Outlet />
       </main>
       <VersionFooter />
+      <BugButton />
+      <RewardNotices />
     </div>
   );
 }
 
 /** Public pages (About, policies, feedback) when no student uses this device. */
 function PublicLayout() {
+  const mainClass = useMainClass('focus-main');
   return (
     <>
       <a className="skip-link" href="#main">
@@ -57,10 +77,11 @@ function PublicLayout() {
       </a>
       <OfflineBanner />
       <PublicHeader />
-      <main id="main" className="focus-main" tabIndex={-1}>
+      <main id="main" className={mainClass} tabIndex={-1}>
         <Outlet />
       </main>
       <VersionFooter />
+      <BugButton />
     </>
   );
 }
@@ -68,12 +89,22 @@ function PublicLayout() {
 /** Layout for focused screens (welcome, lessons): no navigation to distract. */
 export function FocusLayout() {
   return (
+    <BugButtonProvider>
+      <FocusPages />
+    </BugButtonProvider>
+  );
+}
+
+function FocusPages() {
+  const mainClass = useMainClass('focus-main');
+  return (
     <>
       <OfflineBanner />
-      <main id="main" className="focus-main" tabIndex={-1}>
+      <main id="main" className={mainClass} tabIndex={-1}>
         <Outlet />
       </main>
       <VersionFooter />
+      <BugButton />
     </>
   );
 }

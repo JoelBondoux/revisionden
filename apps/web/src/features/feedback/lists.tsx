@@ -7,6 +7,7 @@ import {
   FEEDBACK_STATUSES,
   FeedbackApiError,
   KIND_LABELS,
+  OUTCOME_LABELS,
   STATUS_LABELS,
   useFeedbackApi,
   type Feedback,
@@ -33,6 +34,15 @@ function useLoad<T>(load: () => Promise<T>) {
 
 const date = (iso: string) =>
   new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+/** A short start of the message, cut at a word, for the "Duplicate of…" list. */
+export function snippet(text: string | null, max = 40): string {
+  if (!text) return 'No message';
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max);
+  const space = cut.lastIndexOf(' ');
+  return `${(space > 0 ? cut.slice(0, space) : cut).trimEnd()}…`;
+}
 
 const STATUS_TONES: Record<FeedbackStatus, PillTone> = {
   new: 'neutral',
@@ -84,6 +94,7 @@ export function FeedbackListPage({ scope }: { scope: 'family' | 'mine' }) {
                   <Pill tone={STATUS_TONES[item.status]}>{STATUS_LABELS[item.status]}</Pill>
                 </div>
                 <p>{item.text ?? <span className="secondary-text">No message</span>}</p>
+                {item.outcome && <p className="feedback__thanks">Confirmed – thank you!</p>}
                 <p className="secondary-text">
                   {sender(item, scope)} · {date(item.createdAt)}
                 </p>
@@ -96,8 +107,81 @@ export function FeedbackListPage({ scope }: { scope: 'family' | 'mine' }) {
   );
 }
 
-function TriageRow({ item }: { item: TriageFeedback }) {
+/** Bug Hunter (docs/REWARDS.md): confirm a new bug, or confirm it as a duplicate. */
+function ConfirmBug({
+  item,
+  originals,
+  onConfirmed,
+}: {
+  item: TriageFeedback;
+  originals: TriageFeedback[];
+  onConfirmed: (item: TriageFeedback, message: string) => void;
+}) {
   const api = useFeedbackApi();
+  const [original, setOriginal] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string>();
+
+  const confirm = async (duplicateOf?: string) => {
+    setBusy(true);
+    setError(undefined);
+    try {
+      const result = await (duplicateOf ? api.confirm(item.id, duplicateOf) : api.confirm(item.id));
+      onConfirmed(result.item, result.message);
+    } catch (err) {
+      setError(err instanceof FeedbackApiError ? err.message : 'Could not confirm. Try again.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="feedback__confirm">
+      <Button disabled={busy} onClick={() => void confirm()}>
+        Confirm bug
+      </Button>
+      <label className="feedback__toggle">
+        Duplicate of…
+        <select
+          className="field__input"
+          value={original}
+          onChange={(e) => setOriginal(e.target.value)}
+        >
+          <option value="">Choose a confirmed report</option>
+          {originals.map((o) => (
+            <option key={o.id} value={o.id}>
+              {KIND_LABELS[o.kind]}: {snippet(o.text)} ({date(o.createdAt)})
+            </option>
+          ))}
+        </select>
+      </label>
+      <Button
+        variant="secondary"
+        disabled={busy || !original}
+        onClick={() => void confirm(original)}
+      >
+        Confirm as duplicate
+      </Button>
+      {error && (
+        <p role="alert" className="field__error">
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function TriageRow({
+  item,
+  originals,
+  onConfirmed,
+}: {
+  item: TriageFeedback;
+  originals: TriageFeedback[];
+  onConfirmed: (item: TriageFeedback) => void;
+}) {
+  const api = useFeedbackApi();
+  const [confirmedMessage, setConfirmedMessage] = useState<string>();
   const [status, setStatus] = useState(item.status);
   const [saved, setSaved] = useState<'saved' | 'failed'>();
 
@@ -119,6 +203,8 @@ function TriageRow({ item }: { item: TriageFeedback }) {
         <span className="secondary-text">
           {item.senderRole} · {date(item.createdAt)}
         </span>
+        {item.outcome && <Pill tone="success">{OUTCOME_LABELS[item.outcome]}</Pill>}
+        {item.rewardXp > 0 && <span className="secondary-text">+{item.rewardXp} XP</span>}
       </div>
       <p>{item.text ?? <span className="secondary-text">No message</span>}</p>
       {item.device && (
@@ -150,6 +236,17 @@ function TriageRow({ item }: { item: TriageFeedback }) {
           Could not save. Try again.
         </p>
       )}
+      {item.kind === 'bug' && item.outcome === null && (
+        <ConfirmBug
+          item={item}
+          originals={originals}
+          onConfirmed={(next, message) => {
+            setConfirmedMessage(message);
+            onConfirmed(next);
+          }}
+        />
+      )}
+      {confirmedMessage && <p role="status">{confirmedMessage}</p>}
     </li>
   );
 }
@@ -176,15 +273,30 @@ export function AdminFeedbackPage() {
       {result.state === 'loading' && <p aria-live="polite">Loading…</p>}
       {result.state === 'failed' && <Failed retry={retry} />}
       {result.state === 'ready' &&
-        (result.data.length === 0 ? (
-          <p>No feedback yet.</p>
-        ) : (
-          <ul className="feedback-list">
-            {result.data.map((item) => (
-              <TriageRow key={item.id} item={item} />
-            ))}
-          </ul>
-        ))}
+        (result.data.length === 0 ? <p>No feedback yet.</p> : <TriageList initial={result.data} />)}
     </div>
+  );
+}
+
+/** Keeps confirmed items up to date, so a later bug can be marked a duplicate of one at once. */
+function TriageList({ initial }: { initial: TriageFeedback[] }) {
+  const [items, setItems] = useState(initial);
+  const replace = useCallback(
+    (next: TriageFeedback) => setItems((all) => all.map((i) => (i.id === next.id ? next : i))),
+    [],
+  );
+  return (
+    <ul className="feedback-list">
+      {items.map((item) => (
+        <TriageRow
+          key={item.id}
+          item={item}
+          originals={items.filter(
+            (o) => o.outcome === 'confirmed' && o.id !== item.id && o.createdAt < item.createdAt,
+          )}
+          onConfirmed={replace}
+        />
+      ))}
+    </ul>
   );
 }
