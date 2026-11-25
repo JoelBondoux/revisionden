@@ -75,13 +75,18 @@ Tags: #product #rules #limits #defaults
 - Learning screens: `/learn/subject/:id` (topics, mastery, weak spots), `/learn/subject/:id/start`
   (starting test), `/learn/subject/:id/practice`, `/learn/topic/:id`, `/learn/command-words`,
   `/cards` (flashcards: Due today, All decks, My cards; 3D flip card, reduced motion respected).
-- Installable PWA. Main nav tabs: Learn, Cards, Plan, Papers, Progress (bottom bar on phones, side
 - Installable PWA. Main nav tabs: Map, Cards, Plan, Papers, Progress (bottom bar on phones, side
   rail from 768px wide). Welcome and lessons hide the nav to keep focus.
 - The learning path is a topic map: one hexagon per topic, grouped by unit. States: mastered
   (gold, tick), in progress (violet, fill level shows mastery %), weak spot (orange, pulsing
   glow), locked (grey). Each unit ends in a challenge that unlocks at 80% unit mastery. A Next
   mission card suggests what to do next. The Cards tab shows how many flashcards are due.
+- Topic map data (F2, `GET /v1/student/map`): units are the top-level topics of the subject's tree,
+  leaf topics in specification order. Locked = no item may be served yet; mastered at 80%; weak
+  spot = tried and below 60%; otherwise in progress (including not tried). Unit mastery averages
+  its open topics. Next mission: weakest weak spot, else first topic not mastered, else review
+  the weakest mastered topic (5 minutes). A unit id opens its challenge lesson (all its topics).
+  Implemented in `packages/core/src/map.ts`.
 - Mascot: Pip, an angular geometric fox (orange `#FF7A2F`). Brand violet `#6C47F5`; font Nunito,
   self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
 - Works offline for the app shell; API calls are never cached. iPad users get an "Add to Home
