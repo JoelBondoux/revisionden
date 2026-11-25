@@ -60,6 +60,9 @@ export function ParentHomePage() {
             <li>
               <Link to="/legal">Policies</Link>
             </li>
+            <li>
+              <Link to="/parent/help">Get help</Link>
+            </li>
           </ul>
         </Card>
       </div>

@@ -1,0 +1,22 @@
+{
+  "about": "Test fixture: an entry whose check is years old.",
+  "topics": [{ "id": "feeling-low", "title": "Feeling low", "intro": "Talk.", "urgent": false }],
+  "services": [
+    {
+      "id": "example-helpline",
+      "service": "Example helpline",
+      "audiences": ["student"],
+      "topics": ["feeling-low"],
+      "helps_with": "Someone to talk to.",
+      "official_domains": ["example-helpline.org.uk"],
+      "contacts": [
+        {
+          "kind": "website",
+          "url": "https://www.example-helpline.org.uk/",
+          "source": "https://www.example-helpline.org.uk/"
+        }
+      ],
+      "checked_at": "2020-01-01"
+    }
+  ]
+}

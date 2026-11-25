@@ -223,7 +223,7 @@ export function LessonPlayer({
       <h1>{title}</h1>
       {intro && <p className="secondary-text">{intro}</p>}
       {progress && <DailyGoal progress={progress} />}
-      <Shake key={`${item.id}-${result ? 'marked' : 'open'}`} active={result?.correct === false}>
+      <Shake key={item.id} active={result?.correct === false}>
         <ItemInput
           key={item.id}
           item={item}
