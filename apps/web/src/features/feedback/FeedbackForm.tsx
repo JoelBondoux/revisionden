@@ -1,6 +1,7 @@
 import { useId, useState, type FormEvent } from 'react';
-import { Link } from 'react-router-dom';
 import { Button } from '../../components/Button';
+import { BackIcon, DocumentIcon } from '../../components/icons';
+import { LinkButton, TextLink } from '../../components/links';
 import { Card } from '../../components/Card';
 import { ErrorRef, refOf, type ErrorDetails } from '../../api/ErrorRef';
 import { useStudent } from '../../session/StudentContext';
@@ -94,18 +95,19 @@ export function FeedbackForm({ initialKind, route, variant = 'page', onClose }: 
       <div className="stack">
         {inSheet ? <h3>Thank you!</h3> : <h1>Thank you!</h1>}
         <p>We read every message. You can see what happens to it in your feedback list.</p>
-        <ul className="link-list">
-          <li>
-            <Link to={sender === 'parent' ? '/feedback/family' : '/feedback/mine'}>
-              See your feedback
-            </Link>
-          </li>
-          {!inSheet && (
-            <li>
-              <Link to="/about">Back to About</Link>
-            </li>
-          )}
-        </ul>
+        <LinkButton
+          to={sender === 'parent' ? '/feedback/family' : '/feedback/mine'}
+          variant="secondary"
+          icon={<DocumentIcon />}
+          block
+        >
+          See your feedback
+        </LinkButton>
+        {!inSheet && (
+          <LinkButton to="/about" variant="quiet" icon={<BackIcon />}>
+            Back to About
+          </LinkButton>
+        )}
         {inSheet && onClose && (
           <Button variant="secondary" block onClick={onClose}>
             Close
@@ -124,7 +126,7 @@ export function FeedbackForm({ initialKind, route, variant = 'page', onClose }: 
       </p>
       {sender === 'student' && <p className="feedback__note">Your parent can see what you send.</p>}
       <p className="secondary-text">
-        Prefer email? <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>. Please include only
+        Prefer email? <TextLink href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</TextLink>. Please include only
         the personal details we need to help you.
       </p>
 

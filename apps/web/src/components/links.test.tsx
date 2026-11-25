@@ -90,18 +90,21 @@ describe('LinkTile', () => {
         description="XP, accuracy and streaks by week"
       />,
     );
-    const tile = screen.getByRole('link', { name: 'Stats dashboard' });
-    expect(tile).toHaveAttribute('href', '/stats');
-    expect(tile).toHaveClass('link-tile');
-    expect(tile).toHaveAccessibleDescription('XP, accuracy and streaks by week');
+    const link = screen.getByRole('link', { name: 'Stats dashboard' });
+    expect(link).toHaveAttribute('href', '/stats');
+    expect(link).toHaveAccessibleDescription('XP, accuracy and streaks by week');
+    // The visible link text is exactly its name (WCAG 2.5.3); the whole card is still the target.
+    expect(link).toHaveTextContent(/^Stats dashboard$/);
+    const tile = link.closest('.link-tile')!;
     expect(tile.querySelector('.link-tile__chevron')).toHaveAttribute('aria-hidden', 'true');
     expect(tile.querySelector('.link-tile__icon')).toHaveAttribute('aria-hidden', 'true');
   });
 
   it('works without a description or icon', () => {
     inRouter(<LinkTile to="/stats" title="Stats" />);
-    const tile = screen.getByRole('link', { name: 'Stats' });
-    expect(tile).not.toHaveAttribute('aria-describedby');
+    const link = screen.getByRole('link', { name: 'Stats' });
+    expect(link).not.toHaveAttribute('aria-describedby');
+    expect(link.closest('.link-tile')).not.toBeNull();
   });
 
   it('can link outside the app', () => {
@@ -150,6 +153,11 @@ describe('link styles', () => {
     return found?.[2] ?? '';
   };
 
+  it('stretches a tile link over the whole card so any part of it is tappable', () => {
+    expect(rule('.link-tile__link::after')).toMatch(/position: absolute/);
+    expect(rule('.link-tile__link::after')).toMatch(/inset: 0/);
+  });
+
   it('gives every link a target of at least 44px', () => {
     for (const selector of ['.link-tile', '.link-chip', '.btn--quiet']) {
       expect(rule(selector), selector).toMatch(
@@ -160,7 +168,7 @@ describe('link styles', () => {
 
   it('shows a clear focus ring on every link style', () => {
     for (const selector of [
-      '.link-tile:focus-visible',
+      '.link-tile:focus-within',
       '.link-chip:focus-visible',
       '.text-link:focus-visible',
     ]) {
