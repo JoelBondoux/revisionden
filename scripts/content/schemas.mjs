@@ -12,6 +12,7 @@ const FILES = {
   item: 'item.schema.json',
   markScheme: 'mark-scheme.schema.json',
   diagram: 'diagram.schema.json',
+  learnLinks: 'learn-links.schema.json',
 };
 const SHARED = ['common.schema.json'];
 

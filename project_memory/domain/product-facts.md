@@ -14,6 +14,11 @@ Tags: #product #rules #limits #defaults
 - Students have no outside account: nickname (2–16 letters, numbers, underscore), avatar code and
   year group only. Devices linked by a one-time QR token (10 minutes, single use), then a passkey.
 - Nicknames are unique within a family. A family is created the first time a parent signs in.
+- Two parents (B3): a family can have two parents with equal control (Parent 1, Parent 2).
+  Invite code or link 7 days, single use, hashed, 5 a day; either parent removes the other (access
+  ends at once, notice next sign-in); deleting the family needs both when there are two; family
+  activity log names parents only by number, important changes pushed to the other parent and
+  shown as new in the parent home; log kept 12 months. Migration 0012.
 - Year group: Years 9 to 13 only (core schema and database check `students_year_group_range`,
   migration 0006).
 - Google and Microsoft access, refresh and ID tokens are never stored: blanked in Better Auth's
@@ -338,7 +343,7 @@ Tags: #product #rules #limits #defaults
   "Not set up yet", never zeros. PDF export is made in the browser with nicknames only.
 - Terms until real dates are entered: autumn 1 Sep–31 Dec, spring 1 Jan–31 Mar, summer
   1 Apr–31 Aug; the school year is 1 Sep–31 Aug. Goal lines: 50 XP a day (Week), 250 XP a week
-  (Term). Daily cap 2 hours (provisional, `DEFAULT_DAILY_CAP_MINUTES`, until wellbeing settings).
+  (Term). Time past the student's daily limit is not counted; healthy habits count days at the limit.
 - Subject mastery averages practised topics; change is replayed from marked answers (period start
   for the student, 4 weeks for the parent). Healthy habits are for this week; quiet hours are the
   reminder quiet hours. A rest day is a finished day with no study at all: answers and flashcard
@@ -479,9 +484,17 @@ Tags: #product #rules #limits #defaults
 ## Daily limit, two parents, hidden tracks (owner, 2026-11-25; planned)
 
 - Daily limit in active study minutes: defaults GCSE 60/90 (school day/other), A-Level 90/120;
-  ceilings GCSE 2h/3h, A-Level 2.5h/3.5h; +30 in exam season with parent consent. Parents set it;
-  the app only suggests (+10 at most fortnightly when the student keeps going without accuracy dips;
-  −10 to −15 on tiredness signs). Detail: `docs/PRODUCT_RULES.md` (Daily limit).
+  ceilings GCSE 2h/3h, A-Level 2.5h/3.5h; +30 in exam season (6 weeks before the first exam to the
+  last) with parent consent. Parents set 15 min to 6 h per day type; the app only suggests, at most
+  weekly (+10 at most fortnightly when the limit is reached on 4 of 14 days with steady late
+  accuracy; −10 for one tiredness sign, −15 for two or more). No XP, rewards or streak credit past
+  the limit; progress responses carry `dailyLimit`, and set complete says "See you tomorrow" when
+  it is reached (300 XP cap kept as a safety net). Confirmed by the owner (2026-11-25): school days
+  are Mon–Fri with holidays counted as school days until dates exist; "kept going" means reaching
+  the limit; "stopped part-way" means a starting test unfinished for over an hour; parents set
+  15 min to 6 h. Either parent can change it (latest change wins); saved limits and accepted
+  suggestions are logged for the other parent. Implemented (K7): `packages/core/src/daily-limit.ts`, `apps/api/src/daily-limit/`,
+  `daily_limits` table. Detail: `docs/PRODUCT_RULES.md` (Daily limit).
 - Two parent accounts with equal control; second invited by link or code (7 days); activity log
   ("Parent 1/2"); both confirm whole-family deletion.
 - Hidden tracks besides Bug Hunter (built R7b): Fact Checker (1, 2, 3, 5, 8), Comeback Kid (1, 3,
@@ -532,6 +545,16 @@ Tags: #product #rules #limits #defaults
   Normal / Large (112.5%) / Larger (125%), more spacing (line height 1.8, letter 0.12em, word
   0.16em), tint none / cream / blue. Defaults: all off. Applied app-wide by `data-reading-*`
   attributes on `<html>` (`apps/web/src/features/reading/`).
+- Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
+  `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
+  board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by
+  `pnpm content:check-links` in `.github/workflows/learn-links.yml` (PRs that change links, pushes
+  to dev, weekly Monday 06:17 UTC); 2xx and 3xx pass. Bundled into the web app at build time;
+  the button shows at the top of a topic lesson only for links with `checked_at` set; plain links
+  opening in a new tab (nothing loaded until tapped). Pilot: Oak KS4 Higher lessons for the 9 GCSE
+  Maths topics with items (n4, n7, a4, a6, a17, a18, r9, g9, g17), URLs found by web search only.
+  All 11 returned 200 in the CI link check on 2026-11-25, so `checked_at` is set and the buttons
+  show. No Bitesize links yet: bbc.co.uk could not be reached from the build environment.
 
 ## Operator console (planned)
 

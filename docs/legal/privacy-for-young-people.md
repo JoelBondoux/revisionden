@@ -1,6 +1,6 @@
 # Privacy notice for young people
 
-Version: 1.3
+Version: 1.4
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -14,7 +14,7 @@ If the two ever seem different, the longer one is the one that counts.
 - <!-- icon: mask --> We don't know your real name. You use a nickname.
 - <!-- icon: shield --> We only use your information to help you revise. No adverts, and we never sell it.
 - <!-- icon: robot --> When AI helps mark an answer, it never knows it's you.
-- <!-- icon: family --> Your parent can see your profile, your subjects and your AI use.
+- <!-- icon: family --> Your parent can see your profile, your subjects and your AI use. If two parents are set up, both can.
 - <!-- icon: camera --> Photos of homework (coming soon) are deleted within a day.
 - <!-- icon: hand --> You can ask to see, fix or delete your information.
 
@@ -164,12 +164,12 @@ deleted straight away (and always within 24 hours).
 
 **In short:**
 
-- Your parent or carer.
+- Your parent or carer (both parents, if your family has two set up).
 - The companies that run the app for us, but only what each one needs.
 - Nobody else. There's no chat and other students can't see your work.
 
 - **Your parent or carer**, who can see your profile, subjects, AI use and feedback, and (soon)
-  your progress.
+  your progress. If your family has two parents set up, both of them can see the same things.
 - **The companies that run the app for us**, like the hosting company and the database, but only
   what each one needs to do its job. They're listed in [services we use](processors.md).
 - Nobody else. There's no chat and no way for other students to see your work.
@@ -240,6 +240,7 @@ If we change how we use your information, we'll show you a short note in the app
 
 ## Changes
 
+- 1.4: If your family has two parents set up, both of them can see your progress.
 - 1.3: Added how read aloud works. Nothing new is kept about you.
 - 1.2: Says that the Get help page is private: nothing about using it is recorded or shown to your parent. No change to the data we keep.
 - 1.1: Easier to read: a short version at the top and the key points of each part. The meaning has not changed.
