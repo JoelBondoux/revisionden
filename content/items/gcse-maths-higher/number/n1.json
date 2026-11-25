@@ -1,0 +1,844 @@
+[
+  {
+    "id": "gcse-maths-h-n1-0001",
+    "topic": "gcse-maths-h-n1",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n1-lp-order-numbers",
+    "expected_seconds": 40,
+    "prompt": "Which list is in order from smallest to largest?",
+    "options": [
+      "5/8, 0.6, 2/3, 0.65",
+      "0.6, 0.65, 5/8, 2/3",
+      "0.6, 5/8, 0.65, 2/3",
+      "2/3, 0.65, 5/8, 0.6"
+    ],
+    "answer": {
+      "option": 2
+    },
+    "marks": 1,
+    "explanation": "As decimals, 5/8 = 0.625 and 2/3 = 0.666..., so the order is 0.6, 0.625, 0.65, 0.666...",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N1 (page 12; PDF page 24)",
+        "quote": "order positive and negative integers, decimals and fractions; use the symbols =, ≠, <, >, ≤, ≥",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Correct option and explanation checked with exact fractions in Python: 0.6 < 5/8 = 0.625 < 0.65 < 2/3; each wrong option is out of order.",
+          "at": "2026-11-25T17:18:15Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:18:33Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:33:46Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:19:39Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:19:53Z",
+          "notes": "wrong_answer (answer): The correct order from smallest to largest is 0.6, 5/8 (0.625), 0.65, 2/3 (0.666...). This corresponds to Option 3. The marked answer is Option 2, which incorrectly places 0.65 before 5/8. The explanation gives the correct order of the decimal equivalents, but this matches Option 3, not the marked answer."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n1-0002",
+    "topic": "gcse-maths-h-n1",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-n1-lp-order-numbers",
+    "expected_seconds": 45,
+    "prompt": "Which list is in order from smallest to largest?",
+    "options": [
+      "-3, -1.25, -0.5, -2/5, 0.2",
+      "-0.5, -1.25, -2/5, -3, 0.2",
+      "-3, -1.25, -2/5, -0.5, 0.2",
+      "0.2, -2/5, -0.5, -1.25, -3"
+    ],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "-2/5 = -0.4, which is greater than -0.5. So the order is -3, -1.25, -0.5, -0.4, 0.2.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N1 (page 12; PDF page 24)",
+        "quote": "order positive and negative integers, decimals and fractions; use the symbols =, ≠, <, >, ≤, ≥",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Correct option and explanation checked with exact fractions in Python: -3 < -1.25 < -0.5 < -2/5 = -0.4 < 0.2; each wrong option is out of order.",
+          "at": "2026-11-25T17:18:15Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:18:34Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:33:46Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:20:27Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:22:54Z",
+          "notes": "wrong_answer (answer): The marked answer is Option 0. The correct order from smallest to largest is -3, -1.25, -2/5, -0.5, 0.2. This is because -2/5 is -0.4, which is less negative and therefore larger than -0.5. The correct list is given in Option 2.; factual_error (explanation): The explanation incorrectly states that -0.4 is greater than -0.5. On a number line, -0.5 is to the left of -0.4, meaning -0.5 is smaller than -0.4. The reasoning is flawed.; factual_error (explanation): The explanation concludes that the correct order is '-3, -1.25, -0.5, -0.4, 0.2'. This is incorrect; the correct order should have -0.4 before -0.5."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n1-0003",
+    "topic": "gcse-maths-h-n1",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-n1-lp-order-numbers",
+    "expected_seconds": 40,
+    "prompt": "Which of these numbers is the smallest?",
+    "options": ["-7/10", "-0.75", "-2/3", "-0.71"],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "-7/10 = -0.7 and -2/3 = -0.666..., so -0.75 is the smallest (the furthest below zero).",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N1 (page 12; PDF page 24)",
+        "quote": "order positive and negative integers, decimals and fractions; use the symbols =, ≠, <, >, ≤, ≥",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Correct option and explanation checked with exact fractions in Python: -0.75 < -0.71 < -7/10 < -2/3.",
+          "at": "2026-11-25T17:18:15Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:18:35Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:33:46Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:23:03Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:23:23Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n1-0004",
+    "topic": "gcse-maths-h-n1",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n1-lp-order-numbers",
+    "expected_seconds": 40,
+    "prompt": "Which of these numbers is the largest?",
+    "options": ["3/8", "0.38", "7/20", "0.4"],
+    "answer": {
+      "option": 3
+    },
+    "marks": 1,
+    "explanation": "3/8 = 0.375 and 7/20 = 0.35, so 0.4 is the largest.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N1 (page 12; PDF page 24)",
+        "quote": "order positive and negative integers, decimals and fractions; use the symbols =, ≠, <, >, ≤, ≥",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Correct option and explanation checked with exact fractions in Python: 7/20 = 0.35 < 3/8 = 0.375 < 0.38 < 0.4.",
+          "at": "2026-11-25T17:18:15Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:18:36Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:33:46Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:23:33Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:23:54Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n1-0005",
+    "topic": "gcse-maths-h-n1",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n1-lp-inequality-symbols",
+    "expected_seconds": 40,
+    "prompt": "Which statement is true?",
+    "options": ["-4 > -2", "0.3 < 1/3", "2/5 ≥ 0.5", "-1.5 ≤ -2"],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "1/3 = 0.333..., which is greater than 0.3. The others are false: -4 is less than -2, 2/5 = 0.4 is less than 0.5, and -1.5 is greater than -2.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N1 (page 12; PDF page 24)",
+        "quote": "order positive and negative integers, decimals and fractions; use the symbols =, ≠, <, >, ≤, ≥",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Each statement evaluated with exact fractions in Python: only 0.3 < 1/3 is true. Meaning of the symbols is the standard one named in the cited spec point.",
+          "at": "2026-11-25T17:18:15Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:18:37Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:33:46Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:24:02Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:24:09Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n1-0006",
+    "topic": "gcse-maths-h-n1",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-n1-lp-inequality-symbols",
+    "expected_seconds": 30,
+    "prompt": "Which symbol makes this statement true?  3/4 ? 0.75",
+    "options": ["=", "≠", "<", ">"],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "3/4 = 0.75, so the two numbers are equal.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N1 (page 12; PDF page 24)",
+        "quote": "order positive and negative integers, decimals and fractions; use the symbols =, ≠, <, >, ≤, ≥",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Checked with exact fractions in Python: 3/4 = 0.75, so only = is true among the options (≤ and ≥ are deliberately not offered).",
+          "at": "2026-11-25T17:18:15Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:18:39Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:33:46Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:24:16Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:24:25Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n1-0007",
+    "topic": "gcse-maths-h-n1",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-n1-lp-inequality-symbols",
+    "expected_seconds": 40,
+    "prompt": "Which statement is true?",
+    "options": ["-0.6 < -2/3", "5/6 > 0.8", "0.25 ≠ 1/4", "-3 ≥ -1"],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "5/6 = 0.833..., which is greater than 0.8. The others are false: -2/3 = -0.666... is less than -0.6, 0.25 equals 1/4, and -3 is less than -1.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N1 (page 12; PDF page 24)",
+        "quote": "order positive and negative integers, decimals and fractions; use the symbols =, ≠, <, >, ≤, ≥",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Each statement evaluated with exact fractions in Python: only 5/6 > 0.8 is true.",
+          "at": "2026-11-25T17:18:15Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:18:40Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:33:46Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:24:34Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:24:42Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n1-0008",
+    "topic": "gcse-maths-h-n1",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-n1-lp-inequality-symbols",
+    "expected_seconds": 40,
+    "prompt": "Which symbol makes this statement true?  -5/4 ? -1.2",
+    "options": ["=", "<", ">", "≥"],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "-5/4 = -1.25, which is further below zero than -1.2, so -5/4 < -1.2.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N1 (page 12; PDF page 24)",
+        "quote": "order positive and negative integers, decimals and fractions; use the symbols =, ≠, <, >, ≤, ≥",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Checked with exact fractions in Python: -5/4 = -1.25 < -1.2, so only < is true among the options (≤ and ≠ are deliberately not offered).",
+          "at": "2026-11-25T17:18:15Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:18:41Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:33:46Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:24:49Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:25:04Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n1-0009",
+    "topic": "gcse-maths-h-n1",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-n1-lp-quick-compare",
+    "expected_seconds": 10,
+    "front": "Which is larger: -3 or -7?",
+    "back": "-3",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N1 (page 12; PDF page 24)",
+        "quote": "order positive and negative integers, decimals and fractions; use the symbols =, ≠, <, >, ≤, ≥",
+        "retrieved_at": "2026-11-25",
+        "supports": ["front"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Front cited to spec N1. Back checked in Python: -3 > -7.",
+          "at": "2026-11-25T17:18:15Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:18:42Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:33:46Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:25:10Z",
+          "notes": "model answered \"-3\"; expected \"-3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:25:15Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n1-0010",
+    "topic": "gcse-maths-h-n1",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-n1-lp-quick-compare",
+    "expected_seconds": 10,
+    "front": "Which is smaller: 0.45 or 0.405?",
+    "back": "0.405",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N1 (page 12; PDF page 24)",
+        "quote": "order positive and negative integers, decimals and fractions; use the symbols =, ≠, <, >, ≤, ≥",
+        "retrieved_at": "2026-11-25",
+        "supports": ["front"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Front cited to spec N1. Back checked in Python: 0.405 < 0.45.",
+          "at": "2026-11-25T17:18:15Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:18:43Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:33:46Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:25:24Z",
+          "notes": "model answered \"0.405\"; expected \"0.405\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:25:31Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n1-0011",
+    "topic": "gcse-maths-h-n1",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-n1-lp-quick-compare",
+    "expected_seconds": 15,
+    "front": "Which is larger: 2/3 or 0.6?",
+    "back": "2/3",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N1 (page 12; PDF page 24)",
+        "quote": "order positive and negative integers, decimals and fractions; use the symbols =, ≠, <, >, ≤, ≥",
+        "retrieved_at": "2026-11-25",
+        "supports": ["front"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Front cited to spec N1. Back checked with exact fractions in Python: 2/3 > 0.6.",
+          "at": "2026-11-25T17:18:15Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:18:44Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:33:46Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:25:39Z",
+          "notes": "model answered \"2/3\"; expected \"2/3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:25:45Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  }
+]
