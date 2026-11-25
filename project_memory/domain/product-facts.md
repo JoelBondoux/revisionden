@@ -339,6 +339,9 @@ Tags: #product #rules #limits #defaults
 - Extended answers: blind marking replaces the blind answer (three exemplars, top, middle and low,
   marked by a second provider without the intended levels; all three must match exactly), and
   every one needs individual human approval; review batches always include them.
+- Fact-check stage 4b (decision 0009): items listing `facts` need, per fact, an official citation
+  or a maths engine proof plus a matching blind statement by a third provider (OpenAI, judged by
+  Gemini). Failing facts keep `needs_human_approval`. `pnpm content:model-check --fact-check openai`.
 - Maths flashcards with `back_formula` are blind-answered by formula: the maths engine compares
   the formula (any equivalent form) and every listed condition (e.g. `a ≠ 0`) must be stated.
 - Blind answer must come from a different provider from the writer (Claude by default) and be
@@ -350,6 +353,12 @@ Tags: #product #rules #limits #defaults
   content-lead, parent-reviewer) in `reviewer_roles`; decisions store the role only. Batch
   samples: 10% of the batch, at least 30, plus every item needing approval; seed recorded; one
   confirmed error fails the batch and re-checks the batch, writer prompt and source.
+- A content lead creates a batch on `/review` with "Create batch from draft items": every draft
+  whose synced snapshot (`items.review_snapshot`, full content record plus mark scheme) has all
+  automated checks passed and is not already in an open or passed batch (an item whose fact-check
+  failed goes in for individual review). Items from a failed batch wait until the recheck is done and
+  steps 3 to 5 have re-run since the failure. The batch page shows
+  hint, mark scheme, exemplars and checks.
 - Report a problem stores only item, version and a reason (no free text) and hides the item at
   once (status `quarantined` in `items`, kept through content syncs; restored on "no error";
   lifted after a confirmed error only when a newer version is synced). A confirmed error queues a score recalculation job and re-checks the item. The

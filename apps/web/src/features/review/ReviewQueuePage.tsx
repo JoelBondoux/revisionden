@@ -6,6 +6,7 @@ import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { Pill } from '../../components/Pill';
 import { ConfirmError } from './ConfirmError';
+import { CreateBatchFromDrafts } from './CreateBatchFromDrafts';
 import {
   REASON_LABELS,
   useReviewClient,
@@ -27,6 +28,7 @@ export function ReviewQueuePage() {
   const client = useReviewClient();
   const [version, setVersion] = useState(0);
   const [saved, setSaved] = useState(false);
+  const [createdSize, setCreatedSize] = useState<number | null>(null);
   const data = useApiResource(async () => {
     const [me, reports, batches] = await Promise.all([
       client.me(),
@@ -59,6 +61,11 @@ export function ReviewQueuePage() {
           Decision saved.
         </p>
       )}
+      {createdSize !== null && (
+        <p role="status" className="review-saved">
+          Batch created with {createdSize} items.
+        </p>
+      )}
       {data.status !== 'ready' ? (
         <LoadingOrError resource={data} />
       ) : (
@@ -78,6 +85,15 @@ export function ReviewQueuePage() {
             )}
           </Card>
           <Card title="Batches">
+            {data.data.me.role === 'content-lead' && (
+              <CreateBatchFromDrafts
+                key={version}
+                onCreated={(size) => {
+                  setCreatedSize(size);
+                  setVersion((v) => v + 1);
+                }}
+              />
+            )}
             {data.data.batches.length === 0 ? (
               <p>No batches yet.</p>
             ) : (
