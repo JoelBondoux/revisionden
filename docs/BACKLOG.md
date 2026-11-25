@@ -73,6 +73,14 @@
   - Tests: token expires; token cannot be reused; wrong family cannot redeem.
 - [x] **B6 Rate limits and errors.** Consistent JSON errors; rate limit on auth and AI routes.
   - Tests: error shape matches schema; 429 after limit.
+- [ ] **B7 One new device a day, made atomic (follow-up to I5b #96).** Two unknown browsers
+      unlocking the same synced passkey at the same moment can both pass the 24-hour check in
+      `deviceForUnlock` (`apps/api/src/routes/devices.ts`) and each add a device and an alert.
+      Accepted for now by the lead (harmless and visible to parents). The Neon HTTP driver has no
+      interactive transactions, so add a unique constraint instead (for example a new-device claim
+      per credential per day) and insert the claim before the device.
+  - Tests: two concurrent unknown-browser unlocks of one passkey add one device and one
+    `passkey_new_device` event.
 
 ### C. Core domain rules and shared schemas (`packages/core`)
 
