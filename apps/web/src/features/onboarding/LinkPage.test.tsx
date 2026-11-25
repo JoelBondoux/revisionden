@@ -25,7 +25,11 @@ function fakeApi(overrides: Partial<OnboardingApi> = {}): OnboardingApi {
       options: { challenge: 'abc' },
       student: { nickname: STUDENT.nickname, avatarCode: STUDENT.avatarCode },
     })),
-    verifyLink: vi.fn(async () => ({ deviceId: 'device-1', student: STUDENT })),
+    verifyLink: vi.fn(async () => ({
+      deviceId: 'device-1',
+      deviceMarker: 'marker-1-marker-1-marker-1',
+      student: STUDENT,
+    })),
     unlockOptions: vi.fn(),
     unlockVerify: vi.fn(),
     ...overrides,
@@ -82,6 +86,10 @@ describe('LinkPage (student device)', () => {
       await screen.findByRole('heading', { name: 'Privacy notice for young people' }),
     ).toBeInTheDocument();
     expect(storage.get('revisionden.studentId')).toBe(STUDENT.id);
+    // The device marker that tells this device apart from others with the same passkey (I5b).
+    expect(window.localStorage.getItem('revisionden.deviceMarker')).toBe(
+      'marker-1-marker-1-marker-1',
+    );
   });
 
   it('explains an expired or used code', async () => {

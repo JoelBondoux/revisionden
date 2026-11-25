@@ -43,11 +43,15 @@ const linkStartSchema = z.object({
 });
 export type LinkStart = z.infer<typeof linkStartSchema>;
 
-const linkDoneSchema = z.object({ deviceId: z.string(), student: StudentSchema });
+const linkDoneSchema = z.object({
+  deviceId: z.string(),
+  deviceMarker: z.string().optional(),
+  student: StudentSchema,
+});
 
 const unlockStartSchema = z.object({ challengeId: z.string(), options: z.record(z.unknown()) });
 export type UnlockStart = z.infer<typeof unlockStartSchema>;
-const unlockDoneSchema = z.object({ student: StudentSchema });
+const unlockDoneSchema = z.object({ student: StudentSchema, deviceMarker: z.string().optional() });
 
 export interface OnboardingApi {
   getFamily(): Promise<OnboardingFamily>;
@@ -57,11 +61,16 @@ export interface OnboardingApi {
   verifyLink(input: {
     challengeId: string;
     response: unknown;
-  }): Promise<{ deviceId: string; student: Student }>;
+  }): Promise<{ deviceId: string; deviceMarker?: string; student: Student }>;
   /** Starts a passkey unlock; no credential ids, so any RevisionDen passkey here can answer. */
   unlockOptions(): Promise<UnlockStart>;
   /** Checks the passkey's answer and starts a new 12-hour student session. */
-  unlockVerify(input: { challengeId: string; response: unknown }): Promise<{ student: Student }>;
+  unlockVerify(input: {
+    challengeId: string;
+    response: unknown;
+    /** The marker this browser keeps for its device (I5b), if it has one. */
+    deviceMarker?: string;
+  }): Promise<{ student: Student; deviceMarker?: string }>;
 }
 
 interface Options {

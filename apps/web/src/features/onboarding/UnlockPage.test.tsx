@@ -18,6 +18,8 @@ const noPasskey = () => {
   return Promise.reject(err);
 };
 
+afterEach(() => window.localStorage.clear());
+
 describe('Student passkey unlock', () => {
   it('offers students a passkey unlock on the sign-in page, beside the parent sign-in', async () => {
     // The parent buttons wait for the provider list; make that slow so the test never races it.
@@ -166,6 +168,40 @@ describe('Student passkey unlock', () => {
     );
     renderRoute('/family', { studentId: null });
     expect(await screen.findByRole('heading', { name: 'Please sign in' })).toBeInTheDocument();
+  });
+
+  it('sends the device marker this browser keeps, and keeps a new one the server gives', async () => {
+    window.localStorage.setItem('revisionden.deviceMarker', 'old-marker-old-marker-old');
+    let verifyBody: unknown;
+    server.use(
+      http.post('*/v1/device/unlock/verify', async ({ request }) => {
+        verifyBody = await request.json();
+        return HttpResponse.json({ student: CHILD, deviceMarker: 'new-marker-new-marker-new' });
+      }),
+    );
+    stubPasskey(async () => ({ id: 'cred-1', response: {} }));
+    const { router } = renderRoute('/unlock', { studentId: null });
+    await userEvent.click(await screen.findByRole('button', { name: 'Unlock with my passkey' }));
+    await waitFor(() => expect(router.state.location.pathname).toBe('/map'));
+    expect(verifyBody).toMatchObject({ deviceMarker: 'old-marker-old-marker-old' });
+    expect(window.localStorage.getItem('revisionden.deviceMarker')).toBe(
+      'new-marker-new-marker-new',
+    );
+  });
+
+  it('sends no marker from a browser that has none (a synced passkey on a new device)', async () => {
+    let verifyBody: Record<string, unknown> = {};
+    server.use(
+      http.post('*/v1/device/unlock/verify', async ({ request }) => {
+        verifyBody = (await request.json()) as Record<string, unknown>;
+        return HttpResponse.json({ student: CHILD });
+      }),
+    );
+    stubPasskey(async () => ({ id: 'cred-1', response: {} }));
+    const { router } = renderRoute('/unlock', { studentId: null });
+    await userEvent.click(await screen.findByRole('button', { name: 'Unlock with my passkey' }));
+    await waitFor(() => expect(router.state.location.pathname).toBe('/map'));
+    expect(verifyBody).not.toHaveProperty('deviceMarker');
   });
 
   it('uses the shared link styles, never plain underlined links (J7)', async () => {

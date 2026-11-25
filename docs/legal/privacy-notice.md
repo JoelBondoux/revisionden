@@ -1,6 +1,6 @@
 # Privacy notice
 
-Version: 1.8
+Version: 1.9
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -130,7 +130,11 @@ profile and blanks the name and picture before anything is saved.
 - **Courses:** subjects, exam boards, tiers, specification versions and target grades (one set by a parent, one set by the child);
 - **Devices:** for each linked device, the public part of its passkey and technical details the
   passkey needs (an identifier, a counter and how the device connects), when it was linked and
-  last used; one-time link codes and sessions are stored only as scrambled (hashed) values;
+  last used; one-time link codes and sessions are stored only as scrambled (hashed) values. A
+  passkey can sync to the student's other devices (for example through iCloud Keychain or Google
+  Password Manager); each device it is used on gets its own record, told apart by a random device
+  code kept on that device, which we store only as a hash. When a passkey is used on a new device,
+  both parents see it in the family activity log;
 - **Learning records:** each answer's question, whether it was right, the score, how long it
   took, the mode (learn or test), the XP earned and when; topic mastery scores; starting test
   records; daily XP; streaks, skip days and gift days; rewards earned; flashcards and their review
@@ -369,6 +373,7 @@ in the app on your next visit and ask you to confirm, and students see a plain-E
 
 ## Changes
 
+- 1.9: A passkey synced to the student's other devices works there too, as a separate device the parent can see and unlink. Each device keeps a random device code (we store only its hash), and both parents are told when a passkey is used on a new device.
 - 1.8: Labels our support team can put on your account (for example "Beta tester"), never personal information; kept while the account exists or until removed. You can leave the beta programme from the parent home.
 - 1.7: Complaints: a parent can make a formal complaint in the app, kept 12 months after it is resolved. A student can ask a parent to raise something (a topic and an optional short note), seen only by the family's parents and deleted after 90 days at most.
 - 1.6: Target grades: for each subject a parent can set a target grade and the child can set their own. We keep both with the child's courses; each of you can see both, and they are included in the family data download.
