@@ -27,6 +27,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Policies: the privacy notice and services page (both now 1.1) say parents sign in with Google or Microsoft, whichever this app offers (a deployment may offer only one).
 - Google and Microsoft access, refresh and ID tokens are no longer stored after sign-in (B2).
 - Year group is limited to Years 9 to 13 in the API, the core schema and the database (B2, migration 0006).
 - Students' own flashcards get the same personal-details check as feedback (B2, cleared with F).
