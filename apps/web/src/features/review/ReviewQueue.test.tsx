@@ -210,6 +210,37 @@ describe('Batch review', () => {
     ).toBeInTheDocument();
   });
 
+  it('shows a multiple choice answer as the correct option itself, not a zero-based number', async () => {
+    reviewerApi();
+    const mc = {
+      ...sampleItem('fixture-mc'),
+      snapshot: {
+        type: 'multiple_choice',
+        prompt: 'Fixture multiple choice?',
+        options: ['alpha', 'beta', 'gamma'],
+        answer: { option: 2 },
+      },
+    };
+    server.use(
+      http.get(`*/v1/review/batches/${BATCH_ID}`, () =>
+        HttpResponse.json({
+          id: BATCH_ID,
+          title: 'Fixture batch',
+          status: 'in_review',
+          sampleSeed: 42,
+          createdAt: '2026-11-24T09:00:00.000Z',
+          decidedAt: null,
+          items: [mc],
+        }),
+      ),
+    );
+    renderRoute(`/review/batches/${BATCH_ID}`);
+    const item = await screen.findByRole('article', { name: 'fixture-mc' });
+    expect(within(item).getByText('Option 3: gamma')).toBeInTheDocument();
+    expect(within(item).getByText('1. alpha')).toBeInTheDocument();
+    expect(within(item).queryByText(/"option"/)).not.toBeInTheDocument();
+  });
+
   it('approves an item', async () => {
     const { decisions } = reviewerApi();
     renderRoute(`/review/batches/${BATCH_ID}`);
