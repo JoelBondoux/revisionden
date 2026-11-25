@@ -11,7 +11,6 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Coming soon: build your own title from words you unlock, like "Cosmic Scholar".
 - Coming soon: a private "Get help" page with UK support services you can call or message.
 - Coming soon: a daily study limit you can set as a parent, with gentle suggestions from the app.
-- Coming soon: invite a second parent to share control of the family.
 - Coming soon: more hidden reward tracks to discover.
 - Combo bonus: from your 3rd right answer in a row, each right answer earns 5 extra XP. In the starting test, the bonus is added when you see your results.
 - Your topic map now shows your real progress, and tapping a topic or the next mission starts a lesson.
