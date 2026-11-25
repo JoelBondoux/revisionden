@@ -457,8 +457,21 @@ export const flashcardSessions = pgTable(
     finishedAt: timestamp('finished_at', { withTimezone: true }),
     completed: boolean('completed').notNull().default(false),
     xpEarned: integer('xp_earned').notNull().default(0),
+    /** Set when the session reviews one deck: completion is checked within that deck only. */
+    topicId: text('topic_id'),
+    /**
+     * A rewarded session takes one of the student's daily reward slots (UK day, slot 1 or 2).
+     * The unique key means two finishes at the same time can never both take the same slot,
+     * so the 2-a-day limit holds without a transaction (the Neon HTTP driver has none).
+     */
+    rewardedDay: date('rewarded_day'),
+    rewardSlot: integer('reward_slot'),
   },
-  (t) => [index('flashcard_sessions_student_started_idx').on(t.studentId, t.startedAt)],
+  (t) => [
+    index('flashcard_sessions_student_started_idx').on(t.studentId, t.startedAt),
+    unique('flashcard_sessions_reward_slot').on(t.studentId, t.rewardedDay, t.rewardSlot),
+    check('flashcard_sessions_reward_slot_range', sql`${t.rewardSlot} between 1 and 2`),
+  ],
 );
 
 /**

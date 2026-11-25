@@ -20,6 +20,7 @@ import {
   countCardInSession,
   sessionOutcome,
   FlashcardReviewRequestSchema,
+  FlashcardSessionRequestSchema,
   RATING_QUALITY,
   dueCards,
   previewReviews,
@@ -35,7 +36,7 @@ import { isId } from '../validation';
 import { correctAnswerText, servableItem } from '../learning/items';
 import type { ItemBody } from '../learning/content-sync';
 import { awardXp } from '../learning/progress';
-import { rewardedLeftToday } from '../learning/flashcard-sessions';
+import { claimFinish, rewardedLeftToday, takeRewardSlot } from '../learning/flashcard-sessions';
 import { flashcardStore, toCard, type Loaded } from '../learning/flashcard-store';
 import { containsPersonalData, familyProfiles, personalDetails } from '../feedback/routes';
 import type { LearnDeps } from './learn';
@@ -141,6 +142,9 @@ export function flashcardRoutes({ db, clock, config }: LearnDeps) {
     return c.json(toFlashcard({ card: card!, item: null, topic }, now), 201);
   });
 
+  const sessionFinished = () =>
+    new ApiError(409, 'session_finished', 'That flashcard session has already finished');
+
   /** One of the student's sessions; 404 for someone else's, 409 once finished. */
   async function openSession(studentId: string, sessionId: string) {
     if (!isId(sessionId)) throw notFound();
@@ -149,18 +153,27 @@ export function flashcardRoutes({ db, clock, config }: LearnDeps) {
       .from(flashcardSessions)
       .where(and(eq(flashcardSessions.id, sessionId), eq(flashcardSessions.studentId, studentId)));
     if (!session) throw notFound();
-    if (session.finishedAt) {
-      throw new ApiError(409, 'session_finished', 'That flashcard session has already finished');
-    }
+    if (session.finishedAt) throw sessionFinished();
     return session;
   }
 
   app.post('/sessions', async (c) => {
     const studentId = c.var.student.studentId;
     const now = clock.now();
+    const { topicId } = c.req.header('content-type')?.includes('json')
+      ? await readJson(c, FlashcardSessionRequestSchema)
+      : {};
+    if (topicId) {
+      const [card] = await db
+        .select({ id: flashcards.id })
+        .from(flashcards)
+        .where(and(eq(flashcards.studentId, studentId), eq(flashcards.topicId, topicId)))
+        .limit(1);
+      if (!card) throw notFound('No such deck');
+    }
     const [session] = await db
       .insert(flashcardSessions)
-      .values({ studentId, startedAt: now })
+      .values({ studentId, startedAt: now, topicId: topicId ?? null })
       .returning({ id: flashcardSessions.id });
     return c.json(
       {
@@ -178,28 +191,29 @@ export function flashcardRoutes({ db, clock, config }: LearnDeps) {
     const studentId = c.var.student.studentId;
     const session = await openSession(studentId, c.req.param('id'));
     const now = clock.now();
-    const loaded = await loadCards(studentId);
+    // A one-deck session is complete when that deck has nothing left due.
+    const loaded = await loadCards(
+      studentId,
+      session.topicId ? eq(flashcards.topicId, session.topicId) : undefined,
+    );
     const dueLeft = dueCards(
       loaded.map((l) => toCard(l.card)),
       now.getTime(),
     ).length;
-    const left = await rewardedLeftToday(db, studentId, now);
     const outcome = sessionOutcome({
       cardsCounted: session.cardIds.length,
       dueLeft,
-      rewardedToday: MAX_REWARDED_SESSIONS_PER_DAY - left,
+      rewardedToday: MAX_REWARDED_SESSIONS_PER_DAY - (await rewardedLeftToday(db, studentId, now)),
     });
-    await db
-      .update(flashcardSessions)
-      .set({ finishedAt: now, completed: outcome.completed, xpEarned: outcome.xp })
-      .where(eq(flashcardSessions.id, session.id));
-    const progress = await awardXp(db, studentId, outcome.xp, now);
+    if (!(await claimFinish(db, session.id, outcome.completed, now))) throw sessionFinished();
+    const xp = outcome.xp > 0 ? await takeRewardSlot(db, studentId, session.id, now) : 0;
+    const progress = await awardXp(db, studentId, xp, now);
     return c.json({
       completed: outcome.completed,
-      reason: outcome.reason,
-      xpEarned: outcome.xp,
+      reason: outcome.xp > 0 && xp === 0 ? 'daily_limit' : outcome.reason,
+      xpEarned: xp,
       cardsCounted: session.cardIds.length,
-      rewardedLeftToday: outcome.xp > 0 ? left - 1 : left,
+      rewardedLeftToday: await rewardedLeftToday(db, studentId, now),
       progress,
     });
   });

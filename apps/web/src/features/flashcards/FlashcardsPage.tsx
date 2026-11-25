@@ -61,7 +61,16 @@ const OUTCOME_TEXT: Record<FlashcardSessionResult['reason'], string> = {
  * Reviews cards in one session (at most 20). A card rated Again comes back once before the
  * session ends. XP is paid per completed session, never per card (F3).
  */
-function ReviewSession({ cards, onExit }: { cards: Flashcard[]; onExit?: () => void }) {
+function ReviewSession({
+  cards,
+  topicId,
+  onExit,
+}: {
+  cards: Flashcard[];
+  /** Set when reviewing one deck: the session is complete when that deck is done. */
+  topicId?: string;
+  onExit?: () => void;
+}) {
   const api = useLearnApi();
   const { play } = useSound();
   const [session, setSession] = useState<FlashcardSession | null>(null);
@@ -77,11 +86,11 @@ function ReviewSession({ cards, onExit }: { cards: Flashcard[]; onExit?: () => v
   const start = useCallback(async () => {
     setError(null);
     try {
-      setSession(await api.startFlashcardSession());
+      setSession(await api.startFlashcardSession(topicId));
     } catch {
       setError('start');
     }
-  }, [api]);
+  }, [api, topicId]);
 
   useEffect(() => {
     void start();
@@ -226,14 +235,22 @@ function ReviewSession({ cards, onExit }: { cards: Flashcard[]; onExit?: () => v
 
 function DecksPanel({ overview }: { overview: FlashcardsOverview }) {
   const api = useLearnApi();
-  const [session, setSession] = useState<Flashcard[] | null>(null);
+  const [session, setSession] = useState<{ topicId: string; cards: Flashcard[] } | null>(null);
   const [error, setError] = useState(false);
-  if (session) return <ReviewSession cards={session} onExit={() => setSession(null)} />;
+  if (session) {
+    return (
+      <ReviewSession
+        cards={session.cards}
+        topicId={session.topicId}
+        onExit={() => setSession(null)}
+      />
+    );
+  }
   if (overview.decks.length === 0) return <p>No decks yet. They appear as you learn.</p>;
   async function open(topicId: string) {
     setError(false);
     try {
-      setSession(await api.getDeck(topicId));
+      setSession({ topicId, cards: await api.getDeck(topicId) });
     } catch {
       setError(true);
     }

@@ -84,7 +84,7 @@ Tags: #product #rules #limits #defaults
 - Wrong lesson answers become flashcards. Flashcard buttons Again/Hard/Good/Easy = SM-2 quality
   1/3/4/5; each shows when the card comes back. Deck XP is per completed session, not per card: 20 XP for a
   session of 5+ cards (ends when the due queue is empty or at 20 cards), whatever the ratings; at
-  most 2 rewarded sessions a day; self-ratings never change mastery (owner, 2026-11-25). Students can add their own cards (up to 300 characters a side); a card with an email, a UK mobile number or a family nickname is refused, as for feedback.
+  most 2 rewarded sessions a day (two reward slots per UK day, unique in the database; a one-deck session only needs that deck done); self-ratings never change mastery (owner, 2026-11-25). Students can add their own cards (up to 300 characters a side); a card with an email, a UK mobile number or a family nickname is refused, as for feedback.
 - XP is totalled per day in UK time; a streak day counts once, the first time the day reaches the
   daily goal. Command-word lessons are items tagged `command-word` (none verified yet).
 - Worked maths answers are checked by the maths engine (`MATHS_ENGINE_URL`); long answers are not
