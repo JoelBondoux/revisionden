@@ -193,6 +193,12 @@ export interface RewardsOverview {
 /** Display names of hidden tracks. */
 export const HIDDEN_TRACK_NAMES: Record<string, string> = {
   'bug-hunter': 'Bug Hunter',
+  'fact-checker': 'Fact Checker',
+  'comeback-kid': 'Comeback Kid',
+  explorer: 'Explorer',
+  planner: 'Planner',
+  'pace-setter': 'Pace Setter',
+  perfectionist: 'Perfectionist',
 };
 
 export interface OverviewInput {

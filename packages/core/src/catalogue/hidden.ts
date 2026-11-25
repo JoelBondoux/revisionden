@@ -50,6 +50,124 @@ export const BUG_HUNTER_REWARDS: readonly Reward[] = [
   ]),
 ];
 
+/** More hidden tracks (R7b): each invisible until its first step. */
+export const MORE_HIDDEN_TRACK_REWARDS: readonly Reward[] = [
+  // Fact Checker: reports the review queue confirmed as wrong (rare, so few steps).
+  step('fact-checker', 'factChecks', 1, 'Fact checked', 'common', [
+    { kind: 'badge', id: 'fact-checker' },
+  ]),
+  step('fact-checker', 'factChecks', 2, '"Fact Checker" title', 'rare', [
+    { kind: 'title', text: 'Fact Checker' },
+  ]),
+  step('fact-checker', 'factChecks', 3, 'Quill', 'rare', [
+    { kind: 'avatar', layer: 'heldItem', id: 'quill' },
+  ]),
+  step('fact-checker', 'factChecks', 5, 'Red-pen frame', 'epic', [
+    { kind: 'frame', id: 'red-pen' },
+  ]),
+  step('fact-checker', 'factChecks', 8, 'Truth Seeker set', 'legendary', [
+    { kind: 'frame', id: 'verified' },
+    { kind: 'title', text: 'Truth Seeker' },
+  ]),
+
+  // Comeback Kid: weak spots turned into strong topics.
+  step('comeback-kid', 'weakSpotsTurnedStrong', 1, 'Phoenix badge', 'common', [
+    { kind: 'badge', id: 'phoenix' },
+  ]),
+  step('comeback-kid', 'weakSpotsTurnedStrong', 3, '"Comeback Kid" title', 'common', [
+    { kind: 'title', text: 'Comeback Kid' },
+  ]),
+  step('comeback-kid', 'weakSpotsTurnedStrong', 5, 'Rising-flame frame', 'rare', [
+    { kind: 'frame', id: 'rising-flame' },
+  ]),
+  step('comeback-kid', 'weakSpotsTurnedStrong', 10, 'Pip phoenix outfit', 'rare', [
+    { kind: 'pipOutfit', id: 'phoenix' },
+  ]),
+  step('comeback-kid', 'weakSpotsTurnedStrong', 20, 'Embers effect', 'epic', [
+    { kind: 'effect', id: 'embers' },
+  ]),
+  step('comeback-kid', 'weakSpotsTurnedStrong', 35, 'Rise Again set', 'legendary', [
+    { kind: 'frame', id: 'phoenix-wings' },
+    { kind: 'title', text: 'Risen' },
+  ]),
+
+  // Explorer: first use of each of the 7 kinds of practice.
+  step('explorer', 'practiceKindsTried', 1, 'Compass badge', 'common', [
+    { kind: 'badge', id: 'compass' },
+  ]),
+  step('explorer', 'practiceKindsTried', 2, '"Explorer" title', 'common', [
+    { kind: 'title', text: 'Explorer' },
+  ]),
+  step('explorer', 'practiceKindsTried', 3, 'Map frame', 'common', [{ kind: 'frame', id: 'map' }]),
+  step('explorer', 'practiceKindsTried', 4, 'Explorer hat', 'rare', [
+    { kind: 'avatar', layer: 'headwear', id: 'explorer-hat' },
+  ]),
+  step('explorer', 'practiceKindsTried', 5, 'Trailhead theme', 'rare', [
+    { kind: 'theme', id: 'trailhead' },
+  ]),
+  step('explorer', 'practiceKindsTried', 6, 'Pip trekker outfit', 'epic', [
+    { kind: 'pipOutfit', id: 'trekker' },
+  ]),
+  step('explorer', 'practiceKindsTried', 7, 'Pathfinder set', 'epic', [
+    { kind: 'frame', id: 'globe' },
+    { kind: 'title', text: 'Pathfinder' },
+  ]),
+
+  // Planner: weeks with at least 80% of planned sessions done.
+  step('planner', 'plannedWeeks', 1, 'Calendar badge', 'common', [
+    { kind: 'badge', id: 'calendar' },
+  ]),
+  step('planner', 'plannedWeeks', 4, '"On Schedule" title', 'common', [
+    { kind: 'title', text: 'On Schedule' },
+  ]),
+  step('planner', 'plannedWeeks', 8, 'Planner-grid frame', 'rare', [
+    { kind: 'frame', id: 'planner-grid' },
+  ]),
+  step('planner', 'plannedWeeks', 16, 'Pip planner pack', 'epic', [
+    { kind: 'pipOutfit', id: 'planner-pack' },
+  ]),
+  step('planner', 'plannedWeeks', 30, 'Master Planner set', 'legendary', [
+    { kind: 'frame', id: 'golden-calendar' },
+    { kind: 'title', text: 'Master Planner' },
+  ]),
+
+  // Pace Setter: timed papers with every question on pace (workstream X).
+  step('pace-setter', 'pacedPapers', 1, 'Stopwatch badge', 'common', [
+    { kind: 'badge', id: 'stopwatch' },
+  ]),
+  step('pace-setter', 'pacedPapers', 3, '"Cool Head" title', 'rare', [
+    { kind: 'title', text: 'Cool Head' },
+  ]),
+  step('pace-setter', 'pacedPapers', 6, 'Pace stripes effect', 'epic', [
+    { kind: 'effect', id: 'pace-stripes' },
+  ]),
+  step('pace-setter', 'pacedPapers', 10, 'Clockwork set', 'legendary', [
+    { kind: 'frame', id: 'finish-line' },
+    { kind: 'title', text: 'Clockwork' },
+  ]),
+
+  // Perfectionist: perfect sets at feedback level 2 or above.
+  step('perfectionist', 'perfectSetsLevel2', 1, 'Diamond badge', 'common', [
+    { kind: 'badge', id: 'diamond' },
+  ]),
+  step('perfectionist', 'perfectSetsLevel2', 5, '"Perfectionist" title', 'common', [
+    { kind: 'title', text: 'Perfectionist' },
+  ]),
+  step('perfectionist', 'perfectSetsLevel2', 15, 'Crystal frame', 'rare', [
+    { kind: 'frame', id: 'crystal' },
+  ]),
+  step('perfectionist', 'perfectSetsLevel2', 30, 'Pip jeweller outfit', 'rare', [
+    { kind: 'pipOutfit', id: 'jeweller' },
+  ]),
+  step('perfectionist', 'perfectSetsLevel2', 60, 'Prism effect', 'epic', [
+    { kind: 'effect', id: 'prism' },
+  ]),
+  step('perfectionist', 'perfectSetsLevel2', 100, 'Flawless set', 'legendary', [
+    { kind: 'frame', id: 'flawless' },
+    { kind: 'title', text: 'Flawless' },
+  ]),
+];
+
 const secret = (
   id: string,
   name: string,

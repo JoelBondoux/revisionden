@@ -440,4 +440,45 @@ describe('hidden tracks and secret achievements', () => {
     );
     expect(view.overview.level.totalXp).toBe(50);
   });
+
+  it('reveals Explorer from the first Learn mode answer', async () => {
+    const { studentId, headers } = await t.familyStudent('r_explorer');
+    await t.db.insert(attempts).values({
+      studentId,
+      itemId,
+      correct: true,
+      xpEarned: 10,
+      mode: 'learn',
+      createdAt: new Date('2026-11-24T09:00:00Z'),
+    });
+    const view = await studentRewards(headers);
+    expect(view.newlyEarned.map((r) => r.id)).toContain('explorer-1');
+    expect(view.overview.hiddenTracks).toContainEqual(
+      expect.objectContaining({ id: 'explorer', name: 'Explorer', earned: 1 }),
+    );
+  });
+
+  it('reveals Comeback Kid when a weak spot is turned into a strong topic', async () => {
+    const { studentId, headers } = await t.familyStudent('r_comeback');
+    const at = (minute: number) => `2026-11-24T09:${String(minute).padStart(2, '0')}:00Z`;
+    await answers(studentId, [0, 1, 2].map(at), 0, false);
+    await answers(
+      studentId,
+      Array.from({ length: 20 }, (_, i) => at(i + 3)),
+      10,
+      true,
+    );
+    const view = await studentRewards(headers);
+    expect(view.newlyEarned.map((r) => r.id)).toContain('comeback-kid-1');
+  });
+
+  it('keeps tracks with no data source yet hidden (Fact Checker, Planner, Pace Setter, Perfectionist)', async () => {
+    const { studentId, headers } = await t.familyStudent('r_stub_tracks');
+    await answers(studentId, ['2026-11-24T09:00:00Z']);
+    const view = await studentRewards(headers);
+    const ids = view.overview.hiddenTracks.map((h) => h.id);
+    for (const id of ['fact-checker', 'planner', 'pace-setter', 'perfectionist']) {
+      expect(ids).not.toContain(id);
+    }
+  });
 });

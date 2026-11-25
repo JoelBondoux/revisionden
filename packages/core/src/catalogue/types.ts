@@ -82,6 +82,17 @@ export interface RewardStats {
   bestGoalDaysInMonth: number;
   /** Year chapters filled to the end. */
   chaptersFilled: number;
+  // Hidden track stats (R7b; see track-stats.ts).
+  /** "Report a problem" reports the review queue confirmed as wrong (Fact Checker). */
+  factChecks: number;
+  /** Weak spots turned into strong topics (Comeback Kid). */
+  weakSpotsTurnedStrong: number;
+  /** Kinds of practice tried, out of 7 (Explorer). */
+  practiceKindsTried: number;
+  /** Weeks with at least 80% of planned sessions done (Planner). */
+  plannedWeeks: number;
+  /** Perfect sets at feedback level 2 or above (Perfectionist). */
+  perfectSetsLevel2: number;
 }
 
 export type StatKey = keyof RewardStats;
