@@ -91,6 +91,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- S3-R: draft GCSE Maths Higher (1MA1) Ratio, proportion and rates of change items in `content/items/gcse-maths-higher/ratio/` (one file per topic, at least 3 items per learning point), each with its verification record. Still `draft`.
 - S3-A: draft GCSE Maths Higher (Pearson Edexcel 1MA1) Algebra items for A1 to A25 in `content/items/gcse-maths-higher/algebra/` (one file per topic, at least 3 items per learning point, `learning_point` and `expected_seconds` on every item) and three A6 proof mark schemes; every item carries its verification record. Still `draft`: nothing reaches students until the owner approves it.
 - Research: specialist engines, libraries and services per subject, with licences, costs, privacy and a ranked shortlist (`docs/research/specialist-tools-2026-11.md`).
 - S2 review batches: content sync stores each item's full record and mark scheme in `items.review_snapshot` (migration `0018_review_snapshot`); content leads get **Create batch from draft items** on `/review` (`GET, POST /v1/review/batches/from-drafts`), taking only drafts whose automated checks all passed (`readyForHumanReview` in `packages/core`); an item whose fact-check failed (decision 0009) is batched for individual review (`needsIndividualReview`).

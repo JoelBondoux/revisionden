@@ -1,0 +1,504 @@
+[
+  {
+    "id": "gcse-maths-h-r2-0101",
+    "topic": "gcse-maths-h-r2",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r2-lp-maps",
+    "expected_seconds": 60,
+    "prompt": "A map has a scale of 1 : 25 000. Two towns are 8 cm apart on the map. How far apart are they in real life, in km? (100 cm = 1 m and 1000 m = 1 km.)",
+    "answer": { "value": "2", "unit": "km" },
+    "verify": { "expression": "8*25000/100/1000" },
+    "marks": 2,
+    "mark_scheme": ["M1 for 8 × 25 000 = 200 000 cm", "A1 for 2 km"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R2",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R2 (page 16; PDF page 28)",
+        "quote": "use scale factors, scale diagrams and maps",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R2). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:41:30Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r2-0102",
+    "topic": "gcse-maths-h-r2",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r2-lp-maps",
+    "expected_seconds": 75,
+    "prompt": "A map has a scale of 1 : 50 000. Two villages are 6 km apart. How far apart are they on the map, in cm? (100 cm = 1 m and 1000 m = 1 km.)",
+    "answer": { "value": "12", "unit": "cm" },
+    "verify": { "expression": "6*1000*100/50000" },
+    "marks": 2,
+    "mark_scheme": ["M1 for 6 km = 600 000 cm", "A1 for 12"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R2",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R2 (page 16; PDF page 28)",
+        "quote": "use scale factors, scale diagrams and maps",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R2). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:41:31Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r2-0103",
+    "topic": "gcse-maths-h-r2",
+    "type": "numeric",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r2-lp-maps",
+    "expected_seconds": 30,
+    "prompt": "On a scale drawing, 1 cm represents 4 m. A wall is 14 m long. How long is it on the drawing, in cm?",
+    "answer": { "value": "3.5", "unit": "cm" },
+    "verify": { "expression": "14/4" },
+    "marks": 1,
+    "mark_scheme": ["B1 for 3.5"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R2",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R2 (page 16; PDF page 28)",
+        "quote": "use scale factors, scale diagrams and maps",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R2). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:41:32Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r2-0104",
+    "topic": "gcse-maths-h-r2",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r2-lp-maps",
+    "expected_seconds": 25,
+    "prompt": "A map has a scale of 1 : 200 000. What real distance does 1 cm on the map represent? (100 cm = 1 m and 1000 m = 1 km.)",
+    "options": ["200 m", "2 km", "20 km", "200 km"],
+    "answer": { "option": 1 },
+    "marks": 1,
+    "explanation": "1 cm represents 200 000 cm = 2000 m = 2 km.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R2",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R2 (page 16; PDF page 28)",
+        "quote": "use scale factors, scale diagrams and maps",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R2). Arithmetic checked: 200 000 ÷ 100 ÷ 1000 = 2.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:41:32Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r2-0105",
+    "topic": "gcse-maths-h-r2",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r2-lp-scale-factors",
+    "expected_seconds": 60,
+    "prompt": "A model car is made using a scale factor of 1/40. The real car is 4.2 m long. How long is the model, in cm? (1 m = 100 cm.)",
+    "answer": { "value": "10.5", "unit": "cm" },
+    "verify": { "expression": "4.2*100/40" },
+    "marks": 2,
+    "mark_scheme": ["M1 for 420 ÷ 40 or 4.2 ÷ 40", "A1 for 10.5"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R2",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R2 (page 16; PDF page 28)",
+        "quote": "use scale factors, scale diagrams and maps",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R2). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:41:33Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r2-0106",
+    "topic": "gcse-maths-h-r2",
+    "type": "numeric",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r2-lp-scale-factors",
+    "expected_seconds": 30,
+    "prompt": "A photo is 6 cm wide. It is enlarged by a scale factor of 2.5. How wide is the enlargement, in cm?",
+    "answer": { "value": "15", "unit": "cm" },
+    "verify": { "expression": "6*2.5" },
+    "marks": 1,
+    "mark_scheme": ["B1 for 15"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R2",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R2 (page 16; PDF page 28)",
+        "quote": "use scale factors, scale diagrams and maps",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R2). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:41:34Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r2-0107",
+    "topic": "gcse-maths-h-r2",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r2-lp-scale-factors",
+    "expected_seconds": 60,
+    "prompt": "On a scale drawing, 5 cm represents 12 m. A room is 10 cm long on the drawing. Let x m be its real length. Solve x/10 = 12/5 to find x.",
+    "answer": { "solutions": ["24"] },
+    "verify": { "method": "solve", "equation": "x/10 = 12/5", "variable": "x" },
+    "steps": ["x/10 = 12/5", "x = 10*12/5", "x = 24"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 10 × 12 ÷ 5 or 12 ÷ 5 = 2.4 m per cm", "A1 for 24"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R2",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R2 (page 16; PDF page 28)",
+        "quote": "use scale factors, scale diagrams and maps",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R2). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T19:41:27Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:41:35Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r2-0108",
+    "topic": "gcse-maths-h-r2",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r2-lp-scale-cards",
+    "expected_seconds": 15,
+    "front": "A scale of 1 : 100 means 1 cm on the drawing represents how many cm in real life?",
+    "back": "100",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R2",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R2 (page 16; PDF page 28)",
+        "quote": "use scale factors, scale diagrams and maps",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R2). Meaning of a ratio scale 1 : n, which the specification calls a scale.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:41:36Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r2-0109",
+    "topic": "gcse-maths-h-r2",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r2-lp-scale-cards",
+    "expected_seconds": 15,
+    "front": "A 5 cm length is enlarged by scale factor 3. How long is the new length, in cm?",
+    "back": "15",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R2",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R2 (page 16; PDF page 28)",
+        "quote": "use scale factors, scale diagrams and maps",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R2). Checked: 5 × 3 = 15.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:41:36Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r2-0110",
+    "topic": "gcse-maths-h-r2",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r2-lp-scale-cards",
+    "expected_seconds": 15,
+    "front": "A map has a scale of 1 : 1000. How many metres does 3 cm on the map represent? (100 cm = 1 m)",
+    "back": "30",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R2",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R2 (page 16; PDF page 28)",
+        "quote": "use scale factors, scale diagrams and maps",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R2). Checked: 3 × 1000 = 3000 cm = 30 m.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:41:37Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,632 @@
+[
+  {
+    "id": "gcse-maths-h-r5-0101",
+    "topic": "gcse-maths-h-r5",
+    "type": "numeric",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r5-lp-share",
+    "expected_seconds": 45,
+    "prompt": "Share £120 in the ratio 3 : 5. How much is the larger share?",
+    "answer": { "value": "75", "unit": "pounds" },
+    "verify": { "expression": "120*5/8" },
+    "marks": 2,
+    "mark_scheme": ["M1 for 120 ÷ 8 = 15", "A1 for 75"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R5",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R5 (page 16; PDF page 28)",
+        "quote": "divide a given quantity into two parts in a given part:part or part:whole",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R5). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:42:44Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:42:48Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:43:56Z",
+          "notes": "model answered \"£75\"; expected \"75\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:44:02Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r5-0102",
+    "topic": "gcse-maths-h-r5",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r5-lp-share",
+    "expected_seconds": 45,
+    "prompt": "Divide 84 kg in the ratio 2 : 5. How much is the smaller part?",
+    "answer": { "value": "24", "unit": "kg" },
+    "verify": { "expression": "84*2/7" },
+    "marks": 2,
+    "mark_scheme": ["M1 for 84 ÷ 7 = 12", "A1 for 24"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R5",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R5 (page 16; PDF page 28)",
+        "quote": "divide a given quantity into two parts in a given part:part or part:whole",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R5). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:42:44Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:42:48Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:44:08Z",
+          "notes": "model answered \"24 kg\"; expected \"24\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:44:14Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r5-0103",
+    "topic": "gcse-maths-h-r5",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r5-lp-share",
+    "expected_seconds": 60,
+    "prompt": "Share £360 in the ratio 2 : 3 : 7. How much is the largest share?",
+    "answer": { "value": "210", "unit": "pounds" },
+    "verify": { "expression": "360*7/12" },
+    "marks": 2,
+    "mark_scheme": ["M1 for 360 ÷ 12 = 30", "A1 for 210"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R5",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R5 (page 16; PDF page 28)",
+        "quote": "divide a given quantity into two parts in a given part:part or part:whole",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R5). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:42:44Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:42:49Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:44:21Z",
+          "notes": "model answered \"£210\"; expected \"210\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:44:32Z",
+          "notes": "outside_specification (prompt): The provided specification reference R5 states students should be able to 'divide a given quantity into two parts...'. The question requires dividing a quantity into three parts, which is not explicitly covered by the cited source."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r5-0104",
+    "topic": "gcse-maths-h-r5",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-r5-lp-share",
+    "expected_seconds": 120,
+    "prompt": "Two friends share some sweets in the ratio 4 : 7. The second friend gets 21 more sweets than the first. How many sweets are there altogether?",
+    "answer": { "value": "77" },
+    "verify": { "expression": "11*21/3" },
+    "marks": 3,
+    "mark_scheme": ["M1 for 7 - 4 = 3 parts = 21", "M1 for 1 part = 7", "A1 for 77"],
+    "explanation": "The difference is 7 - 4 = 3 parts, so 3 parts = 21 and 1 part = 7. Altogether 11 parts = 77.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R5",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R5 (page 16; PDF page 28)",
+        "quote": "divide a given quantity into two parts in a given part:part or part:whole",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R5 (page 16; PDF page 28)",
+        "quote": "apply ratio to real contexts and problems (such as those involving conversion, comparison, scaling, mixing, concentrations)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R5). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:42:44Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:42:50Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:44:37Z",
+          "notes": "model answered \"77 sweets\"; expected \"77\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:44:47Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r5-0105",
+    "topic": "gcse-maths-h-r5",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r5-lp-share",
+    "expected_seconds": 60,
+    "prompt": "Two quantities are in the ratio 3 : 8. The second is 40 more than the first. Let one part be p. Solve 8p - 3p = 40 to find p.",
+    "answer": { "solutions": ["8"] },
+    "verify": { "method": "solve", "equation": "8p - 3p = 40", "variable": "p" },
+    "steps": ["8p - 3p = 40", "5p = 40", "p = 8"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 5p = 40", "A1 for p = 8"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R5",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R5 (page 16; PDF page 28)",
+        "quote": "divide a given quantity into two parts in a given part:part or part:whole",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R5). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T19:42:44Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:42:51Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r5-0106",
+    "topic": "gcse-maths-h-r5",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r5-lp-contexts",
+    "expected_seconds": 25,
+    "prompt": "The ratio of boys to girls in a class is 3 : 4. What fraction of the class are girls?",
+    "options": ["3/4", "4/7", "3/7", "4/3"],
+    "answer": { "option": 1 },
+    "marks": 1,
+    "explanation": "There are 3 + 4 = 7 parts, and 4 of them are girls: 4/7.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R5",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R5 (page 16; PDF page 28)",
+        "quote": "divide a given quantity into two parts in a given part:part or part:whole",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R5). Checked: 4/(3 + 4) = 4/7.",
+          "at": "2026-11-25T19:42:44Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:42:52Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r5-0107",
+    "topic": "gcse-maths-h-r5",
+    "type": "numeric",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r5-lp-contexts",
+    "expected_seconds": 30,
+    "prompt": "Concrete is made by mixing cement and sand in the ratio 1 : 4. How much sand is needed with 15 kg of cement?",
+    "answer": { "value": "60", "unit": "kg" },
+    "verify": { "expression": "15*4" },
+    "marks": 1,
+    "mark_scheme": ["B1 for 60"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R5",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R5 (page 16; PDF page 28)",
+        "quote": "apply ratio to real contexts and problems (such as those involving conversion, comparison, scaling, mixing, concentrations)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R5). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:42:44Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:42:52Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r5-0108",
+    "topic": "gcse-maths-h-r5",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r5-lp-contexts",
+    "expected_seconds": 45,
+    "prompt": "A recipe for 4 people uses 300 g of flour. How much flour is needed for 10 people?",
+    "answer": { "value": "750", "unit": "g" },
+    "verify": { "expression": "300/4*10" },
+    "marks": 2,
+    "mark_scheme": ["M1 for 300 ÷ 4 = 75", "A1 for 750"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R5",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R5 (page 16; PDF page 28)",
+        "quote": "apply ratio to real contexts and problems (such as those involving conversion, comparison, scaling, mixing, concentrations)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R5). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:42:44Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:42:53Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r5-0109",
+    "topic": "gcse-maths-h-r5",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r5-lp-share-cards",
+    "expected_seconds": 15,
+    "front": "Share 20 in the ratio 1 : 3. What is the smaller share?",
+    "back": "5",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R5",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R5 (page 16; PDF page 28)",
+        "quote": "divide a given quantity into two parts in a given part:part or part:whole",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R5). Checked: 20 ÷ 4 = 5.",
+          "at": "2026-11-25T19:42:44Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:42:54Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r5-0110",
+    "topic": "gcse-maths-h-r5",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r5-lp-share-cards",
+    "expected_seconds": 15,
+    "front": "Share 25 in the ratio 2 : 3. What is the larger share?",
+    "back": "15",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R5",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R5 (page 16; PDF page 28)",
+        "quote": "divide a given quantity into two parts in a given part:part or part:whole",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R5). Checked: 25 ÷ 5 × 3 = 15.",
+          "at": "2026-11-25T19:42:44Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:42:55Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r5-0111",
+    "topic": "gcse-maths-h-r5",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r5-lp-share-cards",
+    "expected_seconds": 15,
+    "front": "Boys : girls = 2 : 5. What fraction of the group are boys?",
+    "back": "2/7",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R5",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R5 (page 16; PDF page 28)",
+        "quote": "divide a given quantity into two parts in a given part:part or part:whole",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R5). Checked: 2/(2 + 5) = 2/7.",
+          "at": "2026-11-25T19:42:44Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:42:55Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  }
+]

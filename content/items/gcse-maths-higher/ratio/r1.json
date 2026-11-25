@@ -1,0 +1,717 @@
+[
+  {
+    "id": "gcse-maths-h-r1-0101",
+    "topic": "gcse-maths-h-r1",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r1-lp-area-volume-units",
+    "expected_seconds": 45,
+    "prompt": "1 m = 100 cm. Convert 2.5 m^2 to cm^2.",
+    "answer": { "value": "25000", "unit": "cm^2" },
+    "verify": { "expression": "2.5*100^2" },
+    "marks": 2,
+    "mark_scheme": ["M1 for 2.5 × 100 × 100", "A1 for 25000"],
+    "explanation": "1 m^2 = 100 cm × 100 cm = 10 000 cm^2, so 2.5 m^2 = 25 000 cm^2.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "change freely between related standard units (e.g. time, length, area,",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R1). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:40:46Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:41:50Z",
+          "notes": "model answered \"25000 cm^2\"; expected \"25000\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:41:58Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0102",
+    "topic": "gcse-maths-h-r1",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r1-lp-area-volume-units",
+    "expected_seconds": 45,
+    "prompt": "1 cm = 10 mm. Convert 4 cm^3 to mm^3.",
+    "answer": { "value": "4000", "unit": "mm^3" },
+    "verify": { "expression": "4*10^3" },
+    "marks": 2,
+    "mark_scheme": ["M1 for 4 × 10 × 10 × 10", "A1 for 4000"],
+    "explanation": "1 cm^3 = 10 × 10 × 10 = 1000 mm^3, so 4 cm^3 = 4000 mm^3.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "change freely between related standard units (e.g. time, length, area,",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R1). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:40:47Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:42:03Z",
+          "notes": "model answered \"4000 mm^3\"; expected \"4000\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:42:15Z",
+          "notes": "outside_specification (prompt): The cited specification R1 supports conversion of units for \"time, length, area\". The question asks for a conversion of volume (cm^3 to mm^3), which is not explicitly mentioned in the provided source text."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0103",
+    "topic": "gcse-maths-h-r1",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r1-lp-area-volume-units",
+    "expected_seconds": 45,
+    "prompt": "1 m = 100 cm. Convert 45 000 cm^2 to m^2.",
+    "answer": { "value": "4.5", "unit": "m^2" },
+    "verify": { "expression": "45000/100^2" },
+    "marks": 2,
+    "mark_scheme": ["M1 for 45 000 ÷ (100 × 100)", "A1 for 4.5"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "change freely between related standard units (e.g. time, length, area,",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R1). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:40:48Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:42:21Z",
+          "notes": "model answered \"4.5 m^2\"; expected \"4.5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:42:27Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0104",
+    "topic": "gcse-maths-h-r1",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r1-lp-area-volume-units",
+    "expected_seconds": 25,
+    "prompt": "1 litre = 1000 cm^3. How many cm^3 are in 2.4 litres?",
+    "options": ["24 cm^3", "240 cm^3", "2400 cm^3", "24000 cm^3"],
+    "answer": { "option": 2 },
+    "marks": 1,
+    "explanation": "2.4 × 1000 = 2400 cm^3.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "change freely between related standard units (e.g. time, length, area,",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R1). Arithmetic checked: 2.4 × 1000 = 2400.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:40:49Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:42:34Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:42:45Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0105",
+    "topic": "gcse-maths-h-r1",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r1-lp-compound-units",
+    "expected_seconds": 60,
+    "prompt": "Convert 72 km/h to m/s. (1 km = 1000 m and 1 hour = 3600 seconds.)",
+    "answer": { "value": "20", "unit": "m/s" },
+    "verify": { "expression": "72*1000/3600" },
+    "marks": 2,
+    "mark_scheme": ["M1 for 72 × 1000 ÷ 3600", "A1 for 20"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "and compound units (e.g. speed, rates of pay,",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R1). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:40:50Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:42:51Z",
+          "notes": "model answered \"20 m/s\"; expected \"20\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:42:59Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0106",
+    "topic": "gcse-maths-h-r1",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r1-lp-compound-units",
+    "expected_seconds": 60,
+    "prompt": "Convert 15 m/s to km/h. (1 km = 1000 m and 1 hour = 3600 seconds.)",
+    "answer": { "value": "54", "unit": "km/h" },
+    "verify": { "expression": "15*3600/1000" },
+    "marks": 2,
+    "mark_scheme": ["M1 for 15 × 3600 ÷ 1000", "A1 for 54"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "and compound units (e.g. speed, rates of pay,",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R1). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:40:50Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:43:06Z",
+          "notes": "model answered \"54 km/h\"; expected \"54\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:43:14Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0107",
+    "topic": "gcse-maths-h-r1",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-r1-lp-compound-units",
+    "expected_seconds": 90,
+    "prompt": "A metal has density 2.7 g/cm^3. Convert this to kg/m^3. (1 kg = 1000 g and 1 m^3 = 1 000 000 cm^3.)",
+    "answer": { "value": "2700", "unit": "kg/m^3" },
+    "verify": { "expression": "2.7*1000000/1000" },
+    "marks": 2,
+    "mark_scheme": ["M1 for 2.7 × 1 000 000 ÷ 1000", "A1 for 2700"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "and compound units (e.g. speed, rates of pay,",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R1). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:40:51Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:43:24Z",
+          "notes": "model answered \"2700 kg/m^3\"; expected \"2700\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:43:45Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0108",
+    "topic": "gcse-maths-h-r1",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r1-lp-compound-units",
+    "expected_seconds": 75,
+    "prompt": "A car travels at a constant 90 km/h. It travels 30 km. Let m be the time in minutes. Use 90 × (m/60) = 30 to find m.",
+    "answer": { "solutions": ["20"] },
+    "verify": { "method": "solve", "equation": "90*(m/60) = 30", "variable": "m" },
+    "steps": ["90*(m/60) = 30", "1.5m = 30", "m = 20"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 30 ÷ 90 = 1/3 hour or 90 × (m/60) = 30", "A1 for 20 minutes"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "and compound units (e.g. speed, rates of pay,",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R1). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:40:52Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:43:52Z",
+          "notes": "model answered \"20\"; expected \"20\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:44:13Z",
+          "notes": "wording (mark_scheme): The prompt instructs the student to 'Use 90 × (m/60) = 30 to find m', but the mark scheme allows a method mark for an alternative calculation ('30 ÷ 90 = 1/3 hour'). Awarding marks for a method that circumvents the specific instruction in the question undermines the question's intent, which is to assess algebraic manipulation within a given context."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0109",
+    "topic": "gcse-maths-h-r1",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r1-lp-unit-cards",
+    "expected_seconds": 15,
+    "front": "1 m = 100 cm. How many cm^2 are in 1 m^2?",
+    "back": "10000",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "change freely between related standard units (e.g. time, length, area,",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R1). Checked: 100 × 100 = 10 000.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:40:52Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:44:19Z",
+          "notes": "model answered \"10,000 cm²\"; expected \"10000\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:44:25Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0110",
+    "topic": "gcse-maths-h-r1",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r1-lp-unit-cards",
+    "expected_seconds": 15,
+    "front": "1 cm = 10 mm. How many mm^3 are in 1 cm^3?",
+    "back": "1000",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "change freely between related standard units (e.g. time, length, area,",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R1). Checked: 10 × 10 × 10 = 1000.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:40:53Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:44:34Z",
+          "notes": "model answered \"1000\"; expected \"1000\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T19:45:00Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0111",
+    "topic": "gcse-maths-h-r1",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r1-lp-unit-cards",
+    "expected_seconds": 15,
+    "front": "1 hour = 60 minutes. How many minutes are in 2.5 hours?",
+    "back": "150",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "change freely between related standard units (e.g. time, length, area,",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R1). Checked: 2.5 × 60 = 150.",
+          "at": "2026-11-25T19:40:42Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:40:54Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  }
+]
