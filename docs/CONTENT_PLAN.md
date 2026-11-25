@@ -96,6 +96,10 @@ Item types: `multiple_choice`, `short_answer`, `numeric`, `worked_maths`, `flash
   `expanded`) compared with `answer.expression`. Optional `steps` (a model solution) are checked
   line by line.
 
+A maths `flashcard` can add `back_formula` (`formula` in maths-engine notation, e.g.
+`x = (-b +- sqrt(b^2 - 4ac)) / (2a)`, and optional `conditions`, e.g. `["a ≠ 0"]`) so its blind
+answer is compared by the maths engine instead of word for word.
+
 `checked_by` values: `maths-engine`, `model-b` (second AI model agreed), `human`, and `author`
 (only the writing session checked it). It is a short summary; the full audit trail is the
 `verification` record below. Maths items must include `maths-engine`.

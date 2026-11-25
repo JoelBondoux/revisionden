@@ -1,5 +1,6 @@
 // Pipeline step 3 (docs/VERIFICATION.md): a model from a DIFFERENT provider answers the item
 // without seeing the answer. The step passes only if its answer matches, with high confidence.
+import { createPythonChecker } from '../content/maths-engine.mjs';
 import { stamp } from './record.mjs';
 
 export const ANSWER_SCHEMA = {
@@ -27,6 +28,11 @@ const HOW = {
     'Reply with the final answer only: all solutions separated by commas, or the expression.',
 };
 
+const HOW_FORMULA =
+  'Reply with the formula in plain calculator notation: sqrt() for roots, ^ for powers, * for ' +
+  'multiplication, +- for ±, and brackets around every numerator and denominator. Then write ' +
+  '"where" and any conditions that must hold (for example "where b != 0").';
+
 /** The prompt sent to the second model. It never contains the answer, explanation or hint. */
 export function blindAnswerPrompt(item) {
   const lines = [];
@@ -35,7 +41,7 @@ export function blindAnswerPrompt(item) {
   if (item.type === 'multiple_choice') {
     lines.push('Options:', ...item.options.map((o, i) => `${i}. ${o}`));
   }
-  lines.push('', HOW[item.type]);
+  lines.push('', item.back_formula ? HOW_FORMULA : HOW[item.type]);
   return { system: SYSTEM, prompt: lines.join('\n') };
 }
 
@@ -134,6 +140,31 @@ export function writerProviderOf(item) {
   return PROVIDER_HINTS.find(([, re]) => re.test(tool))?.[0] ?? 'anthropic';
 }
 
+// Conditions match ignoring spaces and case, with ≠, != and =/= read the same.
+const condition = (s) =>
+  s
+    .toLowerCase()
+    .replace(/!=|=\/=/g, '≠')
+    .replace(/\s+/g, '');
+
+/**
+ * Maths flashcards (back_formula): the maths engine compares the formula part of the answer, and
+ * the answer must state every condition. { ok, notes }.
+ */
+async function formulaVerdict(item, answer, maths) {
+  const [formulaPart, ...rest] = String(answer).split(/\bwhere\b/i);
+  const given = formulaPart.replace(/[\s,;]+$/, '').trim();
+  const { formula, conditions = [] } = item.back_formula;
+  const [result] = await maths([{ id: item.id, kind: 'formula', expected: formula, given }]);
+  const stated = condition(rest.join(' '));
+  const missing = conditions.filter((c) => !stated.includes(condition(c)));
+  const notes = [
+    `maths engine: ${result?.ok ? 'same formula' : 'not the same formula'}`,
+    ...missing.map((c) => `does not state "${c}": a person must check`),
+  ];
+  return { ok: Boolean(result?.ok) && missing.length === 0, notes };
+}
+
 const record = (provider, modelVersion, result, notes, now) => ({
   name: 'blind-answer',
   result,
@@ -144,7 +175,14 @@ const record = (provider, modelVersion, result, notes, now) => ({
 });
 
 /** Runs the blind answer for one item: { id, result, check } (check is the record entry). */
-export async function runBlindAnswer(item, provider, { now = () => new Date() } = {}) {
+export async function runBlindAnswer(
+  item,
+  provider,
+  {
+    now = () => new Date(),
+    maths = createPythonChecker({ python: process.env.MATHS_PYTHON }),
+  } = {},
+) {
   const writer = writerProviderOf(item);
   if (provider.provider === writer) {
     throw new Error(
@@ -165,10 +203,12 @@ export async function runBlindAnswer(item, provider, { now = () => new Date() } 
     schema: ANSWER_SCHEMA,
     schemaName: 'blind_answer',
   });
-  const matches = want.matches(output.answer);
+  const formula = item.back_formula ? await formulaVerdict(item, output.answer, maths) : null;
+  const matches = formula ? formula.ok : want.matches(output.answer);
   const sure = output.confidence === 'high';
   const notes = [
-    `model answered "${output.answer}"; expected "${want.expected}"`,
+    `model answered "${output.answer}"; expected "${formula ? item.back_formula.formula : want.expected}"`,
+    ...(formula ? formula.notes : []),
     ...(sure ? [] : [`confidence ${output.confidence}`]),
   ].join('; ');
   const result = matches && sure ? 'pass' : 'fail';

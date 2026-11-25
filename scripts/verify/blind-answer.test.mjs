@@ -145,6 +145,70 @@ test('flashcards compare the model answer to the back of the card', async () => 
   assert.equal(r.result, 'pass');
 });
 
+const formulaCard = draftItem('fixture-formula-card', undefined, {
+  type: 'flashcard',
+  front: 'Fixture formula front',
+  back: 'SECRET BACK',
+  back_formula: { formula: 'y = m*x + c', conditions: ['m ≠ 0'] },
+  prompt: undefined,
+  answer: undefined,
+  marks: undefined,
+});
+
+/** A fake maths engine: records each check and says ok when given === the listed answer. */
+function fakeMaths(okFor) {
+  const calls = [];
+  const maths = async (checks) => {
+    calls.push(...checks);
+    return checks.map((c) => ({ id: c.id, ok: c.given === okFor }));
+  };
+  return { maths, calls };
+}
+
+test('a formula flashcard asks for calculator notation and conditions, never showing the back', () => {
+  const { prompt } = blindAnswerPrompt(formulaCard);
+  assert.match(prompt, /Fixture formula front/);
+  assert.match(prompt, /calculator notation/);
+  assert.match(prompt, /where/);
+  assert.doesNotMatch(prompt, /SECRET|m\*x/);
+});
+
+test('a formula flashcard passes when the maths engine finds the same formula and every condition is stated', async () => {
+  const { maths, calls } = fakeMaths('y = c + x*m');
+  const r = await runBlindAnswer(
+    formulaCard,
+    fakeProvider({ answer: 'y = c + x*m, where m != 0', confidence: 'high', reasoning: '' }),
+    { now: AT, maths },
+  );
+  assert.deepEqual(calls, [
+    { id: 'fixture-formula-card', kind: 'formula', expected: 'y = m*x + c', given: 'y = c + x*m' },
+  ]);
+  assert.equal(r.result, 'pass');
+  assert.match(r.check.notes, /maths engine: same formula/);
+});
+
+test('a formula flashcard fails when the maths engine finds a different formula', async () => {
+  const { maths } = fakeMaths('nothing matches');
+  const r = await runBlindAnswer(
+    formulaCard,
+    fakeProvider({ answer: 'y = m*x - c where m ≠ 0', confidence: 'high', reasoning: '' }),
+    { now: AT, maths },
+  );
+  assert.equal(r.result, 'fail');
+  assert.match(r.check.notes, /maths engine: not the same formula/);
+});
+
+test('a formula flashcard fails for a person to check when the answer leaves out a condition', async () => {
+  const { maths } = fakeMaths('y = m*x + c');
+  const r = await runBlindAnswer(
+    formulaCard,
+    fakeProvider({ answer: 'y = m*x + c', confidence: 'high', reasoning: '' }),
+    { now: AT, maths },
+  );
+  assert.equal(r.result, 'fail');
+  assert.match(r.check.notes, /does not state "m ≠ 0": a person must check/);
+});
+
 test('worked maths solutions match as a set, in any order', async () => {
   const item = draftItem('fixture-solve', undefined, {
     type: 'worked_maths',

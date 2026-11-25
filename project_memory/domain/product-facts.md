@@ -323,6 +323,8 @@ Tags: #product #rules #limits #defaults
 - Extended answers: blind marking replaces the blind answer (three exemplars, top, middle and low,
   marked by a second provider without the intended levels; all three must match exactly), and
   every one needs individual human approval; review batches always include them.
+- Maths flashcards with `back_formula` are blind-answered by formula: the maths engine compares
+  the formula (any equivalent form) and every listed condition (e.g. `a ≠ 0`) must be stated.
 - Blind answer must come from a different provider from the writer (Claude by default) and be
   highly confident; any adversarial-review problem fails the item. Real models never run in
   tests or CI.

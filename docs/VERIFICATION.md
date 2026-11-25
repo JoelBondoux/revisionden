@@ -188,7 +188,10 @@ exemplars, and a `human-approval` check; review batches always include them in t
 blind answer must come from a different provider from the writer (Claude by default, read from
 the grounded-writing check). It sees no answer, hint or explanation, and passes only on a match
 with high confidence (multiple choice: same option; numeric: within the item tolerance; short
-answers and flashcards: same words ignoring case and end punctuation; worked maths: the same
+answers and flashcards: same words ignoring case and end punctuation; maths flashcards with a
+`back_formula`: the maths engine finds the same formula (`±` gives both branches, a bare right-hand
+side is compared with the expected one, notation is read strictly so `/ 2a` is not `/ (2a)`), and the
+answer states every listed condition such as `a ≠ 0`, otherwise it fails for a person to check; worked maths: the same
 solutions in any order, or the same expression). The reviewer sees the whole item and the
 quoted sources and must report factual errors, a wrong answer, ambiguity, a second correct
 option, content outside the specification, unsupported claims or poor wording; any problem or
