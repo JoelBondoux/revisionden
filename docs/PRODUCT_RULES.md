@@ -335,6 +335,24 @@ Mockups: screens 19 (student) and 20 (parent).
   or while the app is in the background.
 - **Test mode**: no correct or wrong sound before the student submits; the reveal plays once for
   the whole set. Timed papers play only the timer warning.
+- **Reward sounds grow with the reward** (product owner, 2026-11-25). Bigger rewards sound
+  bigger, and there is enough variety to stay fresh over five years:
+  - Four tiers follow the reward's rarity (`REWARDS.md`): **common** (a bright chime, about
+    0.5 s), **rare** (a two-part motif, about 1 s), **epic** (a rising run with shimmer, about
+    1.5 s) and **legendary** (a short fanfare with harmony and a low hit, at most 3 s).
+  - Each tier has at least **4 variations**; the same one never plays twice in a row (randomness
+    injected, so tests are repeatable).
+  - **Ladders climb:** each step of a milestone ladder (for example streak 7, 30, 60, 100 … 1,000
+    days) plays its tier's sound a step higher and a little fuller than the step before, so the
+    100-day streak sounds bigger than the 30-day one.
+  - **Levels:** the level-up sound rises gently every 10 levels; every 10th level plays the rare
+    sound; prestige stars play legendary.
+  - **Year chapters** each have their own sound colour (a different synth voice), so Year 11
+    rewards sound different from Year 9; the GCSE and A-Level finisher sets get unique fanfares.
+  - Several rewards at once play only the biggest one, once (never a pile-up), after the lesson's
+    own result sound.
+  - Legendary sounds can be skipped with a tap; all reward sounds follow mute and volume, and never
+    play in Test mode before submit.
 - Sound is never the only signal: every sound has a matching visual. Reduced motion does not mute
   sound; the two settings are separate.
 - Volume levels (master gain): low 0.12, medium 0.25, high 0.45. Settings key on the device:

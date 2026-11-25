@@ -82,7 +82,7 @@ Cloudflare API token with the "AI Gateway: Run" permission (dashboard: AI, AI Ga
 
 Web build variables for production (GitHub environment `production`, Variables):
 `VITE_OPERATOR_NAME`, `VITE_CONTACT_EMAIL`, `VITE_POLICY_EFFECTIVE_DATE` (required: the build
-fails without them). Agreed values: `VITE_OPERATOR_NAME` = `JoelBondoux.net`, `VITE_CONTACT_EMAIL` =
+fails without them). `VITE_OPERATOR_NAME` is the agreed value (held by the product owner); `VITE_CONTACT_EMAIL` =
 `privacy@revisionden.com`; leave `VITE_POLICY_EFFECTIVE_DATE` unset until launch.
 `VITE_POSTAL_ADDRESS` is not used. Dev and staging may leave them unset
 and show "to be added".
@@ -125,7 +125,7 @@ Step by step (about 15 minutes):
    copy the URL. In each GitHub environment add the secret `DATABASE_URL` (`main` goes in
    `production`).
 5. **Production variables.** Environment `production`, Variables: `VITE_OPERATOR_NAME`
-   (`JoelBondoux.net`) and `VITE_CONTACT_EMAIL` (`privacy@revisionden.com`). Add
+   (the agreed value, held by the product owner) and `VITE_CONTACT_EMAIL` (`privacy@revisionden.com`). Add
    `VITE_POLICY_EFFECTIVE_DATE` (for example `2026-12-01`) only when production launches; until
    then the production web build fails on purpose. Setting the same two in `dev` and `staging` is
    optional (they show "to be added" without them).
