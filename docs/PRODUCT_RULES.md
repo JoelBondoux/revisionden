@@ -188,6 +188,12 @@ Product owner decision, 2026-11-25: **parent view only**.
   feedback (`/feedback/family`) and to the parent home (`/parent`).
 - Students always use their own device, linked by QR code and passkey. A student device behaves
   as before.
+- After the 12-hour device session, the student unlocks with the passkey: on the welcome page
+  ("I'm a student: unlock with my passkey"), or at `/unlock`, where any student screen sends them
+  when its session has run out, and back to that screen afterwards. With no passkey on the device:
+  "Ask a parent to link this device", with no account details shown. Parents and students share
+  one sign-in page, the welcome page (`decisions/0006-student-passkey-unlock.md` in project
+  memory).
 
 ## Learning loop (workstream F)
 

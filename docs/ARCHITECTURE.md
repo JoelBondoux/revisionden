@@ -91,7 +91,9 @@ Decision 0005. `revisionden.com` is the sales site; the app is on `app.revisiond
 
 **Sign-in.** Parent uses Google or Microsoft through Better Auth (runs in our Worker; sessions in
 Neon). Parent creates student profiles. A student device is linked by a one-time QR token
-(10 minutes, single use) and then a passkey.
+(10 minutes, single use) and then a passkey. After the 12-hour student session the student
+unlocks with that passkey on the welcome page or at `/unlock` (I5): any 401 from a
+`/v1/student/...` call sends the device to `/unlock?returnTo=<page>` (`src/api/LoadingOrError.tsx`).
 
 **Learning.** The web app fetches the next items from the API. The API picks them with
 `packages/core` (weak spots first, parent focus weighting, spaced repetition) and records every
@@ -360,6 +362,7 @@ The only exceptions are listed in `PENDING_ROUTES` (agreed with another workstre
 | `features/feedback` operator "Error reports"      | `GET /v1/admin/error-reports`                                                                                                            | yes   |
 | `features/onboarding/api.ts`                      | `GET /v1/onboarding/family`, `POST /v1/onboarding/children`                                                                              | yes   |
 | `features/onboarding/api.ts` (link a device)      | `POST /v1/students/:id/link-tokens`, `POST /v1/device/link`, `.../verify`                                                                | yes   |
+| `features/onboarding/StudentUnlock.tsx` (unlock)  | `POST /v1/device/unlock/options` (no credential ids), `POST /v1/device/unlock/verify`                                                    | yes   |
 | `features/legal/acceptance.tsx`                   | `GET, PUT /v1/policy-acceptances`                                                                                                        | yes   |
 | `features/learn/learnApi.ts` (lessons, tests)     | `GET /v1/student/learn/{lesson,command-words,progress}`                                                                                  | yes   |
 |                                                   | `GET /v1/student/learn/subjects/:id/topics`                                                                                              | yes   |
@@ -385,8 +388,7 @@ API routes the web app does not call yet: `GET /health` (deploy check and smoke 
 `GET, POST /v1/students/:id/enrolments`, `DELETE .../enrolments/:subjectId` (onboarding uses
 `POST /v1/onboarding/children` instead), `GET, DELETE /v1/students/:id/devices[/:deviceId]`,
 `GET, PUT /v1/students/:id/avatar`, `GET /v1/students/:id/stats`, `GET /v1/students/:id/ai-usage`,
-`GET /v1/students/:id/parent-rewards` (H2 reads it), `POST /v1/device/unlock/{options,verify}`,
-`GET /v1/student/me`, `POST /v1/student/lock`, `POST /v1/student/items/:itemId/reports`,
+`GET /v1/students/:id/parent-rewards` (H2 reads it), `GET /v1/student/me`, `POST /v1/student/lock`, `POST /v1/student/items/:itemId/reports`,
 `POST /v1/items/:itemId/reports`, `POST /v1/ai/mark-short-answer`, `POST /v1/review/batches`,
 `GET, POST /v1/review/rechecks`, `POST .../rechecks/:id/done`, `GET /v1/review/recalculations`,
 `POST .../recalculations/:id/done`, and Better Auth's callback (`/api/auth/callback/:provider`, reached by the provider, not by app

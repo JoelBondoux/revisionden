@@ -35,6 +35,15 @@ Tags: #product #rules #limits #defaults
   the token up. Tokens and sessions are stored only as hashes.
 - A student device session lasts 12 hours, then the student unlocks again with the passkey.
   Parents can unlink a device, which ends its session.
+- Students unlock on the welcome page ("I'm a student: unlock with my passkey") or at `/unlock`,
+  where a student screen sends them when its API call gets 401; they return to the page they were
+  on (default `/map`). With no passkey on the device the page says "Ask a parent to link this
+  device" and shows no account details. The welcome page (`/`) is the one sign-in page for
+  parents and students; the sales site's "Sign in" goes there
+  (`decisions/0006-student-passkey-unlock.md`). Implemented in
+  `apps/web/src/features/onboarding/StudentUnlock.tsx`.
+- A passkey synced to another device (iCloud Keychain, Google Password Manager) unlocks there
+  too, as the same linked device. Open owner question (`operations/contradictions.md`).
 - Rate limits per address: 30 a minute on sign-in and device routes, 20 a minute on AI routes.
   Implemented in `apps/api`.
 
@@ -258,7 +267,8 @@ Tags: #product #rules #limits #defaults
   `apps/www/public` and remade by hand with `node apps/www/scripts/make-images.mjs` after an art
   change; original art only, no stock photos or AI-generated images.
 - Production passkeys use the RP ID `revisionden.com`; OAuth callbacks are on the API host, so the
-  move to `app.` needed no change in Google or Microsoft.
+  move to `app.` needed no change in Google or Microsoft. Dev and staging passkeys use their own
+  hosts (`dev.revisionden.com`, `staging.revisionden.com`), so they work only there.
 - Live since 2026-11-25 (workstream G): API Workers on all three API hosts; web app on `dev.` and
   `staging.`. The production web app waits for the operator details (its build fails without them).
 - Workers: `revisionden-api-dev`, `revisionden-api-staging`, `revisionden-api` (API) and

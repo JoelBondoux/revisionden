@@ -5,6 +5,7 @@ import { Pip } from '../components/Pip';
 import { useParentSession } from '../api/signIn';
 import { SignInButtons } from '../api/SignInButtons';
 import { SignOutButton } from '../api/SignOutButton';
+import { StudentUnlock } from '../features/onboarding/StudentUnlock';
 
 export function WelcomePage() {
   const [params] = useSearchParams();
@@ -34,10 +35,13 @@ export function WelcomePage() {
         )}
       </Card>
       <Card title="Students">
-        <p className="secondary-text">
-          Ask a parent to show you the QR code in their RevisionDen, then scan it with this
-          device&apos;s camera.
-        </p>
+        <div className="stack">
+          <StudentUnlock label="I'm a student: unlock with my passkey" />
+          <p className="secondary-text">
+            New on this device? Ask a parent to show you the QR code in their RevisionDen, then scan
+            it with this device&apos;s camera.
+          </p>
+        </div>
       </Card>
       <footer className="welcome__footer secondary-text">
         <Link to="/legal">Policies</Link> · <Link to="/about">About</Link>
