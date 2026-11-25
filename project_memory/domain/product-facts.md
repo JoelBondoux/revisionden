@@ -395,3 +395,11 @@ Tags: #product #rules #limits #defaults
 - The app is run by a sole trader; name and contact details come from build variables only.
   Policy contact: `privacy@revisionden.com`; no postal address shown.
   Decision 0003.
+
+## Game feel
+
+- Approved 2026-11-25 (mockup 22): practice screens use a dark "arena" style with particle bursts,
+  combos, rising chimes, a set-complete celebration and a pulsing Next mission button; calm screens
+  stay light. Combo bonus: +5 XP per right answer from the 3rd in a row (Learn mode; Test mode at the
+  reveal). Never lives, timers, pay-to-continue, mystery rewards or streak guilt; after the daily cap
+  the call to action becomes "See you tomorrow". Detail: `docs/GAME_FEEL.md`. Workstream J.
