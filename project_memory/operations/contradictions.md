@@ -5,20 +5,27 @@
 
 ## Open
 
+- [ ] **Shared device links last 24 hours, but the data-retention policy says 10 minutes.** E4
+      (#105) adds "Send a link instead": a single-use link and short code that last 24 hours
+      (`apps/api/src/routes/devices.ts`, `docs/PRODUCT_RULES.md` "Linking a device (E4)"). The
+      QR code still lasts 10 minutes. `docs/legal/data-retention.md` (1.9) says "link codes last
+      10 minutes" and its table says device link codes are "Valid for 10 minutes and usable
+      once". Clean-up also now keeps an expired link while a passkey set-up it started is still
+      valid (up to 5 more minutes), so "deleted within 15 minutes of expiring" can be up to 20.
+      Not settled in E4: the policy is L's versioned legal text and needs a version bump. Raised
+      with the lead on 2026-11-25.
+- [ ] **ICO complaint wording awaiting owner check.** `docs/legal/complaints-policy.md` 6.1 has a
+      marked placeholder instead of the ICO's complaint page and phone number, and the parent's
+      complaint page (`apps/web/src/features/complaints/ComplaintsPage.tsx`) names the ICO without
+      contact details. The wording in `docs/legal/privacy-notice.md` ("ico.org.uk/make-a-complaint,
+      or by phone on 0303 123 1113") could not be re-checked: ico.org.uk is blocked from the build
+      sessions. Not settled: the product owner will check ico.org.uk personally (decision 0006).
 - [ ] **Combined Science and the build rule.** `docs/CONTENT_PLAN.md` "Initial subject set" leaves
       out GCSE Combined Science, which `project_memory/domain/product-facts.md` and
       `packages/core/src/onboarding.ts` offer; it also says content is built "only for the board and
       tier combinations actually selected", while the owner now wants the most-used board first
       (`docs/research/board-shares-2026-11.md`). Not settled: a content-plan decision for the
       product owner, not a research change.
-- [ ] **Synced passkeys unlock on other devices (owner question).** `docs/PRODUCT_RULES.md` says
-      students use their own device, linked by QR code and passkey, and parents see and unlink
-      each linked device. But a passkey synced through iCloud Keychain or Google Password Manager
-      unlocks on the child's other devices too, as the same `devices` row
-      (`apps/api/src/routes/devices.ts` matches `devices.credential_id`). Not settled: the owner
-      should choose to allow it, refuse synced passkeys at linking, or allow it and tell the
-      parent (options in `project_memory/decisions/0007-student-passkey-unlock.md`).
-
 - [ ] **Hidden tracks with no data yet (R7b).** Fact Checker (`factChecks`: `item_reports` has a
       family id but no student id, workstream V), Planner (`plannedWeeks`: no planned sessions,
       workstream P), Pace Setter (`pacedPapers`: no timed papers, workstream X) and Perfectionist
@@ -112,6 +119,15 @@
       except a direct link. Not settled: F2's lane; no F2 branch or PR exists yet (2026-11-25).
 
 ## Resolved
+
+- [x] **Synced passkeys unlock on other devices (owner question).** `docs/PRODUCT_RULES.md` says
+      students use their own device, linked by QR code and passkey, and parents see and unlink
+      each linked device. But a passkey synced through iCloud Keychain or Google Password Manager
+      unlocks on the child's other devices too, as the same `devices` row
+      (`apps/api/src/routes/devices.ts` matches `devices.credential_id`). Not settled: the owner
+      should choose to allow it, refuse synced passkeys at linking, or allow it and tell the
+      parent (options in `project_memory/decisions/0007-student-passkey-unlock.md`).
+      Settled 2026-11-25: the owner chose "allow, and tell the parents" (decision 0007, I5b).
 
 - [x] **Daily limit changes in the activity log.** `docs/PRODUCT_RULES.md` ("Two parents") says the
       other parent is told when a limit changes, but the daily limit (same page, "Daily limit") has

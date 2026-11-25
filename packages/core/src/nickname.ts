@@ -1,10 +1,11 @@
 /**
  * Nickname rules for student profiles (see docs/PRIVACY.md and docs/PRODUCT_RULES.md).
- * - 2 to 16 characters: letters A–Z, numbers and underscore only.
+ * - Leading and trailing spaces are trimmed first; the trimmed name is what is checked and saved.
+ * - 2 to 16 characters: letters A–Z, numbers, underscores and single spaces between words.
  * - Not on the block list. Strong words are blocked anywhere in the name; short words that
  *   appear inside ordinary words (for example "ass" in "class") only when they stand alone
- *   between underscores. Number-for-letter swaps (sh1t) and underscores (f_u_c_k) are seen
- *   through.
+ *   between underscores or spaces. Number-for-letter swaps (sh1t), underscores (f_u_c_k) and
+ *   spaces (f u c k) are seen through.
  */
 export type NicknameRejection = 'too_short' | 'too_long' | 'invalid_characters' | 'blocked';
 
@@ -18,7 +19,8 @@ export interface NicknameOptions {
 
 export const NICKNAME_MIN_LENGTH = 2;
 export const NICKNAME_MAX_LENGTH = 16;
-export const NICKNAME_PATTERN = /^[A-Za-z0-9_]+$/;
+/** Words of letters, numbers and underscores, with single spaces between them. */
+export const NICKNAME_PATTERN = /^[A-Za-z0-9_]+( [A-Za-z0-9_]+)*$/;
 
 /** Blocked anywhere in the name, after removing underscores and undoing number swaps. */
 const BLOCKED_ANYWHERE = [
@@ -83,10 +85,12 @@ function undoSwaps(text: string): string {
 }
 
 function isBlocked(nickname: string, extraBlocked: string[]): boolean {
-  const squashed = undoSwaps(nickname.replace(/_/g, ''));
+  const squashed = undoSwaps(nickname.replace(/[_ ]/g, ''));
   const anywhere = [...BLOCKED_ANYWHERE, ...extraBlocked.map((w) => w.toLowerCase())];
   if (anywhere.some((word) => squashed.includes(word))) return true;
-  const parts = nickname.split('_').map(undoSwaps);
+  // A name spelt out letter by letter ("a d m i n") is checked as one word.
+  if (BLOCKED_STANDALONE.includes(squashed)) return true;
+  const parts = nickname.split(/[_ ]/).map(undoSwaps);
   return parts.some((part) => BLOCKED_STANDALONE.includes(part));
 }
 
@@ -98,7 +102,13 @@ export function containsBlockedWord(text: string): boolean {
   return isBlocked(text.replace(/[\s-]+/g, '_'), []);
 }
 
-export function validateNickname(raw: string, options: NicknameOptions = {}): NicknameResult {
+/** The nickname as it is checked and saved: spaces at either end removed. */
+export function normaliseNickname(raw: string): string {
+  return raw.trim();
+}
+
+export function validateNickname(input: string, options: NicknameOptions = {}): NicknameResult {
+  const raw = normaliseNickname(input);
   const length = [...raw].length;
   if (length < NICKNAME_MIN_LENGTH) return { ok: false, reason: 'too_short' };
   if (length > NICKNAME_MAX_LENGTH) return { ok: false, reason: 'too_long' };
@@ -111,6 +121,7 @@ export function validateNickname(raw: string, options: NicknameOptions = {}): Ni
 export const NICKNAME_MESSAGES: Record<NicknameRejection, string> = {
   too_short: `Nickname must be at least ${NICKNAME_MIN_LENGTH} characters`,
   too_long: `Nickname must be at most ${NICKNAME_MAX_LENGTH} characters`,
-  invalid_characters: 'Nickname can only use letters, numbers and underscores',
-  blocked: 'Please choose a different nickname',
+  invalid_characters: 'Nickname can only use letters, numbers, spaces and underscores',
+  blocked:
+    "That looks like a real name or a word we don't allow. Try a made-up nickname like Pixel_Fox",
 };

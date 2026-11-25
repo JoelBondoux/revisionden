@@ -22,11 +22,31 @@ function wholeWord(value: string): RegExp {
   return new RegExp(`(?<![A-Za-z0-9_])${escaped}(?![A-Za-z0-9_])`, 'i');
 }
 
+// Between the words of a nickname: spaces, underscores, or JSON-escaped line breaks and tabs.
+const NICKNAME_GAP = String.raw`(?:[\s_]|\\[nrt])+`;
+
+/**
+ * A nickname with spaces or underscores ("Thing 1", "pixel_fox") matches however its words are
+ * spaced or joined, so "thing  1", "Thing_1" and "pixel fox" are all caught. Underscores at
+ * either end ("_Pixel", "Pixel_") may be there or not, and an underscore-only nickname ("__")
+ * is matched exactly.
+ */
+function nicknamePattern(nickname: string): RegExp {
+  const words = nickname
+    .split(/[\s_]+/)
+    .filter(Boolean)
+    .map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  if (words.length === 0) return wholeWord(nickname);
+  return new RegExp(`(?<![A-Za-z0-9_])_*${words.join(NICKNAME_GAP)}_*(?![A-Za-z0-9_])`, 'i');
+}
+
 /** Names of the personal-data fields found in `body` (empty when it is clean). */
 export function findPersonalData(body: string, profile: StudentProfile): string[] {
   const found: string[] = [];
   for (const field of ['id', 'familyId', 'nickname', 'avatarCode'] as const) {
-    if (wholeWord(profile[field]).test(body)) found.push(field);
+    const pattern =
+      field === 'nickname' ? nicknamePattern(profile.nickname) : wholeWord(profile[field]);
+    if (pattern.test(body)) found.push(field);
   }
   if (new RegExp(`\\byear\\s*${profile.yearGroup}\\b`, 'i').test(body)) found.push('yearGroup');
   if (EMAIL.test(body)) found.push('email');

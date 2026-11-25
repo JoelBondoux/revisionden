@@ -11,7 +11,7 @@ Tags: #product #rules #limits #defaults
   a paid Apple developer membership).
 - Each sign-in provider is optional, but at least one must be set up; the welcome page shows only
   the configured ones (`GET /v1/auth/providers`). The owner is starting with Google only.
-- Students have no outside account: nickname (2–16 letters, numbers, underscore), avatar code and
+- Students have no outside account: nickname (2–16 letters, numbers, underscores and single spaces between words, trimmed at the ends), avatar code and
   year group only. Devices linked by a one-time QR token (10 minutes, single use), then a passkey.
 - Nicknames are unique within a family. A family is created the first time a parent signs in.
 - Two parents (B3): a family can have two parents with equal control (Parent 1, Parent 2).
@@ -33,6 +33,12 @@ Tags: #product #rules #limits #defaults
   challenges and sign-in checks (`apps/api/src/cleanup.ts`).
 - The link token is redeemed with the family id from the QR code; a wrong family id does not use
   the token up. Tokens and sessions are stored only as hashes.
+- Parents can also "Send a link instead": a shared link lasts 24 hours (the QR code 10 minutes),
+  with no nickname in the link or message. Each link has an 8-character short code (no
+  look-alikes, stored hashed) the child can type at `/link`; code attempts are rate-limited per
+  address. Parents can cancel a link (it also stops a set-up already under way), see "Waiting for <nickname>'s device…", and are pushed
+  "<nickname>'s device is set up". Parent home lists each child's devices (type, date linked) with
+  Remove.
 - A student device session lasts 12 hours, then the student unlocks again with the passkey.
   Parents can unlink a device, which ends its session.
 - Students unlock on the welcome page ("I'm a student: unlock with my passkey") or at `/unlock`,
@@ -43,7 +49,13 @@ Tags: #product #rules #limits #defaults
   (`decisions/0007-student-passkey-unlock.md`). Implemented in
   `apps/web/src/features/onboarding/StudentUnlock.tsx`.
 - A passkey synced to another device (iCloud Keychain, Google Password Manager) unlocks there
-  too, as the same linked device. Open owner question (`operations/contradictions.md`).
+  too, as a new device of its own (owner decision: allow, and tell the parents). Each device keeps
+  a random marker in local storage (`revisionden.deviceMarker`; the API stores its hash in
+  `device_markers`). An unknown browser adds a `devices` row and logs the important family event
+  "RevisionDen noticed <nickname>'s passkey being used on a new device", pushed to both parents; at
+  most one new device a day per passkey. An unlinked device's browser is refused. Devices linked
+  before markers are adopted quietly on their first unlock. Implemented in
+  `apps/api/src/routes/devices.ts` (`deviceForUnlock`).
 - Rate limits per address: 30 a minute on sign-in and device routes, 20 a minute on AI routes.
   Implemented in `apps/api`.
 
@@ -55,6 +67,11 @@ Tags: #product #rules #limits #defaults
 - Exam boards and tiers are picked in the app; "not sure" is allowed and reminded later.
 - GCSE Film Studies is offered only by WJEC Eduqas. GCSE Statistics only by AQA and Pearson Edexcel. Boards per subject and tiered GCSEs are listed
   in `docs/PRODUCT_RULES.md` "Onboarding".
+- "Not sure" boards and tiers never block onboarding. They show on the finish screen, in Parent
+  home ("Things to check: N", parent can set them) and in the student's Settings > My subjects
+  (student can only turn Not sure into a value), with a nudge on the student's home until set.
+- New children start from a Boy, Girl or Neutral look (Neutral preselected); only the avatar code
+  is stored, never a gender. A newly linked device offers "Make it yours" (with "Maybe later").
 - Most-used board per subject in England (Ofqual market report 2024 to 2025, share of
   certificates): AQA for GCSE English Language, English Literature, Biology, Chemistry, Physics,
   Combined Science, Drama, French and A-Level Physics; Pearson Edexcel for GCSE Maths, History and
@@ -199,8 +216,33 @@ Tags: #product #rules #limits #defaults
   `deleteFamilies` only for a one-parent family (two parents: 409 `needs_both_parents`, both
   confirm in the app). Records kept 2 years. Trial and free-place routes answer 503
   `payments_not_ready` until workstream $.
+- Family tags (O6): Managers create, edit and retire tags (name ≤40, colour, description ≤200,
+  effects: beta programme, early access, complimentary Premium, exclude from metrics); Agents add
+  and remove them and list a tag's families (the only list view). Retired tags have no effects.
+  Families see only the beta programme: a "Beta" badge on the parent home and "Leave the beta
+  programme" (`/v1/family/programmes`). `effectsForFamily` gives other code a family's effects.
+- Discount codes (O5): Managers create (6–16 letters and digits, any case, stored upper case;
+  percent 1–100 or a fixed amount in pence; months or forever; optional last UK day and maximum
+  uses) and disable them in AppDeck; Agents can see them. One active code per family; never with
+  a free school meals place. Checkout (workstream $) applies them with `checkCodeForFamily`. A use stays counted after the
+  family is deleted (the redemption keeps no family).
+- Complaints (O4): a parent makes one at `/complaints` ("Make a complaint" on the parent home;
+  3 a day per family; summary 3–500 characters with no email, phone or child nickname) or support
+  logs an emailed one. Acknowledge by the end of the 2nd UK working day (weekends and England and
+  Wales bank holidays skipped, list from gov.uk through 2028), aim to resolve within 14 days
+  (`packages/core/src/complaints.ts`). Agents acknowledge, reply and resolve; Managers escalate.
+  The family sees replies and the outcome (and, for personal data, that they can complain to the
+  ICO; contact details await the owner's check), never staff names. Kept 12 months after
+  resolved; deleted with the family; in the export. Deadlines are "we aim to" (decision 0006).
+- Only parents complain. A student uses "Ask a parent to raise something" (Settings,
+  `/ask-a-parent`): a topic (`COMPLAINT_REQUEST_TOPICS`) and an optional note (≤300, no email or
+  phone), 3 a day; both parents see it on `/complaints` and can start a complaint pre-filled with
+  the topic (not the note) or dismiss it. Never sent to AppDeck; deleted after 90 days.
+- Escalation: a complaint not resolved within 5 working days of acknowledgement can be escalated
+  by the parent ("Ask for a manager to review") or a Manager; AppDeck shows `escalationFrom` and
+  overdue flags.
 - Every operator read of a family and every action goes in `operator_audit_log`, kept 2 years
-  (data retention policy 1.5); the scheduled clean-up deletes older entries.
+  (data retention policy 1.7); the scheduled clean-up deletes older entries.
 
 ## Content
 
@@ -469,7 +511,8 @@ Tags: #product #rules #limits #defaults
   logged as important); the child's own target is set or cleared by the child on My stats (not
   logged). Each side sees both, with encouraging wording and no red when they differ. Only grades
   on a cited scale: GCSE Maths Edexcel 1MA1 (higher 9–3 and U, foundation 5–1 and U, 9–1 and U
-  with no tier chosen); every other subject and board says "not available yet".
+  with no tier chosen); every other subject and board says "not available yet". Changing the
+  board or tier (parent or child, E3) clears either target that is not on the new scale.
   `enrolments.parent_target_grade` and `student_target_grade` (migration 0017). Detail:
   `docs/PRODUCT_RULES.md` (Statistics dashboards, Target grades).
 - Parent stats dashboard rewards (K10, owner 2026-11-25): all parent-set rewards with progress
@@ -585,7 +628,7 @@ Tags: #product #rules #limits #defaults
 - Settled in J7 (owner request, 2026-11-25): no plain underlined text links. Navigation uses the
   link components in `apps/web/src/components/links.tsx` (LinkButton, LinkTile, LinkChip; TextLink
   only inside sentences and policy prose: bold, coloured, a soft bar, underline on hover). A guard
-  test, `apps/web/src/components/noTextLinks.test.ts`, keeps it that way.
+  test, `apps/web/src/components/noTextLinks.test.ts`, keeps it that way across the whole web app (no exclusions since 2026-11-25).
 
 ## Exam practice (planned)
 

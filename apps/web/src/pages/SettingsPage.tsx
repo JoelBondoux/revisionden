@@ -17,6 +17,7 @@ import { ReadingSettingsCard } from '../features/reading';
 import { ReadAloudSettingsCard } from '../features/read-aloud';
 import { SoundSettingsCard } from '../features/sound';
 import { ParentCanSee } from '../features/stats/ParentCanSee';
+import { MySubjectsCard } from '../features/onboarding/checksUi';
 import { InstallButton } from '../pwa/InstallCard';
 
 export function SettingsPage() {
@@ -47,6 +48,7 @@ export function SettingsPage() {
           </li>
         </ul>
       </Card>
+      <MySubjectsCard />
       <Card title="Parents">
         <ul className="link-tiles">
           <li>
@@ -83,6 +85,14 @@ export function SettingsPage() {
               icon={<HeartIcon />}
               title="Get help"
               description="People to talk to, any time"
+            />
+          </li>
+          <li>
+            <LinkTile
+              to="/ask-a-parent"
+              icon={<UsersIcon />}
+              title="Ask a parent to raise something"
+              description="If something feels wrong or unfair"
             />
           </li>
           <li>

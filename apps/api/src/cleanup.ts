@@ -2,7 +2,7 @@
  * The scheduled clean-up (cron every 15 minutes, see worker.ts): deletes data whose retention
  * period is over, as `docs/legal/data-retention.md` describes.
  */
-import { and, eq, inArray, lt, notExists } from 'drizzle-orm';
+import { and, eq, gte, inArray, lt, notExists } from 'drizzle-orm';
 import {
   authSessions,
   authUsers,
@@ -20,6 +20,7 @@ import { deleteExpiredFeedback } from './feedback/retention';
 import { deleteExpiredErrorReports } from './feedback/error-reports';
 import { deleteExpiredOperatorRecords } from './operator/bridge';
 import { deleteExpiredDataRequests } from './operator/data-requests';
+import { deleteExpiredComplaintRequests, deleteExpiredComplaints } from './complaints/routes';
 
 /** Accounts nobody has used for this many months are deleted. */
 export const INACTIVE_DELETE_AFTER_MONTHS = 12;
@@ -104,7 +105,24 @@ export async function cleanUpExpiredData({ db, now }: { db: Database; now: Date 
   const linkTokensDeleted = await count(
     db
       .delete(deviceLinkTokens)
-      .where(lt(deviceLinkTokens.expiresAt, now))
+      .where(
+        and(
+          lt(deviceLinkTokens.expiresAt, now),
+          // A link redeemed just before it expired keeps its passkey set-up (up to 5 more
+          // minutes); deleting it would end that set-up early.
+          notExists(
+            db
+              .select({ id: passkeyChallenges.id })
+              .from(passkeyChallenges)
+              .where(
+                and(
+                  eq(passkeyChallenges.linkTokenId, deviceLinkTokens.id),
+                  gte(passkeyChallenges.expiresAt, now),
+                ),
+              ),
+          ),
+        ),
+      )
       .returning({ id: deviceLinkTokens.id }),
   );
   const studentSessionsDeleted = await count(
@@ -155,6 +173,8 @@ export async function cleanUpExpiredData({ db, now }: { db: Database; now: Date 
     verificationsDeleted,
     ...(await deleteExpiredOperatorRecords(db, now)),
     dataRequestsDeleted: await deleteExpiredDataRequests(db, now),
+    complaintsDeleted: await deleteExpiredComplaints(db, now),
+    complaintRequestsDeleted: await deleteExpiredComplaintRequests(db, now),
     ...(await deleteInactiveAccounts(db, now)),
   };
 }

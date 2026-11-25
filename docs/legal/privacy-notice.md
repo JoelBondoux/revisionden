@@ -1,6 +1,6 @@
 # Privacy notice
 
-Version: 1.6
+Version: 1.9
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -94,6 +94,10 @@ students in Years 9 to 13 (usually aged 13 to 18).
 - when the family account was last used by you or your children (so that accounts nobody uses
   for 12 months can be deleted);
 - feedback or bug reports you choose to send us (see section 9);
+- complaints you make, your messages about them and our replies (see section 13);
+- labels our support team puts on your account (for example "Beta tester"; never personal
+  information). The only one you see is the beta programme, which you can leave from the parent
+  home;
 - reports of a mistake in a question (only the question, its version and a reason picked from a
   list; no free text);
 - if you have been given a reviewer role for checking questions, that role;
@@ -126,7 +130,11 @@ profile and blanks the name and picture before anything is saved.
 - **Courses:** subjects, exam boards, tiers, specification versions and target grades (one set by a parent, one set by the child);
 - **Devices:** for each linked device, the public part of its passkey and technical details the
   passkey needs (an identifier, a counter and how the device connects), when it was linked and
-  last used; one-time link codes and sessions are stored only as scrambled (hashed) values;
+  last used; one-time link codes and sessions are stored only as scrambled (hashed) values. A
+  passkey can sync to the student's other devices (for example through iCloud Keychain or Google
+  Password Manager); each device it is used on gets its own record, told apart by a random device
+  code kept on that device, which we store only as a hash. When a passkey is used on a new device,
+  both parents see it in the family activity log;
 - **Learning records:** each answer's question, whether it was right, the score, how long it
   took, the mode (learn or test), the XP earned and when; topic mastery scores; starting test
   records; daily XP; streaks, skip days and gift days; rewards earned; flashcards and their review
@@ -138,7 +146,11 @@ profile and blanks the name and picture before anything is saved.
   sent (the kind, the date and our own wording);
 - **AI usage:** for each AI call made for the student, the job, the AI provider and model, the
   number of tokens and the cost. Never the question, the answer or the AI's reply;
-- feedback the student chooses to send us, and reports of a mistake in a question.
+- feedback the student chooses to send us, and reports of a mistake in a question;
+- **"Ask a parent" notes:** if the student asks a parent to raise something for them, a topic
+  picked from a list and an optional short note (up to 300 characters). Only the family's parents
+  see it; our support staff do not, unless a parent includes it in a complaint. It is deleted when
+  a parent starts a complaint from it or dismisses it, and after 90 days at most.
 
   4.3 **What we do not collect.** We do not collect or store a student's real name, date of birth,
   home address, phone number, email address, photographs, location, contacts or school name. The
@@ -346,6 +358,10 @@ parents, the other parent must confirm it first.
 
 13.1 If you are unhappy with how we use data, please tell us first at {{CONTACT_EMAIL}}.
 
+13.1A You can also make a formal complaint in the app (parent home, "Make a complaint"). We keep
+the complaint, your messages and our replies for 12 months after it is resolved. Our
+[complaints policy](complaints-policy.md) explains how we handle it.
+
 13.2 You also have the right to complain to the Information Commissioner's Office, the UK data
 protection regulator: ico.org.uk/make-a-complaint, or by phone on 0303 123 1113.
 
@@ -357,6 +373,9 @@ in the app on your next visit and ask you to confirm, and students see a plain-E
 
 ## Changes
 
+- 1.9: A passkey synced to the student's other devices works there too, as a separate device the parent can see and unlink. Each device keeps a random device code (we store only its hash), and both parents are told when a passkey is used on a new device.
+- 1.8: Labels our support team can put on your account (for example "Beta tester"), never personal information; kept while the account exists or until removed. You can leave the beta programme from the parent home.
+- 1.7: Complaints: a parent can make a formal complaint in the app, kept 12 months after it is resolved. A student can ask a parent to raise something (a topic and an optional short note), seen only by the family's parents and deleted after 90 days at most.
 - 1.6: Target grades: for each subject a parent can set a target grade and the child can set their own. We keep both with the child's courses; each of you can see both, and they are included in the family data download.
 - 1.5: A family can now have two parents. We keep the second parent's sign-in email in the same way as the first, a family activity log that says "Parent 1" or "Parent 2" (never names), invite codes (hashed, 7 days) and a short note when a parent is removed. Deleting the whole family needs both parents to confirm.
 - 1.4: New 6.4: read aloud uses the device's own speech voices; with only online voices, the device's speech service may process the text, so it starts off. No new data is kept by us.

@@ -140,9 +140,15 @@ formula and its assumptions. Summary of what is built:
 
 ## Nickname and avatar
 
-- Nickname: 2–16 letters (A–Z), numbers and underscores, not on the block list. Strong words are
-  blocked anywhere (number swaps such as `sh1t` and underscores are seen through); short words
-  that hide inside ordinary words (for example "ass" in "class") only when they stand alone.
+- Nickname: letters (A–Z), numbers, underscores and single spaces between words ("Thing 1").
+  Spaces at the start and end are trimmed before checking and saving; no double spaces; 2–16
+  characters after trimming (also enforced by a database check). Not on the block list. Strong
+  words are blocked anywhere (number swaps such as `sh1t`, underscores and spaces are seen
+  through, so "f u c k" and "a d m i n" are caught); short words that hide inside ordinary words
+  (for example "ass" in "class") only when they stand alone between spaces or underscores.
+  Uniqueness within the family and display are unchanged.
+- The AI privacy filter and the feedback and flashcard checks match a nickname however its words
+  are spaced or joined ("Thing 1", "thing 1", "Thing_1").
   Names pretending to be staff (admin, teacher, moderator) are blocked.
 - Avatar code: version `1` then two base-36 characters per layer, in this order: skin, eyes,
   mouth, facial hair, hair style, hair colour, top, top colour, eyewear, headwear, held item,
@@ -171,7 +177,21 @@ formula and its assumptions. Summary of what is built:
   "Not sure" is always offered. A subject with one board has it picked already.
 - Tiered GCSEs (Foundation, Higher or Not sure): Maths, Statistics, Combined Science, Biology,
   Chemistry, Physics, French, Spanish, German. Other subjects have no tier.
-- Each board or tier left as "Not sure" counts as one thing to check later.
+- Each board or tier left as "Not sure" counts as one thing to check later. "Not sure" never
+  blocks the parent. The items are shown on the finish screen, in Parent home as "Things to
+  check: N" (the parent can set each one; `PATCH /v1/students/:id/enrolments/:subjectId`), and on
+  the student's device in Settings > My subjects, where the student can set Not sure boards and
+  tiers for their own subjects only, and only from Not sure to a real value
+  (`GET /v1/student/subjects`, `PATCH /v1/student/subjects/:subjectId`). The student's home shows
+  a gentle nudge until they are all set.
+- Continue on the Add a child form is always tappable. If something is missing, a short summary
+  appears next to it ("Add a nickname that isn't a real name", "Choose a school year") and the
+  first problem is focused. A blocked nickname says: "That looks like a real name or a word we
+  don't allow. Try a made-up nickname like Pixel_Fox".
+- Starting look: Boy, Girl or Neutral (Neutral preselected), plus Edit avatar. Only the avatar
+  code is stored, never a gender. On the child's first open on a newly linked device, "Make it
+  yours" shows the avatar builder with "Maybe later" (`GET`/`PUT /v1/student/avatar`; locked items
+  still need their reward).
 - Final exams are in the summer: Years 11 and 13 at the end of the current school year (which
   starts in September), Years 10 and 12 a year later, Year 9 two years later.
 - A new child has earned no rewards, so their avatar cannot use locked items.
@@ -197,9 +217,38 @@ Product owner decision, 2026-11-25: **parent view only**.
 - After the 12-hour device session, the student unlocks with the passkey: on the welcome page
   ("I'm a student: unlock with my passkey"), or at `/unlock`, where any student screen sends them
   when its session has run out, and back to that screen afterwards. With no passkey on the device:
-  "Ask a parent to link this device", with no account details shown. Parents and students share
+  "Ask a parent to link this device", with no account details shown. A passkey synced to the
+  student's other devices (iCloud Keychain, Google Password Manager) works there too: each device
+  it is used on becomes its own linked device, which a parent can unlink on its own, and both
+  parents are told ("RevisionDen noticed <nickname>'s passkey being used on a new device"). At most
+  one new device a day per passkey (cleared browser storage); an unlinked device stays refused.
+  Parents and students share
   one sign-in page, the welcome page (`decisions/0007-student-passkey-unlock.md` in project
   memory).
+
+### Linking a device (E4)
+
+- The parent's "Link a device" step shows a one-time QR code (10 minutes). Under it, "Send a link
+  instead" makes a shared link that lasts **24 hours** (messages aren't opened straight away):
+  Share (the phone's share sheet: WhatsApp, Messages, email and so on) with "Copy link" as the
+  fallback. The message reads "Set up RevisionDen on your phone: <link>". The link and message
+  hold no nickname or other personal data (only the token and the family id).
+- Each QR code and shared link also has a short code (8 characters, no look-alikes: no 0/O,
+  1/I/L, shown as ABCD-EFGH) the child can type at `/link` when the camera or link is awkward.
+  Codes and tokens are single use and stored only as hashes. Code attempts at `/link` have their
+  own rate limit per address.
+- The parent sees "Waiting for <nickname>'s device…" and "Cancel this link" (a cancelled link no
+  longer works, even on a device that had already opened it and not yet finished its passkey).
+  The screen updates once the device that used that link has set up its passkey (each link
+  records its own set-up, so another device or link never marks it done), and parents with
+  push on are told "<nickname>'s device is set up" (a family event with no parent as the actor,
+  so both parents hear).
+- The parent home lists each child's linked devices: device type (phone, tablet or computer, as
+  the device reported it; never the browser or model) and the date linked, with "Remove", which
+  ends that device's session.
+- API: `POST /v1/students/:id/link-tokens` (`{ kind: 'qr' | 'share' }`), `GET`/`DELETE
+/v1/students/:id/link-tokens/:tokenId`, `POST /v1/device/link` with `{ code }`,
+  `GET /v1/students/:id/devices` (with `deviceType`).
 
 ## Learning loop (workstream F)
 
@@ -359,6 +408,9 @@ Mockups: screens 19 (student) and 20 (parent).
     Edexcel 1MA1: higher tier 9 to 3 and U, foundation tier 5 to 1 and U, and 9 to 1 and U while
     the tier is not chosen (specification page 31). Other subjects and boards, and every A-Level,
     say "not available yet" until their scale is cited.
+  - Changing a subject's board or tier (parent in Parent home, or the child turning Not sure into
+    a value in Settings > My subjects) clears either target that is not on the new scale, for
+    example a 9 when the tier becomes foundation; a target still on the scale is kept.
   - Kept with the child's courses (`enrolments.parent_target_grade`, `student_target_grade`) and
     in the family data download.
   - API: `GET /v1/students/:id/target-grades` (each enrolled subject, both targets and the grades

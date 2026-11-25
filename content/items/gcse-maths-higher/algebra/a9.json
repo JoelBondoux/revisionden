@@ -7,12 +7,8 @@
     "learning_point": "gcse-maths-h-a9-lp-line-equation",
     "expected_seconds": 40,
     "prompt": "Work out the gradient of the straight line through (1, 3) and (4, 12).",
-    "answer": {
-      "value": "3"
-    },
-    "verify": {
-      "expression": "(12 - 3)/(4 - 1)"
-    },
+    "answer": { "value": "3" },
+    "verify": { "expression": "(12 - 3)/(4 - 1)" },
     "marks": 2,
     "mark_scheme": ["M1 for (12 - 3)/(4 - 1)", "A1 for 3"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A9",
@@ -94,12 +90,8 @@
     "learning_point": "gcse-maths-h-a9-lp-line-equation",
     "expected_seconds": 45,
     "prompt": "Work out the gradient of the straight line through (-2, 5) and (4, -7).",
-    "answer": {
-      "value": "-2"
-    },
-    "verify": {
-      "expression": "(-7 - 5)/(4 - (-2))"
-    },
+    "answer": { "value": "-2" },
+    "verify": { "expression": "(-7 - 5)/(4 - (-2))" },
     "marks": 2,
     "mark_scheme": ["M1 for (-7 - 5)/(4 - (-2))", "A1 for -2"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A9",
@@ -181,9 +173,7 @@
     "learning_point": "gcse-maths-h-a9-lp-line-equation",
     "expected_seconds": 90,
     "prompt": "Find the equation of the straight line through (1, 5) and (3, 9). Give your answer in the form y = mx + c.",
-    "answer": {
-      "accepted": ["y = 2x + 3", "y=2x+3"]
-    },
+    "answer": { "accepted": ["y = 2x + 3", "y=2x+3"] },
     "marks": 3,
     "explanation": "Gradient = (9 - 5)/(3 - 1) = 2. Then 5 = 2 × 1 + c, so c = 3: y = 2x + 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A9",
@@ -257,9 +247,7 @@
     "learning_point": "gcse-maths-h-a9-lp-line-equation",
     "expected_seconds": 60,
     "prompt": "Find the equation of the straight line with gradient -3 that passes through (2, 1). Give your answer in the form y = mx + c.",
-    "answer": {
-      "accepted": ["y = -3x + 7", "y=-3x+7", "y = −3x + 7", "y=−3x+7"]
-    },
+    "answer": { "accepted": ["y = -3x + 7", "y=-3x+7", "y = −3x + 7", "y=−3x+7"] },
     "marks": 2,
     "explanation": "1 = -3 × 2 + c, so c = 7: y = -3x + 7.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A9",
@@ -333,14 +321,8 @@
     "learning_point": "gcse-maths-h-a9-lp-line-equation",
     "expected_seconds": 60,
     "prompt": "The line y = mx + 4 passes through the point (3, 19). Work out the value of m.",
-    "answer": {
-      "solutions": ["5"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "19 = 3m + 4",
-      "variable": "m"
-    },
+    "answer": { "solutions": ["5"] },
+    "verify": { "method": "solve", "equation": "19 = 3m + 4", "variable": "m" },
     "steps": ["19 = 3m + 4", "15 = 3m", "m = 5"],
     "marks": 2,
     "mark_scheme": ["M1 for 19 = 3m + 4", "A1 for m = 5"],
@@ -424,14 +406,11 @@
     "expected_seconds": 25,
     "prompt": "Which line is parallel to y = 3x - 2?",
     "options": ["y = -3x + 1", "y = 3x + 5", "y = (1/3)x - 2", "y = -(1/3)x"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "Parallel lines have the same gradient. Only y = 3x + 5 has gradient 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A9",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -450,10 +429,7 @@
       {
         "statement": "Two straight lines are parallel exactly when they have the same gradient.",
         "ask": "For two non-vertical straight lines, how are their gradients related when the lines are parallel?",
-        "engine": {
-          "kind": "identity",
-          "equation": "(m*x + c) - (m*x + d) = c - d"
-        }
+        "engine": { "kind": "parallel", "lines": ["y = m x + c", "y = n x + d"] }
       }
     ],
     "verification": {
@@ -465,7 +441,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Gradients read from y = mx + c: -3, 3, 1/3, -1/3. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Gradients read from y = mx + c: -3, 3, 1/3, -1/3. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T17:23:37Z"
         },
         {
@@ -502,11 +478,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:35:47Z",
-          "notes": "fact 1: maths engine proof pass; blind statement differs (\"For two non-vertical straight lines to be parallel, their gradients must be equal: if the lines have equations y = m₁x + c₁ and y = m₂x + c₂, then they are parallel when m₁ = m₂. If they are distinct parallel lines, then also c₁ ≠ c₂.\")"
+          "at": "2026-11-25T20:36:39Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"For two non-vertical straight lines, the lines are parallel if and only if they have equal gradients (slopes).\")"
         }
       ]
     }
@@ -520,14 +496,11 @@
     "expected_seconds": 25,
     "prompt": "Which line is perpendicular to y = 2x + 1?",
     "options": ["y = 2x - 1", "y = -2x + 1", "y = -(1/2)x + 4", "y = (1/2)x + 1"],
-    "answer": {
-      "option": 2
-    },
+    "answer": { "option": 2 },
     "marks": 1,
     "explanation": "Perpendicular gradients multiply to -1: 2 × (-1/2) = -1.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A9",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -546,10 +519,7 @@
       {
         "statement": "Two straight lines with gradients m and n (both non-zero) are perpendicular exactly when m × n = -1.",
         "ask": "For two non-vertical straight lines, how are their gradients related when the lines are perpendicular?",
-        "engine": {
-          "kind": "identity",
-          "equation": "1*1 + m*(-1/m) = 0"
-        }
+        "engine": { "kind": "identity", "equation": "1*1 + m*(-1/m) = 0" }
       }
     ],
     "verification": {
@@ -561,7 +531,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Checked: only 2 × (-1/2) = -1 among the four gradients. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Checked: only 2 × (-1/2) = -1 among the four gradients. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T17:23:37Z"
         },
         {
@@ -598,11 +568,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:36:16Z",
-          "notes": "fact 1: maths engine proof pass; blind statement differs (\"For two non-vertical straight lines with gradients m₁ and m₂, if the lines are perpendicular then m₁m₂ = -1. Equivalently, each gradient is the negative reciprocal of the other, provided both gradients are defined.\")"
+          "at": "2026-11-25T20:37:11Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"For two non-vertical straight lines with gradients m₁ and m₂, the lines are perpendicular if and only if m₁m₂ = -1. Equivalently, their gradients are negative reciprocals of each other.\")"
         }
       ]
     }
@@ -615,12 +585,8 @@
     "learning_point": "gcse-maths-h-a9-lp-parallel-perpendicular",
     "expected_seconds": 30,
     "prompt": "Line L has equation y = 4x - 3. Write down the gradient of a line perpendicular to L.",
-    "answer": {
-      "value": "-1/4"
-    },
-    "verify": {
-      "expression": "-1/4"
-    },
+    "answer": { "value": "-1/4" },
+    "verify": { "expression": "-1/4" },
     "marks": 1,
     "mark_scheme": ["B1 for -1/4"],
     "explanation": "Perpendicular gradient = -1 ÷ 4 = -1/4.",
@@ -644,10 +610,7 @@
       {
         "statement": "Two straight lines with gradients m and n (both non-zero) are perpendicular exactly when m × n = -1.",
         "ask": "For two non-vertical straight lines, how are their gradients related when the lines are perpendicular?",
-        "engine": {
-          "kind": "identity",
-          "equation": "1*1 + m*(-1/m) = 0"
-        }
+        "engine": { "kind": "identity", "equation": "1*1 + m*(-1/m) = 0" }
       }
     ],
     "verification": {
@@ -721,9 +684,7 @@
     "learning_point": "gcse-maths-h-a9-lp-parallel-perpendicular",
     "expected_seconds": 45,
     "prompt": "Find the equation of the line parallel to y = 5x + 2 that passes through (0, -3).",
-    "answer": {
-      "accepted": ["y = 5x - 3", "y=5x-3"]
-    },
+    "answer": { "accepted": ["y = 5x - 3", "y=5x-3"] },
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A9",
     "checked_by": ["author"],
@@ -758,10 +719,7 @@
       {
         "statement": "Two straight lines are parallel exactly when they have the same gradient.",
         "ask": "For two non-vertical straight lines, how are their gradients related when the lines are parallel?",
-        "engine": {
-          "kind": "identity",
-          "equation": "(m*x + c) - (m*x + d) = c - d"
-        }
+        "engine": { "kind": "parallel", "lines": ["y = m x + c", "y = n x + d"] }
       }
     ],
     "verification": {
@@ -813,8 +771,8 @@
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:36:02Z",
-          "notes": "fact 1: maths engine proof pass; blind statement differs (\"For two non-vertical straight lines, the lines are parallel if and only if their gradients are equal: if the gradients are m1 and m2, then parallel implies m1 = m2 (and distinct parallel lines also have different intercepts).\")"
+          "at": "2026-11-25T20:42:48Z",
+          "notes": "fact 1: maths engine proof pass; blind statement differs (\"For two non-vertical straight lines to be parallel, their gradients must be equal: if the lines have gradients m1 and m2, then parallel implies m1 = m2. Distinct parallel lines also have different intercepts; if the intercepts are the same, the lines are the same line.\")"
         }
       ]
     }
@@ -1004,10 +962,7 @@
       {
         "statement": "Two straight lines with gradients m and n (both non-zero) are perpendicular exactly when m × n = -1.",
         "ask": "For two non-vertical straight lines, how are their gradients related when the lines are perpendicular?",
-        "engine": {
-          "kind": "identity",
-          "equation": "1*1 + m*(-1/m) = 0"
-        }
+        "engine": { "kind": "identity", "equation": "1*1 + m*(-1/m) = 0" }
       }
     ],
     "verification": {
@@ -1074,9 +1029,7 @@
     "expected_seconds": 15,
     "front": "The equation of a straight line with gradient m and y-intercept c",
     "back": "y = mx + c",
-    "back_formula": {
-      "formula": "y = m*x + c"
-    },
+    "back_formula": { "formula": "y = m*x + c" },
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A9",
     "checked_by": ["author"],
     "citations": [

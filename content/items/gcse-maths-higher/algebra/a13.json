@@ -13,14 +13,11 @@
       "A translation 3 units to the right",
       "A translation 3 units to the left"
     ],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "Adding 3 to f(x) adds 3 to every y-value, so the graph moves 3 units up.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -38,7 +35,8 @@
     "facts": [
       {
         "statement": "The graph of y = f(x) + a is the graph of y = f(x) translated a units up (down if a is negative).",
-        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "f(x) + a", "image": "(x, y + a)" }
       }
     ],
     "verification": {
@@ -50,7 +48,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x, y + 3). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x, y + 3). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -87,11 +85,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:36:57Z",
-          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: up if a > 0 and down if a < 0.\")"
+          "at": "2026-11-25T20:37:57Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: upwards if a > 0 and downwards if a < 0.\")"
         }
       ]
     }
@@ -110,14 +108,11 @@
       "A translation 2 units to the right",
       "A translation 2 units to the left"
     ],
-    "answer": {
-      "option": 2
-    },
+    "answer": { "option": 2 },
     "marks": 1,
     "explanation": "The value of f(x - 2) at x is the value f had at x - 2, so each point of the graph moves 2 units to the right.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -135,7 +130,8 @@
     "facts": [
       {
         "statement": "The graph of y = f(x - a) is the graph of y = f(x) translated a units to the right (to the left if a is negative).",
-        "ask": "How is the graph of y = f(x - a) obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = f(x - a) obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "f(x - a)", "image": "(x + a, y)" }
       }
     ],
     "verification": {
@@ -147,7 +143,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x + 2, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x + 2, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T18:04:51Z"
         },
         {
@@ -184,11 +180,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:37:46Z",
-          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x-a) is obtained by translating the graph of y = f(x) horizontally by a units in the positive x-direction (to the right). This applies for any real constant a.\")"
+          "at": "2026-11-25T20:38:52Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The graph of y = f(x - a) is obtained by translating the graph of y = f(x) horizontally by a units: to the right if a > 0, to the left if a < 0. Equivalently, each point (x, f(x)) moves to (x + a, f(x)).\")"
         }
       ]
     }
@@ -207,14 +203,11 @@
       "A translation 4 units to the right",
       "A translation 4 units to the left"
     ],
-    "answer": {
-      "option": 3
-    },
+    "answer": { "option": 3 },
     "marks": 1,
     "explanation": "The value of f(x + 4) at x is the value f had at x + 4, so each point of the graph moves 4 units to the left.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -232,7 +225,8 @@
     "facts": [
       {
         "statement": "The graph of y = f(x - a) is the graph of y = f(x) translated a units to the right (to the left if a is negative).",
-        "ask": "How is the graph of y = f(x - a) obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = f(x - a) obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "f(x - a)", "image": "(x + a, y)" }
       }
     ],
     "verification": {
@@ -244,7 +238,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x - 4, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x - 4, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T18:04:51Z"
         },
         {
@@ -281,11 +275,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:38:01Z",
-          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x-a) is obtained by translating the graph of y = f(x) horizontally by a units to the right, for any real constant a. If a is negative, this is equivalently a shift to the left by |a| units.\")"
+          "at": "2026-11-25T20:39:03Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The graph of y = f(x-a) is obtained by translating the graph of y = f(x) horizontally by a units to the right, where a is a constant. If a<0, this is a shift |a| units to the left.\")"
         }
       ]
     }
@@ -298,13 +292,10 @@
     "learning_point": "gcse-maths-h-a13-lp-translations",
     "expected_seconds": 40,
     "prompt": "The point (3, 5) is on the graph of y = f(x). Write down the coordinates of the point it moves to on the graph of y = f(x) - 4.",
-    "answer": {
-      "accepted": ["(3, 1)", "(3,1)"]
-    },
+    "answer": { "accepted": ["(3, 1)", "(3,1)"] },
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -322,7 +313,8 @@
     "facts": [
       {
         "statement": "The graph of y = f(x) + a is the graph of y = f(x) translated a units up (down if a is negative).",
-        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "f(x) + a", "image": "(x, y + a)" }
       }
     ],
     "verification": {
@@ -334,7 +326,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). (x, y) maps to (x, y - 4): (3, 5) to (3, 1). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). (x, y) maps to (x, y - 4): (3, 5) to (3, 1). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -371,11 +363,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:37:10Z",
-          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: upwards if a > 0 and downwards if a < 0.\")"
+          "at": "2026-11-25T20:38:12Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: up if a > 0 and down if a < 0.\")"
         }
       ]
     }
@@ -388,14 +380,8 @@
     "learning_point": "gcse-maths-h-a13-lp-translations",
     "expected_seconds": 90,
     "prompt": "The graph of y = x^2 + 1 is translated 10 units down. Find the x-coordinates where the new graph crosses the x-axis.",
-    "answer": {
-      "solutions": ["3", "-3"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "x^2 + 1 - 10 = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["3", "-3"] },
+    "verify": { "method": "solve", "equation": "x^2 + 1 - 10 = 0", "variable": "x" },
     "steps": ["x^2 + 1 - 10 = 0", "x^2 - 9 = 0", "(x - 3)(x + 3) = 0", "x = 3 or x = -3"],
     "marks": 3,
     "mark_scheme": [
@@ -423,7 +409,8 @@
     "facts": [
       {
         "statement": "The graph of y = f(x) + a is the graph of y = f(x) translated a units up (down if a is negative).",
-        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "f(x) + a", "image": "(x, y + a)" }
       }
     ],
     "verification": {
@@ -480,11 +467,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:37:20Z",
-          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: upwards if a > 0 and downwards if a < 0.\")"
+          "at": "2026-11-25T20:38:25Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: upwards if a > 0 and downwards if a < 0.\")"
         }
       ]
     }
@@ -503,14 +490,11 @@
       "A reflection in the line y = x",
       "A translation 1 unit down"
     ],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "Every y-value changes sign, so the graph is reflected in the x-axis.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -528,7 +512,8 @@
     "facts": [
       {
         "statement": "The graph of y = -f(x) is the reflection of the graph of y = f(x) in the x-axis.",
-        "ask": "How is the graph of y = -f(x) obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = -f(x) obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "-f(x)", "image": "(x, -y)" }
       }
     ],
     "verification": {
@@ -540,7 +525,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x, -y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x, -y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -577,11 +562,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:38:29Z",
-          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = -f(x) is obtained by reflecting the graph of y = f(x) in the x-axis. Equivalently, each point (x, y) maps to (x, -y).\")"
+          "at": "2026-11-25T20:39:22Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The graph of y = -f(x) is obtained by reflecting the graph of y = f(x) in the x-axis. Equivalently, every point (x, y) on y = f(x) maps to (x, -y).\")"
         }
       ]
     }
@@ -600,14 +585,11 @@
       "A reflection in the line y = x",
       "A translation 1 unit down"
     ],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "The value at x is the old value at -x, so the graph is reflected in the y-axis.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -625,7 +607,8 @@
     "facts": [
       {
         "statement": "The graph of y = f(-x) is the reflection of the graph of y = f(x) in the y-axis.",
-        "ask": "How is the graph of y = f(-x) obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = f(-x) obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "f(-x)", "image": "(-x, y)" }
       }
     ],
     "verification": {
@@ -637,7 +620,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (-x, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (-x, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -674,11 +657,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:38:56Z",
-          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(-x) is obtained by reflecting the graph of y = f(x) in the y-axis. Equivalently, each point (x, y) on y = f(x) moves to (-x, y), provided x is in the domain of f.\")"
+          "at": "2026-11-25T20:39:50Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The graph of y = f(-x) is obtained by reflecting the graph of y = f(x) in the y-axis, provided the original graph is defined for the corresponding x-values.\")"
         }
       ]
     }
@@ -691,13 +674,10 @@
     "learning_point": "gcse-maths-h-a13-lp-reflections",
     "expected_seconds": 40,
     "prompt": "The point (2, -7) is on the graph of y = f(x). Write down the coordinates of the point it moves to on the graph of y = f(-x).",
-    "answer": {
-      "accepted": ["(-2, -7)", "(-2,-7)", "(−2, −7)", "(−2,−7)"]
-    },
+    "answer": { "accepted": ["(-2, -7)", "(-2,-7)", "(−2, −7)", "(−2,−7)"] },
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -715,7 +695,8 @@
     "facts": [
       {
         "statement": "The graph of y = f(-x) is the reflection of the graph of y = f(x) in the y-axis.",
-        "ask": "How is the graph of y = f(-x) obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = f(-x) obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "f(-x)", "image": "(-x, y)" }
       }
     ],
     "verification": {
@@ -727,7 +708,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). (x, y) maps to (-x, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). (x, y) maps to (-x, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T18:55:48Z"
         },
         {
@@ -761,6 +742,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T20:40:04Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The graph of y = f(-x) is obtained by reflecting the graph of y = f(x) in the y-axis. This assumes f is defined at the corresponding x-values so that replacing x by -x makes sense.\")"
         }
       ]
     }
@@ -776,7 +765,6 @@
     "back": "Up",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -794,7 +782,8 @@
     "facts": [
       {
         "statement": "The graph of y = f(x) + a is the graph of y = f(x) translated a units up (down if a is negative).",
-        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "f(x) + a", "image": "(x, y + a)" }
       }
     ],
     "verification": {
@@ -806,7 +795,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -843,11 +832,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:37:31Z",
-          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: upwards if a > 0 and downwards if a < 0.\")"
+          "at": "2026-11-25T20:38:40Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: upwards if a > 0 and downwards if a < 0.\")"
         }
       ]
     }
@@ -863,7 +852,6 @@
     "back": "Right",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -881,7 +869,8 @@
     "facts": [
       {
         "statement": "The graph of y = f(x - a) is the graph of y = f(x) translated a units to the right (to the left if a is negative).",
-        "ask": "How is the graph of y = f(x - a) obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = f(x - a) obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "f(x - a)", "image": "(x + a, y)" }
       }
     ],
     "verification": {
@@ -893,7 +882,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -930,11 +919,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:38:15Z",
-          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x - a) is obtained by translating the graph of y = f(x) horizontally by a units to the right, provided a is a real constant.\")"
+          "at": "2026-11-25T20:39:13Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The graph of y = f(x - a) is obtained by translating the graph of y = f(x) horizontally by a units to the right. If a is negative, this means a translation to the left by |a| units.\")"
         }
       ]
     }
@@ -950,7 +939,6 @@
     "back": "x-axis",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -968,7 +956,8 @@
     "facts": [
       {
         "statement": "The graph of y = -f(x) is the reflection of the graph of y = f(x) in the x-axis.",
-        "ask": "How is the graph of y = -f(x) obtained from the graph of y = f(x)?"
+        "ask": "How is the graph of y = -f(x) obtained from the graph of y = f(x)?",
+        "engine": { "kind": "transformation", "graph": "-f(x)", "image": "(x, -y)" }
       }
     ],
     "verification": {
@@ -980,7 +969,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T18:04:51Z"
         },
         {
@@ -1017,11 +1006,11 @@
         },
         {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:38:42Z",
-          "notes": "fact 1: no maths engine proof; blind statement differs (\"The graph of y = -f(x) is obtained by reflecting the graph of y = f(x) in the x-axis. Equivalently, each point (x, y) maps to (x, -y).\")"
+          "at": "2026-11-25T20:39:32Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The graph of y = -f(x) is obtained by reflecting the graph of y = f(x) in the x-axis. Equivalently, each point (x, y) maps to (x, -y).\")"
         }
       ]
     }

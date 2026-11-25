@@ -33,7 +33,12 @@ import { aiRoutes, parentAiUsageRoutes } from './ai/routes';
 import type { AiProvider, ProviderName } from './ai/types';
 import { reportRoutes } from './routes/quarantine';
 import { reviewRoutes, type VerificationDeps } from './routes/review';
-import { avatarRoutes, onboardingRoutes } from './routes/onboarding';
+import {
+  avatarRoutes,
+  onboardingRoutes,
+  parentSubjectRoutes,
+  studentOnboardingRoutes,
+} from './routes/onboarding';
 import { learnRoutes } from './routes/learn';
 import { flashcardRoutes } from './routes/flashcards';
 import { studentDailyRoutes } from './routes/daily';
@@ -52,7 +57,9 @@ import { parentDailyLimitRoutes, studentDailyLimitRoutes } from './daily-limit/r
 import { parentTargetGradeRoutes, studentTargetGradeRoutes } from './stats/target-grades';
 import { adminErrorReportRoutes, errorReportRoutes } from './feedback/error-reports';
 import type { StatsAdapters } from './stats/adapters';
+import { parentComplaintRoutes, studentComplaintRequestRoutes } from './complaints/routes';
 import { OPERATOR_BASE_PATH, operatorRoutes } from './operator/routes';
+import { parentProgrammeRoutes } from './operator/tags';
 import { createMemoryRateLimiter } from './rate-limit';
 
 export interface AppDeps {
@@ -63,7 +70,13 @@ export interface AppDeps {
   clock: Clock;
   passkeys: PasskeyService;
   /** `operator` (AppDeck bridge) defaults to 120 a minute in memory when not given. */
-  rateLimiters: { auth: RateLimiter; ai: RateLimiter; operator?: RateLimiter };
+  rateLimiters: {
+    auth: RateLimiter;
+    ai: RateLimiter;
+    operator?: RateLimiter;
+    /** Short-code attempts at /link; falls back to `auth` with its own key. */
+    linkCode?: RateLimiter;
+  };
   /** Review queue and quarantine hooks (workstream V). */
   verification?: VerificationDeps;
   /** AI providers that are configured (see ai/providers.ts). */
@@ -147,6 +160,10 @@ export function createApp(deps: AppDeps) {
   parent.use('/parent/*', requireParent);
   parent.use('/family/*', requireParent);
   parent.use('/export', requireParent);
+  parent.use('/complaints', requireParent);
+  parent.use('/complaints/*', requireParent);
+  parent.use('/complaint-requests', requireParent);
+  parent.use('/complaint-requests/*', requireParent);
   async function requireParent(c: Context<AppEnv>, next: Next) {
     const session = await deps.auth.api.getSession({ headers: c.req.raw.headers });
     if (!session) throw unauthorized();
@@ -185,6 +202,7 @@ export function createApp(deps: AppDeps) {
   parent.route('/students', parentReminderRoutes(deps));
   parent.route('/students', parentAiUsageRoutes({ ...deps, gateway }));
   parent.route('/students', avatarRoutes(deps));
+  parent.route('/students', parentSubjectRoutes(deps));
   parent.route('/students', parentRewardRoutes(deps));
   parent.route('/students', parentStatsRoutes(deps));
   parent.route('/students', parentDailyLimitRoutes(deps));
@@ -194,8 +212,10 @@ export function createApp(deps: AppDeps) {
   parent.route('/', parentFeedbackRoutes(deps));
   parent.route('/students', parentBugHunterRoutes(deps));
   parent.route('/family', familyRoutes(deps));
+  parent.route('/family', parentProgrammeRoutes(deps));
   parent.route('/family', familyParentRoutes(deps));
   parent.route('/', familyExport(deps));
+  parent.route('/', parentComplaintRoutes(deps));
   parent.route('/admin', adminFeedbackRoutes(deps));
   parent.route('/admin', adminErrorReportRoutes(deps));
   parent.route('/parent', parentNotificationRoutes(deps));
@@ -226,6 +246,7 @@ export function createApp(deps: AppDeps) {
   app.use('/v1/student/*', studentActivity(deps));
   app.route('/v1/student', studentNotificationRoutes(deps));
   app.route('/v1/student', studentSessionRoutes(deps));
+  app.route('/v1/student', studentOnboardingRoutes(deps));
   // Mounted after the student routes, so their session check runs first.
   app.route('/v1/student/learn', learnRoutes(deps));
   app.route('/v1/student/flashcards', flashcardRoutes(deps));
@@ -236,6 +257,7 @@ export function createApp(deps: AppDeps) {
   app.route('/v1/student/rewards', studentRewardRoutes(deps));
   app.route('/v1/student', studentFeedbackRoutes(deps));
   app.route('/v1/student', studentStatsRoutes(deps));
+  app.route('/v1/student', studentComplaintRequestRoutes(deps));
   app.route('/v1/student', studentDailyLimitRoutes(deps));
   app.route('/v1/student', studentTargetGradeRoutes(deps));
   app.use('/v1/ai/*', studentAuth(deps));
