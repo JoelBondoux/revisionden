@@ -1,0 +1,454 @@
+[
+  {
+    "id": "gcse-maths-h-r7-0101",
+    "topic": "gcse-maths-h-r7",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r7-lp-equal-ratios",
+    "expected_seconds": 45,
+    "prompt": "The ratios 3 : 5 and x : 40 are equal. Solve x/40 = 3/5 to find x.",
+    "answer": { "solutions": ["24"] },
+    "verify": { "method": "solve", "equation": "x/40 = 3/5", "variable": "x" },
+    "steps": ["x/40 = 3/5", "x = 40*3/5", "x = 24"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 40 ÷ 5 × 3", "A1 for 24"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R7). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T19:42:45Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:43:28Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r7-0102",
+    "topic": "gcse-maths-h-r7",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r7-lp-equal-ratios",
+    "expected_seconds": 45,
+    "prompt": "The ratios x : 12 and 7 : 4 are equal. Solve x/12 = 7/4 to find x.",
+    "answer": { "solutions": ["21"] },
+    "verify": { "method": "solve", "equation": "x/12 = 7/4", "variable": "x" },
+    "steps": ["x/12 = 7/4", "x = 12*7/4", "x = 21"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 12 ÷ 4 × 7", "A1 for 21"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R7). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T19:42:45Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:43:29Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r7-0103",
+    "topic": "gcse-maths-h-r7",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r7-lp-equal-ratios",
+    "expected_seconds": 25,
+    "prompt": "Which pair of ratios are equal (in proportion)?",
+    "options": ["2 : 3 and 6 : 9", "2 : 3 and 3 : 2", "2 : 3 and 4 : 5", "2 : 3 and 5 : 6"],
+    "answer": { "option": 0 },
+    "marks": 1,
+    "explanation": "6 : 9 simplifies to 2 : 3, so the two ratios are equal.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R7). Checked: only 6/9 = 2/3.",
+          "at": "2026-11-25T19:42:45Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:43:30Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r7-0104",
+    "topic": "gcse-maths-h-r7",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r7-lp-equal-ratios",
+    "expected_seconds": 45,
+    "prompt": "5 pens cost £3.50. How much do 8 pens cost, in pounds?",
+    "answer": { "value": "5.6", "unit": "pounds" },
+    "verify": { "expression": "3.5/5*8" },
+    "marks": 2,
+    "mark_scheme": ["M1 for 3.50 ÷ 5 = 0.70", "A1 for 5.60"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R7). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:42:45Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:43:31Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r7-0105",
+    "topic": "gcse-maths-h-r7",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r7-lp-equal-ratios",
+    "expected_seconds": 60,
+    "prompt": "A car uses 12 litres of fuel to travel 150 km. At the same rate, how many litres does it use to travel 400 km?",
+    "answer": { "value": "32", "unit": "litres" },
+    "verify": { "expression": "12/150*400" },
+    "marks": 2,
+    "mark_scheme": ["M1 for 12 ÷ 150 × 400 or 150 : 12 = 400 : x", "A1 for 32"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R7). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:43:25Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:43:31Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r7-0106",
+    "topic": "gcse-maths-h-r7",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r7-lp-equal-ratios",
+    "expected_seconds": 25,
+    "prompt": "Which value of x makes the ratio 6 : x equal to 3 : 5?",
+    "options": ["8", "9", "10", "15"],
+    "answer": { "option": 2 },
+    "marks": 1,
+    "explanation": "6 is 2 × 3, so x = 2 × 5 = 10.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R7). Checked: only 6/10 = 3/5.",
+          "at": "2026-11-25T19:43:25Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:43:32Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r7-0107",
+    "topic": "gcse-maths-h-r7",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r7-lp-proportion-cards",
+    "expected_seconds": 15,
+    "front": "1 : 4 = 3 : x. What is x?",
+    "back": "12",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R7). Checked: 3 × 4 = 12.",
+          "at": "2026-11-25T19:43:25Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:43:33Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r7-0108",
+    "topic": "gcse-maths-h-r7",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r7-lp-proportion-cards",
+    "expected_seconds": 15,
+    "front": "2 : 5 = 6 : x. What is x?",
+    "back": "15",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R7). Checked: 5 × 3 = 15.",
+          "at": "2026-11-25T19:43:25Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:43:34Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r7-0109",
+    "topic": "gcse-maths-h-r7",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r7-lp-proportion-cards",
+    "expected_seconds": 15,
+    "front": "x : 9 = 2 : 3. What is x?",
+    "back": "6",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R7). Checked: 9 ÷ 3 × 2 = 6.",
+          "at": "2026-11-25T19:43:25Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:43:34Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  }
+]

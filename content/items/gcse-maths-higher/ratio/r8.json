@@ -1,0 +1,474 @@
+[
+  {
+    "id": "gcse-maths-h-r8-0101",
+    "topic": "gcse-maths-h-r8",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r8-lp-ratio-functions",
+    "expected_seconds": 25,
+    "prompt": "For every point on a line, y : x = 3 : 1. Which is the equation of the line?",
+    "options": [
+      "y = 3x",
+      "y = x + 3",
+      "y = x/3",
+      "x = 3y"
+    ],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "y : x = 3 : 1 means y = 3x for every point.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R8",
+    "checked_by": [
+      "author"
+    ],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R8 (page 16; PDF page 28)",
+        "quote": "relate ratios to fractions and to linear functions",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R8). Checked: only y = 3x gives y/x = 3 for every non-zero x.",
+          "at": "2026-11-25T19:42:45Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:43:07Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r8-0102",
+    "topic": "gcse-maths-h-r8",
+    "type": "short_answer",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r8-lp-ratio-functions",
+    "expected_seconds": 30,
+    "prompt": "Red and blue beads are in the ratio 2 : 3. What fraction of the beads are red?",
+    "answer": {
+      "accepted": [
+        "2/5"
+      ]
+    },
+    "marks": 1,
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R8",
+    "checked_by": [
+      "author"
+    ],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R8 (page 16; PDF page 28)",
+        "quote": "relate ratios to fractions and to linear functions",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R8). Checked: 2/(2 + 3) = 2/5.",
+          "at": "2026-11-25T19:42:45Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:43:08Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r8-0103",
+    "topic": "gcse-maths-h-r8",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r8-lp-ratio-functions",
+    "expected_seconds": 45,
+    "prompt": "The cost, C pounds, of a fabric is proportional to its length, L metres, so C = kL. 4 m of fabric costs £10. Work out k.",
+    "answer": {
+      "value": "2.5"
+    },
+    "verify": {
+      "expression": "10/4"
+    },
+    "marks": 2,
+    "mark_scheme": [
+      "M1 for 10 = 4k",
+      "A1 for 2.5"
+    ],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R8",
+    "checked_by": [
+      "maths-engine",
+      "author"
+    ],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R8 (page 16; PDF page 28)",
+        "quote": "relate ratios to fractions and to linear functions",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R8). Answer backed by the maths engine.",
+          "at": "2026-11-25T19:42:45Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:43:09Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r8-0104",
+    "topic": "gcse-maths-h-r8",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r8-lp-ratio-functions",
+    "expected_seconds": 25,
+    "prompt": "For which equation is the ratio y : x the same for every point (with x ≠ 0)?",
+    "options": [
+      "y = 4x",
+      "y = 4x + 1",
+      "y = x^2",
+      "y = 4/x"
+    ],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "For y = 4x, y/x = 4 always. For the others y/x changes as x changes.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R8",
+    "checked_by": [
+      "author"
+    ],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R8 (page 16; PDF page 28)",
+        "quote": "relate ratios to fractions and to linear functions",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R8). Checked with SymPy: y/x is 4 (constant) for y = 4x; 4 + 1/x, x and 4/x^2 for the others.",
+          "at": "2026-11-25T19:42:45Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:43:10Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r8-0105",
+    "topic": "gcse-maths-h-r8",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r8-lp-ratio-functions",
+    "expected_seconds": 45,
+    "prompt": "The ratio of y to x is 5 : 2 and x = 14. Solve y/14 = 5/2 to find y.",
+    "answer": {
+      "solutions": [
+        "35"
+      ]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "y/14 = 5/2",
+      "variable": "y"
+    },
+    "steps": [
+      "y/14 = 5/2",
+      "y = 14*5/2",
+      "y = 35"
+    ],
+    "marks": 2,
+    "mark_scheme": [
+      "M1 for 14 ÷ 2 × 5",
+      "A1 for 35"
+    ],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R8",
+    "checked_by": [
+      "maths-engine",
+      "author"
+    ],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R8 (page 16; PDF page 28)",
+        "quote": "relate ratios to fractions and to linear functions",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R8). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T19:42:45Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:43:10Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r8-0106",
+    "topic": "gcse-maths-h-r8",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r8-lp-ratio-fraction-cards",
+    "expected_seconds": 15,
+    "front": "A : B = 1 : 4. What fraction of the total is A?",
+    "back": "1/5",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R8",
+    "checked_by": [
+      "author"
+    ],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R8 (page 16; PDF page 28)",
+        "quote": "relate ratios to fractions and to linear functions",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R8). Checked: 1/(1 + 4) = 1/5.",
+          "at": "2026-11-25T19:42:45Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:43:11Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r8-0107",
+    "topic": "gcse-maths-h-r8",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r8-lp-ratio-fraction-cards",
+    "expected_seconds": 15,
+    "front": "y = 6x. The ratio y : x is n : 1. What is n?",
+    "back": "6",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R8",
+    "checked_by": [
+      "author"
+    ],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R8 (page 16; PDF page 28)",
+        "quote": "relate ratios to fractions and to linear functions",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R8). Checked: y/x = 6.",
+          "at": "2026-11-25T19:42:45Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:43:12Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r8-0108",
+    "topic": "gcse-maths-h-r8",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r8-lp-ratio-fraction-cards",
+    "expected_seconds": 15,
+    "front": "3/8 of a class are boys. Write boys : girls as 3 : n. What is n?",
+    "back": "5",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R8",
+    "checked_by": [
+      "author"
+    ],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R8 (page 16; PDF page 28)",
+        "quote": "relate ratios to fractions and to linear functions",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-R writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec R8). Checked: 8 - 3 = 5.",
+          "at": "2026-11-25T19:42:45Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T19:43:13Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  }
+]
