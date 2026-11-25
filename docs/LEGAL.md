@@ -59,6 +59,23 @@ normally on GitHub:
 
 The parent notice and the other policies keep the plain layout for now.
 
+## Accepting the terms and privacy notice (L8)
+
+A new parent's "Before you start" step (`BeforeYouStart.tsx`) shows the Terms of use and the
+Privacy notice in the same friendly style, built from their own files (one source, no extra
+hints, so the policies do not change version):
+
+- Every top-level bullet of a policy's "In plain English" section becomes a card, word for word.
+  A bold start ending in a full stop (`**Who we are.** …`) becomes the card's label. Text before
+  the bullets is shown above the cards. A test checks every card against the policy text.
+- Icons are chosen in code from the label (or, for unlabelled cards, only from strong words such
+  as "AI"); they are decoration and add nothing to what the policy says.
+- "Show the details" opens the policy's full text in place (`aria-expanded`, `aria-controls`);
+  "Read the full …" links to `/legal/<name>`. Cards slide in gently, never with motion when the
+  device asks for reduced motion.
+- Then the "I have read the Terms of use and Privacy notice" checkbox and Continue. What is
+  stored is unchanged: the two policy versions in `policy_acceptances`.
+
 ## Rules
 
 - **Truthful to the code.** Every statement about data must match what the code does today

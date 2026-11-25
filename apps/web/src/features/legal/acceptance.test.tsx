@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { MemoryRouter } from 'react-router-dom';
@@ -15,7 +15,9 @@ import { createPolicyLibrary } from './library';
 import { PolicyLibraryProvider } from './PolicyLibraryContext';
 
 const policyFile = (title: string, version: string, change: string) =>
-  `# ${title}\n\nVersion: ${version}\n\n## In plain English\n\nShort.\n\n## Full text\n\nLong.\n\n## Changes\n\n- ${change}\n`;
+  `# ${title}\n\nVersion: ${version}\n\n## In plain English\n\n` +
+  `- **Who we are.** ${title} is run by us.\n- No adverts in the ${title}.\n\n` +
+  `## Full text\n\n### 1. About\n\nThe long ${title} text.\n\n## Changes\n\n- ${change}\n`;
 const library = createPolicyLibrary(
   {
     'a/privacy-notice.md': policyFile(
@@ -114,6 +116,39 @@ describe('PolicyGate', () => {
       { policy: 'terms-of-use', version: '1.0' },
     ]);
     expect(await screen.findByRole('heading', { name: 'Onboarding' })).toBeInTheDocument();
+  });
+
+  it('shows each policy as cards built from its plain-English summary', async () => {
+    show(fakeApi([]));
+    for (const title of ['Terms of use', 'Privacy notice']) {
+      const list = await screen.findByRole('list', { name: `${title} in short` });
+      const cards = within(list).getAllByRole('listitem');
+      expect(cards).toHaveLength(2);
+      expect(cards[0]).toHaveTextContent(`Who we are${title} is run by us.`);
+      expect(cards[1]).toHaveTextContent(`No adverts in the ${title}.`);
+      expect(screen.getByRole('link', { name: `Read the full ${title}` })).toHaveAttribute(
+        'href',
+        `/legal/${title === 'Terms of use' ? 'terms-of-use' : 'privacy-notice'}`,
+      );
+    }
+  });
+
+  it('opens and closes the full text of each policy, keyboard and screen reader friendly', async () => {
+    show(fakeApi([]));
+    const open = await screen.findByRole('button', {
+      name: 'Show the details of the Terms of use',
+    });
+    expect(open).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.queryByText('The long Terms of use text.')).not.toBeVisible();
+    open.focus();
+    await userEvent.keyboard('{Enter}');
+    expect(open).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getByText('The long Terms of use text.')).toBeVisible();
+    expect(document.getElementById(open.getAttribute('aria-controls')!)).toContainElement(
+      screen.getByText('The long Terms of use text.'),
+    );
+    await userEvent.click(open);
+    expect(open).toHaveAttribute('aria-expanded', 'false');
   });
 
   it('shows the app straight away when the versions are current', async () => {

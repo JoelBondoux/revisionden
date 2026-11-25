@@ -11,8 +11,8 @@ import { Link } from 'react-router-dom';
 import { z } from 'zod';
 import { defaultBaseUrl } from '../../api/ApiContext';
 import { Button } from '../../components/Button';
-import { Card } from '../../components/Card';
 import { Sheet } from '../../components/Sheet';
+import { BeforeYouStart } from './BeforeYouStart';
 import { Markdown } from './Markdown';
 import { usePolicyLibrary } from './PolicyLibraryContext';
 import './legal.css';
@@ -127,31 +127,19 @@ export function PolicyGate({ children }: { children: ReactNode }) {
 
   if (status.kind === 'first') {
     const policies = POLICIES_TO_ACCEPT.filter((p) => current[p]);
+    // Shown in the order the checkbox names them; versions are stored exactly as before.
+    const shown = [...policies].reverse().flatMap((name) => {
+      const policy = library.get(name);
+      return policy ? [{ ...policy, name }] : [];
+    });
     return (
-      <div className="stack">
-        <h1>Before you start</h1>
-        <Card>
-          <p>
-            Please read how RevisionDen works and how we look after your family&apos;s data. Both
-            start with a short summary in plain English.
-          </p>
-          <label className="legal-check">
-            <input type="checkbox" checked={ticked} onChange={(e) => setTicked(e.target.checked)} />
-            <span>
-              I have read the <Link to="/legal/terms-of-use">Terms of use</Link> and{' '}
-              <Link to="/legal/privacy-notice">Privacy notice</Link>
-            </span>
-          </label>
-        </Card>
-        {error && (
-          <p role="alert" className="field__error">
-            {error}
-          </p>
-        )}
-        <Button block disabled={!ticked} onClick={() => void accept(policies)}>
-          Continue
-        </Button>
-      </div>
+      <BeforeYouStart
+        policies={shown}
+        ticked={ticked}
+        onTick={setTicked}
+        error={error}
+        onContinue={() => void accept(policies)}
+      />
     );
   }
 
