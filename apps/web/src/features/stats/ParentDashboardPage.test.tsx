@@ -52,7 +52,6 @@ describe('Parent stats dashboard', () => {
     expect(screen.getByRole('region', { name: 'School report effort' })).toHaveTextContent(
       'Not set up yet',
     );
-    expect(screen.getByRole('region', { name: 'Reward' })).toHaveTextContent('Not set up yet');
   });
 
   it('shows healthy habits, AI spend and recent activity', async () => {
@@ -111,11 +110,6 @@ describe('Parent stats dashboard', () => {
     expect(screen.getByRole('region', { name: 'School report effort' })).toHaveTextContent(
       'Commitment: 3 (1 to 4)',
     );
-    expect(screen.getByRole('progressbar', { name: 'Cinema trip' })).toHaveAttribute(
-      'aria-valuetext',
-      '12 of 30 (30-day streak)',
-    );
-    expect(screen.getByRole('region', { name: 'Reward' })).toHaveTextContent('New game: reached');
   });
 
   it('saves as PDF in the browser', async () => {

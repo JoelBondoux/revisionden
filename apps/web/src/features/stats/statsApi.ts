@@ -3,6 +3,8 @@ import { z, type ZodType } from 'zod';
 import {
   ParentDailyLimitSchema,
   ParentDashboardSchema,
+  ParentRewardsResponseSchema,
+  type ParentRewardsResponse,
   StudentDailyLimitSchema,
   StudentStatsSchema,
   type ParentDailyLimit,
@@ -26,6 +28,8 @@ export interface StatsApi {
   /** The signed-in parent's children (nicknames only). */
   getChildren(): Promise<Child[]>;
   getDashboard(studentId: string): Promise<ParentDashboard>;
+  /** A child's parent-set rewards, read-only: never uses up their "New!" rewards (K10). */
+  getParentRewards(studentId: string): Promise<ParentRewardsResponse>;
   /** The student's own daily limit and minutes left (workstream K7). */
   getMyDailyLimit(): Promise<StudentDailyLimit>;
   markDailyLimitSeen(): Promise<void>;
@@ -56,6 +60,8 @@ export function createStatsApi({
     getChildren: async () => (await get('students', ChildrenSchema)).students,
     getDashboard: (id) =>
       get(`students/${encodeURIComponent(id)}/dashboard`, ParentDashboardSchema),
+    getParentRewards: (id) =>
+      get(`students/${encodeURIComponent(id)}/parent-rewards`, ParentRewardsResponseSchema),
     getMyDailyLimit: () => get('student/daily-limit', StudentDailyLimitSchema),
     markDailyLimitSeen: async () =>
       void (await send('POST', 'student/daily-limit/seen', z.unknown())),

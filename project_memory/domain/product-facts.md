@@ -397,6 +397,9 @@ Tags: #product #rules #limits #defaults
   nothing, so the stats pages and the parent's parent-rewards view never use up the student's
   "New!" rewards (the student's Rewards page, answers and flashcard sessions save and announce them). Plan, school report effort and predicted/target grade panels show "Not set up yet"
   (adapters in `apps/api/src/stats/adapters.ts`) until those features land.
+- Parent stats dashboard rewards (K10, owner 2026-11-25): all parent-set rewards with progress
+  bars, and add, edit and remove (with a confirm step) on the dashboard, through R's editor
+  (`ParentRewardForm`) and routes; empty state "No rewards yet" and "Add a reward".
 - Routes: `/progress` (My stats), `/parent/stats` (parent); API `GET /v1/student/stats`,
   `GET /v1/students/:id/stats`, `GET /v1/students/:id/dashboard`. Implemented in
   `packages/core/src/stats.ts`, `apps/api/src/stats/`, `apps/web/src/features/stats/`.

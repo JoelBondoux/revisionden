@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- On the parent stats page you can now add, edit and remove your child's rewards, and see every reward with its progress.
 - When RevisionDen support replies to your feedback or bug report, you'll see the reply right under your message.
 - Coming soon: a public RevisionDen website at revisionden.com explaining how it works for parents and young people, with the planned prices and all the policies. The app itself will move to app.revisionden.com.
 - "Remember this?" questions are now completely safe: getting one wrong never breaks your combo.
@@ -79,6 +80,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Parent stats rewards (K10): the dashboard's Reward panel is now "Rewards": every parent-set reward with progress, plus add, edit and remove (confirm step) through R's routes (read with the read-only `GET ./parent-rewards`, so a parent looking never uses up the child's "New!" rewards). R's form is now a shared `ParentRewardForm` (`apps/web/src/features/rewards/`), used by the rewards page and the stats dashboard; the rewards MSW mocks gain the edit (PATCH) handler.
 - Operator bridge O3b (O): `GET/POST /operator/appdeck/data-requests` and `POST .../data-requests/:id/handled` (Manager; a deletion runs `deleteFamilies` for one-parent families only, else 409 `needs_both_parents`), `data_requests` table (in migration 0016 with O3), `dataRequestDueAt` (one calendar month) in core, 2-year clean-up; Manager trial and free-place routes answer 503 `payments_not_ready` until payments exist. Data retention policy 1.5.
 - Operator bridge O3 (O): `POST /operator/appdeck/{families/:id/notes,tickets/:id/reply,tickets/:id/status,tickets/:id/confirm-bug,tickets/:id/duplicate}` (`apps/api/src/operator/actions.ts`), audited; `operator_notes` and `feedback_replies` tables (migration 0016); family detail gains `notes`, tickets gain `confirmedBug` and `duplicateOf`, ticket detail gains `messages`; L's confirm and status logic shared as `confirmFeedback` and `setFeedbackStatus`; parent and student feedback lists and the family export include support replies (and the export, support notes); web shows "Reply from RevisionDen" under feedback. Data retention policy 1.4.
 - Operator bridge O2 (O): read routes on AppDeck's paths `GET /operator/appdeck/{health,overview,families/:id,tickets,tickets/:id,error-reports,content-reports,audit}` and `POST /operator/appdeck/families/search` (a read: no replay, nothing stored) in `apps/api/src/operator/reads.ts`, with strict response schemas (`packages/core/src/operator-schemas.ts`); family search, family view and ticket reads are audited; children are sent as nickname and year group only; a student's ticket text is never returned. The signed path keeps a bare `?`.
