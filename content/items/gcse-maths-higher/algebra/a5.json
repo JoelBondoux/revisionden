@@ -386,6 +386,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:52Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:06:23Z",
+          "notes": "model answered \"28.3 cm²\"; expected \"28.3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:06:41Z",
+          "notes": "wrong_answer (answer): The question requires an answer \"correct to 1 decimal place\", which is 28.3. The tolerance of 0.05 allows answers in the range [28.25, 28.35], which would incorrectly accept answers that are not given to 1 decimal place (e.g., 28.27 or 28.32). The tolerance should be 0 to only accept the correctly rounded answer."
         }
       ]
     }
