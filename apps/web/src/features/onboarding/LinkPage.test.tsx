@@ -26,6 +26,8 @@ function fakeApi(overrides: Partial<OnboardingApi> = {}): OnboardingApi {
       student: { nickname: STUDENT.nickname, avatarCode: STUDENT.avatarCode },
     })),
     verifyLink: vi.fn(async () => ({ deviceId: 'device-1', student: STUDENT })),
+    unlockOptions: vi.fn(),
+    unlockVerify: vi.fn(),
     ...overrides,
   };
 }
