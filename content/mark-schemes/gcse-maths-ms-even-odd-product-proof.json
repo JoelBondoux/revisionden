@@ -1,0 +1,44 @@
+{
+  "id": "gcse-maths-ms-even-odd-product-proof",
+  "type": "points",
+  "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6 (mark points written for RevisionDen in the board's M/A/B style)",
+  "points": [
+    {
+      "code": "M1",
+      "description": "Writes an even number and an odd number algebraically, for example 2m and 2n + 1 with m and n integers"
+    },
+    {
+      "code": "M1",
+      "description": "Multiplies them to get 4mn + 2m (or an equivalent expression)"
+    },
+    { "code": "A1", "description": "Writes the product as 2(2mn + m) and concludes it is even" }
+  ],
+  "citations": [
+    {
+      "source_type": "specification",
+      "publisher": "Pearson Edexcel",
+      "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+      "document_ref": "1MA1 Issue 2 (June 2015)",
+      "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+      "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A6 (page 14; PDF page 26)",
+      "quote": "know the difference between an equation and an identity; argue mathematically to show algebraic expressions are equivalent, and use algebra to support and construct arguments and proofs",
+      "retrieved_at": "2026-11-25",
+      "supports": ["mark_scheme"],
+      "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+    }
+  ],
+  "verification": {
+    "status": "draft",
+    "version": 1,
+    "checks": [
+      {
+        "name": "quote-check",
+        "result": "pass",
+        "tool": "revisionden-quote-check",
+        "tool_version": "1.0.0",
+        "at": "2026-11-25T17:21:52Z",
+        "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+      }
+    ]
+  }
+}

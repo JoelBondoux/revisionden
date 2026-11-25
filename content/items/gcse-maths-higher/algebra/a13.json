@@ -1,0 +1,587 @@
+[
+  {
+    "id": "gcse-maths-h-a13-0101",
+    "topic": "gcse-maths-h-a13",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a13-lp-translations",
+    "expected_seconds": 25,
+    "prompt": "Which describes how the graph of y = f(x) + 3 is related to the graph of y = f(x)?",
+    "options": [
+      "A translation 3 units up",
+      "A translation 3 units down",
+      "A translation 3 units to the right",
+      "A translation 3 units to the left"
+    ],
+    "answer": { "option": 0 },
+    "marks": 1,
+    "explanation": "Adding 3 to f(x) adds 3 to every y-value, so the graph moves 3 units up.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x, y + 3). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:04Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0102",
+    "topic": "gcse-maths-h-a13",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a13-lp-translations",
+    "expected_seconds": 25,
+    "prompt": "Which describes how the graph of y = f(x - 2) is related to the graph of y = f(x)?",
+    "options": [
+      "A translation 2 units up",
+      "A translation 2 units down",
+      "A translation 2 units to the right",
+      "A translation 2 units to the left"
+    ],
+    "answer": { "option": 2 },
+    "marks": 1,
+    "explanation": "f(x - 2) takes the value f had 2 units earlier, so the graph moves 2 units to the right.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x + 2, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:05Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0103",
+    "topic": "gcse-maths-h-a13",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a13-lp-translations",
+    "expected_seconds": 25,
+    "prompt": "Which describes how the graph of y = f(x + 4) is related to the graph of y = f(x)?",
+    "options": [
+      "A translation 4 units up",
+      "A translation 4 units down",
+      "A translation 4 units to the right",
+      "A translation 4 units to the left"
+    ],
+    "answer": { "option": 3 },
+    "marks": 1,
+    "explanation": "f(x + 4) takes the value f has 4 units later, so the graph moves 4 units to the left.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x - 4, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:05Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0104",
+    "topic": "gcse-maths-h-a13",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a13-lp-translations",
+    "expected_seconds": 40,
+    "prompt": "The point (3, 5) is on the graph of y = f(x). Write down the coordinates of the point it moves to on the graph of y = f(x) - 4.",
+    "answer": { "accepted": ["(3, 1)", "(3,1)"] },
+    "marks": 1,
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). (x, y) maps to (x, y - 4): (3, 5) to (3, 1). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:06Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0105",
+    "topic": "gcse-maths-h-a13",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a13-lp-translations",
+    "expected_seconds": 90,
+    "prompt": "The graph of y = x^2 + 1 is translated 10 units down. Find the x-coordinates where the new graph crosses the x-axis.",
+    "answer": { "solutions": ["3", "-3"] },
+    "verify": { "method": "solve", "equation": "x^2 + 1 - 10 = 0", "variable": "x" },
+    "steps": ["x^2 + 1 - 10 = 0", "x^2 - 9 = 0", "(x - 3)(x + 3) = 0", "x = 3 or x = -3"],
+    "marks": 3,
+    "mark_scheme": ["B1 for y = x^2 - 9", "M1 for x^2 - 9 = 0", "A1 for x = 3 and x = -3"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Solutions and every step backed by the maths engine. The new equation y = x^2 - 9 uses the translation rule y = f(x) - 10: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:07Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0106",
+    "topic": "gcse-maths-h-a13",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a13-lp-reflections",
+    "expected_seconds": 25,
+    "prompt": "Which describes how the graph of y = -f(x) is related to the graph of y = f(x)?",
+    "options": [
+      "A reflection in the x-axis",
+      "A reflection in the y-axis",
+      "A reflection in the line y = x",
+      "A translation 1 unit down"
+    ],
+    "answer": { "option": 0 },
+    "marks": 1,
+    "explanation": "Every y-value changes sign, so the graph is reflected in the x-axis.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x, -y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:08Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0107",
+    "topic": "gcse-maths-h-a13",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a13-lp-reflections",
+    "expected_seconds": 25,
+    "prompt": "Which describes how the graph of y = f(-x) is related to the graph of y = f(x)?",
+    "options": [
+      "A reflection in the x-axis",
+      "A reflection in the y-axis",
+      "A reflection in the line y = x",
+      "A translation 1 unit down"
+    ],
+    "answer": { "option": 1 },
+    "marks": 1,
+    "explanation": "The value at x is the old value at -x, so the graph is reflected in the y-axis.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (-x, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:08Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0108",
+    "topic": "gcse-maths-h-a13",
+    "type": "short_answer",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a13-lp-reflections",
+    "expected_seconds": 40,
+    "prompt": "The point (2, -7) is on the graph of y = f(x). Write down the coordinates of the point it moves to on the graph of y = f(-x).",
+    "answer": { "accepted": ["(-2, -7)", "(-2,-7)", "(−2, −7)"] },
+    "marks": 1,
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). (x, y) maps to (-x, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:09Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0109",
+    "topic": "gcse-maths-h-a13",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a13-lp-transformation-cards",
+    "expected_seconds": 15,
+    "front": "y = f(x) + a, with a > 0, moves the graph of y = f(x) which way? (one word: left, right, up or down)",
+    "back": "Up",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:10Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0110",
+    "topic": "gcse-maths-h-a13",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a13-lp-transformation-cards",
+    "expected_seconds": 15,
+    "front": "y = f(x - a), with a > 0, moves the graph of y = f(x) which way? (one word: left, right, up or down)",
+    "back": "Right",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:11Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a13-0111",
+    "topic": "gcse-maths-h-a13",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a13-lp-transformation-cards",
+    "expected_seconds": 15,
+    "front": "y = -f(x) is a reflection of y = f(x) in which axis? (x or y)",
+    "back": "x",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A13 (page 14; PDF page 26)",
+        "quote": "sketch translations and reflections of a given function",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:12Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  }
+]

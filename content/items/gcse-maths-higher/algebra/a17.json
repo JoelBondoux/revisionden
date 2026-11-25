@@ -1,0 +1,574 @@
+[
+  {
+    "id": "gcse-maths-h-a17-0101",
+    "topic": "gcse-maths-h-a17",
+    "type": "worked_maths",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a17-lp-solve-linear",
+    "expected_seconds": 40,
+    "prompt": "Solve 4x + 7 = 31",
+    "answer": { "solutions": ["6"] },
+    "verify": { "method": "solve", "equation": "4x + 7 = 31", "variable": "x" },
+    "steps": ["4x + 7 = 31", "4x = 24", "x = 6"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 4x = 24", "A1 for x = 6"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A17 (page 15; PDF page 27)",
+        "quote": "solve linear equations in one unknown algebraically (including those with the unknown on both sides of the equation)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:26Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a17-0102",
+    "topic": "gcse-maths-h-a17",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a17-lp-solve-linear",
+    "expected_seconds": 50,
+    "prompt": "Solve 3(2x - 1) = 21",
+    "answer": { "solutions": ["4"] },
+    "verify": { "method": "solve", "equation": "3(2x - 1) = 21", "variable": "x" },
+    "steps": ["3(2x - 1) = 21", "6x - 3 = 21", "6x = 24", "x = 4"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 6x - 3 = 21 or 2x - 1 = 7", "A1 for x = 4"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A17 (page 15; PDF page 27)",
+        "quote": "solve linear equations in one unknown algebraically (including those with the unknown on both sides of the equation)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:27Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a17-0103",
+    "topic": "gcse-maths-h-a17",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a17-lp-solve-linear",
+    "expected_seconds": 50,
+    "prompt": "Solve 7x - 4 = 3x + 20",
+    "answer": { "solutions": ["6"] },
+    "verify": { "method": "solve", "equation": "7x - 4 = 3x + 20", "variable": "x" },
+    "steps": ["7x - 4 = 3x + 20", "4x - 4 = 20", "4x = 24", "x = 6"],
+    "marks": 2,
+    "mark_scheme": ["M1 for collecting the x terms on one side, 4x = 24", "A1 for x = 6"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A17 (page 15; PDF page 27)",
+        "quote": "solve linear equations in one unknown algebraically (including those with the unknown on both sides of the equation)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:27Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a17-0104",
+    "topic": "gcse-maths-h-a17",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a17-lp-solve-linear",
+    "expected_seconds": 60,
+    "prompt": "The straight lines y = 2x + 1 and y = 7 - x cross. Work out the x-coordinate of the point where they cross.",
+    "answer": { "solutions": ["2"] },
+    "verify": { "method": "solve", "equation": "2x + 1 = 7 - x", "variable": "x" },
+    "steps": ["2x + 1 = 7 - x", "3x + 1 = 7", "3x = 6", "x = 2"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 2x + 1 = 7 - x", "A1 for x = 2"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A17 (page 15; PDF page 27)",
+        "quote": "solve linear equations in one unknown algebraically (including those with the unknown on both sides of the equation)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A17 (page 15; PDF page 27)",
+        "quote": "find approximate solutions using a graph",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:28Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a17-0105",
+    "topic": "gcse-maths-h-a17",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a17-lp-fractions-negatives",
+    "expected_seconds": 45,
+    "prompt": "Solve 2 - 3x = 11",
+    "answer": { "solutions": ["-3"] },
+    "verify": { "method": "solve", "equation": "2 - 3x = 11", "variable": "x" },
+    "steps": ["2 - 3x = 11", "-3x = 9", "x = -3"],
+    "marks": 2,
+    "mark_scheme": ["M1 for -3x = 9", "A1 for x = -3"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A17 (page 15; PDF page 27)",
+        "quote": "solve linear equations in one unknown algebraically (including those with the unknown on both sides of the equation)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:29Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a17-0106",
+    "topic": "gcse-maths-h-a17",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a17-lp-fractions-negatives",
+    "expected_seconds": 90,
+    "prompt": "Solve (x + 5)/3 = 2x - 5",
+    "answer": { "solutions": ["4"] },
+    "verify": { "method": "solve", "equation": "(x + 5)/3 = 2x - 5", "variable": "x" },
+    "steps": ["(x + 5)/3 = 2x - 5", "x + 5 = 6x - 15", "20 = 5x", "x = 4"],
+    "marks": 3,
+    "mark_scheme": ["M1 for x + 5 = 3(2x - 5)", "M1 for 20 = 5x", "A1 for x = 4"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A17 (page 15; PDF page 27)",
+        "quote": "solve linear equations in one unknown algebraically (including those with the unknown on both sides of the equation)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:30Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a17-0107",
+    "topic": "gcse-maths-h-a17",
+    "type": "worked_maths",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-a17-lp-fractions-negatives",
+    "expected_seconds": 100,
+    "prompt": "Solve (2x - 1)/5 = (x + 1)/2",
+    "answer": { "solutions": ["-7"] },
+    "verify": { "method": "solve", "equation": "(2x - 1)/5 = (x + 1)/2", "variable": "x" },
+    "steps": ["(2x - 1)/5 = (x + 1)/2", "2(2x - 1) = 5(x + 1)", "4x - 2 = 5x + 5", "x = -7"],
+    "marks": 3,
+    "mark_scheme": ["M1 for 2(2x - 1) = 5(x + 1)", "M1 for 4x - 2 = 5x + 5", "A1 for x = -7"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A17 (page 15; PDF page 27)",
+        "quote": "solve linear equations in one unknown algebraically (including those with the unknown on both sides of the equation)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:30Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a17-0108",
+    "topic": "gcse-maths-h-a17",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a17-lp-fractions-negatives",
+    "expected_seconds": 90,
+    "prompt": "Solve 5(x + 2) - 3(x - 4) = 30",
+    "answer": { "solutions": ["4"] },
+    "verify": { "method": "solve", "equation": "5(x + 2) - 3(x - 4) = 30", "variable": "x" },
+    "steps": ["5(x + 2) - 3(x - 4) = 30", "5x + 10 - 3x + 12 = 30", "2x + 22 = 30", "x = 4"],
+    "marks": 3,
+    "mark_scheme": ["M1 for 5x + 10 - 3x + 12", "M1 for 2x = 8", "A1 for x = 4"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A17 (page 15; PDF page 27)",
+        "quote": "solve linear equations in one unknown algebraically (including those with the unknown on both sides of the equation)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:31Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a17-0109",
+    "topic": "gcse-maths-h-a17",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a17-lp-linear-cards",
+    "expected_seconds": 15,
+    "front": "Solve x + 9 = 4",
+    "back": "x = -5",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A17 (page 15; PDF page 27)",
+        "quote": "solve linear equations in one unknown algebraically (including those with the unknown on both sides of the equation)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Back checked with SymPy.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:32Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a17-0110",
+    "topic": "gcse-maths-h-a17",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a17-lp-linear-cards",
+    "expected_seconds": 15,
+    "front": "Solve 3x = 18",
+    "back": "x = 6",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A17 (page 15; PDF page 27)",
+        "quote": "solve linear equations in one unknown algebraically (including those with the unknown on both sides of the equation)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Back checked with SymPy.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:33Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a17-0111",
+    "topic": "gcse-maths-h-a17",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a17-lp-linear-cards",
+    "expected_seconds": 15,
+    "front": "Solve x/4 = 5",
+    "back": "x = 20",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A17 (page 15; PDF page 27)",
+        "quote": "solve linear equations in one unknown algebraically (including those with the unknown on both sides of the equation)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Back checked with SymPy.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:33Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  }
+]

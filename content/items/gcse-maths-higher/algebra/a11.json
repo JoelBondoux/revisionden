@@ -1,0 +1,530 @@
+[
+  {
+    "id": "gcse-maths-h-a11-0101",
+    "topic": "gcse-maths-h-a11",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a11-lp-roots",
+    "expected_seconds": 75,
+    "prompt": "Find the roots of y = x^2 - 5x + 6 (the x-values where the graph crosses the x-axis).",
+    "answer": { "solutions": ["2", "3"] },
+    "verify": { "method": "solve", "equation": "x^2 - 5x + 6 = 0", "variable": "x" },
+    "steps": ["x^2 - 5x + 6 = 0", "(x - 2)(x - 3) = 0", "x = 2 or x = 3"],
+    "marks": 3,
+    "mark_scheme": ["M1 for x^2 - 5x + 6 = 0", "M1 for (x - 2)(x - 3)", "A1 for x = 2 and x = 3"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A11 (page 14; PDF page 26)",
+        "quote": "deduce roots algebraically and turning points by completing the square",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:34Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a11-0102",
+    "topic": "gcse-maths-h-a11",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a11-lp-roots",
+    "expected_seconds": 60,
+    "prompt": "The graph of y = x^2 - 16 crosses the x-axis at two points. Find their x-coordinates.",
+    "answer": { "solutions": ["4", "-4"] },
+    "verify": { "method": "solve", "equation": "x^2 - 16 = 0", "variable": "x" },
+    "steps": ["x^2 - 16 = 0", "(x - 4)(x + 4) = 0", "x = 4 or x = -4"],
+    "marks": 2,
+    "mark_scheme": ["M1 for (x - 4)(x + 4) = 0 or x^2 = 16", "A1 for x = 4 and x = -4"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A11 (page 14; PDF page 26)",
+        "quote": "deduce roots algebraically and turning points by completing the square",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:35Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a11-0103",
+    "topic": "gcse-maths-h-a11",
+    "type": "worked_maths",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a11-lp-roots",
+    "expected_seconds": 30,
+    "prompt": "Write down the roots of y = (x + 1)(x - 7).",
+    "answer": { "solutions": ["-1", "7"] },
+    "verify": { "method": "solve", "equation": "(x + 1)(x - 7) = 0", "variable": "x" },
+    "marks": 1,
+    "mark_scheme": ["B1 for x = -1 and x = 7"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A11 (page 14; PDF page 26)",
+        "quote": "deduce roots algebraically and turning points by completing the square",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). Solutions backed by the maths engine.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:36Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a11-0104",
+    "topic": "gcse-maths-h-a11",
+    "type": "short_answer",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a11-lp-turning-points",
+    "expected_seconds": 60,
+    "prompt": "Write x^2 + 6x + 11 in the form (x + a)^2 + b.",
+    "answer": { "accepted": ["(x + 3)^2 + 2", "(x+3)^2+2", "(x + 3)² + 2"] },
+    "marks": 2,
+    "explanation": "Half of 6 is 3: (x + 3)^2 = x^2 + 6x + 9, so x^2 + 6x + 11 = (x + 3)^2 + 2.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A11 (page 14; PDF page 26)",
+        "quote": "deduce roots algebraically and turning points by completing the square",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). Checked with SymPy: (x + 3)^2 + 2 = x^2 + 6x + 11.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:37Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a11-0105",
+    "topic": "gcse-maths-h-a11",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a11-lp-turning-points",
+    "expected_seconds": 30,
+    "prompt": "Write down the coordinates of the turning point of y = (x - 4)^2 + 3.",
+    "answer": { "accepted": ["(4, 3)", "(4,3)"] },
+    "marks": 1,
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A11 (page 14; PDF page 26)",
+        "quote": "deduce roots algebraically and turning points by completing the square",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A11 (page 14; PDF page 26)",
+        "quote": "identify and interpret roots, intercepts, turning points of quadratic functions graphically",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). The minimum of (x - 4)^2 + 3 is 3, at x = 4 (a square is never negative).",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:38Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a11-0106",
+    "topic": "gcse-maths-h-a11",
+    "type": "short_answer",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-a11-lp-turning-points",
+    "expected_seconds": 90,
+    "prompt": "By completing the square, find the coordinates of the turning point of y = x^2 - 8x + 10.",
+    "answer": { "accepted": ["(4, -6)", "(4,-6)", "(4, −6)"] },
+    "marks": 3,
+    "explanation": "x^2 - 8x + 10 = (x - 4)^2 - 16 + 10 = (x - 4)^2 - 6, so the turning point is (4, -6).",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A11 (page 14; PDF page 26)",
+        "quote": "deduce roots algebraically and turning points by completing the square",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). Checked with SymPy: x^2 - 8x + 10 = (x - 4)^2 - 6, minimum at (4, -6).",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:38Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a11-0107",
+    "topic": "gcse-maths-h-a11",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a11-lp-turning-points",
+    "expected_seconds": 25,
+    "prompt": "Is the turning point of y = 5 - (x - 2)^2 a maximum or a minimum, and where is it?",
+    "options": [
+      "Minimum at (2, 5)",
+      "Maximum at (2, 5)",
+      "Maximum at (-2, 5)",
+      "Minimum at (5, 2)"
+    ],
+    "answer": { "option": 1 },
+    "marks": 1,
+    "explanation": "(x - 2)^2 is never negative, so y is largest, 5, when x = 2: a maximum at (2, 5).",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A11 (page 14; PDF page 26)",
+        "quote": "identify and interpret roots, intercepts, turning points of quadratic functions graphically",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A11 (page 14; PDF page 26)",
+        "quote": "deduce roots algebraically and turning points by completing the square",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). Checked: y = 5 - (x - 2)^2 ≤ 5 with equality only at x = 2.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:39Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a11-0108",
+    "topic": "gcse-maths-h-a11",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a11-lp-quadratic-cards",
+    "expected_seconds": 15,
+    "front": "The turning point of y = (x - a)^2 + b",
+    "back": "(a, b)",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A11 (page 14; PDF page 26)",
+        "quote": "deduce roots algebraically and turning points by completing the square",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). Follows from (x - a)^2 ≥ 0 with equality at x = a.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:40Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a11-0109",
+    "topic": "gcse-maths-h-a11",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a11-lp-quadratic-cards",
+    "expected_seconds": 15,
+    "front": "The y-coordinate where y = x^2 + 4x - 7 crosses the y-axis",
+    "back": "-7",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A11 (page 14; PDF page 26)",
+        "quote": "identify and interpret roots, intercepts, turning points of quadratic functions graphically",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). Put x = 0: y = -7.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:41Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a11-0110",
+    "topic": "gcse-maths-h-a11",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a11-lp-quadratic-cards",
+    "expected_seconds": 15,
+    "front": "The x-coordinate of the turning point of y = x^2 + 10x + 3",
+    "back": "-5",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A11 (page 14; PDF page 26)",
+        "quote": "deduce roots algebraically and turning points by completing the square",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). Checked with SymPy: x^2 + 10x + 3 = (x + 5)^2 - 22.",
+          "at": "2026-11-25T17:23:37Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:41Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  }
+]

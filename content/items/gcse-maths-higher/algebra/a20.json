@@ -1,0 +1,510 @@
+[
+  {
+    "id": "gcse-maths-h-a20-0101",
+    "topic": "gcse-maths-h-a20",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a20-lp-iterate",
+    "expected_seconds": 30,
+    "prompt": "Use the iteration formula x_(n+1) = 2 + 3/x_n with x_0 = 1 to work out x_1.",
+    "answer": { "value": "5" },
+    "verify": { "expression": "2 + 3/1" },
+    "marks": 1,
+    "mark_scheme": ["B1 for 5"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A20 (page 15; PDF page 27)",
+        "quote": "find approximate solutions to equations numerically using iteration",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:51Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a20-0102",
+    "topic": "gcse-maths-h-a20",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a20-lp-iterate",
+    "expected_seconds": 60,
+    "prompt": "Use the iteration formula x_(n+1) = 2 + 3/x_n with x_0 = 1 to work out x_2.",
+    "answer": { "value": "2.6" },
+    "verify": { "expression": "2 + 3/(2 + 3/1)" },
+    "marks": 2,
+    "mark_scheme": ["M1 for x_1 = 5", "A1 for 2.6"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A20 (page 15; PDF page 27)",
+        "quote": "find approximate solutions to equations numerically using iteration",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:52Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a20-0103",
+    "topic": "gcse-maths-h-a20",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a20-lp-iterate",
+    "expected_seconds": 90,
+    "prompt": "Use the iteration formula x_(n+1) = 2 + 3/x_n with x_0 = 1 to work out x_3. Give your answer correct to 4 decimal places.",
+    "answer": { "value": "3.1538", "tolerance": 0.00005 },
+    "verify": { "expression": "2 + 3/(2 + 3/(2 + 3/1))" },
+    "marks": 2,
+    "mark_scheme": ["M1 for x_1 = 5 and x_2 = 2.6", "A1 for 3.1538"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A20 (page 15; PDF page 27)",
+        "quote": "find approximate solutions to equations numerically using iteration",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:53Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a20-0104",
+    "topic": "gcse-maths-h-a20",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-a20-lp-iterate",
+    "expected_seconds": 120,
+    "prompt": "Use the iteration formula x_(n+1) = ∛(x_n + 5) with x_0 = 2 to work out x_2. Give your answer correct to 3 decimal places.",
+    "answer": { "value": "1.905", "tolerance": 0.0005 },
+    "verify": { "expression": "((2 + 5)^(1/3) + 5)^(1/3)" },
+    "marks": 2,
+    "mark_scheme": ["M1 for x_1 = ∛7 = 1.91...", "A1 for 1.905"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A20 (page 15; PDF page 27)",
+        "quote": "find approximate solutions to equations numerically using iteration",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:53Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a20-0105",
+    "topic": "gcse-maths-h-a20",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a20-lp-sign-change",
+    "expected_seconds": 25,
+    "prompt": "f(x) = x^3 - 4x - 1. f(2) = -1 and f(3) = 14. What does this show?",
+    "options": [
+      "x^3 - 4x - 1 = 0 has a solution between x = 2 and x = 3",
+      "x^3 - 4x - 1 = 0 has no solution between x = 2 and x = 3",
+      "x = 2 is a solution of x^3 - 4x - 1 = 0",
+      "x = 14 is a solution of x^3 - 4x - 1 = 0"
+    ],
+    "answer": { "option": 0 },
+    "marks": 1,
+    "explanation": "f changes sign between x = 2 and x = 3 and f is continuous, so f(x) = 0 somewhere between them.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A20 (page 15; PDF page 27)",
+        "quote": "find approximate solutions to equations numerically using iteration",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). f(2) and f(3) checked with SymPy. Sign-change argument: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:54Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a20-0106",
+    "topic": "gcse-maths-h-a20",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a20-lp-sign-change",
+    "expected_seconds": 25,
+    "prompt": "Which iteration formula comes from rearranging x^3 - 4x - 1 = 0?",
+    "options": ["x = ∛(4x + 1)", "x = ∛(4x - 1)", "x = ∛(x + 4)", "x = 4x^3 + 1"],
+    "answer": { "option": 0 },
+    "marks": 1,
+    "explanation": "x^3 - 4x - 1 = 0 gives x^3 = 4x + 1, so x = ∛(4x + 1).",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A20 (page 15; PDF page 27)",
+        "quote": "find approximate solutions to equations numerically using iteration",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). Checked with SymPy: cubing each cube-root option, only 4x + 1 equals x^3 from the equation; 4x^3 + 1 is not a rearrangement.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:55Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a20-0107",
+    "topic": "gcse-maths-h-a20",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a20-lp-sign-change",
+    "expected_seconds": 30,
+    "prompt": "f(x) = x^3 - 4x - 1. Work out f(2).",
+    "answer": { "value": "-1" },
+    "verify": { "expression": "2^3 - 4*2 - 1" },
+    "marks": 1,
+    "mark_scheme": ["B1 for -1"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A20 (page 15; PDF page 27)",
+        "quote": "find approximate solutions to equations numerically using iteration",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:55Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a20-0108",
+    "topic": "gcse-maths-h-a20",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a20-lp-iteration-cards",
+    "expected_seconds": 15,
+    "front": "x_(n+1) = 1 + 6/x_n and x_1 = 3. Work out x_2.",
+    "back": "3",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A20 (page 15; PDF page 27)",
+        "quote": "find approximate solutions to equations numerically using iteration",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). Checked: 1 + 6/3 = 3.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:56Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a20-0109",
+    "topic": "gcse-maths-h-a20",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a20-lp-iteration-cards",
+    "expected_seconds": 15,
+    "front": "The name for using a formula such as x_(n+1) = g(x_n) again and again to find an approximate solution (one word)",
+    "back": "Iteration",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A20 (page 15; PDF page 27)",
+        "quote": "find approximate solutions to equations numerically using iteration",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). The specification names iteration; standard description. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:57Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a20-0110",
+    "topic": "gcse-maths-h-a20",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a20-lp-iteration-cards",
+    "expected_seconds": 15,
+    "front": "x_(n+1) = (x_n + 10)/3 and x_1 = 2. Work out x_2.",
+    "back": "4",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A20 (page 15; PDF page 27)",
+        "quote": "find approximate solutions to equations numerically using iteration",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). Checked: (2 + 10)/3 = 4.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:58Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  }
+]

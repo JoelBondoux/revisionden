@@ -1,0 +1,561 @@
+[
+  {
+    "id": "gcse-maths-h-a16-0101",
+    "topic": "gcse-maths-h-a16",
+    "type": "numeric",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a16-lp-circle-equation",
+    "expected_seconds": 20,
+    "prompt": "Write down the radius of the circle x^2 + y^2 = 49.",
+    "answer": { "value": "7" },
+    "verify": { "expression": "sqrt(49)" },
+    "marks": 1,
+    "mark_scheme": ["B1 for 7"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A16 (page 15; PDF page 27)",
+        "quote": "recognise and use the equation of a circle with centre at the origin",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:28Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a16-0102",
+    "topic": "gcse-maths-h-a16",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a16-lp-circle-equation",
+    "expected_seconds": 40,
+    "prompt": "Work out the radius of the circle x^2 + y^2 = 20. Give your answer correct to 3 significant figures.",
+    "answer": { "value": "4.47", "tolerance": 0.005 },
+    "verify": { "expression": "sqrt(20)" },
+    "marks": 1,
+    "mark_scheme": ["B1 for 4.47 (or 2√5)"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A16 (page 15; PDF page 27)",
+        "quote": "recognise and use the equation of a circle with centre at the origin",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:28Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a16-0103",
+    "topic": "gcse-maths-h-a16",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a16-lp-circle-equation",
+    "expected_seconds": 30,
+    "prompt": "Write down the equation of the circle with centre (0, 0) and radius 6.",
+    "answer": { "accepted": ["x^2 + y^2 = 36", "x^2+y^2=36", "x² + y² = 36"] },
+    "marks": 1,
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A16 (page 15; PDF page 27)",
+        "quote": "recognise and use the equation of a circle with centre at the origin",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). x^2 + y^2 = r^2 with r = 6.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:29Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a16-0104",
+    "topic": "gcse-maths-h-a16",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a16-lp-circle-equation",
+    "expected_seconds": 25,
+    "prompt": "Which of these points lies on the circle x^2 + y^2 = 25?",
+    "options": ["(2, 5)", "(-3, 4)", "(4, 4)", "(5, 5)"],
+    "answer": { "option": 1 },
+    "marks": 1,
+    "explanation": "(-3)^2 + 4^2 = 9 + 16 = 25. The others give 29, 32 and 50.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A16 (page 15; PDF page 27)",
+        "quote": "recognise and use the equation of a circle with centre at the origin",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Arithmetic checked for each option.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:30Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a16-0105",
+    "topic": "gcse-maths-h-a16",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a16-lp-tangents",
+    "expected_seconds": 30,
+    "prompt": "P is the point (3, 4) on the circle x^2 + y^2 = 25, which has centre O (0, 0). Work out the gradient of the radius OP.",
+    "answer": { "value": "4/3" },
+    "verify": { "expression": "4/3" },
+    "marks": 1,
+    "mark_scheme": ["B1 for 4/3"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A16 (page 15; PDF page 27)",
+        "quote": "find the equation of a tangent to a circle at a given point",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:31Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a16-0106",
+    "topic": "gcse-maths-h-a16",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-a16-lp-tangents",
+    "expected_seconds": 60,
+    "prompt": "P is the point (3, 4) on the circle x^2 + y^2 = 25. Work out the gradient of the tangent to the circle at P.",
+    "answer": { "value": "-3/4" },
+    "verify": { "expression": "-1/(4/3)" },
+    "marks": 2,
+    "mark_scheme": ["M1 for the gradient of OP = 4/3", "A1 for -3/4"],
+    "explanation": "The tangent is perpendicular to the radius OP, which has gradient 4/3, so the tangent has gradient -3/4.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A16 (page 15; PDF page 27)",
+        "quote": "find the equation of a tangent to a circle at a given point",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Answer backed by the maths engine. Tangent perpendicular to the radius: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:31Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a16-0107",
+    "topic": "gcse-maths-h-a16",
+    "type": "numeric",
+    "difficulty": 5,
+    "learning_point": "gcse-maths-h-a16-lp-tangents",
+    "expected_seconds": 150,
+    "prompt": "The tangent to the circle x^2 + y^2 = 10 at the point (1, 3) crosses the y-axis. Work out the y-coordinate of that point. Give your answer as a fraction.",
+    "answer": { "value": "10/3" },
+    "verify": { "expression": "3 + (1/3)*1" },
+    "marks": 3,
+    "mark_scheme": [
+      "M1 for the gradient of the radius = 3",
+      "M1 for the tangent gradient -1/3 and y - 3 = -(1/3)(x - 1)",
+      "A1 for 10/3"
+    ],
+    "explanation": "Radius gradient 3, so tangent gradient -1/3: y - 3 = -(1/3)(x - 1). At x = 0, y = 3 + 1/3 = 10/3.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A16 (page 15; PDF page 27)",
+        "quote": "find the equation of a tangent to a circle at a given point",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Answer backed by the maths engine. Tangent perpendicular to the radius: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:32Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a16-0108",
+    "topic": "gcse-maths-h-a16",
+    "type": "short_answer",
+    "difficulty": 5,
+    "learning_point": "gcse-maths-h-a16-lp-tangents",
+    "expected_seconds": 150,
+    "prompt": "Find the equation of the tangent to the circle x^2 + y^2 = 25 at the point (3, 4). Give your answer in the form ax + by = c.",
+    "answer": { "accepted": ["3x + 4y = 25", "3x+4y=25"] },
+    "marks": 3,
+    "explanation": "Radius gradient 4/3, so tangent gradient -3/4: y - 4 = -(3/4)(x - 3), which gives 4y - 16 = -3x + 9, so 3x + 4y = 25.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A16 (page 15; PDF page 27)",
+        "quote": "find the equation of a tangent to a circle at a given point",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Checked: gradient -3/4 through (3, 4) gives 3x + 4y = 25, and 3 × 3 + 4 × 4 = 25. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:33Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a16-0109",
+    "topic": "gcse-maths-h-a16",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a16-lp-circle-cards",
+    "expected_seconds": 15,
+    "front": "The radius of the circle x^2 + y^2 = 81",
+    "back": "9",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A16 (page 15; PDF page 27)",
+        "quote": "recognise and use the equation of a circle with centre at the origin",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). x^2 + y^2 = r^2 with r^2 = 81.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:34Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a16-0110",
+    "topic": "gcse-maths-h-a16",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a16-lp-circle-cards",
+    "expected_seconds": 15,
+    "front": "The centre of the circle x^2 + y^2 = 16",
+    "back": "(0, 0)",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A16 (page 15; PDF page 27)",
+        "quote": "recognise and use the equation of a circle with centre at the origin",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). The specification point is about circles centred at the origin.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:35Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a16-0111",
+    "topic": "gcse-maths-h-a16",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a16-lp-circle-cards",
+    "expected_seconds": 15,
+    "front": "A tangent to a circle is ... to the radius at the point where it touches (one word)",
+    "back": "Perpendicular",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A16 (page 15; PDF page 27)",
+        "quote": "find the equation of a tangent to a circle at a given point",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:26:22Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:27:35Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  }
+]

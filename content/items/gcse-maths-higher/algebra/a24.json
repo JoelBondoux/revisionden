@@ -1,0 +1,728 @@
+[
+  {
+    "id": "gcse-maths-h-a24-0101",
+    "topic": "gcse-maths-h-a24",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a24-lp-special-sequences",
+    "expected_seconds": 25,
+    "prompt": "Which of these is the start of the sequence of triangular numbers?",
+    "options": [
+      "1, 3, 6, 10, 15",
+      "1, 4, 9, 16, 25",
+      "1, 8, 27, 64, 125",
+      "2, 4, 6, 8, 10"
+    ],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "Triangular numbers count dots in triangles: 1, 1 + 2, 1 + 2 + 3, ... The others are square, cube and even numbers.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
+    "checked_by": [
+      "author"
+    ],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Sequences, content reference A24 (page 15; PDF page 27)",
+        "quote": "recognise and use sequences of triangular, square and cube numbers, simple arithmetic progressions, Fibonacci type sequences, quadratic sequences, and",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A24). Checked: n(n + 1)/2 for n = 1 to 5 gives 1, 3, 6, 10, 15. Definition of triangular numbers is standard. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T17:31:59Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:33:32Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a24-0102",
+    "topic": "gcse-maths-h-a24",
+    "type": "numeric",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a24-lp-special-sequences",
+    "expected_seconds": 20,
+    "prompt": "Work out the 6th cube number.",
+    "answer": {
+      "value": "216"
+    },
+    "verify": {
+      "expression": "6^3"
+    },
+    "marks": 1,
+    "mark_scheme": [
+      "B1 for 216"
+    ],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
+    "checked_by": [
+      "maths-engine",
+      "author"
+    ],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Sequences, content reference A24 (page 15; PDF page 27)",
+        "quote": "recognise and use sequences of triangular, square and cube numbers, simple arithmetic progressions, Fibonacci type sequences, quadratic sequences, and",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A24). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:31:59Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:33:32Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a24-0103",
+    "topic": "gcse-maths-h-a24",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a24-lp-special-sequences",
+    "expected_seconds": 30,
+    "prompt": "In a Fibonacci-type sequence each term is the sum of the two terms before it. The sequence starts 2, 5, 7, 12, 19. Work out the next term.",
+    "answer": {
+      "value": "31"
+    },
+    "verify": {
+      "expression": "12 + 19"
+    },
+    "marks": 1,
+    "mark_scheme": [
+      "B1 for 31"
+    ],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
+    "checked_by": [
+      "maths-engine",
+      "author"
+    ],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Sequences, content reference A24 (page 15; PDF page 27)",
+        "quote": "recognise and use sequences of triangular, square and cube numbers, simple arithmetic progressions, Fibonacci type sequences, quadratic sequences, and",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A24). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:31:59Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:33:33Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a24-0104",
+    "topic": "gcse-maths-h-a24",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a24-lp-special-sequences",
+    "expected_seconds": 45,
+    "prompt": "The sequence 2, 5, 10, 17, ... is a quadratic sequence (its differences go up by 2 each time). Work out the next term.",
+    "answer": {
+      "value": "26"
+    },
+    "verify": {
+      "expression": "17 + 9"
+    },
+    "marks": 1,
+    "mark_scheme": [
+      "B1 for 26"
+    ],
+    "explanation": "The differences are 3, 5, 7, so the next difference is 9: 17 + 9 = 26.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
+    "checked_by": [
+      "maths-engine",
+      "author"
+    ],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Sequences, content reference A24 (page 15; PDF page 27)",
+        "quote": "recognise and use sequences of triangular, square and cube numbers, simple arithmetic progressions, Fibonacci type sequences, quadratic sequences, and",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A24). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:31:59Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:33:34Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a24-0105",
+    "topic": "gcse-maths-h-a24",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a24-lp-special-sequences",
+    "expected_seconds": 90,
+    "prompt": "In a Fibonacci-type sequence each term is the sum of the two terms before it. The first two terms are a and 3, and the fourth term is 11. Work out a.",
+    "answer": {
+      "solutions": [
+        "5"
+      ]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "3 + (a + 3) = 11",
+      "variable": "a"
+    },
+    "steps": [
+      "3 + (a + 3) = 11",
+      "a + 6 = 11",
+      "a = 5"
+    ],
+    "marks": 3,
+    "mark_scheme": [
+      "M1 for the third term a + 3",
+      "M1 for 3 + (a + 3) = 11",
+      "A1 for 5"
+    ],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
+    "checked_by": [
+      "maths-engine",
+      "author"
+    ],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Sequences, content reference A24 (page 15; PDF page 27)",
+        "quote": "recognise and use sequences of triangular, square and cube numbers, simple arithmetic progressions, Fibonacci type sequences, quadratic sequences, and",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A24). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T17:31:59Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:33:35Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a24-0106",
+    "topic": "gcse-maths-h-a24",
+    "type": "numeric",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a24-lp-geometric",
+    "expected_seconds": 20,
+    "prompt": "The geometric progression 3, 6, 12, 24, ... continues. Work out the next term.",
+    "answer": {
+      "value": "48"
+    },
+    "verify": {
+      "expression": "24*2"
+    },
+    "marks": 1,
+    "mark_scheme": [
+      "B1 for 48"
+    ],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
+    "checked_by": [
+      "maths-engine",
+      "author"
+    ],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Sequences, content reference A24 (page 15; PDF page 27)",
+        "quote": "simple geometric progressions",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A24). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:31:59Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:33:35Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a24-0107",
+    "topic": "gcse-maths-h-a24",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a24-lp-geometric",
+    "expected_seconds": 30,
+    "prompt": "Work out the common ratio of the geometric progression 81, 27, 9, 3, ...",
+    "answer": {
+      "value": "1/3"
+    },
+    "verify": {
+      "expression": "27/81"
+    },
+    "marks": 1,
+    "mark_scheme": [
+      "B1 for 1/3"
+    ],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
+    "checked_by": [
+      "maths-engine",
+      "author"
+    ],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Sequences, content reference A24 (page 15; PDF page 27)",
+        "quote": "simple geometric progressions",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A24). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:31:59Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:33:36Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a24-0108",
+    "topic": "gcse-maths-h-a24",
+    "type": "short_answer",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a24-lp-geometric",
+    "expected_seconds": 60,
+    "prompt": "The geometric progression √2, 2, 2√2, 4, ... continues. Write down the next term. Give your answer as a surd.",
+    "answer": {
+      "accepted": [
+        "4√2",
+        "4 √2",
+        "4sqrt(2)",
+        "4sqrt2",
+        "4 × √2"
+      ]
+    },
+    "marks": 1,
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
+    "checked_by": [
+      "author"
+    ],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Sequences, content reference A24 (page 15; PDF page 27)",
+        "quote": "simple geometric progressions",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A24). Checked with SymPy: the common ratio is 2/√2 = √2 and 4 × √2 = 4√2.",
+          "at": "2026-11-25T17:31:59Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:33:37Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a24-0109",
+    "topic": "gcse-maths-h-a24",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a24-lp-geometric",
+    "expected_seconds": 40,
+    "prompt": "The first term of a geometric progression is 5 and the common ratio is 3. Work out the 4th term.",
+    "answer": {
+      "value": "135"
+    },
+    "verify": {
+      "expression": "5*3^3"
+    },
+    "marks": 1,
+    "mark_scheme": [
+      "B1 for 135"
+    ],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
+    "checked_by": [
+      "maths-engine",
+      "author"
+    ],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Sequences, content reference A24 (page 15; PDF page 27)",
+        "quote": "simple geometric progressions",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A24). Answer backed by the maths engine.",
+          "at": "2026-11-25T17:31:59Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:33:38Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a24-0110",
+    "topic": "gcse-maths-h-a24",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a24-lp-number-pattern-cards",
+    "expected_seconds": 15,
+    "front": "The next cube number after 27",
+    "back": "64",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
+    "checked_by": [
+      "author"
+    ],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Sequences, content reference A24 (page 15; PDF page 27)",
+        "quote": "recognise and use sequences of triangular, square and cube numbers, simple arithmetic progressions, Fibonacci type sequences, quadratic sequences, and",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A24). Checked: 4^3 = 64.",
+          "at": "2026-11-25T17:31:59Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:33:38Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a24-0111",
+    "topic": "gcse-maths-h-a24",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a24-lp-number-pattern-cards",
+    "expected_seconds": 15,
+    "front": "The 5th triangular number",
+    "back": "15",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
+    "checked_by": [
+      "author"
+    ],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Sequences, content reference A24 (page 15; PDF page 27)",
+        "quote": "recognise and use sequences of triangular, square and cube numbers, simple arithmetic progressions, Fibonacci type sequences, quadratic sequences, and",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A24). Checked: 1 + 2 + 3 + 4 + 5 = 15.",
+          "at": "2026-11-25T17:31:59Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:33:39Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a24-0112",
+    "topic": "gcse-maths-h-a24",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a24-lp-number-pattern-cards",
+    "expected_seconds": 15,
+    "front": "The common ratio of the geometric progression 5, 10, 20, 40, ...",
+    "back": "2",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
+    "checked_by": [
+      "author"
+    ],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Sequences, content reference A24 (page 15; PDF page 27)",
+        "quote": "simple geometric progressions",
+        "retrieved_at": "2026-11-25",
+        "supports": [
+          "question"
+        ],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A24). Checked: each term is twice the one before.",
+          "at": "2026-11-25T17:31:59Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:33:40Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  }
+]
