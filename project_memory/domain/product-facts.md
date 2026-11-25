@@ -451,3 +451,11 @@ Tags: #product #rules #limits #defaults
   ("Parent 1/2"); both confirm whole-family deletion.
 - Hidden tracks besides Bug Hunter: Fact Checker, Comeback Kid, Explorer, Planner, Pace Setter,
   Perfectionist (`docs/REWARDS.md`).
+
+## Titles and Get help (owner, 2026-11-25; planned)
+
+- Two-part titles: a first word and a last word unlocked separately from rewards (about 120 each);
+  curated, every pairing validated against blocked words; shown under the nickname.
+- "Get help" page: UK support services by topic with tap-to-call links; every number and URL
+  confirmed on the service's own site with source and date (rechecked each term); nothing about its
+  use is recorded or shown to parents; works offline; Quick exit. Detail: `docs/PRODUCT_RULES.md`.
