@@ -16,7 +16,8 @@ import { PolicyLibraryProvider } from './PolicyLibraryContext';
 
 const policyFile = (title: string, version: string, change: string) =>
   `# ${title}\n\nVersion: ${version}\n\n## In plain English\n\n` +
-  `- **Who we are.** ${title} is run by us.\n- No adverts in the ${title}.\n\n` +
+  `- **Who we are.** ${title} is run by us.\n- No adverts in the ${title}.\n` +
+  `- Point three.\n- Point four.\n- Point five.\n- Point six.\n\n` +
   `## Full text\n\n### 1. About\n\nThe long ${title} text.\n\n## Changes\n\n- ${change}\n`;
 const library = createPolicyLibrary(
   {
@@ -123,7 +124,7 @@ describe('PolicyGate', () => {
     for (const title of ['Terms of use', 'Privacy notice']) {
       const list = await screen.findByRole('list', { name: `${title} in short` });
       const cards = within(list).getAllByRole('listitem');
-      expect(cards).toHaveLength(2);
+      expect(cards).toHaveLength(4);
       expect(cards[0]).toHaveTextContent(`Who we are${title} is run by us.`);
       expect(cards[1]).toHaveTextContent(`No adverts in the ${title}.`);
       expect(screen.getByRole('link', { name: `Read the full ${title}` })).toHaveAttribute(
@@ -131,6 +132,22 @@ describe('PolicyGate', () => {
         `/legal/${title === 'Terms of use' ? 'terms-of-use' : 'privacy-notice'}`,
       );
     }
+  });
+
+  it('shows 4 points first, then all of them in place on "Show all … points"', async () => {
+    show(fakeApi([]));
+    const list = await screen.findByRole('list', { name: 'Terms of use in short' });
+    expect(within(list).getAllByRole('listitem')).toHaveLength(4);
+    const more = screen.getByRole('button', { name: 'Show all 6 points of the Terms of use' });
+    expect(more).toHaveAttribute('aria-expanded', 'false');
+    expect(document.getElementById(more.getAttribute('aria-controls')!)).toBe(list);
+    await userEvent.click(more);
+    expect(within(list).getAllByRole('listitem')).toHaveLength(6);
+    expect(more).toHaveAttribute('aria-expanded', 'true');
+    expect(more).toHaveAccessibleName('Show fewer points of the Terms of use');
+    expect(more).toHaveFocus();
+    await userEvent.click(more);
+    expect(within(list).getAllByRole('listitem')).toHaveLength(4);
   });
 
   it('opens and closes the full text of each policy, keyboard and screen reader friendly', async () => {

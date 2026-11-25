@@ -1,4 +1,9 @@
-import { parseAcceptanceSummary, summaryIcon } from './acceptanceSummary';
+import {
+  FEATURED_POINTS,
+  featuredFirst,
+  parseAcceptanceSummary,
+  summaryIcon,
+} from './acceptanceSummary';
 import { iconNames } from './NoticeIcon';
 import { defaultPolicyLibrary } from './policyFiles';
 
@@ -67,4 +72,63 @@ describe('the summaries a parent accepts', () => {
       }
     },
   );
+});
+
+describe('featuredFirst', () => {
+  const points = parseAcceptanceSummary(
+    [
+      '- **One.** a',
+      '- **Two.** b',
+      '- **Three.** c',
+      '- **Four.** d',
+      '- **Five.** e',
+      '- **Six.** f',
+    ].join('\n'),
+  ).points;
+
+  it('puts the chosen points first, in the chosen order, and keeps the rest in policy order', () => {
+    const { featured, rest } = featuredFirst(points, [/^Five$/, /^Two$/]);
+    expect(featured.map((p) => p.label)).toEqual(['Five', 'Two', 'One', 'Three']);
+    expect(rest.map((p) => p.label)).toEqual(['Four', 'Six']);
+  });
+
+  it('shows the first 4 when nothing is chosen or nothing matches', () => {
+    expect(featuredFirst(points, []).featured.map((p) => p.label)).toEqual([
+      'One',
+      'Two',
+      'Three',
+      'Four',
+    ]);
+    expect(featuredFirst(points, [/^Nope$/]).rest).toHaveLength(2);
+  });
+});
+
+describe('the 4 points shown first (product owner, 2026-11-25)', () => {
+  it.each([
+    [
+      'terms-of-use',
+      [
+        'The parent is in charge',
+        "It's a revision helper, not a teacher",
+        'AI marks are a guide',
+        'No promises about grades',
+      ],
+    ],
+    [
+      'privacy-notice',
+      ['What we keep about your child', 'What we keep about you', 'AI marking', 'Your rights'],
+    ],
+  ])('%s: each chosen point matches exactly one card', (name, expected) => {
+    const { points } = parseAcceptanceSummary(defaultPolicyLibrary.get(name)!.plainEnglish);
+    for (const matcher of FEATURED_POINTS[name]!) {
+      expect(
+        points.filter((p) => matcher.test(p.label ?? p.text)),
+        String(matcher),
+      ).toHaveLength(1);
+    }
+    const { featured } = featuredFirst(points, FEATURED_POINTS[name]!);
+    expect(featured.map((p) => p.label ?? p.text.replace(/\*\*/g, ''))).toEqual(
+      expected.map((e) => expect.stringContaining(e)),
+    );
+  });
 });

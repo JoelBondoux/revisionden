@@ -68,6 +68,11 @@ hints, so the policies do not change version):
 - Every top-level bullet of a policy's "In plain English" section becomes a card, word for word.
   A bold start ending in a full stop (`**Who we are.** …`) becomes the card's label. Text before
   the bullets is shown above the cards. A test checks every card against the policy text.
+- Only 4 cards show at first, chosen in code (`FEATURED_POINTS`, product owner 2026-11-25):
+  Terms: the parent is in charge; a revision helper, not a teacher; AI marks are a guide; no
+  promises about grades. Privacy: what we keep about your child; what we keep about you; AI
+  marking; your rights. "Show all N points" (`aria-expanded`, `aria-controls` on the list) shows
+  the rest in place, in policy order; a test fails if a chosen point stops matching one card.
 - Icons are chosen in code from the label (or, for unlabelled cards, only from strong words such
   as "AI"); they are decoration and add nothing to what the policy says.
 - "Show the details" opens the policy's full text in place (`aria-expanded`, `aria-controls`);

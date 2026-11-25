@@ -5,7 +5,7 @@ import { Card } from '../../components/Card';
 import { PipWithPadlock, Reveal } from './FriendlyNotice';
 import { Markdown } from './Markdown';
 import { NoticeIcon } from './NoticeIcon';
-import { parseAcceptanceSummary } from './acceptanceSummary';
+import { FEATURED_POINTS, featuredFirst, parseAcceptanceSummary } from './acceptanceSummary';
 import './friendlyNotice.css';
 import './legal.css';
 
@@ -24,10 +24,14 @@ const POLICY_ICON: Record<string, string> = {
 /** One policy: its plain-English points as cards, the full text behind "Show the details". */
 function PolicySummary({ policy }: { policy: PolicyToAccept }) {
   const [open, setOpen] = useState(false);
+  const [all, setAll] = useState(false);
   const id = useId();
   const headingId = `${id}-title`;
   const panelId = `${id}-details`;
+  const listId = `${id}-points`;
   const { intro, points } = parseAcceptanceSummary(policy.plainEnglish);
+  const { featured, rest } = featuredFirst(points, FEATURED_POINTS[policy.name] ?? []);
+  const shown = all ? [...featured, ...rest] : featured;
   return (
     <Reveal as="section" className="notice-part accept-policy" aria-labelledby={headingId}>
       <h2 id={headingId} className="notice-part__title">
@@ -37,8 +41,8 @@ function PolicySummary({ policy }: { policy: PolicyToAccept }) {
         {policy.title}
       </h2>
       {intro && <Markdown text={intro} />}
-      <ul className="notice-cards accept-cards" aria-label={`${policy.title} in short`}>
-        {points.map((point, i) => (
+      <ul id={listId} className="notice-cards accept-cards" aria-label={`${policy.title} in short`}>
+        {shown.map((point, i) => (
           <li key={point.text} className={`notice-card notice-card--${i % 3} accept-card`}>
             <span className="notice-card__icon">
               <NoticeIcon name={point.icon} />
@@ -50,6 +54,18 @@ function PolicySummary({ policy }: { policy: PolicyToAccept }) {
           </li>
         ))}
       </ul>
+      {rest.length > 0 && (
+        <button
+          type="button"
+          className="notice-toggle-all accept-more"
+          aria-expanded={all}
+          aria-controls={listId}
+          onClick={() => setAll((a) => !a)}
+        >
+          {all ? 'Show fewer points' : `Show all ${points.length} points`}
+          <span className="visually-hidden"> of the {policy.title}</span>
+        </button>
+      )}
       <button
         type="button"
         className="notice-part__toggle"

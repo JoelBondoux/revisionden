@@ -206,6 +206,13 @@ test('a new parent sees the terms and privacy notice as cards before onboarding,
   await expect(page.getByRole('heading', { level: 1, name: 'Before you start' })).toBeVisible();
   await expect(page.getByRole('list', { name: 'Terms of use in short' })).toBeVisible();
   await expect(page.getByRole('list', { name: 'Privacy notice in short' })).toBeVisible();
+  const terms = page.getByRole('list', { name: 'Terms of use in short' });
+  await expect(terms.getByRole('listitem')).toHaveCount(4);
+  await page.getByRole('button', { name: /^Show all \d+ points of the Terms of use$/ }).click();
+  await expect(
+    page.getByRole('button', { name: 'Show fewer points of the Terms of use' }),
+  ).toHaveAttribute('aria-expanded', 'true');
+  expect(await terms.getByRole('listitem').count()).toBeGreaterThan(4);
   const details = page.getByRole('button', { name: 'Show the details of the Privacy notice' });
   await expect(details).toHaveAttribute('aria-expanded', 'false');
   await details.click();

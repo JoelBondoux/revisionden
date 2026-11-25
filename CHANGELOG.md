@@ -7,7 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
-- New parents now see the Terms of use and Privacy notice as easy-to-read cards before they start, with the full text one tap away.
+- New parents now see the Terms of use and Privacy notice as easy-to-read cards before they start: the 4 most important points first, the rest and the full text one tap away.
 - Coming soon: a public RevisionDen website at revisionden.com explaining how it works for parents and young people, with the planned prices and all the policies. The app itself will move to app.revisionden.com.
 - "Remember this?" questions are now completely safe: getting one wrong never breaks your combo.
 - New 5-a-day: a quick mix of 5 questions from topics you've already practised, at the top of your topic map until you've done it. It takes about 5–8 minutes and counts towards your daily goal and streak like any lesson.
@@ -78,7 +78,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
-- Friendly policy acceptance (L8): "Before you start" shows the Terms of use and Privacy notice as cards built word for word from their "In plain English" bullets (`acceptanceSummary.ts`, `BeforeYouStart.tsx`), the full text behind "Show the details" and links to `/legal/<name>`; stored acceptance versions unchanged; e2e and axe check at phone, tablet and desktop.
+- Friendly policy acceptance (L8): "Before you start" shows the Terms of use and Privacy notice as cards built word for word from their "In plain English" bullets (`acceptanceSummary.ts`, `BeforeYouStart.tsx`), 4 chosen cards first then "Show all N points", the full text behind "Show the details" and links to `/legal/<name>`; stored acceptance versions unchanged; e2e and axe check at phone, tablet and desktop.
 - Operator bridge O2 (O): read routes on AppDeck's paths `GET /operator/appdeck/{health,overview,families/:id,tickets,tickets/:id,error-reports,content-reports,audit}` and `POST /operator/appdeck/families/search` (a read: no replay, nothing stored) in `apps/api/src/operator/reads.ts`, with strict response schemas (`packages/core/src/operator-schemas.ts`); family search, family view and ticket reads are audited; children are sent as nickname and year group only; a student's ticket text is never returned. The signed path keeps a bare `?`.
 - Operator bridge O1 (O): signed AppDeck requests at `/operator/appdeck` (`operatorAuth`, `requireManager`, `audit` in `apps/api/src/operator/bridge.ts`; signature, 5-minute window and published test vector in `packages/core/src/operator-signature.ts`); `operator_audit_log` (2 years) and `operator_requests` (request ids, 1 day) tables (migration 0015); `APPDECK_OPERATOR_SHARED_SECRET` and `OPERATOR_RATE_LIMITER` (120 a minute; 503 when the secret is unset); `GET /operator/appdeck/health`; AppDeck's HireLine format (`sha256=` signature, Unix-millisecond timestamps, `{ success, data }` answers). Data retention policy 1.3 (one table again: the 1.2 merge had left it twice, the first copy without error reports).
 - Public website polish (workstream M3): Open Graph card and Apple touch icon drawn from Pip's shapes and the arena colours (`apps/www/scripts/make-images.mjs`), theme colour and large-image card tags.
