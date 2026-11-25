@@ -44,6 +44,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Game feel (J): flashcard text was white on white inside the arena panel on the Cards tab; light cards inside the arena now keep dark text (`design/arena.css`). In a lesson, saying whether you knew a flashcard no longer hides the answer you had just revealed (the shake wrapper no longer remounts the card).
 - Public pages (I): without a linked student on the device, `AppLayout` pages (About, Feedback, Settings and the rest) and the policy pages (now under `AppLayout`) show `PublicHeader` (logo, Sign in, Policies, About) instead of the student nav.
 - No third-party requests (I): the deployed smoke test and the local e2e suite fail if a page requests any host other than the web origin and its API host. On staging it finds Cloudflare's zone-injected Web Analytics beacon (`static.cloudflareinsights.com`), which the owner is switching off in the Cloudflare dashboard.
 - Policies: the privacy notice and services page (both now 1.1) say parents sign in with Google or Microsoft, whichever this app offers (a deployment may offer only one).
