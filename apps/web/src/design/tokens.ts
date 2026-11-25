@@ -127,6 +127,16 @@ export const textPairs: TextPair[] = [
     background: tokens['--color-surface'],
   },
   {
+    name: 'link text (quiet buttons, tiles, inline links) on surface',
+    foreground: tokens['--color-primary-edge'],
+    background: tokens['--color-surface'],
+  },
+  {
+    name: 'link text on background',
+    foreground: tokens['--color-primary-edge'],
+    background: tokens['--color-background'],
+  },
+  {
     name: 'primary text on soft primary',
     foreground: tokens['--color-primary-edge'],
     background: tokens['--color-primary-soft'],

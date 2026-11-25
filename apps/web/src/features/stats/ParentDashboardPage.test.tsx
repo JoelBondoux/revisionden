@@ -52,6 +52,13 @@ describe('Parent stats dashboard', () => {
     expect(screen.getByRole('region', { name: 'School report effort' })).toHaveTextContent(
       'Not set up yet',
     );
+    // Set-up links are chips, not plain underlined text links (J7).
+    const setUp = within(screen.getByRole('region', { name: 'School report effort' })).getByRole(
+      'link',
+      { name: 'Add a school report' },
+    );
+    expect(setUp).toHaveClass('link-chip');
+    expect(setUp).toHaveAttribute('href', '/onboarding');
   });
 
   it('shows healthy habits, AI spend and recent activity', async () => {
