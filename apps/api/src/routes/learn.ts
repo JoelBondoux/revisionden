@@ -49,6 +49,7 @@ import {
 } from '../learning/items';
 import type { MathsEngine } from '../learning/maths-engine';
 import { awardXp, getProgress } from '../learning/progress';
+import { creditableXp } from '../daily-limit/state';
 import { topicAndDescendants } from '../learning/topic-tree';
 
 /** How many recent answers to look back through for a combo (more is never needed in practice). */
@@ -280,7 +281,8 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
       .where(eq(attempts.startingTestId, test.id))
       .orderBy(asc(attempts.createdAt));
     const combo = comboBonusForSequence(answered.map((a) => a.correct));
-    if (firstFinish && combo.bonusXp > 0) {
+    const comboAllowed = (await creditableXp(db, studentId, combo.bonusXp, now)) > 0;
+    if (firstFinish && combo.bonusXp > 0 && comboAllowed) {
       await awardTestCombo(studentId, answered, combo.bonuses, now);
     }
     const testTopics = await db
@@ -343,7 +345,13 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
     // Learn mode combos come from the student's own recent answers (never from the device).
     const combo = learning && marked.correct ? (await recentCombo(studentId, now)) + 1 : 0;
     const comboBonus = comboBonusXp(combo);
-    const xpEarned = xpForAnswer({ type: row.type as ItemType, score: marked.score }) + comboBonus;
+    // No XP, rewards or streak credit past the daily limit (workstream K7).
+    const xpEarned = await creditableXp(
+      db,
+      studentId,
+      xpForAnswer({ type: row.type as ItemType, score: marked.score }) + comboBonus,
+      now,
+    );
     const [saved] = await db
       .insert(attempts)
       .values({

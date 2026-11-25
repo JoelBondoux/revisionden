@@ -14,6 +14,7 @@ import {
   type StreakState,
 } from '@revisionden/core';
 import { dailyXp, streaks, type Database } from '@revisionden/db';
+import { dailyLimitToday } from '../daily-limit/state';
 
 const DAY_MS = 86_400_000;
 const addDays = (date: string, days: number) =>
@@ -77,6 +78,7 @@ export async function getProgress(db: Database, studentId: string, now: Date): P
     dailyGoalXp: DEFAULT_DAILY_GOAL_XP,
     goalMet: xpToday >= DEFAULT_DAILY_GOAL_XP,
     streak: { current: streak.current, best: streak.best, skipDays: streak.skipDays },
+    dailyLimit: await dailyLimitToday(db, studentId, now),
   };
 }
 

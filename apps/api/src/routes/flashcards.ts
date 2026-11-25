@@ -29,6 +29,7 @@ import { isId } from '../validation';
 import { correctAnswerText, servableItem } from '../learning/items';
 import type { ItemBody } from '../learning/content-sync';
 import { awardXp } from '../learning/progress';
+import { creditableXp } from '../daily-limit/state';
 import { flashcardStore, toCard, type Loaded } from '../learning/flashcard-store';
 import { containsPersonalData, familyProfiles, personalDetails } from '../feedback/routes';
 import type { LearnDeps } from './learn';
@@ -154,10 +155,12 @@ export function flashcardRoutes({ db, clock, config }: LearnDeps) {
       })
       .where(eq(flashcards.id, id))
       .returning();
-    const progress = await awardXp(db, studentId, DECK_REVIEW_XP, now);
+    // No XP past the daily limit (workstream K7).
+    const xpEarned = await creditableXp(db, studentId, DECK_REVIEW_XP, now);
+    const progress = await awardXp(db, studentId, xpEarned, now);
     return c.json({
       card: toFlashcard({ ...loaded, card: card! }, now),
-      xpEarned: DECK_REVIEW_XP,
+      xpEarned,
       comesBackSooner: rating === 'again',
       progress,
     });

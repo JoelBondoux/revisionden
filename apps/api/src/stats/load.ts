@@ -7,6 +7,7 @@ import type { ActivityEvent, DayXp, StatsAnswer } from '@revisionden/core';
 import { attempts, dailyXp, flashcards, items, topics, type Database } from '@revisionden/db';
 import { getProgress } from '../learning/progress';
 import { loadReminderSettings } from '../notifications/runner';
+import { limitOn, loadLimitContext } from '../daily-limit/state';
 import type { ReminderSettings } from '../notifications/schedule';
 
 export interface StudentStatsData {
@@ -16,6 +17,8 @@ export interface StudentStatsData {
   streak: { current: number; best: number };
   topicTitles: Map<string, string>;
   settings: ReminderSettings;
+  /** The student's daily limit in minutes on a local date (workstream K7). */
+  limitOn?: (day: string) => number;
 }
 
 export async function loadStatsData(
@@ -84,5 +87,8 @@ export async function loadStatsData(
     streak: { current: streak.current, best: streak.best },
     topicTitles,
     settings: await loadReminderSettings(db, studentId),
+    limitOn: await loadLimitContext(db, studentId).then(
+      (ctx) => (day) => limitOn(ctx, day).minutes,
+    ),
   };
 }
