@@ -428,6 +428,11 @@ Tags: #product #rules #limits #defaults
   capped at 40 pieces. The combo badge shows from 2 in a row. The CTA pulse takes 1.6 s (well under 3
   flashes a second). Reduced motion removes particles, confetti, float-ups, shakes and pulsing; combo,
   stars and XP still show as text. Arena colours live in `apps/web/src/design/tokens.ts` (`--arena-*`).
+- Settled in J2/J3: lessons, the starting test and flashcard review use the arena. Set complete's
+  Next mission goes to the map (`/map`, next mission card). "Or take a break. Your streak is safe for
+  today." shows when today's daily goal is met (`progress.goalMet`). The "daily cap" for "See you
+  tomorrow" is the daily reward XP cap (`DAILY_REWARD_XP_CAP`, 300 XP today), confirmed by the lead
+  on 2026-11-25 for now: the lesson only knows XP, not study minutes.
 
 ## Exam practice (planned)
 
