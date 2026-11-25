@@ -1,6 +1,6 @@
 # Privacy notice
 
-Version: 1.0
+Version: 1.1
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -11,8 +11,8 @@ ever seem to say different things, the full text is the one that counts.
 
 - **Who we are.** RevisionDen is run by {{OPERATOR_NAME}}. You can contact us at
   {{CONTACT_EMAIL}}.
-- **What we keep about you.** Only the email address you sign in with (through Google or
-  Microsoft), and the records the sign-in needs to work. We do not keep your name or photo.
+- **What we keep about you.** Only the email address you sign in with (with a Google or
+  Microsoft account, whichever this app offers), and the records the sign-in needs to work. We do not keep your name or photo.
 - **What we keep about your child.** A nickname, an avatar, their school year, their subjects and
   exam boards, and their revision records: which questions they answered, whether they were right,
   how long they took, their XP, streaks, rewards, flashcards and study plan. We never keep their
@@ -64,7 +64,7 @@ can still contact us about anything in this notice at the details above.
 ### 3. Who uses the app
 
 3.1 **Parents and carers.** One parent or carer creates a family account by signing in with a
-Google or Microsoft account. The parent adds each child, chooses their subjects and links their
+Google or Microsoft account (whichever of the two this app offers). The parent adds each child, chooses their subjects and links their
 devices.
 
 3.2 **Students.** Students do not have their own outside account, email address or password.
@@ -258,7 +258,7 @@ and deleted when you delete it. The full table is in [how long we keep data](dat
 ### 11. Security
 
 11.1 We use encrypted connections (HTTPS) everywhere. Our hosting and database providers encrypt
-stored data. There are no passwords: parents sign in through Google or Microsoft and students use
+stored data. There are no passwords: parents sign in with a Google or Microsoft account (whichever this app offers) and students use
 passkeys. Link codes and student sessions are stored only as hashes. Each family can only see its
 own data, and our tests check this.
 
@@ -304,4 +304,5 @@ in the app on your next visit and ask you to confirm, and students see a plain-E
 
 ## Changes
 
+- 1.1: Wording only: parents sign in with Google or Microsoft, whichever this app offers. No change to the data we keep.
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).
