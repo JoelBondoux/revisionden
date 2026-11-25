@@ -65,6 +65,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Flaky web test (I5): the unlock test waited for the student button but not for the parent sign-in buttons, which load after the provider list; it now waits for both, with the provider list made slow on purpose.
 - Operator bridge (O, review follow-up to #71/#72): a change retried with the same request id by a different operator or role is refused (409) instead of getting the stored answer; the audit log's `nextBefore` is now `<time>~<id>`, so entries that share a time are never skipped between pages.
 - Game feel (J): flashcard text was white on white inside the arena panel on the Cards tab; light cards inside the arena now keep dark text (`design/arena.css`). In a lesson, saying whether you knew a flashcard no longer hides the answer you had just revealed (the shake wrapper no longer remounts the card).
 - Public pages (I): without a linked student on the device, `AppLayout` pages (About, Feedback, Settings and the rest) and the policy pages (now under `AppLayout`) show `PublicHeader` (logo, Sign in, Policies, About) instead of the student nav.
