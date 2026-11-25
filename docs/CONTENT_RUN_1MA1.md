@@ -58,7 +58,12 @@ file's `verification.checks`.
 
 ## Step 2: scaling plan (not started; the lead starts it after the owner approves step 1)
 
-**Before starting:** decisions 1 and 3 above are settled, and a batch can be created for the
+**Similar-question retries (owner request, F is building them):** every learning point needs at
+least 3 interchangeable items, and items carry `learning_point` (and, if F adds it,
+`expected_seconds`). Neither field is in `content/schemas/item.schema.json` yet; F
+owns that schema change and it must merge before writers use the fields.
+
+**Before starting:** decisions 1 and 3 above are settled, F's schema change has merged, and a batch can be created for the
 owner (gap 1).
 
 **Six writer sessions, one per area**
@@ -106,6 +111,12 @@ numeric, worked_maths, multiple_choice, short_answer; difficulty 1 to 5), 2 to 4
 at least one worked_maths item with full steps that can serve as a worked example. Add an
 extended_answer (proof or "show that") only where the spec point asks for reasoning, with a
 mark scheme in content/mark-schemes/ and three exemplars (top, middle, low).
+
+Similar-question retries: every learning point needs at least 3 interchangeable items (same
+skill, different numbers or context), so a student who gets one wrong can try another. Tag
+every item with its topic and, where the topic is broader than one skill, a learning_point.
+Add expected_seconds to each item if F's schema change has merged; otherwise leave it out.
+Each interchangeable item goes through the pipeline on its own.
 
 Sources: only Pearson's own documents for 1MA1 (specification, sample assessment materials,
 past papers, mark schemes, examiner reports) and DfE or Ofqual. Get document URLs from the
