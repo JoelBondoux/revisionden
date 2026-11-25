@@ -47,6 +47,9 @@ Decision 0005. `revisionden.com` is the sales site; the app is on `app.revisiond
 - `src/worker.ts`: redirects `www.` to the apex, serves the static assets and sets the security
   headers (content security policy `default-src 'self'; script-src 'none'`), and `noindex` on any
   host but `revisionden.com`.
+- Images: `public/og.png` (Open Graph card, 1200×630) and `public/apple-touch-icon.png` are drawn from
+  Pip's shapes and the arena colours by `scripts/make-images.mjs` (Chromium); run it by hand after
+  changing the art and commit the PNGs. Original art only: no stock photos, no AI-generated images.
 - Deployed by `.github/workflows/deploy-www.yml` (staging and production only).
 
 ## Web app (`apps/web`)

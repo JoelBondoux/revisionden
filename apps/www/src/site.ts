@@ -26,6 +26,8 @@ export interface SiteInputs {
   legalFiles: Record<string, string>;
   /** docs/PRICING.md: the planned prices (decision 0004). */
   pricingDoc: string;
+  /** apps/www/public: og.png and apple-touch-icon.png (made by scripts/make-images.mjs). */
+  images: Record<string, Uint8Array>;
 }
 
 export type SiteFiles = Map<string, string | Uint8Array>;
@@ -88,6 +90,7 @@ export function renderSite(config: SiteConfig, inputs: SiteInputs): SiteFiles {
   files.set('styles.css', `${inputs.tokensCss}\n${fontFaces(inputs.fonts)}\n${inputs.siteCss}`);
   for (const [name, bytes] of Object.entries(inputs.fonts)) files.set(`fonts/${name}`, bytes);
   files.set('icon.svg', pipIconSvg());
+  for (const [name, bytes] of Object.entries(inputs.images)) files.set(name, bytes);
   files.set('sitemap.xml', sitemap(config, pages));
   files.set('robots.txt', robots(config));
   return files;

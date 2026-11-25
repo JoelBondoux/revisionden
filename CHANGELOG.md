@@ -77,6 +77,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Public website polish (workstream M3): Open Graph card and Apple touch icon drawn from Pip's shapes and the arena colours (`apps/www/scripts/make-images.mjs`), theme colour and large-image card tags.
 - Public website pages (workstream M2): home (parents first, with a section for young people), how it works, pricing (planned prices read from `docs/PRICING.md`, shown as "Premium, coming soon"), for young people, help and contact, about, and every policy rendered from `docs/legal` with a draft banner until the effective date is set. Tests for page content, invented claims, policy source and pricing source; axe finds no WCAG 2.2 AA issues in light or dark at phone and desktop widths.
 - Public website skeleton (workstream M, decision 0005): `apps/www`, a static site with no client scripts or third-party requests (self-hosted Nunito, the web app's tokens, strict content security policy), `revisionden-www` Workers for `revisionden.com` (www redirects) and `www-staging.revisionden.com`, `deploy-www.yml` called from the staging and production deploys, and a deployed smoke check (`E2E_WWW_URL`).
 - Recall checks keep the combo (Q): `LearnAttemptRequestSchema` takes optional `recall` (Learn mode only, 400 otherwise); the API saves such answers with mode `RECALL_MODE` (`'recall'`), and `comboBefore` passes over a wrong one and counts a right one. `RecallGate` sends `recall: true` via a new `LessonPlayer` `recall` prop.
