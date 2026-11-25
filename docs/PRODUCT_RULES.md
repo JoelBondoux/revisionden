@@ -288,7 +288,7 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
 - **Mastery:** first attempts count as before; a retry counts at **half weight**, because it shows
   learning but is easier just after seeing the answer.
 - Implemented: `packages/core/src/mistakes.ts`, `apps/api/src/learning/mistakes.ts`, the attempts,
-  lesson and daily routes, `apps/web/src/features/learn/LessonPlayer.tsx`. Migration 0025.
+  lesson and daily routes, `apps/web/src/features/learn/LessonPlayer.tsx`. Migration 0026.
 
 ## Flashcards and mastery
 

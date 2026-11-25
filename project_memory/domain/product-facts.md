@@ -84,7 +84,7 @@ Tags: #product #rules #limits #defaults
   points go on the review ladder (`review_points`, with misses and a flag: next day, 3 days, 7 days; each right answer on
   time climbs a rung, the 7-day one clears it, a slip restarts; missed on 3 visits it is parked a
   week and flagged "worth a look" for the parent dashboard). Lessons and the 5-a-day open with
-  up to 2 warm-ups on due points. Retries count at half weight for mastery. Migration 0025.
+  up to 2 warm-ups on due points. Retries count at half weight for mastery. Migration 0026.
 - XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, working 20,
   long answer 30; part marks earn part.
 - The 14 original rewards keep their ids and avatar items (the 100-day streak unlocks two: crown
