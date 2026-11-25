@@ -42,6 +42,15 @@ describe('wrangler config', () => {
     },
   );
 
+  it('serves draft content in dev only, so the family can try the pilot', () => {
+    expect(config.env.dev!.vars.SERVE_DRAFT_CONTENT).toBe('true');
+    for (const name of ['staging', 'production']) {
+      expect(config.env[name]!.vars.SERVE_DRAFT_CONTENT, name).toBeUndefined();
+    }
+    // Local development keeps the default (off) unless .dev.vars turns it on.
+    expect(config.vars.SERVE_DRAFT_CONTENT).toBeUndefined();
+  });
+
   it('never contains secrets: those are set with wrangler secret put', () => {
     const text = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
     for (const secret of [

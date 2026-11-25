@@ -3,11 +3,13 @@
 // --audit <item | topic | topic tree | subject id> prints the full audit trail as JSON.
 // Validates content/ and checks every maths answer with the Python maths engine.
 // MATHS_PYTHON picks the Python that has services/maths/requirements.txt installed.
+import { existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
 import { auditReport, immutabilityErrors, loadContent, validateContent } from './validate.mjs';
 import { createPythonChecker } from './maths-engine.mjs';
+import { validateSupportFile } from './support.mjs';
 
 const DEFAULT_CONTENT = join(dirname(fileURLToPath(import.meta.url)), '../../content');
 
@@ -52,6 +54,12 @@ export async function run(argv, deps = {}) {
   } catch (e) {
     err(`Content validation could not finish: ${e.message}`);
     return 2;
+  }
+  // The Get help page's support services (sources, termly recheck, UK numbers).
+  const supportPath = join(root, 'support', 'uk-services.json');
+  if (existsSync(supportPath)) {
+    for (const e of validateSupportFile(supportPath))
+      errors.push({ file: 'support/uk-services.json', id: e.id, message: e.message });
   }
   if (values.baseline) {
     errors.push(...immutabilityErrors(await loadContent(resolve(values.baseline)), content));
