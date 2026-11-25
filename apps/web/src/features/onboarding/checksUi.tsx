@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import {
   BOARD_LABELS,
   TIER_LABELS,
@@ -10,6 +9,7 @@ import {
   type UpdateSubjectChoiceRequest,
 } from '@revisionden/core';
 import { Card } from '../../components';
+import { LinkTile } from '../../components/links';
 import { checkItems, type CheckItem } from './checks';
 import { ChoiceGroup } from './ChoiceGroup';
 import { useOnboardingApi } from './OnboardingApiContext';
@@ -172,9 +172,11 @@ export function SubjectsNudge() {
   const n = subjects?.toCheckLater ?? 0;
   if (n === 0) return null;
   return (
-    <Link to="/settings#my-subjects" className="subjects-nudge">
-      {n} {n === 1 ? 'thing' : 'things'} to check: which exam board or tier you&apos;re doing. Tap
-      to set {n === 1 ? 'it' : 'them'}.
-    </Link>
+    <LinkTile
+      to="/settings#my-subjects"
+      className="subjects-nudge"
+      title={`${n} ${n === 1 ? 'thing' : 'things'} to check`}
+      description={`Which exam board or tier you're doing. Tap to set ${n === 1 ? 'it' : 'them'}.`}
+    />
   );
 }

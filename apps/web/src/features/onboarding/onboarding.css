@@ -109,21 +109,6 @@
   padding-left: var(--space-4);
 }
 
-.subjects-nudge {
-  display: block;
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
-  background: var(--color-primary-soft);
-  color: var(--color-primary-edge);
-  font-weight: var(--font-weight-extrabold);
-  text-decoration: none;
-}
-
-.subjects-nudge:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
-}
-
 .my-subjects {
   list-style: none;
   margin: 0;

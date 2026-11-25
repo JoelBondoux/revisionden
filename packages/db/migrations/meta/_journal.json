@@ -122,10 +122,10 @@
       "breakpoints": true
     },
     {
-      "idx": 17,
+      "idx": 23,
       "version": "7",
       "when": 1795617971331,
-      "tag": "0017_nickname_spaces",
+      "tag": "0023_nickname_spaces",
       "breakpoints": true
     }
   ]
