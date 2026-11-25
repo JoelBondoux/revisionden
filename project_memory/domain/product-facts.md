@@ -165,8 +165,13 @@ Tags: #product #rules #limits #defaults
   export), ticket replies (≤5000, shown under the message in the sender's app without the
   operator's email), ticket status, confirm bug and duplicate (same L7 rules and rewards, shared
   `confirmFeedback` and `setFeedbackStatus` in `apps/api/src/feedback/routes.ts`).
+- Data requests (O3b): an Agent logs an emailed export or deletion request (due one calendar
+  month later, `dataRequestDueAt` in core); a Manager marks it handled. Handling a deletion runs
+  `deleteFamilies` only for a one-parent family (two parents: 409 `needs_both_parents`, both
+  confirm in the app). Records kept 2 years. Trial and free-place routes answer 503
+  `payments_not_ready` until workstream $.
 - Every operator read of a family and every action goes in `operator_audit_log`, kept 2 years
-  (data retention policy 1.4); the scheduled clean-up deletes older entries.
+  (data retention policy 1.5); the scheduled clean-up deletes older entries.
 
 ## Content
 

@@ -143,3 +143,23 @@ describe('operator_notes and feedback_replies tables (O3)', () => {
     expect(left.rows).toEqual([]);
   });
 });
+
+describe('data_requests table (O3b)', () => {
+  it('records an emailed export or deletion request with its deadline, and keeps it after the family is gone', async () => {
+    await client.query(
+      `insert into data_requests (family_id, kind, received_at, due_at, logged_by)
+       values (gen_random_uuid(), 'deletion', now(), now() + interval '1 month', 'agent@example.com')`,
+    );
+    await expect(
+      client.query(
+        `insert into data_requests (family_id, kind, received_at, due_at, logged_by)
+         values (gen_random_uuid(), 'rename', now(), now(), 'agent@example.com')`,
+      ),
+    ).rejects.toThrow(/data_requests_kind_values/);
+    const fks = await client.query(
+      `select 1 from information_schema.table_constraints
+       where table_name = 'data_requests' and constraint_type = 'FOREIGN KEY'`,
+    );
+    expect(fks.rows).toEqual([]);
+  });
+});

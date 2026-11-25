@@ -145,6 +145,7 @@ Source of truth: `packages/db/src/schema.ts`; migrations in `packages/db/migrati
 | `operator_requests`         | request_id (key), method, path, body_hash, response_status, response_body (change answers only), created_at (1 day)                                                                                                                         |
 | `operator_notes`            | id, family_id, author_email (staff), text (≤2000), created_at (deleted with the family; in its export without the author)                                                                                                                   |
 | `feedback_replies`          | id, feedback_id, author_email (staff), body (≤5000), created_at (shown to the sender without the author; deleted with the ticket)                                                                                                           |
+| `data_requests`             | id, family_id (plain id, no foreign key), kind (export, deletion), received_at, due_at (one calendar month), logged_by (staff), handled_at (2 years)                                                                                        |
 
 No table stores a real name, date of birth, email of a student, photo or school name. The
 schema guard test (`packages/db/src/schema-guard.test.ts`) checks the migrated database and fails

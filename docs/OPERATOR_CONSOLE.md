@@ -118,8 +118,20 @@ Every change answers `data: { ok: true }`, is audited against the family, and is
 | `POST tickets/{id}/confirm-bug` | `{}`                                                            | Bug Hunter confirm (L7 rules and rewards); 400 `not_a_bug`, 409 `already_confirmed`                 | `ticket.confirm_bug` |
 | `POST tickets/{id}/duplicate`   | `{ duplicateOf }`                                               | Duplicate of an earlier confirmed bug; 400 `invalid_duplicate`                                      | `ticket.duplicate`   |
 
-Still to come: data requests, trial and free-place changes (O3b; trial and free places answer 503
-until payments exist), complaints (O4), discount codes (O5), family tags (O6).
+#### Data requests, trial and free places (O3b)
+
+| Route                                                                                                                            | Role                 | Body                                           | What it does                                                                                                                                                                                                                                                               | Audit action                            |
+| -------------------------------------------------------------------------------------------------------------------------------- | -------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| `GET data-requests`                                                                                                              | Agent                |                                                | `{ requests: [{ id, familyId, kind: "export"\|"deletion", receivedAt, dueAt, status: "open"\|"handled", handledAt }] }`, open first by deadline                                                                                                                            | no                                      |
+| `POST data-requests`                                                                                                             | Agent                | `{ familyId, kind, receivedOn: "YYYY-MM-DD" }` | Logs a request a family emailed; `dueAt` is one calendar month later (31 January → 28 February). Answers `{ request: { id } }`                                                                                                                                             | `data_request.log`                      |
+| `POST data-requests/{id}/handled`                                                                                                | Manager              | `{}`                                           | Marks it handled. A **deletion** runs the app's own deletion code (`deleteFamilies`: everything, both parents' sign-ins) but only for a one-parent family; with two parents it answers 409 `needs_both_parents`, since both must confirm in the app. 409 `already_handled` | `family.delete`, `data_request.handled` |
+| `POST families/{id}/trial/extend`, `POST families/{id}/free-place/grant`, `POST families/{id}/free-place/end`, `GET free-places` | Manager (GET: Agent) | as AppDeck sends                               | 503 `payments_not_ready` until payments exist (workstream $)                                                                                                                                                                                                               | no                                      |
+
+Data request records keep a plain family id (they outlive a deleted family) and are deleted 2
+years after the request arrived. An export request is handled by telling the parent to use
+"Download your family's data"; AppDeck never receives the export.
+
+Still to come: complaints (O4), discount codes (O5), family tags (O6).
 
 ## What the operator can see and do
 
