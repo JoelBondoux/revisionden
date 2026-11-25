@@ -521,3 +521,72 @@ Requested by the product owner on 2026-11-25.
 - Either parent can remove the other; the removed parent sees an in-app notice on next
   sign-in and loses access at once. Students see that two parents can view their progress.
 - The privacy notice must list the second parent's sign-in email as data kept.
+
+## Get help (support resources)
+
+Requested by the product owner on 2026-11-25.
+
+- A **"Get help"** page for students, reachable from Settings, the profile menu and the footer of
+  every student screen, with a small heart icon. Also reachable signed out.
+- It lists UK support services by topic, each with what they help with, how to contact them
+  (tap-to-call `tel:` links, text numbers, web chat links) and opening hours where published.
+  Topics: feeling low or anxious, exam stress, suicidal thoughts (urgent), bullying (including
+  online), abuse or neglect, online safety and nude images, eating and body image, self-harm, drugs
+  and alcohol, sexual health and relationships, LGBTQ+, young carers, grief, crime and victims,
+  physical health (NHS 111) and emergencies (999).
+- Services to consider (each must be confirmed on its own official website): Childline, NSPCC,
+  Samaritans, Shout, Papyrus HOPELINE247, YoungMinds, Kooth, The Mix, Beat, Talk to Frank, CEOP,
+  Childline and IWF Report Remove, Switchboard, Mind, Brook, Anti-Bullying Alliance, Kidscape,
+  Carers Trust, Victim Support, NHS 111.
+- **Verified facts only:** every phone number, text number, URL and opening time is copied from the
+  service's own official page, with that URL and the date checked recorded in the data file. Any
+  detail that cannot be confirmed is left out, never guessed. Rechecked every term; a test fails if
+  an entry has no source or its check is older than 4 months.
+- **Private:** nothing about visiting this page or tapping a link is recorded, logged, shown to
+  parents or sent anywhere (no analytics, no feedback prompts, no activity log). The page works
+  offline (cached) so a number can be found without signal.
+- A **Quick exit** button takes the student straight to a neutral screen (the topic map) and replaces
+  the page in history.
+- At the top: "If you are in danger right now, call 999." Wording is warm, short and non-judgemental;
+  it never asks the student to explain themselves.
+- Parents can see the same page from the parent area, plus the NSPCC adult helpline for worried
+  adults.
+
+## Quick wins from the competitor research (owner approved 2026-11-25)
+
+From `docs/research/competitors-2026-11.md`. Workstream Q.
+
+### Daily 5-a-day
+
+- Each day a student gets a short mixed set of **5 questions** from topics they have already
+  practised, chosen by spaced repetition and weak spots (never brand-new topics), across their
+  subjects. Takes about 5–8 minutes.
+- Learn mode, normal XP and combos; finishing it counts as a lesson for the streak and daily goal.
+  It appears at the top of the topic map until done; it never nags (no push just for 5-a-day).
+
+### Recall checks
+
+- At the start of a lesson on a topic practised before, 2 quick recall questions on things learned
+  in earlier lessons ("Remember this?").
+- No penalty: wrong answers do not lower mastery more than a normal answer would, earn no XP loss,
+  and simply become flashcards. Right answers earn normal XP. They can be skipped.
+
+### Learn it first
+
+- Each topic can link to free official lessons: Oak National Academy lessons and BBC Bitesize pages
+  that match the topic (and, later, our own verified notes).
+- Links only (open in a new tab on tap; nothing loaded from those sites until then), stored as data
+  per topic with the page title, URL, and the date checked. A CI job checks every link still works
+  (HTTP status) and fails on broken links. A topic shows the button only when it has a checked link.
+- Links point at the right level (GCSE or A-Level) and the student's board where the page is
+  board-specific.
+
+### Read aloud and reading comfort
+
+- **Read aloud** button on questions, answers, explanations and flashcards, using the device's own
+  speech voices (Web Speech API), preferring voices that run on the device (`localService`); where
+  only online voices exist the setting explains that the device's speech service may process the
+  text, and it stays off by default. Speed control. Maths is read sensibly (for example "x squared").
+- **Reading comfort** settings per device: a dyslexia-friendly font (self-hosted, open licence, no
+  third-party font service), larger text, more line and letter spacing, and a soft tinted background
+  option. These apply across the app and are remembered on the device.

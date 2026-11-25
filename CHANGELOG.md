@@ -8,6 +8,9 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 ### What's new
 
 - When something goes wrong, tap "Send error report" to tell us in one tap. It's anonymous: no names, nothing you typed. We'll get on it.
+- Coming soon: a daily 5-a-day, quick recall checks, links to free lessons for each topic, read aloud, and a dyslexia-friendly reading mode.
+- Coming soon: build your own title from words you unlock, like "Cosmic Scholar".
+- Coming soon: a private "Get help" page with UK support services you can call or message.
 - Coming soon: a daily study limit you can set as a parent, with gentle suggestions from the app.
 - Coming soon: invite a second parent to share control of the family.
 - Coming soon: more hidden reward tracks to discover.
