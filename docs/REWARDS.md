@@ -274,6 +274,19 @@ unlocked words; our words and art are our own).
   blocked-word list and a manual review list, so no combination reads as offensive. No free text.
 - Titles can be changed at any time, free.
 
+**Built (R8):** 120 first words and 120 last words in `packages/core/src/catalogue/title-words.ts`,
+each unlocked by one reward and carrying that reward's rarity. The 99 single titles from R1 to R7b
+were migrated: those rewards now give a `titleWord` item for each part (for example level 11 gives
+"Opening" and "Act"), and their names read "Title words: Opening, Act". Secret achievements and 18
+milestones add one word each. `validateTitleWords` (`packages/core/src/titles.ts`) checks the format
+(one word of letters and hyphens, up to 16 characters), that each word is unique in its part, that
+every reward which had a title has words, and every possible first + last pairing against the
+nickname blocked-word list. `REVIEWED_BLOCKED_PAIRS` is the manual review list: pairs that read
+badly together, refused by the picker. The choice is stored as `students.title_first` and
+`title_last` (migration 0017) through `GET` and `PUT /v1/student/rewards/title`, which accept
+only unlocked words. The Rewards page shows the title under the nickname with a picker. The friends
+league is not built yet; it should show the title under each nickname when it is.
+
 ## Secret achievements
 
 - A set of achievements whose names and conditions are hidden until earned. The rewards page shows

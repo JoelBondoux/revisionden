@@ -46,6 +46,7 @@
     "GET /v1/student/recall",
     "GET /v1/student/reminders/latest",
     "GET /v1/student/rewards",
+    "GET /v1/student/rewards/title",
     "GET /v1/student/stats",
     "GET /v1/students",
     "GET /v1/students/:id",
@@ -104,6 +105,7 @@
     "POST /v1/students/:id/parent-rewards",
     "POST /v1/students/:id/parent-rewards/:rewardId/given",
     "PUT /v1/policy-acceptances",
+    "PUT /v1/student/rewards/title",
     "PUT /v1/students/:id/avatar",
     "PUT /v1/students/:id/reminder-settings"
   ]

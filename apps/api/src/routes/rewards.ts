@@ -31,6 +31,12 @@ import {
   rewardsOverview,
   seasonProgressFor,
   secretStats,
+  chooseTitle,
+  formatTitle,
+  titleWordsFor,
+  TitleChoiceSchema,
+  TITLE_MESSAGES,
+  type StudentTitleResponse,
   practiceKindsTried,
   weakSpotsTurnedStrong,
   type ItemType,
@@ -353,6 +359,51 @@ export function studentRewardRoutes({ db, clock }: Deps) {
       .where(eq(students.id, c.var.student.studentId));
     if (!student) throw notFound('Student not found');
     return c.json(await rewardsView(db, student, clock.now()));
+  });
+
+  /** Two-part title (R8): the words this student has unlocked and the pair they picked. */
+  async function titleView(studentId: string): Promise<StudentTitleResponse> {
+    const [student] = await db
+      .select({ nickname: students.nickname, first: students.titleFirst, last: students.titleLast })
+      .from(students)
+      .where(eq(students.id, studentId));
+    if (!student) throw notFound('Student not found');
+    const earned = await db
+      .select({ rewardId: rewards.rewardId })
+      .from(rewards)
+      .where(eq(rewards.studentId, studentId));
+    const choice = { first: student.first, last: student.last };
+    return {
+      nickname: student.nickname,
+      ...choice,
+      title: formatTitle(choice),
+      words: titleWordsFor(earned.map((r) => r.rewardId)),
+    };
+  }
+
+  app.get('/title', async (c) => c.json(await titleView(c.var.student.studentId)));
+
+  /** Changing a title is free and allowed any time; only unlocked, curated words are accepted. */
+  app.put('/title', async (c) => {
+    const parsed = TitleChoiceSchema.safeParse(await c.req.json().catch(() => null));
+    if (!parsed.success) throw new ApiError(400, 'invalid_title', 'Pick words from your list');
+    const studentId = c.var.student.studentId;
+    const earned = await db
+      .select({ rewardId: rewards.rewardId })
+      .from(rewards)
+      .where(eq(rewards.studentId, studentId));
+    const result = chooseTitle(
+      parsed.data,
+      earned.map((r) => r.rewardId),
+    );
+    if (!result.ok) {
+      throw new ApiError(400, `title_${result.reason}`, TITLE_MESSAGES[result.reason]);
+    }
+    await db
+      .update(students)
+      .set({ titleFirst: parsed.data.first, titleLast: parsed.data.last })
+      .where(eq(students.id, studentId));
+    return c.json(await titleView(studentId));
   });
   return app;
 }
