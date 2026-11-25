@@ -9,13 +9,10 @@ import manifest from '../../../api/routes.json';
 export const REAL_API_ROUTES: readonly string[] = manifest.routes;
 
 /**
- * Routes another workstream has agreed but not merged yet. Workstream F2 adds the topic map and
- * cards-due endpoints for the student device. Remove a line as soon as the route is real.
+ * Routes another workstream has agreed but not merged yet. Remove a line as soon as the route is
+ * real. (F2's topic map and cards-due routes are real now.)
  */
-export const PENDING_ROUTES: readonly string[] = [
-  'GET /v1/student/map',
-  'GET /v1/student/cards/due',
-];
+export const PENDING_ROUTES: readonly string[] = [];
 
 const segments = (path: string) =>
   path

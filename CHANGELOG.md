@@ -8,6 +8,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 ### What's new
 
 - Earn a reward while answering questions or reviewing flashcards and you'll see it (and hear its sound) straight away, not only on the Rewards page.
+- Your topic map now shows your real progress, and tapping a topic or the next mission starts a lesson.
 - Coming soon: a bug button on every screen. Find a real bug and earn bonus XP and secret Bug Hunter rewards.
 - Coming soon: secret achievements you only discover when you earn them.
 - Coming later: timed exam practice. Sit a full paper against the clock, then see your marks, your likely grade and how to pace yourself better.
@@ -53,7 +54,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 ### Added
 
 - Rewards where they are earned (F4): `LearnAttemptResponse` and `FlashcardSessionResult` have `newlyEarned` (saved once each by `saveNewRewards`, shared with the Rewards route); the lesson, Cards screen and starting-test results show "New reward: …" with `RewardSound`.
-- Flashcard sessions (F3): `flashcard_sessions` table (migration 0008), `POST /v1/student/flashcards/sessions` and `.../sessions/:id/finish`; reviews need a `sessionId` and no longer return `xpEarned` or `progress`; session XP counts for rewards and the flashcards-reviewed milestones; flashcard self-ratings never change topic mastery. `DECK_REVIEW_XP` removed.
+- Flashcard sessions (F3): `flashcard_sessions` table (migration 0009), `POST /v1/student/flashcards/sessions` and `.../sessions/:id/finish`; reviews need a `sessionId` and no longer return `xpEarned` or `progress`; session XP counts for rewards and the flashcards-reviewed milestones; flashcard self-ratings never change topic mastery. `DECK_REVIEW_XP` removed.
+- Topic map from real data (F2): `GET /v1/student/map` (units, topic states, unit challenge, next mission) and `GET /v1/student/cards/due`; the Map tab and Cards badge call them, map hexes open the lesson player, and the map schemas are shared from `packages/core`.
 - Friendly view of the young people's privacy notice (L6): short-version cards, key points with accessible "Read more" and "Expand all", original SVG icons and Pip, reduced-motion aware, print expands all; built from `docs/legal/privacy-for-young-people.md` (now 1.1) with comment hints; e2e axe test.
 - Parent reward notification (H2): the family export (`GET /v1/export`) lists the parent's reward-news devices without their push keys; `parent_push_subscriptions` table and `parent_rewards.reached_notified_at` (migration 0007), `POST, DELETE /v1/parent/push-subscriptions`, `GET /v1/parent/notifications/latest`, a cron step (`runParentRewardNotifications`) that reads the read-only `rewardsProgress`, sends once per reward, respects the child's nightly quiet hours and is not counted in the 2-a-day reminder limit; the service worker shows parent text and opens `/parent` on parent devices.
 - Parent home (P): tapping a child on "Who's revising?" now opens `/parent?student=<id>` (that child preselected) instead of `/parent/stats`. `/parent` has a student switcher, rewards you set, reminder times (`/parent/reminders/:id`, the existing reminder settings form), stats dashboard, manage children, family feedback, download your family's data (to the B2 panel on `/onboarding`), Reward news toggle, settings and policies; linked from `/family` and Settings.

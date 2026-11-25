@@ -38,6 +38,7 @@
 | `src/design`                 | Design tokens (`tokens.ts`, mirrored as CSS variables in `tokens.css`), base styles          |
 | `src/components`             | Shared components (Button, Pill, ProgressBar, Card, BottomNav, Toast, Sheet, Avatar, Pip)    |
 | `src/layout`                 | `AppLayout` (main nav: bottom bar on phones, side rail from 768px) and `FocusLayout`         |
+| `src/map`                    | Topic map pieces: honeycomb row layout, topic and challenge hexes, Next mission card         |
 | `src/pages`                  | One component per screen; `src/routes.tsx` maps paths to screens                             |
 | `src/api`                    | Typed API client (every response checked with Zod), `useApiResource`, retry UI               |
 | `src/mocks`                  | MSW handlers and made-up demo data, used by tests and by `pnpm dev`                          |
@@ -54,19 +55,6 @@
 - **Learning routes (F):** `/learn/subject/:subjectId` (topics and mastery), `/learn/subject/:subjectId/start`
   (starting test), `/learn/subject/:subjectId/practice` (mixed lesson), `/learn/topic/:topicId`, `/learn/command-words`;
   `/cards` is the flashcards screen. They call `/v1/student/...` with the device cookie.
-- **Routes:** `/` welcome, `/family`, `/learn` (path), `/lesson/:id`, `/lesson/:id/complete`,
-  | Folder           | What it holds                                                                             |
-  | ---------------- | ----------------------------------------------------------------------------------------- |
-  | `src/design`     | Design tokens (`tokens.ts`, mirrored as CSS variables in `tokens.css`), base styles       |
-  | `src/components` | Shared components (Button, Pill, ProgressBar, Card, BottomNav, Toast, Sheet, Avatar, Pip) |
-  | `src/layout`     | `AppLayout` (main nav: bottom bar on phones, side rail from 768px) and `FocusLayout`      |
-  | `src/map`        | Topic map pieces: honeycomb row layout, topic and challenge hexes, Next mission card      |
-  | `src/pages`      | One component per screen; `src/routes.tsx` maps paths to screens                          |
-  | `src/api`        | Typed API client (every response checked with Zod), `useApiResource`, retry UI            |
-  | `src/mocks`      | MSW handlers and made-up demo data, used by tests and by `pnpm dev`                       |
-  | `src/pwa`        | Service worker registration and the offline banner                                        |
-  | `src/session`    | Which student is using this device (a convenience until device linking lands)             |
-  | `public/`        | Web app manifest, icons, `sw.js` (app shell cache) and the MSW worker for development     |
 - **Routes:** `/` welcome, `/family`, `/map` (topic map; `/learn` redirects there), `/lesson/:id`, `/lesson/:id/complete`,
   `/cards`, `/plan`, `/papers`, `/progress`, `/settings`, `/install`, `/about`, `/feedback`,
   `/feedback/family`, `/feedback/mine`; signed out: `/legal`, `/legal/:name`, `/welcome/privacy`;
@@ -195,6 +183,8 @@ All bodies are validated with the Zod schemas in `packages/core`. Errors always 
 | `POST /v1/student/flashcards/sessions`                                                                                             | student device  | Start a review session                                                       |
 | `POST /v1/student/flashcards/sessions/:id/finish`                                                                                  | student device  | Finish a session: 20 XP if 5+ cards and completed, 2 a day; rewards earned   |
 | `POST /v1/student/flashcards/:id/review`                                                                                           | student device  | Rate a card in an open session (again, hard, good, easy); no XP              |
+| `GET /v1/student/map?subjectId=…`                                                                                                  | student device  | Topic map (F2): units, topic states, unit challenge, next mission            |
+| `GET /v1/student/cards/due`                                                                                                        | student device  | How many flashcards are due (Cards tab badge, F2)                            |
 | `GET /v1/notifications/vapid-key`                                                                                                  | anyone          | Public key for web push (503 if off)                                         |
 | `POST, DELETE /v1/student/push-subscriptions`                                                                                      | student device  | Turn reminders on or off for this device                                     |
 | `GET /v1/student/reminders/latest`                                                                                                 | student device  | Latest reminder text (for the worker)                                        |
@@ -247,8 +237,8 @@ The only exceptions are listed in `PENDING_ROUTES` (agreed with another workstre
 | `api/signIn.ts` `useParentSession` (welcome)      | `GET /api/auth/get-session`                                                                                                              | yes   |
 | `api/SignOutButton.tsx` (welcome, `/family`)      | `POST /api/auth/sign-out`                                                                                                                | yes   |
 | `api/client.ts` `getFamily` (`/family`)           | `GET /v1/onboarding/family`                                                                                                              | yes   |
-| `api/client.ts` `getTopicMap` (`/map`)            | `GET /v1/student/map`                                                                                                                    | F2    |
-| `api/client.ts` `getCardsDue` (Cards tab badge)   | `GET /v1/student/cards/due`                                                                                                              | F2    |
+| `api/client.ts` `getTopicMap` (`/map`)            | `GET /v1/student/map`                                                                                                                    | yes   |
+| `api/client.ts` `getCardsDue` (Cards tab badge)   | `GET /v1/student/cards/due`                                                                                                              | yes   |
 | `api/client.ts` `reportClientError`               | `POST /v1/client-errors`                                                                                                                 | yes   |
 | `features/onboarding/api.ts`                      | `GET /v1/onboarding/family`, `POST /v1/onboarding/children`                                                                              | yes   |
 | `features/onboarding/api.ts` (link a device)      | `POST /v1/students/:id/link-tokens`, `POST /v1/device/link`, `.../verify`                                                                | yes   |
