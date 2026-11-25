@@ -439,6 +439,27 @@ export const startingTests = pgTable(
 );
 
 /**
+ * A flashcard review session (workstream F3). Deck XP is paid per completed session, not per
+ * card: card_ids counts each card once (at most 20); xp_earned and finished_at are set when the
+ * session is finished, so reward XP can apply the late-night and daily rules to it.
+ */
+export const flashcardSessions = pgTable(
+  'flashcard_sessions',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    cardIds: jsonb('card_ids').$type<string[]>().notNull().default([]),
+    startedAt: timestamp('started_at', { withTimezone: true }).notNull().defaultNow(),
+    finishedAt: timestamp('finished_at', { withTimezone: true }),
+    completed: boolean('completed').notNull().default(false),
+    xpEarned: integer('xp_earned').notNull().default(0),
+  },
+  (t) => [index('flashcard_sessions_student_started_idx').on(t.studentId, t.startedAt)],
+);
+
+/**
  * A student's flashcards with their SM-2 state. Deck and wrong-answer cards point at an item
  * (their text comes from the content); a student's own cards keep their own front and back.
  */

@@ -97,4 +97,18 @@ describe('learning loop tables (workstream F)', () => {
       expect.arrayContaining(['id', 'student_id', 'subject_id', 'item_ids', 'finished_at']),
     );
   });
+
+  it('records flashcard sessions with the cards counted and the XP paid (F3)', async () => {
+    expect(await columns('flashcard_sessions')).toEqual(
+      expect.arrayContaining([
+        'id',
+        'student_id',
+        'card_ids',
+        'started_at',
+        'finished_at',
+        'completed',
+        'xp_earned',
+      ]),
+    );
+  });
 });
