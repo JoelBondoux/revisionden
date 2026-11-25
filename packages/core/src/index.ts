@@ -38,5 +38,6 @@ export * from './operator-signature';
 export * from './operator-schemas';
 export * from './complaints';
 export * from './track-stats';
+export * from './discount-codes';
 export * from './titles';
 export * from './stats-allowance';
