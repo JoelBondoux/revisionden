@@ -246,10 +246,16 @@ export const devices = pgTable(
     publicKey: text('public_key').notNull(),
     counter: integer('counter').notNull().default(0),
     transports: jsonb('transports').$type<string[]>(),
+    // Coarse type the device reported when linking ('phone', 'tablet' or 'computer'); never
+    // the browser or model.
+    deviceType: text('device_type'),
     linkedAt: timestamp('linked_at', { withTimezone: true }).notNull().defaultNow(),
     lastUsedAt: timestamp('last_used_at', { withTimezone: true }),
   },
-  (t) => [index('devices_student_id_idx').on(t.studentId)],
+  (t) => [
+    index('devices_student_id_idx').on(t.studentId),
+    check('devices_device_type_values', sql`${t.deviceType} in ('phone', 'tablet', 'computer')`),
+  ],
 );
 
 /** One-time tokens a parent shows as a QR code to link a student device. */
@@ -267,9 +273,17 @@ export const deviceLinkTokens = pgTable(
       .references(() => students.id, { onDelete: 'cascade' }),
     expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
     usedAt: timestamp('used_at', { withTimezone: true }),
+    // 'qr' (shown on screen, 10 minutes) or 'share' (sent as a link, 24 hours).
+    kind: text('kind').notNull().default('qr'),
+    // SHA-256 of the short code a child can type at /link; the code itself is never stored.
+    codeHash: text('code_hash').unique(),
+    cancelledAt: timestamp('cancelled_at', { withTimezone: true }),
     createdAt: createdAt(),
   },
-  (t) => [index('device_link_tokens_student_id_idx').on(t.studentId)],
+  (t) => [
+    index('device_link_tokens_student_id_idx').on(t.studentId),
+    check('device_link_tokens_kind_values', sql`${t.kind} in ('qr', 'share')`),
+  ],
 );
 
 /** WebAuthn challenges waiting for a device's response (registration or unlock). */

@@ -1,7 +1,17 @@
 import { Hono, type MiddlewareHandler } from 'hono';
 import { deleteCookie, getCookie, setCookie } from 'hono/cookie';
-import { and, eq, gt, isNull } from 'drizzle-orm';
+import { and, asc, eq, gt, gte, isNull } from 'drizzle-orm';
 import { z } from 'zod';
+import {
+  CreateLinkTokenRequestSchema,
+  DeviceTypeSchema,
+  formatLinkCode,
+  linkCodeFromBytes,
+  LINK_CODE_LENGTH,
+  normaliseLinkCode,
+  type LinkKind,
+  type LinkStatus,
+} from '@revisionden/core';
 import {
   deviceLinkTokens,
   devices,
@@ -14,14 +24,18 @@ import type { AppEnv } from '../context';
 import type { AppConfig } from '../env';
 import { ApiError, notFound, unauthorized } from '../errors';
 import { requireFamilyStudent } from '../families';
+import { recordFamilyEvent } from '../family-events';
 import { toStudent } from './students';
 import { readJson } from '../http';
 import type { PasskeyService } from '../passkeys';
-import type { Clock } from '../rate-limit';
+import { clientKey, RETRY_AFTER_SECONDS, type Clock, type RateLimiter } from '../rate-limit';
 import { hashToken, randomToken } from '../tokens';
 import { isId } from '../validation';
 
 export const LINK_TOKEN_TTL_MS = 10 * 60 * 1000;
+/** A shared link waits in a message, so it lasts a day (the QR code stays 10 minutes). */
+export const SHARE_LINK_TTL_MS = 24 * 60 * 60 * 1000;
+const TTL: Record<LinkKind, number> = { qr: LINK_TOKEN_TTL_MS, share: SHARE_LINK_TTL_MS };
 export const CHALLENGE_TTL_MS = 5 * 60 * 1000;
 export const STUDENT_SESSION_TTL_MS = 12 * 60 * 60 * 1000;
 export const STUDENT_COOKIE = '__Host-rd_student';
@@ -31,6 +45,8 @@ export interface DeviceDeps {
   config: AppConfig;
   clock: Clock;
   passkeys: PasskeyService;
+  /** Limits short-code attempts at /link per address (falls back to the sign-in limiter). */
+  rateLimiters?: { auth: RateLimiter; linkCode?: RateLimiter };
 }
 
 const invalidLinkToken = () =>
@@ -45,13 +61,30 @@ const passkeyNotVerified = () =>
   new ApiError(400, 'passkey_not_verified', 'The passkey could not be checked.');
 
 // TODO(workstream C): move these device-linking request schemas into packages/core.
-const redeemSchema = z
-  .object({ token: z.string().min(16).max(128), familyId: z.string() })
-  .strict();
+const redeemSchema = z.union([
+  z.object({ token: z.string().min(16).max(128), familyId: z.string() }).strict(),
+  z.object({ code: z.string().min(1).max(32) }).strict(),
+]);
 const credentialResponse = z
   .object({ id: z.string().min(1), response: z.object({}).passthrough() })
   .passthrough();
 const verifySchema = z.object({ challengeId: z.string(), response: credentialResponse }).strict();
+const linkVerifySchema = verifySchema.extend({ deviceType: DeviceTypeSchema.optional() }).strict();
+
+function newLinkCode(): string {
+  return linkCodeFromBytes(crypto.getRandomValues(new Uint8Array(LINK_CODE_LENGTH)));
+}
+
+/** Reads an optional JSON body: a bare POST (no body) means the defaults. */
+async function optionalJson(c: Parameters<MiddlewareHandler<AppEnv>>[0]): Promise<unknown> {
+  const text = await c.req.text();
+  if (text.trim() === '') return {};
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new ApiError(400, 'invalid_json', 'The request body must be JSON');
+  }
+}
 const unlockOptionsSchema = z
   .object({ credentialIds: z.array(z.string()).max(10).optional() })
   .strict();
@@ -63,35 +96,88 @@ export function parentDeviceRoutes({ db, config, clock }: DeviceDeps) {
   app.post('/:id/link-tokens', async (c) => {
     const { familyId } = c.var.parent;
     const student = await requireFamilyStudent(db, familyId, c.req.param('id'));
+    const { kind } = CreateLinkTokenRequestSchema.parse(await optionalJson(c));
     const token = randomToken();
-    const expiresAt = new Date(clock.now().getTime() + LINK_TOKEN_TTL_MS);
-    await db.insert(deviceLinkTokens).values({
-      tokenHash: await hashToken(token),
-      familyId,
-      studentId: student.id,
-      expiresAt,
-    });
+    const code = newLinkCode();
+    const expiresAt = new Date(clock.now().getTime() + TTL[kind]);
+    const [row] = await db
+      .insert(deviceLinkTokens)
+      .values({
+        tokenHash: await hashToken(token),
+        codeHash: await hashToken(code),
+        kind,
+        familyId,
+        studentId: student.id,
+        expiresAt,
+      })
+      .returning({ id: deviceLinkTokens.id });
+    // No nickname or other personal data in the link: only the token and the family id.
     const linkUrl = new URL('/link', config.webOrigin);
     linkUrl.searchParams.set('token', token);
     linkUrl.searchParams.set('family', familyId);
     return c.json(
       {
+        tokenId: row!.id,
+        kind,
         token,
         familyId,
         studentId: student.id,
         expiresAt: expiresAt.toISOString(),
         linkUrl: linkUrl.toString(),
+        code: formatLinkCode(code),
       },
       201,
     );
   });
 
+  async function ownToken(familyId: string, studentId: string, tokenId: string) {
+    const student = await requireFamilyStudent(db, familyId, studentId);
+    if (!isId(tokenId)) throw notFound('Link not found');
+    const [row] = await db
+      .select()
+      .from(deviceLinkTokens)
+      .where(and(eq(deviceLinkTokens.id, tokenId), eq(deviceLinkTokens.studentId, student.id)));
+    if (!row) throw notFound('Link not found');
+    return row;
+  }
+
+  /** Waiting until the child's device has used the link and set up its passkey. */
+  app.get('/:id/link-tokens/:tokenId', async (c) => {
+    const row = await ownToken(c.var.parent.familyId, c.req.param('id'), c.req.param('tokenId'));
+    let status: LinkStatus = 'waiting';
+    if (row.cancelledAt) status = 'cancelled';
+    else if (row.usedAt) {
+      const [device] = await db
+        .select({ id: devices.id })
+        .from(devices)
+        .where(and(eq(devices.studentId, row.studentId), gte(devices.linkedAt, row.usedAt)))
+        .limit(1);
+      status = device ? 'linked' : 'waiting';
+    } else if (row.expiresAt <= clock.now()) status = 'expired';
+    return c.json({ status });
+  });
+
+  app.delete('/:id/link-tokens/:tokenId', async (c) => {
+    const row = await ownToken(c.var.parent.familyId, c.req.param('id'), c.req.param('tokenId'));
+    await db
+      .update(deviceLinkTokens)
+      .set({ cancelledAt: clock.now() })
+      .where(eq(deviceLinkTokens.id, row.id));
+    return c.body(null, 204);
+  });
+
   app.get('/:id/devices', async (c) => {
     const student = await requireFamilyStudent(db, c.var.parent.familyId, c.req.param('id'));
     const rows = await db
-      .select({ id: devices.id, linkedAt: devices.linkedAt, lastUsedAt: devices.lastUsedAt })
+      .select({
+        id: devices.id,
+        deviceType: devices.deviceType,
+        linkedAt: devices.linkedAt,
+        lastUsedAt: devices.lastUsedAt,
+      })
       .from(devices)
-      .where(eq(devices.studentId, student.id));
+      .where(eq(devices.studentId, student.id))
+      .orderBy(asc(devices.linkedAt));
     return c.json({ devices: rows });
   });
 
@@ -111,7 +197,7 @@ export function parentDeviceRoutes({ db, config, clock }: DeviceDeps) {
 }
 
 /** Anonymous routes under /v1/device: redeem a link token, register a passkey, unlock. */
-export function deviceRoutes({ db, clock, passkeys }: DeviceDeps) {
+export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) {
   const app = new Hono<AppEnv>();
   const now = () => clock.now();
 
@@ -173,18 +259,41 @@ export function deviceRoutes({ db, clock, passkeys }: DeviceDeps) {
     });
   }
 
+  /** Short-code attempts have their own budget per address, so codes cannot be guessed. */
+  async function limitCodeAttempts(c: Parameters<MiddlewareHandler<AppEnv>>[0]) {
+    const limiter = rateLimiters?.linkCode ?? rateLimiters?.auth;
+    if (!limiter) return;
+    const { success } = await limiter.limit({ key: `link-code:${clientKey(c.req.raw.headers)}` });
+    if (!success) {
+      c.header('Retry-After', String(RETRY_AFTER_SECONDS));
+      throw new ApiError(429, 'rate_limited', 'Too many tries. Please wait a minute.');
+    }
+  }
+
   app.post('/link', async (c) => {
-    const { token, familyId } = await readJson(c, redeemSchema);
-    if (!isId(familyId)) throw invalidLinkToken();
-    // Single use: the update succeeds only once, only before expiry, only for this family.
+    const body = await readJson(c, redeemSchema);
+    let match;
+    if ('code' in body) {
+      await limitCodeAttempts(c);
+      const code = normaliseLinkCode(body.code);
+      if (!code) throw invalidLinkToken();
+      match = eq(deviceLinkTokens.codeHash, await hashToken(code));
+    } else {
+      if (!isId(body.familyId)) throw invalidLinkToken();
+      match = and(
+        eq(deviceLinkTokens.tokenHash, await hashToken(body.token)),
+        eq(deviceLinkTokens.familyId, body.familyId),
+      );
+    }
+    // Single use: the update succeeds only once, only before expiry, never once cancelled.
     const [used] = await db
       .update(deviceLinkTokens)
       .set({ usedAt: now() })
       .where(
         and(
-          eq(deviceLinkTokens.tokenHash, await hashToken(token)),
-          eq(deviceLinkTokens.familyId, familyId),
+          match,
           isNull(deviceLinkTokens.usedAt),
+          isNull(deviceLinkTokens.cancelledAt),
           gt(deviceLinkTokens.expiresAt, now()),
         ),
       )
@@ -205,7 +314,7 @@ export function deviceRoutes({ db, clock, passkeys }: DeviceDeps) {
   });
 
   app.post('/link/verify', async (c) => {
-    const { challengeId, response } = await readJson(c, verifySchema);
+    const { challengeId, response, deviceType } = await readJson(c, linkVerifySchema);
     const challenge = await consumeChallenge(challengeId, 'register');
     const credential = await passkeys.verifyRegistration({
       response: response as never,
@@ -220,11 +329,20 @@ export function deviceRoutes({ db, clock, passkeys }: DeviceDeps) {
         publicKey: credential.publicKey,
         counter: credential.counter,
         transports: credential.transports ?? null,
+        deviceType: deviceType ?? null,
         linkedAt: now(),
       })
       .returning({ id: devices.id });
     await startSession(c, challenge.studentId!, device!.id);
     const [student] = await db.select().from(students).where(eq(students.id, challenge.studentId!));
+    // Both parents hear "<nickname>'s device is set up" (pushed if they turned push on).
+    await recordFamilyEvent(db, {
+      familyId: student!.familyId,
+      actorPosition: null,
+      kind: 'device_linked',
+      studentId: student!.id,
+      now: now(),
+    });
     return c.json({ deviceId: device!.id, student: toStudent(student!) }, 201);
   });
 
