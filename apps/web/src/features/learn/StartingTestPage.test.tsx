@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { server } from '../../mocks/server';
 import { renderRoute } from '../../test/render';
-import { demoItems } from './mocks';
+import { demoItems, mockNextRewards } from './mocks';
 
 const click = (name: string | RegExp) => userEvent.click(screen.getByRole('button', { name }));
 
@@ -36,6 +36,7 @@ describe('Starting test', () => {
             streak: { current: 4, best: 9, skipDays: 1 },
           },
           flashcardAdded: false,
+          newlyEarned: [],
         });
       }),
     );
@@ -60,6 +61,20 @@ describe('Starting test', () => {
       'test:00000000-0000-4000-8000-000000000900',
       'test:00000000-0000-4000-8000-000000000900',
     ]);
+  });
+
+  it('saves rewards earned during the test for the end, so it stays quiet', async () => {
+    mockNextRewards([{ id: 'correct-100', name: '100 right answers', rarity: 'common' }]);
+    renderRoute('/learn/subject/gcse-maths/start');
+    await click('Start');
+    await userEvent.click(await screen.findByRole('radio', { name: 'Option B' }));
+    await click('Next');
+    expect(screen.queryByRole('status', { name: 'New rewards' })).not.toBeInTheDocument();
+    await click('Skip');
+    await click('Skip');
+    expect(await screen.findByRole('status', { name: 'New rewards' })).toHaveTextContent(
+      'New reward: 100 right answers',
+    );
   });
 
   it('finishes by itself when the time runs out', async () => {

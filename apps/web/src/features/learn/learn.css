@@ -102,6 +102,19 @@
   color: var(--color-text);
 }
 
+/* Rewards just earned by an answer or a flashcard session (F4). */
+.new-rewards {
+  background: var(--color-primary-soft);
+  border-radius: 12px;
+  padding: var(--space-3) var(--space-4);
+  margin-top: var(--space-3);
+  font-weight: var(--font-weight-extrabold);
+}
+
+.new-rewards p {
+  margin: 0;
+}
+
 /* Game feel (workstream J): the arena lesson's top bar, Pip and effects. */
 .lesson__xp {
   min-width: 7ch;

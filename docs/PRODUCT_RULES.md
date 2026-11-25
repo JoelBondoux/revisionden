@@ -111,6 +111,11 @@ formula and its assumptions. Summary of what is built:
 - Rewards never come from time spent or late-night study (22:00 to 05:59 UK time), at most
   300 reward XP count a day, and there are no random draws.
 - Avatar items only unlock from the reward that locks them; locked items are refused when saving.
+- Rewards are celebrated where they are earned (workstream F4, product owner via lead,
+  2026-11-25): an answer or a finished flashcard session saves any new reward once and shows
+  "New reward: …" with the reward sound on that screen (the starting test waits for its results
+  screen). Those rewards are not shown again as "New!" on the Rewards page; the Rewards page
+  announces only rewards first seen there (for example the starting-test milestone).
 - Implemented: `packages/core/src/rewards.ts`, `levels.ts`, `chapters.ts`, `reward-xp.ts`,
   `reward-stats.ts`, `rewards-schemas.ts`; API `apps/api/src/routes/rewards.ts`.
 - Parent-set reward met (workstream H2): the parent gets one notification per reward on each of
