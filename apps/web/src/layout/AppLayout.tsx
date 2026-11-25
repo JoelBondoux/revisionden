@@ -5,6 +5,7 @@ import { BottomNav } from '../components/BottomNav';
 import { MuteButton } from '../features/sound';
 import { OfflineBanner } from '../pwa/OfflineBanner';
 import { useStudent } from '../session/StudentContext';
+import { PublicHeader } from './PublicHeader';
 import { VersionFooter } from './VersionFooter';
 
 /** Flashcards due for the chosen student; zero while loading, on error or with nobody chosen. */
@@ -20,6 +21,14 @@ function useCardsDue(): number {
 
 /** Layout for the main app pages: content plus the main navigation. */
 export function AppLayout() {
+  const { studentId } = useStudent();
+  // Only a student's linked device gets the student app nav; anyone else (signed out, or a
+  // parent) gets the small public header on these pages.
+  if (!studentId) return <PublicLayout />;
+  return <StudentLayout />;
+}
+
+function StudentLayout() {
   const cardsDue = useCardsDue();
   return (
     <div className="app-shell">
@@ -36,6 +45,23 @@ export function AppLayout() {
       </main>
       <VersionFooter />
     </div>
+  );
+}
+
+/** Public pages (About, policies, feedback) when no student uses this device. */
+function PublicLayout() {
+  return (
+    <>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <OfflineBanner />
+      <PublicHeader />
+      <main id="main" className="focus-main" tabIndex={-1}>
+        <Outlet />
+      </main>
+      <VersionFooter />
+    </>
   );
 }
 

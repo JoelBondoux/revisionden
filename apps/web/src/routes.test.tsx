@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 import { renderRoute } from './test/render';
 
 describe('routes', () => {
@@ -97,5 +97,27 @@ describe('routes', () => {
     renderRoute('/family/demo-student/rewards');
     expect(await screen.findByRole('heading', { level: 1, name: 'Rewards' })).toBeInTheDocument();
     expect(await screen.findByText(/No real-world rewards yet/)).toBeInTheDocument();
+  });
+
+  it.each(['/about', '/legal', '/legal/privacy-notice', '/feedback'])(
+    'shows a minimal signed-out header, not the student nav, on %s when no student uses this device',
+    async (path) => {
+      renderRoute(path, { studentId: null });
+      const site = await screen.findByRole('navigation', { name: 'Site' });
+      expect(within(site).getByRole('link', { name: 'Sign in' })).toHaveAttribute('href', '/');
+      expect(within(site).getByRole('link', { name: 'Policies' })).toHaveAttribute(
+        'href',
+        '/legal',
+      );
+      expect(within(site).getByRole('link', { name: 'About' })).toHaveAttribute('href', '/about');
+      expect(screen.getByRole('link', { name: 'RevisionDen home' })).toHaveAttribute('href', '/');
+      expect(screen.queryByRole('navigation', { name: 'Main' })).not.toBeInTheDocument();
+    },
+  );
+
+  it('keeps the student nav on public pages for a linked student device', async () => {
+    renderRoute('/about');
+    expect(await screen.findByRole('navigation', { name: 'Main' })).toBeInTheDocument();
+    expect(screen.queryByRole('navigation', { name: 'Site' })).not.toBeInTheDocument();
   });
 });

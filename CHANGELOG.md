@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- When you're signed out, About, Policies and Feedback show a simple header (Sign in, Policies, About) instead of the student menu.
 - Parents can download all their family's data as one file, from the family list.
 - Accounts nobody uses for 12 months are now deleted automatically; the parent area shows the date, and warns you if you come back after a long break.
 - Your own flashcards can't hold email addresses, phone numbers or family nicknames, to keep personal details out.
@@ -27,6 +28,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Public pages (I): without a linked student on the device, `AppLayout` pages (About, Feedback, Settings and the rest) and the policy pages (now under `AppLayout`) show `PublicHeader` (logo, Sign in, Policies, About) instead of the student nav.
+- No third-party requests (I): the deployed smoke test and the local e2e suite fail if a page requests any host other than the web origin and its API host. On staging it finds Cloudflare's zone-injected Web Analytics beacon (`static.cloudflareinsights.com`), which the owner is switching off in the Cloudflare dashboard.
 - Policies: the privacy notice and services page (both now 1.1) say parents sign in with Google or Microsoft, whichever this app offers (a deployment may offer only one).
 - Google and Microsoft access, refresh and ID tokens are no longer stored after sign-in (B2).
 - Year group is limited to Years 9 to 13 in the API, the core schema and the database (B2, migration 0006).

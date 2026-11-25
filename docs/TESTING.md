@@ -73,7 +73,10 @@ by one test, names a route that is not in it (`apps/web/src/test/apiRoutes.ts`),
 **Deployed smoke test** (`e2e/smoke`, `pnpm --filter @revisionden/e2e smoke`): health ok, Google
 offered, Google sign-in starts with the right callback (stops before Google), the parent family
 route exists and refuses a signed-out request with a reference code, policy pages, the Google
-button, and the signed-out `/family` prompt. It signs nobody in: there is no test backdoor.
+button, the signed-out `/family` prompt, and that `/`, `/family`, `/legal`, a policy and `/about`
+request nothing from third parties (only the web origin and its API host; it caught Cloudflare's
+injected Web Analytics beacon on staging, 2026-11-25). The local suite checks the same for the
+built app. It signs nobody in: there is no test backdoor.
 Still checked by a person after each staging deploy: signing in with Google and landing on
 "Who's revising?", adding a child, linking a device with the QR code and passkey, and the
 student using the app on that device.
