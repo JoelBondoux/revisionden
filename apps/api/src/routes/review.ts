@@ -5,6 +5,7 @@ import {
   batchOutcome,
   createRng,
   drawSample,
+  needsIndividualReview,
   readyForHumanReview,
   type ReviewDecision,
 } from '@revisionden/core';
@@ -243,7 +244,7 @@ export function reviewRoutes(db: Database, deps: VerificationDeps & { now: () =>
             {
               itemId,
               itemVersion: version,
-              needsHumanApproval: snapshot.needs_human_approval === true,
+              needsHumanApproval: needsIndividualReview(snapshot),
               snapshot,
             },
           ]

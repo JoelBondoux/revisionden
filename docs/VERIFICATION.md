@@ -232,7 +232,9 @@ linked mark scheme as `mark_scheme_detail`, in `items.review_snapshot` (never se
 items** (`GET, POST /v1/review/batches/from-drafts`): only drafts whose snapshot has every
 automated check passed (grounded writing, quote check, blind answer or blind marking, adversarial
 review, schema, and the maths engine for maths items; `readyForHumanReview` in
-`packages/core`), and not already in a batch under review or passed at that version. The batch
+`packages/core`), and not already in a batch under review or passed at that version. An item with
+`facts` also needs a fact-check record; if it failed, the item is batched for individual review
+(`needsIndividualReview`), never sampling. The batch
 page shows each item's hint, mark scheme, exemplars and checks.
 
 **Reports and quarantine (section 6).** "Report a problem" stores only the item, its version and

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { missingChecks, readyForHumanReview } from './review-readiness';
+import { missingChecks, needsIndividualReview, readyForHumanReview } from './review-readiness';
 
 const check = (name: string, result = 'pass') => ({ name, result });
 const automated = [
@@ -59,5 +59,36 @@ describe('readyForHumanReview', () => {
   it('refuses something that is not an item record', () => {
     expect(readyForHumanReview(null)).toBe(false);
     expect(readyForHumanReview({ type: 'numeric' })).toBe(false);
+  });
+});
+
+describe('items resting on standard facts (decision 0009)', () => {
+  const base = automated.map((n) => check(n));
+  const withFacts = (checks: { name: string; result: string }[]) => ({
+    type: 'short_answer',
+    facts: [{ statement: 'Fixture fact.', ask: 'Fixture?' }],
+    verification: { status: 'draft', checks },
+  });
+
+  it('needs a fact-check before human review', () => {
+    expect(missingChecks(withFacts(base))).toEqual(['fact-check']);
+    expect(readyForHumanReview(withFacts(base))).toBe(false);
+  });
+
+  it('goes to normal review when the fact-check passed', () => {
+    const item = withFacts([...base, check('fact-check')]);
+    expect(readyForHumanReview(item)).toBe(true);
+    expect(needsIndividualReview(item)).toBe(false);
+  });
+
+  it('still goes to review when the fact-check failed, but always individually', () => {
+    const item = withFacts([...base, check('fact-check', 'fail')]);
+    expect(readyForHumanReview(item)).toBe(true);
+    expect(needsIndividualReview(item)).toBe(true);
+  });
+
+  it('marks needs_human_approval items for individual review', () => {
+    expect(needsIndividualReview({ needs_human_approval: true })).toBe(true);
+    expect(needsIndividualReview({ type: 'short_answer' })).toBe(false);
   });
 });

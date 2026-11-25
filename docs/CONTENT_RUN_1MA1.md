@@ -55,7 +55,7 @@ NODE_USE_ENV_PROXY=1 GEMINI_API_KEY=dummy VERIFY_GEMINI_MODEL=gemini-2.5-pro \
 **Review queue**
 
 - The batch page shows hint, mark scheme, exemplars and checks (S2, #108).
-- "Create batch from draft items" for content leads on `/review` (S2, #109, migration 0026).
+- "Create batch from draft items" for content leads on `/review` (S2, #109, migration 0018).
 - A reviewer role is a database row (`reviewer_roles`); the lead adds the owner's on dev.
 - Topic trees and near-match quotes are not in the queue; they are confirmed with the lead.
 

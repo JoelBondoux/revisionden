@@ -48,6 +48,17 @@ const proof = item('test-proof-0001', {
     checks: passed([...automated.filter((n) => n !== 'blind-answer'), 'blind-marking']),
   },
 });
+const factFailed = item('test-factfail-0001', {
+  facts: [{ statement: 'Fixture fact.', ask: 'Fixture?' }],
+  verification: {
+    status: 'draft',
+    version: 1,
+    checks: [
+      ...passed(automated),
+      { name: 'fact-check', result: 'fail', tool: 't', tool_version: '1', at: 'x' },
+    ],
+  },
+});
 const scheme = { id: 'test-scheme', type: 'points', points: [{ code: 'B1', description: 'x' }] };
 
 let t: TestContext;
@@ -55,7 +66,7 @@ beforeEach(async () => {
   t = await createTestContext({ verification: { randomSeed: () => 7 } });
   await syncContent(t.db, {
     topicTrees: [testTopicTree],
-    items: [ready, failing, verifiedItem, proof],
+    items: [ready, failing, verifiedItem, proof, factFailed],
     markSchemes: [scheme],
   });
 });
@@ -90,7 +101,7 @@ describe('a review batch from draft items', () => {
   it('counts the drafts whose automated checks all passed', async () => {
     const headers = await reviewer();
     const res = await t.app.request('/v1/review/batches/from-drafts', { headers });
-    expect(await res.json()).toEqual({ ready: 2 });
+    expect(await res.json()).toEqual({ ready: 3 });
   });
 
   it('puts only ready drafts in the batch, with their snapshots, and samples them', async () => {
@@ -98,13 +109,20 @@ describe('a review batch from draft items', () => {
     const res = await create(headers);
     expect(res.status).toBe(201);
     const created = (await res.json()) as { id: string; size: number; sample: string[] };
-    expect(created.size).toBe(2);
-    expect(created.sample.sort()).toEqual(['test-proof-0001', 'test-ready-0001']);
+    expect(created.size).toBe(3);
+    expect(created.sample.sort()).toEqual([
+      'test-factfail-0001',
+      'test-proof-0001',
+      'test-ready-0001',
+    ]);
     const batch = (await (
       await t.app.request(`/v1/review/batches/${created.id}`, { headers })
     ).json()) as { items: { itemId: string; needsHumanApproval: boolean; snapshot: object }[] };
     const byId = Object.fromEntries(batch.items.map((i) => [i.itemId, i]));
     expect(byId['test-proof-0001']!.needsHumanApproval).toBe(true);
+    // A failed fact-check (decision 0009) means individual review, never batch sampling.
+    expect(byId['test-factfail-0001']!.needsHumanApproval).toBe(true);
+    expect(byId['test-ready-0001']!.needsHumanApproval).toBe(false);
     expect(byId['test-ready-0001']!.snapshot).toMatchObject({ prompt: ready.prompt });
   });
 

@@ -352,7 +352,8 @@ Tags: #product #rules #limits #defaults
   confirmed error fails the batch and re-checks the batch, writer prompt and source.
 - A content lead creates a batch on `/review` with "Create batch from draft items": every draft
   whose synced snapshot (`items.review_snapshot`, full content record plus mark scheme) has all
-  automated checks passed and is not already in an open or passed batch. The batch page shows
+  automated checks passed and is not already in an open or passed batch (an item whose fact-check
+  failed goes in for individual review). The batch page shows
   hint, mark scheme, exemplars and checks.
 - Report a problem stores only item, version and a reason (no free text) and hides the item at
   once (status `quarantined` in `items`, kept through content syncs; restored on "no error";
