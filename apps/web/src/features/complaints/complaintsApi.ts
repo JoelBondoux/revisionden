@@ -1,3 +1,4 @@
+import { COMPLAINT_REQUEST_TOPICS, type ComplaintRequestTopic } from '@revisionden/core';
 import { z } from 'zod';
 import { defaultBaseUrl } from '../../api/ApiContext';
 
@@ -25,7 +26,9 @@ export type Complaint = z.infer<typeof complaintSchema>;
 const requestSchema = z.object({
   id: z.string(),
   nickname: z.string(),
-  topic: z.string(),
+  topic: z.enum(
+    Object.keys(COMPLAINT_REQUEST_TOPICS) as [ComplaintRequestTopic, ...ComplaintRequestTopic[]],
+  ),
   topicLabel: z.string(),
   note: z.string().nullable(),
   createdAt: z.string(),

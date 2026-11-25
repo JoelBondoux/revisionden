@@ -83,3 +83,12 @@ describe('complaint escalation and requests from a student', () => {
     ).toThrow();
   });
 });
+
+describe("starting a complaint from a child's request", () => {
+  it('pre-fills the topic only, never the nickname or the note', async () => {
+    const { complaintSummaryFromRequest } = await import('./complaints');
+    expect(complaintSummaryFromRequest('marking')).toBe(
+      'Raised for my child: A mark or a question seemed wrong.',
+    );
+  });
+});

@@ -101,7 +101,7 @@ describe('Make a complaint (parent)', () => {
         {
           id: 'r1',
           nickname: 'demo_kid',
-          topic: 'marking',
+          topic: 'marking' as const,
           topicLabel: 'A mark or a question seemed wrong',
           note: 'Question 3',
           createdAt: '2026-11-25T09:00:00.000Z',
@@ -113,10 +113,10 @@ describe('Make a complaint (parent)', () => {
     expect(within(request).getByText('Question 3')).toBeInTheDocument();
     await userEvent.click(within(request).getByRole('button', { name: 'Start a complaint' }));
     const box = screen.getByLabelText('What went wrong?') as HTMLTextAreaElement;
-    expect(box.value).toBe('Raised for demo_kid: A mark or a question seemed wrong.');
+    expect(box.value).toBe('Raised for my child: A mark or a question seemed wrong.');
     await userEvent.click(screen.getByRole('button', { name: 'Send complaint' }));
     expect(api.create).toHaveBeenCalledWith({
-      summary: 'Raised for demo_kid: A mark or a question seemed wrong.',
+      summary: 'Raised for my child: A mark or a question seemed wrong.',
       aboutPersonalData: false,
       fromRequestId: 'r1',
     });
@@ -129,7 +129,7 @@ describe('Make a complaint (parent)', () => {
         {
           id: 'r2',
           nickname: 'demo_kid',
-          topic: 'unfair',
+          topic: 'unfair' as const,
           topicLabel: 'Something felt unfair',
           note: null,
           createdAt: '2026-11-25T09:00:00.000Z',
