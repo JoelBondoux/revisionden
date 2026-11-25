@@ -461,6 +461,13 @@ Tags: #product #rules #limits #defaults
   +50 XP and a step on the hidden Bug Hunter track (badge, title, avatar item, frame, Pip outfit,
   effect, legendary set at 20). Duplicates +10 XP; at most 3 confirmed-bug rewards a week; parents
   are thanked, not rewarded.
+- Built (L7): the bug button and confirm flow; rules in `packages/core/src/bug-hunter.ts`
+  (`bugReward`). The week is Monday to Sunday, UK time, and the 3-a-week cap counts full and
+  duplicate rewards; past the cap the student is thanked with no XP and no track step. Bug XP is
+  added to total XP but not to the daily goal or streak. Students switch the button off in Settings
+  (`revisionden.bugButton` in local storage). Confirmed count: `confirmedBugCount` in
+  `apps/api/src/feedback/bugHunter.ts`, `GET /v1/student/bug-hunter`,
+  `GET /v1/students/:id/bug-hunter`. The track items are R's.
 - Secret achievements: hidden "???" cards with a found count; learning-based conditions only;
   defined in the catalogue with `secret: true`. Detail: `docs/REWARDS.md`.
 

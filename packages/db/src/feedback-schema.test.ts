@@ -96,4 +96,31 @@ describe('policy acceptances table (workstream L)', () => {
       'accepted_at',
     ]);
   });
+
+  it('records a confirmed bug with its reward, and a duplicate pointing at the first report', async () => {
+    const family = await newFamily();
+    const first = await client.query<{ id: string; outcome: string | null; reward_xp: number }>(
+      `insert into feedback (family_id, sender_role, kind) values ($1, 'parent', 'bug')
+       returning id, outcome, reward_xp`,
+      [family],
+    );
+    expect(first.rows[0]).toMatchObject({ outcome: null, reward_xp: 0 });
+    await client.query(
+      `update feedback set outcome = 'confirmed', track_step = true, reward_xp = 50,
+       confirmed_at = now() where id = $1`,
+      [first.rows[0]!.id],
+    );
+    const dup = await client.query<{ duplicate_of: string }>(
+      `insert into feedback (family_id, sender_role, kind, outcome, duplicate_of)
+       values ($1, 'parent', 'bug', 'duplicate', $2) returning duplicate_of`,
+      [family, first.rows[0]!.id],
+    );
+    expect(dup.rows[0]!.duplicate_of).toBe(first.rows[0]!.id);
+    await expect(
+      client.query(
+        `insert into feedback (family_id, sender_role, kind, outcome) values ($1, 'parent', 'bug', 'maybe')`,
+        [family],
+      ),
+    ).rejects.toThrow(/feedback_outcome_values/);
+  });
 });
