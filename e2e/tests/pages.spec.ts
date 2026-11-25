@@ -94,3 +94,31 @@ test('a server error on /family shows a reference code, accessibly', async ({ pa
   await expect(page.getByText('RD-7K2M9Q')).toBeVisible();
   await expectAccessible(page);
 });
+
+test("a parent's family list links to each child's parent view, accessibly", async ({ page }) => {
+  const id = '8f6d2b1e-4c3a-4d5e-9f00-000000000001';
+  await page.route('**/v1/onboarding/family', (route) =>
+    route.fulfill({
+      json: {
+        children: [
+          {
+            student: { id, nickname: 'NovaFox', avatarCode: '10000000000000000000000000000', yearGroup: 11 },
+            enrolments: [],
+            level: 'gcse',
+            examSeason: { season: 'summer', year: 2027 },
+            toCheckLater: 0,
+            linkedDevices: 0,
+          },
+        ],
+      },
+    }),
+  );
+  await page.goto('/family');
+  await expect(page.getByRole('link', { name: /^NovaFox/ })).toHaveAttribute(
+    'href',
+    `/parent/stats?student=${id}`,
+  );
+  await expect(page.getByRole('link', { name: 'Link a device for NovaFox' })).toBeVisible();
+  await expectNoSidewaysScroll(page);
+  await expectAccessible(page);
+});

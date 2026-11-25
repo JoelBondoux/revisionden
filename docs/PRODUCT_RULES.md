@@ -149,6 +149,20 @@ formula and its assumptions. Summary of what is built:
 - Implemented: `packages/core/src/onboarding.ts`, `apps/api/src/routes/onboarding.ts`,
   `apps/web/src/features/onboarding/`.
 
+### "Who's revising?" (`/family`, parents only)
+
+Product owner decision, 2026-11-25: **parent view only**.
+
+- After sign-in a parent lands on `/family`, which lists their children (a family with none goes
+  to `/onboarding`).
+- Tapping a child opens the parent's view of that child: the stats dashboard with that child
+  chosen (`/parent/stats?student=<id>`). It never opens student screens.
+- Each child also shows "Rewards you set" (`/family/:id/rewards`) and "Link a device"
+  (`/onboarding?link=<id>`, straight to that child's QR code). The page links to family
+  feedback (`/feedback/family`).
+- Students always use their own device, linked by QR code and passkey. A student device behaves
+  as before.
+
 ## Learning loop (workstream F)
 
 - **Content gate.** Students only ever see items whose verification status is `verified`.

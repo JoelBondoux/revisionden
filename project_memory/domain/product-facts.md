@@ -93,7 +93,9 @@ Tags: #product #rules #limits #defaults
   device cookie). MSW mocks with made-up data are used only in local development and tests, and
   must use real API paths (`apps/api/routes.json`). Parents sign in from the welcome page
   (Better Auth) and land on "Who's revising?" (`/family`, `GET /v1/onboarding/family`), or on
-  `/onboarding` if they have no children yet. Signed out, any screen shows the sign-in buttons
+  `/onboarding` if they have no children yet. Tapping a child there opens the parent's view
+  (stats dashboard for that child), never student screens; each child has "Rewards you set" and
+  "Link a device" (product owner, 2026-11-25). Students use only their own linked device. Signed out, any screen shows the sign-in buttons
   and returns to the same page after sign-in. Sign out is on the welcome page and `/family`. The topic map and Cards badge wait for F2's
   `GET /v1/student/map` and `GET /v1/student/cards/due`.
 - Every "Something went wrong" shows a reference code like `RD-7K2M9Q` (no I, L, O or U), also

@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- On "Who's revising?", tapping a child now opens your view of them (their stats), with quick links to the rewards you set and to link their device. Students use the app on their own device.
 - Signing in with Google now really signs you in, and "Who's revising?" shows your children instead of "Something went wrong". New families go straight to adding a child. If you're signed out, any page shows the sign-in buttons and brings you back where you were. You can sign out from the welcome page or "Who's revising?".
 - When something does go wrong, the app shows a short code (like RD-7K2M9Q). Send it to us and we can find what happened.
 - Reward sounds now grow with the reward: a bright chime for common rewards up to a short fanfare for legendary ones, with lots of variety, a different sound for each school year and special fanfares for finishing GCSEs and A-Levels. Tap to skip a long one, or try them all in Settings.
@@ -21,6 +22,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- "Who's revising?" is parent view only (I, product owner decision): a child opens `/parent/stats?student=<id>` (preselected), never `/map`; per child "Rewards you set" and "Link a device" (`/onboarding?link=<id>` opens that child's link step); "Family feedback" link.
 - Web app talks to the real API (I): the core client used placeholder paths the API never had (`family`, `students/:id/map`, `lessons/...`) and no cookies, so `/family` failed on staging after sign-in. It now reads `GET /v1/onboarding/family` (shared `OnboardingFamilySchema`) with `credentials: 'include'`; the welcome page starts Better Auth sign-in (`POST /api/auth/sign-in/social`, back to `/family`) instead of jumping to `/family`; a 401 on any screen (and onboarding) shows "Please sign in" with the provider buttons, returning to the same page; a family with no children goes from `/family` to `/onboarding`; sign-out (`POST /api/auth/sign-out`) on the welcome page and `/family`; the welcome page reads `GET /api/auth/get-session` and offers Continue and Sign out when signed in. Placeholder lesson screens removed (`/lesson/:id` opens `/learn/topic/:id`). Map and cards-due call F2's agreed `GET /v1/student/map` and `GET /v1/student/cards/due` (not on the API yet).
 - Parent stats dashboard: a day with only flashcard practice no longer counts as a rest day (K).
 - Opening My stats, the parent dashboard or a child's parent-set rewards no longer uses up the "New!" rewards the student should see on their Rewards page (K, via a read-only `rewardsProgress` in R's rewards routes).

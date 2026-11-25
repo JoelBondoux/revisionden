@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import type { OnboardChildRequest, OnboardedChild } from '@revisionden/core';
 import { Button } from '../../components';
 import { SignInPrompt } from '../../api/SignInButtons';
@@ -32,16 +33,25 @@ export function OnboardingPage({
   const [signedOut, setSignedOut] = useState(false);
   const [step, setStep] = useState<Step>({ name: 'family' });
 
+  // "Who's revising?" sends "Link a device" here as ?link=<student id>.
+  const [params] = useSearchParams();
+  const linkFor = params.get('link');
+
   const load = useCallback(() => {
     setLoadError(undefined);
     api.getFamily().then(
-      (family) => setChildren(family.children),
+      (family) => {
+        setChildren(family.children);
+        const child = linkFor && family.children.find((c) => c.student.id === linkFor);
+        if (child)
+          setStep((current) => (current.name === 'family' ? { name: 'link', child } : current));
+      },
       (err: unknown) => {
         setSignedOut(err instanceof OnboardingApiError && err.status === 401);
         setLoadError(err instanceof Error ? err.message : 'Could not load');
       },
     );
-  }, [api]);
+  }, [api, linkFor]);
 
   useEffect(load, [load]);
 
