@@ -92,9 +92,6 @@ export const RATING_QUALITY: Record<FlashcardRating, number> = {
   easy: 5,
 };
 
-/** XP for each card reviewed in a flashcard deck (approved flashcards design). */
-export const DECK_REVIEW_XP = 2;
-
 /** Milliseconds until the card comes back for each button, as the scheduler works it out. */
 export function previewReviews(card: Card, now: number): Record<FlashcardRating, number> {
   const preview = {} as Record<FlashcardRating, number>;
