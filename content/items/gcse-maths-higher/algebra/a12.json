@@ -586,7 +586,6 @@
     "explanation": "tan x = sin x / cos x and cos 90° = 0, so tan 90° is undefined (the graph has an asymptote there).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -617,7 +616,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Checked with SymPy: tan(0) = 0, tan(pi/4) = 1, tan(pi) = 0 and cos(pi/2) = 0. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Checked with SymPy: tan(0) = 0, tan(pi/4) = 1, tan(pi) = 0 and cos(pi/2) = 0. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T17:23:37Z"
         },
         {
