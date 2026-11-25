@@ -29,6 +29,8 @@ import {
   rewardableXp,
   rewardsOverview,
   seasonProgressFor,
+  secretStats,
+  type ItemType,
   type ParentReward,
   type RewardCardResponse,
   type RewardStats,
@@ -37,6 +39,8 @@ import {
 import {
   attempts,
   dailyXp,
+  enrolments,
+  items,
   mastery,
   parentRewards,
   rewards,
@@ -51,6 +55,7 @@ import { ApiError, notFound } from '../errors';
 import { requireFamilyStudent } from '../families';
 import { readJson } from '../http';
 import type { Clock } from '../rate-limit';
+import { confirmedBugCount } from './reward-sources';
 import { isId } from '../validation';
 
 type ParentRewardRow = typeof parentRewards.$inferSelect;
@@ -62,10 +67,24 @@ interface Deps {
 
 async function loadStats(db: Database, studentId: string, yearGroup: number, now: Date) {
   const answerRows = await db
-    .select({ at: attempts.createdAt, xp: attempts.xpEarned, correct: attempts.correct })
+    .select({
+      at: attempts.createdAt,
+      xp: attempts.xpEarned,
+      correct: attempts.correct,
+      score: attempts.score,
+      type: items.type,
+      topicId: items.topicId,
+      subjectId: topics.subjectId,
+    })
     .from(attempts)
+    .innerJoin(items, eq(items.id, attempts.itemId))
+    .innerJoin(topics, eq(topics.id, items.topicId))
     .where(eq(attempts.studentId, studentId))
     .orderBy(asc(attempts.createdAt));
+  const enrolled = await db
+    .select({ subjectId: enrolments.subjectId })
+    .from(enrolments)
+    .where(eq(enrolments.studentId, studentId));
   const [streak] = await db
     .select({ best: streaks.best })
     .from(streaks)
@@ -95,6 +114,12 @@ async function loadStats(db: Database, studentId: string, yearGroup: number, now
     correctAnswers: correct.length,
     bestCorrectRun: bestRun(answerRows.map((a) => a.correct)),
     startingTestsCompleted: tests?.n ?? 0,
+    confirmedBugs: await confirmedBugCount(db, studentId),
+    ...secretStats({
+      answers: answerRows.map((a) => ({ ...a, type: a.type as ItemType })),
+      goalDays: goalDays.map((g) => g.day),
+      enrolledSubjects: enrolled.map((e) => e.subjectId),
+    }),
   };
   const seasonProgress = seasonProgressFor({
     now,

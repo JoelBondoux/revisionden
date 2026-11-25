@@ -312,6 +312,10 @@ Tags: #product #rules #limits #defaults
 - Newly earned rewards are saved (and announced as "New!") by `rewardsView`, used by the student's
   `GET /v1/student/rewards` and the parent's full `GET /v1/students/:id/rewards`. The parent's
   `GET /v1/students/:id/parent-rewards` and the stats pages use the read-only `rewardsProgress`.
+- Hidden tracks and secrets (R7): Bug Hunter steps at 1, 2, 3, 5, 8, 12, 20 confirmed bugs
+  (`confirmedBugs`, 0 until workstream L's confirm action lands); 24 secret achievements shown as
+  "???" until earned, with hints on 9; stats in `packages/core/src/secret-stats.ts`. New reward
+  item kind `effect` (glitch); new avatar item magnifier (held item, appended).
 - New avatar items: chapter finale tops (chapter hoodie, bomber jacket, GCSE finisher jacket,
   sixth-form coat, A-Level finisher jacket), rooftop scene, and the Frost Fest drop (bobble hat,
   paper lantern, frosty night scene). Always appended to a layer so saved avatar codes still work.

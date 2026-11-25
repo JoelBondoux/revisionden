@@ -6,10 +6,21 @@ import {
 } from '@revisionden/core';
 
 /** A realistic rewards view built with the real core rules (Year 10, mid-November 2026). */
-export function sampleRewards(over: Partial<StudentRewardsResponse> = {}): StudentRewardsResponse {
+export function sampleRewards(
+  over: Partial<StudentRewardsResponse> = {},
+  extra: { earnedIds?: string[]; stats?: Record<string, number> } = {},
+): StudentRewardsResponse {
   const overview = rewardsOverview({
-    stats: { level: 4, chapter2Xp: 1210, bestStreak: 5, correctAnswers: 80 },
-    earnedIds: ['level-2', 'level-3', 'level-4', 'chapter-2-1', 'chapter-2-2', 'chapter-2-3'],
+    stats: { level: 4, chapter2Xp: 1210, bestStreak: 5, correctAnswers: 80, ...extra.stats },
+    earnedIds: [
+      'level-2',
+      'level-3',
+      'level-4',
+      'chapter-2-1',
+      'chapter-2-2',
+      'chapter-2-3',
+      ...(extra.earnedIds ?? []),
+    ],
     totalRewardXp: 1100,
     yearGroup: 10,
     now: new Date('2026-11-24T12:00:00Z'),

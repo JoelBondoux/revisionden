@@ -5,6 +5,17 @@
 
 ## Open
 
+- [ ] **Bug Hunter count and XP.** `docs/REWARDS.md` says a confirmed bug gives +50 XP and a Bug
+      Hunter step; no confirmed-bug record exists yet (workstream L is building it), so
+      `confirmedBugCount` in `apps/api/src/routes/reward-sources.ts` returns 0 and the track stays
+      hidden. Reward XP for levels is read from `attempts` only, so L's +50 XP will not move levels
+      unless it is recorded where reward XP is read (or the rewards route adds L's bug XP).
+      Not settled: depends on how L stores confirmed bugs.
+- [ ] **Secret achievement stats with no data yet.** "Patch Day" (weak spots fixed in a day),
+      "On Pace" (timed papers on pace, workstream X) and "Card Shark" (flashcards in a week; deck
+      reviews have no timestamped record) are in the catalogue but their stats count as 0 until the
+      data exists (`packages/core/src/catalogue/hidden.ts`).
+
 - [ ] **AQA's AI clause and our content pipeline.** AQA's copyright policy says it "does not
       permit the use of any AQA material in any manner or for any purposes in connection with the
       training" of AI tools and "will not allow the use of any AQA material" in a third-party work

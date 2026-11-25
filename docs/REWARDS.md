@@ -212,6 +212,15 @@ Requested by the product owner on 2026-11-25. Rewards students who help make the
   week. Parents' reports are thanked but do not earn student rewards. The operator's decision is
   final; nothing is automatic.
 
+**Built (R7):** catalogue entries `bug-hunter-1` … `bug-hunter-20` in
+`packages/core/src/catalogue/hidden.ts` (source `hidden`, track `bug-hunter`) on the stat
+`confirmedBugs`; original art for the magnifying glass (avatar held item) and the glitch effect
+(a new `effect` item kind, `apps/web/src/features/rewards/effects.tsx`). The count comes through
+`confirmedBugCount` in `apps/api/src/routes/reward-sources.ts`, which returns 0 until workstream
+L's "Confirm bug" action is on dev, so the track stays hidden until then. The +50 XP is awarded by
+L's flow; reward XP for levels is read from answers, so L's XP must be recorded where reward XP
+is read (see contradictions).
+
 ## More hidden tracks
 
 Like Bug Hunter, each track is invisible until its first step is earned, then shows its next step.
@@ -256,6 +265,19 @@ unlocked words; our words and art are our own).
   3 different friends.
 - They are defined as data in the reward catalogue like other rewards (with `secret: true`), so
   they are tested and can be added each term.
+
+**Built (R7):** 24 secret achievements in `packages/core/src/catalogue/hidden.ts` (source
+`secret`), 9 with vague hints. Their stats come from answers and goal days
+(`packages/core/src/secret-stats.ts`): comebacks (5 right straight after 3 wrong), every enrolled
+subject in a week, best day and week of right answers, topics and subjects in a day, subjects
+practised, answers in one topic, answer types right, full-mark extended answers, perfect worked
+maths, full weekends, perfect weeks and goal days in a month; late-night answers never count.
+Three use stats nothing records yet and count as 0 until it does: weak spots fixed in a day,
+papers on pace (workstream X) and flashcards in a week. The overview masks unearned secrets
+(`???`, no name, items or condition leave the server); the rewards page shows "N of 24 found".
+Earning one appears in `newlyEarned`, so the page's celebration and reward sound (U4) play. The
+validator requires secret and hidden rewards to have a stat target, a track for hidden ones, and
+keeps them out of collections.
 
 ## Content pipeline for new items
 

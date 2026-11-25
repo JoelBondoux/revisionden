@@ -644,6 +644,23 @@ const HEADWEAR: Record<string, Draw> = {
 const HELD: Record<string, Draw> = {
   none: nothing,
   // Seasonal drop: Frost Fest 2026 (original art).
+  // Bug Hunter track, step 3 (original art): a brass magnifying glass.
+  magnifier: () => (
+    <>
+      <rect
+        x={100}
+        y={96}
+        width={5}
+        height={22}
+        rx={2}
+        fill="#6B4226"
+        transform="rotate(-35 102 107)"
+      />
+      <circle cx={94} cy={88} r={11} fill="#BFE6FF" opacity={0.7} />
+      <circle cx={94} cy={88} r={11} fill="none" stroke="#C99400" strokeWidth={3.5} />
+      <path d="M88 83 Q91 80 95 80" fill="none" stroke={WHITE} strokeWidth={2} opacity={0.9} />
+    </>
+  ),
   lantern: () => (
     <>
       <path d="M98 78 V86" stroke={INK} strokeWidth={1.5} />

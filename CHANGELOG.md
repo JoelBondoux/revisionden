@@ -18,7 +18,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Combo bonus: from your 3rd right answer in a row, each right answer earns 5 extra XP. In the starting test, the bonus is added when you see your results.
 - Your topic map now shows your real progress, and tapping a topic or the next mission starts a lesson.
 - Coming soon: a bug button on every screen. Find a real bug and earn bonus XP and secret Bug Hunter rewards.
-- Coming soon: secret achievements you only discover when you earn them.
+- Secret achievements: 24 hidden ones to find, shown as "???" until you earn one, with a few vague hints. Earning one reveals it with a celebration.
+- The Bug Hunter track is ready: once bug reports can be confirmed, your first confirmed bug reveals a hidden track with a badge, a title, a magnifying glass, a circuit-board frame and more.
 - Coming later: timed exam practice. Sit a full paper against the clock, then see your marks, your likely grade and how to pace yourself better.
 - The privacy notice for students is now much easier to read: a short version on six cards, the key points of each part up front, and "Read more" when you want the detail.
 - Parents get a notification on their phone when a child reaches a reward target you set. Turn on "Reward news" on the new parent home.
@@ -59,6 +60,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Verification protocol now covers extended answers (blind marking of exemplars plus individual human approval).
 
 ### Added
+
+- Rewards R7: Bug Hunter hidden track (`confirmedBugs`, adapter returns 0 until L's confirm action), 24 secret achievements with masked `???` overview cards, `secret-stats.ts`, `effect` reward item kind, magnifier avatar item and glitch effect art.
 
 - Game feel J2/J3 (J): the lesson player, starting test and flashcard review use the arena theme. Lessons: 2×2 answer grid (`ItemInput` takes an `optionMark` for marked options), particle burst and float-up +XP on the chosen option (or above the feedback for typed answers), shake and right-option highlight on a wrong answer, COMBO ×n, Pip line, rolling "XP this lesson" counter, `ArenaProgress`. New `SetComplete` (stars, confetti, XP tally, best combo, daily goal, pulsing Next mission to `/map`, take-a-break line when the daily goal is met, "Great work today. See you tomorrow" from `DAILY_REWARD_XP_CAP` XP today). Starting test: arena look, no right/wrong effects (Test mode rule). Flashcards: arena panel and progress bar only, pending F3. The lesson follows the API's `combo` (J4) when present and shows "Includes +5 XP combo bonus" in the feedback.
 - Error reports (I): "Send error report" on every error with an `RD-` code posts an anonymous report to `POST /v1/error-reports` (strict `ErrorReportSchema`: code, screen and API path with ids masked, status, build, browser family, online, time); `error_reports` table (migration 0009, one row per code, 90-day clean-up); operator list at `/admin/feedback` (filter "Error reports"), `GET /v1/admin/error-reports?since=…` grouped by screen, API path and status, and `scripts/error-reports.mjs` (reads `DATABASE_URL`). Id-free path checks now also refuse full ids. Privacy notice 1.2 and data retention 1.1.
