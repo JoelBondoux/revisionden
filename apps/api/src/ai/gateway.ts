@@ -9,6 +9,7 @@
  */
 import { and, eq, gte, sum } from 'drizzle-orm';
 import type { z } from 'zod';
+import { aiAllowance, resetDayLabel } from '@revisionden/core';
 import { aiUsage, students, type Database } from '@revisionden/db';
 import type { AiConfig } from '../env';
 import { ApiError } from '../errors';
@@ -47,11 +48,14 @@ export const MAX_ATTEMPTS = 3;
 const BACKOFF_BASE_MS = 250;
 const JITTER_MS = 100;
 
-export const aiLimitReached = () =>
+/** The message a student sees once this month's allowance is used up (no money, K9). */
+export const aiLimitReached = (now: Date) =>
   new ApiError(
     429,
     'ai_limit_reached',
-    "You've used all your AI marking for this month. It comes back on the 1st. Questions marked by the app still work.",
+    `You've used this month's AI marking allowance. It resets on ${resetDayLabel(
+      aiAllowanceFor(monthStart(now), 0, 1).resetsOn,
+    )}. Questions marked by the app still work.`,
   );
 const aiUnavailable = () =>
   new ApiError(503, 'ai_unavailable', 'AI marking is not switched on yet.');
@@ -64,6 +68,11 @@ const personalData = (fields: string[]) =>
     "Please don't include names or personal details in your answer.",
     fields,
   );
+
+/** The family-facing allowance for a month's spend: a share used and the reset date, no money. */
+export function aiAllowanceFor(month: Date, spentMicroUsd: number, capMicroUsd: number) {
+  return aiAllowance({ month: month.toISOString().slice(0, 7), spentMicroUsd, capMicroUsd });
+}
 
 /** Start of the calendar month (UTC) that `now` is in: the cap resets then. */
 export function monthStart(now: Date): Date {
@@ -141,7 +150,7 @@ export function createAiGateway(deps: AiGatewayDeps): AiGateway {
       if (found.length > 0) throw personalData(found);
 
       const spent = await monthlySpendMicroUsd(deps.db, call.studentId, deps.clock.now());
-      if (spent >= deps.config.monthlyCapMicroUsd) throw aiLimitReached();
+      if (spent >= deps.config.monthlyCapMicroUsd) throw aiLimitReached(deps.clock.now());
 
       for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt += 1) {
         if (attempt > 0) await sleep(BACKOFF_BASE_MS * 2 ** (attempt - 1) + random() * JITTER_MS);

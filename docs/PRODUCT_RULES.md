@@ -96,6 +96,10 @@
   not your teacher's mark."
 - AI never rewrites a student's work; it points out what to improve.
 - Students confirm the transcription of photographed work before marking.
+- Each child has a monthly AI marking allowance (the cost cap, set by the operator). Families see
+  it only as an allowance, never as money: a percentage used and the date it resets (Statistics
+  dashboards). When it is used up the student sees "You've used this month's AI marking
+  allowance. It resets on 1 <month>. Questions marked by the app still work."
 
 ## Rewards (avatar unlocks)
 
@@ -286,9 +290,23 @@ Mockups: screens 19 (student) and 20 (parent).
   how far below), change in mastery over the last 4 weeks.
 - Weak spots: the three weakest topics, 4 weeks ago and now.
 - Latest school report effort scores (for example CBI), shown on the school's own scale.
-- Parent-set reward progress (from `REWARDS.md`).
+- Rewards (workstream K10, owner request 2026-11-25): every parent-set reward for the child with
+  its progress bar, and add, edit and remove right on the dashboard ("Add a reward", "Edit",
+  "Remove" with a "Yes, remove / Keep it" step). It uses R's editor (`ParentRewardForm`) and
+  routes (`apps/api/src/routes/rewards.ts`), so the checks and the two-parent activity log are the
+  same as on the rewards page; given rewards can no longer be edited or removed. With none yet:
+  "No rewards yet" and "Add a reward".
 - Healthy habits: sessions in quiet hours, days at the daily limit, rest days taken.
-- AI marking spend this month against the per-child cap.
+- AI marking allowance (workstream K9, owner decision 2026-11-25): the per-child monthly cap shown
+  as a percentage used ("12% used this month") and "Resets on 1 <next month>"; at 100%, "This
+  month's AI marking allowance is used up. It resets on 1 <month>." Families never see money,
+  spend or cost for AI. The month is the cap's own calendar month (UTC, `monthStart` in
+  `apps/api/src/ai/gateway.ts`). The percentage is rounded down, so 100% only shows once it is
+  really used up (`aiAllowance` in `packages/core/src/stats-allowance.ts`). No money leaves the
+  API to a family client: the dashboard carries `aiAllowance` (`percentUsed`, `usedUp`,
+  `resetsOn`), `GET /v1/students/:id/ai-usage` returns `allowanceUsedPercent`, `usedUp` and
+  `resetsOn`, and the family data download shows each AI call's `allowanceUsedPercent` instead
+  of its cost. The raw cost stays in the database and operator routes only.
 - Recent activity: the last 10 events (lessons, flashcards, papers, homework marked, plan edits).
   No free text written by the student is shown.
 - **Save as PDF**: made in the browser, nicknames only, nothing stored on the server.

@@ -7,6 +7,10 @@ describe('What your parent can see', () => {
     const card = await screen.findByRole('region', { name: 'What your parent can see' });
     expect(card).toHaveTextContent('Study time');
     expect(card).toHaveTextContent('never your own words');
+    expect(card).toHaveTextContent(
+      'How much of your AI marking allowance you have used this month',
+    );
+    expect(card.textContent).not.toMatch(/spend|cost|US\$/i);
   });
 
   it('says that two parents can see it, if two are set up', async () => {
