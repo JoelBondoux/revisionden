@@ -37,3 +37,4 @@ export * from './target-grades';
 export * from './operator-signature';
 export * from './operator-schemas';
 export * from './track-stats';
+export * from './stats-allowance';

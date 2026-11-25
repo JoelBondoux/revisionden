@@ -157,7 +157,8 @@ describe('POST /v1/ai/mark-short-answer', () => {
     expect(res.status).toBe(429);
     const body = (await res.json()) as { error: { code: string; message: string } };
     expect(body.error.code).toBe('ai_limit_reached');
-    expect(body.error.message).toMatch(/comes back on the 1st/);
+    expect(body.error.message).toMatch(/AI marking allowance\. It resets on 1 December/);
+    expect(body.error.message).not.toMatch(/US\$|£|cost|spend/i);
     expect(rec.bodies).toHaveLength(0);
   });
 
@@ -190,7 +191,7 @@ describe('POST /v1/ai/mark-short-answer', () => {
 });
 
 describe('GET /v1/students/:id/ai-usage', () => {
-  it("shows the parent this month's spend against the cap", async () => {
+  it("shows the parent this month's allowance used, never money", async () => {
     ctx = await createTestContext();
     const parent = await ctx.signInParent();
     const created = await ctx.app.request(
@@ -210,7 +211,7 @@ describe('GET /v1/students/:id/ai-usage', () => {
         model: 'claude-haiku-5-5',
         inputTokens: 1,
         outputTokens: 1,
-        costMicroUsd: 1200,
+        costMicroUsd: 300_000,
         createdAt: ctx.clock.now(),
       },
       {
@@ -220,7 +221,7 @@ describe('GET /v1/students/:id/ai-usage', () => {
         model: 'claude-haiku-5-5',
         inputTokens: 1,
         outputTokens: 1,
-        costMicroUsd: 300,
+        costMicroUsd: 120_000,
         createdAt: ctx.clock.now(),
       },
       {
@@ -238,8 +239,9 @@ describe('GET /v1/students/:id/ai-usage', () => {
     expect(await res.json()).toEqual({
       month: '2026-11',
       calls: 2,
-      spentMicroUsd: 1500,
-      capMicroUsd: 2_500_000,
+      allowanceUsedPercent: 16,
+      usedUp: false,
+      resetsOn: '2026-12-01',
     });
 
     const other = await ctx.signInParent();

@@ -12,7 +12,7 @@ import type { AppConfig } from '../env';
 import type { AppEnv } from '../context';
 import { requireFamilyStudent } from '../families';
 import type { Clock } from '../rate-limit';
-import { monthStart, monthlySpendMicroUsd } from '../ai/gateway';
+import { aiAllowanceFor, monthStart, monthlySpendMicroUsd } from '../ai/gateway';
 import { NOT_SET_UP, type StatsAdapters } from './adapters';
 import { buildDashboard, buildStudentStats } from './build';
 import { loadStatsData } from './load';
@@ -63,16 +63,17 @@ export function parentStatsRoutes(deps: StatsDeps) {
     const student = await requireFamilyStudent(deps.db, c.var.parent.familyId, c.req.param('id'));
     const now = deps.clock.now();
     const data = await loadStatsData(deps.db, student.id, now);
-    const aiSpend = {
-      month: monthStart(now).toISOString().slice(0, 7),
-      spentMicroUsd: await monthlySpendMicroUsd(deps.db, student.id, now),
-      capMicroUsd: deps.config.ai.monthlyCapMicroUsd,
-    };
+    // Families never see money for AI: only the share of the allowance used (K9).
+    const aiAllowance = aiAllowanceFor(
+      monthStart(now),
+      await monthlySpendMicroUsd(deps.db, student.id, now),
+      deps.config.ai.monthlyCapMicroUsd,
+    );
     const dashboard = await buildDashboard(
       { id: student.id, nickname: student.nickname },
       data,
       now,
-      aiSpend,
+      aiAllowance,
       adaptersOf(deps),
     );
     return c.json(dashboard);

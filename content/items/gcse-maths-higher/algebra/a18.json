@@ -1,0 +1,1071 @@
+[
+  {
+    "id": "gcse-maths-h-a18-0101",
+    "topic": "gcse-maths-h-a18",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a18-lp-factorising",
+    "expected_seconds": 60,
+    "prompt": "Solve x^2 + x - 12 = 0",
+    "answer": {
+      "solutions": ["3", "-4"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "x^2 + x - 12 = 0",
+      "variable": "x"
+    },
+    "steps": ["x^2 + x - 12 = 0", "(x - 3)(x + 4) = 0", "x = 3 or x = -4"],
+    "marks": 3,
+    "mark_scheme": ["M1 for (x - 3)(x + 4)", "A1 for x = 3", "A1 for x = -4"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A18 (page 15; PDF page 27)",
+        "quote": "solve quadratic equations (including those that require rearrangement) algebraically by factorising",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:34Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:35:40Z",
+          "notes": "model answered \"x = 3, x = -4\"; expected \"3, -4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:35:49Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a18-0102",
+    "topic": "gcse-maths-h-a18",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a18-lp-factorising",
+    "expected_seconds": 90,
+    "prompt": "Solve 2x^2 - 7x + 3 = 0",
+    "answer": {
+      "solutions": ["1/2", "3"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "2x^2 - 7x + 3 = 0",
+      "variable": "x"
+    },
+    "steps": ["2x^2 - 7x + 3 = 0", "(2x - 1)(x - 3) = 0", "x = 1/2 or x = 3"],
+    "marks": 3,
+    "mark_scheme": ["M1 for (2x - 1)(x - 3)", "A1 for x = 1/2", "A1 for x = 3"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A18 (page 15; PDF page 27)",
+        "quote": "solve quadratic equations (including those that require rearrangement) algebraically by factorising",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:35Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:35:59Z",
+          "notes": "model answered \"x = 3, x = 0.5\"; expected \"1/2, 3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:11Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a18-0103",
+    "topic": "gcse-maths-h-a18",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a18-lp-factorising",
+    "expected_seconds": 60,
+    "prompt": "Solve x^2 = 5x",
+    "answer": {
+      "solutions": ["0", "5"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "x^2 = 5x",
+      "variable": "x"
+    },
+    "steps": ["x^2 = 5x", "x^2 - 5x = 0", "x(x - 5) = 0", "x = 0 or x = 5"],
+    "marks": 2,
+    "mark_scheme": ["M1 for x(x - 5) = 0", "A1 for x = 0 and x = 5"],
+    "hint": "Do not divide by x: you would lose the solution x = 0.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A18 (page 15; PDF page 27)",
+        "quote": "solve quadratic equations (including those that require rearrangement) algebraically by factorising",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:35Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:21Z",
+          "notes": "model answered \"0, 5\"; expected \"0, 5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:36:29Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a18-0104",
+    "topic": "gcse-maths-h-a18",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a18-lp-completing-square",
+    "expected_seconds": 120,
+    "prompt": "Solve x^2 - 8x + 15 = 0 by completing the square.",
+    "answer": {
+      "solutions": ["3", "5"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "x^2 - 8x + 15 = 0",
+      "variable": "x"
+    },
+    "steps": [
+      "x^2 - 8x + 15 = 0",
+      "(x - 4)^2 - 16 + 15 = 0",
+      "(x - 4)^2 - 1 = 0",
+      "(x - 4)^2 = 1",
+      "x - 4 = 1 or x - 4 = -1",
+      "x = 5 or x = 3"
+    ],
+    "marks": 3,
+    "mark_scheme": [
+      "M1 for (x - 4)^2 - 16 + 15 = 0, (x - 4)^2 - 1 = 0 or (x - 4)^2 = 1",
+      "M1 for x - 4 = ±1",
+      "A1 for x = 3 and x = 5"
+    ],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A18 (page 15; PDF page 27)",
+        "quote": "by completing the square and by using the quadratic formula",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Solutions and every step backed by the maths engine.",
+          "at": "2026-11-25T18:26:24Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:26:29Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:27:07Z",
+          "notes": "model answered \"x = 3, x = 5\"; expected \"3, 5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:27:17Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a18-0105",
+    "topic": "gcse-maths-h-a18",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-a18-lp-completing-square",
+    "expected_seconds": 120,
+    "prompt": "By completing the square, solve x^2 + 6x - 2 = 0. Give the positive solution correct to 2 decimal places.",
+    "answer": {
+      "value": "0.32",
+      "decimal_places": 2
+    },
+    "verify": {
+      "expression": "-3 + sqrt(11)"
+    },
+    "marks": 3,
+    "mark_scheme": [
+      "M1 for (x + 3)^2 - 11 = 0 or (x + 3)^2 = 11",
+      "M1 for x = -3 ± √11",
+      "A1 for 0.32"
+    ],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A18 (page 15; PDF page 27)",
+        "quote": "by completing the square and by using the quadratic formula",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Answer backed by the maths engine.",
+          "at": "2026-11-25T18:04:51Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:05:26Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:07:33Z",
+          "notes": "model answered \"0.32\"; expected \"0.32\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:07:45Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a18-0106",
+    "topic": "gcse-maths-h-a18",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a18-lp-completing-square",
+    "expected_seconds": 25,
+    "prompt": "x^2 - 4x - 1 = (x - 2)^2 - 5. Use this to solve x^2 - 4x - 1 = 0.",
+    "options": ["x = 2 ± √5", "x = -2 ± √5", "x = 2 ± 5", "x = 5 ± √2"],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "(x - 2)^2 = 5, so x - 2 = ±√5 and x = 2 ± √5.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A18 (page 15; PDF page 27)",
+        "quote": "by completing the square and by using the quadratic formula",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Checked with SymPy: the solutions of x^2 - 4x - 1 = 0 are 2 ± √5; the identity is checked too.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:38Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:37Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:46Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a18-0107",
+    "topic": "gcse-maths-h-a18",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a18-lp-formula",
+    "expected_seconds": 120,
+    "prompt": "Use the quadratic formula to solve 2x^2 + 3x - 4 = 0. Give the positive solution correct to 2 decimal places.",
+    "answer": {
+      "value": "0.85",
+      "decimal_places": 2
+    },
+    "verify": {
+      "expression": "(-3 + sqrt(41))/4"
+    },
+    "marks": 3,
+    "mark_scheme": [
+      "M1 for correct substitution into the quadratic formula",
+      "M1 for the correct simplified expression",
+      "A1 for 0.85"
+    ],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A18 (page 15; PDF page 27)",
+        "quote": "by completing the square and by using the quadratic formula",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "dfe_subject_content",
+        "publisher": "DfE",
+        "title": "Mathematics: GCSE subject content and assessment objectives",
+        "document_ref": "DFE-00233-2013 (November 2013)",
+        "url": "https://assets.publishing.service.gov.uk/media/5a7cb5b040f0b6629523b52c/GCSE_mathematics_subject_content_and_assessment_objectives.pdf",
+        "location": "Appendix: Mathematical formulae, section 1 (formulae candidates are expected to know), 'The quadratic formula' (page 14)",
+        "quote": "Formulae included in the subject content. Candidates are expected to know these formulae; they must not be given in the assessment.",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "647a751b51c71d9ced1c9356aa70b15ceb1a4acb2fd5bc9af49619ead06d0ee6"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Answer backed by the maths engine.",
+          "at": "2026-11-25T18:04:51Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:05:27Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 14 (sha256 647a751b51c71d9ced1c9356aa70b15ceb1a4acb2fd5bc9af49619ead06d0ee6)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:07:55Z",
+          "notes": "model answered \"0.85\"; expected \"0.85\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:08:21Z",
+          "notes": "wording (answer): The prompt requires the answer to be given 'correct to 2 decimal places'. The exact positive solution is approximately 0.85078, so the only correct answer is '0.85'. The specified tolerance of approximately 0.0014 creates an acceptance range of roughly [0.8486, 0.8514]. This would cause an incorrect response like '0.851' (which demonstrates incorrect rounding) to be marked as correct. The tolerance is inconsistent with the rounding instruction in the prompt."
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a18-0108",
+    "topic": "gcse-maths-h-a18",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a18-lp-formula",
+    "expected_seconds": 120,
+    "prompt": "Use the quadratic formula to solve x^2 - 3x - 5 = 0. Give the negative solution correct to 2 decimal places.",
+    "answer": {
+      "value": "-1.19",
+      "decimal_places": 2
+    },
+    "verify": {
+      "expression": "(3 - sqrt(29))/2"
+    },
+    "marks": 3,
+    "mark_scheme": [
+      "M1 for correct substitution into the quadratic formula",
+      "M1 for the correct simplified expression",
+      "A1 for -1.19"
+    ],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A18 (page 15; PDF page 27)",
+        "quote": "by completing the square and by using the quadratic formula",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "dfe_subject_content",
+        "publisher": "DfE",
+        "title": "Mathematics: GCSE subject content and assessment objectives",
+        "document_ref": "DFE-00233-2013 (November 2013)",
+        "url": "https://assets.publishing.service.gov.uk/media/5a7cb5b040f0b6629523b52c/GCSE_mathematics_subject_content_and_assessment_objectives.pdf",
+        "location": "Appendix: Mathematical formulae, section 1 (formulae candidates are expected to know), 'The quadratic formula' (page 14)",
+        "quote": "Formulae included in the subject content. Candidates are expected to know these formulae; they must not be given in the assessment.",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "647a751b51c71d9ced1c9356aa70b15ceb1a4acb2fd5bc9af49619ead06d0ee6"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Answer backed by the maths engine.",
+          "at": "2026-11-25T18:04:51Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:05:28Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 14 (sha256 647a751b51c71d9ced1c9356aa70b15ceb1a4acb2fd5bc9af49619ead06d0ee6)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:08:31Z",
+          "notes": "model answered \"-1.19\"; expected \"-1.19\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:09:02Z",
+          "notes": "wording (answer): The prompt requires the answer to be given \"correct to 2 decimal places\", which means the only acceptable answer is -1.19. However, the non-zero `tolerance` allows a range of other numerical answers to be marked as correct, even if they are not rounded to 2 decimal places as instructed. For a question with such a specific rounding instruction, the tolerance should be 0."
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a18-0109",
+    "topic": "gcse-maths-h-a18",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-a18-lp-formula",
+    "expected_seconds": 120,
+    "prompt": "Use the quadratic formula to solve 3x^2 - x - 1 = 0. Give the positive solution correct to 2 decimal places.",
+    "answer": {
+      "value": "0.77",
+      "decimal_places": 2
+    },
+    "verify": {
+      "expression": "(1 + sqrt(13))/6"
+    },
+    "marks": 3,
+    "mark_scheme": [
+      "M1 for correct substitution into the quadratic formula",
+      "M1 for the correct simplified expression",
+      "A1 for 0.77"
+    ],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A18 (page 15; PDF page 27)",
+        "quote": "by completing the square and by using the quadratic formula",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "dfe_subject_content",
+        "publisher": "DfE",
+        "title": "Mathematics: GCSE subject content and assessment objectives",
+        "document_ref": "DFE-00233-2013 (November 2013)",
+        "url": "https://assets.publishing.service.gov.uk/media/5a7cb5b040f0b6629523b52c/GCSE_mathematics_subject_content_and_assessment_objectives.pdf",
+        "location": "Appendix: Mathematical formulae, section 1 (formulae candidates are expected to know), 'The quadratic formula' (page 14)",
+        "quote": "Formulae included in the subject content. Candidates are expected to know these formulae; they must not be given in the assessment.",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "647a751b51c71d9ced1c9356aa70b15ceb1a4acb2fd5bc9af49619ead06d0ee6"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Answer backed by the maths engine.",
+          "at": "2026-11-25T18:04:51Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:05:29Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 14 (sha256 647a751b51c71d9ced1c9356aa70b15ceb1a4acb2fd5bc9af49619ead06d0ee6)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:09:11Z",
+          "notes": "model answered \"0.77\"; expected \"0.77\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:09:27Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer checked",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a18-0110",
+    "topic": "gcse-maths-h-a18",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a18-lp-quadratic-solution-cards",
+    "expected_seconds": 15,
+    "front": "The positive solution of x^2 = 64",
+    "back": "8",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A18 (page 15; PDF page 27)",
+        "quote": "solve quadratic equations (including those that require rearrangement) algebraically by factorising",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Checked: 8^2 = 64.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:41Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:09Z",
+          "notes": "model answered \"8\"; expected \"8\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:26Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a18-0111",
+    "topic": "gcse-maths-h-a18",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a18-lp-quadratic-solution-cards",
+    "expected_seconds": 15,
+    "front": "The non-zero solution of x(x - 9) = 0",
+    "back": "9",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A18 (page 15; PDF page 27)",
+        "quote": "solve quadratic equations (including those that require rearrangement) algebraically by factorising",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Checked: the solutions are 0 and 9.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:42Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:34Z",
+          "notes": "model answered \"9\"; expected \"9\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:39Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a18-0112",
+    "topic": "gcse-maths-h-a18",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a18-lp-quadratic-solution-cards",
+    "expected_seconds": 15,
+    "front": "The negative solution of (x - 3)(x + 8) = 0",
+    "back": "-8",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A18 (page 15; PDF page 27)",
+        "quote": "solve quadratic equations (including those that require rearrangement) algebraically by factorising",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Checked: the solutions are 3 and -8.",
+          "at": "2026-11-25T17:29:17Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:43Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:45Z",
+          "notes": "model answered \"-8\"; expected \"-8\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:39:52Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        }
+      ]
+    }
+  }
+]

@@ -10,7 +10,7 @@ export function ParentCanSee() {
         <li>Sessions in quiet hours, days at the daily limit and rest days</li>
         <li>Your daily limit and the minutes you have used today</li>
         <li>Predicted and target grades, school report effort scores and their reward for you</li>
-        <li>AI marking spend this month</li>
+        <li>How much of your AI marking allowance you have used this month</li>
         <li>Your last 10 activities (lessons, flashcards, tests), never your own words or cards</li>
       </ul>
       <p className="secondary-text">

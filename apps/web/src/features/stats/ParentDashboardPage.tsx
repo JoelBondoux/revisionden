@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import type { ParentDashboard } from '@revisionden/core';
+import { resetDayLabel, type ParentDashboard } from '@revisionden/core';
 import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { ProgressBar } from '../../components/ProgressBar';
@@ -10,7 +10,7 @@ import { BarChart } from './BarChart';
 import { DailyLimitPanel } from './DailyLimit';
 import { ParentRewardsCard } from './ParentRewardsCard';
 import { TargetGradesPanel } from './TargetGrades';
-import { formatMinutes, signedNote, usd } from './format';
+import { formatMinutes, signedNote } from './format';
 import { NotSetUp, Tile } from './Tile';
 import { useStatsApi, type Child } from './statsApi';
 import './stats.css';
@@ -116,7 +116,7 @@ function DashboardView({
   data: ParentDashboard;
   savedTargets: ReadonlyMap<string, string | null>;
 }) {
-  const { tiles, studyTime, healthyHabits: habits, aiSpend } = data;
+  const { tiles, studyTime, healthyHabits: habits, aiAllowance } = data;
   const subjectName = new Map(data.subjects.map((s) => [s.subjectId, s.name]));
   const when = new Intl.DateTimeFormat('en-GB', {
     timeZone: data.timeZone,
@@ -242,15 +242,7 @@ function DashboardView({
         </ul>
       </Card>
 
-      <Card title="AI marking spend">
-        <ProgressBar
-          label="AI marking spend"
-          value={aiSpend.spentMicroUsd}
-          max={aiSpend.capMicroUsd}
-          valueText={`${usd(aiSpend.spentMicroUsd)} of ${usd(aiSpend.capMicroUsd)}`}
-        />
-        <p className="secondary-text">{`${usd(aiSpend.spentMicroUsd)} of ${usd(aiSpend.capMicroUsd)} this month`}</p>
-      </Card>
+      <AiAllowanceCard allowance={aiAllowance} />
 
       <Card title="Recent activity">
         {data.recentActivity.length === 0 ? (
@@ -271,5 +263,29 @@ function DashboardView({
         )}
       </Card>
     </>
+  );
+}
+
+/**
+ * The AI marking allowance (workstream K9): the monthly cap as a percentage used and its reset
+ * date. Families never see money, spend or cost for AI.
+ */
+function AiAllowanceCard({ allowance }: { allowance: ParentDashboard['aiAllowance'] }) {
+  const { percentUsed, usedUp, resetsOn } = allowance;
+  const resetDay = resetDayLabel(resetsOn);
+  return (
+    <Card title="AI marking allowance">
+      <ProgressBar
+        label="AI marking allowance"
+        value={percentUsed}
+        max={100}
+        valueText={`${percentUsed}% used`}
+      />
+      <p className="secondary-text">
+        {usedUp
+          ? `This month’s AI marking allowance is used up. It resets on ${resetDay}.`
+          : `${percentUsed}% used this month. Resets on ${resetDay}.`}
+      </p>
+    </Card>
   );
 }

@@ -8,6 +8,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 ### What's new
 
 - Questions that say "give your answer to 2 decimal places" (or significant figures) now only accept an answer rounded that way, as in the real exam. And when a question asks you to make t the subject, writing "t = …" is marked right.
+- The parent stats page now shows each child's AI marking allowance as a percentage used this month and the date it resets, with no money figures.
 - On the parent stats page you can now add, edit and remove your child's rewards, and see every reward with its progress.
 - New "Add RevisionDen to this device" button on your topic map and on the parent home. On Chrome, Edge and Android it installs the app in one tap; on an iPhone or iPad it shows the three steps. Tap "Not now" to hide it for 30 days.
 - Students: when RevisionDen asks you to unlock (after 12 hours), tap "I'm a student: unlock with my passkey" and use your face, fingerprint or screen lock. You go straight back to where you were. No need to ask a parent for a new QR code.
@@ -92,6 +93,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- S3-A: draft GCSE Maths Higher (Pearson Edexcel 1MA1) Algebra items for A1 to A25 in `content/items/gcse-maths-higher/algebra/` (one file per topic, at least 3 items per learning point, `learning_point` and `expected_seconds` on every item) and three A6 proof mark schemes; every item carries its verification record. Still `draft`: nothing reaches students until the owner approves it.
+- Research: specialist engines, libraries and services per subject, with licences, costs, privacy and a ranked shortlist (`docs/research/specialist-tools-2026-11.md`).
 - S2 review batches: content sync stores each item's full record and mark scheme in `items.review_snapshot` (migration `0018_review_snapshot`); content leads get **Create batch from draft items** on `/review` (`GET, POST /v1/review/batches/from-drafts`), taking only drafts whose automated checks all passed (`readyForHumanReview` in `packages/core`); an item whose fact-check failed (decision 0009) is batched for individual review (`needsIndividualReview`).
 - Fact-check stage (S2, decision 0009): items can list the standard maths `facts` they rest on; `pnpm content:model-check --fact-check openai` checks each against an official citation, or a maths-engine proof (new `identity` check kind) plus a third provider's blind statement judged by Gemini. The validator needs a `fact-check` record on verified items with facts; a failed one only passes with individual human approval.
 - Formula flashcards (S2, cross-lane V): a flashcard's optional `back_formula` (formula plus conditions) makes the blind answer compare formulas with the maths engine (new `formula` check kind in `services/maths`, `±` and bare right-hand sides handled) and require every condition such as `a ≠ 0`, instead of matching words.
@@ -233,6 +236,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Changed
 
+- AI marking allowance (K9): the parent dashboard's "AI marking spend" card (US$ figures) is now "AI marking allowance" with a percentage used and the reset date (`aiAllowance` in `packages/core/src/stats-allowance.ts`); no money leaves the API to a family client: the dashboard carries `aiAllowance`, `GET /v1/students/:id/ai-usage` returns `allowanceUsedPercent`/`usedUp`/`resetsOn`, and the family export shows `allowanceUsedPercent` per AI call instead of its cost (B2 cross-lane); the used-up message reads "You've used this month's AI marking allowance. It resets on 1 <month>."; policies ai-and-marking 1.1 and acceptable-use 1.2 (L cross-lane); "What your parent can see" says "How much of your AI marking allowance you have used this month". The raw cost stays operator-only.
 - Project memory: the public site's Open Graph card and touch icon (and how to remake them) recorded in product facts; duplicate hosting lines left by the domain move merged into one (workstream M).
 - Item type names are the content schema names everywhere (`worked_maths`, `extended_answer`); the mapping in core is removed.
 - One item JSON format in the `items` table for the content sync and AI marking (`body.marks` added; marking reads `answer.key` and `answer.markScheme`), with a round-trip test.
