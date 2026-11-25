@@ -25,6 +25,7 @@ import {
   feedbackReplies,
   operatorNotes,
   complaints,
+  complaintRequests,
   flashcardSessions,
   flashcards,
   itemReports,
@@ -171,6 +172,17 @@ export function familyExport({ db, clock }: { db: Database; clock: Clock }) {
       db,
       familyComplaints.map((r) => r.id),
     );
+    const childRequests = await db
+      .select({
+        nickname: students.nickname,
+        topic: complaintRequests.topic,
+        note: complaintRequests.note,
+        createdAt: complaintRequests.createdAt,
+      })
+      .from(complaintRequests)
+      .innerJoin(students, eq(students.id, complaintRequests.studentId))
+      .where(eq(complaintRequests.familyId, familyId))
+      .orderBy(complaintRequests.createdAt);
     const reports = await db
       .select()
       .from(itemReports)
@@ -214,6 +226,7 @@ export function familyExport({ db, clock }: { db: Database; clock: Clock }) {
           .map(({ body, createdAt }) => ({ body, createdAt })),
       })),
       supportNotes,
+      complaintRequests: childRequests,
       complaints: familyComplaints.map((r) =>
         toFamilyComplaint(r, complaintThreads.get(r.id) ?? []),
       ),

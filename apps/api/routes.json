@@ -1,6 +1,7 @@
 {
   "note": "Generated from the Hono app by src/route-manifest.test.ts (UPDATE_ROUTES=1 pnpm --filter @revisionden/api test). The web app tests fail if an MSW mock handler is not one of these routes.",
   "routes": [
+    "DELETE /v1/complaint-requests/:id",
     "DELETE /v1/family/deletion",
     "DELETE /v1/family/parents/:position",
     "DELETE /v1/parent/push-subscriptions",
@@ -25,6 +26,7 @@
     "GET /v1/admin/error-reports",
     "GET /v1/admin/feedback",
     "GET /v1/auth/providers",
+    "GET /v1/complaint-requests",
     "GET /v1/complaints",
     "GET /v1/export",
     "GET /v1/family/activity",
@@ -98,6 +100,7 @@
     "POST /v1/ai/mark-short-answer",
     "POST /v1/client-errors",
     "POST /v1/complaints",
+    "POST /v1/complaints/:id/escalate",
     "POST /v1/complaints/:id/messages",
     "POST /v1/device/link",
     "POST /v1/device/link/verify",
@@ -119,6 +122,7 @@
     "POST /v1/review/rechecks",
     "POST /v1/review/rechecks/:id/done",
     "POST /v1/review/reports/:id/decision",
+    "POST /v1/student/complaint-requests",
     "POST /v1/student/daily-limit/seen",
     "POST /v1/student/feedback",
     "POST /v1/student/feedback/rewards/seen",

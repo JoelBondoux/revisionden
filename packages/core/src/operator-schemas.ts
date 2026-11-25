@@ -271,6 +271,11 @@ export const OperatorComplaintSchema = z
     resolveDueAt: isoDate,
     acknowledgedAt: isoDate.nullable(),
     resolvedAt: isoDate.nullable(),
+    /** From when it can be escalated: 5 working days after acknowledgement (null before). */
+    escalationFrom: isoDate.nullable(),
+    /** Past the date we aim to acknowledge, or to resolve, by and not done yet. */
+    acknowledgeOverdue: z.boolean(),
+    resolveOverdue: z.boolean(),
     outcome: z.string().nullable(),
     messages: z.array(OperatorTicketMessageSchema),
   })

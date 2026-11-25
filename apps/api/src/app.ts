@@ -51,7 +51,7 @@ import { parentStatsRoutes, studentStatsRoutes } from './stats/routes';
 import { parentDailyLimitRoutes, studentDailyLimitRoutes } from './daily-limit/routes';
 import { adminErrorReportRoutes, errorReportRoutes } from './feedback/error-reports';
 import type { StatsAdapters } from './stats/adapters';
-import { parentComplaintRoutes } from './complaints/routes';
+import { parentComplaintRoutes, studentComplaintRequestRoutes } from './complaints/routes';
 import { OPERATOR_BASE_PATH, operatorRoutes } from './operator/routes';
 import { createMemoryRateLimiter } from './rate-limit';
 
@@ -149,6 +149,8 @@ export function createApp(deps: AppDeps) {
   parent.use('/export', requireParent);
   parent.use('/complaints', requireParent);
   parent.use('/complaints/*', requireParent);
+  parent.use('/complaint-requests', requireParent);
+  parent.use('/complaint-requests/*', requireParent);
   async function requireParent(c: Context<AppEnv>, next: Next) {
     const session = await deps.auth.api.getSession({ headers: c.req.raw.headers });
     if (!session) throw unauthorized();
@@ -238,6 +240,7 @@ export function createApp(deps: AppDeps) {
   app.route('/v1/student/rewards', studentRewardRoutes(deps));
   app.route('/v1/student', studentFeedbackRoutes(deps));
   app.route('/v1/student', studentStatsRoutes(deps));
+  app.route('/v1/student', studentComplaintRequestRoutes(deps));
   app.route('/v1/student', studentDailyLimitRoutes(deps));
   app.use('/v1/ai/*', studentAuth(deps));
   app.route('/v1/ai', aiRoutes({ ...deps, gateway }));

@@ -6,6 +6,7 @@ import {
   ComplaintsApiError,
   defaultComplaintsApi,
   type Complaint,
+  type ComplaintRequest,
   type ComplaintsApi,
 } from './complaintsApi';
 import '../feedback/feedback.css';
@@ -30,13 +31,16 @@ const messageOf = (err: unknown) =>
 
 /**
  * "Make a complaint" (workstream O4, `docs/legal/complaints-policy.md`): a parent makes a formal
- * complaint and follows it here. Replies come from RevisionDen support, never named.
+ * complaint and follows it here, and sees what their children asked them to raise. Replies come
+ * from RevisionDen support, never named. Deadlines are what we aim for (owner, 2026-11-25).
  */
 export function ComplaintsPage({ api: given }: { api?: ComplaintsApi }) {
   const api = useMemo(() => given ?? defaultComplaintsApi(), [given]);
   const [list, setList] = useState<Complaint[] | 'loading' | 'failed'>('loading');
+  const [requests, setRequests] = useState<ComplaintRequest[]>([]);
   const [summary, setSummary] = useState('');
   const [aboutPersonalData, setAboutPersonalData] = useState(false);
+  const [fromRequest, setFromRequest] = useState<string>();
   const [sent, setSent] = useState<string>();
   const [error, setError] = useState<string>();
 
@@ -46,6 +50,11 @@ export function ComplaintsPage({ api: given }: { api?: ComplaintsApi }) {
     } catch {
       setList('failed');
     }
+    try {
+      setRequests(await api.listRequests());
+    } catch {
+      // The children's requests are a convenience; the complaints still show.
+    }
   }, [api]);
   useEffect(() => void load(), [load]);
 
@@ -53,11 +62,25 @@ export function ComplaintsPage({ api: given }: { api?: ComplaintsApi }) {
     e.preventDefault();
     setError(undefined);
     try {
-      const result = await api.create({ summary: summary.trim(), aboutPersonalData });
+      const result = await api.create({
+        summary: summary.trim(),
+        aboutPersonalData,
+        ...(fromRequest ? { fromRequestId: fromRequest } : {}),
+      });
       setSent(ukDay(result.acknowledgeDueAt));
       setSummary('');
       setAboutPersonalData(false);
+      setFromRequest(undefined);
       await load();
+    } catch (err) {
+      setError(messageOf(err));
+    }
+  };
+
+  const dismiss = async (id: string) => {
+    try {
+      await api.dismissRequest(id);
+      setRequests((all) => all.filter((r) => r.id !== id));
     } catch (err) {
       setError(messageOf(err));
     }
@@ -67,11 +90,39 @@ export function ComplaintsPage({ api: given }: { api?: ComplaintsApi }) {
     <div className="stack">
       <h1>Make a complaint</h1>
       <p>
-        If something has gone wrong and you want a formal answer, tell us here. We reply within 2
-        working days and aim to sort it out within 14 days. If it takes longer, we tell you why and
-        when to expect an answer. Read our{' '}
+        If something has gone wrong and you want a formal answer, tell us here. We aim to reply
+        within 2 working days and to sort it out within 14 days. If it takes longer, we tell you why
+        and when to expect an answer. Read our{' '}
         <Link to="/legal/complaints-policy">complaints policy</Link>.
       </p>
+
+      {requests.length > 0 && (
+        <section className="stack" aria-labelledby="child-requests">
+          <h2 id="child-requests">Your children asked you to raise</h2>
+          <ul className="feedback-list">
+            {requests.map((r) => (
+              <li key={r.id} className="feedback-list__item">
+                <p>
+                  <strong>{r.nickname} asked you</strong> about: {r.topicLabel}
+                </p>
+                {r.note && <p>{r.note}</p>}
+                <div className="feedback-list__meta">
+                  <Button
+                    onClick={() => {
+                      setSummary(`Raised for ${r.nickname}: ${r.topicLabel}.`);
+                      setFromRequest(r.id);
+                    }}
+                  >
+                    Start a complaint
+                  </Button>
+                  <Button onClick={() => void dismiss(r.id)}>Dismiss</Button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       <form className="stack" onSubmit={(e) => void send(e)}>
         <label className="field">
           What went wrong?
@@ -99,7 +150,7 @@ export function ComplaintsPage({ api: given }: { api?: ComplaintsApi }) {
           Send complaint
         </Button>
         {error && <p role="alert">{error}</p>}
-        {sent && <p role="status">Thank you. We&apos;ll reply by {sent}.</p>}
+        {sent && <p role="status">Thank you. We aim to reply by {sent}.</p>}
       </form>
 
       <h2>Your complaints</h2>
@@ -114,7 +165,7 @@ export function ComplaintsPage({ api: given }: { api?: ComplaintsApi }) {
       {Array.isArray(list) && list.length > 0 && (
         <ul className="feedback-list">
           {list.map((item) => (
-            <ComplaintItem key={item.id} item={item} api={api} onSent={load} />
+            <ComplaintItem key={item.id} item={item} api={api} onChanged={load} />
           ))}
         </ul>
       )}
@@ -125,26 +176,36 @@ export function ComplaintsPage({ api: given }: { api?: ComplaintsApi }) {
 function ComplaintItem({
   item,
   api,
-  onSent,
+  onChanged,
 }: {
   item: Complaint;
   api: ComplaintsApi;
-  onSent: () => Promise<void>;
+  onChanged: () => Promise<void>;
 }) {
   const [text, setText] = useState('');
   const [error, setError] = useState<string>();
   const status = STATUS[item.status];
+  const canEscalate =
+    item.status === 'acknowledged' &&
+    item.escalationFrom !== null &&
+    new Date(item.escalationFrom).getTime() <= Date.now();
 
-  const addMessage = async (e: FormEvent) => {
-    e.preventDefault();
+  const run = async (action: () => Promise<void>) => {
     setError(undefined);
     try {
-      await api.addMessage(item.id, text.trim());
-      setText('');
-      await onSent();
+      await action();
+      await onChanged();
     } catch (err) {
       setError(messageOf(err));
     }
+  };
+
+  const addMessage = (e: FormEvent) => {
+    e.preventDefault();
+    void run(async () => {
+      await api.addMessage(item.id, text.trim());
+      setText('');
+    });
   };
 
   return (
@@ -158,7 +219,7 @@ function ComplaintItem({
         <p className="secondary-text">
           {item.acknowledgedAt
             ? `We aim to sort this out by ${ukDay(item.resolveDueAt)}.`
-            : `We'll reply by ${ukDay(item.acknowledgeDueAt)}.`}
+            : `We aim to reply by ${ukDay(item.acknowledgeDueAt)}.`}
         </p>
       )}
       {item.messages.map((m, i) => (
@@ -175,12 +236,17 @@ function ComplaintItem({
       )}
       {item.status === 'resolved' && item.aboutPersonalData && (
         <p className="secondary-text">
-          If you are unhappy with how we handled your personal data, you can complain to the
-          Information Commissioner&apos;s Office: <a href="https://ico.org.uk">ico.org.uk</a>.
+          If you are unhappy with how we handled your personal data, you can also complain to the
+          Information Commissioner&apos;s Office (ICO), the UK&apos;s data protection regulator.
         </p>
       )}
+      {canEscalate && (
+        <Button onClick={() => void run(() => api.escalate(item.id))}>
+          Ask for a manager to review
+        </Button>
+      )}
       {item.status !== 'resolved' && (
-        <form className="stack" onSubmit={(e) => void addMessage(e)}>
+        <form className="stack" onSubmit={addMessage}>
           <label className="field">
             Add a message
             <textarea
@@ -194,9 +260,9 @@ function ComplaintItem({
           <Button type="submit" disabled={text.trim().length === 0}>
             Send message
           </Button>
-          {error && <p role="alert">{error}</p>}
         </form>
       )}
+      {error && <p role="alert">{error}</p>}
     </li>
   );
 }

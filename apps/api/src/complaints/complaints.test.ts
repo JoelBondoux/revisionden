@@ -264,3 +264,139 @@ describe('complaint retention and the family export', () => {
     expect(JSON.stringify(data)).not.toContain('agent@example.com');
   });
 });
+
+describe('a student asks a parent to raise something (owner, 2026-11-25)', () => {
+  async function family() {
+    const { parent, headers, studentId } = await t.familyStudent('test_kid');
+    return { parentHeaders: parent.headers, studentHeaders: headers, studentId };
+  }
+  const ask = (headers: Record<string, string>, body: unknown) =>
+    t.app.request('/v1/student/complaint-requests', jsonRequest('POST', body, headers));
+  const requests = async (headers: Record<string, string>) =>
+    (
+      (await (await t.app.request('/v1/complaint-requests', { headers })).json()) as {
+        requests: Record<string, unknown>[];
+      }
+    ).requests;
+
+  it("shows the topic and the child's note to the parents only, never to AppDeck", async () => {
+    const f = await family();
+    expect(
+      (await ask(f.studentHeaders, { topic: 'marking', note: 'Question 3 on fractions' })).status,
+    ).toBe(201);
+    expect(await requests(f.parentHeaders)).toEqual([
+      {
+        id: expect.any(String),
+        nickname: 'test_kid',
+        topic: 'marking',
+        topicLabel: 'A mark or a question seemed wrong',
+        note: 'Question 3 on fractions',
+        createdAt: expect.any(String),
+      },
+    ]);
+    const appdeck = JSON.stringify([
+      (await operator('GET', '/complaints')).data,
+      (await operator('GET', '/tickets')).data,
+    ]);
+    expect(appdeck).not.toContain('Question 3 on fractions');
+    expect(appdeck).not.toContain('marking');
+  });
+
+  it('refuses contact details in the note, and more than 3 requests a day', async () => {
+    const f = await family();
+    expect(
+      (await ask(f.studentHeaders, { topic: 'unfair', note: 'call 07700 900123' })).status,
+    ).toBe(400);
+    for (let i = 0; i < 3; i += 1) {
+      expect((await ask(f.studentHeaders, { topic: 'unfair' })).status).toBe(201);
+    }
+    expect((await ask(f.studentHeaders, { topic: 'unfair' })).status).toBe(429);
+  });
+
+  it('is removed when a parent dismisses it, or starts the complaint from it', async () => {
+    const f = await family();
+    await ask(f.studentHeaders, { topic: 'app_problem' });
+    await ask(f.studentHeaders, { topic: 'my_data' });
+    const [first, second] = await requests(f.parentHeaders);
+    const dismissed = await t.app.request(`/v1/complaint-requests/${first!.id as string}`, {
+      method: 'DELETE',
+      headers: f.parentHeaders,
+    });
+    expect(dismissed.status).toBe(204);
+    const started = await complain(f.parentHeaders, {
+      summary: 'My child says their information was shown wrongly',
+      aboutPersonalData: true,
+      fromRequestId: second!.id,
+    });
+    expect(started.status).toBe(201);
+    expect(await requests(f.parentHeaders)).toEqual([]);
+  });
+
+  it('deletes requests nobody acted on after 90 days', async () => {
+    const { deleteExpiredComplaintRequests } = await import('./routes');
+    const f = await family();
+    await ask(f.studentHeaders, { topic: 'unfair' });
+    t.clock.advance(89 * 24 * 60 * 60 * 1000);
+    expect(await deleteExpiredComplaintRequests(t.db, t.clock.now())).toBe(0);
+    t.clock.advance(2 * 24 * 60 * 60 * 1000);
+    expect(await deleteExpiredComplaintRequests(t.db, t.clock.now())).toBe(1);
+  });
+});
+
+describe('escalation after 5 working days, and overdue dates in AppDeck', () => {
+  it('lets a parent escalate once 5 working days have passed since acknowledgement', async () => {
+    const f = await makeFamily();
+    await complain(f.headers, { summary: 'Escalate when allowed', aboutPersonalData: false });
+    const [listed] = await operatorList();
+    expect(listed).toMatchObject({
+      escalationFrom: null,
+      acknowledgeOverdue: false,
+      resolveOverdue: false,
+    });
+    await operator('POST', `/complaints/${listed!.id}/acknowledge`);
+    const [acked] = await operatorList();
+    // Acknowledged Wednesday 25 November 2026: the 5th working day is Wednesday 2 December.
+    expect(acked!.escalationFrom).toBe('2026-12-02T23:59:59.999Z');
+
+    const escalate = () =>
+      t.app.request(`/v1/complaints/${listed!.id}/escalate`, jsonRequest('POST', {}, f.headers));
+    const early = await escalate();
+    expect(early.status).toBe(409);
+    expect(((await early.json()) as { error: { code: string } }).error.code).toBe('too_early');
+
+    t.clock.advance(8 * 24 * 60 * 60 * 1000);
+    expect((await escalate()).status).toBe(204);
+    const [own] = await listOwn(f.headers);
+    expect(own).toMatchObject({ status: 'escalated', escalationFrom: '2026-12-02T23:59:59.999Z' });
+  });
+
+  it('marks acknowledgement and resolution overdue when their dates pass', async () => {
+    const f = await makeFamily();
+    await complain(f.headers, { summary: 'Overdue complaint', aboutPersonalData: false });
+    t.clock.advance(3 * 24 * 60 * 60 * 1000);
+    expect((await operatorList())[0]).toMatchObject({
+      acknowledgeOverdue: true,
+      resolveOverdue: false,
+    });
+    t.clock.advance(12 * 24 * 60 * 60 * 1000);
+    expect((await operatorList())[0]).toMatchObject({ resolveOverdue: true });
+  });
+});
+
+describe("a child's request in the family export", () => {
+  it('is included with its topic and note', async () => {
+    const { parent, headers } = await t.familyStudent('test_kid');
+    await t.app.request(
+      '/v1/student/complaint-requests',
+      jsonRequest('POST', { topic: 'unfair', note: 'The timer' }, headers),
+    );
+    const data = (await (
+      await t.app.request('/v1/export', { headers: parent.headers })
+    ).json()) as {
+      complaintRequests: unknown[];
+    };
+    expect(data.complaintRequests).toEqual([
+      { nickname: 'test_kid', topic: 'unfair', note: 'The timer', createdAt: expect.any(String) },
+    ]);
+  });
+});

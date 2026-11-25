@@ -20,7 +20,7 @@ import { deleteExpiredFeedback } from './feedback/retention';
 import { deleteExpiredErrorReports } from './feedback/error-reports';
 import { deleteExpiredOperatorRecords } from './operator/bridge';
 import { deleteExpiredDataRequests } from './operator/data-requests';
-import { deleteExpiredComplaints } from './complaints/routes';
+import { deleteExpiredComplaintRequests, deleteExpiredComplaints } from './complaints/routes';
 
 /** Accounts nobody has used for this many months are deleted. */
 export const INACTIVE_DELETE_AFTER_MONTHS = 12;
@@ -157,6 +157,7 @@ export async function cleanUpExpiredData({ db, now }: { db: Database; now: Date 
     ...(await deleteExpiredOperatorRecords(db, now)),
     dataRequestsDeleted: await deleteExpiredDataRequests(db, now),
     complaintsDeleted: await deleteExpiredComplaints(db, now),
+    complaintRequestsDeleted: await deleteExpiredComplaintRequests(db, now),
     ...(await deleteInactiveAccounts(db, now)),
   };
 }

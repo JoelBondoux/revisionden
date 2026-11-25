@@ -5,6 +5,13 @@
 
 ## Open
 
+- [ ] **ICO complaint wording awaiting owner check.** `docs/legal/complaints-policy.md` 6.1 has a
+      marked placeholder instead of the ICO's complaint page and phone number, and the parent's
+      complaint page (`apps/web/src/features/complaints/ComplaintsPage.tsx`) names the ICO without
+      contact details. The wording in `docs/legal/privacy-notice.md` ("ico.org.uk/make-a-complaint,
+      or by phone on 0303 123 1113") could not be re-checked: ico.org.uk is blocked from the build
+      sessions. Not settled: the product owner will check ico.org.uk personally (decision 0005).
+
 - [ ] **Hidden tracks with no data yet (R7b).** Fact Checker (`factChecks`: `item_reports` has a
       family id but no student id, workstream V), Planner (`plannedWeeks`: no planned sessions,
       workstream P), Pace Setter (`pacedPapers`: no timed papers, workstream X) and Perfectionist

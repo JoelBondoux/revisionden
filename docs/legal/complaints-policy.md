@@ -1,17 +1,18 @@
 # Complaints policy
 
-Version: 1.0
+Version: 1.1
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
 
 - If you are unhappy with RevisionDen, you can make a formal complaint. A parent or carer makes
   it, in the app or by email.
-- We will tell you we have received it within 2 working days.
+- We aim to tell you we have received it within 2 working days.
 - We aim to sort it out within 14 days. If we can't, we will tell you why and when to expect an
   answer.
-- You will see our answer in the app. If you are still unhappy, you can ask for a more senior
-  person to look at it again.
+- You will see our answer in the app. If it is not sorted out within 5 working days of us
+  acknowledging it, you can ask for a manager to look at it.
+- Students can ask their parent or carer to raise something for them, from Settings in the app.
 - If your complaint is about your family's personal data, you can also complain to the
   Information Commissioner's Office (ICO).
 - If the summary and the full text seem to differ, the full text is the one that counts.
@@ -31,8 +32,11 @@ give you an answer.
 ### 2. Who can complain
 
 2.1 A parent or carer with a RevisionDen account makes a formal complaint on behalf of the
-family. Students do not make formal complaints in the app. A student who is unhappy can ask their
-parent or carer to complain, and can still send feedback.
+family. Students do not make formal complaints. A student who is unhappy can use "Ask a parent to
+raise something" in Settings: they choose what it is about and can add a short note. Both parents
+see it in the parent area and can start a complaint from it. The note goes to the student's
+parents only, not to our support team. Students can still send feedback, and for anything about
+their safety or wellbeing the app's Get help page lists people they can talk to straight away.
 
 2.2 This does not limit a student's own data protection rights. A student can still contact us
 about their own information at {{CONTACT_EMAIL}}, as the
@@ -52,7 +56,7 @@ understand and look into the problem.
 
 ### 4. What happens next
 
-4.1 **Acknowledgement.** We will confirm that we have received your complaint within 2 working
+4.1 **Acknowledgement.** We aim to confirm that we have received your complaint within 2 working
 days. Working days are Monday to Friday, not counting bank holidays in England and Wales.
 
 4.2 **Investigation and answer.** We aim to resolve your complaint within 14 calendar days of
@@ -66,21 +70,27 @@ individual staff.
 
 ### 5. If you are not happy with our answer
 
-5.1 You can ask for your complaint to be escalated by adding a message to it in the app, or by
-email. A manager will then review it and reply in the app.
+5.1 If your complaint is not resolved within 5 working days of us acknowledging it, you can ask
+for it to be escalated: choose "Ask for a manager to review" on the complaint in the app, or ask
+by email. A manager will then review it and reply in the app. We may also escalate a complaint
+ourselves.
 
 ### 6. Complaints about personal data
 
 6.1 If your complaint is about how we use your family's personal data, our answer will also tell
 you that you can complain to the Information Commissioner's Office (ICO), the UK's data
-protection regulator: ico.org.uk/make-a-complaint, or by phone on 0303 123 1113.
+protection regulator: [ICO COMPLAINT DETAILS: TO BE CHECKED BY THE PRODUCT OWNER ON ico.org.uk
+BEFORE RELEASE].
 
 ### 7. How we keep complaints
 
 7.1 We keep a complaint, our replies and its outcome for 12 months after the complaint is
-resolved, then delete them. If the family account is deleted first, its complaints are deleted
+resolved, then delete them. A student's request to their parents is deleted when a parent starts
+a complaint from it or dismisses it, and in any case after 90 days. If the family account is deleted first, its complaints are deleted
 with it. See [how long we keep data](data-retention.md).
 
 ## Changes
 
+- 1.1: Our timescales are what we aim for; students can ask a parent to raise something;
+  escalation after 5 working days. (Owner decisions, 2026-11-25.)
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).

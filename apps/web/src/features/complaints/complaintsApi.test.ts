@@ -1,4 +1,8 @@
-import { ComplaintsApiError, createComplaintsApi } from './complaintsApi';
+import {
+  ComplaintsApiError,
+  createComplaintRequestSender,
+  createComplaintsApi,
+} from './complaintsApi';
 
 const reply = (status: number, body?: unknown) =>
   new Response(body === undefined ? null : JSON.stringify(body), { status });
@@ -46,5 +50,45 @@ describe('complaints API client', () => {
       },
     });
     await expect(offline.list()).rejects.toBeInstanceOf(ComplaintsApiError);
+  });
+});
+
+describe("escalation and children's requests in the client", () => {
+  it('escalates, lists and dismisses requests, and sends a student request', async () => {
+    const calls: string[] = [];
+    const fetch = vi.fn(async (url: URL | RequestInfo, init?: RequestInit) => {
+      calls.push(`${init?.method ?? 'GET'} ${String(url)}`);
+      if (String(url).endsWith('/complaint-requests') && !init?.method)
+        return reply(200, { requests: [] });
+      return reply(204);
+    });
+    const api = createComplaintsApi({ baseUrl: 'https://api.example.test', fetch });
+    await api.escalate('c1');
+    expect(await api.listRequests()).toEqual([]);
+    await api.dismissRequest('r1');
+    await createComplaintRequestSender({ baseUrl: 'https://api.example.test', fetch })({
+      topic: 'unfair',
+    });
+    expect(calls).toEqual([
+      'POST https://api.example.test/v1/complaints/c1/escalate',
+      'GET https://api.example.test/v1/complaint-requests',
+      'DELETE https://api.example.test/v1/complaint-requests/r1',
+      'POST https://api.example.test/v1/student/complaint-requests',
+    ]);
+  });
+
+  it("turns a refused student request into the API's message", async () => {
+    const send = createComplaintRequestSender({
+      baseUrl: 'https://api.example.test',
+      fetch: async () => reply(429, { error: { code: 'limit_reached', message: 'Tomorrow.' } }),
+    });
+    await expect(send({ topic: 'unfair' })).rejects.toMatchObject({ code: 'limit_reached' });
+    const offline = createComplaintRequestSender({
+      baseUrl: 'https://api.example.test',
+      fetch: async () => {
+        throw new TypeError('offline');
+      },
+    });
+    await expect(offline({ topic: 'unfair' })).rejects.toBeInstanceOf(ComplaintsApiError);
   });
 });

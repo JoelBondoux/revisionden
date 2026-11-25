@@ -1,5 +1,5 @@
 {
-  "id": "fcbb2d6d-ecfe-47ab-8410-a6b8d9c59c3c",
+  "id": "ee8c4d3b-3f7b-4249-9102-ff670b3d250a",
   "prevId": "a5d78382-6f53-419d-8202-68715d2b601c",
   "version": "7",
   "dialect": "postgresql",
@@ -655,6 +655,107 @@
         "complaint_messages_body_length": {
           "name": "complaint_messages_body_length",
           "value": "char_length(\"complaint_messages\".\"body\") between 1 and 5000"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.complaint_requests": {
+      "name": "complaint_requests",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "family_id": {
+          "name": "family_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "student_id": {
+          "name": "student_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "topic": {
+          "name": "topic",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "note": {
+          "name": "note",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "complaint_requests_family_idx": {
+          "name": "complaint_requests_family_idx",
+          "columns": [
+            {
+              "expression": "family_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "complaint_requests_family_id_families_id_fk": {
+          "name": "complaint_requests_family_id_families_id_fk",
+          "tableFrom": "complaint_requests",
+          "tableTo": "families",
+          "columnsFrom": ["family_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "complaint_requests_student_id_students_id_fk": {
+          "name": "complaint_requests_student_id_students_id_fk",
+          "tableFrom": "complaint_requests",
+          "tableTo": "students",
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "complaint_requests_topic_values": {
+          "name": "complaint_requests_topic_values",
+          "value": "\"complaint_requests\".\"topic\" in ('marking', 'unfair', 'app_problem', 'my_data', 'something_else')"
+        },
+        "complaint_requests_note_length": {
+          "name": "complaint_requests_note_length",
+          "value": "char_length(\"complaint_requests\".\"note\") <= 300"
         }
       },
       "isRLSEnabled": false

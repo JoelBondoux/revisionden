@@ -6,11 +6,20 @@
 import { Hono } from 'hono';
 import { and, count, desc, eq, gt, inArray, lt } from 'drizzle-orm';
 import {
+  COMPLAINT_REQUEST_TOPICS,
   ComplaintCreateSchema,
   ComplaintMessageBodySchema,
+  ComplaintRequestCreateSchema,
   complaintDueDates,
+  complaintEscalationFrom,
 } from '@revisionden/core';
-import { complaintMessages, complaints, type Database } from '@revisionden/db';
+import {
+  complaintMessages,
+  complaintRequests,
+  complaints,
+  students,
+  type Database,
+} from '@revisionden/db';
 import type { AppEnv } from '../context';
 import { ApiError, notFound } from '../errors';
 import { findPersonalData } from '../ai/privacy';
@@ -61,6 +70,9 @@ export function toFamilyComplaint(row: ComplaintRow, messages: MessageRow[]) {
     resolveDueAt: row.resolveDueAt.toISOString(),
     acknowledgedAt: row.acknowledgedAt?.toISOString() ?? null,
     resolvedAt: row.resolvedAt?.toISOString() ?? null,
+    escalationFrom: row.acknowledgedAt
+      ? complaintEscalationFrom(row.acknowledgedAt).toISOString()
+      : null,
     outcome: row.outcome,
     messages: messages.map((m) => ({
       from: m.sender,
@@ -71,9 +83,17 @@ export function toFamilyComplaint(row: ComplaintRow, messages: MessageRow[]) {
 }
 
 /** Email, phone number or a child's nickname: kept out of complaint text, as for feedback. */
-async function holdsContactDetails(db: Database, familyId: string, text: string) {
+async function holdsContactDetails(
+  db: Database,
+  familyId: string,
+  text: string,
+  options: { allowNickname?: boolean } = {},
+) {
   const profiles = await familyProfiles(db, familyId);
-  const blocked = new Set(['email', 'phone', 'nickname']);
+  // A child's note goes to their own parents, so their nickname is fine there.
+  const blocked = new Set(
+    options.allowNickname ? ['email', 'phone'] : ['email', 'phone', 'nickname'],
+  );
   // With no children, a profile that matches nothing still checks emails and phone numbers.
   const none = {
     id: '\u0000',
@@ -111,7 +131,7 @@ export function parentComplaintRoutes({ db, clock }: ComplaintDeps) {
   });
 
   app.post('/complaints', async (c) => {
-    const { summary, aboutPersonalData } = await readJson(c, ComplaintCreateSchema);
+    const { summary, aboutPersonalData, fromRequestId } = await readJson(c, ComplaintCreateSchema);
     const { familyId } = c.var.parent;
     if (await holdsContactDetails(db, familyId, summary)) throw personalDetails();
     const now = clock.now();
@@ -144,6 +164,13 @@ export function parentComplaintRoutes({ db, clock }: ComplaintDeps) {
         createdAt: now,
       })
       .returning();
+    if (fromRequestId) {
+      await db
+        .delete(complaintRequests)
+        .where(
+          and(eq(complaintRequests.id, fromRequestId), eq(complaintRequests.familyId, familyId)),
+        );
+    }
     return c.json(
       {
         id: row!.id,
@@ -152,6 +179,63 @@ export function parentComplaintRoutes({ db, clock }: ComplaintDeps) {
       },
       201,
     );
+  });
+
+  // A parent may escalate once 5 working days have passed since we acknowledged it.
+  app.post('/complaints/:id/escalate', async (c) => {
+    const id = c.req.param('id');
+    if (!isId(id)) throw notFound('Complaint not found');
+    const [row] = await db
+      .select()
+      .from(complaints)
+      .where(and(eq(complaints.id, id), eq(complaints.familyId, c.var.parent.familyId)));
+    if (!row) throw notFound('Complaint not found');
+    if (row.status === 'resolved' || row.status === 'escalated') {
+      throw new ApiError(409, 'complaint_closed', 'This complaint cannot be escalated now');
+    }
+    const now = clock.now();
+    if (!row.acknowledgedAt || now < complaintEscalationFrom(row.acknowledgedAt)) {
+      throw new ApiError(
+        409,
+        'too_early',
+        'You can ask for a manager to review this 5 working days after we acknowledged it.',
+      );
+    }
+    await db
+      .update(complaints)
+      .set({ status: 'escalated', escalatedAt: now })
+      .where(eq(complaints.id, id));
+    return c.body(null, 204);
+  });
+
+  app.get('/complaint-requests', async (c) => {
+    const rows = await db
+      .select({ row: complaintRequests, nickname: students.nickname })
+      .from(complaintRequests)
+      .innerJoin(students, eq(students.id, complaintRequests.studentId))
+      .where(eq(complaintRequests.familyId, c.var.parent.familyId))
+      .orderBy(complaintRequests.createdAt);
+    return c.json({
+      requests: rows.map(({ row, nickname }) => ({
+        id: row.id,
+        nickname,
+        topic: row.topic,
+        topicLabel: COMPLAINT_REQUEST_TOPICS[row.topic],
+        note: row.note,
+        createdAt: row.createdAt.toISOString(),
+      })),
+    });
+  });
+
+  app.delete('/complaint-requests/:id', async (c) => {
+    const id = c.req.param('id');
+    if (!isId(id)) throw notFound('Request not found');
+    await db
+      .delete(complaintRequests)
+      .where(
+        and(eq(complaintRequests.id, id), eq(complaintRequests.familyId, c.var.parent.familyId)),
+      );
+    return c.body(null, 204);
   });
 
   app.post('/complaints/:id/messages', async (c) => {
@@ -182,5 +266,61 @@ export async function deleteExpiredComplaints(db: Database, now: Date): Promise<
     .delete(complaints)
     .where(lt(complaints.resolvedAt, cutoff))
     .returning({ id: complaints.id });
+  return deleted.length;
+}
+
+/** Requests one student may send in any 24 hours. */
+export const COMPLAINT_REQUESTS_PER_DAY = 3;
+/** Requests nobody acted on are deleted after this many days. */
+export const COMPLAINT_REQUEST_RETENTION_DAYS = 90;
+
+/**
+ * Student device routes under /v1/student: "Ask a parent to raise this". The topic and the
+ * optional note go to the student's parents only (owner, 2026-11-25).
+ */
+export function studentComplaintRequestRoutes({ db, clock }: ComplaintDeps) {
+  const app = new Hono<AppEnv>();
+  app.post('/complaint-requests', async (c) => {
+    const { topic, note } = await readJson(c, ComplaintRequestCreateSchema);
+    const { studentId, familyId } = c.var.student;
+    if (note && (await holdsContactDetails(db, familyId, note, { allowNickname: true }))) {
+      throw new ApiError(
+        400,
+        'personal_details',
+        'Please leave out email addresses and phone numbers.',
+      );
+    }
+    const now = clock.now();
+    const [recent] = await db
+      .select({ n: count() })
+      .from(complaintRequests)
+      .where(
+        and(
+          eq(complaintRequests.studentId, studentId),
+          gt(complaintRequests.createdAt, new Date(now.getTime() - DAY_MS)),
+        ),
+      );
+    if (recent!.n >= COMPLAINT_REQUESTS_PER_DAY) {
+      throw new ApiError(429, 'limit_reached', 'You can ask 3 times a day. Please try tomorrow.');
+    }
+    await db
+      .insert(complaintRequests)
+      .values({ familyId, studentId, topic, note: note ?? null, createdAt: now });
+    return c.body(null, 201);
+  });
+  return app;
+}
+
+/** Deletes "ask a parent" requests older than 90 days (scheduled clean-up). */
+export async function deleteExpiredComplaintRequests(db: Database, now: Date): Promise<number> {
+  const deleted = await db
+    .delete(complaintRequests)
+    .where(
+      lt(
+        complaintRequests.createdAt,
+        new Date(now.getTime() - COMPLAINT_REQUEST_RETENTION_DAYS * DAY_MS),
+      ),
+    )
+    .returning({ id: complaintRequests.id });
   return deleted.length;
 }

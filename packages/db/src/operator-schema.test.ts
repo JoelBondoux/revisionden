@@ -198,3 +198,36 @@ describe('complaints and complaint_messages tables (O4)', () => {
     expect(left.rows).toEqual([]);
   });
 });
+
+describe('complaint_requests table (a student asks a parent to raise something)', () => {
+  it('keeps the topic and an optional short note, and goes with the student', async () => {
+    const { rows: fam } = await client.query<{ id: string }>(
+      `insert into families default values returning id`,
+    );
+    const { rows: kid } = await client.query<{ id: string }>(
+      `insert into students (family_id, nickname, avatar_code, year_group) values ($1, 'req_kid', 'a', 10) returning id`,
+      [fam[0]!.id],
+    );
+    await client.query(
+      `insert into complaint_requests (family_id, student_id, topic, note) values ($1, $2, 'marking', 'Question 3')`,
+      [fam[0]!.id, kid[0]!.id],
+    );
+    await expect(
+      client.query(
+        `insert into complaint_requests (family_id, student_id, topic) values ($1, $2, 'teacher')`,
+        [fam[0]!.id, kid[0]!.id],
+      ),
+    ).rejects.toThrow(/complaint_requests_topic_values/);
+    await expect(
+      client.query(
+        `insert into complaint_requests (family_id, student_id, topic, note) values ($1, $2, 'unfair', $3)`,
+        [fam[0]!.id, kid[0]!.id, 'x'.repeat(301)],
+      ),
+    ).rejects.toThrow(/complaint_requests_note_length/);
+    await client.query(`delete from students where id = $1`, [kid[0]!.id]);
+    const left = await client.query(`select 1 from complaint_requests where family_id = $1`, [
+      fam[0]!.id,
+    ]);
+    expect(left.rows).toEqual([]);
+  });
+});

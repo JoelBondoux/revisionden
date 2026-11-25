@@ -90,6 +90,9 @@ date per parent sign-in.
 - Complaints (O4): a parent's complaint text (≤500, no email, phone or nickname) and messages are
   kept 12 months after it is resolved, deleted with the family, and in the family export. Staff
   are never named to the family.
+- A student's "Ask a parent to raise something" request (topic, optional note ≤300 with no
+  email or phone number) is shown to the student's parents only, never to AppDeck; deleted when a
+  parent acts on it, with the student, or after 90 days; in the family export.
 - Every operator read of a family and every action is recorded (`operator_audit_log`: operator
   email and role, action, target id, time; no content), kept 2 years.
 

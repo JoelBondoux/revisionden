@@ -1216,3 +1216,40 @@ export const complaintMessages = pgTable(
     check('complaint_messages_body_length', sql`char_length(${t.body}) between 1 and 5000`),
   ],
 );
+
+export const COMPLAINT_REQUEST_TOPICS = [
+  'marking',
+  'unfair',
+  'app_problem',
+  'my_data',
+  'something_else',
+] as const;
+
+/**
+ * O4 (owner, 2026-11-25): a student asks their parents to raise a complaint. Shown to both
+ * parents in the parent area only; never sent to AppDeck. Deleted when a parent dismisses it or
+ * starts the complaint, with the student, and after 90 days.
+ */
+export const complaintRequests = pgTable(
+  'complaint_requests',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    familyId: uuid('family_id')
+      .notNull()
+      .references(() => families.id, { onDelete: 'cascade' }),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    topic: text('topic', { enum: COMPLAINT_REQUEST_TOPICS }).notNull(),
+    note: text('note'),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('complaint_requests_family_idx').on(t.familyId, t.createdAt),
+    check(
+      'complaint_requests_topic_values',
+      sql`${t.topic} in ('marking', 'unfair', 'app_problem', 'my_data', 'something_else')`,
+    ),
+    check('complaint_requests_note_length', sql`char_length(${t.note}) <= 300`),
+  ],
+);

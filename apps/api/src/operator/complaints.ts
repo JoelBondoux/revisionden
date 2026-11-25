@@ -10,6 +10,7 @@ import {
   OperatorComplaintLogBodySchema,
   OperatorComplaintOutcomeBodySchema,
   complaintDueDates,
+  complaintEscalationFrom,
 } from '@revisionden/core';
 import { complaintMessages, complaints, families, type Database } from '@revisionden/db';
 import type { AppEnv } from '../context';
@@ -73,7 +74,8 @@ export function operatorComplaintRoutes({ db, clock }: OperatorComplaintDeps) {
       db,
       rows.map((r) => r.id),
     );
-    await audit(db, c.var.operator, { action: 'complaints.list' }, now());
+    const at = now();
+    await audit(db, c.var.operator, { action: 'complaints.list' }, at);
     return ok(c, {
       complaints: rows.map((r) => ({
         id: r.id,
@@ -87,6 +89,11 @@ export function operatorComplaintRoutes({ db, clock }: OperatorComplaintDeps) {
         resolveDueAt: r.resolveDueAt.toISOString(),
         acknowledgedAt: r.acknowledgedAt?.toISOString() ?? null,
         resolvedAt: r.resolvedAt?.toISOString() ?? null,
+        escalationFrom: r.acknowledgedAt
+          ? complaintEscalationFrom(r.acknowledgedAt).toISOString()
+          : null,
+        acknowledgeOverdue: !r.acknowledgedAt && at > r.acknowledgeDueAt,
+        resolveOverdue: !r.resolvedAt && at > r.resolveDueAt,
         outcome: r.outcome,
         messages: (messages.get(r.id) ?? []).map((m) => ({
           id: m.id,

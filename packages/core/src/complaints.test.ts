@@ -51,3 +51,35 @@ describe('complaint deadlines', () => {
     expect([...ENGLAND_WALES_BANK_HOLIDAYS].sort()).toEqual([...ENGLAND_WALES_BANK_HOLIDAYS]);
   });
 });
+
+describe('complaint escalation and requests from a student', () => {
+  it('can be escalated 5 working days after it was acknowledged, if not resolved by then', async () => {
+    const { COMPLAINT_ESCALATE_AFTER_WORKING_DAYS, complaintEscalationFrom } =
+      await import('./complaints');
+    expect(COMPLAINT_ESCALATE_AFTER_WORKING_DAYS).toBe(5);
+    // Acknowledged Wednesday 25 November 2026: the 5th working day is Wednesday 2 December.
+    expect(complaintEscalationFrom(new Date('2026-11-25T15:00:00Z')).toISOString()).toBe(
+      '2026-12-02T23:59:59.999Z',
+    );
+    // Acknowledged Thursday 24 December 2026: 25 and 28 December and 1 January are bank holidays.
+    expect(complaintEscalationFrom(new Date('2026-12-24T09:00:00Z')).toISOString()).toBe(
+      '2027-01-05T23:59:59.999Z',
+    );
+  });
+
+  it('offers a student a few gentle topics to ask a parent about, never free choice of wording', async () => {
+    const { COMPLAINT_REQUEST_TOPICS, ComplaintRequestCreateSchema } = await import('./complaints');
+    expect(Object.keys(COMPLAINT_REQUEST_TOPICS)).toEqual([
+      'marking',
+      'unfair',
+      'app_problem',
+      'my_data',
+      'something_else',
+    ]);
+    expect(ComplaintRequestCreateSchema.parse({ topic: 'marking' })).toEqual({ topic: 'marking' });
+    expect(() => ComplaintRequestCreateSchema.parse({ topic: 'teacher' })).toThrow();
+    expect(() =>
+      ComplaintRequestCreateSchema.parse({ topic: 'unfair', note: 'x'.repeat(301) }),
+    ).toThrow();
+  });
+});

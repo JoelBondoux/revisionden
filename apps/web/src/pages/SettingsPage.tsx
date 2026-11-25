@@ -53,6 +53,9 @@ export function SettingsPage() {
             <Link to="/help">Get help</Link>
           </li>
           <li>
+            <Link to="/ask-a-parent">Ask a parent to raise something</Link>
+          </li>
+          <li>
             <Link to="/feedback" state={{ from: '/settings' }}>
               Send feedback or report a bug
             </Link>

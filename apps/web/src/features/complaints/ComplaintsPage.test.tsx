@@ -14,6 +14,7 @@ const resolved: Complaint = {
   resolveDueAt: '2026-12-04T23:59:59.999Z',
   acknowledgedAt: '2026-11-21T10:00:00.000Z',
   resolvedAt: '2026-11-25T10:00:00.000Z',
+  escalationFrom: '2026-01-02T23:59:59.999Z',
   outcome: 'We changed the timer.',
   messages: [
     { from: 'operator', body: 'We are looking into it', createdAt: '2026-11-21T10:00:00.000Z' },
@@ -29,6 +30,9 @@ function fakeApi(overrides: Partial<ComplaintsApi> = {}): ComplaintsApi {
       resolveDueAt: '2026-12-09T23:59:59.999Z',
     })),
     addMessage: vi.fn(async () => {}),
+    escalate: vi.fn(async () => {}),
+    listRequests: vi.fn(async () => []),
+    dismissRequest: vi.fn(async () => {}),
     ...overrides,
   };
 }
@@ -44,7 +48,7 @@ describe('Make a complaint (parent)', () => {
   it('explains the timescales and links to the complaints policy', async () => {
     show(fakeApi());
     expect(screen.getByRole('heading', { name: 'Make a complaint' })).toBeInTheDocument();
-    expect(screen.getByText(/within 2 working days/)).toBeInTheDocument();
+    expect(screen.getByText(/We aim to reply within 2 working days/)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'complaints policy' })).toHaveAttribute(
       'href',
       '/legal/complaints-policy',
@@ -62,7 +66,7 @@ describe('Make a complaint (parent)', () => {
       summary: 'The marks were wrong',
       aboutPersonalData: true,
     });
-    expect(await screen.findByText(/We'll reply by Friday 27 November/)).toBeInTheDocument();
+    expect(await screen.findByText(/We aim to reply by Friday 27 November/)).toBeInTheDocument();
   });
 
   it('shows replies, the outcome and, for personal data, where else to go', async () => {
@@ -71,10 +75,70 @@ describe('Make a complaint (parent)', () => {
     expect(within(item).getByText('Resolved')).toBeInTheDocument();
     expect(within(item).getByText('We are looking into it')).toBeInTheDocument();
     expect(within(item).getByText('We changed the timer.')).toBeInTheDocument();
-    expect(within(item).getByRole('link', { name: 'ico.org.uk' })).toHaveAttribute(
-      'href',
-      'https://ico.org.uk',
-    );
+    expect(within(item).getByText(/Information Commissioner's Office \(ICO\)/)).toBeInTheDocument();
+  });
+
+  it('offers a manager review once 5 working days have passed since we acknowledged it', async () => {
+    const waiting = {
+      ...resolved,
+      status: 'acknowledged' as const,
+      resolvedAt: null,
+      outcome: null,
+    };
+    const early = { ...waiting, id: 'c3', escalationFrom: '2999-01-01T23:59:59.999Z' };
+    const api = fakeApi({ list: vi.fn(async () => [waiting, early]) });
+    show(api);
+    const buttons = await screen.findAllByRole('button', { name: 'Ask for a manager to review' });
+    expect(buttons).toHaveLength(1);
+    await userEvent.click(buttons[0]!);
+    expect(api.escalate).toHaveBeenCalledWith('c1');
+  });
+
+  it("starts a complaint from a child's request with the topic, not the child's note", async () => {
+    const api = fakeApi({
+      list: vi.fn(async () => []),
+      listRequests: vi.fn(async () => [
+        {
+          id: 'r1',
+          nickname: 'demo_kid',
+          topic: 'marking',
+          topicLabel: 'A mark or a question seemed wrong',
+          note: 'Question 3',
+          createdAt: '2026-11-25T09:00:00.000Z',
+        },
+      ]),
+    });
+    show(api);
+    const request = (await screen.findByText(/demo_kid asked you/)).closest('li')!;
+    expect(within(request).getByText('Question 3')).toBeInTheDocument();
+    await userEvent.click(within(request).getByRole('button', { name: 'Start a complaint' }));
+    const box = screen.getByLabelText('What went wrong?') as HTMLTextAreaElement;
+    expect(box.value).toBe('Raised for demo_kid: A mark or a question seemed wrong.');
+    await userEvent.click(screen.getByRole('button', { name: 'Send complaint' }));
+    expect(api.create).toHaveBeenCalledWith({
+      summary: 'Raised for demo_kid: A mark or a question seemed wrong.',
+      aboutPersonalData: false,
+      fromRequestId: 'r1',
+    });
+  });
+
+  it("dismisses a child's request", async () => {
+    const api = fakeApi({
+      list: vi.fn(async () => []),
+      listRequests: vi.fn(async () => [
+        {
+          id: 'r2',
+          nickname: 'demo_kid',
+          topic: 'unfair',
+          topicLabel: 'Something felt unfair',
+          note: null,
+          createdAt: '2026-11-25T09:00:00.000Z',
+        },
+      ]),
+    });
+    show(api);
+    await userEvent.click(await screen.findByRole('button', { name: 'Dismiss' }));
+    expect(api.dismissRequest).toHaveBeenCalledWith('r2');
   });
 
   it('adds a follow-up message to an open complaint', async () => {

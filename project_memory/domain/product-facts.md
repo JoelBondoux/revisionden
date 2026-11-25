@@ -175,10 +175,18 @@ Tags: #product #rules #limits #defaults
   logs an emailed one. Acknowledge by the end of the 2nd UK working day (weekends and England and
   Wales bank holidays skipped, list from gov.uk through 2028), aim to resolve within 14 days
   (`packages/core/src/complaints.ts`). Agents acknowledge, reply and resolve; Managers escalate.
-  The family sees replies and the outcome (and, for personal data, the ICO link), never staff
-  names. Kept 12 months after resolved; deleted with the family; in the export.
+  The family sees replies and the outcome (and, for personal data, that they can complain to the
+  ICO; contact details await the owner's check), never staff names. Kept 12 months after
+  resolved; deleted with the family; in the export. Deadlines are "we aim to" (decision 0005).
+- Only parents complain. A student uses "Ask a parent to raise something" (Settings,
+  `/ask-a-parent`): a topic (`COMPLAINT_REQUEST_TOPICS`) and an optional note (≤300, no email or
+  phone), 3 a day; both parents see it on `/complaints` and can start a complaint pre-filled with
+  the topic (not the note) or dismiss it. Never sent to AppDeck; deleted after 90 days.
+- Escalation: a complaint not resolved within 5 working days of acknowledgement can be escalated
+  by the parent ("Ask for a manager to review") or a Manager; AppDeck shows `escalationFrom` and
+  overdue flags.
 - Every operator read of a family and every action goes in `operator_audit_log`, kept 2 years
-  (data retention policy 1.6); the scheduled clean-up deletes older entries.
+  (data retention policy 1.7); the scheduled clean-up deletes older entries.
 
 ## Content
 

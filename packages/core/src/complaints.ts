@@ -7,6 +7,8 @@ import { z } from 'zod';
 
 export const COMPLAINT_ACKNOWLEDGE_WORKING_DAYS = 2;
 export const COMPLAINT_RESOLVE_DAYS = 14;
+/** Owner, 2026-11-25: a complaint not resolved within 5 working days of acknowledgement can be escalated. */
+export const COMPLAINT_ESCALATE_AFTER_WORKING_DAYS = 5;
 /** Longest complaint summary (matches AppDeck's limit). */
 export const COMPLAINT_SUMMARY_MAX = 500;
 
@@ -77,27 +79,60 @@ function isWorkingDay(date: string): boolean {
   return weekday !== 0 && weekday !== 6 && !HOLIDAYS.has(date);
 }
 
-/** When a complaint that arrived at `receivedAt` must be acknowledged, and should be resolved. */
+/** The UK date `days` working days after the UK day of `at`. */
+function workingDaysAfter(at: Date, days: number): string {
+  let day = ukDate(at);
+  for (let left = days; left > 0;) {
+    day = addDays(day, 1);
+    if (isWorkingDay(day)) left -= 1;
+  }
+  return day;
+}
+
+/** When we aim to acknowledge a complaint that arrived at `receivedAt`, and to resolve it. */
 export function complaintDueDates(receivedAt: Date): {
   acknowledgeDueAt: Date;
   resolveDueAt: Date;
 } {
-  const received = ukDate(receivedAt);
-  let day = received;
-  for (let left = COMPLAINT_ACKNOWLEDGE_WORKING_DAYS; left > 0;) {
-    day = addDays(day, 1);
-    if (isWorkingDay(day)) left -= 1;
-  }
   return {
-    acknowledgeDueAt: ukEndOfDay(day),
-    resolveDueAt: ukEndOfDay(addDays(received, COMPLAINT_RESOLVE_DAYS)),
+    acknowledgeDueAt: ukEndOfDay(workingDaysAfter(receivedAt, COMPLAINT_ACKNOWLEDGE_WORKING_DAYS)),
+    resolveDueAt: ukEndOfDay(addDays(ukDate(receivedAt), COMPLAINT_RESOLVE_DAYS)),
   };
 }
+
+/** After this time an acknowledged complaint that is not resolved can be escalated. */
+export function complaintEscalationFrom(acknowledgedAt: Date): Date {
+  return ukEndOfDay(workingDaysAfter(acknowledgedAt, COMPLAINT_ESCALATE_AFTER_WORKING_DAYS));
+}
+
+/**
+ * What a student can ask a parent to raise (owner, 2026-11-25: only parents complain). The
+ * parent sees the topic and the student's optional note; neither ever reaches AppDeck.
+ */
+export const COMPLAINT_REQUEST_TOPICS = {
+  marking: 'A mark or a question seemed wrong',
+  unfair: 'Something felt unfair',
+  app_problem: 'Something in the app is not working',
+  my_data: 'How my information is used',
+  something_else: 'Something else',
+} as const;
+export type ComplaintRequestTopic = keyof typeof COMPLAINT_REQUEST_TOPICS;
+
+export const ComplaintRequestCreateSchema = z
+  .object({
+    topic: z.enum(
+      Object.keys(COMPLAINT_REQUEST_TOPICS) as [ComplaintRequestTopic, ...ComplaintRequestTopic[]],
+    ),
+    note: z.string().trim().min(1).max(300).optional(),
+  })
+  .strict();
 
 export const ComplaintCreateSchema = z
   .object({
     summary: z.string().trim().min(3).max(COMPLAINT_SUMMARY_MAX),
     aboutPersonalData: z.boolean(),
+    /** Started from a child's "ask a parent" request, which is then removed. */
+    fromRequestId: z.string().uuid().optional(),
   })
   .strict();
 
