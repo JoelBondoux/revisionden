@@ -27,14 +27,17 @@ const NICKNAME_GAP = String.raw`(?:[\s_]|\\[nrt])+`;
 
 /**
  * A nickname with spaces or underscores ("Thing 1", "pixel_fox") matches however its words are
- * spaced or joined, so "thing  1", "Thing_1" and "pixel fox" are all caught.
+ * spaced or joined, so "thing  1", "Thing_1" and "pixel fox" are all caught. Underscores at
+ * either end ("_Pixel", "Pixel_") may be there or not, and an underscore-only nickname ("__")
+ * is matched exactly.
  */
 function nicknamePattern(nickname: string): RegExp {
   const words = nickname
     .split(/[\s_]+/)
     .filter(Boolean)
     .map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-  return new RegExp(`(?<![A-Za-z0-9_])${words.join(NICKNAME_GAP)}(?![A-Za-z0-9_])`, 'i');
+  if (words.length === 0) return wholeWord(nickname);
+  return new RegExp(`(?<![A-Za-z0-9_])_*${words.join(NICKNAME_GAP)}_*(?![A-Za-z0-9_])`, 'i');
 }
 
 /** Names of the personal-data fields found in `body` (empty when it is clean). */

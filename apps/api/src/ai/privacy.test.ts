@@ -67,4 +67,17 @@ describe('findPersonalData', () => {
   it('finds an underscore nickname written with spaces', () => {
     expect(findPersonalData('{"answer":"pixel fox is here"}', profile)).toEqual(['nickname']);
   });
+
+  it('finds a nickname that starts or ends with an underscore, written exactly', () => {
+    for (const nickname of ['_Pixel', 'Pixel_', '__Owl__']) {
+      const edged = { ...profile, nickname };
+      expect(findPersonalData(`{"answer":"by ${nickname} today"}`, edged)).toEqual(['nickname']);
+    }
+  });
+
+  it('finds an underscore-only nickname without flagging unrelated text', () => {
+    const lines = { ...profile, nickname: '__' };
+    expect(findPersonalData('{"answer":"x = 2"}', lines)).toEqual([]);
+    expect(findPersonalData('{"answer":"by __ today"}', lines)).toEqual(['nickname']);
+  });
 });
