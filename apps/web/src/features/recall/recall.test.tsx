@@ -50,6 +50,32 @@ describe('Recall checks', () => {
     expect(screen.queryByRole('heading', { name: 'Remember this?' })).not.toBeInTheDocument();
   });
 
+  it('send their answers as recall answers, so a wrong one never resets the combo', async () => {
+    withRecall();
+    lessonOf(0);
+    const bodies: Record<string, unknown>[] = [];
+    server.events.on('request:start', ({ request }) => {
+      if (request.method === 'POST' && request.url.endsWith('/v1/student/learn/attempts')) {
+        void request
+          .clone()
+          .json()
+          .then((b) => bodies.push(b as Record<string, unknown>));
+      }
+    });
+    renderRoute('/learn/topic/demo-topic-a');
+    await userEvent.type(await screen.findByLabelText('Your answer'), 'nope');
+    await userEvent.click(screen.getByRole('button', { name: 'Check' }));
+    await screen.findByText(/Added to your flashcards/);
+    await userEvent.click(screen.getByRole('button', { name: 'Skip recall check' }));
+    await userEvent.click(await screen.findByRole('radio', { name: 'Option B' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Check' }));
+    await screen.findByRole('status', { name: 'Answer feedback' });
+    server.events.removeAllListeners();
+    expect(bodies).toHaveLength(2);
+    expect(bodies[0]).toMatchObject({ mode: 'learn', recall: true });
+    expect(bodies[1]).not.toHaveProperty('recall');
+  });
+
   it('are left out for a topic never practised', async () => {
     lessonOf(0);
     renderRoute('/learn/topic/demo-topic-a');

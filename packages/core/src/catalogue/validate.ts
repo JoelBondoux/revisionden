@@ -66,6 +66,11 @@ export const STAT_MAX: Record<StatKey, number> = {
   perfectWeeks: Infinity,
   bestGoalDaysInMonth: 31,
   chaptersFilled: 5,
+  factChecks: Infinity,
+  weakSpotsTurnedStrong: Infinity,
+  practiceKindsTried: 7,
+  plannedWeeks: Infinity,
+  perfectSetsLevel2: Infinity,
 } satisfies Record<keyof RewardStats, number>;
 
 export const REWARD_STAT_KEYS = Object.keys(STAT_MAX) as StatKey[];

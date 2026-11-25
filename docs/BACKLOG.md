@@ -247,9 +247,12 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [x] Q2 Read aloud: Web Speech API, on-device voices preferred, off by default with only online voices, speed control, maths read sensibly; privacy notice line.
 - [ ] Q1 Reading comfort: dyslexia-friendly self-hosted font (OpenDyslexic, OFL), larger text, spacing and tint in Settings, per device, app-wide.
 - [ ] Q2 Read aloud: Web Speech API, on-device voices preferred, off by default with only online voices, speed control, maths read sensibly; privacy notice line.
-- [ ] Q3 Daily 5-a-day: core selection (practised topics, spaced repetition and weak spots), API route and a card on the topic map, played in the lesson player.
+- [x] Q3 Daily 5-a-day: core selection (practised topics, spaced repetition and weak spots), API route and a card on the topic map, played in the lesson player.
 - [x] Q4 Recall checks: 2 questions at lesson start on previously practised topics, skippable, no penalty; wrong answers become flashcards.
 - [x] Q5 Learn it first: `content/learn-links/*.json` with schema and validator, button on topics with a checked link, CI link check. Pilot GCSE Maths Higher Oak links; Bitesize and other subjects later.
+- [x] Q6 Recall checks never reset the combo: a wrong "Remember this?" answer is passed over; a right one still adds to it (owner decision).
+- [ ] Q7 BBC Bitesize links for Learn it first: find and check pages on bbc.co.uk (not reachable from the build environment), board-specific where the page is, and add them to `content/learn-links/`.
+- [ ] Q8 Learn it first beyond the 9 pilot GCSE Maths Higher topics: the rest of the 1MA1 tree, then other subjects and A-Level, each link with a title that clearly matches the topic and a passing CI link check.
 - Tests: settings saved and applied per device; voice choice and default; maths reading; selection with fixed clock and seeded randomness; no penalty for recall; links validated and checked.
 
 ### O. Operator bridge for AppDeck (RevisionDen side) (`docs/OPERATOR_CONSOLE.md`)
@@ -276,6 +279,14 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [ ] $4 Parent-only upgrade surfaces; privacy notice and terms updates (following `docs/LEGAL.md`).
 - [ ] $5 Later: school, council and charity codes for free places.
 - Tests: entitlement maths (sibling order, 4th free), gating, trial expiry, webhook idempotency, no upgrade prompts on student screens, FSM rules.
+
+### M. Public sales website (`apps/www`, decision 0005)
+
+- [x] M1 Skeleton: static TypeScript build, Workers `revisionden-www` and `revisionden-www-staging`, www → apex redirect, security headers, self-hosted fonts, reused design tokens, sitemap and robots, `deploy-www.yml`.
+- [x] M2 Pages and content: home (parents first, teen section), how it works, pricing (free now, Premium coming soon from `docs/PRICING.md`), for young people, help and contact, policies from `docs/legal`, about.
+- [x] M3 Polish: Open Graph image and touch icon (original Pip art), theme colour, accessibility pass (axe, WCAG 2.2 AA, light and dark).
+- [ ] M4 First live deploy (lead): staging, then production once the app is on `app.revisionden.com` and the Cloudflare secrets are set.
+- Tests: page render, every internal link resolves, no third-party origins, policies come from `docs/legal`, production build refuses missing operator details.
 
 ## Stage 2 and later
 

@@ -49,6 +49,9 @@ const envSchema = z
     AI_CHECKER_MODEL: z.string().min(1).optional(),
     // Workstream L: sign-in emails of the operator, who triages feedback (comma-separated).
     OPERATOR_EMAILS: z.string().optional(),
+    // Workstream O: AppDeck operator bridge. Off until set; a different secret per environment.
+    APPDECK_OPERATOR_SHARED_SECRET: z.string().min(32).optional(),
+    OPERATOR_RATE_LIMITER: optionalRateLimiter,
     // "input/output" US dollars per million tokens, e.g. "0.15/0.6".
     AI_CHECKER_PRICES: z
       .string()
@@ -93,6 +96,8 @@ export interface AppConfig {
   ai: AiConfig;
   /** Parent sign-in emails (lower case) allowed to triage feedback at /v1/admin. */
   operatorEmails: string[];
+  /** AppDeck operator bridge (`/operator/appdeck`); unset means the bridge is off (503). */
+  operatorBridge?: { secret: string };
 }
 
 export type SignInProvider = 'google' | 'microsoft';
@@ -169,6 +174,9 @@ export function parseEnv(env: Record<string, unknown>): AppConfig & { raw: Worke
       .split(',')
       .map((email) => email.trim().toLowerCase())
       .filter(Boolean),
+    ...(e.APPDECK_OPERATOR_SHARED_SECRET
+      ? { operatorBridge: { secret: e.APPDECK_OPERATOR_SHARED_SECRET } }
+      : {}),
     push:
       e.VAPID_PUBLIC_KEY && e.VAPID_PRIVATE_KEY
         ? { keys: { publicKey: e.VAPID_PUBLIC_KEY, privateKey: e.VAPID_PRIVATE_KEY } }

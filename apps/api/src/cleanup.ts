@@ -18,6 +18,7 @@ import {
 } from '@revisionden/db';
 import { deleteExpiredFeedback } from './feedback/retention';
 import { deleteExpiredErrorReports } from './feedback/error-reports';
+import { deleteExpiredOperatorRecords } from './operator/bridge';
 
 /** Accounts nobody has used for this many months are deleted. */
 export const INACTIVE_DELETE_AFTER_MONTHS = 12;
@@ -151,6 +152,7 @@ export async function cleanUpExpiredData({ db, now }: { db: Database; now: Date 
     parentSessionsDeleted,
     challengesDeleted,
     verificationsDeleted,
+    ...(await deleteExpiredOperatorRecords(db, now)),
     ...(await deleteInactiveAccounts(db, now)),
   };
 }

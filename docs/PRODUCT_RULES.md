@@ -713,6 +713,8 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   in earlier lessons ("Remember this?").
 - No penalty: wrong answers do not lower mastery more than a normal answer would, earn no XP loss,
   and simply become flashcards. Right answers earn normal XP. They can be skipped.
+- Combos (owner decision, 2026-11-25): a wrong recall answer never resets the combo, because recall
+  checks test older topics and should feel safe. A right one still adds to the combo.
 
 ### Learn it first
 

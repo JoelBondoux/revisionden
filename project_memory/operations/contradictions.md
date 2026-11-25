@@ -5,6 +5,14 @@
 
 ## Open
 
+- [ ] **Hidden tracks with no data yet (R7b).** Fact Checker (`factChecks`: `item_reports` has a
+      family id but no student id, workstream V), Planner (`plannedWeeks`: no planned sessions,
+      workstream P), Pace Setter (`pacedPapers`: no timed papers, workstream X) and Perfectionist
+      (`perfectSetsLevel2`: practice sets are not stored) are in the catalogue but count 0 in
+      `apps/api/src/routes/rewards.ts`. Explorer counts 4 of its 7 kinds today (no timed paper,
+      homework marking or plan edit records). Not settled because the data belongs to other
+      workstreams.
+
 - [ ] **School holidays and the daily limit.** `docs/PRODUCT_RULES.md` (Daily limit) gives other
       days (weekends and holidays) the higher limit, but no school holiday dates are stored, so
       `dayTypeOf` in `packages/core/src/daily-limit.ts` treats holidays as school days (it takes a

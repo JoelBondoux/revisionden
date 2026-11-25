@@ -146,6 +146,19 @@ Tags: #product #rules #limits #defaults
   finish); the student scans the QR code to `/link` and sets up a passkey.
 - Avatars are drawn as layered SVG from the avatar code (`apps/web/src/features/avatar`).
 
+## Operator console (AppDeck)
+
+- The owner runs RevisionDen from AppDeck Admin through a signed operator bridge at `/operator/appdeck`
+  (no database access for AppDeck). Spec and wire format: `docs/OPERATOR_CONSOLE.md`.
+- Requests are signed with HMAC-SHA256 (tag `appdeck-revisionden-operator-v1`) using
+  `APPDECK_OPERATOR_SHARED_SECRET` (32+ characters, one per environment); without it the bridge
+  answers 503. Refused outside 5 minutes; request ids used once (kept 1 day; a retried change gets the
+  first answer); 120 requests a minute per address. Implemented in
+  `packages/core/src/operator-signature.ts` and `apps/api/src/operator/bridge.ts`.
+- Roles from AppDeck: Agent (support) and Manager (also money and data), enforced by the API.
+- Every operator read of a family and every action goes in `operator_audit_log`, kept 2 years
+  (data retention policy 1.3); the scheduled clean-up deletes older entries.
+
 ## Content
 
 - Content is JSON in `content/`, checked by `pnpm content:validate` (schemas in
@@ -213,8 +226,25 @@ Tags: #product #rules #limits #defaults
 
 ## Hosting
 
-- Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Hosts: `revisionden.com` and
-  `api.revisionden.com` (production), `staging.` and `api-staging.` (staging), `dev.` and `api-dev.` (development).
+- Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Hosts (decision 0005,
+  2026-11-25): `revisionden.com` is the public sales site (`www.` redirects to it, staging copy on
+  `www-staging.`); `app.revisionden.com` and `api.revisionden.com` are the production app and API;
+  `staging.` and `api-staging.` (staging), `dev.` and `api-dev.` (development).
+- Public site (`apps/www`, workstream M): static pages with no client scripts and no third-party
+  requests (self-hosted fonts, strict content security policy). Workers `revisionden-www` and
+  `revisionden-www-staging`. Its policies and design tokens are read from `docs/legal` and the web
+  app at build time. "Sign in" and "Start free" go to `app.revisionden.com` (staging: `staging.`).
+  Until `WWW_LAUNCHED=true` it says the app is in private testing. Pages: home, how it works,
+  pricing (planned prices parsed from `docs/PRICING.md`, "Premium, coming soon", nothing charged),
+  for young people, help and contact, about (operator name from `VITE_OPERATOR_NAME`) and every
+  policy at `/policies/<name>`, with "Draft: not yet in force, being reviewed before launch." while
+  `VITE_POLICY_EFFECTIVE_DATE` is unset.
+  Images: an Open Graph card (`og.png`, 1200×630, used by every page's `og:image`) and an Apple
+  touch icon (180×180), drawn from Pip's shapes and the arena colours. They are committed in
+  `apps/www/public` and remade by hand with `node apps/www/scripts/make-images.mjs` after an art
+  change; original art only, no stock photos or AI-generated images.
+- Production passkeys use the RP ID `revisionden.com`; OAuth callbacks are on the API host, so the
+  move to `app.` needed no change in Google or Microsoft.
 - Live since 2026-11-25 (workstream G): API Workers on all three API hosts; web app on `dev.` and
   `staging.`. The production web app waits for the operator details (its build fails without them).
 - Workers: `revisionden-api-dev`, `revisionden-api-staging`, `revisionden-api` (API) and
@@ -506,8 +536,11 @@ Tags: #product #rules #limits #defaults
   `daily_limits` table. Detail: `docs/PRODUCT_RULES.md` (Daily limit).
 - Two parent accounts with equal control; second invited by link or code (7 days); activity log
   ("Parent 1/2"); both confirm whole-family deletion.
-- Hidden tracks besides Bug Hunter: Fact Checker, Comeback Kid, Explorer, Planner, Pace Setter,
-  Perfectionist (`docs/REWARDS.md`).
+- Hidden tracks besides Bug Hunter (built R7b): Fact Checker (1, 2, 3, 5, 8), Comeback Kid (1, 3,
+  5, 10, 20, 35), Explorer (1 to 7 kinds of practice), Planner (1, 4, 8, 16, 30), Pace Setter (1, 3,
+  6, 10), Perfectionist (1, 5, 15, 30, 60, 100). Each is invisible until its first step. Only
+  Comeback Kid and part of Explorer have data today; the others count 0 until their records exist
+  (`docs/REWARDS.md`, `packages/core/src/track-stats.ts`).
 
 ## Titles (owner, 2026-11-25; planned) and Get help (built, workstream W)
 
@@ -538,12 +571,25 @@ Tags: #product #rules #limits #defaults
   start, no penalty, skippable); "Learn it first" links to Oak and BBC Bitesize per topic, checked
   by CI; read aloud with on-device voices preferred; reading comfort settings (dyslexia-friendly
   self-hosted font, larger text, spacing, tint). Detail: `docs/PRODUCT_RULES.md` (Quick wins).
+- 5-a-day (Q3, built): `GET /v1/student/daily`. The first request of the student's UK day picks
+  up to 5 items from topics with at least one attempt in an enrolled subject (never new topics,
+  never extended answers), stores them in `daily_sets` (one per student per day) and returns the
+  same set all day. Choice: each topic's mastery drifts down by the 30-day half-life since it was
+  last practised, then the normal next-item rules (weak spots first, due flashcards first, at most
+  3 in a row per topic), topped up from the same topics if that leaves fewer than 5. Seeded by
+  student and day. Done when every item has an attempt after the set was made. Map card above
+  the next mission while not done; plays at `/learn/daily` in the lesson player (Learn mode,
+  normal XP and combos, counts to the daily goal and streak through XP; the parent's daily limit
+  applies through the normal attempts route, `creditableXp`). No push for it. Migration 0014.
 - Recall checks (Q4, built): `GET /v1/student/recall?topicId=` before a topic lesson (or unit
   challenge) whose topic has been practised. Up to 2 questions the student has answered before
   (no flashcards, no extended answers), from other practised topics first, then the lesson's own
   topic; weak spots first (next-item rules). Shown as "Remember this?" in the lesson player with
   Skip; answers are normal Learn mode attempts (normal XP when right, wrong ones become
-  flashcards, mastery as any answer). If the call fails the lesson starts as normal.
+  flashcards, mastery as any answer). If the call fails the lesson starts as normal. Recall
+  answers are sent with `recall: true` (Learn mode only) and saved with mode `recall`; a wrong one
+  never resets the combo (`comboBefore` passes over it), a right one still adds to it (owner,
+  2026-11-25).
   `apps/web/src/features/recall/`, `apps/api/src/routes/recall.ts`.
 - Reading comfort (Q1, built): Settings → Reading comfort, per device in `localStorage` key
   `revisionden.reading`. Options: dyslexia-friendly font (OpenDyslexic from

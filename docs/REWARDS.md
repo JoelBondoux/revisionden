@@ -245,6 +245,18 @@ All are learning-based (the principles above); art follows the established style
 | **Pace Setter**   | Timed papers finished with every question within its target time, steps at 1, 3, 6, 10                                               | Stopwatch badge, "Cool Head" title, pace stripes      |
 | **Perfectionist** | Perfect sets (all right at feedback level 2 or above), steps at 1, 5, 15, 30, 60, 100                                                | Diamond badge, crystal frame, prism avatar effect     |
 
+**Built (R7b):** all six tracks in `MORE_HIDDEN_TRACK_REWARDS` (`packages/core/src/catalogue/hidden.ts`),
+each ending in an epic or legendary set (Truth Seeker, Risen, Pathfinder, Master Planner, Clockwork,
+Flawless). Stats: `factChecks`, `weakSpotsTurnedStrong`, `practiceKindsTried` (out of 7),
+`plannedWeeks`, `pacedPapers`, `perfectSetsLevel2`; the pure counters are in
+`packages/core/src/track-stats.ts`. Comeback Kid is counted from answer history (a topic below 60
+mastery after at least 3 answers that later reaches 80). Explorer counts lessons (Learn mode
+answers), flashcard sessions, starting tests and worked maths today; timed papers, homework marking
+and plan edits count once those records exist. Fact Checker, Planner, Pace Setter and Perfectionist
+have no data source yet and count 0 (problem reports have no student id; no planned sessions, timed
+papers or stored practice sets yet). New avatar items: quill (held item) and explorer hat
+(headwear), appended. New effects: embers, pace stripes, prism.
+
 ## Two-part titles
 
 Requested by the product owner on 2026-11-25 (inspired by games where players build titles from

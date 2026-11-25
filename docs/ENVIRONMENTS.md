@@ -19,11 +19,26 @@
 `revisionden.com` (primary, registered with Cloudflare on 2026-11-24) and optionally `revisionden.co.uk` (not yet bought; would redirect to .com), registered with
 Cloudflare Registrar, auto-renew on.
 
+| Host                                                     | Environment                                   |
+| -------------------------------------------------------- | --------------------------------------------- |
+| `revisionden.com` (`www.` redirects to it)               | Public sales site, production (decision 0005) |
+| `www-staging.revisionden.com`                            | Public sales site, staging (not indexed)      |
+| `app.revisionden.com`, `api.revisionden.com`             | Production app and API                        |
+| `staging.revisionden.com`, `api-staging.revisionden.com` | Staging                                       |
+| `dev.revisionden.com`, `api-dev.revisionden.com`         | Development                                   |
+
+Until workstream G moves it, the app's production Worker is still configured for
+`revisionden.com` (`apps/web/wrangler.toml`); it moves to `app.revisionden.com` before the public
+site's first production deploy.
+
 | Host                                                     | Environment |
 | -------------------------------------------------------- | ----------- |
-| `revisionden.com`, `api.revisionden.com`                 | Production  |
+| `app.revisionden.com`, `api.revisionden.com`             | Production  |
 | `staging.revisionden.com`, `api-staging.revisionden.com` | Staging     |
 | `dev.revisionden.com`, `api-dev.revisionden.com`         | Development |
+
+The bare `revisionden.com` is the public sales site (workstream M, `apps/www`); the app never
+runs there. G creates nothing on the apex.
 
 ## What is live (workstream G, 2026-11-25)
 
@@ -37,7 +52,7 @@ Every resource is named `revisionden` or starts `revisionden-` (decision 0003). 
 | API Worker     | `revisionden-api-dev`           | `revisionden-api-staging`       | `revisionden-api`                |
 | API host       | `api-dev.revisionden.com`       | `api-staging.revisionden.com`   | `api.revisionden.com`            |
 | Web Worker     | `revisionden-web-dev`           | `revisionden-web-staging`       | `revisionden-web` (not yet)      |
-| Web host       | `dev.revisionden.com`           | `staging.revisionden.com`       | `revisionden.com` (not yet)      |
+| Web host       | `dev.revisionden.com`           | `staging.revisionden.com`       | `app.revisionden.com` (not yet)  |
 | `/health`      | `misconfigured` (OAuth missing) | `misconfigured` (OAuth missing) | `misconfigured` (OAuth missing)  |
 
 - Neon project `revisionden`, region `aws-eu-west-2` (London), Postgres 17, database
@@ -64,15 +79,16 @@ Every resource is named `revisionden` or starts `revisionden-` (decision 0003). 
 Generated and already set on each API Worker: `DATABASE_URL`, `BETTER_AUTH_SECRET`,
 `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `AI_GATEWAY_URL`.
 
-| Worker secret or variable                        | dev | staging | production | Effect until set                                                                    |
-| ------------------------------------------------ | --- | ------- | ---------- | ----------------------------------------------------------------------------------- |
-| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`       | ✗   | ✗       | ✗          | One provider required: until one is set, every API route except `/health` gives 500 |
-| `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` | ✗   | ✗       | ✗          | Optional once Google is set: the sign-in page hides it                              |
-| `ANTHROPIC_API_KEY`                              | ✗   | ✗       | ✗          | AI routes answer 503                                                                |
-| `AI_GATEWAY_TOKEN`                               | ✗   | ✗       | ✗          | AI calls are refused by the authenticated gateway                                   |
-| `OPERATOR_EMAILS`                                | ✗   | ✗       | ✗          | Nobody can open `/admin/feedback`                                                   |
-| `MATHS_ENGINE_URL`                               | ✗   | ✗       | ✗          | Worked maths answers get 503 (needs G3)                                             |
-| `OPENAI_API_KEY` (optional)                      | –   | –       | –          | No second checker                                                                   |
+| Worker secret or variable                        | dev | staging | production | Effect until set                                                                             |
+| ------------------------------------------------ | --- | ------- | ---------- | -------------------------------------------------------------------------------------------- |
+| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`       | ✗   | ✗       | ✗          | One provider required: until one is set, every API route except `/health` gives 500          |
+| `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` | ✗   | ✗       | ✗          | Optional once Google is set: the sign-in page hides it                                       |
+| `ANTHROPIC_API_KEY`                              | ✗   | ✗       | ✗          | AI routes answer 503                                                                         |
+| `AI_GATEWAY_TOKEN`                               | ✗   | ✗       | ✗          | AI calls are refused by the authenticated gateway                                            |
+| `OPERATOR_EMAILS`                                | ✗   | ✗       | ✗          | Nobody can open `/admin/feedback`                                                            |
+| `APPDECK_OPERATOR_SHARED_SECRET`                 | ✗   | ✗       | ✗          | The AppDeck operator bridge (`/operator/appdeck`) answers 503; set the same value in AppDeck |
+| `MATHS_ENGINE_URL`                               | ✗   | ✗       | ✗          | Worked maths answers get 503 (needs G3)                                                      |
+| `OPENAI_API_KEY` (optional)                      | –   | –       | –          | No second checker                                                                            |
 
 Set each with
 `pnpm --filter @revisionden/api exec wrangler secret put <NAME> --env <dev|staging|production>`
@@ -137,6 +153,28 @@ Step by step (about 15 minutes):
 7. **First run.** Actions, "Deploy dev", Run workflow. It should end with "API is on
    <version>; some secrets still missing" until the OAuth secrets are set.
 
+## Public site deploys (workstream M, decision 0005)
+
+`deploy-www.yml` builds `apps/www` and deploys its Worker. It runs as its own job in
+`deploy-staging.yml` (`revisionden-www-staging` on `www-staging.revisionden.com`) and
+`deploy-production.yml` (`revisionden-www` on `revisionden.com` and `www.revisionden.com`), then
+checks the home page answers. Not live yet: it waits for the GitHub secrets above and, for
+production, for the app to move to `app.revisionden.com`.
+
+| Build variable               | staging                               | production                    | Notes                                                                             |
+| ---------------------------- | ------------------------------------- | ----------------------------- | --------------------------------------------------------------------------------- |
+| `WWW_ENVIRONMENT`            | `staging`                             | `production`                  | Set by the workflow                                                               |
+| `WWW_LAUNCHED`               | unset                                 | unset until launch            | GitHub variable; `true` drops "in private testing" and the policies' draft banner |
+| `WWW_APP_URL`                | `https://staging.revisionden.com`     | `https://app.revisionden.com` | Defaults; "Sign in" and "Start free" go here                                      |
+| `WWW_SITE_URL`               | `https://www-staging.revisionden.com` | `https://revisionden.com`     | Defaults; canonical links, sitemap, Open Graph                                    |
+| `VITE_OPERATOR_NAME`         | optional                              | **required**                  | Same GitHub environment variable as the web app                                   |
+| `VITE_CONTACT_EMAIL`         | optional                              | **required**                  | `privacy@revisionden.com`                                                         |
+| `VITE_SUPPORT_EMAIL`         | optional                              | optional                      | `help@revisionden.com` when unset                                                 |
+| `VITE_POLICY_EFFECTIVE_DATE` | optional                              | optional                      | Policies show "date to be added" until set                                        |
+
+Local build: `pnpm --filter @revisionden/www build` (staging settings), then open `apps/www/dist`
+with any static server, or `pnpm --filter @revisionden/www exec wrangler dev`.
+
 ## Maths engine on Cloud Run (G3, not set up yet)
 
 `.github/workflows/deploy-maths.yml` deploys `services/maths` to Cloud Run (`europe-west2`,
@@ -176,6 +214,7 @@ nothing secret if one is missing; the missing names are written to the Worker lo
 | `AI_GATEWAY_TOKEN`                               | H (now)     | Optional: only if the AI Gateway is set to "authenticated"            |
 | `MATHS_ENGINE_URL`                               | F (now)     | Cloud Run maths engine; without it worked maths answers get a 503     |
 | `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`          | H (now)     | Web push. Both or neither; reminders stay off until set (see below)   |
+| `APPDECK_OPERATOR_SHARED_SECRET`                 | O (now)     | AppDeck operator bridge; 32+ characters, a different one per env      |
 
 At least one sign-in provider (Google or Microsoft, each with its id and secret) is needed;
 the other is optional. `GET /v1/auth/providers` tells the sign-in page which buttons to show, and
@@ -183,15 +222,16 @@ the other is optional. `GET /v1/auth/providers` tells the sign-in page which but
 
 ## Worker variables and bindings (in `apps/api/wrangler.toml`, not secret)
 
-| Name                | dev                               | staging                               | production                       |
-| ------------------- | --------------------------------- | ------------------------------------- | -------------------------------- |
-| `ENVIRONMENT`       | `development`                     | `staging`                             | `production`                     |
-| `API_ORIGIN`        | `https://api-dev.revisionden.com` | `https://api-staging.revisionden.com` | `https://api.revisionden.com`    |
-| `WEB_ORIGIN`        | `https://dev.revisionden.com`     | `https://staging.revisionden.com`     | `https://revisionden.com`        |
-| `PASSKEY_RP_ID`     | `dev.revisionden.com`             | `staging.revisionden.com`             | `revisionden.com`                |
-| `UPLOADS` (R2, EU)  | `revisionden-uploads-dev`         | `revisionden-uploads-staging`         | `revisionden-uploads-production` |
-| `AUTH_RATE_LIMITER` | 30 a minute per address           | same                                  | same                             |
-| `AI_RATE_LIMITER`   | 20 a minute per address           | same                                  | same                             |
+| Name                    | dev                                | staging                               | production                       |
+| ----------------------- | ---------------------------------- | ------------------------------------- | -------------------------------- |
+| `ENVIRONMENT`           | `development`                      | `staging`                             | `production`                     |
+| `API_ORIGIN`            | `https://api-dev.revisionden.com`  | `https://api-staging.revisionden.com` | `https://api.revisionden.com`    |
+| `WEB_ORIGIN`            | `https://dev.revisionden.com`      | `https://staging.revisionden.com`     | `https://app.revisionden.com`    |
+| `PASSKEY_RP_ID`         | `dev.revisionden.com`              | `staging.revisionden.com`             | `revisionden.com`                |
+| `UPLOADS` (R2, EU)      | `revisionden-uploads-dev`          | `revisionden-uploads-staging`         | `revisionden-uploads-production` |
+| `AUTH_RATE_LIMITER`     | 30 a minute per address            | same                                  | same                             |
+| `AI_RATE_LIMITER`       | 20 a minute per address            | same                                  | same                             |
+| `OPERATOR_RATE_LIMITER` | 120 a minute per address (AppDeck) | same                                  | same                             |
 
 Optional AI settings (workstream H), set as plain variables when needed:
 
@@ -245,6 +285,14 @@ Register these in the Google and Microsoft apps (one app per provider can hold a
 - `https://api-dev.revisionden.com/api/auth/callback/google` (and `/microsoft`)
 - `https://api-staging.revisionden.com/api/auth/callback/google` (and `/microsoft`)
 - `https://api.revisionden.com/api/auth/callback/google` (and `/microsoft`)
+
+The callback is on the API host, not the app host, so moving the production app to
+`app.revisionden.com` changes nothing in Google or Microsoft. After sign-in the API sends the
+browser back to `WEB_ORIGIN`, which is also Better Auth's only trusted origin.
+
+Production passkeys use the RP ID `revisionden.com` (the registrable domain). WebAuthn accepts it
+from `app.revisionden.com`, and passkeys keep working if the app ever moves to another subdomain.
+Dev and staging keep their own host as the RP ID, so their passkeys never mix with production's.
 
 Scopes: email and profile only. The API keeps only the email: the name is blanked and the
 picture is never fetched or stored.

@@ -29,6 +29,7 @@ describe('wrangler config', () => {
       expect(env.ratelimits.map((r) => r.name).sort()).toEqual([
         'AI_RATE_LIMITER',
         'AUTH_RATE_LIMITER',
+        'OPERATOR_RATE_LIMITER',
       ]);
     },
   );
@@ -51,6 +52,16 @@ describe('wrangler config', () => {
     expect(config.vars.SERVE_DRAFT_CONTENT).toBeUndefined();
   });
 
+  it('points production at the app on app.revisionden.com, with passkeys for the whole domain', () => {
+    const vars = config.env.production!.vars;
+    expect(vars.WEB_ORIGIN).toBe('https://app.revisionden.com');
+    expect(vars.API_ORIGIN).toBe('https://api.revisionden.com');
+    // The registrable domain, so a passkey made on app.revisionden.com keeps working if the app
+    // moves between subdomains (WebAuthn allows an RP ID that is a suffix of the origin's host).
+    expect(vars.PASSKEY_RP_ID).toBe('revisionden.com');
+    expect(new URL(vars.WEB_ORIGIN!).hostname.endsWith(`.${vars.PASSKEY_RP_ID}`)).toBe(true);
+  });
+
   it('never contains secrets: those are set with wrangler secret put', () => {
     const text = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
     for (const secret of [
@@ -58,6 +69,7 @@ describe('wrangler config', () => {
       'BETTER_AUTH_SECRET',
       'GOOGLE_CLIENT_SECRET',
       'MICROSOFT_CLIENT_SECRET',
+      'APPDECK_OPERATOR_SHARED_SECRET',
       'GOOGLE_CLIENT_ID',
       'MICROSOFT_CLIENT_ID',
       // Contains the Cloudflare account id, so it is a secret too.

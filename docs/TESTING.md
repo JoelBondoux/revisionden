@@ -62,6 +62,7 @@ cd services/maths && pip install -r requirements-dev.txt && python -m pytest -q
 pnpm --filter @revisionden/web build && pnpm --filter @revisionden/e2e e2e   # end-to-end + axe
 E2E_BASE_URL=https://dev.revisionden.com pnpm --filter @revisionden/e2e e2e  # against a live site
 E2E_BASE_URL=https://staging.revisionden.com pnpm --filter @revisionden/e2e smoke  # deployed smoke
+E2E_BASE_URL=https://staging.revisionden.com E2E_WWW_URL=https://www-staging.revisionden.com pnpm --filter @revisionden/e2e smoke  # plus the public site
 UPDATE_ROUTES=1 pnpm --filter @revisionden/api test   # refresh apps/api/routes.json after a route change
 ```
 
@@ -76,7 +77,9 @@ route exists and refuses a signed-out request with a reference code, policy page
 button, the signed-out `/family` prompt, and that `/`, `/family`, `/legal`, a policy and `/about`
 request nothing from third parties (only the web origin and its API host; it caught Cloudflare's
 injected Web Analytics beacon on staging, 2026-11-25). The local suite checks the same for the
-built app. It signs nobody in: there is no test backdoor.
+built app. It signs nobody in: there is no test backdoor. With `E2E_WWW_URL` set it also checks the
+public site (`apps/www`) requests nothing from other origins and sends its content security policy;
+`apps/www`'s own tests check every built page for third-party resources and broken links.
 Still checked by a person after each staging deploy: signing in with Google and landing on
 "Who's revising?", adding a child, linking a device with the QR code and passkey, and the
 student using the app on that device.

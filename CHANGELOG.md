@@ -7,6 +7,10 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Coming soon: a public RevisionDen website at revisionden.com explaining how it works for parents and young people, with the planned prices and all the policies. The app itself will move to app.revisionden.com.
+- "Remember this?" questions are now completely safe: getting one wrong never breaks your combo.
+- New 5-a-day: a quick mix of 5 questions from topics you've already practised, at the top of your topic map until you've done it. It takes about 5–8 minutes and counts towards your daily goal and streak like any lesson.
+- Six more hidden reward tracks to discover, like Comeback Kid (turn a weak topic into a strong one) and Explorer (try every kind of practice). Each stays secret until you earn its first step.
 - Target grades: for each subject, a parent can set a target grade on the stats dashboard and your child can set their own on My stats. You both see both, as goals to reach for (GCSE Maths for now; more subjects as their grade scales are checked).
 - Two parents: invite a second parent from Parent home with a code or link. You both get the same control, a family activity log shows who changed what (as Parent 1 or Parent 2), and you're told about important changes. Deleting the family account needs both of you.
 - Learn it first: a button at the start of a topic lesson opens free lessons from Oak National Academy for that topic in a new tab. It shows up on each GCSE Maths topic once its link has been checked.
@@ -74,6 +78,15 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Operator bridge O1 (O): signed AppDeck requests at `/operator/appdeck` (`operatorAuth`, `requireManager`, `audit` in `apps/api/src/operator/bridge.ts`; signature, 5-minute window and published test vector in `packages/core/src/operator-signature.ts`); `operator_audit_log` (2 years) and `operator_requests` (request ids, 1 day) tables (migration 0015); `APPDECK_OPERATOR_SHARED_SECRET` and `OPERATOR_RATE_LIMITER` (120 a minute; 503 when the secret is unset); `GET /operator/appdeck/health`; AppDeck's HireLine format (`sha256=` signature, Unix-millisecond timestamps, `{ success, data }` answers). Data retention policy 1.3 (one table again: the 1.2 merge had left it twice, the first copy without error reports).
+- Public website polish (workstream M3): Open Graph card and Apple touch icon drawn from Pip's shapes and the arena colours (`apps/www/scripts/make-images.mjs`), theme colour and large-image card tags.
+- Public website pages (workstream M2): home (parents first, with a section for young people), how it works, pricing (planned prices read from `docs/PRICING.md`, shown as "Premium, coming soon"), for young people, help and contact, about, and every policy rendered from `docs/legal` with a draft banner until the effective date is set. Tests for page content, invented claims, policy source and pricing source; axe finds no WCAG 2.2 AA issues in light or dark at phone and desktop widths.
+- Public website skeleton (workstream M, decision 0005): `apps/www`, a static site with no client scripts or third-party requests (self-hosted Nunito, the web app's tokens, strict content security policy), `revisionden-www` Workers for `revisionden.com` (www redirects) and `www-staging.revisionden.com`, `deploy-www.yml` called from the staging and production deploys, and a deployed smoke check (`E2E_WWW_URL`).
+- Recall checks keep the combo (Q): `LearnAttemptRequestSchema` takes optional `recall` (Learn mode only, 400 otherwise); the API saves such answers with mode `RECALL_MODE` (`'recall'`), and `comboBefore` passes over a wrong one and counts a right one. `RecallGate` sends `recall: true` via a new `LessonPlayer` `recall` prop.
+- Production app host is `app.revisionden.com` (G): web Worker route, API `WEB_ORIGIN` (and so Better Auth's trusted origin and the passkey origin), deploy URL and smoke-test API lookup; `PASSKEY_RP_ID` stays `revisionden.com`; tests check the apex is left to the public site (M) and the PWA manifest stays host-relative.
+- Rewards R7b fixes (from review): Comeback Kid ignores flashcard self-ratings (they never change mastery), and its counter replays only the 30-answer mastery window, so long histories stay fast.
+- Daily 5-a-day Q3 (Q): `packages/core/src/daily.ts` (`selectDailySet`: practised topics only, mastery drifts down with the 30-day half-life since last practice, then `selectNextItems`, topped up from the same topics; `dailySeed`, `dailySetProgress`, `DailySetResponseSchema`), `GET /v1/student/daily` (`apps/api/src/routes/daily.ts`; no extended answers), table `daily_sets` (migration 0014, cascade delete, in the family export), web `features/daily/` (map card above the next mission, `/learn/daily` in the lesson player, MSW mock).
+- Rewards R7b: six more hidden tracks (Fact Checker, Comeback Kid, Explorer, Planner, Pace Setter, Perfectionist) with `track-stats.ts` (`weakSpotsTurnedStrong`, `practiceKindsTried`), new stats, quill and explorer hat avatar items, and embers, pace stripes and prism effect art. Fact Checker, Planner, Pace Setter and Perfectionist count 0 until their data exists.
 - Target grades (K8): two per subject, `enrolments.parent_target_grade` and `student_target_grade` (migration 0017); `GET /v1/students/:id/target-grades` and `PUT .../target-grades/:subjectId` for either parent (logged as `target_changed`, important), `PUT /v1/student/target-grades/:subjectId` for the child's own (not logged); both checked against cited grade scales (`packages/core/src/target-grades.ts`, GCSE Maths Edexcel 1MA1 for now); `targets` on student stats; Target grades panel on the parent dashboard and card on My stats. Policies: privacy notice 1.6, young people's notice 1.5, Children's Code 1.1 (wording). Predicted grades stay "Not set up yet" until verified grade boundaries exist.
 - Rewards R7: Bug Hunter hidden track (`confirmedBugs` from L's `confirmedBugCount`; L's bug reward XP added to reward XP for levels), 24 secret achievements with masked `???` overview cards, `secret-stats.ts`, `effect` reward item kind, magnifier avatar item and glitch effect art.
 
@@ -186,6 +199,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Changed
 
+- Project memory: the public site's Open Graph card and touch icon (and how to remake them) recorded in product facts; duplicate hosting lines left by the domain move merged into one (workstream M).
 - Item type names are the content schema names everywhere (`worked_maths`, `extended_answer`); the mapping in core is removed.
 - One item JSON format in the `items` table for the content sync and AI marking (`body.marks` added; marking reads `answer.key` and `answer.markScheme`), with a round-trip test.
 

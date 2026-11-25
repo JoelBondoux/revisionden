@@ -21,6 +21,7 @@
 | Path             | What it is                                                                                                        |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------- |
 | `apps/web`       | React + Vite PWA. Screens, design system, offline cache, web push                                                 |
+| `apps/www`       | Public website for revisionden.com: static pages built by a TypeScript script, no client scripts (decision 0005)  |
 | `apps/api`       | Hono app for Cloudflare Workers. Auth, REST endpoints, AI calls via the gateway                                   |
 | `packages/core`  | Pure TypeScript domain logic, no I/O: rules for levels, streaks, mastery, plans, avatar codes. Shared Zod schemas |
 | `packages/db`    | Drizzle schema and migrations for Neon Postgres                                                                   |
@@ -30,6 +31,26 @@
 | `evals/`         | AI marking evaluation harness and golden sets (never run in CI by default)                                        |
 | `scripts/`       | Repo tooling: version bump, content validator (`content/`), verification pipeline (`verify/`)                     |
 | `docs/`          | Live documentation                                                                                                |
+
+## Public website (`apps/www`)
+
+Decision 0005. `revisionden.com` is the sales site; the app is on `app.revisionden.com`.
+
+- `src/build.ts` reads the build variables (`src/config.ts`), the web app's `tokens.css`, the
+  Nunito font files, `docs/legal/*.md` with `docs/LEGAL.md` (order and audience) and `docs/PRICING.md`
+  (planned prices), then writes `dist/`. `src/site.ts` renders
+  every file as a pure function; pages live in `src/pages/`: `/`, `/how-it-works`, `/pricing`,
+  `/young-people`, `/help`, `/about`, `/policies` and `/policies/<name>` (one per `docs/legal` file, via
+  `src/markdown.ts`, with a draft banner until `VITE_POLICY_EFFECTIVE_DATE` is set), and `404.html`.
+- No client-side JavaScript and no third-party requests. `src/checks.ts` (used by the tests)
+  finds resources from other origins and same-site links that don't resolve.
+- `src/worker.ts`: redirects `www.` to the apex, serves the static assets and sets the security
+  headers (content security policy `default-src 'self'; script-src 'none'`), and `noindex` on any
+  host but `revisionden.com`.
+- Images: `public/og.png` (Open Graph card, 1200×630) and `public/apple-touch-icon.png` are drawn from
+  Pip's shapes and the arena colours by `scripts/make-images.mjs` (Chromium); run it by hand after
+  changing the art and commit the PNGs. Original art only: no stock photos, no AI-generated images.
+- Deployed by `.github/workflows/deploy-www.yml` (staging and production only).
 
 ## Web app (`apps/web`)
 
@@ -122,6 +143,7 @@ Source of truth: `packages/db/src/schema.ts`; migrations in `packages/db/migrati
 | `parent_rewards`            | id, student_id, title, note, target_kind (reward, stat, date), reward_id, stat, at_least, target_date, given_at, reached_notified_at                                                                                                        |
 | `streaks`                   | student_id (key), current, best, skip_days, gift_days, skips_in_a_row, last_date, last_settled_week                                                                                                                                         |
 | `daily_xp`                  | student_id + day (key, UK date), xp                                                                                                                                                                                                         |
+| `daily_sets`                | id, student_id + day (unique, UK date), item_ids (JSON), created_at: the 5-a-day set for the day (Q3)                                                                                                                                       |
 | `starting_tests`            | id, student_id, subject_id, item_ids (JSON), started (created_at), finished_at                                                                                                                                                              |
 | `flashcards`                | id, student_id, item_id (null for own cards), topic_id, origin (deck, wrong_answer, own), front, back, repetitions, interval_days, ease, due_at                                                                                             |
 | `flashcard_sessions`        | id, student_id, card_ids (JSON, distinct cards counted), started_at, finished_at, completed, xp_earned, topic_id (one-deck session), rewarded_day + reward_slot (unique per student; 1 or 2)                                                |
@@ -140,6 +162,8 @@ Source of truth: `packages/db/src/schema.ts`; migrations in `packages/db/migrati
 | `feedback`                  | id, family_id, sender_role, student_id, sender_auth_user_id, kind, text (≤500), device (JSON), status, created_at, updated_at, closed_at, outcome (confirmed, duplicate), duplicate_of, reward_xp, track_step, confirmed_at, reward_seen_at |
 | `error_reports`             | id, ref (unique), screen, api_path, status, build, browser, online, reported_at, created_at (anonymous; deleted after 90 days)                                                                                                              |
 | `policy_acceptances`        | auth_user_id + policy (key), version, accepted_at                                                                                                                                                                                           |
+| `operator_audit_log`        | id, operator_email (staff, from AppDeck), operator_role (agent, manager), action, target_type, target_id (plain id, no foreign key), request_id, outcome (ok, denied), created_at (2 years)                                                 |
+| `operator_requests`         | request_id (key), method, path, body_hash, response_status, response_body (change answers only), created_at (1 day)                                                                                                                         |
 
 No table stores a real name, date of birth, email of a student, photo or school name. The
 schema guard test (`packages/db/src/schema-guard.test.ts`) checks the migrated database and fails
@@ -190,6 +214,7 @@ All bodies are validated with the Zod schemas in `packages/core`. Errors always 
 | `POST /v1/student/flashcards/sessions/:id/finish`                                                                                  | student device  | Finish a session: 20 XP if 5+ cards and completed, 2 a day                                                |
 | `POST /v1/student/flashcards/:id/review`                                                                                           | student device  | Rate a card in an open session (again, hard, good, easy); no XP                                           |
 | `GET /v1/student/map?subjectId=…`                                                                                                  | student device  | Topic map (F2): units, topic states, unit challenge, next mission                                         |
+| `GET /v1/student/daily`                                                                                                            | student device  | Today's 5-a-day (Q3): items, answered ids, done; made and stored on the first request of the day          |
 | `GET /v1/student/cards/due`                                                                                                        | student device  | How many flashcards are due (Cards tab badge, F2)                                                         |
 | `GET /v1/notifications/vapid-key`                                                                                                  | anyone          | Public key for web push (503 if off)                                                                      |
 | `POST, DELETE /v1/student/push-subscriptions`                                                                                      | student device  | Turn reminders on or off for this device                                                                  |
@@ -321,6 +346,7 @@ The only exceptions are listed in `PENDING_ROUTES` (agreed with another workstre
 | `api/client.ts` `getFamily` (`/family`)           | `GET /v1/onboarding/family`                                                                                                              | yes   |
 | `api/client.ts` `getTopicMap` (`/map`)            | `GET /v1/student/map`                                                                                                                    | yes   |
 | `features/recall/recallApi.ts` `getRecall`        | `GET /v1/student/recall`                                                                                                                 | yes   |
+| `features/daily/dailyApi.ts` `getDaily`           | `GET /v1/student/daily`                                                                                                                  | yes   |
 | `api/client.ts` `getCardsDue` (Cards tab badge)   | `GET /v1/student/cards/due`                                                                                                              | yes   |
 | `api/client.ts` `reportClientError`               | `POST /v1/client-errors`                                                                                                                 | yes   |
 | `api/ErrorRef.tsx` "Send error report"            | `POST /v1/error-reports`                                                                                                                 | yes   |

@@ -31,6 +31,8 @@ import {
   rewardsOverview,
   seasonProgressFor,
   secretStats,
+  practiceKindsTried,
+  weakSpotsTurnedStrong,
   type ItemType,
   type ParentReward,
   type RewardCardResponse,
@@ -76,6 +78,7 @@ async function loadStats(db: Database, studentId: string, yearGroup: number, now
       type: items.type,
       topicId: items.topicId,
       subjectId: topics.subjectId,
+      mode: attempts.mode,
     })
     .from(attempts)
     .innerJoin(items, eq(items.id, attempts.itemId))
@@ -127,6 +130,28 @@ async function loadStats(db: Database, studentId: string, yearGroup: number, now
       enrolledSubjects: enrolled.map((e) => e.subjectId),
     }),
     flashcardsReviewed: sessions.cardsReviewed,
+    // Hidden tracks (R7b). Comeback Kid and part of Explorer come from answers; the rest have
+    // no data source yet and stay at 0 (see project_memory/operations/contradictions.md).
+    // Flashcards are self-ratings and never change mastery (learn.ts), so they are left out.
+    weakSpotsTurnedStrong: weakSpotsTurnedStrong(
+      answerRows
+        .filter((a) => a.type !== 'flashcard')
+        .map((a) => ({
+          topicId: a.topicId,
+          at: a.at.getTime(),
+          score: a.score ?? (a.correct ? 1 : 0),
+        })),
+    ),
+    practiceKindsTried: practiceKindsTried({
+      lesson: answerRows.some((a) => a.mode === 'learn'),
+      flashcardSession: sessions.cardsReviewed > 0,
+      startingTest: (tests?.n ?? 0) > 0,
+      workedMaths: answerRows.some((a) => a.type === 'worked_maths'),
+      // Timed papers (X), homework marking and plan edits (P) have no records yet.
+    }),
+    factChecks: 0, // item_reports has no student id yet (workstream V)
+    plannedWeeks: 0, // no planned sessions yet (workstream P)
+    perfectSetsLevel2: 0, // practice sets are not stored yet
   };
   const seasonProgress = seasonProgressFor({
     now,

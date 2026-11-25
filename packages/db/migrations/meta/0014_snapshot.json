@@ -1,5 +1,5 @@
 {
-  "id": "cff0ce13-d859-4118-a78e-974bf9552784",
+  "id": "f7931faa-a1a6-48d9-b458-631714cd07f6",
   "prevId": "f61e3f8b-f5fe-4546-bb36-b812cf9e648e",
   "version": "7",
   "dialect": "postgresql",
@@ -661,6 +661,67 @@
       },
       "isRLSEnabled": false
     },
+    "public.daily_sets": {
+      "name": "daily_sets",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "student_id": {
+          "name": "student_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "day": {
+          "name": "day",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "item_ids": {
+          "name": "item_ids",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "daily_sets_student_id_students_id_fk": {
+          "name": "daily_sets_student_id_students_id_fk",
+          "tableFrom": "daily_sets",
+          "tableTo": "students",
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "daily_sets_student_day_unique": {
+          "name": "daily_sets_student_day_unique",
+          "nullsNotDistinct": false,
+          "columns": ["student_id", "day"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.daily_xp": {
       "name": "daily_xp",
       "schema": "",
@@ -934,18 +995,6 @@
         },
         "spec_version": {
           "name": "spec_version",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "parent_target_grade": {
-          "name": "parent_target_grade",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "student_target_grade": {
-          "name": "student_target_grade",
           "type": "text",
           "primaryKey": false,
           "notNull": false
