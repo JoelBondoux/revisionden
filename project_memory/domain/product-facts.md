@@ -92,7 +92,11 @@ Tags: #product #rules #limits #defaults
   `/cards` (flashcards: Due today, All decks, My cards; 3D flip card, reduced motion respected).
 - Installable PWA. Main nav tabs: Learn, Cards, Plan, Papers, Progress (bottom bar on phones, side
 - Installable PWA. Main nav tabs: Map, Cards, Plan, Papers, Progress (bottom bar on phones, side
-  rail from 768px wide). Welcome and lessons hide the nav to keep focus.
+  rail from 768px wide). Welcome and lessons hide the nav to keep focus. Only a linked student
+  device gets the student nav: elsewhere (signed out, or a parent) About, Policies, Feedback and
+  the other app pages show a small header with the logo, Sign in, Policies and About.
+- The web app loads nothing from third parties (no analytics, fonts or beacons): only its own
+  origin and its API host. The deployed smoke test fails otherwise.
 - The learning path is a topic map: one hexagon per topic, grouped by unit. States: mastered
   (gold, tick), in progress (violet, fill level shows mastery %), weak spot (orange, pulsing
   glow), locked (grey). Each unit ends in a challenge that unlocks at 80% unit mastery. A Next

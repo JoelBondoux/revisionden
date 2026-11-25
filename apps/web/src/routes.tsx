@@ -66,8 +66,6 @@ export const routes: RouteObject[] = [
       { path: '/learn/subject/:subjectId/start', element: <StartingTestPage /> },
       { path: '/learn/command-words', element: <CommandWordsPage /> },
       // Policies, About and feedback (workstream L): policies are reachable without signing in.
-      { path: '/legal', element: <LegalIndexPage /> },
-      { path: '/legal/:name', element: <PolicyPage /> },
       { path: '/welcome/privacy', element: <YoungPeopleNoticePage /> },
       { path: '/admin/feedback', element: <AdminFeedbackPage /> },
       { path: '*', element: <NotFoundPage /> },
@@ -98,6 +96,9 @@ export const routes: RouteObject[] = [
       { path: '/settings', element: <SettingsPage /> },
       { path: '/install', element: <InstallHelpPage /> },
       { path: '/about', element: <AboutPage /> },
+      // Policies are reachable without signing in (workstream L).
+      { path: '/legal', element: <LegalIndexPage /> },
+      { path: '/legal/:name', element: <PolicyPage /> },
       { path: '/feedback', element: <FeedbackPage /> },
       { path: '/feedback/family', element: <FeedbackListPage scope="family" /> },
       { path: '/feedback/mine', element: <FeedbackListPage scope="mine" /> },
