@@ -8,6 +8,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 ### What's new
 
 - New 5-a-day: a quick mix of 5 questions from topics you've already practised, at the top of your topic map until you've done it. It takes about 5–8 minutes and counts towards your daily goal and streak like any lesson.
+- Earn a reward while answering questions or reviewing flashcards and you'll see it (and hear its sound) straight away, not only on the Rewards page.
 - Get help now lists Kooth for feeling low (free in some parts of the UK) and Coram Kidscape for bullying. Parents also see its Parent Advice Line (phone, WhatsApp or email) and the Anti-Bullying Alliance.
 - The right-answer chime now climbs a little higher with each right answer in a row, up to six in a row.
 - On the test site (dev.revisionden.com) you can now try the first practice questions while they are still being checked; they are marked "DRAFT CONTENT".
@@ -67,6 +68,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 ### Added
 
 - Daily 5-a-day Q3 (Q): `packages/core/src/daily.ts` (`selectDailySet`: practised topics only, mastery drifts down with the 30-day half-life since last practice, then `selectNextItems`, topped up from the same topics; `dailySeed`, `dailySetProgress`, `DailySetResponseSchema`), `GET /v1/student/daily` (`apps/api/src/routes/daily.ts`; no extended answers), table `daily_sets` (migration `daily_sets`, numbered after the queued migrations, cascade delete, in the family export), web `features/daily/` (map card above the next mission, `/learn/daily` in the lesson player, MSW mock).
+- Rewards where they are earned (F4): `LearnAttemptResponse` and `FlashcardSessionResult` have `newlyEarned` (saved once each by `saveNewRewards`, shared with the Rewards route); the lesson, Cards screen and starting-test results show "New reward: …" with `RewardSound`.
 - Flashcard sessions (F3): `flashcard_sessions` table (migration 0010), `POST /v1/student/flashcards/sessions` (optional `topicId` for one deck) and `.../sessions/:id/finish` (claimed once; daily reward slots unique per student, so racing finishes can't pay twice or pass 2 a day); the family export includes `flashcardSessions`; reviews need a `sessionId` and no longer return `xpEarned` or `progress`; session XP counts for rewards and the flashcards-reviewed milestones; flashcard self-ratings never change topic mastery. `DECK_REVIEW_XP` removed.
 - Get help (W, follow-up): Coram Kidscape (students and parents) with its Parent Advice Line (parents: phone, WhatsApp, email), Anti-Bullying Alliance (parents) and Kooth (students, with an owner-confirmed availability `note`), confirmed by the product owner from the official sites (`confirmed_by`). Support data now allows WhatsApp (`wa.me` link must match a UK number) and email (`mailto:`, address on the official domain) contacts.
 - Combo chime (U5): `play()` takes a `step` for the correct and part-marks sounds (a whole tone each, clamped at 6); the lesson player passes `comboStep(combo - 1)` from J.
