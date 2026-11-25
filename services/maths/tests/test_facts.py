@@ -193,3 +193,21 @@ def test_givens_the_symbolic_step_cannot_rewrite_are_not_proved():
 def test_the_symbolic_parallel_proof_needs_lines_that_meet_for_different_gradients():
     message = error({"kind": "parallel", "lines": ["y = m x + c", "y = n x + c + (m - n) x"]})
     assert "do not meet" in message or "could not check" in message
+
+
+def test_a_cancelled_division_by_zero_still_breaks_continuity():
+    # x^2/x is undefined at 0: it must not prove a root there by cancelling to x (Codex on #124).
+    message = error({"kind": "sign_change", "function": "x^2/x", "interval": ["-1", "1"]})
+    assert "not continuous" in message
+    message = error({"kind": "sign_change", "function": "(x - 1)/(x - 1) - 2", "interval": ["0", "2"]})
+    assert "not continuous" in message
+
+
+def test_parallel_lines_with_a_shared_intercept_are_still_proved():
+    # They meet at (0, c), so the denominator cancels (Codex on #124).
+    assert ok({"kind": "parallel", "lines": ["y = m x + c", "y = n x + c"]})
+
+
+def test_the_symbolic_parallel_proof_also_checks_equal_gradients_never_meet_once():
+    # Lines whose gradients can be equal must not meet at one point when they are.
+    assert ok({"kind": "parallel", "lines": ["y = m x + c", "y = n x + d"]})

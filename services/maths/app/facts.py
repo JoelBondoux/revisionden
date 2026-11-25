@@ -21,12 +21,15 @@ import random
 import re
 
 from sympy import (
+    EmptySet,
     Expr,
     Function,
+    Pow,
     Interval,
     Symbol,
     cos,
     denom,
+    factor_list,
     lambdify,
     nan,
     nsimplify,
@@ -34,6 +37,7 @@ from sympy import (
     simplify,
     sin,
     solve,
+    solveset,
     tan,
     together,
     zoo,
@@ -172,7 +176,13 @@ def sign_change(check: dict) -> str | None:
     f = parse(check["function"])
     a, b = (parse(v) for v in check["interval"])
     interval = Interval(a, b)
-    if not interval.is_subset(continuous_domain(f, x, interval)):
+    # Parsing cancels x^2/x to x, so look for division by zero in the expression as written.
+    written = parse(check["function"], evaluate=False)
+    divides_by_zero = any(
+        power.exp.is_negative and solveset(power.base, x, interval) != EmptySet
+        for power in written.atoms(Pow)
+    )
+    if divides_by_zero or not interval.is_subset(continuous_domain(f, x, interval)):
         return f"{check['function']} is not continuous on [{a}, {b}]"
     fa, fb = f.subs(x, a), f.subs(x, b)
     if not (fa * fb).is_negative:
@@ -219,12 +229,24 @@ def parallel(check: dict) -> str | None:
     if g1 is None or g2 is None or simplify(g1 - g2) == 0:
         raise ValueError("give two lines with letters for different gradients")
     point = solve([e1, e2], [x, y], dict=True)
-    if len(point) != 1:
+    if len(point) != 1 or set(point[0]) != {x, y}:
         return "the lines do not meet at one point for general gradients"
-    bottom = denom(together(point[0][x]))
-    ratio = simplify(bottom / (g1 - g2))
-    if ratio == 0 or ratio.free_symbols:
-        return "the lines can fail to meet when their gradients differ"
+    # The point exists whenever the gradients differ: every factor of its denominators
+    # vanishes only where they are equal (a shared intercept cancels to a constant).
+    gap = g1 - g2
+    for coordinate in point[0].values():
+        for factor in factor_list(denom(together(coordinate)))[1]:
+            ratio = simplify(factor[0] / gap)
+            if factor[0].free_symbols and (ratio == 0 or ratio.free_symbols):
+                return "the lines can fail to meet when their gradients differ"
+    # And when the gradients are equal, they never meet at exactly one point.
+    letters = sorted(g2.free_symbols - g1.free_symbols, key=str)
+    if not letters:
+        raise ValueError("give the second line its own letter for the gradient")
+    equal = {letters[0]: solve(gap, letters[0])[0]}
+    same = solve([e1, e2.subs(equal)], [x, y], dict=True)
+    if len(same) == 1 and set(same[0]) == {x, y}:
+        return "the lines still meet at one point when their gradients are equal"
     return None
 
 
