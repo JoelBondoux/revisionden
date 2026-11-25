@@ -139,6 +139,12 @@
   overflow-wrap: anywhere;
 }
 
+.help-note {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: #fff8e6;
+}
+
 .help-meta,
 .help-footnote {
   color: #4a5262;

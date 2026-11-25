@@ -197,3 +197,61 @@ test('the real file has the services the page needs', () => {
   const nspcc = data.services.find((s) => s.id === 'nspcc-helpline');
   assert.deepEqual(nspcc.audiences, ['parent']);
 });
+
+test('a WhatsApp contact needs a UK number and a matching wa.me link', () => {
+  const ok = {
+    kind: 'whatsapp',
+    number: '0300 102 4481',
+    href: 'https://wa.me/443001024481',
+    source: SOURCE,
+  };
+  assert.deepEqual(messages(file([service({ contacts: [ok] })])), []);
+  const wrong = { ...ok, href: 'https://wa.me/443001024482' };
+  assert.ok(messages(file([service({ contacts: [wrong] })])).some((m) => /wa\.me/.test(m)));
+});
+
+test('an email contact needs a mailto: link on the official site', () => {
+  const ok = {
+    kind: 'email',
+    address: 'help@example-helpline.org.uk',
+    href: 'mailto:help@example-helpline.org.uk',
+    source: SOURCE,
+  };
+  assert.deepEqual(messages(file([service({ contacts: [ok] })])), []);
+  const offSite = { ...ok, address: 'help@elsewhere.com', href: 'mailto:help@elsewhere.com' };
+  assert.ok(messages(file([service({ contacts: [offSite] })])).some((m) => /official/.test(m)));
+  const badLink = { ...ok, href: 'mailto:other@example-helpline.org.uk' };
+  assert.ok(messages(file([service({ contacts: [badLink] })])).some((m) => /mailto:/.test(m)));
+});
+
+test('a service can record that the product owner confirmed it', () => {
+  const s = service({ confirmed_by: 'product owner, from the official site' });
+  assert.deepEqual(messages(file([s])), []);
+});
+
+test('the real file lists Coram Kidscape for students and parents', () => {
+  const data = JSON.parse(readFileSync(SUPPORT_FILE, 'utf8'));
+  const byId = Object.fromEntries(data.services.map((s) => [s.id, s]));
+  assert.deepEqual(byId['coram-kidscape'].audiences, ['student', 'parent']);
+  assert.deepEqual(byId['coram-kidscape-parent-advice-line'].audiences, ['parent']);
+  assert.deepEqual(byId['anti-bullying-alliance'].audiences, ['parent']);
+});
+
+test('a note is allowed only when someone has confirmed it by hand', () => {
+  const note = 'Free in some parts of the UK.';
+  const unconfirmed = messages(file([service({ note })]));
+  assert.ok(unconfirmed.some((m) => /note.*confirmed_by/.test(m)));
+  assert.deepEqual(messages(file([service({ note, confirmed_by: 'product owner' })])), []);
+});
+
+test('the real file lists Kooth for students under feeling low, with its availability note', () => {
+  const data = JSON.parse(readFileSync(SUPPORT_FILE, 'utf8'));
+  const kooth = data.services.find((s) => s.id === 'kooth');
+  assert.ok(kooth.audiences.includes('student'));
+  assert.ok(kooth.topics.includes('feeling-low'));
+  assert.equal(kooth.note, "Free in some parts of the UK. Check if it's available where you live.");
+  assert.deepEqual(
+    kooth.contacts.map((c) => c.kind),
+    ['website'],
+  );
+});

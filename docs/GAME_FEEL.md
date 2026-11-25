@@ -75,6 +75,7 @@
 - J4: combo XP in `packages/core/src/xp.ts` and the learn API (Learn mode per answer; starting
   test at the reveal), stored in each answer's XP so rewards count it. The lesson shows the API's
   combo and the bonus in its feedback. Still to show: best combo at the starting test reveal.
-- Waiting on others: the chime rising a step per combo needs a pitch step in U's sound bank;
-  star notes use the existing celebration sound. Flashcard sessions get the full treatment once
+- The chime rises a step per combo (U5): `play('correct', { step: comboStep(combo - 1) })`, a
+  whole tone per step up to 6 (an octave). Waiting on others: star notes use the existing
+  celebration sound. Flashcard sessions get the full treatment once
   F3 (flashcard sessions, #45) is on dev (J2b or with J4).
