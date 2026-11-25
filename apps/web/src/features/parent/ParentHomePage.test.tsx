@@ -119,3 +119,25 @@ describe('Reminder times page', () => {
     );
   });
 });
+
+describe('Parent home: two parents', () => {
+  it('shows the parents panel and the family activity log', async () => {
+    await open();
+    expect(
+      await screen.findByRole('button', { name: 'Invite a second parent' }),
+    ).toBeInTheDocument();
+    expect(await screen.findByText('No changes yet.')).toBeInTheDocument();
+  });
+
+  it('shows a removed parent the notice', async () => {
+    server.use(
+      http.get('*/v1/removal-notice', () =>
+        HttpResponse.json({ removed: true, removedAt: '2026-11-24T10:00:00.000Z' }),
+      ),
+    );
+    await open();
+    expect(
+      await screen.findByText(/The other parent removed you from the family/),
+    ).toBeInTheDocument();
+  });
+});
