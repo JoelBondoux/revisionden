@@ -70,6 +70,9 @@ export const StartingTestResultSchema = z.object({
   answered: z.number().int().min(0),
   total: z.number().int().min(0),
   topics: z.array(TopicMasterySchema),
+  /** Test mode combos are shown at the reveal (docs/GAME_FEEL.md): the best run and its bonus. */
+  bestCombo: z.number().int().min(0).optional(),
+  comboBonusXp: z.number().int().min(0).optional(),
 });
 export type StartingTestResult = z.infer<typeof StartingTestResultSchema>;
 
@@ -126,6 +129,10 @@ export const LearnAttemptResponseSchema = z.object({
   progress: ProgressSchema,
   /** True when a wrong answer was turned into a flashcard. */
   flashcardAdded: z.boolean(),
+  /** Learn mode: right answers in a row, this one included (0 in Test mode until the reveal). */
+  combo: z.number().int().min(0).optional(),
+  /** The combo bonus included in xpEarned (+5 from the 3rd in a row). */
+  comboBonusXp: z.number().int().min(0).optional(),
 });
 export type LearnAttemptResponse = z.infer<typeof LearnAttemptResponseSchema>;
 
