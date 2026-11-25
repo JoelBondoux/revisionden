@@ -254,10 +254,22 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
 - **In-lesson retry:** after a wrong answer (Learn mode, not flashcards, long answers or recall
   checks), a similar question (another item on the same learning point, not answered in the last
   7 days, closest difficulty first) comes back 2 to 4 questions later. With no similar question,
-  the same question comes back at the end: "Let's try that one again." At most **2 retries a
-  lesson**, a retry is never retried, there is no penalty, and a retry can build a combo as
-  usual. A question that came back can be skipped ("Skip this one"); the lesson finishes once
-  every retry is answered or skipped.
+  the same question comes back at the end: "Another go at this one: you've got this." There is
+  no penalty, a retry earns the same XP as a first try and can build a combo, and a right retry
+  gets a small "Comeback!" celebration. A question that came back can be skipped ("Skip this
+  one"); the lesson finishes once every retry is answered or skipped.
+- **No repeat-after-repeat** (owner guardrails, 2026-11-25), so the child always feels they are
+  progressing:
+  - At most **one retry per learning point** and **2 retries per lesson**.
+  - A **second miss** on a point (its retry, or another question on it) ends retries for it today
+    and **steps down** instead: "This one's tricky today, so we'll come back to it another day",
+    the topic's "Learn it first" links, and an easier question on the same topic (lower
+    difficulty) next if there is one. The point then waits for the review ladder.
+  - **Never 2 hard retries in a row:** a **confidence question** (one the student has answered
+    right before, same subject, another learning point) goes just before each retry; without one,
+    a retry that would sit next to another waits for the ladder instead.
+  - A lesson **ends on a success:** if the last answer was wrong, one confidence question comes
+    before the summary.
 - **Slow = shaky:** a right answer that takes more than **twice the expected time** still scores
   in full, but its learning point is shaky. Expected time is the item's `expected_seconds` when
   set, else a rough guide by type (owner, 2026-11-25): flashcard 15 s, multiple choice 20 s,
@@ -266,7 +278,10 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
   after 3 days, then after 7 days (`review_points`). Each right answer on time, on or after the
   day it is due, climbs a rung; a right answer at the 7-day rung takes it off the ladder. A
   right answer before it is due (such as the retry in the same lesson) changes nothing; a wrong
-  or slow answer starts it again from the next day.
+  or slow answer starts it again from the next day. A point clears after three right answers on
+  time (days 1, 3 and 7; lead and owner, 2026-11-25). A point still missed on **3 ladder visits**
+  is **parked for a week** and flagged as "worth a look with a teacher or parent" for the parent
+  dashboard (`worthALook`; never shown to the child as a failure), instead of looping.
 - **Where it comes back:** lessons and the 5-a-day open with up to **2 warm-up** questions on due
   learning points from the same subject ("Warm-up: this one came up last time"), preferring a
   question not seen for 7 days.

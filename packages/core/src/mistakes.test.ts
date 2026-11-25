@@ -1,12 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import {
   EXPECTED_SECONDS,
-  MAX_RETRIES_PER_LESSON,
   REVIEW_LADDER_DAYS,
   RETRY_WEIGHT,
+  PARK_AFTER_MISSES,
   dueReviewPoints,
+  endOnSuccess,
   expectedSeconds,
-  insertRetry,
+  planAfterMiss,
   isShaky,
   learningPointOf,
   reviewAfterAnswer,
@@ -58,71 +59,110 @@ describe('learning point', () => {
 });
 
 describe('in-lesson retry', () => {
-  const queue: LessonEntry<string>[] = ['a', 'b', 'c', 'd', 'e', 'f'].map((item) => ({ item }));
-  const items = (q: LessonEntry<string>[]) => q.map((e) => e.item + (e.retry ? '*' : ''));
+  type I = { id: string; point: string };
+  const q = (...ids: string[]): LessonEntry<I>[] => ids.map((id) => ({ item: { id, point: id } }));
+  const it_ = (id: string, point = id): I => ({ id, point });
+  const pointOf = (i: I) => i.point;
+  const show = (queue: LessonEntry<I>[]) =>
+    queue.map((e) => e.item.id + (e.reason ? `(${e.reason})` : ''));
+  const plan = (
+    queue: LessonEntry<I>[],
+    index: number,
+    found: { similar?: I; easier?: I; confidence?: I } = {},
+    rng = fixed(0),
+  ) => planAfterMiss(queue, index, { ...found, pointOf }, rng);
 
-  it('puts a similar question 2 to 4 questions after the missed one', () => {
-    expect(items(insertRetry(queue, 0, { item: 'x', similar: true }, fixed(0)))).toEqual([
+  it('puts a similar question 2 to 4 questions later, after a confidence question', () => {
+    const queue = q('a', 'b', 'c', 'd', 'e', 'f');
+    const result = plan(queue, 0, { similar: it_('x', 'a'), confidence: it_('k') });
+    expect(result.outcome).toBe('retry');
+    expect(show(result.queue)).toEqual([
       'a',
       'b',
       'c',
-      'x*',
+      'k(confidence)',
+      'x(similar)',
       'd',
       'e',
       'f',
     ]);
-    expect(items(insertRetry(queue, 0, { item: 'x', similar: true }, fixed(0.99)))).toEqual([
+    expect(show(plan(queue, 0, { similar: it_('x', 'a') }, fixed(0.99)).queue)).toEqual([
       'a',
       'b',
       'c',
       'd',
       'e',
-      'x*',
+      'x(similar)',
       'f',
-    ]);
-  });
-
-  it('puts a similar question at the end when the lesson is nearly over', () => {
-    expect(items(insertRetry(queue, 4, { item: 'x', similar: true }, fixed(0)))).toEqual([
-      'a',
-      'b',
-      'c',
-      'd',
-      'e',
-      'f',
-      'x*',
     ]);
   });
 
   it('brings the same question back at the end when there is no similar one', () => {
-    const next = insertRetry(queue, 1, { item: 'b', similar: false }, fixed(0));
-    expect(items(next)).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'b*']);
-    expect(next.at(-1)).toEqual({ item: 'b', retry: 'again' });
+    const result = plan(q('a', 'b', 'c'), 1);
+    expect(show(result.queue)).toEqual(['a', 'b', 'c', 'b(again)']);
+  });
+
+  it('retries each learning point at most once a lesson, and steps down to an easier one', () => {
+    const first = plan(q('a', 'b', 'c'), 0, { similar: it_('x', 'a') });
+    const retryAt = first.queue.findIndex((e) => e.reason === 'similar');
+    const second = plan(first.queue, retryAt, { easier: it_('e', 'a') });
+    expect(second.outcome).toBe('stepDown');
+    expect(show(second.queue).slice(retryAt, retryAt + 2)).toEqual(['x(similar)', 'e(easier)']);
+    expect(second.queue.filter((e) => e.reason === 'similar' || e.reason === 'again')).toHaveLength(
+      1,
+    );
+  });
+
+  it('counts a second miss on the same point in a later question as a step down too', () => {
+    const queue: LessonEntry<I>[] = [
+      { item: it_('a', 'p') },
+      { item: it_('b') },
+      { item: it_('c', 'p') },
+    ];
+    const first = plan(queue, 0);
+    const result = plan(first.queue, 2);
+    expect(result.outcome).toBe('stepDown');
   });
 
   it('allows at most 2 retries a lesson', () => {
-    let q = insertRetry(queue, 0, { item: 'x', similar: true }, fixed(0));
-    q = insertRetry(q, 1, { item: 'y', similar: true }, fixed(0));
-    expect(q.filter((e) => e.retry)).toHaveLength(MAX_RETRIES_PER_LESSON);
-    expect(insertRetry(q, 2, { item: 'z', similar: true }, fixed(0))).toBe(q);
+    let queue = q('a', 'b', 'c', 'd');
+    queue = plan(queue, 0).queue;
+    queue = plan(queue, 1).queue;
+    const third = plan(queue, 2);
+    expect(third.outcome).toBe('none');
+    expect(third.queue).toBe(queue);
   });
 
-  it('never retries a retry', () => {
-    const q = insertRetry(queue, 0, { item: 'x', similar: true }, fixed(0));
-    expect(insertRetry(q, 3, { item: 'y', similar: true }, fixed(0))).toBe(q);
+  it('never puts two retries in a row: a confidence question goes between them', () => {
+    let queue = q('a', 'b');
+    queue = plan(queue, 0).queue;
+    const withConfidence = plan(queue, 1, { confidence: it_('k') });
+    expect(show(withConfidence.queue)).toEqual(['a', 'b', 'a(again)', 'k(confidence)', 'b(again)']);
+    // Without one, the second point waits for the review ladder instead.
+    const without = plan(queue, 1);
+    expect(without.outcome).toBe('none');
+    expect(without.queue).toBe(queue);
+  });
+
+  it('ends a lesson on a success: a confidence question after a wrong last answer', () => {
+    const queue = q('a', 'b');
+    expect(show(endOnSuccess(queue, false, it_('k')))).toEqual(['a', 'b', 'k(confidence)']);
+    expect(endOnSuccess(queue, true, it_('k'))).toBe(queue);
+    expect(endOnSuccess(queue, false, null)).toBe(queue);
   });
 });
 
 describe('review ladder across sessions', () => {
+  const at = (rung: number, dueDay: string, misses = 0) => ({
+    rung,
+    dueDay,
+    misses,
+    flagged: false,
+  });
+
   it('brings a missed learning point back the next day', () => {
-    expect(reviewAfterAnswer(null, 'wrong', '2026-11-25')).toEqual({
-      rung: 0,
-      dueDay: '2026-11-26',
-    });
-    expect(reviewAfterAnswer(null, 'shaky', '2026-11-25')).toEqual({
-      rung: 0,
-      dueDay: '2026-11-26',
-    });
+    expect(reviewAfterAnswer(null, 'wrong', '2026-11-25')).toEqual(at(0, '2026-11-26'));
+    expect(reviewAfterAnswer(null, 'shaky', '2026-11-25')).toEqual(at(0, '2026-11-26'));
   });
 
   it('leaves nothing on the ladder for a right answer that was not on it', () => {
@@ -131,31 +171,55 @@ describe('review ladder across sessions', () => {
 
   it('climbs 1, 3 then 7 days with each right answer on time, then leaves the ladder', () => {
     expect(REVIEW_LADDER_DAYS).toEqual([1, 3, 7]);
-    const day1 = reviewAfterAnswer({ rung: 0, dueDay: '2026-11-26' }, 'right', '2026-11-26');
-    expect(day1).toEqual({ rung: 1, dueDay: '2026-11-29' });
+    const day1 = reviewAfterAnswer(at(0, '2026-11-26'), 'right', '2026-11-26');
+    expect(day1).toEqual(at(1, '2026-11-29'));
     const day3 = reviewAfterAnswer(day1, 'right', '2026-11-29');
-    expect(day3).toEqual({ rung: 2, dueDay: '2026-12-06' });
+    expect(day3).toEqual(at(2, '2026-12-06'));
     expect(reviewAfterAnswer(day3, 'right', '2026-12-06')).toBeNull();
   });
 
   it('ignores a right answer before the point is due (for example the retry in the lesson)', () => {
-    const point = { rung: 0, dueDay: '2026-11-26' };
+    const point = at(0, '2026-11-26');
     expect(reviewAfterAnswer(point, 'right', '2026-11-25')).toBe(point);
   });
 
-  it('starts again from the next day after a wrong or slow answer', () => {
-    const point = { rung: 2, dueDay: '2026-12-06' };
-    expect(reviewAfterAnswer(point, 'shaky', '2026-12-06')).toEqual({
+  it('starts again from the next day after a wrong or slow answer on a visit', () => {
+    expect(reviewAfterAnswer(at(2, '2026-12-06'), 'shaky', '2026-12-06')).toEqual(
+      at(0, '2026-12-07', 1),
+    );
+  });
+
+  it('does not count a miss before the point is due as a ladder visit', () => {
+    expect(reviewAfterAnswer(at(0, '2026-11-26', 1), 'wrong', '2026-11-25')).toEqual(
+      at(0, '2026-11-26', 1),
+    );
+  });
+
+  it('parks a point missed on 3 ladder visits for a week and flags it as worth a look', () => {
+    expect(PARK_AFTER_MISSES).toBe(3);
+    expect(reviewAfterAnswer(at(0, '2026-11-28', 2), 'wrong', '2026-11-28')).toEqual({
       rung: 0,
-      dueDay: '2026-12-07',
+      dueDay: '2026-12-05',
+      misses: 0,
+      flagged: true,
+    });
+  });
+
+  it('keeps the flag until the point is cleared', () => {
+    const parked = { rung: 0, dueDay: '2026-12-05', misses: 0, flagged: true };
+    expect(reviewAfterAnswer(parked, 'right', '2026-12-05')).toEqual({
+      rung: 1,
+      dueDay: '2026-12-08',
+      misses: 0,
+      flagged: true,
     });
   });
 
   it('lists the points due today, the most overdue first', () => {
     const points = [
-      { learningPoint: 'b', rung: 0, dueDay: '2026-11-25' },
-      { learningPoint: 'a', rung: 0, dueDay: '2026-11-20' },
-      { learningPoint: 'c', rung: 0, dueDay: '2026-11-26' },
+      { learningPoint: 'b', ...at(0, '2026-11-25') },
+      { learningPoint: 'a', ...at(0, '2026-11-20') },
+      { learningPoint: 'c', ...at(0, '2026-11-26') },
     ];
     expect(dueReviewPoints(points, '2026-11-25').map((p) => p.learningPoint)).toEqual(['a', 'b']);
   });

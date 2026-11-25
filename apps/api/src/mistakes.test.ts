@@ -9,6 +9,7 @@ import {
 } from '@revisionden/core';
 import { attempts, items, mastery, reviewPoints } from '@revisionden/db';
 import { syncContent, type ContentItem, type ContentTopicTree } from './learning/content-sync';
+import { worthALook } from './learning/mistakes';
 import { AVATAR, createTestContext, jsonRequest, type TestContext } from './test/helpers';
 import { testItems } from './test/learning-fixtures';
 
@@ -122,6 +123,22 @@ describe('a similar question after a wrong answer (in-lesson retry)', () => {
   });
 });
 
+describe('help after a mistake (owner guardrails)', () => {
+  it('offers an easier question on the topic and one the student got right before', async () => {
+    const { headers } = await student('mk_help');
+    await answer(headers, 'mk-b1', 'right');
+    const result = await answer(headers, 'mk-a2', 'wrong');
+    expect(result.easier?.id).toBe(ids['mk-a1']);
+    expect(result.confidence?.id).toBe(ids['mk-b1']);
+    expect(result.similar?.learningPoint).toBe('mk-lp-1');
+  });
+
+  it('offers no confidence question before the student has got anything right', async () => {
+    const { headers } = await student('mk_no_wins');
+    expect((await answer(headers, 'mk-a2', 'wrong')).confidence).toBeNull();
+  });
+});
+
 describe('slow means shaky', () => {
   it('scores a slow right answer but marks it shaky and brings it back tomorrow', async () => {
     const { headers, studentId } = await student('mk_slow');
@@ -181,6 +198,28 @@ describe('the review ladder across sessions', () => {
     const res = await t.app.request('/v1/student/daily', { headers });
     const set = DailySetResponseSchema.parse(await res.json());
     expect(set.items[0]).toMatchObject({ id: ids['mk-a3'], warmUp: true });
+  });
+});
+
+describe('a point that keeps being missed', () => {
+  it('is parked for a week and flagged as worth a look after 3 missed ladder visits', async () => {
+    const { headers: first, studentId } = await student('mk_parked');
+    await answer(first, 'mk-a3', 'wrong');
+    let headers = first;
+    for (let visit = 1; visit <= 3; visit++) {
+      headers = await nextDays(studentId, 1);
+      await answer(headers, 'mk-a3', 'wrong');
+    }
+    const [point] = await points(studentId);
+    expect(point).toMatchObject({ flagged: true, misses: 0, rung: 0 });
+    expect(
+      Date.parse(point!.dueDay) - Date.parse(new Date(t.clock.now()).toISOString().slice(0, 10)),
+    ).toBe(7 * DAY_MS);
+    expect(await worthALook(t.db, studentId)).toEqual([
+      { learningPoint: 'mk-lp-2', topicId: 'mk-topic-a', topicTitle: 'Mistakes topic A' },
+    ]);
+    // Parked: no warm-up for it during the week.
+    expect((await lesson(headers, `subjectId=${SUBJECT}`)).some((i) => i.warmUp)).toBe(false);
   });
 });
 

@@ -3,13 +3,15 @@
  *
  * - In a lesson, a wrong answer brings back a similar question (another item on the same
  *   learning point) 2 to 4 questions later, or the same question at the end when there is no
- *   similar one. At most 2 retries a lesson, and a retry is never retried.
+ *   similar one, after a confidence question. At most one retry per point and 2 per lesson; a
+ *   second miss steps down to an easier question. A lesson ends on a success.
  * - A right answer that took more than twice the expected time still scores, but its learning
  *   point is shaky.
  * - Across sessions, a learning point with a wrong or shaky answer comes back on a short ladder
  *   (next day, then 3 days, then 7 days), through the 5-a-day and lesson warm-ups. Each right
  *   answer on time (on or after the day it is due) climbs a rung; after the last rung it leaves
- *   the ladder. A wrong or slow answer starts it again from the next day.
+ *   the ladder. A wrong or slow answer starts it again from the next day; missed on 3 visits,
+ *   it is parked for a week and flagged as worth a look with a teacher or parent.
  * - Retries count at half weight for topic mastery (they show learning, but are easier just
  *   after seeing the answer).
  */
@@ -34,6 +36,9 @@ export const RETRY_GAP = { min: 2, max: 4 } as const;
 export const RETRY_WEIGHT = 0.5;
 /** Days until a missed learning point comes back, rung by rung. */
 export const REVIEW_LADDER_DAYS = [1, 3, 7] as const;
+/** A point missed on this many ladder visits is parked instead of coming back again and again. */
+export const PARK_AFTER_MISSES = 3;
+export const PARK_DAYS = 7;
 
 /** Expected seconds for an item, or null when it is never timed (long answers are not marked). */
 export function expectedSeconds(type: ItemType, own?: number | null): number | null {
@@ -57,34 +62,111 @@ export function learningPointOf(item: { topicId: string; learningPoint?: string 
   return item.learningPoint ?? item.topicId;
 }
 
-/** One question in a lesson's queue; retries are marked so they are never retried again. */
+/** Why a question is in the lesson queue, for questions added after a mistake. */
+export type EntryReason = 'similar' | 'again' | 'easier' | 'confidence';
+
+/** One question in a lesson's queue; added questions say why, and are never retried. */
 export interface LessonEntry<T> {
   item: T;
-  /** 'similar': another question on the same point; 'again': the same question at the end. */
-  retry?: 'similar' | 'again';
+  /**
+   * 'similar': another question on a missed point; 'again': the same question at the end;
+   * 'easier': an easier one after a second miss (a step down); 'confidence': one the student
+   * has got right before, put before a retry and at the end after a wrong last answer.
+   */
+  reason?: EntryReason;
+}
+
+const isRetry = (e: LessonEntry<unknown>) => e.reason === 'similar' || e.reason === 'again';
+
+export interface MissContext<T> {
+  /** Another question on the same learning point (from the server), if any. */
+  similar?: T | null;
+  /** An easier question on the same topic, for a step down after a second miss. */
+  easier?: T | null;
+  /** A question the student has answered right before, to go before a retry. */
+  confidence?: T | null;
+  pointOf: (item: T) => string;
+  /** Item identity (defaults to the item itself), to avoid adding one already in the lesson. */
+  idOf?: (item: T) => unknown;
+}
+
+export interface MissPlan<T> {
+  queue: LessonEntry<T>[];
+  /** 'retry': the point comes back; 'stepDown': a second miss, easier help instead; 'none'. */
+  outcome: 'retry' | 'stepDown' | 'none';
 }
 
 /**
- * The lesson queue after a wrong answer at `index`. A similar question goes 2 to 4 questions
- * later (at the end if the lesson is shorter); without one the same question goes at the end.
- * Returns the same queue when the lesson already has 2 retries or the missed one was a retry.
+ * The lesson queue after a wrong answer at `index` (owner guardrails, 2026-11-25):
+ * - A learning point gets at most one retry a lesson, and a lesson at most 2.
+ * - A second miss on a point (its retry, or another question on it) steps down instead: an
+ *   easier question on the topic goes next (if there is one) and the point waits for another
+ *   day on the review ladder.
+ * - A retry is a similar question 2 to 4 questions later, else the same question at the end,
+ *   with a confidence question just before it, so two hard questions never come back to back.
  */
-export function insertRetry<T>(
+export function planAfterMiss<T>(
   queue: readonly LessonEntry<T>[],
   index: number,
-  retry: { item: T; similar: boolean },
+  ctx: MissContext<T>,
   rng: Rng,
-): LessonEntry<T>[] {
-  const used = queue.filter((e) => e.retry).length;
-  if (used >= MAX_RETRIES_PER_LESSON || queue[index]?.retry) return queue as LessonEntry<T>[];
-  const next = [...queue];
-  if (!retry.similar) {
-    next.push({ item: retry.item, retry: 'again' });
-    return next;
+): MissPlan<T> {
+  const same = queue as LessonEntry<T>[];
+  const entry = queue[index];
+  if (!entry) return { queue: same, outcome: 'none' };
+  const idOf = ctx.idOf ?? ((item: T) => item);
+  const inLesson = (item: T) => queue.some((e) => idOf(e.item) === idOf(item));
+  const point = ctx.pointOf(entry.item);
+  const missedBefore =
+    isRetry(entry) ||
+    queue.some((e, i) => i !== index && isRetry(e) && ctx.pointOf(e.item) === point);
+  if (missedBefore || entry.reason === 'easier') {
+    if (!ctx.easier || inLesson(ctx.easier) || entry.reason === 'easier') {
+      return { queue: same, outcome: entry.reason === 'easier' ? 'none' : 'stepDown' };
+    }
+    const next = [...queue];
+    next.splice(index + 1, 0, { item: ctx.easier, reason: 'easier' });
+    return { queue: next, outcome: 'stepDown' };
   }
-  const gap = RETRY_GAP.min + Math.floor(rng() * (RETRY_GAP.max - RETRY_GAP.min + 1));
-  next.splice(Math.min(index + 1 + gap, next.length), 0, { item: retry.item, retry: 'similar' });
-  return next;
+  if (entry.reason === 'confidence' || queue.filter(isRetry).length >= MAX_RETRIES_PER_LESSON) {
+    return { queue: same, outcome: 'none' };
+  }
+  const similar = ctx.similar && !inLesson(ctx.similar) ? ctx.similar : null;
+  const retry: LessonEntry<T> = similar
+    ? { item: similar, reason: 'similar' }
+    : { item: entry.item, reason: 'again' };
+  const confidence =
+    ctx.confidence && !inLesson(ctx.confidence)
+      ? [{ item: ctx.confidence, reason: 'confidence' as const }]
+      : [];
+  const next = [...queue];
+  let at = next.length;
+  if (similar) {
+    const gap = RETRY_GAP.min + Math.floor(rng() * (RETRY_GAP.max - RETRY_GAP.min + 1));
+    at = Math.min(index + 1 + gap, next.length);
+  }
+  // Never two retries back to back: without a confidence question between them, move past a
+  // retry; if that is not possible, the point waits for the review ladder instead.
+  const touches = (i: number) =>
+    (i > 0 && isRetry(next[i - 1]!)) || (i < next.length && isRetry(next[i]!));
+  if (confidence.length === 0) {
+    while (touches(at) && at < next.length) at++;
+    if (touches(at)) return { queue: same, outcome: 'none' };
+  }
+  next.splice(at, 0, ...confidence, retry);
+  return { queue: next, outcome: 'retry' };
+}
+
+/** A lesson ends on a success: after a wrong last answer, one confidence question is added. */
+export function endOnSuccess<T>(
+  queue: readonly LessonEntry<T>[],
+  lastCorrect: boolean,
+  confidence: T | null | undefined,
+): LessonEntry<T>[] {
+  if (lastCorrect || !confidence || queue.at(-1)?.reason === 'confidence') {
+    return queue as LessonEntry<T>[];
+  }
+  return [...queue, { item: confidence, reason: 'confidence' }];
 }
 
 /** Where a learning point stands on the review ladder. */
@@ -93,6 +175,10 @@ export interface ReviewPoint {
   rung: number;
   /** The student's local day (YYYY-MM-DD) it comes back on. */
   dueDay: string;
+  /** Ladder visits (answers on or after the due day) that were wrong or slow since last parked. */
+  misses: number;
+  /** Parked after PARK_AFTER_MISSES missed visits: "worth a look with a teacher or parent". */
+  flagged: boolean;
 }
 
 export type ReviewOutcome = 'right' | 'wrong' | 'shaky';
@@ -100,19 +186,29 @@ export type ReviewOutcome = 'right' | 'wrong' | 'shaky';
 /**
  * The ladder after an answer on a learning point (`today` is the student's local day). Returns
  * null when the point is not (or no longer) on the ladder, and the same point when nothing
- * changes (a right answer before the point is due, such as the retry in the same lesson).
+ * changes (an answer before the point is due, such as the retry in the same lesson). A point
+ * missed on PARK_AFTER_MISSES visits is parked for PARK_DAYS and flagged, instead of looping.
  */
 export function reviewAfterAnswer(
   point: ReviewPoint | null,
   outcome: ReviewOutcome,
   today: string,
 ): ReviewPoint | null {
-  if (outcome !== 'right') return { rung: 0, dueDay: addDays(today, REVIEW_LADDER_DAYS[0]) };
-  if (!point) return null;
+  const tomorrow = addDays(today, REVIEW_LADDER_DAYS[0]);
+  if (!point) {
+    return outcome === 'right' ? null : { rung: 0, dueDay: tomorrow, misses: 0, flagged: false };
+  }
   if (today < point.dueDay) return point;
+  if (outcome !== 'right') {
+    const misses = point.misses + 1;
+    if (misses >= PARK_AFTER_MISSES) {
+      return { rung: 0, dueDay: addDays(today, PARK_DAYS), misses: 0, flagged: true };
+    }
+    return { ...point, rung: 0, dueDay: tomorrow, misses };
+  }
   const rung = point.rung + 1;
   if (rung >= REVIEW_LADDER_DAYS.length) return null;
-  return { rung, dueDay: addDays(today, REVIEW_LADDER_DAYS[rung]!) };
+  return { ...point, rung, dueDay: addDays(today, REVIEW_LADDER_DAYS[rung]!) };
 }
 
 /** Points due on or before `today`, the most overdue first. */

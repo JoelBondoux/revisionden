@@ -57,7 +57,15 @@ describe('learning loop tables (workstream F)', () => {
     );
     expect(await columns('attempts')).toEqual(expect.arrayContaining(['retry']));
     expect(await columns('review_points')).toEqual(
-      expect.arrayContaining(['student_id', 'learning_point', 'topic_id', 'rung', 'due_day']),
+      expect.arrayContaining([
+        'student_id',
+        'learning_point',
+        'topic_id',
+        'rung',
+        'due_day',
+        'misses',
+        'flagged',
+      ]),
     );
     const id = await student();
     const point = (learningPoint: string) =>

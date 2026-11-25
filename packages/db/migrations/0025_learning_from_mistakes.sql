@@ -4,6 +4,8 @@ CREATE TABLE "review_points" (
 	"topic_id" text NOT NULL,
 	"rung" integer DEFAULT 0 NOT NULL,
 	"due_day" date NOT NULL,
+	"misses" integer DEFAULT 0 NOT NULL,
+	"flagged" boolean DEFAULT false NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "review_points_student_id_learning_point_pk" PRIMARY KEY("student_id","learning_point")
 );

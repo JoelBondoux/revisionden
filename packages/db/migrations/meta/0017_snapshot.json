@@ -1,5 +1,5 @@
 {
-  "id": "19302be6-6bba-42bc-a7a6-012c411ab8e0",
+  "id": "c29b0738-3b8e-402b-a97e-045a2dbe8917",
   "prevId": "a5d78382-6f53-419d-8202-68715d2b601c",
   "version": "7",
   "dialect": "postgresql",
@@ -3953,6 +3953,20 @@
           "type": "date",
           "primaryKey": false,
           "notNull": true
+        },
+        "misses": {
+          "name": "misses",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "flagged": {
+          "name": "flagged",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
         },
         "updated_at": {
           "name": "updated_at",

@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { server } from '../../mocks/server';
 import { renderRoute } from '../../test/render';
-import { demoItems, demoSimilar, mockNextShaky, mockSimilar } from './mocks';
+import { demoEasier, demoItems, demoSimilar, mockHelp, mockNextShaky, mockSimilar } from './mocks';
 
 const lesson = (...list: unknown[]) =>
   server.use(
@@ -40,7 +40,7 @@ describe('Learning from mistakes in a lesson', () => {
     mockSimilar(demoItems[1]!.id, demoSimilar);
     renderRoute('/learn/topic/demo-topic-a');
     await wrongShortAnswer();
-    expect(await feedback()).toHaveTextContent(/one like this again in a moment/);
+    expect(await feedback()).toHaveTextContent(/another go at this in a moment/);
     expect(progressMax()).toBe('5');
     await click('Continue');
     await rightChoice();
@@ -49,10 +49,10 @@ describe('Learning from mistakes in a lesson', () => {
     await click('Check');
     await click('Continue');
     expect(await screen.findByText(demoSimilar.prompt)).toBeInTheDocument();
-    expect(screen.getByText(/one like the one you missed/)).toBeInTheDocument();
+    expect(screen.getByText(/another one like it. You've got this/)).toBeInTheDocument();
   });
 
-  it('brings the same question back at the end when there is no similar one, as a retry', async () => {
+  it('brings the same question back at the end, as a retry, and celebrates a comeback', async () => {
     const bodies: { retry?: boolean }[] = [];
     server.events.on('request:start', async ({ request }) => {
       if (request.method === 'POST' && request.url.endsWith('/learn/attempts')) {
@@ -65,25 +65,50 @@ describe('Learning from mistakes in a lesson', () => {
     await click('Continue');
     await rightChoice();
     await click('Continue');
-    expect(await screen.findByText("Let's try that one again.")).toBeInTheDocument();
+    expect(await screen.findByText("Another go at this one: you've got this.")).toBeInTheDocument();
     await rightShortAnswer();
+    expect(await feedback()).toHaveTextContent('Comeback! You got it this time.');
     await click('Finish');
     expect(await screen.findByRole('region', { name: 'Lesson complete' })).toBeInTheDocument();
     expect(bodies.map((b) => b.retry ?? false)).toEqual([false, false, true]);
     server.events.removeAllListeners();
   });
 
-  it('brings back at most 2 questions a lesson', async () => {
-    only(1, 2, 0);
+  it('steps down to an easier question after a second miss, instead of repeating', async () => {
+    only(1);
+    mockHelp(demoItems[1]!.id, { easier: demoEasier });
     renderRoute('/learn/topic/demo-topic-a');
     await wrongShortAnswer();
     await click('Continue');
-    await userEvent.type(await screen.findByLabelText('Your answer'), '9');
+    await wrongShortAnswer();
+    expect(await feedback()).toHaveTextContent(
+      /tricky today, so we'll come back to it another day/,
+    );
+    await click('Continue');
+    expect(await screen.findByText("Let's try an easier one on this.")).toBeInTheDocument();
+    expect(screen.getByText(demoEasier.prompt)).toBeInTheDocument();
+    expect(progressMax()).toBe('3');
+  });
+
+  it('puts a question they know before a retry, and ends on a success', async () => {
+    only(1);
+    mockHelp(demoItems[1]!.id, { confidence: demoItems[2] });
+    renderRoute('/learn/topic/demo-topic-a');
+    await wrongShortAnswer();
+    await click('Continue');
+    expect(await screen.findByText('A quick one you know.')).toBeInTheDocument();
+    await userEvent.type(await screen.findByLabelText('Your answer'), '4');
     await click('Check');
     await click('Continue');
-    await userEvent.click(await screen.findByRole('radio', { name: 'Option A' }));
+    expect(await screen.findByText("Another go at this one: you've got this.")).toBeInTheDocument();
+    await wrongShortAnswer();
+    // The last answer was wrong, so one more question they know comes before the summary.
+    await click('Continue');
+    expect(await screen.findByText('A quick one you know.')).toBeInTheDocument();
+    await userEvent.type(await screen.findByLabelText('Your answer'), '4');
     await click('Check');
-    expect(progressMax()).toBe('5');
+    await click('Finish');
+    expect(await screen.findByRole('region', { name: 'Lesson complete' })).toBeInTheDocument();
   });
 
   it('lets you skip a question that came back', async () => {
@@ -91,7 +116,7 @@ describe('Learning from mistakes in a lesson', () => {
     renderRoute('/learn/topic/demo-topic-a');
     await wrongShortAnswer();
     await click('Continue');
-    expect(await screen.findByText("Let's try that one again.")).toBeInTheDocument();
+    expect(await screen.findByText("Another go at this one: you've got this.")).toBeInTheDocument();
     await click('Skip this one');
     expect(await screen.findByRole('region', { name: 'Lesson complete' })).toBeInTheDocument();
   });

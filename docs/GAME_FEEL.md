@@ -40,11 +40,14 @@
   otherwise), confetti, XP tally, best combo, daily-goal bar fills, then **Next mission**
   (pulsing) and the line "Or take a break. Your streak is safe for today." when that is true.
 - **A question coming back** (learning from mistakes, F5): a gold line above the question says
-  why: "Here's one like the one you missed.", "Let's try that one again." or "Warm-up: this
-  one came up last time." After a wrong answer the feedback adds "No worries: we'll try one
-  like this again in a moment." A slow right answer adds "Nice one. That took a little while,
-  so it'll come back another day to make it stick." Same sounds as any answer; no penalty
-  words, and retries can build a combo.
+  why: "Here's another one like it. You've got this.", "Another go at this one: you've got
+  this.", "Let's try an easier one on this.", "A quick one you know." or "Warm-up: this one
+  came up last time." After a wrong answer the feedback adds "No worries: we'll have another go
+  at this in a moment"; after a second miss, "This one's tricky today, so we'll come back to it
+  another day" with the "Learn it first" links. A right retry adds "Comeback! You got it this
+  time." A slow right answer adds "Nice one. That took a little while, so it'll come back
+  another day to make it stick." Same sounds as any answer; no penalty or fail words, retries
+  can build a combo, and a lesson always ends on a success.
 - **Pip the fox** reacts with a short line (warm-up, combo, last question).
 - **Reward reveals** use U's tiered reward sounds with a matching visual tier (common to
   legendary). A reveal always shows exactly what was earned and why: no mystery boxes.

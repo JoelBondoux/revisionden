@@ -403,6 +403,9 @@ export const reviewPoints = pgTable(
     topicId: text('topic_id').notNull(),
     rung: integer('rung').notNull().default(0),
     dueDay: date('due_day').notNull(),
+    // Ladder visits missed since last parked; after 3 the point is parked a week and flagged.
+    misses: integer('misses').notNull().default(0),
+    flagged: boolean('flagged').notNull().default(false),
     updatedAt: updatedAt(),
   },
   (t) => [

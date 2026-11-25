@@ -55,7 +55,13 @@ import type { MathsEngine } from '../learning/maths-engine';
 import { awardXp, getProgress } from '../learning/progress';
 import { creditableXp } from '../daily-limit/state';
 import { topicAndDescendants } from '../learning/topic-tree';
-import { findSimilar, recordReview, warmUps } from '../learning/mistakes';
+import {
+  findConfidence,
+  findEasier,
+  findSimilar,
+  recordReview,
+  warmUps,
+} from '../learning/mistakes';
 
 /** How many recent answers to look back through for a combo (more is never needed in practice). */
 const COMBO_HISTORY = 100;
@@ -427,10 +433,16 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
         now,
       );
     }
-    const similar =
-      timed && !marked.correct && !input.retry
-        ? await findSimilar(db, servable, studentId, row, now)
-        : null;
+    // Help after a miss: a similar question (unless this was the retry), an easier one for a
+    // step down after a second miss, and a confidence question the student got right before.
+    const missed = timed && !marked.correct;
+    const help = missed
+      ? {
+          similar: input.retry ? null : await findSimilar(db, servable, studentId, row, now),
+          easier: await findEasier(db, servable, studentId, row, now),
+          confidence: await findConfidence(db, servable, studentId, row),
+        }
+      : { similar: null };
 
     const flashcardAdded =
       learning && !marked.correct && row.type !== 'flashcard'
@@ -458,7 +470,7 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
       flashcardAdded,
       combo,
       comboBonusXp: comboBonus,
-      ...(timed ? { shaky, similar } : {}),
+      ...(timed ? { shaky, ...help } : {}),
       newlyEarned: await saveNewRewards(db, studentId, now),
     };
     return c.json(response);

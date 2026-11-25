@@ -159,3 +159,8 @@
   color: var(--arena-gold);
   font-weight: var(--font-weight-extrabold);
 }
+
+.feedback__comeback {
+  color: var(--arena-gold);
+  font-weight: var(--font-weight-extrabold);
+}

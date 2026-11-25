@@ -19,6 +19,8 @@ const itemBase = {
   hint: text.optional(),
   /** Set on a lesson's warm-up questions: a learning point coming back on the review ladder (F5). */
   warmUp: z.literal(true).optional(),
+  /** The finer learning point the item tests, when content tags one (else its topic). F5. */
+  learningPoint: text.optional(),
 };
 
 export const LearnItemSchema = z.discriminatedUnion('type', [
@@ -152,6 +154,10 @@ export const LearnAttemptResponseSchema = z.object({
    * there is none (the lesson then brings the same question back at the end). F5.
    */
   similar: LearnItemSchema.nullable().optional(),
+  /** Learn mode, wrong answer: an easier question on the topic, for a step down after a second miss. */
+  easier: LearnItemSchema.nullable().optional(),
+  /** Learn mode, wrong answer: a question the student has got right before (a confidence win). */
+  confidence: LearnItemSchema.nullable().optional(),
   /** A right answer that took more than twice the expected time: it comes back another day. */
   shaky: z.boolean().optional(),
   /** Rewards this answer earned, saved once each (play the reward sound and show them). */
