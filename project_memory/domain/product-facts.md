@@ -199,8 +199,23 @@ Tags: #product #rules #limits #defaults
   `deleteFamilies` only for a one-parent family (two parents: 409 `needs_both_parents`, both
   confirm in the app). Records kept 2 years. Trial and free-place routes answer 503
   `payments_not_ready` until workstream $.
+- Complaints (O4): a parent makes one at `/complaints` ("Make a complaint" on the parent home;
+  3 a day per family; summary 3–500 characters with no email, phone or child nickname) or support
+  logs an emailed one. Acknowledge by the end of the 2nd UK working day (weekends and England and
+  Wales bank holidays skipped, list from gov.uk through 2028), aim to resolve within 14 days
+  (`packages/core/src/complaints.ts`). Agents acknowledge, reply and resolve; Managers escalate.
+  The family sees replies and the outcome (and, for personal data, that they can complain to the
+  ICO; contact details await the owner's check), never staff names. Kept 12 months after
+  resolved; deleted with the family; in the export. Deadlines are "we aim to" (decision 0006).
+- Only parents complain. A student uses "Ask a parent to raise something" (Settings,
+  `/ask-a-parent`): a topic (`COMPLAINT_REQUEST_TOPICS`) and an optional note (≤300, no email or
+  phone), 3 a day; both parents see it on `/complaints` and can start a complaint pre-filled with
+  the topic (not the note) or dismiss it. Never sent to AppDeck; deleted after 90 days.
+- Escalation: a complaint not resolved within 5 working days of acknowledgement can be escalated
+  by the parent ("Ask for a manager to review") or a Manager; AppDeck shows `escalationFrom` and
+  overdue flags.
 - Every operator read of a family and every action goes in `operator_audit_log`, kept 2 years
-  (data retention policy 1.5); the scheduled clean-up deletes older entries.
+  (data retention policy 1.7); the scheduled clean-up deletes older entries.
 
 ## Content
 
@@ -585,7 +600,7 @@ Tags: #product #rules #limits #defaults
 - Settled in J7 (owner request, 2026-11-25): no plain underlined text links. Navigation uses the
   link components in `apps/web/src/components/links.tsx` (LinkButton, LinkTile, LinkChip; TextLink
   only inside sentences and policy prose: bold, coloured, a soft bar, underline on hover). A guard
-  test, `apps/web/src/components/noTextLinks.test.ts`, keeps it that way.
+  test, `apps/web/src/components/noTextLinks.test.ts`, keeps it that way across the whole web app (no exclusions since 2026-11-25).
 
 ## Exam practice (planned)
 

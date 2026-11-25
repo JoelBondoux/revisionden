@@ -31,6 +31,8 @@ import { AdminFeedbackPage, FeedbackListPage } from './features/feedback/lists';
 import { MyStatsPage } from './features/stats/MyStatsPage';
 import { ParentDashboardPage } from './features/stats/ParentDashboardPage';
 import { ParentHomePage, ParentRemindersPage } from './features/parent';
+import { ComplaintsPage } from './features/complaints/ComplaintsPage';
+import { AskParentPage } from './features/complaints/AskParentPage';
 import { JoinPage } from './features/parents';
 import { HelpLayout, HelpPage } from './features/help';
 
@@ -75,6 +77,9 @@ export const routes: RouteObject[] = [
       { path: '/parent', element: <ParentHomePage /> },
       { path: '/parent/reminders/:studentId', element: <ParentRemindersPage /> },
       { path: '/parent/stats', element: <ParentDashboardPage /> },
+      // Formal complaints (workstream O4).
+      { path: '/complaints', element: <ComplaintsPage /> },
+      { path: '/ask-a-parent', element: <AskParentPage /> },
       { path: '/review/batches/:batchId', element: <BatchReviewPage /> },
       // Learning loop (workstream F): lessons and the starting test hide the nav.
       { path: '/learn/topic/:topicId', element: <TopicLessonPage /> },

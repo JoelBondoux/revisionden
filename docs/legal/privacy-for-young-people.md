@@ -1,6 +1,6 @@
 # Privacy notice for young people
 
-Version: 1.5
+Version: 1.6
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -70,6 +70,9 @@ checks it and only tells us "yes, it's them".
 - **Reminders:** if you turn them on, an address your browser gives us so we can send them.
 - **AI use:** how much AI marking you used this month (just numbers, never your answers).
 - **Feedback:** anything you choose to send us.
+- **"Ask a parent" notes:** if you ask a parent to raise something for you, the topic you
+  picked and your short note, if you wrote one. Only your parents see it. It's deleted when a parent
+  acts on it or clears it, and after 90 days at most.
 
 We do **not** keep the words of your answers to questions. We use them to mark the question,
 then only keep the result.
@@ -227,8 +230,12 @@ Tell us at {{CONTACT_EMAIL}}. You can also complain to the Information Commissio
 (ICO), which makes sure organisations follow data protection law: ico.org.uk/make-a-complaint or
 0303 123 1113. You can ask a trusted adult to help you.
 
+If something in the app feels wrong or unfair, you can also use "Ask a parent to raise something"
+in Settings. Only your parents see it, and they can make a complaint for you.
+
 ### Changes
 
+- 1.6: You can ask a parent to raise something for you from Settings. Only your parents see it, and it's deleted after 90 days at most.
 - 1.5: Target grades: you can set your own target for each subject, and your parent can set one too. You both see both.
 
 <!-- icon: refresh -->
@@ -242,6 +249,7 @@ If we change how we use your information, we'll show you a short note in the app
 
 ## Changes
 
+- 1.6: You can ask a parent to raise something for you from Settings. Only your parents see it, and it's deleted after 90 days at most.
 - 1.4: If your family has two parents set up, both of them can see your progress.
 - 1.3: Added how read aloud works. Nothing new is kept about you.
 - 1.2: Says that the Get help page is private: nothing about using it is recorded or shown to your parent. No change to the data we keep.
