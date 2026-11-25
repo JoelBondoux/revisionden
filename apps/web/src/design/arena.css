@@ -2,12 +2,26 @@
  * The dark "arena" theme for practice screens (docs/GAME_FEEL.md, mockup 22). Wrap a screen in
  * `.arena`. Transforms and opacity only for motion; reduced motion is handled in base.css.
  */
-.arena {
-  min-height: 100dvh;
-  padding: var(--space-4);
-  color: var(--arena-text);
+body:has(.arena:not(.review)) {
   background:
-    radial-gradient(120% 60% at 50% 0%, var(--arena-raised) 0%, transparent 70%), var(--arena-bg);
+    radial-gradient(120% 50% at 50% 0%, var(--arena-raised) 0%, transparent 70%) no-repeat,
+    var(--arena-bg);
+}
+
+body:has(.arena:not(.review)) footer,
+body:has(.arena:not(.review)) footer a {
+  color: var(--arena-text-secondary);
+}
+
+.arena {
+  color: var(--arena-text);
+}
+
+/* An arena panel inside a light page (the Cards tab), until that page goes fully immersive. */
+.arena.review {
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--arena-bg);
 }
 
 .arena h1,
@@ -60,6 +74,10 @@
 
 .answer-option {
   position: relative;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  min-width: 0;
+  overflow-wrap: anywhere;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -121,4 +139,32 @@
   position: absolute;
   opacity: 0;
   pointer-events: none;
+}
+
+/* Light parts inside the arena keep dark text; labels use the arena's secondary colour. */
+.arena .field__input {
+  color: var(--color-text);
+}
+
+.arena .field__label,
+.arena .deck-header__subject,
+.arena .stat__label,
+.arena.lesson h1 {
+  color: var(--arena-text-secondary);
+}
+
+.arena .card .secondary-text {
+  color: var(--arena-text-secondary);
+}
+
+.arena .question__reveal {
+  color: var(--arena-glow);
+}
+
+.arena .stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  border-radius: var(--radius-md);
+  background: var(--arena-bg);
 }
