@@ -438,7 +438,10 @@ Tags: #product #rules #limits #defaults
   needed.
   Operator triage at `/admin/feedback` for sign-in emails in `OPERATOR_EMAILS`. Workstream L.
 - Parents confirm the terms and privacy notice in onboarding (version stored in
-  `policy_acceptances`); a changed version shows a "We've updated" prompt. A newly linked student
+  `policy_acceptances`) on a "Before you start" page that shows each policy's plain-English
+  bullets as cards (word for word, from the policy files; 4 chosen ones first, then "Show all N
+  points") with the full text behind "Show the
+  details"; a changed version shows a "We've updated" prompt. A newly linked student
   device shows the young people's notice once (`revisionden.youngPeopleNotice` in local storage).
 - The young people's notice has a friendly view built from the same file: 6 short-version cards,
   2 to 4 key points per part always visible, "Read more" and "Expand all", original icons and Pip;

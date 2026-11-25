@@ -117,3 +117,56 @@
   flex: none;
   accent-color: var(--color-primary);
 }
+
+/* "Before you start" (L8): the terms and privacy notice as cards, built from the policy files. */
+.accept {
+  max-width: 980px;
+}
+
+.accept-cards {
+  margin: var(--space-3) 0;
+}
+
+@media (min-width: 900px) {
+  .accept-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.accept-card {
+  align-items: flex-start;
+  font-weight: normal;
+}
+
+.accept-card__text {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.accept-card__text p {
+  margin: 0;
+}
+
+.accept-card__label {
+  font-weight: var(--font-weight-extrabold);
+}
+
+.accept-policy__link {
+  margin: var(--space-3) 0 0;
+  font-weight: var(--font-weight-bold);
+}
+
+/* Phones: the fox sits above the heading so the text keeps the full width. */
+@media (max-width: 559px) {
+  .accept .friendly-notice__intro {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.accept-more {
+  display: block;
+  margin: 0 0 var(--space-3);
+}
