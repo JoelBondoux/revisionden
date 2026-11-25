@@ -11,4 +11,11 @@ describe('reading content/', () => {
     expect(content.items.length).toBeGreaterThan(0);
     expect(content.items.every((i) => typeof i.id === 'string' && i.verification)).toBe(true);
   });
+
+  it('reads the mark schemes, so review snapshots can include them', async () => {
+    const content = await readContentDir(contentDir);
+    expect(content.markSchemes.map((m) => m.id)).toContain(
+      'gcse-maths-ms-consecutive-integers-proof',
+    );
+  });
 });

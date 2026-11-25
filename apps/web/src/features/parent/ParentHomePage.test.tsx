@@ -2,6 +2,7 @@ import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { server } from '../../mocks/server';
+import { family } from '../../mocks/data';
 import { renderRoute } from '../../test/render';
 
 const open = async () => {
@@ -144,5 +145,23 @@ describe('Parent home: two parents', () => {
   it("lists each child's linked devices", async () => {
     renderRoute('/parent');
     expect(await screen.findByRole('heading', { name: 'Linked devices' })).toBeInTheDocument();
+  });
+
+  it('shows the things left to check when a board or tier is Not sure', async () => {
+    server.use(
+      http.get('*/v1/onboarding/family', () =>
+        HttpResponse.json({
+          children: [
+            {
+              ...family.children[0]!,
+              enrolments: [{ ...family.children[0]!.enrolments[0]!, board: 'not_sure' }],
+              toCheckLater: 1,
+            },
+          ],
+        }),
+      ),
+    );
+    renderRoute('/parent');
+    expect(await screen.findByRole('heading', { name: 'Things to check: 1' })).toBeInTheDocument();
   });
 });

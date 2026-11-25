@@ -174,4 +174,77 @@ describe('onboarding API client', () => {
     expect(String(fetch.mock.calls[0]![0])).toBe('https://api.test/v1/device/link');
     expect(String(fetch.mock.calls[1]![0])).toBe('https://api.test/v1/device/link/verify');
   });
+
+  it('sets a child board or tier with PATCH', async () => {
+    const fetch = fakeFetch(200, {
+      studentId: STUDENT_ID,
+      subjectId: 'gcse-maths',
+      board: 'AQA',
+      tier: 'higher',
+    });
+    const api = createOnboardingApi({ baseUrl: 'https://api.test', fetch });
+    const saved = await api.updateChildSubject(STUDENT_ID, 'gcse-maths', { board: 'AQA' });
+    expect(saved.board).toBe('AQA');
+    const [url, init] = fetch.mock.calls[0]!;
+    expect(String(url)).toBe(`https://api.test/v1/students/${STUDENT_ID}/enrolments/gcse-maths`);
+    expect(init?.method).toBe('PATCH');
+    expect(JSON.parse(String(init?.body))).toEqual({ board: 'AQA' });
+  });
+
+  it('reads and updates the student device subjects', async () => {
+    const list = fakeFetch(200, { enrolments: [], toCheckLater: 0 });
+    const api = createOnboardingApi({ baseUrl: 'https://api.test', fetch: list });
+    expect(await api.getMySubjects()).toEqual({ enrolments: [], toCheckLater: 0 });
+    expect(String(list.mock.calls[0]![0])).toBe('https://api.test/v1/student/subjects');
+
+    const patch = fakeFetch(200, {
+      studentId: STUDENT_ID,
+      subjectId: 'gcse-maths',
+      board: 'OCR',
+      tier: 'none',
+    });
+    const api2 = createOnboardingApi({ baseUrl: 'https://api.test', fetch: patch });
+    await api2.updateMySubject('gcse-maths', { board: 'OCR' });
+    expect(String(patch.mock.calls[0]![0])).toBe('https://api.test/v1/student/subjects/gcse-maths');
+    expect(patch.mock.calls[0]![1]?.method).toBe('PATCH');
+  });
+
+  it('reads and saves the student device avatar', async () => {
+    const read = fakeFetch(200, { avatarCode: AVATAR, earnedRewardIds: [] });
+    const api = createOnboardingApi({ baseUrl: 'https://api.test', fetch: read });
+    expect(await api.getMyAvatar()).toEqual({ avatarCode: AVATAR, earnedRewardIds: [] });
+
+    const save = fakeFetch(200, child.student);
+    const api2 = createOnboardingApi({ baseUrl: 'https://api.test', fetch: save });
+    await api2.saveMyAvatar(AVATAR);
+    expect(String(save.mock.calls[0]![0])).toBe('https://api.test/v1/student/avatar');
+    expect(save.mock.calls[0]![1]?.method).toBe('PUT');
+  });
+
+  it('unlocks a student device with a passkey already on it', async () => {
+    const fetch = vi
+      .fn()
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ challengeId: 'c2', options: { challenge: 'xyz' } }), {
+          status: 200,
+        }),
+      )
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ student: child.student }), { status: 200 }),
+      );
+    const api = createOnboardingApi({ baseUrl: 'https://api.test', fetch });
+    const start = await api.unlockOptions();
+    expect(start).toEqual({ challengeId: 'c2', options: { challenge: 'xyz' } });
+    const done = await api.unlockVerify({
+      challengeId: 'c2',
+      response: { id: 'cred', response: {} },
+    });
+    expect(done.student.id).toBe(STUDENT_ID);
+    const [optionsUrl, optionsInit] = fetch.mock.calls[0]!;
+    expect(String(optionsUrl)).toBe('https://api.test/v1/device/unlock/options');
+    // No credential ids: the browser offers any RevisionDen passkey on this device.
+    expect(optionsInit.body).toBe('{}');
+    expect(optionsInit.credentials).toBe('include');
+    expect(String(fetch.mock.calls[1]![0])).toBe('https://api.test/v1/device/unlock/verify');
+  });
 });

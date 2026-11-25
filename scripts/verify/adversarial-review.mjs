@@ -71,6 +71,22 @@ export function reviewPrompt(item) {
   const shown = Object.fromEntries(
     PARTS.filter((k) => item[k] !== undefined).map((k) => [k, item[k]]),
   );
+  // Option numbers count from 0 (answer.option, distractor:N). Say so and show the correct
+  // option's text: a reviewer reading them as 1-based fails correct items as wrong answers.
+  const choices = Array.isArray(item.options) && typeof item.answer?.option === 'number';
+  if (choices) {
+    shown.answer = {
+      ...item.answer,
+      correct_option_text: item.options[item.answer.option],
+    };
+  }
+  const numbering = choices
+    ? [
+        '',
+        'Options are numbered from 0: "option": 0 is the first option. In the sources,',
+        '"distractor:N" means wrong option N, also counted from 0.',
+      ]
+    : [];
   const sources = item.citations.map(
     (c, i) =>
       `${i + 1}. ${c.publisher}, ${c.title} (${c.document_ref}), ${c.location}; supports ${c.supports.join(', ')}:\n` +
@@ -78,9 +94,13 @@ export function reviewPrompt(item) {
   );
   return {
     system: SYSTEM,
-    prompt: [`Item:\n${JSON.stringify(shown, null, 2)}`, '', 'Official sources:', ...sources].join(
-      '\n',
-    ),
+    prompt: [
+      `Item:\n${JSON.stringify(shown, null, 2)}`,
+      ...numbering,
+      '',
+      'Official sources:',
+      ...sources,
+    ].join('\n'),
   };
 }
 

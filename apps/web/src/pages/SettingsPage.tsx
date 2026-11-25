@@ -6,7 +6,6 @@ import {
   HeartIcon,
   HomeIcon,
   InfoIcon,
-  PhoneIcon,
   ShieldIcon,
   UsersIcon,
 } from '../components/icons';
@@ -18,6 +17,8 @@ import { ReadingSettingsCard } from '../features/reading';
 import { ReadAloudSettingsCard } from '../features/read-aloud';
 import { SoundSettingsCard } from '../features/sound';
 import { ParentCanSee } from '../features/stats/ParentCanSee';
+import { MySubjectsCard } from '../features/onboarding/checksUi';
+import { InstallButton } from '../pwa/InstallCard';
 
 export function SettingsPage() {
   const bugButton = useBugButton();
@@ -27,12 +28,7 @@ export function SettingsPage() {
       <Card title="This device">
         <ul className="link-tiles">
           <li>
-            <LinkTile
-              to="/install"
-              icon={<PhoneIcon />}
-              title="Add to Home Screen"
-              description="Open RevisionDen like an app"
-            />
+            <InstallButton />
           </li>
           <li>
             <LinkTile
@@ -52,6 +48,7 @@ export function SettingsPage() {
           </li>
         </ul>
       </Card>
+      <MySubjectsCard />
       <Card title="Parents">
         <ul className="link-tiles">
           <li>
@@ -88,6 +85,14 @@ export function SettingsPage() {
               icon={<HeartIcon />}
               title="Get help"
               description="People to talk to, any time"
+            />
+          </li>
+          <li>
+            <LinkTile
+              to="/ask-a-parent"
+              icon={<UsersIcon />}
+              title="Ask a parent to raise something"
+              description="If something feels wrong or unfair"
             />
           </li>
           <li>

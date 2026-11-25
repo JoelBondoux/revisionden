@@ -37,6 +37,16 @@
       "minimum": 1,
       "maximum": 5
     },
+    "learning_point": {
+      "$ref": "#/$defs/id",
+      "description": "Optional finer skill within the topic, e.g. gcse-maths-h-n7-lp-fractional-indices. After a wrong answer the app offers another item with the same learning point (at least 3 per learning point); without one it falls back to the topic."
+    },
+    "expected_seconds": {
+      "type": "integer",
+      "minimum": 5,
+      "maximum": 900,
+      "description": "Optional time a confident student takes. Answers slower than twice this count as shaky. Without it the app uses a guide by item type."
+    },
     "source_ref": {
       "type": "string",
       "minLength": 1,
@@ -133,6 +143,53 @@
         }
       },
       "additionalProperties": false
+    },
+    "facts": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Standard maths facts the item rests on that no cited source states (decision 0009). Each goes through the fact-check stage (pnpm content:model-check --fact-check): an official citation, or a maths engine proof plus a blind statement by a third provider.",
+      "items": {
+        "type": "object",
+        "required": ["statement", "ask"],
+        "additionalProperties": false,
+        "properties": {
+          "statement": {
+            "$ref": "#/$defs/text",
+            "description": "The fact in plain words, as the item relies on it."
+          },
+          "ask": {
+            "$ref": "#/$defs/text",
+            "description": "A neutral question whose answer is the fact, for the blind statement (never our wording)."
+          },
+          "engine": {
+            "type": "object",
+            "required": ["kind"],
+            "description": "Optional maths engine check that proves the fact (services/maths app/content_check.py and app/facts.py; fields per kind in docs/VERIFICATION.md step 4b). For example {\"kind\": \"transformation\", \"graph\": \"f(x - a)\", \"image\": \"(x + a, y)\"}.",
+            "properties": {
+              "kind": {
+                "enum": [
+                  "identity",
+                  "value",
+                  "solve",
+                  "expression",
+                  "formula",
+                  "transformation",
+                  "implication",
+                  "sign_change",
+                  "parallel",
+                  "trig_value",
+                  "graph_measure"
+                ]
+              }
+            }
+          },
+          "citation": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Citation number (counting from 1) whose official quote states the fact."
+          }
+        }
+      }
     }
   },
   "allOf": [
@@ -199,6 +256,12 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 200
+    },
+    "answer_subject": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 20,
+      "description": "What the answer is the value of, such as t or f^-1(x): an answer written \"<subject> = ...\" is read as its right-hand side."
     },
     "marks": {
       "type": "integer",
@@ -324,7 +387,29 @@
             "tolerance": {
               "type": "number",
               "minimum": 0
+            },
+            "decimal_places": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 10,
+              "description": "The question asks for this many decimal places: only an answer written to exactly this accuracy, with the correctly rounded value, is right."
+            },
+            "significant_figures": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 15,
+              "description": "The question asks for this many significant figures: only an answer written to this accuracy, with the correctly rounded value, is right."
+            },
+            "subject": {
+              "$ref": "#/$defs/answer_subject"
             }
+          },
+          "not": {
+            "anyOf": [
+              { "required": ["decimal_places", "significant_figures"] },
+              { "required": ["tolerance", "decimal_places"] },
+              { "required": ["tolerance", "significant_figures"] }
+            ]
           },
           "additionalProperties": false
         },
@@ -372,6 +457,9 @@
               "properties": {
                 "expression": {
                   "$ref": "#/$defs/maths"
+                },
+                "subject": {
+                  "$ref": "#/$defs/answer_subject"
                 }
               },
               "additionalProperties": false
@@ -437,6 +525,25 @@
         },
         "back": {
           "$ref": "#/$defs/text"
+        },
+        "back_formula": {
+          "type": "object",
+          "description": "Maths flashcards: the back as a formula the maths engine can read (x = ..., +- for ±, sqrt, ^), plus any conditions that must be stated (for example \"a ≠ 0\"). The blind answer is compared with the maths engine and must mention every condition (docs/VERIFICATION.md step 3).",
+          "required": ["formula"],
+          "properties": {
+            "formula": {
+              "type": "string",
+              "minLength": 3
+            },
+            "conditions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "additionalProperties": false
         }
       }
     },

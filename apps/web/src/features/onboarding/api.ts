@@ -4,19 +4,26 @@ import {
   AvatarCodeSchema,
   DeviceListSchema,
   LinkStatusSchema,
+  EnrolmentSchema,
   LinkTokenSchema,
   OnboardedChildSchema,
   OnboardingFamilySchema,
+  StudentAvatarSchema,
   StudentSchema,
   type DeviceType,
   type LinkedDevice,
   type LinkKind,
   type LinkStatus,
+  StudentSubjectsSchema,
+  type Enrolment,
   type LinkToken,
   type OnboardChildRequest,
   type OnboardedChild,
   type OnboardingFamily,
   type Student,
+  type StudentAvatar,
+  type StudentSubjects,
+  type UpdateSubjectChoiceRequest,
 } from '@revisionden/core';
 
 /** A failed onboarding request, with the server's own message when it sent one. */
@@ -49,7 +56,15 @@ const linkStartSchema = z.object({
 });
 export type LinkStart = z.infer<typeof linkStartSchema>;
 
-const linkDoneSchema = z.object({ deviceId: z.string(), student: StudentSchema });
+const linkDoneSchema = z.object({
+  deviceId: z.string(),
+  deviceMarker: z.string().optional(),
+  student: StudentSchema,
+});
+
+const unlockStartSchema = z.object({ challengeId: z.string(), options: z.record(z.unknown()) });
+export type UnlockStart = z.infer<typeof unlockStartSchema>;
+const unlockDoneSchema = z.object({ student: StudentSchema, deviceMarker: z.string().optional() });
 
 export interface OnboardingApi {
   getFamily(): Promise<OnboardingFamily>;
@@ -65,7 +80,28 @@ export interface OnboardingApi {
     challengeId: string;
     response: unknown;
     deviceType?: DeviceType;
-  }): Promise<{ deviceId: string; student: Student }>;
+  }): Promise<{ deviceId: string; deviceMarker?: string; student: Student }>;
+  /** Starts a passkey unlock; no credential ids, so any RevisionDen passkey here can answer. */
+  unlockOptions(): Promise<UnlockStart>;
+  /** Checks the passkey's answer and starts a new 12-hour student session. */
+  unlockVerify(input: {
+    challengeId: string;
+    response: unknown;
+    /** The marker this browser keeps for its device (I5b), if it has one. */
+    deviceMarker?: string;
+  }): Promise<{ student: Student; deviceMarker?: string }>;
+  /** Parent: set a child's board or tier, for example after Not sure. */
+  updateChildSubject(
+    studentId: string,
+    subjectId: string,
+    change: UpdateSubjectChoiceRequest,
+  ): Promise<Enrolment>;
+  /** Student device: their own subjects and how many are left to check. */
+  getMySubjects(): Promise<StudentSubjects>;
+  /** Student device: turn a Not sure board or tier into a real one. */
+  updateMySubject(subjectId: string, change: UpdateSubjectChoiceRequest): Promise<Enrolment>;
+  getMyAvatar(): Promise<StudentAvatar>;
+  saveMyAvatar(avatarCode: string): Promise<Student>;
 }
 
 interface Options {
@@ -84,7 +120,7 @@ export function createOnboardingApi({
     path: string,
     schema: ZodType<T>,
     body?: unknown,
-    method?: 'POST' | 'DELETE',
+    method?: 'POST' | 'PATCH' | 'PUT' | 'DELETE',
   ): Promise<T> {
     let response: Response;
     try {
@@ -167,5 +203,25 @@ export function createOnboardingApi({
     },
     redeemLink: (body) => request('v1/device/link', linkStartSchema, body),
     verifyLink: (body) => request('v1/device/link/verify', linkDoneSchema, body),
+    unlockOptions: () => request('v1/device/unlock/options', unlockStartSchema, {}),
+    unlockVerify: (body) => request('v1/device/unlock/verify', unlockDoneSchema, body),
+    updateChildSubject: (studentId, subjectId, change) =>
+      request(
+        `v1/students/${encodeURIComponent(studentId)}/enrolments/${encodeURIComponent(subjectId)}`,
+        EnrolmentSchema,
+        change,
+        'PATCH',
+      ),
+    getMySubjects: () => request('v1/student/subjects', StudentSubjectsSchema),
+    updateMySubject: (subjectId, change) =>
+      request(
+        `v1/student/subjects/${encodeURIComponent(subjectId)}`,
+        EnrolmentSchema,
+        change,
+        'PATCH',
+      ),
+    getMyAvatar: () => request('v1/student/avatar', StudentAvatarSchema),
+    saveMyAvatar: (avatarCode) =>
+      request('v1/student/avatar', StudentSchema, { avatarCode }, 'PUT'),
   };
 }

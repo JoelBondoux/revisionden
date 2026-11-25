@@ -75,6 +75,10 @@ export interface ReviewClient {
   decideReport(id: string, decision: ReportDecision, notes?: string): Promise<void>;
   batches(): Promise<BatchSummary[]>;
   batch(id: string): Promise<Batch>;
+  /** How many draft items have passed every automated check and wait for a batch. */
+  readyDrafts(): Promise<number>;
+  /** Content leads: put every ready draft item in a new batch. */
+  createBatchFromDrafts(title: string): Promise<{ id: string; size: number }>;
   decideItem(
     batchId: string,
     itemId: string,
@@ -113,6 +117,10 @@ export function createReviewClient({
     batches: async () =>
       (await request('batches', z.object({ batches: z.array(batchSummarySchema) }))).batches,
     batch: (batchId) => request(`batches/${id(batchId)}`, batchSchema),
+    readyDrafts: async () =>
+      (await request('batches/from-drafts', z.object({ ready: z.number() }))).ready,
+    createBatchFromDrafts: (title) =>
+      request('batches/from-drafts', z.object({ id: z.string(), size: z.number() }), { title }),
     decideItem: (batchId, itemId, decision, notes) =>
       request(
         `batches/${id(batchId)}/items/${id(itemId)}/decision`,

@@ -4,9 +4,11 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { startRegistration } from '@simplewebauthn/browser';
 import { Avatar, Button } from '../../components';
 import { useStudent } from '../../session/StudentContext';
+import { AvatarBuilder } from '../avatar/AvatarBuilder';
 import type { LinkStart } from './api';
 import { useOnboardingApi } from './OnboardingApiContext';
 import { afterLinkPath } from '../legal/youngPeopleNotice';
+import { saveDeviceMarker } from '../../session/deviceMarker';
 
 /** Creates a passkey on this device from the server's options; returns the browser's answer. */
 export type RegisterPasskey = (options: Record<string, unknown>) => Promise<unknown>;
@@ -27,6 +29,7 @@ type State =
   | { status: 'enterCode'; error?: string }
   | { status: 'loading' }
   | { status: 'ready'; link: LinkStart; error?: string }
+  | { status: 'personalise'; nickname: string; avatarCode: string }
   | { status: 'failed'; message: string };
 
 /** Student device: opened from the parent's QR code. Redeems the code, then sets up a passkey. */
@@ -87,6 +90,17 @@ export function LinkPage({
     );
   }
 
+  if (state.status === 'personalise') {
+    return (
+      <MakeItYours
+        nickname={state.nickname}
+        startCode={state.avatarCode}
+        save={(code) => api.saveMyAvatar(code)}
+        onDone={() => navigate(afterLinkPath())}
+      />
+    );
+  }
+
   const { link } = state;
   const setUp = async () => {
     setBusy(true);
@@ -97,8 +111,13 @@ export function LinkPage({
         response,
         deviceType: deviceType(),
       });
+      saveDeviceMarker(done.deviceMarker);
       chooseStudent(done.student.id);
-      navigate(afterLinkPath());
+      setState({
+        status: 'personalise',
+        nickname: done.student.nickname,
+        avatarCode: done.student.avatarCode,
+      });
     } catch {
       setState({ status: 'ready', link, error: 'The passkey was not set up. Try again.' });
       setBusy(false);
@@ -171,5 +190,48 @@ function EnterCode({ error, onCode }: { error?: string; onCode: (code: string) =
         Continue
       </Button>
     </form>
+  );
+}
+
+interface MakeItYoursProps {
+  nickname: string;
+  startCode: string;
+  save: (avatarCode: string) => Promise<unknown>;
+  onDone: () => void;
+}
+
+/** First open on a newly linked device: the student can change the look their parent picked. */
+function MakeItYours({ nickname, startCode, save, onDone }: MakeItYoursProps) {
+  const [code, setCode] = useState(startCode);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string>();
+  const submit = async () => {
+    setSaving(true);
+    setError(undefined);
+    try {
+      await save(code);
+      onDone();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not save your avatar.');
+      setSaving(false);
+    }
+  };
+  return (
+    <div className="stack">
+      <h1>Make it yours</h1>
+      <p>Change anything you like. You can always come back to it later.</p>
+      <AvatarBuilder code={code} nickname={nickname} onChange={setCode} />
+      {error && (
+        <p role="alert" className="field__error">
+          {error}
+        </p>
+      )}
+      <Button block onClick={submit} disabled={saving}>
+        Save my avatar
+      </Button>
+      <Button block variant="secondary" onClick={onDone}>
+        Maybe later
+      </Button>
+    </div>
   );
 }

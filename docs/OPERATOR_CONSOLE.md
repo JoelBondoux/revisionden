@@ -130,7 +130,26 @@ Data request records keep a plain family id (they outlive a deleted family) and 
 years after the request arrived. An export request is handled by telling the parent to use
 "Download your family's data"; AppDeck never receives the export.
 
-Still to come: complaints (O4), discount codes (O5), family tags (O6).
+#### Complaints (O4)
+
+| Route                              | Role    | Body                                                                                 | What it does                                                                                                                                                                                                                                                                                                                                                                                                          | Audit action            |
+| ---------------------------------- | ------- | ------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| `GET complaints`                   | Agent   |                                                                                      | `{ complaints: [{ id, familyId, status: "new"\|"acknowledged"\|"resolved"\|"escalated", channel: "app"\|"email", summary, aboutPersonalData, receivedAt, acknowledgeDueAt, resolveDueAt, acknowledgedAt, resolvedAt, escalationFrom, acknowledgeOverdue, resolveOverdue, outcome, messages: [{ id, from, body, createdAt }] }] }`, newest 500. `escalationFrom` is 5 working days after acknowledgement (null before) | `complaints.list`       |
+| `POST complaints`                  | Agent   | `{ familyId \| null, summary (3–500), aboutPersonalData, receivedOn: "YYYY-MM-DD" }` | Logs an emailed complaint (channel `email`). Answers `{ complaint: { id } }`                                                                                                                                                                                                                                                                                                                                          | `complaint.log`         |
+| `POST complaints/{id}/acknowledge` | Agent   | `{}`                                                                                 | 409 `already_acknowledged`                                                                                                                                                                                                                                                                                                                                                                                            | `complaint.acknowledge` |
+| `POST complaints/{id}/reply`       | Agent   | `{ text }` (1–5000)                                                                  | Shown to the parent in "Make a complaint", without the operator's email                                                                                                                                                                                                                                                                                                                                               | `complaint.reply`       |
+| `POST complaints/{id}/resolve`     | Agent   | `{ outcome }` (3–2000)                                                               | Shown to the parent; resolved complaints are deleted 12 months later                                                                                                                                                                                                                                                                                                                                                  | `complaint.resolve`     |
+| `POST complaints/{id}/escalate`    | Manager | `{}`                                                                                 | A Manager reviews it                                                                                                                                                                                                                                                                                                                                                                                                  | `complaint.escalate`    |
+
+Any action on a resolved complaint is 409 `complaint_closed`. Owner decisions (decision 0006):
+deadlines are what we aim for; only parents complain, and a student's "Ask a parent" request
+(topic and note) stays in the family and never reaches AppDeck; a complaint not resolved within
+5 working days of acknowledgement can be escalated, by the parent in the app or a Manager. Deadlines come from
+`complaintDueDates` in `packages/core/src/complaints.ts`: acknowledge by the end of the 2nd working
+day (UK days; weekends and England and Wales bank holidays from gov.uk skipped), resolve within 14
+days. Recording a refund or goodwill payment waits for payments (workstream $).
+
+Still to come: discount codes (O5), family tags (O6).
 
 ## What the operator can see and do
 
@@ -140,7 +159,7 @@ Still to come: complaints (O4), discount codes (O5), family tags (O6).
 | **Family tags**              | Tag list with counts; families with a tag                                                                                                                                                               | Manager: create, rename, retire tags and set effects. Agent: add or remove tags on a family                    |
 | **Families**                 | Search by exact parent sign-in email or family id only (no browsing names). Family: created, parents (sign-in emails), plan and trial, children as nickname + year group + subjects, last active, flags | Agent: add an internal note. Manager: extend trial, grant or end a free place, comp Premium                    |
 | **Tickets**                  | Bug reports, ideas, confusing, other; error reports grouped by RD code; status, device details, history                                                                                                 | Agent: reply (shown in the family's app), change status, confirm bug / mark duplicate (Bug Hunter)             |
-| **Complaints**               | Formal complaints (new feedback kind "complaint"), with dates due                                                                                                                                       | Agent: acknowledge, reply, resolve with outcome. Manager: escalate, record a refund or goodwill                |
+| **Complaints**               | Formal complaints (their own `complaints` table, not a feedback kind: they have their own statuses, deadlines and retention), with dates due                                                            | Agent: acknowledge, reply, resolve with outcome. Manager: escalate, record a refund or goodwill                |
 | **Discount codes**           | Codes, percentage or fixed, duration, expiry, maximum uses, redemptions                                                                                                                                 | Manager: create, disable. Codes are applied at checkout (workstream $)                                         |
 | **Free school meals places** | Claims (scheme and date), renewals due, spot checks                                                                                                                                                     | Manager: start a spot check, record "checked on date", end a place                                             |
 | **Data requests**            | Export and deletion requests, statutory deadline (one calendar month), status                                                                                                                           | Manager: mark handled; deletion runs the existing deletion code (both parents' confirmation rules still apply) |
@@ -171,6 +190,25 @@ Requested by the product owner on 2026-11-25.
 - Tags never hold personal information (no names or notes in tag names); notes stay in the family's
   internal notes. The privacy notice mentions internal account labels for support.
 
+Built (O6) under `/operator/appdeck`, on the paths AppDeck proposed:
+
+| Route                                    | Role    | Body                                                                                        | `data`                                                                                                                                                     | Audit action        |
+| ---------------------------------------- | ------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `GET tags`                               | Agent   |                                                                                             | `{ tags: [{ id, name, colour, description, effects: { betaProgramme, earlyAccess, complimentaryPremium, excludeFromMetrics }, familyCount, retiredAt }] }` | no                  |
+| `POST tags`                              | Manager | `{ name (1–40), colour "#rrggbb", description (≤200), effects }` (no email or phone number) | `{ tag: <as listed> }`; 409 `tag_taken`                                                                                                                    | `tag.create`        |
+| `POST tags/{id}`                         | Manager | same as create                                                                              | `{ ok: true }` (rename or edit)                                                                                                                            | `tag.edit`          |
+| `POST tags/{id}/retire`                  | Manager | `{}`                                                                                        | `{ ok: true }`: no more effects, not shown on families or addable (409 `tag_retired`); links kept for the record                                           | `tag.retire`        |
+| `POST families/{id}/tags`                | Agent   | `{ tagId }`                                                                                 | `{ ok: true }`                                                                                                                                             | `family.tag_add`    |
+| `POST families/{id}/tags/{tagId}/remove` | Agent   | `{}`                                                                                        | `{ ok: true }`                                                                                                                                             | `family.tag_remove` |
+| `GET families?tag={tagId}`               | Agent   |                                                                                             | `{ families: [{ id, parents: [{ email }], plan, tags }] }` (the only list view, newest 500)                                                                | `families.by_tag`   |
+
+Family detail and search hits carry `tags: [{ id, name, colour }]` (live tags only). Overview numbers
+leave out families with a live "exclude from metrics" tag. Other code reads a family's effects with
+`effectsForFamily` (`apps/api/src/operator/tags.ts`): `earlyAccess` for beta features,
+`complimentaryPremium` for payments ($). The family sees only `GET /v1/family/programmes` →
+`{ beta }` (a "Beta" badge on the parent home) and can leave with `DELETE /v1/family/programmes/beta`,
+which removes the family's beta-programme tags and nothing else.
+
 ## Complaints
 
 - A parent can make a formal complaint from the parent area ("Make a complaint") or by email to
@@ -185,6 +223,19 @@ Requested by the product owner on 2026-11-25.
   fixed amount, for a number of months or forever, with an expiry date and a maximum number of uses.
 - One code per family at a time; they never stack with the free school meals place (which is
   already free). Applied through the payment provider when payments exist (workstream $).
+
+Built (O5) under `/operator/appdeck`:
+
+| Route                              | Role    | Body                                                                                                                                                         | `data`                                                                                                                                      | Audit action            |
+| ---------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| `GET discount-codes`               | Agent   |                                                                                                                                                              | `{ codes: [{ id, code, kind: "percent"\|"fixed", amount, months, expiresAt, maxUses, redemptions, disabledAt, createdAt }] }`, newest first | no                      |
+| `POST discount-codes`              | Manager | `{ code (6–16 letters and digits, any case), kind, amount (1–100 for percent; pence for fixed), months?, expiresAt?: "YYYY-MM-DD" (last UK day), maxUses? }` | `{ code: <as listed> }`; 409 `code_taken` (any case)                                                                                        | `discount_code.create`  |
+| `POST discount-codes/{id}/disable` | Manager | `{}`                                                                                                                                                         | `{ ok: true }`                                                                                                                              | `discount_code.disable` |
+
+Rules in `packages/core/src/discount-codes.ts` (`checkDiscountCode`: disabled, expired, used up,
+one active code per family, never with a free place). Checkout calls `checkCodeForFamily` in
+`apps/api/src/operator/discount-codes.ts` and records `discount_redemptions` (one active per family,
+enforced by the database); the free-place rule is checked there once free places exist.
 
 ## Out of scope for now
 

@@ -1,0 +1,6 @@
+{
+  "cases": [
+    { "id": "same-1", "a": "Fixture fact one.", "b": "Fixture fact one, reworded.", "same": true },
+    { "id": "diff-1", "a": "Fixture fact two.", "b": "A different fixture fact.", "same": false }
+  ]
+}

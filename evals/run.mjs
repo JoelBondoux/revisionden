@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 // pnpm evals essay --golden <file> --markers anthropic,openai --live
-// Runs the essay-marking golden set through double AI marking and checks the docs/AI.md bar.
+// pnpm evals fact-judge --golden <file> --judge gemini --live
+// Runs the essay-marking golden set through double AI marking and checks the docs/AI.md bar, or
+// runs the fact-check judge on statement pairs with a known answer.
 // This calls real models and costs money: it needs --live and never runs in CI by default.
 // Keys and model ids come from the environment, as for pnpm content:model-check.
 import { readFile } from 'node:fs/promises';
@@ -8,6 +10,7 @@ import { pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
 import { providerFromEnv } from '../scripts/verify/providers.mjs';
 import { PASS_BARS, createModelMarker, runEssayEval } from './marking.mjs';
+import { FACT_JUDGE_BARS, runFactJudgeEval } from './fact-judge.mjs';
 
 const pct = (x) => `${(x * 100).toFixed(1)}%`;
 
@@ -17,6 +20,7 @@ export async function run(argv, deps = {}) {
     err = console.error,
     env = process.env,
     markerFor = (name) => createModelMarker(providerFromEnv(name, env)),
+    judgeFor = (name) => providerFromEnv(name, env),
   } = deps;
   let parsed;
   try {
@@ -26,6 +30,7 @@ export async function run(argv, deps = {}) {
       options: {
         golden: { type: 'string' },
         markers: { type: 'string', default: 'anthropic,openai' },
+        judge: { type: 'string', default: 'gemini' },
         live: { type: 'boolean' },
         'allow-ci': { type: 'boolean' },
       },
@@ -35,8 +40,10 @@ export async function run(argv, deps = {}) {
     return 2;
   }
   const { values, positionals } = parsed;
-  if (positionals[0] !== 'essay' || !values.golden) {
+  const kind = positionals[0];
+  if (!['essay', 'fact-judge'].includes(kind) || !values.golden) {
     err('Usage: pnpm evals essay --golden <file> [--markers anthropic,openai] --live');
+    err('       pnpm evals fact-judge --golden <file> [--judge gemini] --live');
     return 2;
   }
   if (!values.live) {
@@ -46,6 +53,18 @@ export async function run(argv, deps = {}) {
   if (env.CI && !values['allow-ci']) {
     err('Evaluations are not run in CI by default (add --allow-ci to force).');
     return 2;
+  }
+  if (kind === 'fact-judge') {
+    const golden = JSON.parse(await readFile(values.golden, 'utf8'));
+    const report = await runFactJudgeEval(golden, judgeFor(values.judge));
+    out(`Fact-check judge: ${golden.cases.length} statement pairs`);
+    out(`  same facts accepted: ${pct(report.score.same)} (bar ${FACT_JUDGE_BARS.same * 100}%)`);
+    out(
+      `  different facts refused: ${pct(report.score.different)} (bar ${FACT_JUDGE_BARS.different * 100}%)`,
+    );
+    if (report.misses.length) out(`  misses: ${report.misses.join(', ')}`);
+    out(report.passed ? 'PASS' : 'FAIL');
+    return report.passed ? 0 : 1;
   }
   const names = values.markers.split(',').map((s) => s.trim());
   if (names.length !== 2) {

@@ -29,6 +29,8 @@ interface Kind {
   important: boolean;
   /** For changes no parent made: the whole message, instead of "RevisionDen <what>". */
   message?: string;
+  /** Noticed by RevisionDen, not done by a parent: shown and pushed to both parents. */
+  system?: true;
 }
 
 export const EVENT_KINDS = {
@@ -44,9 +46,11 @@ export const EVENT_KINDS = {
     what: "linked {nickname}'s device",
     important: true,
     message: "{nickname}'s device is set up",
+    system: true,
   },
   reminders_changed: { what: "changed {nickname}'s reminders", important: false },
   limit_changed: { what: "changed {nickname}'s daily limit", important: true },
+  target_changed: { what: "changed {nickname}'s target grades", important: true },
   reward_set: { what: 'set a reward for {nickname}', important: false },
   reward_changed: { what: 'changed a reward for {nickname}', important: false },
   reward_removed: { what: 'removed a reward for {nickname}', important: false },
@@ -57,12 +61,24 @@ export const EVENT_KINDS = {
   parent_invited: { what: 'invited a second parent', important: false },
   parent_joined: { what: 'joined as a parent', important: true },
   parent_removed: { what: 'removed the other parent', important: true },
+  // Synced passkeys (I5b): the child's passkey unlocked a device RevisionDen had not seen.
+  passkey_new_device: {
+    what: "noticed {nickname}'s passkey being used on a new device",
+    important: true,
+    system: true,
+  },
 } satisfies Record<string, Kind>;
 
 export type EventKind = keyof typeof EVENT_KINDS;
 
 export const parentLabel = (position: number | null) =>
   position === null ? null : `Parent ${position}`;
+
+const isSystemKind = (kind: string) => (EVENT_KINDS as Record<string, Kind>)[kind]?.system === true;
+
+/** Who the log names for a change: Parent 1, Parent 2, or RevisionDen for what it noticed. */
+const actorLabel = (kind: string, position: number | null) =>
+  parentLabel(position) ?? (isSystemKind(kind) ? 'RevisionDen' : null);
 
 export function describeEvent(kind: string, nickname: string | null): string {
   const known = (EVENT_KINDS as Record<string, Kind>)[kind];
@@ -116,6 +132,7 @@ const LOGGED_CHANGES: [method: string, pattern: RegExp, kind: EventKind][] = [
   ['DELETE', /^\/v1\/students\/([^/]+)\/devices\/[^/]+$/, 'device_unlinked'],
   ['PUT', /^\/v1\/students\/([^/]+)\/reminder-settings$/, 'reminders_changed'],
   ['PUT', /^\/v1\/students\/([^/]+)\/daily-limit$/, 'limit_changed'],
+  ['PUT', /^\/v1\/students\/([^/]+)\/target-grades\/[^/]+$/, 'target_changed'],
   ['POST', /^\/v1\/students\/([^/]+)\/parent-rewards$/, 'reward_set'],
   ['PATCH', /^\/v1\/students\/([^/]+)\/parent-rewards\/[^/]+$/, 'reward_changed'],
   ['DELETE', /^\/v1\/students\/([^/]+)\/parent-rewards\/[^/]+$/, 'reward_removed'],
@@ -200,7 +217,7 @@ export async function listFamilyEvents(
   const events = rows.map((r) => ({
     id: r.id,
     kind: r.kind,
-    by: parentLabel(r.actorPosition),
+    by: actorLabel(r.kind, r.actorPosition),
     you: r.actorPosition === viewer.position,
     what: describeEvent(r.kind, r.nickname),
     important: r.important,

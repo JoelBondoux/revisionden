@@ -1,6 +1,6 @@
 import { Hono, type MiddlewareHandler } from 'hono';
 import { deleteCookie, getCookie, setCookie } from 'hono/cookie';
-import { and, asc, eq, gt, gte, isNull } from 'drizzle-orm';
+import { and, asc, desc, eq, gt, gte, inArray, isNull } from 'drizzle-orm';
 import { z } from 'zod';
 import {
   CreateLinkTokenRequestSchema,
@@ -14,6 +14,7 @@ import {
 } from '@revisionden/core';
 import {
   deviceLinkTokens,
+  deviceMarkers,
   devices,
   passkeyChallenges,
   students,
@@ -39,6 +40,8 @@ const TTL: Record<LinkKind, number> = { qr: LINK_TOKEN_TTL_MS, share: SHARE_LINK
 export const CHALLENGE_TTL_MS = 5 * 60 * 1000;
 export const STUDENT_SESSION_TTL_MS = 12 * 60 * 60 * 1000;
 export const STUDENT_COOKIE = '__Host-rd_student';
+/** A synced passkey makes at most one new device a day (cleared browser storage, I5b). */
+export const NEW_DEVICE_WINDOW_MS = 24 * 60 * 60 * 1000;
 
 export interface DeviceDeps {
   db: Database;
@@ -85,6 +88,15 @@ async function optionalJson(c: Parameters<MiddlewareHandler<AppEnv>>[0]): Promis
     throw new ApiError(400, 'invalid_json', 'The request body must be JSON');
   }
 }
+
+const unlockVerifySchema = z
+  .object({
+    challengeId: z.string(),
+    response: credentialResponse,
+    /** The marker this browser keeps for its device (I5b); missing on a new device. */
+    deviceMarker: z.string().min(16).max(128).optional(),
+  })
+  .strict();
 const unlockOptionsSchema = z
   .object({ credentialIds: z.array(z.string()).max(10).optional() })
   .strict();
@@ -240,6 +252,83 @@ export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) 
     return row;
   }
 
+  /** Gives a device a new marker for its browser to keep; only the hash is stored. */
+  async function issueMarker(deviceId: string, studentId: string): Promise<string> {
+    const marker = randomToken();
+    await db
+      .insert(deviceMarkers)
+      .values({ markerHash: await hashToken(marker), deviceId, studentId, createdAt: now() });
+    return marker;
+  }
+
+  /**
+   * Which device a verified passkey is being used on (I5b, synced passkeys: allow, and tell the
+   * parents). `rows` are the student's devices with this passkey. Returns the device and, when
+   * this browser needs one, a new marker; throws if a parent unlinked this browser's device.
+   */
+  async function deviceForUnlock(
+    rows: (typeof devices.$inferSelect)[],
+    markerToken: string | undefined,
+  ): Promise<{ device: typeof devices.$inferSelect; marker?: string }> {
+    const studentId = rows[0]!.studentId;
+    const ids = rows.map((r) => r.id);
+    if (markerToken) {
+      const [known] = await db
+        .select()
+        .from(deviceMarkers)
+        .where(
+          and(
+            eq(deviceMarkers.markerHash, await hashToken(markerToken)),
+            eq(deviceMarkers.studentId, studentId),
+          ),
+        );
+      // A parent unlinked this browser's device: it needs linking again.
+      if (known && known.deviceId === null) throw passkeyNotVerified();
+      const device = rows.find((r) => r.id === known?.deviceId);
+      if (device) return { device };
+    }
+    const markers = await db
+      .select({ deviceId: deviceMarkers.deviceId })
+      .from(deviceMarkers)
+      .where(inArray(deviceMarkers.deviceId, ids));
+    // Linked before markers existed: this is that device; no news for the parents.
+    if (markers.length === 0 && rows.length === 1) {
+      return { device: rows[0]!, marker: await issueMarker(rows[0]!.id, studentId) };
+    }
+    // Browser storage cleared again today: reuse today's new device rather than add another.
+    const since = new Date(now().getTime() - NEW_DEVICE_WINDOW_MS);
+    const [recent] = rows
+      .filter((r) => r.linkedAt > since)
+      .sort((a, b) => b.linkedAt.getTime() - a.linkedAt.getTime());
+    if (recent && rows.length > 1) {
+      return { device: recent, marker: await issueMarker(recent.id, studentId) };
+    }
+    const source = rows[0]!;
+    const [device] = await db
+      .insert(devices)
+      .values({
+        studentId,
+        credentialId: source.credentialId,
+        publicKey: source.publicKey,
+        counter: source.counter,
+        transports: source.transports,
+        linkedAt: now(),
+      })
+      .returning();
+    const [student] = await db
+      .select({ familyId: students.familyId })
+      .from(students)
+      .where(eq(students.id, studentId));
+    await recordFamilyEvent(db, {
+      familyId: student!.familyId,
+      actorPosition: null,
+      kind: 'passkey_new_device',
+      studentId,
+      now: now(),
+    });
+    return { device: device!, marker: await issueMarker(device!.id, studentId) };
+  }
+
   async function startSession(
     c: Parameters<MiddlewareHandler<AppEnv>>[0],
     studentId: string,
@@ -333,6 +422,7 @@ export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) 
         linkedAt: now(),
       })
       .returning({ id: devices.id });
+    const deviceMarker = await issueMarker(device!.id, challenge.studentId!);
     await startSession(c, challenge.studentId!, device!.id);
     const [student] = await db.select().from(students).where(eq(students.id, challenge.studentId!));
     // Both parents hear "<nickname>'s device is set up" (pushed if they turned push on).
@@ -343,7 +433,7 @@ export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) 
       studentId: student!.id,
       now: now(),
     });
-    return c.json({ deviceId: device!.id, student: toStudent(student!) }, 201);
+    return c.json({ deviceId: device!.id, deviceMarker, student: toStudent(student!) }, 201);
   });
 
   app.post('/unlock/options', async (c) => {
@@ -354,23 +444,32 @@ export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) 
   });
 
   app.post('/unlock/verify', async (c) => {
-    const { challengeId, response } = await readJson(c, verifySchema);
+    const { challengeId, response, deviceMarker } = await readJson(c, unlockVerifySchema);
     const challenge = await consumeChallenge(challengeId, 'unlock');
-    const [device] = await db.select().from(devices).where(eq(devices.credentialId, response.id));
-    if (!device) throw passkeyNotVerified();
+    // A synced passkey has one row per device; all hold the same public key.
+    const rows = await db
+      .select()
+      .from(devices)
+      .where(eq(devices.credentialId, response.id))
+      .orderBy(desc(devices.linkedAt));
+    if (rows.length === 0) throw passkeyNotVerified();
     const result = await passkeys.verifyAuthentication({
       response: response as never,
       expectedChallenge: challenge.challenge,
-      credential: device,
+      credential: rows[0]!,
     });
     if (!result) throw passkeyNotVerified();
+    const { device, marker } = await deviceForUnlock(rows, deviceMarker);
+    // The counter belongs to the passkey, not the device: keep it the same on every row, so a
+    // cloned passkey with an older counter is still refused whichever device unlocked last.
     await db
       .update(devices)
-      .set({ counter: result.newCounter, lastUsedAt: now() })
-      .where(eq(devices.id, device.id));
+      .set({ counter: result.newCounter })
+      .where(eq(devices.credentialId, device.credentialId));
+    await db.update(devices).set({ lastUsedAt: now() }).where(eq(devices.id, device.id));
     await startSession(c, device.studentId, device.id);
     const [student] = await db.select().from(students).where(eq(students.id, device.studentId));
-    return c.json({ student: toStudent(student!) });
+    return c.json({ student: toStudent(student!), ...(marker ? { deviceMarker: marker } : {}) });
   });
 
   return app;

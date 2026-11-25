@@ -23,6 +23,13 @@ export const onboardingHandlers: RequestHandler[] = [
       ],
     }),
   ),
+  // Student device: the student's own subjects (all set in the demo family).
+  http.get('*/v1/student/subjects', () =>
+    HttpResponse.json({ enrolments: family.children[0]!.enrolments, toCheckLater: 0 }),
+  ),
+  http.get('*/v1/student/avatar', () =>
+    HttpResponse.json({ avatarCode: family.children[0]!.student.avatarCode, earnedRewardIds: [] }),
+  ),
   http.get('*/v1/onboarding/family', () => HttpResponse.json(family)),
 
   http.post('*/v1/onboarding/children', async ({ request }) => {
@@ -68,5 +75,12 @@ export const onboardingHandlers: RequestHandler[] = [
   http.delete(
     '*/v1/students/:id/link-tokens/:tokenId',
     () => new HttpResponse(null, { status: 204 }),
+  ),
+  // Student passkey unlock (I5): any passkey answers; the mock device belongs to the first child.
+  http.post('*/v1/device/unlock/options', () =>
+    HttpResponse.json({ challengeId: 'mock-unlock', options: { challenge: 'mock-challenge' } }),
+  ),
+  http.post('*/v1/device/unlock/verify', () =>
+    HttpResponse.json({ student: family.children[0]!.student }),
   ),
 ];

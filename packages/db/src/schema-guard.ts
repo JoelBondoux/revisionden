@@ -30,7 +30,7 @@ const FORBIDDEN = [
  * `email_verified` are the parent's sign-in email; `name` and `image` are required by Better Auth
  * and always stored blank; `ip_address` is required too but IP tracking is switched off, so it
  * stays empty. `operator_audit_log.operator_email`, `operator_notes.author_email` and
- * `feedback_replies.author_email` are the work email of the owner's support staff (from AppDeck),
+ * `feedback_replies.author_email` and `complaint_messages.author_email` are the work email of the owner's support staff (from AppDeck),
  * never a family's. Nothing about a student may ever be added here.
  */
 const ALLOWED = new Set([
@@ -42,6 +42,9 @@ const ALLOWED = new Set([
   'operator_audit_log.operator_email',
   'operator_notes.author_email',
   'feedback_replies.author_email',
+  // A support label such as "Beta tester" (checked to hold no contact details), not a person.
+  'family_tags.name',
+  'complaint_messages.author_email',
 ]);
 
 export async function findForbiddenColumns(client: QueryClient): Promise<ForbiddenColumn[]> {

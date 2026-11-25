@@ -60,7 +60,7 @@ describe('student profiles', () => {
   it.each([
     ['too short', 'a'],
     ['too long', 'a'.repeat(17)],
-    ['a space', 'quiz fox'],
+    ['a double space', 'quiz  fox'],
     ['a symbol', 'quiz-fox!'],
     ['a blocked word', 'admin_kid'],
   ])('rejects a nickname with %s', async (_label, nickname) => {
@@ -68,6 +68,17 @@ describe('student profiles', () => {
     const res = await createStudent(headers, { nickname, avatarCode: AVATAR, yearGroup: 11 });
     expect(res.status).toBe(400);
     expect(await res.json()).toMatchObject({ error: { code: 'invalid_request' } });
+  });
+
+  it('accepts single spaces between words and trims spaces at the ends', async () => {
+    const { headers } = await t.signInParent();
+    const res = await createStudent(headers, {
+      nickname: '  quiz fox ',
+      avatarCode: AVATAR,
+      yearGroup: 11,
+    });
+    expect(res.status).toBe(201);
+    expect(StudentSchema.parse(await res.json()).nickname).toBe('quiz fox');
   });
 
   it('rejects an avatar code that is not in the avatar format', async () => {

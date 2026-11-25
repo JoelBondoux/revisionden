@@ -12,7 +12,7 @@ const files = {
 describe('createPolicyLibrary', () => {
   const library = createPolicyLibrary(files, { VITE_CONTACT_EMAIL: 'help@example.com' });
 
-  it('lists the eleven policies from docs/LEGAL.md in order', () => {
+  it('lists the twelve policies from docs/LEGAL.md in order', () => {
     expect(POLICIES.map((p) => p.name)).toEqual([
       'privacy-notice',
       'privacy-for-young-people',
@@ -25,6 +25,7 @@ describe('createPolicyLibrary', () => {
       'content-accuracy',
       'accessibility-statement',
       'childrens-code',
+      'complaints-policy',
     ]);
   });
 

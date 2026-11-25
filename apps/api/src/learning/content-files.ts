@@ -1,6 +1,6 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import type { ContentItem, ContentTopicTree } from './content-sync';
+import type { ContentItem, ContentMarkScheme, ContentTopicTree } from './content-sync';
 
 async function jsonFiles(dir: string): Promise<string[]> {
   const entries = await readdir(dir, { withFileTypes: true, recursive: true });
@@ -12,10 +12,12 @@ async function jsonFiles(dir: string): Promise<string[]> {
 
 const readJsonFile = async (path: string) => JSON.parse(await readFile(path, 'utf8')) as unknown;
 
-/** Reads topic trees and item files from a content/ folder (Node only, for the sync CLI). */
-export async function readContentDir(
-  dir: string,
-): Promise<{ topicTrees: ContentTopicTree[]; items: ContentItem[] }> {
+/** Reads topic trees, items and mark schemes from a content/ folder (Node only, for the sync CLI). */
+export async function readContentDir(dir: string): Promise<{
+  topicTrees: ContentTopicTree[];
+  items: ContentItem[];
+  markSchemes: ContentMarkScheme[];
+}> {
   const topicTrees = await Promise.all(
     (await jsonFiles(join(dir, 'topic-trees'))).map(
       async (f) => (await readJsonFile(f)) as ContentTopicTree,
@@ -28,5 +30,10 @@ export async function readContentDir(
       ),
     )
   ).flat();
-  return { topicTrees, items };
+  const markSchemes = await Promise.all(
+    (await jsonFiles(join(dir, 'mark-schemes'))).map(
+      async (f) => (await readJsonFile(f)) as ContentMarkScheme,
+    ),
+  );
+  return { topicTrees, items, markSchemes };
 }

@@ -86,15 +86,28 @@ The full schemas (JSON Schema draft 2020-12) live in `content/schemas/`:
 | Items        | `content/items/**`      | `item.schema.json`        | Files hold arrays; every item has `source_ref` and `checked_by`        |
 | Mark schemes | `content/mark-schemes/` | `mark-scheme.schema.json` | `points` (M1, A1, B1) or `levels` (level descriptors with mark ranges) |
 
+Optional on every item: `learning_point` (an id for the finer skill, e.g.
+`gcse-maths-h-n7-lp-fractional-indices`; similar-question retries pick another item with the same
+one, so write at least 3 per learning point) and `expected_seconds` (5 to 900, how long a
+confident student takes; slower than twice this counts as shaky).
+
 Item types: `multiple_choice`, `short_answer`, `numeric`, `worked_maths`, `flashcard`,
 `extended_answer`. Maths items carry a `verify` block the maths engine can check:
 
 - `numeric`: `verify.expression` is evaluated and compared with `answer.value` (exactly, or
-  within `answer.tolerance` for rounded answers).
+  within `answer.tolerance`). When the question asks for rounding, set `answer.decimal_places`
+  or `answer.significant_figures` instead of a tolerance: only the correctly rounded value,
+  written to that accuracy, is right (VERIFICATION.md, "Answer format").
+- An answer that is the value of a letter or function (`t`, `f^-1(x)`) may declare
+  `answer.subject` (numeric, or a worked_maths expression), so "t = ..." is accepted.
 - `worked_maths`: `verify.method` is `solve` (`equation`, `variable`) compared with
   `answer.solutions`, or `expression` (`expression`, optional `form`: `factorised` or
   `expanded`) compared with `answer.expression`. Optional `steps` (a model solution) are checked
   line by line.
+
+A maths `flashcard` can add `back_formula` (`formula` in maths-engine notation, e.g.
+`x = (-b +- sqrt(b^2 - 4ac)) / (2a)`, and optional `conditions`, e.g. `["a ≠ 0"]`) so its blind
+answer is compared by the maths engine instead of word for word.
 
 `checked_by` values: `maths-engine`, `model-b` (second AI model agreed), `human`, and `author`
 (only the writing session checked it). It is a short summary; the full audit trail is the

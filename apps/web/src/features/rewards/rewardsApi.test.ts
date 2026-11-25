@@ -21,6 +21,25 @@ describe('rewards API client', () => {
     expect(calls[0]!.init.credentials).toBe('include');
   });
 
+  it("loads and saves the student's two-part title", async () => {
+    const title = {
+      nickname: 'quiet_fox',
+      first: 'Fresh',
+      last: null,
+      title: 'Fresh',
+      words: { first: [], last: [] },
+    };
+    const { calls, fetch } = fakeFetch(200, title);
+    const api = createRewardsApi({ baseUrl: 'https://api.example.com', fetch });
+    expect((await api.getMyTitle()).title).toBe('Fresh');
+    await api.setMyTitle({ first: 'Fresh', last: null });
+    expect(calls.map((c) => [c.init.method, c.url])).toEqual([
+      [undefined, 'https://api.example.com/v1/student/rewards/title'],
+      ['PUT', 'https://api.example.com/v1/student/rewards/title'],
+    ]);
+    expect(JSON.parse(String(calls[1]!.init.body))).toEqual({ first: 'Fresh', last: null });
+  });
+
   it('loads, adds, marks given and removes parent rewards for a child', async () => {
     const { calls, fetch } = fakeFetch(200, cinemaTrip);
     const api = createRewardsApi({ baseUrl: 'https://api.example.com/', fetch });

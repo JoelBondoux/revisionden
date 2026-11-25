@@ -139,6 +139,51 @@ def test_expected_solutions_do_not_match_an_expression_line():
     assert result.final_answer_correct is False
 
 
+def test_a_final_line_stating_the_declared_subject_is_the_answer():
+    expected = {"expression": "(v - u)/a", "subject": "t"}
+    result = check_working(["v = u + a t", "a t = v - u", "t = (v - u)/a"], expected=expected)
+    assert result.first_wrong_line is None
+    assert result.final_answer_correct is True
+
+
+def test_with_a_declared_subject_a_step_may_not_divide_by_the_subject_itself():
+    result = check_working(["a t = v - u", "a = (v - u)/t"],
+                           expected={"expression": "(v - u)/a", "subject": "t"})
+    assert result.first_wrong_line == 1  # divides by t, so it could lose t = 0
+    result = check_working(["t - 1 = 0", "t^2 - t = 0"],
+                           expected={"expression": "1", "subject": "t"})
+    assert result.first_wrong_line == 1
+
+
+def test_without_a_subject_dividing_by_a_letter_still_does_not_follow():
+    assert check_working(["a t = v - u", "t = (v - u)/a"]).first_wrong_line == 1
+
+
+def test_a_final_line_stating_a_different_letter_is_not_the_answer():
+    result = check_working(["a t = v - u", "u = v - a t"],
+                           expected={"expression": "v - a t", "subject": "t"})
+    assert result.final_answer_correct is False
+
+
+def test_without_a_declared_subject_an_equation_line_is_still_not_an_expression_answer():
+    result = check_working(["a t = v - u", "t = (v - u)/a"], expected={"expression": "(v - u)/a"})
+    assert result.final_answer_correct is False
+
+
+def test_an_inverse_function_answer_follows_from_the_line_that_solves_for_it():
+    expected = {"expression": "(x + 3)/2", "subject": "f^-1(x)"}
+    result = check_working(["y = (x + 3)/2", "f^-1(x) = (x + 3)/2"], expected=expected)
+    assert result.first_wrong_line is None
+    assert result.final_answer_correct is True
+
+
+def test_an_inverse_function_line_with_a_slip_is_caught():
+    expected = {"expression": "(x + 3)/2", "subject": "f^-1(x)"}
+    result = check_working(["y = (x + 3)/2", "f^-1(x) = (x - 3)/2"], expected=expected)
+    assert result.first_wrong_line == 1
+    assert result.final_answer_correct is False
+
+
 def test_at_least_one_line_is_needed():
     with pytest.raises(ValueError):
         check_working([])

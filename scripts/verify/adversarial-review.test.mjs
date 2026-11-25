@@ -33,6 +33,19 @@ test('the reviewer sees the full item, the answer and the quoted sources', () =>
   assert.match(prompt, /page 2/);
 });
 
+test('for multiple choice the reviewer is told options count from 0 and sees the correct option text', () => {
+  const { prompt } = reviewPrompt(item);
+  assert.match(prompt, /"correct_option_text": "first"/);
+  assert.match(prompt, /numbered from 0/);
+  assert.match(prompt, /distractor:N/);
+});
+
+test('items without options get no option-numbering note', () => {
+  const card = { ...item, type: 'flashcard', options: undefined, answer: undefined };
+  const { prompt } = reviewPrompt(card);
+  assert.doesNotMatch(prompt, /numbered from 0|correct_option_text/);
+});
+
 test('the reviewer is asked about every kind of problem the protocol names', () => {
   assert.deepEqual(PROBLEM_KINDS, [
     'factual_error',

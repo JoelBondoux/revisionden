@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { findSubject, LEVEL_LABELS, type OnboardedChild } from '@revisionden/core';
 import { Avatar, Button, ButtonLink, Card, Pill } from '../../components';
+import { checkItems } from './checks';
 
 const summary = (c: OnboardedChild) =>
   `Year ${c.student.yearGroup} · ${LEVEL_LABELS[c.level]} · exams ${c.examSeason.season} ${c.examSeason.year}`;
@@ -132,6 +133,15 @@ export function FinishStep({ children }: { children: OnboardedChild[] }) {
                 what {c.student.nickname} already knows, so practice starts with weak spots.
               </p>
             </div>
+            {checkItems(c.enrolments).length > 0 && (
+              <p className="secondary-text">
+                To check later:{' '}
+                {checkItems(c.enrolments)
+                  .map((i) => i.text)
+                  .join(', ')}
+                . You can set these in Parent home, or {c.student.nickname} can on their own device.
+              </p>
+            )}
           </Card>
         );
       })}

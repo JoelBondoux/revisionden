@@ -12,6 +12,13 @@ export function fakeOnboardingApi(overrides: Partial<OnboardingApi> = {}): Onboa
     removeDevice: vi.fn(async () => undefined),
     redeemLink: vi.fn(),
     verifyLink: vi.fn(),
+    updateChildSubject: vi.fn(),
+    getMySubjects: vi.fn(async () => ({ enrolments: [], toCheckLater: 0 })),
+    updateMySubject: vi.fn(),
+    getMyAvatar: vi.fn(async () => ({ avatarCode: '1' + '0'.repeat(28), earnedRewardIds: [] })),
+    saveMyAvatar: vi.fn(),
+    unlockOptions: vi.fn(),
+    unlockVerify: vi.fn(),
     ...overrides,
   };
 }

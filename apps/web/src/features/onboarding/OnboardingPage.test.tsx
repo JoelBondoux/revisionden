@@ -56,6 +56,13 @@ function fakeApi(initial: OnboardedChild[] = []): OnboardingApi & { children: On
     removeDevice: vi.fn(async () => undefined),
     redeemLink: vi.fn(),
     verifyLink: vi.fn(),
+    updateChildSubject: vi.fn(),
+    getMySubjects: vi.fn(),
+    updateMySubject: vi.fn(),
+    getMyAvatar: vi.fn(),
+    saveMyAvatar: vi.fn(),
+    unlockOptions: vi.fn(),
+    unlockVerify: vi.fn(),
   };
 }
 
@@ -146,7 +153,9 @@ describe('OnboardingPage', () => {
     expect(screen.getByRole('heading', { name: 'What Comet_7 sees first' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'What Nova sees first' })).toBeInTheDocument();
     expect(screen.getAllByText(/A short starting test/)).toHaveLength(2);
-    expect(screen.getByText(/Further Maths/)).toBeInTheDocument();
+    expect(screen.getByText(/^To check later: Maths exam board, Maths tier\./)).toBeInTheDocument();
+    expect(screen.getAllByText(/You can set these in Parent home/)).toHaveLength(2);
+    expect(screen.getByText(/starting test in Further Maths/)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Go to the family screen' })).toHaveAttribute(
       'href',
       '/family',

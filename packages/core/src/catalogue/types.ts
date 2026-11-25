@@ -100,6 +100,8 @@ export type StatKey = keyof RewardStats;
 export type Rarity = 'common' | 'rare' | 'epic' | 'legendary';
 export const RARITIES: readonly Rarity[] = ['common', 'rare', 'epic', 'legendary'];
 
+export type TitlePart = 'first' | 'last';
+
 export type RewardSource =
   'level' | 'chapter' | 'milestone' | 'collection' | 'season' | 'hidden' | 'secret';
 
@@ -107,7 +109,13 @@ export type RewardSource =
 export type RewardItem =
   | { kind: 'avatar'; layer: AvatarLayer; id: string }
   | { kind: 'frame'; id: string }
+  /**
+   * A single title from R1 to R7b. Only in the source catalogue files: the exported REWARDS
+   * replace it with two-part title words (R8, `title-words.ts`).
+   */
   | { kind: 'title'; text: string }
+  /** A word for a two-part title (R8): the student picks one first word and one last word. */
+  | { kind: 'titleWord'; part: TitlePart; text: string }
   | { kind: 'theme'; id: string }
   | { kind: 'pipOutfit'; id: string }
   | { kind: 'badge'; id: string }
