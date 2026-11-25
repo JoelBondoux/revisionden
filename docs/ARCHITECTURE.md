@@ -21,6 +21,7 @@
 | Path             | What it is                                                                                                        |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------- |
 | `apps/web`       | React + Vite PWA. Screens, design system, offline cache, web push                                                 |
+| `apps/www`       | Public website for revisionden.com: static pages built by a TypeScript script, no client scripts (decision 0005)  |
 | `apps/api`       | Hono app for Cloudflare Workers. Auth, REST endpoints, AI calls via the gateway                                   |
 | `packages/core`  | Pure TypeScript domain logic, no I/O: rules for levels, streaks, mastery, plans, avatar codes. Shared Zod schemas |
 | `packages/db`    | Drizzle schema and migrations for Neon Postgres                                                                   |
@@ -30,6 +31,20 @@
 | `evals/`         | AI marking evaluation harness and golden sets (never run in CI by default)                                        |
 | `scripts/`       | Repo tooling: version bump, content validator (`content/`), verification pipeline (`verify/`)                     |
 | `docs/`          | Live documentation                                                                                                |
+
+## Public website (`apps/www`)
+
+Decision 0005. `revisionden.com` is the sales site; the app is on `app.revisionden.com`.
+
+- `src/build.ts` reads the build variables (`src/config.ts`), the web app's `tokens.css`, the
+  Nunito font files and (from PR 2) `docs/legal/*.md`, then writes `dist/`. `src/site.ts` renders
+  every file as a pure function; pages live in `src/pages/`.
+- No client-side JavaScript and no third-party requests. `src/checks.ts` (used by the tests)
+  finds resources from other origins and same-site links that don't resolve.
+- `src/worker.ts`: redirects `www.` to the apex, serves the static assets and sets the security
+  headers (content security policy `default-src 'self'; script-src 'none'`), and `noindex` on any
+  host but `revisionden.com`.
+- Deployed by `.github/workflows/deploy-www.yml` (staging and production only).
 
 ## Web app (`apps/web`)
 

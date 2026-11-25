@@ -280,6 +280,13 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [ ] $5 Later: school, council and charity codes for free places.
 - Tests: entitlement maths (sibling order, 4th free), gating, trial expiry, webhook idempotency, no upgrade prompts on student screens, FSM rules.
 
+### M. Public sales website (`apps/www`, decision 0005)
+
+- [x] M1 Skeleton: static TypeScript build, Workers `revisionden-www` and `revisionden-www-staging`, www → apex redirect, security headers, self-hosted fonts, reused design tokens, sitemap and robots, `deploy-www.yml`.
+- [ ] M2 Pages and content: home (parents first, teen section), how it works, pricing (free now, Premium coming soon from `docs/PRICING.md`), for young people, help and contact, policies from `docs/legal`, about.
+- [ ] M3 Polish: Open Graph image (original Pip art), accessibility pass (WCAG 2.2 AA), first live deploy by the lead.
+- Tests: page render, every internal link resolves, no third-party origins, policies come from `docs/legal`, production build refuses missing operator details.
+
 ## Stage 2 and later
 
 Broken down into tasks when Stage 1 ships, following the same format. Headline order:

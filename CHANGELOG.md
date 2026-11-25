@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Coming soon: a public RevisionDen website at revisionden.com explaining how it works for parents and young people, with the planned prices and all the policies. The app itself will move to app.revisionden.com.
 - "Remember this?" questions are now completely safe: getting one wrong never breaks your combo.
 - New 5-a-day: a quick mix of 5 questions from topics you've already practised, at the top of your topic map until you've done it. It takes about 5–8 minutes and counts towards your daily goal and streak like any lesson.
 - Six more hidden reward tracks to discover, like Comeback Kid (turn a weak topic into a strong one) and Explorer (try every kind of practice). Each stays secret until you earn its first step.
@@ -76,6 +77,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Public website skeleton (workstream M, decision 0005): `apps/www`, a static site with no client scripts or third-party requests (self-hosted Nunito, the web app's tokens, strict content security policy), `revisionden-www` Workers for `revisionden.com` (www redirects) and `www-staging.revisionden.com`, `deploy-www.yml` called from the staging and production deploys, and a deployed smoke check (`E2E_WWW_URL`).
 - Recall checks keep the combo (Q): `LearnAttemptRequestSchema` takes optional `recall` (Learn mode only, 400 otherwise); the API saves such answers with mode `RECALL_MODE` (`'recall'`), and `comboBefore` passes over a wrong one and counts a right one. `RecallGate` sends `recall: true` via a new `LessonPlayer` `recall` prop.
 - Production app host is `app.revisionden.com` (G): web Worker route, API `WEB_ORIGIN` (and so Better Auth's trusted origin and the passkey origin), deploy URL and smoke-test API lookup; `PASSKEY_RP_ID` stays `revisionden.com`; tests check the apex is left to the public site (M) and the PWA manifest stays host-relative.
 - Rewards R7b fixes (from review): Comeback Kid ignores flashcard self-ratings (they never change mastery), and its counter replays only the 30-answer mastery window, so long histories stay fast.

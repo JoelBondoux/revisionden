@@ -19,6 +19,18 @@
 `revisionden.com` (primary, registered with Cloudflare on 2026-11-24) and optionally `revisionden.co.uk` (not yet bought; would redirect to .com), registered with
 Cloudflare Registrar, auto-renew on.
 
+| Host                                                     | Environment                                   |
+| -------------------------------------------------------- | --------------------------------------------- |
+| `revisionden.com` (`www.` redirects to it)               | Public sales site, production (decision 0005) |
+| `www-staging.revisionden.com`                            | Public sales site, staging (not indexed)      |
+| `app.revisionden.com`, `api.revisionden.com`             | Production app and API                        |
+| `staging.revisionden.com`, `api-staging.revisionden.com` | Staging                                       |
+| `dev.revisionden.com`, `api-dev.revisionden.com`         | Development                                   |
+
+Until workstream G moves it, the app's production Worker is still configured for
+`revisionden.com` (`apps/web/wrangler.toml`); it moves to `app.revisionden.com` before the public
+site's first production deploy.
+
 | Host                                                     | Environment |
 | -------------------------------------------------------- | ----------- |
 | `app.revisionden.com`, `api.revisionden.com`             | Production  |
@@ -139,6 +151,28 @@ Step by step (about 15 minutes):
    needs the owner's inbox address).
 7. **First run.** Actions, "Deploy dev", Run workflow. It should end with "API is on
    <version>; some secrets still missing" until the OAuth secrets are set.
+
+## Public site deploys (workstream M, decision 0005)
+
+`deploy-www.yml` builds `apps/www` and deploys its Worker. It runs as its own job in
+`deploy-staging.yml` (`revisionden-www-staging` on `www-staging.revisionden.com`) and
+`deploy-production.yml` (`revisionden-www` on `revisionden.com` and `www.revisionden.com`), then
+checks the home page answers. Not live yet: it waits for the GitHub secrets above and, for
+production, for the app to move to `app.revisionden.com`.
+
+| Build variable               | staging                               | production                    | Notes                                                                             |
+| ---------------------------- | ------------------------------------- | ----------------------------- | --------------------------------------------------------------------------------- |
+| `WWW_ENVIRONMENT`            | `staging`                             | `production`                  | Set by the workflow                                                               |
+| `WWW_LAUNCHED`               | unset                                 | unset until launch            | GitHub variable; `true` drops "in private testing" and the policies' draft banner |
+| `WWW_APP_URL`                | `https://staging.revisionden.com`     | `https://app.revisionden.com` | Defaults; "Sign in" and "Start free" go here                                      |
+| `WWW_SITE_URL`               | `https://www-staging.revisionden.com` | `https://revisionden.com`     | Defaults; canonical links, sitemap, Open Graph                                    |
+| `VITE_OPERATOR_NAME`         | optional                              | **required**                  | Same GitHub environment variable as the web app                                   |
+| `VITE_CONTACT_EMAIL`         | optional                              | **required**                  | `privacy@revisionden.com`                                                         |
+| `VITE_SUPPORT_EMAIL`         | optional                              | optional                      | `help@revisionden.com` when unset                                                 |
+| `VITE_POLICY_EFFECTIVE_DATE` | optional                              | optional                      | Policies show "date to be added" until set                                        |
+
+Local build: `pnpm --filter @revisionden/www build` (staging settings), then open `apps/www/dist`
+with any static server, or `pnpm --filter @revisionden/www exec wrangler dev`.
 
 ## Maths engine on Cloud Run (G3, not set up yet)
 
