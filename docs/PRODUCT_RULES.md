@@ -462,3 +462,49 @@ So nobody runs an old copy of the app for long after a deploy (decided 2026-11-2
   shape) the app checks at once and, when a newer build exists, reloads by itself, once per new
   build, so it can never get stuck or loop. Without browser storage it only shows the banner.
 - Implemented: `apps/web/public/sw.js`, `apps/web/src/pwa/updates.tsx`, `apps/web/vite.config.ts`.
+
+## Daily limit (wellbeing)
+
+Requested by the product owner on 2026-11-25. One daily limit per student, in **active study
+minutes** (the same measure as the stats dashboards: time between answers, gaps over 5 minutes not
+counted).
+
+- **Defaults** (a starting point, not a target): GCSE 60 minutes on school days and 90 at weekends
+  and in holidays; A-Level 90 and 120. Exam season (from 6 weeks before the student's first exam)
+  adds 30 minutes, if the parent agrees.
+- **Hard ceiling** the app never suggests going past: GCSE 2 hours on school days and 3 on other
+  days; A-Level 2.5 and 3.5. A parent may set a lower or higher limit by hand.
+- **Parent control:** either parent can change the limit at any time (per day type) from the parent
+  area. The student sees their limit and how much is left; they can always stop early with no
+  penalty.
+- **Suggestions, never pushes.** Once a week the app may suggest a change to the parent; it never
+  changes the limit by itself.
+  - **Suggest a small rise** (+10 minutes, at most once a fortnight) only when, over the last 2
+    weeks, the student reached the limit on at least 4 days, accuracy in the last 15 minutes of
+    sessions stayed within 5 points of the first 15, and they chose to keep going (not prompted).
+  - **Suggest easing off** (−10 to −15 minutes) when accuracy drops by more than 10 points late in
+    sessions (tiredness), sessions keep being abandoned part-way, or rest days are being skipped.
+  - Suggestions say why in plain words ("Accuracy dips after about 40 minutes"); the parent accepts,
+    changes or dismisses them. The student is told when their limit changes.
+- **At the limit:** practice screens show "Great work today. See you tomorrow"; no XP, rewards or
+  streak credit past it (the existing healthy-limits rule). Timed papers may finish past the limit;
+  the limit then pauses other practice for the rest of the day.
+- The XP reward cap (`DAILY_REWARD_XP_CAP`, 300 XP) stays as a safety net alongside the minutes
+  limit.
+
+## Two parents (shared parent control)
+
+Requested by the product owner on 2026-11-25.
+
+- A family can have **two parent accounts with equal control**. The first parent invites the
+  second from the parent area with a one-time link or code (valid 7 days); the second signs in with
+  their own Google or Microsoft account (only their sign-in email is kept, as for the first).
+- Both parents can do everything: add or remove children, settings, limits, focus, rewards,
+  feedback, export and deletion. Deleting the whole family needs both parents to confirm (or one
+  parent after the other is removed).
+- A family activity log shows what changed and by which parent ("Parent 1", "Parent 2"; no names),
+  and the other parent is notified of important changes (limits, children added or removed,
+  rewards given, exports, deletion requests).
+- Either parent can remove the other; the removed parent sees an in-app notice on next
+  sign-in and loses access at once. Students see that two parents can view their progress.
+- The privacy notice must list the second parent's sign-in email as data kept.
