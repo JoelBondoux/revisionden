@@ -21,11 +21,17 @@ specification names the topic but does not state the fact, so grounded writing h
     Then it is an ordinary cited fact. Only the judge is called, and if it says no, the fact falls
     back to (b) and (c).
   - **(b) Maths engine proof:** an `engine` check that proves it (for example `identity`: an
-    equation true for every value). Facts the engine cannot express are recorded as unprovable.
+    equation true for every value; also `transformation`, `implication`, `sign_change`,
+    `parallel`, `trig_value` and `graph_measure`, added 2026-11-25, see docs/VERIFICATION.md).
+    Facts the engine cannot express are recorded as unprovable.
   - **(c) Third-provider blind statement:** a provider that is neither the writer nor the blind
     answerer (OpenAI by default) answers the neutral question without seeing our wording. Another
     provider (Gemini by default) judges that both state the same fact. Every answer must be given
-    with high confidence.
+    with high confidence. Amended 2026-11-25 (S3-A run, lead's request): the judge compares
+    meaning, not wording. A statement that adds explanation, an implied condition ("non-vertical")
+    or further related facts is the same; one that contradicts, leaves out part of the fact or a
+    needed condition, or covers only a narrower case is not. Checked with
+    `pnpm evals fact-judge` (every different pair must be refused).
 - A fact passes with (a), or with both (b) and (c). An item whose facts all pass goes into normal
   batches (10% sampling).
 - An item with a fact that fails or cannot be proved keeps `needs_human_approval: true` and is
@@ -38,7 +44,8 @@ specification names the topic but does not state the fact, so grounded writing h
 ## Consequences
 
 - `pnpm content:model-check --fact-check openai [--fact-judge gemini]` runs the stage
-  (`scripts/verify/fact-check.mjs`); the maths engine has an `identity` check kind.
+  (`scripts/verify/fact-check.mjs`); the maths engine's fact proof kinds are listed in
+  docs/VERIFICATION.md step 4b.
 - The validator requires a `fact-check` record on verified items with `facts`. A failed one is
   allowed only with `needs_human_approval` and a passing `human-approval`.
 - The review batch readiness rule (#109) must treat a failed fact-check as "individual review",

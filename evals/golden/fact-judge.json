@@ -1,0 +1,145 @@
+{
+  "description": "Fact-check judge regression set (S2, 2026-11-25). 'recorded' pairs are our fact statements and the blind statements a third provider gave in the S3-A fact-check run; 'made' pairs are written to differ in meaning and must always be refused. Maths facts only, no personal data.",
+  "cases": [
+    {
+      "id": "recorded-same-a12-0108",
+      "a": "tan x = sin x / cos x, and cos 90° = 0, so tan 90° is undefined.",
+      "b": "tan x is undefined at x = 90° for angles between 0° and 180°. This is because tan x = sin x / cos x, and cos 90° = 0, so the expression involves division by zero.",
+      "same": true,
+      "note": "recorded S3-A run 2026-11-25"
+    },
+    {
+      "id": "recorded-same-a9-0109",
+      "a": "Two straight lines are parallel exactly when they have the same gradient.",
+      "b": "For two non-vertical straight lines, the lines are parallel if and only if their gradients are equal: if the gradients are m1 and m2, then parallel implies m1 = m2 (and distinct parallel lines also have different intercepts).",
+      "same": true,
+      "note": "recorded S3-A run 2026-11-25"
+    },
+    {
+      "id": "recorded-same-a13-0108",
+      "a": "The graph of y = f(-x) is the reflection of the graph of y = f(x) in the y-axis.",
+      "b": "The graph of y = f(-x) is obtained by reflecting the graph of y = f(x) in the y-axis. This is because each point (x, f(x)) on the original graph becomes (-x, f(x)) on the new graph.",
+      "same": true,
+      "note": "recorded S3-A run 2026-11-25"
+    },
+    {
+      "id": "recorded-same-a13-0111",
+      "a": "The graph of y = -f(x) is the reflection of the graph of y = f(x) in the x-axis.",
+      "b": "The graph of y = -f(x) is obtained by reflecting the graph of y = f(x) in the x-axis. Equivalently, each point (x, y) maps to (x, -y).",
+      "same": true,
+      "note": "recorded S3-A run 2026-11-25"
+    },
+    {
+      "id": "recorded-same-a15-0104",
+      "a": "The area under a velocity-time graph is the distance travelled (for motion in one direction).",
+      "b": "The signed area under a velocity–time graph between two times represents the displacement over that time interval. If the graph stays above the time axis, this is also the distance travelled; if it goes below, areas below the axis count as negative displacement.",
+      "same": true,
+      "note": "recorded S3-A run 2026-11-25"
+    },
+    {
+      "id": "recorded-same-a15-0101",
+      "a": "The gradient of a velocity-time graph is the acceleration.",
+      "b": "The gradient of a velocity–time graph represents the acceleration, i.e. the rate of change of velocity with respect to time. For a curved graph, the gradient at a point gives the instantaneous acceleration; for a straight-line section, the constant gradient gives the constant acceleration over that interval.",
+      "same": true,
+      "note": "recorded S3-A run 2026-11-25"
+    },
+    {
+      "id": "recorded-same-a13-0101",
+      "a": "The graph of y = f(x) + a is the graph of y = f(x) translated a units up (down if a is negative).",
+      "b": "The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: up if a > 0 and down if a < 0.",
+      "same": true,
+      "note": "recorded S3-A run 2026-11-25"
+    },
+    {
+      "id": "recorded-same-a13-0102",
+      "a": "The graph of y = f(x - a) is the graph of y = f(x) translated a units to the right (to the left if a is negative).",
+      "b": "The graph of y = f(x-a) is obtained by translating the graph of y = f(x) horizontally by a units in the positive x-direction (to the right). This applies for any real constant a.",
+      "same": true,
+      "note": "recorded S3-A run 2026-11-25"
+    },
+    {
+      "id": "recorded-different-a14-0108",
+      "a": "The gradient of a distance-time graph is the speed; a horizontal line means the object is stationary.",
+      "b": "The gradient of a distance–time graph represents the object's speed: \u000bgradient = change in distance divided by change in time. For a curved graph, the gradient at a point gives the instantaneous speed at that time.",
+      "same": false,
+      "note": "B leaves out that a horizontal line means stationary"
+    },
+    {
+      "id": "recorded-different-a22-0112",
+      "a": "Multiplying or dividing both sides of an inequality by a negative number reverses the inequality sign.",
+      "b": "When you divide both sides of an inequality by a negative number, the inequality sign reverses direction. For example, if a < b and c < 0, then a/c > b/c.",
+      "same": false,
+      "note": "B covers dividing only, not multiplying (narrower)"
+    },
+    {
+      "id": "recorded-different-a20-0105",
+      "a": "If a continuous function f has f(a) and f(b) of opposite signs, then f(x) = 0 has a solution between a and b.",
+      "b": "Since polynomials are continuous, if f(2)<0 and f(3)>0 then there is at least one real number c with 2<c<3 such that f(c)=0. This follows from the Intermediate Value Theorem.",
+      "same": false,
+      "note": "B is one example, not the general fact (narrower)"
+    },
+    {
+      "id": "made-different-parallel-vs-perpendicular",
+      "a": "Two straight lines are parallel exactly when they have the same gradient.",
+      "b": "Two straight lines are perpendicular exactly when their gradients multiply to -1.",
+      "same": false,
+      "note": "a different fact"
+    },
+    {
+      "id": "made-different-translation-direction",
+      "a": "The graph of y = f(x - a) is the graph of y = f(x) translated a units to the right (to the left if a is negative).",
+      "b": "The graph of y = f(x - a) is the graph of y = f(x) translated a units to the left.",
+      "same": false,
+      "note": "contradicts A"
+    },
+    {
+      "id": "made-different-translation-axis",
+      "a": "The graph of y = f(x) + a is the graph of y = f(x) translated a units up (down if a is negative).",
+      "b": "The graph of y = f(x) + a is the graph of y = f(x) translated a units to the right.",
+      "same": false,
+      "note": "contradicts A"
+    },
+    {
+      "id": "made-different-inequality-any-number",
+      "a": "Multiplying or dividing both sides of an inequality by a negative number reverses the inequality sign.",
+      "b": "Multiplying or dividing both sides of an inequality by any non-zero number reverses the inequality sign.",
+      "same": false,
+      "note": "drops the condition that the number is negative"
+    },
+    {
+      "id": "made-different-perpendicular-product",
+      "a": "Two straight lines with gradients m and n (both non-zero) are perpendicular exactly when m × n = -1.",
+      "b": "Two straight lines with gradients m and n are perpendicular exactly when m × n = 1.",
+      "same": false,
+      "note": "contradicts A"
+    },
+    {
+      "id": "made-different-velocity-time-area",
+      "a": "The gradient of a velocity-time graph is the acceleration.",
+      "b": "The area under a velocity-time graph is the acceleration.",
+      "same": false,
+      "note": "a different (and wrong) fact"
+    },
+    {
+      "id": "made-different-sign-change-continuity",
+      "a": "If a continuous function f has f(a) and f(b) of opposite signs, then f(x) = 0 has a solution between a and b.",
+      "b": "If f(a) and f(b) have opposite signs, then f(x) = 0 has a solution between a and b.",
+      "same": false,
+      "note": "leaves out the condition that f is continuous"
+    },
+    {
+      "id": "made-different-tan-90",
+      "a": "tan x = sin x / cos x, and cos 90° = 0, so tan 90° is undefined.",
+      "b": "tan 90° = 0, because sin 90° / cos 90° and cos 90° = 0.",
+      "same": false,
+      "note": "contradicts A"
+    },
+    {
+      "id": "made-different-reflection-axis",
+      "a": "The graph of y = f(-x) is the reflection of the graph of y = f(x) in the y-axis.",
+      "b": "The graph of y = f(-x) is the reflection of the graph of y = f(x) in the x-axis.",
+      "same": false,
+      "note": "contradicts A"
+    }
+  ]
+}
