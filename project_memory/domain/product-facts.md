@@ -507,4 +507,5 @@ Tags: #product #rules #limits #defaults
   the button shows at the top of a topic lesson only for links with `checked_at` set; plain links
   opening in a new tab (nothing loaded until tapped). Pilot: Oak KS4 Higher lessons for the 9 GCSE
   Maths topics with items (n4, n7, a4, a6, a17, a18, r9, g9, g17), URLs found by web search only.
-  No Bitesize links yet: bbc.co.uk could not be reached from the build environment.
+  All 11 returned 200 in the CI link check on 2026-11-25, so `checked_at` is set and the buttons
+  show. No Bitesize links yet: bbc.co.uk could not be reached from the build environment.

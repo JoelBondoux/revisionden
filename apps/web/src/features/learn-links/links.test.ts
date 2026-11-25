@@ -44,6 +44,6 @@ describe('Learn it first links', () => {
         expect(['www.thenational.academy', 'www.bbc.co.uk']).toContain(new URL(l.url).host);
       }
     }
-    expect(learnLinksByTopic.has('gcse-maths-h-a17')).toBe(true);
+    expect(checkedLinksFor(learnLinksByTopic, 'gcse-maths-h-a17').length).toBeGreaterThan(0);
   });
 });
