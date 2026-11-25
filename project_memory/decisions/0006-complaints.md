@@ -1,4 +1,4 @@
-# 0005: Complaints: who complains, deadlines and escalation
+# 0006: Complaints: who complains, deadlines and escalation
 
 - Status: accepted (product owner, 2026-11-25, relayed by the lead session)
 - Date: 2026-11-25

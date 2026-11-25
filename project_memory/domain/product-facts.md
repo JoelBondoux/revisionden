@@ -177,7 +177,7 @@ Tags: #product #rules #limits #defaults
   (`packages/core/src/complaints.ts`). Agents acknowledge, reply and resolve; Managers escalate.
   The family sees replies and the outcome (and, for personal data, that they can complain to the
   ICO; contact details await the owner's check), never staff names. Kept 12 months after
-  resolved; deleted with the family; in the export. Deadlines are "we aim to" (decision 0005).
+  resolved; deleted with the family; in the export. Deadlines are "we aim to" (decision 0006).
 - Only parents complain. A student uses "Ask a parent to raise something" (Settings,
   `/ask-a-parent`): a topic (`COMPLAINT_REQUEST_TOPICS`) and an optional note (≤300, no email or
   phone), 3 a day; both parents see it on `/complaints` and can start a complaint pre-filled with

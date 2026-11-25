@@ -142,7 +142,7 @@ years after the request arrived. An export request is handled by telling the par
 | `POST complaints/{id}/resolve`     | Agent   | `{ outcome }` (3–2000)                                                               | Shown to the parent; resolved complaints are deleted 12 months later                                                                                                                                                                                                                                                                                                                                                  | `complaint.resolve`     |
 | `POST complaints/{id}/escalate`    | Manager | `{}`                                                                                 | A Manager reviews it                                                                                                                                                                                                                                                                                                                                                                                                  | `complaint.escalate`    |
 
-Any action on a resolved complaint is 409 `complaint_closed`. Owner decisions (decision 0005):
+Any action on a resolved complaint is 409 `complaint_closed`. Owner decisions (decision 0006):
 deadlines are what we aim for; only parents complain, and a student's "Ask a parent" request
 (topic and note) stays in the family and never reaches AppDeck; a complaint not resolved within
 5 working days of acknowledgement can be escalated, by the parent in the app or a Manager. Deadlines come from
