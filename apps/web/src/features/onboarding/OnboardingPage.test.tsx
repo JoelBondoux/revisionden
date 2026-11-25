@@ -197,3 +197,13 @@ describe('OnboardingPage', () => {
     expect(await screen.findByRole('heading', { name: "Who's studying?" })).toBeInTheDocument();
   });
 });
+
+describe('OnboardingPage from "Who\'s revising?"', () => {
+  it("opens straight on linking the chosen child's device", async () => {
+    const { renderRoute } = await import('../../test/render');
+    renderRoute('/onboarding?link=8f6d2b1e-4c3a-4d5e-9f00-000000000002', { studentId: null });
+    expect(
+      await screen.findByRole('heading', { name: "Link PixelOwl's device" }),
+    ).toBeInTheDocument();
+  });
+});

@@ -27,4 +27,6 @@ interface ImportMeta {
 declare const __APP_VERSION__: string;
 declare const __BUILD_DATE__: string;
 declare const __COMMIT__: string;
+/** Version and commit of this build; also written to /version.json. */
+declare const __BUILD_ID__: string;
 declare const __LICENCES__: { name: string; version: string; licence: string }[];

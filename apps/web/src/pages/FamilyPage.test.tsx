@@ -8,16 +8,44 @@ import { renderRoute } from '../test/render';
 describe('Family screen', () => {
   it('lists each child from the parent family route with their avatar', async () => {
     renderRoute('/family', { studentId: null });
-    expect(await screen.findByRole('button', { name: /NovaFox/ })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /PixelOwl/ })).toBeInTheDocument();
+    expect(await screen.findByRole('link', { name: /^NovaFox/ })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /^PixelOwl/ })).toBeInTheDocument();
     expect(screen.getByRole('img', { name: "NovaFox's avatar" })).toBeInTheDocument();
     expect(screen.getByText('Year 11')).toBeInTheDocument();
   });
 
-  it("opens the chosen student's learning path", async () => {
+  it("opens the parent's view of the chosen child (stats), never the student screens", async () => {
+    const { router } = renderRoute('/family', { studentId: null });
+    const nova = await screen.findByRole('link', { name: /^NovaFox/ });
+    expect(nova).toHaveAttribute(
+      'href',
+      '/parent/stats?student=8f6d2b1e-4c3a-4d5e-9f00-000000000001',
+    );
+    await userEvent.click(nova);
+    expect(
+      await screen.findByRole('heading', { level: 1, name: 'Stats dashboard' }),
+    ).toBeInTheDocument();
+    expect(router.state.location.pathname).toBe('/parent/stats');
+    expect(screen.queryByRole('heading', { name: 'Topic map' })).not.toBeInTheDocument();
+  });
+
+  it('shows each child the rewards their parent set and a way to link a device', async () => {
     renderRoute('/family', { studentId: null });
-    await userEvent.click(await screen.findByRole('button', { name: /PixelOwl/ }));
-    expect(await screen.findByRole('heading', { level: 1, name: 'Topic map' })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('link', { name: 'Rewards you set for NovaFox' }),
+    ).toHaveAttribute('href', '/family/8f6d2b1e-4c3a-4d5e-9f00-000000000001/rewards');
+    expect(screen.getByRole('link', { name: 'Link a device for NovaFox' })).toHaveAttribute(
+      'href',
+      '/onboarding?link=8f6d2b1e-4c3a-4d5e-9f00-000000000001',
+    );
+  });
+
+  it('links to the family feedback list', async () => {
+    renderRoute('/family', { studentId: null });
+    expect(await screen.findByRole('link', { name: 'Family feedback' })).toHaveAttribute(
+      'href',
+      '/feedback/family',
+    );
   });
 
   it('asks a signed-out visitor to sign in instead of showing an error', async () => {

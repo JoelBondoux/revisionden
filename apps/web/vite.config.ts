@@ -54,9 +54,27 @@ export default defineConfig(({ command, mode }) => {
   return config;
 });
 
+/** Identifies this build; the app compares it with /version.json to spot a newer deploy. */
+const buildId = `${appVersion()}-${shortCommit()}`;
+
+/** Writes /version.json next to the app, so a running copy can tell a newer one was deployed. */
+const versionFile = {
+  name: 'revisionden-version-file',
+  generateBundle(this: {
+    emitFile: (file: { type: 'asset'; fileName: string; source: string }) => void;
+  }) {
+    this.emitFile({
+      type: 'asset',
+      fileName: 'version.json',
+      source: `${JSON.stringify({ build: buildId })}\n`,
+    });
+  },
+};
+
 const config: UserConfig = {
-  plugins: [react()],
+  plugins: [react(), versionFile],
   define: {
+    __BUILD_ID__: JSON.stringify(buildId),
     __APP_VERSION__: JSON.stringify(appVersion()),
     __BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)),
     __COMMIT__: JSON.stringify(shortCommit()),
