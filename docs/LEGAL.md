@@ -41,6 +41,22 @@ never drift apart.
 | `accessibility-statement.md`  | Everyone               | Accessibility standard (WCAG 2.2 AA), known gaps, how to ask for help           |
 | `childrens-code.md`           | Parents, reviewers     | How each of the ICO Children's Code's 15 standards is met                       |
 
+## Friendly view (young people's notice, L6)
+
+`privacy-for-young-people.md` is also shown as a friendly page, built from the same file (one
+source; the Markdown stays the legal text). Hints are HTML comments, so the file still reads
+normally on GitHub:
+
+- Under "In plain English", a `### The short version` list of 5 or 6 one-sentence cards, each item
+  starting `<!-- icon: name -->`.
+- Each `###` part of the full text starts with `<!-- icon: name -->`, then `**In short:**` and 2 to
+  4 key points (short sentences, about a 12-year-old's reading level, no legal words). The rest of
+  the part is the "Read more" text.
+- Icon names are the original SVG icons in `apps/web/src/features/legal/NoticeIcon.tsx`; a test
+  fails if the file uses an unknown icon or a part has fewer than 2 or more than 4 key points.
+
+The parent notice and the other policies keep the plain layout for now.
+
 ## Rules
 
 - **Truthful to the code.** Every statement about data must match what the code does today

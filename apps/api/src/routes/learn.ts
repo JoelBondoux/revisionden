@@ -49,6 +49,7 @@ import {
 } from '../learning/items';
 import type { MathsEngine } from '../learning/maths-engine';
 import { awardXp, getProgress } from '../learning/progress';
+import { topicAndDescendants } from '../learning/topic-tree';
 
 /** How many recent answers to look back through for a combo (more is never needed in practice). */
 const COMBO_HISTORY = 100;
@@ -158,7 +159,9 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
     const query = LessonQuerySchema.parse(c.req.query());
     const studentId = c.var.student.studentId;
     if (query.topicId) {
-      const rows = await loadItems(eq(items.topicId, query.topicId), query.count);
+      // A unit's id gives its challenge: items from every topic in the unit.
+      const topicIds = await topicAndDescendants(db, query.topicId);
+      const rows = await loadItems(inArray(items.topicId, topicIds), query.count);
       return c.json(lessonResponse(rows.map((r) => toLearnItem(r.item, r.topicTitle))));
     }
     return c.json(lessonResponse(await subjectLesson(studentId, query.subjectId!, query.count)));

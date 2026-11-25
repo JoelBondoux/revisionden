@@ -8,7 +8,12 @@ import {
   type OnboardingFamily,
 } from '@revisionden/core';
 import { reportPossiblyStale } from '../pwa/updates';
-import { cardsDueSchema, topicMapSchema, type CardsDue, type TopicMap } from './schemas';
+import {
+  CardsDueSchema as cardsDueSchema,
+  TopicMapSchema as topicMapSchema,
+  type CardsDue,
+  type TopicMap,
+} from '@revisionden/core';
 
 export type ApiErrorKind = 'network' | 'http' | 'schema';
 
