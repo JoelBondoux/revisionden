@@ -45,6 +45,7 @@ import {
   studentFeedbackRoutes,
 } from './feedback/routes';
 import { parentStatsRoutes, studentStatsRoutes } from './stats/routes';
+import { adminErrorReportRoutes, errorReportRoutes } from './feedback/error-reports';
 import type { StatsAdapters } from './stats/adapters';
 
 export interface AppDeps {
@@ -106,6 +107,7 @@ export function createApp(deps: AppDeps) {
   app.use('/v1/family/join', limit('auth', deps.rateLimiters.auth));
   app.use('/v1/ai/*', limit('ai', deps.rateLimiters.ai));
   app.use('/v1/client-errors', limit('auth', deps.rateLimiters.auth));
+  app.use('/v1/error-reports', limit('auth', deps.rateLimiters.auth));
 
   app.on(['GET', 'POST'], `${AUTH_BASE_PATH}/*`, async (c) =>
     reporting.toSharedErrorShape(await deps.auth.handler(c.req.raw), c),
@@ -181,12 +183,14 @@ export function createApp(deps: AppDeps) {
   parent.route('/family', familyParentRoutes(deps));
   parent.route('/', familyExport(deps));
   parent.route('/admin', adminFeedbackRoutes(deps));
+  parent.route('/admin', adminErrorReportRoutes(deps));
   parent.route('/parent', parentNotificationRoutes(deps));
   parent.route(
     '/review',
     reviewRoutes(deps.db, { ...deps.verification, now: () => deps.clock.now() }),
   );
 
+  app.route('/v1/error-reports', errorReportRoutes(deps));
   app.route('/v1/device', deviceRoutes(deps));
   app.route('/v1/notifications', pushKeyRoutes(deps));
   // Student routes: the session middleware runs before every /v1/student route below.

@@ -71,6 +71,13 @@ device details (app version, screen, browser family, screen size, online). Never
 contacts. Deleted 12 months after closing. Policy confirmations store only the policy, version and
 date per parent sign-in.
 
+## Error reports
+
+- "Send error report" (one tap, no typing) on every error that shows a reference code stores an
+  anonymous row in `error_reports`: the code, the screen and failing API path with ids masked, the
+  build, the browser family, online or not and the time. No family, student, account, id or text
+  (strict schema in `packages/core`, `ErrorReportSchema`). Rate limited; deleted after 90 days.
+
 ## Own flashcards
 
 A student's own flashcards (up to 300 characters a side) get the same check as feedback before

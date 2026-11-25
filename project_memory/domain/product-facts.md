@@ -18,7 +18,7 @@ Tags: #product #rules #limits #defaults
   Invite code or link 7 days, single use, hashed, 5 a day; either parent removes the other (access
   ends at once, notice next sign-in); deleting the family needs both when there are two; family
   activity log names parents only by number, important changes pushed to the other parent and
-  shown as new in the parent home; log kept 12 months. Migration 0009.
+  shown as new in the parent home; log kept 12 months. Migration 0010.
 - Year group: Years 9 to 13 only (core schema and database check `students_year_group_range`,
   migration 0006).
 - Google and Microsoft access, refresh and ID tokens are never stored: blanked in Better Auth's
@@ -134,6 +134,10 @@ Tags: #product #rules #limits #defaults
   "Link a device" (product owner, 2026-11-25). Students use only their own linked device. Signed out, any screen shows the sign-in buttons
   and returns to the same page after sign-in. Sign out is on the welcome page and `/family`. The topic map and Cards badge wait for F2's
   `GET /v1/student/map` and `GET /v1/student/cards/due`.
+- Every error with a reference code has a one-tap "Send error report" button: an anonymous report
+  (code, screen and API path with ids masked, status, build, browser family, online, time) is
+  stored in `error_reports` for 90 days and listed for the operator at `/admin/feedback` (Error
+  reports), `GET /v1/admin/error-reports` and `scripts/error-reports.mjs`. Privacy notice 1.2.
 - Every "Something went wrong" shows a reference code like `RD-7K2M9Q` (no I, L, O or U), also
   in the API logs with no personal data, so a family can report it. Implemented in
   `packages/core/src/error-ref.ts`, `apps/api/src/errors.ts`, `apps/web/src/api/client.ts`.
@@ -464,3 +468,10 @@ Tags: #product #rules #limits #defaults
 - "Get help" page: UK support services by topic with tap-to-call links; every number and URL
   confirmed on the service's own site with source and date (rechecked each term); nothing about its
   use is recorded or shown to parents; works offline; Quick exit. Detail: `docs/PRODUCT_RULES.md`.
+
+## Quick wins (owner approved 2026-11-25; planned, workstream Q)
+
+- Daily 5-a-day mixed set (5 questions from practised topics); recall checks (2 questions at lesson
+  start, no penalty, skippable); "Learn it first" links to Oak and BBC Bitesize per topic, checked
+  by CI; read aloud with on-device voices preferred; reading comfort settings (dyslexia-friendly
+  self-hosted font, larger text, spacing, tint). Detail: `docs/PRODUCT_RULES.md` (Quick wins).

@@ -30,6 +30,7 @@ export const handlers: RequestHandler[] = [
 
   // Error reports from the web app (reference codes).
   http.post('*/v1/client-errors', () => new HttpResponse(null, { status: 204 })),
+  http.post('*/v1/error-reports', () => HttpResponse.json({ received: true }, { status: 202 })),
 
   // Learning loop and flashcards (workstream F).
   ...learnHandlers,
