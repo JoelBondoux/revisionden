@@ -226,10 +226,10 @@ Tags: #product #rules #limits #defaults
   for young people, help and contact, about (operator name from `VITE_OPERATOR_NAME`) and every
   policy at `/policies/<name>`, with "Draft: not yet in force, being reviewed before launch." while
   `VITE_POLICY_EFFECTIVE_DATE` is unset.
-  Until `WWW_LAUNCHED=true` it says the app is in private testing.
-- Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Hosts: `app.revisionden.com`
-  and `api.revisionden.com` (production; owner decision 2026-11-25), `staging.` and `api-staging.` (staging), `dev.` and `api-dev.` (development).
-- The bare `revisionden.com` is the public sales site (workstream M, `apps/www`), not the app.
+  Images: an Open Graph card (`og.png`, 1200×630, used by every page's `og:image`) and an Apple
+  touch icon (180×180), drawn from Pip's shapes and the arena colours. They are committed in
+  `apps/www/public` and remade by hand with `node apps/www/scripts/make-images.mjs` after an art
+  change; original art only, no stock photos or AI-generated images.
 - Production passkeys use the RP ID `revisionden.com`; OAuth callbacks are on the API host, so the
   move to `app.` needed no change in Google or Microsoft.
 - Live since 2026-11-25 (workstream G): API Workers on all three API hosts; web app on `dev.` and

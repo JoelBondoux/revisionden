@@ -196,6 +196,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Changed
 
+- Project memory: the public site's Open Graph card and touch icon (and how to remake them) recorded in product facts; duplicate hosting lines left by the domain move merged into one (workstream M).
 - Item type names are the content schema names everywhere (`worked_maths`, `extended_answer`); the mapping in core is removed.
 - One item JSON format in the `items` table for the content sync and AI marking (`body.marks` added; marking reads `answer.key` and `answer.markScheme`), with a round-trip test.
 
