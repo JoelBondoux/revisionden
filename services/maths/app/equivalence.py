@@ -19,6 +19,7 @@ from sympy.parsing.sympy_parser import (
     convert_xor,
     implicit_multiplication,
     parse_expr,
+    rationalize,
     standard_transformations,
 )
 
@@ -70,13 +71,17 @@ def _check_powers(expr: Expr) -> None:
             raise ValueError(f"Exponents larger than {MAX_EXPONENT} are not supported")
 
 
-def parse(text: str, evaluate: bool = True, functions: dict | None = None) -> Expr:
+def parse(
+    text: str, evaluate: bool = True, functions: dict | None = None, exact: bool = False
+) -> Expr:
     """Parse one untrusted expression safely, or raise ValueError.
 
     With ``evaluate=False`` the expression keeps the shape the student wrote, which is what
     form checks (factorised, expanded) need. ``functions`` maps single letters to SymPy
-    functions (for example ``f`` to an undefined function, for graph transformations).
+    functions (for example ``f`` to an undefined function, for graph transformations). With
+    ``exact=True`` decimals are read as exact fractions (2.675 is 2675/1000), for rounding.
     """
+    transformations = TRANSFORMATIONS + ((rationalize,) if exact else ())
     _check_text(text)
     names = {**_names(), **(functions or {})}
     try:
@@ -84,7 +89,7 @@ def parse(text: str, evaluate: bool = True, functions: dict | None = None) -> Ex
             text,
             local_dict=names,
             global_dict={"__builtins__": {}, **_sympy_core()},
-            transformations=TRANSFORMATIONS,
+            transformations=transformations,
             evaluate=False,
         )
         _check_powers(unevaluated)
@@ -94,7 +99,7 @@ def parse(text: str, evaluate: bool = True, functions: dict | None = None) -> Ex
             text,
             local_dict=names,
             global_dict={"__builtins__": {}, **_sympy_core()},
-            transformations=TRANSFORMATIONS,
+            transformations=transformations,
             evaluate=True,
         )
     except ValueError:

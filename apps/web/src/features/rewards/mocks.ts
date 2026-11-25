@@ -5,6 +5,7 @@
 import { http, HttpResponse, type RequestHandler } from 'msw';
 import {
   CreateParentRewardRequestSchema,
+  UpdateParentRewardRequestSchema,
   parentRewardProgress,
   parentTargetLabel,
   type ParentReward,
@@ -21,6 +22,7 @@ const view = () => sampleRewards({ parentRewards });
 export const rewardsHandlers: RequestHandler[] = [
   http.get('*/v1/student/rewards', () => HttpResponse.json(view())),
   http.get('*/v1/students/:id/rewards', () => HttpResponse.json(view())),
+  http.get('*/v1/students/:id/parent-rewards', () => HttpResponse.json({ parentRewards })),
   http.post('*/v1/students/:id/parent-rewards', async ({ request }) => {
     const parsed = CreateParentRewardRequestSchema.safeParse(await request.json());
     if (!parsed.success) return HttpResponse.json({ error: { code: 'invalid' } }, { status: 400 });
@@ -47,6 +49,30 @@ export const rewardsHandlers: RequestHandler[] = [
     );
     const found = parentRewards.find((r) => r.id === params.rewardId);
     return found ? HttpResponse.json(found) : HttpResponse.json({}, { status: 404 });
+  }),
+  http.patch('*/v1/students/:id/parent-rewards/:rewardId', async ({ request, params }) => {
+    const parsed = UpdateParentRewardRequestSchema.safeParse(await request.json());
+    if (!parsed.success) return HttpResponse.json({ error: { code: 'invalid' } }, { status: 400 });
+    const found = parentRewards.find((r) => r.id === params.rewardId);
+    if (!found) return HttpResponse.json({}, { status: 404 });
+    if (found.givenAt)
+      return HttpResponse.json({ error: { code: 'already_given' } }, { status: 409 });
+    const { title, note, target } = parsed.data;
+    const nextTarget = target ?? found.target;
+    const today = new Date().toISOString().slice(0, 10);
+    const progress = parentRewardProgress(nextTarget, { level: 4, bestStreak: 5 }, [], today);
+    const updated: ParentReward = {
+      ...found,
+      title: title ?? found.title,
+      note: note === undefined ? found.note : note,
+      target: nextTarget,
+      targetLabel: parentTargetLabel(nextTarget),
+      reached: progress.reached,
+      current: progress.current,
+      goal: progress.target,
+    };
+    parentRewards = parentRewards.map((r) => (r.id === updated.id ? updated : r));
+    return HttpResponse.json(updated);
   }),
   http.delete('*/v1/students/:id/parent-rewards/:rewardId', ({ params }) => {
     parentRewards = parentRewards.filter((r) => r.id !== params.rewardId);

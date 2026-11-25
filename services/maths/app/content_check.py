@@ -50,7 +50,7 @@ def _rounded(value, check: dict) -> Decimal:
 def _value(check: dict) -> str | None:
     tolerance = check.get("tolerance")
     if "decimal_places" in check or "significant_figures" in check:
-        ok = _rounded(parse(check["expression"]), check) == Decimal(check["answer"])
+        ok = _rounded(parse(check["expression"], exact=True), check) == Decimal(check["answer"])
     elif tolerance is None:
         ok = are_equivalent(check["expression"], check["answer"])
     else:

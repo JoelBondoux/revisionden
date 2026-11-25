@@ -57,10 +57,27 @@ export function showsRounding(text: string, rounding: Rounding): boolean {
   return shown.figures[0] <= want && want <= shown.figures[1];
 }
 
-/** A rounded answer: written to the asked accuracy, with the same value as the key. */
+/** A plain decimal as an exact scaled integer (digits, places), or null. */
+function exactDecimal(text: string): { digits: bigint; places: number } | null {
+  const m = /^(-?)(\d+)(?:\.(\d+))?$/.exec(text.trim());
+  if (!m) return null;
+  const fraction = m[3] ?? '';
+  const digits = BigInt(`${m[2]}${fraction}`);
+  return { digits: m[1] ? -digits : digits, places: fraction.length };
+}
+
+/** Whether two plain decimals have exactly the same value (no floating-point tolerance). */
+function sameDecimal(a: string, b: string): boolean {
+  const x = exactDecimal(a);
+  const y = exactDecimal(b);
+  if (!x || !y) return false;
+  const places = Math.max(x.places, y.places);
+  const scale = (d: { digits: bigint; places: number }) =>
+    d.digits * 10n ** BigInt(places - d.places);
+  return scale(x) === scale(y);
+}
+
+/** A rounded answer: written to the asked accuracy, with exactly the key's value. */
 export function meetsRounding(given: string, expected: string, rounding: Rounding): boolean {
-  if (!showsRounding(given, rounding)) return false;
-  const a = Number(given.trim());
-  const b = Number(expected.trim());
-  return Math.abs(a - b) <= 1e-9 * Math.max(1, Math.abs(b));
+  return showsRounding(given, rounding) && sameDecimal(given, expected);
 }

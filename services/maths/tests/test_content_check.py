@@ -243,3 +243,12 @@ def test_a_function_notation_subject_such_as_an_inverse_is_accepted():
     [r] = run_checks([{"id": "a", "kind": "expression", "expression": "(x + 3)/2",
                        "answer": "f^-1(x) = (x + 3)/2", "subject": "f^-1(x)"}])
     assert r == {"id": "a", "ok": True}
+
+
+def test_decimal_literals_round_exactly_half_up_not_from_their_binary_approximation():
+    # 2.675 as a binary float is just below 2.675; the exact decimal rounds up to 2.68.
+    [up, down] = run_checks([
+        {"id": "a", "kind": "value", "expression": "2.675", "answer": "2.68", "decimal_places": 2},
+        {"id": "b", "kind": "value", "expression": "2.675", "answer": "2.67", "decimal_places": 2},
+    ])
+    assert up["ok"] is True and down["ok"] is False
