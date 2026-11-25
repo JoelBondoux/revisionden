@@ -23,7 +23,14 @@ export type SoundEvent = (typeof SOUND_EVENTS)[number];
 /** Learn mode marks live; Test mode marks after submit; timed papers stay quiet but for the timer. */
 export type SoundMode = 'learn' | 'test' | 'timed';
 
-const MARKING_SOUNDS: ReadonlySet<SoundEvent> = new Set(['correct', 'wrong', 'partMarks']);
+/** Never in Test mode before submit: marking sounds, and reward sounds (they follow marking). */
+const MARKING_SOUNDS: ReadonlySet<SoundEvent> = new Set([
+  'correct',
+  'wrong',
+  'partMarks',
+  'rewardUnlocked',
+  'levelUp',
+]);
 
 /**
  * The Test mode rule: no correct, wrong or part-marks sound before the student submits (the
