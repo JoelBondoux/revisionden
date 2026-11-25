@@ -37,8 +37,11 @@
 Decision 0005. `revisionden.com` is the sales site; the app is on `app.revisionden.com`.
 
 - `src/build.ts` reads the build variables (`src/config.ts`), the web app's `tokens.css`, the
-  Nunito font files and (from PR 2) `docs/legal/*.md`, then writes `dist/`. `src/site.ts` renders
-  every file as a pure function; pages live in `src/pages/`.
+  Nunito font files, `docs/legal/*.md` with `docs/LEGAL.md` (order and audience) and `docs/PRICING.md`
+  (planned prices), then writes `dist/`. `src/site.ts` renders
+  every file as a pure function; pages live in `src/pages/`: `/`, `/how-it-works`, `/pricing`,
+  `/young-people`, `/help`, `/about`, `/policies` and `/policies/<name>` (one per `docs/legal` file, via
+  `src/markdown.ts`, with a draft banner until `VITE_POLICY_EFFECTIVE_DATE` is set), and `404.html`.
 - No client-side JavaScript and no third-party requests. `src/checks.ts` (used by the tests)
   finds resources from other origins and same-site links that don't resolve.
 - `src/worker.ts`: redirects `www.` to the apex, serves the static assets and sets the security

@@ -1,16 +1,7 @@
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { readSiteConfig } from './config.ts';
 import { internalLinks, thirdPartyResources } from './checks.ts';
-import { renderSite, type SiteInputs } from './site.ts';
-
-const repoRoot = join(import.meta.dirname, '..', '..', '..');
-const tokensCss = readFileSync(join(repoRoot, 'apps/web/src/design/tokens.css'), 'utf8');
-const inputs: SiteInputs = {
-  tokensCss,
-  siteCss: '.site { color: var(--color-text); }',
-  fonts: { 'nunito-latin-400-normal.woff2': new Uint8Array([1]) },
-};
+import { renderSite } from './site.ts';
+import { testInputs as inputs, tokensCss } from './test-inputs.ts';
 
 const production = readSiteConfig({
   WWW_ENVIRONMENT: 'production',
@@ -130,13 +121,13 @@ describe('the built site', () => {
   it('says the app is in private testing before launch, not open to the public', () => {
     const html = text(files, 'index.html');
     expect(html).toContain('in private testing');
-    expect(html).not.toContain('Free to use now');
+    expect(html).not.toContain('Free to use.');
   });
 
   it('says the app is free to use once launched', () => {
     const launched = { ...production, launched: true };
     const html = text(renderSite(launched, inputs), 'index.html');
-    expect(html).toContain('Free to use now');
+    expect(html).toContain('Free to use.');
     expect(html).not.toContain('in private testing');
   });
 });

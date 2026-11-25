@@ -8,7 +8,7 @@ test.describe('deployed public site privacy', () => {
   test.skip(!www, 'Set E2E_WWW_URL to check the public site');
 
   // Only the site's own origin: no fonts, analytics, trackers, embeds or CDN scripts.
-  for (const path of ['/', '/404-check']) {
+  for (const path of ['/', '/pricing', '/policies/privacy-notice', '/404-check']) {
     test(`${path} makes no requests to third parties`, async ({ page }) => {
       const own = new URL(www!).host;
       const foreign: string[] = [];
