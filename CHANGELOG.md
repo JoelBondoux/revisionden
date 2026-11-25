@@ -67,6 +67,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Fact-check stage (S2, Codex findings on #116): a cited quote now counts only if the judge confirms it states the fact (not just its topic), otherwise the fact needs the engine proof and blind statement; and each `content:model-check` stage sees the checks recorded earlier in the same run, so one provider can't give both the blind answer and the blind statement.
 - Multiple choice reviews (S2, cross-lane V): the adversarial review prompt now says option numbers count from 0 (also `distractor:N`) and shows the correct option's text, so the reviewer no longer fails correct items as wrong answers; the human review page shows the answer as the correct option ("Option 3: …") with options numbered from 1.
 - Dark theme: mastered-topic checkmarks on the map use `--color-text-on-gold` (dark on gold) instead of the light body text, which gave about 1.3:1 contrast; the theme contrast tests now cover this pair and check the map rule (J8 follow-up).
 - Flaky web test (I5): the unlock test waited for the student button but not for the parent sign-in buttons, which load after the provider list; it now waits for both, with the provider list made slow on purpose.

@@ -1,6 +1,7 @@
 // Pipeline step 4b, the fact-check stage (decision 0009, docs/VERIFICATION.md). An item that rests
 // on a standard maths fact no cited source states lists it in `facts`. Each fact passes if:
-//   (a) an official citation states it and the item's quote check passed (no model calls), or
+//   (a) an official citation's quote states it: the item's quote check passed (the quote is really
+//       in the source) and the judge confirms the quote states the fact, not just its topic, or
 //   (b) the maths engine proves it AND (c) a third provider, asked a neutral question without our
 //       wording, states the same fact (judged by another provider, high confidence throughout).
 // A fact that fails or cannot be proved leaves the item for individual human review.
@@ -49,6 +50,13 @@ const judgePrompt = (ours, theirs) => ({
   prompt: `Statement A:\n${ours}\n\nStatement B:\n${theirs}\n\nDo A and B state the same fact?`,
 });
 
+const quoteJudgePrompt = (fact, quote) => ({
+  system: JUDGE_SYSTEM,
+  prompt:
+    `Statement A (a maths fact):\n${fact}\n\nStatement B (a quote from an official exam board ` +
+    `document):\n${quote}\n\nDoes B state the same fact as A? Mentioning the topic is not enough.`,
+});
+
 const providerOf = (tool = '') => String(tool).split(':')[0];
 
 function assertProviders(item, stater, judge) {
@@ -78,14 +86,27 @@ export async function runFactCheck(item, { stater, judge, maths, now = () => new
   );
   const versions = new Set();
   let usedModels = false;
+  let usedJudge = false;
   const notes = [];
   let allPass = true;
 
   for (const [i, fact] of item.facts.entries()) {
     const label = `fact ${i + 1}`;
-    if (fact.citation && quotePassed && item.citations?.[fact.citation - 1]) {
-      notes.push(`${label}: official (citation ${fact.citation})`);
-      continue;
+    const quote = fact.citation ? item.citations?.[fact.citation - 1]?.quote : undefined;
+    let prefix = '';
+    if (quote && quotePassed) {
+      const q = await judge.complete({
+        ...quoteJudgePrompt(fact.statement, quote),
+        schema: JUDGE_SCHEMA,
+        schemaName: 'fact_quote_judgement',
+      });
+      versions.add(q.modelVersion);
+      usedJudge = true;
+      if (q.output.same && q.output.confidence === 'high') {
+        notes.push(`${label}: official (citation ${fact.citation}, the quote states it)`);
+        continue;
+      }
+      prefix = `citation ${fact.citation} does not state it; `;
     }
     usedModels = true;
     let proof = 'no maths engine proof';
@@ -113,7 +134,7 @@ export async function runFactCheck(item, { stater, judge, maths, now = () => new
     ];
     const matches = j.output.same && problems.length === 0;
     notes.push(
-      `${label}: ${proof}; blind statement ${j.output.same ? 'matches' : 'differs'} ("${s.output.statement}")` +
+      `${label}: ${prefix}${proof}; blind statement ${j.output.same ? 'matches' : 'differs'} ("${s.output.statement}")` +
         (problems.length ? `; ${problems.join('; ')}` : ''),
     );
     allPass &&= proved && matches;
@@ -122,7 +143,7 @@ export async function runFactCheck(item, { stater, judge, maths, now = () => new
   const result = allPass ? 'pass' : 'fail';
   const tool = usedModels
     ? `${stater.provider}:${stater.model} + ${judge.provider}:${judge.model} + maths-engine`
-    : 'revisionden-quote-check';
+    : `${judge.provider}:${judge.model} + revisionden-quote-check`;
   return {
     id: item.id,
     result,
@@ -130,7 +151,7 @@ export async function runFactCheck(item, { stater, judge, maths, now = () => new
       name: 'fact-check',
       result,
       tool,
-      tool_version: usedModels ? [...versions].join('; ') : '1.0.0',
+      tool_version: usedModels || usedJudge ? [...versions].join('; ') : '1.0.0',
       at: stamp(now()),
       notes: notes.join('; '),
     },
