@@ -339,6 +339,13 @@ Mockups: screens 19 (student) and 20 (parent).
   Settings.
 - When the operator confirms a student's bug, the student is told in the app and earns the Bug
   Hunter rewards in `REWARDS.md`.
+- Operator triage (`/admin/feedback`) has **Confirm bug** and **Duplicate of…** (an earlier
+  confirmed report) for bug reports. Each report can be confirmed once. Rules:
+  `packages/core/src/bug-hunter.ts`; a week is Monday to Sunday, UK time; the 3-a-week cap counts
+  full and duplicate rewards, and past it the student is thanked with no XP and no track step. The
+  student sees the thank-you once (a toast on their next visit). Bug XP counts towards total XP,
+  not the daily goal or streak. The button's on/off setting is per device
+  (`revisionden.bugButton`). Built in L7.
 
 - Kinds: **bug**, **idea**, **something confusing**, **other**. (Mistakes in a question keep
   using "Report a problem" on the item, which quarantines it.)

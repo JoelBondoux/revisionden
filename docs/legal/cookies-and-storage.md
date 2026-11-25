@@ -1,6 +1,6 @@
 # Cookies and storage
 
-Version: 1.0
+Version: 1.1
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -43,6 +43,7 @@ policies. We do not set or read those.
 | Local storage `revisionden.youngPeopleNotice` | Remembers that the student has seen the privacy notice for young people (the version number only)                                       | Until site data is cleared                    |
 | Service worker and its cache                  | Lets the app open quickly and work offline. Holds only the app's own files, never your data; API responses are never cached             | Until the app updates or site data is cleared |
 | Push subscription                             | Lets the browser receive reminders, if the student turns them on                                                                        | Until reminders are turned off                |
+| Local storage `revisionden.bugButton`         | Remembers if the student switched the bug button off on this device                                                                     | Until site data is cleared                    |
 | Sound settings (when added)                   | Remembers mute, volume and tap sounds for this device                                                                                   | Until site data is cleared                    |
 
 ### 4. What we do not use
@@ -57,4 +58,5 @@ need to sign in, or unlink and link the student's device again.
 
 ## Changes
 
+- 1.1: Added the setting that remembers if the bug button is switched off on this device.
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).

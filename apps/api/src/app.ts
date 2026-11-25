@@ -37,6 +37,7 @@ import { parentRewardRoutes, studentRewardRoutes } from './routes/rewards';
 import type { MathsEngine } from './learning/maths-engine';
 import {
   adminFeedbackRoutes,
+  parentBugHunterRoutes,
   parentFeedbackRoutes,
   studentFeedbackRoutes,
 } from './feedback/routes';
@@ -149,6 +150,7 @@ export function createApp(deps: AppDeps) {
   parent.route('/onboarding', onboardingRoutes(deps));
   parent.route('/', reportRoutes(deps.db, 'parent'));
   parent.route('/', parentFeedbackRoutes(deps));
+  parent.route('/students', parentBugHunterRoutes(deps));
   parent.route('/family', familyRoutes(deps));
   parent.route('/', familyExport(deps));
   parent.route('/admin', adminFeedbackRoutes(deps));
