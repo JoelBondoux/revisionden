@@ -158,4 +158,11 @@ describe('Student passkey unlock', () => {
     renderRoute('/family', { studentId: null });
     expect(await screen.findByRole('heading', { name: 'Please sign in' })).toBeInTheDocument();
   });
+
+  it('uses the shared link styles, never plain underlined links (J7)', async () => {
+    renderRoute('/unlock', { studentId: null });
+    const parents = await screen.findByRole('link', { name: 'Parents sign in here' });
+    expect(parents).toHaveAttribute('href', '/');
+    expect(parents).toHaveClass('text-link');
+  });
 });
