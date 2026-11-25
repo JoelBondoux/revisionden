@@ -71,7 +71,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -140,20 +140,20 @@
           "notes": "model answered \"2\"; expected \"2\""
         },
         {
-          "name": "adversarial-review",
-          "result": "fail",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:41:58Z",
-          "notes": "wrong_answer (answer): The marked answer is option 2, '(x - 3)(x + 3) = x^2 - 9', which is a valid identity (the difference of two squares). The question asks which statement is NOT an identity. Option 3, '(x + 2)^2 = x^2 + 4', is not an identity because the correct expansion is x^2 + 4x + 4. This is correctly stated in the explanation, which refers to option 3, not option 2."
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:32:10Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -230,7 +230,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -310,7 +310,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         },
         {
           "name": "maths-engine",
@@ -318,7 +318,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -408,7 +408,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         },
         {
           "name": "maths-engine",
@@ -416,7 +416,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -500,7 +500,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         },
         {
           "name": "maths-engine",
@@ -508,7 +508,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -594,7 +594,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         },
         {
           "name": "maths-engine",
@@ -602,7 +602,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -693,7 +693,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -784,7 +784,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -875,7 +875,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -948,7 +948,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -1021,7 +1021,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -1093,7 +1093,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }

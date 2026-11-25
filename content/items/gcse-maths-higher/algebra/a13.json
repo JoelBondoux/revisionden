@@ -35,6 +35,12 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "facts": [
+      {
+        "statement": "The graph of y = f(x) + a is the graph of y = f(x) translated a units up (down if a is negative).",
+        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?"
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -44,7 +50,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x, y + 3). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x, y + 3). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -77,7 +83,15 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:36:57Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: up if a > 0 and down if a < 0.\")"
         }
       ]
     }
@@ -118,6 +132,12 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "facts": [
+      {
+        "statement": "The graph of y = f(x - a) is the graph of y = f(x) translated a units to the right (to the left if a is negative).",
+        "ask": "How is the graph of y = f(x - a) obtained from the graph of y = f(x)?"
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -127,7 +147,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x + 2, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x + 2, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
           "at": "2026-11-25T18:04:51Z"
         },
         {
@@ -160,7 +180,15 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:37:46Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x-a) is obtained by translating the graph of y = f(x) horizontally by a units in the positive x-direction (to the right). This applies for any real constant a.\")"
         }
       ]
     }
@@ -201,6 +229,12 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "facts": [
+      {
+        "statement": "The graph of y = f(x - a) is the graph of y = f(x) translated a units to the right (to the left if a is negative).",
+        "ask": "How is the graph of y = f(x - a) obtained from the graph of y = f(x)?"
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -210,7 +244,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x - 4, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x - 4, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
           "at": "2026-11-25T18:04:51Z"
         },
         {
@@ -230,20 +264,28 @@
           "notes": "model answered \"3\"; expected \"3\""
         },
         {
-          "name": "adversarial-review",
-          "result": "fail",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:08:20Z",
-          "notes": "wrong_answer (answer): The transformation from y = f(x) to y = f(x + 4) is a translation of 4 units to the left. The correct option is D. The selected answer is C, which describes a translation 4 units to the right. The provided explanation is also inconsistent with the answer, as it correctly states that the graph moves '4 units to the left'."
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:32:45Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:38:01Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x-a) is obtained by translating the graph of y = f(x) horizontally by a units to the right, for any real constant a. If a is negative, this is equivalently a shift to the left by |a| units.\")"
         }
       ]
     }
@@ -277,6 +319,12 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "facts": [
+      {
+        "statement": "The graph of y = f(x) + a is the graph of y = f(x) translated a units up (down if a is negative).",
+        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?"
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -286,7 +334,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). (x, y) maps to (x, y - 4): (3, 5) to (3, 1). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). (x, y) maps to (x, y - 4): (3, 5) to (3, 1). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -319,7 +367,15 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:37:10Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: upwards if a > 0 and downwards if a < 0.\")"
         }
       ]
     }
@@ -364,6 +420,12 @@
       }
     ],
     "needs_human_approval": true,
+    "facts": [
+      {
+        "statement": "The graph of y = f(x) + a is the graph of y = f(x) translated a units up (down if a is negative).",
+        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?"
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -373,7 +435,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Solutions and every step backed by the maths engine. The new equation y = x^2 - 9 uses the translation rule y = f(x) - 10: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Solutions and every step backed by the maths engine. The new equation y = x^2 - 9 uses the translation rule y = f(x) - 10: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Lead ruling 2026-11-25: the last adversarial-review finding is left for the owner to judge (see that check); needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
           "at": "2026-11-25T18:18:47Z"
         },
         {
@@ -406,7 +468,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         },
         {
           "name": "maths-engine",
@@ -414,7 +476,15 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:37:20Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: upwards if a > 0 and downwards if a < 0.\")"
         }
       ]
     }
@@ -455,6 +525,12 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "facts": [
+      {
+        "statement": "The graph of y = -f(x) is the reflection of the graph of y = f(x) in the x-axis.",
+        "ask": "How is the graph of y = -f(x) obtained from the graph of y = f(x)?"
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -464,7 +540,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x, -y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (x, -y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -497,7 +573,15 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:38:29Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = -f(x) is obtained by reflecting the graph of y = f(x) in the x-axis. Equivalently, each point (x, y) maps to (x, -y).\")"
         }
       ]
     }
@@ -538,6 +622,12 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "facts": [
+      {
+        "statement": "The graph of y = f(-x) is the reflection of the graph of y = f(x) in the y-axis.",
+        "ask": "How is the graph of y = f(-x) obtained from the graph of y = f(x)?"
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -547,7 +637,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (-x, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Every point (x, y) maps to (-x, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -580,7 +670,15 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:38:56Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(-x) is obtained by reflecting the graph of y = f(x) in the y-axis. Equivalently, each point (x, y) on y = f(x) moves to (-x, y), provided x is in the domain of f.\")"
         }
       ]
     }
@@ -614,6 +712,12 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "facts": [
+      {
+        "statement": "The graph of y = f(-x) is the reflection of the graph of y = f(x) in the y-axis.",
+        "ask": "How is the graph of y = f(-x) obtained from the graph of y = f(x)?"
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -623,7 +727,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). (x, y) maps to (-x, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). (x, y) maps to (-x, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -656,7 +760,15 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:39:11Z",
+          "notes": "fact 1: no maths engine proof; blind statement differs (\"The graph of y = f(-x) is obtained by reflecting the graph of y = f(x) in the y-axis. This is because each point (x, f(x)) on the original graph becomes (-x, f(x)) on the new graph.\")"
         }
       ]
     }
@@ -687,6 +799,12 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "facts": [
+      {
+        "statement": "The graph of y = f(x) + a is the graph of y = f(x) translated a units up (down if a is negative).",
+        "ask": "How is the graph of y = f(x) + a obtained from the graph of y = f(x)?"
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -696,7 +814,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -729,7 +847,15 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:37:31Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: upwards if a > 0 and downwards if a < 0.\")"
         }
       ]
     }
@@ -760,6 +886,12 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "facts": [
+      {
+        "statement": "The graph of y = f(x - a) is the graph of y = f(x) translated a units to the right (to the left if a is negative).",
+        "ask": "How is the graph of y = f(x - a) obtained from the graph of y = f(x)?"
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -769,7 +901,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -802,7 +934,15 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:38:15Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"The graph of y = f(x - a) is obtained by translating the graph of y = f(x) horizontally by a units to the right, provided a is a real constant.\")"
         }
       ]
     }
@@ -833,6 +973,12 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "facts": [
+      {
+        "statement": "The graph of y = -f(x) is the reflection of the graph of y = f(x) in the x-axis.",
+        "ask": "How is the graph of y = -f(x) obtained from the graph of y = f(x)?"
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -842,7 +988,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
           "at": "2026-11-25T18:04:51Z"
         },
         {
@@ -875,7 +1021,15 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:38:42Z",
+          "notes": "fact 1: no maths engine proof; blind statement differs (\"The graph of y = -f(x) is obtained by reflecting the graph of y = f(x) in the x-axis. Equivalently, each point (x, y) maps to (x, -y).\")"
         }
       ]
     }

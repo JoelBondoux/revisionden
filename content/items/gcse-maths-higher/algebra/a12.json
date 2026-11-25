@@ -71,7 +71,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -135,20 +135,20 @@
           "notes": "model answered \"2\"; expected \"2\""
         },
         {
-          "name": "adversarial-review",
-          "result": "fail",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:42:41Z",
-          "notes": "wrong_answer (answer): The question asks for the equation of a cubic graph. The correct option is 'y = x^3 - 2x', which is the third option in the list. The `answer` field specifies `option: 2`. If this refers to the second option in the list (i.e., using a 1-based index), it points to 'y = x^2 - 4', which is a quadratic equation and therefore incorrect. The explanation provided refers to 'y = x^3 - 2x', which is the third option, contradicting the specified answer if 1-based indexing is assumed."
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:32:35Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -225,7 +225,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -326,7 +326,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -405,7 +405,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         },
         {
           "name": "maths-engine",
@@ -413,7 +413,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -492,7 +492,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         },
         {
           "name": "maths-engine",
@@ -500,7 +500,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -579,7 +579,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         },
         {
           "name": "maths-engine",
@@ -587,7 +587,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -623,6 +623,16 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "facts": [
+      {
+        "statement": "tan x = sin x / cos x, and cos 90° = 0, so tan 90° is undefined.",
+        "ask": "For which angle between 0° and 180° is tan x undefined, and why?",
+        "engine": {
+          "kind": "identity",
+          "equation": "cos(pi/2) = 0"
+        }
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -632,7 +642,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Checked with SymPy: tan(0) = 0, tan(pi/4) = 1, tan(pi) = 0 and cos(pi/2) = 0. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Checked with SymPy: tan(0) = 0, tan(pi/4) = 1, tan(pi) = 0 and cos(pi/2) = 0. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
           "at": "2026-11-25T17:23:37Z"
         },
         {
@@ -665,7 +675,15 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:36:46Z",
+          "notes": "fact 1: maths engine proof pass; blind statement differs (\"\\(\\tan x\\) is undefined at \\(x = 90^\\circ\\) for angles between \\(0^\\circ\\) and \\(180^\\circ\\). This is because \\(\\tan x = \\frac{\\sin x}{\\cos x}\\), and \\(\\cos 90^\\circ = 0\\), so the expression involves division by zero.\")"
         }
       ]
     }
@@ -737,7 +755,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -809,7 +827,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -881,7 +899,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }

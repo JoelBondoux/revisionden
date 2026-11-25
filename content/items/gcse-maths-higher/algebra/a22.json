@@ -70,7 +70,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -146,7 +146,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -222,7 +222,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -311,7 +311,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -400,7 +400,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -477,7 +477,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -554,7 +554,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -631,7 +631,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -683,6 +683,7 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "needs_human_approval": true,
     "verification": {
       "status": "draft",
       "version": 1,
@@ -692,7 +693,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Solutions and every step backed by the maths engine.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Solutions and every step backed by the maths engine. Lead ruling 2026-11-25: the last adversarial-review finding is left for the owner to judge (see that check); needs individual human approval.",
           "at": "2026-11-25T18:26:25Z"
         },
         {
@@ -725,7 +726,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         },
         {
           "name": "maths-engine",
@@ -733,7 +734,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -805,7 +806,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -877,7 +878,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -908,6 +909,12 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "facts": [
+      {
+        "statement": "Multiplying or dividing both sides of an inequality by a negative number reverses the inequality sign.",
+        "ask": "What happens to an inequality sign when both sides are divided by a negative number?"
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -917,7 +924,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
           "at": "2026-11-25T18:18:48Z"
         },
         {
@@ -950,7 +957,15 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:42:16Z",
+          "notes": "fact 1: no maths engine proof; blind statement differs (\"When you divide both sides of an inequality by a negative number, the inequality sign reverses direction. For example, if a < b and c < 0, then a/c > b/c.\")"
         }
       ]
     }

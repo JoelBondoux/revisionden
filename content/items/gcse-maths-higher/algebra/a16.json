@@ -73,7 +73,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         },
         {
           "name": "maths-engine",
@@ -81,7 +81,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -161,7 +161,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         },
         {
           "name": "maths-engine",
@@ -169,7 +169,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -250,7 +250,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -327,7 +327,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -406,7 +406,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         },
         {
           "name": "maths-engine",
@@ -414,7 +414,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -452,7 +452,16 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "needs_human_approval": true,
+    "facts": [
+      {
+        "statement": "The tangent of a circle is perpendicular to the radius at the point where it touches the circle.",
+        "ask": "What angle does the tangent to a circle make with the radius drawn to the point of contact?",
+        "engine": {
+          "kind": "identity",
+          "equation": "x^2 + y^2 - (a^2 + b^2) = (x - a)^2 + (y - b)^2 + 2*(a*x + b*y - a^2 - b^2)"
+        }
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -462,7 +471,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Answer backed by the maths engine. Tangent perpendicular to the radius: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Answer backed by the maths engine. Tangent perpendicular to the radius: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -495,7 +504,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         },
         {
           "name": "maths-engine",
@@ -503,7 +512,15 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:44:57Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"A tangent to a circle is perpendicular to the radius drawn to the point of contact, so the angle between them is 90°.\")"
         }
       ]
     }
@@ -545,7 +562,16 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "needs_human_approval": true,
+    "facts": [
+      {
+        "statement": "The tangent of a circle is perpendicular to the radius at the point where it touches the circle.",
+        "ask": "What angle does the tangent to a circle make with the radius drawn to the point of contact?",
+        "engine": {
+          "kind": "identity",
+          "equation": "x^2 + y^2 - (a^2 + b^2) = (x - a)^2 + (y - b)^2 + 2*(a*x + b*y - a^2 - b^2)"
+        }
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -555,7 +581,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Answer backed by the maths engine. Tangent perpendicular to the radius: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Answer backed by the maths engine. Tangent perpendicular to the radius: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -588,7 +614,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         },
         {
           "name": "maths-engine",
@@ -596,7 +622,15 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:45:07Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"A tangent to a circle is perpendicular to the radius drawn to the point of contact, so the angle between them is 90°.\")"
         }
       ]
     }
@@ -616,7 +650,6 @@
     "explanation": "Radius gradient 4/3, so tangent gradient -3/4: y - 4 = -(3/4)(x - 3), which gives 4y - 16 = -3x + 9, so 3x + 4y = 25.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -631,6 +664,16 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "facts": [
+      {
+        "statement": "The tangent of a circle is perpendicular to the radius at the point where it touches the circle.",
+        "ask": "What angle does the tangent to a circle make with the radius drawn to the point of contact?",
+        "engine": {
+          "kind": "identity",
+          "equation": "x^2 + y^2 - (a^2 + b^2) = (x - a)^2 + (y - b)^2 + 2*(a*x + b*y - a^2 - b^2)"
+        }
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -640,7 +683,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Checked: gradient -3/4 through (3, 4) gives 3x + 4y = 25, and 3 × 3 + 4 × 4 = 25. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Checked: gradient -3/4 through (3, 4) gives 3x + 4y = 25, and 3 × 3 + 4 × 4 = 25. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T18:04:51Z"
         },
         {
@@ -673,7 +716,15 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:45:20Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"A tangent to a circle is perpendicular to the radius drawn to the point of contact, so the angle between them is 90°.\")"
         }
       ]
     }
@@ -745,7 +796,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -817,7 +868,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -833,7 +884,6 @@
     "back": "Perpendicular",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -848,6 +898,16 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "facts": [
+      {
+        "statement": "The tangent of a circle is perpendicular to the radius at the point where it touches the circle.",
+        "ask": "What angle does the tangent to a circle make with the radius drawn to the point of contact?",
+        "engine": {
+          "kind": "identity",
+          "equation": "x^2 + y^2 - (a^2 + b^2) = (x - a)^2 + (y - b)^2 + 2*(a*x + b*y - a^2 - b^2)"
+        }
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -857,7 +917,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -890,7 +950,91 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:45:31Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"A tangent to a circle is perpendicular to the radius drawn to the point of contact, so the angle between them is 90°.\")"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a16-0112",
+    "topic": "gcse-maths-h-a16",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a16-lp-circle-cards",
+    "expected_seconds": 15,
+    "front": "The equation of a circle with centre (0, 0) and radius r",
+    "back": "x^2 + y^2 = r^2, where r > 0",
+    "back_formula": {
+      "formula": "x^2 + y^2 = r^2",
+      "conditions": ["r > 0"]
+    },
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A16 (page 15; PDF page 27)",
+        "quote": "recognise and use the equation of a circle with centre at the origin",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Formula card for the circle the specification names (centre at the origin). Compared by the maths engine (back_formula).",
+          "at": "2026-11-25T18:44:32Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:45:32Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:45:56Z",
+          "notes": "model answered \"x^2 + y^2 = r^2 where r > 0\"; expected \"x^2 + y^2 = r^2\"; maths engine: same formula"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:46:15Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }

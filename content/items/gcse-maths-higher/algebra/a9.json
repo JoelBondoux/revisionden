@@ -73,7 +73,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         },
         {
           "name": "maths-engine",
@@ -81,7 +81,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -160,7 +160,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         },
         {
           "name": "maths-engine",
@@ -168,7 +168,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -244,7 +244,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -320,7 +320,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -402,7 +402,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         },
         {
           "name": "maths-engine",
@@ -410,7 +410,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -446,6 +446,16 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "facts": [
+      {
+        "statement": "Two straight lines are parallel exactly when they have the same gradient.",
+        "ask": "For two non-vertical straight lines, how are their gradients related when the lines are parallel?",
+        "engine": {
+          "kind": "identity",
+          "equation": "(m*x + c) - (m*x + d) = c - d"
+        }
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -455,7 +465,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Gradients read from y = mx + c: -3, 3, 1/3, -1/3. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Gradients read from y = mx + c: -3, 3, 1/3, -1/3. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
           "at": "2026-11-25T17:23:37Z"
         },
         {
@@ -488,7 +498,15 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:35:47Z",
+          "notes": "fact 1: maths engine proof pass; blind statement differs (\"For two non-vertical straight lines to be parallel, their gradients must be equal: if the lines have equations y = m₁x + c₁ and y = m₂x + c₂, then they are parallel when m₁ = m₂. If they are distinct parallel lines, then also c₁ ≠ c₂.\")"
         }
       ]
     }
@@ -524,6 +542,16 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "facts": [
+      {
+        "statement": "Two straight lines with gradients m and n (both non-zero) are perpendicular exactly when m × n = -1.",
+        "ask": "For two non-vertical straight lines, how are their gradients related when the lines are perpendicular?",
+        "engine": {
+          "kind": "identity",
+          "equation": "1*1 + m*(-1/m) = 0"
+        }
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -533,7 +561,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Checked: only 2 × (-1/2) = -1 among the four gradients. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Checked: only 2 × (-1/2) = -1 among the four gradients. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
           "at": "2026-11-25T17:23:37Z"
         },
         {
@@ -553,20 +581,28 @@
           "notes": "model answered \"2\"; expected \"2\""
         },
         {
-          "name": "adversarial-review",
-          "result": "fail",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:55:07Z",
-          "notes": "wrong_answer (answer): The correct answer is option 3. The line y = 2x + 1 has a gradient of 2. A perpendicular line must have a gradient that is the negative reciprocal, which is -1/2. Option 3, y = -(1/2)x + 4, is the only option with a gradient of -1/2. The marked answer, option 2, has a gradient of -2."
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:32:18Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:36:16Z",
+          "notes": "fact 1: maths engine proof pass; blind statement differs (\"For two non-vertical straight lines with gradients m₁ and m₂, if the lines are perpendicular then m₁m₂ = -1. Equivalently, each gradient is the negative reciprocal of the other, provided both gradients are defined.\")"
         }
       ]
     }
@@ -604,7 +640,16 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "needs_human_approval": true,
+    "facts": [
+      {
+        "statement": "Two straight lines with gradients m and n (both non-zero) are perpendicular exactly when m × n = -1.",
+        "ask": "For two non-vertical straight lines, how are their gradients related when the lines are perpendicular?",
+        "engine": {
+          "kind": "identity",
+          "equation": "1*1 + m*(-1/m) = 0"
+        }
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -614,7 +659,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Answer backed by the maths engine. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Answer backed by the maths engine. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T17:23:37Z"
         },
         {
@@ -647,7 +692,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         },
         {
           "name": "maths-engine",
@@ -655,7 +700,15 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:35:26Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"For two non-vertical straight lines with gradients m₁ and m₂, the lines are perpendicular if and only if m₁m₂ = -1. Equivalently, each gradient is the negative reciprocal of the other.\")"
         }
       ]
     }
@@ -701,6 +754,16 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "facts": [
+      {
+        "statement": "Two straight lines are parallel exactly when they have the same gradient.",
+        "ask": "For two non-vertical straight lines, how are their gradients related when the lines are parallel?",
+        "engine": {
+          "kind": "identity",
+          "equation": "(m*x + c) - (m*x + d) = c - d"
+        }
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -710,7 +773,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Same gradient 5; (0, -3) is the y-intercept. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Same gradient 5; (0, -3) is the y-intercept. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
           "at": "2026-11-25T17:23:37Z"
         },
         {
@@ -743,7 +806,15 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:36:02Z",
+          "notes": "fact 1: maths engine proof pass; blind statement differs (\"For two non-vertical straight lines, the lines are parallel if and only if their gradients are equal: if the gradients are m1 and m2, then parallel implies m1 = m2 (and distinct parallel lines also have different intercepts).\")"
         }
       ]
     }
@@ -815,7 +886,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -899,7 +970,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
@@ -915,7 +986,6 @@
     "back": "-1/2",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A9",
     "checked_by": ["author"],
-    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -930,6 +1000,16 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "facts": [
+      {
+        "statement": "Two straight lines with gradients m and n (both non-zero) are perpendicular exactly when m × n = -1.",
+        "ask": "For two non-vertical straight lines, how are their gradients related when the lines are perpendicular?",
+        "engine": {
+          "kind": "identity",
+          "equation": "1*1 + m*(-1/m) = 0"
+        }
+      }
+    ],
     "verification": {
       "status": "draft",
       "version": 1,
@@ -939,7 +1019,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
           "at": "2026-11-25T17:23:37Z"
         },
         {
@@ -972,7 +1052,90 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T18:29:12Z"
+          "at": "2026-11-25T18:46:27Z"
+        },
+        {
+          "name": "fact-check",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
+          "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
+          "at": "2026-11-25T18:36:34Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"For two non-vertical straight lines with gradients m₁ and m₂, the lines are perpendicular if and only if m₁m₂ = -1. Equivalently, each gradient is the negative reciprocal of the other, provided both gradients are defined.\")"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a9-0113",
+    "topic": "gcse-maths-h-a9",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-a9-lp-line-cards",
+    "expected_seconds": 15,
+    "front": "The equation of a straight line with gradient m and y-intercept c",
+    "back": "y = mx + c",
+    "back_formula": {
+      "formula": "y = m*x + c"
+    },
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A9",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A9 (page 14; PDF page 26)",
+        "quote": "use the form y = mx + c to identify parallel and perpendicular lines",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-A writer 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Formula card; the specification point itself names the form y = mx + c. Compared by the maths engine (back_formula).",
+          "at": "2026-11-25T18:44:31Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T18:45:33Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:45:39Z",
+          "notes": "model answered \"y = m*x + c where m is the gradient and c is the y-intercept\"; expected \"y = m*x + c\"; maths engine: same formula"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:45:48Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T18:46:27Z"
         }
       ]
     }
