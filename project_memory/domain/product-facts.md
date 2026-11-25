@@ -77,7 +77,8 @@ Tags: #product #rules #limits #defaults
   two (crown and Alien skin). `packages/core/src/rewards.ts`, `avatar.ts`.
 - 14 rewards, each unlocking one avatar item: `packages/core/src/rewards.ts`.
 - Only `verified` items reach students. Drafts are served only with `SERVE_DRAFT_CONTENT=true` in
-  development (never staging or production), with a "DRAFT CONTENT" banner; quarantined and
+  development (never staging or production), with a "DRAFT CONTENT" banner; the dev Worker has it on
+  so the family can try the pilot on dev.revisionden.com; quarantined and
   retired items never. Implemented in `packages/core/src/learning.ts` and `apps/api`.
 - Starting test per subject: about 5 minutes (300 s, up to 10 questions, one per topic first),
   Test mode; its answers set first mastery. Lessons are Learn mode at feedback level 1.
@@ -427,6 +428,11 @@ Tags: #product #rules #limits #defaults
   capped at 40 pieces. The combo badge shows from 2 in a row. The CTA pulse takes 1.6 s (well under 3
   flashes a second). Reduced motion removes particles, confetti, float-ups, shakes and pulsing; combo,
   stars and XP still show as text. Arena colours live in `apps/web/src/design/tokens.ts` (`--arena-*`).
+- Settled in J5: light-theme motion lives in `apps/web/src/design/motion.css` and applies only to
+  the topic map, rewards and stats (parent area, policies and settings stay calm). The map's Next
+  mission button is the pulsing main call to action. Reward reveals show the tier, the items and the
+  reason from the reward's one catalogue target ("For: 7-day streak"); epic and legendary add a
+  particle burst, legendary a shine. No reason is shown for a reward missing from the catalogue.
 - Settled in J2/J3: lessons, the starting test and flashcard review use the arena. Set complete's
   Next mission goes to the map (`/map`, next mission card). "Or take a break. Your streak is safe for
   today." shows when today's daily goal is met (`progress.goalMet`). The "daily cap" for "See you
@@ -461,13 +467,26 @@ Tags: #product #rules #limits #defaults
 - Hidden tracks besides Bug Hunter: Fact Checker, Comeback Kid, Explorer, Planner, Pace Setter,
   Perfectionist (`docs/REWARDS.md`).
 
-## Titles and Get help (owner, 2026-11-25; planned)
+## Titles (owner, 2026-11-25; planned) and Get help (built, workstream W)
 
 - Two-part titles: a first word and a last word unlocked separately from rewards (about 120 each);
   curated, every pairing validated against blocked words; shown under the nickname.
-- "Get help" page: UK support services by topic with tap-to-call links; every number and URL
-  confirmed on the service's own site with source and date (rechecked each term); nothing about its
-  use is recorded or shown to parents; works offline; Quick exit. Detail: `docs/PRODUCT_RULES.md`.
+- "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
+  NSPCC adult helpline, parent-only). Reached from Settings, the heart link in the student footer,
+  the signed-out header and parent home. There is no separate profile menu yet.
+- Data: `content/support/uk-services.json` (schema `content/schemas/support-services.schema.json`).
+  Every phone, text, link, opening time and age range has the URL of the service's own page it was
+  copied from; `checked_at` per service. `pnpm content:validate` (and `scripts/content/support.test.mjs`)
+  fails on a missing or off-site source, a check older than 4 months, or a non-UK number.
+- Services first checked 2026-11-25: 999 and NHS 111 (nhs.uk), Childline, Report Remove (Childline
+  and IWF), NSPCC Helpline (parents), Samaritans, Shout, The Mix, YoungMinds (website only), Beat,
+  FRANK, CEOP, Switchboard, Brook (website only), Victim Support. Left out because their own site
+  could not be confirmed: Papyrus (site redirects to an administrator's page), Mind, Carers Trust,
+  Anti-Bullying Alliance (bot checks block automated checking), Kidscape (moved to another domain),
+  Kooth (now "Soluna by Kooth"; area-dependent). See `docs/PRODUCT_RULES.md` (Get help).
+- Private: the page uses its own layout with no API calls (no cards-due badge, no sounds), loads
+  nothing from other sites, and opens websites with `rel="noreferrer"`. Quick exit replaces the
+  history entry and goes to `/map`. Service worker v3 precaches `/help` and the built files.
 
 ## Quick wins (owner approved 2026-11-25; planned, workstream Q)
 
@@ -482,4 +501,4 @@ Tags: #product #rules #limits #defaults
   `revisionden.readAloud` (`enabled` null until chosen). Speaker buttons: lesson question (with
   options and unit), feedback (verdict, answer, explanation), flashcard front or back. Maths read
   as words (`x^2` "x squared", `8^(2/3)` "8 to the power 2 over 3", `cm^2` "square centimetres",
-  `√`, `π`, `×`, `÷`, `≤`, `≥`). `apps/web/src/features/read-aloud/`. Privacy notice 1.3 (6.4).
+  `√`, `π`, `×`, `÷`, `≤`, `≥`). `apps/web/src/features/read-aloud/`. Privacy notice 1.4 (6.4); young people's notice 1.3.

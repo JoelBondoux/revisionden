@@ -43,7 +43,7 @@ function StudentLayout() {
         </header>
         <Outlet />
       </main>
-      <VersionFooter />
+      <VersionFooter showHelp />
     </div>
   );
 }

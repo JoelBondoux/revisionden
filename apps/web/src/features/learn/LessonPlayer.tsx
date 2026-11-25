@@ -237,7 +237,7 @@ export function LessonPlayer({
       {intro && <p className="secondary-text">{intro}</p>}
       {progress && <DailyGoal progress={progress} />}
       <ReadAloudButton text={itemSpeechText(item)} label="Read the question aloud" />
-      <Shake key={`${item.id}-${result ? 'marked' : 'open'}`} active={result?.correct === false}>
+      <Shake key={item.id} active={result?.correct === false}>
         <ItemInput
           key={item.id}
           item={item}

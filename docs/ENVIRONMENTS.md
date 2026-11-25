@@ -228,7 +228,9 @@ with `wrangler secret put`. Changing the keys means every device has to turn rem
 
 `SERVE_DRAFT_CONTENT` (workstream F) is off unless set to `true`, and only works when
 `ENVIRONMENT` is `development`: staging and production never serve draft content, whatever it
-says. Set it in `apps/api/.dev.vars` to try the pilot drafts locally; the app then shows a
+says. The dev Worker sets it to `true` in `apps/api/wrangler.toml` (`[env.dev.vars]`) so the family
+can try the pilot drafts on dev.revisionden.com; a config test fails if staging or production set
+it. Set it in `apps/api/.dev.vars` to try the drafts locally; the app then shows a
 "DRAFT CONTENT" banner. Load content into a database with
 `DATABASE_URL=... pnpm --filter @revisionden/api content:sync`.
 
