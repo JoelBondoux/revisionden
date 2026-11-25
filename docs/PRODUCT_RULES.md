@@ -572,13 +572,25 @@ Requested by the product owner on 2026-11-25.
   older than 4 months; phone numbers in UK format (10 or 11 digits starting 0, 116 numbers,
   Childline's 0800 1111, 111, 999) with a matching `tel:` link; text numbers as UK short codes or
   mobiles with a matching `sms:` link; every topic has at least one service for students.
+- Added 2026-11-25 from the product owner's own check of the official sites (recorded as
+  `confirmed_by` in the data): **Coram Kidscape** (was Kidscape; `coramkidscape.org.uk`): its young
+  people's advice page for students under bullying; for parents only, the **Parent Advice Line**
+  (phone and WhatsApp 0300 102 4481, email, 9am to 9pm Monday to Friday and 10am to 3pm Saturday
+  and Sunday). **Anti-Bullying Alliance**: parents only (website), because its site sends young
+  people with a problem to Childline; students' bullying card lists Childline and Coram Kidscape.
+- **Kooth** (now "Soluna by Kooth"; added 2026-11-25 at the product owner's request): students and
+  parents, under feeling low. Website `https://www.kooth.com/` only, as seen by the build session.
+  The note "Free in some parts of the UK. Check if it's available where you live." is the product
+  owner's (kooth.com did not say it), so the entry has `confirmed_by`. No hours, ages or areas.
+- A service may have a short `note` shown on the page; the validator only allows it with
+  `confirmed_by`, because no checked source backs it.
+- Contacts can also be WhatsApp (UK number, link `https://wa.me/44…` that must match it) and email
+  (`mailto:` link; the address must be on the service's official domain).
 - Recheck each term: open every `source`, confirm each detail, update `checked_at`. Leave out any
   detail that can no longer be confirmed.
 - Left out on 2026-11-25 (could not be confirmed on the service's own site from the build
   environment; recheck by hand): Papyrus HOPELINE247 (`papyrus-uk.org` redirects to an insolvency
-  administrator's page), Mind, Carers Trust and Anti-Bullying Alliance (their sites block automated
-  visits), Kidscape (`kidscape.org.uk` now redirects to `coramkidscape.org.uk`), Kooth (now
-  "Soluna by Kooth"; availability depends on area). Also left out: Samaritans web chat (a pilot,
+  administrator's page), Mind and Carers Trust (their sites block automated visits). These stay out for now (lead, 2026-11-25). Also left out: Samaritans web chat (a pilot,
   "not currently available"), FRANK live chat and email, Switchboard chat and email (could not be
   seen from outside the UK), Beat's email and web chat hours, and Childline's message service. Grief has
   no specialist service yet (none was on the list to check) and young carers' one (Carers Trust)

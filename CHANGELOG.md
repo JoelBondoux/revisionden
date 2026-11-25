@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Get help now lists Kooth for feeling low (free in some parts of the UK) and Coram Kidscape for bullying. Parents also see its Parent Advice Line (phone, WhatsApp or email) and the Anti-Bullying Alliance.
 - The right-answer chime now climbs a little higher with each right answer in a row, up to six in a row.
 - On the test site (dev.revisionden.com) you can now try the first practice questions while they are still being checked; they are marked "DRAFT CONTENT".
 - The topic map, rewards and stats now move a little: cards slide in, hexagons pop up and buttons bounce. New rewards show how special they are, what you get and exactly why you earned it.
@@ -64,6 +65,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Get help (W, follow-up): Coram Kidscape (students and parents) with its Parent Advice Line (parents: phone, WhatsApp, email), Anti-Bullying Alliance (parents) and Kooth (students, with an owner-confirmed availability `note`), confirmed by the product owner from the official sites (`confirmed_by`). Support data now allows WhatsApp (`wa.me` link must match a UK number) and email (`mailto:`, address on the official domain) contacts.
 - Combo chime (U5): `play()` takes a `step` for the correct and part-marks sounds (a whole tone each, clamped at 6); the lesson player passes `comboStep(combo - 1)` from J.
 - Dev serves the pilot draft questions (`SERVE_DRAFT_CONTENT="true"` in `[env.dev.vars]`), with a config test that staging and production never set it (G).
 - Game feel J5 (J): `apps/web/src/design/motion.css` gives the topic map, rewards and stats entrance motion (cards rise, hexes and stat tiles pop in), springy button presses and a pulsing Next mission button; calm screens are left alone. `.cta-pulse` moved there from `juice.css`. New `RewardReveal` (`features/rewards/`) on the Rewards screen: each new reward shows its tier (common to legendary, matching U's reward sound tiers), what it gives and why (`rewardReason`, from the reward's one stated target; nothing shown if it is not in the catalogue). A stylesheet test checks that game-feel animations use only transform and opacity, switch off for reduced motion and never pulse faster than 3 times a second.
