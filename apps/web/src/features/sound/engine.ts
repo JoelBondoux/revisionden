@@ -53,6 +53,20 @@ export interface PlayOptions {
   mode?: SoundMode;
   /** Seconds to wait before the sound starts (to follow another sound). */
   delay?: number;
+  /**
+   * Combo step for the correct and part-marks chimes: each step is a whole tone higher, from 0
+   * up to COMBO_MAX_STEP (6 steps = an octave). Other sounds ignore it.
+   */
+  step?: number;
+}
+
+export const COMBO_MAX_STEP = 6;
+const STEPPED: ReadonlySet<SoundEvent> = new Set(['correct', 'partMarks']);
+
+/** The pitch multiplier for a combo step (clamped to 0 to COMBO_MAX_STEP). */
+export function comboPitch(step = 0): number {
+  const s = Math.max(0, Math.min(COMBO_MAX_STEP, Math.floor(step)));
+  return 2 ** ((2 * s) / 12);
 }
 
 export interface SoundEngine {
@@ -119,7 +133,7 @@ export function createSoundEngine(deps: SoundEngineDeps): SoundEngine {
   }
 
   /** Plays a sound function through its own volume, after anything still playing if `follow`. */
-  function run(fn: SoundFn, delay: number, follow = false) {
+  function run(fn: SoundFn, delay: number, follow = false, pitch = 1) {
     const settings = deps.settings();
     if (!unlocked || !settings.enabled || deps.isHidden()) return null;
     const audio = context();
@@ -130,7 +144,7 @@ export function createSoundEngine(deps: SoundEngineDeps): SoundEngine {
       const voice = audio.createGain();
       voice.connect(master);
       const start = Math.max(audio.currentTime + delay, follow ? busyUntil : 0);
-      const end = fn(audio, voice, start);
+      const end = fn(audio, voice, start, pitch);
       busyUntil = Math.max(busyUntil, end);
       return { voice, end };
     } catch {
@@ -162,7 +176,8 @@ export function createSoundEngine(deps: SoundEngineDeps): SoundEngine {
       const settings = deps.settings();
       if (event === 'tap' && !settings.taps) return false;
       if (!allowedInMode(event, options.mode)) return false;
-      return run(soundBank[event], options.delay ?? 0) !== null;
+      const pitch = STEPPED.has(event) ? comboPitch(options.step) : 1;
+      return run(soundBank[event], options.delay ?? 0, false, pitch) !== null;
     },
     playReward(rewards, options = {}) {
       const biggest = biggestReward(rewards);

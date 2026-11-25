@@ -171,3 +171,22 @@ describe('reward sounds in the app', () => {
     expect(contexts[0]!.oscillators.length).toBe(expected.oscillators.length);
   });
 });
+
+describe('combo chime in lessons', () => {
+  it('rises a step for each right answer in a row', async () => {
+    lessonOf(0, 2);
+    const { played, contexts } = renderWithSound('/learn/topic/demo-topic-a');
+    await userEvent.click(await screen.findByRole('radio', { name: 'Option B' }));
+    await click('Check');
+    await screen.findByRole('status', { name: 'Answer feedback' });
+    const firstChime = contexts[0]!.oscillators[0]!.frequencies[0]!;
+    const after = contexts[0]!.oscillators.length;
+    await click('Continue');
+    await userEvent.type(await screen.findByLabelText('Your answer'), '4');
+    await click('Check');
+    await screen.findByRole('status', { name: 'Answer feedback' });
+    expect(played.slice(0, 2)).toEqual(['correct', 'correct']);
+    const secondChime = contexts[0]!.oscillators[after]!.frequencies[0]!;
+    expect(secondChime).toBeGreaterThan(firstChime);
+  });
+});

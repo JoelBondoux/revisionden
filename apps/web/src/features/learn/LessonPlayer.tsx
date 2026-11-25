@@ -12,6 +12,7 @@ import {
   PipSays,
   RollingNumber,
   Shake,
+  comboStep,
   nextCombo,
   pipLine,
 } from '../juice';
@@ -146,13 +147,14 @@ export function LessonPlayer({
         timeMs: Math.max(0, Date.now() - shownAt.current),
         mode: 'learn',
       });
-      play(markSound(marked));
+      // The API counts combos (J4); older responses without it fall back to counting here.
+      const streak = marked.combo ?? nextCombo(combo, marked.correct);
+      // The chime rises a step per right answer in a row (the first one is the plain chime).
+      play(markSound(marked), { step: comboStep(streak - 1) });
       if (marked.progress.goalMet && progress && !progress.goalMet)
         play('streakDay', { delay: 0.4 });
       setResult(marked);
       setProgress(marked.progress);
-      // The API counts combos (J4); older responses without it fall back to counting here.
-      const streak = marked.combo ?? nextCombo(combo, marked.correct);
       setCombo(streak);
       setBestCombo((best) => Math.max(best, streak));
       setTotals((t) => ({

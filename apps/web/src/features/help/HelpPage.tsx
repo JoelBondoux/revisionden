@@ -119,6 +119,7 @@ function ServiceEntry({ service }: { service: SupportService }) {
     <li className="help-service">
       <h3>{service.service}</h3>
       <p>{service.helps_with}</p>
+      {service.note && <p className="help-note">{service.note}</p>}
       {(service.age_range || service.area) && (
         <p className="help-meta">
           {service.age_range && <>For: {service.age_range.text}. </>}
@@ -150,6 +151,21 @@ function ContactLink({ contact: c, service }: { contact: Contact; service: strin
     return (
       <a className="help-action" href={c.href}>
         {c.keyword ? `Text ${c.keyword} to ${c.number}` : `Text ${c.number}`}
+      </a>
+    );
+  }
+  if (c.kind === 'email') {
+    return (
+      <a className="help-action" href={c.href}>
+        Email {c.address}
+      </a>
+    );
+  }
+  if (c.kind === 'whatsapp') {
+    return (
+      <a className="help-action help-action--web" href={c.href} target="_blank" rel="noreferrer">
+        WhatsApp {c.number}
+        <span className="visually-hidden"> (opens in a new tab)</span>
       </a>
     );
   }

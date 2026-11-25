@@ -392,6 +392,9 @@ Tags: #product #rules #limits #defaults
 - Reward sounds scale with rarity (common, rare, epic, legendary; 4+ variations each, no repeat
   in a row); milestone ladders and levels climb in pitch and fullness; one sound for several
   rewards at once; legendary at most 3 s and skippable (owner, 2026-11-25; U4).
+- Combo chime (U5): each right answer in a row plays the correct chime a whole tone higher, up to
+  6 steps (an octave); the first right answer is the plain chime, and part marks rise too. Wrong
+  never changes. `PlayOptions.step` in `apps/web/src/features/sound/engine.ts`.
 - Reward sound details (U4, `apps/web/src/features/sound/rewardSounds.ts`, `rewardBank.ts`): tier
   = the reward's rarity, except prestige stars always play legendary (prestige 1 to 3 are epic in
   the catalogue). Ladder step = position in its milestone ladder; level step = level ÷ 10. Each
@@ -480,10 +483,12 @@ Tags: #product #rules #limits #defaults
   fails on a missing or off-site source, a check older than 4 months, or a non-UK number.
 - Services first checked 2026-11-25: 999 and NHS 111 (nhs.uk), Childline, Report Remove (Childline
   and IWF), NSPCC Helpline (parents), Samaritans, Shout, The Mix, YoungMinds (website only), Beat,
-  FRANK, CEOP, Switchboard, Brook (website only), Victim Support. Left out because their own site
-  could not be confirmed: Papyrus (site redirects to an administrator's page), Mind, Carers Trust,
-  Anti-Bullying Alliance (bot checks block automated checking), Kidscape (moved to another domain),
-  Kooth (now "Soluna by Kooth"; area-dependent). See `docs/PRODUCT_RULES.md` (Get help).
+  FRANK, CEOP, Switchboard, Brook (website only), Victim Support. Added the same day from the
+  product owner's own check (`confirmed_by`): Coram Kidscape (young people's page; parent-only
+  Parent Advice Line by phone, WhatsApp and email) and Anti-Bullying Alliance (parents only). Left
+  out for now: Papyrus (site redirects to an administrator's page), Mind, Carers Trust (bot checks block automated checking). Kooth ("Soluna by Kooth") was added for
+  students under feeling low: website only, with the owner's note "Free in some parts of the UK.
+  Check if it's available where you live." (a `note` needs `confirmed_by`). See `docs/PRODUCT_RULES.md` (Get help).
 - Private: the page uses its own layout with no API calls (no cards-due badge, no sounds), loads
   nothing from other sites, and opens websites with `rel="noreferrer"`. Quick exit replaces the
   history entry and goes to `/map`. Service worker v3 precaches `/help` and the built files.
