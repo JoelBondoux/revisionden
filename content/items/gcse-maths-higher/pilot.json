@@ -725,9 +725,9 @@
           "name": "grounded-writing",
           "tool": "anthropic:content-session",
           "tool_version": "S2 audit 2026-11-25",
-          "result": "fail",
-          "notes": "Audit after writing (no writer record existed). The answer rests on a definition (a tangent touches the circle at exactly one point). The cited spec point G9 only names \"tangent\"; no quoted official source gives the definition. Needs an official source for the definition, or an owner ruling on standard definitions.",
-          "at": "2026-11-25T16:02:20Z"
+          "result": "pass",
+          "notes": "Question scope cited (spec G9, which names \"tangent\"). No official source defines a tangent (DfE subject content and the 1MA1 specification checked), so the answer rests on the spec point plus a standard definition under decision 0008 (project_memory/decisions/0008-definitions-policy.md, approved by the product owner 2026-11-25): needs_human_approval is set and a person must approve it individually.",
+          "at": "2026-11-25T17:04:00Z"
         },
         {
           "name": "quote-check",
@@ -762,7 +762,8 @@
           "notes": "no problems found"
         }
       ]
-    }
+    },
+    "needs_human_approval": true
   },
   {
     "id": "gcse-maths-h-a18-0002",

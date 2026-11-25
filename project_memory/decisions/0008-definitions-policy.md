@@ -1,7 +1,6 @@
 # 0008: Standard definitions with no official source
 
-- Status: proposed. The product owner's acceptance was relayed by the lead session on
-  2026-11-25 and is waiting for the owner's direct confirmation before it is applied to content.
+- Status: accepted (product owner, confirmed directly to workstream S2, 2026-11-25)
 - Date: 2026-11-25
 
 ## Context
@@ -24,8 +23,8 @@ grounded writing for this reason (workstream S2).
 
 ## Consequences
 
-- Once confirmed, `gcse-maths-h-g9-0001` gets `needs_human_approval: true` and passes grounded
-  writing under this decision. Until then it stays failed.
+- `gcse-maths-h-g9-0001` carries `needs_human_approval: true` and passes grounded writing under
+  this decision.
 - Review batches always include these items (the sample adds every item that needs human
   approval).
 - Writer sessions follow this decision for definition flashcards and short answers
