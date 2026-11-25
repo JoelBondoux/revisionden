@@ -77,7 +77,7 @@ date per parent sign-in.
 ## Operator console (AppDeck)
 
 - The owner's support console (AppDeck Admin) never reads the database. It calls the signed
-  operator bridge (`/v1/operator`, `docs/OPERATOR_CONSOLE.md`), which returns only minimal fields:
+  operator bridge (`/operator/appdeck`, `docs/OPERATOR_CONSOLE.md`), which returns only minimal fields:
   never answers, a student's own flashcards or free text, homework, AI prompts, push keys, sign-in
   tokens or anything from Get help.
 - Every operator read of a family and every action is recorded (`operator_audit_log`: operator

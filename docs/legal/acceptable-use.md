@@ -82,7 +82,7 @@ students until it is checked.
 - use another student's profile or device, or link a device that is not yours;
 - try to make the AI produce content that is harmful, or that is not about the question.
 
-6.2 If you find a security problem, please tell us at {{CONTACT_EMAIL}} and do not share it.
+  6.2 If you find a security problem, please tell us at {{CONTACT_EMAIL}} and do not share it.
 
 ### 7. What happens if the rules are broken
 

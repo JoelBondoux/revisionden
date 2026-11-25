@@ -75,7 +75,7 @@ describe('operator_requests table (request ids, workstream O)', () => {
     const insert = () =>
       client.query(
         `insert into operator_requests (request_id, method, path, body_hash)
-         values ('req-dup', 'POST', '/v1/operator/x', 'abc')`,
+         values ('req-dup', 'POST', '/operator/appdeck/x', 'abc')`,
       );
     await insert();
     await expect(insert()).rejects.toThrow(/operator_requests_pkey/);

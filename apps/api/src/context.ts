@@ -12,7 +12,7 @@ export interface AppEnv {
     parent: ParentContext;
     parentEmail: string;
     student: StudentContext;
-    /** Set by the operator bridge (AppDeck) on /v1/operator routes. */
+    /** Set by the operator bridge (AppDeck) on /operator/appdeck routes. */
     operator: OperatorContext;
   };
 }

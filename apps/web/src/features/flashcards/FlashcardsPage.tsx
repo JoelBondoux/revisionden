@@ -16,6 +16,7 @@ import { subjectLabel, useLearnApi, type FlashcardRating } from '../learn/learnA
 import { NewRewards } from '../learn/NewRewards';
 import { DraftBanner } from '../learn/parts';
 import { useSound } from '../sound';
+import { ReadAloudButton } from '../read-aloud';
 import './flashcards.css';
 
 const RATINGS: {
@@ -203,6 +204,10 @@ function ReviewSession({
           : "You've had today's 2 rewarded sessions. Keep going: every card helps you remember."}
       </p>
       <FlipCard card={card} flipped={flipped} />
+      <ReadAloudButton
+        text={flipped ? [card.back, card.sourceRef].filter(Boolean).join('. ') : card.front}
+        label="Read the card aloud"
+      />
       {error === 'review' && (
         <p role="alert" className="feedback feedback--wrong">
           Couldn&apos;t save that. Please try again.

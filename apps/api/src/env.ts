@@ -96,7 +96,7 @@ export interface AppConfig {
   ai: AiConfig;
   /** Parent sign-in emails (lower case) allowed to triage feedback at /v1/admin. */
   operatorEmails: string[];
-  /** AppDeck operator bridge (`/v1/operator`); unset means the bridge is off (404). */
+  /** AppDeck operator bridge (`/operator/appdeck`); unset means the bridge is off (404). */
   operatorBridge?: { secret: string };
 }
 

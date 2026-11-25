@@ -27,21 +27,22 @@ operatorEmail, operatorRole, requestId, rawBody]` with a shared secret
 
 ## Wire format (O1, built)
 
-Every operator route is under `/v1/operator` on the RevisionDen API host of that environment.
-AppDeck sends these headers with every request:
+Every operator route is under `/operator/appdeck` on the RevisionDen API host of that environment
+(the same pattern AppDeck's HireLine client uses). AppDeck sends these headers (lower case) with
+every request:
 
-| Header                     | Value                                                                       |
-| -------------------------- | --------------------------------------------------------------------------- |
-| `X-AppDeck-Timestamp`      | Whole Unix seconds (for example `1795600800`)                               |
-| `X-AppDeck-Request-Id`     | Unique per request: 1–128 of `A-Z a-z 0-9 . _ : -` (a UUID is ideal)        |
-| `X-AppDeck-Operator-Email` | The signed-in operator's work email                                         |
-| `X-AppDeck-Operator-Role`  | `agent` or `manager` (any letter case; signed exactly as sent)              |
-| `X-AppDeck-Signature`      | Lower-case hex HMAC-SHA256 of the payload below with the environment secret |
+| Header                     | Value                                                                                          |
+| -------------------------- | ---------------------------------------------------------------------------------------------- |
+| `x-appdeck-timestamp`      | Unix **milliseconds** as a string (`String(Date.now())`, e.g. `1795600800000`)                 |
+| `x-appdeck-request-id`     | Unique per request: 1–128 of `A-Z a-z 0-9 . _ : -` (a UUID is ideal)                           |
+| `x-appdeck-operator-email` | The signed-in operator's work email                                                            |
+| `x-appdeck-operator-role`  | `agent` or `manager` (any letter case; signed exactly as sent)                                 |
+| `x-appdeck-signature`      | `sha256=` then the lower-case hex HMAC-SHA256 of the payload below with the environment secret |
 
 Signed payload: the JSON text of
 `["appdeck-revisionden-operator-v1", timestamp, METHOD, path, operatorEmail, operatorRole, requestId, rawBody]`,
 where `METHOD` is upper case, `path` is the path **and query string** exactly as requested
-(`/v1/operator/families?id=…`), the header values are exactly as sent, and `rawBody` is the body
+(`/operator/appdeck/tickets?status=open`), the header values are exactly as sent, and `rawBody` is the body
 text exactly as sent (an empty string for none). JSON as `JSON.stringify` writes it (no spaces).
 
 Rules the API enforces:
@@ -52,11 +53,13 @@ Rules the API enforces:
   5 minutes from the server clock either way: 401 `operator_request_expired`.
 - Request ids are used once (kept 1 day). A read (GET) sent again: 409
   `operator_request_replayed`. A change (POST, PATCH, DELETE) sent again with the same id, method,
-  path and body gets the first answer again with `X-AppDeck-Replayed: true` and does not run
+  path and body gets the first answer again with `x-appdeck-replayed: true` and does not run
   twice; with a different body: 409 `operator_request_conflict`; still running: 409
   `operator_request_in_progress`. A change that failed with a 5xx can be retried with its id.
 - An Agent calling a Manager action: 403 `operator_forbidden` (the refusal is audited).
-- Errors use the API's shared shape: `{ "error": { "code", "message", "ref" } }`.
+- Success (2xx) answers are `{ "success": true, "data": … }`; a change answers `data: { "ok": true }`
+  unless stated. Errors are told apart by HTTP status (400, 401, 403, 404, 409, 429, 503) and use
+  the API's shared shape: `{ "error": { "code", "message", "ref" } }`.
 
 Audit log (`operator_audit_log`, 2 years): operator email and role, action, target type and id,
 request id, outcome (`ok` or `denied`), time. The target is a plain id, so entries outlive a
@@ -67,45 +70,33 @@ deleted family; search text and content are never recorded.
 Also checked by `packages/core/src/operator-signature.test.ts` (`OPERATOR_TEST_VECTOR`). The
 secret is a test value used nowhere else.
 
-| Input          | Value                                                                                                                                                                                             |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Secret         | `revisionden-operator-test-vector-secret-0001`                                                                                                                                                    |
-| Timestamp      | `1795600800`                                                                                                                                                                                      |
-| Method         | `POST`                                                                                                                                                                                            |
-| Path           | `/v1/operator/families/00000000-0000-4000-8000-000000000001/notes`                                                                                                                                |
-| Operator email | `operator@example.com`                                                                                                                                                                            |
-| Operator role  | `agent`                                                                                                                                                                                           |
-| Request id     | `req-0001`                                                                                                                                                                                        |
-| Raw body       | `{"note":"Test note"}`                                                                                                                                                                            |
-| Signed payload | `["appdeck-revisionden-operator-v1","1795600800","POST","/v1/operator/families/00000000-0000-4000-8000-000000000001/notes","operator@example.com","agent","req-0001","{\"note\":\"Test note\"}"]` |
-| Signature      | `a83dae3e05e726fc32810568b530376f5bdd43bb58457f0918d1e4c7a1169874`                                                                                                                                |
+| Input          | Value                                                                                                                                                                                                     |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Secret         | `revisionden-operator-test-vector-secret-0001`                                                                                                                                                            |
+| Timestamp      | `1795600800000`                                                                                                                                                                                           |
+| Method         | `POST`                                                                                                                                                                                                    |
+| Path           | `/operator/appdeck/families/00000000-0000-4000-8000-000000000001/notes`                                                                                                                                   |
+| Operator email | `operator@example.com`                                                                                                                                                                                    |
+| Operator role  | `agent`                                                                                                                                                                                                   |
+| Request id     | `req-0001`                                                                                                                                                                                                |
+| Raw body       | `{"note":"Test note"}`                                                                                                                                                                                    |
+| Signed payload | `["appdeck-revisionden-operator-v1","1795600800000","POST","/operator/appdeck/families/00000000-0000-4000-8000-000000000001/notes","operator@example.com","agent","req-0001","{\"note\":\"Test note\"}"]` |
+| Signature      | `sha256=64618da6da442da5b05657dd5ebf56a50665dd4a15462dc3350d47db8db9bcbd`                                                                                                                                 |
 
 ### Endpoints
 
-All reads are open to Agent and Manager. Response shapes are strict Zod schemas in
-`packages/core/src/operator-schemas.ts` (`Operator…Schema`), so an unagreed field fails the
-tests instead of reaching AppDeck. `null` marks figures whose workstream is not built yet
-(payments: Premium, trials, free places, plan; complaints: O4).
+| Route                          | Role  | Returns                                                                                     | Audited |
+| ------------------------------ | ----- | ------------------------------------------------------------------------------------------- | ------- |
+| `GET /operator/appdeck/health` | Agent | `data: { status: "ok", environment, version, operator: { email, role } }` (connection test) | no      |
 
-| Route                              | Query                                                                           | Returns                                                                                                                                                                                                                              | Audited                                                                  |
-| ---------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
-| `GET /v1/operator/ping`            |                                                                                 | `{ environment, version, operator: { email, role } }` (connection test)                                                                                                                                                              | no                                                                       |
-| `GET /v1/operator/overview`        |                                                                                 | `{ families, students, activeStudents7d, activeStudents30d, openTickets, openContentReports, errorReports24h, premiumFamilies, trials, freePlaces, openComplaints }`; active = answered a question in that window                    | no                                                                       |
-| `GET /v1/operator/families`        | `email=` (exact, any case) **or** `id=`                                         | `{ families: [{ id, createdAt, lastActiveAt, parentCount, childCount }] }` (0 or 1); anything else is 400                                                                                                                            | `family.search` (target = family found; the search text is never stored) |
-| `GET /v1/operator/families/:id`    |                                                                                 | `{ id, createdAt, lastActiveAt, deletesAfter, parents: [{ email, joinedAt }], plan, children: [{ id, nickname, yearGroup, subjects, linkedDevices, lastActiveAt }], flags: { inactivityWarning, openTickets, openContentReports } }` | `family.view`                                                            |
-| `GET /v1/operator/tickets`         | `status=open\|all\|new\|looking_into_it\|fixed\|will_not_fix`, `familyId=`      | `{ tickets: [{ id, familyId, kind, status, senderRole, text, device, createdAt, updatedAt, closedAt }] }`, newest 200; `text` is always `null` when a student sent it                                                                | `tickets.list` (target = family when filtered)                           |
-| `GET /v1/operator/error-reports`   | `since=` (default 24 hours, at most 90 days)                                    | Error reports grouped by screen, API path and status (same shape as `GET /v1/admin/error-reports`)                                                                                                                                   | no                                                                       |
-| `GET /v1/operator/content-reports` | `status=open` (default)`\|no_error\|confirmed_error\|all`                       | `{ reviewQueueUrl, reports: [{ id, itemId, itemVersion, reason, reportedBy, status, quarantined, createdAt, decidedAt }] }`, newest 200                                                                                              | no                                                                       |
-| `GET /v1/operator/audit-log`       | `targetType=`, `targetId=`, `before=` (ISO time), `limit=` (1–500, default 100) | `{ entries: [...], nextBefore }`, newest first                                                                                                                                                                                       | no                                                                       |
-| `GET /v1/operator/status`          |                                                                                 | `{ environment, version, database, errorReportsLastHour, errorReports24h }`                                                                                                                                                          | no                                                                       |
-
-Actions come with O3 to O5.
+Read endpoints come with O2, actions with O3 to O5.
 
 ## What the operator can see and do
 
 | Area                         | View                                                                                                                                                                                                    | Actions (role)                                                                                                 |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | **Overview**                 | Families, active students (7 and 30 days), Premium families, trials, free places, open tickets, complaints                                                                                              | none                                                                                                           |
+| **Family tags**              | Tag list with counts; families with a tag                                                                                                                                                               | Manager: create, rename, retire tags and set effects. Agent: add or remove tags on a family                    |
 | **Families**                 | Search by exact parent sign-in email or family id only (no browsing names). Family: created, parents (sign-in emails), plan and trial, children as nickname + year group + subjects, last active, flags | Agent: add an internal note. Manager: extend trial, grant or end a free place, comp Premium                    |
 | **Tickets**                  | Bug reports, ideas, confusing, other; error reports grouped by RD code; status, device details, history                                                                                                 | Agent: reply (shown in the family's app), change status, confirm bug / mark duplicate (Bug Hunter)             |
 | **Complaints**               | Formal complaints (new feedback kind "complaint"), with dates due                                                                                                                                       | Agent: acknowledge, reply, resolve with outcome. Manager: escalate, record a refund or goodwill                |
@@ -118,6 +109,26 @@ Actions come with O3 to O5.
 
 Never shown in AppDeck: answers, flashcards a student wrote, homework photos (deleted anyway), AI
 prompts, push keys, sign-in tokens, or anything from the Get help page (which records nothing).
+
+## Family tags
+
+Requested by the product owner on 2026-11-25.
+
+- Operators can tag a family with labels such as **Beta tester**, **Press**, **Friends & family**,
+  **School partner** or **VIP support**. A family can have several tags.
+- **Managers** create, rename and retire tags (name, colour, short description, and optional
+  effects below); **Agents** can add or remove existing tags on a family. Every change is audited.
+- **Tags are internal.** Families never see them, with one exception: a tag with the
+  "beta programme" effect shows the family a small "Beta" badge and lets them leave the programme.
+- **Optional effects** a Manager can switch on per tag:
+  - **Early access:** turns on features marked as beta for that family (feature flags in RevisionDen).
+  - **Complimentary Premium:** Premium free while the tag is on (applied with workstream $).
+  - **Exclude from metrics:** left out of overview numbers (for test and press accounts).
+- **Filter by tag:** the families screen can list families with a given tag (showing family id,
+  parent sign-in emails, plan and tags only). This is the only list view; other lookups stay exact
+  search.
+- Tags never hold personal information (no names or notes in tag names); notes stay in the family's
+  internal notes. The privacy notice mentions internal account labels for support.
 
 ## Complaints
 

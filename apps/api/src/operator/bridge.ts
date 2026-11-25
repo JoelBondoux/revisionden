@@ -189,6 +189,11 @@ async function replay(
   });
 }
 
+/** AppDeck's success envelope: `{ success: true, data }`. Errors keep the API's shared shape. */
+export function ok<T>(c: Context, data: T, status: 200 | 201 = 200) {
+  return c.json({ success: true as const, data }, status);
+}
+
 /** Records an operator read of a family, or an action, in the audit log. */
 export async function audit(
   db: Database,

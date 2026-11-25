@@ -12,7 +12,7 @@ export interface OperatorCall {
   email?: string;
   role?: string;
   requestId?: string;
-  /** Unix seconds; defaults to the clock's time. */
+  /** Unix milliseconds; defaults to the clock's time. */
   timestamp?: string;
   secret?: string;
 }
@@ -22,7 +22,7 @@ export async function signedOperatorRequest(call: OperatorCall): Promise<[string
   const method = call.method ?? 'GET';
   const rawBody = call.body === undefined ? '' : JSON.stringify(call.body);
   const fields = {
-    timestamp: call.timestamp ?? String(Math.floor(call.clock.now().getTime() / 1000)),
+    timestamp: call.timestamp ?? String(call.clock.now().getTime()),
     method,
     path: call.path,
     operatorEmail: call.email ?? 'agent@example.com',

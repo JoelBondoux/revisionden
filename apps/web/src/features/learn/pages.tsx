@@ -6,6 +6,7 @@ import { ButtonLink } from '../../components/Button';
 import { Pill } from '../../components/Pill';
 import { ProgressBar } from '../../components/ProgressBar';
 import { Link } from 'react-router-dom';
+import { RecallGate } from '../recall';
 import { LessonPlayer } from './LessonPlayer';
 import { subjectLabel, useLearnApi } from './learnApi';
 
@@ -16,12 +17,14 @@ export function TopicLessonPage() {
   const lesson = useApiResource(() => api.getLesson({ topicId }), [api, topicId]);
   if (lesson.status !== 'ready') return <LoadingOrError resource={lesson} />;
   return (
-    <LessonPlayer
-      key={topicId}
-      title={lesson.data.items[0]?.topicTitle ?? 'Lesson'}
-      items={lesson.data.items}
-      draftContent={lesson.data.draftContent}
-    />
+    <RecallGate topicId={topicId}>
+      <LessonPlayer
+        key={topicId}
+        title={lesson.data.items[0]?.topicTitle ?? 'Lesson'}
+        items={lesson.data.items}
+        draftContent={lesson.data.draftContent}
+      />
+    </RecallGate>
   );
 }
 
