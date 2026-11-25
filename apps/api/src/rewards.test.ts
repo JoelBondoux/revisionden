@@ -473,6 +473,33 @@ describe('hidden tracks and secret achievements', () => {
     expect(view.newlyEarned.map((r) => r.id)).toContain('comeback-kid-1');
   });
 
+  it('does not count flashcard self-ratings towards Comeback Kid (they never change mastery)', async () => {
+    const { studentId, headers } = await t.familyStudent('r_comeback_cards');
+    const [card] = await t.db
+      .insert(items)
+      .values({ topicId: 'r-topic', type: 'flashcard', body: {}, answer: {} })
+      .returning();
+    const at = (minute: number) => new Date(`2026-11-24T09:${String(minute).padStart(2, '0')}:00Z`);
+    await answers(
+      studentId,
+      [0, 1, 2].map((m) => at(m).toISOString()),
+      0,
+      false,
+    );
+    await t.db.insert(attempts).values(
+      Array.from({ length: 30 }, (_, i) => ({
+        studentId,
+        itemId: card!.id,
+        correct: true,
+        score: 1,
+        xpEarned: 0,
+        createdAt: at(i + 3),
+      })),
+    );
+    const view = await studentRewards(headers);
+    expect(view.newlyEarned.map((r) => r.id)).not.toContain('comeback-kid-1');
+  });
+
   it('keeps tracks with no data source yet hidden (Fact Checker, Planner, Pace Setter, Perfectionist)', async () => {
     const { studentId, headers } = await t.familyStudent('r_stub_tracks');
     await answers(studentId, ['2026-11-24T09:00:00Z']);
