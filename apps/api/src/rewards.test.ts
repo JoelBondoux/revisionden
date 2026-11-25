@@ -9,7 +9,7 @@ import {
   DEFAULT_AVATAR,
   AVATAR_CATALOGUE,
 } from '@revisionden/core';
-import { attempts, items, rewards, streaks, topics } from '@revisionden/db';
+import { attempts, feedback, items, rewards, streaks, students, topics } from '@revisionden/db';
 import { createTestContext, jsonRequest, type TestContext } from './test/helpers';
 
 let t: TestContext;
@@ -365,5 +365,147 @@ describe('parent reading rewards', () => {
 
     const own = await studentRewards(headers);
     expect(own.newlyEarned.map((r) => r.id)).toContain('level-2');
+  });
+});
+
+describe('hidden tracks and secret achievements', () => {
+  it('shows secrets as ??? and no hidden tracks for a new student', async () => {
+    const { headers } = await t.familyStudent('r_secret_new');
+    const view = await studentRewards(headers);
+    expect(view.overview.hiddenTracks).toEqual([]);
+    expect(view.overview.secrets.found).toBe(0);
+    expect(view.overview.secrets.cards.every((c) => c.name === '???')).toBe(true);
+    expect(JSON.stringify(view.overview.secrets)).not.toContain('Combo Ten');
+  });
+
+  it('reveals a secret achievement when it is earned and celebrates it', async () => {
+    const { studentId, headers } = await t.familyStudent('r_secret_combo');
+    const times = Array.from(
+      { length: 10 },
+      (_, i) => `2026-11-24T09:${String(i).padStart(2, '0')}:00Z`,
+    );
+    await answers(studentId, times, 10);
+    const view = await studentRewards(headers);
+    expect(view.newlyEarned.map((r) => r.id)).toContain('secret-combo-ten');
+    expect(view.overview.secrets.cards).toContainEqual(
+      expect.objectContaining({ id: 'secret-combo-ten', name: 'Combo Ten', earned: true }),
+    );
+  });
+
+  it('counts the subjects answered for secret stats (Polymath at 5 subjects)', async () => {
+    const { studentId, headers } = await t.familyStudent('r_secret_mix');
+    for (const n of [1, 2, 3, 4, 5]) {
+      await t.db
+        .insert(topics)
+        .values({ id: `r-poly-${n}`, subjectId: `r-subject-${n}`, board: 'aqa', title: 'T' });
+      const [item] = await t.db
+        .insert(items)
+        .values({ topicId: `r-poly-${n}`, type: 'multiple_choice', body: {}, answer: {} })
+        .returning();
+      await t.db.insert(attempts).values({
+        studentId,
+        itemId: item!.id,
+        correct: true,
+        xpEarned: 10,
+        createdAt: new Date(`2026-11-24T09:0${n}:00Z`),
+      });
+    }
+    const view = await studentRewards(headers);
+    expect(view.newlyEarned.map((r) => r.id)).toContain('secret-polymath');
+  });
+
+  it('keeps Bug Hunter hidden until a bug is confirmed', async () => {
+    const { headers } = await t.familyStudent('r_bug_none');
+    const view = await studentRewards(headers);
+    expect(view.overview.hiddenTracks.find((h) => h.id === 'bug-hunter')).toBeUndefined();
+  });
+
+  it('reveals Bug Hunter from confirmed bugs and adds their reward XP to the level', async () => {
+    const { studentId, headers } = await t.familyStudent('r_bug_one');
+    const [student] = await t.db.select().from(students).where(eq(students.id, studentId));
+    await t.db.insert(feedback).values({
+      familyId: student!.familyId,
+      senderRole: 'student',
+      studentId,
+      kind: 'bug',
+      outcome: 'confirmed',
+      rewardXp: 50,
+      trackStep: true,
+      confirmedAt: new Date('2026-11-24T09:00:00Z'),
+    });
+    const view = await studentRewards(headers);
+    expect(view.newlyEarned.map((r) => r.id)).toContain('bug-hunter-1');
+    expect(view.overview.hiddenTracks).toContainEqual(
+      expect.objectContaining({ id: 'bug-hunter', earned: 1 }),
+    );
+    expect(view.overview.level.totalXp).toBe(50);
+  });
+
+  it('reveals Explorer from the first Learn mode answer', async () => {
+    const { studentId, headers } = await t.familyStudent('r_explorer');
+    await t.db.insert(attempts).values({
+      studentId,
+      itemId,
+      correct: true,
+      xpEarned: 10,
+      mode: 'learn',
+      createdAt: new Date('2026-11-24T09:00:00Z'),
+    });
+    const view = await studentRewards(headers);
+    expect(view.newlyEarned.map((r) => r.id)).toContain('explorer-1');
+    expect(view.overview.hiddenTracks).toContainEqual(
+      expect.objectContaining({ id: 'explorer', name: 'Explorer', earned: 1 }),
+    );
+  });
+
+  it('reveals Comeback Kid when a weak spot is turned into a strong topic', async () => {
+    const { studentId, headers } = await t.familyStudent('r_comeback');
+    const at = (minute: number) => `2026-11-24T09:${String(minute).padStart(2, '0')}:00Z`;
+    await answers(studentId, [0, 1, 2].map(at), 0, false);
+    await answers(
+      studentId,
+      Array.from({ length: 20 }, (_, i) => at(i + 3)),
+      10,
+      true,
+    );
+    const view = await studentRewards(headers);
+    expect(view.newlyEarned.map((r) => r.id)).toContain('comeback-kid-1');
+  });
+
+  it('does not count flashcard self-ratings towards Comeback Kid (they never change mastery)', async () => {
+    const { studentId, headers } = await t.familyStudent('r_comeback_cards');
+    const [card] = await t.db
+      .insert(items)
+      .values({ topicId: 'r-topic', type: 'flashcard', body: {}, answer: {} })
+      .returning();
+    const at = (minute: number) => new Date(`2026-11-24T09:${String(minute).padStart(2, '0')}:00Z`);
+    await answers(
+      studentId,
+      [0, 1, 2].map((m) => at(m).toISOString()),
+      0,
+      false,
+    );
+    await t.db.insert(attempts).values(
+      Array.from({ length: 30 }, (_, i) => ({
+        studentId,
+        itemId: card!.id,
+        correct: true,
+        score: 1,
+        xpEarned: 0,
+        createdAt: at(i + 3),
+      })),
+    );
+    const view = await studentRewards(headers);
+    expect(view.newlyEarned.map((r) => r.id)).not.toContain('comeback-kid-1');
+  });
+
+  it('keeps tracks with no data source yet hidden (Fact Checker, Planner, Pace Setter, Perfectionist)', async () => {
+    const { studentId, headers } = await t.familyStudent('r_stub_tracks');
+    await answers(studentId, ['2026-11-24T09:00:00Z']);
+    const view = await studentRewards(headers);
+    const ids = view.overview.hiddenTracks.map((h) => h.id);
+    for (const id of ['fact-checker', 'planner', 'pace-setter', 'perfectionist']) {
+      expect(ids).not.toContain(id);
+    }
   });
 });

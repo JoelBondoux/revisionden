@@ -226,8 +226,11 @@ Tags: #product #rules #limits #defaults
 
 ## Hosting
 
-- Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Hosts: `revisionden.com` and
-  `api.revisionden.com` (production), `staging.` and `api-staging.` (staging), `dev.` and `api-dev.` (development).
+- Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Hosts: `app.revisionden.com`
+  and `api.revisionden.com` (production; owner decision 2026-11-25), `staging.` and `api-staging.` (staging), `dev.` and `api-dev.` (development).
+- The bare `revisionden.com` is the public sales site (workstream M, `apps/www`), not the app.
+- Production passkeys use the RP ID `revisionden.com`; OAuth callbacks are on the API host, so the
+  move to `app.` needed no change in Google or Microsoft.
 - Live since 2026-11-25 (workstream G): API Workers on all three API hosts; web app on `dev.` and
   `staging.`. The production web app waits for the operator details (its build fails without them).
 - Workers: `revisionden-api-dev`, `revisionden-api-staging`, `revisionden-api` (API) and
@@ -332,6 +335,11 @@ Tags: #product #rules #limits #defaults
 - Newly earned rewards are saved (and announced as "New!") by `rewardsView`, used by the student's
   `GET /v1/student/rewards` and the parent's full `GET /v1/students/:id/rewards`. The parent's
   `GET /v1/students/:id/parent-rewards` and the stats pages use the read-only `rewardsProgress`.
+- Hidden tracks and secrets (R7): Bug Hunter steps at 1, 2, 3, 5, 8, 12, 20 confirmed bugs
+  (`confirmedBugs` from L's `confirmedBugCount`; L's bug reward XP counts for levels, not
+  chapters); 24 secret achievements shown as
+  "???" until earned, with hints on 9; stats in `packages/core/src/secret-stats.ts`. New reward
+  item kind `effect` (glitch); new avatar item magnifier (held item, appended).
   They are also saved, once each, by an answer (`POST /v1/student/learn/attempts`) and a finished
   flashcard session (`.../sessions/:id/finish`): both return `newlyEarned` (`saveNewRewards`), and
   the lesson, Cards screen and starting-test results show "New reward: …" with the reward sound
@@ -351,7 +359,7 @@ Tags: #product #rules #limits #defaults
   "Not set up yet", never zeros. PDF export is made in the browser with nicknames only.
 - Terms until real dates are entered: autumn 1 Sep–31 Dec, spring 1 Jan–31 Mar, summer
   1 Apr–31 Aug; the school year is 1 Sep–31 Aug. Goal lines: 50 XP a day (Week), 250 XP a week
-  (Term). Daily cap 2 hours (provisional, `DEFAULT_DAILY_CAP_MINUTES`, until wellbeing settings).
+  (Term). Time past the student's daily limit is not counted; healthy habits count days at the limit.
 - Subject mastery averages practised topics; change is replayed from marked answers (period start
   for the student, 4 weeks for the parent). Healthy habits are for this week; quiet hours are the
   reminder quiet hours. A rest day is a finished day with no study at all: answers and flashcard
@@ -492,13 +500,24 @@ Tags: #product #rules #limits #defaults
 ## Daily limit, two parents, hidden tracks (owner, 2026-11-25; planned)
 
 - Daily limit in active study minutes: defaults GCSE 60/90 (school day/other), A-Level 90/120;
-  ceilings GCSE 2h/3h, A-Level 2.5h/3.5h; +30 in exam season with parent consent. Parents set it;
-  the app only suggests (+10 at most fortnightly when the student keeps going without accuracy dips;
-  −10 to −15 on tiredness signs). Detail: `docs/PRODUCT_RULES.md` (Daily limit).
+  ceilings GCSE 2h/3h, A-Level 2.5h/3.5h; +30 in exam season (6 weeks before the first exam to the
+  last) with parent consent. Parents set 15 min to 6 h per day type; the app only suggests, at most
+  weekly (+10 at most fortnightly when the limit is reached on 4 of 14 days with steady late
+  accuracy; −10 for one tiredness sign, −15 for two or more). No XP, rewards or streak credit past
+  the limit; progress responses carry `dailyLimit`, and set complete says "See you tomorrow" when
+  it is reached (300 XP cap kept as a safety net). Confirmed by the owner (2026-11-25): school days
+  are Mon–Fri with holidays counted as school days until dates exist; "kept going" means reaching
+  the limit; "stopped part-way" means a starting test unfinished for over an hour; parents set
+  15 min to 6 h. Either parent can change it (latest change wins); saved limits and accepted
+  suggestions are logged for the other parent. Implemented (K7): `packages/core/src/daily-limit.ts`, `apps/api/src/daily-limit/`,
+  `daily_limits` table. Detail: `docs/PRODUCT_RULES.md` (Daily limit).
 - Two parent accounts with equal control; second invited by link or code (7 days); activity log
   ("Parent 1/2"); both confirm whole-family deletion.
-- Hidden tracks besides Bug Hunter: Fact Checker, Comeback Kid, Explorer, Planner, Pace Setter,
-  Perfectionist (`docs/REWARDS.md`).
+- Hidden tracks besides Bug Hunter (built R7b): Fact Checker (1, 2, 3, 5, 8), Comeback Kid (1, 3,
+  5, 10, 20, 35), Explorer (1 to 7 kinds of practice), Planner (1, 4, 8, 16, 30), Pace Setter (1, 3,
+  6, 10), Perfectionist (1, 5, 15, 30, 60, 100). Each is invisible until its first step. Only
+  Comeback Kid and part of Explorer have data today; the others count 0 until their records exist
+  (`docs/REWARDS.md`, `packages/core/src/track-stats.ts`).
 
 ## Titles (owner, 2026-11-25; planned) and Get help (built, workstream W)
 
@@ -529,6 +548,16 @@ Tags: #product #rules #limits #defaults
   start, no penalty, skippable); "Learn it first" links to Oak and BBC Bitesize per topic, checked
   by CI; read aloud with on-device voices preferred; reading comfort settings (dyslexia-friendly
   self-hosted font, larger text, spacing, tint). Detail: `docs/PRODUCT_RULES.md` (Quick wins).
+- 5-a-day (Q3, built): `GET /v1/student/daily`. The first request of the student's UK day picks
+  up to 5 items from topics with at least one attempt in an enrolled subject (never new topics,
+  never extended answers), stores them in `daily_sets` (one per student per day) and returns the
+  same set all day. Choice: each topic's mastery drifts down by the 30-day half-life since it was
+  last practised, then the normal next-item rules (weak spots first, due flashcards first, at most
+  3 in a row per topic), topped up from the same topics if that leaves fewer than 5. Seeded by
+  student and day. Done when every item has an attempt after the set was made. Map card above
+  the next mission while not done; plays at `/learn/daily` in the lesson player (Learn mode,
+  normal XP and combos, counts to the daily goal and streak through XP; the parent's daily limit
+  applies through the normal attempts route, `creditableXp`). No push for it. Migration 0014.
 - Recall checks (Q4, built): `GET /v1/student/recall?topicId=` before a topic lesson (or unit
   challenge) whose topic has been practised. Up to 2 questions the student has answered before
   (no flashcards, no extended answers), from other practised topics first, then the lesson's own

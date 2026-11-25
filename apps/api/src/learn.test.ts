@@ -378,6 +378,8 @@ describe('rewards earned by an answer', () => {
   it('returns no rewards when nothing new is earned', async () => {
     const { headers } = await t.familyStudent('rw_none_kid');
     const mc = itemByPrompt(await allItems(headers), 'Test question 1');
+    // The very first lesson answer earns Explorer's first step (R7b), so answer once first.
+    expect((await answer(headers, mc.id, 0)).newlyEarned.map((r) => r.id)).toEqual(['explorer-1']);
     expect((await answer(headers, mc.id, 0)).newlyEarned).toEqual([]);
   });
 });
