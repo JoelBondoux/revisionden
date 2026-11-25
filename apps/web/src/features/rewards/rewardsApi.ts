@@ -1,6 +1,7 @@
 import { ApiError, failureRef } from '../../api/client';
 import type { ZodType } from 'zod';
 import {
+  maskIdsInPath,
   ParentRewardSchema,
   StudentRewardsResponseSchema,
   type CreateParentRewardRequest,
@@ -46,6 +47,8 @@ export function createRewardsApi(options: {
         `The server replied with ${res.status}.`,
         res.status,
         failureRef(options, res, json),
+        undefined,
+        maskIdsInPath(new URL(path, root).pathname),
       );
     }
     return res;
@@ -56,7 +59,14 @@ export function createRewardsApi(options: {
     const parsed = schema.safeParse(json);
     if (parsed.success) return parsed.data;
     const ref = failureRef(options, res, json, 'schema');
-    throw new ApiError('schema', `Unexpected response from ${path}.`, res.status, ref);
+    throw new ApiError(
+      'schema',
+      `Unexpected response from ${path}.`,
+      res.status,
+      ref,
+      undefined,
+      maskIdsInPath(new URL(path, root).pathname),
+    );
   };
   const child = (id: string) => `v1/students/${encodeURIComponent(id)}`;
 
