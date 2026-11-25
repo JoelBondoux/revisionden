@@ -280,7 +280,7 @@
     "verify": { "method": "solve", "equation": "x = 2y + 3", "variable": "y" },
     "marks": 2,
     "mark_scheme": [
-      "M1 for a correct first step of the rearrangement, for example x - 3 = 2y",
+      "M1 for a correct first step by either method (y - 3 = 2x from y = 2x + 3, or x - 3 = 2y after swapping x and y)",
       "A1 for f^-1(x) = (x - 3)/2"
     ],
     "hint": "Write y = 2x + 3, swap x and y, then make y the subject.",
@@ -310,14 +310,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). Solutions backed by the maths engine.",
-          "at": "2026-11-25T18:04:50Z"
+          "at": "2026-11-25T18:18:47Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:05:56Z",
+          "at": "2026-11-25T18:19:06Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -335,7 +335,7 @@
     "verify": { "method": "solve", "equation": "x = 5y - 1", "variable": "y" },
     "marks": 2,
     "mark_scheme": [
-      "M1 for a correct first step of the rearrangement, for example x + 1 = 5y",
+      "M1 for a correct first step by either method (y + 1 = 5x from y = 5x - 1, or x + 1 = 5y after swapping x and y)",
       "A1 for f^-1(x) = (x + 1)/5"
     ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
@@ -364,14 +364,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). Solutions backed by the maths engine.",
-          "at": "2026-11-25T18:04:50Z"
+          "at": "2026-11-25T18:18:47Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:05:57Z",
+          "at": "2026-11-25T18:19:07Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -389,7 +389,7 @@
     "verify": { "method": "solve", "equation": "x = (y + 4)/3", "variable": "y" },
     "marks": 2,
     "mark_scheme": [
-      "M1 for a correct first step of the rearrangement, for example 3x = y + 4",
+      "M1 for a correct first step by either method (3y = x + 4 from y = (x + 4)/3, or 3x = y + 4 after swapping x and y)",
       "A1 for f^-1(x) = 3x - 4"
     ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
@@ -418,14 +418,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). Solutions backed by the maths engine.",
-          "at": "2026-11-25T18:04:50Z"
+          "at": "2026-11-25T18:18:47Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:05:57Z",
+          "at": "2026-11-25T18:19:07Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -679,6 +679,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:58Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:12:05Z",
+          "notes": "model answered \"x - 7\"; expected \"x - 7\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:12:11Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -727,6 +743,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:59Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:12:17Z",
+          "notes": "model answered \"x/4\"; expected \"x/4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:12:26Z",
+          "notes": "no problems found"
         }
       ]
     }

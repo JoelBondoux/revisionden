@@ -330,6 +330,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:53Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:06:51Z",
+          "notes": "model answered \"16x\"; expected \"16x\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:07:09Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -341,7 +357,7 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a6-lp-show-equivalent",
     "expected_seconds": 60,
-    "prompt": "Simplify (n + 1)^2 - n^2 to show that (n + 1)^2 - n^2 ≡ 2n + 1.",
+    "prompt": "Expand and simplify (n + 1)^2 - n^2",
     "answer": { "expression": "2n + 1" },
     "verify": { "method": "expression", "expression": "(n + 1)^2 - n^2" },
     "steps": ["(n + 1)^2 - n^2", "n^2 + 2n + 1 - n^2", "2n + 1"],
@@ -376,14 +392,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A6). Answer and every step backed by the maths engine.",
-          "at": "2026-11-25T18:04:50Z"
+          "at": "2026-11-25T18:18:47Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:05:53Z",
+          "at": "2026-11-25T18:19:05Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -445,6 +461,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:54Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:07:59Z",
+          "notes": "model answered \"24n\"; expected \"24n\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:08:11Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -512,6 +544,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:23:59Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-marking",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:08:49Z",
+          "notes": "top: intended 3 marks, marked 3 marks; middle: intended 2 marks, marked 2 marks; low: intended 1 marks, marked 1 marks"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:08:59Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -579,6 +627,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:23:59Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-marking",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:09:28Z",
+          "notes": "top: intended 3 marks, marked 3 marks; middle: intended 2 marks, marked 2 marks; low: intended 1 marks, marked 1 marks"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:09:40Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -646,6 +710,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T17:24:00Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-marking",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:10:04Z",
+          "notes": "top: intended 3 marks, marked 3 marks; middle: intended 2 marks, marked 2 marks; low: intended 1 marks, marked 1 marks"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:10:10Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -824,6 +904,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:55Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:10:18Z",
+          "notes": "model answered \"yes\"; expected \"Yes\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:10:25Z",
+          "notes": "no problems found"
         }
       ]
     }

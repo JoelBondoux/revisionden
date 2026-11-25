@@ -7,7 +7,9 @@
     "learning_point": "gcse-maths-h-a19-lp-linear-linear",
     "expected_seconds": 120,
     "prompt": "Solve the simultaneous equations 3x + 2y = 13 and x - 2y = -1.",
-    "answer": { "accepted": ["x = 3, y = 2", "x = 3 and y = 2", "x=3, y=2", "x = 3; y = 2"] },
+    "answer": {
+      "accepted": ["x = 3, y = 2", "x = 3 and y = 2", "x=3, y=2", "x = 3; y = 2"]
+    },
     "marks": 3,
     "explanation": "Add the equations: 4x = 12, so x = 3. Then 3 - 2y = -1, so y = 2.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
@@ -73,7 +75,9 @@
     "learning_point": "gcse-maths-h-a19-lp-linear-linear",
     "expected_seconds": 180,
     "prompt": "Solve the simultaneous equations 2x + 3y = 7 and 5x - 2y = 8.",
-    "answer": { "accepted": ["x = 2, y = 1", "x = 2 and y = 1", "x=2, y=1", "x = 2; y = 1"] },
+    "answer": {
+      "accepted": ["x = 2, y = 1", "x = 2 and y = 1", "x=2, y=1", "x = 2; y = 1"]
+    },
     "marks": 4,
     "explanation": "Multiply: 4x + 6y = 14 and 15x - 6y = 24. Add: 19x = 38, so x = 2. Then 4 + 3y = 7, so y = 1.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
@@ -139,8 +143,12 @@
     "learning_point": "gcse-maths-h-a19-lp-linear-linear",
     "expected_seconds": 40,
     "prompt": "x + y = 10 and x - y = 4. Work out the value of x.",
-    "answer": { "value": "7" },
-    "verify": { "expression": "(10 + 4)/2" },
+    "answer": {
+      "value": "7"
+    },
+    "verify": {
+      "expression": "(10 + 4)/2"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for adding the equations, 2x = 14", "A1 for 7"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
@@ -206,8 +214,14 @@
     "learning_point": "gcse-maths-h-a19-lp-linear-linear",
     "expected_seconds": 60,
     "prompt": "y = 2x - 1 and 3x + y = 14. Substitute the first equation into the second and solve for x.",
-    "answer": { "solutions": ["3"] },
-    "verify": { "method": "solve", "equation": "3x + 2x - 1 = 14", "variable": "x" },
+    "answer": {
+      "solutions": ["3"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "3x + 2x - 1 = 14",
+      "variable": "x"
+    },
     "steps": ["3x + 2x - 1 = 14", "5x - 1 = 14", "5x = 15", "x = 3"],
     "marks": 2,
     "mark_scheme": ["M1 for 3x + 2x - 1 = 14", "A1 for x = 3"],
@@ -274,8 +288,14 @@
     "learning_point": "gcse-maths-h-a19-lp-linear-quadratic",
     "expected_seconds": 100,
     "prompt": "The line y = x + 2 meets the curve y = x^2 at two points. Find the x-coordinates of these points.",
-    "answer": { "solutions": ["2", "-1"] },
-    "verify": { "method": "solve", "equation": "x^2 = x + 2", "variable": "x" },
+    "answer": {
+      "solutions": ["2", "-1"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "x^2 = x + 2",
+      "variable": "x"
+    },
     "steps": ["x^2 = x + 2", "x^2 - x - 2 = 0", "(x - 2)(x + 1) = 0", "x = 2 or x = -1"],
     "marks": 3,
     "mark_scheme": ["M1 for x^2 = x + 2", "M1 for (x - 2)(x + 1) = 0", "A1 for x = 2 and x = -1"],
@@ -342,8 +362,14 @@
     "learning_point": "gcse-maths-h-a19-lp-linear-quadratic",
     "expected_seconds": 180,
     "prompt": "The line y = x + 1 meets the circle x^2 + y^2 = 25 at two points. Find the x-coordinates of these points.",
-    "answer": { "solutions": ["3", "-4"] },
-    "verify": { "method": "solve", "equation": "x^2 + (x + 1)^2 = 25", "variable": "x" },
+    "answer": {
+      "solutions": ["3", "-4"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "x^2 + (x + 1)^2 = 25",
+      "variable": "x"
+    },
     "steps": [
       "x^2 + (x + 1)^2 = 25",
       "2x^2 + 2x + 1 = 25",
@@ -394,6 +420,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:30Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:09:34Z",
+          "notes": "model answered \"3, -4\"; expected \"3, -4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:10:03Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -406,8 +448,14 @@
     "learning_point": "gcse-maths-h-a19-lp-linear-quadratic",
     "expected_seconds": 150,
     "prompt": "The line y = 3x + 2 meets the curve y = 2x^2 at two points. Find the x-coordinates of these points.",
-    "answer": { "solutions": ["2", "-1/2"] },
-    "verify": { "method": "solve", "equation": "2x^2 = 3x + 2", "variable": "x" },
+    "answer": {
+      "solutions": ["2", "-1/2"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "2x^2 = 3x + 2",
+      "variable": "x"
+    },
     "steps": ["2x^2 = 3x + 2", "2x^2 - 3x - 2 = 0", "(2x + 1)(x - 2) = 0", "x = -1/2 or x = 2"],
     "marks": 3,
     "mark_scheme": [
@@ -514,6 +562,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:30Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:10:10Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:10:16Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -562,6 +626,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:31Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:10:23Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:10:30Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -610,6 +690,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:32Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:10:37Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:10:44Z",
+          "notes": "no problems found"
         }
       ]
     }

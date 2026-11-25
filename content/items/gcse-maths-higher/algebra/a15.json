@@ -438,6 +438,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:20Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:11:12Z",
+          "notes": "model answered \"24\"; expected \"24\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:11:26Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -579,8 +595,8 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a15-lp-graph-meaning-cards",
     "expected_seconds": 15,
-    "front": "On a velocity-time graph for an object moving in one direction, what does the area under the graph represent? (two words)",
-    "back": "Distance travelled",
+    "front": "A velocity-time graph is a horizontal line. What is the acceleration?",
+    "back": "0",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -607,15 +623,15 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
-          "at": "2026-11-25T18:04:51Z"
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Gradient 0 means acceleration 0. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T18:18:47Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:05:21Z",
+          "at": "2026-11-25T18:18:58Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]

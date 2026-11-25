@@ -7,8 +7,14 @@
     "learning_point": "gcse-maths-h-a5-lp-rearrange",
     "expected_seconds": 45,
     "prompt": "Make t the subject of v = u + at",
-    "answer": { "solutions": ["(v - u)/a"] },
-    "verify": { "method": "solve", "equation": "v = u + a t", "variable": "t" },
+    "answer": {
+      "solutions": ["(v - u)/a"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "v = u + a t",
+      "variable": "t"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for v - u = at", "A1 for t = (v - u)/a"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
@@ -74,8 +80,14 @@
     "learning_point": "gcse-maths-h-a5-lp-rearrange",
     "expected_seconds": 45,
     "prompt": "Make x the subject of y = 3x - 7",
-    "answer": { "solutions": ["(y + 7)/3"] },
-    "verify": { "method": "solve", "equation": "y = 3x - 7", "variable": "x" },
+    "answer": {
+      "solutions": ["(y + 7)/3"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "y = 3x - 7",
+      "variable": "x"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for y + 7 = 3x", "A1 for x = (y + 7)/3"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
@@ -141,8 +153,14 @@
     "learning_point": "gcse-maths-h-a5-lp-rearrange",
     "expected_seconds": 45,
     "prompt": "Make x the subject of y = (x + 4)/5",
-    "answer": { "solutions": ["5y - 4"] },
-    "verify": { "method": "solve", "equation": "y = (x + 4)/5", "variable": "x" },
+    "answer": {
+      "solutions": ["5y - 4"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "y = (x + 4)/5",
+      "variable": "x"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for 5y = x + 4", "A1 for x = 5y - 4"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
@@ -208,8 +226,14 @@
     "learning_point": "gcse-maths-h-a5-lp-rearrange",
     "expected_seconds": 180,
     "prompt": "Make b the subject of a = (2b + 3)/(b - 1)",
-    "answer": { "solutions": ["(a + 3)/(a - 2)"] },
-    "verify": { "method": "solve", "equation": "a = (2b + 3)/(b - 1)", "variable": "b" },
+    "answer": {
+      "solutions": ["(a + 3)/(a - 2)"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "a = (2b + 3)/(b - 1)",
+      "variable": "b"
+    },
     "marks": 4,
     "mark_scheme": [
       "M1 for multiplying both sides by (b - 1): ab - a = 2b + 3",
@@ -280,8 +304,12 @@
     "learning_point": "gcse-maths-h-a5-lp-use-formulae",
     "expected_seconds": 40,
     "prompt": "The area of a trapezium is A = (1/2)(a + b)h. Work out A when a = 5, b = 9 and h = 4.",
-    "answer": { "value": "28" },
-    "verify": { "expression": "(1/2)*(5 + 9)*4" },
+    "answer": {
+      "value": "28"
+    },
+    "verify": {
+      "expression": "(1/2)*(5 + 9)*4"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for (1/2) × (5 + 9) × 4", "A1 for 28"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
@@ -347,8 +375,14 @@
     "learning_point": "gcse-maths-h-a5-lp-use-formulae",
     "expected_seconds": 45,
     "prompt": "A circle has radius 3 cm. Use A = πr^2 to work out its area. Give your answer correct to 1 decimal place.",
-    "answer": { "value": "28.3", "unit": "cm^2", "tolerance": 0.05 },
-    "verify": { "expression": "pi*3^2" },
+    "answer": {
+      "value": "28.3",
+      "unit": "cm^2",
+      "tolerance": 0.05
+    },
+    "verify": {
+      "expression": "pi*3^2"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for π × 3^2", "A1 for 28.3"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
@@ -414,8 +448,14 @@
     "learning_point": "gcse-maths-h-a5-lp-use-formulae",
     "expected_seconds": 60,
     "prompt": "The perimeter of a rectangle is P = 2(l + w). Work out w when P = 30 and l = 9.",
-    "answer": { "solutions": ["6"] },
-    "verify": { "method": "solve", "equation": "30 = 2(9 + w)", "variable": "w" },
+    "answer": {
+      "solutions": ["6"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "30 = 2(9 + w)",
+      "variable": "w"
+    },
     "steps": ["30 = 2(9 + w)", "15 = 9 + w", "w = 6"],
     "marks": 2,
     "mark_scheme": ["M1 for 30 = 2(9 + w) or 15 = 9 + w", "A1 for w = 6"],
@@ -494,8 +534,14 @@
     "learning_point": "gcse-maths-h-a5-lp-use-formulae",
     "expected_seconds": 60,
     "prompt": "The cost, C pounds, of a repair that takes h hours is C = 40 + 25h. Work out h when C = 115.",
-    "answer": { "solutions": ["3"] },
-    "verify": { "method": "solve", "equation": "115 = 40 + 25h", "variable": "h" },
+    "answer": {
+      "solutions": ["3"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "115 = 40 + 25h",
+      "variable": "h"
+    },
     "steps": ["115 = 40 + 25h", "75 = 25h", "h = 3"],
     "marks": 2,
     "mark_scheme": ["M1 for 115 = 40 + 25h", "A1 for h = 3"],

@@ -141,7 +141,7 @@
     "prompt": "n is an integer and -3 < 2n + 1 ≤ 7. List all the possible values of n, from smallest to largest.",
     "answer": { "accepted": ["-1, 0, 1, 2, 3", "-1,0,1,2,3", "−1, 0, 1, 2, 3"] },
     "marks": 3,
-    "explanation": "Subtract 1: -4 < 2n ≤ 6. Divide by 2: -2 < n ≤ 3, so n = -1, 0, 1, 2 or 3.",
+    "explanation": "Subtract 1: -4 < 2n ≤ 6. Divide by 2: -2 < n ≤ 3, so the possible values of n are -1, 0, 1, 2 and 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
     "checked_by": ["author"],
     "citations": [
@@ -168,14 +168,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Checked by testing integers: -1, 0, 1, 2, 3.",
-          "at": "2026-11-25T18:04:52Z"
+          "at": "2026-11-25T18:18:48Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:05:36Z",
+          "at": "2026-11-25T18:19:00Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -240,6 +240,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:37Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:13:42Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:13:49Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -303,6 +319,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:38Z",
           "notes": "citation 1: found on page 27; near match (letters, confidence 1.00): a reviewer must confirm it (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:13:59Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:14:10Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -515,7 +547,7 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a22-lp-quadratic",
     "expected_seconds": 60,
-    "prompt": "Solve x^2 + 2x - 15 = 0. (Its solutions are the critical values you need to solve the inequality x^2 + 2x - 15 > 0.)",
+    "prompt": "Solve x^2 + 2x - 15 = 0",
     "answer": { "solutions": ["3", "-5"] },
     "verify": { "method": "solve", "equation": "x^2 + 2x - 15 = 0", "variable": "x" },
     "steps": ["x^2 + 2x - 15 = 0", "(x - 3)(x + 5) = 0", "x = 3 or x = -5"],
@@ -547,14 +579,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Solutions and every step backed by the maths engine.",
-          "at": "2026-11-25T18:04:52Z"
+          "at": "2026-11-25T18:18:48Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:05:39Z",
+          "at": "2026-11-25T18:19:01Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -695,7 +727,7 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a22-lp-inequality-cards",
     "expected_seconds": 15,
-    "front": "When you divide both sides of an inequality by a negative number, should you keep or reverse the inequality sign?",
+    "front": "When you divide both sides of an inequality by a negative number, should you keep or reverse the inequality sign? (answer keep or reverse)",
     "back": "Reverse",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
     "checked_by": ["author"],
@@ -724,14 +756,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
-          "at": "2026-11-25T18:04:52Z"
+          "at": "2026-11-25T18:18:48Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:05:40Z",
+          "at": "2026-11-25T18:19:02Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]

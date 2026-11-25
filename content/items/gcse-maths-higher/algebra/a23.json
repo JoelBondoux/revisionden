@@ -248,6 +248,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:41Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:14:52Z",
+          "notes": "model answered \"4\"; expected \"4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:15:02Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -299,6 +315,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:43Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:15:07Z",
+          "notes": "model answered \"77\"; expected \"77\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:15:17Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -350,6 +382,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:44Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:15:22Z",
+          "notes": "model answered \"35\"; expected \"35\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:15:29Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -401,6 +449,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:45Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:15:34Z",
+          "notes": "model answered \"46\"; expected \"46\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:15:40Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -452,6 +516,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:45Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:15:46Z",
+          "notes": "model answered \"3/5\"; expected \"3/5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:15:54Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -500,6 +580,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:46Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:16:00Z",
+          "notes": "model answered \"4\"; expected \"4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:16:06Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -511,7 +607,7 @@
     "difficulty": 1,
     "learning_point": "gcse-maths-h-a23-lp-sequence-rule-cards",
     "expected_seconds": 15,
-    "front": "The term-to-term rule of 7, 11, 15, 19, ...",
+    "front": "What is the term-to-term rule of the sequence 7, 11, 15, 19, ...?",
     "back": "Add 4",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A23",
     "checked_by": ["author"],
@@ -539,14 +635,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A23). Checked: each difference is 4.",
-          "at": "2026-11-25T18:04:52Z"
+          "at": "2026-11-25T18:18:48Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:05:47Z",
+          "at": "2026-11-25T18:19:03Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -596,6 +692,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:48Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:16:38Z",
+          "notes": "model answered \"7\"; expected \"7\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:16:44Z",
+          "notes": "no problems found"
         }
       ]
     }

@@ -51,6 +51,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:34Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:11:37Z",
+          "notes": "model answered \"8\"; expected \"8\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:11:54Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -69,7 +85,7 @@
     "marks": 3,
     "mark_scheme": [
       "B1 for 2(x + 5) + 2x = 38 or an equivalent equation",
-      "M1 for 4x + 10 = 38 or 4x = 28",
+      "M1 for 4x + 10 = 38, (x + 5) + x = 19 or 4x = 28",
       "A1 for x = 7"
     ],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
@@ -98,14 +114,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A21). Solutions and every step backed by the maths engine.",
-          "at": "2026-11-25T18:04:52Z"
+          "at": "2026-11-25T18:18:48Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:05:35Z",
+          "at": "2026-11-25T18:19:00Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -231,6 +247,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-25T18:05:35Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:12:54Z",
+          "notes": "model answered \"12\"; expected \"12\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:13:02Z",
+          "notes": "no problems found"
         }
       ]
     }

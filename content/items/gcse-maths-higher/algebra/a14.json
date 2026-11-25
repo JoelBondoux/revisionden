@@ -6,7 +6,7 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a14-lp-models",
     "expected_seconds": 40,
-    "prompt": "The graph of N = 200 × 2^t shows the number of bacteria in a dish after t hours. Work out the value of N on the graph when t = 3.",
+    "prompt": "The number of bacteria in a dish after t hours is modelled by the exponential function N = 200 × 2^t. Use the model to work out N when t = 3.",
     "answer": { "value": "1600" },
     "verify": { "expression": "200*2^3" },
     "marks": 2,
@@ -49,14 +49,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A14). Answer backed by the maths engine.",
-          "at": "2026-11-25T18:04:51Z"
+          "at": "2026-11-25T18:18:47Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:05:16Z",
+          "at": "2026-11-25T18:18:53Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -69,7 +69,7 @@
     "difficulty": 3,
     "learning_point": "gcse-maths-h-a14-lp-models",
     "expected_seconds": 45,
-    "prompt": "The graph of V = 15000 × 0.8^t shows the value, in pounds, of a car t years after it is bought. Work out the value on the graph when t = 2.",
+    "prompt": "The value, V pounds, of a car t years after it is bought is modelled by the exponential function V = 15000 × 0.8^t. Use the model to work out V when t = 2.",
     "answer": { "value": "9600", "unit": "pounds" },
     "verify": { "expression": "15000*(4/5)^2" },
     "marks": 2,
@@ -112,14 +112,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A14). Answer backed by the maths engine.",
-          "at": "2026-11-25T18:04:51Z"
+          "at": "2026-11-25T18:18:47Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:05:17Z",
+          "at": "2026-11-25T18:18:54Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -132,7 +132,7 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a14-lp-models",
     "expected_seconds": 30,
-    "prompt": "The reciprocal graph T = 24/x shows the time, T hours, that x people take to paint a hall. Use the equation to find T when x = 6.",
+    "prompt": "The time, T hours, that x people take to paint a hall is modelled by the reciprocal function T = 24/x. Use the model to work out T when x = 6.",
     "answer": { "value": "4", "unit": "hours" },
     "verify": { "expression": "24/6" },
     "marks": 1,
@@ -175,14 +175,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A14). Answer backed by the maths engine.",
-          "at": "2026-11-25T18:04:51Z"
+          "at": "2026-11-25T18:18:47Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:05:18Z",
+          "at": "2026-11-25T18:18:55Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -195,7 +195,7 @@
     "difficulty": 3,
     "learning_point": "gcse-maths-h-a14-lp-models",
     "expected_seconds": 45,
-    "prompt": "The reciprocal graph T = 24/x shows the time, T hours, that x people take to paint a hall. Use the equation to find x when T = 3.",
+    "prompt": "The time, T hours, that x people take to paint a hall is modelled by the reciprocal function T = 24/x. Use the model to work out x when T = 3.",
     "answer": { "solutions": ["8"] },
     "verify": { "method": "solve", "equation": "24/x = 3", "variable": "x" },
     "steps": ["24/x = 3", "24 = 3x", "x = 8"],
@@ -239,14 +239,14 @@
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A14). Solutions and every step backed by the maths engine.",
-          "at": "2026-11-25T18:04:51Z"
+          "at": "2026-11-25T18:18:47Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:05:19Z",
+          "at": "2026-11-25T18:18:56Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
@@ -595,8 +595,8 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a14-lp-context-cards",
     "expected_seconds": 15,
-    "front": "The general name for lines that a curve gets closer and closer to but never meets, such as the axes for y = 1/x (one word)",
-    "back": "Asymptotes",
+    "front": "On a distance-time graph, what does a straight line sloping upwards show: constant speed or acceleration?",
+    "back": "Constant speed",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -608,7 +608,7 @@
         "document_ref": "1MA1 Issue 2 (June 2015)",
         "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A14 (page 15; PDF page 27)",
-        "quote": "plot and interpret graphs (including reciprocal graphs and exponential graphs) and graphs of non-standard functions in real contexts",
+        "quote": "to find approximate solutions to problems such as simple kinematic problems involving distance, speed and acceleration",
         "retrieved_at": "2026-11-25",
         "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
@@ -623,15 +623,15 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A14). Standard name for these lines; the specification names reciprocal graphs. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
-          "at": "2026-11-25T18:04:51Z"
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A14). Standard interpretation: equal distances in equal times. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "at": "2026-11-25T18:18:47Z"
         },
         {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-25T18:05:19Z",
+          "at": "2026-11-25T18:18:57Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
