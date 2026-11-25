@@ -10,6 +10,7 @@ export * from './xp';
 export * from './streaks';
 export * from './rewards';
 export * from './review-sampling';
+export * from './review-readiness';
 export * from './double-marking';
 export * from './onboarding';
 export * from './onboarding-schemas';
