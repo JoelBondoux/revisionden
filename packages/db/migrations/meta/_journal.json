@@ -169,6 +169,13 @@
       "when": 1795643295247,
       "tag": "0023_device_markers",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1795645758993,
+      "tag": "0024_nickname_spaces",
+      "breakpoints": true
     }
   ]
 }

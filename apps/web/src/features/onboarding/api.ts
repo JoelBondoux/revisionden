@@ -2,15 +2,22 @@ import { failureRef } from '../../api/client';
 import { z, type ZodType } from 'zod';
 import {
   AvatarCodeSchema,
+  EnrolmentSchema,
   LinkTokenSchema,
   OnboardedChildSchema,
   OnboardingFamilySchema,
+  StudentAvatarSchema,
   StudentSchema,
+  StudentSubjectsSchema,
+  type Enrolment,
   type LinkToken,
   type OnboardChildRequest,
   type OnboardedChild,
   type OnboardingFamily,
   type Student,
+  type StudentAvatar,
+  type StudentSubjects,
+  type UpdateSubjectChoiceRequest,
 } from '@revisionden/core';
 
 /** A failed onboarding request, with the server's own message when it sent one. */
@@ -71,6 +78,18 @@ export interface OnboardingApi {
     /** The marker this browser keeps for its device (I5b), if it has one. */
     deviceMarker?: string;
   }): Promise<{ student: Student; deviceMarker?: string }>;
+  /** Parent: set a child's board or tier, for example after Not sure. */
+  updateChildSubject(
+    studentId: string,
+    subjectId: string,
+    change: UpdateSubjectChoiceRequest,
+  ): Promise<Enrolment>;
+  /** Student device: their own subjects and how many are left to check. */
+  getMySubjects(): Promise<StudentSubjects>;
+  /** Student device: turn a Not sure board or tier into a real one. */
+  updateMySubject(subjectId: string, change: UpdateSubjectChoiceRequest): Promise<Enrolment>;
+  getMyAvatar(): Promise<StudentAvatar>;
+  saveMyAvatar(avatarCode: string): Promise<Student>;
 }
 
 interface Options {
@@ -85,11 +104,16 @@ export function createOnboardingApi({
 }: Options): OnboardingApi {
   const root = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
 
-  async function request<T>(path: string, schema: ZodType<T>, body?: unknown): Promise<T> {
+  async function request<T>(
+    path: string,
+    schema: ZodType<T>,
+    body?: unknown,
+    method: 'POST' | 'PATCH' | 'PUT' = 'POST',
+  ): Promise<T> {
     let response: Response;
     try {
       response = await fetch(new URL(path, root), {
-        method: body === undefined ? 'GET' : 'POST',
+        method: body === undefined ? 'GET' : method,
         credentials: 'include',
         headers: {
           Accept: 'application/json',
@@ -141,5 +165,23 @@ export function createOnboardingApi({
     verifyLink: (body) => request('v1/device/link/verify', linkDoneSchema, body),
     unlockOptions: () => request('v1/device/unlock/options', unlockStartSchema, {}),
     unlockVerify: (body) => request('v1/device/unlock/verify', unlockDoneSchema, body),
+    updateChildSubject: (studentId, subjectId, change) =>
+      request(
+        `v1/students/${encodeURIComponent(studentId)}/enrolments/${encodeURIComponent(subjectId)}`,
+        EnrolmentSchema,
+        change,
+        'PATCH',
+      ),
+    getMySubjects: () => request('v1/student/subjects', StudentSubjectsSchema),
+    updateMySubject: (subjectId, change) =>
+      request(
+        `v1/student/subjects/${encodeURIComponent(subjectId)}`,
+        EnrolmentSchema,
+        change,
+        'PATCH',
+      ),
+    getMyAvatar: () => request('v1/student/avatar', StudentAvatarSchema),
+    saveMyAvatar: (avatarCode) =>
+      request('v1/student/avatar', StudentSchema, { avatarCode }, 'PUT'),
   };
 }

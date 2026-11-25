@@ -71,3 +71,17 @@ export const LinkTokenSchema = z.object({
   linkUrl: z.string().url(),
 });
 export type LinkToken = z.infer<typeof LinkTokenSchema>;
+
+/** PATCH a subject's board or tier (parent: any valid value; student: only from Not sure). */
+export const UpdateSubjectChoiceRequestSchema = z
+  .object({ board: BoardSchema.optional(), tier: TierSchema.optional() })
+  .strict()
+  .refine((v) => v.board !== undefined || v.tier !== undefined, 'Send a board or a tier');
+export type UpdateSubjectChoiceRequest = z.infer<typeof UpdateSubjectChoiceRequestSchema>;
+
+/** GET /v1/student/subjects: the student's own subjects and how many are left to check. */
+export const StudentSubjectsSchema = z.object({
+  enrolments: z.array(EnrolmentSchema),
+  toCheckLater: z.number().int().min(0),
+});
+export type StudentSubjects = z.infer<typeof StudentSubjectsSchema>;

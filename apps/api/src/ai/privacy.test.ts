@@ -50,4 +50,21 @@ describe('findPersonalData', () => {
     expect(findPersonalData('{"answer":"It also reacts with alkalis"}', short)).toEqual([]);
     expect(findPersonalData('{"answer":"al thinks it is acid"}', short)).toEqual(['nickname']);
   });
+
+  it('finds a nickname with spaces however the words are spaced or joined', () => {
+    const spaced = { ...profile, nickname: 'Thing 1' };
+    for (const body of [
+      '{"answer":"Thing 1 wrote this"}',
+      '{"answer":"thing  1 wrote this"}',
+      '{"answer":"Thing\\n1"}',
+      '{"answer":"by Thing_1"}',
+    ]) {
+      expect(findPersonalData(body, spaced)).toEqual(['nickname']);
+    }
+    expect(findPersonalData('{"answer":"Things 10"}', spaced)).toEqual([]);
+  });
+
+  it('finds an underscore nickname written with spaces', () => {
+    expect(findPersonalData('{"answer":"pixel fox is here"}', profile)).toEqual(['nickname']);
+  });
 });

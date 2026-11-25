@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { DEFAULT_AVATAR, encodeAvatar, type OnboardedChild } from '@revisionden/core';
 import type { OnboardingApi } from './api';
 import { OnboardingApiError } from './api';
+import { fakeOnboardingApi } from '../../test/fakeOnboardingApi';
 import { LinkDeviceStep } from './LinkDeviceStep';
 
 const child: OnboardedChild = {
@@ -29,15 +30,7 @@ const token = (n = 1) => ({
 });
 
 function fakeApi(create: OnboardingApi['createLinkToken']): OnboardingApi {
-  return {
-    getFamily: vi.fn(),
-    addChild: vi.fn(),
-    createLinkToken: create,
-    redeemLink: vi.fn(),
-    verifyLink: vi.fn(),
-    unlockOptions: vi.fn(),
-    unlockVerify: vi.fn(),
-  };
+  return fakeOnboardingApi({ createLinkToken: create });
 }
 
 describe('LinkDeviceStep', () => {

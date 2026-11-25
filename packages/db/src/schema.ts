@@ -209,7 +209,10 @@ export const students = pgTable(
   },
   (t) => [
     unique('students_family_nickname_unique').on(t.familyId, t.nickname),
-    check('students_nickname_format', sql`${t.nickname} ~ '^[A-Za-z0-9_]{2,16}$'`),
+    check(
+      'students_nickname_format',
+      sql`${t.nickname} ~ '^[A-Za-z0-9_]+( [A-Za-z0-9_]+)*$' and char_length(${t.nickname}) between 2 and 16`,
+    ),
     check('students_year_group_range', sql`${t.yearGroup} between 9 and 13`),
     check('students_title_first_format', sql`${t.titleFirst} ~ '^[A-Z][A-Za-z-]{0,15}$'`),
     check('students_title_last_format', sql`${t.titleLast} ~ '^[A-Z][A-Za-z-]{0,15}$'`),

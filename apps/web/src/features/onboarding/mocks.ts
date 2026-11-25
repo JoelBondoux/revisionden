@@ -10,6 +10,13 @@ import { family } from '../../mocks/data';
 
 /** Mock onboarding API for development and tests (made-up data only, nothing kept). */
 export const onboardingHandlers: RequestHandler[] = [
+  // Student device: the student's own subjects (all set in the demo family).
+  http.get('*/v1/student/subjects', () =>
+    HttpResponse.json({ enrolments: family.children[0]!.enrolments, toCheckLater: 0 }),
+  ),
+  http.get('*/v1/student/avatar', () =>
+    HttpResponse.json({ avatarCode: family.children[0]!.student.avatarCode, earnedRewardIds: [] }),
+  ),
   http.get('*/v1/onboarding/family', () => HttpResponse.json(family)),
 
   http.post('*/v1/onboarding/children', async ({ request }) => {

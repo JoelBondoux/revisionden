@@ -11,7 +11,7 @@ Tags: #product #rules #limits #defaults
   a paid Apple developer membership).
 - Each sign-in provider is optional, but at least one must be set up; the welcome page shows only
   the configured ones (`GET /v1/auth/providers`). The owner is starting with Google only.
-- Students have no outside account: nickname (2–16 letters, numbers, underscore), avatar code and
+- Students have no outside account: nickname (2–16 letters, numbers, underscores and single spaces between words, trimmed at the ends), avatar code and
   year group only. Devices linked by a one-time QR token (10 minutes, single use), then a passkey.
 - Nicknames are unique within a family. A family is created the first time a parent signs in.
 - Two parents (B3): a family can have two parents with equal control (Parent 1, Parent 2).
@@ -61,6 +61,11 @@ Tags: #product #rules #limits #defaults
 - Exam boards and tiers are picked in the app; "not sure" is allowed and reminded later.
 - GCSE Film Studies is offered only by WJEC Eduqas. GCSE Statistics only by AQA and Pearson Edexcel. Boards per subject and tiered GCSEs are listed
   in `docs/PRODUCT_RULES.md` "Onboarding".
+- "Not sure" boards and tiers never block onboarding. They show on the finish screen, in Parent
+  home ("Things to check: N", parent can set them) and in the student's Settings > My subjects
+  (student can only turn Not sure into a value), with a nudge on the student's home until set.
+- New children start from a Boy, Girl or Neutral look (Neutral preselected); only the avatar code
+  is stored, never a gender. A newly linked device offers "Make it yours" (with "Maybe later").
 - Most-used board per subject in England (Ofqual market report 2024 to 2025, share of
   certificates): AQA for GCSE English Language, English Literature, Biology, Chemistry, Physics,
   Combined Science, Drama, French and A-Level Physics; Pearson Edexcel for GCSE Maths, History and
@@ -500,7 +505,8 @@ Tags: #product #rules #limits #defaults
   logged as important); the child's own target is set or cleared by the child on My stats (not
   logged). Each side sees both, with encouraging wording and no red when they differ. Only grades
   on a cited scale: GCSE Maths Edexcel 1MA1 (higher 9–3 and U, foundation 5–1 and U, 9–1 and U
-  with no tier chosen); every other subject and board says "not available yet".
+  with no tier chosen); every other subject and board says "not available yet". Changing the
+  board or tier (parent or child, E3) clears either target that is not on the new scale.
   `enrolments.parent_target_grade` and `student_target_grade` (migration 0017). Detail:
   `docs/PRODUCT_RULES.md` (Statistics dashboards, Target grades).
 - Parent stats dashboard rewards (K10, owner 2026-11-25): all parent-set rewards with progress

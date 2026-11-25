@@ -1,11 +1,10 @@
-import { useId, useMemo, useState, type FormEvent } from 'react';
+import { useId, useMemo, useRef, useState, type FormEvent } from 'react';
 import {
   BOARD_LABELS,
   LEVEL_LABELS,
   NICKNAME_MESSAGES,
   TIER_LABELS,
   boardsFor,
-  encodeAvatar,
   examSeasonFor,
   findSubject,
   levelForYear,
@@ -21,7 +20,7 @@ import { ErrorRef, refOf, type ErrorDetails } from '../../api/ErrorRef';
 import { Button, Sheet } from '../../components';
 import { AvatarBuilder } from '../avatar/AvatarBuilder';
 import { AvatarSvg } from '../avatar/AvatarSvg';
-import { shuffleAvatar } from '../avatar/catalogue';
+import { STARTER_LOOKS, starterCode, type StarterId } from '../avatar/starters';
 import { ChoiceGroup } from './ChoiceGroup';
 
 interface AddChildFormProps {
@@ -51,13 +50,17 @@ export function AddChildForm({
 }: AddChildFormProps) {
   const nicknameId = useId();
   const [nickname, setNickname] = useState('');
-  const [avatarCode, setAvatarCode] = useState(() => encodeAvatar(shuffleAvatar(random)));
+  const [look, setLook] = useState<StarterId | undefined>('neutral');
+  const [avatarCode, setAvatarCode] = useState(() => starterCode('neutral'));
   const [building, setBuilding] = useState(false);
   const [yearGroup, setYearGroup] = useState<number>();
   const [subjects, setSubjects] = useState<SubjectChoice[]>([]);
   const [saving, setSaving] = useState(false);
   const [serverError, setServerError] = useState<string>();
   const [serverErrorRef, setServerErrorRef] = useState<ErrorDetails>();
+  const [triedToContinue, setTriedToContinue] = useState(false);
+  const nicknameRef = useRef<HTMLInputElement>(null);
+  const yearRef = useRef<HTMLFieldSetElement>(null);
 
   const nicknameCheck = validateNickname(nickname);
   const nicknameError =
@@ -65,7 +68,20 @@ export function AddChildForm({
   const level = yearGroup === undefined ? undefined : levelForYear(yearGroup);
   const exams = yearGroup === undefined ? undefined : examSeasonFor(yearGroup, today);
   const toCheck = toCheckLaterCount(subjects);
-  const canContinue = nicknameCheck.ok && yearGroup !== undefined && !saving;
+  const problems = [
+    ...(nicknameCheck.ok
+      ? []
+      : [
+          {
+            field: 'nickname' as const,
+            text:
+              nickname.trim().length === 0
+                ? "Add a nickname that isn't a real name"
+                : NICKNAME_MESSAGES[nicknameCheck.reason],
+          },
+        ]),
+    ...(yearGroup === undefined ? [{ field: 'year' as const, text: 'Choose a school year' }] : []),
+  ];
   const levelSubjects = useMemo(() => (level ? subjectsForLevel(level) : []), [level]);
 
   const chooseYear = (year: number) => {
@@ -87,11 +103,27 @@ export function AddChildForm({
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
-    if (!canContinue) return;
+    if (saving) return;
+    if (problems.length > 0) {
+      setTriedToContinue(true);
+      const first = problems[0]!.field;
+      const target =
+        first === 'nickname'
+          ? nicknameRef.current
+          : yearRef.current?.querySelector<HTMLElement>('[role="radio"]');
+      target?.scrollIntoView?.({ block: 'center' });
+      target?.focus();
+      return;
+    }
     setSaving(true);
     setServerError(undefined);
     try {
-      await onSubmit({ nickname, avatarCode, yearGroup: yearGroup!, subjects });
+      await onSubmit({
+        nickname: nicknameCheck.ok ? nicknameCheck.nickname : nickname,
+        avatarCode,
+        yearGroup: yearGroup!,
+        subjects,
+      });
     } catch (err) {
       setServerErrorRef(refOf(err));
       setServerError(err instanceof Error ? err.message : 'Something went wrong');
@@ -108,11 +140,12 @@ export function AddChildForm({
           Nickname
         </label>
         <input
+          ref={nicknameRef}
           id={nicknameId}
           className="field__input"
           value={nickname}
           autoComplete="off"
-          maxLength={16}
+          maxLength={20}
           aria-describedby={`${nicknameId}-help`}
           aria-invalid={nicknameError ? true : undefined}
           onChange={(e) => setNickname(e.target.value)}
@@ -129,12 +162,23 @@ export function AddChildForm({
 
       <div className="onboarding-avatar">
         <AvatarSvg code={avatarCode} label={`${nickname || 'New child'}'s avatar`} size={96} />
-        <Button variant="secondary" onClick={() => setBuilding(true)}>
-          Edit avatar
-        </Button>
+        <div className="stack">
+          <ChoiceGroup<StarterId>
+            label="Starting look"
+            options={STARTER_LOOKS.map((l) => ({ value: l.id, label: l.label }))}
+            value={look}
+            onChange={(id) => {
+              setLook(id);
+              setAvatarCode(starterCode(id));
+            }}
+          />
+          <Button variant="secondary" onClick={() => setBuilding(true)}>
+            Edit avatar
+          </Button>
+        </div>
       </div>
 
-      <fieldset className="field">
+      <fieldset className="field" ref={yearRef}>
         <legend className="field__label">School year</legend>
         {(Object.keys(YEARS) as (keyof typeof YEARS)[]).map((lvl) => (
           <ChoiceGroup
@@ -205,7 +249,17 @@ export function AddChildForm({
         </div>
       )}
 
-      <Button type="submit" block disabled={!canContinue}>
+      {triedToContinue && problems.length > 0 && (
+        <div role="status" aria-label="Before you continue" className="continue-summary">
+          <ul>
+            {problems.map((p) => (
+              <li key={p.field}>{p.text}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <Button type="submit" block disabled={saving}>
         {toCheck > 0 ? `Continue · ${toCheck} to check later` : 'Continue'}
       </Button>
       <Button variant="secondary" block onClick={onCancel}>
@@ -216,7 +270,10 @@ export function AddChildForm({
         <AvatarBuilder
           code={avatarCode}
           nickname={nickname}
-          onChange={setAvatarCode}
+          onChange={(code) => {
+            setAvatarCode(code);
+            setLook(undefined);
+          }}
           random={random}
         />
         <Button block onClick={() => setBuilding(false)}>

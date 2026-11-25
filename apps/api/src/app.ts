@@ -33,7 +33,12 @@ import { aiRoutes, parentAiUsageRoutes } from './ai/routes';
 import type { AiProvider, ProviderName } from './ai/types';
 import { reportRoutes } from './routes/quarantine';
 import { reviewRoutes, type VerificationDeps } from './routes/review';
-import { avatarRoutes, onboardingRoutes } from './routes/onboarding';
+import {
+  avatarRoutes,
+  onboardingRoutes,
+  parentSubjectRoutes,
+  studentOnboardingRoutes,
+} from './routes/onboarding';
 import { learnRoutes } from './routes/learn';
 import { flashcardRoutes } from './routes/flashcards';
 import { studentDailyRoutes } from './routes/daily';
@@ -191,6 +196,7 @@ export function createApp(deps: AppDeps) {
   parent.route('/students', parentReminderRoutes(deps));
   parent.route('/students', parentAiUsageRoutes({ ...deps, gateway }));
   parent.route('/students', avatarRoutes(deps));
+  parent.route('/students', parentSubjectRoutes(deps));
   parent.route('/students', parentRewardRoutes(deps));
   parent.route('/students', parentStatsRoutes(deps));
   parent.route('/students', parentDailyLimitRoutes(deps));
@@ -234,6 +240,7 @@ export function createApp(deps: AppDeps) {
   app.use('/v1/student/*', studentActivity(deps));
   app.route('/v1/student', studentNotificationRoutes(deps));
   app.route('/v1/student', studentSessionRoutes(deps));
+  app.route('/v1/student', studentOnboardingRoutes(deps));
   // Mounted after the student routes, so their session check runs first.
   app.route('/v1/student/learn', learnRoutes(deps));
   app.route('/v1/student/flashcards', flashcardRoutes(deps));

@@ -10,6 +10,7 @@ import { ProgressBar } from '../components/ProgressBar';
 import { Toast } from '../components/Toast';
 import { honeycombRows } from '../map/honeycomb';
 import { DailyCard } from '../features/daily';
+import { SubjectsNudge } from '../features/onboarding/checksUi';
 import { NextMissionCard } from '../map/NextMissionCard';
 import { ChallengeHex, TopicHex } from '../map/TopicHex';
 import { useStudent } from '../session/StudentContext';
@@ -78,6 +79,7 @@ export function MapPage() {
           </Pill>
         )}
       </div>
+      <SubjectsNudge />
       {map.status !== 'ready' ? (
         <LoadingOrError resource={map} />
       ) : (
