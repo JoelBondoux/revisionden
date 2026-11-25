@@ -188,3 +188,13 @@
   padding: 0;
   list-style: none;
 }
+
+/* Tiles and chips keep their light card colours inside the arena; these selectors beat the arena's
+   own link colour (.arena a:not(.btn)), so text stays dark on the light surfaces. */
+.arena .link-tile a.link-tile__link {
+  color: var(--color-text);
+}
+
+.arena a.link-chip.link-chip {
+  color: var(--color-primary-edge);
+}

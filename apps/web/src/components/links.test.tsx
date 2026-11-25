@@ -107,6 +107,12 @@ describe('LinkTile', () => {
     expect(link.closest('.link-tile')).not.toBeNull();
   });
 
+  it('tells screen readers when a tile opens a new tab', () => {
+    render(<LinkTile href="https://example.com/guide" newTab title="Guide" />);
+    const link = screen.getByRole('link', { name: 'Guide (opens in a new tab)' });
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+  });
+
   it('can link outside the app', () => {
     render(<LinkTile href="mailto:help@example.com" title="Get help" description="Email us" />);
     expect(screen.getByRole('link', { name: 'Get help' })).toHaveAttribute(
@@ -152,6 +158,11 @@ describe('link styles', () => {
     );
     return found?.[2] ?? '';
   };
+
+  it('keeps tiles and chips readable inside the dark arena (beats the arena link colour)', () => {
+    expect(rule('.arena .link-tile a.link-tile__link')).toMatch(/color: var\(--color-text\)/);
+    expect(rule('.arena a.link-chip.link-chip')).toMatch(/color: var\(--color-primary-edge\)/);
+  });
 
   it('stretches a tile link over the whole card so any part of it is tappable', () => {
     expect(rule('.link-tile__link::after')).toMatch(/position: absolute/);
