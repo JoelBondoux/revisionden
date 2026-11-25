@@ -9,6 +9,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 - Parents get a notification on their phone when a child reaches a reward target you set. Turn on "Reward news" on the new parent home.
 - New parent home: one place for the stats dashboard, rewards you set, reminder times, family feedback, settings and policies. Find it from the profile picker or Settings.
+- Coming soon: flashcards give XP for finishing a session, not for each card, so there's no point tapping "Good" on everything.
 - Coming soon: a stats page for students and a stats dashboard for parents.
 - Coming soon: rewards you set yourself as a parent, like a cinema trip for a 30-day streak.
 - Sound effects: soft, original sounds for right and wrong answers, finishing a lesson, meeting your daily goal, flashcards and the starting test. Mute them from the speaker button at the top, or change the volume and tap sounds in Settings.
