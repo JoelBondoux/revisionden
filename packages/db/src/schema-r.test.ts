@@ -103,3 +103,27 @@ describe('parent-set rewards table (workstream R)', () => {
     expect(res.rows[0]!.n).toBe(0);
   });
 });
+
+describe('two-part titles (R8)', () => {
+  it('stores a chosen first and last title word on the student, both empty at first', async () => {
+    const studentId = await makeStudent('r_kid_title');
+    const before = await client.query<Record<string, unknown>>(
+      `select title_first, title_last from students where id = '${studentId}'`,
+    );
+    expect(before.rows[0]).toEqual({ title_first: null, title_last: null });
+    await client.query(
+      `update students set title_first = 'Cosmic', title_last = 'Scholar' where id = '${studentId}'`,
+    );
+    const after = await client.query<Record<string, unknown>>(
+      `select title_first, title_last from students where id = '${studentId}'`,
+    );
+    expect(after.rows[0]).toEqual({ title_first: 'Cosmic', title_last: 'Scholar' });
+  });
+
+  it('refuses anything that is not a single curated-style word', async () => {
+    const studentId = await makeStudent('r_kid_title2');
+    await expect(
+      client.query(`update students set title_first = 'two words' where id = '${studentId}'`),
+    ).rejects.toThrow(/students_title_first_format/);
+  });
+});

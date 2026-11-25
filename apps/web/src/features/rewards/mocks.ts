@@ -8,19 +8,31 @@ import {
   UpdateParentRewardRequestSchema,
   parentRewardProgress,
   parentTargetLabel,
+  formatTitle,
+  TitleChoiceSchema,
   type ParentReward,
+  type StudentTitleResponse,
 } from '@revisionden/core';
-import { sampleRewards } from './fixtures';
+import { sampleRewards, sampleTitle } from './fixtures';
 
 let parentRewards: ParentReward[] = [];
+let title: StudentTitleResponse = sampleTitle;
 export const resetRewardsMocks = () => {
   parentRewards = [];
+  title = sampleTitle;
 };
 
 const view = () => sampleRewards({ parentRewards });
 
 export const rewardsHandlers: RequestHandler[] = [
   http.get('*/v1/student/rewards', () => HttpResponse.json(view())),
+  http.get('*/v1/student/rewards/title', () => HttpResponse.json(title)),
+  http.put('*/v1/student/rewards/title', async ({ request }) => {
+    const parsed = TitleChoiceSchema.safeParse(await request.json());
+    if (!parsed.success) return HttpResponse.json({ error: { code: 'invalid' } }, { status: 400 });
+    title = { ...title, ...parsed.data, title: formatTitle(parsed.data) };
+    return HttpResponse.json(title);
+  }),
   http.get('*/v1/students/:id/rewards', () => HttpResponse.json(view())),
   http.get('*/v1/students/:id/parent-rewards', () => HttpResponse.json({ parentRewards })),
   http.post('*/v1/students/:id/parent-rewards', async ({ request }) => {
