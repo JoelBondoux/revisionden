@@ -452,6 +452,9 @@ Tags: #product #rules #limits #defaults
   with no tier chosen); every other subject and board says "not available yet".
   `enrolments.parent_target_grade` and `student_target_grade` (migration 0017). Detail:
   `docs/PRODUCT_RULES.md` (Statistics dashboards, Target grades).
+- Parent stats dashboard rewards (K10, owner 2026-11-25): all parent-set rewards with progress
+  bars, and add, edit and remove (with a confirm step) on the dashboard, through R's editor
+  (`ParentRewardForm`) and routes; empty state "No rewards yet" and "Add a reward".
 - Routes: `/progress` (My stats), `/parent/stats` (parent); API `GET /v1/student/stats`,
   `GET /v1/students/:id/stats`, `GET /v1/students/:id/dashboard`. Implemented in
   `packages/core/src/stats.ts`, `apps/api/src/stats/`, `apps/web/src/features/stats/`.
