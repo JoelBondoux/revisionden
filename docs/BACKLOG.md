@@ -225,6 +225,17 @@ Spec: `PRODUCT_RULES.md` (Sound effects).
 - [x] U4 Reward sound tiers (common, rare, epic, legendary) with 4+ variations each, climbing ladders and levels, chapter sound colours, finisher fanfares, one sound for several rewards, skippable legendary.
 - Tests: mute and volume respected; tap sounds off by default; Test mode plays no correct/wrong before submit; nothing plays before first interaction; a fake AudioContext records calls.
 
+### J. Game feel (`apps/web/src/design/**` motion tokens, `apps/web/src/features/juice/**`, practice screens)
+
+Spec: `docs/GAME_FEEL.md`. Mockup 22.
+
+- [ ] J1 Motion and colour tokens (arena theme, easing, durations), reduced-motion switch, effect components (particle burst, float-up text, shake, combo badge, star reveal, confetti, pulsing CTA).
+- [ ] J2 Lesson player and flashcard sessions in the arena style with all effects, wired to U's sounds; Test mode reveal rules.
+- [ ] J3 Set complete screen (stars, tally, daily goal, Next mission, take-a-break line, daily-cap message).
+- [ ] J4 Combo XP bonus in core (+5 from the 3rd in a row, Learn mode; Test mode at reveal), wired through the learn API and R's reward XP.
+- [ ] J5 Light-theme polish: bouncy buttons, entrance motion and reward reveals on map, rewards and stats.
+- Tests: effect components respect reduced motion; no right/wrong effect before submit in Test mode; combo rules (reset on wrong, cap, Learn vs Test); daily-cap message; axe on the arena theme; performance budget check (particles capped).
+
 ## Stage 2 and later
 
 Broken down into tasks when Stage 1 ships, following the same format. Headline order:
