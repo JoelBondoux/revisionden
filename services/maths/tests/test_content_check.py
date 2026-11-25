@@ -187,3 +187,59 @@ def test_an_identity_check_proves_a_statement_true_for_every_value():
 def test_an_identity_check_needs_one_equals_sign():
     [result] = run_checks([{"id": "q", "kind": "identity", "equation": "a + b"}])
     assert result["ok"] is False
+
+
+def test_a_value_check_with_decimal_places_needs_the_correctly_rounded_answer():
+    def ok(answer, places):
+        [r] = run_checks([{"id": "a", "kind": "value", "expression": "pi * 3^2",
+                           "answer": answer, "decimal_places": places}])
+        return r["ok"]
+    assert ok("28.27", 2) is True
+    assert ok("28.274", 2) is False  # unrounded
+    assert ok("28.28", 2) is False  # rounded the wrong way
+    assert ok("28", 0) is True
+
+
+def test_a_value_check_with_significant_figures_needs_the_correctly_rounded_answer():
+    def ok(answer, figures):
+        [r] = run_checks([{"id": "a", "kind": "value", "expression": "pi * 3^2",
+                           "answer": answer, "significant_figures": figures}])
+        return r["ok"]
+    assert ok("28.3", 3) is True
+    assert ok("28.27", 3) is False
+    assert ok("30", 1) is True
+
+
+def test_rounding_takes_an_exact_half_up_as_uk_exams_do():
+    [a, b] = run_checks([
+        {"id": "a", "kind": "value", "expression": "5/2", "answer": "3", "decimal_places": 0},
+        {"id": "b", "kind": "value", "expression": "1/8", "answer": "0.13",
+         "decimal_places": 2},
+    ])
+    assert a["ok"] is True and b["ok"] is True
+
+
+def test_small_values_round_to_significant_figures_after_the_leading_zeros():
+    [r] = run_checks([{"id": "a", "kind": "value", "expression": "1/81", "answer": "0.0123",
+                       "significant_figures": 3}])
+    assert r["ok"] is True
+
+
+def test_an_expression_answer_may_state_the_declared_subject():
+    def ok(answer, subject="t"):
+        check = {"id": "a", "kind": "expression", "expression": "(v - u)/a", "answer": answer}
+        if subject:
+            check["subject"] = subject
+        [r] = run_checks([check])
+        return r["ok"]
+    assert ok("t = (v - u)/a") is True
+    assert ok("(v - u)/a") is True
+    assert ok("u = (v - u)/a") is False  # a different subject
+    assert ok("t = (v + u)/a") is False
+    assert ok("t = (v - u)/a", subject=None) is False  # no subject declared
+
+
+def test_a_function_notation_subject_such_as_an_inverse_is_accepted():
+    [r] = run_checks([{"id": "a", "kind": "expression", "expression": "(x + 3)/2",
+                       "answer": "f^-1(x) = (x + 3)/2", "subject": "f^-1(x)"}])
+    assert r == {"id": "a", "ok": True}

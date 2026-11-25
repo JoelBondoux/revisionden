@@ -122,6 +122,11 @@ every item with its topic and, where the topic is broader than one skill, a lear
 expected_seconds (5 to 900): how long a confident student takes; slower than twice this counts
 as shaky. Without it the app guesses by type (flashcard 15, multiple choice 20, numeric 40,
 short answer 45, worked maths 120).
+When a question asks for rounding ("to 2 decimal places", "to 3 significant figures", "to the
+nearest whole number"), set answer.decimal_places or answer.significant_figures (not tolerance)
+and write answer.value to exactly that accuracy. When the answer is the value of a letter or
+function ("make t the subject", "find f^-1(x)"), set answer.subject (e.g. "t" or "f^-1(x)") so
+answers written "t = ..." are accepted.
 Each interchangeable item goes through the pipeline on its own.
 
 Sources: only Pearson's own documents for 1MA1 (specification, sample assessment materials,

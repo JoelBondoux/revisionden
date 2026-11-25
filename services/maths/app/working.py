@@ -6,8 +6,13 @@ or commas (``x = 1/3 or x = -2``).
 - Two expressions follow when they are identical.
 - Two equations in one unknown follow when they have the same solutions.
 - Two equations in several letters (rearranging a formula) follow when one is a non-zero
-  constant multiple of the other.
+  constant multiple of the other; when the answer declares a letter subject, the multiple may be
+  any non-zero expression without that letter (dividing by ``a`` to make ``t`` the subject).
 - Switching between an expression and an equation does not follow.
+
+An expected answer may declare its ``subject`` (``t``, ``f^-1(x)``): a final line written as
+``<subject> = RHS`` then answers with RHS. A subject in function notation, which is not a letter,
+is read as its RHS, and follows from a line ``y = E`` when E is the same as RHS.
 """
 
 import re
@@ -36,6 +41,7 @@ class Line:
     text: str
     expression: Expr | None = None
     equations: tuple[Equation, ...] = ()
+    states_subject: bool = False
 
     @property
     def is_equation(self) -> bool:
@@ -57,7 +63,27 @@ class WorkingResult:
     final_answer_correct: bool | None
 
 
-def _parse_line(text: str) -> Line:
+LETTER = re.compile(r"[A-Za-z]")
+
+
+def _squash(text: str) -> str:
+    return re.sub(r"\s+", "", text)
+
+
+def without_subject(text: str, subject: str | None) -> str | None:
+    """RHS when ``text`` reads ``<subject> = RHS`` (spaces ignored), else None."""
+    if not subject:
+        return None
+    left, sep, right = text.partition("=")
+    if not sep or "=" in right or not right.strip() or _squash(left) != _squash(subject):
+        return None
+    return right.strip()
+
+
+def _parse_line(text: str, subject: str | None = None) -> Line:
+    rhs = without_subject(text, subject)
+    if rhs is not None and not LETTER.fullmatch(_squash(subject or "")):
+        return Line(text=text, expression=parse(rhs), states_subject=True)
     if "=" not in text:
         return Line(text=text, expression=parse(text))
     equations = []
@@ -85,7 +111,7 @@ def _solution_set(line: Line, variable: Symbol):
     return Union(*(solveset(eq.zero_form, variable, domain=S.Complexes) for eq in line.equations))
 
 
-def _equations_follow(before: Line, after: Line) -> bool:
+def _equations_follow(before: Line, after: Line, subject: Symbol | None = None) -> bool:
     symbols = before.symbols | after.symbols
     if not symbols:
         truth = [all(_same_values(eq.lhs, eq.rhs) for eq in ln.equations) for ln in (before, after)]
@@ -96,14 +122,29 @@ def _equations_follow(before: Line, after: Line) -> bool:
     if len(before.equations) != 1 or len(after.equations) != 1:
         return False
     ratio = simplify(before.equations[0].zero_form / after.equations[0].zero_form)
-    return ratio != 0 and not ratio.free_symbols
+    if ratio == 0:
+        return False
+    if subject is not None:
+        return subject not in ratio.free_symbols
+    return not ratio.free_symbols
 
 
-def _follows(before: Line, after: Line) -> bool:
+def _states_the_same_subject(before: Line, after: Line) -> bool:
+    """``y = E`` then ``f^-1(x) = RHS``: follows when E is RHS."""
+    if len(before.equations) != 1:
+        return False
+    eq = before.equations[0]
+    sides = [(eq.lhs, eq.rhs), (eq.rhs, eq.lhs)]
+    return any(isinstance(a, Symbol) and _same_values(b, after.expression) for a, b in sides)
+
+
+def _follows(before: Line, after: Line, subject: Symbol | None = None) -> bool:
+    if after.states_subject and before.is_equation:
+        return _states_the_same_subject(before, after)
     if before.is_equation != after.is_equation:
         return False
     if before.is_equation:
-        return _equations_follow(before, after)
+        return _equations_follow(before, after, subject)
     return _same_values(before.expression, after.expression)
 
 
@@ -124,6 +165,9 @@ def _in_form(line: Line, form: str | None) -> bool:
 
 
 def _final_answer_correct(line: Line, expected: dict) -> bool:
+    rhs = without_subject(line.text, expected.get("subject"))
+    if rhs is not None and "expression" in expected:
+        line = Line(text=rhs, expression=parse(rhs))
     if "solutions" in expected:
         if not line.is_equation:
             return False
@@ -143,15 +187,19 @@ def check_working(lines: list[str], expected: dict | None = None) -> WorkingResu
     """Find the first line (0-based) that does not follow from the previous one.
 
     ``expected`` is optional: ``{"solutions": [...]}`` for equations, or
-    ``{"expression": "...", "form": "factorised" | "expanded"}`` for expressions.
+    ``{"expression": "...", "form": "factorised" | "expanded"}`` for expressions, either with an
+    optional ``subject`` that the final line may state (``t = ...``).
     """
     if not lines:
         raise ValueError("Give at least one line of working")
     if len(lines) > MAX_LINES:
         raise ValueError(f"Give at most {MAX_LINES} lines of working")
-    parsed = [_parse_line(text) for text in lines]
+    subject = (expected or {}).get("subject")
+    parsed = [_parse_line(text, subject) for text in lines]
+    letter = Symbol(_squash(subject)) if subject and LETTER.fullmatch(_squash(subject)) else None
     first_wrong = next(
-        (i for i in range(1, len(parsed)) if not _follows(parsed[i - 1], parsed[i])), None
+        (i for i in range(1, len(parsed)) if not _follows(parsed[i - 1], parsed[i], letter)),
+        None,
     )
     final = None if expected is None else _final_answer_correct(parsed[-1], expected)
     return WorkingResult(first_wrong_line=first_wrong, final_answer_correct=final)

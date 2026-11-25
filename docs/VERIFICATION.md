@@ -207,15 +207,34 @@ through the authenticated AI Gateway, set `<PROVIDER>_BASE_URL` to the gateway's
 `cf-aig-collect-log-payload: false` so prompts and answers are not logged. The token is sent only to
 https addresses on `gateway.ai.cloudflare.com`, never to a provider's own API. The blind answer must come from a different provider from the writer (Claude by default, read from
 the grounded-writing check). It sees no answer, hint or explanation, and passes only on a match
-with high confidence (multiple choice: same option; numeric: within the item tolerance; short
+with high confidence (multiple choice: same option; numeric: within the item tolerance, or, when the answer sets `decimal_places` or `significant_figures`, written to exactly that accuracy with the correctly rounded value (see "Answer format" below); short
 answers and flashcards: same words ignoring case and end punctuation; maths flashcards with a
 `back_formula`: the maths engine finds the same formula (`±` gives both branches, a bare right-hand
 side is compared with the expected one, notation is read strictly so `/ 2a` is not `/ (2a)`), and the
 answer states every listed condition such as `a ≠ 0` as a whole clause (`a ≠ 0.5` does not count), otherwise it fails for a person to check; worked maths: the same
-solutions in any order, or the same expression). The reviewer sees the whole item and the
+solutions in any order, or the same expression; an answer written `<subject> = …` counts as its right-hand side when the item declares that `answer.subject`). The reviewer sees the whole item and the
 quoted sources and must report factual errors, a wrong answer, ambiguity, a second correct
 option, content outside the specification, unsupported claims or poor wording; any problem or
 an unsure reviewer fails. Tests use recorded fixtures only.
+
+**Answer format (S3-A rulings, 2026-11-25).** One set of rules in `packages/core/src/answer-format.ts`
+serves student marking, content validation and the blind check, and the maths engine applies the same
+ones:
+
+- _Subject._ A numeric or expression answer may declare `answer.subject` (`t`, `f^-1(x)`). An answer
+  written `<subject> = RHS` (spaces ignored) is then read as RHS; another letter, or no declared
+  subject, is not. In a student's working the final line may state the subject; with a letter
+  subject, a rearranging step may multiply or divide by anything without that letter (so
+  `a t = v - u` to `t = (v - u)/a` follows), and a function-notation line such as
+  `f^-1(x) = (x + 3)/2` follows from `y = (x + 3)/2`.
+- _Rounding._ When a question asks for rounding, the numeric answer sets `decimal_places` (0 to 10)
+  or `significant_figures` (1 to 15) instead of `tolerance` (the schema refuses two of these
+  together). A right answer has the correctly rounded value and is written to that accuracy:
+  `28.274` and `28.270` are wrong for 2 decimal places. Whole numbers with trailing zeros may count
+  them or not (4500 is 2, 3 or 4 significant figures). The engine rounds the exact value half up,
+  as UK exams do. Validation fails an item whose question mentions decimal places, significant
+  figures or the nearest whole number without one of these fields, one with a field but no such
+  words, and one whose `answer.value` is not itself written to that accuracy.
 
 **Exact checks (step 5).** An item names the facts to check in an optional `exact` block:
 `quantity` (its `answer.unit` must have that dimension), `chemical_equation` (atoms and charge

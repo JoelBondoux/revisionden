@@ -12,6 +12,8 @@ export interface ExpectedAnswer {
   solutions?: string[];
   expression?: string;
   form?: 'factorised' | 'expanded';
+  /** The final line may read "<subject> = answer", for example "t = ..." or "f^-1(x) = ...". */
+  subject?: string;
 }
 
 export interface MathsEngine {

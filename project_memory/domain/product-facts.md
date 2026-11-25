@@ -226,6 +226,12 @@ Tags: #product #rules #limits #defaults
 - `services/maths`: SymPy, no AI. `POST /check-working` returns the 0-based index of the first
   line of working that does not follow from the previous line, and whether the final answer is
   correct. Input is limited to safe maths (single letters, a few functions, 200 characters).
+- Answer format (S3-A rulings, rules in `packages/core/src/answer-format.ts`): an answer may declare
+  `answer.subject` (`t`, `f^-1(x)`), so "t = RHS" counts as RHS in marking, the engine and the
+  blind check. Rounded numeric answers set `decimal_places` or `significant_figures` (not
+  `tolerance`): only the value rounded half up and written to that accuracy is right (28.274 and
+  28.270 are wrong for 2 dp). Validation requires the field whenever the question asks for
+  rounding.
 
 ## Reminders
 

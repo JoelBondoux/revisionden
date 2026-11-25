@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Questions that say "give your answer to 2 decimal places" (or significant figures) now only accept an answer rounded that way, as in the real exam. And when a question asks you to make t the subject, writing "t = …" is marked right.
 - New "Add RevisionDen to this device" button on your topic map and on the parent home. On Chrome, Edge and Android it installs the app in one tap; on an iPhone or iPad it shows the three steps. Tap "Not now" to hide it for 30 days.
 - Students: when RevisionDen asks you to unlock (after 12 hours), tap "I'm a student: unlock with my passkey" and use your face, fingerprint or screen lock. You go straight back to where you were. No need to ask a parent for a new QR code.
 - New Appearance settings: choose a dark theme (or let it follow your device), colour-blind friendly colours (blue for right, orange for wrong), and a subtle doodle background with Pip and maths sketches that you can switch off.
@@ -67,6 +68,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Answer format (S2, S3-A rulings): rounded numeric answers set `answer.decimal_places` or `answer.significant_figures` instead of `tolerance`, so an unrounded value (28.274 for 2 dp) no longer passes marking, the maths engine (rounds half up) or the blind check, and validation requires the field when the question asks for rounding; numeric and expression answers may declare `answer.subject` (`t`, `f^-1(x)`) so "t = RHS" counts as RHS in marking, the engine (including rearranging by dividing by a letter) and the blind check. Rules in `packages/core/src/answer-format.ts`. Pilot item G17 moved from a tolerance to `decimal_places: 2` and re-checked (engine, schema, Gemini blind answer: pass).
 - Multiple choice reviews (S2, cross-lane V): the adversarial review prompt now says option numbers count from 0 (also `distractor:N`) and shows the correct option's text, so the reviewer no longer fails correct items as wrong answers; the human review page shows the answer as the correct option ("Option 3: …") with options numbered from 1.
 - Dark theme: mastered-topic checkmarks on the map use `--color-text-on-gold` (dark on gold) instead of the light body text, which gave about 1.3:1 contrast; the theme contrast tests now cover this pair and check the map rule (J8 follow-up).
 - Flaky web test (I5): the unlock test waited for the student button but not for the parent sign-in buttons, which load after the provider list; it now waits for both, with the provider list made slow on purpose.
