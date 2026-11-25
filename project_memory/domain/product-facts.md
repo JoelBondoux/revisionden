@@ -158,7 +158,8 @@ Tags: #product #rules #limits #defaults
 - Roles from AppDeck: Agent (support) and Manager (also money and data), enforced by the API.
 - AppDeck reads (O2): health, overview, family search by exact parent email or family id only
   (POST body, no browsing names), family detail (parents' emails, children as nickname + year
-  group only, flags), tickets (a student's ticket text is never sent), error-report groups,
+  group only, flags), tickets (a student's ticket text is never sent), error-report groups (and
+  an exact lookup of one RD code, `error-reports?code=`),
   content reports, audit log. `apps/api/src/operator/reads.ts`; shapes in
   `packages/core/src/operator-schemas.ts`.
 - AppDeck actions (O3, all Agent): internal family notes (≤2000, never shown to the family, in its
