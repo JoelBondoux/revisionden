@@ -34,6 +34,7 @@
 
 /* LinkTile: a tappable card. */
 .link-tile {
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-3);
@@ -62,9 +63,27 @@
   box-shadow: none;
 }
 
-.link-tile:focus-visible {
+.link-tile:focus-within {
   outline: 3px solid var(--color-primary);
   outline-offset: 3px;
+}
+
+/* The link covers the whole card, so the icon, description and chevron all tap through to it. */
+.link-tile__link {
+  color: inherit;
+  font-weight: var(--font-weight-black);
+  text-decoration: none;
+}
+
+.link-tile__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.link-tile__link:focus-visible {
+  outline: none;
 }
 
 .link-tile__icon {
@@ -86,16 +105,10 @@
   flex-direction: column;
 }
 
-.link-tile__title {
-  font-weight: var(--font-weight-black);
-}
-
 .link-tile__description {
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  line-height: 1.35;
 }
 
 .link-tile__chevron {
@@ -164,4 +177,14 @@
 
 .arena .btn--quiet {
   color: var(--arena-text);
+}
+
+/* A list of link tiles. */
+.link-tiles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
