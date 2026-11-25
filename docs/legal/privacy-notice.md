@@ -1,6 +1,6 @@
 # Privacy notice
 
-Version: 1.0
+Version: 1.1
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -11,8 +11,8 @@ ever seem to say different things, the full text is the one that counts.
 
 - **Who we are.** RevisionDen is run by {{OPERATOR_NAME}}. You can contact us at
   {{CONTACT_EMAIL}}.
-- **What we keep about you.** Only the email address you sign in with (through Google or
-  Microsoft), and the records the sign-in needs to work. We do not keep your name or photo.
+- **What we keep about you.** Only the email address you sign in with (with a Google or
+  Microsoft account, whichever this app offers), and the records the sign-in needs to work. We do not keep your name or photo.
 - **What we keep about your child.** A nickname, an avatar, their school year, their subjects and
   exam boards, and their revision records: which questions they answered, whether they were right,
   how long they took, their XP, streaks, rewards, flashcards and study plan. We never keep their
@@ -25,7 +25,8 @@ ever seem to say different things, the full text is the one that counts.
   [list of services we use](processors.md)).
 - **Who else sees it.** Only the services that run the app for us, and only what each one needs.
 - **How long.** Most data stays until you delete it. You can delete your child's data at any
-  time. See [how long we keep data](data-retention.md).
+  time. Accounts nobody uses for 12 months are deleted automatically. See
+  [how long we keep data](data-retention.md).
 - **Your rights.** You can ask to see, correct, download or delete your family's data, and you
   can complain to the Information Commissioner's Office (ICO). Your child has these rights too.
 - This notice is a draft and has not yet been checked by a solicitor.
@@ -64,7 +65,7 @@ can still contact us about anything in this notice at the details above.
 ### 3. Who uses the app
 
 3.1 **Parents and carers.** One parent or carer creates a family account by signing in with a
-Google or Microsoft account. The parent adds each child, chooses their subjects and links their
+Google or Microsoft account (whichever of the two this app offers). The parent adds each child, chooses their subjects and links their
 devices.
 
 3.2 **Students.** Students do not have their own outside account, email address or password.
@@ -81,11 +82,12 @@ students in Years 9 to 13 (usually aged 13 to 18).
 
 - the email address of the Google or Microsoft account used to sign in, and whether that provider
   says it is verified;
-- the identifier the sign-in provider gives your account, and the sign-in tokens the provider
-  issues so that the sign-in keeps working (see 4.5);
+- the identifier the sign-in provider gives your account (see 4.5);
 - your sign-in sessions (a random token and an expiry time). We switch off the sign-in library's
   recording of IP address and browser details, so sessions do not store them;
 - the versions of the terms of use and this notice that you have confirmed, and when;
+- when the family account was last used by you or your children (so that accounts nobody uses
+  for 12 months can be deleted);
 - feedback or bug reports you choose to send us (see section 9);
 - reports of a mistake in a question (only the question, its version and a reason picked from a
   list; no free text);
@@ -105,7 +107,8 @@ profile and blanks the name and picture before anything is saved.
 - **Learning records:** each answer's question, whether it was right, the score, how long it
   took, the mode (learn or test), the XP earned and when; topic mastery scores; starting test
   records; daily XP; streaks, skip days and gift days; rewards earned; flashcards and their review
-  schedule, including the text of any flashcards the student writes themselves; study plans;
+  schedule, including the text of any flashcards the student writes themselves (refused if it
+  holds an email address, a UK mobile number or a nickname from your family); study plans;
   exam, mock and assessment dates and results that are entered;
 - **Reminders:** if the student turns reminders on, the web push address and keys that the
   student's browser gives us, the reminder settings the parent chooses, and a log of reminders
@@ -126,10 +129,12 @@ sent to our maths engine. Neither is stored in our database. Your and your child
 address (IP address) is seen by our hosting provider and used for a moment to limit the number of
 requests (to protect the app from abuse); we do not store it.
 
-4.5 **Sign-in tokens.** The sign-in library we use stores the tokens that Google or Microsoft
-issue when you sign in. One of these (the "ID token") is a signed message from the provider that
-may itself contain the name and picture address on your Google or Microsoft account, even though
-we blank them everywhere else. We are reviewing whether this token needs to be kept at all.
+4.5 **Sign-in tokens.** When you sign in, Google or Microsoft give the app some tokens: keys to
+your account with them and a signed message (the "ID token") that can contain the name and
+picture on that account. We use them only for that moment to learn your email address and account
+identifier, and we do not keep any of them: they are blanked before the sign-in record is saved.
+The account identifier is all the app needs to recognise you next time, and we never use your
+Google or Microsoft account for anything else.
 
 4.6 **Features not available yet.** Some features described in our plans are not yet built,
 including reading photos of homework or school reports, marking long answers and essays, and
@@ -253,12 +258,14 @@ could identify your family. Feedback is deleted 12 months after we close it.
 ### 10. How long we keep data
 
 10.1 We keep data only as long as we need it. Most data is kept while the family account is used
-and deleted when you delete it. The full table is in [how long we keep data](data-retention.md).
+and deleted when you delete it. If nobody in the family uses the account for 12 months, it is
+deleted automatically with everything in it; if you sign in after 11 months or more without use,
+the app warns you. The full table is in [how long we keep data](data-retention.md).
 
 ### 11. Security
 
 11.1 We use encrypted connections (HTTPS) everywhere. Our hosting and database providers encrypt
-stored data. There are no passwords: parents sign in through Google or Microsoft and students use
+stored data. There are no passwords: parents sign in with a Google or Microsoft account (whichever this app offers) and students use
 passkeys. Link codes and student sessions are stored only as hashes. Each family can only see its
 own data, and our tests check this.
 
@@ -286,8 +293,10 @@ unlink devices at any time. Deleting a student removes their profile and all the
 records. For anything else, contact us at {{CONTACT_EMAIL}}. We will reply within one month, which
 the law lets us extend in some cases; we will tell you if we do. There is normally no charge.
 
-12.4 A one-click export of a student's data and a parent account deletion button are planned but
-not built yet; until then we will do these for you on request.
+12.4 In the parent area, "Download your family's data" gives you a file (in the common JSON
+format) with everything we hold about you and your children. It leaves out only security codes
+such as scrambled session codes and device keys. A parent account deletion button is planned but
+not built yet; until then we will delete your account on request.
 
 ### 13. Complaints
 
@@ -304,4 +313,5 @@ in the app on your next visit and ask you to confirm, and students see a plain-E
 
 ## Changes
 
+- 1.1: Wording only: parents sign in with Google or Microsoft, whichever this app offers. No change to the data we keep.
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).

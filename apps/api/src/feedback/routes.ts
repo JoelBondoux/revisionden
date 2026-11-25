@@ -65,7 +65,7 @@ const acceptSchema = z
   })
   .strict();
 
-const personalDetails = () =>
+export const personalDetails = () =>
   new ApiError(
     400,
     'personal_details',
@@ -84,12 +84,12 @@ const NO_PROFILE: StudentProfile = {
 };
 
 /** The same checks as the AI privacy filter, against every given student profile. */
-function containsPersonalData(text: string, profiles: StudentProfile[]): boolean {
+export function containsPersonalData(text: string, profiles: StudentProfile[]): boolean {
   const list = profiles.length > 0 ? profiles : [NO_PROFILE];
   return list.some((profile) => findPersonalData(text, profile).length > 0);
 }
 
-async function familyProfiles(db: Database, familyId: string): Promise<StudentProfile[]> {
+export async function familyProfiles(db: Database, familyId: string): Promise<StudentProfile[]> {
   return db
     .select({
       id: students.id,

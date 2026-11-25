@@ -8,6 +8,9 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 ### What's new
 
 - When you're signed out, About, Policies and Feedback show a simple header (Sign in, Policies, About) instead of the student menu.
+- Parents can download all their family's data as one file, from the family list.
+- Accounts nobody uses for 12 months are now deleted automatically; the parent area shows the date, and warns you if you come back after a long break.
+- Your own flashcards can't hold email addresses, phone numbers or family nicknames, to keep personal details out.
 - After an update, the app now shows "A new version of RevisionDen is ready" with a Refresh button, so you're never stuck on an old version.
 - On "Who's revising?", tapping a child now opens your view of them (their stats), with quick links to the rewards you set and to link their device. Students use the app on their own device.
 - Need help? Email help@revisionden.com. You'll find it on the About page and the feedback screen.
@@ -27,6 +30,10 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 - Public pages (I): without a linked student on the device, `AppLayout` pages (About, Feedback, Settings and the rest) and the policy pages (now under `AppLayout`) show `PublicHeader` (logo, Sign in, Policies, About) instead of the student nav.
 - No third-party requests (I): the deployed smoke test and the local e2e suite fail if a page requests any host other than the web origin and its API host. On staging it finds Cloudflare's zone-injected Web Analytics beacon (`static.cloudflareinsights.com`), which the owner is switching off in the Cloudflare dashboard.
+- Policies: the privacy notice and services page (both now 1.1) say parents sign in with Google or Microsoft, whichever this app offers (a deployment may offer only one).
+- Google and Microsoft access, refresh and ID tokens are no longer stored after sign-in (B2).
+- Year group is limited to Years 9 to 13 in the API, the core schema and the database (B2, migration 0006).
+- Students' own flashcards get the same personal-details check as feedback (B2, cleared with F).
 - Stale app after a deploy (I): page visits skip the browser cache and refresh the offline copy (service worker v2); builds publish `/version.json` (`version-commit`); `UpdateBanner` checks it on start, on return to the foreground and every 15 minutes and offers Refresh; an unknown-route 404 or a wrong-shape reply from the API triggers a check and one automatic reload per new build (no loops).
 - "Who's revising?" is parent view only (I, product owner decision): a child opens `/parent/stats?student=<id>` (preselected), never `/map`; per child "Rewards you set" and "Link a device" (`/onboarding?link=<id>` opens that child's link step); "Family feedback" link.
 - Web app talks to the real API (I): the core client used placeholder paths the API never had (`family`, `students/:id/map`, `lessons/...`) and no cookies, so `/family` failed on staging after sign-in. It now reads `GET /v1/onboarding/family` (shared `OnboardingFamilySchema`) with `credentials: 'include'`; the welcome page starts Better Auth sign-in (`POST /api/auth/sign-in/social`, back to `/family`) instead of jumping to `/family`; a 401 on any screen (and onboarding) shows "Please sign in" with the provider buttons, returning to the same page; a family with no children goes from `/family` to `/onboarding`; sign-out (`POST /api/auth/sign-out`) on the welcome page and `/family`; the welcome page reads `GET /api/auth/get-session` and offers Continue and Sign out when signed in. Placeholder lesson screens removed (`/lesson/:id` opens `/learn/topic/:id`). Map and cards-due call F2's agreed `GET /v1/student/map` and `GET /v1/student/cards/due` (not on the API yet).
@@ -37,6 +44,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Privacy fixes (B2): `GET /v1/export` (parent's and own children's data as JSON, secrets left out) and a "Download your family's data" panel on the onboarding family list; family activity (`families.last_active_at`, `previous_active_at`, migration 0006), 12-month inactive deletion and `GET /v1/family/activity` with a return-after-11-months warning; the 15-minute cron (`apps/api/src/cleanup.ts`) also deletes expired link codes, student and parent sessions, passkey challenges and sign-in checks.
 - Support email (L): `help@revisionden.com` from `VITE_SUPPORT_EMAIL` (default in the repo) on the About page, the feedback form and as `{{SUPPORT_EMAIL}}` in the accessibility statement and community rules (both now 1.1); privacy@ stays the privacy contact.
 - Error reference codes (I): every API error body has `error.ref` (`RD-` + 6 letters/digits, `makeErrorRef` in core), logged with status, code, method and an id-masked path (no messages or personal data); every "Something went wrong" in the web app shows it; `POST /v1/client-errors` logs codes the web app made itself (strict schema, rate limited).
 - Route contract (I): `apps/api/routes.json` generated from the Hono app (`UPDATE_ROUTES=1` to refresh); web tests fail if any MSW handler (shared or per test) is not a real route; the web/API call table is in `docs/ARCHITECTURE.md`.

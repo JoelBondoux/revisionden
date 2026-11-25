@@ -76,12 +76,12 @@ describe('student profiles', () => {
     expect(res.status).toBe(400);
   });
 
-  it('rejects a year group outside 7 to 13', async () => {
+  it.each([8, 14])('rejects year group %i (only Years 9 to 13)', async (yearGroup) => {
     const { headers } = await t.signInParent();
     const res = await createStudent(headers, {
-      nickname: 'owl_1',
+      nickname: `owl_y${yearGroup}`,
       avatarCode: AVATAR,
-      yearGroup: 14,
+      yearGroup,
     });
     expect(res.status).toBe(400);
   });
@@ -172,7 +172,7 @@ describe('family isolation', () => {
     const path = `/v1/students/${id}`;
     expect((await t.app.request(path, { headers: b.headers })).status).toBe(404);
     expect(
-      (await t.app.request(path, jsonRequest('PATCH', { yearGroup: 7 }, b.headers))).status,
+      (await t.app.request(path, jsonRequest('PATCH', { yearGroup: 10 }, b.headers))).status,
     ).toBe(404);
     expect((await t.app.request(path, { method: 'DELETE', headers: b.headers })).status).toBe(404);
     expect((await t.app.request(`${path}/enrolments`, { headers: b.headers })).status).toBe(404);

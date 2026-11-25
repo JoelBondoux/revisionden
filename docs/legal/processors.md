@@ -1,6 +1,6 @@
 # Services we use
 
-Version: 1.0
+Version: 1.1
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -13,7 +13,7 @@ Effective date: {{EFFECTIVE_DATE}}
 - **Google Cloud** runs our maths checker. It only sees maths working, never who wrote it.
 - **Anthropic** (the AI called Claude) helps mark some written answers. It sees the question and
   the answer, but not who wrote it.
-- **Google or Microsoft** sign the parent in.
+- **Google or Microsoft** (whichever this app offers) sign the parent in.
 - **Your browser's push service** delivers reminders, but never sees what they say.
 - Some of these companies are in the United States, so data may go there. We are still choosing
   the legal safeguard for that, and the app won't be offered outside the operator's family until
@@ -100,13 +100,14 @@ page before the app is offered beyond the operator's family.
 
 #### 2.6 Google and Microsoft: parent sign-in
 
-- **What they do:** let a parent sign in with an existing Google or Microsoft account, so we never
+- **What they do:** let a parent sign in with an existing Google or Microsoft account (whichever of the two this
+  app offers), so we never
   hold a password.
 - **What they receive:** the fact that you are signing in to RevisionDen, from your browser, under
   their own privacy policies (they act as separate controllers for your account with them).
 - **What we receive from them:** your email address, whether it is verified, an account
-  identifier and sign-in tokens. We blank your name and picture before saving your profile; the ID
-  token the sign-in library stores may still contain them (see the privacy notice, 4.5).
+  identifier and sign-in tokens. We blank your name and picture before saving your profile, and
+  we do not keep the tokens (see the privacy notice, 4.5).
 
 #### 2.7 Browser push services: reminders
 
@@ -140,4 +141,5 @@ be offered to anyone outside the operator's family.
 
 ## Changes
 
+- 1.1: Wording only: sign-in uses Google or Microsoft, whichever this app offers.
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).

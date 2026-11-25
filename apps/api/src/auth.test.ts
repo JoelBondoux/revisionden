@@ -1,5 +1,5 @@
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
-import { authUsers } from '@revisionden/db';
+import { authAccounts, authUsers } from '@revisionden/db';
 import { eq } from 'drizzle-orm';
 import { createTestContext, jsonRequest, type TestContext } from './test/helpers';
 
@@ -31,6 +31,7 @@ function stubProvider(tokenEndpoint: string, claims: object) {
     if (url.startsWith(tokenEndpoint)) {
       return Response.json({
         access_token: 'provider-access-token',
+        refresh_token: 'provider-refresh-token',
         id_token: fakeIdToken(claims),
         token_type: 'Bearer',
         expires_in: 3600,
@@ -52,8 +53,13 @@ function cookieHeader(setCookies: string[]): string {
   return setCookies.map((c) => c.split(';')[0]).join('; ');
 }
 
-async function signInWith(provider: 'google' | 'microsoft', tokenEndpoint: string, claims: object) {
-  const start = await t.app.request(
+async function signInWith(
+  provider: 'google' | 'microsoft',
+  tokenEndpoint: string,
+  claims: object,
+  ctx: TestContext = t,
+) {
+  const start = await ctx.app.request(
     '/api/auth/sign-in/social',
     jsonRequest(
       'POST',
@@ -67,7 +73,7 @@ async function signInWith(provider: 'google' | 'microsoft', tokenEndpoint: strin
   expect(state).toBeTruthy();
 
   const calls = stubProvider(tokenEndpoint, claims);
-  const callback = await t.app.request(
+  const callback = await ctx.app.request(
     `/api/auth/callback/${provider}?code=test-code&state=${state}`,
     { headers: { cookie: cookieHeader(cookiesFrom(start)) } },
   );
@@ -101,6 +107,45 @@ describe('parent sign-in', () => {
     expect(user).toMatchObject({ name: '', image: null });
   });
 
+  it('keeps no Google tokens after sign-in: access, refresh and ID tokens are all blank', async () => {
+    const [user] = await t.db
+      .select()
+      .from(authUsers)
+      .where(eq(authUsers.email, 'parent.google@example.com'));
+    const accounts = await t.db
+      .select()
+      .from(authAccounts)
+      .where(eq(authAccounts.userId, user!.id));
+    expect(accounts).toHaveLength(1);
+    expect(accounts[0]).toMatchObject({
+      providerId: 'google',
+      accountId: 'google-user-1',
+      accessToken: null,
+      refreshToken: null,
+      idToken: null,
+      accessTokenExpiresAt: null,
+      refreshTokenExpiresAt: null,
+      password: null,
+    });
+  });
+
+  it('signs in again with Google and still keeps no tokens', async () => {
+    const { callback } = await signInWith('google', 'https://oauth2.googleapis.com/token', {
+      sub: 'google-user-1',
+      email: 'parent.google@example.com',
+      email_verified: true,
+      name: 'Made Up Person',
+    });
+    expect(callback.status).toBe(302);
+    expect(callback.headers.get('location')).toBe('https://dev.revisionden.test/family');
+    const rows = await t.db
+      .select()
+      .from(authAccounts)
+      .where(eq(authAccounts.accountId, 'google-user-1'));
+    expect(rows).toHaveLength(1);
+    expect(rows[0]).toMatchObject({ accessToken: null, refreshToken: null, idToken: null });
+  });
+
   it('signs in with Microsoft without fetching the profile photo', async () => {
     const { callback, calls } = await signInWith(
       'microsoft',
@@ -120,6 +165,11 @@ describe('parent sign-in', () => {
       .from(authUsers)
       .where(eq(authUsers.email, 'parent.microsoft@example.com'));
     expect(user).toMatchObject({ name: '', image: null });
+    const [account] = await t.db
+      .select()
+      .from(authAccounts)
+      .where(eq(authAccounts.userId, user!.id));
+    expect(account).toMatchObject({ accessToken: null, refreshToken: null, idToken: null });
   });
 
   it('signs out: the session stops working', async () => {
@@ -132,5 +182,35 @@ describe('parent sign-in', () => {
     );
     expect(out.status).toBe(200);
     expect((await t.app.request('/v1/me', { headers })).status).toBe(401);
+  });
+});
+
+describe('parent sign-in with only one provider configured', () => {
+  it('keeps no tokens when Microsoft is the only provider', async () => {
+    const solo = await createTestContext({
+      config: { google: undefined, signInProviders: ['microsoft'] },
+    });
+    try {
+      const { callback } = await signInWith(
+        'microsoft',
+        'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+        { sub: 'ms-solo-1', oid: 'ms-solo-1', email: 'solo@example.com', email_verified: true },
+        solo,
+      );
+      expect(callback.status).toBe(302);
+      const rows = await solo.db
+        .select()
+        .from(authAccounts)
+        .where(eq(authAccounts.accountId, 'ms-solo-1'));
+      expect(rows).toHaveLength(1);
+      expect(rows[0]).toMatchObject({
+        providerId: 'microsoft',
+        accessToken: null,
+        refreshToken: null,
+        idToken: null,
+      });
+    } finally {
+      await solo.close();
+    }
   });
 });
