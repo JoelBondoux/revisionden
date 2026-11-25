@@ -748,8 +748,20 @@ Requested by the product owner on 2026-11-25.
 
 - Pages: `/help` (students, also signed out) and `/parent/help` (parent area; adds a "Worried about a
   child?" card with the NSPCC Helpline). Links: Settings (Help and information), a small heart
-  "Get help" link in the student footer, the signed-out header, and parent home. The app has no
-  separate profile menu yet; add a link there when one exists.
+  "Get help" link in the student footer, the signed-out header, and parent home. Since W3 also: a
+  calm "Get help" tile on the topic map (the student's home) and a "Get help" chip in the student
+  header on every student screen (the app has no separate menu yet; add it there when one exists).
+  All use the shared link components; tapping them records nothing.
+- Layout (W3, 2026-11-25): the "Quick exit" button sits in a bar that stays at the top of the
+  screen while scrolling (sticky, padded for phone notches with `env(safe-area-inset-*)`, first
+  control after the skip link). Topics are grouped into categories
+  (`apps/web/src/features/help/categories.ts`): **Right now** (In danger right now, Thinking about
+  suicide) is always first and always open; **Feelings and mental health** starts open; **Staying
+  safe**, **Home, school and friends** and **Body and health** are collapsible (native
+  `<details>`), each summary listing its topics. A "Find a topic" box filters by the words of the
+  topics and their services; "In danger right now" always stays; a live status says how many
+  topics match. The search is component state only: never stored, sent or put in the address.
+  Grouping is presentation only: every verified entry and all wording are unchanged.
 - Data: `content/support/uk-services.json`, schema `content/schemas/support-services.schema.json`.
   Each service has topics, one plain sentence of our own (`helps_with`), its official domains,
   optional age range and area, contacts (phone as `tel:`, text number with keyword as

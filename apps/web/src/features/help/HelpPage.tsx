@@ -1,14 +1,15 @@
-import { useId, type ReactNode } from 'react';
+import { useId, useMemo, useState, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BackIcon } from '../../components/icons';
 import { LinkButton, TextLink } from '../../components/links';
+import { categoriesFor, type ResolvedCategory } from './categories';
 import {
-  helpTopics,
   lastChecked,
   parentOnlyServices,
   servicesFor,
   type Audience,
   type Contact,
+  type HelpTopic,
   type SupportService,
 } from './data';
 import './help.css';
@@ -20,12 +21,11 @@ import './help.css';
  */
 export function HelpPage({ audience }: { audience: Audience }) {
   const navigate = useNavigate();
-  const topics = helpTopics(audience);
   const quickExit = () => navigate('/map', { replace: true });
 
   return (
     <div className="help-page">
-      <div className="help-page__bar">
+      <div className="help-exit-bar">
         <button type="button" className="help-exit" onClick={quickExit}>
           Quick exit
         </button>
@@ -46,25 +46,7 @@ export function HelpPage({ audience }: { audience: Audience }) {
 
       {audience === 'parent' && <WorriedAdults />}
 
-      <nav aria-label="Topics" className="help-topics-nav">
-        <ul>
-          {topics.map((t) => (
-            <li key={t.id}>
-              <a className="help-topic" href={`#help-${t.id}`}>
-                {t.title}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      {topics.map((t) => (
-        <TopicCard key={t.id} id={t.id} title={t.title} intro={t.intro} urgent={t.urgent}>
-          {servicesFor(audience, t.id).map((s) => (
-            <ServiceEntry key={s.id} service={s} />
-          ))}
-        </TopicCard>
-      ))}
+      <TopicBrowser audience={audience} />
 
       <p className="help-footnote">
         Every number and link was checked on the service&apos;s own website on{' '}
@@ -81,6 +63,117 @@ export function HelpPage({ audience }: { audience: Audience }) {
   );
 }
 
+/** Lower-case text a search can match: the topic's own words and its services' words. */
+function searchText(audience: Audience, topic: HelpTopic): string {
+  const services = servicesFor(audience, topic.id)
+    .map((s) => [s.service, s.helps_with, s.note ?? ''].join(' '))
+    .join(' ');
+  return `${topic.title} ${topic.intro} ${services}`.toLowerCase();
+}
+
+/**
+ * The topics in categories, with a filter box. "Right now" is always first and always open; the
+ * other categories are native collapsible sections. The search lives only in this component's
+ * state: it is never stored, sent or put in the address.
+ */
+function TopicBrowser({ audience }: { audience: Audience }) {
+  const categories = useMemo(() => categoriesFor(audience), [audience]);
+  const [query, setQuery] = useState('');
+  const [open, setOpen] = useState(
+    () => new Set(categories.filter((c) => c.openByDefault).map((c) => c.id)),
+  );
+  const term = query.trim().toLowerCase();
+  const matches = (t: HelpTopic) => !term || searchText(audience, t).includes(term);
+  const shown = categories.map((c) => ({
+    ...c,
+    // In danger right now stays whatever the search, so it is always first on the page.
+    topics: c.topics.filter((t) => t.id === 'emergency' || matches(t)),
+  }));
+  const matchCount = term
+    ? shown.flatMap((c) => c.topics).filter((t) => t.id !== 'emergency' && matches(t)).length
+    : 0;
+  const searchId = useId();
+
+  return (
+    <>
+      <div className="help-search" role="search">
+        <label htmlFor={searchId}>Find a topic</label>
+        <div className="help-search__row">
+          <input
+            id={searchId}
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            autoComplete="off"
+            spellCheck={false}
+          />
+          {query && (
+            <button type="button" className="help-search__clear" onClick={() => setQuery('')}>
+              Clear
+            </button>
+          )}
+        </div>
+        <p role="status" className="help-search__status">
+          {!term
+            ? ''
+            : matchCount === 0
+              ? 'No topics match. Try another word, or clear the search.'
+              : `${matchCount} ${matchCount === 1 ? 'topic matches' : 'topics match'}`}
+        </p>
+      </div>
+
+      {shown.map((c) =>
+        c.topics.length === 0 ? null : c.id === 'right-now' ? (
+          <section key={c.id} className="help-category" data-testid="help-category">
+            <h2 className="help-category__title">{c.title}</h2>
+            <TopicList audience={audience} category={c} />
+          </section>
+        ) : (
+          <details
+            key={c.id}
+            className="help-category"
+            data-testid="help-category"
+            open={Boolean(term) || open.has(c.id)}
+            onToggle={(e) => {
+              if (term) return;
+              const isOpen = e.currentTarget.open;
+              setOpen((prev) => {
+                if (prev.has(c.id) === isOpen) return prev;
+                const next = new Set(prev);
+                if (isOpen) next.add(c.id);
+                else next.delete(c.id);
+                return next;
+              });
+            }}
+          >
+            <summary className="help-category__summary">
+              <span className="help-category__title">{c.title}</span>
+              <span className="help-category__topics">
+                {c.topics.map((t) => t.title).join(' · ')}
+              </span>
+            </summary>
+            <TopicList audience={audience} category={c} />
+          </details>
+        ),
+      )}
+    </>
+  );
+}
+
+function TopicList({ audience, category }: { audience: Audience; category: ResolvedCategory }) {
+  return (
+    <>
+      {category.topics.map((t) => (
+        <TopicCard key={t.id} id={t.id} title={t.title} intro={t.intro} urgent={t.urgent}>
+          {servicesFor(audience, t.id).map((s) => (
+            <ServiceEntry key={s.id} service={s} />
+          ))}
+        </TopicCard>
+      ))}
+    </>
+  );
+}
+
 function WorriedAdults() {
   const headingId = useId();
   return (
@@ -88,7 +181,7 @@ function WorriedAdults() {
       <h2 id={headingId}>Worried about a child?</h2>
       <ul className="help-services">
         {parentOnlyServices().map((s) => (
-          <ServiceEntry key={s.id} service={s} />
+          <ServiceEntry key={s.id} service={s} level={3} />
         ))}
       </ul>
     </section>
@@ -115,17 +208,18 @@ function TopicCard({
       className={`help-topic${urgent ? ' help-topic--urgent' : ''}`}
       aria-labelledby={headingId}
     >
-      <h2 id={headingId}>{title}</h2>
+      <h3 id={headingId}>{title}</h3>
       <p>{intro}</p>
       <ul className="help-services">{children}</ul>
     </section>
   );
 }
 
-function ServiceEntry({ service }: { service: SupportService }) {
+function ServiceEntry({ service, level = 4 }: { service: SupportService; level?: 3 | 4 }) {
+  const Heading = level === 3 ? 'h3' : 'h4';
   return (
     <li className="help-service">
-      <h3>{service.service}</h3>
+      <Heading>{service.service}</Heading>
       <p>{service.helps_with}</p>
       {service.note && <p className="help-note">{service.note}</p>}
       {(service.age_range || service.area) && (

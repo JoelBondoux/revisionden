@@ -75,3 +75,34 @@ test('phone and text links are tap-to-call and tap-to-text', async ({ page }) =>
     'sms:85258?&body=SHOUT',
   );
 });
+
+test('Quick exit stays on screen while scrolling to the bottom of Get help', async ({ page }) => {
+  await page.goto('/help');
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  const exit = page.getByRole('button', { name: 'Quick exit' });
+  await expect(exit).toBeInViewport();
+  const box = await exit.boundingBox();
+  expect(box!.y).toBeLessThan(80);
+});
+
+test('the topic filter narrows the list, makes no requests and stays accessible', async ({
+  page,
+}) => {
+  await page.goto('/help');
+  const requests: string[] = [];
+  page.on('request', (r) => requests.push(r.url()));
+  await page.getByRole('searchbox', { name: 'Find a topic' }).fill('bully');
+  await expect(page.getByRole('status')).toHaveText('1 topic matches');
+  await expect(page.getByRole('heading', { name: 'Bullying, online or in person' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'In danger right now' })).toBeVisible();
+  const origin = new URL(page.url()).origin;
+  const offending = requests.filter((url) => {
+    const u = new URL(url);
+    return u.origin !== origin || u.pathname.startsWith('/api/') || u.pathname.startsWith('/v1/');
+  });
+  expect(offending).toEqual([]);
+  const results = await new AxeBuilder({ page })
+    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+    .analyze();
+  expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
+});
