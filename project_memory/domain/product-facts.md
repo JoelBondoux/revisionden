@@ -518,6 +518,17 @@ Tags: #product #rules #limits #defaults
   0.16em), tint none / cream / blue. Defaults: all off. Applied app-wide by `data-reading-*`
   attributes on `<html>` (`apps/web/src/features/reading/`).
 
+## Operator console (planned)
+
+- Operators use AppDeck Admin (repo `appdeck-admin`) with RevisionDen as a managed app. AppDeck has
+  no database access; it calls a signed operator bridge (HMAC tag `appdeck-revisionden-operator-v1`,
+  per-environment shared secret, 5-minute window, idempotent request ids), and every operator read
+  and change is audited. Agents: support; Managers: money and data. Complaints: acknowledge in 2
+  working days, aim to resolve in 14. Data requests: one calendar month. Family tags (for example
+  Beta tester, Press, Friends & family) are internal; Managers define them and their effects (early
+  access, complimentary Premium, exclude from metrics); Agents apply them. Detail:
+  `docs/OPERATOR_CONSOLE.md`.
+
 ## Pricing (agreed 2026-11-25; not live)
 
 - Free app; Premium per child per month £9.99, £4.99, £2.99, then free; annual about £79.99;

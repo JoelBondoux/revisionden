@@ -253,6 +253,22 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [ ] Q5 Learn it first: `content/learn-links/*.json` with schema and validator, button on topics with a checked link, CI link check.
 - Tests: settings saved and applied per device; voice choice and default; maths reading; selection with fixed clock and seeded randomness; no penalty for recall; links validated and checked.
 
+### O. Operator bridge for AppDeck (RevisionDen side) (`docs/OPERATOR_CONSOLE.md`)
+
+- [ ] O1 Signed operator bridge: HMAC verification, timestamps, request ids, rate limit, per-environment secret, audit log table and retention.
+- [ ] O2 Read endpoints: overview metrics, family search (exact email or id), family detail (minimal fields), tickets and error-report groups, content reports, audit log.
+- [ ] O3 Actions: notes, ticket replies shown in the parent or student app, status changes, confirm bug / duplicate, trial and free-place changes, data request handling.
+- [ ] O4 Complaints: new feedback kind, parent "Make a complaint" flow, due dates, complaints policy in `docs/legal/`.
+- [ ] O5 Discount codes model and rules (enforced at checkout with workstream $).
+- [ ] O6 Family tags: tag catalogue, family tag links, effects (early access via feature flags, complimentary Premium flag for $, exclude from metrics), filter by tag, "Beta" badge for the beta programme effect.
+- Tests: signature vectors shared with AppDeck, replay and clock-skew refusal, role checks (Agent vs Manager), minimal fields only (no answers or child free text), audit entries for every read and change.
+
+### AD. RevisionDen in AppDeck (repository `appdeck-admin`)
+
+- [ ] AD1 Add RevisionDen as a managed app with environments, settings and service status.
+- [ ] AD2 Screens: overview, families, tickets, complaints, discount codes, free places, data requests, content reports, audit, family tags.
+- [ ] AD3 Role gating (Agent/Manager) matching the bridge; signed client with the shared test vector.
+
 ### $. Payments and Premium (`docs/PRICING.md`)
 
 - [ ] $1 Plans and entitlements in core (per-child pricing, sibling order, trial, annual), feature gates for each Premium feature, neutral "not included" states for students.
