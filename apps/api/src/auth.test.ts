@@ -1,5 +1,5 @@
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
-import { authUsers } from '@revisionden/db';
+import { authAccounts, authUsers } from '@revisionden/db';
 import { eq } from 'drizzle-orm';
 import { createTestContext, jsonRequest, type TestContext } from './test/helpers';
 
@@ -31,6 +31,7 @@ function stubProvider(tokenEndpoint: string, claims: object) {
     if (url.startsWith(tokenEndpoint)) {
       return Response.json({
         access_token: 'provider-access-token',
+        refresh_token: 'provider-refresh-token',
         id_token: fakeIdToken(claims),
         token_type: 'Bearer',
         expires_in: 3600,
@@ -101,6 +102,45 @@ describe('parent sign-in', () => {
     expect(user).toMatchObject({ name: '', image: null });
   });
 
+  it('keeps no Google tokens after sign-in: access, refresh and ID tokens are all blank', async () => {
+    const [user] = await t.db
+      .select()
+      .from(authUsers)
+      .where(eq(authUsers.email, 'parent.google@example.com'));
+    const accounts = await t.db
+      .select()
+      .from(authAccounts)
+      .where(eq(authAccounts.userId, user!.id));
+    expect(accounts).toHaveLength(1);
+    expect(accounts[0]).toMatchObject({
+      providerId: 'google',
+      accountId: 'google-user-1',
+      accessToken: null,
+      refreshToken: null,
+      idToken: null,
+      accessTokenExpiresAt: null,
+      refreshTokenExpiresAt: null,
+      password: null,
+    });
+  });
+
+  it('signs in again with Google and still keeps no tokens', async () => {
+    const { callback } = await signInWith('google', 'https://oauth2.googleapis.com/token', {
+      sub: 'google-user-1',
+      email: 'parent.google@example.com',
+      email_verified: true,
+      name: 'Made Up Person',
+    });
+    expect(callback.status).toBe(302);
+    expect(callback.headers.get('location')).toBe('https://dev.revisionden.test/family');
+    const rows = await t.db
+      .select()
+      .from(authAccounts)
+      .where(eq(authAccounts.accountId, 'google-user-1'));
+    expect(rows).toHaveLength(1);
+    expect(rows[0]).toMatchObject({ accessToken: null, refreshToken: null, idToken: null });
+  });
+
   it('signs in with Microsoft without fetching the profile photo', async () => {
     const { callback, calls } = await signInWith(
       'microsoft',
@@ -120,6 +160,11 @@ describe('parent sign-in', () => {
       .from(authUsers)
       .where(eq(authUsers.email, 'parent.microsoft@example.com'));
     expect(user).toMatchObject({ name: '', image: null });
+    const [account] = await t.db
+      .select()
+      .from(authAccounts)
+      .where(eq(authAccounts.userId, user!.id));
+    expect(account).toMatchObject({ accessToken: null, refreshToken: null, idToken: null });
   });
 
   it('signs out: the session stops working', async () => {

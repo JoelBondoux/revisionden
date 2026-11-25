@@ -7,6 +7,10 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Parents can download all their family's data as one file, from the family list.
+- Accounts nobody uses for 12 months are now deleted automatically; the parent area shows the date, and warns you if you come back after a long break.
+- Your own flashcards can't hold email addresses, phone numbers or family nicknames, to keep personal details out.
+
 - Coming soon: a stats page for students and a stats dashboard for parents.
 - Coming soon: rewards you set yourself as a parent, like a cinema trip for a 30-day streak.
 - Sound effects: soft, original sounds for right and wrong answers, finishing a lesson, meeting your daily goal, flashcards and the starting test. Mute them from the speaker button at the top, or change the volume and tap sounds in Settings.
@@ -17,12 +21,18 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Google and Microsoft access, refresh and ID tokens are no longer stored after sign-in (B2).
+- Year group is limited to Years 9 to 13 in the API, the core schema and the database (B2, migration 0006).
+- Students' own flashcards get the same personal-details check as feedback (B2, cleared with F).
+
 - Parent stats dashboard: a day with only flashcard practice no longer counts as a rest day (K).
 - Opening My stats, the parent dashboard or a child's parent-set rewards no longer uses up the "New!" rewards the student should see on their Rewards page (K, via a read-only `rewardsProgress` in R's rewards routes).
 - GCSE Statistics offers only AQA and Pearson Edexcel in onboarding (checked on the board websites).
 - Verification protocol now covers extended answers (blind marking of exemplars plus individual human approval).
 
 ### Added
+
+- Privacy fixes (B2): `GET /v1/export` (parent's and own children's data as JSON, secrets left out) and a "Download your family's data" panel on the onboarding family list; family activity (`families.last_active_at`, `previous_active_at`, migration 0006), 12-month inactive deletion and `GET /v1/family/activity` with a return-after-11-months warning; the 15-minute cron (`apps/api/src/cleanup.ts`) also deletes expired link codes, student and parent sessions, passkey challenges and sign-in checks.
 
 - Sound effects (U1–U3): Web Audio sound bank (one synthesised sound per event, no audio files), `SoundProvider` and `useSound().play()`, header quick mute, Settings Sound section (on/off, volume, tap sounds; saved per device), iOS ambient audio session, nothing before the first tap or in the background, Test mode rule; wired into lessons, starting test and flashcards.
 - Five-year rewards progression (R): level curve 1 to 100 with prestige stars, a 369-reward catalogue as data (levels, year chapters, milestone ladders, collections, 2026/27 seasonal drops) with a validator, healthy-limit rules (no late-night or time-based rewards, daily cap), student `/rewards` screen, and parent-set real-world rewards (`/family/:id/rewards`, `parent_rewards` table, migration 0004).

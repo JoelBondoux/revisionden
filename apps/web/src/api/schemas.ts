@@ -9,7 +9,7 @@ export const studentSchema = z.object({
   id: z.string(),
   nickname: z.string(),
   avatarCode: z.string(),
-  yearGroup: z.number().int().min(7).max(13),
+  yearGroup: z.number().int().min(9).max(13),
 });
 
 export const familySchema = z.object({

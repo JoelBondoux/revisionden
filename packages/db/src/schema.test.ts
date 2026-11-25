@@ -59,6 +59,16 @@ describe('database schema', () => {
   });
 });
 
+describe('family activity', () => {
+  it('gives a new family a last-active time and no earlier activity yet', async () => {
+    const res = await client.query<{ last_active_at: Date; previous_active_at: Date | null }>(
+      'insert into families default values returning last_active_at, previous_active_at',
+    );
+    expect(res.rows[0]!.last_active_at).toBeInstanceOf(Date);
+    expect(res.rows[0]!.previous_active_at).toBeNull();
+  });
+});
+
 describe('student constraints', () => {
   async function newFamily(): Promise<string> {
     const res = await client.query<{ id: string }>(
@@ -77,14 +87,22 @@ describe('student constraints', () => {
     ).rejects.toThrow(/students_nickname_format/);
   });
 
-  it('rejects a year group outside 7 to 13', async () => {
+  it.each([6, 7, 8, 14])('rejects year group %i (only Years 9 to 13 are allowed)', async (year) => {
     const familyId = await newFamily();
     await expect(
       client.query(
-        `insert into students (family_id, nickname, avatar_code, year_group) values ($1, 'owl_7', 'a1', 6)`,
-        [familyId],
+        `insert into students (family_id, nickname, avatar_code, year_group) values ($1, 'owl_7', 'a1', $2)`,
+        [familyId, year],
       ),
     ).rejects.toThrow(/students_year_group_range/);
+  });
+
+  it.each([9, 13])('accepts year group %i', async (year) => {
+    const familyId = await newFamily();
+    await client.query(
+      `insert into students (family_id, nickname, avatar_code, year_group) values ($1, 'owl_9', 'a1', $2)`,
+      [familyId, year],
+    );
   });
 
   it('does not allow two students with the same nickname in one family', async () => {

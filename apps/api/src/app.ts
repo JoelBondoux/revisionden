@@ -9,6 +9,8 @@ import { clientKey, RETRY_AFTER_SECONDS, type Clock, type RateLimiter } from './
 import type { AppEnv } from './context';
 import { ensureParent } from './families';
 import { studentRoutes } from './routes/students';
+import { familyRoutes, recordActivity, studentActivity } from './routes/family';
+import { familyExport } from './routes/export';
 import {
   deviceRoutes,
   parentDeviceRoutes,
@@ -106,10 +108,15 @@ export function createApp(deps: AppDeps) {
   parent.use('/feedback', requireParent);
   parent.use('/policy-acceptances', requireParent);
   parent.use('/admin/*', requireParent);
+  parent.use('/family/*', requireParent);
+  parent.use('/export', requireParent);
   async function requireParent(c: Context<AppEnv>, next: Next) {
     const session = await deps.auth.api.getSession({ headers: c.req.raw.headers });
     if (!session) throw unauthorized();
-    c.set('parent', await ensureParent(deps.db, session.user.id));
+    const ctx = await ensureParent(deps.db, session.user.id);
+    // Keeps the account from being deleted as unused (routes/family.ts).
+    await recordActivity(deps.db, ctx.familyId, deps.clock.now());
+    c.set('parent', ctx);
     c.set('parentEmail', session.user.email);
     await next();
   }
@@ -124,6 +131,8 @@ export function createApp(deps: AppDeps) {
   parent.route('/onboarding', onboardingRoutes(deps));
   parent.route('/', reportRoutes(deps.db, 'parent'));
   parent.route('/', parentFeedbackRoutes(deps));
+  parent.route('/family', familyRoutes(deps));
+  parent.route('/', familyExport(deps));
   parent.route('/admin', adminFeedbackRoutes(deps));
   parent.route(
     '/review',
@@ -134,6 +143,7 @@ export function createApp(deps: AppDeps) {
   app.route('/v1/notifications', pushKeyRoutes(deps));
   // Student routes: the session middleware runs before every /v1/student route below.
   app.use('/v1/student/*', studentAuth(deps));
+  app.use('/v1/student/*', studentActivity(deps));
   app.route('/v1/student', studentNotificationRoutes(deps));
   app.route('/v1/student', studentSessionRoutes(deps));
   // Mounted after the student routes, so their session check runs first.

@@ -110,8 +110,8 @@ deleted straight away (and always within 24 hours).
 
 ### How long we keep it
 
-Until your parent deletes your profile, which they can do at any time. Some things are deleted
-sooner. See [how long we keep data](data-retention.md).
+Until your parent deletes your profile, which they can do at any time, or until nobody in your
+family has used RevisionDen for 12 months. Some things are deleted sooner. See [how long we keep data](data-retention.md).
 
 ### Your rights
 

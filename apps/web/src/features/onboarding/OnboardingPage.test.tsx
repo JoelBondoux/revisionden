@@ -83,6 +83,16 @@ describe('OnboardingPage', () => {
     expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
   });
 
+  it('offers the family data download on the family list', async () => {
+    renderPage(fakeApi());
+    expect(
+      await screen.findByRole('link', { name: 'Download your family’s data' }),
+    ).toHaveAttribute('href', expect.stringMatching(/\/v1\/export$/));
+    expect(
+      await screen.findByText(/Accounts nobody uses for 12 months are deleted automatically/),
+    ).toBeInTheDocument();
+  });
+
   it('adds two children, links a device, and finishes', async () => {
     const api = fakeApi();
     const user = userEvent.setup();

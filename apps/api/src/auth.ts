@@ -8,6 +8,19 @@ export const AUTH_BASE_PATH = '/api/auth';
 
 const BLANK_PROFILE = { name: '', image: null };
 
+/**
+ * Better Auth only needs the provider's account id to sign a parent in again; it never needs
+ * the provider's tokens, because we call no Google or Microsoft API after sign-in. The ID token
+ * can carry the account name and picture address, so none of the tokens is kept.
+ */
+const NO_PROVIDER_TOKENS = {
+  accessToken: null,
+  refreshToken: null,
+  idToken: null,
+  accessTokenExpiresAt: null,
+  refreshTokenExpiresAt: null,
+};
+
 /** Better Auth for parents: Google and Microsoft only, no passwords, minimal stored profile. */
 export function createAuth({ db, config }: { db: Database; config: AppConfig }) {
   return betterAuth({
@@ -44,6 +57,11 @@ export function createAuth({ db, config }: { db: Database; config: AppConfig }) 
       user: {
         create: { before: async (user) => ({ data: { ...user, ...BLANK_PROFILE } }) },
         update: { before: async (user) => ({ data: { ...user, ...BLANK_PROFILE } }) },
+      },
+      // Keep the provider account id only: no access, refresh or ID tokens.
+      account: {
+        create: { before: async (account) => ({ data: { ...account, ...NO_PROVIDER_TOKENS } }) },
+        update: { before: async (account) => ({ data: { ...account, ...NO_PROVIDER_TOKENS } }) },
       },
       session: {
         create: {

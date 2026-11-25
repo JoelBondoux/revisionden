@@ -5,6 +5,7 @@ import { AddChildForm } from './AddChildForm';
 import { LinkDeviceStep } from './LinkDeviceStep';
 import { useOnboardingApi } from './OnboardingApiContext';
 import { FamilyListStep, FinishStep, SchoolReportStep } from './steps';
+import { FamilyDataPanel } from '../family-data/FamilyDataPanel';
 import './onboarding.css';
 
 type Step =
@@ -86,12 +87,15 @@ export function OnboardingPage({
       return <FinishStep children={children} />;
     default:
       return (
-        <FamilyListStep
-          children={children}
-          onAdd={() => setStep({ name: 'add' })}
-          onLink={(child) => setStep({ name: 'link', child })}
-          onFinish={() => setStep({ name: 'finish' })}
-        />
+        <>
+          <FamilyListStep
+            children={children}
+            onAdd={() => setStep({ name: 'add' })}
+            onLink={(child) => setStep({ name: 'link', child })}
+            onFinish={() => setStep({ name: 'finish' })}
+          />
+          <FamilyDataPanel />
+        </>
       );
   }
 }

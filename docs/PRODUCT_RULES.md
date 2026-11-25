@@ -130,7 +130,8 @@ formula and its assumptions. Summary of what is built:
 
 - The parent adds each child: nickname, avatar, school year, subjects, and an exam board and tier
   per subject. Years 9 to 11 take GCSE, Years 12 and 13 take A-Level. Changing level clears the
-  chosen subjects.
+  chosen subjects. Only Years 9 to 13 are accepted (the API and a database check both refuse 7
+  and 8).
 - Subjects: GCSE English Language, English Literature, Maths, Statistics, Combined Science,
   Biology, Chemistry, Physics, French, Spanish, German, History, Drama, Film Studies. A-Level
   Maths, Further Maths, Computer Science, Physics.
@@ -169,7 +170,8 @@ formula and its assumptions. Summary of what is built:
   Each button shows when the card would come back, worked out by the scheduler. Reviewing a card
   in a deck earns 2 XP (approved flashcards design). Deck cards come from flashcard items in the
   student's enrolled subjects; students can add their own cards (front and back up to 300
-  characters) to a topic.
+  characters) to a topic. Like feedback, an own card holding an email address, a UK mobile number
+  or a nickname from the family is refused ("Please leave out personal details…").
 - **Daily goal and streak:** XP is totalled per day in UK time (Europe/London). The first time a
   day's total reaches the daily goal (50 XP) the day counts on the streak, once. On the first goal
   day of a new week, last week is settled (a skip day if the weekly goal was hit). A streak with
@@ -311,6 +313,30 @@ Mockups: screens 19 (student) and 20 (parent).
   the device has a chosen student, otherwise as the parent.
 - Implemented: `apps/api/src/feedback/`, `apps/web/src/features/{legal,about,feedback}/`; tables
   `feedback` and `policy_acceptances` (migration 0005).
+
+## Family data: export, clean-up and inactive accounts (workstream B2)
+
+- **Export:** "Download your family's data" in the parent area (the family list in onboarding)
+  downloads `GET /v1/export`: one JSON file with the parent's sign-in email, provider account id,
+  policy confirmations, the family, and for each of that parent's own children the profile and
+  every record (courses, devices, answers, mastery, exams, reports, plans, rewards, streak, daily
+  XP, starting tests, flashcards, reminders, AI usage, parent-set rewards), plus the family's
+  feedback and question reports. Secrets are left out (session and link-code hashes, passkey keys
+  and credential ids, push keys). Never another family's data.
+- **Activity:** any parent or student request marks the family as used (`families.last_active_at`,
+  written at most once an hour).
+- **Inactive accounts:** a family nobody has used for more than 12 calendar months is deleted by
+  the 15-minute clean-up, with its students and all their records and the parents' sign-in
+  records. A sign-in that never became a family is deleted 12 months after it was made.
+- **Warning:** the parent area always says the date the account will be deleted if nobody uses it.
+  If the family comes back after 11 months or more without use, the parent area shows a warning
+  with the date it would have been deleted (for that visit: until the next hourly activity
+  write). No emails are sent.
+- **Clean-up** (every 15 minutes): expired device link codes, student sessions, parent sessions,
+  passkey challenges and sign-in checks are deleted.
+- **Sign-in tokens:** the Google or Microsoft access, refresh and ID tokens are never kept.
+- Implemented: `apps/api/src/cleanup.ts`, `apps/api/src/routes/{family,export}.ts`,
+  `apps/api/src/auth.ts`, `apps/web/src/features/family-data/`; migration 0006.
 
 ## Sound effects (workstream U)
 
