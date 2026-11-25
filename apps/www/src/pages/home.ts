@@ -48,7 +48,7 @@ export function homePage(config: SiteConfig): Page {
 <section aria-labelledby="checked">
   <h2 id="checked">Questions you can trust</h2>
   <p>Every question cites an official source, such as the exam board's specification or mark scheme, and passes our checks before any student sees it. Questions are added subject by subject as they pass. GCSE Maths (Higher) is first and is being checked now.</p>
-  <p><a href="/how-it-works#checked-questions">How questions are checked</a></p>
+  <p><a class="button button--quiet" href="/how-it-works#checked-questions">How questions are checked</a></p>
 </section>
 
 <section class="teen" aria-labelledby="young-people">
