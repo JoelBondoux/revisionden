@@ -7,6 +7,7 @@ import { ChildReminderSettings, ParentRewardNews } from '../notifications';
 import { NotSetUp } from '../stats/Tile';
 import { useStatsApi, type Child } from '../stats/statsApi';
 import { FamilyLog, ParentsPanel, RemovalNotice } from '../parents';
+import { InstallCard } from '../../pwa/InstallCard';
 import './parent.css';
 
 /**
@@ -33,6 +34,7 @@ export function ParentHomePage() {
       ) : (
         <LoadingOrError resource={children} />
       )}
+      <InstallCard />
       <div className="parent-home__grid">
         <Card title="Progress">
           <ul className="link-list">

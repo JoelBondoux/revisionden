@@ -6,6 +6,7 @@ import { ReadingSettingsCard } from '../features/reading';
 import { ReadAloudSettingsCard } from '../features/read-aloud';
 import { SoundSettingsCard } from '../features/sound';
 import { ParentCanSee } from '../features/stats/ParentCanSee';
+import { InstallButton } from '../pwa/InstallCard';
 
 export function SettingsPage() {
   const bugButton = useBugButton();
@@ -15,7 +16,7 @@ export function SettingsPage() {
       <Card title="This device">
         <ul className="link-list">
           <li>
-            <Link to="/install">Add to Home Screen</Link>
+            <InstallButton />
           </li>
           <li>
             <Link to="/family">Switch profile</Link>
