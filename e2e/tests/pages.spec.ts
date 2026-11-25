@@ -142,3 +142,25 @@ test('offers a refresh, accessibly, when a newer version has been deployed', asy
   await expectNoSidewaysScroll(page);
   await expectAccessible(page);
 });
+
+for (const path of ['/', '/legal', '/about']) {
+  test(`${path} loads nothing from third parties`, async ({ page, baseURL }) => {
+    const own = new URL(baseURL!).host;
+    const foreign: string[] = [];
+    page.on('request', (request) => {
+      const url = new URL(request.url());
+      if (['http:', 'https:'].includes(url.protocol) && url.host !== own) foreign.push(url.host);
+    });
+    await page.goto(path, { waitUntil: 'networkidle' });
+    expect(foreign).toEqual([]);
+  });
+}
+
+test('signed-out public pages show the small site header, accessibly', async ({ page }) => {
+  await page.goto('/about');
+  const site = page.getByRole('navigation', { name: 'Site' });
+  await expect(site.getByRole('link', { name: 'Sign in' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Main' })).toHaveCount(0);
+  await expectNoSidewaysScroll(page);
+  await expectAccessible(page);
+});

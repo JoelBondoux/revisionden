@@ -71,3 +71,20 @@ test.describe('deployed web app', () => {
     await expect(page.getByText('Something went wrong')).toHaveCount(0);
   });
 });
+
+test.describe('deployed web app privacy', () => {
+  // Only our own web origin and its API host: no analytics beacons, fonts or other third parties.
+  for (const path of ['/', '/family', '/legal', '/legal/privacy-notice', '/about']) {
+    test(`${path} makes no requests to third parties`, async ({ page }) => {
+      const allowed = new Set([new URL(web).host, new URL(api).host]);
+      const foreign: string[] = [];
+      page.on('request', (request) => {
+        const url = new URL(request.url());
+        if (!['http:', 'https:'].includes(url.protocol)) return;
+        if (!allowed.has(url.host)) foreign.push(`${url.host}${url.pathname}`);
+      });
+      await page.goto(path, { waitUntil: 'networkidle' });
+      expect(foreign).toEqual([]);
+    });
+  }
+});
