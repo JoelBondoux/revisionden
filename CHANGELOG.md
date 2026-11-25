@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Parents: if your child's passkey syncs to another of their devices (through iCloud or Google Password Manager), it works there too. It shows up as a separate device you can unlink, and both parents see "RevisionDen noticed <nickname>'s passkey being used on a new device".
 - Students: when RevisionDen asks you to unlock (after 12 hours), tap "I'm a student: unlock with my passkey" and use your face, fingerprint or screen lock. You go straight back to where you were. No need to ask a parent for a new QR code.
 - When RevisionDen support replies to your feedback or bug report, you'll see the reply right under your message.
 - Coming soon: a public RevisionDen website at revisionden.com explaining how it works for parents and young people, with the planned prices and all the policies. The app itself will move to app.revisionden.com.
@@ -80,6 +81,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Synced passkeys (I5b, owner decision: allow, and tell the parents): `device_markers` table and `devices.credential_id` no longer unique (migration 0017); link and unlock return a `deviceMarker` the web app keeps in local storage and sends back on unlock; an unknown browser becomes a new `devices` row and logs the important family event `passkey_new_device` (by "RevisionDen", pushed to both parents), at most once a day per passkey; an unlinked device's browser is refused; devices linked before markers are adopted quietly. Privacy notice 1.6, cookies and storage 1.3, data retention 1.6.
 - Student passkey unlock (I5): "I'm a student: unlock with my passkey" on the welcome page and a new `/unlock` page calling `POST /v1/device/unlock/{options,verify}`; a 401 from any `/v1/student/...` call sends the device to `/unlock?returnTo=<page>`; "Ask a parent to link this device" when no passkey is found. Rewards API errors now carry the API path. Decision `project_memory/decisions/0007-student-passkey-unlock.md`.
 - Operator bridge O3b (O): `GET/POST /operator/appdeck/data-requests` and `POST .../data-requests/:id/handled` (Manager; a deletion runs `deleteFamilies` for one-parent families only, else 409 `needs_both_parents`), `data_requests` table (in migration 0016 with O3), `dataRequestDueAt` (one calendar month) in core, 2-year clean-up; Manager trial and free-place routes answer 503 `payments_not_ready` until payments exist. Data retention policy 1.5.
 - Operator bridge O3 (O): `POST /operator/appdeck/{families/:id/notes,tickets/:id/reply,tickets/:id/status,tickets/:id/confirm-bug,tickets/:id/duplicate}` (`apps/api/src/operator/actions.ts`), audited; `operator_notes` and `feedback_replies` tables (migration 0016); family detail gains `notes`, tickets gain `confirmedBug` and `duplicateOf`, ticket detail gains `messages`; L's confirm and status logic shared as `confirmFeedback` and `setFeedbackStatus`; parent and student feedback lists and the family export include support replies (and the export, support notes); web shows "Reply from RevisionDen" under feedback. Data retention policy 1.4.

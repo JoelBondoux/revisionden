@@ -1,7 +1,6 @@
 # 0007: Student passkey unlock and one sign-in page
 
-- Status: accepted for the sign-in page and unlock flow (lead, 2026-11-25); the synced-passkey
-  question below is open for the product owner.
+- Status: accepted (lead, 2026-11-25; synced passkeys: product owner, 2026-11-25)
 - Date: 2026-11-25
 
 ## Context
@@ -28,23 +27,28 @@ only get back in with a fresh QR code from a parent.
   `app.revisionden.com`. Dev and staging use their own hosts (`dev.revisionden.com`,
   `staging.revisionden.com`): a passkey made on one environment does not work on another.
 
-## Open: synced passkeys (owner question)
+## Synced passkeys (product owner: allow, and tell the parents)
 
 Passkeys can sync between a student's own devices through iCloud Keychain or Google Password
-Manager. Today a synced passkey unlocks on the other device too, because it has the same credential
-id and so matches the same `devices` row: the parent sees one linked device, and unlinking it
-locks every device sharing that passkey.
+Manager. They are allowed, and the parents are told (I5b):
 
-Options for the owner:
+- **Device marker.** When a device is linked, and when a passkey first unlocks on a device, the API
+  gives the browser a random marker, kept in local storage (`revisionden.deviceMarker`); the API
+  stores only its hash (`device_markers`). Unlock sends it back.
+- **New device.** If the passkey verifies but the marker is missing or unknown, the API adds a
+  `devices` row for the same student and passkey (so it shows in the parent's device list and can
+  be unlinked on its own), gives it a marker, and logs the important family event
+  `passkey_new_device`: "RevisionDen noticed <nickname>'s passkey being used on a new device",
+  shown as new and pushed to both parents.
+- **Cleared storage.** At most one new device a day per passkey: within 24 hours of the last new
+  device, another unknown browser reuses that device (new marker, no new event).
+- **Devices linked before markers.** The first unlock of a passkey with one device and no marker
+  adopts that device quietly (no event), so the release does not alert every family.
+- **Unlinking.** When a parent unlinks a device, its marker stays with no device, so that browser
+  is refused ("Ask a parent to link this device"); the passkey still works on the student's other
+  devices. Clearing that browser's storage would make it a new device again, which the parents are
+  told about. To stop a synced passkey everywhere, a parent unlinks every device that uses it.
 
-1. **Allow it** (today's behaviour). Simple for families with a phone and a laptop. The parent's
-   "linked devices" count means passkeys, not physical devices.
-2. **Refuse synced passkeys** at linking (check the backup flags, `credentialBackedUp` /
-   `credentialDeviceType: 'multiDevice'`, in `apps/api/src/passkeys.ts`). Each device then needs
-   its own QR code. Some phones only offer synced passkeys, so linking could fail there.
-3. **Allow it but show it.** Record that a passkey is synced and tell the parent ("this passkey
-   may also work on the child's other devices").
-
-Recorded in `operations/contradictions.md` until the owner decides. Implemented (sign-in page and
-unlock): `apps/web/src/features/onboarding/{StudentUnlock,UnlockPage}.tsx`,
-`apps/web/src/api/{unlock.ts,LoadingOrError.tsx}`.
+Implemented: `apps/web/src/features/onboarding/{StudentUnlock,UnlockPage}.tsx`,
+`apps/web/src/api/{unlock.ts,LoadingOrError.tsx}`, `apps/web/src/session/deviceMarker.ts`,
+`apps/api/src/routes/devices.ts` (`deviceForUnlock`), `packages/db` migration 0017.

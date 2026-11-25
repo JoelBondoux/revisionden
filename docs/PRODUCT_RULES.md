@@ -191,7 +191,12 @@ Product owner decision, 2026-11-25: **parent view only**.
 - After the 12-hour device session, the student unlocks with the passkey: on the welcome page
   ("I'm a student: unlock with my passkey"), or at `/unlock`, where any student screen sends them
   when its session has run out, and back to that screen afterwards. With no passkey on the device:
-  "Ask a parent to link this device", with no account details shown. Parents and students share
+  "Ask a parent to link this device", with no account details shown. A passkey synced to the
+  student's other devices (iCloud Keychain, Google Password Manager) works there too: each device
+  it is used on becomes its own linked device, which a parent can unlink on its own, and both
+  parents are told ("RevisionDen noticed <nickname>'s passkey being used on a new device"). At most
+  one new device a day per passkey (cleared browser storage); an unlinked device stays refused.
+  Parents and students share
   one sign-in page, the welcome page (`decisions/0007-student-passkey-unlock.md` in project
   memory).
 

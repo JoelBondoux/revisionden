@@ -1,6 +1,6 @@
 # Privacy notice
 
-Version: 1.5
+Version: 1.6
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -126,7 +126,11 @@ profile and blanks the name and picture before anything is saved.
 - **Courses:** subjects, exam boards, tiers and specification versions;
 - **Devices:** for each linked device, the public part of its passkey and technical details the
   passkey needs (an identifier, a counter and how the device connects), when it was linked and
-  last used; one-time link codes and sessions are stored only as scrambled (hashed) values;
+  last used; one-time link codes and sessions are stored only as scrambled (hashed) values. A
+  passkey can sync to the student's other devices (for example through iCloud Keychain or Google
+  Password Manager); each device it is used on gets its own record, told apart by a random device
+  code kept on that device, which we store only as a hash. When a passkey is used on a new device,
+  both parents see it in the family activity log;
 - **Learning records:** each answer's question, whether it was right, the score, how long it
   took, the mode (learn or test), the XP earned and when; topic mastery scores; starting test
   records; daily XP; streaks, skip days and gift days; rewards earned; flashcards and their review
@@ -357,6 +361,7 @@ in the app on your next visit and ask you to confirm, and students see a plain-E
 
 ## Changes
 
+- 1.6: A passkey synced to the student's other devices works there too, as a separate device the parent can see and unlink. Each device keeps a random device code (we store only its hash), and both parents are told when a passkey is used on a new device.
 - 1.5: A family can now have two parents. We keep the second parent's sign-in email in the same way as the first, a family activity log that says "Parent 1" or "Parent 2" (never names), invite codes (hashed, 7 days) and a short note when a parent is removed. Deleting the whole family needs both parents to confirm.
 - 1.4: New 6.4: read aloud uses the device's own speech voices; with only online voices, the device's speech service may process the text, so it starts off. No new data is kept by us.
 - 1.3: Adds that the Get help page (support services) is private: its use is not recorded or shown to parents. No change to the data we keep.

@@ -120,6 +120,13 @@
       "when": 1795613085799,
       "tag": "0016_operator_actions",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1795616692050,
+      "tag": "0017_device_markers",
+      "breakpoints": true
     }
   ]
 }

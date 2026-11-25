@@ -43,7 +43,13 @@ Tags: #product #rules #limits #defaults
   (`decisions/0007-student-passkey-unlock.md`). Implemented in
   `apps/web/src/features/onboarding/StudentUnlock.tsx`.
 - A passkey synced to another device (iCloud Keychain, Google Password Manager) unlocks there
-  too, as the same linked device. Open owner question (`operations/contradictions.md`).
+  too, as a new device of its own (owner decision: allow, and tell the parents). Each device keeps
+  a random marker in local storage (`revisionden.deviceMarker`; the API stores its hash in
+  `device_markers`). An unknown browser adds a `devices` row and logs the important family event
+  "RevisionDen noticed <nickname>'s passkey being used on a new device", pushed to both parents; at
+  most one new device a day per passkey. An unlinked device's browser is refused. Devices linked
+  before markers are adopted quietly on their first unlock. Implemented in
+  `apps/api/src/routes/devices.ts` (`deviceForUnlock`).
 - Rate limits per address: 30 a minute on sign-in and device routes, 20 a minute on AI routes.
   Implemented in `apps/api`.
 

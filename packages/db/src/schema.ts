@@ -241,15 +241,37 @@ export const devices = pgTable(
     studentId: uuid('student_id')
       .notNull()
       .references(() => students.id, { onDelete: 'cascade' }),
-    // WebAuthn passkey credential (public part only).
-    credentialId: text('credential_id').notNull().unique(),
+    // WebAuthn passkey credential (public part only). Not unique: a passkey synced between the
+    // student's own devices (iCloud Keychain, Google Password Manager) has one row per device (I5b).
+    credentialId: text('credential_id').notNull(),
     publicKey: text('public_key').notNull(),
     counter: integer('counter').notNull().default(0),
     transports: jsonb('transports').$type<string[]>(),
     linkedAt: timestamp('linked_at', { withTimezone: true }).notNull().defaultNow(),
     lastUsedAt: timestamp('last_used_at', { withTimezone: true }),
   },
-  (t) => [index('devices_student_id_idx').on(t.studentId)],
+  (t) => [
+    index('devices_student_id_idx').on(t.studentId),
+    index('devices_credential_id_idx').on(t.credentialId),
+  ],
+);
+
+/**
+ * A random marker kept in the student device's browser storage (only its hash here), so a synced
+ * passkey used on another device is seen as a new device (I5b). When a parent unlinks the device,
+ * the marker stays with no device, so that browser is refused until a parent links it again.
+ */
+export const deviceMarkers = pgTable(
+  'device_markers',
+  {
+    markerHash: text('marker_hash').primaryKey(),
+    deviceId: uuid('device_id').references(() => devices.id, { onDelete: 'set null' }),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    createdAt: createdAt(),
+  },
+  (t) => [index('device_markers_device_id_idx').on(t.deviceId)],
 );
 
 /** One-time tokens a parent shows as a QR code to link a student device. */
