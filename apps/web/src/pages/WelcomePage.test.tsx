@@ -1,5 +1,7 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { http, HttpResponse } from 'msw';
+import { server } from '../mocks/server';
 import { renderRoute } from '../test/render';
 
 describe('Welcome screen', () => {
@@ -19,6 +21,26 @@ describe('Welcome screen', () => {
     ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /continue with microsoft/i })).toBeInTheDocument();
     expect(screen.queryByLabelText(/password/i)).not.toBeInTheDocument();
+  });
+
+  it('shows only the sign-in providers the server has set up', async () => {
+    server.use(http.get('*/v1/auth/providers', () => HttpResponse.json({ providers: ['google'] })));
+    renderRoute('/', { studentId: null });
+    expect(
+      await screen.findByRole('button', { name: /continue with google/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: /continue with microsoft/i }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('offers both providers when it cannot ask the server', async () => {
+    server.use(http.get('*/v1/auth/providers', () => HttpResponse.error()));
+    renderRoute('/', { studentId: null });
+    expect(
+      await screen.findByRole('button', { name: /continue with microsoft/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /continue with google/i })).toBeInTheDocument();
   });
 
   it('goes on to choose who is revising after signing in', async () => {

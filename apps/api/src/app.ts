@@ -95,6 +95,8 @@ export function createApp(deps: AppDeps) {
   );
 
   app.get('/health', (c) => c.json({ status: 'ok', version: deps.version }));
+  // Public: which sign-in buttons the web app should show.
+  app.get('/v1/auth/providers', (c) => c.json({ providers: deps.config.signInProviders }));
 
   // Parent routes: a Better Auth session is required, and the family is created on first use.
   const parent = new Hono<AppEnv>();

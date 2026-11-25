@@ -2,11 +2,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { Pip } from '../components/Pip';
+import { useSignInProviders } from '../api/signInProviders';
 
 export function WelcomePage() {
   const navigate = useNavigate();
   // TODO(workstream B): replace with Better Auth sign-in. For now, go straight to the mock family.
   const signIn = () => navigate('/family');
+  const providers = useSignInProviders();
 
   return (
     <div className="welcome stack">
@@ -17,12 +19,20 @@ export function WelcomePage() {
       </div>
       <Card title="Parents">
         <div className="stack">
-          <Button block onClick={signIn}>
-            Continue with Google
-          </Button>
-          <Button block variant="secondary" onClick={signIn}>
-            Continue with Microsoft
-          </Button>
+          {providers?.includes('google') && (
+            <Button block onClick={signIn}>
+              Continue with Google
+            </Button>
+          )}
+          {providers?.includes('microsoft') && (
+            <Button
+              block
+              variant={providers.includes('google') ? 'secondary' : 'primary'}
+              onClick={signIn}
+            >
+              Continue with Microsoft
+            </Button>
+          )}
         </div>
       </Card>
       <Card title="Students">

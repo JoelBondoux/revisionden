@@ -23,10 +23,11 @@ const envSchema = z
     BETTER_AUTH_SECRET: z.string().min(32),
     API_ORIGIN: url,
     WEB_ORIGIN: url,
-    GOOGLE_CLIENT_ID: secret,
-    GOOGLE_CLIENT_SECRET: secret,
-    MICROSOFT_CLIENT_ID: secret,
-    MICROSOFT_CLIENT_SECRET: secret,
+    // Sign-in providers: each is optional (id and secret together), but at least one is needed.
+    GOOGLE_CLIENT_ID: secret.optional(),
+    GOOGLE_CLIENT_SECRET: secret.optional(),
+    MICROSOFT_CLIENT_ID: secret.optional(),
+    MICROSOFT_CLIENT_SECRET: secret.optional(),
     AI_GATEWAY_URL: url,
     UPLOADS: binding,
     PASSKEY_RP_ID: z.string().min(1).optional(),
@@ -75,8 +76,11 @@ export interface AppConfig {
   authSecret: string;
   apiOrigin: string;
   webOrigin: string;
-  google: { clientId: string; clientSecret: string };
-  microsoft: { clientId: string; clientSecret: string };
+  /** Unset when that provider is not configured; at least one of the two is set. */
+  google?: OAuthClient;
+  microsoft?: OAuthClient;
+  /** Configured providers, in the order the sign-in page shows them. */
+  signInProviders: SignInProvider[];
   aiGatewayUrl: string;
   /** WebAuthn relying party id: the web app's host unless overridden. */
   passkeyRpId: string;
@@ -91,6 +95,13 @@ export interface AppConfig {
   operatorEmails: string[];
 }
 
+export type SignInProvider = 'google' | 'microsoft';
+
+export interface OAuthClient {
+  clientId: string;
+  clientSecret: string;
+}
+
 export interface AiConfig {
   anthropicApiKey: string | undefined;
   openaiApiKey: string | undefined;
@@ -101,14 +112,42 @@ export interface AiConfig {
   checker: { model: string; inputUsdPerMTok: number; outputUsdPerMTok: number } | undefined;
 }
 
+/**
+ * Sign-in provider keys that are missing: an id without its secret (or the reverse), or both
+ * providers unset. Checked on the raw environment so it is reported with every other problem.
+ */
+function missingProviderKeys(env: Record<string, unknown>): string[] {
+  const set = (key: string) => typeof env[key] === 'string' && env[key] !== '';
+  const missing: string[] = [];
+  for (const p of ['GOOGLE', 'MICROSOFT']) {
+    const id = set(`${p}_CLIENT_ID`);
+    if (id !== set(`${p}_CLIENT_SECRET`))
+      missing.push(id ? `${p}_CLIENT_SECRET` : `${p}_CLIENT_ID`);
+  }
+  const none = [
+    'GOOGLE_CLIENT_ID',
+    'GOOGLE_CLIENT_SECRET',
+    'MICROSOFT_CLIENT_ID',
+    'MICROSOFT_CLIENT_SECRET',
+  ];
+  if (!none.some(set)) missing.push('GOOGLE_CLIENT_ID', 'MICROSOFT_CLIENT_ID');
+  return missing;
+}
+
 /** Validates the Worker environment. Throws naming every missing or invalid key. */
 export function parseEnv(env: Record<string, unknown>): AppConfig & { raw: WorkerEnv } {
   const result = envSchema.safeParse(env);
-  if (!result.success) {
-    const keys = [...new Set(result.error.issues.map((i) => String(i.path[0])))].sort();
+  const providerKeys = missingProviderKeys(env);
+  if (!result.success || providerKeys.length > 0) {
+    const issues = result.success ? [] : result.error.issues.map((i) => String(i.path[0]));
+    const keys = [...new Set([...issues, ...providerKeys])].sort();
     throw new Error(`Missing or invalid environment: ${keys.join(', ')}`);
   }
   const e = result.data;
+  const client = (clientId?: string, clientSecret?: string): OAuthClient | undefined =>
+    clientId && clientSecret ? { clientId, clientSecret } : undefined;
+  const google = client(e.GOOGLE_CLIENT_ID, e.GOOGLE_CLIENT_SECRET);
+  const microsoft = client(e.MICROSOFT_CLIENT_ID, e.MICROSOFT_CLIENT_SECRET);
   return {
     raw: e,
     environment: e.ENVIRONMENT,
@@ -116,8 +155,12 @@ export function parseEnv(env: Record<string, unknown>): AppConfig & { raw: Worke
     authSecret: e.BETTER_AUTH_SECRET,
     apiOrigin: e.API_ORIGIN,
     webOrigin: e.WEB_ORIGIN,
-    google: { clientId: e.GOOGLE_CLIENT_ID, clientSecret: e.GOOGLE_CLIENT_SECRET },
-    microsoft: { clientId: e.MICROSOFT_CLIENT_ID, clientSecret: e.MICROSOFT_CLIENT_SECRET },
+    ...(google ? { google } : {}),
+    ...(microsoft ? { microsoft } : {}),
+    signInProviders: [
+      ...(google ? ['google' as const] : []),
+      ...(microsoft ? ['microsoft' as const] : []),
+    ],
     aiGatewayUrl: e.AI_GATEWAY_URL,
     passkeyRpId: e.PASSKEY_RP_ID ?? new URL(e.WEB_ORIGIN).hostname,
     serveDraftContent: e.ENVIRONMENT === 'development' && e.SERVE_DRAFT_CONTENT === 'true',
