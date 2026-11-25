@@ -133,8 +133,13 @@ Tags: #product #rules #limits #defaults
 - Works offline for the app shell; API calls are never cached. Pages always come fresh from the
   server when online. The app checks `/version.json` on start, on return to the foreground and
   every 15 minutes and shows "A new version of RevisionDen is ready." with Refresh; an API reply
-  that suggests the app is out of date makes it reload by itself once per new build. iPad users get an "Add to Home
-  Screen" help page (`/install`), because iPadOS has no install prompt.
+  that suggests the app is out of date makes it reload by itself once per new build.
+- "Add RevisionDen to this device" (I6): a card with Pip on the topic map and the parent home, and
+  a button in Settings. Chrome, Edge and Android show the browser's own install prompt on tap;
+  iPhone and iPad Safari open a sheet with Share → Add to Home Screen steps (`/install` shows the
+  steps for the device in use); browsers that cannot install get no card. Hidden once installed
+  and for 30 days after "Not now" (local storage `revisionden.installDismissed`). Implemented in
+  `apps/web/src/pwa/InstallCard.tsx`.
 - The web app calls the real API on dev and staging (parent session cookie, or the student
   device cookie). MSW mocks with made-up data are used only in local development and tests, and
   must use real API paths (`apps/api/routes.json`). Parents sign in from the welcome page
@@ -275,7 +280,8 @@ Tags: #product #rules #limits #defaults
   `apps/www/public` and remade by hand with `node apps/www/scripts/make-images.mjs` after an art
   change; original art only, no stock photos or AI-generated images.
   Links use the app's J7 styles (buttons, tiles, chips, bold inline links), never plain underlined
-  text (owner, 2026-11-25).
+  text (owner, 2026-11-25). Light or dark follows the device only (no switch), with the app's dark
+  theme colours.
 - Production passkeys use the RP ID `revisionden.com`; OAuth callbacks are on the API host, so the
   move to `app.` needed no change in Google or Microsoft. Dev and staging passkeys use their own
   hosts (`dev.revisionden.com`, `staging.revisionden.com`), so they work only there.
