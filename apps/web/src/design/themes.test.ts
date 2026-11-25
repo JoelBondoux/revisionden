@@ -96,3 +96,21 @@ describe('colour-blind friendly palette', () => {
     expect(deltaE(simulate(a, d), simulate(b, d))).toBeGreaterThanOrEqual(20);
   });
 });
+
+describe('gold surfaces on the map', () => {
+  const pagesCss = readFileSync(join(__dirname, '../pages/pages.css'), 'utf8');
+
+  it('draws the mastered hex checkmark in the dark-on-gold text colour', () => {
+    const rule = /\.hex--mastered \.hex__shape\s*\{([^}]*)\}/.exec(pagesCss)?.[1] ?? '';
+    expect(rule).toContain('--hex-fill: var(--color-gold)');
+    expect(rule).toMatch(/(^|[^-])color: var\(--color-text-on-gold\)/);
+  });
+
+  it('keeps the mastered hex checkmark readable in every theme', () => {
+    for (const palette of [light, dark, lightCb, darkCb]) {
+      const pair = resolvePairs(palette).find((p) => p.name === 'mastered hex checkmark');
+      expect(pair).toBeDefined();
+      expect(contrastRatio(pair!.foreground, pair!.background)).toBeGreaterThanOrEqual(4.5);
+    }
+  });
+});

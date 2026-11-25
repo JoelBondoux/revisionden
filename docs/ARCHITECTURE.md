@@ -56,6 +56,9 @@ Decision 0005. `revisionden.com` is the sales site; the app is on `app.revisiond
   links. Styles in `src/site.css`; `src/links.test.ts` checks them.
 - Light and dark follow the device setting only (`prefers-color-scheme`, no switch or stored
   choice); dark uses the app's dark theme values (J8). `src/theme.test.ts` checks them.
+- The app's doodle tile (`apps/web/src/design/doodles.svg`, read at build time and served as
+  `/doodles.svg`) is a fixed CSS mask behind every page at 7% ink, hidden under
+  `prefers-contrast: more` and `forced-colors: active` (J8). `src/doodles.test.ts` checks it.
 - Deployed by `.github/workflows/deploy-www.yml` (staging and production only).
 
 ## Web app (`apps/web`)
