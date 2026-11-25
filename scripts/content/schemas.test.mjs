@@ -149,6 +149,34 @@ test('an item may name its learning point and expected time (for similar-questio
   assert.equal(v.item({ ...item, expected_seconds: 12.5 }), false);
 });
 
+test('an item may list the standard facts it rests on, for the fact-check stage', () => {
+  const fact = {
+    statement: 'The product of the gradients of two perpendicular lines is -1.',
+    ask: 'What is the product of the gradients of two perpendicular lines?',
+    engine: { kind: 'identity', equation: 'm * (-1/m) = -1' },
+    citation: 1,
+  };
+  assert.equal(v.item({ ...samples.short_answer, facts: [fact] }), true);
+  assert.equal(v.item({ ...samples.short_answer, facts: [] }), false);
+  assert.equal(v.item({ ...samples.short_answer, facts: [{ statement: 'x' }] }), false);
+  assert.equal(v.item({ ...samples.short_answer, facts: [{ ...fact, citation: 0 }] }), false);
+  assert.equal(v.item({ ...samples.short_answer, facts: [{ ...fact, extra: 1 }] }), false);
+});
+
+test('fact-check is a pipeline check name', () => {
+  const item = structuredClone(samples.short_answer);
+  item.verification.checks = [
+    {
+      name: 'fact-check',
+      result: 'pass',
+      tool: 't',
+      tool_version: '1',
+      at: '2026-11-25T00:00:00Z',
+    },
+  ];
+  assert.equal(v.item(item), true);
+});
+
 test('item ids are lowercase words joined by hyphens', () => {
   assert.equal(v.item({ ...samples.flashcard, id: 'Bad ID' }), false);
 });

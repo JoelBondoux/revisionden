@@ -55,7 +55,7 @@ NODE_USE_ENV_PROXY=1 GEMINI_API_KEY=dummy VERIFY_GEMINI_MODEL=gemini-2.5-pro \
 **Review queue**
 
 - The batch page shows hint, mark scheme, exemplars and checks (S2, #108).
-- "Create batch from draft items" for content leads on `/review` (S2, #109, migration 0026).
+- "Create batch from draft items" for content leads on `/review` (S2, #109, migration 0018).
 - A reviewer role is a database row (`reviewer_roles`); the lead adds the owner's on dev.
 - Topic trees and near-match quotes are not in the queue; they are confirmed with the lead.
 
@@ -133,6 +133,13 @@ the maths engine, not by the specification.
 If no official source defines a standard term, follow decision 0008
 (project_memory/decisions/0008-definitions-policy.md): cite the spec point that names it, add the
 standard definition, and set needs_human_approval: true.
+If an item rests on a standard maths fact that no cited source states, follow decision 0009: list
+it in facts (statement, a neutral ask, an engine check such as identity where the maths engine can
+prove it, or citation N if an official quote states it) and run
+  NODE_USE_ENV_PROXY=1 OPENAI_API_KEY=proxy-injected VERIFY_OPENAI_MODEL=gpt-5.4-2026-03-05 \
+    GEMINI_API_KEY=dummy VERIFY_GEMINI_MODEL=gemini-2.5-pro \
+    pnpm content:model-check --fact-check openai --write
+A fact that fails keeps needs_human_approval: true.
 
 Run every item through the pipeline and record results with --write:
   pnpm content:validate                      (schema, links, maths engine)
