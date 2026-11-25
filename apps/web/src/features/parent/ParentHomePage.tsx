@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { Card } from '../../components/Card';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
@@ -64,7 +64,10 @@ export function ParentHomePage() {
 }
 
 function ChildCard({ choices }: { choices: Child[] }) {
-  const [childId, setChildId] = useState(choices[0]!.id);
+  // "Who's revising?" opens this page with ?student=<id> for the child the parent tapped.
+  const [params] = useSearchParams();
+  const asked = params.get('student');
+  const [childId, setChildId] = useState(choices.find((c) => c.id === asked)?.id ?? choices[0]!.id);
   const child = choices.find((c) => c.id === childId) ?? choices[0]!;
   const id = encodeURIComponent(child.id);
   return (

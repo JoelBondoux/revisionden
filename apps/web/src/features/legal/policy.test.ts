@@ -61,6 +61,13 @@ describe('fillPlaceholders', () => {
     expect(text).not.toContain('{{');
   });
 
+  it('fills {{SUPPORT_EMAIL}} from VITE_SUPPORT_EMAIL, or help@revisionden.com by default', () => {
+    expect(fillPlaceholders('Email {{SUPPORT_EMAIL}}.', {})).toBe('Email help@revisionden.com.');
+    expect(
+      fillPlaceholders('Email {{SUPPORT_EMAIL}}.', { VITE_SUPPORT_EMAIL: 'x@example.com' }),
+    ).toBe('Email x@example.com.');
+  });
+
   it('says contact details are to be added when a value is missing or blank', () => {
     const text = fillPlaceholders(SAMPLE, { VITE_OPERATOR_NAME: '  ' });
     expect(text).toContain('Ask contact details to be added at contact details to be added.');

@@ -129,3 +129,90 @@ describe('sound engine', () => {
     expect(throwing.play('correct')).toBe(false);
   });
 });
+
+describe('sound engine: reward sounds', () => {
+  function rewardSetup(settings: Partial<SoundSettings> = {}, randoms: number[] = [0]) {
+    const contexts: FakeAudioContext[] = [];
+    let i = 0;
+    const engine = createSoundEngine({
+      createContext: () => {
+        const ctx = createFakeAudioContext();
+        contexts.push(ctx);
+        return ctx;
+      },
+      settings: () => ({ ...DEFAULT_SOUND_SETTINGS, ...settings }),
+      isHidden: () => false,
+      random: () => randoms[i++ % randoms.length]!,
+    });
+    engine.unlock();
+    return { engine, ctx: () => contexts[0]! };
+  }
+
+  it('plays only the biggest of several rewards, once', () => {
+    const { engine } = rewardSetup();
+    const played = engine.playReward([
+      { id: 'level-9', rarity: 'common' },
+      { id: 'streak-100', rarity: 'epic' },
+    ]);
+    expect(played).toMatchObject({ tier: 'epic', step: 3 });
+    expect(engine.playReward([])).toBeNull();
+  });
+
+  it('never plays the same variation twice in a row, with the same random numbers', () => {
+    const { engine } = rewardSetup({}, [0]);
+    const variations = Array.from(
+      { length: 6 },
+      () => engine.playReward([{ id: 'streak-7', rarity: 'common' }])!.variation,
+    );
+    for (let i = 1; i < variations.length; i++) expect(variations[i]).not.toBe(variations[i - 1]);
+  });
+
+  it('respects mute, volume and the Test mode rule', () => {
+    const muted = rewardSetup({ enabled: false });
+    expect(muted.engine.playReward([{ id: 'streak-7', rarity: 'common' }])).toBeNull();
+
+    const quiet = rewardSetup({ volume: 'low' });
+    quiet.engine.playReward([{ id: 'streak-7', rarity: 'common' }]);
+    expect(quiet.ctx().gains[0]!.value).toBe(VOLUME_LEVELS.low);
+
+    const test = rewardSetup();
+    expect(
+      test.engine.playReward([{ id: 'streak-7', rarity: 'common' }], { mode: 'test' }),
+    ).toBeNull();
+    expect(test.engine.play('rewardUnlocked', { mode: 'test' })).toBe(false);
+    expect(test.engine.play('levelUp', { mode: 'test' })).toBe(false);
+  });
+
+  it("waits for the lesson's own result sound to finish", () => {
+    const { engine, ctx } = rewardSetup();
+    engine.play('correct');
+    const resultEnd = Math.max(...ctx().oscillators.map((o) => o.stop!));
+    const before = ctx().oscillators.length;
+    engine.playReward([{ id: 'streak-7', rarity: 'common' }]);
+    const rewardStart = Math.min(
+      ...ctx()
+        .oscillators.slice(before)
+        .map((o) => o.start!),
+    );
+    expect(rewardStart).toBeGreaterThanOrEqual(resultEnd);
+  });
+
+  it('lets a tap skip a legendary sound, but not smaller ones', () => {
+    const { engine, ctx } = rewardSetup();
+    engine.playReward([{ id: 'streak-30', rarity: 'rare' }]);
+    expect(engine.skip()).toBe(false);
+    const before = ctx().gains.length;
+    engine.playReward([{ id: 'streak-1000', rarity: 'legendary' }]);
+    // The first gain made for a reward sound is its own volume, which a skip fades to silence.
+    const voice = ctx().gains[before]!;
+    expect(engine.skip()).toBe(true);
+    expect(voice.peaks.at(-1)).toBe(0);
+    expect(engine.skip()).toBe(false);
+  });
+
+  it('plays a sample of each tier for the Settings buttons', () => {
+    const { engine } = rewardSetup();
+    expect(engine.sampleReward('legendary')).toMatchObject({ tier: 'legendary' });
+    expect(engine.sampleReward('common')).toMatchObject({ tier: 'common' });
+  });
+});

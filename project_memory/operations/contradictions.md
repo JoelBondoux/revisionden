@@ -52,6 +52,12 @@
       `long_answer`. F maps them (`contentTypeToItemType`) instead of renaming either, because both
       sit in other workstreams' lanes. Pick one set of names.
 
+- [ ] **Topic map and cards due have no API yet.** The web app's map (`/map`) and Cards badge call
+      `GET /v1/student/map` and `GET /v1/student/cards/due` (`apps/web/src/api/client.ts`), agreed
+      with F2, but `apps/api` has neither, so on staging the map shows "Something went wrong" (with
+      a code) and the badge shows 0. A student device therefore has no way into subject lessons
+      except a direct link. Not settled: F2's lane; no F2 branch or PR exists yet (2026-11-25).
+
 ## Resolved
 
 - [x] **Parent reward notification.** `docs/REWARDS.md` says the parent gets a notification when a
@@ -59,6 +65,11 @@
       built. Settled by H2 (2026-11-25): parent devices get one web push per reward
       (`apps/api/src/notifications/parent-rewards.ts`, migration 0006); not counted in the 2-a-day
       limit, respects the child's nightly quiet hours.
+- [x] **"Who's revising?" on a parent's device.** Picking a child opened `/map`, which needs the
+      student device cookie. Settled by the product owner (2026-11-25): parent view only. Tapping
+      a child opens the parent's stats dashboard for that child (`/parent/stats?student=<id>`),
+      with "Rewards you set" and "Link a device" per child and a "Family feedback" link; it never
+      opens student screens (`apps/web/src/pages/FamilyPage.tsx`, `docs/PRODUCT_RULES.md`).
 
 - [x] `docs/PRIVACY.md` principle 5 says data stays in the UK or EU, but `docs/AI.md` sends
       answers, essays and homework photos to Anthropic, OpenAI and Gemini, which may process them

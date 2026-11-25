@@ -1,12 +1,10 @@
-import { Navigate, type RouteObject } from 'react-router-dom';
+import { Navigate, useParams, type RouteObject } from 'react-router-dom';
 import { AppLayout, FocusLayout } from './layout/AppLayout';
 import { LinkPage } from './features/onboarding/LinkPage';
 import { OnboardingPage } from './features/onboarding/OnboardingPage';
 import { ComingSoon } from './pages/ComingSoon';
 import { FamilyPage } from './pages/FamilyPage';
 import { InstallHelpPage } from './pages/InstallHelpPage';
-import { LessonCompletePage } from './pages/LessonCompletePage';
-import { LessonPage } from './pages/LessonPage';
 import { MapPage } from './pages/MapPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { SettingsPage } from './pages/SettingsPage';
@@ -32,6 +30,11 @@ import { MyStatsPage } from './features/stats/MyStatsPage';
 import { ParentDashboardPage } from './features/stats/ParentDashboardPage';
 import { ParentHomePage, ParentRemindersPage } from './features/parent';
 
+function LessonRedirect() {
+  const { lessonId = '' } = useParams();
+  return <Navigate to={`/learn/topic/${encodeURIComponent(lessonId)}`} replace />;
+}
+
 export const routes: RouteObject[] = [
   {
     element: <FocusLayout />,
@@ -48,8 +51,9 @@ export const routes: RouteObject[] = [
       },
       { path: '/link', element: <LinkPage /> },
       { path: '/family/:studentId/rewards', element: <ParentRewardsPage /> },
-      { path: '/lesson/:lessonId', element: <LessonPage /> },
-      { path: '/lesson/:lessonId/complete', element: <LessonCompletePage /> },
+      // Old topic map links: the lesson player is /learn/topic/:topicId (workstream F).
+      { path: '/lesson/:lessonId', element: <LessonRedirect /> },
+      { path: '/lesson/:lessonId/complete', element: <Navigate to="/map" replace /> },
       { path: '/review', element: <ReviewQueuePage /> },
       // Parent home (workstream P): the way in to the parent pages.
       { path: '/parent', element: <ParentHomePage /> },

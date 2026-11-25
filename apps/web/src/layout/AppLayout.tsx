@@ -5,13 +5,14 @@ import { BottomNav } from '../components/BottomNav';
 import { MuteButton } from '../features/sound';
 import { OfflineBanner } from '../pwa/OfflineBanner';
 import { useStudent } from '../session/StudentContext';
+import { VersionFooter } from './VersionFooter';
 
 /** Flashcards due for the chosen student; zero while loading, on error or with nobody chosen. */
 function useCardsDue(): number {
   const api = useApi();
   const { studentId } = useStudent();
   const cards = useApiResource(
-    () => (studentId ? api.getCardsDue(studentId) : Promise.resolve({ due: 0 })),
+    () => (studentId ? api.getCardsDue() : Promise.resolve({ due: 0 })),
     [api, studentId],
   );
   return cards.status === 'ready' ? cards.data.due : 0;
@@ -33,6 +34,7 @@ export function AppLayout() {
         </header>
         <Outlet />
       </main>
+      <VersionFooter />
     </div>
   );
 }
@@ -45,6 +47,7 @@ export function FocusLayout() {
       <main id="main" className="focus-main" tabIndex={-1}>
         <Outlet />
       </main>
+      <VersionFooter />
     </>
   );
 }

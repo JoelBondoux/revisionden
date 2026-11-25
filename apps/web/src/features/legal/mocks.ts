@@ -7,7 +7,7 @@ import { defaultPolicyLibrary } from './policyFiles';
  * the current versions, so onboarding opens straight away.
  */
 export const legalHandlers: RequestHandler[] = [
-  http.get('*/api/v1/policy-acceptances', () =>
+  http.get('*/v1/policy-acceptances', () =>
     HttpResponse.json({
       acceptances: POLICIES_TO_ACCEPT.flatMap((policy) => {
         const version = defaultPolicyLibrary.version(policy);
@@ -15,7 +15,7 @@ export const legalHandlers: RequestHandler[] = [
       }),
     }),
   ),
-  http.put('*/api/v1/policy-acceptances', async ({ request }) => {
+  http.put('*/v1/policy-acceptances', async ({ request }) => {
     const body = (await request.json()) as { acceptances: { policy: string; version: string }[] };
     return HttpResponse.json({
       acceptances: body.acceptances.map((a) => ({ ...a, acceptedAt: new Date().toISOString() })),

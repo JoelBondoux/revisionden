@@ -1,12 +1,14 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '../components/Button';
+import { Link, useSearchParams } from 'react-router-dom';
+import { ButtonLink } from '../components/Button';
 import { Card } from '../components/Card';
 import { Pip } from '../components/Pip';
+import { useParentSession } from '../api/signIn';
+import { SignInButtons } from '../api/SignInButtons';
+import { SignOutButton } from '../api/SignOutButton';
 
 export function WelcomePage() {
-  const navigate = useNavigate();
-  // TODO(workstream B): replace with Better Auth sign-in. For now, go straight to the mock family.
-  const signIn = () => navigate('/family');
+  const [params] = useSearchParams();
+  const session = useParentSession();
 
   return (
     <div className="welcome stack">
@@ -16,14 +18,20 @@ export function WelcomePage() {
         <p className="welcome__tagline">Revision that finds the gaps.</p>
       </div>
       <Card title="Parents">
-        <div className="stack">
-          <Button block onClick={signIn}>
-            Continue with Google
-          </Button>
-          <Button block variant="secondary" onClick={signIn}>
-            Continue with Microsoft
-          </Button>
-        </div>
+        {session === 'signed-in' ? (
+          <div className="stack">
+            <p>You are signed in.</p>
+            <ButtonLink to="/family" block>
+              Continue
+            </ButtonLink>
+            <SignOutButton />
+          </div>
+        ) : (
+          <div className="stack">
+            {params.has('error') && <p role="alert">Sign-in did not finish. Please try again.</p>}
+            <SignInButtons returnTo="/family" />
+          </div>
+        )}
       </Card>
       <Card title="Students">
         <p className="secondary-text">

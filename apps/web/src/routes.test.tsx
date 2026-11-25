@@ -6,8 +6,6 @@ describe('routes', () => {
     ['/', 'RevisionDen'],
     ['/family', "Who's revising?"],
     ['/map', 'Topic map'],
-    ['/lesson/standard-form', 'Standard form'],
-    ['/lesson/demo/complete', 'Lesson complete!'],
     ['/progress', 'My stats'],
     ['/parent/stats', 'Stats dashboard'],
     ['/plan', 'Plan'],
@@ -35,7 +33,13 @@ describe('routes', () => {
     expect(screen.getByRole('main')).toBeInTheDocument();
   });
 
-  it.each(['/', '/lesson/standard-form', '/onboarding'])(
+  it('sends the old /lesson/:id links from the topic map to the real lesson player', async () => {
+    const { router } = renderRoute('/lesson/demo-topic-a');
+    await screen.findByRole('heading', { level: 1 });
+    expect(router.state.location.pathname).toBe('/learn/topic/demo-topic-a');
+  });
+
+  it.each(['/', '/learn/topic/demo-topic-a', '/onboarding'])(
     'hides the main navigation on %s to keep focus',
     async (path) => {
       renderRoute(path);
@@ -52,7 +56,7 @@ describe('routes', () => {
     );
   });
 
-  it.each(['/map', '/lesson/standard-form'])(
+  it.each(['/map', '/learn/topic/demo-topic-a'])(
     'shows the offline banner on %s when offline',
     async (path) => {
       Object.defineProperty(navigator, 'onLine', { configurable: true, get: () => false });

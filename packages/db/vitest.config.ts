@@ -11,6 +11,7 @@ export default defineConfig({
         'src/**/*.test.ts',
         'src/index.ts',
         'src/seed-cli.ts',
+        'src/migrate-cli.ts',
         'src/neon.ts',
         // Declarative table definitions; exercised by the migration and schema tests.
         'src/schema.ts',

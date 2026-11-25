@@ -48,6 +48,12 @@ describe('Parent home', () => {
     );
   });
 
+  it('preselects the child named in ?student= (from "Who\'s revising?")', async () => {
+    renderRoute('/parent?student=00000000-0000-4000-8000-0000000000a2');
+    expect(await screen.findByRole('region', { name: 'demo_owl' })).toBeInTheDocument();
+    expect(screen.getByLabelText('Student')).toHaveValue('00000000-0000-4000-8000-0000000000a2');
+  });
+
   it('offers reward news for this device', async () => {
     await open();
     expect(screen.getByRole('heading', { name: 'Reward news' })).toBeInTheDocument();

@@ -39,17 +39,17 @@ function reviewerApi({ role = 'subject-specialist' as string | null } = {}) {
   const decisions: unknown[] = [];
   let status = 'in_review';
   server.use(
-    http.get('*/api/v1/review/me', () =>
+    http.get('*/v1/review/me', () =>
       role
         ? HttpResponse.json({ role })
         : HttpResponse.json({ error: { code: 'forbidden', message: 'no' } }, { status: 403 }),
     ),
-    http.get('*/api/v1/review/reports', () => HttpResponse.json({ reports: [openReport] })),
-    http.post('*/api/v1/review/reports/:id/decision', async ({ request, params }) => {
+    http.get('*/v1/review/reports', () => HttpResponse.json({ reports: [openReport] })),
+    http.post('*/v1/review/reports/:id/decision', async ({ request, params }) => {
       decisions.push({ report: params.id, ...((await request.json()) as object) });
       return HttpResponse.json({ id: params.id, status: 'no_error' });
     }),
-    http.get('*/api/v1/review/batches', () =>
+    http.get('*/v1/review/batches', () =>
       HttpResponse.json({
         batches: [
           {
@@ -64,7 +64,7 @@ function reviewerApi({ role = 'subject-specialist' as string | null } = {}) {
         ],
       }),
     ),
-    http.get(`*/api/v1/review/batches/${BATCH_ID}`, () =>
+    http.get(`*/v1/review/batches/${BATCH_ID}`, () =>
       HttpResponse.json({
         id: BATCH_ID,
         title: 'Fixture batch',
@@ -76,7 +76,7 @@ function reviewerApi({ role = 'subject-specialist' as string | null } = {}) {
       }),
     ),
     http.post(
-      `*/api/v1/review/batches/${BATCH_ID}/items/:itemId/decision`,
+      `*/v1/review/batches/${BATCH_ID}/items/:itemId/decision`,
       async ({ request, params }) => {
         const body = (await request.json()) as { decision: string };
         decisions.push({ item: params.itemId, ...body });
@@ -168,7 +168,7 @@ describe('Batch review', () => {
 
   it('offers a retry when the batch cannot be loaded', async () => {
     reviewerApi();
-    server.use(http.get(`*/api/v1/review/batches/${BATCH_ID}`, () => HttpResponse.error()));
+    server.use(http.get(`*/v1/review/batches/${BATCH_ID}`, () => HttpResponse.error()));
     renderRoute(`/review/batches/${BATCH_ID}`);
     expect(await screen.findByRole('button', { name: 'Try again' })).toBeInTheDocument();
   });

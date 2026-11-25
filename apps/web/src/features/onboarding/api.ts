@@ -1,3 +1,4 @@
+import { failureRef } from '../../api/client';
 import { z, type ZodType } from 'zod';
 import {
   AvatarCodeSchema,
@@ -19,6 +20,8 @@ export class OnboardingApiError extends Error {
     message: string,
     readonly status?: number,
     readonly details: string[] = [],
+    /** Reference code shown to the user and logged on the server. */
+    readonly ref?: string,
   ) {
     super(message);
     this.name = 'OnboardingApiError';
@@ -86,19 +89,28 @@ export function createOnboardingApi({
     const json: unknown = await response.json().catch(() => undefined);
     if (!response.ok) {
       const parsed = errorBodySchema.safeParse(json);
+      const ref = failureRef({ baseUrl, fetch }, response, json);
       if (parsed.success) {
         const { code, message, details } = parsed.data.error;
-        throw new OnboardingApiError(code, message, response.status, details);
+        throw new OnboardingApiError(code, message, response.status, details, ref);
       }
       throw new OnboardingApiError(
         'http',
         'Something went wrong. Please try again.',
         response.status,
+        [],
+        ref,
       );
     }
     const parsed = schema.safeParse(json);
     if (!parsed.success) {
-      throw new OnboardingApiError('schema', 'The server sent something unexpected.');
+      throw new OnboardingApiError(
+        'schema',
+        'Something went wrong. Please try again.',
+        response.status,
+        [],
+        failureRef({ baseUrl, fetch }, response, json, 'schema'),
+      );
     }
     return parsed.data;
   }

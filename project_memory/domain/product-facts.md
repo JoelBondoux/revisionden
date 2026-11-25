@@ -9,6 +9,8 @@ Tags: #product #rules #limits #defaults
 
 - One parent account per family; signs in with Google or Microsoft. Apple sign-in deferred (needs
   a paid Apple developer membership).
+- Each sign-in provider is optional, but at least one must be set up; the welcome page shows only
+  the configured ones (`GET /v1/auth/providers`). The owner is starting with Google only.
 - Students have no outside account: nickname (2–16 letters, numbers, underscore), avatar code and
   year group only. Devices linked by a one-time QR token (10 minutes, single use), then a passkey.
 - Nicknames are unique within a family. A family is created the first time a parent signs in.
@@ -85,9 +87,23 @@ Tags: #product #rules #limits #defaults
   mission card suggests what to do next. The Cards tab shows how many flashcards are due.
 - Mascot: Pip, an angular geometric fox (orange `#FF7A2F`). Brand violet `#6C47F5`; font Nunito,
   self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
-- Works offline for the app shell; API calls are never cached. iPad users get an "Add to Home
+- Works offline for the app shell; API calls are never cached. Pages always come fresh from the
+  server when online. The app checks `/version.json` on start, on return to the foreground and
+  every 15 minutes and shows "A new version of RevisionDen is ready." with Refresh; an API reply
+  that suggests the app is out of date makes it reload by itself once per new build. iPad users get an "Add to Home
   Screen" help page (`/install`), because iPadOS has no install prompt.
-- Until the real API and sign-in land, the web app runs on an MSW mock API with made-up data.
+- The web app calls the real API on dev and staging (parent session cookie, or the student
+  device cookie). MSW mocks with made-up data are used only in local development and tests, and
+  must use real API paths (`apps/api/routes.json`). Parents sign in from the welcome page
+  (Better Auth) and land on "Who's revising?" (`/family`, `GET /v1/onboarding/family`), or on
+  `/onboarding` if they have no children yet. Tapping a child there opens the parent's view
+  (the parent home `/parent?student=<id>` with that child chosen), never student screens; each child has "Rewards you set" and
+  "Link a device" (product owner, 2026-11-25). Students use only their own linked device. Signed out, any screen shows the sign-in buttons
+  and returns to the same page after sign-in. Sign out is on the welcome page and `/family`. The topic map and Cards badge wait for F2's
+  `GET /v1/student/map` and `GET /v1/student/cards/due`.
+- Every "Something went wrong" shows a reference code like `RD-7K2M9Q` (no I, L, O or U), also
+  in the API logs with no personal data, so a family can report it. Implemented in
+  `packages/core/src/error-ref.ts`, `apps/api/src/errors.ts`, `apps/web/src/api/client.ts`.
 - Parent onboarding is at `/onboarding` (family list, add a child, school report, link a device,
   finish); the student scans the QR code to `/link` and sets up a passkey.
 - Avatars are drawn as layered SVG from the avatar code (`apps/web/src/features/avatar`).
@@ -159,8 +175,26 @@ Tags: #product #rules #limits #defaults
 
 ## Hosting
 
-- Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Planned hosts: `revisionden.com` and
+- Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Hosts: `revisionden.com` and
   `api.revisionden.com` (production), `staging.` and `api-staging.` (staging), `dev.` and `api-dev.` (development).
+- Live since 2026-11-25 (workstream G): API Workers on all three API hosts; web app on `dev.` and
+  `staging.`. The production web app waits for the operator details (its build fails without them).
+- Workers: `revisionden-api-dev`, `revisionden-api-staging`, `revisionden-api` (API) and
+  `revisionden-web-dev`, `revisionden-web-staging`, `revisionden-web` (web, static assets only).
+- Database: Neon project `revisionden` in London (`aws-eu-west-2`), Postgres 17, database
+  `revisionden`; branch `main` is production, `staging` and `dev` branch off it.
+- Uploads: R2 buckets `revisionden-uploads-<dev|staging|production>` in the EU jurisdiction, each
+  with a rule deleting objects (and unfinished uploads) after 24 hours.
+- AI Gateway `revisionden`: authenticated (Cloudflare requires it for new gateways, so the API
+  needs `AI_GATEWAY_TOKEN`), logging on but the API sends `cf-aig-collect-log-payload: false` so
+  prompts and answers are never stored, cache off, 120 requests a minute.
+- Deploys: GitHub Actions. Push to `dev` deploys dev, push to `staging` deploys staging, and
+  production deploys after the release bump on `main`. Each deploy migrates the database first,
+  then the API, then the web app, then checks `/health` shows the new version.
+- `GET /health` always answers with the version: `ok` (200) when configured, `misconfigured`
+  (503) while a required secret is missing. Dev and staging deploys accept `misconfigured`;
+  production does not.
+- The app shows its version in a small footer on every page (links to About).
 
 ## Verification (no mistakes on the education side)
 
@@ -213,6 +247,8 @@ Tags: #product #rules #limits #defaults
 - Content and verification sessions run in the `revisionden` cloud environment, which can reach
   the exam board sites (Pearson, AQA, OCR, WJEC/Eduqas) and gov.uk. Other sessions use the default
   environment, which cannot.
+- The `revisionden` environment can also reach the three Neon database hosts and the six
+  revisionden.com hosts (added for workstream G, to run migrations and check the live sites).
 
 ## Rewards progression
 
@@ -285,7 +321,8 @@ Tags: #product #rules #limits #defaults
 
 - `/parent` (workstream P): student switcher, per-child "Rewards you set" and "Reminder times"
   (`/parent/reminders/:id`), stats dashboard, add or manage children, family feedback, Reward
-  news, app settings and policies. Linked from `/family` (where a parent lands after signing in)
+  news, app settings and policies. Tapping a child on `/family` (where a parent lands after
+  signing in) opens `/parent?student=<id>` with that child chosen; also linked from `/family`
   and Settings. No focus-suggestions or export page exists yet, so neither has a card.
 
 ## Policies, About and feedback
@@ -295,10 +332,17 @@ Tags: #product #rules #limits #defaults
   Shown at `/legal/<name>`, signed out, printable. Operator name, email and address are
   build-time placeholders, never in the repository.
 - About page: version, environment, build date, commit, "What's new" (the `### What's new`
-  lines in `CHANGELOG.md`), policy links, open-source licences.
+  lines in `CHANGELOG.md`), policy links, open-source licences, and "Need help? Email
+  help@revisionden.com".
+- Contacts: help and support `help@revisionden.com` (`VITE_SUPPORT_EMAIL`, that default when
+  unset; on About, the feedback form, the accessibility statement and community rules); privacy,
+  data rights and security `privacy@revisionden.com` (`VITE_CONTACT_EMAIL`). Both forward to the
+  product owner (Cloudflare Email Routing).
 - Feedback kinds: bug, idea, something confusing, other; text up to 500 characters with personal
   details refused; device details optional; parents see their family's feedback; never sent to
   GitHub automatically; 5 in any 24 hours per sender; device details off by default for students, on for parents; deleted 12 months after closing (cron).
+  The form also offers "Prefer email? help@revisionden.com" and asks for only the personal details
+  needed.
   Operator triage at `/admin/feedback` for sign-in emails in `OPERATOR_EMAILS`. Workstream L.
 - Parents confirm the terms and privacy notice in onboarding (version stored in
   `policy_acceptances`); a changed version shows a "We've updated" prompt. A newly linked student
@@ -309,13 +353,23 @@ Tags: #product #rules #limits #defaults
 - Original Web Audio sounds, no files. Header quick mute and Settings (on/off, volume, tap sounds
   off by default), per device; follows the iOS silent switch where possible. No correct/wrong
   sounds in Test mode before submit. Sound is never the only signal. Workstream U.
+- Reward sounds scale with rarity (common, rare, epic, legendary; 4+ variations each, no repeat
+  in a row); milestone ladders and levels climb in pitch and fullness; one sound for several
+  rewards at once; legendary at most 3 s and skippable (owner, 2026-11-25; U4).
+- Reward sound details (U4, `apps/web/src/features/sound/rewardSounds.ts`, `rewardBank.ts`): tier
+  = the reward's rarity, except prestige stars always play legendary (prestige 1 to 3 are epic in
+  the catalogue). Ladder step = position in its milestone ladder; level step = level ÷ 10. Each
+  step is 1.5 semitones higher (8 steps = an octave) and adds one harmony note (up to 4). Voice per
+  chapter id (`chapter-<n>-…`); finisher fanfares for the chapter rewards that need
+  `gcseFinished` or `aLevelFinished`. Biggest = tier, then finisher, then step. Played on the
+  Rewards screen for `newlyEarned`; a tap or key press skips legendary.
 - Defaults: on, medium volume, tap sounds off; saved in `localStorage` key `revisionden.sound`
   (storage errors are ignored). One AudioContext, made at the first tap or key press; paused when
   the app is hidden. Test mode: submit and one reveal for the set; timed papers: only the timer
   warning (once, at 1 minute left). Implemented in `apps/web/src/features/sound/`.
 - Wired so far: lessons (correct, wrong, part marks, daily goal met, lesson complete), starting
-  test (submit, reveal, timer warning) and flashcards (flip, rating). Level up, rewards, gifts and
-  plan sounds exist in the bank but wait for their screens.
+  test (submit, reveal, timer warning), flashcards (flip, rating) and the Rewards screen (new
+  rewards, U4). Gifts and plan sounds exist in the bank but wait for their screens.
 
 ## Owner decisions (2026-11-25)
 

@@ -3,9 +3,10 @@ import { execSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv, type UserConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { listLicences } from './src/features/about/licences';
+import { assertProductionDetails } from './src/features/legal/productionGuard';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(here, '..', '..');
@@ -46,9 +47,34 @@ const licences = listLicences(readJson(join(here, 'package.json')) ?? {}, (name)
   return existsSync(path) ? readJson(path) : undefined;
 });
 
-export default defineConfig({
-  plugins: [react()],
+export default defineConfig(({ command, mode }) => {
+  // A production build without the operator details must fail (workstream G, decision 0003).
+  if (command === 'build')
+    assertProductionDetails({ ...loadEnv(mode, here, 'VITE_'), ...process.env });
+  return config;
+});
+
+/** Identifies this build; the app compares it with /version.json to spot a newer deploy. */
+const buildId = `${appVersion()}-${shortCommit()}`;
+
+/** Writes /version.json next to the app, so a running copy can tell a newer one was deployed. */
+const versionFile = {
+  name: 'revisionden-version-file',
+  generateBundle(this: {
+    emitFile: (file: { type: 'asset'; fileName: string; source: string }) => void;
+  }) {
+    this.emitFile({
+      type: 'asset',
+      fileName: 'version.json',
+      source: `${JSON.stringify({ build: buildId })}\n`,
+    });
+  },
+};
+
+const config: UserConfig = {
+  plugins: [react(), versionFile],
   define: {
+    __BUILD_ID__: JSON.stringify(buildId),
     __APP_VERSION__: JSON.stringify(appVersion()),
     __BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)),
     __COMMIT__: JSON.stringify(shortCommit()),
@@ -76,4 +102,4 @@ export default defineConfig({
       thresholds: { lines: 70, functions: 70, branches: 70, statements: 70 },
     },
   },
-});
+};

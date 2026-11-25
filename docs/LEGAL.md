@@ -54,7 +54,10 @@ never drift apart.
   postal address is shown (product owner, 2026-11-25); `{{POSTAL_ADDRESS}}` is still supported if
   one is ever added. A build
   without them shows "contact details to be added". `{{EFFECTIVE_DATE}}` comes from
-  `VITE_POLICY_EFFECTIVE_DATE` ("date to be added" when unset). Production builds fail without them
+  `VITE_POLICY_EFFECTIVE_DATE` ("date to be added" when unset). `{{SUPPORT_EMAIL}}` (help
+  requests) comes from `VITE_SUPPORT_EMAIL`, default `help@revisionden.com` (not personal data, so
+  the default is in the repository). `{{CONTACT_EMAIL}}` (`privacy@revisionden.com`) stays the
+  contact for privacy questions, data rights and security. Production builds fail without them
   (workstream G).
 - **Accurate legal references only.** Name laws and guidance exactly (UK GDPR, Data Protection
   Act 2018, Privacy and Electronic Communications Regulations 2003, ICO Age Appropriate Design

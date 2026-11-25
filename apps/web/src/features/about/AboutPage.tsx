@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import changelogText from '../../../../../CHANGELOG.md?raw';
 import { Card } from '../../components/Card';
 import { usePolicyLibrary } from '../legal/PolicyLibraryContext';
+import { SUPPORT_EMAIL } from '../legal/supportEmail';
 import { buildInfo, type BuildInfo } from './buildInfo';
 import { parseWhatsNew } from './whatsNew';
 import './about.css';
@@ -57,6 +58,9 @@ export function AboutPage({ info = buildInfo, changelog = changelogText }: About
       </Card>
 
       <Card title="Tell us what you think">
+        <p>
+          Need help? Email <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
+        </p>
         <ul className="link-list">
           <li>
             <Link to="/feedback?kind=bug">Report a bug</Link>

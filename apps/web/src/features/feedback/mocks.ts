@@ -17,10 +17,10 @@ const demo = [
 const sent = () => new HttpResponse(null, { status: 201 });
 
 export const feedbackHandlers: RequestHandler[] = [
-  http.post('*/api/v1/student/feedback', sent),
-  http.post('*/api/v1/feedback', sent),
-  http.get('*/api/v1/feedback', () => HttpResponse.json({ feedback: demo })),
-  http.get('*/api/v1/student/feedback', () =>
+  http.post('*/v1/student/feedback', sent),
+  http.post('*/v1/feedback', sent),
+  http.get('*/v1/feedback', () => HttpResponse.json({ feedback: demo })),
+  http.get('*/v1/student/feedback', () =>
     HttpResponse.json({
       feedback: demo.map((item) => {
         const own: Partial<typeof item> = { ...item };
@@ -30,7 +30,7 @@ export const feedbackHandlers: RequestHandler[] = [
     }),
   ),
   // The demo parent is not an operator: triage answers 404, as the real API does.
-  http.get('*/api/v1/admin/feedback', () =>
+  http.get('*/v1/admin/feedback', () =>
     HttpResponse.json({ error: { code: 'not_found', message: 'Not found' } }, { status: 404 }),
   ),
 ];

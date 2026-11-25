@@ -15,6 +15,51 @@ const complete = {
   UPLOADS: { put: () => undefined },
 };
 
+describe('sign-in providers', () => {
+  const without = (...keys: string[]) => {
+    const env: Record<string, unknown> = { ...complete };
+    for (const key of keys) delete env[key];
+    return env;
+  };
+
+  it('offers both providers when both are configured', () => {
+    expect(parseEnv(complete).signInProviders).toEqual(['google', 'microsoft']);
+  });
+
+  it('starts with Google only', () => {
+    const config = parseEnv(without('MICROSOFT_CLIENT_ID', 'MICROSOFT_CLIENT_SECRET'));
+    expect(config.signInProviders).toEqual(['google']);
+    expect(config.microsoft).toBeUndefined();
+    expect(config.google).toEqual({ clientId: 'google-id', clientSecret: 'google-secret' });
+  });
+
+  it('starts with Microsoft only', () => {
+    const config = parseEnv(without('GOOGLE_CLIENT_ID', 'GOOGLE_CLIENT_SECRET'));
+    expect(config.signInProviders).toEqual(['microsoft']);
+    expect(config.google).toBeUndefined();
+  });
+
+  it('names the missing half of a provider set up with only its id or secret', () => {
+    expect(() => parseEnv(without('MICROSOFT_CLIENT_SECRET'))).toThrow(
+      /Missing or invalid environment: MICROSOFT_CLIENT_SECRET$/,
+    );
+    expect(() => parseEnv(without('GOOGLE_CLIENT_ID'))).toThrow(/GOOGLE_CLIENT_ID$/);
+  });
+
+  it('needs at least one provider', () => {
+    expect(() =>
+      parseEnv(
+        without(
+          'GOOGLE_CLIENT_ID',
+          'GOOGLE_CLIENT_SECRET',
+          'MICROSOFT_CLIENT_ID',
+          'MICROSOFT_CLIENT_SECRET',
+        ),
+      ),
+    ).toThrow(/GOOGLE_CLIENT_ID, MICROSOFT_CLIENT_ID/);
+  });
+});
+
 describe('environment validation', () => {
   it('accepts a complete environment and returns typed config', () => {
     const config = parseEnv(complete);

@@ -1,0 +1,17 @@
+{
+  "name": "@revisionden/e2e",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "End-to-end and accessibility checks (Playwright + axe) at phone, tablet and desktop sizes.",
+  "scripts": {
+    "e2e": "playwright test --trace off",
+    "typecheck": "tsc --noEmit",
+    "smoke": "playwright test --config playwright.smoke.config.ts --trace off"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.1",
+    "@playwright/test": "1.63.0",
+    "@types/node": "^22.20.5"
+  }
+}
