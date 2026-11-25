@@ -10,6 +10,7 @@ import { ErrorRef, refOf, type ErrorDetails } from '../../api/ErrorRef';
 import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { ProgressBar } from '../../components/ProgressBar';
+import { useHideBugButton } from '../feedback/bugButtonContext';
 import { ArenaProgress } from '../juice';
 import { useSound } from '../sound';
 import { useLearnApi } from './learnApi';
@@ -63,6 +64,7 @@ function Runner({
 }) {
   const api = useLearnApi();
   const { play } = useSound();
+  useHideBugButton(true); // Test mode questions: no bug button until the results.
   const [index, setIndex] = useState(0);
   const [draft, setDraft] = useState<Draft>(null);
   const [busy, setBusy] = useState(false);

@@ -461,6 +461,13 @@ Tags: #product #rules #limits #defaults
   +50 XP and a step on the hidden Bug Hunter track (badge, title, avatar item, frame, Pip outfit,
   effect, legendary set at 20). Duplicates +10 XP; at most 3 confirmed-bug rewards a week; parents
   are thanked, not rewarded.
+- Built (L7): the bug button and confirm flow; rules in `packages/core/src/bug-hunter.ts`
+  (`bugReward`). The week is Monday to Sunday, UK time, and the 3-a-week cap counts full and
+  duplicate rewards; past the cap the student is thanked with no XP and no track step. Bug XP is
+  added to total XP but not to the daily goal or streak. Students switch the button off in Settings
+  (`revisionden.bugButton` in local storage). Confirmed count: `confirmedBugCount` in
+  `apps/api/src/feedback/bugHunter.ts`, `GET /v1/student/bug-hunter`,
+  `GET /v1/students/:id/bug-hunter`. The track items are R's.
 - Secret achievements: hidden "???" cards with a found count; learning-based conditions only;
   defined in the catalogue with `secret: true`. Detail: `docs/REWARDS.md`.
 
@@ -527,3 +534,29 @@ Tags: #product #rules #limits #defaults
   Maths topics with items (n4, n7, a4, a6, a17, a18, r9, g9, g17), URLs found by web search only.
   All 11 returned 200 in the CI link check on 2026-11-25, so `checked_at` is set and the buttons
   show. No Bitesize links yet: bbc.co.uk could not be reached from the build environment.
+
+## Operator console (planned)
+
+- Operators use AppDeck Admin (repo `appdeck-admin`) with RevisionDen as a managed app. AppDeck has
+  no database access; it calls a signed operator bridge (HMAC tag `appdeck-revisionden-operator-v1`,
+  per-environment shared secret, 5-minute window, idempotent request ids), and every operator read
+  and change is audited. Agents: support; Managers: money and data. Complaints: acknowledge in 2
+  working days, aim to resolve in 14. Data requests: one calendar month. Family tags (for example
+  Beta tester, Press, Friends & family) are internal; Managers define them and their effects (early
+  access, complimentary Premium, exclude from metrics); Agents apply them. Detail:
+  `docs/OPERATOR_CONSOLE.md`.
+
+## Pricing (agreed 2026-11-25; not live)
+
+- Free app; Premium per child per month £9.99, £4.99, £2.99, then free; annual about £79.99;
+  14-day trial; web only; prices include VAT. Learning, safety and accessibility stay free; offers
+  only to parents; rewards never sold; no adverts. Free school meals: scheme choice and date only,
+  declaration, soft checks, rare spot checks. Detail: `docs/PRICING.md`, decision 0004.
+- Read aloud (Q2, built): Web Speech API only, no audio sent by us. Voice: on-device British
+  English, then any on-device English, then online English. On by default only with an on-device
+  voice; with only online voices it starts off and Settings says the device's speech service may
+  process the text. Speed Slower 0.75 / Normal 1 / Faster 1.25. Saved in `localStorage` key
+  `revisionden.readAloud` (`enabled` null until chosen). Speaker buttons: lesson question (with
+  options and unit), feedback (verdict, answer, explanation), flashcard front or back. Maths read
+  as words (`x^2` "x squared", `8^(2/3)` "8 to the power 2 over 3", `cm^2` "square centimetres",
+  `√`, `π`, `×`, `÷`, `≤`, `≥`). `apps/web/src/features/read-aloud/`. Privacy notice 1.4 (6.4); young people's notice 1.3.
