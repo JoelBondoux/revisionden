@@ -74,6 +74,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Rewards R7b fixes (from review): Comeback Kid ignores flashcard self-ratings (they never change mastery), and its counter replays only the 30-answer mastery window, so long histories stay fast.
 - Rewards R7b: six more hidden tracks (Fact Checker, Comeback Kid, Explorer, Planner, Pace Setter, Perfectionist) with `track-stats.ts` (`weakSpotsTurnedStrong`, `practiceKindsTried`), new stats, quill and explorer hat avatar items, and embers, pace stripes and prism effect art. Fact Checker, Planner, Pace Setter and Perfectionist count 0 until their data exists.
 - Rewards R7: Bug Hunter hidden track (`confirmedBugs` from L's `confirmedBugCount`; L's bug reward XP added to reward XP for levels), 24 secret achievements with masked `???` overview cards, `secret-stats.ts`, `effect` reward item kind, magnifier avatar item and glitch effect art.
 
