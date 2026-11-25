@@ -504,6 +504,24 @@ So nobody runs an old copy of the app for long after a deploy (decided 2026-11-2
   build, so it can never get stuck or loop. Without browser storage it only shows the banner.
 - Implemented: `apps/web/public/sw.js`, `apps/web/src/pwa/updates.tsx`, `apps/web/vite.config.ts`.
 
+## Add RevisionDen to this device (I6)
+
+Owner request, 2026-11-25: a clear install button, not only a text link in Settings.
+
+- A card with Pip, "Add RevisionDen to this device", on the child's topic map and the parent home.
+  It is a card in the page, never a pop-up. Settings has the same entry as a button.
+- **Chrome, Edge and Android:** the app keeps the browser's install prompt (`beforeinstallprompt`)
+  and shows it when the button is tapped.
+- **iPhone and iPad Safari** (no install prompt): the button opens a sheet with three illustrated
+  steps (Share, Add to Home Screen, Add), worded for an iPhone or an iPad. `/install` shows the
+  same steps for the device in use (both, plus the Chrome and Edge way, on other devices).
+- **Browsers that cannot install** (for example Firefox on a computer): no card; Settings links to
+  `/install`.
+- Hidden once installed (opened from the Home Screen, `display-mode: standalone`, or the
+  `appinstalled` event), and for 30 days after "Not now" on this device (local storage
+  `revisionden.installDismissed`).
+- Implemented: `apps/web/src/pwa/{install.ts,InstallCard.tsx,IosSteps.tsx,installStore.ts}`.
+
 ## Daily limit (wellbeing)
 
 Requested by the product owner on 2026-11-25. One daily limit per student, in **active study
