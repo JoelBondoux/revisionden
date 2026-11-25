@@ -1,4 +1,5 @@
-import type { CardsDue, Family, Lesson, TopicMap } from '../api/schemas';
+import type { CardsDue, TopicMap } from '@revisionden/core';
+import type { Family, Lesson } from '../api/schemas';
 
 /* Made-up demo data. Never put real names, schools or answers here. */
 

@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import type { NextMission } from '../api/schemas';
+import type { NextMission } from '@revisionden/core';
 import { ButtonLink } from '../components/Button';
 import { Pip } from '../components/Pip';
 
@@ -17,7 +17,7 @@ export function NextMissionCard({ mission }: { mission: NextMission }) {
         <p className="mission__time">{mission.minutes} min</p>
       </div>
       <ButtonLink
-        to={`/lesson/${mission.lessonId}`}
+        to={`/learn/topic/${mission.lessonId}`}
         variant="gold"
         aria-label={`Go: ${mission.title}`}
       >

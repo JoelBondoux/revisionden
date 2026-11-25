@@ -1,16 +1,13 @@
 import type { ZodType } from 'zod';
+import { CardsDueSchema, TopicMapSchema, type CardsDue, type TopicMap } from '@revisionden/core';
 import {
   answerResultSchema,
-  cardsDueSchema,
   familySchema,
   lessonSchema,
-  topicMapSchema,
   type AnswerRequest,
   type AnswerResult,
-  type CardsDue,
   type Family,
   type Lesson,
-  type TopicMap,
 } from './schemas';
 
 export type ApiErrorKind = 'network' | 'http' | 'schema';
@@ -28,8 +25,10 @@ export class ApiError extends Error {
 
 export interface ApiClient {
   getFamily(): Promise<Family>;
-  getTopicMap(studentId: string): Promise<TopicMap>;
-  getCardsDue(studentId: string): Promise<CardsDue>;
+  /** The signed-in student's topic map (student device session, F2). */
+  getTopicMap(subjectId?: string): Promise<TopicMap>;
+  /** How many flashcards the signed-in student has due (F2). */
+  getCardsDue(): Promise<CardsDue>;
   getLesson(lessonId: string): Promise<Lesson>;
   submitAnswer(lessonId: string, answer: AnswerRequest): Promise<AnswerResult>;
 }
@@ -68,10 +67,14 @@ export function createApiClient({
 
   return {
     getFamily: () => request('family', familySchema),
-    getTopicMap: (studentId) =>
-      request(`students/${encodeURIComponent(studentId)}/map`, topicMapSchema),
-    getCardsDue: (studentId) =>
-      request(`students/${encodeURIComponent(studentId)}/cards/due`, cardsDueSchema),
+    // Student routes use the device session cookie.
+    getTopicMap: (subjectId) =>
+      request(
+        `v1/student/map${subjectId ? `?subjectId=${encodeURIComponent(subjectId)}` : ''}`,
+        TopicMapSchema,
+        { credentials: 'include' },
+      ),
+    getCardsDue: () => request('v1/student/cards/due', CardsDueSchema, { credentials: 'include' }),
     getLesson: (lessonId) => request(`lessons/${encodeURIComponent(lessonId)}`, lessonSchema),
     submitAnswer: (lessonId, answer) =>
       request(`lessons/${encodeURIComponent(lessonId)}/answers`, answerResultSchema, {

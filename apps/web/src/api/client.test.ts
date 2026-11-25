@@ -30,13 +30,22 @@ describe('API client', () => {
     await expect(client.getFamily()).rejects.toMatchObject({ kind: 'network' });
   });
 
-  it('fetches the topic map for a student', async () => {
-    const map = await client.getTopicMap('student-1');
+  it('fetches the topic map from the student routes with the device cookie', async () => {
+    let seen: { url: string; credentials?: RequestCredentials } | undefined;
+    const spy = createApiClient({
+      baseUrl: 'http://api.test/api',
+      fetch: async (input, init) => {
+        seen = { url: String(input), credentials: init?.credentials };
+        return Response.json(await (await fetch('http://api.test/api/v1/student/map')).json());
+      },
+    });
+    const map = await spy.getTopicMap();
     expect(map.units.length).toBeGreaterThan(0);
+    expect(seen).toEqual({ url: 'http://api.test/api/v1/student/map', credentials: 'include' });
   });
 
-  it('fetches how many flashcards are due', async () => {
-    const cards = await client.getCardsDue('student-1');
+  it('fetches how many flashcards are due from the student routes', async () => {
+    const cards = await client.getCardsDue();
     expect(cards.due).toBeGreaterThanOrEqual(0);
   });
 

@@ -8,8 +8,6 @@ import { feedbackHandlers } from '../features/feedback/mocks';
 import { legalHandlers } from '../features/legal/mocks';
 import { statsHandlers } from '../features/stats/mocks';
 
-const isKnownStudent = (id: unknown) => family.students.some((s) => s.id === id);
-
 const normalise = (value: string) => value.trim().toLowerCase().replace(/\s+/g, '');
 
 /** Mock API used in development and tests until the real API (workstream B) is ready. */
@@ -17,17 +15,9 @@ export const handlers: RequestHandler[] = [
   ...onboardingHandlers,
   http.get('*/api/family', () => HttpResponse.json(family)),
 
-  http.get('*/api/students/:studentId/map', ({ params }) =>
-    isKnownStudent(params.studentId)
-      ? HttpResponse.json(topicMap)
-      : new HttpResponse(null, { status: 404 }),
-  ),
-
-  http.get('*/api/students/:studentId/cards/due', ({ params }) =>
-    isKnownStudent(params.studentId)
-      ? HttpResponse.json(cardsDue)
-      : new HttpResponse(null, { status: 404 }),
-  ),
+  // Student routes (device session) for the Map tab and the Cards badge (F2).
+  http.get('*/v1/student/map', () => HttpResponse.json(topicMap)),
+  http.get('*/v1/student/cards/due', () => HttpResponse.json(cardsDue)),
 
   http.get('*/api/lessons/:lessonId', ({ params }) => {
     const lesson = lessons[String(params.lessonId)];

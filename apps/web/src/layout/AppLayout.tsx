@@ -11,7 +11,7 @@ function useCardsDue(): number {
   const api = useApi();
   const { studentId } = useStudent();
   const cards = useApiResource(
-    () => (studentId ? api.getCardsDue(studentId) : Promise.resolve({ due: 0 })),
+    () => (studentId ? api.getCardsDue() : Promise.resolve({ due: 0 })),
     [api, studentId],
   );
   return cards.status === 'ready' ? cards.data.due : 0;

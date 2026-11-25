@@ -33,7 +33,7 @@ describe('Topic map screen', () => {
     expect(mission).toHaveTextContent('Fix weak spot: Surds');
     expect(within(mission).getByRole('link', { name: /go/i })).toHaveAttribute(
       'href',
-      '/lesson/surds',
+      '/learn/topic/surds',
     );
   });
 
@@ -66,7 +66,7 @@ describe('Topic map screen', () => {
 
   it('hides the mission card when there is no mission', async () => {
     server.use(
-      http.get('*/api/students/:id/map', async () => {
+      http.get('*/v1/student/map', async () => {
         const { topicMap } = await import('../mocks/data');
         return HttpResponse.json({ ...topicMap, nextMission: null });
       }),
@@ -77,7 +77,7 @@ describe('Topic map screen', () => {
   });
 
   it('offers a retry when the map cannot be loaded', async () => {
-    server.use(http.get('*/api/students/:id/map', () => HttpResponse.error()));
+    server.use(http.get('*/v1/student/map', () => HttpResponse.error()));
     renderRoute('/map');
     expect(await screen.findByRole('button', { name: 'Try again' })).toBeInTheDocument();
   });
