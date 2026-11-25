@@ -3,6 +3,7 @@
 @import '@fontsource/nunito/900.css';
 @import './tokens.css';
 @import './arena.css';
+@import './motion.css';
 
 *,
 *::before,

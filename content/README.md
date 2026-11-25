@@ -13,6 +13,7 @@ validated in CI. Owned by workstream D (see `docs/WORKSTREAMS.md`).
 | `topic-trees/`     | One tree per subject, board and tier             | `schemas/topic-tree.schema.json`       |
 | `items/`           | JSON arrays of items, any sub-folder             | `schemas/item.schema.json` (each item) |
 | `mark-schemes/`    | Reusable mark schemes (points or levels)         | `schemas/mark-scheme.schema.json`      |
+| `support/`         | UK support services for the Get help page        | `schemas/support-services.schema.json` |
 | `equation-sheets/` | Official equation sheets, with citations         | checked by `pnpm content:exact-check`  |
 
 Check everything with `pnpm content:validate` (see `docs/CONTENT_PLAN.md`). The verification

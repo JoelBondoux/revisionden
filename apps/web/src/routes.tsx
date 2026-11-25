@@ -29,6 +29,7 @@ import { AdminFeedbackPage, FeedbackListPage } from './features/feedback/lists';
 import { MyStatsPage } from './features/stats/MyStatsPage';
 import { ParentDashboardPage } from './features/stats/ParentDashboardPage';
 import { ParentHomePage, ParentRemindersPage } from './features/parent';
+import { HelpLayout, HelpPage } from './features/help';
 
 function LessonRedirect() {
   const { lessonId = '' } = useParams();
@@ -36,6 +37,14 @@ function LessonRedirect() {
 }
 
 export const routes: RouteObject[] = [
+  {
+    // Get help (workstream W): a calm page with no navigation and no API calls, signed in or out.
+    element: <HelpLayout />,
+    children: [
+      { path: '/help', element: <HelpPage audience="student" /> },
+      { path: '/parent/help', element: <HelpPage audience="parent" /> },
+    ],
+  },
   {
     element: <FocusLayout />,
     children: [
