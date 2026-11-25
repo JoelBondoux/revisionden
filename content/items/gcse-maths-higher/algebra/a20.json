@@ -7,12 +7,8 @@
     "learning_point": "gcse-maths-h-a20-lp-iterate",
     "expected_seconds": 30,
     "prompt": "Use the iteration formula x_(n+1) = 2 + 3/x_n with x_0 = 1 to work out x_1.",
-    "answer": {
-      "value": "5"
-    },
-    "verify": {
-      "expression": "2 + 3/1"
-    },
+    "answer": { "value": "5" },
+    "verify": { "expression": "2 + 3/1" },
     "marks": 1,
     "mark_scheme": ["B1 for 5"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
@@ -94,12 +90,8 @@
     "learning_point": "gcse-maths-h-a20-lp-iterate",
     "expected_seconds": 60,
     "prompt": "Use the iteration formula x_(n+1) = 2 + 3/x_n with x_0 = 1 to work out x_2.",
-    "answer": {
-      "value": "2.6"
-    },
-    "verify": {
-      "expression": "2 + 3/(2 + 3/1)"
-    },
+    "answer": { "value": "2.6" },
+    "verify": { "expression": "2 + 3/(2 + 3/1)" },
     "marks": 2,
     "mark_scheme": ["M1 for x_1 = 5", "A1 for 2.6"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
@@ -181,13 +173,8 @@
     "learning_point": "gcse-maths-h-a20-lp-iterate",
     "expected_seconds": 90,
     "prompt": "Use the iteration formula x_(n+1) = 2 + 3/x_n with x_0 = 1 to work out x_3. Give your answer correct to 4 decimal places.",
-    "answer": {
-      "value": "3.1538",
-      "tolerance": 5e-5
-    },
-    "verify": {
-      "expression": "2 + 3/(2 + 3/(2 + 3/1))"
-    },
+    "answer": { "value": "3.1538", "tolerance": 0.00005 },
+    "verify": { "expression": "2 + 3/(2 + 3/(2 + 3/1))" },
     "marks": 2,
     "mark_scheme": ["M1 for x_1 = 5 and x_2 = 2.6", "A1 for 3.1538"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
@@ -269,13 +256,8 @@
     "learning_point": "gcse-maths-h-a20-lp-iterate",
     "expected_seconds": 120,
     "prompt": "Use the iteration formula x_(n+1) = ∛(x_n + 5) with x_0 = 2 to work out x_2. Give your answer correct to 3 decimal places.",
-    "answer": {
-      "value": "1.905",
-      "tolerance": 0.0005
-    },
-    "verify": {
-      "expression": "((2 + 5)^(1/3) + 5)^(1/3)"
-    },
+    "answer": { "value": "1.905", "tolerance": 0.0005 },
+    "verify": { "expression": "((2 + 5)^(1/3) + 5)^(1/3)" },
     "marks": 2,
     "mark_scheme": ["M1 for x_1 = ∛7 = 1.91...", "A1 for 1.905"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
@@ -363,9 +345,7 @@
       "x = 2 is a solution of x^3 - 4x - 1 = 0",
       "x = 14 is a solution of x^3 - 4x - 1 = 0"
     ],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "f(x) changes sign between x = 2 and x = 3, so the graph of y = f(x) crosses the x-axis between them: there is a solution between 2 and 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
@@ -388,7 +368,7 @@
     "facts": [
       {
         "statement": "If a continuous function f has f(a) and f(b) of opposite signs, then f(x) = 0 has a solution between a and b.",
-        "ask": "If f(2) is negative and f(3) is positive for a polynomial f, what can you conclude about the equation f(x) = 0?"
+        "ask": "If a continuous function f has f(a) and f(b) of opposite signs, what can you say about f(x) = 0 between a and b?"
       }
     ],
     "verification": {
@@ -440,8 +420,8 @@
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:42:06Z",
-          "notes": "fact 1: no maths engine proof; blind statement differs (\"Since polynomials are continuous, if f(2)<0 and f(3)>0 then there is at least one real number c with 2<c<3 such that f(c)=0. This follows from the Intermediate Value Theorem.\")"
+          "at": "2026-11-25T19:27:37Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"If f is continuous on [a,b] and f(a) and f(b) have opposite signs (that is, f(a)f(b)<0), then there exists at least one number c in (a,b) such that f(c)=0.\")"
         }
       ]
     }
@@ -455,9 +435,7 @@
     "expected_seconds": 25,
     "prompt": "Which iteration formula comes from rearranging x^3 - 4x - 1 = 0?",
     "options": ["x = ∛(4x + 1)", "x = ∛(4x - 1)", "x = ∛(x + 4)", "x = 4x^3 + 1"],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "x^3 - 4x - 1 = 0 gives x^3 = 4x + 1, so x = ∛(4x + 1).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
@@ -531,12 +509,8 @@
     "learning_point": "gcse-maths-h-a20-lp-sign-change",
     "expected_seconds": 30,
     "prompt": "To show that x^3 - 4x - 1 = 0 has a solution between x = 2 and x = 3, you look for a change of sign. Let f(x) = x^3 - 4x - 1. Work out f(2).",
-    "answer": {
-      "value": "-1"
-    },
-    "verify": {
-      "expression": "2^3 - 4*2 - 1"
-    },
+    "answer": { "value": "-1" },
+    "verify": { "expression": "2^3 - 4*2 - 1" },
     "marks": 1,
     "mark_scheme": ["B1 for -1"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",

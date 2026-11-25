@@ -7,9 +7,7 @@
     "learning_point": "gcse-maths-h-a22-lp-linear",
     "expected_seconds": 45,
     "prompt": "Solve 3x - 5 < 16",
-    "answer": {
-      "accepted": ["x < 7", "x<7"]
-    },
+    "answer": { "accepted": ["x < 7", "x<7"] },
     "marks": 2,
     "explanation": "Add 5: 3x < 21. Divide by 3: x < 7.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
@@ -83,9 +81,7 @@
     "learning_point": "gcse-maths-h-a22-lp-linear",
     "expected_seconds": 60,
     "prompt": "Solve 7 - 2x ≥ 1",
-    "answer": {
-      "accepted": ["x ≤ 3", "x<=3", "x <= 3", "x≤3"]
-    },
+    "answer": { "accepted": ["x ≤ 3", "x<=3", "x <= 3", "x≤3"] },
     "marks": 2,
     "explanation": "Subtract 7: -2x ≥ -6. Divide by -2 and reverse the sign: x ≤ 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
@@ -159,9 +155,7 @@
     "learning_point": "gcse-maths-h-a22-lp-linear",
     "expected_seconds": 90,
     "prompt": "n is an integer and -3 < 2n + 1 ≤ 7. List all the possible values of n, from smallest to largest.",
-    "answer": {
-      "accepted": ["-1, 0, 1, 2, 3", "-1,0,1,2,3", "−1, 0, 1, 2, 3", "−1,0,1,2,3"]
-    },
+    "answer": { "accepted": ["-1, 0, 1, 2, 3", "-1,0,1,2,3", "−1, 0, 1, 2, 3", "−1,0,1,2,3"] },
     "marks": 3,
     "explanation": "Subtract 1: -4 < 2n ≤ 6. Divide by 2: -2 < n ≤ 3, so the possible values of n are -1, 0, 1, 2 and 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
@@ -236,9 +230,7 @@
     "expected_seconds": 25,
     "prompt": "Which shows the solution of 2x + 3 > 11 in set notation?",
     "options": ["{x : x > 4}", "{x : x < 4}", "{x : x ≥ 4}", "{4}"],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "2x > 8, so x > 4, written {x : x > 4}.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
@@ -325,9 +317,7 @@
     "expected_seconds": 25,
     "prompt": "Which point lies in the region where y > 2x and x + y < 6?",
     "options": ["(1, 3)", "(2, 3)", "(3, 4)", "(0, 7)"],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "For (1, 3): 3 > 2 and 1 + 3 = 4 < 6. (2, 3) and (3, 4) fail y > 2x, and (0, 7) fails x + y < 6.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
@@ -414,9 +404,7 @@
     "expected_seconds": 25,
     "prompt": "Solve x^2 - 9 < 0",
     "options": ["-3 < x < 3", "x < 3", "x < -3 or x > 3", "x > -3"],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "x^2 - 9 = (x - 3)(x + 3) is negative between its roots -3 and 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
@@ -491,9 +479,7 @@
     "expected_seconds": 25,
     "prompt": "Solve x^2 - x - 6 ≥ 0",
     "options": ["x ≤ -2 or x ≥ 3", "-2 ≤ x ≤ 3", "x ≥ 3", "x ≤ -3 or x ≥ 2"],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "x^2 - x - 6 = (x - 3)(x + 2) has roots -2 and 3. The graph is a U shape, so it is ≥ 0 outside the roots.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
@@ -568,9 +554,7 @@
     "expected_seconds": 25,
     "prompt": "Solve (x - 1)(x - 5) < 0",
     "options": ["1 < x < 5", "x < 1 or x > 5", "x < 5", "-5 < x < -1"],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "The product is negative between the roots 1 and 5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
@@ -644,14 +628,8 @@
     "learning_point": "gcse-maths-h-a22-lp-quadratic",
     "expected_seconds": 60,
     "prompt": "Solve x^2 + 2x - 15 = 0",
-    "answer": {
-      "solutions": ["3", "-5"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "x^2 + 2x - 15 = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["3", "-5"] },
+    "verify": { "method": "solve", "equation": "x^2 + 2x - 15 = 0", "variable": "x" },
     "steps": ["x^2 + 2x - 15 = 0", "(x - 3)(x + 5) = 0", "x = 3 or x = -5"],
     "marks": 2,
     "mark_scheme": ["M1 for (x - 3)(x + 5)", "A1 for x = 3 and x = -5"],
@@ -912,7 +890,7 @@
     "facts": [
       {
         "statement": "Multiplying or dividing both sides of an inequality by a negative number reverses the inequality sign.",
-        "ask": "What happens to an inequality sign when both sides are divided by a negative number?"
+        "ask": "What happens to an inequality when you multiply or divide both sides by a negative number?"
       }
     ],
     "verification": {
@@ -964,8 +942,8 @@
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:42:16Z",
-          "notes": "fact 1: no maths engine proof; blind statement differs (\"When you divide both sides of an inequality by a negative number, the inequality sign reverses direction. For example, if a < b and c < 0, then a/c > b/c.\")"
+          "at": "2026-11-25T19:27:48Z",
+          "notes": "fact 1: no maths engine proof; blind statement matches (\"When you multiply or divide both sides of an inequality by a negative number, the inequality sign must be reversed. For example, if a < b and c < 0, then ac > bc and a/c > b/c.\")"
         }
       ]
     }

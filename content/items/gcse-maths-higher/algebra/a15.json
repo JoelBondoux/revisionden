@@ -7,13 +7,8 @@
     "learning_point": "gcse-maths-h-a15-lp-gradients",
     "expected_seconds": 45,
     "prompt": "A velocity-time graph is a straight line from (0 s, 4 m/s) to (5 s, 19 m/s). Work out the acceleration.",
-    "answer": {
-      "value": "3",
-      "unit": "m/s^2"
-    },
-    "verify": {
-      "expression": "(19 - 4)/(5 - 0)"
-    },
+    "answer": { "value": "3", "unit": "m/s^2" },
+    "verify": { "expression": "(19 - 4)/(5 - 0)" },
     "marks": 2,
     "mark_scheme": ["M1 for (19 - 4) ÷ 5", "A1 for 3"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
@@ -122,13 +117,8 @@
     "learning_point": "gcse-maths-h-a15-lp-gradients",
     "expected_seconds": 40,
     "prompt": "A distance-time graph is a straight line from (0 hours, 0 km) to (3 hours, 150 km). Work out the speed.",
-    "answer": {
-      "value": "50",
-      "unit": "km/h"
-    },
-    "verify": {
-      "expression": "150/3"
-    },
+    "answer": { "value": "50", "unit": "km/h" },
+    "verify": { "expression": "150/3" },
     "marks": 2,
     "mark_scheme": ["M1 for 150 ÷ 3", "A1 for 50"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
@@ -162,7 +152,7 @@
     "needs_human_approval": true,
     "facts": [
       {
-        "statement": "The gradient of a distance-time graph is the speed; a horizontal line means the object is stationary.",
+        "statement": "The gradient of a distance-time graph is the speed.",
         "ask": "What does the gradient of a distance-time graph represent?"
       }
     ],
@@ -223,8 +213,8 @@
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:39:50Z",
-          "notes": "fact 1: no maths engine proof; blind statement differs (\"The gradient of a distance–time graph represents the speed (or velocity if direction is taken into account): it is the rate of change of distance with respect to time. A steeper gradient means a greater speed, and a zero gradient means the object is stationary.\")"
+          "at": "2026-11-25T19:27:09Z",
+          "notes": "fact 1: no maths engine proof; blind statement differs (\"On a distance–time graph, the gradient represents the speed: \u0007average speed over a section if the graph is curved, and constant speed if the section is a straight line. A positive gradient means moving away from the start, zero means stationary, and a negative gradient means the distance from the start is decreasing (if such values are used).\")"
         }
       ]
     }
@@ -237,12 +227,8 @@
     "learning_point": "gcse-maths-h-a15-lp-gradients",
     "expected_seconds": 45,
     "prompt": "The depth of water in a tank falls steadily from 80 cm to 20 cm in 12 minutes. A graph of depth against time is a straight line. Work out its gradient, in cm per minute.",
-    "answer": {
-      "value": "-5"
-    },
-    "verify": {
-      "expression": "(20 - 80)/12"
-    },
+    "answer": { "value": "-5" },
+    "verify": { "expression": "(20 - 80)/12" },
     "marks": 2,
     "mark_scheme": ["M1 for (20 - 80) ÷ 12", "A1 for -5"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
@@ -324,13 +310,8 @@
     "learning_point": "gcse-maths-h-a15-lp-areas",
     "expected_seconds": 60,
     "prompt": "A velocity-time graph is a straight line from (0 s, 0 m/s) to (10 s, 20 m/s). Work out the distance travelled in the 10 seconds.",
-    "answer": {
-      "value": "100",
-      "unit": "m"
-    },
-    "verify": {
-      "expression": "(1/2)*10*20"
-    },
+    "answer": { "value": "100", "unit": "m" },
+    "verify": { "expression": "(1/2)*10*20" },
     "marks": 2,
     "mark_scheme": ["M1 for (1/2) × 10 × 20", "A1 for 100"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
@@ -439,13 +420,8 @@
     "learning_point": "gcse-maths-h-a15-lp-areas",
     "expected_seconds": 75,
     "prompt": "A car accelerates steadily from 6 m/s to 14 m/s in 5 seconds. Use the area under its velocity-time graph to work out how far it travels in that time.",
-    "answer": {
-      "value": "50",
-      "unit": "m"
-    },
-    "verify": {
-      "expression": "(1/2)*(6 + 14)*5"
-    },
+    "answer": { "value": "50", "unit": "m" },
+    "verify": { "expression": "(1/2)*(6 + 14)*5" },
     "marks": 2,
     "mark_scheme": ["M1 for (1/2) × (6 + 14) × 5", "A1 for 50"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
@@ -554,12 +530,8 @@
     "learning_point": "gcse-maths-h-a15-lp-areas",
     "expected_seconds": 150,
     "prompt": "Estimate the area under the curve y = x^2 between x = 0 and x = 4 using two trapeziums (strips) of equal width.",
-    "answer": {
-      "value": "24"
-    },
-    "verify": {
-      "expression": "(1/2)*2*(0^2 + 2^2) + (1/2)*2*(2^2 + 4^2)"
-    },
+    "answer": { "value": "24" },
+    "verify": { "expression": "(1/2)*2*(0^2 + 2^2) + (1/2)*2*(2^2 + 4^2)" },
     "marks": 3,
     "mark_scheme": [
       "M1 for the y-values 0, 4 and 16 at x = 0, 2 and 4",
@@ -753,7 +725,7 @@
     ],
     "facts": [
       {
-        "statement": "The gradient of a distance-time graph is the speed; a horizontal line means the object is stationary.",
+        "statement": "The gradient of a distance-time graph is the speed.",
         "ask": "What does the gradient of a distance-time graph represent?"
       }
     ],
@@ -806,8 +778,8 @@
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T18:40:04Z",
-          "notes": "fact 1: no maths engine proof; blind statement differs (\"The gradient of a distance–time graph represents the object's speed: \n\n- On a distance–time graph, gradient = change in distance  change in time.\n- A steeper gradient means a greater speed.\n- This is valid provided distance is plotted against time; on a displacement–time graph, the gradient represents velocity instead.\")"
+          "at": "2026-11-25T19:27:23Z",
+          "notes": "fact 1: no maths engine proof; blind statement differs (\"The gradient of a distance–time graph represents the object's speed: \tgradient = change in distance \u0000f7 change in time. This is valid when distance is plotted on the vertical axis and time on the horizontal axis; on a curved graph, the gradient of the tangent at a point gives the instantaneous speed.\")"
         }
       ]
     }
