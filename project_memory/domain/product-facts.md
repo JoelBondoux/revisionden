@@ -403,3 +403,8 @@ Tags: #product #rules #limits #defaults
   stay light. Combo bonus: +5 XP per right answer from the 3rd in a row (Learn mode; Test mode at the
   reveal). Never lives, timers, pay-to-continue, mystery rewards or streak guilt; after the daily cap
   the call to action becomes "See you tomorrow". Detail: `docs/GAME_FEEL.md`. Workstream J.
+- Settled in J1 (`apps/web/src/features/juice/logic.ts`): stars for a set are 3 for all right, 2 for at
+  least 60% right (3–4 of 5), otherwise 1. A burst is about 20 particles, capped at 24; confetti is
+  capped at 40 pieces. The combo badge shows from 2 in a row. The CTA pulse takes 1.6 s (well under 3
+  flashes a second). Reduced motion removes particles, confetti, float-ups, shakes and pulsing; combo,
+  stars and XP still show as text. Arena colours live in `apps/web/src/design/tokens.ts` (`--arena-*`).
