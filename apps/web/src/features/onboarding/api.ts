@@ -2,12 +2,18 @@ import { failureRef } from '../../api/client';
 import { z, type ZodType } from 'zod';
 import {
   AvatarCodeSchema,
+  DeviceListSchema,
+  LinkStatusSchema,
   EnrolmentSchema,
   LinkTokenSchema,
   OnboardedChildSchema,
   OnboardingFamilySchema,
   StudentAvatarSchema,
   StudentSchema,
+  type DeviceType,
+  type LinkedDevice,
+  type LinkKind,
+  type LinkStatus,
   StudentSubjectsSchema,
   type Enrolment,
   type LinkToken,
@@ -63,11 +69,17 @@ const unlockDoneSchema = z.object({ student: StudentSchema, deviceMarker: z.stri
 export interface OnboardingApi {
   getFamily(): Promise<OnboardingFamily>;
   addChild(request: OnboardChildRequest): Promise<OnboardedChild>;
-  createLinkToken(studentId: string): Promise<LinkToken>;
-  redeemLink(input: { token: string; familyId: string }): Promise<LinkStart>;
+  /** A QR code (10 minutes) or a link to send (24 hours); both come with a short code. */
+  createLinkToken(studentId: string, kind?: LinkKind): Promise<LinkToken>;
+  getLinkStatus(studentId: string, tokenId: string): Promise<LinkStatus>;
+  cancelLink(studentId: string, tokenId: string): Promise<void>;
+  listDevices(studentId: string): Promise<LinkedDevice[]>;
+  removeDevice(studentId: string, deviceId: string): Promise<void>;
+  redeemLink(input: { token: string; familyId: string } | { code: string }): Promise<LinkStart>;
   verifyLink(input: {
     challengeId: string;
     response: unknown;
+    deviceType?: DeviceType;
   }): Promise<{ deviceId: string; deviceMarker?: string; student: Student }>;
   /** Starts a passkey unlock; no credential ids, so any RevisionDen passkey here can answer. */
   unlockOptions(): Promise<UnlockStart>;
@@ -108,12 +120,12 @@ export function createOnboardingApi({
     path: string,
     schema: ZodType<T>,
     body?: unknown,
-    method: 'POST' | 'PATCH' | 'PUT' = 'POST',
+    method?: 'POST' | 'PATCH' | 'PUT' | 'DELETE',
   ): Promise<T> {
     let response: Response;
     try {
       response = await fetch(new URL(path, root), {
-        method: body === undefined ? 'GET' : method,
+        method: method ?? (body === undefined ? 'GET' : 'POST'),
         credentials: 'include',
         headers: {
           Accept: 'application/json',
@@ -159,8 +171,36 @@ export function createOnboardingApi({
   return {
     getFamily: () => request('v1/onboarding/family', OnboardingFamilySchema),
     addChild: (body) => request('v1/onboarding/children', OnboardedChildSchema, body),
-    createLinkToken: (studentId) =>
-      request(`v1/students/${encodeURIComponent(studentId)}/link-tokens`, LinkTokenSchema, {}),
+    createLinkToken: (studentId, kind = 'qr') =>
+      request(`v1/students/${encodeURIComponent(studentId)}/link-tokens`, LinkTokenSchema, {
+        kind,
+      }),
+    getLinkStatus: async (studentId, tokenId) =>
+      (
+        await request(
+          `v1/students/${encodeURIComponent(studentId)}/link-tokens/${encodeURIComponent(tokenId)}`,
+          LinkStatusSchema,
+        )
+      ).status,
+    cancelLink: async (studentId, tokenId) => {
+      await request(
+        `v1/students/${encodeURIComponent(studentId)}/link-tokens/${encodeURIComponent(tokenId)}`,
+        z.unknown(),
+        undefined,
+        'DELETE',
+      );
+    },
+    listDevices: async (studentId) =>
+      (await request(`v1/students/${encodeURIComponent(studentId)}/devices`, DeviceListSchema))
+        .devices,
+    removeDevice: async (studentId, deviceId) => {
+      await request(
+        `v1/students/${encodeURIComponent(studentId)}/devices/${encodeURIComponent(deviceId)}`,
+        z.unknown(),
+        undefined,
+        'DELETE',
+      );
+    },
     redeemLink: (body) => request('v1/device/link', linkStartSchema, body),
     verifyLink: (body) => request('v1/device/link/verify', linkDoneSchema, body),
     unlockOptions: () => request('v1/device/unlock/options', unlockStartSchema, {}),

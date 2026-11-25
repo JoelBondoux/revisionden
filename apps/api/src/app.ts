@@ -70,7 +70,13 @@ export interface AppDeps {
   clock: Clock;
   passkeys: PasskeyService;
   /** `operator` (AppDeck bridge) defaults to 120 a minute in memory when not given. */
-  rateLimiters: { auth: RateLimiter; ai: RateLimiter; operator?: RateLimiter };
+  rateLimiters: {
+    auth: RateLimiter;
+    ai: RateLimiter;
+    operator?: RateLimiter;
+    /** Short-code attempts at /link; falls back to `auth` with its own key. */
+    linkCode?: RateLimiter;
+  };
   /** Review queue and quarantine hooks (workstream V). */
   verification?: VerificationDeps;
   /** AI providers that are configured (see ai/providers.ts). */

@@ -142,6 +142,11 @@ describe('Parent home: two parents', () => {
     ).toBeInTheDocument();
   });
 
+  it("lists each child's linked devices", async () => {
+    renderRoute('/parent');
+    expect(await screen.findByRole('heading', { name: 'Linked devices' })).toBeInTheDocument();
+  });
+
   it('shows the things left to check when a board or tier is Not sure', async () => {
     server.use(
       http.get('*/v1/onboarding/family', () =>

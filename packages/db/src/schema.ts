@@ -261,11 +261,15 @@ export const devices = pgTable(
     publicKey: text('public_key').notNull(),
     counter: integer('counter').notNull().default(0),
     transports: jsonb('transports').$type<string[]>(),
+    // Coarse type the device reported when linking ('phone', 'tablet' or 'computer'); never
+    // the browser or model.
+    deviceType: text('device_type'),
     linkedAt: timestamp('linked_at', { withTimezone: true }).notNull().defaultNow(),
     lastUsedAt: timestamp('last_used_at', { withTimezone: true }),
   },
   (t) => [
     index('devices_student_id_idx').on(t.studentId),
+    check('devices_device_type_values', sql`${t.deviceType} in ('phone', 'tablet', 'computer')`),
     index('devices_credential_id_idx').on(t.credentialId),
   ],
 );
@@ -303,9 +307,19 @@ export const deviceLinkTokens = pgTable(
       .references(() => students.id, { onDelete: 'cascade' }),
     expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
     usedAt: timestamp('used_at', { withTimezone: true }),
+    // 'qr' (shown on screen, 10 minutes) or 'share' (sent as a link, 24 hours).
+    kind: text('kind').notNull().default('qr'),
+    // SHA-256 of the short code a child can type at /link; the code itself is never stored.
+    codeHash: text('code_hash').unique(),
+    cancelledAt: timestamp('cancelled_at', { withTimezone: true }),
+    // When the device that used this link finished setting up its passkey.
+    linkedAt: timestamp('linked_at', { withTimezone: true }),
     createdAt: createdAt(),
   },
-  (t) => [index('device_link_tokens_student_id_idx').on(t.studentId)],
+  (t) => [
+    index('device_link_tokens_student_id_idx').on(t.studentId),
+    check('device_link_tokens_kind_values', sql`${t.kind} in ('qr', 'share')`),
+  ],
 );
 
 /** WebAuthn challenges waiting for a device's response (registration or unlock). */
@@ -315,6 +329,10 @@ export const passkeyChallenges = pgTable('passkey_challenges', {
   challenge: text('challenge').notNull(),
   // Set for registration (the student being linked); null for unlock.
   studentId: uuid('student_id').references(() => students.id, { onDelete: 'cascade' }),
+  // Registration only: the link that started it, so cancelling the link stops the set-up too.
+  linkTokenId: uuid('link_token_id').references(() => deviceLinkTokens.id, {
+    onDelete: 'cascade',
+  }),
   expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
   usedAt: timestamp('used_at', { withTimezone: true }),
   createdAt: createdAt(),

@@ -21,6 +21,7 @@ import { ChildReminderSettings, ParentRewardNews } from '../notifications';
 import { NotSetUp } from '../stats/Tile';
 import { useStatsApi, type Child } from '../stats/statsApi';
 import { FamilyLog, ParentsPanel, RemovalNotice } from '../parents';
+import { LinkedDevicesCard } from '../onboarding/LinkedDevicesCard';
 import { ThingsToCheckCard } from '../onboarding/checksUi';
 import { BetaBadge } from '../programmes/BetaBadge';
 import { InstallCard } from '../../pwa/InstallCard';
@@ -51,6 +52,7 @@ export function ParentHomePage() {
       ) : (
         <LoadingOrError resource={children} />
       )}
+      <LinkedDevicesCard />
       <ThingsToCheckCard />
       <InstallCard />
       <div className="parent-home__grid">

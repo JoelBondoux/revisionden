@@ -95,6 +95,34 @@
   align-items: center;
 }
 
+.link-code {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-black);
+  letter-spacing: 0.12em;
+  margin: 0;
+}
+
+.link-share {
+  border-top: 2px solid var(--color-border);
+  padding-top: var(--space-4);
+}
+
+.linked-devices__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.linked-devices__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
 .continue-summary {
   border: 2px solid var(--color-warning);
   background: var(--color-warning-soft);

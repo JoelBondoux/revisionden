@@ -176,6 +176,13 @@
       "when": 1795645758993,
       "tag": "0024_nickname_spaces",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1795648437653,
+      "tag": "0025_device_share_links",
+      "breakpoints": true
     }
   ]
 }

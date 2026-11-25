@@ -27,6 +27,8 @@ interface Kind {
   what: string;
   /** Important changes are shown as new to the other parent and pushed to them. */
   important: boolean;
+  /** For changes no parent made: the whole message, instead of "RevisionDen <what>". */
+  message?: string;
   /** Noticed by RevisionDen, not done by a parent: shown and pushed to both parents. */
   system?: true;
 }
@@ -39,6 +41,13 @@ export const EVENT_KINDS = {
   avatar_changed: { what: "changed {nickname}'s avatar", important: false },
   device_link_started: { what: 'started linking a device for {nickname}', important: false },
   device_unlinked: { what: 'unlinked a device from {nickname}', important: false },
+  // Recorded with no parent (the child's device did it), so both parents are told.
+  device_linked: {
+    what: "linked {nickname}'s device",
+    important: true,
+    message: "{nickname}'s device is set up",
+    system: true,
+  },
   reminders_changed: { what: "changed {nickname}'s reminders", important: false },
   limit_changed: { what: "changed {nickname}'s daily limit", important: true },
   target_changed: { what: "changed {nickname}'s target grades", important: true },
@@ -75,6 +84,19 @@ export function describeEvent(kind: string, nickname: string | null): string {
   const known = (EVENT_KINDS as Record<string, Kind>)[kind];
   if (!known) return 'made a change';
   return known.what.replace('{nickname}', nickname ?? 'a child');
+}
+
+/** The pushed text: "Parent 1 added Nova", or a whole message for changes no parent made. */
+export function describeFamilyEventMessage(
+  kind: string,
+  actorPosition: number | null,
+  nickname: string | null,
+): string {
+  const known = (EVENT_KINDS as Record<string, Kind>)[kind];
+  if (actorPosition === null && known?.message) {
+    return known.message.replace('{nickname}', nickname ?? 'A child');
+  }
+  return `${parentLabel(actorPosition) ?? 'RevisionDen'} ${describeEvent(kind, nickname)}`;
 }
 
 export async function recordFamilyEvent(
@@ -234,8 +256,10 @@ export async function latestFamilyEventMessage(
     .orderBy(desc(familyEvents.pushedAt), desc(familyEvents.seq))
     .limit(1);
   if (!row?.pushedAt) return null;
-  const who = parentLabel(row.actorPosition) ?? 'RevisionDen';
-  return { message: `${who} ${describeEvent(row.kind, row.nickname)}`, at: row.pushedAt };
+  return {
+    message: describeFamilyEventMessage(row.kind, row.actorPosition, row.nickname),
+    at: row.pushedAt,
+  };
 }
 
 export interface FamilyEventPushSummary {

@@ -226,6 +226,30 @@ Product owner decision, 2026-11-25: **parent view only**.
   one sign-in page, the welcome page (`decisions/0007-student-passkey-unlock.md` in project
   memory).
 
+### Linking a device (E4)
+
+- The parent's "Link a device" step shows a one-time QR code (10 minutes). Under it, "Send a link
+  instead" makes a shared link that lasts **24 hours** (messages aren't opened straight away):
+  Share (the phone's share sheet: WhatsApp, Messages, email and so on) with "Copy link" as the
+  fallback. The message reads "Set up RevisionDen on your phone: <link>". The link and message
+  hold no nickname or other personal data (only the token and the family id).
+- Each QR code and shared link also has a short code (8 characters, no look-alikes: no 0/O,
+  1/I/L, shown as ABCD-EFGH) the child can type at `/link` when the camera or link is awkward.
+  Codes and tokens are single use and stored only as hashes. Code attempts at `/link` have their
+  own rate limit per address.
+- The parent sees "Waiting for <nickname>'s device…" and "Cancel this link" (a cancelled link no
+  longer works, even on a device that had already opened it and not yet finished its passkey).
+  The screen updates once the device that used that link has set up its passkey (each link
+  records its own set-up, so another device or link never marks it done), and parents with
+  push on are told "<nickname>'s device is set up" (a family event with no parent as the actor,
+  so both parents hear).
+- The parent home lists each child's linked devices: device type (phone, tablet or computer, as
+  the device reported it; never the browser or model) and the date linked, with "Remove", which
+  ends that device's session.
+- API: `POST /v1/students/:id/link-tokens` (`{ kind: 'qr' | 'share' }`), `GET`/`DELETE
+/v1/students/:id/link-tokens/:tokenId`, `POST /v1/device/link` with `{ code }`,
+  `GET /v1/students/:id/devices` (with `deviceType`).
+
 ## Learning loop (workstream F)
 
 - **Content gate.** Students only ever see items whose verification status is `verified`.
