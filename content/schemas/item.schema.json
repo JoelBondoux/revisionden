@@ -447,6 +447,25 @@
         },
         "back": {
           "$ref": "#/$defs/text"
+        },
+        "back_formula": {
+          "type": "object",
+          "description": "Maths flashcards: the back as a formula the maths engine can read (x = ..., +- for ±, sqrt, ^), plus any conditions that must be stated (for example \"a ≠ 0\"). The blind answer is compared with the maths engine and must mention every condition (docs/VERIFICATION.md step 3).",
+          "required": ["formula"],
+          "properties": {
+            "formula": {
+              "type": "string",
+              "minLength": 3
+            },
+            "conditions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "additionalProperties": false
         }
       }
     },
