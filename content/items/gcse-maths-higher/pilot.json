@@ -825,25 +825,29 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T16:02:20Z"
+          "at": "2026-11-25T17:24:56Z"
         },
         {
           "name": "blind-answer",
-          "result": "fail",
+          "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T16:40:32Z",
-          "notes": "model answered \"x = [-b ± √(b² - 4ac)] / 2a\"; expected \"x = (-b ± √(b^2 - 4ac)) / (2a), where a ≠ 0\""
+          "at": "2026-11-25T17:24:29Z",
+          "notes": "model answered \"x = (-b +- sqrt(b^2 - 4*a*c)) / (2*a) where a != 0\"; expected \"x = (-b +- sqrt(b^2 - 4ac)) / (2a)\"; maths engine: same formula"
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T16:40:39Z",
+          "at": "2026-11-25T17:24:56Z",
           "notes": "no problems found"
         }
       ]
+    },
+    "back_formula": {
+      "formula": "x = (-b +- sqrt(b^2 - 4ac)) / (2a)",
+      "conditions": ["a ≠ 0"]
     }
   },
   {

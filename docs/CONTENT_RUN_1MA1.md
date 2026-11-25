@@ -9,15 +9,15 @@
 `gcse-maths-ms-consecutive-integers-proof` and the topic tree. Results are recorded in each
 file's `verification.checks`.
 
-| Step                 | Result                                                                                                           |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| 1 Grounded writing   | 10 pass, 1 fail (G9). Audited after writing, since no writer record existed                                      |
-| 2 Quote check        | All 11 items and the mark scheme pass exactly. Topic tree: 95 of 97 exact, 2 near matches (A22, A25)             |
-| 3 Blind answer       | Gemini (`gemini-2.5-pro`): 10 pass (the A6 proof by blind marking, all three exemplars exact), 1 fail (A18-0002) |
-| 4 Adversarial review | Gemini: 11 pass, after fixing A4-0001 (see below)                                                                |
-| 5 Exact checks       | Maths engine passes all 7 maths items. No item has an `exact` block (units, equations)                           |
-| 6 Schema and links   | Pass                                                                                                             |
-| 7 Human approval     | **9 items ready** for the owner. 2 wait for a decision                                                           |
+| Step                 | Result                                                                                                                         |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| 1 Grounded writing   | 10 pass, 1 fail (G9). Audited after writing, since no writer record existed                                                    |
+| 2 Quote check        | All 11 items and the mark scheme pass exactly. Topic tree: 95 of 97 exact, 2 near matches (A22, A25)                           |
+| 3 Blind answer       | Gemini (`gemini-2.5-pro`): 11 pass (the A6 proof by blind marking, all three exemplars exact; A18-0002 by formula, after #111) |
+| 4 Adversarial review | Gemini: 11 pass, after fixing A4-0001 (see below)                                                                              |
+| 5 Exact checks       | Maths engine passes all 7 maths items. No item has an `exact` block (units, equations)                                         |
+| 6 Schema and links   | Pass                                                                                                                           |
+| 7 Human approval     | **10 items ready** for the owner. G9 waits for #112 (decision 0008)                                                            |
 
 **Per item**
 
@@ -33,7 +33,7 @@ file's `verification.checks`.
 | `gcse-maths-h-n4-0001`  | multiple_choice | Ready (explanation arithmetic checked with SymPy)                                                                                                                                                                                                          |
 | `gcse-maths-h-a6-0001`  | extended_answer | Ready; needs individual approval. Exemplars (top 3, middle 2, low 1 marks) written from the mark scheme; blind marking matched all three                                                                                                                   |
 | `gcse-maths-h-g9-0001`  | short_answer    | **Blocked at step 1**: the answer rests on a definition of a tangent that no quoted official source gives (DfE subject content and the 1MA1 specification only name the word). Steps 3 and 4 pass                                                          |
-| `gcse-maths-h-a18-0002` | flashcard       | **Blocked at step 3**: the blind answer gave the right formula in different notation ("x = [-b ± √(b² - 4ac)] / 2a", no "a ≠ 0"); flashcards must match word for word, which a formula almost never does. Not weakened                                     |
+| `gcse-maths-h-a18-0002` | flashcard       | Ready (#111): `back_formula` added, so the blind answer is compared by the maths engine. Gemini gave "x = (-b +- sqrt(b^2 - 4*a*c)) / (2*a) where a != 0": same formula, condition stated. Review re-run: no problems                                      |
 
 **Decisions needed**
 
