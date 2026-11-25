@@ -154,11 +154,13 @@
 
 ### G. Deploy pipelines and end-to-end (`.github/workflows/deploy-*.yml`, `e2e/`)
 
-- [ ] G1 Deploy web and API to Cloudflare per branch (dev, staging, production).
-- [ ] G2 Neon branch per environment; migrations run on deploy.
-- [ ] G3 Maths engine to Cloud Run per environment.
-- [ ] G4 Playwright suite at three viewports with axe accessibility checks on PRs into staging and main.
-- [ ] G5 Version shown in the app footer and `/health`.
+- [x] G1 Deploy web and API to Cloudflare per branch (dev, staging, production). Production web
+      waits for the operator details; CI deploys wait for the GitHub secrets (docs/ENVIRONMENTS.md).
+- [x] G2 Neon branch per environment; migrations run on deploy.
+- [ ] G3 Maths engine to Cloud Run per environment. Workflow written and disabled until Google
+      Cloud is set up (`.github/workflows/deploy-maths.yml`).
+- [x] G4 Playwright suite at three viewports with axe accessibility checks on PRs into staging and main.
+- [x] G5 Version shown in the app footer and `/health`.
 
 ### H. Reminders and AI gateway (`apps/api` notifications and AI)
 

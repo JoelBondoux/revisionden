@@ -1,0 +1,22 @@
+# Cloudflare Worker that serves the built web app (static assets only, no server code).
+# Deployed per environment by .github/workflows/deploy-*.yml after `vite build`.
+# No IDs or secrets here; build variables are listed in docs/ENVIRONMENTS.md.
+name = "revisionden-web-dev"
+compatibility_date = "2026-11-01"
+
+[assets]
+directory = "./dist"
+# Unknown paths get index.html so the app's own router shows the page (or its "not found").
+not_found_handling = "single-page-application"
+
+[env.dev]
+name = "revisionden-web-dev"
+routes = [{ pattern = "dev.revisionden.com", custom_domain = true }]
+
+[env.staging]
+name = "revisionden-web-staging"
+routes = [{ pattern = "staging.revisionden.com", custom_domain = true }]
+
+[env.production]
+name = "revisionden-web"
+routes = [{ pattern = "revisionden.com", custom_domain = true }]

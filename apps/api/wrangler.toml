@@ -1,4 +1,5 @@
 # Cloudflare Worker for the RevisionDen API.
+# Upload buckets are in the EU jurisdiction (data stays in the EU) with a 24-hour delete rule.
 # No real IDs or secrets here: secrets (including AI_GATEWAY_URL, which holds the account id)
 # are set with `wrangler secret put <NAME> --env <env>`
 # and listed in docs/ENVIRONMENTS.md. Locally, put them in apps/api/.dev.vars (git-ignored).
@@ -17,6 +18,7 @@ PASSKEY_RP_ID = "localhost"
 [[r2_buckets]]
 binding = "UPLOADS"
 bucket_name = "revisionden-uploads-dev"
+jurisdiction = "eu"
 
 [[ratelimits]]
 name = "AUTH_RATE_LIMITER"
@@ -49,6 +51,7 @@ crons = ["*/15 * * * *"]
 [[env.dev.r2_buckets]]
 binding = "UPLOADS"
 bucket_name = "revisionden-uploads-dev"
+jurisdiction = "eu"
 
 [[env.dev.ratelimits]]
 name = "AUTH_RATE_LIMITER"
@@ -77,6 +80,7 @@ crons = ["*/15 * * * *"]
 [[env.staging.r2_buckets]]
 binding = "UPLOADS"
 bucket_name = "revisionden-uploads-staging"
+jurisdiction = "eu"
 
 [[env.staging.ratelimits]]
 name = "AUTH_RATE_LIMITER"
@@ -105,6 +109,7 @@ crons = ["*/15 * * * *"]
 [[env.production.r2_buckets]]
 binding = "UPLOADS"
 bucket_name = "revisionden-uploads-production"
+jurisdiction = "eu"
 
 [[env.production.ratelimits]]
 name = "AUTH_RATE_LIMITER"

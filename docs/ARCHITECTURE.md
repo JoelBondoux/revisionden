@@ -159,7 +159,7 @@ All bodies are validated with the Zod schemas in `packages/core`. Errors always 
 
 | Route                                                                                                                              | Who             | What                                                      |
 | ---------------------------------------------------------------------------------------------------------------------------------- | --------------- | --------------------------------------------------------- |
-| `GET /health`                                                                                                                      | anyone          | `{ status, version }`                                     |
+| `GET /health`                                                                                                                      | anyone          | `{ status, version }`; 503 `misconfigured` if unset       |
 | `/api/auth/*`                                                                                                                      | anyone          | Better Auth: Google, Microsoft, sign-out                  |
 | `GET /v1/me`                                                                                                                       | parent          | Family id and sign-in email                               |
 | `GET, POST /v1/students`                                                                                                           | parent          | List (`{ students }`) or create                           |

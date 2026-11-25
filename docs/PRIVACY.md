@@ -28,7 +28,7 @@ Student real name, date of birth, address, phone, email, photos, location, conta
 
 ## Uploads
 
-R2 bucket with a lifecycle rule deleting objects after 24 hours; deleted immediately after the
+R2 bucket in the EU jurisdiction (one per environment) with a lifecycle rule deleting objects after 24 hours; deleted immediately after the
 user confirms the reading. Only extracted values and confirmed text are kept.
 
 ## AI providers

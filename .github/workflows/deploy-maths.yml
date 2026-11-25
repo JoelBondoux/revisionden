@@ -1,0 +1,49 @@
+name: Deploy maths engine (Cloud Run)
+
+# G3: deploys services/maths to Cloud Run (London, scale to zero) per environment.
+# DISABLED until the product owner has set up Google Cloud (docs/ENVIRONMENTS.md, "Maths engine
+# on Cloud Run"): it only runs by hand, and only when the repository variable
+# MATHS_DEPLOY_ENABLED is "true". Uses workload identity, so no long-lived Google key is stored.
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'dev, staging or production'
+        required: true
+        type: choice
+        options: [dev, staging, production]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    if: vars.MATHS_DEPLOY_ENABLED == 'true'
+    name: Deploy maths engine to ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    env:
+      SERVICE: ${{ inputs.environment == 'production' && 'revisionden-maths' || format('revisionden-maths-{0}', inputs.environment) }}
+      REGION: europe-west2
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run the maths engine tests first
+        run: services/maths/smoke-test.sh
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+      - uses: google-github-actions/setup-gcloud@v2
+      - name: Deploy to Cloud Run from source
+        run: |
+          gcloud run deploy "$SERVICE" \
+            --source services/maths \
+            --region "$REGION" \
+            --project "${{ vars.GCP_PROJECT_ID }}" \
+            --min-instances 0 --max-instances 2 \
+            --memory 512Mi --cpu 1 \
+            --allow-unauthenticated \
+            --quiet
+      - name: Show the service URL (set it as MATHS_ENGINE_URL on the API Worker)
+        run: gcloud run services describe "$SERVICE" --region "$REGION" --project "${{ vars.GCP_PROJECT_ID }}" --format 'value(status.url)'

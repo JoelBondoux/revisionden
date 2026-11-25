@@ -3,9 +3,10 @@ import { execSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv, type UserConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { listLicences } from './src/features/about/licences';
+import { assertProductionDetails } from './src/features/legal/productionGuard';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(here, '..', '..');
@@ -46,7 +47,14 @@ const licences = listLicences(readJson(join(here, 'package.json')) ?? {}, (name)
   return existsSync(path) ? readJson(path) : undefined;
 });
 
-export default defineConfig({
+export default defineConfig(({ command, mode }) => {
+  // A production build without the operator details must fail (workstream G, decision 0003).
+  if (command === 'build')
+    assertProductionDetails({ ...loadEnv(mode, here, 'VITE_'), ...process.env });
+  return config;
+});
+
+const config: UserConfig = {
   plugins: [react()],
   define: {
     __APP_VERSION__: JSON.stringify(appVersion()),
@@ -76,4 +84,4 @@ export default defineConfig({
       thresholds: { lines: 70, functions: 70, branches: 70, statements: 70 },
     },
   },
-});
+};
