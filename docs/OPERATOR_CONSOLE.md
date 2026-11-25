@@ -53,7 +53,7 @@ Rules the API enforces:
   5 minutes from the server clock either way: 401 `operator_request_expired`.
 - Request ids are used once (kept 1 day). A read (GET) sent again: 409
   `operator_request_replayed`. A change (POST, PATCH, DELETE) sent again with the same id, method,
-  path and body gets the first answer again with `x-appdeck-replayed: true` and does not run
+  path, body, operator email and role gets the first answer again with `x-appdeck-replayed: true` and does not run
   twice; with a different body: 409 `operator_request_conflict`; still running: 409
   `operator_request_in_progress`. A change that failed with a 5xx can be retried with its id.
 - An Agent calling a Manager action: 403 `operator_forbidden` (the refusal is audited).
@@ -101,7 +101,7 @@ Premium, trials, free places, plan; complaints: O4).
 | `GET tickets/{id}`     |                                                                                                                                       | One ticket, same shape                                                                                                                                                                                                                                                | `ticket.view` (target = its family)                                      |
 | `GET error-reports`    | `since=` (default 24 hours, at most 90 days)                                                                                          | Error reports grouped by screen, API path and status (same shape as `GET /v1/admin/error-reports`)                                                                                                                                                                    | no                                                                       |
 | `GET content-reports`  | `status=open` (default)`\|no_error\|confirmed_error\|all`                                                                             | `{ reviewQueueUrl, reports: [{ id, itemId, itemVersion, reason, reportedBy, status, quarantined, createdAt, decidedAt }] }`, newest 200                                                                                                                               | no                                                                       |
-| `GET audit`            | `targetType=`, `targetId=`, `before=` (ISO time), `limit=` (1–500, default 100)                                                       | `{ entries: [...], nextBefore }`, newest first                                                                                                                                                                                                                        | no                                                                       |
+| `GET audit`            | `targetType=`, `targetId=`, `before=` (the previous page's `nextBefore`, `<time>~<id>`), `limit=` (1–500, default 100)                | `{ entries: [...], nextBefore }`, newest first; entries sharing a time are never skipped                                                                                                                                                                              | no                                                                       |
 
 AppDeck finds an RD code through `GET error-reports` (its groups' `refs`), so tickets have no
 `errorCode` filter.
