@@ -24,5 +24,4 @@
 
 ## Blocked
 
-- [ ] G deploys: needs a scoped Cloudflare API token (account + revisionden.com zone) and a Neon
-      key scoped to a `revisionden` project.
+- [x] G deploys unblocked 2026-11-25: reuse the existing keys (decision 0003).
