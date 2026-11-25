@@ -20,16 +20,19 @@ one question of each item: **would I be happy for my child to see this exactly a
 
 ## Reviewing a batch
 
-1. Open **dev.revisionden.com/review**. You see "Reported problems" and a list of batches.
-2. Click a batch title. Small batches (under 30 items) show every item; bigger ones show a random
+1. Open **dev.revisionden.com/review**. You see "Reported problems" and "Batches".
+2. To start a batch: under Batches it says how many draft items are ready (only items that
+   passed every automatic check). Type a name (for example "Maths pilot") in **Batch name** and
+   click **Create batch from draft items**.
+3. Click a batch title. Small batches (under 30 items) show every item; bigger ones show a random
    10% (at least 30), plus every item that always needs a person (proofs and essays).
-3. For each item, check:
+4. For each item, check:
    - **The question** reads clearly and has only one correct answer.
    - **The answer** is right. Work it out yourself; don't just trust it.
    - **Wrong options** (multiple choice) really are wrong.
    - **Steps or explanation** are correct and easy to follow.
    - **Sources**: the quote is about the same topic as the question.
-4. Click **Approve** if it is right. Click **Confirm error** if anything is wrong, type what is
+5. Click **Approve** if it is right. Click **Confirm error** if anything is wrong, type what is
    wrong in "What is wrong?", then **Yes, confirm the error**. Be specific ("option C is also
    prime", "step 2 drops a minus sign").
 

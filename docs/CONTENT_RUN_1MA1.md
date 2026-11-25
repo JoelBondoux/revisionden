@@ -11,50 +11,56 @@ file's `verification.checks`.
 
 | Step                 | Result                                                                                                           |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| 1 Grounded writing   | 10 pass, 1 fail (G9, below). Audited after writing, since no writer record existed                               |
+| 1 Grounded writing   | 10 pass, 1 fail (G9). Audited after writing, since no writer record existed                                      |
 | 2 Quote check        | All 11 items and the mark scheme pass exactly. Topic tree: 95 of 97 exact, 2 near matches (A22, A25)             |
-| 3 Blind answer       | **Not run**: no OpenAI or Gemini key is configured (the writer is Claude, so the blind answer can't be)          |
-| 4 Adversarial review | **Not run**: no provider key is configured                                                                       |
-| 5 Exact checks       | Maths engine passes all 7 maths items. No item has an `exact` block (units, equations), so nothing else to check |
+| 3 Blind answer       | Gemini (`gemini-2.5-pro`): 10 pass (the A6 proof by blind marking, all three exemplars exact), 1 fail (A18-0002) |
+| 4 Adversarial review | Gemini: 11 pass, after fixing A4-0001 (see below)                                                                |
+| 5 Exact checks       | Maths engine passes all 7 maths items. No item has an `exact` block (units, equations)                           |
 | 6 Schema and links   | Pass                                                                                                             |
-| 7 Human approval     | Waiting for steps 3 and 4                                                                                        |
+| 7 Human approval     | **9 items ready** for the owner. 2 wait for a decision                                                           |
 
 **Per item**
 
-| Item                    | Type            | Steps 1, 2, 5, 6                                                                                               | Still to do                                      |
-| ----------------------- | --------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| `gcse-maths-h-n7-0001`  | numeric         | pass                                                                                                           | 3, 4, 7                                          |
-| `gcse-maths-h-r9-0001`  | numeric         | pass                                                                                                           | 3, 4, 7                                          |
-| `gcse-maths-h-g17-0001` | numeric         | pass                                                                                                           | 3, 4, 7                                          |
-| `gcse-maths-h-a18-0001` | worked_maths    | pass                                                                                                           | 3, 4, 7                                          |
-| `gcse-maths-h-a17-0001` | worked_maths    | pass                                                                                                           | 3, 4, 7                                          |
-| `gcse-maths-h-a4-0001`  | worked_maths    | pass                                                                                                           | 3, 4, 7                                          |
-| `gcse-maths-h-a4-0002`  | worked_maths    | pass                                                                                                           | 3, 4, 7                                          |
-| `gcse-maths-h-n4-0001`  | multiple_choice | pass (explanation arithmetic checked with SymPy)                                                               | 3, 4, 7                                          |
-| `gcse-maths-h-g9-0001`  | short_answer    | **grounded writing fails**: the answer rests on a definition of a tangent that no quoted official source gives | owner ruling or an official source, then 3, 4, 7 |
-| `gcse-maths-h-a18-0002` | flashcard       | pass (the formula on the back is typeset; the reviewer compares it with DfE page 14)                           | 3, 4, 7                                          |
-| `gcse-maths-h-a6-0001`  | extended_answer | pass; three exemplars (top 3, middle 2, low 1 marks) added from the mark scheme for blind marking              | 3 (blind marking), 4, 7                          |
+| Item                    | Type            | Result                                                                                                                                                                                                                                                     |
+| ----------------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `gcse-maths-h-n7-0001`  | numeric         | Ready for approval                                                                                                                                                                                                                                         |
+| `gcse-maths-h-r9-0001`  | numeric         | Ready for approval                                                                                                                                                                                                                                         |
+| `gcse-maths-h-g17-0001` | numeric         | Ready for approval                                                                                                                                                                                                                                         |
+| `gcse-maths-h-a18-0001` | worked_maths    | Ready for approval                                                                                                                                                                                                                                         |
+| `gcse-maths-h-a17-0001` | worked_maths    | Ready for approval                                                                                                                                                                                                                                         |
+| `gcse-maths-h-a4-0001`  | worked_maths    | Ready, after two fixes from the adversarial review: a working step added (the steps showed none), and the mark scheme reworded as "B2 for 3x(2x + 3) (B1 for a partial factorisation …)" so the full answer clearly earns 2 marks. Re-checked from scratch |
+| `gcse-maths-h-a4-0002`  | worked_maths    | Ready for approval                                                                                                                                                                                                                                         |
+| `gcse-maths-h-n4-0001`  | multiple_choice | Ready (explanation arithmetic checked with SymPy)                                                                                                                                                                                                          |
+| `gcse-maths-h-a6-0001`  | extended_answer | Ready; needs individual approval. Exemplars (top 3, middle 2, low 1 marks) written from the mark scheme; blind marking matched all three                                                                                                                   |
+| `gcse-maths-h-g9-0001`  | short_answer    | **Blocked at step 1**: the answer rests on a definition of a tangent that no quoted official source gives (DfE subject content and the 1MA1 specification only name the word). Steps 3 and 4 pass                                                          |
+| `gcse-maths-h-a18-0002` | flashcard       | **Blocked at step 3**: the blind answer gave the right formula in different notation ("x = [-b ± √(b² - 4ac)] / 2a", no "a ≠ 0"); flashcards must match word for word, which a formula almost never does. Not weakened                                     |
 
 **Decisions needed**
 
-1. **Provider key for steps 3 and 4.** Recommended: a Gemini API key saved as an environment
-   network secret for `generativelanguage.googleapis.com` (header `x-goog-api-key`), then
-   `VERIFY_GEMINI_MODEL=<model id> GEMINI_API_KEY=dummy pnpm content:model-check --blind gemini --review gemini --write`.
-   `api.openai.com` and `gateway.ai.cloudflare.com` are blocked from content sessions, and
-   `scripts/verify/providers.mjs` does not send the AI Gateway's `cf-aig-authorization` header.
-2. **Two near-match quotes** (topic tree A22 and A25): a person compares them with the PDF page
+1. **Two near-match quotes** (topic tree A22 and A25): a person compares them with the PDF page
    (`REVIEW_GUIDE.md`). On the rendered page both read word for word as quoted.
-3. **Definitions in maths items (G9).** Either find an official source that states the
+2. **Definitions in maths items (G9).** Either find an official source that states the
    definition, or rule that a standard definition may rest on the specification point plus
    individual human approval. This ruling decides how step 2 writes flashcards.
+3. **Formula flashcards (A18-0002).** Options: (a) a V change so maths flashcards are compared by
+   the maths engine (the same formula in any form), keeping word matching for word cards;
+   (b) formula cards always get individual human approval instead of the blind answer;
+   (c) no formula flashcards. Recommended: (a).
 
-**Gaps found in the review queue (outside S2's paths)**
+**How steps 3 and 4 run** (Gemini key saved as an environment network secret for
+`generativelanguage.googleapis.com`, header `x-goog-api-key`; Node's fetch only uses the proxy
+with `NODE_USE_ENV_PROXY=1`):
 
-- No button or script creates a review batch: `POST /v1/review/batches` needs a signed-in
-  reviewer and a snapshot of each item.
-- ~~The batch page does not show hints, mark schemes, exemplars or the checks that passed.~~
-  Fixed in S2: it shows them (the linked mark scheme from `mark_scheme_detail` in the snapshot).
-- A reviewer role is a database row only (`reviewer_roles`); the owner needs one on dev.
+```bash
+NODE_USE_ENV_PROXY=1 GEMINI_API_KEY=dummy VERIFY_GEMINI_MODEL=gemini-2.5-pro \
+  pnpm content:model-check --blind gemini --review gemini --write
+```
+
+**Review queue**
+
+- The batch page shows hint, mark scheme, exemplars and checks (S2, #108).
+- "Create batch from draft items" for content leads on `/review` (S2, #109, migration 0026).
+- A reviewer role is a database row (`reviewer_roles`); the lead adds the owner's on dev.
 - Topic trees and near-match quotes are not in the queue; they are confirmed with the lead.
 
 ## Step 2: scaling plan (not started; the lead starts it after the owner approves step 1)
@@ -64,8 +70,8 @@ least 3 interchangeable items, and items carry `learning_point` (and, if F adds 
 `expected_seconds`). Neither field is in `content/schemas/item.schema.json` yet; F
 owns that schema change and it must merge before writers use the fields.
 
-**Before starting:** decisions 1 and 3 above are settled, F's schema change has merged, and a batch can be created for the
-owner (gap 1).
+**Before starting:** decisions 2 and 3 above are settled, F's schema change has merged, and #109 (create batch
+from draft items) has merged.
 
 **Six writer sessions, one per area**
 
@@ -130,7 +136,8 @@ Run every item through the pipeline and record results with --write:
   pnpm content:validate                      (schema, links, maths engine)
   pnpm content:quote-check --write           (step 2)
   pnpm content:exact-check --write           (units and similar, where an `exact` block applies)
-  pnpm content:model-check --blind gemini --review gemini --write   (steps 3 and 4)
+  NODE_USE_ENV_PROXY=1 GEMINI_API_KEY=dummy VERIFY_GEMINI_MODEL=gemini-2.5-pro \
+    pnpm content:model-check --blind gemini --review gemini --write   (steps 3 and 4)
 Record grounded-writing yourself as you write. Fix and re-run anything that fails, or leave it
 out with the reason in your PR. Never weaken a check to get a pass. Near-match quotes: list them
 in the PR for a person to confirm. Keep items draft; the owner approves through the review
