@@ -55,6 +55,14 @@ Tags: #product #rules #limits #defaults
 - Exam boards and tiers are picked in the app; "not sure" is allowed and reminded later.
 - GCSE Film Studies is offered only by WJEC Eduqas. GCSE Statistics only by AQA and Pearson Edexcel. Boards per subject and tiered GCSEs are listed
   in `docs/PRODUCT_RULES.md` "Onboarding".
+- Most-used board per subject in England (Ofqual market report 2024 to 2025, share of
+  certificates): AQA for GCSE English Language, English Literature, Biology, Chemistry, Physics,
+  Combined Science, Drama, French and A-Level Physics; Pearson Edexcel for GCSE Maths, History and
+  A-Level Maths, Further Maths; OCR for A-Level Computer Science; WJEC Eduqas only for GCSE Film
+  Studies. AI terms: AQA forbids its material in AI-assisted works; Pearson reportedly reserves AI
+  training rights (not confirmed); no AI clause found for OCR or WJEC Eduqas. Figures, quotes and
+  the recommended build order: `docs/research/board-shares-2026-11.md` (research, 2026-11-25; not
+  yet a decision).
 - Onboarding takes Years 9 to 13 (9–11 GCSE, 12–13 A-Level). Exams are worked out from the year:
   Year 11 and 13 sit them next summer (2027 in school year 2026/27), Year 10 and 12 a year later,
   Year 9 two years later.
@@ -199,10 +207,16 @@ Tags: #product #rules #limits #defaults
   record (`docs/VERIFICATION.md`); verified content needs quotes and every pipeline check, and is
   immutable (edits create a new version). `pnpm content:validate --audit <id>` prints the audit trail.
 - Diagrams are SVG drawn by code from verified data; no AI-generated or raster teaching images.
+- Items may carry `learning_point` (finer skill id; at least 3 items per learning point, for
+  similar-question retries) and `expected_seconds` (5 to 900; slower than twice it is shaky).
 - Pilot: GCSE Maths Higher, Pearson Edexcel 1MA1 (content references N1 to S6). Every pilot
   citation has a verbatim quote from the 1MA1 specification Issue 2 (or, for the quadratic
   formula, the DfE subject content DFE-00233-2013), with page and SHA-256. All pilot content is
-  still `draft`: blind answer, adversarial review and human approval are still to do.
+  still `draft`. Pipeline run 2026-11-25 (S2, `docs/CONTENT_RUN_1MA1.md`): every step
+  recorded; blind answer and adversarial review by Gemini (`gemini-2.5-pro`). All 11 items pass
+  steps 1 to 6 and wait for the owner (G9 under decision 0008 and the A6 proof with individual
+  approval; A18-0002 after it was compared by formula, #111). The topic tree's 2 near matches (A22,
+  A25) were confirmed by the owner. Owner's review steps: `docs/REVIEW_GUIDE.md`.
 - Citation `supports` names only what the quote itself backs. A specification quote backs the
   question being in scope (`question`, `topic`); maths answers are backed by the maths engine,
   not by a citation. Sourcing record: `docs/sourcing/gcse-maths-1ma1-pilot.md`.
@@ -273,7 +287,10 @@ Tags: #product #rules #limits #defaults
   `apps/www/public` and remade by hand with `node apps/www/scripts/make-images.mjs` after an art
   change; original art only, no stock photos or AI-generated images.
   Links use the app's J7 styles (buttons, tiles, chips, bold inline links), never plain underlined
-  text (owner, 2026-11-25).
+  text (owner, 2026-11-25). Light or dark follows the device only (no switch), with the app's dark
+  theme colours. Behind every page sits the app's doodle tile (`apps/web/src/design/doodles.svg`,
+  read at build time, 240px, 7% ink), always on with no switch, hidden for high contrast and forced
+  colours.
 - Production passkeys use the RP ID `revisionden.com`; OAuth callbacks are on the API host, so the
   move to `app.` needed no change in Google or Microsoft. Dev and staging passkeys use their own
   hosts (`dev.revisionden.com`, `staging.revisionden.com`), so they work only there.
@@ -322,6 +339,8 @@ Tags: #product #rules #limits #defaults
 - Extended answers: blind marking replaces the blind answer (three exemplars, top, middle and low,
   marked by a second provider without the intended levels; all three must match exactly), and
   every one needs individual human approval; review batches always include them.
+- Maths flashcards with `back_formula` are blind-answered by formula: the maths engine compares
+  the formula (any equivalent form) and every listed condition (e.g. `a ≠ 0`) must be stated.
 - Blind answer must come from a different provider from the writer (Claude by default) and be
   highly confident; any adversarial-review problem fails the item. Real models never run in
   tests or CI.
@@ -647,7 +666,7 @@ Tags: #product #rules #limits #defaults
   #B34F00 (orange), checked by simulation (ΔE ≥ 20 for deuteranopia, protanopia, tritanopia) and
   4.5:1 contrast in all four combinations. Doodle tile `apps/web/src/design/doodles.svg` (original,
   240px, used as a CSS mask at 7% ink), hidden with `prefers-contrast: more` and forced colours.
-  Text on gold or streak orange uses `--color-text-on-gold`. Get help keeps light colours in dark.
+  Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help keeps light colours in dark.
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by

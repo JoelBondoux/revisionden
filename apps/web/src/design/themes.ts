@@ -84,6 +84,7 @@ export const THEME_PAIRS: PairSpec[] = [
   ['warning text on soft warning', '--color-warning-text', '--color-warning-soft'],
   ['white on danger button', '--color-text-on-primary', '--color-danger'],
   ['text on gold', '--color-text-on-gold', '--color-gold'],
+  ['mastered hex checkmark', '--color-text-on-gold', '--color-gold'],
   ['text on streak orange', '--color-text-on-gold', '--color-streak'],
   ['mastery text on mastery fill', '--color-primary-edge', '--color-mastery-fill'],
   ['secondary text on locked hex', '--color-text-secondary', '--color-locked-soft'],

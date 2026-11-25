@@ -80,6 +80,8 @@ tab say so to screen readers.
   pencil, book, π, √, ÷, x², a graph, a lightbulb, a star, a trophy, a calculator, a test tube,
   headphones, a planet). Very faint (7% ink), behind solid cards, no animation, off in high
   contrast and forced colours, and switchable off. Tokens and checks: `apps/web/src/design/themes.ts`.
+- **Text on gold** always uses `--color-text-on-gold` (dark), in every theme: gold buttons,
+  gold and streak pills, earned reward steps, the combo badge and the mastered-topic checkmark on the map.
 
 ## Never (Children's Code and `REWARDS.md`)
 
