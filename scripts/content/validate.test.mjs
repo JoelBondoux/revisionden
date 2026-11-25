@@ -776,3 +776,30 @@ test('rounding and the declared subject are sent to the maths engine', () => {
   assert.equal(checks[1].subject, 't');
   assert.deepEqual(checks[2].expected, { expression: '(v - u)/a', subject: 't' });
 });
+
+test('a fact proof must name a maths engine check kind the engine knows', async () => {
+  const withProof = (kind) => ({
+    ...numericItem,
+    facts: [
+      {
+        statement: 'Fixture fact.',
+        ask: 'Fixture question about the fact?',
+        engine: { kind, graph: 'f(x - a)', image: '(x + a, y)' },
+      },
+    ],
+  });
+  const ok = await validateContent(
+    content({ items: [at('items/a.json', withProof('transformation'))] }),
+    {
+      checkMaths: fakeEngine(),
+    },
+  );
+  assert.deepEqual(ok, []);
+  const typo = await validateContent(
+    content({ items: [at('items/a.json', withProof('transform'))] }),
+    {
+      checkMaths: fakeEngine(),
+    },
+  );
+  assert.notDeepEqual(typo, []);
+});

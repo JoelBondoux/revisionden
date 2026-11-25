@@ -64,6 +64,7 @@ spend tracking, per-child monthly cap, provider fallback).
 | Short-answer marking | 300 answers with known correctness                  | 95% agreement                                                                             |
 | Handwriting reading  | 40 synthetic handwritten pages                      | 98% word accuracy on confirmed text                                                       |
 | Item correctness     | Random 200 items per subject                        | 100% correct (any error triggers a batch re-check)                                        |
+| Fact-check judge     | 20 statement pairs (`evals/golden/fact-judge.json`) | 100% of different facts refused; 90% of same facts accepted                               |
 
 Teacher marks added in Mark my homework are collected (with no personal data) to compare against
 AI marks over time. Evaluations run weekly and whenever a prompt or model changes; never in CI by
