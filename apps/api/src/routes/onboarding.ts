@@ -245,20 +245,27 @@ async function saveChoice(
     })
     .where(where)
     .returning();
-  // A target grade that is not on the saved board and tier's scale is cleared (K8).
-  const keep = (grade: string | null) =>
-    grade !== null && isAllowedTarget(updated!, grade) ? grade : null;
-  const targets = {
-    parentTargetGrade: keep(updated!.parentTargetGrade),
-    studentTargetGrade: keep(updated!.studentTargetGrade),
-  };
-  const unchanged =
-    targets.parentTargetGrade === updated!.parentTargetGrade &&
-    targets.studentTargetGrade === updated!.studentTargetGrade;
-  const [saved] = unchanged
-    ? [updated]
-    : await db.update(enrolments).set(targets).where(where).returning();
-  return toEnrolment(saved!);
+  // A target grade that is not on the saved board and tier's scale is cleared (K8). Targets are
+  // only ever set to null, and only while the row still has the board, tier and target checked
+  // here, so a request that lost a race cannot bring back a target another one cleared.
+  const saved = { ...updated! };
+  for (const column of ['parentTargetGrade', 'studentTargetGrade'] as const) {
+    const grade = updated![column];
+    if (grade === null || isAllowedTarget(updated!, grade)) continue;
+    await db
+      .update(enrolments)
+      .set({ [column]: null })
+      .where(
+        and(
+          where,
+          eq(enrolments.board, updated!.board),
+          eq(enrolments.tier, updated!.tier),
+          eq(enrolments[column], grade),
+        ),
+      );
+    saved[column] = null;
+  }
+  return toEnrolment(saved);
 }
 
 /** Parent route under /v1/students: set a child's board or tier (for example after Not sure). */
