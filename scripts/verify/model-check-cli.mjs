@@ -109,7 +109,9 @@ export async function run(argv, deps = {}) {
       try {
         const essay = step.name === 'blind-answer' && data.type === 'extended_answer';
         const run = essay ? blindMarking : step.run;
-        const r = await run(data, step.provider, { now });
+        // Each stage sees the checks recorded earlier in this run (the fact-check must know which
+        // provider gave the blind answer just saved).
+        const r = await run(updated, step.provider, { now });
         out(
           `${r.result === 'pass' ? 'pass' : 'FAIL'}  ${data.id}  ${r.check.name}  ${r.check.notes}`,
         );
