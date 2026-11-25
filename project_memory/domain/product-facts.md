@@ -297,6 +297,10 @@ Tags: #product #rules #limits #defaults
 - Newly earned rewards are saved (and announced as "New!") by `rewardsView`, used by the student's
   `GET /v1/student/rewards` and the parent's full `GET /v1/students/:id/rewards`. The parent's
   `GET /v1/students/:id/parent-rewards` and the stats pages use the read-only `rewardsProgress`.
+  They are also saved, once each, by an answer (`POST /v1/student/learn/attempts`) and a finished
+  flashcard session (`.../sessions/:id/finish`): both return `newlyEarned` (`saveNewRewards`), and
+  the lesson, Cards screen and starting-test results show "New reward: …" with the reward sound
+  (F4, 2026-11-25). The starting test keeps quiet until its results screen.
 - New avatar items: chapter finale tops (chapter hoodie, bomber jacket, GCSE finisher jacket,
   sixth-form coat, A-Level finisher jacket), rooftop scene, and the Frost Fest drop (bobble hat,
   paper lantern, frosty night scene). Always appended to a layer so saved avatar codes still work.
@@ -320,7 +324,7 @@ Tags: #product #rules #limits #defaults
 - Level bar and parent-set rewards come from the rewards progression (same numbers as the Rewards
   page), read with the read-only `rewardsProgress`: it counts earned-but-unseen rewards and saves
   nothing, so the stats pages and the parent's parent-rewards view never use up the student's
-  "New!" rewards (only the student's own Rewards page saves and announces them). Plan, school report effort and predicted/target grade panels show "Not set up yet"
+  "New!" rewards (the student's Rewards page, answers and flashcard sessions save and announce them). Plan, school report effort and predicted/target grade panels show "Not set up yet"
   (adapters in `apps/api/src/stats/adapters.ts`) until those features land.
 - Routes: `/progress` (My stats), `/parent/stats` (parent); API `GET /v1/student/stats`,
   `GET /v1/students/:id/stats`, `GET /v1/students/:id/dashboard`. Implemented in
@@ -382,7 +386,7 @@ Tags: #product #rules #limits #defaults
   step is 1.5 semitones higher (8 steps = an octave) and adds one harmony note (up to 4). Voice per
   chapter id (`chapter-<n>-…`); finisher fanfares for the chapter rewards that need
   `gcseFinished` or `aLevelFinished`. Biggest = tier, then finisher, then step. Played on the
-  Rewards screen for `newlyEarned`; a tap or key press skips legendary.
+  Rewards screen, after an answer and after a flashcard session for `newlyEarned`; a tap or key press skips legendary.
 - Defaults: on, medium volume, tap sounds off; saved in `localStorage` key `revisionden.sound`
   (storage errors are ignored). One AudioContext, made at the first tap or key press; paused when
   the app is hidden. Test mode: submit and one reveal for the set; timed papers: only the timer

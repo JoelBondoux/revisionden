@@ -7,6 +7,7 @@ import { CloseIcon } from '../../components/icons';
 import { ProgressBar } from '../../components/ProgressBar';
 import { markSound, useSound } from '../sound';
 import { useLearnApi } from './learnApi';
+import { NewRewards } from './NewRewards';
 import { DailyGoal, DraftBanner, ItemInput, toAnswer, type Answer, type Draft } from './parts';
 
 function Feedback({ result }: { result: LearnAttemptResponse }) {
@@ -187,6 +188,7 @@ export function LessonPlayer({
           </p>
         )}
         {result && <Feedback result={result} />}
+        {result && <NewRewards rewards={result.newlyEarned} />}
         {result || unmarked ? (
           <Button block variant={result?.correct ? 'success' : 'primary'} onClick={advance}>
             {isLast ? 'Finish' : 'Continue'}

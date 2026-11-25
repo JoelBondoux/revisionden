@@ -9,7 +9,7 @@ import {
   SubjectTopicsResponseSchema,
   type LearnItem,
 } from '@revisionden/core';
-import { items, topics } from '@revisionden/db';
+import { items, rewards, streaks, topics } from '@revisionden/db';
 import { syncContent } from './learning/content-sync';
 import type { MathsEngine } from './learning/maths-engine';
 import { createTestContext, jsonRequest, type TestContext } from './test/helpers';
@@ -354,6 +354,27 @@ describe('mastery, XP, daily goal and streak', () => {
       await (await get('/v1/student/learn/progress', headers)).json(),
     );
     expect(lapsed.streak).toMatchObject({ current: 0, best: 2 });
+  });
+});
+
+describe('rewards earned by an answer', () => {
+  it('returns rewards the answer earned, once each, and saves them', async () => {
+    const { headers, studentId } = await t.familyStudent('rw_answer_kid');
+    await t.db.insert(streaks).values({ studentId, current: 8, best: 8 });
+    const mc = itemByPrompt(await allItems(headers), 'Test question 1');
+    const first = await answer(headers, mc.id, 1);
+    expect(first.newlyEarned.map((r) => r.id)).toContain('streak-7');
+    expect(first.newlyEarned[0]).toMatchObject({ earned: true });
+    const saved = await t.db.select().from(rewards).where(eq(rewards.studentId, studentId));
+    expect(saved.map((r) => r.rewardId)).toContain('streak-7');
+    const second = await answer(headers, mc.id, 1);
+    expect(second.newlyEarned.map((r) => r.id)).not.toContain('streak-7');
+  });
+
+  it('returns no rewards when nothing new is earned', async () => {
+    const { headers } = await t.familyStudent('rw_none_kid');
+    const mc = itemByPrompt(await allItems(headers), 'Test question 1');
+    expect((await answer(headers, mc.id, 0)).newlyEarned).toEqual([]);
   });
 });
 

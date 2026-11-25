@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import type { StartingTestResponse, StartingTestResult } from '@revisionden/core';
+import type {
+  RewardCardResponse,
+  StartingTestResponse,
+  StartingTestResult,
+} from '@revisionden/core';
 import { ApiError } from '../../api/client';
 import { ErrorRef, refOf } from '../../api/ErrorRef';
 import { Button, ButtonLink } from '../../components/Button';
@@ -8,20 +12,15 @@ import { Card } from '../../components/Card';
 import { ProgressBar } from '../../components/ProgressBar';
 import { useSound } from '../sound';
 import { useLearnApi } from './learnApi';
+import { NewRewards } from './NewRewards';
 import { DraftBanner, ItemInput, toAnswer, type Draft } from './parts';
 
 const clockText = (seconds: number) =>
   `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')} left`;
 
-function Results({
-  result,
-  timeUp,
-  subjectId,
-}: {
-  result: StartingTestResult;
-  timeUp: boolean;
-  subjectId: string;
-}) {
+type Outcome = { result: StartingTestResult; timeUp: boolean; earned: RewardCardResponse[] };
+
+function Results({ result, timeUp, earned, subjectId }: Outcome & { subjectId: string }) {
   const { play } = useSound();
   useEffect(() => void play('reveal', { mode: 'test' }), [play]);
   return (
@@ -31,6 +30,7 @@ function Results({
         <p>
           You got {result.correct} of {result.total} right.
         </p>
+        <NewRewards rewards={earned} />
         <ul className="topic-list">
           {result.topics.map((topic) => (
             <li key={topic.topicId} className="topic-list__item">
@@ -58,7 +58,7 @@ function Runner({
   onFinished,
 }: {
   test: StartingTestResponse;
-  onFinished: (result: StartingTestResult, timeUp: boolean) => void;
+  onFinished: (outcome: Outcome) => void;
 }) {
   const api = useLearnApi();
   const { play } = useSound();
@@ -66,6 +66,7 @@ function Runner({
   const [draft, setDraft] = useState<Draft>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<{ ref: string | undefined } | null>(null);
+  const earned = useRef<RewardCardResponse[]>([]);
   const [secondsLeft, setSecondsLeft] = useState(test.timeLimitSeconds);
   const startedAt = useRef(Date.now());
   const shownAt = useRef(Date.now());
@@ -77,7 +78,8 @@ function Runner({
       if (finishing.current) return;
       finishing.current = true;
       try {
-        onFinished(await api.finishStartingTest(test.id), timeUp);
+        const result = await api.finishStartingTest(test.id);
+        onFinished({ result, timeUp, earned: earned.current });
       } catch (err) {
         finishing.current = false;
         setError({ ref: refOf(err) });
@@ -112,13 +114,15 @@ function Runner({
     try {
       if (!skip && answer !== null) {
         play('submit', { mode: 'test' });
-        await api.submitAttempt({
+        const marked = await api.submitAttempt({
           itemId: item.id,
           answer,
           timeMs: Math.max(0, Date.now() - shownAt.current),
           mode: 'test',
           startingTestId: test.id,
         });
+        // Test mode stays quiet: rewards are announced on the results screen.
+        earned.current = [...earned.current, ...marked.newlyEarned];
       }
       if (isLast) {
         await finish(false);
@@ -174,13 +178,8 @@ export function StartingTestPage() {
   const api = useLearnApi();
   const [test, setTest] = useState<StartingTestResponse | null>(null);
   const [problem, setProblem] = useState<{ text: string; ref?: string } | null>(null);
-  const [outcome, setOutcome] = useState<{ result: StartingTestResult; timeUp: boolean } | null>(
-    null,
-  );
-  const onFinished = useCallback(
-    (result: StartingTestResult, timeUp: boolean) => setOutcome({ result, timeUp }),
-    [],
-  );
+  const [outcome, setOutcome] = useState<Outcome | null>(null);
+  const onFinished = useCallback((finished: Outcome) => setOutcome(finished), []);
 
   async function start() {
     setProblem(null);

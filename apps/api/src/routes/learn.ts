@@ -31,6 +31,7 @@ import {
   type Database,
 } from '@revisionden/db';
 import type { AppConfig } from '../env';
+import { saveNewRewards } from './rewards';
 import type { AppEnv } from '../context';
 import { ApiError, notFound } from '../errors';
 import { readJson } from '../http';
@@ -340,6 +341,7 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
         : null,
       progress,
       flashcardAdded,
+      newlyEarned: await saveNewRewards(db, studentId, now),
     };
     return c.json(response);
   });

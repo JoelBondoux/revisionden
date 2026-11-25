@@ -29,6 +29,7 @@ import {
   type FlashcardDeck,
 } from '@revisionden/core';
 import { enrolments, flashcardSessions, flashcards, items, topics } from '@revisionden/db';
+import { saveNewRewards } from './rewards';
 import type { AppEnv } from '../context';
 import { ApiError, notFound } from '../errors';
 import { readJson } from '../http';
@@ -256,6 +257,7 @@ export function flashcardRoutes({ db, clock, config }: LearnDeps) {
       cardsCounted: session.cardIds.length,
       rewardedLeftToday: outcome.xp > 0 ? left - 1 : left,
       progress,
+      newlyEarned: await saveNewRewards(db, studentId, now),
     });
   });
 

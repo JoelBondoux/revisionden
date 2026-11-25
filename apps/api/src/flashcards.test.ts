@@ -9,6 +9,7 @@ import {
   RELEARN_DELAY_MS,
   type Flashcard,
 } from '@revisionden/core';
+import { streaks } from '@revisionden/db';
 import { syncContent } from './learning/content-sync';
 import { flashcardSessionStats } from './learning/flashcard-sessions';
 import { AVATAR, createTestContext, jsonRequest, type TestContext } from './test/helpers';
@@ -304,6 +305,17 @@ describe('reviewing cards in a session', () => {
     const sessionId = await startSession(other.headers);
     expect((await review(other.headers, card.id, 'good', sessionId)).status).toBe(404);
     expect((await review(other.headers, 'not-an-id', 'good', sessionId)).status).toBe(404);
+  });
+});
+
+describe('rewards earned by a flashcard session', () => {
+  it('returns rewards the finished session earned, once each', async () => {
+    const { headers, studentId } = await student('rw_session_kid');
+    await t.db.insert(streaks).values({ studentId, current: 8, best: 8 });
+    const first = await finished(headers, await startSession(headers));
+    expect(first.newlyEarned.map((r) => r.id)).toContain('streak-7');
+    const second = await finished(headers, await startSession(headers));
+    expect(second.newlyEarned).toEqual([]);
   });
 });
 

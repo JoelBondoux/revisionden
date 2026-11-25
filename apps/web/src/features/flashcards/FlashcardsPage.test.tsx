@@ -30,6 +30,7 @@ function finishResult(over: Record<string, unknown>) {
       goalMet: true,
       streak: { current: 4, best: 9, skipDays: 1 },
     },
+    newlyEarned: [],
     ...over,
   };
 }
@@ -108,6 +109,32 @@ describe('Flashcards screen', () => {
     await reviewBothCards();
     const done = await screen.findByRole('region', { name: 'Deck done!' });
     expect(done).toHaveTextContent('+20 XP');
+  });
+
+  it('announces a reward the session earned', async () => {
+    server.use(
+      http.post('*/v1/student/flashcards/sessions/:id/finish', () =>
+        HttpResponse.json(
+          finishResult({
+            newlyEarned: [
+              {
+                id: 'flashcards-500',
+                name: '500 flashcards',
+                rarity: 'rare',
+                items: [],
+                earned: true,
+                current: 1,
+                target: 1,
+              },
+            ],
+          }),
+        ),
+      ),
+    );
+    await reviewBothCards();
+    expect(await screen.findByRole('status', { name: 'New rewards' })).toHaveTextContent(
+      'New reward: 500 flashcards',
+    );
   });
 
   it('explains when today’s rewarded sessions are used up', async () => {

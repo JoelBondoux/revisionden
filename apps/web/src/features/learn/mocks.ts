@@ -12,6 +12,7 @@ import {
   type Flashcard,
   type LearnItem,
   type Progress,
+  type RewardCardResponse,
 } from '@revisionden/core';
 
 const id = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, '0')}`;
@@ -62,6 +63,7 @@ function card(n: number, front: string, back: string, origin: Flashcard['origin'
 }
 
 interface State {
+  nextRewards: RewardCardResponse[];
   sessionCards: string[];
   xpToday: number;
   totalXp: number;
@@ -77,8 +79,28 @@ const fresh = (): State => ({
   mine: [],
   ownCount: 0,
   sessionCards: [],
+  nextRewards: [],
 });
 let state = fresh();
+
+type MockReward = Pick<RewardCardResponse, 'id' | 'name' | 'rarity'>;
+
+/** The next answer or finished flashcard session earns these rewards (tests and demos). */
+export function mockNextRewards(rewards: MockReward[]) {
+  state.nextRewards = rewards.map((r) => ({
+    ...r,
+    items: [],
+    earned: true,
+    current: 1,
+    target: 1,
+  }));
+}
+
+function takeRewards() {
+  const earned = state.nextRewards;
+  state.nextRewards = [];
+  return earned;
+}
 
 /** Puts the mock back to its starting point (called after each test). */
 export function resetLearnMocks() {
@@ -194,6 +216,7 @@ export const learnHandlers: RequestHandler[] = [
       progress: progress(),
       flashcardAdded:
         !correct && body.data.mode === 'learn' && typeof body.data.answer !== 'boolean',
+      newlyEarned: takeRewards(),
     });
   }),
 
@@ -246,6 +269,7 @@ export const learnHandlers: RequestHandler[] = [
       cardsCounted: state.sessionCards.length,
       rewardedLeftToday: 2,
       progress: progress(),
+      newlyEarned: takeRewards(),
     }),
   ),
 
