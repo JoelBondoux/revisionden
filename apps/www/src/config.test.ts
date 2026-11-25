@@ -51,4 +51,10 @@ describe('site build config', () => {
   it('rejects an unknown environment name', () => {
     expect(() => readSiteConfig({ WWW_ENVIRONMENT: 'prod' })).toThrow(/WWW_ENVIRONMENT/);
   });
+
+  it('treats the app as in private testing until WWW_LAUNCHED is true', () => {
+    expect(readSiteConfig({}).launched).toBe(false);
+    expect(readSiteConfig({ WWW_LAUNCHED: 'yes' }).launched).toBe(false);
+    expect(readSiteConfig({ WWW_LAUNCHED: 'true' }).launched).toBe(true);
+  });
 });

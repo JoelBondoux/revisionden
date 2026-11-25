@@ -17,6 +17,8 @@ export interface SiteConfig {
   siteUrl: string;
   /** Only the live site is listed by search engines. */
   indexable: boolean;
+  /** False until WWW_LAUNCHED=true: pages say the app is in private testing (lead, 2026-11-25). */
+  launched: boolean;
   policyEnv: PolicyEnv;
 }
 
@@ -65,6 +67,7 @@ export function readSiteConfig(env: Env): SiteConfig {
     appUrl: withoutSlash(set(env.WWW_APP_URL) ?? DEFAULTS[environment].appUrl),
     siteUrl: withoutSlash(set(env.WWW_SITE_URL) ?? DEFAULTS[environment].siteUrl),
     indexable: environment === 'production',
+    launched: set(env.WWW_LAUNCHED) === 'true',
     policyEnv,
   };
 }

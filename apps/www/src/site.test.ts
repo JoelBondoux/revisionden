@@ -126,4 +126,17 @@ describe('the built site', () => {
   it('never includes the trading name on the home page', () => {
     expect(text(files, 'index.html')).not.toContain('Example Trading');
   });
+
+  it('says the app is in private testing before launch, not open to the public', () => {
+    const html = text(files, 'index.html');
+    expect(html).toContain('in private testing');
+    expect(html).not.toContain('Free to use now');
+  });
+
+  it('says the app is free to use once launched', () => {
+    const launched = { ...production, launched: true };
+    const html = text(renderSite(launched, inputs), 'index.html');
+    expect(html).toContain('Free to use now');
+    expect(html).not.toContain('in private testing');
+  });
 });

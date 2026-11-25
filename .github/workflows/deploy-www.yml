@@ -58,6 +58,8 @@ jobs:
       - name: Build the public site
         env:
           WWW_ENVIRONMENT: ${{ inputs.environment }}
+          # Until this GitHub variable is 'true', pages say the app is in private testing.
+          WWW_LAUNCHED: ${{ vars.WWW_LAUNCHED }}
           # Operator details (decision 0003): GitHub environment variables, shared with the web
           # app. A production build fails without the name and contact email.
           VITE_OPERATOR_NAME: ${{ vars.VITE_OPERATOR_NAME }}

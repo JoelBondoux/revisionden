@@ -221,6 +221,7 @@ Tags: #product #rules #limits #defaults
   requests (self-hosted fonts, strict content security policy). Workers `revisionden-www` and
   `revisionden-www-staging`. Its policies and design tokens are read from `docs/legal` and the web
   app at build time. "Sign in" and "Start free" go to `app.revisionden.com` (staging: `staging.`).
+  Until `WWW_LAUNCHED=true` it says the app is in private testing.
 - Live since 2026-11-25 (workstream G): API Workers on all three API hosts; web app on `dev.` and
   `staging.`. The production web app waits for the operator details (its build fails without them).
 - Workers: `revisionden-api-dev`, `revisionden-api-staging`, `revisionden-api` (API) and

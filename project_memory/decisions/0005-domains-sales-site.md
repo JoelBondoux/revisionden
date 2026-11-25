@@ -34,6 +34,9 @@ planned prices and links to the policies, with the app on its own host.
   `VITE_CONTACT_EMAIL`, `VITE_SUPPORT_EMAIL`, `VITE_POLICY_EFFECTIVE_DATE`) so the GitHub
   environment variables are shared. A production build fails without the operator name and
   contact email; the trading name is never committed (decision 0003).
+- Until `WWW_LAUNCHED=true` (a GitHub variable) the site says the app is in private testing, and
+  policy pages without an effective date show "Draft: not yet in force, being reviewed before
+  launch" (lead, 2026-11-25).
 - "Sign in" and "Start free" go to `https://app.revisionden.com` (staging:
   `https://staging.revisionden.com`).
 

@@ -151,15 +151,16 @@ Step by step (about 15 minutes):
 checks the home page answers. Not live yet: it waits for the GitHub secrets above and, for
 production, for the app to move to `app.revisionden.com`.
 
-| Build variable               | staging                               | production                    | Notes                                           |
-| ---------------------------- | ------------------------------------- | ----------------------------- | ----------------------------------------------- |
-| `WWW_ENVIRONMENT`            | `staging`                             | `production`                  | Set by the workflow                             |
-| `WWW_APP_URL`                | `https://staging.revisionden.com`     | `https://app.revisionden.com` | Defaults; "Sign in" and "Start free" go here    |
-| `WWW_SITE_URL`               | `https://www-staging.revisionden.com` | `https://revisionden.com`     | Defaults; canonical links, sitemap, Open Graph  |
-| `VITE_OPERATOR_NAME`         | optional                              | **required**                  | Same GitHub environment variable as the web app |
-| `VITE_CONTACT_EMAIL`         | optional                              | **required**                  | `privacy@revisionden.com`                       |
-| `VITE_SUPPORT_EMAIL`         | optional                              | optional                      | `help@revisionden.com` when unset               |
-| `VITE_POLICY_EFFECTIVE_DATE` | optional                              | optional                      | Policies show "date to be added" until set      |
+| Build variable               | staging                               | production                    | Notes                                                                             |
+| ---------------------------- | ------------------------------------- | ----------------------------- | --------------------------------------------------------------------------------- |
+| `WWW_ENVIRONMENT`            | `staging`                             | `production`                  | Set by the workflow                                                               |
+| `WWW_LAUNCHED`               | unset                                 | unset until launch            | GitHub variable; `true` drops "in private testing" and the policies' draft banner |
+| `WWW_APP_URL`                | `https://staging.revisionden.com`     | `https://app.revisionden.com` | Defaults; "Sign in" and "Start free" go here                                      |
+| `WWW_SITE_URL`               | `https://www-staging.revisionden.com` | `https://revisionden.com`     | Defaults; canonical links, sitemap, Open Graph                                    |
+| `VITE_OPERATOR_NAME`         | optional                              | **required**                  | Same GitHub environment variable as the web app                                   |
+| `VITE_CONTACT_EMAIL`         | optional                              | **required**                  | `privacy@revisionden.com`                                                         |
+| `VITE_SUPPORT_EMAIL`         | optional                              | optional                      | `help@revisionden.com` when unset                                                 |
+| `VITE_POLICY_EFFECTIVE_DATE` | optional                              | optional                      | Policies show "date to be added" until set                                        |
 
 Local build: `pnpm --filter @revisionden/www build` (staging settings), then open `apps/www/dist`
 with any static server, or `pnpm --filter @revisionden/www exec wrangler dev`.
