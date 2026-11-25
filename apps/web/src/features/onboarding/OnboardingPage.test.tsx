@@ -49,6 +49,11 @@ function fakeApi(initial: OnboardedChild[] = []): OnboardingApi & { children: On
     })),
     redeemLink: vi.fn(),
     verifyLink: vi.fn(),
+    updateChildSubject: vi.fn(),
+    getMySubjects: vi.fn(),
+    updateMySubject: vi.fn(),
+    getMyAvatar: vi.fn(),
+    saveMyAvatar: vi.fn(),
   };
 }
 

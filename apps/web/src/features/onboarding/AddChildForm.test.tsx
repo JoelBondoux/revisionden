@@ -54,10 +54,11 @@ describe('AddChildForm', () => {
     expect(continueButton()).toBeEnabled();
     await user.click(continueButton());
     const summary = screen.getByRole('status', { name: 'Before you continue' });
-    expect(within(summary).getAllByRole('listitem').map((li) => li.textContent)).toEqual([
-      "Add a nickname that isn't a real name",
-      'Choose a school year',
-    ]);
+    expect(
+      within(summary)
+        .getAllByRole('listitem')
+        .map((li) => li.textContent),
+    ).toEqual(["Add a nickname that isn't a real name", 'Choose a school year']);
     expect(screen.getByLabelText('Nickname')).toHaveFocus();
     expect(onSubmit).not.toHaveBeenCalled();
   });
@@ -67,9 +68,11 @@ describe('AddChildForm', () => {
     await user.type(screen.getByLabelText('Nickname'), 'Comet_7');
     await user.click(continueButton());
     const summary = screen.getByRole('status', { name: 'Before you continue' });
-    expect(within(summary).getAllByRole('listitem').map((li) => li.textContent)).toEqual([
-      'Choose a school year',
-    ]);
+    expect(
+      within(summary)
+        .getAllByRole('listitem')
+        .map((li) => li.textContent),
+    ).toEqual(['Choose a school year']);
     expect(screen.getByRole('radio', { name: 'Year 9' })).toHaveFocus();
   });
 
@@ -230,11 +233,11 @@ describe('AddChildForm', () => {
   it('offers Boy, Girl and Neutral starting looks, with Neutral picked', () => {
     setup();
     const looks = screen.getByRole('radiogroup', { name: 'Starting look' });
-    expect(within(looks).getAllByRole('radio').map((r) => r.textContent)).toEqual([
-      'Boy',
-      'Girl',
-      'Neutral',
-    ]);
+    expect(
+      within(looks)
+        .getAllByRole('radio')
+        .map((r) => r.textContent),
+    ).toEqual(['Boy', 'Girl', 'Neutral']);
     expect(within(looks).getByRole('radio', { name: 'Neutral' })).toBeChecked();
   });
 
