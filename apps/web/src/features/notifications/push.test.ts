@@ -91,6 +91,21 @@ describe('enableReminders', () => {
   });
 });
 
+describe('enableReminders for a parent device', () => {
+  it("remembers that this device's notifications are for the parent", async () => {
+    const rememberAudience = vi.fn(async () => undefined);
+    const { env } = fakeEnv({ rememberAudience });
+    expect(await enableReminders(env, fakeApi(), 'parent')).toBe('on');
+    expect(rememberAudience).toHaveBeenCalledWith('parent');
+  });
+
+  it('marks a student device as a student device', async () => {
+    const rememberAudience = vi.fn(async () => undefined);
+    await enableReminders(fakeEnv({ rememberAudience }).env, fakeApi());
+    expect(rememberAudience).toHaveBeenCalledWith('student');
+  });
+});
+
 describe('disableReminders', () => {
   it('removes the subscription from the server and the browser', async () => {
     const { env, current } = fakeEnv();

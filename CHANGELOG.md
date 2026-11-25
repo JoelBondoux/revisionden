@@ -7,6 +7,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Parents get a notification on their phone when a child reaches a reward target you set. Turn on "Reward news" on the new parent home.
+- New parent home: one place for the stats dashboard, rewards you set, reminder times, family feedback, settings and policies. Find it from the profile picker or Settings.
 - When you're signed out, About, Policies and Feedback show a simple header (Sign in, Policies, About) instead of the student menu.
 - Parents can download all their family's data as one file, from the family list.
 - Accounts nobody uses for 12 months are now deleted automatically; the parent area shows the date, and warns you if you come back after a long break.
@@ -44,6 +46,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Parent reward notification (H2): the family export (`GET /v1/export`) lists the parent's reward-news devices without their push keys; `parent_push_subscriptions` table and `parent_rewards.reached_notified_at` (migration 0007), `POST, DELETE /v1/parent/push-subscriptions`, `GET /v1/parent/notifications/latest`, a cron step (`runParentRewardNotifications`) that reads the read-only `rewardsProgress`, sends once per reward, respects the child's nightly quiet hours and is not counted in the 2-a-day reminder limit; the service worker shows parent text and opens `/parent` on parent devices.
+- Parent home (P): tapping a child on "Who's revising?" now opens `/parent?student=<id>` (that child preselected) instead of `/parent/stats`. `/parent` has a student switcher, rewards you set, reminder times (`/parent/reminders/:id`, the existing reminder settings form), stats dashboard, manage children, family feedback, download your family's data (to the B2 panel on `/onboarding`), Reward news toggle, settings and policies; linked from `/family` and Settings.
 - Privacy fixes (B2): `GET /v1/export` (parent's and own children's data as JSON, secrets left out) and a "Download your family's data" panel on the onboarding family list; family activity (`families.last_active_at`, `previous_active_at`, migration 0006), 12-month inactive deletion and `GET /v1/family/activity` with a return-after-11-months warning; the 15-minute cron (`apps/api/src/cleanup.ts`) also deletes expired link codes, student and parent sessions, passkey challenges and sign-in checks.
 - Support email (L): `help@revisionden.com` from `VITE_SUPPORT_EMAIL` (default in the repo) on the About page, the feedback form and as `{{SUPPORT_EMAIL}}` in the accessibility statement and community rules (both now 1.1); privacy@ stays the privacy contact.
 - Error reference codes (I): every API error body has `error.ref` (`RD-` + 6 letters/digits, `makeErrorRef` in core), logged with status, code, method and an id-masked path (no messages or personal data); every "Something went wrong" in the web app shows it; `POST /v1/client-errors` logs codes the web app made itself (strict schema, rate limited).

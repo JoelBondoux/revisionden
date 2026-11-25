@@ -50,6 +50,13 @@
       "when": 1795583577401,
       "tag": "0006_privacy_activity",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1795592516108,
+      "tag": "0007_parent_reward_notifications",
+      "breakpoints": true
     }
   ]
 }

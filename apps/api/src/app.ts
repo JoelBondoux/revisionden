@@ -20,6 +20,7 @@ import {
   studentSessionRoutes,
 } from './routes/devices';
 import {
+  parentNotificationRoutes,
   parentReminderRoutes,
   pushKeyRoutes,
   studentNotificationRoutes,
@@ -124,6 +125,7 @@ export function createApp(deps: AppDeps) {
   parent.use('/feedback', requireParent);
   parent.use('/policy-acceptances', requireParent);
   parent.use('/admin/*', requireParent);
+  parent.use('/parent/*', requireParent);
   parent.use('/family/*', requireParent);
   parent.use('/export', requireParent);
   async function requireParent(c: Context<AppEnv>, next: Next) {
@@ -150,6 +152,7 @@ export function createApp(deps: AppDeps) {
   parent.route('/family', familyRoutes(deps));
   parent.route('/', familyExport(deps));
   parent.route('/admin', adminFeedbackRoutes(deps));
+  parent.route('/parent', parentNotificationRoutes(deps));
   parent.route(
     '/review',
     reviewRoutes(deps.db, { ...deps.verification, now: () => deps.clock.now() }),

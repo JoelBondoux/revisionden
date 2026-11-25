@@ -1,0 +1,14 @@
+/* Parent home (workstream P). Uses the design tokens only. */
+.parent-home__grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.parent-home__switcher {
+  max-width: 320px;
+}
+
+.parent-home__child {
+  border-color: var(--color-primary-soft);
+}

@@ -14,6 +14,22 @@
       exams sat, flashcards reviewed, weak spots fixed, perfect sets, gifting and the friends league
       are in the catalogue, but nothing records those numbers yet, so the rewards route counts them
       as 0 (`apps/api/src/routes/rewards.ts`). They unlock once those features store the numbers.
+- [ ] **OAuth tokens kept.** `docs/PRIVACY.md` and the policies say only the parent's sign-in
+      email is stored, but Better Auth stores `access_token`, `refresh_token` and `id_token` in
+      `auth_accounts` (`packages/db/src/schema.ts`, `apps/api/src/auth.ts`); a Google or Microsoft
+      ID token usually carries the account name and picture URL. Not settled: auth is workstream
+      B's lane. The privacy notice (4.5) describes it as it is today.
+- [ ] **Youngest school year.** Onboarding and the policies take Years 9 to 13 (13+), but the
+      `students_year_group_range` check in `packages/db/src/schema.ts` allows 7 to 13. Not
+      settled: schema is B's lane; needs a product owner nod to tighten to 9.
+- [ ] **Promised deletion tools not built.** `docs/PRIVACY.md` says "export first is offered" and
+      "accounts unused for 12 months are deleted automatically"; neither exists in `apps/api`.
+      Expired link tokens, student sessions and parent sessions are not cleaned up either. The
+      policies (`docs/legal/data-retention.md`) say "still to do". Not settled: outside L's lane.
+- [ ] **Own flashcards are not privacy-checked.** Students can write their own flashcards (300
+      characters a side, `apps/api/src/routes/flashcards.ts`) and they are stored as free text with
+      no personal-data check, unlike AI requests and feedback. Not settled: F's lane; the
+      community rules ask students to take care.
 - [ ] **Parent reward notification.** `docs/REWARDS.md` says the parent gets a notification when a
       parent-set target is met; not built (reminders are workstream H). The student celebration is
       built.
@@ -53,6 +69,11 @@
 
 ## Resolved
 
+- [x] **Parent reward notification.** `docs/REWARDS.md` says the parent gets a notification when a
+      parent-set target is met; not built (reminders are workstream H). The student celebration is
+      built. Settled by H2 (2026-11-25): parent devices get one web push per reward
+      (`apps/api/src/notifications/parent-rewards.ts`, migration 0007); not counted in the 2-a-day
+      limit, respects the child's nightly quiet hours.
 - [x] **OAuth tokens kept.** `docs/PRIVACY.md` and the policies say only the parent's sign-in
       email is stored, but Better Auth stores `access_token`, `refresh_token` and `id_token` in
       `auth_accounts` (`packages/db/src/schema.ts`, `apps/api/src/auth.ts`); a Google or Microsoft

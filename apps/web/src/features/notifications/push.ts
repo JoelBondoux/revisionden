@@ -1,5 +1,14 @@
 import type { NotificationsApi, SubscriptionJson } from './notificationsApi';
 
+/** The calls push needs; the parent client has these too. */
+export type PushApi = Pick<
+  NotificationsApi,
+  'baseUrl' | 'getVapidKey' | 'saveSubscription' | 'deleteSubscription'
+>;
+
+/** Who this device's pushes are for: the service worker fetches different text for each. */
+export type PushAudience = 'student' | 'parent';
+
 interface MinimalSubscription {
   endpoint: string;
   toJSON(): unknown;
@@ -25,6 +34,8 @@ export interface PushEnvironment {
   pushManager(): Promise<MinimalPushManager>;
   /** Tells the service worker where the API is, so it can fetch the reminder text. */
   rememberApiBase(baseUrl: string): Promise<void>;
+  /** Tells the service worker whether pushes here are for the student or the parent. */
+  rememberAudience?(audience: PushAudience): Promise<void>;
 }
 
 export type PushSupport = 'ok' | 'unsupported' | 'needs-install';
@@ -45,7 +56,8 @@ export function pushSupport(env: PushEnvironment): PushSupport {
 /** Asks for permission (only now, after a tap), subscribes and saves the subscription. */
 export async function enableReminders(
   env: PushEnvironment,
-  api: NotificationsApi,
+  api: PushApi,
+  audience: PushAudience = 'student',
 ): Promise<ReminderState> {
   if (env.permission() === 'denied') return 'blocked';
   const permission = env.permission() === 'granted' ? 'granted' : await env.requestPermission();
@@ -58,13 +70,11 @@ export async function enableReminders(
   });
   await api.saveSubscription(subscription.toJSON() as SubscriptionJson);
   await env.rememberApiBase(api.baseUrl);
+  await env.rememberAudience?.(audience);
   return 'on';
 }
 
-export async function disableReminders(
-  env: PushEnvironment,
-  api: NotificationsApi,
-): Promise<ReminderState> {
+export async function disableReminders(env: PushEnvironment, api: PushApi): Promise<ReminderState> {
   const subscription = await (await env.pushManager()).getSubscription();
   if (subscription) {
     await api.deleteSubscription(subscription.endpoint);
@@ -99,6 +109,10 @@ export function browserPushEnvironment(
     rememberApiBase: async (baseUrl) => {
       const cache = await win.caches.open('rd-config');
       await cache.put('/reminder-api', new Response(baseUrl));
+    },
+    rememberAudience: async (audience) => {
+      const cache = await win.caches.open('rd-config');
+      await cache.put('/push-audience', new Response(audience));
     },
   };
 }

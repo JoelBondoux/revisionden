@@ -6,8 +6,8 @@ import { useApiResource } from '../api/useApiResource';
 import { Avatar } from '../components/Avatar';
 
 /**
- * The signed-in parent's children. Tapping a child opens the parent's view of that child (the
- * stats dashboard); it never opens student screens, which only run on the child's own linked
+ * The signed-in parent's children. Tapping a child opens the parent home with that child chosen
+ * (workstream P); it never opens student screens, which only run on the child's own linked
  * device (product owner, 2026-11-25).
  */
 export function FamilyPage() {
@@ -27,7 +27,7 @@ export function FamilyPage() {
             const id = encodeURIComponent(student.id);
             return (
               <li key={student.id} className="stack">
-                <Link to={`/parent/stats?student=${id}`} className="profile">
+                <Link to={`/parent?student=${id}`} className="profile">
                   <Avatar code={student.avatarCode} nickname={student.nickname} size={56} />
                   <span className="profile__text">
                     <span className="profile__name">{student.nickname}</span>
@@ -53,6 +53,7 @@ export function FamilyPage() {
           })}
         </ul>
       )}
+      <Link to="/parent">Parent home</Link>
       <Link to="/feedback/family" className="secondary-text">
         Family feedback
       </Link>

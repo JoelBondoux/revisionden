@@ -89,6 +89,11 @@ function inWindow(time: string, start: string, end: string): boolean {
   return start <= end ? time >= start && time < end : time >= start || time < end;
 }
 
+/** Only the nightly window: used for notifications to parents, who are not at school. */
+export function isNightlyQuietTime(time: string, settings: ReminderSettings): boolean {
+  return inWindow(time, settings.quietStart, settings.quietEnd);
+}
+
 export function isQuietTime(
   at: Pick<LocalClock, 'time' | 'weekday'>,
   settings: ReminderSettings,

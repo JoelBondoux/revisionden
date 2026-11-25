@@ -85,29 +85,45 @@ self.addEventListener('fetch', (event) => {
  */
 const CONFIG_CACHE = 'rd-config';
 const GENERIC_REMINDER = 'Time for a little revision? Pip is ready when you are.';
+// Parent devices (workstream H2): news that a parent-set reward target was met. No nickname here.
+const GENERIC_PARENT = 'A reward target you set has been reached.';
 
-async function reminderText() {
+async function savedConfig(key) {
+  const saved = await (await caches.open(CONFIG_CACHE)).match(key);
+  return saved ? saved.text() : null;
+}
+
+async function audience() {
   try {
-    const saved = await (await caches.open(CONFIG_CACHE)).match('/reminder-api');
-    const base = saved ? await saved.text() : `${self.location.origin}/api/`;
+    return (await savedConfig('/push-audience')) === 'parent' ? 'parent' : 'student';
+  } catch {
+    return 'student';
+  }
+}
+
+async function notificationText(who) {
+  try {
+    const base = (await savedConfig('/reminder-api')) ?? `${self.location.origin}/api/`;
     const root = base.endsWith('/') ? base : `${base}/`;
-    const response = await fetch(`${root}v1/student/reminders/latest`, { credentials: 'include' });
+    const path =
+      who === 'parent' ? 'v1/parent/notifications/latest' : 'v1/student/reminders/latest';
+    const response = await fetch(`${root}${path}`, { credentials: 'include' });
     if (response.ok) {
       const body = await response.json();
       if (typeof body.message === 'string' && body.message) return body.message;
     }
   } catch {
-    // Offline or locked: fall through to the generic reminder.
+    // Offline or locked: fall through to the generic text.
   }
-  return GENERIC_REMINDER;
+  return who === 'parent' ? GENERIC_PARENT : GENERIC_REMINDER;
 }
 
 self.addEventListener('push', (event) => {
   event.waitUntil(
-    reminderText().then((body) =>
+    audience().then(async (who) =>
       self.registration.showNotification('RevisionDen', {
-        body,
-        tag: 'reminder',
+        body: await notificationText(who),
+        tag: who === 'parent' ? 'parent-reward' : 'reminder',
         icon: '/icons/icon-192.png',
         badge: '/icons/icon-192.png',
       }),
@@ -117,5 +133,7 @@ self.addEventListener('push', (event) => {
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  event.waitUntil(self.clients.openWindow('/learn'));
+  event.waitUntil(
+    audience().then((who) => self.clients.openWindow(who === 'parent' ? '/parent' : '/learn')),
+  );
 });

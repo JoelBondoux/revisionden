@@ -28,6 +28,7 @@ import { FeedbackPage } from './features/feedback/FeedbackPage';
 import { AdminFeedbackPage, FeedbackListPage } from './features/feedback/lists';
 import { MyStatsPage } from './features/stats/MyStatsPage';
 import { ParentDashboardPage } from './features/stats/ParentDashboardPage';
+import { ParentHomePage, ParentRemindersPage } from './features/parent';
 
 function LessonRedirect() {
   const { lessonId = '' } = useParams();
@@ -54,6 +55,9 @@ export const routes: RouteObject[] = [
       { path: '/lesson/:lessonId', element: <LessonRedirect /> },
       { path: '/lesson/:lessonId/complete', element: <Navigate to="/map" replace /> },
       { path: '/review', element: <ReviewQueuePage /> },
+      // Parent home (workstream P): the way in to the parent pages.
+      { path: '/parent', element: <ParentHomePage /> },
+      { path: '/parent/reminders/:studentId', element: <ParentRemindersPage /> },
       { path: '/parent/stats', element: <ParentDashboardPage /> },
       { path: '/review/batches/:batchId', element: <BatchReviewPage /> },
       // Learning loop (workstream F): lessons and the starting test hide the nav.

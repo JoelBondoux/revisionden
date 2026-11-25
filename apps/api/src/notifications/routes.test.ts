@@ -1,6 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-import { pushSubscriptions, reminderLog } from '@revisionden/db';
+import { eq } from 'drizzle-orm';
+import {
+  parentPushSubscriptions,
+  parentRewards,
+  parents,
+  pushSubscriptions,
+  reminderLog,
+} from '@revisionden/db';
 import { createTestContext, jsonRequest, type TestContext } from '../test/helpers';
 import { makeStudentWithDevice, studentCookie } from '../test/fixtures';
 
@@ -214,5 +221,85 @@ describe('parent reminder settings', () => {
       jsonRequest('PUT', { enabled: false }, other.headers),
     );
     expect(put.status).toBe(404);
+  });
+});
+
+describe('parent push subscriptions and reward news', () => {
+  beforeEach(async () => {
+    ctx = await createTestContext();
+  });
+
+  it('needs a signed-in parent', async () => {
+    const post = await ctx.app.request('/v1/parent/push-subscriptions', jsonRequest('POST', sub));
+    expect(post.status).toBe(401);
+    expect((await ctx.app.request('/v1/parent/notifications/latest')).status).toBe(401);
+  });
+
+  it("saves this parent device's subscription, replaces it if sent again and removes it", async () => {
+    const parent = await ctx.signInParent();
+    const post = () =>
+      ctx.app.request('/v1/parent/push-subscriptions', jsonRequest('POST', sub, parent.headers));
+    expect((await post()).status).toBe(201);
+    expect((await post()).status).toBe(201);
+    const [me] = await ctx.db.select().from(parents).where(eq(parents.authUserId, parent.userId));
+    const rows = await ctx.db.select().from(parentPushSubscriptions);
+    expect(rows).toHaveLength(1);
+    expect(rows[0]).toMatchObject({ parentId: me!.id, endpoint: sub.endpoint });
+
+    const other = await ctx.signInParent();
+    await ctx.app.request(
+      '/v1/parent/push-subscriptions',
+      jsonRequest('DELETE', { endpoint: sub.endpoint }, other.headers),
+    );
+    expect(await ctx.db.select().from(parentPushSubscriptions)).toHaveLength(1);
+    const del = await ctx.app.request(
+      '/v1/parent/push-subscriptions',
+      jsonRequest('DELETE', { endpoint: sub.endpoint }, parent.headers),
+    );
+    expect(del.status).toBe(204);
+    expect(await ctx.db.select().from(parentPushSubscriptions)).toHaveLength(0);
+  });
+
+  it('rejects a push endpoint that is not https', async () => {
+    const parent = await ctx.signInParent();
+    const res = await ctx.app.request(
+      '/v1/parent/push-subscriptions',
+      jsonRequest('POST', { ...sub, endpoint: 'http://push.example.com/x' }, parent.headers),
+    );
+    expect(res.status).toBe(400);
+  });
+
+  it('gives the latest reward news for this family only, from the last day', async () => {
+    const { studentId, parent } = await ctx.familyStudent('test_kid');
+    const latest = async (headers: Record<string, string>) =>
+      (await (await ctx.app.request('/v1/parent/notifications/latest', { headers })).json()) as {
+        message: string | null;
+      };
+    expect(await latest(parent.headers)).toEqual({ message: null });
+
+    const now = ctx.clock.now();
+    await ctx.db.insert(parentRewards).values([
+      {
+        studentId,
+        title: 'Old news',
+        targetKind: 'stat',
+        stat: 'level',
+        atLeast: 1,
+        reachedNotifiedAt: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000),
+      },
+      {
+        studentId,
+        title: 'Cinema trip',
+        targetKind: 'stat',
+        stat: 'level',
+        atLeast: 1,
+        reachedNotifiedAt: new Date(now.getTime() - 60 * 1000),
+      },
+    ]);
+    expect(await latest(parent.headers)).toEqual({
+      message: 'test_kid reached a reward target: Cinema trip',
+    });
+    const other = await ctx.signInParent();
+    expect(await latest(other.headers)).toEqual({ message: null });
   });
 });

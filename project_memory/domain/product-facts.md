@@ -113,7 +113,7 @@ Tags: #product #rules #limits #defaults
   must use real API paths (`apps/api/routes.json`). Parents sign in from the welcome page
   (Better Auth) and land on "Who's revising?" (`/family`, `GET /v1/onboarding/family`), or on
   `/onboarding` if they have no children yet. Tapping a child there opens the parent's view
-  (stats dashboard for that child), never student screens; each child has "Rewards you set" and
+  (the parent home `/parent?student=<id>` with that child chosen), never student screens; each child has "Rewards you set" and
   "Link a device" (product owner, 2026-11-25). Students use only their own linked device. Signed out, any screen shows the sign-in buttons
   and returns to the same page after sign-in. Sign out is on the welcome page and `/family`. The topic map and Cards badge wait for F2's
   `GET /v1/student/map` and `GET /v1/student/cards/due`.
@@ -161,6 +161,14 @@ Tags: #product #rules #limits #defaults
   kind or all reminders off. Implemented in `apps/api/src/notifications/schedule.ts`.
 - Pushes carry no text; the service worker fetches it from the API (generic text if locked).
   The cron runs every 15 minutes and does nothing until the VAPID keys are set.
+- Parent devices (H2): the parent turns on "Reward news" on the parent home (`/parent`), saved
+  in `parent_push_subscriptions`. One push per parent-set reward when its target is met and it is
+  not given (`parent_rewards.reached_notified_at`). It does not count towards the child's 2 a
+  day; it respects the child's nightly quiet hours and time zone but not the school-hours window
+  or the child's reminder switch. Text "<nickname> reached a reward target: <title>" from
+  `GET /v1/parent/notifications/latest` (last 24 hours). The service worker knows a device is a
+  parent device from the `/push-audience` entry it is given when push is turned on. Code:
+  `apps/api/src/notifications/parent-rewards.ts`.
 
 ## AI
 
@@ -283,7 +291,8 @@ Tags: #product #rules #limits #defaults
   target = a catalogue reward, a stat reaching a number, or a UK date. Editable and deletable until
   the parent marks it given; then kept as history (409). Shown to the student with a "From home"
   badge and a celebration when the target is met. Routes in `apps/api/src/routes/rewards.ts`;
-  screens `/rewards` (student, linked from Settings) and `/family/:id/rewards` (parent).
+  screens `/rewards` (student, linked from Settings) and `/family/:id/rewards` (parent, linked from
+  the parent home `/parent`).
 - Newly earned rewards are saved (and announced as "New!") by `rewardsView`, used by the student's
   `GET /v1/student/rewards` and the parent's full `GET /v1/students/:id/rewards`. The parent's
   `GET /v1/students/:id/parent-rewards` and the stats pages use the read-only `rewardsProgress`.
@@ -320,8 +329,17 @@ Tags: #product #rules #limits #defaults
 ## Parent-set rewards
 
 - Title (60 characters), optional note (200), target from any catalogue target type or a custom
-  date; "from home" badge for the student; celebration and parent notification when met; parent
-  marks "given" (locked after that); no student free text. Workstream R5. Detail: `docs/REWARDS.md`.
+  date; "from home" badge for the student; celebration and parent notification when met (H2,
+  once per reward, see Reminders); parent marks "given" (locked after that); no student free
+  text. Workstream R5. Detail: `docs/REWARDS.md`.
+
+## Parent home
+
+- `/parent` (workstream P): student switcher, per-child "Rewards you set" and "Reminder times"
+  (`/parent/reminders/:id`), stats dashboard, add or manage children, family feedback, download your family's data
+  (`/onboarding`), Reward news, app settings and policies. Tapping a child on `/family` (where a parent lands after
+  signing in) opens `/parent?student=<id>` with that child chosen; also linked from `/family`
+  and Settings. No focus-suggestions page exists yet, so it has no card.
 
 ## Policies, About and feedback
 

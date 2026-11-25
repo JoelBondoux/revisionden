@@ -86,3 +86,30 @@ export function createNotificationsApi(options: {
       ),
   };
 }
+
+/**
+ * Push on a parent's own device (workstream H2): used only to say a parent-set reward target
+ * was met. Sends the parent's session cookies.
+ */
+export function createParentPushApi(options: {
+  baseUrl: string;
+  fetch?: typeof globalThis.fetch;
+}): Pick<NotificationsApi, 'baseUrl' | 'getVapidKey' | 'saveSubscription' | 'deleteSubscription'> {
+  const shared = createNotificationsApi(options);
+  const fetch = options.fetch ?? ((...args) => globalThis.fetch(...args));
+  async function send(method: string, body: unknown): Promise<void> {
+    const res = await fetch(new URL('v1/parent/push-subscriptions', shared.baseUrl), {
+      method,
+      credentials: 'include',
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) throw new NotificationsApiError(res.status);
+  }
+  return {
+    baseUrl: shared.baseUrl,
+    getVapidKey: shared.getVapidKey,
+    saveSubscription: (subscription) => send('POST', subscription),
+    deleteSubscription: (endpoint) => send('DELETE', { endpoint }),
+  };
+}

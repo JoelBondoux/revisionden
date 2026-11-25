@@ -184,9 +184,18 @@ Parents can add their own real-world rewards to any target (for example "cinema 
 delete, mark given; editing or deleting a given reward answers 409); target = a catalogue
 reward, a stat reaching a number (level, streak and the rest) or a UK date. The student's
 `/rewards` screen shows them under "From home" with progress and a "Target met" celebration;
-the parent manages them at `/family/:id/rewards` (linked from the family list). Not built yet:
-the parent notification when a target is met (reminders are workstream H) and the panel on
-the parent stats dashboard (workstream K).
+the parent manages them at `/family/:id/rewards` (linked from the family list and the parent
+home at `/parent`). Not built yet: the panel on the parent stats dashboard (workstream K).
+
+**Parent notification (H2):** when a target is met and the reward is not marked given, each
+parent device with "Reward news" turned on (parent home, `/parent`) gets one web push, once per
+reward (`parent_rewards.reached_notified_at`, migration 0007). The push has no payload; the
+service worker fetches "<nickname> reached a reward target: <title>" from
+`GET /v1/parent/notifications/latest`. It waits out the nightly quiet hours and time zone set for
+that child; the weekday school-hours window and the child's reminder switch do not apply. It is
+not one of the child's 2 reminders a day. If no parent device has it on, nothing is used up: the
+parent is told once they turn it on (while the reward is still not given). Code:
+`apps/api/src/notifications/parent-rewards.ts`, run by the 15-minute cron.
 
 ## Content pipeline for new items
 

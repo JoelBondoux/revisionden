@@ -24,6 +24,7 @@ import {
   flashcards,
   itemReports,
   mastery,
+  parentPushSubscriptions,
   parentRewards,
   plans,
   policyAcceptances,
@@ -106,6 +107,11 @@ export function familyExport({ db, clock }: { db: Database; clock: Clock }) {
       })
       .from(policyAcceptances)
       .where(eq(policyAcceptances.authUserId, authUserId));
+    // The parent's own devices with reward news on (H2); push keys and endpoints left out.
+    const rewardNewsDevices = await db
+      .select({ id: parentPushSubscriptions.id, createdAt: parentPushSubscriptions.createdAt })
+      .from(parentPushSubscriptions)
+      .where(eq(parentPushSubscriptions.parentId, c.var.parent.parentId));
     const [family] = await db.select().from(families).where(eq(families.id, familyId));
     const kids = await db
       .select()
@@ -140,6 +146,7 @@ export function familyExport({ db, clock }: { db: Database; clock: Clock }) {
         createdAt: user!.createdAt,
         signIns,
         policyAcceptances: acceptances,
+        rewardNewsDevices,
       },
       family: {
         id: family!.id,

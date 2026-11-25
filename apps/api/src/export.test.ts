@@ -1,5 +1,13 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { authAccounts, authUsers, feedback, flashcards, topics } from '@revisionden/db';
+import {
+  authAccounts,
+  authUsers,
+  feedback,
+  flashcards,
+  parentPushSubscriptions,
+  parents,
+  topics,
+} from '@revisionden/db';
 import { eq } from 'drizzle-orm';
 import { AVATAR, createTestContext, jsonRequest, type TestContext } from './test/helpers';
 
@@ -74,6 +82,30 @@ describe('family data export', () => {
     // Nothing from the other family.
     expect(text).not.toContain(otherKid);
     expect(text).not.toContain('other_kid');
+  });
+
+  it("lists the parent's own devices with reward news on, without their push keys", async () => {
+    const mine = await t.signInParent();
+    await t.app.request('/v1/me', { headers: mine.headers });
+    const [me] = await t.db.select().from(parents).where(eq(parents.authUserId, mine.userId));
+    await t.db.insert(parentPushSubscriptions).values({
+      parentId: me!.id,
+      endpoint: 'https://push.example.com/parent-export-device',
+      p256dh: 'parent-p256dh-secret',
+      auth: 'parent-auth-secret',
+    });
+    const text = await (await t.app.request('/v1/export', { headers: mine.headers })).text();
+    const data = JSON.parse(text) as { parent: { rewardNewsDevices: unknown[] } };
+    expect(data.parent.rewardNewsDevices).toEqual([
+      expect.objectContaining({ createdAt: expect.any(String) }),
+    ]);
+    for (const secret of [
+      'push.example.com/parent-export-device',
+      'parent-p256dh-secret',
+      'parent-auth-secret',
+    ]) {
+      expect(text).not.toContain(secret);
+    }
   });
 
   it('leaves out secrets: session tokens, hashes and passkey keys', async () => {
