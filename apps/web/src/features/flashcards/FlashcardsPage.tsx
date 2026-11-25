@@ -13,6 +13,7 @@ import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { ArenaProgress } from '../juice';
 import { subjectLabel, useLearnApi, type FlashcardRating } from '../learn/learnApi';
+import { NewRewards } from '../learn/NewRewards';
 import { DraftBanner } from '../learn/parts';
 import { useSound } from '../sound';
 import './flashcards.css';
@@ -118,6 +119,7 @@ function ReviewSession({
         ) : (
           <p>{OUTCOME_TEXT[result.reason]}</p>
         )}
+        <NewRewards rewards={result.newlyEarned} />
         <p>
           {sooner === 0
             ? 'No cards come back sooner.'
