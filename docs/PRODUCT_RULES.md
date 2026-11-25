@@ -357,9 +357,13 @@ Mockups: screens 19 (student) and 20 (parent).
   sound; the two settings are separate.
 - Volume levels (master gain): low 0.12, medium 0.25, high 0.45. Settings key on the device:
   `revisionden.sound`; if the browser cannot save, the choice still applies until the app closes.
-  The Settings section has a "Play a sample" button. The starting test timer turns orange at
+  The Settings section has a "Play a sample" button and Common, Rare, Epic and Legend reward
+  samples (each tap plays another variation). The starting test timer turns orange at
   1 minute left, alongside the warning sound.
 - Implemented: `apps/web/src/features/sound/**` (`SoundProvider`, `useSound().play(event, { mode })`,
   `MuteButton`, `SoundSettingsCard`, the synthesised sound bank in `bank.ts`, the Test mode rule in
-  `events.ts`), with one-line `play()` calls in lessons, the starting test and flashcards. Level up,
-  rewards, gifts, plan and timed papers get their calls when those screens are built.
+  `events.ts`), with one-line `play()` calls in lessons, the starting test and flashcards. Reward
+  sounds (U4): `rewardSounds.ts` (which sound: tier, step, voice, fanfare, biggest, variation),
+  `rewardBank.ts` (synthesis) and `<RewardSound rewards={newlyEarned} />` on the Rewards screen.
+  Prestige stars play legendary even where the catalogue rarity is epic. Gifts, plan and timed
+  papers get their calls when those screens are built.

@@ -1,7 +1,15 @@
 import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
+import type { RewardTier } from './rewardSounds';
 import type { SoundVolume } from './settings';
 import { useSound } from './SoundProvider';
+
+const REWARD_SAMPLES: { tier: RewardTier; label: string }[] = [
+  { tier: 'common', label: 'Common' },
+  { tier: 'rare', label: 'Rare' },
+  { tier: 'epic', label: 'Epic' },
+  { tier: 'legendary', label: 'Legend' },
+];
 
 const VOLUMES: { value: SoundVolume; label: string }[] = [
   { value: 'low', label: 'Low' },
@@ -11,7 +19,7 @@ const VOLUMES: { value: SoundVolume; label: string }[] = [
 
 /** The Sound section in Settings: on/off, volume and tap sounds, saved on this device. */
 export function SoundSettingsCard() {
-  const { settings, update, play } = useSound();
+  const { settings, update, play, sampleReward } = useSound();
   const off = !settings.enabled;
   return (
     <Card title="Sound">
@@ -54,6 +62,22 @@ export function SoundSettingsCard() {
         <Button variant="secondary" disabled={off} onClick={() => play('correct')}>
           Play a sample
         </Button>
+        <fieldset className="sound-settings__rewards" disabled={off}>
+          <legend>Reward sounds</legend>
+          <p className="secondary-text">Bigger rewards sound bigger. Tap again for another one.</p>
+          <div className="sound-settings__samples">
+            {REWARD_SAMPLES.map((s) => (
+              <Button
+                key={s.tier}
+                variant="secondary"
+                aria-label={`Play a ${s.label} reward sound`}
+                onClick={() => sampleReward(s.tier)}
+              >
+                {s.label}
+              </Button>
+            ))}
+          </div>
+        </fieldset>
       </div>
     </Card>
   );

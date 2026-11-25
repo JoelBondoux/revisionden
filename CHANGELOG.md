@@ -7,13 +7,13 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Reward sounds now grow with the reward: a bright chime for common rewards up to a short fanfare for legendary ones, with lots of variety, a different sound for each school year and special fanfares for finishing GCSEs and A-Levels. Tap to skip a long one, or try them all in Settings.
 - RevisionDen is now online for testing at dev.revisionden.com and staging.revisionden.com, with the app version shown at the bottom of every page.
 - Coming soon: reward sounds that get bigger and more exciting the bigger the reward.
 - Coming soon: flashcards give XP for finishing a session, not for each card, so there's no point tapping "Good" on everything.
 - Coming soon: a stats page for students and a stats dashboard for parents.
 - Coming soon: rewards you set yourself as a parent, like a cinema trip for a 30-day streak.
 - Sound effects: soft, original sounds for right and wrong answers, finishing a lesson, meeting your daily goal, flashcards and the starting test. Mute them from the speaker button at the top, or change the volume and tap sounds in Settings.
-- Coming soon: sound effects, with a mute button.
 - Read our privacy notice, terms and other policies in plain English, at any time, even signed out.
 - New About page shows the app version and what's new.
 - Send us a bug, an idea or something confusing from Settings, and see what happens to it.
@@ -27,6 +27,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Reward sounds (U4): four tiers by rarity (common ~0.5 s, rare ~1 s, epic ~1.5 s, legendary ≤ 3 s) with 4 variations each and no repeat in a row (injected randomness), ladder and level steps that climb in pitch and fullness, a synth voice per year chapter, unique GCSE and A-Level finisher fanfares, one sound for several rewards (the biggest, after any sound still playing), tap to skip legendary, Settings samples (Common, Rare, Epic, Legend); played on the Rewards screen for new rewards. Removed a stale "coming soon: sound effects" line.
 - Deploys (G1, G2, G5): Neon project `revisionden` (London) with `main`, `staging` and `dev` branches migrated to 0005; EU-jurisdiction R2 upload buckets with a 24-hour delete rule; authenticated AI Gateway `revisionden`; API Workers on `api-dev.`, `api-staging.` and `api.revisionden.com` and web Workers on `dev.` and `staging.`; GitHub Actions deploys (`deploy-dev.yml`, `deploy-staging.yml`, `deploy-production.yml` after the release bump, shared `deploy.yml`) that migrate over HTTPS (`db:migrate:deploy`), deploy, and check `/health` (`scripts/check-deploy.mjs`). `/health` now answers `misconfigured` (503) with the version while a secret is missing. Production web builds fail without `VITE_OPERATOR_NAME`, `VITE_CONTACT_EMAIL` or `VITE_POLICY_EFFECTIVE_DATE`. Version footer on every page.
 - End-to-end and accessibility (G4): Playwright + axe suite in `e2e/` at phone, tablet and desktop sizes, run on pull requests into `staging` and `main` (`e2e.yml`).
 - Cloud Run deploy for the maths engine (G3), written and disabled until Google Cloud is set up (`deploy-maths.yml`).
