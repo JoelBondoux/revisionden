@@ -59,7 +59,7 @@ describe('Parent stats dashboard', () => {
     await open();
     const habits = screen.getByRole('region', { name: 'Healthy habits' });
     expect(habits).toHaveTextContent('1 session in quiet hours');
-    expect(habits).toHaveTextContent('0 days over the 2-hour daily cap');
+    expect(habits).toHaveTextContent('0 days at the daily limit (120 minutes today)');
     expect(screen.getByRole('progressbar', { name: 'AI marking spend' })).toHaveAttribute(
       'aria-valuetext',
       'US$0.42 of US$2.50',
