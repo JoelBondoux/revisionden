@@ -362,7 +362,8 @@ Tags: #product #rules #limits #defaults
 - A content lead creates a batch on `/review` with "Create batch from draft items": every draft
   whose synced snapshot (`items.review_snapshot`, full content record plus mark scheme) has all
   automated checks passed and is not already in an open or passed batch (an item whose fact-check
-  failed goes in for individual review). The batch page shows
+  failed goes in for individual review). Items from a failed batch wait until the recheck is done and
+  steps 3 to 5 have re-run since the failure. The batch page shows
   hint, mark scheme, exemplars and checks.
 - Report a problem stores only item, version and a reason (no free text) and hides the item at
   once (status `quarantined` in `items`, kept through content syncs; restored on "no error";

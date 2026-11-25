@@ -16,8 +16,10 @@ specification names the topic but does not state the fact, so grounded writing h
 - Such items stay in. They list each fact in `facts` (`statement`, a neutral `ask`, an optional
   maths engine check `engine`, an optional `citation` number) and must pass a **fact-check stage
   (step 4b)** before human review. Per fact:
-  - **(a) Official source:** a citation, counting from 1, whose quote states the fact and whose
-    quote check passed. Then it is an ordinary cited fact, and no model is called.
+  - **(a) Official source:** a citation, counting from 1, whose quote check passed (the quote is
+    really in the source) and whose quote the judge confirms states the fact, not just its topic.
+    Then it is an ordinary cited fact. Only the judge is called, and if it says no, the fact falls
+    back to (b) and (c).
   - **(b) Maths engine proof:** an `engine` check that proves it (for example `identity`: an
     equation true for every value). Facts the engine cannot express are recorded as unprovable.
   - **(c) Third-provider blind statement:** a provider that is neither the writer nor the blind
@@ -30,7 +32,8 @@ specification names the topic but does not state the fact, so grounded writing h
   approved individually. The `fact-check` record's notes say what failed.
 - A maths engine proof only proves the equation the writer supplied. The adversarial review and
   the human reviewer check that the equation really captures the fact.
-- Cost: only items that list `facts` are sent, and a fact with an official citation calls no model.
+- Cost: only items that list `facts` are sent, and a fact with an official citation calls only the
+  judge.
 
 ## Consequences
 
