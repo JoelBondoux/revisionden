@@ -1,0 +1,84 @@
+name: Deploy public site (reusable)
+
+# The public website (apps/www, decision 0005): builds the static pages and deploys the
+# revisionden-www Worker. Called by deploy-staging.yml (www-staging.revisionden.com) and
+# deploy-production.yml (revisionden.com and www.revisionden.com). Needs only the two Cloudflare
+# repository secrets; the operator details come from the GitHub environment's variables
+# (docs/ENVIRONMENTS.md). It runs as its own job, so the web app's deploy does not hold it up.
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: 'staging or production (wrangler --env and GitHub environment)'
+        required: true
+        type: string
+      ref:
+        description: 'Git ref to deploy (defaults to the triggering commit)'
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy the public site to ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ inputs.environment == 'production' && 'https://revisionden.com' || 'https://www-staging.revisionden.com' }}
+    concurrency:
+      group: deploy-www-${{ inputs.environment }}
+      cancel-in-progress: false
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Check the deploy secrets are set
+        run: |
+          missing=""
+          [ -n "$CLOUDFLARE_API_TOKEN" ] || missing="$missing CLOUDFLARE_API_TOKEN"
+          [ -n "$CLOUDFLARE_ACCOUNT_ID" ] || missing="$missing CLOUDFLARE_ACCOUNT_ID"
+          if [ -n "$missing" ]; then
+            echo "::error::Missing GitHub secrets:$missing (see docs/ENVIRONMENTS.md)"
+            exit 1
+          fi
+
+      - name: Build the public site
+        env:
+          WWW_ENVIRONMENT: ${{ inputs.environment }}
+          # Operator details (decision 0003): GitHub environment variables, shared with the web
+          # app. A production build fails without the name and contact email.
+          VITE_OPERATOR_NAME: ${{ vars.VITE_OPERATOR_NAME }}
+          VITE_CONTACT_EMAIL: ${{ vars.VITE_CONTACT_EMAIL }}
+          VITE_SUPPORT_EMAIL: ${{ vars.VITE_SUPPORT_EMAIL }}
+          VITE_POLICY_EFFECTIVE_DATE: ${{ vars.VITE_POLICY_EFFECTIVE_DATE }}
+        run: pnpm --filter @revisionden/www build
+
+      - name: Deploy the public site Worker
+        working-directory: apps/www
+        run: pnpm exec wrangler deploy --env ${{ inputs.environment }}
+
+      - name: Check the site answers
+        run: |
+          url="${{ inputs.environment == 'production' && 'https://revisionden.com' || 'https://www-staging.revisionden.com' }}"
+          for attempt in 1 2 3 4 5; do
+            if curl --fail --silent --show-error --output /dev/null "$url/"; then
+              echo "The public site answers at $url"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "::error::$url did not answer after the deploy"
+          exit 1

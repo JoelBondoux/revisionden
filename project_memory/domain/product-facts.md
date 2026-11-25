@@ -213,8 +213,14 @@ Tags: #product #rules #limits #defaults
 
 ## Hosting
 
-- Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Hosts: `revisionden.com` and
-  `api.revisionden.com` (production), `staging.` and `api-staging.` (staging), `dev.` and `api-dev.` (development).
+- Domain `revisionden.com` is registered with Cloudflare (2026-11-24). Hosts (decision 0005,
+  2026-11-25): `revisionden.com` is the public sales site (`www.` redirects to it, staging copy on
+  `www-staging.`); `app.revisionden.com` and `api.revisionden.com` are the production app and API;
+  `staging.` and `api-staging.` (staging), `dev.` and `api-dev.` (development).
+- Public site (`apps/www`, workstream M): static pages with no client scripts and no third-party
+  requests (self-hosted fonts, strict content security policy). Workers `revisionden-www` and
+  `revisionden-www-staging`. Its policies and design tokens are read from `docs/legal` and the web
+  app at build time. "Sign in" and "Start free" go to `app.revisionden.com` (staging: `staging.`).
 - Live since 2026-11-25 (workstream G): API Workers on all three API hosts; web app on `dev.` and
   `staging.`. The production web app waits for the operator details (its build fails without them).
 - Workers: `revisionden-api-dev`, `revisionden-api-staging`, `revisionden-api` (API) and
