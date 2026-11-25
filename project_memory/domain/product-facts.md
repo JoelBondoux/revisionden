@@ -510,3 +510,10 @@ Tags: #product #rules #limits #defaults
   Normal / Large (112.5%) / Larger (125%), more spacing (line height 1.8, letter 0.12em, word
   0.16em), tint none / cream / blue. Defaults: all off. Applied app-wide by `data-reading-*`
   attributes on `<html>` (`apps/web/src/features/reading/`).
+
+## Pricing (agreed 2026-11-25; not live)
+
+- Free app; Premium per child per month £9.99, £4.99, £2.99, then free; annual about £79.99;
+  14-day trial; web only; prices include VAT. Learning, safety and accessibility stay free; offers
+  only to parents; rewards never sold; no adverts. Free school meals: scheme choice and date only,
+  declaration, soft checks, rare spot checks. Detail: `docs/PRICING.md`, decision 0004.

@@ -249,6 +249,15 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [ ] Q5 Learn it first: `content/learn-links/*.json` with schema and validator, button on topics with a checked link, CI link check.
 - Tests: settings saved and applied per device; voice choice and default; maths reading; selection with fixed clock and seeded randomness; no penalty for recall; links validated and checked.
 
+### $. Payments and Premium (`docs/PRICING.md`)
+
+- [ ] $1 Plans and entitlements in core (per-child pricing, sibling order, trial, annual), feature gates for each Premium feature, neutral "not included" states for students.
+- [ ] $2 Stripe checkout and billing portal for parents (web only), webhooks, VAT-inclusive prices, cancel as easily as subscribe.
+- [ ] $3 Free school meals claims: scheme choice and date, declaration, soft checks, September renewal, operator spot-check flow with no stored proof.
+- [ ] $4 Parent-only upgrade surfaces; privacy notice and terms updates (following `docs/LEGAL.md`).
+- [ ] $5 Later: school, council and charity codes for free places.
+- Tests: entitlement maths (sibling order, 4th free), gating, trial expiry, webhook idempotency, no upgrade prompts on student screens, FSM rules.
+
 ## Stage 2 and later
 
 Broken down into tasks when Stage 1 ships, following the same format. Headline order:
