@@ -191,6 +191,32 @@ test("the young people's notice shows cards, expands its parts and is accessible
   await expectAccessible(page);
 });
 
+test('Settings offers "Add RevisionDen to this device" as a button, accessibly', async ({
+  page,
+}) => {
+  await page.goto('/settings');
+  // Chrome only offers its install prompt to a real installable site; send the event ourselves.
+  await page.evaluate(() => {
+    const event = new Event('beforeinstallprompt');
+    Object.assign(event, {
+      prompt: async () => undefined,
+      userChoice: Promise.resolve({ outcome: 'dismissed', platform: 'web' }),
+    });
+    window.dispatchEvent(event);
+  });
+  await expect(page.getByRole('button', { name: 'Add RevisionDen to this device' })).toBeVisible();
+  await expectNoSidewaysScroll(page);
+  await expectAccessible(page);
+});
+
+test('the install help shows illustrated iPhone and iPad steps, accessibly', async ({ page }) => {
+  await page.goto('/install');
+  await expect(page.getByRole('list', { name: 'Steps for iPhone' })).toBeVisible();
+  await expect(page.getByRole('list', { name: 'Steps for iPad' })).toBeVisible();
+  await expectNoSidewaysScroll(page);
+  await expectAccessible(page);
+});
+
 /** A virtual passkey device (Chromium only), optionally holding one RevisionDen passkey. */
 async function virtualPasskeyDevice(page: Page, rpId: string, withPasskey: boolean) {
   const cdp = await page.context().newCDPSession(page);
