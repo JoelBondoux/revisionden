@@ -471,6 +471,7 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
+    "needs_human_approval": true,
     "facts": [
       {
         "statement": "The area under a velocity-time graph is the distance travelled (for motion in one direction).",
@@ -493,7 +494,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Answer backed by the maths engine. Area under a velocity-time graph = distance travelled: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Answer backed by the maths engine. Area under a velocity-time graph = distance travelled: Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Codex review on #123: the matching blind statement assumed positive velocity, narrower than \"motion in one direction\", and the units proof cannot settle the sign, so it keeps individual human approval.",
           "at": "2026-11-25T17:26:22Z"
         },
         {
