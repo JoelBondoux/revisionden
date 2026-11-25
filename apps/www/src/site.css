@@ -8,6 +8,9 @@
   --site-border: var(--color-border);
   --site-accent: var(--color-primary);
   --site-accent-soft: var(--color-primary-soft);
+  /* Links (J7, docs/GAME_FEEL.md "Links"). */
+  --site-link: var(--color-primary-edge);
+  --site-link-bar: var(--color-mastery-fill);
   --site-width: 72rem;
   color-scheme: light dark;
 }
@@ -21,6 +24,8 @@
     --site-border: #3d2d6b;
     --site-accent: var(--arena-option-1);
     --site-accent-soft: #2f2160;
+    --site-link: var(--arena-glow);
+    --site-link-bar: var(--arena-option-1);
     --focus-ring: 0 0 0 3px var(--arena-bg), 0 0 0 6px var(--arena-glow);
   }
 }
@@ -48,11 +53,34 @@ a {
   color: inherit;
 }
 
-a:focus-visible,
+/* Every link keeps the 3px violet focus ring (J7). */
+a:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
 main:focus-visible {
   outline: none;
   box-shadow: var(--focus-ring);
   border-radius: var(--radius-sm);
+}
+
+/* Links inside sentences and policies: bold, coloured, a soft bar under them, no underline
+   until hovered. Standalone links are buttons, tiles or chips instead. */
+main a:not([class]) {
+  color: var(--site-link);
+  font-weight: var(--font-weight-extrabold);
+  text-decoration: none;
+  border-bottom: 2px solid var(--color-mastery-fill);
+  border-bottom-color: var(--site-link-bar);
+  transition: border-color var(--motion-fast) var(--ease-out);
+}
+
+main a:not([class]):hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  border-bottom-color: var(--color-primary);
 }
 
 h1,
@@ -128,18 +156,126 @@ main > section {
   list-style: none;
 }
 
-.site-nav a,
-.site-footer a {
+/* Header navigation: quiet pills; the current page sits on a soft-violet pill. */
+.nav-link {
   display: inline-flex;
   align-items: center;
   min-height: var(--tap-target);
-  font-weight: var(--font-weight-bold);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  color: var(--site-link);
+  font-weight: var(--font-weight-extrabold);
+  text-decoration: none;
+  transition:
+    transform var(--motion-fast) var(--ease-spring),
+    background-color var(--motion-fast) var(--ease-out);
 }
 
-.site-nav a:not([aria-current]) {
+.nav-link:hover {
+  background: var(--site-accent-soft);
+  transform: translateY(-2px);
+}
+
+.nav-link[aria-current] {
+  background: var(--site-accent-soft);
+}
+
+/* Chips: small soft-violet pill links (footer). */
+.link-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target);
+  padding: 0 var(--space-4);
+  border: 2px solid var(--site-accent-soft);
+  border-radius: var(--radius-pill);
+  background: var(--site-accent-soft);
+  color: var(--site-link);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-extrabold);
   text-decoration: none;
+  transition:
+    transform var(--motion-fast) var(--ease-spring),
+    border-color var(--motion-fast) var(--ease-out);
+}
+
+.link-chip:hover {
+  transform: translateY(-1px);
+  border-color: var(--color-primary);
+}
+
+.link-chip:active {
+  transform: scale(0.95);
+}
+
+/* Tiles: a whole tappable card for "go to X". */
+.tiles {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link-tile {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--tap-target);
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--site-border);
+  border-radius: var(--radius-lg);
+  background: var(--site-surface);
+  box-shadow: 0 5px 0 var(--site-border);
+  color: var(--site-text);
+  text-decoration: none;
+  margin-bottom: 5px;
+  transition:
+    transform var(--motion-fast) var(--ease-spring),
+    box-shadow var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out);
+}
+
+.link-tile:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+}
+
+.link-tile:active {
+  transform: translateY(5px) scale(0.99, 0.97);
+  box-shadow: none;
+}
+
+.link-tile__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--site-accent-soft);
+  color: var(--site-link);
+}
+
+.link-tile__text {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.link-tile__title {
+  font-weight: var(--font-weight-black);
+}
+
+.link-tile__description {
+  color: var(--site-muted);
+  font-size: var(--font-size-sm);
+}
+
+.link-tile__chevron {
+  flex-shrink: 0;
+  color: var(--site-link);
 }
 
 .site-actions {
@@ -153,10 +289,36 @@ main > section {
   justify-content: center;
   min-height: var(--tap-target);
   padding: var(--space-2) var(--space-6);
+  border: 2px solid transparent;
   border-radius: var(--radius-pill);
-  font-weight: var(--font-weight-extrabold);
+  font-weight: var(--font-weight-black);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   text-decoration: none;
-  transition: transform var(--motion-fast) var(--ease-out);
+  transition:
+    transform var(--motion-fast) var(--ease-spring),
+    box-shadow var(--motion-fast) var(--ease-out);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+
+.button:active {
+  transform: translateY(5px) scale(0.97, 0.94);
+  box-shadow: none;
+}
+
+/* Quiet: transparent with violet text, for secondary ways on. */
+.button--quiet {
+  background: transparent;
+  color: var(--site-link);
+  padding-left: var(--space-3);
+  padding-right: var(--space-3);
+}
+
+.button--quiet:hover {
+  background: var(--site-accent-soft);
 }
 
 .button--primary {
@@ -165,13 +327,10 @@ main > section {
   box-shadow: var(--shadow-3d-primary);
 }
 
-.button--primary:active {
-  transform: translateY(3px);
-}
-
 .button--ghost {
-  border: 2px solid var(--site-border);
+  border-color: var(--site-border);
   background: var(--site-surface);
+  color: var(--site-text);
 }
 
 .button--large {
@@ -507,6 +666,16 @@ code {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .button:hover,
+  .button:active,
+  .nav-link:hover,
+  .link-chip:hover,
+  .link-chip:active,
+  .link-tile:hover,
+  .link-tile:active {
+    transform: none;
+  }
+
   *,
   *::before,
   *::after {

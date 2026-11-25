@@ -257,6 +257,8 @@ Tags: #product #rules #limits #defaults
   touch icon (180×180), drawn from Pip's shapes and the arena colours. They are committed in
   `apps/www/public` and remade by hand with `node apps/www/scripts/make-images.mjs` after an art
   change; original art only, no stock photos or AI-generated images.
+  Links use the app's J7 styles (buttons, tiles, chips, bold inline links), never plain underlined
+  text (owner, 2026-11-25).
 - Production passkeys use the RP ID `revisionden.com`; OAuth callbacks are on the API host, so the
   move to `app.` needed no change in Google or Microsoft.
 - Live since 2026-11-25 (workstream G): API Workers on all three API hosts; web app on `dev.` and
