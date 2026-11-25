@@ -4,7 +4,7 @@ import {
   gradeScaleFor,
   isAllowedTarget,
   TargetGradeRequestSchema,
-  ParentTargetGradesSchema,
+  TargetGradesSchema,
 } from './target-grades';
 
 const maths = (tier: 'foundation' | 'higher' | 'none' | 'not_sure', board = 'Edexcel') => ({
@@ -76,14 +76,31 @@ describe('target grade schemas', () => {
     expect(() => TargetGradeRequestSchema.parse({ targetGrade: '' })).toThrow();
   });
 
-  it('describes the parent view: one row per enrolled subject', () => {
+  it('describes both targets per enrolled subject: the parent’s and the child’s own', () => {
     expect(
-      ParentTargetGradesSchema.parse({
+      TargetGradesSchema.parse({
         subjects: [
-          { subjectId: 'gcse-maths', name: 'Maths', targetGrade: '7', grades: ['9', 'U'] },
-          { subjectId: 'gcse-history', name: 'History', targetGrade: null, grades: null },
+          {
+            subjectId: 'gcse-maths',
+            name: 'Maths',
+            parentTarget: '7',
+            studentTarget: '8',
+            grades: ['9', 'U'],
+          },
+          {
+            subjectId: 'gcse-history',
+            name: 'History',
+            parentTarget: null,
+            studentTarget: null,
+            grades: null,
+          },
         ],
       }).subjects,
     ).toHaveLength(2);
+    expect(() =>
+      TargetGradesSchema.parse({
+        subjects: [{ subjectId: 'x', name: 'X', targetGrade: '7', grades: null }],
+      }),
+    ).toThrow();
   });
 });

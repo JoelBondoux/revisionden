@@ -90,27 +90,6 @@
 - Not built yet: it needs verified grade boundaries (docs/VERIFICATION.md), and mocks and school
   reports are not entered yet. Until then the stats dashboards show "Not set up yet" for it.
 
-## Target grades
-
-Agreed with the lead on 2026-11-25 (workstream K8).
-
-- A parent sets or clears a target grade for each of the child's subjects, from the parent stats
-  dashboard ("Target grades"). Either parent can change it; the latest change wins, and each
-  change goes in the family activity log as an important change ("changed {child}'s target
-  grades").
-- The grade must be on the subject's grade scale for its board and tier, best first. A scale is a
-  specification fact, so it is offered only where its official citation is stored
-  (`packages/core/src/target-grades.ts`, `GRADE_SCALES`). Today that is GCSE Maths, Pearson
-  Edexcel 1MA1: higher tier 9 to 3 and U, foundation tier 5 to 1 and U, and 9 to 1 and U while the
-  tier is not chosen (specification page 31). Other subjects and boards, and every A-Level, show
-  "not available yet" until their scale is cited.
-- The student sees their targets, read-only, on My stats. The parent dashboard's subjects table
-  shows the target next to mastery. The target is kept with the child's courses
-  (`enrolments.target_grade`) and is in the family data download.
-- API: `GET /v1/students/:id/target-grades` (each enrolled subject, its target and the grades it
-  can take, or `grades: null`) and `PUT /v1/students/:id/target-grades/:subjectId`
-  (`{ targetGrade }`, null to clear; 422 `grade_not_on_scale` or `no_grade_scale`).
-
 ## AI marking
 
 - Every AI-marked result carries the label: "Marked by AI. This is a guide to help you improve,
@@ -340,7 +319,29 @@ Mockups: screens 19 (student) and 20 (parent).
   through R's read-only `rewardsProgress` (`apps/api/src/stats/reward-adapters.ts`), so the
   numbers match the Rewards page and reading them never uses up the student's "New!" rewards. Parent-set
   rewards are listed not-yet-given first, without the note to the student.
-- Panels not built yet (study plan, school report effort, predicted and target grades) come from
+- **Target grades** (workstream K8; owner decision 2026-11-25). Each subject has two targets, both
+  goals to reach for:
+  - the **parent's target**, set or cleared by either parent in the "Target grades" panel of the
+    parent stats dashboard. The latest change wins, and each change goes in the family activity
+    log as an important change ("changed {child}'s target grades");
+  - the **child's own target**, set or cleared by the child on My stats. It is not logged as a
+    change for the parents.
+  - The child sees both side by side on My stats; the parents see both in their panel, and the
+    subjects table shows the parent's target. When they differ the tone stays encouraging: no
+    red, "fail" or "below" styling or wording.
+  - Both must be on the subject's grade scale for its board and tier, best first. A scale is a
+    specification fact, so it is offered only where its official citation is stored
+    (`packages/core/src/target-grades.ts`, `GRADE_SCALES`). Today that is GCSE Maths, Pearson
+    Edexcel 1MA1: higher tier 9 to 3 and U, foundation tier 5 to 1 and U, and 9 to 1 and U while
+    the tier is not chosen (specification page 31). Other subjects and boards, and every A-Level,
+    say "not available yet" until their scale is cited.
+  - Kept with the child's courses (`enrolments.parent_target_grade`, `student_target_grade`) and
+    in the family data download.
+  - API: `GET /v1/students/:id/target-grades` (each enrolled subject, both targets and the grades
+    they can take, or `grades: null`); `PUT /v1/students/:id/target-grades/:subjectId` (parent's
+    target) and `PUT /v1/student/target-grades/:subjectId` (child's own), each `{ targetGrade }`,
+    null to clear, 422 `grade_not_on_scale` or `no_grade_scale`. Student stats carry `targets`.
+- Panels not built yet (study plan, school report effort, predicted grades) come from
   adapters in `apps/api/src/stats/adapters.ts` that return null and show "Not set up yet".
 - Implemented: `packages/core/src/stats.ts` (pure functions) and `stats-schemas.ts` (shared
   schemas); API `GET /v1/student/stats?period=week|term|year` (student device),

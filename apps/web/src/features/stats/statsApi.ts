@@ -3,8 +3,8 @@ import { z, type ZodType } from 'zod';
 import {
   ParentDailyLimitSchema,
   ParentDashboardSchema,
-  ParentTargetGradesSchema,
-  type ParentTargetGrades,
+  TargetGradesSchema,
+  type TargetGrades,
   StudentDailyLimitSchema,
   StudentStatsSchema,
   type ParentDailyLimit,
@@ -35,12 +35,14 @@ export interface StatsApi {
   saveDailyLimit(studentId: string, change: UpdateDailyLimitRequest): Promise<ParentDailyLimit>;
   answerSuggestion(studentId: string, action: 'accept' | 'dismiss'): Promise<ParentDailyLimit>;
   /** Target grades per enrolled subject (workstream K8). */
-  getTargetGrades(studentId: string): Promise<ParentTargetGrades>;
+  getTargetGrades(studentId: string): Promise<TargetGrades>;
+  /** The child's own target (student device session). */
+  saveMyTargetGrade(subjectId: string, targetGrade: string | null): Promise<TargetGrades>;
   saveTargetGrade(
     studentId: string,
     subjectId: string,
     targetGrade: string | null,
-  ): Promise<ParentTargetGrades>;
+  ): Promise<TargetGrades>;
 }
 
 /** Client for the stats routes (apps/api/src/stats). Sends the session cookies. */
@@ -73,9 +75,13 @@ export function createStatsApi({
     saveDailyLimit: (id, change) => send('PUT', limitPath(id), ParentDailyLimitSchema, change),
     answerSuggestion: (id, action) =>
       send('POST', `${limitPath(id)}/suggestion`, ParentDailyLimitSchema, { action }),
-    getTargetGrades: (id) => get(targetPath(id), ParentTargetGradesSchema),
+    getTargetGrades: (id) => get(targetPath(id), TargetGradesSchema),
+    saveMyTargetGrade: (subjectId, targetGrade) =>
+      send('PUT', `student/target-grades/${encodeURIComponent(subjectId)}`, TargetGradesSchema, {
+        targetGrade,
+      }),
     saveTargetGrade: (id, subjectId, targetGrade) =>
-      send('PUT', `${targetPath(id)}/${encodeURIComponent(subjectId)}`, ParentTargetGradesSchema, {
+      send('PUT', `${targetPath(id)}/${encodeURIComponent(subjectId)}`, TargetGradesSchema, {
         targetGrade,
       }),
   };

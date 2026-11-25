@@ -13,7 +13,7 @@ afterAll(async () => {
 });
 
 describe('target grades on enrolments (workstream K8)', () => {
-  it('starts with no target and keeps one once set', async () => {
+  it('starts with no targets and keeps the parent’s and the child’s own separately', async () => {
     const fam = await client.query<{ id: string }>(
       `insert into families default values returning id`,
     );
@@ -26,16 +26,22 @@ describe('target grades on enrolments (workstream K8)', () => {
       `insert into enrolments (student_id, subject_id, board, tier)
        values ('${studentId}', 'gcse-maths', 'Edexcel', 'higher')`,
     );
-    const before = await client.query<{ target_grade: string | null }>(
-      `select target_grade from enrolments where student_id = '${studentId}'`,
-    );
-    expect(before.rows[0]!.target_grade).toBeNull();
+    const targets = () =>
+      client.query<{ parent_target_grade: string | null; student_target_grade: string | null }>(
+        `select parent_target_grade, student_target_grade from enrolments
+         where student_id = '${studentId}'`,
+      );
+    expect((await targets()).rows[0]).toEqual({
+      parent_target_grade: null,
+      student_target_grade: null,
+    });
     await client.query(
-      `update enrolments set target_grade = '7' where student_id = '${studentId}'`,
+      `update enrolments set parent_target_grade = '7', student_target_grade = '8'
+       where student_id = '${studentId}'`,
     );
-    const after = await client.query<{ target_grade: string | null }>(
-      `select target_grade from enrolments where student_id = '${studentId}'`,
-    );
-    expect(after.rows[0]!.target_grade).toBe('7');
+    expect((await targets()).rows[0]).toEqual({
+      parent_target_grade: '7',
+      student_target_grade: '8',
+    });
   });
 });

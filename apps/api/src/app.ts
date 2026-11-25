@@ -48,7 +48,7 @@ import {
 } from './feedback/routes';
 import { parentStatsRoutes, studentStatsRoutes } from './stats/routes';
 import { parentDailyLimitRoutes, studentDailyLimitRoutes } from './daily-limit/routes';
-import { parentTargetGradeRoutes } from './stats/target-grades';
+import { parentTargetGradeRoutes, studentTargetGradeRoutes } from './stats/target-grades';
 import { adminErrorReportRoutes, errorReportRoutes } from './feedback/error-reports';
 import type { StatsAdapters } from './stats/adapters';
 
@@ -215,6 +215,7 @@ export function createApp(deps: AppDeps) {
   app.route('/v1/student', studentFeedbackRoutes(deps));
   app.route('/v1/student', studentStatsRoutes(deps));
   app.route('/v1/student', studentDailyLimitRoutes(deps));
+  app.route('/v1/student', studentTargetGradeRoutes(deps));
   app.use('/v1/ai/*', studentAuth(deps));
   app.route('/v1/ai', aiRoutes({ ...deps, gateway }));
   app.route('/v1', parent);

@@ -1,6 +1,7 @@
 /**
- * Target grades (workstream K8, docs/PRODUCT_RULES.md "Target grades"). A parent sets a target
- * grade per enrolled subject; it must be on that qualification's grade scale. Grade scales are
+ * Target grades (workstream K8, docs/PRODUCT_RULES.md "Statistics dashboards", Target grades).
+ * Each enrolled subject has two targets: one set by either parent and the child's own. Both must
+ * be on that qualification's grade scale. Grade scales are
  * specification facts, so each one carries its official citation (docs/VERIFICATION.md) and a
  * subject, board and tier with no cited scale has none: no target can be set for it yet.
  */
@@ -104,15 +105,23 @@ export const TargetGradeRequestSchema = z
   .strict();
 export type TargetGradeRequest = z.infer<typeof TargetGradeRequestSchema>;
 
-export const SubjectTargetSchema = z.object({
-  subjectId: z.string(),
-  name: z.string(),
-  targetGrade: z.string().nullable(),
-  /** The grades the parent may pick, best first; null when no cited scale exists yet. */
-  grades: z.array(z.string()).nullable(),
-});
+export const SubjectTargetSchema = z
+  .object({
+    subjectId: z.string(),
+    name: z.string(),
+    /** Set by either parent. */
+    parentTarget: z.string().nullable(),
+    /** The child's own target, set by the child on My stats. */
+    studentTarget: z.string().nullable(),
+    /** The grades either target may take, best first; null when no cited scale exists yet. */
+    grades: z.array(z.string()).nullable(),
+  })
+  .strict();
 export type SubjectTarget = z.infer<typeof SubjectTargetSchema>;
 
-/** GET /v1/students/:id/target-grades (parent). */
-export const ParentTargetGradesSchema = z.object({ subjects: z.array(SubjectTargetSchema) });
-export type ParentTargetGrades = z.infer<typeof ParentTargetGradesSchema>;
+/**
+ * Both targets for each enrolled subject: GET /v1/students/:id/target-grades (parent) and the
+ * `targets` on the student's own stats.
+ */
+export const TargetGradesSchema = z.object({ subjects: z.array(SubjectTargetSchema) }).strict();
+export type TargetGrades = z.infer<typeof TargetGradesSchema>;

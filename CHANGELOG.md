@@ -7,7 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
-- Target grades: parents can set a target grade for each subject on the stats dashboard (GCSE Maths for now; more subjects as their grade scales are checked). Students see their targets on My stats.
+- Target grades: for each subject, a parent can set a target grade on the stats dashboard and your child can set their own on My stats. You both see both, as goals to reach for (GCSE Maths for now; more subjects as their grade scales are checked).
 - Two parents: invite a second parent from Parent home with a code or link. You both get the same control, a family activity log shows who changed what (as Parent 1 or Parent 2), and you're told about important changes. Deleting the family account needs both of you.
 - Learn it first: a button at the start of a topic lesson opens free lessons from Oak National Academy for that topic in a new tab. It shows up on each GCSE Maths topic once its link has been checked.
 - Spotted a bug? Tap the little bug button in the corner to tell us. If we confirm it, you earn +50 XP. You can hide the button in Settings.
@@ -74,7 +74,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
-- Target grades (K8): `enrolments.target_grade` (migration 0017); `GET /v1/students/:id/target-grades`, `PUT .../target-grades/:subjectId` for either parent, checked against cited grade scales (`packages/core/src/target-grades.ts`, GCSE Maths Edexcel 1MA1 for now); logged as `target_changed` (important); `targets` on student stats; Target grades panel on the parent dashboard and card on My stats. Policies: privacy notice 1.6, young people's notice 1.5, Children's Code 1.1 (wording). Predicted grades stay "Not set up yet" until verified grade boundaries exist.
+- Target grades (K8): two per subject, `enrolments.parent_target_grade` and `student_target_grade` (migration 0017); `GET /v1/students/:id/target-grades` and `PUT .../target-grades/:subjectId` for either parent (logged as `target_changed`, important), `PUT /v1/student/target-grades/:subjectId` for the child's own (not logged); both checked against cited grade scales (`packages/core/src/target-grades.ts`, GCSE Maths Edexcel 1MA1 for now); `targets` on student stats; Target grades panel on the parent dashboard and card on My stats. Policies: privacy notice 1.6, young people's notice 1.5, Children's Code 1.1 (wording). Predicted grades stay "Not set up yet" until verified grade boundaries exist.
 - Rewards R7: Bug Hunter hidden track (`confirmedBugs` from L's `confirmedBugCount`; L's bug reward XP added to reward XP for levels), 24 secret achievements with masked `???` overview cards, `secret-stats.ts`, `effect` reward item kind, magnifier avatar item and glitch effect art.
 
 - Two parents (B3): `parent_invites`, `family_events`, `parent_removal_notices`, `parents.position`/`events_seen_at`, `families.deletion_requested_*` (migration 0012; privacy notice 1.5, young people 1.4, data retention 1.2); `/v1/family/{invites,join,parents,deletion,events}` and `/v1/removal-notice`; parent guard refuses removed parents; change log middleware over parent routes; important changes pushed to the other parent by the cron and shown in `GET /v1/parent/notifications/latest`; Parents panel, Family activity and removal notice on Parent home, `/join` page; export includes the activity log; cron deletes expired invites and log rows older than 12 months.

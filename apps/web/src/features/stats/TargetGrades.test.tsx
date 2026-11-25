@@ -13,9 +13,9 @@ describe('target grades for the parent', () => {
     return screen.findByRole('region', { name: 'Target grades' });
   };
 
-  it('lets a parent pick a target from the subject’s grades and save it', async () => {
+  it('lets a parent pick their target from the subject’s grades and save it', async () => {
     const panel = await openPanel();
-    const maths = within(panel).getByLabelText('Maths target grade');
+    const maths = within(panel).getByLabelText('Maths: your target');
     expect(
       within(maths)
         .getAllByRole('option')
@@ -23,26 +23,31 @@ describe('target grades for the parent', () => {
     ).toEqual(['No target', '9', '8', '7', '6', '5', '4', '3', 'U']);
     await userEvent.selectOptions(maths, '7');
     expect(await within(panel).findByRole('status')).toHaveTextContent('Maths target saved');
-    expect(within(panel).getByLabelText('Maths target grade')).toHaveValue('7');
+    expect(within(panel).getByLabelText('Maths: your target')).toHaveValue('7');
   });
 
-  it('lets a parent clear a target', async () => {
-    resetTargetGradeMocks({ mathsTarget: '6' });
+  it('shows the child’s own target next to the parent’s', async () => {
+    resetTargetGradeMocks({ parentTarget: '6', studentTarget: '8' });
     const panel = await openPanel();
-    const maths = within(panel).getByLabelText('Maths target grade');
-    expect(maths).toHaveValue('6');
-    await userEvent.selectOptions(maths, '');
+    expect(within(panel).getByLabelText('Maths: your target')).toHaveValue('6');
+    expect(panel).toHaveTextContent('Their own target: 8');
+  });
+
+  it('lets a parent clear their target', async () => {
+    resetTargetGradeMocks({ parentTarget: '6' });
+    const panel = await openPanel();
+    await userEvent.selectOptions(within(panel).getByLabelText('Maths: your target'), '');
     expect(await within(panel).findByRole('status')).toHaveTextContent('Maths target cleared');
   });
 
   it('explains when a subject has no grade scale yet', async () => {
     const panel = await openPanel();
-    expect(within(panel).queryByLabelText('Physics target grade')).not.toBeInTheDocument();
+    expect(within(panel).queryByLabelText('Physics: your target')).not.toBeInTheDocument();
     expect(panel).toHaveTextContent('Physics: not available yet');
   });
 
-  it('shows the target in the subjects table before predicted grades exist', async () => {
-    resetTargetGradeMocks({ mathsTarget: '7' });
+  it('shows the parent’s target in the subjects table before predicted grades exist', async () => {
+    resetTargetGradeMocks({ parentTarget: '7' });
     renderRoute('/parent/stats');
     const table = await screen.findByRole('table', { name: 'Subjects' });
     expect(within(table).getByRole('row', { name: /Maths/ })).toHaveTextContent('Target 7');
@@ -55,23 +60,48 @@ describe('target grades for the parent', () => {
       ),
     );
     const panel = await openPanel();
-    await userEvent.selectOptions(within(panel).getByLabelText('Maths target grade'), '7');
+    await userEvent.selectOptions(within(panel).getByLabelText('Maths: your target'), '7');
     expect(await within(panel).findByRole('alert')).toHaveTextContent('Could not save');
   });
 });
 
 describe('target grades for the student', () => {
-  it('shows the targets a parent set, without a way to change them', async () => {
-    resetTargetGradeMocks({ mathsTarget: '7' });
+  const openCard = async () => {
     renderRoute('/progress');
-    const card = await screen.findByRole('region', { name: 'Target grades' });
-    expect(card).toHaveTextContent('Maths: 7');
-    expect(within(card).queryByRole('combobox')).not.toBeInTheDocument();
+    return screen.findByRole('region', { name: 'Target grades' });
+  };
+
+  it('shows the parent’s target and lets the child set their own', async () => {
+    resetTargetGradeMocks({ parentTarget: '7' });
+    const card = await openCard();
+    expect(card).toHaveTextContent('Your parent’s target: 7');
+    await userEvent.selectOptions(within(card).getByLabelText('Maths: my target'), '8');
+    expect(await within(card).findByRole('status')).toHaveTextContent('Maths target saved');
+    expect(within(card).getByLabelText('Maths: my target')).toHaveValue('8');
   });
 
-  it('says when no targets are set yet', async () => {
-    renderRoute('/progress');
-    const card = await screen.findByRole('region', { name: 'Target grades' });
-    expect(card).toHaveTextContent('No target grades yet');
+  it('keeps the tone encouraging when the two targets differ', async () => {
+    resetTargetGradeMocks({ parentTarget: '7', studentTarget: '5' });
+    const card = await openCard();
+    expect(card).toHaveTextContent('Your parent’s target: 7');
+    expect(within(card).getByLabelText('Maths: my target')).toHaveValue('5');
+    expect(card.textContent).not.toMatch(/fail|below|behind|wrong|lower/i);
+  });
+
+  it('says when no parent target is set yet, and explains subjects without a scale', async () => {
+    const card = await openCard();
+    expect(card).toHaveTextContent('Your parent hasn’t set one yet');
+    expect(card).toHaveTextContent('Physics: not available yet');
+  });
+
+  it('shows a friendly message when the child’s target cannot be saved', async () => {
+    server.use(
+      http.put('*/v1/student/target-grades/:subjectId', () =>
+        HttpResponse.json({}, { status: 500 }),
+      ),
+    );
+    const card = await openCard();
+    await userEvent.selectOptions(within(card).getByLabelText('Maths: my target'), '7');
+    expect(await within(card).findByRole('alert')).toHaveTextContent('Could not save');
   });
 });

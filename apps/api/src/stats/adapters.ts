@@ -19,7 +19,7 @@ export interface StatsAdapters {
     weekStart: string,
   ): Promise<{ kept: NonNullable<ParentDashboard['tiles']['planKept']>; minutes: number } | null>;
   effortScores(studentId: string): Promise<ParentDashboard['effortScores']>;
-  /** Target grades set by a parent (workstream K8); only subjects with a target. */
+  /** Both target grades per enrolled subject (workstream K8). */
   targets(studentId: string): Promise<StudentStats['targets']>;
   grades(
     studentId: string,

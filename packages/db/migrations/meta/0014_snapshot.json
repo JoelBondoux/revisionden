@@ -1,5 +1,5 @@
 {
-  "id": "eb5de87c-b420-42dd-86db-dc978010bc73",
+  "id": "cff0ce13-d859-4118-a78e-974bf9552784",
   "prevId": "f61e3f8b-f5fe-4546-bb36-b812cf9e648e",
   "version": "7",
   "dialect": "postgresql",
@@ -938,8 +938,14 @@
           "primaryKey": false,
           "notNull": false
         },
-        "target_grade": {
-          "name": "target_grade",
+        "parent_target_grade": {
+          "name": "parent_target_grade",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "student_target_grade": {
+          "name": "student_target_grade",
           "type": "text",
           "primaryKey": false,
           "notNull": false

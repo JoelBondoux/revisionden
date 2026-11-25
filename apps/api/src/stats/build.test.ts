@@ -33,7 +33,15 @@ const wired: StatsAdapters = {
   ],
   level: async (_id, xp) => ({ level: 2, xpIntoLevel: xp, xpForNextLevel: 100 }),
   plan: async () => ({ kept: { done: 3, planned: 4 }, minutes: 150 }),
-  targets: async () => [{ subjectId: 'not-a-known-subject', name: 'Demo', targetGrade: '7' }],
+  targets: async () => [
+    {
+      subjectId: 'not-a-known-subject',
+      name: 'Demo',
+      parentTarget: '7',
+      studentTarget: '8',
+      grades: null,
+    },
+  ],
   effortScores: async () => ({
     date: '2026-11-01',
     scores: [{ label: 'Commitment', value: '3', scale: '1 to 4' }],
@@ -57,7 +65,13 @@ describe('dashboard building', () => {
     const stats = await buildStudentStats(student.id, data, 'week', now, wired);
     expect(stats.level).toEqual({ level: 2, xpIntoLevel: 10, xpForNextLevel: 100 });
     expect(stats.targets).toEqual([
-      { subjectId: 'not-a-known-subject', name: 'Demo', targetGrade: '7' },
+      {
+        subjectId: 'not-a-known-subject',
+        name: 'Demo',
+        parentTarget: '7',
+        studentTarget: '8',
+        grades: null,
+      },
     ]);
   });
 

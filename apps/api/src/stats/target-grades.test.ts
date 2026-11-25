@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { ParentTargetGradesSchema, StudentStatsSchema } from '@revisionden/core';
+import { StudentStatsSchema, TargetGradesSchema } from '@revisionden/core';
 import { targetGradeAdapters } from './target-grades';
 import { createTestContext, jsonRequest, type TestContext } from '../test/helpers';
 
@@ -7,8 +7,9 @@ let ctx: TestContext;
 afterEach(async () => ctx?.close());
 
 type H = Record<string, string>;
+const HIGHER = ['9', '8', '7', '6', '5', '4', '3', 'U'];
 
-/** A child with Maths (Edexcel, higher) and Maths-free History (AQA): one cited scale, one not. */
+/** A child with Maths (Edexcel, higher: a cited scale) and History (AQA: no cited scale). */
 async function setUp() {
   ctx = await createTestContext();
   const family = await ctx.familyStudent('target_kid');
@@ -22,70 +23,73 @@ async function setUp() {
   return family;
 }
 
-const view = async (studentId: string, headers: H) => {
+const parentView = async (studentId: string, headers: H) => {
   const res = await ctx.app.request(`/v1/students/${studentId}/target-grades`, { headers });
   expect(res.status).toBe(200);
-  return ParentTargetGradesSchema.parse(await res.json()).subjects;
+  return TargetGradesSchema.parse(await res.json()).subjects;
 };
 
-const put = (studentId: string, subjectId: string, targetGrade: string | null, headers: H) =>
+const studentTargets = async (headers: H) => {
+  const res = await ctx.app.request('/v1/student/stats', { headers });
+  expect(res.status).toBe(200);
+  return StudentStatsSchema.parse(await res.json()).targets;
+};
+
+const setParent = (studentId: string, subjectId: string, targetGrade: string | null, headers: H) =>
   ctx.app.request(
     `/v1/students/${studentId}/target-grades/${subjectId}`,
     jsonRequest('PUT', { targetGrade }, headers),
   );
 
-describe('target grades for the parent', () => {
-  it('lists each enrolled subject with the grades a target can take', async () => {
+const setOwn = (subjectId: string, targetGrade: string | null, headers: H) =>
+  ctx.app.request(
+    `/v1/student/target-grades/${subjectId}`,
+    jsonRequest('PUT', { targetGrade }, headers),
+  );
+
+const mathsOf = <T extends { subjectId: string }>(rows: T[]) =>
+  rows.find((r) => r.subjectId === 'gcse-maths')!;
+
+const NO_TARGETS = { parentTarget: null, studentTarget: null };
+
+describe('the parent’s target', () => {
+  it('lists each enrolled subject with both targets and the grades they can take', async () => {
     const { studentId, parent } = await setUp();
-    expect(await view(studentId, parent.headers)).toEqual([
-      {
-        subjectId: 'gcse-history',
-        name: 'History',
-        targetGrade: null,
-        grades: null,
-      },
-      {
-        subjectId: 'gcse-maths',
-        name: 'Maths',
-        targetGrade: null,
-        grades: ['9', '8', '7', '6', '5', '4', '3', 'U'],
-      },
+    expect(await parentView(studentId, parent.headers)).toEqual([
+      { subjectId: 'gcse-history', name: 'History', ...NO_TARGETS, grades: null },
+      { subjectId: 'gcse-maths', name: 'Maths', ...NO_TARGETS, grades: HIGHER },
     ]);
   });
 
-  it('sets and clears a target on the scale', async () => {
+  it('sets and clears the parent’s target on the scale', async () => {
     const { studentId, parent } = await setUp();
-    const res = await put(studentId, 'gcse-maths', '7', parent.headers);
+    const res = await setParent(studentId, 'gcse-maths', '7', parent.headers);
     expect(res.status).toBe(200);
-    expect(
-      ParentTargetGradesSchema.parse(await res.json()).subjects.find(
-        (s) => s.subjectId === 'gcse-maths',
-      )?.targetGrade,
-    ).toBe('7');
-    expect((await put(studentId, 'gcse-maths', null, parent.headers)).status).toBe(200);
-    expect((await view(studentId, parent.headers))[1]!.targetGrade).toBeNull();
+    expect(mathsOf(TargetGradesSchema.parse(await res.json()).subjects).parentTarget).toBe('7');
+    expect((await setParent(studentId, 'gcse-maths', null, parent.headers)).status).toBe(200);
+    expect(mathsOf(await parentView(studentId, parent.headers)).parentTarget).toBeNull();
   });
 
   it('refuses a grade off the scale, or any grade where no scale is cited', async () => {
     const { studentId, parent } = await setUp();
-    const off = await put(studentId, 'gcse-maths', '2', parent.headers);
+    const off = await setParent(studentId, 'gcse-maths', '2', parent.headers);
     expect(off.status).toBe(422);
     expect(await off.json()).toMatchObject({ error: { code: 'grade_not_on_scale' } });
-    const none = await put(studentId, 'gcse-history', '7', parent.headers);
+    const none = await setParent(studentId, 'gcse-history', '7', parent.headers);
     expect(none.status).toBe(422);
     expect(await none.json()).toMatchObject({ error: { code: 'no_grade_scale' } });
-    expect((await put(studentId, 'gcse-maths', '', parent.headers)).status).toBe(400);
+    expect((await setParent(studentId, 'gcse-maths', '', parent.headers)).status).toBe(400);
   });
 
   it('keeps other families and unenrolled subjects out', async () => {
     const { studentId, parent } = await setUp();
     const other = await ctx.signInParent();
-    expect(
-      (await ctx.app.request(`/v1/students/${studentId}/target-grades`, { headers: other.headers }))
-        .status,
-    ).toBe(404);
-    expect((await put(studentId, 'gcse-maths', '7', other.headers)).status).toBe(404);
-    expect((await put(studentId, 'gcse-physics', '7', parent.headers)).status).toBe(404);
+    const theirs = await ctx.app.request(`/v1/students/${studentId}/target-grades`, {
+      headers: other.headers,
+    });
+    expect(theirs.status).toBe(404);
+    expect((await setParent(studentId, 'gcse-maths', '7', other.headers)).status).toBe(404);
+    expect((await setParent(studentId, 'gcse-physics', '7', parent.headers)).status).toBe(404);
   });
 
   it('logs a change by either parent as important for the other', async () => {
@@ -97,9 +101,9 @@ describe('target grades for the parent', () => {
     const { code } = (await invite.json()) as { code: string };
     const second = await ctx.signInParent();
     await ctx.app.request('/v1/family/join', jsonRequest('POST', { code }, second.headers));
-    expect((await put(studentId, 'gcse-maths', '8', second.headers)).status).toBe(200);
+    expect((await setParent(studentId, 'gcse-maths', '8', second.headers)).status).toBe(200);
     // Refused changes are not logged.
-    await put(studentId, 'gcse-maths', '2', second.headers);
+    await setParent(studentId, 'gcse-maths', '2', second.headers);
     const res = await ctx.app.request('/v1/family/events', { headers: parent.headers });
     const { events } = (await res.json()) as {
       events: { kind: string; by: string; what: string; isNew: boolean }[];
@@ -114,25 +118,71 @@ describe('target grades for the parent', () => {
   });
 });
 
-describe('target grades for the student', () => {
-  it('shows the targets a parent set on My stats, read-only', async () => {
+describe('the child’s own target', () => {
+  it('shows both targets for every enrolled subject on My stats', async () => {
     const { studentId, parent, headers } = await setUp();
-    await put(studentId, 'gcse-maths', '7', parent.headers);
-    const res = await ctx.app.request('/v1/student/stats', { headers });
-    expect(StudentStatsSchema.parse(await res.json()).targets).toEqual([
-      { subjectId: 'gcse-maths', name: 'Maths', targetGrade: '7' },
+    await setParent(studentId, 'gcse-maths', '7', parent.headers);
+    expect(await studentTargets(headers)).toEqual([
+      { subjectId: 'gcse-history', name: 'History', ...NO_TARGETS, grades: null },
+      {
+        subjectId: 'gcse-maths',
+        name: 'Maths',
+        parentTarget: '7',
+        studentTarget: null,
+        grades: HIGHER,
+      },
     ]);
-    // The student cannot change it.
-    const own = await ctx.app.request(
-      `/v1/students/${studentId}/target-grades/gcse-maths`,
-      jsonRequest('PUT', { targetGrade: '9' }, headers),
-    );
-    expect(own.status).toBe(401);
   });
 
-  it('gives the dashboard the target and no predicted grade (not built until verified boundaries exist)', async () => {
-    const { studentId, parent } = await setUp();
-    await put(studentId, 'gcse-maths', '6', parent.headers);
+  it('lets the child set and clear their own target, which the parent then sees', async () => {
+    const { studentId, parent, headers } = await setUp();
+    await setParent(studentId, 'gcse-maths', '6', parent.headers);
+    const res = await setOwn('gcse-maths', '8', headers);
+    expect(res.status).toBe(200);
+    expect(mathsOf(TargetGradesSchema.parse(await res.json()).subjects)).toMatchObject({
+      parentTarget: '6',
+      studentTarget: '8',
+    });
+    expect(mathsOf(await parentView(studentId, parent.headers)).studentTarget).toBe('8');
+    expect((await setOwn('gcse-maths', null, headers)).status).toBe(200);
+    expect(mathsOf(await studentTargets(headers))).toMatchObject({
+      parentTarget: '6',
+      studentTarget: null,
+    });
+  });
+
+  it('checks the child’s target against the same scale', async () => {
+    const { headers } = await setUp();
+    expect((await setOwn('gcse-maths', '2', headers)).status).toBe(422);
+    expect((await setOwn('gcse-history', '7', headers)).status).toBe(422);
+    expect((await setOwn('gcse-physics', '7', headers)).status).toBe(404);
+    const signedOut = await ctx.app.request(
+      '/v1/student/target-grades/gcse-maths',
+      jsonRequest('PUT', { targetGrade: '7' }, {}),
+    );
+    expect(signedOut.status).toBe(401);
+  });
+
+  it('keeps the child off the parent’s target', async () => {
+    const { studentId, headers } = await setUp();
+    expect((await setParent(studentId, 'gcse-maths', '9', headers)).status).toBe(401);
+  });
+
+  it('does not log the child’s own target as a change for the parents', async () => {
+    const { parent, headers } = await setUp();
+    expect((await setOwn('gcse-maths', '8', headers)).status).toBe(200);
+    const res = await ctx.app.request('/v1/family/events', { headers: parent.headers });
+    const { events } = (await res.json()) as { events: { kind: string }[] };
+    expect(events.filter((e) => e.kind === 'target_changed')).toEqual([]);
+  });
+});
+
+describe('target grades elsewhere', () => {
+  it('gives the dashboard the parent’s target and no predicted grade yet', async () => {
+    // Predicted grades are not built until verified grade boundaries exist.
+    const { studentId, parent, headers } = await setUp();
+    await setParent(studentId, 'gcse-maths', '6', parent.headers);
+    await setOwn('gcse-maths', '7', headers);
     const grades = targetGradeAdapters({ db: ctx.db }).grades!;
     expect(await grades(studentId, 'gcse-maths')).toEqual({
       predictedGrade: null,
@@ -143,18 +193,19 @@ describe('target grades for the student', () => {
       targetGrade: null,
     });
   });
-});
 
-describe('target grades in the family data download', () => {
-  it('includes the target with the child’s courses', async () => {
-    const { studentId, parent } = await setUp();
-    await put(studentId, 'gcse-maths', '7', parent.headers);
+  it('includes both targets with the child’s courses in the family data download', async () => {
+    const { studentId, parent, headers } = await setUp();
+    await setParent(studentId, 'gcse-maths', '7', parent.headers);
+    await setOwn('gcse-maths', '8', headers);
     const res = await ctx.app.request('/v1/export', { headers: parent.headers });
-    const data = (await res.json()) as {
-      students: { courses: { subjectId: string; targetGrade: string | null }[] }[];
-    };
+    const data = (await res.json()) as { students: { courses: Record<string, unknown>[] }[] };
     expect(data.students[0]!.courses).toContainEqual(
-      expect.objectContaining({ subjectId: 'gcse-maths', targetGrade: '7' }),
+      expect.objectContaining({
+        subjectId: 'gcse-maths',
+        parentTargetGrade: '7',
+        studentTargetGrade: '8',
+      }),
     );
   });
 });

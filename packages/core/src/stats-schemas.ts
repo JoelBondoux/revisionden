@@ -5,6 +5,7 @@
  * No free text written by the student appears anywhere here.
  */
 import { z } from 'zod';
+import { SubjectTargetSchema } from './target-grades';
 import { STATS_PERIODS } from './stats';
 
 const LocalDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
@@ -50,10 +51,8 @@ export const StudentStatsSchema = z
       longestCorrectRun: Count,
       bestWeek: z.object({ weekStart: LocalDate, xp: Count }).nullable(),
     }),
-    /** Target grades a parent has set (workstream K8), read-only for the student. */
-    targets: z.array(
-      z.object({ subjectId: z.string(), name: z.string(), targetGrade: z.string() }),
-    ),
+    /** Both targets per enrolled subject (workstream K8): the parent's and the child's own. */
+    targets: z.array(SubjectTargetSchema),
     /** Level progress from the rewards progression (workstream R); null until it lands. */
     level: z
       .object({ level: z.number().int().min(1), xpIntoLevel: Count, xpForNextLevel: Count })
