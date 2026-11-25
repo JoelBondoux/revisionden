@@ -232,6 +232,12 @@ Tags: #product #rules #limits #defaults
 - `services/maths`: SymPy, no AI. `POST /check-working` returns the 0-based index of the first
   line of working that does not follow from the previous line, and whether the final answer is
   correct. Input is limited to safe maths (single letters, a few functions, 200 characters).
+- Answer format (S3-A rulings, rules in `packages/core/src/answer-format.ts`): an answer may declare
+  `answer.subject` (`t`, `f^-1(x)`), so "t = RHS" counts as RHS in marking, the engine and the
+  blind check. Rounded numeric answers set `decimal_places` or `significant_figures` (not
+  `tolerance`): only the value rounded half up and written to that accuracy is right (28.274 and
+  28.270 are wrong for 2 dp). Validation requires the field whenever the question asks for
+  rounding.
 
 ## Reminders
 
@@ -624,10 +630,18 @@ Tags: #product #rules #limits #defaults
   Comeback Kid and part of Explorer have data today; the others count 0 until their records exist
   (`docs/REWARDS.md`, `packages/core/src/track-stats.ts`).
 
-## Titles (owner, 2026-11-25; planned) and Get help (built, workstream W)
+## Titles (owner, 2026-11-25; built R8) and Get help (built, workstream W)
 
-- Two-part titles: a first word and a last word unlocked separately from rewards (about 120 each);
-  curated, every pairing validated against blocked words; shown under the nickname.
+- Two-part titles (built R8): 120 first words and 120 last words, each unlocked by one reward
+  (levels, chapters, milestones, collections, seasons, hidden tracks, secrets); a word has its
+  reward's rarity. The 99 old single titles were migrated into words (their rewards now give a
+  first and a last word, named "Title words: …"). Data: `packages/core/src/catalogue/title-words.ts`;
+  rules: `packages/core/src/titles.ts`. `validateTitleWords` checks format (one word, letters and
+  hyphens, up to 16), uniqueness, and every possible pairing against the nickname blocked words;
+  `REVIEWED_BLOCKED_PAIRS` is the manual review list the picker refuses. The student picks one of
+  each (or none) on the Rewards page; saved as `students.title_first` / `title_last` (migration
+  0019); `GET`/`PUT /v1/student/rewards/title`; free to change any time; included in the family data export. Shown under the nickname
+  on the Rewards page; the friends league is not built yet, so it shows there once it is.
 - "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
   NSPCC adult helpline, parent-only). Reached from Settings, the heart link in the student footer,
   the signed-out header and parent home. There is no separate profile menu yet.

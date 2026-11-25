@@ -381,7 +381,7 @@
     "prompt": "By completing the square, solve x^2 + 6x - 2 = 0. Give the positive solution correct to 2 decimal places.",
     "answer": {
       "value": "0.32",
-      "tolerance": 0.005
+      "decimal_places": 2
     },
     "verify": {
       "expression": "-3 + sqrt(11)"
@@ -550,7 +550,7 @@
     "prompt": "Use the quadratic formula to solve 2x^2 + 3x - 4 = 0. Give the positive solution correct to 2 decimal places.",
     "answer": {
       "value": "0.85",
-      "tolerance": 0.001399993896484375
+      "decimal_places": 2
     },
     "verify": {
       "expression": "(-3 + sqrt(41))/4"
@@ -654,7 +654,7 @@
     "prompt": "Use the quadratic formula to solve x^2 - 3x - 5 = 0. Give the negative solution correct to 2 decimal places.",
     "answer": {
       "value": "-1.19",
-      "tolerance": 0.003200531005859375
+      "decimal_places": 2
     },
     "verify": {
       "expression": "(3 - sqrt(29))/2"
@@ -758,7 +758,7 @@
     "prompt": "Use the quadratic formula to solve 3x^2 - x - 1 = 0. Give the positive solution correct to 2 decimal places.",
     "answer": {
       "value": "0.77",
-      "tolerance": 0.00299835205078125
+      "decimal_places": 2
     },
     "verify": {
       "expression": "(1 + sqrt(13))/6"

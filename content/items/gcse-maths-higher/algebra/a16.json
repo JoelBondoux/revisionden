@@ -96,7 +96,7 @@
     "prompt": "Work out the radius of the circle x^2 + y^2 = 20. Give your answer correct to 3 significant figures.",
     "answer": {
       "value": "4.47",
-      "tolerance": 0.005
+      "significant_figures": 3
     },
     "verify": {
       "expression": "sqrt(20)"

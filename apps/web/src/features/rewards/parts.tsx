@@ -12,6 +12,7 @@ const KIND_WORDS: Record<RewardCardResponse['items'][number]['kind'], string> = 
   avatar: 'Avatar item',
   frame: 'Frame',
   title: 'Title',
+  titleWord: 'Title word',
   theme: 'Colour theme',
   pipOutfit: 'Pip outfit',
   badge: 'Badge',

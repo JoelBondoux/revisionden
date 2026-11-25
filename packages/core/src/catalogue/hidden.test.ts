@@ -17,18 +17,23 @@ describe('Bug Hunter track (hidden)', () => {
     expect(bugHunter.every((r) => r.source === 'hidden')).toBe(true);
   });
 
-  it('gives a badge, title, magnifier, circuit frame, Pip debug outfit, glitch effect and the Exterminator set', () => {
+  it('gives a badge, title words, magnifier, circuit frame, Pip debug outfit, glitch effect and the Exterminator set', () => {
     const kinds = bugHunter.map((r) =>
       r.items.map((i) => `${i.kind}:${'id' in i ? i.id : i.text}`),
     );
     expect(kinds).toEqual([
       ['badge:bug-hunter'],
-      ['title:Bug Hunter'],
+      ['titleWord:Bug-Hunting', 'titleWord:Bug-Hunter'],
       ['avatar:magnifier'],
       ['frame:circuit-board'],
       ['pipOutfit:debug'],
       ['effect:glitch'],
-      ['frame:exterminator', 'title:Exterminator', 'pipOutfit:exterminator'],
+      [
+        'frame:exterminator',
+        'pipOutfit:exterminator',
+        'titleWord:Glitch-Proof',
+        'titleWord:Exterminator',
+      ],
     ]);
     expect(bugHunter.at(-1)!.rarity).toBe('legendary');
   });

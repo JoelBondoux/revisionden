@@ -8,7 +8,8 @@
     "expected_seconds": 30,
     "prompt": "Round 0.004637 to 2 significant figures.",
     "answer": {
-      "value": "0.0046"
+      "value": "0.0046",
+      "significant_figures": 2
     },
     "verify": {
       "expression": "46/10000"
@@ -67,20 +68,20 @@
           "at": "2026-11-25T17:40:50Z"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:34:35Z",
-          "notes": "model answered \"0.0046\"; expected \"0.0046\""
-        },
-        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:34:40Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:10:10Z",
+          "notes": "model answered \"0.0046\"; expected \"0.0046\""
         }
       ]
     }
@@ -94,7 +95,8 @@
     "expected_seconds": 30,
     "prompt": "Round 38 652 to 3 significant figures.",
     "answer": {
-      "value": "38700"
+      "value": "38700",
+      "significant_figures": 3
     },
     "verify": {
       "expression": "38700"
@@ -153,20 +155,20 @@
           "at": "2026-11-25T17:40:50Z"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:34:48Z",
-          "notes": "model answered \"38700\"; expected \"38700\""
-        },
-        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:34:52Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "blind-answer",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:10:17Z",
+          "notes": "model answered \"38 700\"; expected \"38700\""
         }
       ]
     }
@@ -180,7 +182,8 @@
     "expected_seconds": 30,
     "prompt": "Round 7.8463 to 2 decimal places.",
     "answer": {
-      "value": "7.85"
+      "value": "7.85",
+      "decimal_places": 2
     },
     "verify": {
       "expression": "785/100"
@@ -239,20 +242,20 @@
           "at": "2026-11-25T17:40:50Z"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:35:00Z",
-          "notes": "model answered \"7.85\"; expected \"7.85\""
-        },
-        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:35:05Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:10:25Z",
+          "notes": "model answered \"7.85\"; expected \"7.85\""
         }
       ]
     }

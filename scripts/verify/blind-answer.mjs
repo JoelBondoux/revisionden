@@ -2,6 +2,11 @@
 // without seeing the answer. The step passes only if its answer matches, with high confidence.
 import { createPythonChecker } from '../content/maths-engine.mjs';
 import { stamp } from './record.mjs';
+import {
+  meetsRounding,
+  roundingOf,
+  withoutSubject,
+} from '../../packages/core/src/answer-format.ts';
 
 export const ANSWER_SCHEMA = {
   type: 'object',
@@ -21,7 +26,8 @@ const SYSTEM =
 
 const HOW = {
   multiple_choice: 'Reply with the number of the correct option only (for example "2").',
-  numeric: 'Reply with the number (and unit if needed).',
+  numeric:
+    'Reply with the number (and unit if needed), written to the accuracy the question asks for.',
   short_answer: 'Reply with a short answer: a word, phrase or value.',
   flashcard: 'Reply with what belongs on the back of this flashcard, as briefly as possible.',
   worked_maths:
@@ -46,12 +52,17 @@ export function blindAnswerPrompt(item) {
 }
 
 const NUMBER = /-?\d+(?:\.\d+)?(?:\s*\/\s*-?\d+(?:\.\d+)?)?/;
-function toNumber(text) {
+/** The first number in the text as written ("1,250.0 cm" gives "1250.0"), or null. */
+function numberText(text) {
   const m = String(text)
     .replace(/,(?=\d{3})/g, '')
     .match(NUMBER);
-  if (!m) return null;
-  const [a, b] = m[0].split('/').map((s) => Number(s.trim()));
+  return m ? m[0] : null;
+}
+function toNumber(text) {
+  const n = numberText(text);
+  if (n === null) return null;
+  const [a, b] = n.split('/').map((s) => Number(s.trim()));
   return b === undefined ? a : a / b;
 }
 const isPlainNumber = (text) => /^\s*-?\d+(\.\d+)?(\s*\/\s*-?\d+(\.\d+)?)?\s*$/.test(String(text));
@@ -89,14 +100,20 @@ function expectation(item) {
         expected: String(item.answer.option),
         matches: (a) => toNumber(a) === item.answer.option,
       };
-    case 'numeric':
+    case 'numeric': {
+      const rounding = roundingOf(item.answer);
+      const value = item.answer.value;
       return {
-        expected: item.answer.value,
-        matches: (a) =>
-          isPlainNumber(item.answer.value)
-            ? closeEnough(a, item.answer.value, item.answer.tolerance)
-            : tight(a) === tight(item.answer.value),
+        expected: value,
+        matches: (raw) => {
+          const a = withoutSubject(String(raw), item.answer.subject);
+          if (rounding) return meetsRounding(numberText(a) ?? '', value, rounding);
+          return isPlainNumber(value)
+            ? closeEnough(a, value, item.answer.tolerance)
+            : tight(a) === tight(value);
+        },
       };
+    }
     case 'short_answer':
       return {
         expected: item.answer.accepted.join(' | '),
@@ -121,7 +138,8 @@ function expectation(item) {
       }
       return {
         expected: item.answer.expression,
-        matches: (a) => tight(a) === tight(item.answer.expression),
+        matches: (a) =>
+          tight(withoutSubject(String(a), item.answer.subject)) === tight(item.answer.expression),
       };
     default:
       return null;

@@ -97,7 +97,8 @@
     "prompt": "A mass is 4.6 kg, correct to 1 decimal place. Write down the lower bound of the mass.",
     "answer": {
       "value": "4.55",
-      "unit": "kg"
+      "unit": "kg",
+      "decimal_places": 2
     },
     "verify": {
       "expression": "46/10 - 5/100"
@@ -157,20 +158,20 @@
           "at": "2026-11-25T17:40:50Z"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:34:46Z",
-          "notes": "model answered \"4.55 kg\"; expected \"4.55\""
-        },
-        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:34:52Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:10:32Z",
+          "notes": "model answered \"4.55 kg\"; expected \"4.55\""
         }
       ]
     }
@@ -185,7 +186,8 @@
     "prompt": "A time is 3.20 seconds, correct to 2 decimal places. Write down the upper bound of the time.",
     "answer": {
       "value": "3.205",
-      "unit": "s"
+      "unit": "s",
+      "decimal_places": 3
     },
     "verify": {
       "expression": "320/100 + 5/1000"
@@ -245,20 +247,20 @@
           "at": "2026-11-25T17:40:50Z"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:34:57Z",
-          "notes": "model answered \"3.205 seconds\"; expected \"3.205\""
-        },
-        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:35:03Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:10:40Z",
+          "notes": "model answered \"3.205 seconds\"; expected \"3.205\""
         }
       ]
     }
@@ -464,7 +466,7 @@
     "answer": {
       "value": "7.93",
       "unit": "m/s",
-      "tolerance": 0.005
+      "significant_figures": 3
     },
     "verify": {
       "expression": "(100 - 1/2)/(125/10 + 5/100)"
@@ -524,20 +526,20 @@
           "at": "2026-11-25T17:40:50Z"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:35:45Z",
-          "notes": "model answered \"7.93 m/s\"; expected \"7.93\""
-        },
-        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:35:53Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:10:49Z",
+          "notes": "model answered \"7.93 m/s\"; expected \"7.93\""
         }
       ]
     }

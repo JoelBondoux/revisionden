@@ -95,7 +95,11 @@ Item types: `multiple_choice`, `short_answer`, `numeric`, `worked_maths`, `flash
 `extended_answer`. Maths items carry a `verify` block the maths engine can check:
 
 - `numeric`: `verify.expression` is evaluated and compared with `answer.value` (exactly, or
-  within `answer.tolerance` for rounded answers).
+  within `answer.tolerance`). When the question asks for rounding, set `answer.decimal_places`
+  or `answer.significant_figures` instead of a tolerance: only the correctly rounded value,
+  written to that accuracy, is right (VERIFICATION.md, "Answer format").
+- An answer that is the value of a letter or function (`t`, `f^-1(x)`) may declare
+  `answer.subject` (numeric, or a worked_maths expression), so "t = ..." is accepted.
 - `worked_maths`: `verify.method` is `solve` (`equation`, `variable`) compared with
   `answer.solutions`, or `expression` (`expression`, optional `form`: `factorised` or
   `expanded`) compared with `answer.expression`. Optional `steps` (a model solution) are checked

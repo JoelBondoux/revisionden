@@ -8,7 +8,8 @@
     "expected_seconds": 45,
     "prompt": "By rounding each number to 1 significant figure, estimate the value of 4.87 × 31.2",
     "answer": {
-      "value": "150"
+      "value": "150",
+      "significant_figures": 2
     },
     "verify": {
       "expression": "5*30"
@@ -67,20 +68,20 @@
           "at": "2026-11-25T17:40:50Z"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:34:34Z",
-          "notes": "model answered \"150\"; expected \"150\""
-        },
-        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:34:39Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:09:55Z",
+          "notes": "model answered \"150\"; expected \"150\""
         }
       ]
     }
@@ -183,7 +184,8 @@
     "expected_seconds": 60,
     "prompt": "By rounding each number to 1 significant figure, estimate the value of (612 × 0.47) ÷ 2.9",
     "answer": {
-      "value": "100"
+      "value": "100",
+      "significant_figures": 1
     },
     "verify": {
       "expression": "600*(5/10)/3"
@@ -242,20 +244,20 @@
           "at": "2026-11-25T17:40:50Z"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:35:14Z",
-          "notes": "model answered \"100\"; expected \"100\""
-        },
-        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:35:20Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:10:01Z",
+          "notes": "model answered \"100\"; expected \"100\""
         }
       ]
     }

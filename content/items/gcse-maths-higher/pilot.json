@@ -179,7 +179,7 @@
     "answer": {
       "value": "28.27",
       "unit": "cm^2",
-      "tolerance": 0.005
+      "decimal_places": 2
     },
     "verify": {
       "expression": "pi * 3^2"
@@ -227,8 +227,8 @@
           "result": "pass",
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
-          "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-25T16:02:20Z"
+          "notes": "pnpm content:validate: 28.27 is pi x 3^2 rounded half up to 2 decimal places (answer.decimal_places replaced the tolerance)",
+          "at": "2026-11-25T18:41:16Z"
         },
         {
           "name": "schema",
@@ -236,15 +236,7 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T16:02:20Z"
-        },
-        {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T16:38:21Z",
-          "notes": "model answered \"28.27 cm²\"; expected \"28.27\""
+          "at": "2026-11-25T18:41:16Z"
         },
         {
           "name": "adversarial-review",
@@ -253,6 +245,14 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T16:38:30Z",
           "notes": "no problems found"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:41:00Z",
+          "notes": "model answered \"28.27 cm²\"; expected \"28.27\""
         }
       ]
     }

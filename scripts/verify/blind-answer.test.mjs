@@ -107,6 +107,64 @@ test('numeric answers given as fractions are compared by value', async () => {
   assert.equal(r.result, 'pass');
 });
 
+const blind = (item, answer) =>
+  runBlindAnswer(item, fakeProvider({ answer, confidence: 'high', reasoning: '' }), { now: AT });
+
+test('a rounded numeric answer must be written to the asked accuracy, not just be close', async () => {
+  const item = draftItem('fixture-round', undefined, {
+    type: 'numeric',
+    prompt: 'Fixture? Give your answer to 2 decimal places.',
+    answer: { value: '28.27', unit: 'cm^2', decimal_places: 2 },
+    verify: { expression: 'pi * 3^2' },
+  });
+  assert.equal((await blind(item, '28.27 cm²')).result, 'pass');
+  assert.equal((await blind(item, '28.274')).result, 'fail');
+  assert.equal((await blind(item, '28.3')).result, 'fail');
+  const sf = draftItem('fixture-sf', undefined, {
+    type: 'numeric',
+    prompt: 'Fixture? Give your answer to 3 significant figures.',
+    answer: { value: '1250', significant_figures: 3 },
+    verify: { expression: '1250' },
+  });
+  assert.equal((await blind(sf, '1,250')).result, 'pass');
+  assert.equal((await blind(sf, '1249.6')).result, 'fail');
+  assert.equal((await blind(sf, '1250.0')).result, 'fail'); // right value, 5 sf
+  assert.equal((await blind(item, '28.270')).result, 'fail');
+});
+
+test('the blind model is asked to round as the question says', () => {
+  const { prompt } = blindAnswerPrompt(mc);
+  assert.doesNotMatch(prompt, /accuracy the question asks/);
+  const item = { ...mc, type: 'numeric', options: undefined };
+  assert.match(blindAnswerPrompt(item).prompt, /accuracy the question asks/);
+});
+
+test('an answer stating the declared subject matches, such as "t = (v - u)/a"', async () => {
+  const item = draftItem('fixture-subject', undefined, {
+    type: 'worked_maths',
+    prompt: 'Make t the subject of v = u + at.',
+    answer: { expression: '(v - u)/a', subject: 't' },
+    verify: { method: 'expression', expression: '(v - u)/a' },
+  });
+  assert.equal((await blind(item, 't = (v - u)/a')).result, 'pass');
+  assert.equal((await blind(item, '(v-u)/a')).result, 'pass');
+  assert.equal((await blind(item, 'u = (v - u)/a')).result, 'fail');
+  const inverse = draftItem('fixture-inverse', undefined, {
+    type: 'worked_maths',
+    prompt: 'f(x) = 2x - 3. Find f^-1(x).',
+    answer: { expression: '(x + 3)/2', subject: 'f^-1(x)' },
+    verify: { method: 'expression', expression: '(x + 3)/2' },
+  });
+  assert.equal((await blind(inverse, 'f^-1(x) = (x + 3)/2')).result, 'pass');
+  const numeric = draftItem('fixture-t', undefined, {
+    type: 'numeric',
+    prompt: 'Find t.',
+    answer: { value: '4', subject: 't' },
+    verify: { expression: '4' },
+  });
+  assert.equal((await blind(numeric, 't = 4')).result, 'pass');
+});
+
 test('short answers match any accepted answer, ignoring case, spacing and end punctuation', async () => {
   const item = draftItem('fixture-short', undefined, {
     answer: { accepted: ['Fixture Answer', 'other'] },
