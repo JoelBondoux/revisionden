@@ -37,6 +37,16 @@
       "minimum": 1,
       "maximum": 5
     },
+    "learning_point": {
+      "$ref": "#/$defs/id",
+      "description": "Optional finer skill within the topic, e.g. gcse-maths-h-n7-lp-fractional-indices. After a wrong answer the app offers another item with the same learning point (at least 3 per learning point); without one it falls back to the topic."
+    },
+    "expected_seconds": {
+      "type": "integer",
+      "minimum": 5,
+      "maximum": 900,
+      "description": "Optional time a confident student takes. Answers slower than twice this count as shaky. Without it the app uses a guide by item type."
+    },
     "source_ref": {
       "type": "string",
       "minLength": 1,

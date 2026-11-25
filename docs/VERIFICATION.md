@@ -184,8 +184,10 @@ Verified extended answers need a passing `blind-marking` check (not `blind-answe
 exemplars, and a `human-approval` check; review batches always include them in the sample.
 
 **Blind answer and adversarial review (steps 3 and 4).** Providers share one interface
-(`scripts/verify/providers.mjs`) with structured JSON output that is validated before use. The
-blind answer must come from a different provider from the writer (Claude by default, read from
+(`scripts/verify/providers.mjs`) with structured JSON output that is validated before use. To go
+through the authenticated AI Gateway, set `<PROVIDER>_BASE_URL` to the gateway's provider URL and
+`AI_GATEWAY_TOKEN`; the token is sent as `cf-aig-authorization`, with
+`cf-aig-collect-log-payload: false` so prompts and answers are not logged. The blind answer must come from a different provider from the writer (Claude by default, read from
 the grounded-writing check). It sees no answer, hint or explanation, and passes only on a match
 with high confidence (multiple choice: same option; numeric: within the item tolerance; short
 answers and flashcards: same words ignoring case and end punctuation; worked maths: the same

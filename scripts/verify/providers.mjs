@@ -38,10 +38,16 @@ async function post(provider, fetch, url, headers, body) {
 
 const trim = (url) => url.replace(/\/+$/, '');
 
+// Our Cloudflare AI Gateway is authenticated: with a token, send it and ask the gateway not to
+// keep prompts or answers in its logs (the same headers the API sends).
+const gatewayHeaders = (token) =>
+  token ? { 'cf-aig-authorization': `Bearer ${token}`, 'cf-aig-collect-log-payload': 'false' } : {};
+
 export function createAnthropicProvider({
   apiKey,
   model,
   fetch = globalThis.fetch,
+  gatewayToken,
   baseUrl = 'https://api.anthropic.com',
   maxTokens = 2048,
 }) {
@@ -53,7 +59,7 @@ export function createAnthropicProvider({
         'anthropic',
         fetch,
         `${trim(baseUrl)}/v1/messages`,
-        { 'x-api-key': apiKey, 'anthropic-version': '2023-06-01' },
+        { 'x-api-key': apiKey, 'anthropic-version': '2023-06-01', ...gatewayHeaders(gatewayToken) },
         {
           model,
           max_tokens: maxTokens,
@@ -77,6 +83,7 @@ export function createOpenAIProvider({
   apiKey,
   model,
   fetch = globalThis.fetch,
+  gatewayToken,
   baseUrl = 'https://api.openai.com',
 }) {
   return {
@@ -87,7 +94,7 @@ export function createOpenAIProvider({
         'openai',
         fetch,
         `${trim(baseUrl)}/v1/chat/completions`,
-        { authorization: `Bearer ${apiKey}` },
+        { authorization: `Bearer ${apiKey}`, ...gatewayHeaders(gatewayToken) },
         {
           model,
           messages: [
@@ -113,6 +120,7 @@ export function createGeminiProvider({
   apiKey,
   model,
   fetch = globalThis.fetch,
+  gatewayToken,
   baseUrl = 'https://generativelanguage.googleapis.com',
 }) {
   return {
@@ -124,7 +132,7 @@ export function createGeminiProvider({
         'gemini',
         fetch,
         url,
-        { 'x-goog-api-key': apiKey },
+        { 'x-goog-api-key': apiKey, ...gatewayHeaders(gatewayToken) },
         {
           systemInstruction: { parts: [{ text: system }] },
           contents: [{ role: 'user', parts: [{ text: prompt }] }],
@@ -172,5 +180,6 @@ export function providerFromEnv(name, env = process.env, fetch = globalThis.fetc
     model: env[f.model],
     fetch,
     ...(env[f.base] ? { baseUrl: env[f.base] } : {}),
+    ...(env.AI_GATEWAY_TOKEN ? { gatewayToken: env.AI_GATEWAY_TOKEN } : {}),
   });
 }

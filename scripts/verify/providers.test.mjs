@@ -144,3 +144,33 @@ test('providers are configured from environment variables, and a missing key is 
   );
   assert.throws(() => providerFromEnv('mystery', env), /unknown provider mystery/);
 });
+
+test('with an AI gateway token, every provider sends it as cf-aig-authorization and asks the gateway not to log payloads', async () => {
+  const cases = [
+    [createAnthropicProvider, 'anthropic-tool-use'],
+    [createOpenAIProvider, 'openai-chat'],
+    [createGeminiProvider, 'gemini-generate'],
+  ];
+  for (const [create, name] of cases) {
+    const { fetch, calls } = recorder(fixture(name));
+    const p = create({ apiKey: 'k', model: 'm', fetch, gatewayToken: 'gw-token' });
+    await p.complete(REQUEST);
+    const headers = calls[0].init.headers;
+    assert.equal(headers['cf-aig-authorization'], 'Bearer gw-token', name);
+    assert.equal(headers['cf-aig-collect-log-payload'], 'false', name);
+  }
+});
+
+test('without a gateway token, no gateway headers are sent', async () => {
+  const { fetch, calls } = recorder(fixture('openai-chat'));
+  await createOpenAIProvider({ apiKey: 'k', model: 'm', fetch }).complete(REQUEST);
+  assert.equal(calls[0].init.headers['cf-aig-authorization'], undefined);
+  assert.equal(calls[0].init.headers['cf-aig-collect-log-payload'], undefined);
+});
+
+test('providerFromEnv passes AI_GATEWAY_TOKEN to the provider', async () => {
+  const { fetch, calls } = recorder(fixture('gemini-generate'));
+  const env = { GEMINI_API_KEY: 'k', VERIFY_GEMINI_MODEL: 'm', AI_GATEWAY_TOKEN: 'gw' };
+  await providerFromEnv('gemini', env, fetch).complete(REQUEST);
+  assert.equal(calls[0].init.headers['cf-aig-authorization'], 'Bearer gw');
+});
