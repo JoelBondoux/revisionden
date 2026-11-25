@@ -17,6 +17,7 @@ const SHELL = [
   '/icons/apple-touch-icon.png',
   '/help',
   '/parent/help',
+  '/appearance-boot.js',
 ];
 
 /** Caches the current app page and every built file it links to (scripts, styles). */

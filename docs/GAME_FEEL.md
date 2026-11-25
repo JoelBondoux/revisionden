@@ -58,8 +58,9 @@ No plain underlined text links. Use the shared components in `apps/web/src/compo
 - **LinkButton** (primary, secondary or quiet, optional icon): a link that looks like our buttons,
   for the main way on from a screen.
 - **LinkTile** (icon, title, one-line description, chevron): a tappable card for "go to X" lists
-  such as the parent home, settings and stats. Its screen reader name is the title; the description
-  is read as its description.
+  such as the parent home, settings and stats; wrap a list in `<ul className="link-tiles">`. The
+  link's text is the title (its screen reader name, matching what it shows, WCAG 2.5.3), the
+  description is read as its description, and the link stretches over the whole card.
 - **LinkChip**: a small pill link inside a card ("Details", "Change").
 - **TextLink**: only for links inside sentences and long prose (policies). Bold, coloured, a soft
   bar under it and an underline on hover; it stays inline for readability.
@@ -67,6 +68,18 @@ No plain underlined text links. Use the shared components in `apps/web/src/compo
 All render real links (router `Link` or `<a>`), keep a 3px focus ring and a 44px target, lift on
 hover and squash on press (transform only; off with reduced motion). Outside links that open a new
 tab say so to screen readers.
+
+## Themes, colours and background (J8, owner request 2026-11-25)
+
+- **Dark theme** (Settings → Appearance; System follows the device): deep violet surfaces, the same
+  chunky buttons with white text, violet text in a lighter shade for contrast. Arena screens are
+  already dark and look the same in both themes.
+- **Colour-blind friendly colours**: right is blue (#1F6FD1) and wrong is orange (#B34F00), in
+  answers, the arena, combo, progress, the map and stats. Icons and words always say it too.
+- **Doodle background**: our own original tile of thin line doodles in Pip's angular style (fox,
+  pencil, book, π, √, ÷, x², a graph, a lightbulb, a star, a trophy, a calculator, a test tube,
+  headphones, a planet). Very faint (7% ink), behind solid cards, no animation, off in high
+  contrast and forced colours, and switchable off. Tokens and checks: `apps/web/src/design/themes.ts`.
 
 ## Never (Children's Code and `REWARDS.md`)
 

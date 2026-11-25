@@ -1,6 +1,6 @@
 # Cookies and storage
 
-Version: 1.3
+Version: 1.4
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -48,6 +48,7 @@ policies. We do not set or read those.
 | Sound settings (when added)                   | Remembers mute, volume and tap sounds for this device                                                                                      | Until site data is cleared                           |
 | Local storage `revisionden.readAloud`         | Remembers whether read aloud is on and its speed on this device                                                                            | Until site data is cleared                           |
 | Local storage `revisionden.reading`           | Remembers reading comfort choices (font, text size, spacing, tint) on this device                                                          | Until site data is cleared                           |
+| Local storage `revisionden.appearance`        | Remembers appearance choices (theme, colour-blind friendly colours, background pattern) on this device                                     | Until site data is cleared                           |
 
 ### 4. What we do not use
 
@@ -61,7 +62,8 @@ need to sign in, or unlink and link the student's device again.
 
 ## Changes
 
-- 1.3: Added the device code that tells a student's devices apart when their passkey is synced.
+- 1.4: Added the device code that tells a student's devices apart when their passkey is synced.
+- 1.3: Added the appearance settings (theme, colours and background pattern) kept on the device.
 - 1.2: Added the setting that remembers if the bug button is switched off on this device.
 - 1.1: Added the read aloud and reading comfort settings kept on the device.
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).

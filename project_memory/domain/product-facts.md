@@ -173,7 +173,8 @@ Tags: #product #rules #limits #defaults
 - Roles from AppDeck: Agent (support) and Manager (also money and data), enforced by the API.
 - AppDeck reads (O2): health, overview, family search by exact parent email or family id only
   (POST body, no browsing names), family detail (parents' emails, children as nickname + year
-  group only, flags), tickets (a student's ticket text is never sent), error-report groups,
+  group only, flags), tickets (a student's ticket text is never sent), error-report groups (and
+  an exact lookup of one RD code, `error-reports?code=`),
   content reports, audit log. `apps/api/src/operator/reads.ts`; shapes in
   `packages/core/src/operator-schemas.ts`.
 - AppDeck actions (O3, all Agent): internal family notes (≤2000, never shown to the family, in its
@@ -272,6 +273,8 @@ Tags: #product #rules #limits #defaults
   touch icon (180×180), drawn from Pip's shapes and the arena colours. They are committed in
   `apps/www/public` and remade by hand with `node apps/www/scripts/make-images.mjs` after an art
   change; original art only, no stock photos or AI-generated images.
+  Links use the app's J7 styles (buttons, tiles, chips, bold inline links), never plain underlined
+  text (owner, 2026-11-25).
 - Production passkeys use the RP ID `revisionden.com`; OAuth callbacks are on the API host, so the
   move to `app.` needed no change in Google or Microsoft. Dev and staging passkeys use their own
   hosts (`dev.revisionden.com`, `staging.revisionden.com`), so they work only there.
@@ -453,7 +456,10 @@ Tags: #product #rules #limits #defaults
   needed.
   Operator triage at `/admin/feedback` for sign-in emails in `OPERATOR_EMAILS`. Workstream L.
 - Parents confirm the terms and privacy notice in onboarding (version stored in
-  `policy_acceptances`); a changed version shows a "We've updated" prompt. A newly linked student
+  `policy_acceptances`) on a "Before you start" page that shows each policy's plain-English
+  bullets as cards (word for word, from the policy files; 4 chosen ones first, then "Show all N
+  points") with the full text behind "Show the
+  details"; a changed version shows a "We've updated" prompt. A newly linked student
   device shows the young people's notice once (`revisionden.youngPeopleNotice` in local storage).
 - The young people's notice has a friendly view built from the same file: 6 short-version cards,
   2 to 4 key points per part always visible, "Read more" and "Expand all", original icons and Pip;
@@ -516,6 +522,11 @@ Tags: #product #rules #limits #defaults
   today." shows when today's daily goal is met (`progress.goalMet`). The "daily cap" for "See you
   tomorrow" is the daily reward XP cap (`DAILY_REWARD_XP_CAP`, 300 XP today), confirmed by the lead
   on 2026-11-25 for now: the lesson only knows XP, not study minutes.
+
+- Settled in J7 (owner request, 2026-11-25): no plain underlined text links. Navigation uses the
+  link components in `apps/web/src/components/links.tsx` (LinkButton, LinkTile, LinkChip; TextLink
+  only inside sentences and policy prose: bold, coloured, a soft bar, underline on hover). A guard
+  test, `apps/web/src/components/noTextLinks.test.ts`, keeps it that way.
 
 ## Exam practice (planned)
 
@@ -618,6 +629,17 @@ Tags: #product #rules #limits #defaults
   Normal / Large (112.5%) / Larger (125%), more spacing (line height 1.8, letter 0.12em, word
   0.16em), tint none / cream / blue. Defaults: all off. Applied app-wide by `data-reading-*`
   attributes on `<html>` (`apps/web/src/features/reading/`).
+- Appearance (J8, built): Settings → Appearance, per device in `localStorage` key
+  `revisionden.appearance` (`{theme, palette, pattern}`). Theme `system` (default) / `light` /
+  `dark`; palette `standard` (default) / `colourblind`; pattern `on` (default) / `off`. Applied as
+  `data-theme`, `data-palette`, `data-pattern` on `<html>` by `public/appearance-boot.js` before
+  first paint and by `AppearanceProvider` after (`apps/web/src/features/appearance/`). Colours in
+  `apps/web/src/design/themes.ts` / `themes.css`: dark keeps button colours with white text and
+  uses `--color-primary-edge` (#C4B5FF) for violet text; colour-blind right #1F6FD1 (blue), wrong
+  #B34F00 (orange), checked by simulation (ΔE ≥ 20 for deuteranopia, protanopia, tritanopia) and
+  4.5:1 contrast in all four combinations. Doodle tile `apps/web/src/design/doodles.svg` (original,
+  240px, used as a CSS mask at 7% ink), hidden with `prefers-contrast: more` and forced colours.
+  Text on gold or streak orange uses `--color-text-on-gold`. Get help keeps light colours in dark.
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by
