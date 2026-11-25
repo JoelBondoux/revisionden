@@ -4,6 +4,7 @@
  * are the exception (the back is the answer the student checks themselves against).
  */
 import { z } from 'zod';
+import { DailyLimitTodaySchema } from './daily-limit-schemas';
 import { IdSchema, IsoDateTimeSchema, ModeSchema } from './schemas';
 
 const text = z.string().min(1);
@@ -106,6 +107,11 @@ export const ProgressSchema = z.object({
     best: z.number().int().min(0),
     skipDays: z.number().int().min(0),
   }),
+  /**
+   * Today's daily limit (workstream K7). When `reached`, practice earns no XP, rewards or streak
+   * credit and the set-complete screen says "Great work today. See you tomorrow".
+   */
+  dailyLimit: DailyLimitTodaySchema.optional(),
 });
 export type Progress = z.infer<typeof ProgressSchema>;
 

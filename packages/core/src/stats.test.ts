@@ -213,6 +213,14 @@ describe('active study time', () => {
     expect(days).toEqual([{ day: '2026-11-24', ms: 10 * MIN, overCap: true }]);
   });
 
+  it("uses each day's own limit when given one per day", () => {
+    const times = Array.from({ length: 31 }, (_, i) => start + i * MIN);
+    const limit = (day: string) => (day === '2026-11-24' ? 20 : 5);
+    expect(activeStudy(times, UK, limit).days).toEqual([
+      { day: '2026-11-24', ms: 20 * MIN, overCap: true },
+    ]);
+  });
+
   it('gives time across midnight to the day of the later answer', () => {
     const late = at('2026-11-24T23:58:00Z');
     const { days } = activeStudy([late, late + 3 * MIN], UK, 120);
