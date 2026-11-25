@@ -125,6 +125,19 @@ test('difficulty must be 1 to 5', () => {
   assert.equal(v.item({ ...samples.flashcard, difficulty: 6 }), false);
 });
 
+test('an item may name its learning point and expected time (for similar-question retries)', () => {
+  const item = {
+    ...samples.flashcard,
+    learning_point: 'gcse-maths-h-n7-lp-fractional-indices',
+    expected_seconds: 40,
+  };
+  assert.equal(v.item(item), true);
+  assert.equal(v.item({ ...item, learning_point: 'Not An Id' }), false);
+  assert.equal(v.item({ ...item, expected_seconds: 2 }), false);
+  assert.equal(v.item({ ...item, expected_seconds: 901 }), false);
+  assert.equal(v.item({ ...item, expected_seconds: 12.5 }), false);
+});
+
 test('item ids are lowercase words joined by hyphens', () => {
   assert.equal(v.item({ ...samples.flashcard, id: 'Bad ID' }), false);
 });

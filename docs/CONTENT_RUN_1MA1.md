@@ -66,11 +66,11 @@ NODE_USE_ENV_PROXY=1 GEMINI_API_KEY=dummy VERIFY_GEMINI_MODEL=gemini-2.5-pro \
 ## Step 2: scaling plan (not started; the lead starts it after the owner approves step 1)
 
 **Similar-question retries (owner request, F is building them):** every learning point needs at
-least 3 interchangeable items, and items carry `learning_point` (and, if F adds it,
-`expected_seconds`). Neither field is in `content/schemas/item.schema.json` yet; F
-owns that schema change and it must merge before writers use the fields.
+least 3 interchangeable items. Items carry the optional `learning_point` (an id such as
+`gcse-maths-h-n7-lp-fractional-indices`) and `expected_seconds` (5 to 900, the time a confident
+student takes) in `content/schemas/item.schema.json`; F5 (#110) syncs and uses them.
 
-**Before starting:** decisions 2 and 3 above are settled, F's schema change has merged, and #109 (create batch
+**Before starting:** decisions 2 and 3 above are settled, and #109 (create batch
 from draft items) has merged.
 
 **Six writer sessions, one per area**
@@ -121,8 +121,11 @@ mark scheme in content/mark-schemes/ and three exemplars (top, middle, low).
 
 Similar-question retries: every learning point needs at least 3 interchangeable items (same
 skill, different numbers or context), so a student who gets one wrong can try another. Tag
-every item with its topic and, where the topic is broader than one skill, a learning_point.
-Add expected_seconds to each item if F's schema change has merged; otherwise leave it out.
+every item with its topic and, where the topic is broader than one skill, a learning_point id
+(<topic id>-lp-<short-name>, e.g. gcse-maths-h-n7-lp-fractional-indices). Give each item
+expected_seconds (5 to 900): how long a confident student takes; slower than twice this counts
+as shaky. Without it the app guesses by type (flashcard 15, multiple choice 20, numeric 40,
+short answer 45, worked maths 120).
 Each interchangeable item goes through the pipeline on its own.
 
 Sources: only Pearson's own documents for 1MA1 (specification, sample assessment materials,

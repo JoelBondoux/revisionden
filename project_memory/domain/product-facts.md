@@ -194,6 +194,8 @@ Tags: #product #rules #limits #defaults
   record (`docs/VERIFICATION.md`); verified content needs quotes and every pipeline check, and is
   immutable (edits create a new version). `pnpm content:validate --audit <id>` prints the audit trail.
 - Diagrams are SVG drawn by code from verified data; no AI-generated or raster teaching images.
+- Items may carry `learning_point` (finer skill id; at least 3 items per learning point, for
+  similar-question retries) and `expected_seconds` (5 to 900; slower than twice it is shaky).
 - Pilot: GCSE Maths Higher, Pearson Edexcel 1MA1 (content references N1 to S6). Every pilot
   citation has a verbatim quote from the 1MA1 specification Issue 2 (or, for the quadratic
   formula, the DfE subject content DFE-00233-2013), with page and SHA-256. All pilot content is
