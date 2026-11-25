@@ -23,6 +23,7 @@ import {
   feedback,
   feedbackReplies,
   operatorNotes,
+  complaints,
   flashcardSessions,
   flashcards,
   itemReports,
@@ -41,6 +42,7 @@ import {
   students,
   type Database,
 } from '@revisionden/db';
+import { complaintMessagesFor, toFamilyComplaint } from '../complaints/routes';
 import type { AppEnv } from '../context';
 import type { Clock } from '../rate-limit';
 import { listFamilyEvents, recordFamilyEvent } from '../family-events';
@@ -158,6 +160,15 @@ export function familyExport({ db, clock }: { db: Database; clock: Clock }) {
       .from(operatorNotes)
       .where(eq(operatorNotes.familyId, familyId))
       .orderBy(operatorNotes.createdAt);
+    const familyComplaints = await db
+      .select()
+      .from(complaints)
+      .where(eq(complaints.familyId, familyId))
+      .orderBy(complaints.receivedAt);
+    const complaintThreads = await complaintMessagesFor(
+      db,
+      familyComplaints.map((r) => r.id),
+    );
     const reports = await db
       .select()
       .from(itemReports)
@@ -201,6 +212,9 @@ export function familyExport({ db, clock }: { db: Database; clock: Clock }) {
           .map(({ body, createdAt }) => ({ body, createdAt })),
       })),
       supportNotes,
+      complaints: familyComplaints.map((r) =>
+        toFamilyComplaint(r, complaintThreads.get(r.id) ?? []),
+      ),
       questionReports: reports.map((row) => without(row, ['familyId'])),
       activityLog: log.events.map(({ by, what, createdAt }) => ({ by, what, at: createdAt })),
     };

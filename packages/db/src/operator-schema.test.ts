@@ -163,3 +163,38 @@ describe('data_requests table (O3b)', () => {
     expect(fks.rows).toEqual([]);
   });
 });
+
+describe('complaints and complaint_messages tables (O4)', () => {
+  it('keeps a complaint with its channel, status and deadlines, and its messages', async () => {
+    const { rows: fam } = await client.query<{ id: string }>(
+      `insert into families default values returning id`,
+    );
+    const { rows } = await client.query<{ id: string }>(
+      `insert into complaints (family_id, channel, summary, about_personal_data, received_at, acknowledge_due_at, resolve_due_at)
+       values ($1, 'app', 'The timer is unfair', false, now(), now(), now()) returning id`,
+      [fam[0]!.id],
+    );
+    await client.query(
+      `insert into complaint_messages (complaint_id, sender, body) values ($1, 'family', 'More detail')`,
+      [rows[0]!.id],
+    );
+    await expect(
+      client.query(
+        `insert into complaints (channel, summary, about_personal_data, received_at, acknowledge_due_at, resolve_due_at)
+         values ('post', 'x', false, now(), now(), now())`,
+      ),
+    ).rejects.toThrow(/complaints_channel_values/);
+    await expect(
+      client.query(
+        `insert into complaints (channel, summary, about_personal_data, received_at, acknowledge_due_at, resolve_due_at, status)
+         values ('email', 'x', false, now(), now(), now(), 'lost')`,
+      ),
+    ).rejects.toThrow(/complaints_status_values/);
+    // Deleting the family deletes its complaints and their messages, like everything else.
+    await client.query(`delete from families where id = $1`, [fam[0]!.id]);
+    const left = await client.query(`select 1 from complaint_messages where complaint_id = $1`, [
+      rows[0]!.id,
+    ]);
+    expect(left.rows).toEqual([]);
+  });
+});

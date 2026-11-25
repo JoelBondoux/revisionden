@@ -1,6 +1,6 @@
 # How long we keep data
 
-Version: 1.5
+Version: 1.6
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -64,6 +64,7 @@ the family account for 12 months (section 3).
 | Replies from our support team to your feedback                                                      | As long as the feedback (12 months after it is closed)                                                              | Deleted with the feedback                                                                                                         |
 | Notes our support team keeps about your account                                                     | While the family account exists                                                                                     | With the family account; included in "Download your family's data"                                                                |
 | Record of a request you emailed us to export or delete your data (what, when, when handled)         | 2 years after we received it, so we can show we handled it on time                                                  | Deleted automatically by a scheduled clean-up                                                                                     |
+| Complaints and their messages | 12 months after the complaint is resolved | Deleted automatically by a scheduled clean-up, or with the family account |
 | Uploaded photos (homework, school reports), when available                                          | Deleted as soon as the user confirms what was read, and always within 24 hours                                      | Storage rule deletes after 24 hours (feature not built yet)                                                                       |
 | Information stored on your device                                                                   | See [cookies and storage](cookies-and-storage.md)                                                                   | Clearing the browser's site data removes it                                                                                       |
 | Records held by our service providers                                                               | See [services we use](processors.md)                                                                                | Under each provider's terms                                                                                                       |
@@ -95,6 +96,7 @@ to keep it, and tell you if anything cannot be deleted and why.
 
 ## Changes
 
+- 1.6: Added complaints, kept 12 months after they are resolved.
 - 1.5: Added the record of emailed export and deletion requests, kept 2 years.
 - 1.4: Added support replies to feedback and support notes about an account.
 - 1.3: Added the record of support staff access to a family's account, kept 2 years.

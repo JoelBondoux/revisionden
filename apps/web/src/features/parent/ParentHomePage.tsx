@@ -50,6 +50,9 @@ export function ParentHomePage() {
               <Link to="/feedback/family">Family feedback</Link>
             </li>
             <li>
+              <Link to="/complaints">Make a complaint</Link>
+            </li>
+            <li>
               <Link to="/onboarding">Download your family&apos;s data</Link>
             </li>
           </ul>

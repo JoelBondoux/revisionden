@@ -170,8 +170,15 @@ Tags: #product #rules #limits #defaults
   `deleteFamilies` only for a one-parent family (two parents: 409 `needs_both_parents`, both
   confirm in the app). Records kept 2 years. Trial and free-place routes answer 503
   `payments_not_ready` until workstream $.
+- Complaints (O4): a parent makes one at `/complaints` ("Make a complaint" on the parent home;
+  3 a day per family; summary 3–500 characters with no email, phone or child nickname) or support
+  logs an emailed one. Acknowledge by the end of the 2nd UK working day (weekends and England and
+  Wales bank holidays skipped, list from gov.uk through 2028), aim to resolve within 14 days
+  (`packages/core/src/complaints.ts`). Agents acknowledge, reply and resolve; Managers escalate.
+  The family sees replies and the outcome (and, for personal data, the ICO link), never staff
+  names. Kept 12 months after resolved; deleted with the family; in the export.
 - Every operator read of a family and every action goes in `operator_audit_log`, kept 2 years
-  (data retention policy 1.5); the scheduled clean-up deletes older entries.
+  (data retention policy 1.6); the scheduled clean-up deletes older entries.
 
 ## Content
 

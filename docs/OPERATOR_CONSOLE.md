@@ -131,7 +131,23 @@ Data request records keep a plain family id (they outlive a deleted family) and 
 years after the request arrived. An export request is handled by telling the parent to use
 "Download your family's data"; AppDeck never receives the export.
 
-Still to come: complaints (O4), discount codes (O5), family tags (O6).
+#### Complaints (O4)
+
+| Route | Role | Body | What it does | Audit action |
+| --- | --- | --- | --- | --- |
+| `GET complaints` | Agent | | `{ complaints: [{ id, familyId, status: "new"\|"acknowledged"\|"resolved"\|"escalated", channel: "app"\|"email", summary, aboutPersonalData, receivedAt, acknowledgeDueAt, resolveDueAt, acknowledgedAt, resolvedAt, outcome, messages: [{ id, from, body, createdAt }] }] }`, newest 500 | `complaints.list` |
+| `POST complaints` | Agent | `{ familyId \| null, summary (3–500), aboutPersonalData, receivedOn: "YYYY-MM-DD" }` | Logs an emailed complaint (channel `email`). Answers `{ complaint: { id } }` | `complaint.log` |
+| `POST complaints/{id}/acknowledge` | Agent | `{}` | 409 `already_acknowledged` | `complaint.acknowledge` |
+| `POST complaints/{id}/reply` | Agent | `{ text }` (1–5000) | Shown to the parent in "Make a complaint", without the operator's email | `complaint.reply` |
+| `POST complaints/{id}/resolve` | Agent | `{ outcome }` (3–2000) | Shown to the parent; resolved complaints are deleted 12 months later | `complaint.resolve` |
+| `POST complaints/{id}/escalate` | Manager | `{}` | A Manager reviews it | `complaint.escalate` |
+
+Any action on a resolved complaint is 409 `complaint_closed`. Deadlines come from
+`complaintDueDates` in `packages/core/src/complaints.ts`: acknowledge by the end of the 2nd working
+day (UK days; weekends and England and Wales bank holidays from gov.uk skipped), resolve within 14
+days. Recording a refund or goodwill payment waits for payments (workstream $).
+
+Still to come: discount codes (O5), family tags (O6).
 
 ## What the operator can see and do
 
@@ -141,7 +157,7 @@ Still to come: complaints (O4), discount codes (O5), family tags (O6).
 | **Family tags**              | Tag list with counts; families with a tag                                                                                                                                                               | Manager: create, rename, retire tags and set effects. Agent: add or remove tags on a family                    |
 | **Families**                 | Search by exact parent sign-in email or family id only (no browsing names). Family: created, parents (sign-in emails), plan and trial, children as nickname + year group + subjects, last active, flags | Agent: add an internal note. Manager: extend trial, grant or end a free place, comp Premium                    |
 | **Tickets**                  | Bug reports, ideas, confusing, other; error reports grouped by RD code; status, device details, history                                                                                                 | Agent: reply (shown in the family's app), change status, confirm bug / mark duplicate (Bug Hunter)             |
-| **Complaints**               | Formal complaints (new feedback kind "complaint"), with dates due                                                                                                                                       | Agent: acknowledge, reply, resolve with outcome. Manager: escalate, record a refund or goodwill                |
+| **Complaints**               | Formal complaints (their own `complaints` table, not a feedback kind: they have their own statuses, deadlines and retention), with dates due                                                                                                                                       | Agent: acknowledge, reply, resolve with outcome. Manager: escalate, record a refund or goodwill                |
 | **Discount codes**           | Codes, percentage or fixed, duration, expiry, maximum uses, redemptions                                                                                                                                 | Manager: create, disable. Codes are applied at checkout (workstream $)                                         |
 | **Free school meals places** | Claims (scheme and date), renewals due, spot checks                                                                                                                                                     | Manager: start a spot check, record "checked on date", end a place                                             |
 | **Data requests**            | Export and deletion requests, statutory deadline (one calendar month), status                                                                                                                           | Manager: mark handled; deletion runs the existing deletion code (both parents' confirmation rules still apply) |

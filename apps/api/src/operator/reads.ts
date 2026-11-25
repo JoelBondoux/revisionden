@@ -5,7 +5,19 @@
  * homework, prompts, tokens or push keys. Every read of a family is audited.
  */
 import { Hono } from 'hono';
-import { and, count, countDistinct, desc, eq, gte, inArray, lt, sql, type SQL } from 'drizzle-orm';
+import {
+  and,
+  count,
+  countDistinct,
+  desc,
+  eq,
+  gte,
+  inArray,
+  lt,
+  ne,
+  sql,
+  type SQL,
+} from 'drizzle-orm';
 import { z } from 'zod';
 import {
   ERROR_REPORT_RETENTION_DAYS,
@@ -17,6 +29,7 @@ import {
 import {
   attempts,
   authUsers,
+  complaints,
   errorReports,
   families,
   feedback,
@@ -118,19 +131,28 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
         .select({ n: countDistinct(attempts.studentId) })
         .from(attempts)
         .where(gte(attempts.createdAt, new Date(at - days * DAY_MS)));
-    const [[fam], [kids], [active7], [active30], [tickets], [reports], errors24h] =
-      await Promise.all([
-        db.select({ n: count() }).from(families),
-        db.select({ n: count() }).from(students),
-        activeSince(7),
-        activeSince(30),
-        db
-          .select({ n: count() })
-          .from(feedback)
-          .where(inArray(feedback.status, [...OPEN_TICKET_STATUSES])),
-        db.select({ n: count() }).from(itemReports).where(eq(itemReports.status, 'open')),
-        countErrorReportsSince(DAY_MS),
-      ]);
+    const [
+      [fam],
+      [kids],
+      [active7],
+      [active30],
+      [tickets],
+      [reports],
+      errors24h,
+      [complaintCount],
+    ] = await Promise.all([
+      db.select({ n: count() }).from(families),
+      db.select({ n: count() }).from(students),
+      activeSince(7),
+      activeSince(30),
+      db
+        .select({ n: count() })
+        .from(feedback)
+        .where(inArray(feedback.status, [...OPEN_TICKET_STATUSES])),
+      db.select({ n: count() }).from(itemReports).where(eq(itemReports.status, 'open')),
+      countErrorReportsSince(DAY_MS),
+      db.select({ n: count() }).from(complaints).where(ne(complaints.status, 'resolved')),
+    ]);
     const overview: OperatorOverview = {
       families: fam!.n,
       students: kids!.n,
@@ -142,7 +164,7 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
       premiumFamilies: null,
       trials: null,
       freePlaces: null,
-      openComplaints: null,
+      openComplaints: complaintCount!.n,
     };
     return ok(c, overview);
   });

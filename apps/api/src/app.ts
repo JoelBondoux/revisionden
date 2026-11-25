@@ -49,6 +49,7 @@ import {
 import { parentStatsRoutes, studentStatsRoutes } from './stats/routes';
 import { adminErrorReportRoutes, errorReportRoutes } from './feedback/error-reports';
 import type { StatsAdapters } from './stats/adapters';
+import { parentComplaintRoutes } from './complaints/routes';
 import { OPERATOR_BASE_PATH, operatorRoutes } from './operator/routes';
 import { createMemoryRateLimiter } from './rate-limit';
 
@@ -144,6 +145,8 @@ export function createApp(deps: AppDeps) {
   parent.use('/parent/*', requireParent);
   parent.use('/family/*', requireParent);
   parent.use('/export', requireParent);
+  parent.use('/complaints', requireParent);
+  parent.use('/complaints/*', requireParent);
   async function requireParent(c: Context<AppEnv>, next: Next) {
     const session = await deps.auth.api.getSession({ headers: c.req.raw.headers });
     if (!session) throw unauthorized();
@@ -191,6 +194,7 @@ export function createApp(deps: AppDeps) {
   parent.route('/family', familyRoutes(deps));
   parent.route('/family', familyParentRoutes(deps));
   parent.route('/', familyExport(deps));
+  parent.route('/', parentComplaintRoutes(deps));
   parent.route('/admin', adminFeedbackRoutes(deps));
   parent.route('/admin', adminErrorReportRoutes(deps));
   parent.route('/parent', parentNotificationRoutes(deps));
