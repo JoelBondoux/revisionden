@@ -77,6 +77,21 @@ describe('parent sets a board or tier later', () => {
     expect(await familyChecks(parent)).toBe(1);
   });
 
+  it('keeps both choices when the board and tier are sent at the same time', async () => {
+    const { parent, id } = await setup();
+    const path = `/v1/students/${id}/enrolments/gcse-maths`;
+    const [a, b] = await Promise.all([
+      patch(path, { board: 'Edexcel' }, parent),
+      patch(path, { tier: 'higher' }, parent),
+    ]);
+    expect([a.status, b.status]).toEqual([200, 200]);
+    const [row] = await t.db
+      .select()
+      .from(enrolments)
+      .where(and(eq(enrolments.studentId, id), eq(enrolments.subjectId, 'gcse-maths')));
+    expect({ board: row!.board, tier: row!.tier }).toEqual({ board: 'Edexcel', tier: 'higher' });
+  });
+
   it('can change a board that was already set', async () => {
     const { parent, id } = await setup();
     const res = await patch(
