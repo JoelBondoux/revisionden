@@ -38,11 +38,12 @@ export const AvatarCodeSchema = z.string().refine(
   { message: 'Avatar code is not valid' },
 );
 
-const yearGroupMessage = 'Year group must be from 7 to 13';
+// Years 9 to 13 (GCSE and A-Level, 13+); the database check matches.
+const yearGroupMessage = 'Year group must be from 9 to 13';
 export const YearGroupSchema = z
   .number()
   .int(yearGroupMessage)
-  .min(7, yearGroupMessage)
+  .min(9, yearGroupMessage)
   .max(13, yearGroupMessage);
 
 // Students

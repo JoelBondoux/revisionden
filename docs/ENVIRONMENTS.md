@@ -216,7 +216,9 @@ added"; a production build (`VITE_ENVIRONMENT=production`) fails without `VITE_O
 (`apps/web/src/features/legal/productionGuard.ts`).
 
 **Cron trigger:** every 15 minutes (`[triggers] crons` in `wrangler.toml`) the Worker deletes
-feedback closed more than 12 months ago, then sends due reminders. Reminders do nothing until
+data past its retention period (`apps/api/src/cleanup.ts`: expired link codes, sessions,
+passkey challenges and sign-in checks; feedback closed more than 12 months ago; families unused
+for 12 months), then sends due reminders. Reminders do nothing until
 both VAPID keys are set.
 
 **VAPID keys:** generate once per environment, for example with
