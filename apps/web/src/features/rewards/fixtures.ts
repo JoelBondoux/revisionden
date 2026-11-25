@@ -3,6 +3,7 @@ import {
   StudentRewardsResponseSchema,
   type ParentReward,
   type StudentRewardsResponse,
+  type StudentTitleResponse,
 } from '@revisionden/core';
 
 /** A realistic rewards view built with the real core rules (Year 10, mid-November 2026). */
@@ -44,4 +45,22 @@ export const cinemaTrip: ParentReward = {
   current: 5,
   goal: 100,
   givenAt: null,
+};
+
+/** A two-part title view (R8) for tests and the mock API. */
+export const sampleTitle: StudentTitleResponse = {
+  nickname: 'quiet_fox',
+  first: 'Cosmic',
+  last: 'Scholar',
+  title: 'Cosmic Scholar',
+  words: {
+    first: [
+      { text: 'Fresh', part: 'first', rewardId: 'level-4', rarity: 'common' },
+      { text: 'Cosmic', part: 'first', rewardId: 'correct-25000', rarity: 'legendary' },
+    ],
+    last: [
+      { text: 'Starter', part: 'last', rewardId: 'level-4', rarity: 'common' },
+      { text: 'Scholar', part: 'last', rewardId: 'correct-10000', rarity: 'epic' },
+    ],
+  },
 };

@@ -63,6 +63,12 @@ Tags: #product #rules #limits #defaults
   training rights (not confirmed); no AI clause found for OCR or WJEC Eduqas. Figures, quotes and
   the recommended build order: `docs/research/board-shares-2026-11.md` (research, 2026-11-25; not
   yet a decision).
+- Specialist tools research (2026-11-25, not yet a decision): quick wins are self-hosted and free
+  for paid use (KaTeX, MathLive, pint, ChemPy, RDKit, SmilesDrawer, textstat, on-device Web Speech,
+  the DfE French required-words list under OGL, and public-domain set texts: all 6 AQA Shakespeare
+  plays, all 7 19th-century novels and Animal Farm). Embedded third-party widgets (GeoGebra, Desmos,
+  PhET) break the no-third-parties rule unless self-hosted and need commercial licences for a paid
+  tier; Mathpix's terms are adults-only. Detail: `docs/research/specialist-tools-2026-11.md`.
 - Onboarding takes Years 9 to 13 (9–11 GCSE, 12–13 A-Level). Exams are worked out from the year:
   Year 11 and 13 sit them next summer (2027 in school year 2026/27), Year 10 and 12 a year later,
   Year 9 two years later.
@@ -261,7 +267,12 @@ Tags: #product #rules #limits #defaults
 - Quick feedback: Claude Haiku 5.5. Long answers and homework: Claude Opus 5.5. Maths: no AI.
 - Question banks are written in subscription working sessions; live AI is capped per child.
 - AI spend cap: US$2.50 per child per calendar month (UTC) by default (`AI_MONTHLY_CAP_USD`),
-  checked before every call; every billed attempt counts. Up to 3 attempts per call.
+  checked before every call; every billed attempt counts. Up to 3 attempts per call. Families
+  never see money for AI (K9, owner 2026-11-25): the parent dashboard shows an "AI marking
+  allowance" as a percentage used and "Resets on 1 <next month>" (used up at 100%). No money in
+  any family-facing API response or the family export (`allowanceUsedPercent` instead); the
+  used-up message is "You've used this month's AI marking allowance. It resets on 1 <month>.".
+  Policies: ai-and-marking 1.1, acceptable-use 1.2. The cost figures stay operator-only.
 - Short answers: rules first (accepted answers and official mark-point wording, not when the
   answer contains a negation), then Claude Haiku 5.5 only for the remaining mark points, citing
   each point and quoting the student's words. Unsure → "Check with your teacher", never a guess.
@@ -622,10 +633,18 @@ Tags: #product #rules #limits #defaults
   Comeback Kid and part of Explorer have data today; the others count 0 until their records exist
   (`docs/REWARDS.md`, `packages/core/src/track-stats.ts`).
 
-## Titles (owner, 2026-11-25; planned) and Get help (built, workstream W)
+## Titles (owner, 2026-11-25; built R8) and Get help (built, workstream W)
 
-- Two-part titles: a first word and a last word unlocked separately from rewards (about 120 each);
-  curated, every pairing validated against blocked words; shown under the nickname.
+- Two-part titles (built R8): 120 first words and 120 last words, each unlocked by one reward
+  (levels, chapters, milestones, collections, seasons, hidden tracks, secrets); a word has its
+  reward's rarity. The 99 old single titles were migrated into words (their rewards now give a
+  first and a last word, named "Title words: …"). Data: `packages/core/src/catalogue/title-words.ts`;
+  rules: `packages/core/src/titles.ts`. `validateTitleWords` checks format (one word, letters and
+  hyphens, up to 16), uniqueness, and every possible pairing against the nickname blocked words;
+  `REVIEWED_BLOCKED_PAIRS` is the manual review list the picker refuses. The student picks one of
+  each (or none) on the Rewards page; saved as `students.title_first` / `title_last` (migration
+  0019); `GET`/`PUT /v1/student/rewards/title`; free to change any time; included in the family data export. Shown under the nickname
+  on the Rewards page; the friends league is not built yet, so it shows there once it is.
 - "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
   NSPCC adult helpline, parent-only). Reached from Settings, the heart link in the student footer,
   the signed-out header and parent home. There is no separate profile menu yet.

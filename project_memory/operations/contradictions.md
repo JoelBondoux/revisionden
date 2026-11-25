@@ -36,6 +36,12 @@
       "On Pace" (timed papers on pace, workstream X) and "Card Shark" (flashcards in a week; deck
       reviews have no timestamped record) are in the catalogue but their stats count as 0 until the
       data exists (`packages/core/src/catalogue/hidden.ts`).
+
+- [ ] **Daily limit changes in the activity log.** `docs/PRODUCT_RULES.md` ("Two parents") says the
+      other parent is told when a limit changes, but the daily limit (same page, "Daily limit") has
+      no API route yet. B3 logs `PUT /v1/students/:id/daily-limit` as an important change
+      (`apps/api/src/family-events.ts`, `LOGGED_CHANGES`); the limits workstream must use that
+      route (or update the table) when it builds it.
 - [ ] **AQA's AI clause and our content pipeline.** AQA's copyright policy says it "does not
       permit the use of any AQA material in any manner or for any purposes in connection with the
       training" of AI tools and "will not allow the use of any AQA material" in a third-party work

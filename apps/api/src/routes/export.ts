@@ -42,6 +42,7 @@ import {
   students,
   type Database,
 } from '@revisionden/db';
+import { allowanceSharePercent } from '@revisionden/core';
 import type { AppEnv } from '../context';
 import type { Clock } from '../rate-limit';
 import { listFamilyEvents, recordFamilyEvent } from '../family-events';
@@ -75,7 +76,20 @@ function without(row: Record<string, unknown>, omit: string[]) {
   return Object.fromEntries(Object.entries(row).filter(([key]) => !omit.includes(key)));
 }
 
-async function studentRecords(db: Database, studentIds: string[]) {
+/**
+ * Rows shown differently in the download. AI use is a share of the monthly allowance, never
+ * money (workstream K9): the cost column is replaced by `allowanceUsedPercent`.
+ */
+function shown(name: string, row: Record<string, unknown>, capMicroUsd: number) {
+  if (name !== 'aiUsage') return row;
+  const { costMicroUsd, ...rest } = row;
+  return {
+    ...rest,
+    allowanceUsedPercent: allowanceSharePercent(Number(costMicroUsd), capMicroUsd),
+  };
+}
+
+async function studentRecords(db: Database, studentIds: string[], capMicroUsd: number) {
   const byStudent = new Map<string, Record<string, unknown[]>>(studentIds.map((id) => [id, {}]));
   for (const [name, table, omit] of STUDENT_RECORDS) {
     const rows = (await db
@@ -84,13 +98,22 @@ async function studentRecords(db: Database, studentIds: string[]) {
       .where(inArray(table.studentId, studentIds))) as Record<string, unknown>[];
     for (const id of studentIds) byStudent.get(id)![name] = [];
     for (const row of rows) {
-      byStudent.get(row.studentId as string)![name]!.push(without(row, [...omit, 'studentId']));
+      const records = byStudent.get(row.studentId as string)!;
+      records[name]!.push(shown(name, without(row, [...omit, 'studentId']), capMicroUsd));
     }
   }
   return byStudent;
 }
 
-export function familyExport({ db, clock }: { db: Database; clock: Clock }) {
+export function familyExport({
+  db,
+  clock,
+  config,
+}: {
+  db: Database;
+  clock: Clock;
+  config: { ai: { monthlyCapMicroUsd: number } };
+}) {
   const app = new Hono<AppEnv>();
 
   app.get('/export', async (c) => {
@@ -126,7 +149,8 @@ export function familyExport({ db, clock }: { db: Database; clock: Clock }) {
       .where(eq(students.familyId, familyId))
       .orderBy(students.createdAt);
     const ids = kids.map((k) => k.id);
-    const records = ids.length > 0 ? await studentRecords(db, ids) : new Map();
+    const records =
+      ids.length > 0 ? await studentRecords(db, ids, config.ai.monthlyCapMicroUsd) : new Map();
 
     // Feedback sent by this parent or by one of their children.
     const sentBy: SQL[] = [eq(feedback.senderAuthUserId, authUserId)];
@@ -191,6 +215,8 @@ export function familyExport({ db, clock }: { db: Database; clock: Clock }) {
           nickname: kid.nickname,
           avatarCode: kid.avatarCode,
           yearGroup: kid.yearGroup,
+          titleFirst: kid.titleFirst,
+          titleLast: kid.titleLast,
           createdAt: kid.createdAt,
           updatedAt: kid.updatedAt,
         },

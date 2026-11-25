@@ -50,12 +50,12 @@ const wired: StatsAdapters = {
 };
 
 const student = { id: '00000000-0000-4000-8000-000000000009', nickname: 'demo_kid' };
-const aiSpend = { month: '2026-11', spentMicroUsd: 0, capMicroUsd: 2_500_000 };
+const aiAllowance = { percentUsed: 0, usedUp: false, resetsOn: '2026-12-01' };
 
 describe('dashboard building', () => {
   it('passes through panels from features that are set up', async () => {
     const dashboard = ParentDashboardSchema.parse(
-      await buildDashboard(student, data, now, aiSpend, wired),
+      await buildDashboard(student, data, now, aiAllowance, wired),
     );
     expect(dashboard.rewards.map((r) => r.title)).toEqual(['Cinema trip']);
     expect(dashboard.tiles.planKept).toEqual({ done: 3, planned: 4 });
@@ -76,7 +76,7 @@ describe('dashboard building', () => {
   });
 
   it('falls back to the subject id for unknown subjects and names test activity', async () => {
-    const dashboard = await buildDashboard(student, data, now, aiSpend, NOT_SET_UP);
+    const dashboard = await buildDashboard(student, data, now, aiAllowance, NOT_SET_UP);
     expect(dashboard.subjects[0]!.name).toBe('not-a-known-subject');
     expect(dashboard.weakSpots[0]!.title).toBe('demo-topic');
     expect(dashboard.recentActivity.map((a) => a.kind)).toEqual(['test', 'starting_test']);
