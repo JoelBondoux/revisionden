@@ -1,5 +1,5 @@
 /* RevisionDen public site. Colours, type, spacing and radii come from the web app's tokens
-   (apps/web/src/design/tokens.css, prepended at build). Dark mode reuses the arena tokens. */
+   (apps/web/src/design/tokens.css, prepended at build). Dark mode uses the app's dark theme values. */
 :root {
   --site-bg: var(--color-background);
   --site-surface: var(--color-surface);
@@ -15,18 +15,20 @@
   color-scheme: light dark;
 }
 
+/* Dark: the app's dark theme values (J8, owner 2026-11-25), following the device setting only.
+   Buttons keep the brand purple with white text. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --site-bg: var(--arena-bg);
-    --site-surface: var(--arena-raised);
-    --site-text: var(--arena-text);
-    --site-muted: var(--arena-text-secondary);
-    --site-border: #3d2d6b;
-    --site-accent: var(--arena-option-1);
-    --site-accent-soft: #2f2160;
-    --site-link: var(--arena-glow);
-    --site-link-bar: var(--arena-option-1);
-    --focus-ring: 0 0 0 3px var(--arena-bg), 0 0 0 6px var(--arena-glow);
+    --site-bg: #14112a;
+    --site-surface: #1f1b33;
+    --site-text: #eceaf5;
+    --site-muted: #b5b1c8;
+    --site-border: #3a3552;
+    --site-accent: var(--color-primary);
+    --site-accent-soft: #2d2652;
+    --site-link: #c4b5ff;
+    --site-link-bar: #4b3f86;
+    --focus-ring: 0 0 0 3px #14112a, 0 0 0 6px #c4b5ff;
   }
 }
 
