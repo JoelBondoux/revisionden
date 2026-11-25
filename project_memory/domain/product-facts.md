@@ -77,7 +77,8 @@ Tags: #product #rules #limits #defaults
   two (crown and Alien skin). `packages/core/src/rewards.ts`, `avatar.ts`.
 - 14 rewards, each unlocking one avatar item: `packages/core/src/rewards.ts`.
 - Only `verified` items reach students. Drafts are served only with `SERVE_DRAFT_CONTENT=true` in
-  development (never staging or production), with a "DRAFT CONTENT" banner; quarantined and
+  development (never staging or production), with a "DRAFT CONTENT" banner; the dev Worker has it on
+  so the family can try the pilot on dev.revisionden.com; quarantined and
   retired items never. Implemented in `packages/core/src/learning.ts` and `apps/api`.
 - Starting test per subject: about 5 minutes (300 s, up to 10 questions, one per topic first),
   Test mode; its answers set first mastery. Lessons are Learn mode at feedback level 1.

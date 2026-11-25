@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- On the test site (dev.revisionden.com) you can now try the first practice questions while they are still being checked; they are marked "DRAFT CONTENT".
 - When something goes wrong, tap "Send error report" to tell us in one tap. It's anonymous: no names, nothing you typed. We'll get on it.
 - Coming soon: a daily 5-a-day, quick recall checks, links to free lessons for each topic, read aloud, and a dyslexia-friendly reading mode.
 - Coming soon: build your own title from words you unlock, like "Cosmic Scholar".
@@ -60,6 +61,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Dev serves the pilot draft questions (`SERVE_DRAFT_CONTENT="true"` in `[env.dev.vars]`), with a config test that staging and production never set it (G).
 - Error reports (I): "Send error report" on every error with an `RD-` code posts an anonymous report to `POST /v1/error-reports` (strict `ErrorReportSchema`: code, screen and API path with ids masked, status, build, browser family, online, time); `error_reports` table (migration 0009, one row per code, 90-day clean-up); operator list at `/admin/feedback` (filter "Error reports"), `GET /v1/admin/error-reports?since=…` grouped by screen, API path and status, and `scripts/error-reports.mjs` (reads `DATABASE_URL`). Id-free path checks now also refuse full ids. Privacy notice 1.2 and data retention 1.1.
 - Combo XP J4 (J): `COMBO_BONUS_XP`, `comboBonusXp`, `comboBefore`, `comboBonusForSequence` in `packages/core/src/xp.ts`. `POST /v1/student/learn/attempts` adds +5 XP from the 3rd right Learn mode answer in a row (worked out from the student's recent answers; a wrong answer, a Test mode answer or a 5-minute gap ends it) and returns `combo` and `comboBonusXp`. `POST .../starting-tests/:id/finish` applies the bonus to the test's answers in order on the first finish and returns `bestCombo` and `comboBonusXp`. The bonus is stored in each answer's `xp_earned`, so R's reward XP and daily cap count it. New optional fields in `LearnAttemptResponseSchema` and `StartingTestResultSchema`.
 - Research: competitor analysis of UK revision products (features, past-paper licensing, prices) and a ranked gap list (`docs/research/competitors-2026-11.md`).
