@@ -8,6 +8,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 ### What's new
 
 - New 5-a-day: a quick mix of 5 questions from topics you've already practised, at the top of your topic map until you've done it. It takes about 5–8 minutes and counts towards your daily goal and streak like any lesson.
+- Six more hidden reward tracks to discover, like Comeback Kid (turn a weak topic into a strong one) and Explorer (try every kind of practice). Each stays secret until you earn its first step.
 - Two parents: invite a second parent from Parent home with a code or link. You both get the same control, a family activity log shows who changed what (as Parent 1 or Parent 2), and you're told about important changes. Deleting the family account needs both of you.
 - Learn it first: a button at the start of a topic lesson opens free lessons from Oak National Academy for that topic in a new tab. It shows up on each GCSE Maths topic once its link has been checked.
 - Spotted a bug? Tap the little bug button in the corner to tell us. If we confirm it, you earn +50 XP. You can hide the button in Settings.
@@ -75,6 +76,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 ### Added
 
 - Daily 5-a-day Q3 (Q): `packages/core/src/daily.ts` (`selectDailySet`: practised topics only, mastery drifts down with the 30-day half-life since last practice, then `selectNextItems`, topped up from the same topics; `dailySeed`, `dailySetProgress`, `DailySetResponseSchema`), `GET /v1/student/daily` (`apps/api/src/routes/daily.ts`; no extended answers), table `daily_sets` (migration 0014, cascade delete, in the family export), web `features/daily/` (map card above the next mission, `/learn/daily` in the lesson player, MSW mock).
+- Rewards R7b: six more hidden tracks (Fact Checker, Comeback Kid, Explorer, Planner, Pace Setter, Perfectionist) with `track-stats.ts` (`weakSpotsTurnedStrong`, `practiceKindsTried`), new stats, quill and explorer hat avatar items, and embers, pace stripes and prism effect art. Fact Checker, Planner, Pace Setter and Perfectionist count 0 until their data exists.
 - Rewards R7: Bug Hunter hidden track (`confirmedBugs` from L's `confirmedBugCount`; L's bug reward XP added to reward XP for levels), 24 secret achievements with masked `???` overview cards, `secret-stats.ts`, `effect` reward item kind, magnifier avatar item and glitch effect art.
 
 - Two parents (B3): `parent_invites`, `family_events`, `parent_removal_notices`, `parents.position`/`events_seen_at`, `families.deletion_requested_*` (migration 0012; privacy notice 1.5, young people 1.4, data retention 1.2); `/v1/family/{invites,join,parents,deletion,events}` and `/v1/removal-notice`; parent guard refuses removed parents; change log middleware over parent routes; important changes pushed to the other parent by the cron and shown in `GET /v1/parent/notifications/latest`; Parents panel, Family activity and removal notice on Parent home, `/join` page; export includes the activity log; cron deletes expired invites and log rows older than 12 months.

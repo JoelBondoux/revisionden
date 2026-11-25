@@ -639,11 +639,18 @@ const HEADWEAR: Record<string, Draw> = {
       <circle cx={60} cy={11} r={6} fill={WHITE} />
     </>
   ),
+  // Explorer track, step 4 (original art): a sand-coloured wide-brim explorer hat.
+  'explorer-hat': () => (
+    <>
+      <ellipse cx={60} cy={36} rx={34} ry={6} fill="#C8A36A" />
+      <path d="M42 36 Q42 16 60 16 Q78 16 78 36 Z" fill="#D9B77E" />
+      <path d="M42 31 H78 V36 H42 Z" fill="#6B4226" />
+    </>
+  ),
 };
 
 const HELD: Record<string, Draw> = {
   none: nothing,
-  // Seasonal drop: Frost Fest 2026 (original art).
   // Bug Hunter track, step 3 (original art): a brass magnifying glass.
   magnifier: () => (
     <>
@@ -661,6 +668,20 @@ const HELD: Record<string, Draw> = {
       <path d="M88 83 Q91 80 95 80" fill="none" stroke={WHITE} strokeWidth={2} opacity={0.9} />
     </>
   ),
+  // Fact Checker track, step 3 (original art): a feather quill with an ink tip.
+  quill: () => (
+    <>
+      <path
+        d="M90 116 L104 74 Q110 62 112 70 Q108 92 94 116 Z"
+        fill={WHITE}
+        stroke="#9AA5B1"
+        strokeWidth={1.5}
+      />
+      <path d="M95 112 L106 78" stroke="#9AA5B1" strokeWidth={1} />
+      <path d="M90 116 L93 108 L96 110 Z" fill="#1F2937" />
+    </>
+  ),
+  // Seasonal drop: Frost Fest 2026 (original art).
   lantern: () => (
     <>
       <path d="M98 78 V86" stroke={INK} strokeWidth={1.5} />

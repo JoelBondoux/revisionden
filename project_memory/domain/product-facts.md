@@ -497,8 +497,11 @@ Tags: #product #rules #limits #defaults
   `daily_limits` table. Detail: `docs/PRODUCT_RULES.md` (Daily limit).
 - Two parent accounts with equal control; second invited by link or code (7 days); activity log
   ("Parent 1/2"); both confirm whole-family deletion.
-- Hidden tracks besides Bug Hunter: Fact Checker, Comeback Kid, Explorer, Planner, Pace Setter,
-  Perfectionist (`docs/REWARDS.md`).
+- Hidden tracks besides Bug Hunter (built R7b): Fact Checker (1, 2, 3, 5, 8), Comeback Kid (1, 3,
+  5, 10, 20, 35), Explorer (1 to 7 kinds of practice), Planner (1, 4, 8, 16, 30), Pace Setter (1, 3,
+  6, 10), Perfectionist (1, 5, 15, 30, 60, 100). Each is invisible until its first step. Only
+  Comeback Kid and part of Explorer have data today; the others count 0 until their records exist
+  (`docs/REWARDS.md`, `packages/core/src/track-stats.ts`).
 
 ## Titles (owner, 2026-11-25; planned) and Get help (built, workstream W)
 
