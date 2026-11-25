@@ -5,9 +5,19 @@ import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { CloseIcon } from '../../components/icons';
 import { ProgressBar } from '../../components/ProgressBar';
+import { ReadAloudButton, itemSpeechText } from '../read-aloud';
 import { markSound, useSound } from '../sound';
 import { useLearnApi } from './learnApi';
 import { DailyGoal, DraftBanner, ItemInput, toAnswer, type Answer, type Draft } from './parts';
+
+/** What read aloud says for the feedback box: the verdict, the answer and the explanation. */
+function feedbackSpeech(result: LearnAttemptResponse): string {
+  const feedback = result.feedback;
+  const parts = [result.correct ? 'Correct!' : 'Not quite.'];
+  if (!result.correct && feedback) parts.push(`Answer: ${feedback.correctAnswer}.`);
+  if (feedback?.explanation) parts.push(feedback.explanation);
+  return parts.join(' ');
+}
 
 function Feedback({ result }: { result: LearnAttemptResponse }) {
   const feedback = result.feedback;
@@ -18,7 +28,10 @@ function Feedback({ result }: { result: LearnAttemptResponse }) {
       role="status"
       aria-label="Answer feedback"
     >
-      <p className="feedback__title">{result.correct ? 'Correct!' : 'Not quite'}</p>
+      <div className="read-aloud-row">
+        <p className="feedback__title">{result.correct ? 'Correct!' : 'Not quite'}</p>
+        <ReadAloudButton text={feedbackSpeech(result)} label="Read the feedback aloud" />
+      </div>
       {result.correct ? (
         <p>+{result.xpEarned} XP</p>
       ) : (
@@ -172,6 +185,7 @@ export function LessonPlayer({
       <h1>{title}</h1>
       {intro && <p className="secondary-text">{intro}</p>}
       {progress && <DailyGoal progress={progress} />}
+      <ReadAloudButton text={itemSpeechText(item)} label="Read the question aloud" />
       <ItemInput
         key={item.id}
         item={item}

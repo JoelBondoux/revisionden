@@ -466,3 +466,11 @@ Tags: #product #rules #limits #defaults
   start, no penalty, skippable); "Learn it first" links to Oak and BBC Bitesize per topic, checked
   by CI; read aloud with on-device voices preferred; reading comfort settings (dyslexia-friendly
   self-hosted font, larger text, spacing, tint). Detail: `docs/PRODUCT_RULES.md` (Quick wins).
+- Read aloud (Q2, built): Web Speech API only, no audio sent by us. Voice: on-device British
+  English, then any on-device English, then online English. On by default only with an on-device
+  voice; with only online voices it starts off and Settings says the device's speech service may
+  process the text. Speed Slower 0.75 / Normal 1 / Faster 1.25. Saved in `localStorage` key
+  `revisionden.readAloud` (`enabled` null until chosen). Speaker buttons: lesson question (with
+  options and unit), feedback (verdict, answer, explanation), flashcard front or back. Maths read
+  as words (`x^2` "x squared", `8^(2/3)` "8 to the power 2 over 3", `cm^2` "square centimetres",
+  `√`, `π`, `×`, `÷`, `≤`, `≥`). `apps/web/src/features/read-aloud/`. Privacy notice 1.2 (6.4).

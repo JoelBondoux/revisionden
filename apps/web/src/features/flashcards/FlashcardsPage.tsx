@@ -8,6 +8,7 @@ import { ProgressBar } from '../../components/ProgressBar';
 import { subjectLabel, useLearnApi, type FlashcardRating } from '../learn/learnApi';
 import { DraftBanner } from '../learn/parts';
 import { useSound } from '../sound';
+import { ReadAloudButton } from '../read-aloud';
 import './flashcards.css';
 
 const RATINGS: {
@@ -104,6 +105,10 @@ function ReviewSession({ cards, onExit }: { cards: Flashcard[]; onExit?: () => v
         valueText={`${index} of ${cardsText(cards.length)}`}
       />
       <FlipCard card={card} flipped={flipped} />
+      <ReadAloudButton
+        text={flipped ? [card.back, card.sourceRef].filter(Boolean).join('. ') : card.front}
+        label="Read the card aloud"
+      />
       {error && (
         <p role="alert" className="feedback feedback--wrong">
           Couldn&apos;t save that. Please try again.
