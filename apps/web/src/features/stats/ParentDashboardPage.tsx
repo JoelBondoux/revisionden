@@ -8,6 +8,7 @@ import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { BarChart } from './BarChart';
 import { DailyLimitPanel } from './DailyLimit';
+import { ParentRewardsCard } from './ParentRewardsCard';
 import { TargetGradesPanel } from './TargetGrades';
 import { formatMinutes, signedNote } from './format';
 import { NotSetUp, Tile } from './Tile';
@@ -231,30 +232,7 @@ function DashboardView({
         )}
       </Card>
 
-      <Card title="Reward">
-        {data.rewards.length === 0 ? (
-          <NotSetUp />
-        ) : (
-          <ul className="stats-list">
-            {data.rewards.map((r) => (
-              <li key={r.title}>
-                <span>
-                  {`${r.title}: ${r.given ? 'given' : r.reached ? 'reached' : r.targetLabel}`}
-                </span>
-                {!r.reached && (
-                  <ProgressBar
-                    label={r.title}
-                    value={r.current}
-                    max={r.goal}
-                    valueText={`${r.current} of ${r.goal} (${r.targetLabel})`}
-                    tone="gold"
-                  />
-                )}
-              </li>
-            ))}
-          </ul>
-        )}
-      </Card>
+      <ParentRewardsCard key={data.student.id} studentId={data.student.id} />
 
       <Card title="Healthy habits">
         <ul className="stats-list">

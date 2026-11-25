@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { Link } from 'react-router-dom';
+import { LinkChip } from '../../components';
 
 /** A headline number with a short note under it. */
 export function Tile({
@@ -37,7 +37,7 @@ export function NotSetUp({
       {link && (
         <>
           {' · '}
-          <Link to={link.to}>{link.label}</Link>
+          <LinkChip to={link.to}>{link.label}</LinkChip>
         </>
       )}
     </p>
