@@ -518,6 +518,35 @@ test('a verified item needs human approval or a passed batch sample to be releas
   );
 });
 
+const factItem = (checks, extra = {}) => {
+  const v = verified({ maths: true, release: 'batch-sample' });
+  v.checks.push(...checks.map((c) => ({ ...v.checks[0], ...c })));
+  return {
+    ...numericItem,
+    citations: [quotedCitation()],
+    facts: [{ statement: 'Fixture fact.', ask: 'Fixture question about the fact?' }],
+    verification: v,
+    ...extra,
+  };
+};
+
+test('a verified item with facts needs a fact-check (decision 0009)', async () => {
+  assert.match(messages(await check([factItem([])])), /needs a fact-check check/);
+  assert.deepEqual(await check([factItem([{ name: 'fact-check', result: 'pass' }])]), []);
+});
+
+test('a failed fact-check is only released by individual human approval', async () => {
+  const failed = [{ name: 'fact-check', result: 'fail' }];
+  assert.match(
+    messages(await check([factItem(failed)])),
+    /failed fact-check needs needs_human_approval and a passing human-approval check/,
+  );
+  const v = verified({ maths: true });
+  v.checks.push({ ...v.checks[0], name: 'fact-check', result: 'fail' });
+  const approved = { ...factItem(failed), needs_human_approval: true, verification: v };
+  assert.deepEqual(await check([approved]), []);
+});
+
 test('an item that needs human approval cannot be released by batch sampling', async () => {
   const item = {
     ...numericItem,
