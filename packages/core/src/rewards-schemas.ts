@@ -245,6 +245,11 @@ const STAT_WORDS: Record<StatKey, (n: number) => string> = {
   perfectWeeks: (n) => `${n} perfect week${n === 1 ? '' : 's'}`,
   bestGoalDaysInMonth: (n) => `${n} goal days in a month`,
   chaptersFilled: (n) => `${n} chapter${n === 1 ? '' : 's'} filled`,
+  factChecks: (n) => `${n} confirmed problem report${n === 1 ? '' : 's'}`,
+  weakSpotsTurnedStrong: (n) => `${n} weak spot${n === 1 ? '' : 's'} turned strong`,
+  practiceKindsTried: (n) => `${n} kinds of practice tried`,
+  plannedWeeks: (n) => `${n} week${n === 1 ? '' : 's'} on plan`,
+  perfectSetsLevel2: (n) => `${n} perfect set${n === 1 ? '' : 's'} at level 2+`,
 };
 
 /** The target in words, for the parent and student screens. */

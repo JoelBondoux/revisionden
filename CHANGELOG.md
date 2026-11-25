@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Six more hidden reward tracks to discover, like Comeback Kid (turn a weak topic into a strong one) and Explorer (try every kind of practice). Each stays secret until you earn its first step.
 - Spotted a bug? Tap the little bug button in the corner to tell us. If we confirm it, you earn +50 XP. You can hide the button in Settings.
 - Read aloud: tap the speaker button to hear a question, the feedback and explanation, or a flashcard, with your device's own voice. Maths is read properly ("x squared"). Turn it on or off and change the speed in Settings.
 - Remember this? A lesson on a topic you've practised before starts with 2 quick questions from earlier lessons. There's no penalty: anything you miss becomes a flashcard, and you can skip them.
@@ -71,6 +72,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Rewards R7b: six more hidden tracks (Fact Checker, Comeback Kid, Explorer, Planner, Pace Setter, Perfectionist) with `track-stats.ts` (`weakSpotsTurnedStrong`, `practiceKindsTried`), new stats, quill and explorer hat avatar items, and embers, pace stripes and prism effect art. Fact Checker, Planner, Pace Setter and Perfectionist count 0 until their data exists.
 - Rewards R7: Bug Hunter hidden track (`confirmedBugs` from L's `confirmedBugCount`; L's bug reward XP added to reward XP for levels), 24 secret achievements with masked `???` overview cards, `secret-stats.ts`, `effect` reward item kind, magnifier avatar item and glitch effect art.
 
 - Bug Hunter (L7): bug button on every screen with a per-device off switch, hidden in Test mode; operator Confirm bug / Duplicate of…; `bugReward` rules in core (+50 XP and a track step, +10 for duplicates, 3 rewards a week, parents thanked); unseen thank-you toasts; confirmed-bug count API; `feedback` outcome and reward columns (migration 0011); cookies-and-storage 1.1.

@@ -5,6 +5,14 @@
 
 ## Open
 
+- [ ] **Hidden tracks with no data yet (R7b).** Fact Checker (`factChecks`: `item_reports` has a
+      family id but no student id, workstream V), Planner (`plannedWeeks`: no planned sessions,
+      workstream P), Pace Setter (`pacedPapers`: no timed papers, workstream X) and Perfectionist
+      (`perfectSetsLevel2`: practice sets are not stored) are in the catalogue but count 0 in
+      `apps/api/src/routes/rewards.ts`. Explorer counts 4 of its 7 kinds today (no timed paper,
+      homework marking or plan edit records). Not settled because the data belongs to other
+      workstreams.
+
 - [ ] **Secret achievement stats with no data yet.** "Patch Day" (weak spots fixed in a day),
       "On Pace" (timed papers on pace, workstream X) and "Card Shark" (flashcards in a week; deck
       reviews have no timestamped record) are in the catalogue but their stats count as 0 until the
