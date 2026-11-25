@@ -1,5 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import {
+  aiUsage,
   authAccounts,
   authUsers,
   feedback,
@@ -159,5 +160,29 @@ describe('family data export', () => {
     expect(data.feedback).toEqual([
       expect.objectContaining({ text: 'more cards please', senderRole: 'student' }),
     ]);
+  });
+
+  it('shows AI use as a share of the monthly allowance, never money', async () => {
+    const mine = await t.signInParent();
+    const kid = await addStudent(mine.headers, 'ai_export_kid');
+    await t.db.insert(aiUsage).values({
+      studentId: kid,
+      job: 'short_answer_marking',
+      provider: 'anthropic',
+      model: 'claude-haiku-5-5',
+      inputTokens: 10,
+      outputTokens: 5,
+      costMicroUsd: 25_000,
+      createdAt: t.clock.now(),
+    });
+    const res = await t.app.request('/v1/export', { headers: mine.headers });
+    const data = (await res.json()) as {
+      students: { profile: { id: string }; aiUsage: Record<string, unknown>[] }[];
+    };
+    const rows = data.students.find((s) => s.profile.id === kid)!.aiUsage;
+    expect(rows).toEqual([
+      expect.objectContaining({ job: 'short_answer_marking', allowanceUsedPercent: 1 }),
+    ]);
+    expect(JSON.stringify(rows)).not.toMatch(/MicroUsd|cost/i);
   });
 });

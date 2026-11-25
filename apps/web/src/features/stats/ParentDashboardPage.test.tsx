@@ -61,15 +61,17 @@ describe('Parent stats dashboard', () => {
     expect(setUp).toHaveAttribute('href', '/onboarding');
   });
 
-  it('shows healthy habits, AI spend and recent activity', async () => {
+  it('shows healthy habits, the AI marking allowance and recent activity', async () => {
     await open();
     const habits = screen.getByRole('region', { name: 'Healthy habits' });
     expect(habits).toHaveTextContent('1 session in quiet hours');
     expect(habits).toHaveTextContent('0 days at the daily limit (120 minutes today)');
-    expect(screen.getByRole('progressbar', { name: 'AI marking spend' })).toHaveAttribute(
-      'aria-valuetext',
-      'US$0.42 of US$2.50',
-    );
+    const allowance = screen.getByRole('region', { name: 'AI marking allowance' });
+    expect(
+      within(allowance).getByRole('progressbar', { name: 'AI marking allowance' }),
+    ).toHaveAttribute('aria-valuetext', '16% used');
+    expect(allowance).toHaveTextContent('16% used this month');
+    expect(allowance).toHaveTextContent('Resets on 1 December');
     const activity = within(screen.getByRole('region', { name: 'Recent activity' })).getAllByRole(
       'listitem',
     );
@@ -131,5 +133,27 @@ describe('Parent stats dashboard', () => {
     server.use(http.get('*/v1/students', () => HttpResponse.json({ students: [] })));
     renderRoute('/parent/stats');
     expect(await screen.findByText(/No children yet/)).toBeInTheDocument();
+  });
+
+  it('says when this month’s AI marking allowance is used up', async () => {
+    server.use(
+      http.get('*/v1/students/:id/dashboard', () =>
+        HttpResponse.json({
+          ...demoDashboard(),
+          aiAllowance: { percentUsed: 100, usedUp: true, resetsOn: '2027-01-01' },
+        }),
+      ),
+    );
+    await open();
+    const allowance = screen.getByRole('region', { name: 'AI marking allowance' });
+    expect(allowance).toHaveTextContent(
+      'This month’s AI marking allowance is used up. It resets on 1 January.',
+    );
+  });
+
+  it('never shows money, spend or cost for AI to a family', async () => {
+    await open();
+    const page = document.body.textContent ?? '';
+    expect(page).not.toMatch(/US\$|£|\$\d|spend|cost/i);
   });
 });

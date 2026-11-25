@@ -126,7 +126,7 @@ export function demoDashboard(childId = DEMO_CHILDREN[0]!.id): ParentDashboard {
     effortScores: null,
     rewards: [],
     healthyHabits: { quietHourSessions: 1, daysOverCap: 0, restDays: 1, dailyCapMinutes: 120 },
-    aiSpend: { month: '2026-11', spentMicroUsd: 420_000, capMicroUsd: 2_500_000 },
+    aiAllowance: { percentUsed: 16, usedUp: false, resetsOn: '2026-12-01' },
     recentActivity: [
       { kind: 'flashcards', at: '2026-11-24T17:10:00.000Z', count: 6, subjectId: null },
       { kind: 'lesson', at: '2026-11-24T16:30:00.000Z', count: 8, subjectId: 'gcse-maths' },
