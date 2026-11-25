@@ -6,6 +6,7 @@ import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { BarChart } from './BarChart';
 import { DailyLimitToday } from './DailyLimit';
+import { MyTargetGrades } from './TargetGrades';
 import { kindNote } from './format';
 import { NotSetUp, Tile } from './Tile';
 import { useStatsApi } from './statsApi';
@@ -127,6 +128,8 @@ function StatsView({ stats }: { stats: StudentStats }) {
           </ul>
         )}
       </Card>
+
+      <MyTargetGrades targets={stats.targets} />
 
       <Card title="Personal bests">
         <dl className="stats-facts">

@@ -1,6 +1,6 @@
 # Privacy notice for young people
 
-Version: 1.4
+Version: 1.5
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -60,7 +60,7 @@ checks it and only tells us "yes, it's them".
 - Reminders are off until you turn them on, and you can turn them off any time.
 
 - **Your profile:** your nickname, your avatar (saved as a short code) and your school year.
-- **Your courses:** your subjects, exam boards and tiers.
+- **Your courses:** your subjects, exam boards, tiers, and target grades (your own and your parent's).
 - **Your devices:** a code that lets your passkey work, and when the device was linked and last
   used.
 - **Your revision:** the questions you answered, if you got them right, your score, how long you
@@ -228,6 +228,8 @@ Tell us at {{CONTACT_EMAIL}}. You can also complain to the Information Commissio
 0303 123 1113. You can ask a trusted adult to help you.
 
 ### Changes
+
+- 1.5: Target grades: you can set your own target for each subject, and your parent can set one too. You both see both.
 
 <!-- icon: refresh -->
 
