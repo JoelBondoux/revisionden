@@ -8,9 +8,7 @@
     "expected_seconds": 45,
     "prompt": "Make t the subject of v = u + at",
     "options": ["t = (v - u)/a", "t = v - u/a", "t = (v + u)/a", "t = a(v - u)"],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "Subtract u: v - u = at. Divide by a: t = (v - u)/a.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
@@ -85,9 +83,7 @@
     "expected_seconds": 45,
     "prompt": "Make x the subject of y = 3x - 7",
     "options": ["x = (y - 7)/3", "x = (y + 7)/3", "x = 3y + 7", "x = y/3 + 7"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "Add 7: y + 7 = 3x. Divide by 3: x = (y + 7)/3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
@@ -162,9 +158,7 @@
     "expected_seconds": 45,
     "prompt": "Make x the subject of y = (x + 4)/5",
     "options": ["x = 5y + 4", "x = (y - 4)/5", "x = 5y - 4", "x = 5(y + 4)"],
-    "answer": {
-      "option": 2
-    },
+    "answer": { "option": 2 },
     "marks": 1,
     "explanation": "Multiply by 5: 5y = x + 4. Subtract 4: x = 5y - 4.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
@@ -244,9 +238,7 @@
       "b = (a + 3)/(2 - a)",
       "b = (3 - a)/(a - 2)"
     ],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "Multiply by (b - 1): ab - a = 2b + 3. Collect b terms: ab - 2b = a + 3. Factorise: b(a - 2) = a + 3, so b = (a + 3)/(a - 2).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
@@ -320,12 +312,8 @@
     "learning_point": "gcse-maths-h-a5-lp-use-formulae",
     "expected_seconds": 40,
     "prompt": "The area of a trapezium is A = (1/2)(a + b)h. Work out A when a = 5, b = 9 and h = 4.",
-    "answer": {
-      "value": "28"
-    },
-    "verify": {
-      "expression": "(1/2)*(5 + 9)*4"
-    },
+    "answer": { "value": "28" },
+    "verify": { "expression": "(1/2)*(5 + 9)*4" },
     "marks": 2,
     "mark_scheme": ["M1 for (1/2) × (5 + 9) × 4", "A1 for 28"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
@@ -407,14 +395,8 @@
     "learning_point": "gcse-maths-h-a5-lp-use-formulae",
     "expected_seconds": 45,
     "prompt": "A circle has radius 3 cm. Use A = πr^2 to work out its area. Give your answer correct to 1 decimal place.",
-    "answer": {
-      "value": "28.3",
-      "unit": "cm^2",
-      "decimal_places": 1
-    },
-    "verify": {
-      "expression": "pi*3^2"
-    },
+    "answer": { "value": "28.3", "unit": "cm^2", "decimal_places": 1 },
+    "verify": { "expression": "pi*3^2" },
     "marks": 2,
     "mark_scheme": ["M1 for π × 3^2", "A1 for 28.3"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
@@ -454,22 +436,6 @@
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:06:23Z",
-          "notes": "model answered \"28.3 cm²\"; expected \"28.3\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "fail",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:06:41Z",
-          "notes": "wrong_answer (answer): The question requires an answer \"correct to 1 decimal place\", which is 28.3. The tolerance of 0.05 allows answers in the range [28.25, 28.35], which would incorrectly accept answers that are not given to 1 decimal place (e.g., 28.27 or 28.32). The tolerance should be 0 to only accept the correctly rounded answer."
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -484,6 +450,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:08:55Z",
+          "notes": "model answered \"28.3 cm²\"; expected \"28.3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:09:03Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -496,14 +478,8 @@
     "learning_point": "gcse-maths-h-a5-lp-use-formulae",
     "expected_seconds": 60,
     "prompt": "The perimeter of a rectangle is P = 2(l + w). Work out w when P = 30 and l = 9.",
-    "answer": {
-      "solutions": ["6"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "30 = 2(9 + w)",
-      "variable": "w"
-    },
+    "answer": { "solutions": ["6"] },
+    "verify": { "method": "solve", "equation": "30 = 2(9 + w)", "variable": "w" },
     "steps": ["30 = 2(9 + w)", "15 = 9 + w", "w = 6"],
     "marks": 2,
     "mark_scheme": ["M1 for 30 = 2(9 + w) or 15 = 9 + w", "A1 for w = 6"],
@@ -598,14 +574,8 @@
     "learning_point": "gcse-maths-h-a5-lp-use-formulae",
     "expected_seconds": 60,
     "prompt": "The cost, C pounds, of a repair that takes h hours is C = 40 + 25h. Work out h when C = 115.",
-    "answer": {
-      "solutions": ["3"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "115 = 40 + 25h",
-      "variable": "h"
-    },
+    "answer": { "solutions": ["3"] },
+    "verify": { "method": "solve", "equation": "115 = 40 + 25h", "variable": "h" },
     "steps": ["115 = 40 + 25h", "75 = 25h", "h = 3"],
     "marks": 2,
     "mark_scheme": ["M1 for 115 = 40 + 25h", "A1 for h = 3"],

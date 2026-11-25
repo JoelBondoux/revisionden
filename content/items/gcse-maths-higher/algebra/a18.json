@@ -7,14 +7,8 @@
     "learning_point": "gcse-maths-h-a18-lp-factorising",
     "expected_seconds": 60,
     "prompt": "Solve x^2 + x - 12 = 0",
-    "answer": {
-      "solutions": ["3", "-4"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "x^2 + x - 12 = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["3", "-4"] },
+    "verify": { "method": "solve", "equation": "x^2 + x - 12 = 0", "variable": "x" },
     "steps": ["x^2 + x - 12 = 0", "(x - 3)(x + 4) = 0", "x = 3 or x = -4"],
     "marks": 3,
     "mark_scheme": ["M1 for (x - 3)(x + 4)", "A1 for x = 3", "A1 for x = -4"],
@@ -97,14 +91,8 @@
     "learning_point": "gcse-maths-h-a18-lp-factorising",
     "expected_seconds": 90,
     "prompt": "Solve 2x^2 - 7x + 3 = 0",
-    "answer": {
-      "solutions": ["1/2", "3"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "2x^2 - 7x + 3 = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["1/2", "3"] },
+    "verify": { "method": "solve", "equation": "2x^2 - 7x + 3 = 0", "variable": "x" },
     "steps": ["2x^2 - 7x + 3 = 0", "(2x - 1)(x - 3) = 0", "x = 1/2 or x = 3"],
     "marks": 3,
     "mark_scheme": ["M1 for (2x - 1)(x - 3)", "A1 for x = 1/2", "A1 for x = 3"],
@@ -187,14 +175,8 @@
     "learning_point": "gcse-maths-h-a18-lp-factorising",
     "expected_seconds": 60,
     "prompt": "Solve x^2 = 5x",
-    "answer": {
-      "solutions": ["0", "5"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "x^2 = 5x",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["0", "5"] },
+    "verify": { "method": "solve", "equation": "x^2 = 5x", "variable": "x" },
     "steps": ["x^2 = 5x", "x^2 - 5x = 0", "x(x - 5) = 0", "x = 0 or x = 5"],
     "marks": 2,
     "mark_scheme": ["M1 for x(x - 5) = 0", "A1 for x = 0 and x = 5"],
@@ -278,14 +260,8 @@
     "learning_point": "gcse-maths-h-a18-lp-completing-square",
     "expected_seconds": 120,
     "prompt": "Solve x^2 - 8x + 15 = 0 by completing the square.",
-    "answer": {
-      "solutions": ["3", "5"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "x^2 - 8x + 15 = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["3", "5"] },
+    "verify": { "method": "solve", "equation": "x^2 - 8x + 15 = 0", "variable": "x" },
     "steps": [
       "x^2 - 8x + 15 = 0",
       "(x - 4)^2 - 16 + 15 = 0",
@@ -379,13 +355,8 @@
     "learning_point": "gcse-maths-h-a18-lp-completing-square",
     "expected_seconds": 120,
     "prompt": "By completing the square, solve x^2 + 6x - 2 = 0. Give the positive solution correct to 2 decimal places.",
-    "answer": {
-      "value": "0.32",
-      "decimal_places": 2
-    },
-    "verify": {
-      "expression": "-3 + sqrt(11)"
-    },
+    "answer": { "value": "0.32", "decimal_places": 2 },
+    "verify": { "expression": "-3 + sqrt(11)" },
     "marks": 3,
     "mark_scheme": [
       "M1 for (x + 3)^2 - 11 = 0 or (x + 3)^2 = 11",
@@ -429,22 +400,6 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:07:33Z",
-          "notes": "model answered \"0.32\"; expected \"0.32\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:07:45Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -459,6 +414,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:09:27Z",
+          "notes": "model answered \"0.32\"; expected \"0.32\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:09:35Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -472,9 +443,7 @@
     "expected_seconds": 25,
     "prompt": "x^2 - 4x - 1 = (x - 2)^2 - 5. Use this to solve x^2 - 4x - 1 = 0.",
     "options": ["x = 2 ± √5", "x = -2 ± √5", "x = 2 ± 5", "x = 5 ± √2"],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "(x - 2)^2 = 5, so x - 2 = ±√5 and x = 2 ± √5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
@@ -548,13 +517,8 @@
     "learning_point": "gcse-maths-h-a18-lp-formula",
     "expected_seconds": 120,
     "prompt": "Use the quadratic formula to solve 2x^2 + 3x - 4 = 0. Give the positive solution correct to 2 decimal places.",
-    "answer": {
-      "value": "0.85",
-      "decimal_places": 2
-    },
-    "verify": {
-      "expression": "(-3 + sqrt(41))/4"
-    },
+    "answer": { "value": "0.85", "decimal_places": 2 },
+    "verify": { "expression": "(-3 + sqrt(41))/4" },
     "marks": 3,
     "mark_scheme": [
       "M1 for correct substitution into the quadratic formula",
@@ -610,22 +574,6 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 14 (sha256 647a751b51c71d9ced1c9356aa70b15ceb1a4acb2fd5bc9af49619ead06d0ee6)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:07:55Z",
-          "notes": "model answered \"0.85\"; expected \"0.85\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "fail",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:08:21Z",
-          "notes": "wording (answer): The prompt requires the answer to be given 'correct to 2 decimal places'. The exact positive solution is approximately 0.85078, so the only correct answer is '0.85'. The specified tolerance of approximately 0.0014 creates an acceptance range of roughly [0.8486, 0.8514]. This would cause an incorrect response like '0.851' (which demonstrates incorrect rounding) to be marked as correct. The tolerance is inconsistent with the rounding instruction in the prompt."
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -640,6 +588,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:09:43Z",
+          "notes": "model answered \"0.85\"; expected \"0.85\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:09:52Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -652,13 +616,8 @@
     "learning_point": "gcse-maths-h-a18-lp-formula",
     "expected_seconds": 120,
     "prompt": "Use the quadratic formula to solve x^2 - 3x - 5 = 0. Give the negative solution correct to 2 decimal places.",
-    "answer": {
-      "value": "-1.19",
-      "decimal_places": 2
-    },
-    "verify": {
-      "expression": "(3 - sqrt(29))/2"
-    },
+    "answer": { "value": "-1.19", "decimal_places": 2 },
+    "verify": { "expression": "(3 - sqrt(29))/2" },
     "marks": 3,
     "mark_scheme": [
       "M1 for correct substitution into the quadratic formula",
@@ -714,22 +673,6 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 14 (sha256 647a751b51c71d9ced1c9356aa70b15ceb1a4acb2fd5bc9af49619ead06d0ee6)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:08:31Z",
-          "notes": "model answered \"-1.19\"; expected \"-1.19\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "fail",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:09:02Z",
-          "notes": "wording (answer): The prompt requires the answer to be given \"correct to 2 decimal places\", which means the only acceptable answer is -1.19. However, the non-zero `tolerance` allows a range of other numerical answers to be marked as correct, even if they are not rounded to 2 decimal places as instructed. For a question with such a specific rounding instruction, the tolerance should be 0."
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -744,6 +687,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:10:02Z",
+          "notes": "model answered \"-1.19\"; expected \"-1.19\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:10:11Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -756,13 +715,8 @@
     "learning_point": "gcse-maths-h-a18-lp-formula",
     "expected_seconds": 120,
     "prompt": "Use the quadratic formula to solve 3x^2 - x - 1 = 0. Give the positive solution correct to 2 decimal places.",
-    "answer": {
-      "value": "0.77",
-      "decimal_places": 2
-    },
-    "verify": {
-      "expression": "(1 + sqrt(13))/6"
-    },
+    "answer": { "value": "0.77", "decimal_places": 2 },
+    "verify": { "expression": "(1 + sqrt(13))/6" },
     "marks": 3,
     "mark_scheme": [
       "M1 for correct substitution into the quadratic formula",
@@ -818,22 +772,6 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 14 (sha256 647a751b51c71d9ced1c9356aa70b15ceb1a4acb2fd5bc9af49619ead06d0ee6)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:09:11Z",
-          "notes": "model answered \"0.77\"; expected \"0.77\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:09:27Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -848,6 +786,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:10:19Z",
+          "notes": "model answered \"0.77\"; expected \"0.77\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:10:30Z",
+          "notes": "no problems found"
         }
       ]
     }
