@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Coming soon: a new game feel for practice, with colour bursts, combos, rising sounds and a big "set complete" celebration.
 - Parents get a notification on their phone when a child reaches a reward target you set. Turn on "Reward news" on the new parent home.
 - New parent home: one place for the stats dashboard, rewards you set, reminder times, family feedback, settings and policies. Find it from the profile picker or Settings.
 - When you're signed out, About, Policies and Feedback show a simple header (Sign in, Policies, About) instead of the student menu.
