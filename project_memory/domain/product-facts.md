@@ -55,6 +55,14 @@ Tags: #product #rules #limits #defaults
 - Exam boards and tiers are picked in the app; "not sure" is allowed and reminded later.
 - GCSE Film Studies is offered only by WJEC Eduqas. GCSE Statistics only by AQA and Pearson Edexcel. Boards per subject and tiered GCSEs are listed
   in `docs/PRODUCT_RULES.md` "Onboarding".
+- Most-used board per subject in England (Ofqual market report 2024 to 2025, share of
+  certificates): AQA for GCSE English Language, English Literature, Biology, Chemistry, Physics,
+  Combined Science, Drama, French and A-Level Physics; Pearson Edexcel for GCSE Maths, History and
+  A-Level Maths, Further Maths; OCR for A-Level Computer Science; WJEC Eduqas only for GCSE Film
+  Studies. AI terms: AQA forbids its material in AI-assisted works; Pearson reportedly reserves AI
+  training rights (not confirmed); no AI clause found for OCR or WJEC Eduqas. Figures, quotes and
+  the recommended build order: `docs/research/board-shares-2026-11.md` (research, 2026-11-25; not
+  yet a decision).
 - Onboarding takes Years 9 to 13 (9–11 GCSE, 12–13 A-Level). Exams are worked out from the year:
   Year 11 and 13 sit them next summer (2027 in school year 2026/27), Year 10 and 12 a year later,
   Year 9 two years later.
