@@ -231,18 +231,33 @@ async function saveChoice(
       problems.map((p) => `${p.subjectId}: ${SUBJECT_PROBLEMS[p.problem]}`),
     );
   }
-  // A target grade that is not on the new board and tier's scale is cleared (K8).
-  const keep = (grade: string | null) =>
-    grade !== null && isAllowedTarget({ subjectId: row.subjectId, ...next }, grade) ? grade : null;
-  const [saved] = await db
+  // Only the fields sent are written, so two quick picks (board, then tier) cannot undo each
+  // other. Each is valid on its own: a board depends only on the subject, and so does a tier.
+  const where = and(
+    eq(enrolments.studentId, row.studentId),
+    eq(enrolments.subjectId, row.subjectId),
+  );
+  const [updated] = await db
     .update(enrolments)
     .set({
-      ...next,
-      parentTargetGrade: keep(row.parentTargetGrade),
-      studentTargetGrade: keep(row.studentTargetGrade),
+      ...(change.board ? { board: change.board } : {}),
+      ...(change.tier ? { tier: change.tier } : {}),
     })
-    .where(and(eq(enrolments.studentId, row.studentId), eq(enrolments.subjectId, row.subjectId)))
+    .where(where)
     .returning();
+  // A target grade that is not on the saved board and tier's scale is cleared (K8).
+  const keep = (grade: string | null) =>
+    grade !== null && isAllowedTarget(updated!, grade) ? grade : null;
+  const targets = {
+    parentTargetGrade: keep(updated!.parentTargetGrade),
+    studentTargetGrade: keep(updated!.studentTargetGrade),
+  };
+  const unchanged =
+    targets.parentTargetGrade === updated!.parentTargetGrade &&
+    targets.studentTargetGrade === updated!.studentTargetGrade;
+  const [saved] = unchanged
+    ? [updated]
+    : await db.update(enrolments).set(targets).where(where).returning();
   return toEnrolment(saved!);
 }
 
