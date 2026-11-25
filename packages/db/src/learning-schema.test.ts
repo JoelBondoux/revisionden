@@ -92,6 +92,10 @@ describe('learning loop tables (workstream F)', () => {
     ).rejects.toThrow(/check constraint/i);
   });
 
+  it("keeps each topic's place in the topic tree (F2 map order)", async () => {
+    expect(await columns('topics')).toContain('position');
+  });
+
   it('records starting tests per student and subject', async () => {
     expect(await columns('starting_tests')).toEqual(
       expect.arrayContaining(['id', 'student_id', 'subject_id', 'item_ids', 'finished_at']),

@@ -10,7 +10,7 @@
  *   (20 XP for 5+ cards, at most 2 a day), never per card (packages/core flashcard-session.ts).
  */
 import { Hono } from 'hono';
-import { and, asc, eq, inArray, isNull, or, type SQL } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import {
   CreateFlashcardRequestSchema,
   FLASHCARD_SESSION_MAX_CARDS,
@@ -24,37 +24,21 @@ import {
   dueCards,
   previewReviews,
   reviewCard,
-  type Card,
   type Flashcard,
   type FlashcardDeck,
 } from '@revisionden/core';
-import { enrolments, flashcardSessions, flashcards, items, topics } from '@revisionden/db';
+import { flashcardSessions, flashcards, topics } from '@revisionden/db';
 import type { AppEnv } from '../context';
 import { ApiError, notFound } from '../errors';
 import { readJson } from '../http';
 import { isId } from '../validation';
-import { correctAnswerText, servableItem, type ItemRow } from '../learning/items';
+import { correctAnswerText, servableItem } from '../learning/items';
 import type { ItemBody } from '../learning/content-sync';
 import { awardXp } from '../learning/progress';
 import { rewardedLeftToday } from '../learning/flashcard-sessions';
+import { flashcardStore, toCard, type Loaded } from '../learning/flashcard-store';
 import { containsPersonalData, familyProfiles, personalDetails } from '../feedback/routes';
 import type { LearnDeps } from './learn';
-
-type CardRow = typeof flashcards.$inferSelect;
-type TopicRow = typeof topics.$inferSelect;
-interface Loaded {
-  card: CardRow;
-  item: ItemRow | null;
-  topic: TopicRow;
-}
-
-const toCard = (row: CardRow): Card => ({
-  id: row.id,
-  repetitions: row.repetitions,
-  intervalDays: row.intervalDays,
-  ease: row.ease,
-  dueAt: row.dueAt.getTime(),
-});
 
 function cardText({ card, item }: Loaded): { front: string; back: string } {
   if (!item) return { front: card.front ?? '', back: card.back ?? '' };
@@ -89,46 +73,7 @@ export function flashcardRoutes({ db, clock, config }: LearnDeps) {
   const app = new Hono<AppEnv>();
   const servable = servableItem(config.serveDraftContent);
 
-  /** The student's cards whose content may be served (own cards have no item). */
-  async function loadCards(studentId: string, where?: SQL): Promise<Loaded[]> {
-    return db
-      .select({ card: flashcards, item: items, topic: topics })
-      .from(flashcards)
-      .innerJoin(topics, eq(topics.id, flashcards.topicId))
-      .leftJoin(items, eq(items.id, flashcards.itemId))
-      .where(
-        and(eq(flashcards.studentId, studentId), or(isNull(flashcards.itemId), servable), where),
-      )
-      .orderBy(asc(flashcards.dueAt), asc(flashcards.createdAt));
-  }
-
-  /** Makes a row for each servable deck card in the student's subjects not yet seen. */
-  async function addNewDeckCards(studentId: string, now: Date) {
-    const subjects = await db
-      .select({ subjectId: enrolments.subjectId })
-      .from(enrolments)
-      .where(eq(enrolments.studentId, studentId));
-    if (subjects.length === 0) return;
-    const deck = await db
-      .select({ itemId: items.id, topicId: items.topicId })
-      .from(items)
-      .innerJoin(topics, eq(topics.id, items.topicId))
-      .where(
-        and(
-          servable,
-          eq(items.type, 'flashcard'),
-          inArray(
-            topics.subjectId,
-            subjects.map((s) => s.subjectId),
-          ),
-        ),
-      );
-    if (deck.length === 0) return;
-    await db
-      .insert(flashcards)
-      .values(deck.map((d) => ({ studentId, ...d, origin: 'deck' as const, dueAt: now })))
-      .onConflictDoNothing();
-  }
+  const { loadCards, addNewDeckCards } = flashcardStore(db, servable);
 
   app.get('/', async (c) => {
     const studentId = c.var.student.studentId;

@@ -61,8 +61,15 @@
     {
       "idx": 8,
       "version": "7",
-      "when": 1795594042913,
-      "tag": "0008_flashcard_sessions",
+      "when": 1795593414810,
+      "tag": "0008_topic_position",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1795596193305,
+      "tag": "0009_flashcard_sessions",
       "breakpoints": true
     }
   ]

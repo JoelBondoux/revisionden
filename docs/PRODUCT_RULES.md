@@ -214,6 +214,13 @@ Product owner decision, 2026-11-25: **parent view only**.
   missed days shows as lapsed (or kept by skip days) before anything is saved.
 - **Command-word lessons** (exam technique basics) are items tagged `command-word` in `content/`.
   None are verified yet, so the lesson says nothing is ready.
+- **Topic map (F2):** units are the top-level topics of a subject's tree; each shows its leaf
+  topics in specification order. A topic is locked while none of its items may be served,
+  mastered at 80% or more, a weak spot when tried and below 60%, otherwise in progress. Unit
+  mastery is the average of its open topics and its challenge unlocks at 80% (the challenge lesson
+  draws on every topic in the unit). The next mission is the weakest weak spot, else the first
+  topic not yet mastered, else a review of the weakest mastered topic. Implemented in
+  `packages/core/src/map.ts` and `apps/api/src/routes/map.ts`.
 - Implemented: `packages/core/src/learning.ts`, `apps/api/src/routes/learn.ts`,
   `apps/api/src/routes/flashcards.ts`.
 

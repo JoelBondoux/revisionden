@@ -77,8 +77,11 @@ describe('content sync', () => {
     expect(topicRows.map((r) => r.id).sort()).toEqual([
       'test-topic-a',
       'test-topic-b',
+      'test-topic-c',
       'test-unit',
     ]);
+    const order = [...topicRows].sort((x, y) => x.position - y.position).map((r) => r.id);
+    expect(order).toEqual(['test-unit', 'test-topic-a', 'test-topic-b', 'test-topic-c']);
     const [mc] = await t.db.select().from(items).where(eq(items.contentId, 'test-mc-0001'));
     expect(mc).toMatchObject({ type: 'multiple_choice', status: 'verified', version: 1 });
     const [work] = await t.db.select().from(items).where(eq(items.contentId, 'test-work-0001'));
@@ -90,7 +93,7 @@ describe('content sync', () => {
       i.id === 'test-short-0001' ? { ...i, verification: { ...i.verification, version: 2 } } : i,
     );
     const result = await syncContent(t.db, { topicTrees: [testTopicTree], items: changed });
-    expect(result).toEqual({ topics: 3, items: testItems.length });
+    expect(result).toEqual({ topics: 4, items: testItems.length });
     const rows = await t.db.select().from(items).where(eq(items.contentId, 'test-short-0001'));
     expect(rows).toHaveLength(1);
     expect(rows[0]!.version).toBe(2);
