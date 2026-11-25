@@ -6,6 +6,7 @@ import { useStudent } from '../../session/StudentContext';
 import type { LinkStart } from './api';
 import { useOnboardingApi } from './OnboardingApiContext';
 import { afterLinkPath } from '../legal/youngPeopleNotice';
+import { saveDeviceMarker } from '../../session/deviceMarker';
 
 /** Creates a passkey on this device from the server's options; returns the browser's answer. */
 export type RegisterPasskey = (options: Record<string, unknown>) => Promise<unknown>;
@@ -65,6 +66,7 @@ export function LinkPage({ register = browserRegister }: { register?: RegisterPa
     try {
       const response = await register(link.options);
       const done = await api.verifyLink({ challengeId: link.challengeId, response });
+      saveDeviceMarker(done.deviceMarker);
       chooseStudent(done.student.id);
       navigate(afterLinkPath());
     } catch {

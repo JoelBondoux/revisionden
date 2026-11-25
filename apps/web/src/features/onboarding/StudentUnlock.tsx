@@ -5,6 +5,7 @@ import { Button } from '../../components';
 import { ErrorRef, refOf, type ErrorDetails } from '../../api/ErrorRef';
 import { safeReturnTo } from '../../api/unlock';
 import { useStudent } from '../../session/StudentContext';
+import { readDeviceMarker, saveDeviceMarker } from '../../session/deviceMarker';
 import { OnboardingApiError } from './api';
 import { useOnboardingApi } from './OnboardingApiContext';
 
@@ -44,7 +45,13 @@ export function StudentUnlock({ label, returnTo }: { label: string; returnTo?: s
     try {
       const start = await api.unlockOptions();
       const response = await passkeyBrowser.authenticate(start.options);
-      const done = await api.unlockVerify({ challengeId: start.challengeId, response });
+      const deviceMarker = readDeviceMarker();
+      const done = await api.unlockVerify({
+        challengeId: start.challengeId,
+        response,
+        ...(deviceMarker ? { deviceMarker } : {}),
+      });
+      saveDeviceMarker(done.deviceMarker);
       chooseStudent(done.student.id);
       navigate(safeReturnTo(returnTo), { replace: true });
     } catch (err) {

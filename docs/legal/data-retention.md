@@ -1,6 +1,6 @@
 # How long we keep data
 
-Version: 1.8
+Version: 1.9
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -54,6 +54,7 @@ the family account for 12 months (section 3).
 | Device link codes (hashed)                                                                           | Valid for 10 minutes and usable once                                                                                | Deleted automatically within 15 minutes of expiring                                                                               |
 | Student device sessions (hashed)                                                                     | 12 hours, or until the device is locked or unlinked                                                                 | Removed on lock or unlink; expired sessions deleted automatically within 15 minutes                                               |
 | Device passkey records                                                                               | Until the parent unlinks the device or deletes the student                                                          | In-app unlink or delete                                                                                                           |
+| Device codes (hashed)                                                                                | Until the student is deleted; an unlinked device's code is kept so that device stays unlinked                       | Deleted with the student                                                                                                          |
 | Push addresses and keys                                                                              | Until the student turns reminders off, the push service says the address no longer works, or the device is unlinked | Deleted automatically in each of those cases                                                                                      |
 | Reminder settings and reminder log                                                                   | Until the student is deleted                                                                                        | In-app delete                                                                                                                     |
 | AI usage (tokens and cost only)                                                                      | Until the student is deleted                                                                                        | In-app delete                                                                                                                     |
@@ -98,6 +99,7 @@ to keep it, and tell you if anything cannot be deleted and why.
 
 ## Changes
 
+- 1.9: Added hashed device codes, which tell a student's devices apart when their passkey is synced.
 - 1.8: Added the labels our support team can put on an account.
 - 1.7: Added students' requests to their parents to raise a complaint, kept at most 90 days.
 - 1.6: Added complaints, kept 12 months after they are resolved.
