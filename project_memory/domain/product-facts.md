@@ -77,7 +77,8 @@ Tags: #product #rules #limits #defaults
   two (crown and Alien skin). `packages/core/src/rewards.ts`, `avatar.ts`.
 - 14 rewards, each unlocking one avatar item: `packages/core/src/rewards.ts`.
 - Only `verified` items reach students. Drafts are served only with `SERVE_DRAFT_CONTENT=true` in
-  development (never staging or production), with a "DRAFT CONTENT" banner; quarantined and
+  development (never staging or production), with a "DRAFT CONTENT" banner; the dev Worker has it on
+  so the family can try the pilot on dev.revisionden.com; quarantined and
   retired items never. Implemented in `packages/core/src/learning.ts` and `apps/api`.
 - Starting test per subject: about 5 minutes (300 s, up to 10 questions, one per topic first),
   Test mode; its answers set first mastery. Lessons are Learn mode at feedback level 1.
@@ -428,6 +429,11 @@ Tags: #product #rules #limits #defaults
   capped at 40 pieces. The combo badge shows from 2 in a row. The CTA pulse takes 1.6 s (well under 3
   flashes a second). Reduced motion removes particles, confetti, float-ups, shakes and pulsing; combo,
   stars and XP still show as text. Arena colours live in `apps/web/src/design/tokens.ts` (`--arena-*`).
+- Settled in J5: light-theme motion lives in `apps/web/src/design/motion.css` and applies only to
+  the topic map, rewards and stats (parent area, policies and settings stay calm). The map's Next
+  mission button is the pulsing main call to action. Reward reveals show the tier, the items and the
+  reason from the reward's one catalogue target ("For: 7-day streak"); epic and legendary add a
+  particle burst, legendary a shine. No reason is shown for a reward missing from the catalogue.
 - Settled in J2/J3: lessons, the starting test and flashcard review use the arena. Set complete's
   Next mission goes to the map (`/map`, next mission card). "Or take a break. Your streak is safe for
   today." shows when today's daily goal is met (`progress.goalMet`). The "daily cap" for "See you

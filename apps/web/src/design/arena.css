@@ -142,7 +142,8 @@ body:has(.arena:not(.review)) footer a {
 }
 
 /* Light parts inside the arena keep dark text; labels use the arena's secondary colour. */
-.arena .field__input {
+.arena .field__input,
+.arena .flip-card__face {
   color: var(--color-text);
 }
 
