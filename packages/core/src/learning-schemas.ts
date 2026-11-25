@@ -94,6 +94,8 @@ export const LearnAttemptRequestSchema = z
     timeMs: z.number().int().min(0),
     mode: ModeSchema,
     startingTestId: IdSchema.optional(),
+    /** A recall check answer (Q4): Learn mode only; a wrong one never resets the combo. */
+    recall: z.boolean().optional(),
   })
   .strict();
 export type LearnAttemptRequest = z.infer<typeof LearnAttemptRequestSchema>;
