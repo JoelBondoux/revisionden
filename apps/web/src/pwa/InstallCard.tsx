@@ -1,4 +1,5 @@
 import { useState, useSyncExternalStore } from 'react';
+import { createPortal } from 'react-dom';
 import { Button, LinkTile, Sheet } from '../components';
 import { PhoneIcon } from '../components/icons';
 import { Card } from '../components/Card';
@@ -101,15 +102,18 @@ export function InstallCard(props: InstallProps) {
       <Button variant="secondary" onClick={notNow}>
         Not now
       </Button>
-      {device.ios && (
-        <Sheet
-          open={showSteps}
-          title="Add RevisionDen to your Home Screen"
-          onClose={() => setShowSteps(false)}
-        >
-          <IosSteps device={device.ios} />
-        </Sheet>
-      )}
+      {device.ios &&
+        // Rendered on the page body: the card's pop-in transform would trap a fixed sheet inside it.
+        createPortal(
+          <Sheet
+            open={showSteps}
+            title="Add RevisionDen to your Home Screen"
+            onClose={() => setShowSteps(false)}
+          >
+            <IosSteps device={device.ios} />
+          </Sheet>,
+          document.body,
+        )}
     </Card>
   );
 }

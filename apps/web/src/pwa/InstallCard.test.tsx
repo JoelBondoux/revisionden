@@ -69,6 +69,8 @@ describe('"Add RevisionDen to this device" card', () => {
     expect(steps[0]).toHaveTextContent(/share/i);
     expect(steps[0]).toHaveTextContent(/bottom of safari/i);
     expect(steps[1]).toHaveTextContent('Add to Home Screen');
+    // Outside the card: the card's pop-in transform would otherwise trap the fixed sheet in it.
+    expect(sheet.closest('.install-card')).toBeNull();
     await userEvent.click(within(sheet).getByRole('button', { name: 'Close' }));
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
