@@ -187,6 +187,19 @@ Requested by the product owner on 2026-11-25.
 - One code per family at a time; they never stack with the free school meals place (which is
   already free). Applied through the payment provider when payments exist (workstream $).
 
+Built (O5) under `/operator/appdeck`:
+
+| Route                              | Role    | Body                                                                                                                                                         | `data`                                                                                                                                      | Audit action            |
+| ---------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| `GET discount-codes`               | Agent   |                                                                                                                                                              | `{ codes: [{ id, code, kind: "percent"\|"fixed", amount, months, expiresAt, maxUses, redemptions, disabledAt, createdAt }] }`, newest first | no                      |
+| `POST discount-codes`              | Manager | `{ code (6–16 letters and digits, any case), kind, amount (1–100 for percent; pence for fixed), months?, expiresAt?: "YYYY-MM-DD" (last UK day), maxUses? }` | `{ code: <as listed> }`; 409 `code_taken` (any case)                                                                                        | `discount_code.create`  |
+| `POST discount-codes/{id}/disable` | Manager | `{}`                                                                                                                                                         | `{ ok: true }`                                                                                                                              | `discount_code.disable` |
+
+Rules in `packages/core/src/discount-codes.ts` (`checkDiscountCode`: disabled, expired, used up,
+one active code per family, never with a free place). Checkout calls `checkCodeForFamily` in
+`apps/api/src/operator/discount-codes.ts` and records `discount_redemptions` (one active per family,
+enforced by the database); the free-place rule is checked there once free places exist.
+
 ## Out of scope for now
 
 - Refunds and plan changes in the payment provider: added with workstream $.

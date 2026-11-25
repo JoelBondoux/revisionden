@@ -23,6 +23,7 @@ import {
   text,
   timestamp,
   unique,
+  uniqueIndex,
   uuid,
 } from 'drizzle-orm/pg-core';
 
@@ -1152,5 +1153,61 @@ export const dataRequests = pgTable(
   (t) => [
     index('data_requests_due_idx').on(t.handledAt, t.dueAt),
     check('data_requests_kind_values', sql`${t.kind} in ('export', 'deletion')`),
+  ],
+);
+
+/**
+ * O5: discount codes, created by a Manager in AppDeck (`docs/OPERATOR_CONSOLE.md`). Stored in
+ * upper case. Applied at checkout by payments (workstream $), which records redemptions.
+ */
+export const discountCodes = pgTable(
+  'discount_codes',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    code: text('code').notNull().unique('discount_codes_code_unique'),
+    kind: text('kind', { enum: ['percent', 'fixed'] }).notNull(),
+    // A percentage (1–100), or pence when the kind is fixed.
+    amount: integer('amount').notNull(),
+    // How many months it lasts; null for forever.
+    months: integer('months'),
+    // The last UK day it can be used; null for no expiry.
+    expiresOn: date('expires_on'),
+    maxUses: integer('max_uses'),
+    // Work email of the Manager who created it (staff, from AppDeck).
+    createdBy: text('created_by').notNull(),
+    disabledAt: timestamp('disabled_at', { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    check('discount_codes_code_format', sql`${t.code} ~ '^[A-Z0-9]{6,16}$'`),
+    check('discount_codes_kind_values', sql`${t.kind} in ('percent', 'fixed')`),
+    check(
+      'discount_codes_amount_range',
+      sql`${t.amount} >= 1 and (${t.kind} <> 'percent' or ${t.amount} <= 100)`,
+    ),
+    check('discount_codes_months_positive', sql`${t.months} is null or ${t.months} >= 1`),
+    check('discount_codes_max_uses_positive', sql`${t.maxUses} is null or ${t.maxUses} >= 1`),
+  ],
+);
+
+/** O5: a family using a code. One active code per family at a time (ended_at null). */
+export const discountRedemptions = pgTable(
+  'discount_redemptions',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    codeId: uuid('code_id')
+      .notNull()
+      .references(() => discountCodes.id),
+    familyId: uuid('family_id')
+      .notNull()
+      .references(() => families.id, { onDelete: 'cascade' }),
+    redeemedAt: timestamp('redeemed_at', { withTimezone: true }).notNull().defaultNow(),
+    endedAt: timestamp('ended_at', { withTimezone: true }),
+  },
+  (t) => [
+    index('discount_redemptions_code_idx').on(t.codeId),
+    uniqueIndex('discount_redemptions_one_active_per_family')
+      .on(t.familyId)
+      .where(sql`${t.endedAt} is null`),
   ],
 );

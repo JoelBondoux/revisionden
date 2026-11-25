@@ -167,6 +167,8 @@ Source of truth: `packages/db/src/schema.ts`; migrations in `packages/db/migrati
 | `operator_notes`            | id, family_id, author_email (staff), text (≤2000), created_at (deleted with the family; in its export without the author)                                                                                                                   |
 | `feedback_replies`          | id, feedback_id, author_email (staff), body (≤5000), created_at (shown to the sender without the author; deleted with the ticket)                                                                                                           |
 | `data_requests`             | id, family_id (plain id, no foreign key), kind (export, deletion), received_at, due_at (one calendar month), logged_by (staff), handled_at (2 years)                                                                                        |
+| `discount_codes`            | id, code (unique, upper case, 6–16), kind (percent, fixed), amount, months, expires_on, max_uses, created_by (staff), disabled_at, created_at                                                                                               |
+| `discount_redemptions`      | id, code_id, family_id (one active per family), redeemed_at, ended_at (written at checkout, workstream $; deleted with the family)                                                                                                          |
 
 No table stores a real name, date of birth, email of a student, photo or school name. The
 schema guard test (`packages/db/src/schema-guard.test.ts`) checks the migrated database and fails

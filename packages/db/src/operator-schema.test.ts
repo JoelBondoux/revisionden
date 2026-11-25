@@ -163,3 +163,33 @@ describe('data_requests table (O3b)', () => {
     expect(fks.rows).toEqual([]);
   });
 });
+
+describe('discount_codes and discount_redemptions tables (O5)', () => {
+  it('keeps codes unique, checks their kind and amount, and allows one active code per family', async () => {
+    const insert = (code: string, kind = 'percent', amount = 20) =>
+      client.query<{ id: string }>(
+        `insert into discount_codes (code, kind, amount, created_by) values ($1, $2, $3, 'manager@example.com') returning id`,
+        [code, kind, amount],
+      );
+    const { rows } = await insert('WINTER26');
+    await expect(insert('WINTER26')).rejects.toThrow(/discount_codes_code_unique/);
+    await expect(insert('LOWERx12')).rejects.toThrow(/discount_codes_code_format/);
+    await expect(insert('PERCENT2', 'percent', 150)).rejects.toThrow(/discount_codes_amount_range/);
+    await expect(insert('KINDBAD1', 'free', 10)).rejects.toThrow(/discount_codes_kind_values/);
+
+    const { rows: fam } = await client.query<{ id: string }>(
+      `insert into families default values returning id`,
+    );
+    const redeem = () =>
+      client.query(`insert into discount_redemptions (code_id, family_id) values ($1, $2)`, [
+        rows[0]!.id,
+        fam[0]!.id,
+      ]);
+    await redeem();
+    await expect(redeem()).rejects.toThrow(/discount_redemptions_one_active_per_family/);
+    await client.query(`update discount_redemptions set ended_at = now() where family_id = $1`, [
+      fam[0]!.id,
+    ]);
+    await redeem();
+  });
+});

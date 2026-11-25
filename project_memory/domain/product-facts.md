@@ -170,6 +170,10 @@ Tags: #product #rules #limits #defaults
   `deleteFamilies` only for a one-parent family (two parents: 409 `needs_both_parents`, both
   confirm in the app). Records kept 2 years. Trial and free-place routes answer 503
   `payments_not_ready` until workstream $.
+- Discount codes (O5): Managers create (6–16 letters and digits, any case, stored upper case;
+  percent 1–100 or a fixed amount in pence; months or forever; optional last UK day and maximum
+  uses) and disable them in AppDeck; Agents can see them. One active code per family; never with
+  a free school meals place. Checkout (workstream $) applies them with `checkCodeForFamily`.
 - Every operator read of a family and every action goes in `operator_audit_log`, kept 2 years
   (data retention policy 1.5); the scheduled clean-up deletes older entries.
 
