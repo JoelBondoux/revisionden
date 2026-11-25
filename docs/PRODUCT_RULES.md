@@ -329,6 +329,11 @@ Mockups: screens 19 (student) and 20 (parent).
 - Subjects table: mastery (average of topics), predicted grade and target (with "on target" or
   how far below), change in mastery over the last 4 weeks.
 - Weak spots: the three weakest topics, 4 weeks ago and now.
+- **Worth a look together** (K11): topics holding learning points the child has missed on
+  several review-ladder visits across days (flagged by F5's `worthALook`), one row per topic
+  with how many points, and "Learn it first" where the topic has checked lessons. Wording:
+  "These have been tricky for a while. A chat or a look with their teacher may help." No card
+  at all when nothing is flagged. Parent only: never on the child's My stats.
 - Latest school report effort scores (for example CBI), shown on the school's own scale.
 - Parent-set reward progress (from `REWARDS.md`).
 - Healthy habits: sessions in quiet hours, days at the daily limit, rest days taken.

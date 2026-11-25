@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Parents: a new "Worth a look together" card on the stats page lists topics your child has found tricky for a while, with a "Learn it first" lesson link where there is one. It only appears when there is something to look at, and your child never sees it.
 - Got one wrong? A similar question comes back a few questions later (or the same one at the end), and anything you found hard, or took a long time over, comes back as a warm-up over the next few days until it sticks.
 - New "Add RevisionDen to this device" button on your topic map and on the parent home. On Chrome, Edge and Android it installs the app in one tap; on an iPhone or iPad it shows the three steps. Tap "Not now" to hide it for 30 days.
 - Students: when RevisionDen asks you to unlock (after 12 hours), tap "I'm a student: unlock with my passkey" and use your face, fingerprint or screen lock. You go straight back to where you were. No need to ask a parent for a new QR code.
@@ -87,6 +88,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- K11: "Worth a look together" card on the parent stats dashboard, from F5's flagged review points (`GET /v1/students/:id/worth-a-look`, parent only; `groupWorthALook` and `WorthALookSchema` in core). Hidden when empty.
 - Learning from mistakes (F5): `packages/core/src/mistakes.ts` (expected times, shaky, `insertRetry`, review ladder 1/3/7 days, `RETRY_WEIGHT`); migration 0026 (`items.learning_point`, `items.expected_seconds`, `attempts.retry`, `review_points`); attempts return `similar` and `shaky` and take `retry`; lessons and the 5-a-day start with up to 2 `warmUp` items; retries count at half weight for mastery; the family export includes `reviewPoints`; content sync reads optional `learning_point` and `expected_seconds`.
 - Install button (I6): `InstallCard` on the topic map and the parent home and `InstallButton` in Settings (`apps/web/src/pwa/{install.ts,InstallCard.tsx,IosSteps.tsx,installStore.ts}`): keeps `beforeinstallprompt` and shows it on tap, an iPhone- or iPad-worded Share → Add to Home Screen sheet on Safari, nothing where install is unsupported; hidden when standalone, after `appinstalled`, and for 30 days after "Not now" (`revisionden.installDismissed`). `/install` shows the steps for the device in use. Cookies and storage 1.4.
 - Student passkey unlock (I5): "I'm a student: unlock with my passkey" on the welcome page and a new `/unlock` page calling `POST /v1/device/unlock/{options,verify}`; a 401 from any `/v1/student/...` call sends the device to `/unlock?returnTo=<page>`; "Ask a parent to link this device" when no passkey is found. Rewards API errors now carry the API path. Decision `project_memory/decisions/0007-student-passkey-unlock.md`.

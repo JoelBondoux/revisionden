@@ -199,6 +199,7 @@ export const dailyLimitHandlers: RequestHandler[] = [
   http.get('*/v1/student/daily-limit', () => HttpResponse.json(demoStudentLimit())),
   http.post('*/v1/student/daily-limit/seen', () => new HttpResponse(null, { status: 204 })),
   http.get('*/v1/students/:id/daily-limit', () => HttpResponse.json(parentLimit())),
+  http.get('*/v1/students/:id/worth-a-look', () => HttpResponse.json({ topics: [] })),
   http.put('*/v1/students/:id/daily-limit', async ({ request }) => {
     const change = UpdateDailyLimitRequestSchema.parse(await request.json());
     limitState = { ...limitState, ...change, suggestion: limitState.suggestion };

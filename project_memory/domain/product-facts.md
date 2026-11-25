@@ -85,6 +85,10 @@ Tags: #product #rules #limits #defaults
   time climbs a rung, the 7-day one clears it, a slip restarts; missed on 3 visits it is parked a
   week and flagged "worth a look" for the parent dashboard). Lessons and the 5-a-day open with
   up to 2 warm-ups on due points. Retries count at half weight for mastery. Migration 0026.
+- Worth a look together (K11, lead 2026-11-25): parent stats dashboard card listing the topics with
+  F5-flagged points (one row per topic, a count, "Learn it first" where checked lessons exist),
+  from `GET /v1/students/:id/worth-a-look`. Hidden when empty; never shown to the child. Learning
+  point ids are internal, so parents see topic titles only.
 - XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, working 20,
   long answer 30; part marks earn part.
 - The 14 original rewards keep their ids and avatar items (the 100-day streak unlocks two: crown

@@ -5,12 +5,14 @@ import {
   ParentDashboardSchema,
   StudentDailyLimitSchema,
   StudentStatsSchema,
+  WorthALookSchema,
   type ParentDailyLimit,
   type ParentDashboard,
   type StatsPeriod,
   type StudentDailyLimit,
   type StudentStats,
   type UpdateDailyLimitRequest,
+  type WorthALook,
 } from '@revisionden/core';
 import { apiRequest } from '../../api/client';
 import { defaultBaseUrl } from '../../api/ApiContext';
@@ -32,6 +34,8 @@ export interface StatsApi {
   getDailyLimit(studentId: string): Promise<ParentDailyLimit>;
   saveDailyLimit(studentId: string, change: UpdateDailyLimitRequest): Promise<ParentDailyLimit>;
   answerSuggestion(studentId: string, action: 'accept' | 'dismiss'): Promise<ParentDailyLimit>;
+  /** Topics flagged as tricky across several days (parent only, workstream K11). */
+  getWorthALook(studentId: string): Promise<WorthALook>;
 }
 
 /** Client for the stats routes (apps/api/src/stats). Sends the session cookies. */
@@ -63,6 +67,7 @@ export function createStatsApi({
     saveDailyLimit: (id, change) => send('PUT', limitPath(id), ParentDailyLimitSchema, change),
     answerSuggestion: (id, action) =>
       send('POST', `${limitPath(id)}/suggestion`, ParentDailyLimitSchema, { action }),
+    getWorthALook: (id) => get(`students/${encodeURIComponent(id)}/worth-a-look`, WorthALookSchema),
   };
 }
 

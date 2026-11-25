@@ -72,6 +72,7 @@
     "GET /v1/students/:id/reminder-settings",
     "GET /v1/students/:id/rewards",
     "GET /v1/students/:id/stats",
+    "GET /v1/students/:id/worth-a-look",
     "PATCH /v1/admin/feedback/:id",
     "PATCH /v1/students/:id",
     "PATCH /v1/students/:id/parent-rewards/:rewardId",

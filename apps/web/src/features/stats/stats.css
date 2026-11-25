@@ -178,6 +178,12 @@
   gap: var(--space-3);
 }
 
+/* A row whose second part (a "Learn it first" list) can drop below the title on a phone. */
+.stats-list__row--wrap {
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
 .stats-facts {
   display: grid;
   grid-template-columns: auto 1fr;

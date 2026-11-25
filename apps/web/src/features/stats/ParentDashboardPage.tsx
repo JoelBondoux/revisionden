@@ -8,6 +8,7 @@ import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { BarChart } from './BarChart';
 import { DailyLimitPanel } from './DailyLimit';
+import { WorthALookCard } from './WorthALook';
 import { formatMinutes, signedNote, usd } from './format';
 import { NotSetUp, Tile } from './Tile';
 import { useStatsApi, type Child } from './statsApi';
@@ -193,6 +194,8 @@ function DashboardView({ data }: { data: ParentDashboard }) {
         )}
         <p className="secondary-text">4 weeks ago → now</p>
       </Card>
+
+      <WorthALookCard key={data.student.id} studentId={data.student.id} />
 
       <Card title="School report effort">
         {data.effortScores ? (
