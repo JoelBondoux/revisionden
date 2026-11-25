@@ -5,12 +5,6 @@
 
 ## Open
 
-- [ ] **The privacy notices only mention the QR code for linking a device.** E4 (#105) added
-      "Send a link instead" (`apps/api/src/routes/devices.ts`), but `docs/legal/privacy-notice.md`
-      3.2 says a parent "links the student's device with a one-time QR code" and
-      `docs/legal/privacy-for-young-people.md` ("How your account works") says "Your device is
-      linked with a QR code". Not settled: changing the privacy notice raises its version, which
-      asks every parent to confirm it again; raised with the lead (L, 2026-11-25).
 - [ ] **ICO complaint wording awaiting owner check.** `docs/legal/complaints-policy.md` 6.1 has a
       marked placeholder instead of the ICO's complaint page and phone number, and the parent's
       complaint page (`apps/web/src/features/complaints/ComplaintsPage.tsx`) names the ICO without
@@ -117,6 +111,14 @@
 
 ## Resolved
 
+- [x] **The privacy notices only mention the QR code for linking a device.** E4 (#105) added
+      "Send a link instead" (`apps/api/src/routes/devices.ts`), but `docs/legal/privacy-notice.md`
+      3.2 says a parent "links the student's device with a one-time QR code" and
+      `docs/legal/privacy-for-young-people.md` ("How your account works") says "Your device is
+      linked with a QR code". Not settled: changing the privacy notice raises its version, which
+      asks every parent to confirm it again; raised with the lead (L, 2026-11-25).
+      Resolved by L on the lead's decision (pre-launch, re-prompt accepted): privacy notice 1.10,
+      young people's notice 1.7, 2026-11-25.
 - [x] **Shared device links last 24 hours, but the data-retention policy says 10 minutes.** E4
       (#105) adds "Send a link instead": a single-use link and short code that last 24 hours
       (`apps/api/src/routes/devices.ts`, `docs/PRODUCT_RULES.md` "Linking a device (E4)"). The
