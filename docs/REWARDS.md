@@ -203,6 +203,35 @@ not one of the child's 2 reminders a day. If no parent device has it on, nothing
 parent is told once they turn it on (while the reward is still not given). Code:
 `apps/api/src/notifications/parent-rewards.ts`, run by the 15-minute cron.
 
+## Bug Hunter track (hidden)
+
+Requested by the product owner on 2026-11-25. Rewards students who help make the app better.
+
+- A student who reports a bug (bug icon or error report) that the operator then **confirms** gets
+  **+50 XP** and moves one step along the **Bug Hunter** track.
+- The track is hidden: it appears in the student's rewards only after their first confirmed bug.
+- Steps (customisations, all original art): 1 bug badge; 2 "Bug Hunter" title; 3 magnifying-glass
+  avatar item; 5 circuit-board profile frame; 8 Pip "debug" outfit; 12 glitch avatar effect;
+  20 legendary "Exterminator" set.
+- Fair play: one reward per distinct bug. Duplicates of a bug already confirmed for someone else
+  earn a smaller "Thanks for confirming" (+10 XP, no track step). At most 3 confirmed-bug rewards a
+  week. Parents' reports are thanked but do not earn student rewards. The operator's decision is
+  final; nothing is automatic.
+
+## Secret achievements
+
+- A set of achievements whose names and conditions are hidden until earned. The rewards page shows
+  them as locked "???" cards with a count ("Secret achievements: 3 of 24 found"), plus a vague hint
+  for some (for example "Something about comebacks…").
+- Earning one reveals it with its own reward sound tier and a celebration.
+- Conditions follow learning, never screen time, late nights or spending (the principles above).
+  Examples: a perfect set straight after a wrong answer streak ("Comeback"), practise every
+  enrolled subject in one week, a 10-answer combo, fix 3 weak spots in a day, finish a timed paper
+  with every question on pace, review 100 flashcards in finished sessions in a week, gift a day to
+  3 different friends.
+- They are defined as data in the reward catalogue like other rewards (with `secret: true`), so
+  they are tested and can be added each term.
+
 ## Content pipeline for new items
 
 - Items are original SVG art in the app's style, inspired by the student's hobbies (music,
