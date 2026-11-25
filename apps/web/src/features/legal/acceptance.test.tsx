@@ -31,6 +31,8 @@ const library = createPolicyLibrary(
   {},
 );
 const at = '2026-11-24T10:00:00.000Z';
+/** J7 button-style links: `btn link-button` today, `btn-link` after J's #95. */
+const BUTTON_LINK = /\bbtn(-link)?\b/;
 
 describe('acceptanceStatus', () => {
   const current = { 'privacy-notice': '1.1', 'terms-of-use': '1.0' };
@@ -152,8 +154,9 @@ describe('PolicyGate', () => {
 
   it('uses button-style links and inline text links, never plain links (J7)', async () => {
     show(fakeApi([]));
-    expect(await screen.findByRole('link', { name: 'Read the full Terms of use' })).toHaveClass(
-      'link-button',
+    expect(await screen.findByRole('link', { name: 'Read the full Terms of use' })).toHaveAttribute(
+      'class',
+      expect.stringMatching(BUTTON_LINK),
     );
     expect(screen.getByRole('link', { name: 'Terms of use' })).toHaveClass('text-link');
     expect(screen.getByRole('link', { name: 'Privacy notice' })).toHaveClass('text-link');
@@ -195,8 +198,9 @@ describe('PolicyGate', () => {
     ]);
     show(api);
     const dialog = await screen.findByRole('dialog', { name: "We've updated our Privacy notice" });
-    expect(within(dialog).getByRole('link', { name: 'Read the Privacy notice' })).toHaveClass(
-      'link-button',
+    expect(within(dialog).getByRole('link', { name: 'Read the Privacy notice' })).toHaveAttribute(
+      'class',
+      expect.stringMatching(BUTTON_LINK),
     );
     expect(dialog).toHaveTextContent('We now keep feedback for 12 months.');
     await userEvent.click(screen.getByRole('button', { name: 'Confirm' }));
