@@ -15,6 +15,7 @@ const KIND_WORDS: Record<RewardCardResponse['items'][number]['kind'], string> = 
   theme: 'Colour theme',
   pipOutfit: 'Pip outfit',
   badge: 'Badge',
+  effect: 'Avatar effect',
 };
 
 export function RarityPill({ rarity }: { rarity: RewardCardResponse['rarity'] }) {

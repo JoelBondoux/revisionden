@@ -5,6 +5,11 @@
 
 ## Open
 
+- [ ] **Secret achievement stats with no data yet.** "Patch Day" (weak spots fixed in a day),
+      "On Pace" (timed papers on pace, workstream X) and "Card Shark" (flashcards in a week; deck
+      reviews have no timestamped record) are in the catalogue but their stats count as 0 until the
+      data exists (`packages/core/src/catalogue/hidden.ts`).
+
 - [ ] **Daily limit changes in the activity log.** `docs/PRODUCT_RULES.md` ("Two parents") says the
       other parent is told when a limit changes, but the daily limit (same page, "Daily limit") has
       no API route yet. B3 logs `PUT /v1/students/:id/daily-limit` as an important change
@@ -77,6 +82,10 @@
       except a direct link. Not settled: F2's lane; no F2 branch or PR exists yet (2026-11-25).
 
 ## Resolved
+
+- [x] Bug Hunter count and XP: settled once workstream L's #52 merged. The rewards route reads
+      L's `confirmedBugCount` and adds L's `bugRewardXp` to reward XP for levels
+      (`apps/api/src/routes/rewards.ts`); nothing is written to `attempts`.
 
 - [x] **Flashcard deck XP and rewards.** `docs/REWARDS.md` says XP from flashcards counts towards
       levels, but deck reviews (`apps/api/src/routes/flashcards.ts`) only add to `daily_xp`, which

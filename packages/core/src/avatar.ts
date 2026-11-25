@@ -193,6 +193,7 @@ export const AVATAR_CATALOGUE: AvatarCatalogue = {
     locked('dino-buddy', 'gift-3-days'),
     locked('pixel-sword', 'perfect-set'),
     locked('lantern', 'autumn-2-2026-5'),
+    locked('magnifier', 'bug-hunter-3'),
   ],
   backgroundColour: free(
     'sky',

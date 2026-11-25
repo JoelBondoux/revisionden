@@ -5,7 +5,7 @@
  * must reach a number, a collection to complete, or a seasonal challenge inside its term window.
  * Evaluation is deterministic: the same progress always gives the same rewards.
  */
-import { CHAPTERS, CHAPTER_STEP_XP, chapterForYear, chapterXp } from './chapters';
+import { CHAPTERS, CHAPTER_FULL_XP, CHAPTER_STEP_XP, chapterForYear, chapterXp } from './chapters';
 import {
   COLLECTIONS,
   REWARDS,
@@ -132,6 +132,8 @@ export function progressionStats(input: {
     chapter3Xp: chapters[3],
     chapter4Xp: chapters[4],
     chapter5Xp: chapters[5],
+    chaptersFilled: Object.values(chapters).filter((xp) => xp >= CHAPTER_FULL_XP).length,
+    bestRewardDayXp: Math.max(0, ...days.map((d) => d.xp)),
   };
   if (input.yearGroup >= 12) Object.assign(stats, { gcseExamsSat: 1, gcseFinished: 1 });
   return stats;
@@ -175,7 +177,23 @@ export interface RewardsOverview {
   }[];
   /** Seasonal drops live today (this term's drop, and any re-release). */
   seasons: { id: string; name: string; challenge: string; ends: string; items: RewardCard[] }[];
+  /** Hidden tracks with at least one step earned (others stay invisible). */
+  hiddenTracks: {
+    id: string;
+    name: string;
+    earned: number;
+    total: number;
+    next: RewardCard | null;
+    steps: RewardCard[];
+  }[];
+  /** Secret achievements: found ones in full, the rest as "???" cards with optional hints. */
+  secrets: { found: number; total: number; cards: (RewardCard & { hint?: string })[] };
 }
+
+/** Display names of hidden tracks. */
+export const HIDDEN_TRACK_NAMES: Record<string, string> = {
+  'bug-hunter': 'Bug Hunter',
+};
 
 export interface OverviewInput {
   stats: Partial<RewardStats>;
@@ -270,11 +288,53 @@ export function rewardsOverview(input: OverviewInput): RewardsOverview {
     };
   });
 
+  const trackIds = [...new Set(REWARDS.flatMap((r) => (r.track ? [r.track] : [])))];
+  const hiddenTracks = trackIds.flatMap((id) => {
+    const steps = REWARDS.filter((r) => r.track === id);
+    const earnedSteps = steps.filter((r) => earned.has(r.id)).length;
+    if (earnedSteps === 0) return [];
+    const nextStep = steps.find((r) => !earned.has(r.id));
+    return [
+      {
+        id,
+        name: HIDDEN_TRACK_NAMES[id] ?? id,
+        earned: earnedSteps,
+        total: steps.length,
+        next: nextStep ? card(nextStep) : null,
+        steps: steps.map(card),
+      },
+    ];
+  });
+
+  // Unearned secrets are masked so their names and conditions never leave the server.
+  let hiddenIndex = 0;
+  const secretRewards = REWARDS.filter((r) => r.secret);
+  const secretCards = secretRewards.map((r) => {
+    if (earned.has(r.id)) return card(r);
+    hiddenIndex += 1;
+    return {
+      id: `secret-hidden-${hiddenIndex}`,
+      name: '???',
+      rarity: r.rarity,
+      items: [],
+      earned: false,
+      current: 0,
+      target: 1,
+      ...(r.hint && { hint: r.hint }),
+    };
+  });
+
   return {
     level: levelProgress(input.totalRewardXp),
     chapter,
     nextMilestones,
     collections,
     seasons,
+    hiddenTracks,
+    secrets: {
+      found: secretRewards.filter((r) => earned.has(r.id)).length,
+      total: secretRewards.length,
+      cards: secretCards,
+    },
   };
 }

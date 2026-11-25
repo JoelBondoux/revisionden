@@ -319,6 +319,11 @@ Tags: #product #rules #limits #defaults
 - Newly earned rewards are saved (and announced as "New!") by `rewardsView`, used by the student's
   `GET /v1/student/rewards` and the parent's full `GET /v1/students/:id/rewards`. The parent's
   `GET /v1/students/:id/parent-rewards` and the stats pages use the read-only `rewardsProgress`.
+- Hidden tracks and secrets (R7): Bug Hunter steps at 1, 2, 3, 5, 8, 12, 20 confirmed bugs
+  (`confirmedBugs` from L's `confirmedBugCount`; L's bug reward XP counts for levels, not
+  chapters); 24 secret achievements shown as
+  "???" until earned, with hints on 9; stats in `packages/core/src/secret-stats.ts`. New reward
+  item kind `effect` (glitch); new avatar item magnifier (held item, appended).
   They are also saved, once each, by an answer (`POST /v1/student/learn/attempts`) and a finished
   flashcard session (`.../sessions/:id/finish`): both return `newlyEarned` (`saveNewRewards`), and
   the lesson, Cards screen and starting-test results show "New reward: …" with the reward sound

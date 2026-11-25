@@ -28,7 +28,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Combo bonus: from your 3rd right answer in a row, each right answer earns 5 extra XP. In the starting test, the bonus is added when you see your results.
 - Your topic map now shows your real progress, and tapping a topic or the next mission starts a lesson.
 - Coming soon: a bug button on every screen. Find a real bug and earn bonus XP and secret Bug Hunter rewards.
-- Coming soon: secret achievements you only discover when you earn them.
+- Secret achievements: 24 hidden ones to find, shown as "???" until you earn one, with a few vague hints. Earning one reveals it with a celebration.
+- Bug Hunter: your first confirmed bug reveals a hidden track with a badge, a title, a magnifying glass, a circuit-board frame and more, and the bonus XP counts towards your level.
 - Coming later: timed exam practice. Sit a full paper against the clock, then see your marks, your likely grade and how to pace yourself better.
 - The privacy notice for students is now much easier to read: a short version on six cards, the key points of each part up front, and "Read more" when you want the detail.
 - Parents get a notification on their phone when a child reaches a reward target you set. Turn on "Reward news" on the new parent home.
@@ -70,6 +71,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Verification protocol now covers extended answers (blind marking of exemplars plus individual human approval).
 
 ### Added
+
+- Rewards R7: Bug Hunter hidden track (`confirmedBugs` from L's `confirmedBugCount`; L's bug reward XP added to reward XP for levels), 24 secret achievements with masked `???` overview cards, `secret-stats.ts`, `effect` reward item kind, magnifier avatar item and glitch effect art.
 
 - Two parents (B3): `parent_invites`, `family_events`, `parent_removal_notices`, `parents.position`/`events_seen_at`, `families.deletion_requested_*` (migration 0012; privacy notice 1.5, young people 1.4, data retention 1.2); `/v1/family/{invites,join,parents,deletion,events}` and `/v1/removal-notice`; parent guard refuses removed parents; change log middleware over parent routes; important changes pushed to the other parent by the cron and shown in `GET /v1/parent/notifications/latest`; Parents panel, Family activity and removal notice on Parent home, `/join` page; export includes the activity log; cron deletes expired invites and log rows older than 12 months.
 - Learn it first Q5 (Q): `content/learn-links/<topic id>.json` with `content/schemas/learn-links.schema.json`, checked by `pnpm content:validate` (`scripts/content/learn-links.mjs`: real topic, file name, provider host, level and board match the subject and tree, no duplicates). `pnpm content:check-links` and `.github/workflows/learn-links.yml` (on link changes and weekly) request every URL and fail on anything but 2xx/3xx. Pilot: 11 Oak KS4 Higher lessons for the 9 GCSE Maths topics with items, all 200 in the CI link check on 2026-11-25 (no Bitesize yet). Web `features/learn-links/` bundles the files at build time and shows a "Learn it first" button on topic lessons with a checked link (`checked_at` set).
