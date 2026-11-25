@@ -5,6 +5,15 @@
 
 ## Open
 
+- [ ] **Shared device links last 24 hours, but the data-retention policy says 10 minutes.** E4
+      (#105) adds "Send a link instead": a single-use link and short code that last 24 hours
+      (`apps/api/src/routes/devices.ts`, `docs/PRODUCT_RULES.md` "Linking a device (E4)"). The
+      QR code still lasts 10 minutes. `docs/legal/data-retention.md` (1.9) says "link codes last
+      10 minutes" and its table says device link codes are "Valid for 10 minutes and usable
+      once". Clean-up also now keeps an expired link while a passkey set-up it started is still
+      valid (up to 5 more minutes), so "deleted within 15 minutes of expiring" can be up to 20.
+      Not settled in E4: the policy is L's versioned legal text and needs a version bump. Raised
+      with the lead on 2026-11-25.
 - [ ] **ICO complaint wording awaiting owner check.** `docs/legal/complaints-policy.md` 6.1 has a
       marked placeholder instead of the ICO's complaint page and phone number, and the parent's
       complaint page (`apps/web/src/features/complaints/ComplaintsPage.tsx`) names the ICO without

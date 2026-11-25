@@ -91,6 +91,37 @@ describe('scheduled clean-up', () => {
     expect(left.map((r) => r.tokenHash)).toEqual(['live-link']);
   });
 
+  it('keeps an expired link while a passkey set-up it started is still under way', async () => {
+    const f = await family(NOW);
+    const [token] = await db
+      .insert(deviceLinkTokens)
+      .values({
+        tokenHash: 'redeemed-just-in-time',
+        familyId: f.familyId,
+        studentId: f.studentId,
+        expiresAt: minutes(-1),
+        usedAt: minutes(-2),
+      })
+      .returning();
+    await db.insert(passkeyChallenges).values({
+      kind: 'register',
+      challenge: 'still-valid',
+      studentId: f.studentId,
+      linkTokenId: token!.id,
+      expiresAt: minutes(3),
+    });
+    await cleanUpExpiredData({ db, now: NOW });
+    const left = await db
+      .select()
+      .from(passkeyChallenges)
+      .where(eq(passkeyChallenges.linkTokenId, token!.id));
+    expect(left).toHaveLength(1);
+
+    await cleanUpExpiredData({ db, now: minutes(10) });
+    const gone = await db.select().from(deviceLinkTokens).where(eq(deviceLinkTokens.id, token!.id));
+    expect(gone).toHaveLength(0);
+  });
+
   it('deletes expired student sessions and keeps live ones', async () => {
     const f = await family(NOW);
     await db.insert(studentSessions).values([
