@@ -25,7 +25,7 @@ feature/<workstream>-<short-name>  ──PR──▶  dev  ──PR──▶  st
 | ----------- | ------------------------- | ----------------------------- | --------------------- |
 | Development | `dev.revisionden.com`     | `api-dev.revisionden.com`     | Neon branch `dev`     |
 | Staging     | `staging.revisionden.com` | `api-staging.revisionden.com` | Neon branch `staging` |
-| Production  | `revisionden.com`         | `api.revisionden.com`         | Neon `main`           |
+| Production  | `app.revisionden.com`     | `api.revisionden.com`         | Neon `main`           |
 
 Deploys run from GitHub Actions (`.github/workflows/deploy-*.yml`): a push to `dev` deploys
 development, a push to `staging` deploys staging, and production deploys once the release

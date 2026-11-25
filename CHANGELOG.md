@@ -75,6 +75,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Production app host is `app.revisionden.com` (G): web Worker route, API `WEB_ORIGIN` (and so Better Auth's trusted origin and the passkey origin), deploy URL and smoke-test API lookup; `PASSKEY_RP_ID` stays `revisionden.com`; tests check the apex is left to the public site (M) and the PWA manifest stays host-relative.
 - Rewards R7b fixes (from review): Comeback Kid ignores flashcard self-ratings (they never change mastery), and its counter replays only the 30-answer mastery window, so long histories stay fast.
 - Daily 5-a-day Q3 (Q): `packages/core/src/daily.ts` (`selectDailySet`: practised topics only, mastery drifts down with the 30-day half-life since last practice, then `selectNextItems`, topped up from the same topics; `dailySeed`, `dailySetProgress`, `DailySetResponseSchema`), `GET /v1/student/daily` (`apps/api/src/routes/daily.ts`; no extended answers), table `daily_sets` (migration 0014, cascade delete, in the family export), web `features/daily/` (map card above the next mission, `/learn/daily` in the lesson player, MSW mock).
 - Rewards R7b: six more hidden tracks (Fact Checker, Comeback Kid, Explorer, Planner, Pace Setter, Perfectionist) with `track-stats.ts` (`weakSpotsTurnedStrong`, `practiceKindsTried`), new stats, quill and explorer hat avatar items, and embers, pace stripes and prism effect art. Fact Checker, Planner, Pace Setter and Perfectionist count 0 until their data exists.
