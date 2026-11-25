@@ -298,3 +298,11 @@ Tags: #product #rules #limits #defaults
 - Wired so far: lessons (correct, wrong, part marks, daily goal met, lesson complete), starting
   test (submit, reveal, timer warning) and flashcards (flip, rating). Level up, rewards, gifts and
   plan sounds exist in the bank but wait for their screens.
+
+## Owner decisions (2026-11-25)
+
+- Hosting reuses the existing Cloudflare token and Neon key; only `revisionden`-named resources
+  may be created or changed. New Neon project `revisionden` in London.
+- AI marking text may be processed in the US (accepted for now); stored data stays in the UK or EU.
+- The app is run by a sole trader; name and contact details come from build variables only.
+  Decision 0003.
