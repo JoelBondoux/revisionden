@@ -80,6 +80,8 @@ interface LessonPlayerProps {
   onFinish?: () => void;
   /** Extra controls under the intro, such as a Skip button. */
   aside?: ReactNode;
+  /** Recall check answers (Q4): sent as recall, so a wrong one never resets the combo. */
+  recall?: boolean;
 }
 
 /** The option a marked multiple choice answer should show as right, if we can tell. */
@@ -112,6 +114,7 @@ export function LessonPlayer({
   doneHref = '/learn',
   onFinish,
   aside,
+  recall = false,
 }: LessonPlayerProps) {
   const api = useLearnApi();
   const { play } = useSound();
@@ -160,6 +163,7 @@ export function LessonPlayer({
         answer: value,
         timeMs: Math.max(0, Date.now() - shownAt.current),
         mode: 'learn',
+        ...(recall ? { recall: true } : {}),
       });
       // The API counts combos (J4); older responses without it fall back to counting here.
       const streak = marked.combo ?? nextCombo(combo, marked.correct);

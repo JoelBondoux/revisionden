@@ -47,7 +47,8 @@
 
 - **Combo bonus:** from the 3rd right answer in a row, +5 XP per right answer (on top of the
   normal XP), in Learn mode only. In Test mode the combo is shown at the reveal and the same bonus
-  applies to the answers in order. Combos never span sessions. All daily caps and healthy limits
+  applies to the answers in order. Combos never span sessions. A wrong recall check answer
+  ("Remember this?", Q4) never resets the combo; a right one still adds to it. All daily caps and healthy limits
   still apply.
 
 ## Never (Children's Code and `REWARDS.md`)
