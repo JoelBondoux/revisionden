@@ -41,7 +41,7 @@
 | `src/pages`                  | One component per screen; `src/routes.tsx` maps paths to screens                             |
 | `src/api`                    | Typed API client (every response checked with Zod), `useApiResource`, retry UI               |
 | `src/mocks`                  | MSW handlers and made-up demo data, used by tests and by `pnpm dev`                          |
-| `src/pwa`                    | Service worker registration and the offline banner                                           |
+| `src/pwa`                    | Service worker registration, the offline banner and the update banner (`/version.json`)      |
 | `src/session`                | Which student is using this device (a convenience until device linking lands)                |
 | `src/features/learn`         | Lesson player, starting test, subject page, command words, learning API client and mocks (F) |
 | `src/features/flashcards`    | Cards tab: due cards, all decks, my cards, 3D flip card (F)                                  |

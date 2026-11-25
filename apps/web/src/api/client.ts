@@ -7,6 +7,7 @@ import {
   maskIdsInPath,
   type OnboardingFamily,
 } from '@revisionden/core';
+import { reportPossiblyStale } from '../pwa/updates';
 import { cardsDueSchema, topicMapSchema, type CardsDue, type TopicMap } from './schemas';
 
 export type ApiErrorKind = 'network' | 'http' | 'schema';
@@ -128,6 +129,10 @@ export async function apiRequest<T>(
   };
   if (!response.ok) {
     const body = ApiErrorSchema.safeParse(json);
+    // An unknown route may mean this copy of the app is older than the API: check for a new build.
+    if (response.status === 404 && body.success && body.data.error.code === 'not_found') {
+      reportPossiblyStale();
+    }
     const message = `The server replied with ${response.status}.`;
     if (body.success && body.data.error.ref) {
       throw new ApiError(
@@ -144,7 +149,10 @@ export async function apiRequest<T>(
       : error;
   }
   const parsed = schema.safeParse(json);
-  if (!parsed.success) throw fail('schema', `Unexpected response from ${url.pathname}.`);
+  if (!parsed.success) {
+    reportPossiblyStale();
+    throw fail('schema', `Unexpected response from ${url.pathname}.`);
+  }
   return parsed.data;
 }
 

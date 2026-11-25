@@ -381,3 +381,17 @@ Mockups: screens 19 (student) and 20 (parent).
   `rewardBank.ts` (synthesis) and `<RewardSound rewards={newlyEarned} />` on the Rewards screen.
   Prestige stars play legendary even where the catalogue rarity is epic. Gifts, plan and timed
   papers get their calls when those screens are built.
+
+## App updates (installable app)
+
+So nobody runs an old copy of the app for long after a deploy (decided 2026-11-25):
+
+- Opening or reloading the app always fetches the newest page from the server; the offline copy
+  is only used when there is no connection, and is replaced by the newest page each visit.
+- Every build publishes its id at `/version.json` (version and commit). The app checks it when it
+  starts, when it comes back to the foreground and every 15 minutes. When a newer build is
+  deployed it shows "A new version of RevisionDen is ready." with a Refresh button.
+- If an API reply suggests the app is out of date (an unknown route, or a reply in an unexpected
+  shape) the app checks at once and, when a newer build exists, reloads by itself, once per new
+  build, so it can never get stuck or loop. Without browser storage it only shows the banner.
+- Implemented: `apps/web/public/sw.js`, `apps/web/src/pwa/updates.tsx`, `apps/web/vite.config.ts`.

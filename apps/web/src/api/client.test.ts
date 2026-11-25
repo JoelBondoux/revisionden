@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import { server } from '../mocks/server';
 import { ApiError, createApiClient } from './client';
+import { STALE_BUILD_EVENT } from '../pwa/updates';
 
 const reports: unknown[] = [];
 const client = createApiClient({ baseUrl: 'http://api.test', random: () => 0 });
@@ -92,5 +93,26 @@ describe('API client', () => {
   it('fetches how many flashcards are due on the student device', async () => {
     const cards = await client.getCardsDue();
     expect(cards.due).toBeGreaterThanOrEqual(0);
+  });
+
+  it('signals a possibly out-of-date app when a route is missing or a reply has the wrong shape', async () => {
+    const seen: string[] = [];
+    const listener = () => seen.push('stale');
+    window.addEventListener(STALE_BUILD_EVENT, listener);
+    server.use(
+      http.get('*/v1/onboarding/family', () =>
+        HttpResponse.json(
+          { error: { code: 'not_found', message: 'Not found', ref: 'RD-7K2M9Q' } },
+          { status: 404 },
+        ),
+      ),
+    );
+    await client.getFamily().catch(() => undefined);
+    server.use(http.get('*/v1/onboarding/family', () => HttpResponse.json({ students: [] })));
+    await client.getFamily().catch(() => undefined);
+    server.use(http.get('*/v1/onboarding/family', () => new HttpResponse(null, { status: 500 })));
+    await client.getFamily().catch(() => undefined);
+    window.removeEventListener(STALE_BUILD_EVENT, listener);
+    expect(seen).toEqual(['stale', 'stale']);
   });
 });

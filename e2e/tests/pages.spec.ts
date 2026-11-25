@@ -102,7 +102,12 @@ test("a parent's family list links to each child's parent view, accessibly", asy
       json: {
         children: [
           {
-            student: { id, nickname: 'NovaFox', avatarCode: '10000000000000000000000000000', yearGroup: 11 },
+            student: {
+              id,
+              nickname: 'NovaFox',
+              avatarCode: '10000000000000000000000000000',
+              yearGroup: 11,
+            },
             enrolments: [],
             level: 'gcse',
             examSeason: { season: 'summer', year: 2027 },
@@ -119,6 +124,21 @@ test("a parent's family list links to each child's parent view, accessibly", asy
     `/parent/stats?student=${id}`,
   );
   await expect(page.getByRole('link', { name: 'Link a device for NovaFox' })).toBeVisible();
+  await expectNoSidewaysScroll(page);
+  await expectAccessible(page);
+});
+
+test('the build publishes its id for update checks', async ({ request }) => {
+  const res = await request.get('/version.json');
+  expect(res.ok()).toBe(true);
+  expect(((await res.json()) as { build: string }).build).toMatch(/^\d{2}\.\d{2}\.\d{3}-/);
+});
+
+test('offers a refresh, accessibly, when a newer version has been deployed', async ({ page }) => {
+  await page.route('**/version.json', (route) => route.fulfill({ json: { build: 'newer-build' } }));
+  await page.goto('/legal');
+  await expect(page.getByText('A new version of RevisionDen is ready.')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Refresh' })).toBeVisible();
   await expectNoSidewaysScroll(page);
   await expectAccessible(page);
 });

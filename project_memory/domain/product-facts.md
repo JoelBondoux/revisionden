@@ -87,7 +87,10 @@ Tags: #product #rules #limits #defaults
   mission card suggests what to do next. The Cards tab shows how many flashcards are due.
 - Mascot: Pip, an angular geometric fox (orange `#FF7A2F`). Brand violet `#6C47F5`; font Nunito,
   self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
-- Works offline for the app shell; API calls are never cached. iPad users get an "Add to Home
+- Works offline for the app shell; API calls are never cached. Pages always come fresh from the
+  server when online. The app checks `/version.json` on start, on return to the foreground and
+  every 15 minutes and shows "A new version of RevisionDen is ready." with Refresh; an API reply
+  that suggests the app is out of date makes it reload by itself once per new build. iPad users get an "Add to Home
   Screen" help page (`/install`), because iPadOS has no install prompt.
 - The web app calls the real API on dev and staging (parent session cookie, or the student
   device cookie). MSW mocks with made-up data are used only in local development and tests, and
