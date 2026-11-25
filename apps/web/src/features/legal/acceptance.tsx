@@ -7,10 +7,10 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { Link } from 'react-router-dom';
 import { z } from 'zod';
 import { defaultBaseUrl } from '../../api/ApiContext';
 import { Button } from '../../components/Button';
+import { LinkButton } from '../../components/links';
 import { Sheet } from '../../components/Sheet';
 import { BeforeYouStart } from './BeforeYouStart';
 import { Markdown } from './Markdown';
@@ -157,7 +157,9 @@ export function PolicyGate({ children }: { children: ReactNode }) {
           {changed.map((p) => (
             <div key={p}>
               <p>
-                <Link to={`/legal/${p}`}>Read the {library.get(p)?.title ?? p}</Link>
+                <LinkButton to={`/legal/${p}`} variant="secondary">
+                  Read the {library.get(p)?.title ?? p}
+                </LinkButton>
               </p>
               <Markdown text={library.get(p)?.changes ?? ''} headingOffset={2} />
             </div>

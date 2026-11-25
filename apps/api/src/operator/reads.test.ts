@@ -8,7 +8,7 @@ import {
   OperatorOverviewSchema,
   OperatorHealthSchema,
   OperatorTicketListSchema,
-  OperatorTicketSchema,
+  OperatorTicketDetailSchema,
   type OperatorTicket,
 } from '@revisionden/core';
 import {
@@ -331,7 +331,10 @@ describe('operator tickets', () => {
 
     const one = await get(`/operator/appdeck/tickets/${bug!.id}`);
     expect(one.status).toBe(200);
-    expect(OperatorTicketSchema.parse(one.body)).toMatchObject({ id: bug!.id, text: 'Map broken' });
+    expect(OperatorTicketDetailSchema.parse(one.body)).toMatchObject({
+      id: bug!.id,
+      text: 'Map broken',
+    });
     expect(await auditRows()).toContainEqual(
       expect.objectContaining({
         action: 'ticket.view',
@@ -425,6 +428,31 @@ describe('operator audit log and service status', () => {
     );
     expect(page2.entries).toHaveLength(1);
     expect(page2.nextBefore).toBeNull();
+  });
+
+  it('pages through entries that share a time without skipping any', async () => {
+    const at = t.clock.now();
+    await t.db.insert(operatorAuditLog).values(
+      ['a', 'b', 'c'].map((id) => ({
+        operatorEmail: 'agent@example.com',
+        operatorRole: 'agent' as const,
+        action: 'family.view',
+        targetType: 'tie',
+        targetId: 'same-time',
+        requestId: `tie-${id}`,
+        outcome: 'ok' as const,
+        createdAt: at,
+      })),
+    );
+    const seen: string[] = [];
+    let before: string | null = null;
+    do {
+      const query: string = `/operator/appdeck/audit?targetType=tie&limit=2${before ? `&before=${encodeURIComponent(before)}` : ''}`;
+      const page = OperatorAuditLogSchema.parse((await get(query)).body);
+      seen.push(...page.entries.map((e) => e.requestId));
+      before = page.nextBefore;
+    } while (before);
+    expect(seen.sort()).toEqual(['tie-a', 'tie-b', 'tie-c']);
   });
 
   it('reports the environment, version and error-report rate', async () => {

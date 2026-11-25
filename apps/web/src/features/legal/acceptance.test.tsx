@@ -150,6 +150,15 @@ describe('PolicyGate', () => {
     expect(within(list).getAllByRole('listitem')).toHaveLength(4);
   });
 
+  it('uses button-style links and inline text links, never plain links (J7)', async () => {
+    show(fakeApi([]));
+    expect(await screen.findByRole('link', { name: 'Read the full Terms of use' })).toHaveClass(
+      'link-button',
+    );
+    expect(screen.getByRole('link', { name: 'Terms of use' })).toHaveClass('text-link');
+    expect(screen.getByRole('link', { name: 'Privacy notice' })).toHaveClass('text-link');
+  });
+
   it('opens and closes the full text of each policy, keyboard and screen reader friendly', async () => {
     show(fakeApi([]));
     const open = await screen.findByRole('button', {
@@ -186,6 +195,9 @@ describe('PolicyGate', () => {
     ]);
     show(api);
     const dialog = await screen.findByRole('dialog', { name: "We've updated our Privacy notice" });
+    expect(within(dialog).getByRole('link', { name: 'Read the Privacy notice' })).toHaveClass(
+      'link-button',
+    );
     expect(dialog).toHaveTextContent('We now keep feedback for 12 months.');
     await userEvent.click(screen.getByRole('button', { name: 'Confirm' }));
     expect(api.accept).toHaveBeenCalledWith([{ policy: 'privacy-notice', version: '1.1' }]);

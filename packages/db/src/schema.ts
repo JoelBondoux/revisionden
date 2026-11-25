@@ -1076,7 +1076,7 @@ export const operatorRequests = pgTable(
     requestId: text('request_id').primaryKey(),
     method: text('method').notNull(),
     path: text('path').notNull(),
-    // SHA-256 of the raw body, to tell a true retry from a reused id.
+    // SHA-256 of the operator email, role and raw body, to tell a true retry from a reused id.
     bodyHash: text('body_hash').notNull(),
     // Null while the change is running.
     responseStatus: integer('response_status'),
@@ -1084,4 +1084,73 @@ export const operatorRequests = pgTable(
     createdAt: createdAt(),
   },
   (t) => [index('operator_requests_created_at_idx').on(t.createdAt)],
+);
+
+/**
+ * O3: internal notes an operator keeps on a family (never shown to the family). The author is
+ * the operator's work email from AppDeck. Deleted with the family; included in the family's
+ * data export.
+ */
+export const operatorNotes = pgTable(
+  'operator_notes',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    familyId: uuid('family_id')
+      .notNull()
+      .references(() => families.id, { onDelete: 'cascade' }),
+    authorEmail: text('author_email').notNull(),
+    text: text('text').notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('operator_notes_family_id_idx').on(t.familyId, t.createdAt),
+    check('operator_notes_text_length', sql`char_length(${t.text}) between 1 and 2000`),
+  ],
+);
+
+/**
+ * O3: replies from RevisionDen support to a ticket (feedback), shown in the sender's app. The
+ * family sees only the text and time, never the operator's email. Deleted with the ticket.
+ */
+export const feedbackReplies = pgTable(
+  'feedback_replies',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    feedbackId: uuid('feedback_id')
+      .notNull()
+      .references(() => feedback.id, { onDelete: 'cascade' }),
+    authorEmail: text('author_email').notNull(),
+    body: text('body').notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('feedback_replies_feedback_id_idx').on(t.feedbackId, t.createdAt),
+    check('feedback_replies_body_length', sql`char_length(${t.body}) between 1 and 5000`),
+  ],
+);
+
+export const DATA_REQUEST_KINDS = ['export', 'deletion'] as const;
+
+/**
+ * O3b: an export or deletion request a family sent by email, logged by an operator, with the
+ * statutory deadline (one calendar month). The family id is a plain id (no foreign key), so the
+ * record of handling a deletion outlives the family. Kept 2 years.
+ */
+export const dataRequests = pgTable(
+  'data_requests',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    familyId: uuid('family_id').notNull(),
+    kind: text('kind', { enum: DATA_REQUEST_KINDS }).notNull(),
+    receivedAt: timestamp('received_at', { withTimezone: true }).notNull(),
+    dueAt: timestamp('due_at', { withTimezone: true }).notNull(),
+    // Work email of the operator who logged it (staff, from AppDeck).
+    loggedBy: text('logged_by').notNull(),
+    handledAt: timestamp('handled_at', { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('data_requests_due_idx').on(t.handledAt, t.dueAt),
+    check('data_requests_kind_values', sql`${t.kind} in ('export', 'deletion')`),
+  ],
 );

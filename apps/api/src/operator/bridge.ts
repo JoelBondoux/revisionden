@@ -136,7 +136,9 @@ export function operatorAuth(deps: OperatorBridgeDeps): MiddlewareHandler<AppEnv
       throw unauthorizedOperator();
     }
 
-    const bodyHash = await sha256Hex(rawBody);
+    // Binds the request id to who sent it as well as the body, so a stored answer is never
+    // replayed to another operator or role.
+    const bodyHash = await sha256Hex(JSON.stringify([email.toLowerCase(), role, rawBody]));
     const [claimed] = await deps.db
       .insert(operatorRequests)
       .values({ requestId, method, path, bodyHash, createdAt: deps.clock.now() })

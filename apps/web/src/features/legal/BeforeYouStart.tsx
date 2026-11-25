@@ -1,7 +1,7 @@
 import { useId, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
+import { LinkButton, TextLink } from '../../components/links';
 import { PipWithPadlock, Reveal } from './FriendlyNotice';
 import { Markdown } from './Markdown';
 import { NoticeIcon } from './NoticeIcon';
@@ -80,7 +80,9 @@ function PolicySummary({ policy }: { policy: PolicyToAccept }) {
         <Markdown text={policy.fullText} />
       </div>
       <p className="accept-policy__link">
-        <Link to={`/legal/${policy.name}`}>Read the full {policy.title}</Link>
+        <LinkButton to={`/legal/${policy.name}`} variant="secondary">
+          Read the full {policy.title}
+        </LinkButton>
       </p>
     </Reveal>
   );
@@ -117,8 +119,8 @@ export function BeforeYouStart(props: {
         <label className="legal-check">
           <input type="checkbox" checked={ticked} onChange={(e) => onTick(e.target.checked)} />
           <span>
-            I have read the <Link to="/legal/terms-of-use">Terms of use</Link> and{' '}
-            <Link to="/legal/privacy-notice">Privacy notice</Link>
+            I have read the <TextLink to="/legal/terms-of-use">Terms of use</TextLink> and{' '}
+            <TextLink to="/legal/privacy-notice">Privacy notice</TextLink>
           </span>
         </label>
       </Card>
