@@ -5,12 +5,15 @@ import { server } from '../../mocks/server';
 import { renderRoute } from '../../test/render';
 import { resetTargetGradeMocks } from './mocks';
 
+/** The panels load after the dashboard, so give slow CI machines time. */
+const LOAD = { timeout: 5000 };
+
 beforeEach(() => resetTargetGradeMocks());
 
 describe('target grades for the parent', () => {
   const openPanel = async () => {
     renderRoute('/parent/stats');
-    return screen.findByRole('region', { name: 'Target grades' });
+    return screen.findByRole('region', { name: 'Target grades' }, LOAD);
   };
 
   it('lets a parent pick their target from the subject’s grades and save it', async () => {
@@ -49,8 +52,15 @@ describe('target grades for the parent', () => {
   it('shows the parent’s target in the subjects table before predicted grades exist', async () => {
     resetTargetGradeMocks({ parentTarget: '7' });
     renderRoute('/parent/stats');
-    const table = await screen.findByRole('table', { name: 'Subjects' });
+    const table = await screen.findByRole('table', { name: 'Subjects' }, LOAD);
     expect(within(table).getByRole('row', { name: /Maths/ })).toHaveTextContent('Target 7');
+  });
+
+  it('updates the subjects table after a save, so Save as PDF shows the new target', async () => {
+    const panel = await openPanel();
+    await userEvent.selectOptions(within(panel).getByLabelText('Maths: your target'), '7');
+    const table = screen.getByRole('table', { name: 'Subjects' });
+    expect(await within(table).findByText('Target 7', {}, LOAD)).toBeVisible();
   });
 
   it('shows a friendly message when the target cannot be saved', async () => {
@@ -68,7 +78,7 @@ describe('target grades for the parent', () => {
 describe('target grades for the student', () => {
   const openCard = async () => {
     renderRoute('/progress');
-    return screen.findByRole('region', { name: 'Target grades' });
+    return screen.findByRole('region', { name: 'Target grades' }, LOAD);
   };
 
   it('shows the parent’s target and lets the child set their own', async () => {

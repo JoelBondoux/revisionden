@@ -27,6 +27,13 @@ import type { StatsAdapters } from './adapters';
 
 const subjectName = (subjectId: string) => findSubject(subjectId)?.name ?? subjectId;
 
+/**
+ * A saved target only counts while it is on the course's current scale: if a parent changes the
+ * board or tier (for example higher to foundation), a saved 9 is treated as not set.
+ */
+const onScale = (grade: string | null, scale: readonly string[] | null) =>
+  grade !== null && scale?.includes(grade) ? grade : null;
+
 /** Both targets for each enrolled subject, with the grades they can take. */
 export async function targetGrades(db: Database, studentId: string): Promise<TargetGrades> {
   const rows = await db
@@ -40,8 +47,8 @@ export async function targetGrades(db: Database, studentId: string): Promise<Tar
       return {
         subjectId: e.subjectId,
         name: subjectName(e.subjectId),
-        parentTarget: e.parentTargetGrade,
-        studentTarget: e.studentTargetGrade,
+        parentTarget: onScale(e.parentTargetGrade, scale),
+        studentTarget: onScale(e.studentTargetGrade, scale),
         grades: scale ? [...scale] : null,
       };
     }),
@@ -53,10 +60,11 @@ export function targetGradeAdapters({ db }: { db: Database }): Pick<StatsAdapter
   return {
     grades: async (studentId, subjectId) => {
       const [row] = await db
-        .select({ target: enrolments.parentTargetGrade })
+        .select()
         .from(enrolments)
         .where(and(eq(enrolments.studentId, studentId), eq(enrolments.subjectId, subjectId)));
-      return { predictedGrade: null, targetGrade: row?.target ?? null };
+      const target = row ? onScale(row.parentTargetGrade, gradeScaleFor(row)) : null;
+      return { predictedGrade: null, targetGrade: target };
     },
   };
 }

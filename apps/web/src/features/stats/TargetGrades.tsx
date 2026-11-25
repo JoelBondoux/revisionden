@@ -58,7 +58,14 @@ function SaveMessage({ message }: { message: Message }) {
  * the subject's grade scale and saved at once (either parent can change it), next to the child's
  * own target.
  */
-export function TargetGradesPanel({ studentId }: { studentId: string }) {
+export function TargetGradesPanel({
+  studentId,
+  onSaved,
+}: {
+  studentId: string;
+  /** Called with the saved targets, so the rest of the dashboard can show them at once. */
+  onSaved?: (next: TargetGrades) => void;
+}) {
   const api = useStatsApi();
   const loaded = useApiResource(() => api.getTargetGrades(studentId), [api, studentId]);
   const [view, setView] = useState<TargetGrades | null>(null);
@@ -90,7 +97,12 @@ export function TargetGradesPanel({ studentId }: { studentId: string }) {
                     subject={s}
                     label={`${s.name}: your target`}
                     value={s.parentTarget}
-                    onPick={(g) => void run(s, g, setView)}
+                    onPick={(g) =>
+                      void run(s, g, (next) => {
+                        setView(next);
+                        onSaved?.(next);
+                      })
+                    }
                   />
                 </label>
                 <span className="secondary-text">

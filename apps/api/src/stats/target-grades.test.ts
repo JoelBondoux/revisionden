@@ -177,6 +177,32 @@ describe('the child’s own target', () => {
   });
 });
 
+describe('targets after the course changes', () => {
+  it('treats a target that is no longer on the scale as not set', async () => {
+    const { studentId, parent, headers } = await setUp();
+    await setParent(studentId, 'gcse-maths', '9', parent.headers);
+    await setOwn('gcse-maths', '4', headers);
+    // The parent moves the child to the foundation tier, whose grades stop at 5.
+    const moved = await ctx.app.request(
+      `/v1/students/${studentId}/enrolments`,
+      jsonRequest(
+        'POST',
+        { subjectId: 'gcse-maths', board: 'Edexcel', tier: 'foundation' },
+        parent.headers,
+      ),
+    );
+    expect(moved.ok).toBe(true);
+    expect(mathsOf(await parentView(studentId, parent.headers))).toMatchObject({
+      parentTarget: null,
+      studentTarget: '4',
+      grades: ['5', '4', '3', '2', '1', 'U'],
+    });
+    expect(mathsOf(await studentTargets(headers)).parentTarget).toBeNull();
+    const grades = targetGradeAdapters({ db: ctx.db }).grades!;
+    expect((await grades(studentId, 'gcse-maths')).targetGrade).toBeNull();
+  });
+});
+
 describe('target grades elsewhere', () => {
   it('gives the dashboard the parent’s target and no predicted grade yet', async () => {
     // Predicted grades are not built until verified grade boundaries exist.
