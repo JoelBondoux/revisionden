@@ -435,8 +435,17 @@ Tags: #product #rules #limits #defaults
 - Level bar and parent-set rewards come from the rewards progression (same numbers as the Rewards
   page), read with the read-only `rewardsProgress`: it counts earned-but-unseen rewards and saves
   nothing, so the stats pages and the parent's parent-rewards view never use up the student's
-  "New!" rewards (the student's Rewards page, answers and flashcard sessions save and announce them). Plan, school report effort and predicted/target grade panels show "Not set up yet"
-  (adapters in `apps/api/src/stats/adapters.ts`) until those features land.
+  "New!" rewards (the student's Rewards page, answers and flashcard sessions save and announce them). Plan, school report effort and predicted grade panels show "Not set up yet"
+  (adapters in `apps/api/src/stats/adapters.ts`) until those features land; predicted grades wait
+  for verified grade boundaries.
+- Target grades (K8, owner decision 2026-11-25): two per subject, both goals to reach for. The
+  parent's target is set or cleared by either parent on the parent stats dashboard (latest wins,
+  logged as important); the child's own target is set or cleared by the child on My stats (not
+  logged). Each side sees both, with encouraging wording and no red when they differ. Only grades
+  on a cited scale: GCSE Maths Edexcel 1MA1 (higher 9–3 and U, foundation 5–1 and U, 9–1 and U
+  with no tier chosen); every other subject and board says "not available yet".
+  `enrolments.parent_target_grade` and `student_target_grade` (migration 0017). Detail:
+  `docs/PRODUCT_RULES.md` (Statistics dashboards, Target grades).
 - Routes: `/progress` (My stats), `/parent/stats` (parent); API `GET /v1/student/stats`,
   `GET /v1/students/:id/stats`, `GET /v1/students/:id/dashboard`. Implemented in
   `packages/core/src/stats.ts`, `apps/api/src/stats/`, `apps/web/src/features/stats/`.
