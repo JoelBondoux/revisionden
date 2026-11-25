@@ -255,6 +255,18 @@ describe('target grades when the board or tier changes', () => {
     expect(await mathsTargets(ctx.id)).toEqual({ parent: '7', student: null });
   });
 
+  it('never brings back a cleared target when the board and tier change at the same time', async () => {
+    const ctx = await setup();
+    const path = `/v1/students/${ctx.id}/enrolments/gcse-maths`;
+    await patch(path, { board: 'Edexcel' }, ctx.parent);
+    await setTargets(ctx, '9', '2');
+    await Promise.all([
+      patch(path, { tier: 'foundation' }, ctx.parent),
+      patch(path, { board: 'AQA' }, ctx.parent),
+    ]);
+    expect(await mathsTargets(ctx.id)).toEqual({ parent: null, student: null });
+  });
+
   it('clears both targets when the new board has no grade scale yet', async () => {
     const ctx = await setup();
     await patch(`/v1/students/${ctx.id}/enrolments/gcse-maths`, { board: 'Edexcel' }, ctx.parent);
