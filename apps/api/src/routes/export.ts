@@ -24,6 +24,8 @@ import {
   feedback,
   feedbackReplies,
   operatorNotes,
+  complaints,
+  complaintRequests,
   flashcardSessions,
   flashcards,
   itemReports,
@@ -42,6 +44,7 @@ import {
   students,
   type Database,
 } from '@revisionden/db';
+import { complaintMessagesFor, toFamilyComplaint } from '../complaints/routes';
 import { allowanceSharePercent } from '@revisionden/core';
 import type { AppEnv } from '../context';
 import type { Clock } from '../rate-limit';
@@ -184,6 +187,26 @@ export function familyExport({
       .from(operatorNotes)
       .where(eq(operatorNotes.familyId, familyId))
       .orderBy(operatorNotes.createdAt);
+    const familyComplaints = await db
+      .select()
+      .from(complaints)
+      .where(eq(complaints.familyId, familyId))
+      .orderBy(complaints.receivedAt);
+    const complaintThreads = await complaintMessagesFor(
+      db,
+      familyComplaints.map((r) => r.id),
+    );
+    const childRequests = await db
+      .select({
+        nickname: students.nickname,
+        topic: complaintRequests.topic,
+        note: complaintRequests.note,
+        createdAt: complaintRequests.createdAt,
+      })
+      .from(complaintRequests)
+      .innerJoin(students, eq(students.id, complaintRequests.studentId))
+      .where(eq(complaintRequests.familyId, familyId))
+      .orderBy(complaintRequests.createdAt);
     const reports = await db
       .select()
       .from(itemReports)
@@ -229,6 +252,10 @@ export function familyExport({
           .map(({ body, createdAt }) => ({ body, createdAt })),
       })),
       supportNotes,
+      complaintRequests: childRequests,
+      complaints: familyComplaints.map((r) =>
+        toFamilyComplaint(r, complaintThreads.get(r.id) ?? []),
+      ),
       questionReports: reports.map((row) => without(row, ['familyId'])),
       activityLog: log.events.map(({ by, what, createdAt }) => ({ by, what, at: createdAt })),
     };

@@ -199,8 +199,23 @@ Tags: #product #rules #limits #defaults
   `deleteFamilies` only for a one-parent family (two parents: 409 `needs_both_parents`, both
   confirm in the app). Records kept 2 years. Trial and free-place routes answer 503
   `payments_not_ready` until workstream $.
+- Complaints (O4): a parent makes one at `/complaints` ("Make a complaint" on the parent home;
+  3 a day per family; summary 3–500 characters with no email, phone or child nickname) or support
+  logs an emailed one. Acknowledge by the end of the 2nd UK working day (weekends and England and
+  Wales bank holidays skipped, list from gov.uk through 2028), aim to resolve within 14 days
+  (`packages/core/src/complaints.ts`). Agents acknowledge, reply and resolve; Managers escalate.
+  The family sees replies and the outcome (and, for personal data, that they can complain to the
+  ICO; contact details await the owner's check), never staff names. Kept 12 months after
+  resolved; deleted with the family; in the export. Deadlines are "we aim to" (decision 0006).
+- Only parents complain. A student uses "Ask a parent to raise something" (Settings,
+  `/ask-a-parent`): a topic (`COMPLAINT_REQUEST_TOPICS`) and an optional note (≤300, no email or
+  phone), 3 a day; both parents see it on `/complaints` and can start a complaint pre-filled with
+  the topic (not the note) or dismiss it. Never sent to AppDeck; deleted after 90 days.
+- Escalation: a complaint not resolved within 5 working days of acknowledgement can be escalated
+  by the parent ("Ask for a manager to review") or a Manager; AppDeck shows `escalationFrom` and
+  overdue flags.
 - Every operator read of a family and every action goes in `operator_audit_log`, kept 2 years
-  (data retention policy 1.5); the scheduled clean-up deletes older entries.
+  (data retention policy 1.7); the scheduled clean-up deletes older entries.
 
 ## Content
 
@@ -359,6 +374,9 @@ Tags: #product #rules #limits #defaults
 - Fact-check stage 4b (decision 0009): items listing `facts` need, per fact, an official citation
   or a maths engine proof plus a matching blind statement by a third provider (OpenAI, judged by
   Gemini). Failing facts keep `needs_human_approval`. `pnpm content:model-check --fact-check openai`.
+  Engine fact proofs: `identity`, `transformation`, `implication`, `sign_change`, `parallel`,
+  `trig_value`, `graph_measure` (`services/maths/app/facts.py`). The judge compares meaning, not
+  wording; `pnpm evals fact-judge` must refuse every different-fact pair.
 - Maths flashcards with `back_formula` are blind-answered by formula: the maths engine compares
   the formula (any equivalent form) and every listed condition (e.g. `a ≠ 0`) must be stated.
 - Blind answer must come from a different provider from the writer (Claude by default) and be

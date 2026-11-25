@@ -6,6 +6,7 @@ import {
   BellIcon,
   ChatIcon,
   CrownIcon,
+  DocumentIcon,
   DownloadIcon,
   HeartIcon,
   ProgressIcon,
@@ -77,6 +78,14 @@ export function ParentHomePage() {
                 icon={<ChatIcon />}
                 title="Family feedback"
                 description="What your family has sent us"
+              />
+            </li>
+            <li>
+              <LinkTile
+                to="/complaints"
+                icon={<DocumentIcon />}
+                title="Make a complaint"
+                description="Tell us formally if something went wrong"
               />
             </li>
             <li>

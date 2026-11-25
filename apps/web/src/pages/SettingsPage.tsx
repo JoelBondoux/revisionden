@@ -87,6 +87,14 @@ export function SettingsPage() {
           </li>
           <li>
             <LinkTile
+              to="/ask-a-parent"
+              icon={<UsersIcon />}
+              title="Ask a parent to raise something"
+              description="If something feels wrong or unfair"
+            />
+          </li>
+          <li>
+            <LinkTile
               to="/feedback"
               state={{ from: '/settings' }}
               icon={<ChatIcon />}
