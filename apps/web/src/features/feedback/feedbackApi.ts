@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+import { ErrorReportSummarySchema, type ErrorReportSummary } from '@revisionden/core';
 import { failureRef } from '../../api/client';
 import { z, type ZodType } from 'zod';
 import { defaultBaseUrl } from '../../api/ApiContext';
@@ -52,6 +53,8 @@ export interface FeedbackApi {
   listFamily(): Promise<Feedback[]>;
   listAll(): Promise<TriageFeedback[]>;
   setStatus(id: string, status: FeedbackStatus): Promise<TriageFeedback>;
+  /** Operator only: error reports since a time, grouped (`GET /v1/admin/error-reports`). */
+  errorReports(since?: string): Promise<ErrorReportSummary>;
 }
 
 const errorBody = z.object({ error: z.object({ code: z.string(), message: z.string() }) });
@@ -104,6 +107,11 @@ export function createFeedbackApi(options: {
       })),
     listOwn: async () => (await request('student/feedback', list)).feedback,
     listFamily: async () => (await request('feedback', list)).feedback,
+    errorReports: (since) =>
+      request(
+        `admin/error-reports${since ? `?since=${encodeURIComponent(since)}` : ''}`,
+        ErrorReportSummarySchema,
+      ),
     listAll: async () =>
       (await request('admin/feedback', z.object({ feedback: triageSchema.array() }))).feedback,
     setStatus: (id, status) =>

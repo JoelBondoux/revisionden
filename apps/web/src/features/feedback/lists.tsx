@@ -157,6 +157,7 @@ function TriageRow({ item }: { item: TriageFeedback }) {
 /** Operator triage. The API answers 404 to anyone without the operator role. */
 export function AdminFeedbackPage() {
   const api = useFeedbackApi();
+  const [view, setView] = useState<'feedback' | 'errors'>('feedback');
   const load = useCallback(() => api.listAll(), [api]);
   const { result, retry } = useLoad(load);
 
@@ -173,6 +174,30 @@ export function AdminFeedbackPage() {
       <p className="secondary-text">
         Never copy anything that could identify a family into a public issue.
       </p>
+      <div className="feedback-filter" role="group" aria-label="Show">
+        <Button
+          variant={view === 'feedback' ? 'primary' : 'secondary'}
+          aria-pressed={view === 'feedback'}
+          onClick={() => setView('feedback')}
+        >
+          Feedback
+        </Button>
+        <Button
+          variant={view === 'errors' ? 'primary' : 'secondary'}
+          aria-pressed={view === 'errors'}
+          onClick={() => setView('errors')}
+        >
+          Error reports
+        </Button>
+      </div>
+      {view === 'errors' ? <ErrorReportList /> : <TriageList result={result} retry={retry} />}
+    </div>
+  );
+}
+
+function TriageList({ result, retry }: { result: Load<TriageFeedback[]>; retry: () => void }) {
+  return (
+    <>
       {result.state === 'loading' && <p aria-live="polite">Loading…</p>}
       {result.state === 'failed' && <Failed retry={retry} />}
       {result.state === 'ready' &&
@@ -185,6 +210,37 @@ export function AdminFeedbackPage() {
             ))}
           </ul>
         ))}
-    </div>
+    </>
+  );
+}
+
+/** Anonymous error reports from the last 24 hours, grouped by screen and failing API call. */
+function ErrorReportList() {
+  const api = useFeedbackApi();
+  const load = useCallback(() => api.errorReports(), [api]);
+  const { result, retry } = useLoad(load);
+  if (result.state === 'loading') return <p aria-live="polite">Loading…</p>;
+  if (result.state === 'failed') return <Failed retry={retry} />;
+  const { groups } = result.data;
+  if (groups.length === 0) return <p>No error reports in the last 24 hours.</p>;
+  return (
+    <ul className="feedback-list">
+      {groups.map((g) => {
+        const label = `${g.screen}${g.apiPath ? ` → ${g.apiPath} ${g.status ?? ''}` : ''}`.trim();
+        return (
+          <li key={label} aria-label={label} className="feedback-item">
+            <p>
+              <strong>{label}</strong> · {g.count} {g.count === 1 ? 'report' : 'reports'}
+            </p>
+            <p className="secondary-text">
+              {date(g.firstSeen)} to {date(g.lastSeen)} · builds {g.builds.join(', ')}
+            </p>
+            <p className="secondary-text">
+              Codes: <code>{g.refs.join(' ')}</code>
+            </p>
+          </li>
+        );
+      })}
+    </ul>
   );
 }

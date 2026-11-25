@@ -1,6 +1,6 @@
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
-import { ErrorRef } from './ErrorRef';
+import { ErrorRef, refOf } from './ErrorRef';
 import { SignInPrompt } from './SignInButtons';
 import type { ApiResource } from './useApiResource';
 
@@ -35,7 +35,7 @@ export function LoadingOrError({ resource }: LoadingOrErrorProps) {
             ? 'Check your internet connection, then try again.'
             : 'It is not you, it is us. Please try again in a moment.'}
         </p>
-        {!offline && <ErrorRef code={error.ref} />}
+        {!offline && <ErrorRef code={refOf(error)} />}
       </div>
       <Button onClick={resource.retry}>Try again</Button>
     </Card>

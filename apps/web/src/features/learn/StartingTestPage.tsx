@@ -2,10 +2,11 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import type { StartingTestResponse, StartingTestResult } from '@revisionden/core';
 import { ApiError } from '../../api/client';
-import { ErrorRef, refOf } from '../../api/ErrorRef';
+import { ErrorRef, refOf, type ErrorDetails } from '../../api/ErrorRef';
 import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { ProgressBar } from '../../components/ProgressBar';
+import { ArenaProgress } from '../juice';
 import { useSound } from '../sound';
 import { useLearnApi } from './learnApi';
 import { DraftBanner, ItemInput, toAnswer, type Draft } from './parts';
@@ -25,7 +26,7 @@ function Results({
   const { play } = useSound();
   useEffect(() => void play('reveal', { mode: 'test' }), [play]);
   return (
-    <div className="complete">
+    <div className="complete arena">
       <Card title="Your starting point">
         {timeUp && <p>Time is up, so we marked what you answered.</p>}
         <p>
@@ -65,7 +66,7 @@ function Runner({
   const [index, setIndex] = useState(0);
   const [draft, setDraft] = useState<Draft>(null);
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<{ ref: string | undefined } | null>(null);
+  const [error, setError] = useState<{ ref: ErrorDetails | undefined } | null>(null);
   const [secondsLeft, setSecondsLeft] = useState(test.timeLimitSeconds);
   const startedAt = useRef(Date.now());
   const shownAt = useRef(Date.now());
@@ -135,9 +136,9 @@ function Runner({
   }
 
   return (
-    <div className="lesson">
+    <div className="lesson arena">
       <div className="lesson__top">
-        <ProgressBar label="Test progress" tone="success" value={index} max={test.items.length} />
+        <ArenaProgress label="Test progress" value={index} max={test.items.length} />
         <span className={`timer${secondsLeft <= 60 ? ' timer--warning' : ''}`} aria-live="off">
           {clockText(secondsLeft)}
         </span>
@@ -167,13 +168,14 @@ function Runner({
 
 /**
  * The starting test for a subject (about 5 minutes, Test mode: no feedback until the end).
- * Its answers set the first mastery for each topic.
+ * Its answers set the first mastery for each topic. Arena look, but no right or wrong effects
+ * until the reveal (docs/GAME_FEEL.md).
  */
 export function StartingTestPage() {
   const { subjectId = '' } = useParams();
   const api = useLearnApi();
   const [test, setTest] = useState<StartingTestResponse | null>(null);
-  const [problem, setProblem] = useState<{ text: string; ref?: string } | null>(null);
+  const [problem, setProblem] = useState<{ text: string; ref?: ErrorDetails } | null>(null);
   const [outcome, setOutcome] = useState<{ result: StartingTestResult; timeUp: boolean } | null>(
     null,
   );
@@ -200,7 +202,7 @@ export function StartingTestPage() {
   if (outcome) return <Results {...outcome} subjectId={subjectId} />;
   if (test) return <Runner test={test} onFinished={onFinished} />;
   return (
-    <div className="lesson">
+    <div className="lesson arena">
       <h1>Starting test</h1>
       <Card>
         <p>

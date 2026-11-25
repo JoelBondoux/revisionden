@@ -3,6 +3,8 @@
  * tests; components pass Math.random.
  */
 
+import { DAILY_REWARD_XP_CAP } from '@revisionden/core';
+
 export type Random = () => number;
 
 /** Particles per burst are capped so a burst stays cheap on a mid-range phone. */
@@ -110,4 +112,12 @@ function easeOut(t: number): number {
 export function rollValue(from: number, to: number, t: number): number {
   const p = Math.min(Math.max(t, 0), 1);
   return Math.round(from + (to - from) * easeOut(p));
+}
+
+/**
+ * True once today's XP reaches the daily reward cap (`DAILY_REWARD_XP_CAP`). The set-complete call
+ * to action then says "See you tomorrow" instead of offering another mission.
+ */
+export function pastDailyCap(xpToday: number): boolean {
+  return xpToday >= DAILY_REWARD_XP_CAP;
 }
