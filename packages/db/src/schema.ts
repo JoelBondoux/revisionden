@@ -489,6 +489,24 @@ export const dailyXp = pgTable(
   (t) => [primaryKey({ columns: [t.studentId, t.day] })],
 );
 
+/**
+ * A student's daily 5-a-day set (workstream Q): the item ids chosen for one local day, kept so a
+ * reload shows the same set. Done once every item has an attempt since `created_at`.
+ */
+export const dailySets = pgTable(
+  'daily_sets',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    day: date('day').notNull(),
+    itemIds: jsonb('item_ids').$type<string[]>().notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [unique('daily_sets_student_day_unique').on(t.studentId, t.day)],
+);
+
 /** A student's starting test for one subject (about 5 minutes; sets first mastery). */
 export const startingTests = pgTable(
   'starting_tests',
