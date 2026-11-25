@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { TextLink } from '../../components/links';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { Button } from '../../components/Button';
@@ -84,7 +84,7 @@ export function ReviewQueuePage() {
               <ul className="review-list">
                 {data.data.batches.map((b) => (
                   <li key={b.id}>
-                    <Link to={`/review/batches/${b.id}`}>{b.title}</Link>{' '}
+                    <TextLink to={`/review/batches/${b.id}`}>{b.title}</TextLink>{' '}
                     <Pill tone={STATUS_TONE[b.status]}>{STATUS_LABEL[b.status]}</Pill>
                     <div className="secondary-text">
                       {b.decided} of {b.sampleSize} sampled items decided

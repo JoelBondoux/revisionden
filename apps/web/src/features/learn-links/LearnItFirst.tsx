@@ -25,7 +25,12 @@ export function LearnItFirst({ links }: { links: readonly LearnLink[] }) {
         <ul id={listId} className="learn-first__list">
           {links.map((link) => (
             <li key={link.url}>
-              <a href={link.url} target="_blank" rel="noopener noreferrer">
+              <a
+                className="learn-first__link"
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <span className="learn-first__title">{link.title}</span>
                 <span className="learn-first__provider">
                   {PROVIDER_NAMES[link.provider]}

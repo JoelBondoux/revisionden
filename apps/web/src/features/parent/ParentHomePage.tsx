@@ -1,6 +1,19 @@
 import { useState } from 'react';
-import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Card } from '../../components/Card';
+import {
+  BackIcon,
+  BellIcon,
+  ChatIcon,
+  CrownIcon,
+  DownloadIcon,
+  HeartIcon,
+  ProgressIcon,
+  SettingsIcon,
+  ShieldIcon,
+  UsersIcon,
+} from '../../components/icons';
+import { LinkButton, LinkTile } from '../../components/links';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { ChildReminderSettings, ParentRewardNews } from '../notifications';
@@ -35,22 +48,42 @@ export function ParentHomePage() {
       )}
       <div className="parent-home__grid">
         <Card title="Progress">
-          <ul className="link-list">
+          <ul className="link-tiles">
             <li>
-              <Link to="/parent/stats">Stats dashboard</Link>
+              <LinkTile
+                to="/parent/stats"
+                icon={<ProgressIcon />}
+                title="Stats dashboard"
+                description="XP, accuracy, streaks and mastery"
+              />
             </li>
           </ul>
         </Card>
         <Card title="Family">
-          <ul className="link-list">
+          <ul className="link-tiles">
             <li>
-              <Link to="/onboarding">Add or manage children</Link>
+              <LinkTile
+                to="/onboarding"
+                icon={<UsersIcon />}
+                title="Add or manage children"
+                description="Profiles, subjects and device links"
+              />
             </li>
             <li>
-              <Link to="/feedback/family">Family feedback</Link>
+              <LinkTile
+                to="/feedback/family"
+                icon={<ChatIcon />}
+                title="Family feedback"
+                description="What your family has sent us"
+              />
             </li>
             <li>
-              <Link to="/onboarding">Download your family&apos;s data</Link>
+              <LinkTile
+                to="/onboarding"
+                icon={<DownloadIcon />}
+                title="Download your family's data"
+                description="Everything we hold, in one file"
+              />
             </li>
           </ul>
         </Card>
@@ -58,15 +91,30 @@ export function ParentHomePage() {
         <ParentsPanel onDeleted={() => navigate('/', { replace: true })} />
         <FamilyLog />
         <Card title="Settings and policies">
-          <ul className="link-list">
+          <ul className="link-tiles">
             <li>
-              <Link to="/settings">App settings</Link>
+              <LinkTile
+                to="/settings"
+                icon={<SettingsIcon />}
+                title="App settings"
+                description="Sound, reading and reminders"
+              />
             </li>
             <li>
-              <Link to="/legal">Policies</Link>
+              <LinkTile
+                to="/legal"
+                icon={<ShieldIcon />}
+                title="Policies"
+                description="Privacy and terms in plain English"
+              />
             </li>
             <li>
-              <Link to="/parent/help">Get help</Link>
+              <LinkTile
+                to="/parent/help"
+                icon={<HeartIcon />}
+                title="Get help"
+                description="Support for you and your child"
+              />
             </li>
           </ul>
         </Card>
@@ -97,12 +145,22 @@ function ChildCard({ choices }: { choices: Child[] }) {
         </label>
       )}
       <Card title={child.nickname} className="parent-home__child">
-        <ul className="link-list">
+        <ul className="link-tiles">
           <li>
-            <Link to={`/family/${id}/rewards`}>Rewards you set</Link>
+            <LinkTile
+              to={`/family/${id}/rewards`}
+              icon={<CrownIcon />}
+              title="Rewards you set"
+              description="Treats for targets they reach"
+            />
           </li>
           <li>
-            <Link to={`/parent/reminders/${id}`}>Reminder times</Link>
+            <LinkTile
+              to={`/parent/reminders/${id}`}
+              icon={<BellIcon />}
+              title="Reminder times"
+              description="When reminders come, and quiet hours"
+            />
           </li>
         </ul>
       </Card>
@@ -117,7 +175,9 @@ export function ParentRemindersPage() {
     <div className="stack">
       <h1>Reminder times</h1>
       <ChildReminderSettings studentId={studentId} />
-      <Link to="/parent">Back to parent home</Link>
+      <LinkButton to="/parent" variant="quiet" icon={<BackIcon />}>
+        Back to parent home
+      </LinkButton>
     </div>
   );
 }

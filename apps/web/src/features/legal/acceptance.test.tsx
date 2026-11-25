@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { MemoryRouter } from 'react-router-dom';
@@ -15,7 +15,10 @@ import { createPolicyLibrary } from './library';
 import { PolicyLibraryProvider } from './PolicyLibraryContext';
 
 const policyFile = (title: string, version: string, change: string) =>
-  `# ${title}\n\nVersion: ${version}\n\n## In plain English\n\nShort.\n\n## Full text\n\nLong.\n\n## Changes\n\n- ${change}\n`;
+  `# ${title}\n\nVersion: ${version}\n\n## In plain English\n\n` +
+  `- **Who we are.** ${title} is run by us.\n- No adverts in the ${title}.\n` +
+  `- Point three.\n- Point four.\n- Point five.\n- Point six.\n\n` +
+  `## Full text\n\n### 1. About\n\nThe long ${title} text.\n\n## Changes\n\n- ${change}\n`;
 const library = createPolicyLibrary(
   {
     'a/privacy-notice.md': policyFile(
@@ -28,6 +31,8 @@ const library = createPolicyLibrary(
   {},
 );
 const at = '2026-11-24T10:00:00.000Z';
+/** J7 button-style links: `btn link-button` today, `btn-link` after J's #95. */
+const BUTTON_LINK = /\bbtn(-link)?\b/;
 
 describe('acceptanceStatus', () => {
   const current = { 'privacy-notice': '1.1', 'terms-of-use': '1.0' };
@@ -116,6 +121,65 @@ describe('PolicyGate', () => {
     expect(await screen.findByRole('heading', { name: 'Onboarding' })).toBeInTheDocument();
   });
 
+  it('shows each policy as cards built from its plain-English summary', async () => {
+    show(fakeApi([]));
+    for (const title of ['Terms of use', 'Privacy notice']) {
+      const list = await screen.findByRole('list', { name: `${title} in short` });
+      const cards = within(list).getAllByRole('listitem');
+      expect(cards).toHaveLength(4);
+      expect(cards[0]).toHaveTextContent(`Who we are${title} is run by us.`);
+      expect(cards[1]).toHaveTextContent(`No adverts in the ${title}.`);
+      expect(screen.getByRole('link', { name: `Read the full ${title}` })).toHaveAttribute(
+        'href',
+        `/legal/${title === 'Terms of use' ? 'terms-of-use' : 'privacy-notice'}`,
+      );
+    }
+  });
+
+  it('shows 4 points first, then all of them in place on "Show all … points"', async () => {
+    show(fakeApi([]));
+    const list = await screen.findByRole('list', { name: 'Terms of use in short' });
+    expect(within(list).getAllByRole('listitem')).toHaveLength(4);
+    const more = screen.getByRole('button', { name: 'Show all 6 points of the Terms of use' });
+    expect(more).toHaveAttribute('aria-expanded', 'false');
+    expect(document.getElementById(more.getAttribute('aria-controls')!)).toBe(list);
+    await userEvent.click(more);
+    expect(within(list).getAllByRole('listitem')).toHaveLength(6);
+    expect(more).toHaveAttribute('aria-expanded', 'true');
+    expect(more).toHaveAccessibleName('Show fewer points of the Terms of use');
+    expect(more).toHaveFocus();
+    await userEvent.click(more);
+    expect(within(list).getAllByRole('listitem')).toHaveLength(4);
+  });
+
+  it('uses button-style links and inline text links, never plain links (J7)', async () => {
+    show(fakeApi([]));
+    expect(await screen.findByRole('link', { name: 'Read the full Terms of use' })).toHaveAttribute(
+      'class',
+      expect.stringMatching(BUTTON_LINK),
+    );
+    expect(screen.getByRole('link', { name: 'Terms of use' })).toHaveClass('text-link');
+    expect(screen.getByRole('link', { name: 'Privacy notice' })).toHaveClass('text-link');
+  });
+
+  it('opens and closes the full text of each policy, keyboard and screen reader friendly', async () => {
+    show(fakeApi([]));
+    const open = await screen.findByRole('button', {
+      name: 'Show the details of the Terms of use',
+    });
+    expect(open).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.queryByText('The long Terms of use text.')).not.toBeVisible();
+    open.focus();
+    await userEvent.keyboard('{Enter}');
+    expect(open).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getByText('The long Terms of use text.')).toBeVisible();
+    expect(document.getElementById(open.getAttribute('aria-controls')!)).toContainElement(
+      screen.getByText('The long Terms of use text.'),
+    );
+    await userEvent.click(open);
+    expect(open).toHaveAttribute('aria-expanded', 'false');
+  });
+
   it('shows the app straight away when the versions are current', async () => {
     show(
       fakeApi([
@@ -134,6 +198,10 @@ describe('PolicyGate', () => {
     ]);
     show(api);
     const dialog = await screen.findByRole('dialog', { name: "We've updated our Privacy notice" });
+    expect(within(dialog).getByRole('link', { name: 'Read the Privacy notice' })).toHaveAttribute(
+      'class',
+      expect.stringMatching(BUTTON_LINK),
+    );
     expect(dialog).toHaveTextContent('We now keep feedback for 12 months.');
     await userEvent.click(screen.getByRole('button', { name: 'Confirm' }));
     expect(api.accept).toHaveBeenCalledWith([{ policy: 'privacy-notice', version: '1.1' }]);

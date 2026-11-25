@@ -1,4 +1,6 @@
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { DocumentIcon } from '../../components/icons';
+import { LinkButton } from '../../components/links';
 import { Button } from '../../components/Button';
 import { FriendlyNotice } from './FriendlyNotice';
 import { parseFriendlyNotice } from './friendlyNotice';
@@ -59,9 +61,9 @@ export function YoungPeopleNoticePage({ storage = browserStorage() }: { storage?
     <article className="policy stack">
       <h1>{notice.title}</h1>
       <FriendlyNotice content={parseFriendlyNotice(notice)} />
-      <p>
-        <Link to={`/legal/${NOTICE}`}>Open this notice on its own page</Link>
-      </p>
+      <LinkButton to={`/legal/${NOTICE}`} variant="quiet" icon={<DocumentIcon />}>
+        Open this notice on its own page
+      </LinkButton>
       <Button block onClick={done}>
         Got it
       </Button>
