@@ -7,6 +7,7 @@ import { Pill } from '../../components/Pill';
 import { ProgressBar } from '../../components/ProgressBar';
 import { Link } from 'react-router-dom';
 import { LearnItFirst, checkedLinksFor, learnLinksByTopic } from '../learn-links';
+import { RecallGate } from '../recall';
 import { LessonPlayer } from './LessonPlayer';
 import { subjectLabel, useLearnApi } from './learnApi';
 
@@ -19,12 +20,14 @@ export function TopicLessonPage() {
   return (
     <>
       <LearnItFirst links={checkedLinksFor(learnLinksByTopic, topicId)} />
-      <LessonPlayer
-        key={topicId}
-        title={lesson.data.items[0]?.topicTitle ?? 'Lesson'}
-        items={lesson.data.items}
-        draftContent={lesson.data.draftContent}
-      />
+      <RecallGate topicId={topicId}>
+        <LessonPlayer
+          key={topicId}
+          title={lesson.data.items[0]?.topicTitle ?? 'Lesson'}
+          items={lesson.data.items}
+          draftContent={lesson.data.draftContent}
+        />
+      </RecallGate>
     </>
   );
 }

@@ -504,6 +504,19 @@ Tags: #product #rules #limits #defaults
   start, no penalty, skippable); "Learn it first" links to Oak and BBC Bitesize per topic, checked
   by CI; read aloud with on-device voices preferred; reading comfort settings (dyslexia-friendly
   self-hosted font, larger text, spacing, tint). Detail: `docs/PRODUCT_RULES.md` (Quick wins).
+- Recall checks (Q4, built): `GET /v1/student/recall?topicId=` before a topic lesson (or unit
+  challenge) whose topic has been practised. Up to 2 questions the student has answered before
+  (no flashcards, no extended answers), from other practised topics first, then the lesson's own
+  topic; weak spots first (next-item rules). Shown as "Remember this?" in the lesson player with
+  Skip; answers are normal Learn mode attempts (normal XP when right, wrong ones become
+  flashcards, mastery as any answer). If the call fails the lesson starts as normal.
+  `apps/web/src/features/recall/`, `apps/api/src/routes/recall.ts`.
+- Reading comfort (Q1, built): Settings → Reading comfort, per device in `localStorage` key
+  `revisionden.reading`. Options: dyslexia-friendly font (OpenDyslexic from
+  `@fontsource/opendyslexic`, SIL OFL 1.1, bundled with the app, no font service), text size
+  Normal / Large (112.5%) / Larger (125%), more spacing (line height 1.8, letter 0.12em, word
+  0.16em), tint none / cream / blue. Defaults: all off. Applied app-wide by `data-reading-*`
+  attributes on `<html>` (`apps/web/src/features/reading/`).
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by
