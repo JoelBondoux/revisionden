@@ -1,6 +1,6 @@
 # Community rules
 
-Version: 1.0
+Version: 1.1
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -93,8 +93,9 @@ unfairly, or suspend a profile or family account, as set out in the
 ### 8. Getting help
 
 8.1 If anything in the app upsets or worries you, tell a parent, carer or teacher, and let us know
-at {{CONTACT_EMAIL}}.
+at {{SUPPORT_EMAIL}}.
 
 ## Changes
 
+- 1.1: Ask for help at our help inbox, {{SUPPORT_EMAIL}}. Security problems still go to {{CONTACT_EMAIL}}.
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).

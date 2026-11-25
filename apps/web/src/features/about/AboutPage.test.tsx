@@ -74,6 +74,15 @@ describe('About page', () => {
     expect(within(news).queryByText('Technical only.')).not.toBeInTheDocument();
   });
 
+  it('shows the support email for help', () => {
+    show();
+    expect(screen.getByText(/Need help\? Email/)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'help@revisionden.com' })).toHaveAttribute(
+      'href',
+      'mailto:help@revisionden.com',
+    );
+  });
+
   it('links to every policy, the licences and the feedback form', () => {
     show();
     expect(screen.getByRole('link', { name: 'Privacy notice' })).toHaveAttribute(

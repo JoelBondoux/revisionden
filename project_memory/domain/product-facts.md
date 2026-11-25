@@ -309,10 +309,17 @@ Tags: #product #rules #limits #defaults
   Shown at `/legal/<name>`, signed out, printable. Operator name, email and address are
   build-time placeholders, never in the repository.
 - About page: version, environment, build date, commit, "What's new" (the `### What's new`
-  lines in `CHANGELOG.md`), policy links, open-source licences.
+  lines in `CHANGELOG.md`), policy links, open-source licences, and "Need help? Email
+  help@revisionden.com".
+- Contacts: help and support `help@revisionden.com` (`VITE_SUPPORT_EMAIL`, that default when
+  unset; on About, the feedback form, the accessibility statement and community rules); privacy,
+  data rights and security `privacy@revisionden.com` (`VITE_CONTACT_EMAIL`). Both forward to the
+  product owner (Cloudflare Email Routing).
 - Feedback kinds: bug, idea, something confusing, other; text up to 500 characters with personal
   details refused; device details optional; parents see their family's feedback; never sent to
   GitHub automatically; 5 in any 24 hours per sender; device details off by default for students, on for parents; deleted 12 months after closing (cron).
+  The form also offers "Prefer email? help@revisionden.com" and asks for only the personal details
+  needed.
   Operator triage at `/admin/feedback` for sign-in emails in `OPERATOR_EMAILS`. Workstream L.
 - Parents confirm the terms and privacy notice in onboarding (version stored in
   `policy_acceptances`); a changed version shows a "We've updated" prompt. A newly linked student
