@@ -78,9 +78,9 @@ describe('students', () => {
   });
 
   it('trims spaces at either end of a nickname before it is saved', () => {
-    expect(CreateStudentRequestSchema.parse({ ...newStudent, nickname: '  Thing 1 ' }).nickname).toBe(
-      'Thing 1',
-    );
+    expect(
+      CreateStudentRequestSchema.parse({ ...newStudent, nickname: '  Thing 1 ' }).nickname,
+    ).toBe('Thing 1');
   });
 
   it('never accepts unknown fields such as a real name', () => {

@@ -120,6 +120,13 @@
       "when": 1795613085799,
       "tag": "0016_operator_actions",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1795617971331,
+      "tag": "0017_nickname_spaces",
+      "breakpoints": true
     }
   ]
 }

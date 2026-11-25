@@ -41,7 +41,8 @@ function nicknamePattern(nickname: string): RegExp {
 export function findPersonalData(body: string, profile: StudentProfile): string[] {
   const found: string[] = [];
   for (const field of ['id', 'familyId', 'nickname', 'avatarCode'] as const) {
-    const pattern = field === 'nickname' ? nicknamePattern(profile.nickname) : wholeWord(profile[field]);
+    const pattern =
+      field === 'nickname' ? nicknamePattern(profile.nickname) : wholeWord(profile[field]);
     if (pattern.test(body)) found.push(field);
   }
   if (new RegExp(`\\byear\\s*${profile.yearGroup}\\b`, 'i').test(body)) found.push('yearGroup');

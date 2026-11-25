@@ -23,10 +23,10 @@ export const NicknameSchema = z
   .string()
   .transform(normaliseNickname)
   .superRefine((value, ctx) => {
-  const result = validateNickname(value);
-  if (!result.ok)
-    ctx.addIssue({ code: z.ZodIssueCode.custom, message: NICKNAME_MESSAGES[result.reason] });
-});
+    const result = validateNickname(value);
+    if (!result.ok)
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: NICKNAME_MESSAGES[result.reason] });
+  });
 
 /** Checks the code's shape only. Locked items are checked by validateAvatar with earned rewards. */
 export const AvatarCodeSchema = z.string().refine(
