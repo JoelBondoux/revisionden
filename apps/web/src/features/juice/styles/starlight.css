@@ -19,9 +19,9 @@
   box-shadow: 0 0 12px rgb(255 214 90 / 60%);
 }
 
-:root[data-effect-style='starlight'] .map-summary,
-:root[data-effect-style='starlight'] .mission,
-:root[data-effect-style='starlight'] .daily-card {
+:root[data-effect-style='starlight'] .today-strip,
+:root[data-effect-style='starlight'] .today-strip__mission,
+:root[data-effect-style='starlight'] .today-strip__daily {
   border: 1px solid rgb(255 255 255 / 18%);
   border-radius: var(--radius-lg);
   background: linear-gradient(170deg, var(--sl-night), var(--sl-deep));
@@ -29,22 +29,22 @@
   box-shadow: var(--sl-glow);
 }
 
-:root[data-effect-style='starlight'] .map-summary {
-  padding: var(--space-4);
+:root[data-effect-style='starlight'] .today-strip {
+  padding: var(--space-2) var(--space-3) var(--space-1);
 }
 
-:root[data-effect-style='starlight'] .map-summary__subject {
+:root[data-effect-style='starlight'] .today-strip__heading {
   color: #c4b5ff;
 }
 
-:root[data-effect-style='starlight'] .map-summary .secondary-text,
-:root[data-effect-style='starlight'] .daily-card .secondary-text,
-:root[data-effect-style='starlight'] .daily-card__count,
-:root[data-effect-style='starlight'] .mission__time {
+:root[data-effect-style='starlight'] .today-strip__xp,
+:root[data-effect-style='starlight'] .today-strip__daily .today-strip__eyebrow,
+:root[data-effect-style='starlight'] .today-strip__daily .today-strip__title,
+:root[data-effect-style='starlight'] .today-strip__mission .today-strip__meta {
   color: var(--sl-soft);
 }
 
-:root[data-effect-style='starlight'] .mission__eyebrow {
+:root[data-effect-style='starlight'] .today-strip__mission .today-strip__eyebrow {
   color: var(--sl-cyan);
 }
 

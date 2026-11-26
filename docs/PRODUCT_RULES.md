@@ -791,19 +791,21 @@ So nobody runs an old copy of the app for long after a deploy (decided 2026-11-2
 
 Owner request, 2026-11-25: a clear install button, not only a text link in Settings.
 
-- A card with Pip, "Add RevisionDen to this device", on the child's topic map and the parent home.
-  It is a card in the page, never a pop-up. Settings has the same entry as a button.
+- "Add RevisionDen to this device": a short row in the Today strip of the child's topic map (J12b)
+  and a card with Pip on the parent home. Both are part of the page, never a pop-up. Settings has
+  the same entry as a button. "Not now" in either hides both.
 - **Chrome, Edge and Android:** the app keeps the browser's install prompt (`beforeinstallprompt`)
   and shows it when the button is tapped.
 - **iPhone and iPad Safari** (no install prompt): the button opens a sheet with three illustrated
   steps (Share, Add to Home Screen, Add), worded for an iPhone or an iPad. `/install` shows the
   same steps for the device in use (both, plus the Chrome and Edge way, on other devices).
-- **Browsers that cannot install** (for example Firefox on a computer): no card; Settings links to
+- **Browsers that cannot install** (for example Firefox on a computer): no card or row; Settings links to
   `/install`.
 - Hidden once installed (opened from the Home Screen, `display-mode: standalone`, or the
   `appinstalled` event), and for 30 days after "Not now" on this device (local storage
   `revisionden.installDismissed`).
-- Implemented: `apps/web/src/pwa/{install.ts,InstallCard.tsx,IosSteps.tsx,installStore.ts}`.
+- Implemented: `apps/web/src/pwa/{install.ts,InstallCard.tsx,IosSteps.tsx,installStore.ts}` and
+  `apps/web/src/map/InstallRow.tsx`.
 
 ## Daily limit (wellbeing)
 
@@ -1032,7 +1034,8 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   practised, chosen by spaced repetition and weak spots (never brand-new topics), across their
   subjects. Takes about 5–8 minutes.
 - Learn mode, normal XP and combos; finishing it counts as a lesson for the streak and daily goal.
-  It appears at the top of the topic map until done; it never nags (no push just for 5-a-day).
+  It appears in the topic map's Today strip, under the next mission, until done; it never nags (no
+  push just for 5-a-day).
 
 ### Recall checks
 
