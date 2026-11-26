@@ -3,9 +3,63 @@
   border-radius: var(--radius-md);
 }
 
+/* Builder layout (J9): the preview never scrolls away. Narrow (phones and the sheet): the stage
+   (preview, Shuffle, tabs) is pinned on top and the options scroll under it. Wide (600px of
+   builder or more): the stage is a sticky column on the left, the options on the right. */
 .avatar-builder {
+  --avatar-stage-bg: var(--color-background);
+  --avatar-compact-drop: 64px;
+  position: relative;
+  container: avatar-builder / inline-size;
+  container-type: inline-size;
+}
+
+/* The grid lives on an inner element: a container query cannot style its own container. */
+.avatar-builder__layout {
   display: grid;
   gap: var(--space-4);
+}
+
+.sheet .avatar-builder {
+  --avatar-stage-bg: var(--color-surface);
+}
+
+/* A sheet scrolls inside its own padding: pin the stage to its very top edge instead, so no
+   options show in a strip above it. */
+.sheet .avatar-builder__stage {
+  top: calc(-1 * var(--space-4));
+  padding-top: var(--space-4);
+}
+
+/* Scrolled out of view once the options have moved up by about a preview's height. */
+.avatar-builder__sentinel {
+  position: absolute;
+  top: 96px;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.avatar-builder__stage {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: grid;
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+  background: var(--avatar-stage-bg);
+  transition:
+    margin-bottom var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out);
+}
+
+/* Compact: the figure is shorter and the bottom margin grows by the same amount, so the stage
+   takes the same room in the flow. The options keep their place (no layout shift) and simply
+   show more of themselves under a smaller preview. */
+.avatar-builder__stage[data-compact='true'] {
+  margin-bottom: var(--avatar-compact-drop);
+  box-shadow: 0 6px 8px -6px rgba(43, 43, 58, 0.25);
 }
 
 .avatar-builder__preview {
@@ -14,11 +68,105 @@
   gap: var(--space-3);
 }
 
+.avatar-builder__figure {
+  width: 160px;
+  height: 160px;
+  transition: height var(--motion-fast) var(--ease-out);
+}
+
+.avatar-builder__stage[data-compact='true'] .avatar-builder__figure {
+  height: calc(160px - var(--avatar-compact-drop));
+}
+
+.avatar-builder__figure-inner {
+  display: block;
+  transform-origin: 50% 0;
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+
+.avatar-builder__stage[data-compact='true'] .avatar-builder__figure-inner {
+  transform: scale(0.6);
+}
+
+/* Each change gives the preview a short squash-and-pop (transform only). */
+.avatar-builder__pop .avatar-svg {
+  animation: avatar-pop var(--motion-medium) var(--ease-spring);
+}
+
+@keyframes avatar-pop {
+  0% {
+    transform: scale(0.92);
+  }
+  60% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .avatar-builder__tabs {
   display: flex;
   gap: var(--space-2);
   overflow-x: auto;
   padding-bottom: var(--space-1);
+}
+
+/* Tall enough for the biggest tab, so switching tabs never moves what comes after the builder. */
+.avatar-builder__panel {
+  min-height: 320px;
+}
+
+@container avatar-builder (min-width: 600px) {
+  .avatar-builder__layout {
+    grid-template-columns: minmax(200px, 240px) 1fr;
+    align-items: start;
+    gap: var(--space-6);
+  }
+
+  .avatar-builder__sentinel {
+    display: none;
+  }
+
+  .avatar-builder__stage {
+    top: var(--space-4);
+    grid-row: span 2;
+  }
+
+  .avatar-builder__stage,
+  .avatar-builder__stage[data-compact='true'] {
+    margin-bottom: 0;
+    box-shadow: none;
+  }
+
+  .avatar-builder__stage[data-compact='true'] .avatar-builder__figure {
+    height: 160px;
+  }
+
+  .avatar-builder__stage[data-compact='true'] .avatar-builder__figure-inner {
+    transform: none;
+  }
+
+  .avatar-builder__tabs {
+    flex-wrap: wrap;
+  }
+
+  .avatar-builder__panel {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar-builder__stage,
+  .avatar-builder__figure,
+  .avatar-builder__figure-inner {
+    transition: none;
+  }
+
+  .avatar-builder__pop .avatar-svg {
+    animation: none;
+  }
 }
 
 .avatar-builder__tab {
@@ -106,8 +254,4 @@
   font-size: 0.75rem;
   color: var(--color-text-secondary);
   text-align: center;
-}
-
-.avatar-option__lock::before {
-  content: '🔒 ';
 }

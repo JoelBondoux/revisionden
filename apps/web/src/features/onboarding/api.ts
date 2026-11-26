@@ -15,6 +15,9 @@ import {
   type LinkKind,
   type LinkStatus,
   StudentSubjectsSchema,
+  ParentSubjectsSchema,
+  type AddSubjectRequest,
+  type ParentSubject,
   type Enrolment,
   type LinkToken,
   type OnboardChildRequest,
@@ -97,6 +100,12 @@ export interface OnboardingApi {
     change: UpdateSubjectChoiceRequest,
   ): Promise<Enrolment>;
   /** Student device: their own subjects and how many are left to check. */
+  /** Parent: a child's subjects, each saying whether questions are ready yet (E5). */
+  getChildSubjects(studentId: string): Promise<ParentSubject[]>;
+  /** Parent: add a subject from the catalogue (same choices as onboarding). */
+  addChildSubject(studentId: string, choice: AddSubjectRequest): Promise<Enrolment>;
+  /** Parent: remove a subject. The child's progress is kept and comes back if re-added. */
+  removeChildSubject(studentId: string, subjectId: string): Promise<void>;
   getMySubjects(): Promise<StudentSubjects>;
   /** Student device: turn a Not sure board or tier into a real one. */
   updateMySubject(subjectId: string, change: UpdateSubjectChoiceRequest): Promise<Enrolment>;
@@ -212,6 +221,19 @@ export function createOnboardingApi({
         change,
         'PATCH',
       ),
+    getChildSubjects: async (studentId) =>
+      (await request(`v1/students/${encodeURIComponent(studentId)}/subjects`, ParentSubjectsSchema))
+        .subjects,
+    addChildSubject: (studentId, choice) =>
+      request(`v1/students/${encodeURIComponent(studentId)}/subjects`, EnrolmentSchema, choice),
+    removeChildSubject: async (studentId, subjectId) => {
+      await request(
+        `v1/students/${encodeURIComponent(studentId)}/subjects/${encodeURIComponent(subjectId)}`,
+        z.unknown(),
+        undefined,
+        'DELETE',
+      );
+    },
     getMySubjects: () => request('v1/student/subjects', StudentSubjectsSchema),
     updateMySubject: (subjectId, change) =>
       request(

@@ -23,6 +23,24 @@ export const onboardingHandlers: RequestHandler[] = [
       ],
     }),
   ),
+  // Parent Subjects page (E5): the demo child's subjects; no questions are ready in the demo.
+  http.get('*/v1/students/:id/subjects', ({ params }) =>
+    HttpResponse.json({
+      subjects: (family.children.find((c) => c.student.id === params.id)?.enrolments ?? []).map(
+        (e) => ({ ...e, hasQuestions: false }),
+      ),
+    }),
+  ),
+  http.post('*/v1/students/:id/subjects', async ({ params, request }) =>
+    HttpResponse.json(
+      { ...((await request.json()) as object), studentId: params.id as string },
+      { status: 201 },
+    ),
+  ),
+  http.delete(
+    '*/v1/students/:id/subjects/:subjectId',
+    () => new HttpResponse(null, { status: 204 }),
+  ),
   // Student device: the student's own subjects (all set in the demo family).
   http.get('*/v1/student/subjects', () =>
     HttpResponse.json({ enrolments: family.children[0]!.enrolments, toCheckLater: 0 }),

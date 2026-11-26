@@ -3,6 +3,7 @@ import { readdir, readFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import { createValidators } from './schemas.mjs';
 import { learnLinkErrors } from './learn-links.mjs';
+import { controlCharacters } from '../verify/record.mjs';
 import { roundingOf, showsRounding } from '../../packages/core/src/answer-format.ts';
 
 const FOLDERS = {
@@ -476,8 +477,27 @@ async function mathsErrors(content, checkMaths) {
  * Returns a list of { file, id, message } problems; empty means valid.
  * checkMaths(checks) => Promise<results>, or null to skip the maths engine.
  */
+/** Control characters anywhere in any content file (they break the database sync). */
+function controlCharacterErrors(content) {
+  const errors = [];
+  for (const list of Object.values(content)) {
+    if (!Array.isArray(list)) continue;
+    for (const { file, data } of list) {
+      if (!file) continue;
+      for (const { path, code } of controlCharacters(data)) {
+        errors.push({ file, id: data?.id, message: `control character ${code} in ${path}` });
+      }
+    }
+  }
+  return errors;
+}
+
 export async function validateContent(content, { checkMaths, validators = createValidators() }) {
-  const errors = [...(content.loadErrors ?? []), ...schemaErrors(content, validators)];
+  const errors = [
+    ...(content.loadErrors ?? []),
+    ...controlCharacterErrors(content),
+    ...schemaErrors(content, validators),
+  ];
   if (errors.length) return errors;
   errors.push(...linkErrors(content), ...citationErrors(content), ...learnLinkErrors(content));
   if (errors.length || !checkMaths) return errors;

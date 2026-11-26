@@ -57,15 +57,13 @@ describe('acceptanceStatus', () => {
     expect(acceptanceStatus(accepted, current)).toEqual({
       kind: 'changed',
       policies: ['privacy-notice'],
+      accepted: { 'privacy-notice': '1.0', 'terms-of-use': '1.0' },
     });
   });
 
-  it('treats a policy never accepted (after others were) as changed', () => {
+  it('uses the normal first confirmation when a policy was never accepted (after others were)', () => {
     const accepted: Acceptance[] = [{ policy: 'terms-of-use', version: '1.0', acceptedAt: at }];
-    expect(acceptanceStatus(accepted, current)).toEqual({
-      kind: 'changed',
-      policies: ['privacy-notice'],
-    });
+    expect(acceptanceStatus(accepted, current)).toEqual({ kind: 'first' });
   });
 
   it('ignores policies with no file in this build', () => {
@@ -82,12 +80,28 @@ function fakeApi(accepted: Acceptance[]): LegalApi {
   };
 }
 
-const show = (api: LegalApi) =>
+function memoryStorage() {
+  const map = new Map<string, string>();
+  return {
+    map,
+    getItem: (k: string) => map.get(k) ?? null,
+    setItem: (k: string, v: string) => void map.set(k, v),
+  };
+}
+
+const show = (
+  api: LegalApi,
+  device: {
+    storage?: ReturnType<typeof memoryStorage>;
+    now?: () => number;
+    library?: typeof library;
+  } = {},
+) =>
   render(
-    <PolicyLibraryProvider library={library}>
+    <PolicyLibraryProvider library={device.library ?? library}>
       <LegalApiProvider value={api}>
         <MemoryRouter>
-          <PolicyGate>
+          <PolicyGate storage={device.storage ?? memoryStorage()} now={device.now}>
             <h1>Onboarding</h1>
           </PolicyGate>
         </MemoryRouter>
@@ -203,9 +217,143 @@ describe('PolicyGate', () => {
       expect.stringMatching(BUTTON_LINK),
     );
     expect(dialog).toHaveTextContent('We now keep feedback for 12 months.');
-    await userEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+    await userEvent.click(screen.getByRole('button', { name: "I've read the changes" }));
     expect(api.accept).toHaveBeenCalledWith([{ policy: 'privacy-notice', version: '1.1' }]);
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+
+  describe('after several versions were skipped', () => {
+    const changes = (title: string, lines: string[]) =>
+      `# ${title}\n\nVersion: ${lines[0]!.split(':')[0]}\n\n## In plain English\n\n- A point.\n\n` +
+      `## Full text\n\nText.\n\n## Changes\n\n${lines.map((l) => `- ${l}`).join('\n')}\n`;
+    const skipped = createPolicyLibrary(
+      {
+        'a/privacy-notice.md': changes('Privacy notice', [
+          '1.10: A parent can send a one-time link.',
+          '1.9: Synced passkeys work on other devices.',
+          '1.8: Labels on your account.',
+          '1.7: Complaints in the app.',
+        ]),
+        'a/terms-of-use.md': changes('Terms of use', [
+          '1.3: Fair use of AI marking.',
+          '1.2: Two parents per family.',
+        ]),
+      },
+      {},
+    );
+
+    it('shows only the changes since the version this parent accepted, per policy', async () => {
+      const api = fakeApi([
+        { policy: 'privacy-notice', version: '1.7', acceptedAt: at },
+        { policy: 'terms-of-use', version: '1.2', acceptedAt: at },
+      ]);
+      show(api, { library: skipped });
+      const dialog = await screen.findByRole('dialog', {
+        name: "We've updated our Privacy notice and Terms of use",
+      });
+      const privacy = within(dialog).getByRole('region', { name: 'Privacy notice, version 1.10' });
+      expect(
+        within(privacy)
+          .getAllByRole('listitem')
+          .map((li) => li.textContent),
+      ).toEqual([
+        '1.10: A parent can send a one-time link.',
+        '1.9: Synced passkeys work on other devices.',
+        '1.8: Labels on your account.',
+      ]);
+      expect(dialog).not.toHaveTextContent('Complaints in the app.');
+      expect(
+        within(privacy).getByRole('link', { name: 'Read the Privacy notice' }),
+      ).toHaveAttribute('href', '/legal/privacy-notice');
+      const terms = within(dialog).getByRole('region', { name: 'Terms of use, version 1.3' });
+      expect(
+        within(terms)
+          .getAllByRole('listitem')
+          .map((li) => li.textContent),
+      ).toEqual(['1.3: Fair use of AI marking.']);
+      await userEvent.click(screen.getByRole('button', { name: "I've read the changes" }));
+      expect(api.accept).toHaveBeenCalledWith([
+        { policy: 'privacy-notice', version: '1.10' },
+        { policy: 'terms-of-use', version: '1.3' },
+      ]);
+    });
+
+    it('leaves out a policy with no changes since it was accepted', async () => {
+      show(
+        fakeApi([
+          { policy: 'privacy-notice', version: '1.8', acceptedAt: at },
+          // Accepted on a newer build that was rolled back: different, but nothing newer to read.
+          { policy: 'terms-of-use', version: '1.4', acceptedAt: at },
+        ]),
+        { library: skipped },
+      );
+      const dialog = await screen.findByRole('dialog', {
+        name: "We've updated our Privacy notice",
+      });
+      expect(
+        within(dialog).queryByRole('region', { name: /Terms of use/ }),
+      ).not.toBeInTheDocument();
+      expect(within(dialog).getAllByRole('listitem')).toHaveLength(2);
+    });
+
+    it('asks for the normal confirmation when a policy was never accepted', async () => {
+      show(fakeApi([{ policy: 'terms-of-use', version: '1.2', acceptedAt: at }]), {
+        library: skipped,
+      });
+      expect(await screen.findByRole('heading', { name: 'Before you start' })).toBeInTheDocument();
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('closing the "We\'ve updated" notice without reading it', () => {
+    const outdated = (): Acceptance[] => [
+      { policy: 'privacy-notice', version: '1.0', acceptedAt: at },
+      { policy: 'terms-of-use', version: '1.0', acceptedAt: at },
+    ];
+
+    it('does not show it again when the parent comes back to the screen', async () => {
+      const storage = memoryStorage();
+      const api = fakeApi(outdated());
+      const first = show(api, { storage });
+      await screen.findByRole('dialog', { name: "We've updated our Privacy notice" });
+      await userEvent.click(screen.getByRole('button', { name: 'Close' }));
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+      expect(api.accept).not.toHaveBeenCalled();
+      first.unmount();
+
+      show(api, { storage });
+      expect(await screen.findByRole('heading', { name: 'Onboarding' })).toBeInTheDocument();
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+
+    it('shows it again after 24 hours on this device', async () => {
+      const storage = memoryStorage();
+      let now = Date.parse('2026-11-26T09:00:00Z');
+      const api = fakeApi(outdated());
+      const first = show(api, { storage, now: () => now });
+      await screen.findByRole('dialog');
+      await userEvent.keyboard('{Escape}');
+      first.unmount();
+
+      now += 24 * 60 * 60 * 1000 + 1;
+      show(api, { storage, now: () => now });
+      expect(
+        await screen.findByRole('dialog', { name: "We've updated our Privacy notice" }),
+      ).toBeInTheDocument();
+    });
+
+    it('shows it again as soon as a newer version ships', async () => {
+      const storage = memoryStorage();
+      // Closed while 1.1 was the newest version, on another build.
+      storage.setItem(
+        'revisionden.policyNotice',
+        JSON.stringify({ versions: { 'privacy-notice': '1.0' }, until: Date.now() + 3_600_000 }),
+      );
+      show(fakeApi(outdated()), { storage });
+      expect(
+        await screen.findByRole('dialog', { name: "We've updated our Privacy notice" }),
+      ).toBeInTheDocument();
+    });
   });
 
   it('does not lock anyone out when the acceptances cannot be loaded', async () => {
