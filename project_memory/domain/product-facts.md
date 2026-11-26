@@ -86,6 +86,11 @@ Tags: #product #rules #limits #defaults
   family log events.
 - New children start from a Boy, Girl or Neutral look (Neutral preselected); only the avatar code
   is stored, never a gender. A newly linked device offers "Make it yours" (with "Maybe later").
+- Avatar motion (E9, 2026-11-26): `AvatarSvg` takes `motion` (`idle`, `nod` right answer, `hop`
+  goal or level, `hmm` wrong answer, `tap`, `still` default) and `paused` (questions and Test mode: no
+  idle loop, reactions still play); `useAvatarMotion` in `features/avatar/motion.ts`. Whole parts
+  (figure, head, eyes, mouth) move by CSS transforms, so any outfit moves together. Still with
+  reduced motion; paused in a hidden tab. Placement in the nav is J15b. `docs/GAME_FEEL.md`.
 - Most-used board per subject in England (Ofqual market report 2024 to 2025, share of
   certificates): AQA for GCSE English Language, English Literature, Biology, Chemistry, Physics,
   Combined Science, Drama, French and A-Level Physics; Pearson Edexcel for GCSE Maths, History and
@@ -263,10 +268,17 @@ Tags: #product #rules #limits #defaults
   with questions and answers `status: "coming_soon"` (plus `subjectId` and `subjects` with
   `hasContent` for the switcher) for one with none; 404 `no_subject` only with no subject at all
   or an unknown id. The web shows "Questions for <subject> are on their way." and a switcher.
+- Clues and help (F10, owner 2026-11-26): "Need a clue?" shows the verified hint (no penalty,
+  no longer shown up front); then "Help me understand" steps through the verified worked
+  solution. A right answer after help earns half XP (rounded down, owner), no combo, and is
+  practised like a miss (mastery 0, review ladder, flashcard). Learn mode only.
+  `attempts.helped` (migration 0029).
 - Powers (F9, owner 2026-11-26): shown as superscripts everywhere students see maths
   (`packages/core/src/powers.ts`, web `MathText`), with spoken words for screen readers; stored
   content keeps ^. A lone ^ stays ("Use ^ for powers"). Answer boxes have a Power key and a
   "Shows as:" preview. Computing subjects (id containing "comput") keep ^ as typed (owner).
+  A tap on any power switches every power on screen between x² and x^2 (F9b, owner), remembered
+  on the device; it never chooses an answer or turns a card.
 - Mascot: Pip, an angular geometric fox (orange `#FF7A2F`). Brand violet `#6C47F5`; font Nunito,
   self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
 - Works offline for the app shell; API calls are never cached. Pages always come fresh from the
