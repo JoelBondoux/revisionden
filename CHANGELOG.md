@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Fixed: the About page no longer scrolls sideways on a small phone with large text; the version details and support email now wrap.
 - Fixed: when the version line at the bottom of a phone screen wraps, Get help now simply moves to the next line, with no stray dot at the start or end of either line.
 - Clearer at a glance: empty progress bars are now an outline instead of a grey block, so an empty bar no longer looks full; the levels you've reached on Rewards show their numbers clearly in Doodle Diary, even in dark mode; and "+10 XP" now pops just above the feedback instead of floating across the question.
 - On parent screens the bug report button now sits at the top of the page too, so it never covers a choice like the subject buttons.
@@ -121,6 +122,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- About page reflow (L10): at 320px with 200% text the version facts grid (`max-content` label column) and the support email pushed `/about` sideways. The grid columns can now shrink and long values wrap (`about.css`); new e2e checks the About content at 320px and 200% text. The shared version footer still overflows there (workstream I, reported).
 - Version footer (G8): laid out as a wrapping flex row with a gap and no "·" text separator, so the separator can no longer start or end a wrapped line. Pieces: the version link with its environment and commit, then Get help.
 - Visual polish J10g (J, from the refreshed morning walkthrough #217): `.progress` and `.arena-progress` show an empty track as an inset 2px ring in `--color-track` / `--arena-track` with a transparent inside (`components.css` changed at the lead's request); Doodle Diary's earned Rewards steps use solid #FFE45C with #2B2A3A numbers (no hatching), and a test stops any style putting a pattern behind a level number; in `LessonPlayer` the "+XP" floater moves from the answer option to `.lesson__xp-pop` above the feedback with a short rise (`float-up-short`). Tests: CSS rules, stylesheets, lesson arena.
 - Parent screens (`/parent…`, `/family…`) get a top row for the bug button instead of the floating corner button, which sat beside content such as the Subjects chips (I15). It keeps the keyboard focus ring. End-to-end tests scroll the parent Subjects page checking the button covers nothing (it did on phones before) and tab to it checking the ring.

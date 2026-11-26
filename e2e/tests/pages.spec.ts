@@ -520,3 +520,18 @@ test('a new parent sees the terms and privacy notice as cards before onboarding,
   await page.getByRole('button', { name: 'Continue' }).click();
   await expect.poll(() => stored).toMatchObject({ acceptances: expect.any(Array) });
 });
+
+test('/about content reflows at 320px with text at 200% (WCAG 1.4.4, 1.4.10)', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 640 });
+  await page.goto('/about');
+  await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+  await expect(page.getByRole('heading', { level: 1, name: 'About RevisionDen' })).toBeVisible();
+  // The page's own content only: the shared version footer is workstream I's (reported to the lead).
+  const tooWide = await page.evaluate(() => {
+    const width = document.documentElement.clientWidth;
+    return Array.from(document.querySelectorAll('main *'))
+      .filter((el) => el.getBoundingClientRect().right > width + 0.5)
+      .map((el) => `${el.tagName.toLowerCase()}: ${(el.textContent ?? '').trim().slice(0, 40)}`);
+  });
+  expect(tooWide).toEqual([]);
+});
