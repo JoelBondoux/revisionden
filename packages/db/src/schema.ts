@@ -645,6 +645,8 @@ export const flashcardSessions = pgTable(
     xpEarned: integer('xp_earned').notNull().default(0),
     /** Set when the session reviews one deck: completion is checked within that deck only. */
     topicId: text('topic_id'),
+    /** "10 more" cards asked for today (F11b): complete when today's offered cards are done. */
+    extraCards: integer('extra_cards').notNull().default(0),
     /**
      * A rewarded session takes one of the student's daily reward slots (UK day, slot 1 or 2).
      * The unique key means two finishes at the same time can never both take the same slot,

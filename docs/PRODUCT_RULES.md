@@ -544,7 +544,9 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
   the most recent wrong answers, then the one due earliest. The student's own cards count; All
   decks is browsing, not review, and is not limited. After 20 the Cards tab says "Done for today!"
   (with the usual celebration sound and vibration) and offers "10 more" for keen students; extra
-  cards schedule normally. Cards past the cap stay due and roll to the next day with no penalty
+  cards schedule normally. A review session over all decks is complete (and earns its session XP
+  under the usual rules) when the cards offered today are done, the daily 20 plus any "10 more",
+  not when the whole backlog is (F11b; the session stores `extra_cards`, migration 0030). Cards past the cap stay due and roll to the next day with no penalty
   and no overdue message: SM-2 sets the next gap from the card's own interval, never from how late
   it was reviewed, so a held-back card is not treated as forgotten. The parent stats show no
   flashcard backlog today (the API returns `backlog` for a later parent view). Implemented in

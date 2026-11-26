@@ -289,6 +289,8 @@ Tags: #product #rules #limits #defaults
   Order: relearning, most overdue for its interval, then weak spots, then recent wrong answers.
   Own cards count; All decks is not limited. Held-back cards roll over with no penalty (SM-2
   uses the card's interval, not its lateness). Parent stats show no backlog (API has `backlog`).
+  An all-decks session is complete when today's offered cards are done, including a "10 more"
+  batch (F11b, `flashcard_sessions.extra_cards`, migration 0030).
 - Clues and help (F10, owner 2026-11-26): "Need a clue?" shows the verified hint (no penalty,
   no longer shown up front); then "Help me understand" steps through the verified worked
   solution. A right answer after help earns half XP (rounded down, owner), no combo, and is

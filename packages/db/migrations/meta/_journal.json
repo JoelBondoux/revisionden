@@ -211,6 +211,13 @@
       "when": 1795698854574,
       "tag": "0029_helped_answers",
       "breakpoints": true
+    },
+    {
+      "idx": 30,
+      "version": "7",
+      "when": 1795703708113,
+      "tag": "0030_flashcard_session_extra",
+      "breakpoints": true
     }
   ]
 }

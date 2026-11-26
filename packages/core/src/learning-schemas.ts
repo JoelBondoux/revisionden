@@ -282,7 +282,13 @@ export const FlashcardSessionSchema = z.object({
 export type FlashcardSession = z.infer<typeof FlashcardSessionSchema>;
 
 /** Optional deck scope: completion is then checked within that topic's cards only. */
-export const FlashcardSessionRequestSchema = z.object({ topicId: text.optional() }).strict();
+export const FlashcardSessionRequestSchema = z
+  .object({
+    topicId: text.optional(),
+    /** "10 more" cards asked for today (F11b): the session is complete when they are done. */
+    extra: z.number().int().min(0).max(100).optional(),
+  })
+  .strict();
 export type FlashcardSessionRequest = z.infer<typeof FlashcardSessionRequestSchema>;
 
 export const FlashcardReviewRequestSchema = z

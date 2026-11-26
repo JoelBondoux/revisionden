@@ -34,11 +34,33 @@ const content: ContentItem[] = Array.from({ length: 25 }, (_, n) => ({
   back: `Cap back ${n}`,
 }));
 
+/** A bigger made-up deck (40 cards), so 10 are still due after the daily 20 and 10 more. */
+const BIG = 'cap-big-subject';
+const bigTree: ContentTopicTree = {
+  ...tree,
+  id: 'cap-big-tree',
+  subject: BIG,
+  topics: [
+    {
+      id: 'cap-big-unit',
+      title: 'Big unit',
+      children: [{ id: 'cap-big-topic', title: 'Big topic', spec_ref: ['C2'], citations: [] }],
+    },
+  ],
+};
+const bigContent: ContentItem[] = Array.from({ length: 40 }, (_, n) => ({
+  ...card,
+  id: `cap-big-${n}`,
+  topic: 'cap-big-topic',
+  front: `Big front ${n}`,
+  back: `Big back ${n}`,
+}));
+
 let t: TestContext;
 
 beforeAll(async () => {
   t = await createTestContext();
-  await syncContent(t.db, { topicTrees: [tree], items: content });
+  await syncContent(t.db, { topicTrees: [tree, bigTree], items: [...content, ...bigContent] });
 });
 
 afterAll(async () => {
@@ -56,10 +78,10 @@ async function dueBadge(headers: H) {
   return CardsDueSchema.parse(await res.json()).due;
 }
 
-async function review(headers: H, ids: string[]) {
+async function review(headers: H, ids: string[], body: Record<string, unknown> = {}) {
   const res = await t.app.request(
     '/v1/student/flashcards/sessions',
-    jsonRequest('POST', {}, headers),
+    jsonRequest('POST', body, headers),
   );
   const session = FlashcardSessionSchema.parse(await res.json()).id;
   for (const id of ids) {
@@ -69,6 +91,16 @@ async function review(headers: H, ids: string[]) {
     );
     expect(r.status).toBe(200);
   }
+  return session;
+}
+
+async function finish(headers: H, session: string) {
+  const res = await t.app.request(
+    `/v1/student/flashcards/sessions/${session}/finish`,
+    jsonRequest('POST', {}, headers),
+  );
+  expect(res.status).toBe(200);
+  return (await res.json()) as { completed: boolean; reason: string; xpEarned: number };
 }
 
 describe('daily flashcard limit (F11, owner)', () => {
@@ -115,5 +147,45 @@ describe('daily flashcard limit (F11, owner)', () => {
     // The 5 held back are still due, first in line; nothing was lost.
     expect(tomorrow.backlog).toBeGreaterThanOrEqual(5);
     expect(tomorrow.dueToday).toBe(Math.min(20, tomorrow.backlog!));
+  });
+
+  it('counts the "10 more" batch as complete once those 10 are done, with its XP (F11b)', async () => {
+    const { headers } = await t.familyStudent('cap_extra', [BIG]);
+    const first = await review(
+      headers,
+      (await overview(headers)).due.map((c) => c.id),
+    );
+    expect((await finish(headers, first)).completed).toBe(true);
+    const more = await overview(headers, '?extra=10');
+    expect(more.due).toHaveLength(10);
+    const second = await review(
+      headers,
+      more.due.map((c) => c.id),
+      { extra: 10 },
+    );
+    // 10 cards are still due in the backlog, but the batch offered today is done.
+    expect(await finish(headers, second)).toMatchObject({
+      completed: true,
+      reason: 'rewarded',
+      xpEarned: 20,
+    });
+  });
+
+  it('still says left early when the "10 more" batch is not finished', async () => {
+    const { headers } = await t.familyStudent('cap_extra_early', [BIG]);
+    await finish(
+      headers,
+      await review(
+        headers,
+        (await overview(headers)).due.map((c) => c.id),
+      ),
+    );
+    const more = await overview(headers, '?extra=10');
+    const part = await review(
+      headers,
+      more.due.slice(0, 6).map((c) => c.id),
+      { extra: 10 },
+    );
+    expect(await finish(headers, part)).toMatchObject({ completed: false, reason: 'left_early' });
   });
 });
