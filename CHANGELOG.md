@@ -83,6 +83,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Blind answer and review (S2, after #133): the blind check compares short answers with the same normaliser as marking (`x² + y² = 36` matches `x^2 + y^2 = 36`; `any_order` and `units` honoured), and the adversarial review is told when an item has `any_order: true` so it does not ask for reordered variants.
+- Content sync (S2): `pnpm content:validate` now refuses control characters (U+0000 to U+001F except tab and newline) anywhere in content, naming the field, and `withCheck` replaces them with a space in every check record the pipeline writes, so recorded model output can no longer break the sync to Postgres (22P05, as with the S3-A review notes fixed in #137).
 - Fairer marking review fixes (F6, from Codex on #133): a multiply sign before a signed number is kept, so `3n*-2` no longer matches `3n-2`; with `any_order`, up to 4 letters on their own (`pq`) are a product; the maths engine accepts a letter answer either way round (`a = x`).
 - Content: removed stray control characters from two Algebra review notes (A12, A15) that stopped `content:sync` loading the bank into the dev database.
 - Scroll and focus on a screen change (I7): `RouteChange` (`apps/web/src/layout/RouteChange.tsx`) wraps every route. A new screen scrolls to the top and focuses its `h1` (or `#main`) without a focus ring; back and forward restore the position the reader last scrolled to (kept up to date as they scroll), waiting up to 5 seconds for a loading screen's content to make it reachable; `#id` links scroll to that part; a query-only change on the same screen keeps the position; the first screen is left alone.
