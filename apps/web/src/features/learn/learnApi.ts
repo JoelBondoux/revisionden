@@ -6,6 +6,7 @@ import {
   FlashcardSessionSchema,
   FlashcardSchema,
   FlashcardsOverviewSchema,
+  ItemHelpResponseSchema,
   LearnAttemptResponseSchema,
   LessonResponseSchema,
   ProgressSchema,
@@ -39,6 +40,8 @@ export interface LearnApi {
   startStartingTest(subjectId: string): Promise<StartingTestResponse>;
   finishStartingTest(id: string): Promise<StartingTestResult>;
   submitAttempt(attempt: LearnAttemptRequest): Promise<LearnAttemptResponse>;
+  /** "Help me understand" (F10): the item's verified steps, ending on the answer. */
+  getItemHelp(itemId: string): Promise<string[]>;
   getFlashcards(): Promise<FlashcardsOverview>;
   getDeck(topicId: string): Promise<Flashcard[]>;
   /** Starts a review session: deck XP is paid per completed session (F3). */
@@ -90,6 +93,8 @@ export function createLearnApi({
     finishStartingTest: (id) =>
       request(`learn/starting-tests/${enc(id)}/finish`, StartingTestResultSchema, {}),
     submitAttempt: (attempt) => request('learn/attempts', LearnAttemptResponseSchema, attempt),
+    getItemHelp: async (itemId) =>
+      (await request(`learn/items/${enc(itemId)}/help`, ItemHelpResponseSchema)).steps,
     getFlashcards: () => request('flashcards', FlashcardsOverviewSchema),
     getDeck: (topicId) => request(`flashcards/decks/${enc(topicId)}`, FlashcardSchema.array()),
     startFlashcardSession: (topicId) =>

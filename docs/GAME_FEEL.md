@@ -119,6 +119,24 @@ tab say so to screen readers.
 - **Text on gold** always uses `--color-text-on-gold` (dark), in every theme: gold buttons,
   gold and streak pills, earned reward steps, the combo badge and the mastered-topic checkmark on the map.
 
+## Avatar motion (E9, owner request 2026-11-26)
+
+- The student's own avatar can move as a puppet: whole parts (the figure, the head, the eyes, the
+  mouth) move with CSS transforms, so hats, hair and glasses ride along with the head whatever the
+  child wears. Hair that hangs behind the body (long hair, ponytails) moves in step with the head
+  but stays behind the top.
+- `<AvatarSvg code motion="idle|nod|hop|hmm|tap|still" />`; still by default, so options and lists
+  never move. `useAvatarMotion({ paused })` gives the props and `react('nod' | 'hop' | 'hmm' | 'tap')`.
+- Idle: slow breathing with a small bounce (6.4s loop), a blink every 5.2s, a slow look left and
+  right (8.8s loop); the loops are multiples of `--motion-pulse`, so nothing pulses fast. Reactions play once: **nod** for a right answer (700ms), **hop** with a squint
+  and a bigger smile for a goal or level (900ms), a gentle **hmm** head tilt for a wrong answer
+  (1.4s), and a quick **tap** squash when the avatar is tapped (450ms). Same feel as Pip: ease-in-out loops, reactions on `--ease-out` and `--ease-spring`.
+- Small moves only (at most 4px up, 7 degrees of tilt), so nothing leaves the frame: checked for
+  every hat, hair style, skin and held item.
+- `paused` (questions and Test mode) stops the idle loop; reactions still play. Nothing runs in a
+  hidden tab. Reduced motion: the avatar stays still and reactions do nothing.
+- Placement (the bigger avatar at the bottom right, in the Me nav item) is J's (J15b).
+
 ## Avatar builder layout (J9, owner request 2026-11-25)
 
 - The preview never scrolls away; only the options scroll or change tab. The layout follows the
