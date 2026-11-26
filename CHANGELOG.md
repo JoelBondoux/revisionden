@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- The doodle background feels less like wallpaper: the little sketches are now scattered at all angles and sizes, with more of them (atoms, leaves, music notes, rockets and more), so there's no visible grid.
 - Building an avatar is easier: your avatar now stays in view while you scroll through the options. On a phone it sits at the top and shrinks a little as you scroll; on a tablet or computer it sits on the left. Each change gives it a little bounce.
 - Parents can now change a child's subjects at any time: in Parent home, tap Subjects on your child's card to add a subject, remove one, or change its exam board or tier. Removing a subject keeps your child's progress, and it comes back if you add the subject again. Subjects without questions yet say "Questions coming soon".
 - Got one wrong? A similar question comes back a few questions later (or the same one at the end), and anything you found hard, or took a long time over, comes back as a warm-up over the next few days until it sticks.
@@ -277,6 +278,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Changed
 
+- Doodle background J8b (J): a new generated tile, `apps/web/src/design/doodle-scatter.svg` (800px, 114 doodles from 36 original motifs, about 4KB gzipped), replaces the 240px grid tile in the app. Made by `apps/web/src/design/doodleTile.ts` from a fixed seed: Poisson-disc points on a wrap-round tile, a random angle, size (0.6–1.4×) and line weight per doodle, and edge copies so the repeat has no seams. A test checks the committed file matches the generator (`UPDATE_DOODLES=1` rewrites it). The old `doodles.svg` stays for the public site until it switches over.
 - Backlog: task B7 makes the "one new device a day" check for synced passkeys atomic with a unique constraint (follow-up to I5b #96; the rare duplicate is accepted until then).
 - AI marking allowance (K9): the parent dashboard's "AI marking spend" card (US$ figures) is now "AI marking allowance" with a percentage used and the reset date (`aiAllowance` in `packages/core/src/stats-allowance.ts`); no money leaves the API to a family client: the dashboard carries `aiAllowance`, `GET /v1/students/:id/ai-usage` returns `allowanceUsedPercent`/`usedUp`/`resetsOn`, and the family export shows `allowanceUsedPercent` per AI call instead of its cost (B2 cross-lane); the used-up message reads "You've used this month's AI marking allowance. It resets on 1 <month>."; policies ai-and-marking 1.1 and acceptable-use 1.2 (L cross-lane); "What your parent can see" says "How much of your AI marking allowance you have used this month". The raw cost stays operator-only.
 - Project memory: the public site's Open Graph card and touch icon (and how to remake them) recorded in product facts; duplicate hosting lines left by the domain move merged into one (workstream M).

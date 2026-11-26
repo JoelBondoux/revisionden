@@ -148,8 +148,8 @@
   z-index: -1;
   pointer-events: none;
   background-color: var(--pattern-ink);
-  -webkit-mask: url('./doodles.svg') 0 0 / 240px 240px repeat;
-  mask: url('./doodles.svg') 0 0 / 240px 240px repeat;
+  -webkit-mask: url('./doodle-scatter.svg') 0 0 / 800px 800px repeat;
+  mask: url('./doodle-scatter.svg') 0 0 / 800px 800px repeat;
 }
 
 /* No pattern for high contrast or forced colours (Windows High Contrast). */
