@@ -25,7 +25,11 @@ class SolutionsRequest(BaseModel):
 class ExpectedAnswer(BaseModel):
     solutions: list[str] | None = None
     expression: str | None = None
-    form: Literal["factorised", "expanded"] | None = None
+    form: (
+        Literal["factorised", "expanded", "fraction", "simplest_fraction", "standard_form",
+                "index_form"]
+        | None
+    ) = None
     subject: str | None = Field(default=None, min_length=1, max_length=20)
 
     @model_validator(mode="after")

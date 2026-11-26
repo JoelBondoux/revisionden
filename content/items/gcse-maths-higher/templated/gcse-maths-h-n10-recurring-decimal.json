@@ -1,0 +1,432 @@
+[
+  {
+    "id": "gcse-maths-h-n10-t-recurring-decimal-01",
+    "topic": "gcse-maths-h-n10",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-n10-lp-recurring",
+    "expected_seconds": 90,
+    "prompt": "Write 0.696969... (the digits 69 recur) as a fraction in its simplest form.",
+    "answer": {
+      "value": "23/33"
+    },
+    "verify": {
+      "expression": "69/99"
+    },
+    "marks": 2,
+    "mark_scheme": ["M1 for 99x = 69 or 69/99", "A1 for 23/33"],
+    "hint": "Let x be the decimal. Two digits recur, so work out 100x - x.",
+    "explanation": "Let x = 0.6969... Two digits recur, so multiply by 100: 100x = 69.6969... Subtract: 100x - x = 69.6969... - 0.6969..., so 99x = 69 and x = 69/99. Simplify by dividing by 3: 23/33.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N10",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Fractions, decimals and percentages, content reference N10 (page 13; PDF page 25)",
+        "quote": "change recurring decimals",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-n10-recurring-decimal",
+      "version": 2,
+      "seed": 1
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-n10-recurring-decimal v2",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Generated from template gcse-maths-h-n10-recurring-decimal (version 2, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:21:20Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:21:27Z",
+          "notes": "model answered \"23/33\"; expected \"23/33\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:21:35Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n10-t-recurring-decimal-02",
+    "topic": "gcse-maths-h-n10",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-n10-lp-recurring",
+    "expected_seconds": 90,
+    "prompt": "Write 0.292929... (the digits 29 recur) as a fraction in its simplest form.",
+    "answer": {
+      "value": "29/99"
+    },
+    "verify": {
+      "expression": "29/99"
+    },
+    "marks": 2,
+    "mark_scheme": ["M1 for 99x = 29 or 29/99", "A1 for 29/99"],
+    "hint": "Let x be the decimal. Two digits recur, so work out 100x - x.",
+    "explanation": "Let x = 0.2929... Two digits recur, so multiply by 100: 100x = 29.2929... Subtract: 100x - x = 29.2929... - 0.2929..., so 99x = 29 and x = 29/99. 29/99 is already in its simplest form.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N10",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Fractions, decimals and percentages, content reference N10 (page 13; PDF page 25)",
+        "quote": "change recurring decimals",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-n10-recurring-decimal",
+      "version": 2,
+      "seed": 2
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-n10-recurring-decimal v2",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Generated from template gcse-maths-h-n10-recurring-decimal (version 2, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:21:35Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:21:42Z",
+          "notes": "model answered \"29/99\"; expected \"29/99\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:22:01Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n10-t-recurring-decimal-03",
+    "topic": "gcse-maths-h-n10",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-n10-lp-recurring",
+    "expected_seconds": 90,
+    "prompt": "Write 0.676767... (the digits 67 recur) as a fraction in its simplest form.",
+    "answer": {
+      "value": "67/99"
+    },
+    "verify": {
+      "expression": "67/99"
+    },
+    "marks": 2,
+    "mark_scheme": ["M1 for 99x = 67 or 67/99", "A1 for 67/99"],
+    "hint": "Let x be the decimal. Two digits recur, so work out 100x - x.",
+    "explanation": "Let x = 0.6767... Two digits recur, so multiply by 100: 100x = 67.6767... Subtract: 100x - x = 67.6767... - 0.6767..., so 99x = 67 and x = 67/99. 67/99 is already in its simplest form.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N10",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Fractions, decimals and percentages, content reference N10 (page 13; PDF page 25)",
+        "quote": "change recurring decimals",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-n10-recurring-decimal",
+      "version": 2,
+      "seed": 3
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-n10-recurring-decimal v2",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Generated from template gcse-maths-h-n10-recurring-decimal (version 2, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:22:02Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:22:08Z",
+          "notes": "model answered \"67/99\"; expected \"67/99\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:22:18Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n10-t-recurring-decimal-04",
+    "topic": "gcse-maths-h-n10",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-n10-lp-recurring",
+    "expected_seconds": 90,
+    "prompt": "Write 0.262626... (the digits 26 recur) as a fraction in its simplest form.",
+    "answer": {
+      "value": "26/99"
+    },
+    "verify": {
+      "expression": "26/99"
+    },
+    "marks": 2,
+    "mark_scheme": ["M1 for 99x = 26 or 26/99", "A1 for 26/99"],
+    "hint": "Let x be the decimal. Two digits recur, so work out 100x - x.",
+    "explanation": "Let x = 0.2626... Two digits recur, so multiply by 100: 100x = 26.2626... Subtract: 100x - x = 26.2626... - 0.2626..., so 99x = 26 and x = 26/99. 26/99 is already in its simplest form.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N10",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Fractions, decimals and percentages, content reference N10 (page 13; PDF page 25)",
+        "quote": "change recurring decimals",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-n10-recurring-decimal",
+      "version": 2,
+      "seed": 4
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-n10-recurring-decimal v2",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Generated from template gcse-maths-h-n10-recurring-decimal (version 2, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:22:19Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:22:25Z",
+          "notes": "model answered \"26/99\"; expected \"26/99\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:22:32Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n10-t-recurring-decimal-05",
+    "topic": "gcse-maths-h-n10",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-n10-lp-recurring",
+    "expected_seconds": 90,
+    "prompt": "Write 0.343434... (the digits 34 recur) as a fraction in its simplest form.",
+    "answer": {
+      "value": "34/99"
+    },
+    "verify": {
+      "expression": "34/99"
+    },
+    "marks": 2,
+    "mark_scheme": ["M1 for 99x = 34 or 34/99", "A1 for 34/99"],
+    "hint": "Let x be the decimal. Two digits recur, so work out 100x - x.",
+    "explanation": "Let x = 0.3434... Two digits recur, so multiply by 100: 100x = 34.3434... Subtract: 100x - x = 34.3434... - 0.3434..., so 99x = 34 and x = 34/99. 34/99 is already in its simplest form.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N10",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Fractions, decimals and percentages, content reference N10 (page 13; PDF page 25)",
+        "quote": "change recurring decimals",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-n10-recurring-decimal",
+      "version": 2,
+      "seed": 5
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-n10-recurring-decimal v2",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Generated from template gcse-maths-h-n10-recurring-decimal (version 2, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:22:33Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:22:38Z",
+          "notes": "model answered \"34/99\"; expected \"34/99\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:22:46Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  }
+]

@@ -23,6 +23,8 @@ from math import prod
 from sympy import Expr, FiniteSet, Mul, Pow, S, Symbol, Union, expand, simplify, solveset
 
 from app.equivalence import parse
+from app.forms import FORMS, in_form
+from app.notation import normalise
 
 MAX_LINES = 50
 # At most this many ways to read a final line of letter-to-letter alternatives (a = x).
@@ -85,6 +87,7 @@ def without_subject(text: str, subject: str | None) -> str | None:
 
 
 def _parse_line(text: str, subject: str | None = None) -> Line:
+    text = normalise(text)
     rhs = without_subject(text, subject)
     if rhs is not None and not LETTER.fullmatch(_squash(subject or "")):
         return Line(text=text, expression=parse(rhs, exact=True), states_subject=True)
@@ -165,6 +168,8 @@ def _solved_values(eq: Equation) -> list[Expr]:
 
 
 def _in_form(line: Line, form: str | None) -> bool:
+    if form in FORMS:
+        return in_form(line.text, form)
     if form == "factorised":
         return isinstance(parse(line.text, evaluate=False), (Mul, Pow))
     if form == "expanded":
@@ -202,7 +207,8 @@ def check_working(lines: list[str], expected: dict | None = None) -> WorkingResu
     """Find the first line (0-based) that does not follow from the previous one.
 
     ``expected`` is optional: ``{"solutions": [...]}`` for equations, or
-    ``{"expression": "...", "form": "factorised" | "expanded"}`` for expressions, either with an
+    ``{"expression": "...", "form": ...}`` for expressions (``factorised``, ``expanded`` or an
+    answer form from ``app/forms.py``), either with an
     optional ``subject`` that the final line may state (``t = ...``).
     """
     if not lines:
