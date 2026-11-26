@@ -158,8 +158,9 @@ tab say so to screen readers.
   load (for example a 401 before unlocking) on the next screen change.
 - Doodle Diary (J10d, the default): a diary full of pen doodles. On Home, page titles are
   handwritten (Patrick Hand, self-hosted, SIL Open Font Licence, listed under open-source
-  licences) with a wavy biro underline; the daily goal, today's mission and the 5-a-day card are
-  boxes sketched in pen with wobbly corners; mastered topics are outlined in ink and coloured in
+  licences) with a wavy biro underline; the Today strip and the chosen unit's card are boxes sketched in
+  pen with wobbly corners (the rows inside stay plain), and the chosen unit badge is coloured in
+  with highlighter (J12b); mastered topics are outlined in ink and coloured in
   with highlighter scribbles. On Rewards, earned steps are solid highlighter yellow with dark ink numbers (AA in light and
   dark, J10g) and locked ones are dashed
   pencil outlines. In lessons the surround is diary paper (night paper in dark mode) and the
@@ -171,7 +172,7 @@ tab say so to screen readers.
   active style.
 - Sticker Book (J10a): wins are stickers slapped onto the page. Each sticker has a white die-cut
   edge, a slight tilt and a soft offset shadow; bursts and confetti are paper scraps. On Home, the
-  daily goal and the next mission are cards taped into the book, the 5-a-day card is a paper
+  Today strip and its Next mission row are cards taped into the book, the 5-a-day row is a paper
   note, the streak is a sticker, and mastered topics are gold stickers stuck on at slight angles.
   On Rewards, earned chapter steps are stickers and locked ones are dashed outlines. Stickers keep
   their paper colours in dark mode, like real stickers, with dark ink text (AA). The combo badge

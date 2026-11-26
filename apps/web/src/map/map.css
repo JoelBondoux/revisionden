@@ -1,0 +1,560 @@
+/* Topic map, design C "Your path" (J12b, docs/design/j12). Effect styles restyle the hooks. */
+
+/* ---------- Sideways rows (subject chips, unit badges) ---------- */
+/* The row scrolls; the page never does. A fade at either end shows there is more. */
+.hscroll {
+  position: relative;
+  min-width: 0;
+}
+
+.hscroll__track {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--space-2);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--space-4);
+  /* Room for focus rings and the drawn shadows, which overflow would otherwise clip. */
+  padding: 6px 4px 8px;
+  margin: -6px -4px -8px;
+}
+
+.hscroll__track > * {
+  flex: none;
+  scroll-snap-align: start;
+}
+
+.hscroll::before,
+.hscroll::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 28px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--motion-fast, 120ms) ease-out;
+}
+
+.hscroll::before {
+  left: -4px;
+  background: linear-gradient(to right, var(--color-background), transparent);
+}
+
+.hscroll::after {
+  right: -4px;
+  background: linear-gradient(to left, var(--color-background), transparent);
+}
+
+.hscroll[data-more-before]::before,
+.hscroll[data-more-after]::after {
+  opacity: 1;
+}
+
+/* Arrow buttons only with a mouse or trackpad; touch scrolls by swiping. */
+.hscroll__arrow {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hscroll__arrow:not([hidden]) {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    margin-top: -18px;
+    padding: 0;
+    border: 2px solid var(--color-track);
+    border-radius: 50%;
+    background: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .hscroll__arrow--before {
+    left: -6px;
+  }
+
+  .hscroll__arrow--after {
+    right: -6px;
+  }
+
+  .hscroll__track {
+    scrollbar-width: thin;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .hscroll__track {
+    scrollbar-width: none;
+  }
+
+  .hscroll__track::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Subject chips: one line, never wrapping. */
+.map-subjects .chip {
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+/* The map's sections sit a little closer than other pages', so it all fits one screen. */
+.map-page {
+  gap: var(--space-2);
+}
+
+/* ---------- Today strip ---------- */
+.today-strip {
+  padding: var(--space-2) var(--space-3) var(--space-1);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-card);
+}
+
+.today-strip__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.today-strip__heading {
+  margin: 0;
+  font-size: var(--font-size-lg);
+}
+
+.today-strip__goal {
+  flex: 1 1 10rem;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.today-strip__goal .progress {
+  flex: 1;
+  margin: 0;
+}
+
+.today-strip__xp {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-extrabold);
+  white-space: nowrap;
+}
+
+.today-strip__list {
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.today-strip__list:empty {
+  display: none;
+}
+
+.today-strip__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  /* Inset a little, so a style that draws the row as a card does not crowd its text. */
+  margin-inline: calc(var(--space-2) * -1);
+  padding: 4px var(--space-2);
+  border-top: 2px dashed var(--color-track);
+}
+
+.today-strip__list > li + li {
+  margin-top: 4px;
+}
+
+.today-strip__what {
+  flex: 1 1 11rem;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.today-strip__eyebrow-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
+}
+
+.today-strip__eyebrow-row .today-strip__meta::before {
+  content: '· ';
+}
+
+.today-strip__what--inline {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
+}
+
+.today-strip__eyebrow {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-text-secondary);
+}
+
+.today-strip__mission .today-strip__eyebrow {
+  color: var(--color-primary-edge);
+}
+
+.today-strip__title {
+  font-weight: var(--font-weight-black);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.today-strip__meta {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.today-strip__row .btn {
+  min-height: 44px;
+  padding-inline: var(--space-4);
+}
+
+.today-strip__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.today-strip__not-now {
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  border: 0;
+  background: none;
+  color: var(--color-text-secondary);
+  font: inherit;
+  font-weight: var(--font-weight-extrabold);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---------- Your path ---------- */
+.map-path {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.map-path__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
+}
+
+.map-path__heading {
+  margin: 0;
+}
+
+.map-path__subject {
+  flex: 1;
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-text-secondary);
+}
+
+:root[data-theme='dark'] .map-path__see-all {
+  color: var(--color-primary-edge);
+}
+
+.map-path__see-all {
+  /* A 44px target that takes only one line of space. */
+  min-height: 44px;
+  margin-block: -10px;
+  padding: 0 var(--space-1);
+  border: 0;
+  background: none;
+  color: var(--color-primary);
+  font: inherit;
+  font-weight: var(--font-weight-black);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Unit badges: a small hexagon and a short name, joined by a dotted line. */
+.map-path__units .hscroll__track {
+  gap: var(--space-1);
+  background-image: linear-gradient(to right, var(--color-track) 50%, transparent 0);
+  background-size: 8px 3px;
+  background-repeat: repeat-x;
+  background-position: 0 31px;
+}
+
+.unit-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 58px;
+  min-height: 44px;
+  padding: 2px var(--space-1) 2px;
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  background: none;
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.unit-badge[aria-pressed='true'] {
+  border-color: var(--color-text);
+  background: var(--color-surface);
+}
+
+.unit-badge__hex {
+  --badge-edge: var(--color-text);
+  --badge-fill: var(--color-surface);
+  display: grid;
+  place-items: center;
+  position: relative;
+  width: 40px;
+  height: 46px;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  background: var(--badge-edge);
+}
+
+.unit-badge__inner {
+  position: absolute;
+  inset: 3px;
+  display: grid;
+  place-items: center;
+  clip-path: inherit;
+  background: var(--badge-fill);
+  color: var(--color-text);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-black);
+}
+
+.unit-badge__inner[data-percent]::after {
+  content: attr(data-percent);
+}
+
+.unit-badge__inner .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.unit-badge[aria-pressed='true'] .unit-badge__hex {
+  --badge-fill: var(--color-gold);
+}
+
+.unit-badge[aria-pressed='true'] .unit-badge__inner {
+  color: var(--color-text-on-gold);
+}
+
+.unit-badge--locked .unit-badge__hex {
+  --badge-edge: var(--color-track);
+  --badge-fill: var(--color-locked-soft);
+}
+
+.unit-badge__name {
+  max-width: 7rem;
+  font-size: 0.8rem;
+  font-weight: var(--font-weight-extrabold);
+  line-height: 1.15;
+  text-align: center;
+}
+
+/* ---------- The chosen unit ---------- */
+.unit-card {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-card);
+}
+
+.unit-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 var(--space-3);
+  padding-bottom: var(--space-1);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.unit-card__title,
+.unit-card__mastery {
+  margin: 0;
+}
+
+.unit-card__title {
+  font-size: var(--font-size-lg);
+}
+
+.unit-card__mastery {
+  font-weight: var(--font-weight-black);
+  color: var(--color-primary-edge);
+}
+
+.unit-card__locked {
+  margin: var(--space-2) 0 0;
+  color: var(--color-text-secondary);
+}
+
+/* The path: every topic, down a dotted line, scrolling inside the card on a normal phone. */
+.unit-path {
+  position: relative;
+  margin-top: var(--space-2);
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  border-radius: var(--radius-sm);
+}
+
+.unit-path:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Short screens, narrow screens and big text: the page scrolls instead (no scroll in a scroll). */
+.unit-path--flow {
+  overflow: visible;
+}
+
+.unit-path__list {
+  position: relative;
+  margin: 0;
+  padding: var(--space-2) 0;
+  list-style: none;
+}
+
+.unit-path__list::before {
+  content: '';
+  position: absolute;
+  top: var(--space-3);
+  bottom: var(--space-3);
+  left: calc(var(--hex-w) / 2 + 4px);
+  border-left: 3px dotted var(--color-track);
+}
+
+.unit-path {
+  --hex-w: max(64px, 4rem);
+  --hex-h: calc(var(--hex-w) * 1.15);
+}
+
+.unit-path__step {
+  position: relative;
+}
+
+.unit-path__step + .unit-path__step {
+  margin-top: var(--space-2);
+}
+
+/* A hex with its name beside it; every other step sits a little further in, like a path. */
+.unit-path .hex {
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: var(--space-3);
+  padding: 2px;
+}
+
+.unit-path .hex__shape {
+  flex: none;
+}
+
+.unit-path .hex__title {
+  flex: 1;
+  min-width: 0;
+  max-width: none;
+  font-size: var(--font-size-md, 1rem);
+  text-align: left;
+  overflow-wrap: break-word;
+}
+
+.unit-path .hex__content .icon {
+  width: 24px;
+  height: 24px;
+}
+
+.unit-path .hex__percent {
+  font-size: var(--font-size-md, 1rem);
+}
+
+.unit-path .hex__tag {
+  font-size: 0.62rem;
+}
+
+.unit-path__step--out .hex {
+  padding-left: 18px;
+}
+
+/* The weak-spot glow sits behind the hexagon, not across the row. */
+.unit-path .hex--weak::before {
+  top: 2px;
+  left: calc(2px + var(--hex-w) / 2);
+}
+
+.unit-path__step--out .hex--weak::before {
+  left: calc(18px + var(--hex-w) / 2);
+}
+
+/* ---------- All units ---------- */
+.units-overview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.units-overview__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 56px;
+  padding: var(--space-2) var(--space-3);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.units-overview__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.units-overview__name {
+  font-weight: var(--font-weight-black);
+  overflow-wrap: anywhere;
+}
+
+.units-overview__meta {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hscroll::before,
+  .hscroll::after {
+    transition: none;
+  }
+}

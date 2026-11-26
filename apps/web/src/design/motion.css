@@ -5,9 +5,9 @@
  */
 
 /* Entrance: cards rise in, hexes and stat tiles pop in one after another. */
-.mission,
-.unit,
-.map-summary,
+.today-strip__mission,
+.unit-card,
+.today-strip,
 .rewards > *,
 .stats > * {
   animation: enter-rise var(--motion-medium) var(--ease-out) both;
@@ -28,22 +28,22 @@
   animation-delay: 180ms;
 }
 
-.honeycomb .hex,
+.unit-path .hex,
 .stat-tile {
   animation: enter-pop var(--motion-medium) var(--ease-spring) both;
 }
 
-.honeycomb__row:nth-child(2) .hex,
+.unit-path__step:nth-child(2) .hex,
 .stat-tile:nth-child(2) {
   animation-delay: 50ms;
 }
 
-.honeycomb__row:nth-child(3) .hex,
+.unit-path__step:nth-child(3) .hex,
 .stat-tile:nth-child(3) {
   animation-delay: 100ms;
 }
 
-.honeycomb__row:nth-child(n + 4) .hex,
+.unit-path__step:nth-child(n + 4) .hex,
 .stat-tile:nth-child(n + 4) {
   animation-delay: 150ms;
 }
@@ -71,14 +71,14 @@
 }
 
 /* Bouncy buttons: a springy squash on tap. */
-.mission .btn,
+.today-strip__mission .btn,
 .rewards .btn,
 .stats .btn,
 .period-toggle__button {
   transition: transform var(--motion-fast) var(--ease-spring);
 }
 
-.mission .btn:active:not(:disabled),
+.today-strip__mission .btn:active:not(:disabled),
 .rewards .btn:active:not(:disabled),
 .stats .btn:active:not(:disabled),
 .period-toggle__button:active {
@@ -86,7 +86,7 @@
 }
 
 /* The map's Next mission button is the main call to action, so it pulses too. */
-.mission .btn {
+.today-strip__mission .btn {
   position: relative;
   overflow: hidden;
   animation: cta-pulse var(--motion-pulse) ease-in-out infinite;
@@ -130,14 +130,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mission,
-  .unit,
-  .map-summary,
+  .today-strip__mission,
+  .unit-card,
+  .today-strip,
   .rewards > *,
   .stats > *,
-  .honeycomb .hex,
+  .unit-path .hex,
   .stat-tile,
-  .mission .btn,
+  .today-strip__mission .btn,
   .cta-pulse,
   .cta-pulse::after {
     animation: none;

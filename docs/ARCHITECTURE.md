@@ -63,24 +63,24 @@ Decision 0005. `revisionden.com` is the sales site; the app is on `app.revisiond
 
 ## Web app (`apps/web`)
 
-| Folder                       | What it holds                                                                                |
-| ---------------------------- | -------------------------------------------------------------------------------------------- |
-| `src/design`                 | Design tokens (`tokens.ts`, mirrored as CSS variables in `tokens.css`), base styles          |
-| `src/components`             | Shared components (Button, Pill, ProgressBar, Card, BottomNav, Toast, Sheet, Avatar, Pip)    |
-| `src/layout`                 | `AppLayout` (main nav: bottom bar on phones, side rail from 768px) and `FocusLayout`         |
-| `src/map`                    | Topic map pieces: honeycomb row layout, topic and challenge hexes, Next mission card         |
-| `src/pages`                  | One component per screen; `src/routes.tsx` maps paths to screens                             |
-| `src/api`                    | Typed API client (every response checked with Zod), `useApiResource`, retry UI               |
-| `src/mocks`                  | MSW handlers and made-up demo data, used by tests and by `pnpm dev`                          |
-| `src/pwa`                    | Service worker registration, the offline banner and the update banner (`/version.json`)      |
-| `src/session`                | Which student is using this device (a convenience until device linking lands)                |
-| `src/features/learn`         | Lesson player, starting test, subject page, command words, learning API client and mocks (F) |
-| `src/features/flashcards`    | Cards tab: due cards, all decks, my cards, 3D flip card (F)                                  |
-| `src/features/notifications` | Reminders card for this device, parent reminder settings, push helpers (H)                   |
-| `src/features/legal`         | Policy pages from `docs/legal/*.md`, placeholders, safe Markdown, policy acceptance gate (L) |
-| `src/features/about`         | About page: version, environment, build, What's new from `CHANGELOG.md`, licences (L)        |
-| `src/features/feedback`      | Feedback form, family and own feedback lists, operator triage at `/admin/feedback` (L)       |
-| `public/`                    | Web app manifest, icons, `sw.js` (app shell cache) and the MSW worker for development        |
+| Folder                       | What it holds                                                                                 |
+| ---------------------------- | --------------------------------------------------------------------------------------------- |
+| `src/design`                 | Design tokens (`tokens.ts`, mirrored as CSS variables in `tokens.css`), base styles           |
+| `src/components`             | Shared components (Button, Pill, ProgressBar, Card, BottomNav, Toast, Sheet, Avatar, Pip)     |
+| `src/layout`                 | `AppLayout` (main nav: bottom bar on phones, side rail from 768px) and `FocusLayout`          |
+| `src/map`                    | Topic map pieces: Today strip, unit path and badges, sideways rows, topic and challenge hexes |
+| `src/pages`                  | One component per screen; `src/routes.tsx` maps paths to screens                              |
+| `src/api`                    | Typed API client (every response checked with Zod), `useApiResource`, retry UI                |
+| `src/mocks`                  | MSW handlers and made-up demo data, used by tests and by `pnpm dev`                           |
+| `src/pwa`                    | Service worker registration, the offline banner and the update banner (`/version.json`)       |
+| `src/session`                | Which student is using this device (a convenience until device linking lands)                 |
+| `src/features/learn`         | Lesson player, starting test, subject page, command words, learning API client and mocks (F)  |
+| `src/features/flashcards`    | Cards tab: due cards, all decks, my cards, 3D flip card (F)                                   |
+| `src/features/notifications` | Reminders card for this device, parent reminder settings, push helpers (H)                    |
+| `src/features/legal`         | Policy pages from `docs/legal/*.md`, placeholders, safe Markdown, policy acceptance gate (L)  |
+| `src/features/about`         | About page: version, environment, build, What's new from `CHANGELOG.md`, licences (L)         |
+| `src/features/feedback`      | Feedback form, family and own feedback lists, operator triage at `/admin/feedback` (L)        |
+| `public/`                    | Web app manifest, icons, `sw.js` (app shell cache) and the MSW worker for development         |
 
 - **Learning routes (F):** `/learn/subject/:subjectId` (topics and mastery), `/learn/subject/:subjectId/start`
   (starting test), `/learn/subject/:subjectId/practice` (mixed lesson), `/learn/topic/:topicId`, `/learn/command-words`;

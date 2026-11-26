@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react';
+import { useCallback, useEffect, useId, useRef, useState, type FormEvent } from 'react';
 import {
   FLASHCARD_SESSION_MAX_CARDS,
   formatReviewDelay,
@@ -48,42 +48,50 @@ function FlipCard({
   revealed: boolean;
   onTurn: () => void;
 }) {
+  const hintId = useId();
   return (
-    <div
-      className={`flip-card${flipped ? ' flip-card--flipped' : ''}`}
-      data-testid="flip-card"
-      role="button"
-      tabIndex={0}
-      aria-label={flipped ? 'Turn back to the question' : 'Turn over to see the answer'}
-      onClick={onTurn}
-      onKeyDown={(event) => {
-        if (event.key === ' ' || event.key === 'Enter') {
-          event.preventDefault();
-          onTurn();
-        }
-      }}
-    >
-      <div className="flip-card__inner">
-        <div className="flip-card__face flip-card__face--front" aria-hidden={flipped}>
-          <span className="flip-card__label">Question</span>
-          <span className="flip-card__topic">{card.topicTitle}</span>
-          <p className="flip-card__text">
-            <MathText text={card.front} subject={card.subjectId} />
-          </p>
-        </div>
-        <div className="flip-card__face flip-card__face--back" aria-hidden={!flipped}>
-          {revealed && (
-            <>
-              <span className="flip-card__label">Answer</span>
-              <p className="flip-card__text">
-                <MathText text={card.back} subject={card.subjectId} />
-              </p>
-              {card.sourceRef && <small className="flip-card__ref">{card.sourceRef}</small>}
-            </>
-          )}
+    <>
+      <span id={hintId} className="visually-hidden">
+        {flipped ? 'Turn back to the question' : 'Turn over to see the answer'}
+      </span>
+      <div
+        className={`flip-card${flipped ? ' flip-card--flipped' : ''}`}
+        data-testid="flip-card"
+        role="button"
+        tabIndex={0}
+        // The accessible name is the text on the card's showing face (the hidden face is
+        // aria-hidden), so it matches what is seen (WCAG 2.5.3); the turn hint is the description.
+        aria-describedby={hintId}
+        onClick={onTurn}
+        onKeyDown={(event) => {
+          if (event.key === ' ' || event.key === 'Enter') {
+            event.preventDefault();
+            onTurn();
+          }
+        }}
+      >
+        <div className="flip-card__inner">
+          <div className="flip-card__face flip-card__face--front" aria-hidden={flipped}>
+            <span className="flip-card__label">Question</span>
+            <span className="flip-card__topic">{card.topicTitle}</span>
+            <p className="flip-card__text">
+              <MathText text={card.front} subject={card.subjectId} />
+            </p>
+          </div>
+          <div className="flip-card__face flip-card__face--back" aria-hidden={!flipped}>
+            {revealed && (
+              <>
+                <span className="flip-card__label">Answer</span>
+                <p className="flip-card__text">
+                  <MathText text={card.back} subject={card.subjectId} />
+                </p>
+                {card.sourceRef && <small className="flip-card__ref">{card.sourceRef}</small>}
+              </>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -333,7 +341,6 @@ function ReviewSession({
                 key={rating}
                 variant={variant}
                 disabled={busy}
-                aria-label={`${label}, back in ${when}`}
                 onClick={() => void rate(rating)}
               >
                 <span className="ratings__label">{label}</span>
