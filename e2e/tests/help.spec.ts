@@ -106,3 +106,33 @@ test('the topic filter narrows the list, makes no requests and stays accessible'
     .analyze();
   expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
 });
+
+const APPEARANCES = [
+  { name: 'dark', settings: { theme: 'dark' } },
+  { name: 'colour-blind', settings: { theme: 'light', palette: 'colourblind' } },
+  { name: 'dark colour-blind', settings: { theme: 'dark', palette: 'colourblind' } },
+];
+
+for (const { name, settings } of APPEARANCES) {
+  test(`Get help follows the ${name} theme and stays accessible`, async ({ page }) => {
+    await page.addInitScript((saved) => {
+      window.localStorage.setItem('revisionden.appearance', JSON.stringify(saved));
+    }, settings);
+    await page.goto('/help');
+    await expect(page.getByRole('heading', { level: 1, name: 'Get help' })).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.dataset.theme)).toBe(settings.theme);
+    const pageBg = await page
+      .locator('.help-main')
+      .evaluate((el) => getComputedStyle(el).backgroundColor);
+    expect(pageBg).toBe(settings.theme === 'dark' ? 'rgb(31, 27, 51)' : 'rgb(255, 255, 255)');
+    // Open every category so axe checks every topic and service.
+    for (const summary of await page.locator('summary').all()) {
+      if (!(await summary.evaluate((el) => (el.parentElement as HTMLDetailsElement).open)))
+        await summary.click();
+    }
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+      .analyze();
+    expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
+  });
+}

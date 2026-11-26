@@ -799,7 +799,11 @@ Requested by the product owner on 2026-11-25.
 - Privacy: its own layout with no navigation, sounds or API calls; nothing is fetched to show it
   (the data is built into the app); websites open in a new tab with `rel="noreferrer"`. A unit test
   and an e2e test check that visiting it makes no API calls and no requests to other sites.
-- Style: calm and light, no game-feel effects (`features/help/help.css`).
+- Style: calm, no game-feel effects (`features/help/help.css`). Follows the app's theme (light,
+  dark, colour-blind) through its own `--help-*` colours; every text pair meets WCAG AA and Quick
+  exit and control borders meet 3:1 in every theme (`helpTheme.test.ts`). The danger panel keeps a
+  thick border and bold text in each theme (red, or orange-brown in the colour-blind palette);
+  Quick exit is solid (dark in light themes, white in dark themes).
 
 ## Quick wins from the competitor research (owner approved 2026-11-25)
 
@@ -847,5 +851,6 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   deuteranopia, protanopia and tritanopia; icons and words always carry the meaning too);
   Background pattern On (default) or Off. Applied before the first paint, so there is no flash.
   The doodle pattern is our own original art, very faint, and is never shown in high contrast or
-  forced colours. Get help stays a calm light page in every theme. The sales site follows the
+  forced colours. Get help follows the theme too (light, dark, colour-blind), with its own calm,
+  high-contrast colours (owner, 2026-11-25, W3). The sales site follows the
   device's theme only.
