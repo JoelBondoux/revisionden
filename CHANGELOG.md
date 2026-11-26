@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- A new look for rewards and celebrations, Sticker Book: your daily goal and next mission are cards taped into a sticker book, mastered topics are gold stickers, and combos, stars and confetti slap onto the page like stickers.
 - Every animation now has its own sound, matched to your effect style (paper and stamps for Sticker Book, pops and boings for Pop Burst, chimes for Starlight), and phones that can vibrate give a little buzz too. Turn vibration off in Settings next to Sound. iPhones and iPads don't allow websites to vibrate.
 - The doodle background is now a busy, hand-drawn sticker sheet: lots more little sketches packed close together, a few big ones (Pip reading, a rocket, a globe, a stack of books) and tiny stars and sparkles in the gaps, with no visible grid and no two of the same sketch side by side.
 - Inviting the other parent or sending your child their set-up link is quicker on a phone: tap Share link to send it with any app you like (Messages, WhatsApp, email). Where your device can't share, Copy link is still there.
@@ -127,6 +128,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Effect styles J10a (J): `features/juice/styles` (registry, `EffectStyleProvider`/`useEffectStyle`, `data-effect-style` on `<html>`, per-device choice in `revisionden.effectStyle`), and the default Sticker Book style (`sticker-book.css`, every rule scoped to the style) for the combo badge, stars, bursts, confetti, "+XP", the Home screen (daily goal, 5-a-day, next mission, streak, mastered hexes) and Rewards chapter steps. `index.html` starts in Sticker Book. Tests: registry, provider, stylesheet scoping and the game-feel CSS rules. Cookies and storage policy 1.7.
 - Style sounds and haptics (U6): `useSound().emit(event)` for 15 feedback events (including J's `homeEnter`, `nodePop` and `locked`), a synthesised sound pack per effect style (Sticker Book, Pop Burst, Starlight), vibration patterns via a `HapticsDriver` (`navigator.vibrate` on the web; a native wrapper can plug in real haptics), a Vibration setting (on by default), throttling, softer sounds with reduced motion, and `useFeedbackStyle()` for J's style system. Existing tap, correct, wrong, flip, celebration, level-up and reward sounds follow the style.
 - E5b: on the parent Subjects page, a failed add keeps the chosen subject, board and tier so the parent can try again (Codex review on #142).
 - Share invite links (I8): `ShareLink` and `browserShareApis` (`apps/web/src/pwa/{ShareLink.tsx,share.ts}`) give the second-parent invite (`ParentsPanel`, B3's lane, authorised by the lead) and the child device link (`LinkDeviceStep`) a big "Share link" button using `navigator.share` where it exists, "Copy link" otherwise or after a failed share, and treat a closed share sheet (`AbortError`) as no error. Share text names no child; the QR code and codes stay.

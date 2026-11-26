@@ -124,6 +124,29 @@ tab say so to screen readers.
 - Locked items get their spoken name from the visible text plus hidden words ("Crown, locked.
   Unlock: 100-day streak"), so what is seen is what is said (WCAG 2.5.3).
 
+## Effect styles (J10, owner decision 2026-11-26)
+
+- One effect style is active at a time. It sets the look and motion of the game-feel moments
+  (combo badge, stars, bursts, confetti, "+XP"), the Home screen (topic map) and Rewards. The
+  owner picked **Sticker Book** as the default. Pop Burst and Starlight become styles a child
+  unlocks through normal progress, never by buying (J10b). More styles may follow once the owner
+  has reviewed them.
+- A style is one entry in `apps/web/src/features/juice/styles/registry.ts` plus one stylesheet in
+  which every rule is scoped to `:root[data-effect-style='<id>']`. A test checks that scoping, so
+  removing or swapping a style never leaves bits of it behind. `EffectStyleProvider` sets
+  `data-effect-style` on `<html>` and remembers the choice on this device (`localStorage`
+  `revisionden.effectStyle`). A saved style that isn't unlocked falls back to Sticker Book.
+  `index.html` starts with Sticker Book, so the first paint is already in the default style.
+- Sticker Book (J10a): wins are stickers slapped onto the page. Each sticker has a white die-cut
+  edge, a slight tilt and a soft offset shadow; bursts and confetti are paper scraps. On Home, the
+  daily goal and the next mission are cards taped into the book, the 5-a-day card is a paper
+  note, the streak is a sticker, and mastered topics are gold stickers stuck on at slight angles.
+  On Rewards, earned chapter steps are stickers and locked ones are dashed outlines. Stickers keep
+  their paper colours in dark mode, like real stickers, with dark ink text (AA). The combo badge
+  and stars "slap" in (transform and opacity only), with no animation under reduced motion.
+- Every style plays its own sounds and vibration through the sound workstream's events (U6).
+  Wiring the style into those events follows once U's PR is on dev.
+
 ## Never (Children's Code and `REWARDS.md`)
 
 - No lives or energy that run out and block learning; no waiting timers; no pay-to-continue.
