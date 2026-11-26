@@ -7,14 +7,8 @@
     "learning_point": "gcse-maths-h-n9-lp-calculate",
     "expected_seconds": 80,
     "prompt": "Work out (6 × 10^2) × (1.6 × 10^8). Give your answer in standard form.",
-    "answer": {
-      "expression": "9.6 × 10^10",
-      "form": "standard_form"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(6 × 10^2) × (1.6 × 10^8)"
-    },
+    "answer": { "expression": "9.6 × 10^10", "form": "standard_form" },
+    "verify": { "method": "expression", "expression": "(6 × 10^2) × (1.6 × 10^8)" },
     "steps": ["(6 × 10^2) × (1.6 × 10^8)", "(6 × 1.6) × 10^(2+8)", "9.6 × 10^10"],
     "marks": 2,
     "mark_scheme": ["M1 for 6 × 1.6 = 9.6 or 10^2 × 10^8 = 10^10", "A1 for 9.6 × 10^10"],
@@ -48,11 +42,7 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": {
-      "id": "gcse-maths-h-n9-standard-form-multiply",
-      "version": 5,
-      "seed": 1
-    },
+    "template": { "id": "gcse-maths-h-n9-standard-form-multiply", "version": 5, "seed": 1 },
     "verification": {
       "status": "draft",
       "version": 6,
@@ -72,6 +62,14 @@
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-26T05:58:27Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:59:02Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
     }
@@ -84,14 +82,8 @@
     "learning_point": "gcse-maths-h-n9-lp-calculate",
     "expected_seconds": 100,
     "prompt": "Work out (9 × 10^9) × (7.8 × 10^6). Give your answer in standard form.",
-    "answer": {
-      "expression": "7.02 × 10^16",
-      "form": "standard_form"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(9 × 10^9) × (7.8 × 10^6)"
-    },
+    "answer": { "expression": "7.02 × 10^16", "form": "standard_form" },
+    "verify": { "method": "expression", "expression": "(9 × 10^9) × (7.8 × 10^6)" },
     "steps": ["(9 × 10^9) × (7.8 × 10^6)", "(9 × 7.8) × 10^(9+6)", "70.2 × 10^15", "7.02 × 10^16"],
     "marks": 2,
     "mark_scheme": ["M1 for 70.2 × 10^15 or 70 200 000 000 000 000", "A1 for 7.02 × 10^16"],
@@ -125,11 +117,7 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": {
-      "id": "gcse-maths-h-n9-standard-form-multiply",
-      "version": 5,
-      "seed": 2
-    },
+    "template": { "id": "gcse-maths-h-n9-standard-form-multiply", "version": 5, "seed": 2 },
     "verification": {
       "status": "draft",
       "version": 5,
@@ -161,14 +149,8 @@
     "learning_point": "gcse-maths-h-n9-lp-calculate",
     "expected_seconds": 100,
     "prompt": "Work out (6.6 × 10^2) × (2 × 10^5). Give your answer in standard form.",
-    "answer": {
-      "expression": "1.32 × 10^8",
-      "form": "standard_form"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(6.6 × 10^2) × (2 × 10^5)"
-    },
+    "answer": { "expression": "1.32 × 10^8", "form": "standard_form" },
+    "verify": { "method": "expression", "expression": "(6.6 × 10^2) × (2 × 10^5)" },
     "steps": ["(6.6 × 10^2) × (2 × 10^5)", "(6.6 × 2) × 10^(2+5)", "13.2 × 10^7", "1.32 × 10^8"],
     "marks": 2,
     "mark_scheme": ["M1 for 13.2 × 10^7 or 132 000 000", "A1 for 1.32 × 10^8"],
@@ -202,11 +184,7 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": {
-      "id": "gcse-maths-h-n9-standard-form-multiply",
-      "version": 5,
-      "seed": 3
-    },
+    "template": { "id": "gcse-maths-h-n9-standard-form-multiply", "version": 5, "seed": 3 },
     "verification": {
       "status": "draft",
       "version": 5,
@@ -238,14 +216,8 @@
     "learning_point": "gcse-maths-h-n9-lp-calculate",
     "expected_seconds": 100,
     "prompt": "Work out (4.2 × 10^3) × (7 × 10^5). Give your answer in standard form.",
-    "answer": {
-      "expression": "2.94 × 10^9",
-      "form": "standard_form"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(4.2 × 10^3) × (7 × 10^5)"
-    },
+    "answer": { "expression": "2.94 × 10^9", "form": "standard_form" },
+    "verify": { "method": "expression", "expression": "(4.2 × 10^3) × (7 × 10^5)" },
     "steps": ["(4.2 × 10^3) × (7 × 10^5)", "(4.2 × 7) × 10^(3+5)", "29.4 × 10^8", "2.94 × 10^9"],
     "marks": 2,
     "mark_scheme": ["M1 for 29.4 × 10^8 or 2 940 000 000", "A1 for 2.94 × 10^9"],
@@ -279,11 +251,7 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": {
-      "id": "gcse-maths-h-n9-standard-form-multiply",
-      "version": 5,
-      "seed": 4
-    },
+    "template": { "id": "gcse-maths-h-n9-standard-form-multiply", "version": 5, "seed": 4 },
     "verification": {
       "status": "draft",
       "version": 5,
@@ -315,14 +283,8 @@
     "learning_point": "gcse-maths-h-n9-lp-calculate",
     "expected_seconds": 100,
     "prompt": "Work out (6 × 10^9) × (4.9 × 10^2). Give your answer in standard form.",
-    "answer": {
-      "expression": "2.94 × 10^12",
-      "form": "standard_form"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(6 × 10^9) × (4.9 × 10^2)"
-    },
+    "answer": { "expression": "2.94 × 10^12", "form": "standard_form" },
+    "verify": { "method": "expression", "expression": "(6 × 10^9) × (4.9 × 10^2)" },
     "steps": ["(6 × 10^9) × (4.9 × 10^2)", "(6 × 4.9) × 10^(9+2)", "29.4 × 10^11", "2.94 × 10^12"],
     "marks": 2,
     "mark_scheme": ["M1 for 29.4 × 10^11 or 2 940 000 000 000", "A1 for 2.94 × 10^12"],
@@ -356,11 +318,7 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": {
-      "id": "gcse-maths-h-n9-standard-form-multiply",
-      "version": 5,
-      "seed": 5
-    },
+    "template": { "id": "gcse-maths-h-n9-standard-form-multiply", "version": 5, "seed": 5 },
     "verification": {
       "status": "draft",
       "version": 5,
