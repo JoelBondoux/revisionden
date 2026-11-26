@@ -265,6 +265,7 @@
     "mark_scheme": ["M1 for x_1 = ∛7 = 1.91...", "A1 for 1.905"],
     "hint": "Put x_0 = 2 into the formula to get x_1, then use x_1 to get x_2. Round only at the end.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
+    "needs_human_approval": true,
     "checked_by": ["maths-engine", "author"],
     "citations": [
       {
@@ -329,8 +330,8 @@
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T11:30:36Z",
-          "notes": "wrong_answer (answer): The given answer 1.905 is not x_2 for the iteration x_(n+1)=∛(x_n+5) with x_0=2. x_1=∛7≈1.913, then x_2=∛(1.913...+5)=∛6.913...≈1.9054, which rounds to 1.905 only if truncated incorrectly; to 3 decimal places it is 1.906.; factual_error (mark_scheme): The mark scheme states x_1 = ∛7 = 1.91..., but ∛7≈1.913, not 1.91 as an exact stated value. More importantly, using proper accuracy gives x_2≈1.9054..., which rounds to 1.906, so the final A1 value is incorrect.; wrong_answer (mark_scheme): The final mark-scheme answer 'A1 for 1.905' is incorrect. Calculating with sufficient accuracy gives x_2≈1.90538..., so the correct 3 decimal place answer is 1.905 only if the fourth decimal digit were below 5, but it is 3 only under a rougher intermediate approximation; from the exact iteration it is approximately 1.90538? Rechecking precisely is needed, because the provided scheme conflicts with the instruction to round only at the end.; confidence medium"
+          "at": "2026-11-26T11:48:54Z",
+          "notes": "wrong_answer (answer): Using x_(n+1)=∛(x_n+5) with x_0=2 gives x_1=∛7≈1.912931 and then x_2=∛(1.912931+5)=∛6.912931≈1.905778, which rounds to 1.906 to 3 decimal places, not 1.905.; factual_error (mark_scheme): The final accuracy mark gives 1.905, but carrying out the iteration exactly as stated gives x_2≈1.905778, so to 3 decimal places the value is 1.906."
         }
       ]
     }
@@ -426,8 +427,8 @@
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T11:30:49Z",
-          "notes": "outside_specification (question): The item relies on interpreting a sign change of f(x) over an interval to infer a root between x=2 and x=3 (an intermediate value argument). The only cited source is A20: 'find approximate solutions to equations numerically using iteration', which does not explicitly cover using sign changes/graph arguments to guarantee a solution in an interval.; unsupported_claim (explanation): The explanation states that because f(x) changes sign between x=2 and x=3, the graph 'crosses the x-axis between them'. The quoted source does not support this theorem or reasoning.; unsupported_claim (hint): The hint refers to what the graph must do between a point below the x-axis and a point above it. The cited source does not provide support for this graphical/intermediate value reasoning."
+          "at": "2026-11-26T11:49:06Z",
+          "notes": "outside_specification (question): The item asks students to infer the existence of a root from sign changes of f(x) between x = 2 and x = 3. The only cited source is A20, 'find approximate solutions to equations numerically using iteration'. This source does not support assessing the Intermediate Value Theorem/sign-change argument used here.; unsupported_claim (explanation): The explanation states that because f(x) changes sign between x = 2 and x = 3, 'the graph of y = f(x) crosses the x-axis between them'. The quoted source does not provide support for this claim."
         }
       ]
     }
@@ -583,11 +584,11 @@
         },
         {
           "name": "adversarial-review",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T11:31:10Z",
-          "notes": "unsupported_claim (question): The prompt says 'To show that x^3 - 4x - 1 = 0 has a solution between x = 2 and x = 3, you look for a change of sign.' The cited specification point only says 'find approximate solutions to equations numerically using iteration' and does not explicitly support the intermediate value/change-of-sign method or the claim about showing a solution in an interval.; outside_specification (question): Using a change of sign to show a root lies between 2 and 3 is not what is stated in the cited source, which is specifically about numerical iteration. The item tests a related but different numerical method than the one evidenced by the quotation."
+          "at": "2026-11-26T11:49:16Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -657,11 +658,11 @@
         },
         {
           "name": "adversarial-review",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T11:31:22Z",
-          "notes": "outside_specification (question): The item asks students to use a recurrence relation to generate the next term of a sequence (substituting x_1 into x_(n+1) = 1 + 6/x_n). The cited source only mentions finding approximate solutions to equations numerically using iteration, not generating terms of a recursive sequence. This question may be valid GCSE maths content, but it is not supported by the specific official source quoted."
+          "at": "2026-11-26T11:49:27Z",
+          "notes": "no problems found"
         }
       ]
     }
