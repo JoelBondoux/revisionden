@@ -284,8 +284,9 @@ Tags: #product #rules #limits #defaults
   "Learning loop"): spaces, case, minus signs, multiply and divide signs, superscripts, ≤/≥ and √
   are normalised, so content lists one written form. `answer.any_order: true` also accepts
   commuted products and sums, reordered lists and swapped equation sides (never coordinates or
-  inequalities); `answer.units` lists optional units. The maths engine accepts a solved value in
-  other letters (`x = 2a`).
+  inequalities); `answer.units` lists optional units. A multiply sign before a sign is kept
+  (`3n × -2` is not `3n - 2`). The maths engine accepts a solved value in other letters (`x = 2a`,
+  and `a = x` either way round).
 
 ## Reminders
 
