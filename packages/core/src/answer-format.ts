@@ -130,8 +130,11 @@ export function inForm(text: string, form: AnswerForm): boolean {
   const t = withMinus(text).trim();
   if (form === 'standard_form') return standardForm(t)?.proper === true;
   if (form === 'index_form') return indexForm(t) !== null;
-  if (/^-?\d+$/.test(t)) return true;
-  const m = /^-?(\d+)\/(\d+)$/.exec(t);
+  // Spaces may sit around a sign or "/" (3 / 8), never between two digits: 1 1/3 stays a mixed
+  // number, which no form accepts, and never reads as 11/3.
+  const tight = t.replace(/(?<!\d)\s+|\s+(?!\d)/g, '');
+  if (/^-?\d+$/.test(tight)) return true;
+  const m = /^-?(\d+)\/(\d+)$/.exec(tight);
   if (!m) return false;
   const top = BigInt(m[1]!);
   const bottom = BigInt(m[2]!);

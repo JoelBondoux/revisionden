@@ -211,6 +211,12 @@ describe('marking', () => {
     expect(markNumeric(fraction, '3/8').correct).toBe(true);
     expect(markNumeric(fraction, '6/16').correct).toBe(true);
     expect(markNumeric(fraction, '0.375').correct).toBe(false);
+    expect(markNumeric(fraction, '3 / 8').correct).toBe(true);
+    expect(markNumeric({ value: '3/8', form: 'simplest_fraction' as const }, '3 / 8').correct).toBe(
+      true,
+    );
+    expect(markNumeric({ value: '4/3', form: 'fraction' as const }, '1 1/3').correct).toBe(false);
+    expect(markNumeric({ value: '11/3', form: 'fraction' as const }, '1 1/3').correct).toBe(false);
     expect(markNumeric({ value: '49/20', form: 'fraction' as const }, '2.45').correct).toBe(false);
     expect(markNumeric({ value: '49/20', form: 'fraction' as const }, '2 9/20').correct).toBe(
       false,
