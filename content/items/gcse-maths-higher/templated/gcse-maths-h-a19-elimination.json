@@ -9,7 +9,7 @@
     "prompt": "Solve the simultaneous equations 6x + 3y = 9 and x - 3y = 5.",
     "answer": { "accepted": ["x = 2, y = -1"], "any_order": true },
     "marks": 3,
-    "hint": "Add or subtract the equations so that y disappears.",
+    "hint": "The y terms have opposite signs, so add the equations to make y disappear.",
     "explanation": "Add the equations to eliminate y: 7x = 14, so x = 2. Substitute x = 2 into 6x + 3y = 9: 12 + 3y = 9, so 3y = -3 and y = -1. Check in x - 3y = 5: 2 - 3 × (-1) = 5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
     "checked_by": ["maths-engine", "author"],
@@ -27,25 +27,25 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-a19-elimination", "version": 1, "seed": 1 },
+    "template": { "id": "gcse-maths-h-a19-elimination", "version": 2, "seed": 1 },
     "verification": {
       "status": "draft",
-      "version": 1,
+      "version": 2,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
-          "tool_version": "gcse-maths-h-a19-elimination v1",
-          "at": "2026-11-26T04:44:22Z",
-          "notes": "Generated from template gcse-maths-h-a19-elimination (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+          "tool_version": "gcse-maths-h-a19-elimination v2",
+          "at": "2026-11-26T04:55:13Z",
+          "notes": "Generated from template gcse-maths-h-a19-elimination (version 2, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
           "name": "maths-engine",
           "result": "pass",
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-26T04:44:22Z",
+          "at": "2026-11-26T04:55:13Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
         },
         {
@@ -53,24 +53,8 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-26T04:46:00Z",
+          "at": "2026-11-26T04:55:25Z",
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
-        },
-        {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:47:58Z",
-          "notes": "model answered \"x = 2, y = -1\"; expected \"x = 2, y = -1\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:48:07Z",
-          "notes": "no problems found"
         }
       ]
     }
@@ -85,7 +69,7 @@
     "prompt": "Solve the simultaneous equations x + 4y = -13 and 3x - 4y = 25.",
     "answer": { "accepted": ["x = 3, y = -4"], "any_order": true },
     "marks": 3,
-    "hint": "Add or subtract the equations so that y disappears.",
+    "hint": "The y terms have opposite signs, so add the equations to make y disappear.",
     "explanation": "Add the equations to eliminate y: 4x = 12, so x = 3. Substitute x = 3 into x + 4y = -13: 3 + 4y = -13, so 4y = -16 and y = -4. Check in 3x - 4y = 25: 3 × 3 - 4 × (-4) = 25.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
     "checked_by": ["maths-engine", "author"],
@@ -103,50 +87,26 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-a19-elimination", "version": 1, "seed": 2 },
+    "template": { "id": "gcse-maths-h-a19-elimination", "version": 2, "seed": 2 },
     "verification": {
       "status": "draft",
-      "version": 1,
+      "version": 2,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
-          "tool_version": "gcse-maths-h-a19-elimination v1",
-          "at": "2026-11-26T04:44:22Z",
-          "notes": "Generated from template gcse-maths-h-a19-elimination (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+          "tool_version": "gcse-maths-h-a19-elimination v2",
+          "at": "2026-11-26T04:55:13Z",
+          "notes": "Generated from template gcse-maths-h-a19-elimination (version 2, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
           "name": "maths-engine",
           "result": "pass",
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-26T04:44:22Z",
+          "at": "2026-11-26T04:55:13Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
-        },
-        {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-26T04:46:01Z",
-          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
-        },
-        {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:48:15Z",
-          "notes": "model answered \"x = 3, y = -4\"; expected \"x = 3, y = -4\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:48:45Z",
-          "notes": "no problems found"
         }
       ]
     }
@@ -161,7 +121,7 @@
     "prompt": "Solve the simultaneous equations 6x + 2y = -20 and 5x - 2y = -35.",
     "answer": { "accepted": ["x = -5, y = 5"], "any_order": true },
     "marks": 3,
-    "hint": "Add or subtract the equations so that y disappears.",
+    "hint": "The y terms have opposite signs, so add the equations to make y disappear.",
     "explanation": "Add the equations to eliminate y: 11x = -55, so x = -5. Substitute x = -5 into 6x + 2y = -20: -30 + 2y = -20, so 2y = 10 and y = 5. Check in 5x - 2y = -35: 5 × (-5) - 2 × 5 = -35.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
     "checked_by": ["maths-engine", "author"],
@@ -179,50 +139,26 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-a19-elimination", "version": 1, "seed": 3 },
+    "template": { "id": "gcse-maths-h-a19-elimination", "version": 2, "seed": 3 },
     "verification": {
       "status": "draft",
-      "version": 1,
+      "version": 2,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
-          "tool_version": "gcse-maths-h-a19-elimination v1",
-          "at": "2026-11-26T04:44:22Z",
-          "notes": "Generated from template gcse-maths-h-a19-elimination (version 1, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+          "tool_version": "gcse-maths-h-a19-elimination v2",
+          "at": "2026-11-26T04:55:13Z",
+          "notes": "Generated from template gcse-maths-h-a19-elimination (version 2, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
           "name": "maths-engine",
           "result": "pass",
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-26T04:44:22Z",
+          "at": "2026-11-26T04:55:13Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
-        },
-        {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-26T04:46:01Z",
-          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
-        },
-        {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:48:52Z",
-          "notes": "model answered \"x = -5, y = 5\"; expected \"x = -5, y = 5\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:49:00Z",
-          "notes": "no problems found"
         }
       ]
     }
@@ -237,7 +173,7 @@
     "prompt": "Solve the simultaneous equations 2x + 3y = -9 and 4x - 3y = 27.",
     "answer": { "accepted": ["x = 3, y = -5"], "any_order": true },
     "marks": 3,
-    "hint": "Add or subtract the equations so that y disappears.",
+    "hint": "The y terms have opposite signs, so add the equations to make y disappear.",
     "explanation": "Add the equations to eliminate y: 6x = 18, so x = 3. Substitute x = 3 into 2x + 3y = -9: 6 + 3y = -9, so 3y = -15 and y = -5. Check in 4x - 3y = 27: 4 × 3 - 3 × (-5) = 27.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
     "checked_by": ["maths-engine", "author"],
@@ -255,50 +191,26 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-a19-elimination", "version": 1, "seed": 4 },
+    "template": { "id": "gcse-maths-h-a19-elimination", "version": 2, "seed": 4 },
     "verification": {
       "status": "draft",
-      "version": 1,
+      "version": 2,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
-          "tool_version": "gcse-maths-h-a19-elimination v1",
-          "at": "2026-11-26T04:44:22Z",
-          "notes": "Generated from template gcse-maths-h-a19-elimination (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+          "tool_version": "gcse-maths-h-a19-elimination v2",
+          "at": "2026-11-26T04:55:13Z",
+          "notes": "Generated from template gcse-maths-h-a19-elimination (version 2, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
           "name": "maths-engine",
           "result": "pass",
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-26T04:44:22Z",
+          "at": "2026-11-26T04:55:13Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
-        },
-        {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-26T04:46:02Z",
-          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
-        },
-        {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:49:08Z",
-          "notes": "model answered \"x = 3, y = -5\"; expected \"x = 3, y = -5\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:49:29Z",
-          "notes": "no problems found"
         }
       ]
     }
@@ -313,7 +225,7 @@
     "prompt": "Solve the simultaneous equations 6x + 4y = -8 and 6x - 4y = 32.",
     "answer": { "accepted": ["x = 2, y = -5"], "any_order": true },
     "marks": 3,
-    "hint": "Add or subtract the equations so that y disappears.",
+    "hint": "The y terms have opposite signs, so add the equations to make y disappear.",
     "explanation": "Add the equations to eliminate y: 12x = 24, so x = 2. Substitute x = 2 into 6x + 4y = -8: 12 + 4y = -8, so 4y = -20 and y = -5. Check in 6x - 4y = 32: 6 × 2 - 4 × (-5) = 32.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
     "checked_by": ["maths-engine", "author"],
@@ -331,50 +243,26 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-a19-elimination", "version": 1, "seed": 5 },
+    "template": { "id": "gcse-maths-h-a19-elimination", "version": 2, "seed": 5 },
     "verification": {
       "status": "draft",
-      "version": 1,
+      "version": 2,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
-          "tool_version": "gcse-maths-h-a19-elimination v1",
-          "at": "2026-11-26T04:44:22Z",
-          "notes": "Generated from template gcse-maths-h-a19-elimination (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+          "tool_version": "gcse-maths-h-a19-elimination v2",
+          "at": "2026-11-26T04:55:13Z",
+          "notes": "Generated from template gcse-maths-h-a19-elimination (version 2, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
           "name": "maths-engine",
           "result": "pass",
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-26T04:44:22Z",
+          "at": "2026-11-26T04:55:13Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
-        },
-        {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-26T04:46:03Z",
-          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
-        },
-        {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:49:36Z",
-          "notes": "model answered \"x = 2, y = -5\"; expected \"x = 2, y = -5\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "fail",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:49:49Z",
-          "notes": "wording (hint): The hint says \"Add or subtract the equations so that y disappears.\" This could be misleading, as only adding the equations will eliminate y. Subtracting the equations eliminates x. A student might interpret this to mean that either operation will make y disappear."
         }
       ]
     }

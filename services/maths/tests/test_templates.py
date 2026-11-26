@@ -319,3 +319,14 @@ def test_the_elimination_hint_names_the_one_operation_that_removes_y():
             assert "add" in hint.lower() and "subtract" not in hint.lower()
         seen.add(p["same"])
     assert seen == {0, 1}
+
+
+def test_standard_form_wording_says_the_indices_are_added_and_shows_why():
+    template = _template("standard-form-multiply")
+    for seed in range(1, 30):
+        item = make_item(template, seed, NOW)
+        text = item["hint"] + " " + item["explanation"]
+        assert "add the powers" not in text.lower()
+        assert "indices" in item["hint"] and "indices" in item["explanation"]
+        if len(item["steps"]) == 4:  # the product had to be moved into standard form
+            assert "× 10^1 ×" in item["explanation"]

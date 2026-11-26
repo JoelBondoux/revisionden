@@ -7,8 +7,13 @@
     "learning_point": "gcse-maths-h-n12-lp-percentage-operator",
     "expected_seconds": 60,
     "prompt": "A price of £680 is decreased by 15%. Work out the new price.",
-    "answer": { "value": "578", "unit": "£" },
-    "verify": { "expression": "680 * 85/100" },
+    "answer": {
+      "value": "578",
+      "unit": "£"
+    },
+    "verify": {
+      "expression": "680 * 85/100"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for 680 × 0.85, or 15% of 680 = 102", "A1 for 578"],
     "hint": "Work out the multiplier: 100% minus 15%, written as a decimal.",
@@ -29,7 +34,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-n12-percentage-change", "version": 1, "seed": 1 },
+    "template": {
+      "id": "gcse-maths-h-n12-percentage-change",
+      "version": 1,
+      "seed": 1
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -85,8 +94,13 @@
     "learning_point": "gcse-maths-h-n12-lp-percentage-operator",
     "expected_seconds": 60,
     "prompt": "A price of £700 is decreased by 45%. Work out the new price.",
-    "answer": { "value": "385", "unit": "£" },
-    "verify": { "expression": "700 * 55/100" },
+    "answer": {
+      "value": "385",
+      "unit": "£"
+    },
+    "verify": {
+      "expression": "700 * 55/100"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for 700 × 0.55, or 45% of 700 = 315", "A1 for 385"],
     "hint": "Work out the multiplier: 100% minus 45%, written as a decimal.",
@@ -107,7 +121,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-n12-percentage-change", "version": 1, "seed": 2 },
+    "template": {
+      "id": "gcse-maths-h-n12-percentage-change",
+      "version": 1,
+      "seed": 2
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -135,6 +153,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-26T04:46:08Z",
           "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:51:32Z",
+          "notes": "model answered \"£385\"; expected \"385\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:51:42Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -147,8 +181,13 @@
     "learning_point": "gcse-maths-h-n12-lp-percentage-operator",
     "expected_seconds": 60,
     "prompt": "A price of £400 is increased by 45%. Work out the new price.",
-    "answer": { "value": "580", "unit": "£" },
-    "verify": { "expression": "400 * 145/100" },
+    "answer": {
+      "value": "580",
+      "unit": "£"
+    },
+    "verify": {
+      "expression": "400 * 145/100"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for 400 × 1.45, or 45% of 400 = 180", "A1 for 580"],
     "hint": "Work out the multiplier: 100% plus 45%, written as a decimal.",
@@ -169,7 +208,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-n12-percentage-change", "version": 1, "seed": 3 },
+    "template": {
+      "id": "gcse-maths-h-n12-percentage-change",
+      "version": 1,
+      "seed": 3
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -197,6 +240,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-26T04:46:08Z",
           "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:51:49Z",
+          "notes": "model answered \"£580\"; expected \"580\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:51:55Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -209,8 +268,13 @@
     "learning_point": "gcse-maths-h-n12-lp-percentage-operator",
     "expected_seconds": 60,
     "prompt": "A price of £140 is decreased by 45%. Work out the new price.",
-    "answer": { "value": "77", "unit": "£" },
-    "verify": { "expression": "140 * 55/100" },
+    "answer": {
+      "value": "77",
+      "unit": "£"
+    },
+    "verify": {
+      "expression": "140 * 55/100"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for 140 × 0.55, or 45% of 140 = 63", "A1 for 77"],
     "hint": "Work out the multiplier: 100% minus 45%, written as a decimal.",
@@ -231,7 +295,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-n12-percentage-change", "version": 1, "seed": 4 },
+    "template": {
+      "id": "gcse-maths-h-n12-percentage-change",
+      "version": 1,
+      "seed": 4
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -259,6 +327,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-26T04:46:09Z",
           "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:52:01Z",
+          "notes": "model answered \"£77\"; expected \"77\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:52:08Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -271,8 +355,13 @@
     "learning_point": "gcse-maths-h-n12-lp-percentage-operator",
     "expected_seconds": 60,
     "prompt": "A price of £680 is decreased by 20%. Work out the new price.",
-    "answer": { "value": "544", "unit": "£" },
-    "verify": { "expression": "680 * 80/100" },
+    "answer": {
+      "value": "544",
+      "unit": "£"
+    },
+    "verify": {
+      "expression": "680 * 80/100"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for 680 × 0.8, or 20% of 680 = 136", "A1 for 544"],
     "hint": "Work out the multiplier: 100% minus 20%, written as a decimal.",
@@ -293,7 +382,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-n12-percentage-change", "version": 1, "seed": 5 },
+    "template": {
+      "id": "gcse-maths-h-n12-percentage-change",
+      "version": 1,
+      "seed": 5
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -321,6 +414,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-26T04:46:10Z",
           "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:52:15Z",
+          "notes": "model answered \"£544\"; expected \"544\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:52:22Z",
+          "notes": "no problems found"
         }
       ]
     }

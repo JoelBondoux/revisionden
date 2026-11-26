@@ -7,8 +7,14 @@
     "learning_point": "gcse-maths-h-a17-lp-solve-linear",
     "expected_seconds": 50,
     "prompt": "Solve 4x - 11 = x + 4",
-    "answer": { "solutions": ["5"] },
-    "verify": { "method": "solve", "equation": "4x - 11 = x + 4", "variable": "x" },
+    "answer": {
+      "solutions": ["5"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "4x - 11 = x + 4",
+      "variable": "x"
+    },
     "steps": ["4x - 11 = x + 4", "3x - 11 = 4", "3x = 15", "x = 5"],
     "marks": 2,
     "mark_scheme": ["M1 for 3x - 11 = 4 or 3x = 15", "A1 for x = 5"],
@@ -30,7 +36,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-a17-unknown-both-sides", "version": 1, "seed": 1 },
+    "template": {
+      "id": "gcse-maths-h-a17-unknown-both-sides",
+      "version": 1,
+      "seed": 1
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -86,8 +96,14 @@
     "learning_point": "gcse-maths-h-a17-lp-solve-linear",
     "expected_seconds": 50,
     "prompt": "Solve 4x - 4 = x + 2",
-    "answer": { "solutions": ["2"] },
-    "verify": { "method": "solve", "equation": "4x - 4 = x + 2", "variable": "x" },
+    "answer": {
+      "solutions": ["2"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "4x - 4 = x + 2",
+      "variable": "x"
+    },
     "steps": ["4x - 4 = x + 2", "3x - 4 = 2", "3x = 6", "x = 2"],
     "marks": 2,
     "mark_scheme": ["M1 for 3x - 4 = 2 or 3x = 6", "A1 for x = 2"],
@@ -109,7 +125,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-a17-unknown-both-sides", "version": 1, "seed": 2 },
+    "template": {
+      "id": "gcse-maths-h-a17-unknown-both-sides",
+      "version": 1,
+      "seed": 2
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -165,8 +185,14 @@
     "learning_point": "gcse-maths-h-a17-lp-solve-linear",
     "expected_seconds": 50,
     "prompt": "Solve 6x - 5 = 2x - 1",
-    "answer": { "solutions": ["1"] },
-    "verify": { "method": "solve", "equation": "6x - 5 = 2x - 1", "variable": "x" },
+    "answer": {
+      "solutions": ["1"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "6x - 5 = 2x - 1",
+      "variable": "x"
+    },
     "steps": ["6x - 5 = 2x - 1", "4x - 5 = -1", "4x = 4", "x = 1"],
     "marks": 2,
     "mark_scheme": ["M1 for 4x - 5 = -1 or 4x = 4", "A1 for x = 1"],
@@ -188,7 +214,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-a17-unknown-both-sides", "version": 1, "seed": 3 },
+    "template": {
+      "id": "gcse-maths-h-a17-unknown-both-sides",
+      "version": 1,
+      "seed": 3
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -244,8 +274,14 @@
     "learning_point": "gcse-maths-h-a17-lp-solve-linear",
     "expected_seconds": 50,
     "prompt": "Solve 8x + 4 = 3x - 16",
-    "answer": { "solutions": ["-4"] },
-    "verify": { "method": "solve", "equation": "8x + 4 = 3x - 16", "variable": "x" },
+    "answer": {
+      "solutions": ["-4"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "8x + 4 = 3x - 16",
+      "variable": "x"
+    },
     "steps": ["8x + 4 = 3x - 16", "5x + 4 = -16", "5x = -20", "x = -4"],
     "marks": 2,
     "mark_scheme": ["M1 for 5x + 4 = -16 or 5x = -20", "A1 for x = -4"],
@@ -267,7 +303,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-a17-unknown-both-sides", "version": 1, "seed": 4 },
+    "template": {
+      "id": "gcse-maths-h-a17-unknown-both-sides",
+      "version": 1,
+      "seed": 4
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -323,8 +363,14 @@
     "learning_point": "gcse-maths-h-a17-lp-solve-linear",
     "expected_seconds": 50,
     "prompt": "Solve 7x - 3 = 3x + 25",
-    "answer": { "solutions": ["7"] },
-    "verify": { "method": "solve", "equation": "7x - 3 = 3x + 25", "variable": "x" },
+    "answer": {
+      "solutions": ["7"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "7x - 3 = 3x + 25",
+      "variable": "x"
+    },
     "steps": ["7x - 3 = 3x + 25", "4x - 3 = 25", "4x = 28", "x = 7"],
     "marks": 2,
     "mark_scheme": ["M1 for 4x - 3 = 25 or 4x = 28", "A1 for x = 7"],
@@ -346,7 +392,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-a17-unknown-both-sides", "version": 1, "seed": 5 },
+    "template": {
+      "id": "gcse-maths-h-a17-unknown-both-sides",
+      "version": 1,
+      "seed": 5
+    },
     "verification": {
       "status": "draft",
       "version": 1,

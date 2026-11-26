@@ -368,12 +368,14 @@ def _standard_write(p: dict) -> dict:
     sp, sm, power = _decimal(product), _decimal(mantissa), m + n + shift
     answer = f"{sm}*10^{power}"
     steps = [f"({sa}*10^{m})*({sb}*10^{n})", f"({sa}*{sb})*10^({m}+{n})", f"{sp}*10^{m + n}"]
-    explanation = (f"Multiply the numbers: {sa} × {sb} = {sp}. Add the powers of 10: "
-                   f"10^{m} × 10^{n} = 10^{m + n}. This gives {sp} × 10^{m + n}.")
+    explanation = (f"Multiply the numbers: {sa} × {sb} = {sp}. To multiply powers of 10, add "
+                   f"their indices: 10^{m} × 10^{n} = 10^({m} + {n}) = 10^{m + n}. This gives "
+                   f"{sp} × 10^{m + n}.")
     if shift:
         steps.append(answer)
-        explanation += (f" In standard form the first number is at least 1 and less than 10, "
-                        f"so write {sp} as {sm} × 10 and add 1 to the power: {sm} × 10^{power}.")
+        explanation += (f" In standard form the first number is at least 1 and less than 10. "
+                        f"{sp} = {sm} × 10^1, so {sp} × 10^{m + n} = {sm} × 10^1 × 10^{m + n} = "
+                        f"{sm} × 10^{power}.")
         mark = f"M1 for {sp} × 10^{m + n}"
     else:
         explanation += f" {sp} is at least 1 and less than 10, so this is already standard form."
@@ -386,7 +388,7 @@ def _standard_write(p: dict) -> dict:
         "verify": {"method": "expression", "expression": steps[0]},
         "steps": steps,
         "mark_scheme": [mark, f"A1 for {sm} × 10^{power}"],
-        "hint": "Multiply the numbers, then add the powers of 10.",
+        "hint": "Multiply the numbers, then multiply the powers of 10 by adding their indices.",
         "explanation": explanation,
     }
 
@@ -414,7 +416,7 @@ def _standard_recheck(p: dict, item: dict) -> list[str]:
 
 STANDARD_FORM_MULTIPLY = Template(
     id="gcse-maths-h-n9-standard-form-multiply",
-    version=1,
+    version=2,  # v2: "add their indices", and the move into standard form shown (review)
     topic="gcse-maths-h-n9",
     learning_point="gcse-maths-h-n9-lp-calculate",
     type="worked_maths",

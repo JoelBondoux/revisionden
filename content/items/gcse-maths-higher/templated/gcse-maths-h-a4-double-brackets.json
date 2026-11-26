@@ -7,8 +7,14 @@
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 90,
     "prompt": "Expand and simplify (x - 5)(3x - 4). Use ^ for powers.",
-    "answer": { "expression": "3x^2 - 19x + 20" },
-    "verify": { "method": "expression", "expression": "(x - 5)(3x - 4)", "form": "expanded" },
+    "answer": {
+      "expression": "3x^2 - 19x + 20"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "(x - 5)(3x - 4)",
+      "form": "expanded"
+    },
     "steps": ["(x - 5)(3x - 4)", "3x^2 - 4x - 15x + 20", "3x^2 - 19x + 20"],
     "marks": 2,
     "mark_scheme": ["M1 for at least three of the four terms correct", "A1 for 3x^2 - 19x + 20"],
@@ -30,7 +36,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-a4-double-brackets", "version": 1, "seed": 1 },
+    "template": {
+      "id": "gcse-maths-h-a4-double-brackets",
+      "version": 1,
+      "seed": 1
+    },
     "verification": {
       "status": "draft",
       "version": 2,
@@ -86,8 +96,14 @@
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 60,
     "prompt": "Expand and simplify (x - 1)(x - 5). Use ^ for powers.",
-    "answer": { "expression": "x^2 - 6x + 5" },
-    "verify": { "method": "expression", "expression": "(x - 1)(x - 5)", "form": "expanded" },
+    "answer": {
+      "expression": "x^2 - 6x + 5"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "(x - 1)(x - 5)",
+      "form": "expanded"
+    },
     "steps": ["(x - 1)(x - 5)", "x^2 - 5x - x + 5", "x^2 - 6x + 5"],
     "marks": 2,
     "mark_scheme": ["M1 for at least three of the four terms correct", "A1 for x^2 - 6x + 5"],
@@ -109,7 +125,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-a4-double-brackets", "version": 1, "seed": 2 },
+    "template": {
+      "id": "gcse-maths-h-a4-double-brackets",
+      "version": 1,
+      "seed": 2
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -165,8 +185,14 @@
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 60,
     "prompt": "Expand and simplify (x - 4)(x - 8). Use ^ for powers.",
-    "answer": { "expression": "x^2 - 12x + 32" },
-    "verify": { "method": "expression", "expression": "(x - 4)(x - 8)", "form": "expanded" },
+    "answer": {
+      "expression": "x^2 - 12x + 32"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "(x - 4)(x - 8)",
+      "form": "expanded"
+    },
     "steps": ["(x - 4)(x - 8)", "x^2 - 8x - 4x + 32", "x^2 - 12x + 32"],
     "marks": 2,
     "mark_scheme": ["M1 for at least three of the four terms correct", "A1 for x^2 - 12x + 32"],
@@ -188,7 +214,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-a4-double-brackets", "version": 1, "seed": 3 },
+    "template": {
+      "id": "gcse-maths-h-a4-double-brackets",
+      "version": 1,
+      "seed": 3
+    },
     "verification": {
       "status": "draft",
       "version": 2,
@@ -244,8 +274,14 @@
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 90,
     "prompt": "Expand and simplify (2x - 3)(2x + 7). Use ^ for powers.",
-    "answer": { "expression": "4x^2 + 8x - 21" },
-    "verify": { "method": "expression", "expression": "(2x - 3)(2x + 7)", "form": "expanded" },
+    "answer": {
+      "expression": "4x^2 + 8x - 21"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "(2x - 3)(2x + 7)",
+      "form": "expanded"
+    },
     "steps": ["(2x - 3)(2x + 7)", "4x^2 + 14x - 6x - 21", "4x^2 + 8x - 21"],
     "marks": 2,
     "mark_scheme": ["M1 for at least three of the four terms correct", "A1 for 4x^2 + 8x - 21"],
@@ -267,7 +303,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-a4-double-brackets", "version": 1, "seed": 4 },
+    "template": {
+      "id": "gcse-maths-h-a4-double-brackets",
+      "version": 1,
+      "seed": 4
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -323,8 +363,14 @@
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 90,
     "prompt": "Expand and simplify (x + 1)(2x - 3). Use ^ for powers.",
-    "answer": { "expression": "2x^2 - x - 3" },
-    "verify": { "method": "expression", "expression": "(x + 1)(2x - 3)", "form": "expanded" },
+    "answer": {
+      "expression": "2x^2 - x - 3"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "(x + 1)(2x - 3)",
+      "form": "expanded"
+    },
     "steps": ["(x + 1)(2x - 3)", "2x^2 - 3x + 2x - 3", "2x^2 - x - 3"],
     "marks": 2,
     "mark_scheme": ["M1 for at least three of the four terms correct", "A1 for 2x^2 - x - 3"],
@@ -346,7 +392,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-a4-double-brackets", "version": 1, "seed": 5 },
+    "template": {
+      "id": "gcse-maths-h-a4-double-brackets",
+      "version": 1,
+      "seed": 5
+    },
     "verification": {
       "status": "draft",
       "version": 1,
