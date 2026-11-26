@@ -164,6 +164,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- J14c (Codex review of train #355): the empty-lesson and finished screens keep Pip's Home button (only the lesson header's `LessonPip` hides the layout's Pip row), and command words shows the avatar beside Pip's line. The lesson routes are one list, `LESSON_PATHS` (`layout/lessonRoutes.ts`), used by `routes.tsx` and the layout, with a test that they stay in step.
 - J15s-c (Codex review of train #350): the painted-page contrast check no longer skips faint text. Letters are found from two extra screenshots with the text forced black and white, then measured in their real colour; visible text with too few letter pixels fails; lines hidden by a line clamp, off screen or under another element are left out. A fixture with 1.1:1 text must fail (`e2e/tests/looks.spec.ts`).
 - W12: the prize box's accessibility check also uses the shared `axeWhenSettled` helper, so every e2e axe check now waits for animations first.
 - J15s-b (Codex review of train #343): text on the page reads AA on the painted page in every look. Pop Burst's dark wash is now a deep purple-to-plum (the purple-to-peach left the footer at 2.5:1), and Sticker Book's main colour is a shade deeper (#0b6b60) so "See all" reads over its warm glow. A new e2e check in `looks.spec.ts` screenshots the page with and without its text and checks every letter pixel against what is painted behind it (page wash, texture, road and halos included), for all 7 looks in light and dark, on Me and the map.

@@ -1,4 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom';
+import { isLessonPage } from './lessonRoutes';
 import { useApi } from '../api/ApiContext';
 import { useApiResource } from '../api/useApiResource';
 import { BottomNav } from '../components/BottomNav';
@@ -113,10 +114,6 @@ export function FocusLayout() {
     </BugButtonProvider>
   );
 }
-
-/** Lessons and tests: Pip sits top left there too, and asks before leaving (J15b). */
-const isLessonPage = (pathname: string) =>
-  /^\/learn\/(topic\/[^/]+|daily|subject\/[^/]+\/(practice|start))$/.test(pathname);
 
 /** Parent screens: the bug button goes in a top row there, so it never covers the page (I15). */
 const isParentPage = (pathname: string) => /^\/(parent|family)(\/|$)/.test(pathname);

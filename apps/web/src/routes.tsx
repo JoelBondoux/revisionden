@@ -1,4 +1,5 @@
 import { Navigate, useParams, type RouteObject } from 'react-router-dom';
+import { LESSON_PATHS } from './layout/lessonRoutes';
 import { AppLayout, FocusLayout } from './layout/AppLayout';
 import { HomePage } from './features/home/HomePage';
 import { RouteChange } from './layout/RouteChange';
@@ -91,12 +92,12 @@ const screens: RouteObject[] = [
       { path: '/ask-a-parent', element: <AskParentPage /> },
       { path: '/review/batches/:batchId', element: <BatchReviewPage /> },
       // Learning loop (workstream F): lessons and the starting test hide the nav.
-      { path: '/learn/topic/:topicId', element: <TopicLessonPage /> },
+      { path: LESSON_PATHS.topic, element: <TopicLessonPage /> },
       // Daily 5-a-day (workstream Q), in the lesson player.
-      { path: '/learn/daily', element: <DailyPage /> },
-      { path: '/learn/subject/:subjectId/practice', element: <SubjectPracticePage /> },
-      { path: '/learn/subject/:subjectId/start', element: <StartingTestPage /> },
-      { path: '/learn/command-words', element: <CommandWordsPage /> },
+      { path: LESSON_PATHS.daily, element: <DailyPage /> },
+      { path: LESSON_PATHS.practice, element: <SubjectPracticePage /> },
+      { path: LESSON_PATHS.start, element: <StartingTestPage /> },
+      { path: LESSON_PATHS.commandWords, element: <CommandWordsPage /> },
       // Policies, About and feedback (workstream L): policies are reachable without signing in.
       { path: '/welcome/privacy', element: <YoungPeopleNoticePage /> },
       { path: '/admin/feedback', element: <AdminFeedbackPage /> },
