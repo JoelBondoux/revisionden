@@ -17,6 +17,9 @@ const STYLES = [
   'garden-grow',
   'comic-pop',
   'pixel-arcade',
+  'petal-glow',
+  'turbo-drive',
+  'rainbow-parade',
 ];
 
 /** A Foundation student's map: two Higher-only topics on a side branch and an either-order pair. */
@@ -40,10 +43,16 @@ async function openMap(
   await page.route('**/v1/**', (route) => route.fulfill({ status: 404, json: { error: 'none' } }));
   await page.route('**/v1/student/map**', (route) => route.fulfill({ json: map }));
   await page.route('**/v1/student/cards/due', (route) => route.fulfill({ json: { due: 0 } }));
+  // Every style unlocked, so choosing one (below) shows its own node art as a child would see it.
+  await page.route('**/v1/student/rewards/effect-styles', (route) =>
+    route.fulfill({ json: { unlocked: STYLES } }),
+  );
   await page.addInitScript(
     ([id, scale, effect]) => {
       localStorage.setItem('revisionden.studentId', id as string);
-      localStorage.setItem('revisionden.effectStyle', effect as string);
+      // Only the first time: a style chosen later (chooseStyle) survives the reload.
+      if (!localStorage.getItem('revisionden.effectStyle'))
+        localStorage.setItem('revisionden.effectStyle', effect as string);
       if (scale !== 1) {
         document.addEventListener('DOMContentLoaded', () => {
           const css = document.createElement('style');
@@ -57,6 +66,17 @@ async function openMap(
   await page.goto('/map');
   await expect(page.getByRole('group', { name: 'Units' })).toBeVisible();
   await page.evaluate((s) => (document.documentElement.dataset.effectStyle = s), style);
+}
+
+/**
+ * Chooses a style as a child does (saved, then the app restarts), so the map draws that style's
+ * own node art, not just its colours (J16: Petal Glow's tiles are flowers).
+ */
+async function chooseStyle(page: Page, style: string) {
+  await page.evaluate((s) => localStorage.setItem('revisionden.effectStyle', s), style);
+  await page.reload();
+  await expect(page.getByRole('group', { name: 'Units' })).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('data-effect-style', style);
 }
 
 const sidewaysScroll = (page: Page) =>
@@ -242,7 +262,7 @@ for (const scheme of ['light', 'dark'] as const) {
     await openMap(page);
     const failures: string[] = [];
     for (const style of STYLES) {
-      await page.evaluate((s) => (document.documentElement.dataset.effectStyle = s), style);
+      await chooseStyle(page, style);
       // The page's real pixels (textures included) with the trail hidden.
       const pageEl = page.locator('.wiggly-map__page').nth(1);
       await page.addStyleTag({
@@ -380,7 +400,7 @@ for (const scheme of ['light', 'dark'] as const) {
     await openMap(page);
     const failures: string[] = [];
     for (const style of STYLES) {
-      await page.evaluate((s) => (document.documentElement.dataset.effectStyle = s), style);
+      await chooseStyle(page, style);
       const found = await page.evaluate(() => {
         const ctx = document.createElement('canvas').getContext('2d')!;
         const parse = (c: string): number[] | null => {

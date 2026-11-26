@@ -223,6 +223,9 @@ describe('the looks follow the approved mockup', () => {
     ['comic-pop', 'Bangers'],
     ['pixel-arcade', 'Press Start 2P'],
     ['doodle-diary', 'Patrick Hand'],
+    ['petal-glow', 'Fredoka'],
+    ['turbo-drive', 'Russo One'],
+    ['rainbow-parade', 'Baloo 2'],
   ] as const)('letters %s headings in %s, served from our own site', (id, font) => {
     expect(LOOKS[id].light['--font-heading']).toContain(`'${font}'`);
     const pkg = font.toLowerCase().replace(/ /g, '-');

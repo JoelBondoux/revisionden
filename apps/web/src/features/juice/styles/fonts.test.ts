@@ -17,6 +17,8 @@ describe('self-hosted fonts', () => {
         '@fontsource/bangers',
         '@fontsource/press-start-2p',
         '@fontsource/patrick-hand',
+        '@fontsource/fredoka',
+        '@fontsource/russo-one',
       ]),
     );
   });

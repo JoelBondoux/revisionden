@@ -75,7 +75,18 @@ describe('effect style registry', () => {
       ['Starlight', 'Master 10 topics'],
       ['Comic Pop', 'Reach level 20'],
       ['Pixel Arcade', 'Reach level 40'],
+      ['Petal Glow', 'Finish your starting test'],
+      ['Turbo Drive', 'Finish your starting test'],
+      ['Rainbow Parade', 'Finish your starting test'],
     ]);
+  });
+
+  // J16 (U7, owner-approved): the three starting-test styles are never labelled by gender.
+  it('never labels a style by gender', () => {
+    for (const id of EFFECT_STYLE_IDS)
+      expect(
+        `${EFFECT_STYLES[id].name} ${EFFECT_STYLES[id].description}`.toLowerCase(),
+      ).not.toMatch(/\b(girls?|boys?|girly|pink is|for her|for him)\b/);
   });
 });
 

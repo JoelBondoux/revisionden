@@ -99,6 +99,9 @@ importers:
       '@fontsource/bangers':
         specifier: 5.2.6
         version: 5.2.6
+      '@fontsource/fredoka':
+        specifier: 5.2.9
+        version: 5.2.9
       '@fontsource/nunito':
         specifier: ^5.3.0
         version: 5.3.0
@@ -109,6 +112,9 @@ importers:
         specifier: 5.3.0
         version: 5.3.0
       '@fontsource/press-start-2p':
+        specifier: 5.2.6
+        version: 5.2.6
+      '@fontsource/russo-one':
         specifier: 5.2.6
         version: 5.2.6
       '@revisionden/core':
@@ -1175,6 +1181,9 @@ packages:
   '@fontsource/bangers@5.2.6':
     resolution: {integrity: sha512-KSOq6IE/wOwRRDPmpxBzleTy2Kg8GDkzYNdb15ZYWnJZIrfzP9Cllr3vqf7t/mxanI9ssE4hq5sT5fGyS1dz3A==}
 
+  '@fontsource/fredoka@5.2.9':
+    resolution: {integrity: sha512-XmgO8bHMgLCuSWqOStp3yoggp/vYnAH8WvimE1Dip5uOR/yc3cyJvSL0RQVpVxitcsHz0/dyGbsSmu1KuQDOLg==}
+
   '@fontsource/nunito@5.3.0':
     resolution: {integrity: sha512-vw9TaTQJ/zpEpKrsODuPmOvaVjXgdda6B+xXA4YqjrdeJ62MLgVoDerdRXFQHyBnSCt2yQ2nHKCHPP/Pv7Xq4Q==}
 
@@ -1186,6 +1195,9 @@ packages:
 
   '@fontsource/press-start-2p@5.2.6':
     resolution: {integrity: sha512-qzNBsl4yQaLpQLftsj9kfrNvOrhftj5MUoNk3vQf3tQwZ4mhpDD6XucBWySlA1kG2q054pVqRt73UZSP0AldYA==}
+
+  '@fontsource/russo-one@5.2.6':
+    resolution: {integrity: sha512-tKEVVtQ84B+ea21TV/oZujLMii0zOJmbmWF67lV+3PsORtfURgkvqRO4XbOOXaxrm610fTnOi5eHwpuTejlY0g==}
 
   '@hexagon/base64@1.1.28':
     resolution: {integrity: sha512-lhqDEAvWixy3bZ+UOYbPwUbBkwBq5C1LAJ/xPC8Oi+lL54oyakv/npbA0aU2hgCsx/1NUd4IBvV03+aUBWxerw==}
@@ -4159,6 +4171,8 @@ snapshots:
 
   '@fontsource/bangers@5.2.6': {}
 
+  '@fontsource/fredoka@5.2.9': {}
+
   '@fontsource/nunito@5.3.0': {}
 
   '@fontsource/opendyslexic@5.3.0': {}
@@ -4166,6 +4180,8 @@ snapshots:
   '@fontsource/patrick-hand@5.3.0': {}
 
   '@fontsource/press-start-2p@5.2.6': {}
+
+  '@fontsource/russo-one@5.2.6': {}
 
   '@hexagon/base64@1.1.28': {}
 

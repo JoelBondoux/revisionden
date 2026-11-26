@@ -29,6 +29,9 @@ import './starlight.css';
 import './garden-grow.css';
 import './comic-pop.css';
 import './pixel-arcade.css';
+import './petal-glow.css';
+import './turbo-drive.css';
+import './rainbow-parade.css';
 import './bars.css';
 
 export interface EffectStyleApi {
