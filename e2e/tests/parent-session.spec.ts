@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { expect, test, type Page, type Route } from '@playwright/test';
 import { axeWhenSettled } from './support/axe';
+import { allowedOrigins, isElsewhere } from './support/origins';
 
 /*
  * W16: one whole parent session on a phone, as a smoke test of the pieces working together. A new
@@ -190,12 +191,11 @@ test('a new parent signs in, adds a child, links their device and reads the stat
 }) => {
   test.setTimeout(60_000);
   const state = await stubParentApi(page);
-  // Nothing leaves the test server: no Google, no other site.
+  // Nothing leaves the app: no Google, no other site (the API's own host is fine when deployed).
+  const allowed = allowedOrigins(baseURL!);
   const elsewhere: string[] = [];
   page.on('request', (request) => {
-    const url = new URL(request.url());
-    if (url.origin !== new URL(baseURL!).origin && url.protocol !== 'data:')
-      elsewhere.push(url.origin);
+    if (isElsewhere(request.url(), allowed)) elsewhere.push(new URL(request.url()).origin);
   });
 
   // Sign in: the welcome page's Google button comes straight back, signed in, to the family.
@@ -259,5 +259,5 @@ test('a new parent signs in, adds a child, links their device and reads the stat
   await expect(page.getByRole('heading', { level: 1, name: 'Stats dashboard' })).toBeVisible();
   await expect(page.getByRole('group', { name: 'Active study time' })).toBeVisible();
   await expectAccessible(page, 'the stats dashboard');
-  expect(elsewhere, 'requests that left the test server').toEqual([]);
+  expect(elsewhere, 'requests that left the app').toEqual([]);
 });
