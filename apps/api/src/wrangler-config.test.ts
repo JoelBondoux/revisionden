@@ -53,6 +53,14 @@ describe('wrangler config', () => {
     expect(config.vars.SERVE_DRAFT_CONTENT).toBeUndefined();
   });
 
+  it('has the friends league in dev only, until the notices are updated (FL, lead 2026-11-26)', () => {
+    expect(config.env.dev!.vars.FRIENDS_ENABLED).toBe('true');
+    for (const name of ['staging', 'production']) {
+      expect(config.env[name]!.vars.FRIENDS_ENABLED, name).toBeUndefined();
+    }
+    expect(config.vars.FRIENDS_ENABLED).toBeUndefined();
+  });
+
   it('offers the style tester in dev only (J12c)', () => {
     expect(config.env.dev!.vars.STYLE_TESTER).toBe('true');
     for (const name of ['staging', 'production']) {

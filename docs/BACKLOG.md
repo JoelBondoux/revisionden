@@ -336,3 +336,6 @@ Broken down into tasks when Stage 1 ships, following the same format. Headline o
    - Friends league: show each student's two-part title under their nickname (R8). The title is
      `formatTitle` of `students.title_first` and `title_last`; `GET /v1/student/rewards/title`
      shows the shape (`docs/REWARDS.md` "Two-part titles").
+   - Friends league follow-up (FL, lead 2026-11-26): an AppDeck support view of friend reports
+     (nicknames, avatar code, fixed reason and date only) and a way to close a report, so the
+     12-month retention after closing can start (`docs/FRIENDS_LEAGUE.md` sections 7 and 8).

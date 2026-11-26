@@ -1,7 +1,9 @@
 # Friends league: design and privacy
 
 > Status: **approved by the owner, 2026-11-26** (workstream FL), with the decisions in section 10.
-> Not built yet. The solicitor items in section 11 stay open.
+> Build in progress (section 9 "Built so far"). The solicitor items in section 11 stay open.
+> **Development only** for now (lead ruling, 2026-11-26): the `FRIENDS_ENABLED` flag is on in dev and
+> off in staging and production until the notices are updated and the solicitor has reviewed them.
 > Owner decision, 2026-11-26: friends can come from **other families from day one**, not only
 > siblings. Planned in `docs/PLAN.md` (Stage 4, "Weekly XP league; head-to-head challenges;
 > parent-approved invites"), `docs/REWARDS.md` (league rewards), `docs/BACKLOG.md` (title under
@@ -163,6 +165,7 @@ New tables (one new migration):
 | Table                 | Holds                                                                                       | Kept until                                                     |
 | --------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
 | `friend_codes`        | code hash, child, expiry, used                                                              | used or expired, then deleted within 24 hours                  |
+| `friend_code_tries`   | each typed code: child, family, right or wrong, time (for the try limits)                   | 24 hours                                                       |
 | `friend_requests`     | the two children, status, which family has approved (parent number only), expiry            | started, declined or 7 days, then deleted within 24 hours      |
 | `friendships`         | the two children (stored once, lower id first), start date, optional private label per side | removed, either child deleted                                  |
 | `friend_blocks`       | blocking child, blocked child, date                                                         | unblocked, either child deleted                                |
@@ -197,6 +200,29 @@ New tables (one new migration):
   hookup and title.
 - Tests: every rule above has a plain-English test first; API tests on PGlite; e2e for two
   families making friends, the league, removing, blocking, and export and deletion.
+
+### Built so far
+
+- **PR 1 (core, migration 0030, API):** `packages/core/src/league.ts` (week, league XP, places,
+  ties, win rule, codes, labels, limits); tables `friend_codes`, `friend_code_tries`,
+  `friend_requests`, `friendships`, `friend_blocks`, `friend_reports` and
+  `students.friends_allowed` / `league_hidden`; routes in `apps/api/src/routes/friends.ts` and
+  `friends-league.ts`:
+  - Student: `GET /v1/student/friends`, `POST /v1/student/friends/codes`,
+    `POST /v1/student/friends/redeem`, `POST /v1/student/friends/requests/:id/confirm|cancel`,
+    `DELETE /v1/student/friends/:id`, `POST /v1/student/friends/:id/block|report`,
+    `GET /v1/student/league`, `PUT /v1/student/league/hidden`.
+  - Parent: `GET /v1/students/:id/friends`, `PUT /v1/students/:id/friends/allowed`,
+    `POST /v1/students/:id/friends/requests/:rid/approve|decline`,
+    `DELETE /v1/students/:id/friends/:friendId`, `POST /v1/students/:id/friends/:friendId/block`,
+    `DELETE /v1/students/:id/friends/blocks/:blockedId`,
+    `PUT /v1/students/:id/friends/:friendId/label`.
+  - Every step is in the family activity log (new kinds in `apps/api/src/family-events.ts`);
+    the family export has a `friends` block per child and the profile's two settings; the daily
+    clean-up deletes used or expired codes, tries after a day, and requests a day after they end.
+- **Still to come:** the web screens (PR 2); `league_weeks`, weekly wins into rewards and the
+  title in the league (PR 3); the AppDeck report view, and closing a report (until then reports
+  are kept until either child is deleted).
 
 ## 10. Owner decisions (2026-11-26, via the lead)
 

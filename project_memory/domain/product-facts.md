@@ -953,7 +953,9 @@ Tags: #product #rules #limits #defaults
   0019); `GET`/`PUT /v1/student/rewards/title`; free to change any time; included in the family data export. Shown under the nickname
   on the Rewards page; the friends league is not built yet, so it shows there once it is.
 - Friends league (FL): owner decision 2026-11-26, friends may come from other families from day
-  one, not family only. Design approved 2026-11-26, not built yet: `docs/FRIENDS_LEAGUE.md`
+  one, not family only. Development only (`FRIENDS_ENABLED`, lead 2026-11-26) until the notices
+  are updated and the solicitor has reviewed them. Design approved 2026-11-26; core rules, API and migration 0030 built
+  (screens and weekly wins to come): `docs/FRIENDS_LEAGUE.md`
   (nickname, avatar, title and weekly learning XP only; one parent per family approves; no chat;
   10-friend cap; siblings join automatically; reports seen by both families' parents and AppDeck;
   rank chip on Map, League page under Me; head-to-head challenges later).

@@ -45,6 +45,7 @@ import { studentDailyRoutes } from './routes/daily';
 import { studentMapRoutes } from './routes/map';
 import { studentRecallRoutes } from './routes/recall';
 import { parentRewardRoutes, studentRewardRoutes } from './routes/rewards';
+import { parentFriendRoutes, studentFriendRoutes } from './routes/friends';
 import type { MathsEngine } from './learning/maths-engine';
 import {
   adminFeedbackRoutes,
@@ -205,6 +206,7 @@ export function createApp(deps: AppDeps) {
   parent.route('/students', avatarRoutes(deps));
   parent.route('/students', parentSubjectRoutes(deps));
   parent.route('/students', parentRewardRoutes(deps));
+  parent.route('/students', parentFriendRoutes(deps));
   parent.route('/students', parentStatsRoutes(deps));
   parent.route('/students', worthALookRoutes(deps));
   parent.route('/students', parentDailyLimitRoutes(deps));
@@ -255,6 +257,7 @@ export function createApp(deps: AppDeps) {
   app.route('/v1/student', studentMapRoutes(deps));
   app.route('/v1/student', studentDailyRoutes(deps));
   app.route('/v1/student', studentRecallRoutes(deps));
+  app.route('/v1/student', studentFriendRoutes(deps));
   app.route('/v1/student', reportRoutes(deps.db, 'student'));
   app.route('/v1/student/rewards', studentRewardRoutes(deps));
   app.route('/v1/student', studentFeedbackRoutes(deps));
