@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- The privacy notices now say exactly what a bug report's device details include: the question or card you were looking at (just its code) and how the app looked on your device. They never include your reading tint, font or colour choices.
 - Starting test: screen readers now say "One minute left" when the time is nearly up, and "Time is up" at the end, without reading out the clock every second.
 - Fixed: "Best combo" at the end of a lesson is now easy to read in every style, light and dark.
 - On small phones, the map now opens with "You are here" clear of the bottom bar, so tapping it starts your topic. The RevisionDen title on the welcome page also fits small screens with large text.
@@ -525,6 +526,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Changed
 
+- docs(legal): privacy notice 1.11 (9.2) and young people's notice 1.8 list the bug-report content id, last-problem code and display details, and rule out reading comfort and colour choices (L12); the young people's notice's Changes list is whole again (1.5 and 1.7 had been left in the wrong place).
 - Maths templates (T1): the expanding-brackets template (A4, v2) now says "Use the Power key (^) for powers.", matching F9's Power key in answer boxes (#254). Its 5 items were regenerated with the same numbers and re-verified.
 - Student nav and Get help (W7, owner decision 2026-11-26): `BottomNav` drops Progress and gains a last **Me** item ("Me, settings and personalisation") linking to `/settings`, marked current on `/settings` and `/progress` (and their sub-paths), with the student's avatar from `getMyAvatar` (decorative `AvatarSvg`, 28px) or a neutral `PersonIcon` placeholder. The five items share the bar equally (at least 56px wide) and labels wrap, so the nav fits 320px at 200% text. Removed the Get help chip from the student header and the footer heart (`VersionFooter`'s `showHelp` prop removed). Get help is now the first tile on Settings, with "My progress" (to `/progress`, unchanged) right after it. `/help`, Quick exit, signed-out and parent links, and the offline precache are unchanged. Tests: nav order and Me link, no Get help on student screens, Settings shows Get help first; e2e for Me (including My progress keeping Me current), a 320px/200% five-item fit, and the tablet rail.
 - Morning walkthrough screenshots in `docs/design/morning/` retaken on tonight's final `dev` (I14): seven of the first walkthrough's eight issues are fixed (the footer's stray "·" has moved, not gone), and the README lists four new small ones.

@@ -1,6 +1,6 @@
 # Privacy notice for young people
 
-Version: 1.7
+Version: 1.8
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -70,7 +70,11 @@ checks it and only tells us "yes, it's them".
   entered.
 - **Reminders:** if you turn them on, an address your browser gives us so we can send them.
 - **AI use:** how much AI marking you used this month (just numbers, never your answers).
-- **Feedback:** anything you choose to send us.
+- **Feedback:** anything you choose to send us. If you include device details (they start
+  off for you, and you see them before you send), we also get things like the app version, the
+  screen you were on, the question or card you were looking at (just its code, never the words)
+  and how the app looked (light or dark, zoom, high contrast). Never your reading tint, font or
+  colour choices.
 - **"Ask a parent" notes:** if you ask a parent to raise something for you, the topic you
   picked and your short note, if you wrote one. Only your parents see it. It's deleted when a parent
   acts on it or clears it, and after 90 days at most.
@@ -236,10 +240,6 @@ in Settings. Only your parents see it, and they can make a complaint for you.
 
 ### Changes
 
-- 1.7: Your device can also be linked with a link your parent sends you, not just a QR code.
-- 1.6: You can ask a parent to raise something for you from Settings. Only your parents see it, and it's deleted after 90 days at most.
-- 1.5: Target grades: you can set your own target for each subject, and your parent can set one too. You both see both.
-
 <!-- icon: refresh -->
 
 **In short:**
@@ -251,7 +251,10 @@ If we change how we use your information, we'll show you a short note in the app
 
 ## Changes
 
+- 1.8: If you include device details in a bug report, they can now show the question or card you were looking at (just its code) and how the app looked. Never your reading tint, font or colour choices.
+- 1.7: Your device can also be linked with a link your parent sends you, not just a QR code.
 - 1.6: You can ask a parent to raise something for you from Settings. Only your parents see it, and it's deleted after 90 days at most.
+- 1.5: Target grades: you can set your own target for each subject, and your parent can set one too. You both see both.
 - 1.4: If your family has two parents set up, both of them can see your progress.
 - 1.3: Added how read aloud works. Nothing new is kept about you.
 - 1.2: Says that the Get help page is private: nothing about using it is recorded or shown to your parent. No change to the data we keep.

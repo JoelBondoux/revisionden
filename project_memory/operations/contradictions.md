@@ -5,6 +5,28 @@
 
 ## Open
 
+- [x] **Bug reports now carry the question or card on screen, but the privacy notice does not
+      list it.** F16 (#391) adds `contentId` to the optional device details of a bug report.
+      Settled by L12: `docs/legal/privacy-notice.md` 1.11 (9.2) and
+      `docs/legal/privacy-for-young-people.md` 1.8 now list the question or card on screen (id
+      only), the last-problem code (E8, which 9.2 had also left out) and the display details F
+      plans next. Merge L12 together with, or after, both F PRs, so the notice never lists data the
+      app does not send.
+
+- [ ] **Accessibility settings in bug reports: solicitor to confirm the special-category line.**
+      Lead asked (2026-11-26) whether the app's own accessibility settings (background pattern, high
+      contrast, reading tint) may go into bug-report device details. L12 ruling: a reading tint,
+      the dyslexia-friendly font or colour-blind friendly colours could let someone infer a health
+      condition or learning difference about a child (health data is special category under UK
+      GDPR), and they add little to fixing touch and contrast faults, so they are left out.
+      High contrast (on or off) and the background pattern stay, as common display choices that
+      the contrast bugs need, named in 9.2 and shown to the sender before sending. Not settled:
+      this is a judgement, not legal advice; the solicitor should confirm it, and the product owner
+      should sign off the re-prompt that the 1.11 privacy notice causes for every parent. If the
+      solicitor says high contrast is also too revealing, F drops it and the notice changes again.
+      Also: held PR #292 used privacy notice 1.11 and young people's 1.8; it becomes 1.12 and 1.9
+      when it lands.
+
 - [ ] **Starting test time limit vs WCAG 2.2.1 Timing Adjustable.** The starting test
       (`apps/web/src/features/learn/StartingTestPage.tsx`, `timeLimitSeconds` from
       `apps/api/src/routes/learn.ts`; e2e `e2e/tests/starting-test.spec.ts`) has a 5-minute
