@@ -1,6 +1,7 @@
 .about__facts {
   display: grid;
-  grid-template-columns: max-content 1fr;
+  /* Labels size to their text but can shrink, so large text never pushes the values off-screen. */
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
   gap: var(--space-2) var(--space-4);
   margin: 0;
 }
@@ -12,6 +13,13 @@
 
 .about__facts dd {
   margin: 0;
+}
+
+/* Long words, version numbers and the support email wrap instead of scrolling sideways, even at
+   320px with 200% text (WCAG 1.4.4 and 1.4.10). */
+.about {
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
 
 .about__version h3 {
