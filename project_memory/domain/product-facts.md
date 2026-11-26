@@ -822,7 +822,8 @@ Tags: #product #rules #limits #defaults
   Burst, Garden Grow, Starlight, Comic Pop, Pixel Arcade. Unlocked list:
   `GET /v1/student/rewards/effect-styles`. Picker: Settings → Effect style (students only), with
   locked styles showing a preview and how to unlock them. Proposed new free default: Doodle Diary
-  (`doodle-diary`), with the owner.
+  (`doodle-diary`), with the owner. Lesson surround (J10a2): follows the style; the question and answers
+  sit on `.lesson__stage`, kept plain (Sticker Book: warm paper, night paper in dark mode).
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by

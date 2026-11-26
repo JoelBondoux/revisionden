@@ -14,6 +14,21 @@
   --sb-edge: rgb(80 70 140 / 28%);
   --sb-shadow: rgb(0 0 0 / 16%);
   --sb-sticker: 0 0 0 3px #fff, 0 0 0 5px var(--sb-edge), 3px 5px 0 var(--sb-shadow);
+  /* The lesson surround turns to paper (J10a2); the moments stay stickers. */
+  --arena-bg: #f6efe0;
+  --arena-raised: #fffdf7;
+  --arena-text: #2f2a3d;
+  --arena-text-secondary: #57516b;
+  --arena-glow: #0e6b60;
+}
+
+/* In dark mode the lesson surround is night paper, so the screen stays dark. */
+:root[data-effect-style='sticker-book'][data-theme='dark'] {
+  --arena-bg: #221d33;
+  --arena-raised: #2c2640;
+  --arena-text: #f3eefc;
+  --arena-text-secondary: #c9c2e0;
+  --arena-glow: #6fe0cf;
 }
 
 /* ---------- Home ---------- */
@@ -113,6 +128,60 @@
 
 :root[data-effect-style='sticker-book'] .rewards__step--earned:nth-child(even) {
   rotate: 5deg;
+}
+
+/* ---------- Lesson surround ---------- */
+/* The question and answers sit on a plain white card: no tilt, tape, texture or motion. */
+:root[data-effect-style='sticker-book'] .lesson__stage {
+  padding: var(--space-4);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--sb-ink);
+  box-shadow: 0 0 0 2px var(--sb-edge);
+}
+
+:root[data-effect-style='sticker-book'] .answer-option {
+  border: 2px solid var(--sb-edge);
+  background: #fff;
+  color: var(--sb-ink);
+  box-shadow: 0 4px 0 var(--sb-edge);
+}
+
+:root[data-effect-style='sticker-book'] .answer-option:has(input:checked) {
+  border-color: var(--sb-ink);
+}
+
+:root[data-effect-style='sticker-book'] .answer-option--right {
+  background: #dff5ec !important;
+  border-color: #0b8457;
+  box-shadow: 0 4px 0 #0b8457 !important;
+  color: var(--sb-ink);
+}
+
+:root[data-effect-style='sticker-book'][data-theme='dark'] .lesson__stage,
+:root[data-effect-style='sticker-book'][data-theme='dark'] .answer-option {
+  background: var(--arena-raised);
+  color: var(--arena-text);
+}
+
+:root[data-effect-style='sticker-book'][data-theme='dark'] .lesson__stage {
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 18%);
+}
+
+:root[data-effect-style='sticker-book'][data-theme='dark'] .answer-option {
+  border-color: rgb(255 255 255 / 22%);
+  box-shadow: 0 4px 0 rgb(0 0 0 / 35%);
+}
+
+:root[data-effect-style='sticker-book'][data-theme='dark'] .answer-option:has(input:checked) {
+  border-color: var(--arena-text);
+}
+
+:root[data-effect-style='sticker-book'][data-theme='dark'] .answer-option--right {
+  background: #163a2c !important;
+  border-color: #3ccf91;
+  box-shadow: 0 4px 0 #0b8457 !important;
+  color: var(--arena-text);
 }
 
 /* ---------- Lesson moments ---------- */

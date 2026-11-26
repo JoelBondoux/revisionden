@@ -340,18 +340,21 @@ export function LessonPlayer({
       {aside}
       {progress && <DailyGoal progress={progress} />}
       {comeBackNote(entry) && <p className="lesson__comeback">{comeBackNote(entry)}</p>}
-      <ReadAloudButton text={itemSpeechText(item)} label="Read the question aloud" />
-      <Shake key={item.id} active={result?.correct === false}>
-        <ItemInput
-          key={item.id}
-          item={item}
-          draft={draft}
-          disabled={result !== null || checking}
-          onChange={setDraft}
-          onSelfCheck={(knewIt) => void submit(knewIt)}
-          optionMark={optionMark}
-        />
-      </Shake>
+      {/* The question and its answers: a calm stage each effect style keeps plain (J10a2). */}
+      <div className="lesson__stage">
+        <ReadAloudButton text={itemSpeechText(item)} label="Read the question aloud" />
+        <Shake key={item.id} active={result?.correct === false}>
+          <ItemInput
+            key={item.id}
+            item={item}
+            draft={draft}
+            disabled={result !== null || checking}
+            onChange={setDraft}
+            onSelfCheck={(knewIt) => void submit(knewIt)}
+            optionMark={optionMark}
+          />
+        </Shake>
+      </div>
       <div className="lesson__footer">
         {result?.correct && item.type !== 'multiple_choice' && (
           <span className="lesson__burst">
