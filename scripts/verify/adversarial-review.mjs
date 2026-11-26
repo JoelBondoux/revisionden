@@ -49,6 +49,7 @@ const SYSTEM = [
   '- outside_specification: the content goes beyond the cited specification;',
   '- unsupported_claim: a claim that the quoted sources do not back up;',
   '- wording: unclear, misleading or unsuitable wording for the age group.',
+  "For the hint, explanation and model solution steps: Carry out each step it gives literally on this question's numbers. If doing exactly what it says gives a wrong value or does not lead to the marked answer, report factual_error.",
   'Return an empty list only if you find nothing. Say "low" or "medium" confidence if unsure.',
 ].join('\n');
 
