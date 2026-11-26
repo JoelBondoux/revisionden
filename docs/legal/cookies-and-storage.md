@@ -1,6 +1,6 @@
 # Cookies and storage
 
-Version: 1.6
+Version: 1.7
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -51,6 +51,7 @@ policies. We do not set or read those.
 | Local storage `revisionden.readAloud`         | Remembers whether read aloud is on and its speed on this device                                                                            | Until site data is cleared                           |
 | Local storage `revisionden.reading`           | Remembers reading comfort choices (font, text size, spacing, tint) on this device                                                          | Until site data is cleared                           |
 | Local storage `revisionden.appearance`        | Remembers appearance choices (theme, colour-blind friendly colours, background pattern) on this device                                     | Until site data is cleared                           |
+| Local storage `revisionden.effectStyle`       | Remembers which effect style (the look of rewards and celebrations, such as Sticker Book) is chosen on this device                         | Until site data is cleared                           |
 
 ### 4. What we do not use
 
@@ -64,6 +65,7 @@ need to sign in, or unlink and link the student's device again.
 
 ## Changes
 
+- 1.7: Added the setting that remembers the chosen effect style on this device.
 - 1.6: Added the setting that remembers, for 24 hours, that a parent closed the "We've updated" notice on this device.
 - 1.5: Added the device code that tells a student's devices apart when their passkey is synced.
 - 1.4: Added the setting that hides "Add RevisionDen to this device" for 30 days after "Not now".

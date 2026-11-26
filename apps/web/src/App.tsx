@@ -6,6 +6,7 @@ import { SoundProvider } from './features/sound';
 import { ReadingProvider } from './features/reading';
 import { AppearanceProvider } from './features/appearance';
 import { ReadAloudProvider } from './features/read-aloud';
+import { EffectStyleProvider } from './features/juice/styles';
 
 const router = createBrowserRouter(routes);
 
@@ -15,10 +16,12 @@ export function App() {
       <ReadingProvider>
         <ReadAloudProvider>
           <SoundProvider>
-            <StudentProvider>
-              {import.meta.env.PROD && <UpdateBanner />}
-              <RouterProvider router={router} />
-            </StudentProvider>
+            <EffectStyleProvider>
+              <StudentProvider>
+                {import.meta.env.PROD && <UpdateBanner />}
+                <RouterProvider router={router} />
+              </StudentProvider>
+            </EffectStyleProvider>
           </SoundProvider>
         </ReadAloudProvider>
       </ReadingProvider>
