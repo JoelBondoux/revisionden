@@ -16,8 +16,10 @@ page, lesson "+XP", "Best combo", header XP and comeback text), each fixed one a
 - **Standard.** Every screen, in every look, in light and dark (and the colour-blind and reading
   tint variants), meets WCAG 2.2 AA:
   - text 4.5:1, large text (24 px, or 18.66 px bold) 3:1 (1.4.3);
-  - buttons, inputs, checkboxes, radios, chips, focus rings and other UI parts 3:1 against what is
-    behind them (1.4.11);
+  - UI parts 3:1 against what is behind them (1.4.11), as WCAG defines it: anything that shows
+    state (selected chip or tab, checked box or radio, on/off toggle, focus ring), the boundary of an
+    input (text field, select, checkbox, radio) and icon-only controls. A button or link whose
+    passing text label identifies it does not also need a 3:1 fill or border;
   - the accessible name of a control contains its visible label (2.5.3).
 - **Measured on the painted page.** Contrast is measured against the pixels actually behind the
   text (page art, gradients, arena, button fill), with the shared painted helper
