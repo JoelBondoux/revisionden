@@ -54,6 +54,12 @@ const BUZZES: Record<Exclude<FeedbackEvent, 'combo'>, number[] | null> = {
   locked: [30],
   // A rolling celebration: three quick pulses (one per new style), then two big ones.
   stylesUnlocked: [20, 20, 20, 60, 100],
+  goalHit: [15, 15, 15, 40],
+  nodeComplete: [12, 20],
+  // Screen changes happen often: no buzz.
+  pageTransition: null,
+  particleBurst: [8],
+  prizeBox: [14],
 };
 
 /**

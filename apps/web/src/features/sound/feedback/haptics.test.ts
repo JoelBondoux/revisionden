@@ -83,7 +83,7 @@ describe('haptics', () => {
     for (const style of FEEDBACK_STYLES) {
       for (const event of FEEDBACK_EVENTS) {
         const p = hapticPattern(style, event, 3);
-        if (event === 'xpTick' || event === 'ringFill' || event === 'nodePop') {
+        if (['xpTick', 'ringFill', 'nodePop', 'pageTransition'].includes(event)) {
           expect(p).toBeNull();
           continue;
         }

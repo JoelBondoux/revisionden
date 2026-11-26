@@ -15,6 +15,10 @@ import type { FeedbackEvent } from './events';
 
 export { SQUARE_LOWPASS_HZ } from '../bank';
 
+/** U8's new moments: built from each style's pops, whizzes and sparkles, not hand-written. */
+type JuiceEvent = 'goalHit' | 'nodeComplete' | 'pageTransition' | 'particleBurst' | 'prizeBox';
+type BaseEvent = Exclude<FeedbackEvent, JuiceEvent>;
+
 export const FEEDBACK_STYLES = [
   'sticker-book',
   'pop-burst',
@@ -135,7 +139,7 @@ const stamp = (at: number, peak = 0.42) => sin(150, at, 0.12, peak, 55);
 /** A fast falling rustle, like a sticker peeling off its sheet. */
 const peel = (at: number, dur = 0.12, peak = 0.2) => tri(1900, at, dur, peak, 450);
 
-const stickerBook: Record<FeedbackEvent, SoundFn> = {
+const stickerBook: Record<BaseEvent, SoundFn> = {
   buttonPress: sound(tri(3200, 0, 0.03, 0.18, 2600)),
   cardFlip: sound(peel(0), tri(640, 0.08, 0.05, 0.1)),
   correct: sound(stamp(0), tri(784, 0.05, 0.25, 0.3), tri(1046.5, 0.1, 0.3, 0.25)),
@@ -177,7 +181,7 @@ const boing = (freq: number, at: number, peak = 0.3): N[] => [
   sin(freq * 0.6, at + 0.09, 0.12, peak * 0.8, freq * 0.85),
 ];
 
-const popBurst: Record<FeedbackEvent, SoundFn> = {
+const popBurst: Record<BaseEvent, SoundFn> = {
   buttonPress: sound(sin(520, 0, 0.04, 0.2, 1100)),
   cardFlip: sound(sin(310, 0, 0.08, 0.2, 620), sin(620, 0.08, 0.06, 0.16, 450)),
   correct: sound(pop(620, 0), pop(830, 0.08)),
@@ -236,7 +240,7 @@ const shimmer = (at: number, base = 2093, peak = 0.1): N[] => [
   sin(base * 1.5, at + 0.1, 0.15, peak),
 ];
 
-const starlight: Record<FeedbackEvent, SoundFn> = {
+const starlight: Record<BaseEvent, SoundFn> = {
   buttonPress: sound(sin(2093, 0, 0.05, 0.12)),
   cardFlip: sound(sin(1568, 0, 0.06, 0.14), sin(2093, 0.05, 0.08, 0.12)),
   correct: sound(...chime(1046.5, 0), ...chime(1568, 0.09, 0.35)),
@@ -272,7 +276,7 @@ const starlight: Record<FeedbackEvent, SoundFn> = {
 };
 
 // ---- Comic Pop: punchy squares, whooshes and POWs ----
-const comicPop: Record<FeedbackEvent, SoundFn> = {
+const comicPop: Record<BaseEvent, SoundFn> = {
   buttonPress: sound(sq(300, 0, 0.05, 0.12, 600)),
   cardFlip: sound(nz('bandpass', 800, 0, 0.1, 0.22, { glideTo: 3000 }), sq(400, 0.03, 0.04, 0.08)),
   correct: sound(sq(m(72), 0, 0.09, 0.15), sq(m(79), 0.09, 0.2, 0.15)),
@@ -310,7 +314,7 @@ const wood = (freq: number, at: number, dur: number, peak: number, glideTo?: num
 ];
 
 const gsound = louder(1.5);
-const gardenGrow: Record<FeedbackEvent, SoundFn> = {
+const gardenGrow: Record<BaseEvent, SoundFn> = {
   buttonPress: gsound(tri(m(79), 0, 0.12, 0.17)),
   cardFlip: gsound(
     nz('bandpass', 1500, 0, 0.1, 0.12, { glideTo: 3500 }),
@@ -341,7 +345,7 @@ const gardenGrow: Record<FeedbackEvent, SoundFn> = {
 };
 
 // ---- Pixel Arcade: chiptune ----
-const pixelArcade: Record<FeedbackEvent, SoundFn> = {
+const pixelArcade: Record<BaseEvent, SoundFn> = {
   buttonPress: sound(sq(m(84), 0, 0.04, 0.11)),
   cardFlip: sound(sq(m(72), 0, 0.03, 0.1), sq(m(79), 0.03, 0.03, 0.1)),
   correct: sound(sq(m(83), 0, 0.06, 0.13), sq(m(88), 0.06, 0.16, 0.13)),
@@ -380,7 +384,7 @@ const pageFlip = (at: number, dur = 0.3, peak = 0.18) =>
   nz('bandpass', 700, at, dur, peak, { glideTo: 3500, q: 0.6, attack: 0.05 });
 
 const dsound = louder(1.35);
-const doodleDiary: Record<FeedbackEvent, SoundFn> = {
+const doodleDiary: Record<BaseEvent, SoundFn> = {
   // A biro click: a tiny bright tick (triangle, not square, in this style).
   buttonPress: dsound(nz('highpass', 5000, 0, 0.02, 0.3), tri(1800, 0.015, 0.015, 0.08)),
   cardFlip: dsound(
@@ -431,7 +435,7 @@ const doodleDiary: Record<FeedbackEvent, SoundFn> = {
 };
 
 // ---- Petal Glow: music box, sparkle and petals ----
-const petalGlow: Record<FeedbackEvent, SoundFn> = {
+const petalGlow: Record<BaseEvent, SoundFn> = {
   buttonPress: sound(sin(m(98), 0, 0.05, 0.1)),
   cardFlip: sound(swish(0, 0.1), sin(m(91), 0.04, 0.1, 0.08)),
   correct: sound(...bell(m(84), 0, 0.3, 0.22), ...bell(m(88), 0.09, 0.4, 0.2)),
@@ -466,7 +470,7 @@ const petalGlow: Record<FeedbackEvent, SoundFn> = {
 };
 
 // ---- Turbo Drive: bold, sporty, mechanical ----
-const turboDrive: Record<FeedbackEvent, SoundFn> = {
+const turboDrive: Record<BaseEvent, SoundFn> = {
   buttonPress: sound(click(0), tri(1200, 0, 0.02, 0.06)),
   cardFlip: sound(whoosh(0, 0.12, 0.18)),
   correct: sound(tri(m(67), 0, 0.08, 0.22), tri(m(74), 0.07, 0.18, 0.22)),
@@ -506,7 +510,7 @@ const turboDrive: Record<FeedbackEvent, SoundFn> = {
 
 // ---- Rainbow Parade: joyful major-scale colour runs ----
 const sparkle = (at: number) => nz('highpass', 5000, at, 0.3, 0.08, { attack: 0.02 });
-const rainbowParade: Record<FeedbackEvent, SoundFn> = {
+const rainbowParade: Record<BaseEvent, SoundFn> = {
   buttonPress: sound(tri(m(84), 0, 0.06, 0.14)),
   cardFlip: sound(tri(m(76), 0, 0.05, 0.12), tri(m(79), 0.04, 0.06, 0.12)),
   correct: sound(tri(m(72), 0, 0.1, 0.2), tri(m(76), 0.07, 0.1, 0.2), tri(m(79), 0.14, 0.25, 0.22)),
@@ -537,7 +541,8 @@ const rainbowParade: Record<FeedbackEvent, SoundFn> = {
   stylesUnlocked: stylesUnlockedReveal,
 };
 
-export const stylePacks: Record<FeedbackStyle, Record<FeedbackEvent, SoundFn>> = {
+/** Every style before U8's juice layers (exported so tests can check what U8 adds). */
+export const basePacks: Record<FeedbackStyle, Record<BaseEvent, SoundFn>> = {
   'sticker-book': stickerBook,
   'pop-burst': popBurst,
   starlight,
@@ -549,3 +554,228 @@ export const stylePacks: Record<FeedbackStyle, Record<FeedbackEvent, SoundFn>> =
   'turbo-drive': turboDrive,
   'rainbow-parade': rainbowParade,
 };
+
+// ---- U8: juice. Pops, whizzes, sparkles and fizz, each in its style's own flavour ----
+type Part = N | Noise;
+interface Flavour {
+  /** One pop at `at`; `p` shifts its pitch (1 = as written). */
+  pop: (at: number, p?: number) => Part[];
+  /** A sweep over `dur` seconds: rising when `up`, falling otherwise. */
+  whizz: (at: number, dur: number, up: boolean) => Part[];
+  /** A quick tinkle of three sparkles. */
+  sparkle: (at: number) => Part[];
+  /** A short fizz burst. */
+  fizz: (at: number) => Part[];
+  /** A soft page-turn whoosh. */
+  whoosh: (at: number) => Part[];
+}
+
+const FLAVOURS: Record<FeedbackStyle, Flavour> = {
+  // Paper pocks and peel sweeps.
+  'sticker-book': {
+    pop: (at, p = 1) => [sin(420 * p, at, 0.06, 0.3, 900 * p), tri(2600 * p, at, 0.015, 0.08)],
+    whizz: (at, d, up) => [tri(up ? 700 : 1800, at, d, 0.14, up ? 1800 : 700)],
+    sparkle: (at) => [
+      tri(2637, at, 0.05, 0.08),
+      tri(3136, at + 0.04, 0.05, 0.07),
+      tri(3520, at + 0.08, 0.06, 0.06),
+    ],
+    fizz: (at) => [nz('bandpass', 3000, at, 0.15, 0.12, { q: 0.8, glideTo: 5000 })],
+    whoosh: (at) => [nz('bandpass', 900, at, 0.22, 0.12, { glideTo: 2600, q: 0.7 })],
+  },
+  // Coin pops, a slide whistle and bubble blips.
+  'pop-burst': {
+    pop: (at, p = 1) => [
+      sin(988 * p, at, 0.05, 0.28, 1320 * p),
+      tri(1976 * p, at + 0.03, 0.12, 0.1),
+    ],
+    whizz: (at, d, up) => [sin(up ? 500 : 1500, at, d, 0.16, up ? 1500 : 500)],
+    sparkle: (at) => [
+      sin(1400, at, 0.03, 0.1, 2100),
+      sin(1700, at + 0.04, 0.03, 0.1, 2500),
+      sin(2000, at + 0.08, 0.03, 0.1, 3000),
+    ],
+    fizz: (at) => [nz('highpass', 4000, at, 0.15, 0.1)],
+    whoosh: (at) => [
+      nz('bandpass', 700, at, 0.2, 0.12, { glideTo: 2200 }),
+      sin(300, at, 0.15, 0.08, 600),
+    ],
+  },
+  // Glassy chime pops and shimmer sweeps.
+  starlight: {
+    pop: (at, p = 1) => [sin(1568 * p, at, 0.12, 0.22), tri(3136 * p, at, 0.06, 0.05)],
+    whizz: (at, d, up) => [
+      nz('highpass', up ? 3000 : 7000, at, d, 0.07, { glideTo: up ? 7000 : 3000 }),
+      sin(up ? 1046.5 : 2093, at, d, 0.08, up ? 2093 : 1046.5),
+    ],
+    sparkle: (at) => [
+      sin(2093, at, 0.1, 0.09),
+      sin(2637, at + 0.04, 0.1, 0.08),
+      sin(3136, at + 0.08, 0.12, 0.07),
+    ],
+    fizz: (at) => [nz('highpass', 6000, at, 0.2, 0.06, { attack: 0.03 })],
+    whoosh: (at) => [nz('bandpass', 1500, at, 0.25, 0.08, { glideTo: 4000, attack: 0.05 })],
+  },
+  // Square blips with a POW, and noisy whooshes.
+  'comic-pop': {
+    pop: (at, p = 1) => [
+      sq(220 * p, at, 0.04, 0.1, 440 * p),
+      nz('lowpass', 2500, at, 0.06, 0.25, { glideTo: 400 }),
+    ],
+    whizz: (at, d, up) => [
+      nz('bandpass', up ? 400 : 3000, at, d, 0.2, { glideTo: up ? 3000 : 400, q: 1.2 }),
+    ],
+    sparkle: (at) => [
+      sq(1568, at, 0.03, 0.07),
+      sq(2093, at + 0.04, 0.03, 0.07),
+      sq(2637, at + 0.08, 0.03, 0.06),
+    ],
+    fizz: (at) => [nz('bandpass', 2500, at, 0.12, 0.15)],
+    whoosh: (at) => [nz('bandpass', 400, at, 0.2, 0.16, { glideTo: 3000 })],
+  },
+  // Seed pops, breezes and chimes.
+  'garden-grow': {
+    pop: (at, p = 1) => [
+      tri(600 * p, at, 0.05, 0.18, 300 * p),
+      nz('bandpass', 1800, at, 0.03, 0.1, { q: 3 }),
+    ],
+    whizz: (at, d, up) => [
+      nz('bandpass', up ? 600 : 2500, at, d, 0.1, { glideTo: up ? 2500 : 600, q: 0.6 }),
+    ],
+    sparkle: (at) => [
+      tri(m(88), at, 0.08, 0.08),
+      tri(m(91), at + 0.04, 0.08, 0.08),
+      tri(m(96), at + 0.08, 0.1, 0.07),
+    ],
+    fizz: (at) => [nz('highpass', 5000, at, 0.15, 0.05)],
+    whoosh: (at) => [nz('bandpass', 500, at, 0.25, 0.1, { glideTo: 1800, q: 0.5 })],
+  },
+  // Chiptune blips and sweeps, plus the noise channel.
+  'pixel-arcade': {
+    pop: (at, p = 1) => [sq(m(72) * p, at, 0.04, 0.1, m(84) * p)],
+    whizz: (at, d, up) => [sq(up ? m(60) : m(84), at, d, 0.08, up ? m(84) : m(60))],
+    sparkle: (at) => [
+      sq(m(96), at, 0.03, 0.06),
+      sq(m(100), at + 0.03, 0.03, 0.06),
+      sq(m(103), at + 0.06, 0.03, 0.06),
+    ],
+    fizz: (at) => [nz('highpass', 3000, at, 0.08, 0.12)],
+    whoosh: (at) => [sq(m(72), at, 0.12, 0.06, m(60)), nz('highpass', 2000, at, 0.1, 0.06)],
+  },
+  // Pencil taps, scribble sweeps and eraser crumbs.
+  'doodle-diary': {
+    pop: (at, p = 1) => [
+      nz('bandpass', 3200 * p, at, 0.025, 0.3, { q: 6 }),
+      tri(1400 * p, at + 0.01, 0.03, 0.08),
+    ],
+    whizz: (at, d, up) => [
+      nz('bandpass', up ? 1500 : 4000, at, d, 0.16, { glideTo: up ? 4000 : 1500, q: 2.5 }),
+    ],
+    sparkle: (at) => [
+      nz('bandpass', 3600, at, 0.02, 0.12, { q: 5 }),
+      nz('bandpass', 4200, at + 0.04, 0.02, 0.12, { q: 5 }),
+      nz('bandpass', 3900, at + 0.08, 0.02, 0.12, { q: 5 }),
+    ],
+    fizz: (at) => [nz('bandpass', 2800, at, 0.15, 0.1, { q: 1.5 })],
+    whoosh: (at) => [nz('bandpass', 700, at, 0.25, 0.14, { glideTo: 3500, q: 0.6 })],
+  },
+  // Soft bubble pops, airy swishes and bells.
+  'petal-glow': {
+    pop: (at, p = 1) => [
+      sin(1046.5 * p, at, 0.07, 0.16, 1568 * p),
+      sin(2093 * p, at + 0.02, 0.1, 0.05),
+    ],
+    whizz: (at, d, up) => [
+      nz('bandpass', up ? 2500 : 6000, at, d, 0.07, { glideTo: up ? 6000 : 2500, q: 1.5 }),
+      sin(up ? 1318.5 : 2637, at, d, 0.05, up ? 2637 : 1318.5),
+    ],
+    sparkle: (at) => [
+      sin(m(96), at, 0.1, 0.07, undefined, 0.01),
+      sin(m(100), at + 0.04, 0.1, 0.07, undefined, 0.01),
+      sin(m(103), at + 0.08, 0.12, 0.06, undefined, 0.01),
+    ],
+    fizz: (at) => [nz('highpass', 6500, at, 0.18, 0.04, { attack: 0.03 })],
+    whoosh: (at) => [nz('bandpass', 3000, at, 0.25, 0.07, { glideTo: 6000, q: 1.5 })],
+  },
+  // Click-thump pops and engine whooshes.
+  'turbo-drive': {
+    pop: (at, p = 1) => [sin(180 * p, at, 0.07, 0.2, 70 * p), nz('highpass', 5000, at, 0.012, 0.2)],
+    whizz: (at, d, up) => [
+      nz('bandpass', up ? 300 : 3500, at, d, 0.16, { glideTo: up ? 3500 : 300, q: 0.9 }),
+      tri(up ? 110 : 440, at, d, 0.1, up ? 440 : 110),
+    ],
+    sparkle: (at) => [
+      nz('highpass', 6000, at, 0.012, 0.18),
+      nz('highpass', 6000, at + 0.03, 0.012, 0.18),
+      tri(1760, at + 0.06, 0.04, 0.06),
+    ],
+    fizz: (at) => [nz('bandpass', 1200, at, 0.12, 0.15, { q: 0.6 })],
+    whoosh: (at) => [
+      nz('bandpass', 350, at, 0.22, 0.18, { glideTo: 2800, q: 0.8 }),
+      tri(90, at, 0.18, 0.08, 160),
+    ],
+  },
+  // Bright colour pops and rainbow slides.
+  'rainbow-parade': {
+    pop: (at, p = 1) => [
+      tri(m(84) * p, at, 0.06, 0.2, m(91) * p),
+      sin(m(96) * p, at + 0.02, 0.08, 0.06),
+    ],
+    whizz: (at, d, up) => [tri(up ? m(72) : m(96), at, d, 0.12, up ? m(96) : m(72))],
+    sparkle: (at) => [
+      tri(m(91), at, 0.05, 0.08),
+      tri(m(95), at + 0.04, 0.05, 0.08),
+      tri(m(98), at + 0.08, 0.06, 0.07),
+    ],
+    fizz: (at) => [nz('highpass', 5000, at, 0.15, 0.06)],
+    whoosh: (at) => [tri(m(79), at, 0.15, 0.08, m(84)), nz('highpass', 4000, at, 0.15, 0.04)],
+  },
+};
+
+/** A run of pops, each a little higher: the payoff after a whizz. */
+const cascade = (f: Flavour, at: number, count: number, gap = 0.07): Part[] =>
+  Array.from({ length: count }, (_, i) => f.pop(at + i * gap, 1 + i * 0.1)).flat();
+
+/** Plays a base sound and extra juice together (base first, so its character leads). */
+const layer =
+  (base: SoundFn, ...extra: Part[]): SoundFn =>
+  (ctx, out, at, pitch = 1) =>
+    Math.max(base(ctx, out, at, pitch), sound(...extra)(ctx, out, at, pitch));
+
+/** The reveal's juice is the same in every style: a rainbow of pops around the chord. */
+const revealJuice = cascade(FLAVOURS['rainbow-parade'], 1.42, 6, 0.06);
+const juicedReveal: SoundFn = (ctx, out, at, pitch = 1) =>
+  // Juice first here, so the reveal still ends on its held chord.
+  Math.max(
+    sound(...revealJuice, ...FLAVOURS['rainbow-parade'].fizz(1.5))(ctx, out, at, pitch),
+    stylesUnlockedReveal(ctx, out, at, pitch),
+  );
+
+function juice(base: Record<BaseEvent, SoundFn>, f: Flavour): Record<FeedbackEvent, SoundFn> {
+  return {
+    ...base,
+    correct: layer(base.correct, ...f.pop(0.02), ...f.sparkle(0.08)),
+    combo: layer(base.combo, ...f.whizz(0, 0.18, true)),
+    setComplete: layer(base.setComplete, ...f.whizz(0, 0.25, true), ...cascade(f, 0.28, 4)),
+    levelUp: layer(base.levelUp, ...f.whizz(0, 0.35, true), ...cascade(f, 0.38, 6), ...f.fizz(0.8)),
+    // The prize box: a rattle, a big POP, then each reward popping out.
+    rewardWobble: layer(
+      base.rewardWobble,
+      ...f.pop(0, 0.9),
+      ...f.pop(0.05, 1.1),
+      ...f.pop(0.1, 0.95),
+    ),
+    rewardOpen: layer(base.rewardOpen, ...f.pop(0, 0.8), ...f.fizz(0.02), ...f.sparkle(0.1)),
+    rewardUnlock: layer(base.rewardUnlock, ...cascade(f, 0.1, 4, 0.09), ...f.sparkle(0.5)),
+    stylesUnlocked: juicedReveal,
+    goalHit: sound(...f.whizz(0, 0.3, true), ...cascade(f, 0.32, 5), ...f.sparkle(0.7)),
+    nodeComplete: sound(...f.pop(0), ...f.pop(0.08, 1.25), ...f.sparkle(0.15)),
+    pageTransition: sound(...f.whoosh(0)),
+    particleBurst: sound(...f.pop(0), ...f.fizz(0.01)),
+    prizeBox: sound(...f.pop(0), ...f.sparkle(0.04)),
+  };
+}
+
+export const stylePacks: Record<FeedbackStyle, Record<FeedbackEvent, SoundFn>> = Object.fromEntries(
+  FEEDBACK_STYLES.map((id) => [id, juice(basePacks[id], FLAVOURS[id])]),
+) as Record<FeedbackStyle, Record<FeedbackEvent, SoundFn>>;

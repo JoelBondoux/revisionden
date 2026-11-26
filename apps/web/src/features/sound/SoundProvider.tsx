@@ -150,6 +150,7 @@ export function SoundProvider({
         haptics ?? createWebHaptics(navigator as { vibrate?: (pattern: number[]) => boolean }),
       now: () => performance.now(),
       reducedMotion,
+      random,
     }),
   );
 

@@ -7,6 +7,7 @@ import { DEFAULT_STYLE } from './styles';
 function setup(
   settings: Partial<SoundSettings> = {},
   { supported = true, reduced = false }: { supported?: boolean; reduced?: boolean } = {},
+  random: () => number = () => 0.5,
 ) {
   let now = 0;
   let current: SoundSettings = { ...DEFAULT_SOUND_SETTINGS, ...settings };
@@ -28,6 +29,7 @@ function setup(
     haptics: { supported, vibrate: (p) => void vibrations.push(p) },
     now: () => now,
     reducedMotion: () => reducedMotion,
+    random,
   });
   return {
     engine,
@@ -183,6 +185,36 @@ describe('feedback: sound and vibration for every animation', () => {
     t.engine.unlock();
     t.feedback.setStyle('pixel-arcade');
     expect(t.feedback.emit('stylesUnlocked')).toEqual({ sound: true, haptic: true });
+  });
+
+  it('pops vary their pitch a little each time, so repeats never sound robotic', () => {
+    const rolls = [0, 1];
+    const t = setup({}, undefined, () => rolls.shift() ?? 0.5);
+    t.engine.unlock();
+    t.feedback.emit('particleBurst');
+    const first = t.ctx().oscillators.map((o) => o.frequencies[0]!);
+    t.tick(1000);
+    const before = t.ctx().oscillators.length;
+    t.feedback.emit('particleBurst');
+    const second = t
+      .ctx()
+      .oscillators.slice(before)
+      .map((o) => o.frequencies[0]!);
+    expect(second[0]).not.toBe(first[0]);
+    // Only slightly: within 4 percent either way.
+    expect(Math.abs(second[0]! / first[0]! - 1)).toBeLessThan(0.08);
+  });
+
+  it('a combo still climbs exactly a whole tone per step (no wobble on combos)', () => {
+    const t = setup({}, undefined, () => 0.99);
+    t.engine.unlock();
+    t.feedback.emit('combo', { step: 1 });
+    const one = t.ctx().oscillators[0]!.frequencies[0]!;
+    t.tick(1000);
+    const before = t.ctx().oscillators.length;
+    t.feedback.emit('combo', { step: 2 });
+    const two = t.ctx().oscillators[before]!.frequencies[0]!;
+    expect(two / one).toBeCloseTo(2 ** (2 / 12), 5);
   });
 
   it('copes with a device that cannot vibrate', () => {
