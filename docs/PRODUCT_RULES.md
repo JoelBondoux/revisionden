@@ -933,6 +933,10 @@ Requested by the product owner on 2026-11-25.
 
 Owner decisions, 2026-11-26. Full design: `docs/FRIENDS_LEAGUE.md`.
 
+- **Development only for now** (lead ruling, 2026-11-26): behind `FRIENDS_ENABLED` (dev only);
+  in staging and production every friends route answers `404 friends_not_available`. It turns on
+  in production only after L updates the notices and the owner's solicitor reviews them.
+
 - Friends can come from other families. Off per child until a parent turns on "Allow friends".
   A child shares a one-time 8-character code in person; the friend types it and confirms; then
   one parent from **each** family approves (7 days). Codes: 48 hours, used once, hashed, 3 a

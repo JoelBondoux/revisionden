@@ -2,6 +2,8 @@
 
 > Status: **approved by the owner, 2026-11-26** (workstream FL), with the decisions in section 10.
 > Build in progress (section 9 "Built so far"). The solicitor items in section 11 stay open.
+> **Development only** for now (lead ruling, 2026-11-26): the `FRIENDS_ENABLED` flag is on in dev and
+> off in staging and production until the notices are updated and the solicitor has reviewed them.
 > Owner decision, 2026-11-26: friends can come from **other families from day one**, not only
 > siblings. Planned in `docs/PLAN.md` (Stage 4, "Weekly XP league; head-to-head challenges;
 > parent-approved invites"), `docs/REWARDS.md` (league rewards), `docs/BACKLOG.md` (title under

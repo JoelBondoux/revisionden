@@ -107,6 +107,20 @@ describe('environment validation', () => {
     expect(parseEnv({ ...complete, STYLE_TESTER: 'true' }).styleTester).toBe(true);
   });
 
+  it('turns on the friends league only when the development flag is on in development (FL)', () => {
+    expect(parseEnv(complete).friendsEnabled).toBe(false);
+    expect(parseEnv({ ...complete, FRIENDS_ENABLED: 'false' }).friendsEnabled).toBe(false);
+    expect(parseEnv({ ...complete, FRIENDS_ENABLED: 'true' }).friendsEnabled).toBe(true);
+  });
+
+  it('never turns on the friends league in staging or production, even with the flag on', () => {
+    for (const ENVIRONMENT of ['staging', 'production']) {
+      expect(parseEnv({ ...complete, ENVIRONMENT, FRIENDS_ENABLED: 'true' }).friendsEnabled).toBe(
+        false,
+      );
+    }
+  });
+
   it('never turns on the style tester in staging or production, even with the flag on', () => {
     for (const ENVIRONMENT of ['staging', 'production']) {
       expect(parseEnv({ ...complete, ENVIRONMENT, STYLE_TESTER: 'true' }).styleTester).toBe(false);

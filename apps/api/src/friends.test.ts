@@ -20,7 +20,7 @@ const HOUR = 60 * 60 * 1000;
 const DAY = 24 * HOUR;
 
 beforeAll(async () => {
-  t = await createTestContext();
+  t = await createTestContext({ config: { friendsEnabled: true } });
 });
 
 afterAll(async () => {
@@ -599,5 +599,42 @@ describe('the daily clean-up', () => {
     expect(await requestsOf()).toHaveLength(0);
     expect(await triesOf()).toHaveLength(0);
     expect(await codesOf()).toHaveLength(1); // the unused one is still valid for 48 hours
+  });
+});
+
+describe('the friends flag (dev only until the notices are updated)', () => {
+  it('refuses every friends and league route with "not available yet" when off', async () => {
+    const off = await createTestContext();
+    try {
+      const k = await off.familyStudent('Flag_Off');
+      const studentPaths: [string, string][] = [
+        ['GET', '/v1/student/friends'],
+        ['POST', '/v1/student/friends/codes'],
+        ['GET', '/v1/student/league'],
+        ['PUT', '/v1/student/league/hidden'],
+      ];
+      for (const [method, path] of studentPaths) {
+        const init = method === 'GET' ? { headers: k.headers } : jsonRequest(method, {}, k.headers);
+        const res = await off.app.request(path, init);
+        expect(res.status, path).toBe(404);
+        const body = (await res.json()) as { error: { code: string } };
+        expect(body.error.code, path).toBe('friends_not_available');
+      }
+      const parent = await off.app.request(`/v1/students/${k.studentId}/friends`, {
+        headers: k.parent.headers,
+      });
+      expect(parent.status).toBe(404);
+      const allow = await off.app.request(
+        `/v1/students/${k.studentId}/friends/allowed`,
+        jsonRequest('PUT', { allowed: true }, k.parent.headers),
+      );
+      expect(allow.status).toBe(404);
+      // Other student routes still work.
+      expect((await off.app.request('/v1/student/rewards', { headers: k.headers })).status).toBe(
+        200,
+      );
+    } finally {
+      await off.close();
+    }
   });
 });

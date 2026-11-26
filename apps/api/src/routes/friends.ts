@@ -13,7 +13,7 @@
  * Parent (/v1/students/:id/friends): the view, "Allow friends", approve or decline a request,
  * remove, block, unblock and a private label. One parent from each family must approve.
  */
-import { Hono } from 'hono';
+import { Hono, type MiddlewareHandler } from 'hono';
 import { and, count, eq, gt, inArray, isNotNull, isNull, lt, ne, or } from 'drizzle-orm';
 import { z } from 'zod';
 import {
@@ -58,8 +58,20 @@ const DAY_MS = 24 * HOUR_MS;
 export interface FriendDeps {
   db: Database;
   clock: Clock;
+  config?: { friendsEnabled?: boolean };
   /** Injected in tests; defaults to crypto randomness. */
   randomBytes?: (n: number) => Uint8Array;
+}
+
+const notAvailable = () =>
+  new ApiError(404, 'friends_not_available', "Friends aren't available yet.");
+
+/** Refuses every friends route while the friends flag is off (dev only for now). */
+function requireFriendsOn(deps: FriendDeps): MiddlewareHandler<AppEnv> {
+  return async (_c, next) => {
+    if (!deps.config?.friendsEnabled) throw notAvailable();
+    await next();
+  };
 }
 
 type StudentRow = typeof students.$inferSelect;
@@ -242,6 +254,10 @@ function waitingStatus(r: RequestRow, now: Date) {
 export function studentFriendRoutes(deps: FriendDeps) {
   const { db, clock } = deps;
   const app = new Hono<AppEnv>();
+  // Only these paths: this app is mounted on /v1/student with the other student routes.
+  for (const path of ['/friends', '/friends/*', '/league', '/league/*']) {
+    app.use(path, requireFriendsOn(deps));
+  }
 
   const me = async (studentId: string) => (await loadStudent(db, studentId))!;
 
@@ -484,6 +500,7 @@ export function studentFriendRoutes(deps: FriendDeps) {
 export function parentFriendRoutes(deps: FriendDeps) {
   const { db, clock } = deps;
   const app = new Hono<AppEnv>();
+  for (const path of ['/:id/friends', '/:id/friends/*']) app.use(path, requireFriendsOn(deps));
 
   const child = async (familyId: string, id: string) => {
     await requireFamilyStudent(db, familyId, id);
