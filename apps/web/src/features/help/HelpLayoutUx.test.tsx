@@ -114,7 +114,7 @@ describe('finding Get help from the student screens (owner, 2026-11-26: Settings
       within(nav).getByRole('link', { name: 'Me, settings and personalisation' }),
     );
     const main = screen.getByRole('main');
-    await within(main).findByRole('heading', { level: 1, name: 'Settings' });
+    await within(main).findByRole('heading', { level: 1, name: 'Me' });
     const header = main.querySelector('.sound-header')!;
     const pageLinks = within(main)
       .getAllByRole('link')

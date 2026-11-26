@@ -1,0 +1,29 @@
+/* Me page header (W9). Layout only, from shared tokens, so J13's re-skin covers it. */
+.me-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.me-header__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.me-header__name {
+  margin: 0;
+  font-weight: var(--font-weight-extrabold);
+  overflow-wrap: anywhere;
+}
+
+.me-header__actions,
+.me-header__ask {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}

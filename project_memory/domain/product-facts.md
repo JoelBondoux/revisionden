@@ -208,7 +208,14 @@ Tags: #product #rules #limits #defaults
   on phones, side rail from 768px wide). Me shows the student's own avatar (a neutral person icon
   until it loads) and opens `/settings`, "settings and personalisation"; Get help and My progress
   (`/progress`) live there, and Me is marked current on `/settings` and `/progress` (and anything
-  under them). Progress is no longer a nav tab (owner, 2026-11-26, W7). Items share the bar and
+  under them). Progress is no longer a nav tab (owner, 2026-11-26, W7). The Me page (W9) fits one
+  phone screen: avatar, nickname and **Edit my avatar** (E's builder in a sheet; Save, or Cancel
+  with a "Throw away your changes?" check; the nav avatar updates at once; the API only checks
+  items are unlocked, no parent approval or rate limit), then Get help, My progress, My rewards,
+  and two sub-pages: Look and sound (`/settings/look-and-sound`: reading comfort, appearance,
+  effect style, read aloud, sound) and More (`/settings/more`: subjects, reminders, device,
+  parents, feedback, policies, about, what your parent can see). A parent on `/settings` gets a
+  Parent home tile instead of the avatar header. Items share the bar and
   labels wrap, so they fit 320px with text at 200%. Welcome and lessons hide the nav to keep focus. Only a linked student
   device gets the student nav: elsewhere (signed out, or a parent) About, Policies, Feedback and
   the other app pages show a small header with the logo, Sign in, Policies and About.
