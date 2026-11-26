@@ -10,7 +10,7 @@ import { OfflineBanner } from '../pwa/OfflineBanner';
 import { useStudent } from '../session/StudentContext';
 import { PublicHeader } from './PublicHeader';
 import { VersionFooter } from './VersionFooter';
-import { GetHelpLink } from '../features/help';
+import { useOnboardingApi } from '../features/onboarding/OnboardingApiContext';
 
 /** Flashcards due for the chosen student; zero while loading, on error or with nobody chosen. */
 function useCardsDue(): number {
@@ -21,6 +21,17 @@ function useCardsDue(): number {
     [api, studentId],
   );
   return cards.status === 'ready' ? cards.data.due : 0;
+}
+
+/** The chosen student's own avatar code for the Me nav item; null while loading or on error. */
+function useMyAvatarCode(): string | null {
+  const onboarding = useOnboardingApi();
+  const { studentId } = useStudent();
+  const avatar = useApiResource(
+    () => (studentId ? onboarding.getMyAvatar() : Promise.resolve(null)),
+    [onboarding, studentId],
+  );
+  return avatar.status === 'ready' ? (avatar.data?.avatarCode ?? null) : null;
 }
 
 /** Marks the main area while the bug button is showing (focused and public pages pad it). */
@@ -47,6 +58,7 @@ function AppPages() {
 
 function StudentLayout() {
   const cardsDue = useCardsDue();
+  const avatarCode = useMyAvatarCode();
   const mainClass = useMainClass('app-main');
   return (
     <div className="app-shell">
@@ -54,17 +66,17 @@ function StudentLayout() {
         Skip to content
       </a>
       <OfflineBanner />
-      <BottomNav cardsDue={cardsDue} />
+      <BottomNav cardsDue={cardsDue} avatarCode={avatarCode} />
       <main id="main" className={mainClass} tabIndex={-1}>
         <header className="sound-header">
-          <GetHelpLink />
           <MuteButton />
           {/* In the top row, not floating, so it never covers the page (docs/PRODUCT_RULES.md). */}
           <BugButton />
         </header>
         <Outlet />
       </main>
-      <VersionFooter showHelp />
+      {/* No Get help link here: it lives on Settings, reached from Me (owner, 2026-11-26). */}
+      <VersionFooter />
       <RewardNotices />
     </div>
   );

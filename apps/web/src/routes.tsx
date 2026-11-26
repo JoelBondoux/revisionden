@@ -120,7 +120,7 @@ const screens: RouteObject[] = [
           <ComingSoon title="Papers" description="Past papers with a timer and mark schemes." />
         ),
       },
-      // Statistics dashboards (workstream K): My stats lives on the Progress tab.
+      // Statistics dashboards (workstream K): My stats, reached from "My progress" on Me (W7).
       { path: '/progress', element: <MyStatsPage /> },
       { path: '/settings', element: <SettingsPage /> },
       { path: '/install', element: <InstallHelpPage /> },

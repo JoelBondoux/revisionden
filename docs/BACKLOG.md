@@ -208,7 +208,7 @@ Spec: `PRODUCT_RULES.md`, statistics dashboards. Mockups 19 and 20.
 
 - [x] K1 Pure stats functions in core: periods (week, term, year in the family time zone), XP and questions per bucket, accuracy, active study time (5-minute gap rule, daily cap), personal bests, subject mastery average and change, weak-spot trend.
 - [x] K2 API: `GET /students/:id/stats?period=` (student or own parent only) and `GET /parent/students/:id/dashboard` (parent only), with shared Zod schemas.
-- [x] K3 Student "My stats" screen from the Progress tab: period toggle, tiles, XP bar chart with goal line, tooltip and table view, mastery by subject, personal bests, level bar.
+- [x] K3 Student "My stats" screen (from the Progress tab; since W7 from "My progress" on the Me page): period toggle, tiles, XP bar chart with goal line, tooltip and table view, mastery by subject, personal bests, level bar.
 - [x] K4 Parent dashboard: student switcher, tiles, 8-week study time chart with plan line, subjects table, weak spots, effort scores, reward progress, healthy habits, AI spend, recent activity.
 - [x] K5 Save as PDF in the browser (nicknames only); "Not set up yet" states for missing panels; student Settings line showing what the parent can see.
 - [x] K6 Accessibility: table view for every chart, keyboard focus on bars, reduced motion.
