@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Rewards now arrive in a prize box: it drops in, wobbles, and pops open to show each reward you earned and why. Tap the box to open it straight away. Right answers, hitting your daily goal and finishing a lesson also burst with your effect style's own sparkles (pen doodles, stickers, gold coins, stars, petals, pixels and more). If your device asks for less motion, the box simply opens with the list and nothing flies.
 - In the interactive factorising lesson, picking the wrong pair of numbers now shows the gaps or the spare strips, instead of drawing a different shape.
 - Coming at version 1.0: everyone who has been practising with RevisionDen before then gets a special Founding Tester badge and title, as a thank-you for helping build it. It can never be earned later.
 - Every look now sounds more exciting: pops, whizzes and sparkles when you get answers right, build a combo, hit your daily goal, level up and open a prize, each in that look's own style.
@@ -248,6 +249,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- J17: themed particle bursts (`features/juice/particles`: a pure planner with per-style flavours, capped at 30 a burst and 90 on screen, off for reduced motion) on right answers (growing with the combo), the daily goal and lesson complete, plus `celebrate`/`burstAt` for level-up and style-unlock screens; and the prize box (`features/juice/prize`, a native `<dialog>`) for newly earned rewards.
 - W8b (Codex review of #269): the area model keeps exactly b strips and c unit squares for any pair, outlining missing slots or leaving spare strips over (`fitStrips`); pilot steps are never picked as warm-ups or similar-question retries; "Did this help?" is one row per student and item, enforced by a unique partial index and an upsert (migration 0033).
 - Rewards R5: Founding Tester. One-off `special` reward (badge and "Founding"/"Tester" title words), `foundingTesterStat` in core, `BETA_ENDS_AT` Worker variable (unset everywhere until 1.0, with a test that `wrangler.toml` never sets it), awarded by the normal evaluator on answers, flashcard sessions and the Rewards page, a Special card and a badge moment on reveal (code-drawn Doodle Diary badge in `features/rewards/badges.tsx`), and the 1.0 release step in `docs/ENVIRONMENTS.md`.
 - Lesson reactions hook (F13, for J14, owner approved): `LessonPlayer` takes `onAnswerReaction({ kind, combo })`, called once per marked answer, after its feedback renders, with `right`, `wrong`, `helped` or `goal` (the first right answer that meets today's goal), from `answerReaction()` in `features/learn/reaction.ts`. Never called for an unmarked answer. No visible change yet: J wires Pip and the avatar to it.

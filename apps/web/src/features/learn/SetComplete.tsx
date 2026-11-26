@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import type { Progress } from '@revisionden/core';
 import { ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
-import { Confetti, StarReveal, pastDailyCap, starsForSet } from '../juice';
+import { Confetti, StarReveal, pastDailyCap, starsForSet, useCelebrate } from '../juice';
 import { useSound } from '../sound';
 import { DailyGoal } from './parts';
 
@@ -29,13 +29,19 @@ export function SetComplete({
   nextHref = '/map',
 }: SetCompleteProps) {
   const { play } = useSound();
+  const stars = useRef<HTMLDivElement>(null);
+  const { celebrate } = useCelebrate();
   useEffect(() => void play('celebration'), [play]);
+  // J17: a topic-complete burst from the stars, in the active style.
+  useEffect(() => void celebrate('topicComplete', stars.current), []);
   const capped = progress !== null && pastDailyCap(progress);
   return (
     <div className="complete set-complete">
       <Confetti />
       <Card title="Lesson complete">
-        <StarReveal stars={starsForSet(correct, marked)} />
+        <div ref={stars}>
+          <StarReveal stars={starsForSet(correct, marked)} />
+        </div>
         <div className="complete__stats">
           <div className="stat stat--success">
             <span className="stat__label">Right answers</span>

@@ -4,6 +4,7 @@ import { http, HttpResponse } from 'msw';
 import { server } from '../../mocks/server';
 import { renderRoute } from '../../test/render';
 import { stubReducedMotion } from '../juice/testing';
+import { resetParticles } from '../juice/particles/burst';
 import { demoItems } from './mocks';
 
 const only = (...indexes: number[]) =>
@@ -23,7 +24,12 @@ async function answerText(text: string) {
   await feedback();
 }
 
-afterEach(() => vi.unstubAllGlobals());
+const particles = () => document.querySelectorAll('.fx-layer .fx-particle');
+
+afterEach(() => {
+  resetParticles();
+  vi.unstubAllGlobals();
+});
 
 describe('Lesson player in the arena (game feel)', () => {
   beforeEach(() => stubReducedMotion(false));
@@ -54,7 +60,8 @@ describe('Lesson player in the arena (game feel)', () => {
     await feedback();
     const chosen = optionLabel('Option B');
     expect(chosen).toHaveClass('answer-option--right');
-    expect(chosen.querySelector('.burst')).not.toBeNull();
+    // J17: the active style's particles burst from the right answer.
+    expect(particles().length).toBeGreaterThan(0);
     // J10g: "+XP" pops just above the feedback, never across the question.
     const floater = container.querySelector('.float-up')!;
     expect(floater).toHaveTextContent('+10 XP');
@@ -72,7 +79,7 @@ describe('Lesson player in the arena (game feel)', () => {
     expect(container.querySelector('.shake')).not.toBeNull();
     expect(optionLabel('Option B')).toHaveClass('answer-option--right');
     expect(optionLabel('Option A')).not.toHaveClass('answer-option--right');
-    expect(container.querySelector('.burst')).toBeNull();
+    expect(particles()).toHaveLength(0);
     expect(box).not.toHaveTextContent(/fail|lose|lost/i);
   });
 
@@ -208,7 +215,7 @@ describe('Lesson player with reduced motion', () => {
     await click('Check');
     expect(await feedback()).toHaveTextContent('+10 XP');
     expect(optionLabel('Option B')).toHaveClass('answer-option--right');
-    expect(container.querySelector('.burst')).toBeNull();
+    expect(particles()).toHaveLength(0);
     expect(container.querySelector('.float-up')).toBeNull();
     await click('Continue');
     await userEvent.click(await screen.findByRole('radio', { name: 'Option A' }));

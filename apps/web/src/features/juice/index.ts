@@ -20,3 +20,6 @@ export {
   starsForSet,
 } from './logic';
 export { useReducedMotion } from './motion';
+export { burstAt, celebrate, useCelebrate } from './particles/burst';
+export type { Celebrate } from './particles/burst';
+export type { BurstOptions, CelebrateEvent } from './particles/plan';
