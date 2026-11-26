@@ -4,7 +4,7 @@
  * `:root[data-effect-style='<id>']` (see sticker-book.css). Sticker Book is the default and is
  * always available; other styles unlock as rewards (J10b).
  */
-export const EFFECT_STYLE_IDS = ['sticker-book'] as const;
+export const EFFECT_STYLE_IDS = ['sticker-book', 'pop-burst', 'starlight'] as const;
 export type EffectStyleId = (typeof EFFECT_STYLE_IDS)[number];
 
 export interface EffectStyle {
@@ -12,6 +12,10 @@ export interface EffectStyle {
   readonly name: string;
   /** One plain sentence for the style picker. */
   readonly description: string;
+  /** How to unlock it (none for the default); the rewards catalogue does the unlocking. */
+  readonly unlock?: string;
+  /** Three colours for the picker's little preview. */
+  readonly swatch: readonly [string, string, string];
 }
 
 export const EFFECT_STYLES: Readonly<Record<EffectStyleId, EffectStyle>> = {
@@ -20,6 +24,22 @@ export const EFFECT_STYLES: Readonly<Record<EffectStyleId, EffectStyle>> = {
     name: 'Sticker Book',
     description:
       'Warm and hand-made: wins are stickers slapped onto the page, with paper confetti and a little wobble.',
+    swatch: ['#fffdf7', '#ffd166', '#c93a2b'],
+  },
+  'pop-burst': {
+    id: 'pop-burst',
+    name: 'Pop Burst',
+    description: 'Loud and bouncy: jelly squash, gold coins of XP and big confetti bursts.',
+    unlock: 'Reach level 5',
+    swatch: ['#7b4dff', '#ff7a59', '#ffe066'],
+  },
+  starlight: {
+    id: 'starlight',
+    name: 'Starlight',
+    description:
+      'Glowing and dreamy: progress lights up like stars, and rewards arrive in a swirl of sparkles.',
+    unlock: 'Master 10 topics',
+    swatch: ['#241a6b', '#4be3ff', '#ff7ad9'],
   },
 };
 

@@ -1,0 +1,160 @@
+/*
+ * Pop Burst, an unlockable effect style (J10b, docs/GAME_FEEL.md). Loud, bouncy and saturated:
+ * jelly cards with a chunky bottom edge, gold for wins, round confetti. Every rule is scoped to
+ * the style. Transforms and opacity only. Colours chosen for AA with the text on them.
+ */
+:root[data-effect-style='pop-burst'] {
+  --pb-night: #5b33d6;
+  --pb-plum: #8a2bc2;
+  --pb-gold: #ffe066;
+  --pb-gold-edge: #e0a800;
+  --pb-ink: #3a1a7a;
+  --pb-violet: #5a2fc0;
+}
+
+/* ---------- Home ---------- */
+:root[data-effect-style='pop-burst'] .page-header .pill {
+  box-shadow: 0 3px 0 rgb(0 0 0 / 22%);
+}
+
+:root[data-effect-style='pop-burst'] .map-summary {
+  padding: var(--space-4);
+  border-radius: 22px;
+  background: linear-gradient(160deg, var(--pb-night), var(--pb-plum));
+  color: #fff;
+  box-shadow: 0 6px 0 var(--pb-ink);
+}
+
+:root[data-effect-style='pop-burst'] .map-summary__subject,
+:root[data-effect-style='pop-burst'] .map-summary .secondary-text {
+  color: #fff;
+}
+
+:root[data-effect-style='pop-burst'] .daily-card {
+  border: 3px solid var(--pb-night);
+  border-radius: 22px;
+  box-shadow: 0 6px 0 var(--pb-violet);
+}
+
+/* Today's mission is a big gold jelly button-card. */
+:root[data-effect-style='pop-burst'] .mission {
+  border-radius: 24px;
+  background: var(--pb-gold);
+  color: var(--pb-ink);
+  box-shadow: 0 6px 0 var(--pb-gold-edge);
+}
+
+:root[data-effect-style='pop-burst'] .mission__eyebrow {
+  color: var(--pb-violet);
+}
+
+:root[data-effect-style='pop-burst'] .mission__time {
+  color: var(--pb-ink);
+}
+
+:root[data-effect-style='pop-burst'] .hex--mastered {
+  filter: drop-shadow(0 4px 0 var(--pb-gold-edge));
+}
+
+:root[data-effect-style='pop-burst'] .hex--mastered .hex__shape {
+  --hex-border: var(--pb-gold-edge);
+  --hex-fill: var(--pb-gold);
+}
+
+/* ---------- Rewards ---------- */
+:root[data-effect-style='pop-burst'] .rewards__step {
+  border-radius: 10px;
+}
+
+:root[data-effect-style='pop-burst'] .rewards__step--earned {
+  background: var(--pb-gold);
+  color: var(--pb-violet);
+  box-shadow: 0 3px 0 var(--pb-gold-edge);
+}
+
+/* ---------- Lesson moments ---------- */
+:root[data-effect-style='pop-burst'] .combo-badge {
+  background: var(--pb-gold);
+  color: var(--pb-violet);
+  box-shadow: 0 3px 0 var(--pb-gold-edge);
+  animation: pb-stamp var(--motion-medium) var(--ease-spring);
+}
+
+:root[data-effect-style='pop-burst'] .star--earned polygon {
+  fill: var(--pb-gold);
+  stroke: var(--pb-gold-edge);
+}
+
+:root[data-effect-style='pop-burst'] .star--earned {
+  animation: pb-drop var(--motion-medium) var(--ease-spring) forwards;
+}
+
+:root[data-effect-style='pop-burst'] .burst__particle,
+:root[data-effect-style='pop-burst'] .confetti__piece {
+  border-radius: 50%;
+}
+
+:root[data-effect-style='pop-burst'] .confetti__piece {
+  width: 10px;
+  height: 10px;
+}
+
+:root[data-effect-style='pop-burst'] .spark-0 {
+  background: #ffe066;
+}
+
+:root[data-effect-style='pop-burst'] .spark-1 {
+  background: #ff7a59;
+}
+
+:root[data-effect-style='pop-burst'] .spark-2 {
+  background: #7cf2ff;
+}
+
+:root[data-effect-style='pop-burst'] .spark-3 {
+  background: #b8ff6a;
+}
+
+:root[data-effect-style='pop-burst'] .float-up {
+  color: var(--pb-gold);
+  text-shadow: 0 3px 0 var(--pb-violet);
+}
+
+/* The badge stamps in from big; stars drop in with a thump. */
+@keyframes pb-stamp {
+  0% {
+    opacity: 0;
+    transform: scale(2.2) rotate(-12deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pb-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px) scale(2.4);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-effect-style='pop-burst'] .combo-badge,
+  :root[data-effect-style='pop-burst'] .star--earned {
+    animation: none;
+    opacity: 1;
+  }
+}

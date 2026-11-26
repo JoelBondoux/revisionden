@@ -803,8 +803,11 @@ Tags: #product #rules #limits #defaults
   `apps/web/src/features/juice/styles/registry.ts`; one stylesheet per style, scoped to
   `:root[data-effect-style='<id>']`. Chosen per device in `localStorage` key
   `revisionden.effectStyle` (cookies and storage policy 1.7); a style that is not unlocked falls
-  back to Sticker Book. Pop Burst and Starlight unlock through progress milestones (J10b, not yet
-  built). Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).
+  back to Sticker Book. Unlockable (J10b, built): Pop Burst (`pop-burst`) with the `level-5`
+  reward, Starlight (`starlight`) with `topics-mastered-10`, added as `effectStyle` items by
+  `withEffectStyles` (`packages/core/src/catalogue/effect-styles.ts`). Unlocked list:
+  `GET /v1/student/rewards/effect-styles`. Picker: Settings → Effect style (students only), with
+  locked styles showing a preview and how to unlock them. Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by

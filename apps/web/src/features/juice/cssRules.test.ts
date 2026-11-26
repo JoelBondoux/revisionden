@@ -9,6 +9,8 @@ const files = [
   'features/rewards/reveal.css',
   'features/avatar/avatar.css',
   'features/juice/styles/sticker-book.css',
+  'features/juice/styles/pop-burst.css',
+  'features/juice/styles/starlight.css',
 ];
 const read = (file: string) => readFileSync(join(src, file), 'utf8');
 

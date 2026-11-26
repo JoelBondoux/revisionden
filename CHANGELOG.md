@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Two new effect styles to unlock: Pop Burst (loud and bouncy, at level 5) and Starlight (glowing and dreamy, when you master 10 topics). Pick your style in Settings → Effect style; locked styles show a preview and how to unlock them.
 - A new look for rewards and celebrations, Sticker Book: your daily goal and next mission are cards taped into a sticker book, mastered topics are gold stickers, and combos, stars and confetti slap onto the page like stickers.
 - Fixed: the "We've updated our policies" message no longer comes back every time you return. Tap "I've read the changes" and it's gone for good; close it and it waits 24 hours. It now shows only what changed since you last agreed, with a link to each full policy.
 - Parents: a new "Worth a look together" card on the stats page lists topics your child has found tricky for a while, with a "Learn it first" lesson link where there is one. It only appears when there is something to look at, and your child never sees it.
@@ -121,6 +122,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Effect styles J10b (J; R's catalogue and rewards route cleared for J10): `effectStyle` reward item kind (types, `RewardItemSchema`, Rewards page wording); `withEffectStyles` adds Pop Burst to `level-5` and Starlight to `topics-mastered-10`; `GET /v1/student/rewards/effect-styles`; `pop-burst.css` and `starlight.css` (scoped, AA colours); the provider loads the signed-in student's unlocked styles; Settings → Effect style picker (students only). Tests: catalogue, route, registry, provider, picker and every stylesheet.
 - Effect styles J10a (J): `features/juice/styles` (registry, `EffectStyleProvider`/`useEffectStyle`, `data-effect-style` on `<html>`, per-device choice in `revisionden.effectStyle`), and the default Sticker Book style (`sticker-book.css`, every rule scoped to the style) for the combo badge, stars, bursts, confetti, "+XP", the Home screen (daily goal, 5-a-day, next mission, streak, mastered hexes) and Rewards chapter steps. `index.html` starts in Sticker Book. Tests: registry, provider, stylesheet scoping and the game-feel CSS rules. Cookies and storage policy 1.7.
 - Dev and staging footers show the short commit next to the environment, e.g. "(Development, ef86a9a)", so a new build is easy to spot. The live app is unchanged (G5).
 - Policy notice fix (L9): closing the "We've updated" sheet saved nothing, so it reappeared on every visit to `/onboarding`. "I've read the changes" (was "Confirm") stores the versions as before; closing hides it on the device for 24 hours for those versions only (`policyNoticeSnooze.ts`, `revisionden.policyNotice`). Cookies and storage 1.6. The notice shows only the Changes lines newer than that parent's accepted version, per policy (`policyChanges.ts`, numeric version compare so 1.10 > 1.9), hides policies with nothing newer, and a policy never accepted now goes through "Before you start".

@@ -115,9 +115,15 @@ tab say so to screen readers.
 
 - One effect style is active at a time. It sets the look and motion of the game-feel moments
   (combo badge, stars, bursts, confetti, "+XP"), the Home screen (topic map) and Rewards. The
-  owner picked **Sticker Book** as the default. Pop Burst and Starlight become styles a child
-  unlocks through normal progress, never by buying (J10b). More styles may follow once the owner
-  has reviewed them.
+  owner picked **Sticker Book** as the default. Pop Burst (with the level 5 reward) and
+  Starlight (with the 10-topics-mastered reward) unlock through normal progress, never by buying
+  (J10b, `docs/REWARDS.md` "Effect styles"). The child picks in Settings → Effect style, where
+  locked styles show a three-colour preview and "Locked. Unlock: …". More styles may follow once
+  the owner has reviewed them.
+- Pop Burst (J10b): jelly cards with a chunky bottom edge, a gold jelly mission card, gold wins,
+  round confetti; the badge stamps in from big and the stars drop in. Starlight (J10b): night-sky
+  cards with a soft glow, mastered topics and earned steps glow like stars; the badge brightens
+  into view and the stars rise and settle.
 - A style is one entry in `apps/web/src/features/juice/styles/registry.ts` plus one stylesheet in
   which every rule is scoped to `:root[data-effect-style='<id>']`. A test checks that scoping, so
   removing or swapping a style never leaves bits of it behind. `EffectStyleProvider` sets

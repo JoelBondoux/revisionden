@@ -1,0 +1,158 @@
+/*
+ * Starlight, an unlockable effect style (J10b, docs/GAME_FEEL.md). Glowing and dreamy: night-sky
+ * cards, wins that light up like stars, soft sparkles. Every rule is scoped to the style.
+ * Transforms and opacity only (glows are static shadows). Colours chosen for AA.
+ */
+:root[data-effect-style='starlight'] {
+  --sl-night: #241a6b;
+  --sl-deep: #120d3a;
+  --sl-text: #f2f0ff;
+  --sl-soft: #d8d3f0;
+  --sl-cyan: #4be3ff;
+  --sl-pink: #ff7ad9;
+  --sl-star: #fff6b0;
+  --sl-glow: 0 0 24px rgb(180 140 255 / 35%);
+}
+
+/* ---------- Home ---------- */
+:root[data-effect-style='starlight'] .page-header .pill {
+  box-shadow: 0 0 12px rgb(255 214 90 / 60%);
+}
+
+:root[data-effect-style='starlight'] .map-summary,
+:root[data-effect-style='starlight'] .mission,
+:root[data-effect-style='starlight'] .daily-card {
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(170deg, var(--sl-night), var(--sl-deep));
+  color: var(--sl-text);
+  box-shadow: var(--sl-glow);
+}
+
+:root[data-effect-style='starlight'] .map-summary {
+  padding: var(--space-4);
+}
+
+:root[data-effect-style='starlight'] .map-summary__subject {
+  color: #c4b5ff;
+}
+
+:root[data-effect-style='starlight'] .map-summary .secondary-text,
+:root[data-effect-style='starlight'] .daily-card .secondary-text,
+:root[data-effect-style='starlight'] .daily-card__count,
+:root[data-effect-style='starlight'] .mission__time {
+  color: var(--sl-soft);
+}
+
+:root[data-effect-style='starlight'] .mission__eyebrow {
+  color: var(--sl-cyan);
+}
+
+/* Mastered topics glow like stars. */
+:root[data-effect-style='starlight'] .hex--mastered {
+  filter: drop-shadow(0 0 8px rgb(255 246 176 / 90%));
+}
+
+:root[data-effect-style='starlight'] .hex--mastered .hex__shape {
+  --hex-border: var(--sl-star);
+}
+
+/* ---------- Rewards ---------- */
+:root[data-effect-style='starlight'] .rewards__step {
+  border-radius: 50%;
+}
+
+:root[data-effect-style='starlight'] .rewards__step--earned {
+  background: var(--sl-star);
+  color: #3a2a00;
+  box-shadow: 0 0 10px var(--sl-star);
+}
+
+/* ---------- Lesson moments ---------- */
+:root[data-effect-style='starlight'] .combo-badge {
+  background: linear-gradient(90deg, var(--sl-cyan), var(--sl-pink));
+  color: var(--sl-deep);
+  box-shadow: 0 0 16px rgb(255 122 217 / 70%);
+  animation: sl-brighten var(--motion-medium) ease-out;
+}
+
+:root[data-effect-style='starlight'] .star--earned polygon {
+  fill: var(--sl-star);
+  stroke: #fff;
+}
+
+:root[data-effect-style='starlight'] .star--earned {
+  filter: drop-shadow(0 0 8px var(--sl-star));
+  animation: sl-rise var(--motion-medium) ease-out forwards;
+}
+
+:root[data-effect-style='starlight'] .burst__particle,
+:root[data-effect-style='starlight'] .confetti__piece {
+  border-radius: 50%;
+}
+
+:root[data-effect-style='starlight'] .burst__particle {
+  width: calc(var(--size) * 0.7);
+  height: calc(var(--size) * 0.7);
+}
+
+:root[data-effect-style='starlight'] .confetti__piece {
+  width: 6px;
+  height: 6px;
+}
+
+:root[data-effect-style='starlight'] .spark-0 {
+  background: #fff;
+}
+
+:root[data-effect-style='starlight'] .spark-1 {
+  background: var(--sl-cyan);
+}
+
+:root[data-effect-style='starlight'] .spark-2 {
+  background: var(--sl-pink);
+}
+
+:root[data-effect-style='starlight'] .spark-3 {
+  background: var(--sl-star);
+}
+
+:root[data-effect-style='starlight'] .float-up {
+  color: #fff;
+  text-shadow: 0 0 10px var(--sl-cyan);
+}
+
+/* The badge brightens into view; stars rise and settle. */
+@keyframes sl-brighten {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes sl-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.5);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(0) scale(1.15);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-effect-style='starlight'] .combo-badge,
+  :root[data-effect-style='starlight'] .star--earned {
+    animation: none;
+    opacity: 1;
+  }
+}

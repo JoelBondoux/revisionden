@@ -1,3 +1,4 @@
+import { EFFECT_STYLE_UNLOCKS } from '@revisionden/core';
 import {
   DEFAULT_EFFECT_STYLE,
   EFFECT_STYLES,
@@ -29,12 +30,38 @@ describe('effect style registry', () => {
     expect(style.description.length).toBeGreaterThan(20);
   });
 
-  it('describes every style by its own id', () => {
-    for (const id of EFFECT_STYLE_IDS) expect(EFFECT_STYLES[id].id).toBe(id);
+  it('describes every style by its own id, with a three-colour preview', () => {
+    for (const id of EFFECT_STYLE_IDS) {
+      expect(EFFECT_STYLES[id].id).toBe(id);
+      expect(EFFECT_STYLES[id].swatch).toHaveLength(3);
+    }
+  });
+
+  it('has Pop Burst and Starlight to unlock, each saying how', () => {
+    expect(EFFECT_STYLES['pop-burst']).toMatchObject({
+      name: 'Pop Burst',
+      unlock: 'Reach level 5',
+    });
+    expect(EFFECT_STYLES.starlight).toMatchObject({
+      name: 'Starlight',
+      unlock: 'Master 10 topics',
+    });
+    expect(EFFECT_STYLES['sticker-book'].unlock).toBeUndefined();
+  });
+
+  it('only lists styles to unlock that the rewards catalogue actually unlocks', () => {
+    const fromCatalogue = EFFECT_STYLE_UNLOCKS.map((u) => u.style).sort();
+    const toUnlock = EFFECT_STYLE_IDS.filter((id) => EFFECT_STYLES[id].unlock).sort();
+    expect(toUnlock).toEqual(fromCatalogue);
   });
 });
 
 describe('choosing a style', () => {
+  it('uses an unlocked style the child picked', () => {
+    expect(chooseEffectStyle('pop-burst', ['pop-burst'])).toBe('pop-burst');
+    expect(chooseEffectStyle('starlight', ['pop-burst'])).toBe('sticker-book');
+  });
+
   it('uses the saved style when it is available, and Sticker Book otherwise', () => {
     expect(chooseEffectStyle('sticker-book', [])).toBe('sticker-book');
     expect(chooseEffectStyle('neon-disco', ['sticker-book'])).toBe('sticker-book');

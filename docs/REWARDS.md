@@ -288,6 +288,24 @@ badly together, refused by the picker. The choice is stored as `students.title_f
 only unlocked words. The Rewards page shows the title under the nickname with a picker. The friends
 league is not built yet; it should show the title under each nickname when it is.
 
+## Effect styles (J10b)
+
+An effect style is how rewards, combos, celebrations, the Home screen and Rewards look (see
+`docs/GAME_FEEL.md` "Effect styles"). Sticker Book is everyone's default and is never a reward.
+The other styles come as an extra `effectStyle` item on rewards that already exist, tied to
+learning progress, so children who already earned them have the style straight away:
+
+| Style     | Comes with                                 | Reward id            |
+| --------- | ------------------------------------------ | -------------------- |
+| Pop Burst | Reaching level 5                           | `level-5`            |
+| Starlight | Mastering 10 topics (a practice milestone) | `topics-mastered-10` |
+
+They are added by `withEffectStyles` (`packages/core/src/catalogue/effect-styles.ts`), the same
+way as title words, so the source catalogue files are unchanged. `GET /v1/student/rewards/effect-styles`
+lists the styles a student has unlocked (`{ unlocked: string[] }`). The child picks one in
+Settings → Effect style; the choice is kept on the device, and a style that isn't unlocked falls
+back to Sticker Book. Styles are never bought, never random and never tied to a streak.
+
 ## Secret achievements
 
 - A set of achievements whose names and conditions are hidden until earned. The rewards page shows
