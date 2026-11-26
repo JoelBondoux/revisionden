@@ -47,6 +47,7 @@ function renderLink(
   api: OnboardingApi,
   register: (options: Record<string, unknown>) => Promise<unknown>,
   env: Partial<LinkEnv> = {},
+  path = '/link?token=tttttttttttttttttttttttttttttttt&family=family-1',
 ) {
   const fullEnv: LinkEnv = {
     userAgent: CHROME,
@@ -66,7 +67,7 @@ function renderLink(
       { path: '/unlock', element: <h1>Unlock</h1> },
       { path: '/welcome/privacy', element: <h1>Privacy notice for young people</h1> },
     ],
-    { initialEntries: ['/link?token=tttttttttttttttttttttttttttttttt&family=family-1'] },
+    { initialEntries: [path] },
   );
   render(
     <StudentProvider storage={{ getItem: () => null, setItem: () => undefined }}>
@@ -225,6 +226,36 @@ describe('LinkPage: before the tap', () => {
     expect(await screen.findByText('Link copied. Paste it into Chrome.')).toBeInTheDocument();
     // The child can still try here.
     expect(screen.getByRole('button', { name: 'Set up passkey' })).toBeInTheDocument();
+  });
+
+  it('shows a typed code to enter again in Chrome, since the link it hands over has no code', async () => {
+    const user = userEvent.setup();
+    const api = fakeApi();
+    const { env } = renderLink(
+      api,
+      vi.fn(),
+      { userAgent: GOOGLE_APP, pageUrl: () => 'https://dev.revisionden.test/link' },
+      '/link',
+    );
+    await user.type(await screen.findByLabelText('Code from your parent'), 'abcd efgh');
+    await user.click(screen.getByRole('button', { name: 'Continue' }));
+    expect(
+      await screen.findByRole('heading', { name: 'Open this page in Chrome' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText('In Chrome, enter your code again:')).toBeInTheDocument();
+    expect(screen.getByText('ABCD-EFGH')).toBeInTheDocument();
+    // The code never goes into the link handed to Chrome.
+    await user.click(screen.getByRole('button', { name: 'Copy link' }));
+    expect(env.copy).toHaveBeenCalledWith('https://dev.revisionden.test/link');
+    expect(screen.getByRole('link', { name: 'Open in Chrome' }).getAttribute('href')).not.toMatch(
+      /ABCD|EFGH/,
+    );
+  });
+
+  it('does not ask for a code again when the page came from the QR link', async () => {
+    renderLink(fakeApi(), vi.fn(), { userAgent: GOOGLE_APP });
+    await screen.findByRole('heading', { name: 'Open this page in Chrome' });
+    expect(screen.queryByText('In Chrome, enter your code again:')).toBeNull();
   });
 
   it('asks for another browser when this one has no passkeys at all', async () => {

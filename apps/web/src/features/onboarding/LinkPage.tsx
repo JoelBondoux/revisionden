@@ -237,7 +237,9 @@ export function LinkPage({
     <div className="stack">
       <Avatar code={link.student.avatarCode} nickname={link.student.nickname} size={120} />
       <h1>Hi {link.student.nickname}!</h1>
-      {support !== 'ok' && <OpenInChrome env={env} />}
+      {support !== 'ok' && (
+        <OpenInChrome env={env} code={'code' in input ? formatLinkCode(input.code) : undefined} />
+      )}
       {!blocked && (
         <>
           <p>
@@ -282,7 +284,7 @@ function ProblemDetails({ problem }: { problem: Problem }) {
 }
 
 /** For in-app browsers and browsers without passkeys: open the same page in Chrome instead. */
-function OpenInChrome({ env }: { env: LinkEnv }) {
+function OpenInChrome({ env, code }: { env: LinkEnv; code?: string }) {
   const [copied, setCopied] = useState(false);
   const page = env.pageUrl();
   const intent = chromeIntentUrl(page, env.userAgent);
@@ -296,6 +298,13 @@ function OpenInChrome({ env }: { env: LinkEnv }) {
         This browser may not be able to set up a passkey. Open the same link in Chrome (or Safari on
         an iPhone).
       </p>
+      {code && (
+        // A typed code is not in the page's link (it stays out of URLs), so show it to type again.
+        <p>
+          <span>In Chrome, enter your code again:</span>{' '}
+          <strong className="link-code">{code}</strong>
+        </p>
+      )}
       {intent && (
         <LinkButton href={intent} block>
           Open in Chrome
