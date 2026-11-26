@@ -911,6 +911,11 @@ Tags: #product #rules #limits #defaults
   art and heading font (self-hosted: Baloo 2, Bangers, Press Start 2P, Patrick Hand). Vivid and
   night pages (Pop Burst purple, Starlight night sky, Pixel Arcade screen) show in dark mode only;
   light mode keeps a light page there, because the shared status colours need a light page.
+  Lead ruling (2026-11-26, accessibility comes first): rich pages are dark-mode only for Pop Burst,
+  Starlight and Pixel Arcade, light pages in light mode, and those looks use deeper button colours
+  with white text (the bright colour stays as the highlight). Every self-hosted font (Nunito,
+  OpenDyslexic, Baloo 2, Bangers, Press Start 2P, Patrick Hand; all SIL OFL 1.1, via @fontsource)
+  ships with its licence in `apps/web/public/licences/fonts/` (checked by `fonts.test.ts`).
 - Living progress bars (J15s revision): every horizontal progress bar's fill gently moves in the
   style's own way (hatching, stripes, gloss, stars, dots, leaves, chase light) with a pulsing
   leading edge; off with reduced motion, paused while the tab is hidden

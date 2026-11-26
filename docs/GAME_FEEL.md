@@ -192,7 +192,9 @@ tab say so to screen readers.
   colours are not made for, so light mode keeps a light page in those styles. To keep white text on
   the success button readable, night and vivid looks use a deeper main colour for buttons (Starlight
   violet, Pixel Arcade green, Pop Burst pink) and keep their bright colour (cyan, neon green, sunny
-  yellow) as the highlight (`--color-primary-edge`).
+  yellow) as the highlight (`--color-primary-edge`). Lead ruling, 2026-11-26: accessibility comes
+  first. The heading fonts are SIL OFL 1.1; every self-hosted font's licence ships in
+  `apps/web/public/licences/fonts/`.
 - **Living progress bars (J15s revision).** Every horizontal bar's fill (`.progress__fill`,
   `.arena-progress__fill`) is always gently on the move, in each style's own way: biro hatching
   (Doodle Diary), a rolling barber stripe (Sticker Book), a gloss sweep with bubbles (Pop Burst),
