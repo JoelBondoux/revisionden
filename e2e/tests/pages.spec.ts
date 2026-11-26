@@ -209,6 +209,38 @@ test('Settings offers "Add RevisionDen to this device" as a button, accessibly',
   await expectAccessible(page);
 });
 
+test('the bug button never covers a button or link on a student page, however far it scrolls', async ({
+  page,
+}) => {
+  // A student uses this device; Settings is long and full of controls.
+  await page.addInitScript(() => localStorage.setItem('revisionden.studentId', 'student-e2e'));
+  await page.goto('/settings');
+  const bug = page.getByRole('button', { name: 'Report a bug' });
+  await expect(bug).toBeVisible();
+  const overlaps = await page.evaluate(async () => {
+    const button = document.querySelector('.bug-button')!;
+    const hits = new Set<string>();
+    const max = document.documentElement.scrollHeight - innerHeight;
+    for (let y = 0; y <= max + 100; y += 100) {
+      scrollTo(0, Math.min(y, max));
+      await new Promise((r) => requestAnimationFrame(() => r(null)));
+      const b = button.getBoundingClientRect();
+      for (const el of Array.from(
+        document.querySelectorAll('a, button, input, select, textarea, label'),
+      )) {
+        if (el === button || button.contains(el)) continue;
+        const r = el.getBoundingClientRect();
+        if (r.width === 0 || r.height === 0) continue;
+        const apart =
+          r.right <= b.left || r.left >= b.right || r.bottom <= b.top || r.top >= b.bottom;
+        if (!apart) hits.add(el.outerHTML.slice(0, 80));
+      }
+    }
+    return [...hits];
+  });
+  expect(overlaps).toEqual([]);
+});
+
 test('the install help shows illustrated iPhone and iPad steps, accessibly', async ({ page }) => {
   await page.goto('/install');
   await expect(page.getByRole('list', { name: 'Steps for iPhone' })).toBeVisible();

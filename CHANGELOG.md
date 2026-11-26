@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- The bug report button now sits at the top of the screen, beside Get help and the sound button, so it never covers a button or your cards.
 - Lessons now match your look: in Sticker Book, practice happens on a warm paper page (or night paper in dark mode), with each question on a plain, easy-to-read card.
 - A new look for rewards and celebrations, Sticker Book: your daily goal and next mission are cards taped into a sticker book, mastered topics are gold stickers, and combos, stars and confetti slap onto the page like stickers.
 - Fixed: with sound switched off, earning a reward now still gives a little buzz on phones that can vibrate (Vibration is its own setting).
@@ -101,6 +102,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- The bug button no longer covers content at phone width (I12): in the student app it moved into the top row (`AppLayout`, `layout.css`), checked by an end-to-end test that scrolls Settings and looks for overlaps. The mock API now tells one story: the Cards badge matches the flashcards due, and the family mock uses the same child ids as parent home, so its Subjects links open.
 - U6b: `playReward` vibration no longer depends on the reward sound playing; it follows the biggest reward and the Test mode rule, so muted sound still buzzes when Vibration is on.
 - One new device a day, made atomic (B7, follow-up to I5b): two new browsers unlocking the same synced passkey at the same moment could each add a device and alert the parents twice. Unlock now claims the day with one conditional upsert on the new `passkey_new_device_claims` table (migration `0027_new_device_claims`); the loser reuses the winner's device. The scheduled clean-up deletes claims after 24 hours. Data retention 1.12.
 - Avatar builder (J9b, Codex review of #134): picking a tab after scrolling part-way down now brings the new tab's first options into view just below the pinned stage (level with its top when wide), allowing for the compact stage growing back; instant with reduced motion.

@@ -560,8 +560,10 @@ Mockups: screens 19 (student) and 20 (parent).
 
 ### Feedback and bug reports
 
-- **Bug icon:** a small bug button sits in a corner of every screen (above the bottom nav, never
-  covering content, hidden during timed papers and Test mode questions). It opens the bug report
+- **Bug icon:** a small bug button is on every screen, never covering content: in the student app
+  it sits in the top row beside Get help and the sound button; on focused and public screens it
+  sits in a corner, with room left below the page. It is hidden during timed papers and Test mode
+  questions. It opens the bug report
   sheet straight away, with the current screen filled in. Students can turn the icon off in
   Settings.
 - When the operator confirms a student's bug, the student is told in the app and earns the Bug

@@ -23,7 +23,7 @@ function useCardsDue(): number {
   return cards.status === 'ready' ? cards.data.due : 0;
 }
 
-/** Extra bottom padding on the main area while the bug button is showing. */
+/** Marks the main area while the bug button is showing (focused and public pages pad it). */
 function useMainClass(base: string): string {
   return useBugButtonVisible() ? `${base} has-bug-button` : base;
 }
@@ -59,11 +59,12 @@ function StudentLayout() {
         <header className="sound-header">
           <GetHelpLink />
           <MuteButton />
+          {/* In the top row, not floating, so it never covers the page (docs/PRODUCT_RULES.md). */}
+          <BugButton />
         </header>
         <Outlet />
       </main>
       <VersionFooter showHelp />
-      <BugButton />
       <RewardNotices />
     </div>
   );

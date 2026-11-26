@@ -718,7 +718,7 @@ Tags: #product #rules #limits #defaults
 
 ## Bug Hunter and secret achievements (planned)
 
-- Bug icon on every screen opens the bug report sheet. A student's bug confirmed by the operator:
+- Bug icon on every screen opens the bug report sheet (student app: in the top row beside Get help and sound; focused and public screens: a corner button, with room below the page). A student's bug confirmed by the operator:
   +50 XP and a step on the hidden Bug Hunter track (badge, title, avatar item, frame, Pip outfit,
   effect, legendary set at 20). Duplicates +10 XP; at most 3 confirmed-bug rewards a week; parents
   are thanked, not rewarded.
