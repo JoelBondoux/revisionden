@@ -180,7 +180,7 @@
     "steps": ["x^2 = 5x", "x^2 - 5x = 0", "x(x - 5) = 0", "x = 0 or x = 5"],
     "marks": 2,
     "mark_scheme": ["M1 for x(x - 5) = 0", "A1 for x = 0 and x = 5"],
-    "hint": "Do not divide by x: you would lose the solution x = 0.",
+    "hint": "Do not divide both sides by x, or you will lose a solution: bring everything to one side and factorise.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -226,14 +226,6 @@
           "notes": "model answered \"0, 5\"; expected \"0, 5\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:36:29Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -248,6 +240,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:15Z",
+          "notes": "no problems found"
         }
       ]
     }

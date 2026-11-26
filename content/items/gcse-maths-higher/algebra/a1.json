@@ -11,6 +11,7 @@
     "answer": { "option": 1 },
     "marks": 1,
     "explanation": "a × a is written a^2, so a × a × b is a^2b.",
+    "hint": "Count how many times each letter is multiplied, and use a power for any letter that appears more than once.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
     "checked_by": ["author"],
     "citations": [
@@ -23,6 +24,18 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1 (page 13; PDF page 25)",
         "quote": "use and interpret algebraic manipulation, including:",
         "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1, bullet \"a^2b in place of a × a × b\" (page 13; PDF page 25)",
+        "quote": "in place of a × a × b",
+        "retrieved_at": "2026-11-26",
         "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
@@ -48,28 +61,28 @@
           "notes": "model answered \"1\"; expected \"1\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:18:27Z",
-          "notes": "no problems found"
-        },
-        {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-25T17:34:41Z",
-          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T10:16:20Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:16:23Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -86,6 +99,7 @@
     "answer": { "option": 2 },
     "marks": 1,
     "explanation": "Multiplying n by itself three times is n cubed, written n^3. 3n means n + n + n.",
+    "hint": "Multiplying a letter by itself several times is written with a power; adding it several times is written with a number in front.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
     "checked_by": ["author"],
     "citations": [
@@ -141,9 +155,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:30:57Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:54Z",
           "notes": "no problems found"
         }
       ]
@@ -160,6 +174,7 @@
     "answer": { "accepted": ["p^3q", "p^3q^1"], "any_order": true },
     "marks": 1,
     "explanation": "p × p × p is p^3, so the product is p^3q.",
+    "hint": "Count how many p's are multiplied together and write that count as a power of p.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
     "checked_by": ["author"],
     "citations": [
@@ -172,6 +187,18 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1 (page 13; PDF page 25)",
         "quote": "use and interpret algebraic manipulation, including:",
         "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1, bullet \"a^3 in place of a × a × a\" (page 13; PDF page 25)",
+        "quote": "in place of a × a × a",
+        "retrieved_at": "2026-11-26",
         "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
@@ -190,14 +217,6 @@
           "at": "2026-11-25T18:55:46Z"
         },
         {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-25T18:56:00Z",
-          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -214,11 +233,19 @@
           "notes": "model answered \"p^3q\"; expected \"p^3q | p^3q^1\""
         },
         {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T10:16:21Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:05:58Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:16:25Z",
           "notes": "no problems found"
         }
       ]
@@ -237,6 +264,7 @@
     "steps": ["2x * 5x", "2 * 5 * x * x", "10x^2"],
     "marks": 1,
     "mark_scheme": ["B1 for 10x^2"],
+    "hint": "Multiply the numbers together, then the letters together: x × x can be written with a power.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -274,14 +302,6 @@
           "notes": "model answered \"10x^2\"; expected \"10x^2\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:19:25Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
@@ -304,6 +324,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:58Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -320,6 +348,7 @@
     "answer": { "option": 1 },
     "marks": 1,
     "explanation": "Adding four lots of y gives 4 × y, written 4y. y^4 means y × y × y × y.",
+    "hint": "Adding the same letter again and again is like counting how many of that letter you have.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
     "checked_by": ["author"],
     "citations": [
@@ -357,14 +386,6 @@
           "notes": "model answered \"1\"; expected \"1\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:19:42Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
@@ -379,6 +400,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:00Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -395,6 +424,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "Division is written as a fraction: m ÷ 4 is m/4.",
+    "hint": "In algebra a division is written as a fraction, with the number being divided on top.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
     "checked_by": ["author"],
     "citations": [
@@ -407,6 +437,18 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1 (page 13; PDF page 25)",
         "quote": "use and interpret algebraic manipulation, including:",
         "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1, bullet \"a/b in place of a ÷ b\" (page 13; PDF page 25)",
+        "quote": "in place of a ÷ b",
+        "retrieved_at": "2026-11-26",
         "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
@@ -432,28 +474,28 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:19:57Z",
-          "notes": "no problems found"
-        },
-        {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-25T17:34:45Z",
-          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T10:16:06Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:16:27Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -470,6 +512,7 @@
     "answer": { "option": 1 },
     "marks": 1,
     "explanation": "The addition happens first, so it goes in a bracket: 5(n + 3). 5n + 3 multiplies first and then adds.",
+    "hint": "The part that happens first needs to go in a bracket.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
     "checked_by": ["author"],
     "citations": [
@@ -519,14 +562,6 @@
           "notes": "model answered \"1\"; expected \"1\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:20:13Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
@@ -541,6 +576,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:05Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -557,6 +600,7 @@
     "answer": { "option": 1 },
     "marks": 1,
     "explanation": "0.5 = 1/2, so 0.5x is (1/2)x, which can also be written x/2.",
+    "hint": "Write 0.5 as a fraction first.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
     "checked_by": ["author"],
     "citations": [
@@ -606,14 +650,6 @@
           "notes": "model answered \"1\"; expected \"1\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:20:35Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
@@ -628,6 +664,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:07Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -645,6 +689,7 @@
     "steps": ["y + y + y + 2y", "3y + 2y", "5y"],
     "marks": 1,
     "mark_scheme": ["B1 for 5y"],
+    "hint": "Count the y's: a y on its own means one y.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -690,14 +735,6 @@
           "notes": "model answered \"5y\"; expected \"5y\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:36:14Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -712,6 +749,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:09Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -726,6 +771,7 @@
     "front": "In the term 7x, what is the number 7 called?",
     "back": "Coefficient",
     "explanation": "In 7x, the number 7 multiplies the letter x. A number that multiplies a letter in a term is called its coefficient.",
+    "hint": "It is the special word for the number that multiplies the letter.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -782,9 +828,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:02:59Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:10Z",
           "notes": "no problems found"
         }
       ]
@@ -800,6 +846,7 @@
     "front": "Write a × a × a in index notation (use ^ for powers)",
     "back": "a^3",
     "explanation": "a × a × a is three a's multiplied together. Index notation writes this as a^3: the 3 counts the a's.",
+    "hint": "Count how many a's are multiplied together; that count becomes the power.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
     "checked_by": ["author"],
     "citations": [
@@ -855,9 +902,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:03:06Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:12Z",
           "notes": "no problems found"
         }
       ]
@@ -873,6 +920,7 @@
     "front": "Write a ÷ b as an algebraic fraction (use / for the fraction line)",
     "back": "a/b",
     "explanation": "In algebra we write a division as a fraction: a ÷ b is written a/b, with a on top and b underneath.",
+    "hint": "A division can be written as a fraction: the number being divided goes on top.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
     "checked_by": ["author"],
     "citations": [
@@ -885,6 +933,18 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1 (page 13; PDF page 25)",
         "quote": "use and interpret algebraic manipulation, including:",
         "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A1, bullet \"a/b in place of a ÷ b\" (page 13; PDF page 25)",
+        "quote": "in place of a ÷ b",
+        "retrieved_at": "2026-11-26",
         "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
@@ -910,14 +970,6 @@
           "notes": "model answered \"a/b\"; expected \"a/b\""
         },
         {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-25T17:34:50Z",
-          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -926,11 +978,19 @@
           "at": "2026-11-25T19:05:18Z"
         },
         {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T10:16:07Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:03:13Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:16:28Z",
           "notes": "no problems found"
         }
       ]
