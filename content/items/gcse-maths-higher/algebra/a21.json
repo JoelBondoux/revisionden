@@ -442,13 +442,13 @@
     "learning_point": "gcse-maths-h-a21-lp-form-harder",
     "expected_seconds": 150,
     "prompt": "A rectangle is (x + 3) cm long and x cm wide. Its area is 40 cm^2. Form and solve an equation to find the width of the rectangle.",
-    "answer": { "value": "5", "unit": "cm" },
+    "answer": { "value": "5", "unit": "cm", "subject": "x" },
     "verify": { "expression": "(-3 + sqrt(9 + 160))/2" },
     "marks": 4,
     "mark_scheme": [
       "B1 for x(x + 3) = 40",
       "M1 for x^2 + 3x - 40 = 0",
-      "M1 for (x + 8)(x - 5) = 0",
+      "M1 for a correct method to solve x^2 + 3x - 40 = 0, such as (x + 8)(x - 5) = 0 or the quadratic formula",
       "A1 for 5 (rejecting -8 because a width cannot be negative)"
     ],
     "explanation": "x(x + 3) = 40 gives x^2 + 3x - 40 = 0, so (x + 8)(x - 5) = 0. A width cannot be negative, so x = 5.",
@@ -489,22 +489,6 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:47:54Z",
-          "notes": "model answered \"5 cm\"; expected \"5\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:48:07Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -519,6 +503,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:48:37Z",
+          "notes": "model answered \"5 cm\"; expected \"5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:48:46Z",
+          "notes": "no problems found"
         }
       ]
     }

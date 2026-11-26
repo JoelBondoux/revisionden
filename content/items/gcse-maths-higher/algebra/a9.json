@@ -173,7 +173,7 @@
     "learning_point": "gcse-maths-h-a9-lp-line-equation",
     "expected_seconds": 90,
     "prompt": "Find the equation of the straight line through (1, 5) and (3, 9). Give your answer in the form y = mx + c.",
-    "answer": { "accepted": ["y = 2x + 3", "y=2x+3"] },
+    "answer": { "accepted": ["y = 2x + 3", "y=2x+3"], "any_order": true },
     "marks": 3,
     "explanation": "Gradient = (9 - 5)/(3 - 1) = 2. Then 5 = 2 × 1 + c, so c = 3: y = 2x + 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A9",
@@ -213,11 +213,19 @@
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
           "name": "blind-answer",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:53:50Z",
+          "at": "2026-11-26T04:44:07Z",
           "notes": "model answered \"y = 2x + 3\"; expected \"y = 2x + 3 | y=2x+3\""
         },
         {
@@ -225,16 +233,8 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:53:59Z",
+          "at": "2026-11-26T04:44:21Z",
           "notes": "no problems found"
-        },
-        {
-          "name": "schema",
-          "result": "pass",
-          "tool": "revisionden-content-validate",
-          "tool_version": "00.01.002",
-          "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -247,7 +247,10 @@
     "learning_point": "gcse-maths-h-a9-lp-line-equation",
     "expected_seconds": 60,
     "prompt": "Find the equation of the straight line with gradient -3 that passes through (2, 1). Give your answer in the form y = mx + c.",
-    "answer": { "accepted": ["y = -3x + 7", "y=-3x+7", "y = −3x + 7", "y=−3x+7"] },
+    "answer": {
+      "accepted": ["y = -3x + 7", "y=-3x+7", "y = −3x + 7", "y=−3x+7"],
+      "any_order": true
+    },
     "marks": 2,
     "explanation": "1 = -3 × 2 + c, so c = 7: y = -3x + 7.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A9",
@@ -287,11 +290,19 @@
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
           "name": "blind-answer",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:00:24Z",
+          "at": "2026-11-26T04:44:28Z",
           "notes": "model answered \"y = -3x + 7\"; expected \"y = -3x + 7 | y=-3x+7 | y = −3x + 7 | y=−3x+7\""
         },
         {
@@ -299,16 +310,8 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:00:32Z",
+          "at": "2026-11-26T04:44:37Z",
           "notes": "no problems found"
-        },
-        {
-          "name": "schema",
-          "result": "pass",
-          "tool": "revisionden-content-validate",
-          "tool_version": "00.01.002",
-          "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }

@@ -357,7 +357,8 @@
     "expected_seconds": 40,
     "prompt": "The formula v = u + at is used in physics. Work out v when u = 12, a = 3 and t = 5.",
     "answer": {
-      "value": "27"
+      "value": "27",
+      "subject": "v"
     },
     "verify": {
       "expression": "12 + 3*5"
@@ -401,22 +402,6 @@
           "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:22:33Z",
-          "notes": "model answered \"27\"; expected \"27\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:22:40Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -431,6 +416,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:36:43Z",
+          "notes": "model answered \"27\"; expected \"27\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:36:49Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -444,7 +445,8 @@
     "expected_seconds": 60,
     "prompt": "s = ut + (1/2)at^2. Work out s when u = 2, t = 4 and a = 3.",
     "answer": {
-      "value": "32"
+      "value": "32",
+      "subject": "s"
     },
     "verify": {
       "expression": "2*4 + (1/2)*3*4^2"
@@ -488,22 +490,6 @@
           "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:22:46Z",
-          "notes": "model answered \"32\"; expected \"32\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:22:52Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -518,6 +504,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:36:55Z",
+          "notes": "model answered \"32\"; expected \"32\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:37:01Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -531,7 +533,8 @@
     "expected_seconds": 45,
     "prompt": "E = (1/2)mv^2. Work out E when m = 6 and v = 5.",
     "answer": {
-      "value": "75"
+      "value": "75",
+      "subject": "E"
     },
     "verify": {
       "expression": "(1/2)*6*5^2"
@@ -575,22 +578,6 @@
           "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:23:00Z",
-          "notes": "model answered \"75\"; expected \"75\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:23:08Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -605,6 +592,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:37:06Z",
+          "notes": "model answered \"75\"; expected \"75\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:37:13Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -618,7 +621,8 @@
     "expected_seconds": 45,
     "prompt": "F = (9/5)C + 32. Work out F when C = -10.",
     "answer": {
-      "value": "14"
+      "value": "14",
+      "subject": "F"
     },
     "verify": {
       "expression": "(9/5)*(-10) + 32"
@@ -662,22 +666,6 @@
           "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:23:16Z",
-          "notes": "model answered \"14\"; expected \"14\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:23:22Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -692,6 +680,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:37:20Z",
+          "notes": "model answered \"14\"; expected \"14\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:37:26Z",
+          "notes": "no problems found"
         }
       ]
     }

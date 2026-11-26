@@ -7,7 +7,7 @@
     "learning_point": "gcse-maths-h-a20-lp-iterate",
     "expected_seconds": 30,
     "prompt": "Use the iteration formula x_(n+1) = 2 + 3/x_n with x_0 = 1 to work out x_1.",
-    "answer": { "value": "5" },
+    "answer": { "value": "5", "subject": "x_1" },
     "verify": { "expression": "2 + 3/1" },
     "marks": 1,
     "mark_scheme": ["B1 for 5"],
@@ -48,22 +48,6 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:42:53Z",
-          "notes": "model answered \"5\"; expected \"5\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:43:00Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -78,6 +62,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:40:12Z",
+          "notes": "model answered \"5\"; expected \"5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:40:18Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -90,7 +90,7 @@
     "learning_point": "gcse-maths-h-a20-lp-iterate",
     "expected_seconds": 60,
     "prompt": "Use the iteration formula x_(n+1) = 2 + 3/x_n with x_0 = 1 to work out x_2.",
-    "answer": { "value": "2.6" },
+    "answer": { "value": "2.6", "subject": "x_2" },
     "verify": { "expression": "2 + 3/(2 + 3/1)" },
     "marks": 2,
     "mark_scheme": ["M1 for x_1 = 5", "A1 for 2.6"],
@@ -131,22 +131,6 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:43:05Z",
-          "notes": "model answered \"2.6\"; expected \"2.6\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:43:12Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -161,6 +145,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:40:23Z",
+          "notes": "model answered \"2.6\"; expected \"2.6\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:40:30Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -173,10 +173,10 @@
     "learning_point": "gcse-maths-h-a20-lp-iterate",
     "expected_seconds": 90,
     "prompt": "Use the iteration formula x_(n+1) = 2 + 3/x_n with x_0 = 1 to work out x_3. Give your answer correct to 4 decimal places.",
-    "answer": { "value": "3.1538", "decimal_places": 4 },
+    "answer": { "value": "3.1538", "decimal_places": 4, "subject": "x_3" },
     "verify": { "expression": "2 + 3/(2 + 3/(2 + 3/1))" },
     "marks": 2,
-    "mark_scheme": ["M1 for x_1 = 5 and x_2 = 2.6", "A1 for 3.1538"],
+    "mark_scheme": ["M1 for x_1 = 5 (or a correct x_2 = 2.6)", "A1 for 3.1538"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -234,7 +234,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T20:10:37Z",
+          "at": "2026-11-26T04:48:21Z",
           "notes": "model answered \"3.1538\"; expected \"3.1538\""
         },
         {
@@ -242,7 +242,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T20:10:45Z",
+          "at": "2026-11-26T04:48:29Z",
           "notes": "no problems found"
         }
       ]
@@ -256,7 +256,7 @@
     "learning_point": "gcse-maths-h-a20-lp-iterate",
     "expected_seconds": 120,
     "prompt": "Use the iteration formula x_(n+1) = ∛(x_n + 5) with x_0 = 2 to work out x_2. Give your answer correct to 3 decimal places.",
-    "answer": { "value": "1.905", "decimal_places": 3 },
+    "answer": { "value": "1.905", "decimal_places": 3, "subject": "x_2" },
     "verify": { "expression": "((2 + 5)^(1/3) + 5)^(1/3)" },
     "marks": 2,
     "mark_scheme": ["M1 for x_1 = ∛7 = 1.91...", "A1 for 1.905"],
@@ -317,7 +317,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T20:10:52Z",
+          "at": "2026-11-26T04:41:11Z",
           "notes": "model answered \"1.905\"; expected \"1.905\""
         },
         {
@@ -325,7 +325,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T20:11:03Z",
+          "at": "2026-11-26T04:41:22Z",
           "notes": "no problems found"
         }
       ]

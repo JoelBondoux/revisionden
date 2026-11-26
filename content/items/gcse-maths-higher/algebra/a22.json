@@ -7,7 +7,7 @@
     "learning_point": "gcse-maths-h-a22-lp-linear",
     "expected_seconds": 45,
     "prompt": "Solve 3x - 5 < 16",
-    "answer": { "accepted": ["x < 7", "x<7"] },
+    "answer": { "accepted": ["x < 7", "x<7", "7 > x"] },
     "marks": 2,
     "explanation": "Add 5: 3x < 21. Divide by 3: x < 7.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
@@ -47,28 +47,28 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:49:12Z",
-          "notes": "model answered \"x < 7\"; expected \"x < 7 | x<7\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:49:18Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:45:27Z",
+          "notes": "model answered \"x < 7\"; expected \"x < 7 | x<7 | 7 > x\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:45:33Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -81,7 +81,7 @@
     "learning_point": "gcse-maths-h-a22-lp-linear",
     "expected_seconds": 60,
     "prompt": "Solve 7 - 2x ≥ 1",
-    "answer": { "accepted": ["x ≤ 3", "x<=3", "x <= 3", "x≤3"] },
+    "answer": { "accepted": ["x ≤ 3", "x<=3", "x <= 3", "x≤3", "3 ≥ x", "3 >= x"] },
     "marks": 2,
     "explanation": "Subtract 7: -2x ≥ -6. Divide by -2 and reverse the sign: x ≤ 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
@@ -121,28 +121,28 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:49:22Z",
-          "notes": "model answered \"x ≤ 3\"; expected \"x ≤ 3 | x<=3 | x <= 3 | x≤3\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:49:28Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:45:37Z",
+          "notes": "model answered \"x ≤ 3\"; expected \"x ≤ 3 | x<=3 | x <= 3 | x≤3 | 3 ≥ x | 3 >= x\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:45:43Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -155,7 +155,9 @@
     "learning_point": "gcse-maths-h-a22-lp-linear",
     "expected_seconds": 90,
     "prompt": "n is an integer and -3 < 2n + 1 ≤ 7. List all the possible values of n, from smallest to largest.",
-    "answer": { "accepted": ["-1, 0, 1, 2, 3", "-1,0,1,2,3", "−1, 0, 1, 2, 3", "−1,0,1,2,3"] },
+    "answer": {
+      "accepted": ["-1, 0, 1, 2, 3", "-1,0,1,2,3", "−1, 0, 1, 2, 3", "−1,0,1,2,3", "-1 0 1 2 3"]
+    },
     "marks": 3,
     "explanation": "Subtract 1: -4 < 2n ≤ 6. Divide by 2: -2 < n ≤ 3, so the possible values of n are -1, 0, 1, 2 and 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
@@ -195,28 +197,28 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:02:57Z",
-          "notes": "model answered \"-1, 0, 1, 2, 3\"; expected \"-1, 0, 1, 2, 3 | -1,0,1,2,3 | −1, 0, 1, 2, 3 | −1,0,1,2,3\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:03:16Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:45:50Z",
+          "notes": "model answered \"-1, 0, 1, 2, 3\"; expected \"-1, 0, 1, 2, 3 | -1,0,1,2,3 | −1, 0, 1, 2, 3 | −1,0,1,2,3 | -1 0 1 2 3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:46:01Z",
+          "notes": "no problems found"
         }
       ]
     }
