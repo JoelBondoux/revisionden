@@ -1,6 +1,7 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
+import type { ShareApis } from '../../pwa/share';
 import { ParentsPanel } from './ParentsPanel';
 import { FamilyLog } from './FamilyLog';
 import { RemovalNotice } from './RemovalNotice';
@@ -45,10 +46,10 @@ function fakeApi(over: Partial<ParentsApi> = {}): ParentsApi {
   };
 }
 
-const renderPanel = (api: ParentsApi, onDeleted = vi.fn()) =>
+const renderPanel = (api: ParentsApi, onDeleted = vi.fn(), share: ShareApis = {}) =>
   render(
     <MemoryRouter>
-      <ParentsPanel api={api} onDeleted={onDeleted} />
+      <ParentsPanel api={api} onDeleted={onDeleted} share={share} />
     </MemoryRouter>,
   );
 
@@ -62,6 +63,29 @@ describe('Parents panel', () => {
       'https://dev.revisionden.test/join?code=ABCD2345EFGH',
     );
     expect(screen.getByText(/works once, until 1 December 2026/)).toBeInTheDocument();
+  });
+
+  it("shares the invite link with the device's share sheet, in a short plain message", async () => {
+    const share = vi.fn(async () => undefined);
+    renderPanel(fakeApi(), vi.fn(), { share });
+    await userEvent.click(await screen.findByRole('button', { name: 'Invite a second parent' }));
+    await userEvent.click(await screen.findByRole('button', { name: 'Share link' }));
+    expect(share).toHaveBeenCalledWith({
+      text: 'Join our family on RevisionDen as a parent: https://dev.revisionden.test/join?code=ABCD2345EFGH',
+    });
+    // The code and the link stay on screen too.
+    expect(screen.getByText('ABCD2345EFGH')).toBeInTheDocument();
+  });
+
+  it('copies the invite link where the device cannot share', async () => {
+    const copy = vi.fn(async () => undefined);
+    renderPanel(fakeApi(), vi.fn(), { copy });
+    await userEvent.click(await screen.findByRole('button', { name: 'Invite a second parent' }));
+    expect(screen.queryByRole('button', { name: 'Share link' })).toBeNull();
+    await userEvent.click(await screen.findByRole('button', { name: 'Copy link' }));
+    expect(copy).toHaveBeenCalledWith(
+      'Join our family on RevisionDen as a parent: https://dev.revisionden.test/join?code=ABCD2345EFGH',
+    );
   });
 
   it('says when the invite limit is reached', async () => {

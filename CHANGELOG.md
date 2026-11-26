@@ -8,6 +8,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 ### What's new
 
 - The doodle background is now a busy, hand-drawn sticker sheet: lots more little sketches packed close together, a few big ones (Pip reading, a rocket, a globe, a stack of books) and tiny stars and sparkles in the gaps, with no visible grid and no two of the same sketch side by side.
+- Inviting the other parent or sending your child their set-up link is quicker on a phone: tap Share link to send it with any app you like (Messages, WhatsApp, email). Where your device can't share, Copy link is still there.
 - Fixed: the "We've updated our policies" message no longer comes back every time you return. Tap "I've read the changes" and it's gone for good; close it and it waits 24 hours. It now shows only what changed since you last agreed, with a link to each full policy.
 - Parents: a new "Worth a look together" card on the stats page lists topics your child has found tricky for a while, with a "Learn it first" lesson link where there is one. It only appears when there is something to look at, and your child never sees it.
 - Get help is easier to find: a calm Get help tile on your topic map and a Get help button at the top of every screen. On the page, Quick exit now stays at the top while you scroll, topics are grouped into a few clear sections, and you can type to find a topic. Each service is a short card with big Call, Text, chat and website buttons. It now follows your colour theme (light, dark or colour-blind). Still private: nothing is recorded.
@@ -89,6 +90,9 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Avatar builder (J9b, Codex review of #134): picking a tab after scrolling part-way down now brings the new tab's first options into view just below the pinned stage (level with its top when wide), allowing for the compact stage growing back; instant with reduced motion.
+- Adversarial review (S2, from S3-A on a1-0103): for typed answers the reviewer is told the marking normaliser's rules (spaces, case, multiply signs, minus signs, superscripts, √), so it no longer asks for `p^3*q` or `p^3 q` when `p^3q` is accepted.
+- Maths engine (F6, from Codex on #139): a final line of many letter-to-letter alternatives (`a = x, a = x, …`) no longer ties up the engine. Repeats are dropped, only readings that are an expected solution are tried, and at most 64 ways to read a line (`MAX_READINGS`).
 - Blind answer and review (S2, after #133): the blind check compares short answers with the same normaliser as marking (`x² + y² = 36` matches `x^2 + y^2 = 36`; `any_order` and `units` honoured), and the adversarial review is told when an item has `any_order: true` so it does not ask for reordered variants.
 - Content sync (S2): `pnpm content:validate` now refuses control characters (U+0000 to U+001F except tab and newline) anywhere in content, naming the field, and `withCheck` replaces them with a space in every check record the pipeline writes, so recorded model output can no longer break the sync to Postgres (22P05, as with the S3-A review notes fixed in #137).
 - Fairer marking review fixes (F6, from Codex on #133): a multiply sign before a signed number is kept, so `3n*-2` no longer matches `3n-2`; with `any_order`, up to 4 letters on their own (`pq`) are a product; the maths engine accepts a letter answer either way round (`a = x`).
@@ -121,6 +125,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- E5b: on the parent Subjects page, a failed add keeps the chosen subject, board and tier so the parent can try again (Codex review on #142).
+- Share invite links (I8): `ShareLink` and `browserShareApis` (`apps/web/src/pwa/{ShareLink.tsx,share.ts}`) give the second-parent invite (`ParentsPanel`, B3's lane, authorised by the lead) and the child device link (`LinkDeviceStep`) a big "Share link" button using `navigator.share` where it exists, "Copy link" otherwise or after a failed share, and treat a closed share sheet (`AbortError`) as no error. Share text names no child; the QR code and codes stay.
 - Dev and staging footers show the short commit next to the environment, e.g. "(Development, ef86a9a)", so a new build is easy to spot. The live app is unchanged (G5).
 - Policy notice fix (L9): closing the "We've updated" sheet saved nothing, so it reappeared on every visit to `/onboarding`. "I've read the changes" (was "Confirm") stores the versions as before; closing hides it on the device for 24 hours for those versions only (`policyNoticeSnooze.ts`, `revisionden.policyNotice`). Cookies and storage 1.6. The notice shows only the Changes lines newer than that parent's accepted version, per policy (`policyChanges.ts`, numeric version compare so 1.10 > 1.9), hides policies with nothing newer, and a policy never accepted now goes through "Before you start".
 - K11: "Worth a look together" card on the parent stats dashboard, from F5's flagged review points (`GET /v1/students/:id/worth-a-look`, parent only; `groupWorthALook` and `WorthALookSchema` in core). Hidden when empty.

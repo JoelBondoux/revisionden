@@ -116,7 +116,8 @@ tab say so to screen readers.
 - Wide (600px or more: tablets and desktops): the preview, Shuffle and the tabs are a sticky
   column on the left, with the options on the right.
 - Tabs follow the ARIA tabs pattern: arrow keys move and select, wrapping round; Home and End;
-  only the selected tab is in the Tab order.
+  only the selected tab is in the Tab order. Picking a tab after scrolling brings the new tab's first options into view,
+  just below the pinned stage (level with its top when wide); instant with reduced motion.
 - Every change (an item or Shuffle) gives the preview a short squash-and-pop (transform only;
   none with reduced motion). The options panel keeps a minimum height, so switching tabs never
   moves what comes after the builder.
