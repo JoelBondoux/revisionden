@@ -7,14 +7,8 @@
     "learning_point": "gcse-maths-h-a11-lp-roots",
     "expected_seconds": 75,
     "prompt": "Find the roots of y = x^2 - 5x + 6 (the x-values where the graph crosses the x-axis).",
-    "answer": {
-      "solutions": ["2", "3"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "x^2 - 5x + 6 = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["2", "3"] },
+    "verify": { "method": "solve", "equation": "x^2 - 5x + 6 = 0", "variable": "x" },
     "steps": ["x^2 - 5x + 6 = 0", "(x - 2)(x - 3) = 0", "x = 2 or x = 3"],
     "marks": 3,
     "mark_scheme": ["M1 for x^2 - 5x + 6 = 0", "M1 for (x - 2)(x - 3)", "A1 for x = 2 and x = 3"],
@@ -97,14 +91,8 @@
     "learning_point": "gcse-maths-h-a11-lp-roots",
     "expected_seconds": 60,
     "prompt": "The graph of y = x^2 - 16 crosses the x-axis at two points. Find their x-coordinates.",
-    "answer": {
-      "solutions": ["4", "-4"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "x^2 - 16 = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["4", "-4"] },
+    "verify": { "method": "solve", "equation": "x^2 - 16 = 0", "variable": "x" },
     "steps": ["x^2 - 16 = 0", "(x - 4)(x + 4) = 0", "x = 4 or x = -4"],
     "marks": 2,
     "mark_scheme": ["M1 for (x - 4)(x + 4) = 0 or x^2 = 16", "A1 for x = 4 and x = -4"],
@@ -187,14 +175,8 @@
     "learning_point": "gcse-maths-h-a11-lp-roots",
     "expected_seconds": 30,
     "prompt": "Write down the roots of y = (x + 1)(x - 7).",
-    "answer": {
-      "solutions": ["-1", "7"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "(x + 1)(x - 7) = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["-1", "7"] },
+    "verify": { "method": "solve", "equation": "(x + 1)(x - 7) = 0", "variable": "x" },
     "marks": 1,
     "mark_scheme": ["B1 for x = -1 and x = 7"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
@@ -319,11 +301,19 @@
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
           "name": "blind-answer",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:00:38Z",
+          "at": "2026-11-26T04:43:17Z",
           "notes": "model answered \"(x + 3)^2 + 2\"; expected \"(x + 3)^2 + 2 | (x+3)^2+2 | (x + 3)² + 2 | (x+3)²+2\""
         },
         {
@@ -331,16 +321,8 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:00:45Z",
+          "at": "2026-11-26T04:43:27Z",
           "notes": "no problems found"
-        },
-        {
-          "name": "schema",
-          "result": "pass",
-          "tool": "revisionden-content-validate",
-          "tool_version": "00.01.002",
-          "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -404,28 +386,28 @@
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:16Z",
-          "notes": "model answered \"(4, 3)\"; expected \"(4, 3) | (4,3)\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:26Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:46:09Z",
+          "notes": "model answered \"(4, 3)\"; expected \"(4, 3) | (4,3) | 4, 3 | x = 4, y = 3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:46:15Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -478,28 +460,28 @@
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:00:52Z",
-          "notes": "model answered \"(4, -6)\"; expected \"(4, -6) | (4,-6) | (4, −6) | (4,−6)\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:01:08Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:46:25Z",
+          "notes": "model answered \"(4, -6)\"; expected \"(4, -6) | (4,-6) | (4, −6) | (4,−6) | 4, -6 | x = 4, y = -6\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:46:35Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -518,9 +500,7 @@
       "Maximum at (-2, 5)",
       "Minimum at (5, 2)"
     ],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "(x - 2)^2 is never negative, so y is largest, 5, when x = 2: a maximum at (2, 5).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",

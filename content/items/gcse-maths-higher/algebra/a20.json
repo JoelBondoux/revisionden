@@ -48,22 +48,6 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:42:53Z",
-          "notes": "model answered \"5\"; expected \"5\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:43:00Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -78,6 +62,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:40:12Z",
+          "notes": "model answered \"5\"; expected \"5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:40:18Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -131,22 +131,6 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:43:05Z",
-          "notes": "model answered \"2.6\"; expected \"2.6\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:43:12Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -161,6 +145,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:40:23Z",
+          "notes": "model answered \"2.6\"; expected \"2.6\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:40:30Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -176,7 +176,7 @@
     "answer": { "value": "3.1538", "decimal_places": 4, "subject": "x_3" },
     "verify": { "expression": "2 + 3/(2 + 3/(2 + 3/1))" },
     "marks": 2,
-    "mark_scheme": ["M1 for x_1 = 5 and x_2 = 2.6", "A1 for 3.1538"],
+    "mark_scheme": ["M1 for x_1 = 5 (or a correct x_2 = 2.6)", "A1 for 3.1538"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -234,7 +234,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T20:10:37Z",
+          "at": "2026-11-26T04:48:21Z",
           "notes": "model answered \"3.1538\"; expected \"3.1538\""
         },
         {
@@ -242,7 +242,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T20:10:45Z",
+          "at": "2026-11-26T04:48:29Z",
           "notes": "no problems found"
         }
       ]
@@ -317,7 +317,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T20:10:52Z",
+          "at": "2026-11-26T04:41:11Z",
           "notes": "model answered \"1.905\"; expected \"1.905\""
         },
         {
@@ -325,7 +325,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T20:11:03Z",
+          "at": "2026-11-26T04:41:22Z",
           "notes": "no problems found"
         }
       ]

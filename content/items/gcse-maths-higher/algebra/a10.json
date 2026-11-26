@@ -7,12 +7,8 @@
     "learning_point": "gcse-maths-h-a10-lp-from-equation",
     "expected_seconds": 30,
     "prompt": "Write down the gradient of the line 2y = 6x + 8.",
-    "answer": {
-      "value": "3"
-    },
-    "verify": {
-      "expression": "6/2"
-    },
+    "answer": { "value": "3" },
+    "verify": { "expression": "6/2" },
     "marks": 1,
     "mark_scheme": ["B1 for 3"],
     "explanation": "Divide by 2: y = 3x + 4, so the gradient is 3.",
@@ -95,12 +91,8 @@
     "learning_point": "gcse-maths-h-a10-lp-from-equation",
     "expected_seconds": 30,
     "prompt": "Write down the gradient of the line 3x + y = 7.",
-    "answer": {
-      "value": "-3"
-    },
-    "verify": {
-      "expression": "-3"
-    },
+    "answer": { "value": "-3" },
+    "verify": { "expression": "-3" },
     "marks": 1,
     "mark_scheme": ["B1 for -3"],
     "explanation": "Rearrange: y = -3x + 7, so the gradient is -3.",
@@ -184,9 +176,7 @@
     "expected_seconds": 40,
     "prompt": "Find the y-coordinate where the line 4y - 2x = 12 crosses the y-axis.",
     "answer": { "value": "3", "subject": "y" },
-    "verify": {
-      "expression": "12/4"
-    },
+    "verify": { "expression": "12/4" },
     "marks": 1,
     "mark_scheme": ["B1 for 3"],
     "explanation": "Put x = 0: 4y = 12, so y = 3.",
@@ -227,22 +217,6 @@
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:36:08Z",
-          "notes": "model answered \"3\"; expected \"3\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:36:16Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -257,6 +231,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:42:18Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:42:25Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -269,14 +259,8 @@
     "learning_point": "gcse-maths-h-a10-lp-from-equation",
     "expected_seconds": 45,
     "prompt": "Find the x-coordinate where the line y = 3x - 6 crosses the x-axis.",
-    "answer": {
-      "solutions": ["2"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "3x - 6 = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["2"] },
+    "verify": { "method": "solve", "equation": "3x - 6 = 0", "variable": "x" },
     "steps": ["3x - 6 = 0", "3x = 6", "x = 2"],
     "marks": 2,
     "mark_scheme": ["M1 for 3x - 6 = 0", "A1 for x = 2"],
@@ -365,9 +349,7 @@
       "The length of the journey in miles",
       "The total cost in pounds"
     ],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "2.5 is the gradient: C goes up by £2.50 for each extra mile.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
@@ -447,9 +429,7 @@
       "The length of the journey in miles",
       "The total cost in pounds"
     ],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "4 is the intercept: the cost when d = 0, a fixed charge of £4.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
@@ -529,9 +509,7 @@
       "The tank gains 8 litres each minute",
       "The tank is empty after 8 minutes"
     ],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "The gradient -8 means V falls by 8 litres for every minute. (The tank is empty after 25 minutes.)",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
