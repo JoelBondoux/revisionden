@@ -66,6 +66,14 @@ body:has(.arena:not(.review)) footer a {
 }
 
 /* 2 × 2 chunky coloured answer buttons. */
+/* The question and its answers (J10a2): spaced like the lesson around it; effect styles may give
+   it a plain card, never texture or motion behind the text. */
+.lesson__stage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
 .answer-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { contrastRatio } from '../../../design/tokens';
 
 // J10a: Sticker Book, the default effect style. Its stylesheet only ever applies while the style
 // is active, so another style can replace it completely.
@@ -41,8 +42,33 @@ describe('Sticker Book stylesheet', () => {
       '.hex--mastered',
       '.page-header .pill',
       '.rewards__step--earned',
+      '.lesson__stage',
+      '.answer-option',
     ]) {
       expect(css, hook).toContain(`${SCOPE} ${hook}`);
+    }
+  });
+
+  it('turns the lesson surround into paper, night paper in dark mode, with readable colours (AA)', () => {
+    const blockAt = (selector: string) => {
+      const start = css.indexOf(`${selector} {`);
+      expect(start, selector).toBeGreaterThanOrEqual(0);
+      return css.slice(start, css.indexOf('}', start));
+    };
+    for (const block of [
+      blockAt(SCOPE),
+      blockAt(":root[data-effect-style='sticker-book'][data-theme='dark']"),
+    ]) {
+      const token = (name: string) =>
+        new RegExp(`--${name}:\\s*(#[0-9a-f]{6})`, 'i').exec(block)?.[1];
+      const bg = token('arena-bg')!;
+      expect(bg).toBeDefined();
+      for (const text of ['arena-text', 'arena-text-secondary', 'arena-glow']) {
+        expect(contrastRatio(token(text)!, bg), text).toBeGreaterThanOrEqual(4.5);
+      }
+      expect(contrastRatio(token('arena-text')!, token('arena-raised')!)).toBeGreaterThanOrEqual(
+        4.5,
+      );
     }
   });
 
