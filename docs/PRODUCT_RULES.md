@@ -439,6 +439,10 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
   prompts, options, units, flashcards (both faces and the card list), Explain steps, answers and
   explanations in feedback, hints, and the review batch screens. Stored content keeps its ^.
 - Screen readers hear the words from the read-aloud rules ("x squared", "to the power minus 3").
+- A tap on any power switches every power on screen between x² and x^2, and back on another tap
+  (F9b, owner). The choice is remembered on this device (`revisionden.powersSwitched`). In
+  computing, powers start as ^ and a tap raises them. The tap only switches: it never chooses an
+  answer or turns a flashcard. Screen readers hear the same words either way.
 - A ^ with nothing it can raise stays as it is (content says "Use ^ for powers", which is how a
   power is typed).
 - Typed-answer boxes and worked maths have a "Power" key that types ^ where the cursor is, and a

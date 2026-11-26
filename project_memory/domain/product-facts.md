@@ -254,6 +254,8 @@ Tags: #product #rules #limits #defaults
   (`packages/core/src/powers.ts`, web `MathText`), with spoken words for screen readers; stored
   content keeps ^. A lone ^ stays ("Use ^ for powers"). Answer boxes have a Power key and a
   "Shows as:" preview. Computing subjects (id containing "comput") keep ^ as typed (owner).
+  A tap on any power switches every power on screen between x² and x^2 (F9b, owner), remembered
+  on the device; it never chooses an answer or turns a card.
 - Mascot: Pip, an angular geometric fox (orange `#FF7A2F`). Brand violet `#6C47F5`; font Nunito,
   self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
 - Works offline for the app shell; API calls are never cached. Pages always come fresh from the
