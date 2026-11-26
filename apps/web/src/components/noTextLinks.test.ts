@@ -17,6 +17,7 @@ const STYLED_CLASSES = [
   'profile', // avatar cards on "Who's revising?"
   'profile__action', // round icon actions on "Who's revising?"
   'hex', // topic map hexagons
+  'path-node', // nodes on the winding topic map (J15c)
   'public-header__brand', // the logo
   'help-action', // big call/text/email actions on Get help
   'help-topic', // topic pills on Get help (styled by .help-topics-nav a)
@@ -33,7 +34,7 @@ const STYLED_CLASSES = [
 const LINK_COMPONENTS = new Set(['components/links.tsx', 'components/Button.tsx']);
 
 /** Links whose class is built in a variable from one of the styled classes above. */
-const STYLED_BY_VARIABLE = ['map/TopicHex.tsx']; // className = 'hex hex--…'
+const STYLED_BY_VARIABLE = ['map/WigglyMap.tsx']; // className = 'path-node path-node--…'
 
 function sourceFiles(dir: string): string[] {
   return readdirSync(dir).flatMap((name) => {

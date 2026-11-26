@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- A new topic map: tap the big box at the top to change subject (Pip dresses for each one). Each unit is its own winding path you climb from the bottom to the unit challenge at the top, with "You are here" next to your topic. Swipe sideways (or use the arrows) for the next unit. Every unit has its own shape, the path gently breathes, and each style draws the topics its own way (plant pots in Garden Grow, pixel art in Pixel Arcade...).
 - Pip has a new look: a bigger head leaning out of his ring, and he now holds something for your subject so you can spot it at a glance (a calculator for Maths, a book for English Literature, a magnet for Physics...). For French, German and Spanish his circle has a soft wash of flag colours. He changes his look a little each day. Your own avatar now sits in its own ring on the Me button, with its head leaning out, just like Pip.
 - In the interactive factorising lesson, picking the wrong pair of numbers now shows the gaps or the spare strips, instead of drawing a different shape.
 - Fixed: finishing the "10 more" flashcards now counts as a finished session and earns its XP, instead of saying you left early.
@@ -243,6 +244,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- J15c: the winding map (`apps/web/src/map/WigglyMap.tsx`): seeded bottom-to-top routes per subject and unit (`route.ts`), a sideways unit pager, each style's node tiles and road (`nodeArt.tsx`, `wiggly-styles.css`, generated from the approved mockup), You are here, the subject box and Subject selection, breathing (off with reduced motion and under automation), a Higher side branch for Foundation students from the new optional map-topic `tier`, either-order pairs from the optional `orderGroup`, discovered bridges behind data hooks (`bridges.ts`); e2e route-readability and 3:1 node-contrast checks ported from the mockup. Replaces UnitPath and TopicHex.
 - J15b-2: Pip v3 (`features/juice/pip/`): bigger head leaning out of the ring, shoulders only (no arm), keyline, props in front of the ring, outfits for all 16 subjects (`art.tsx` generated from the approved mockup), flag washes for French/German/Spanish, three day-rotating looks (`lookFor` replaces `touchFor`), head and ear idle poses; `FramedAvatar` puts the student's avatar in its own ring on the Me item; "Leave this lesson?" is now a true modal (portal, inert page, Tab trap, focus back to Pip).
 - W8b (Codex review of #269): the area model keeps exactly b strips and c unit squares for any pair, outlining missing slots or leaving spare strips over (`fitStrips`); pilot steps are never picked as warm-ups or similar-question retries; "Did this help?" is one row per student and item, enforced by a unique partial index and an upsert (migration 0033).
 - Use my phone instead (E10): `POST /v1/device/unlock/options` takes `usePhone` and adds `hints: ['hybrid']`; the unlock screens offer the phone on computers and tablets and after no passkey was found, with plain messages for hybrid failures. Decision 0007 records the owner's choice.

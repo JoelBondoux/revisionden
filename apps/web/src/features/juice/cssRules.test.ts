@@ -17,6 +17,7 @@ const files = [
   'features/juice/styles/pixel-arcade.css',
   'features/home/home.css',
   'map/map.css',
+  'map/wiggly.css',
   'features/juice/pip/pip.css',
 ];
 const read = (file: string) => readFileSync(join(src, file), 'utf8');

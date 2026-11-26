@@ -291,13 +291,38 @@ never transition. An ordinary link does not either.
   the reward gift. It reads the map, the week's stats (read-only, so Rewards keeps its "New!"
   moments), the 5-a-day and cards due. The map's Today strip moved here; the map is topics only.
 
-## The topics-only map (J15c)
+## The winding map (J15c, owner sign-off of the all-themes mockup, revision 5)
 
-The map shows only topics: the unit badges, the unit's name on a slanted colour field (no card in
-a card), and the trail of topic hexes. The next mission's topic (`.unit-path__step--next`) is the
-biggest hex, glowing in gold, with its own Go button (`.map-go`). Each effect style restyles Home's
-mission field (`.home-next`), its big button (`.home-cta`) and the next hex; the old `.today-strip`
-rules are gone from every stylesheet (a test keeps it so).
+`apps/web/src/map/` (`WigglyMap.tsx`, `route.ts`, `bridges.ts`, `nodeArt.tsx`, `wiggly.css`,
+`wiggly-styles.css`), reference `docs/mockups/all-themes-pip.html`.
+
+- **The big subject box** at the top (Pip dressed for the subject, "Your subject", Change) opens
+  **Subject selection**: every subject with Pip dressed for it, Back to the map.
+- **One unit at a time**: a sideways pager (swipe, the arrow buttons, or the arrow keys on the
+  focused pager) with dots; the heading says the unit and its mastery.
+- **Each unit's route comes from a seed** (subject + unit, `layoutRoute`): S-bends, switchbacks, a
+  long sweep or a curl (one segment bulges sideways; no true loop, so the road never crosses
+  itself). It **climbs from the first topic at the bottom to the unit challenge at the top**, and
+  opens scrolled to the current topic with done topics below it.
+- **Nodes** are each style's own solid tiles (generated from the mockup): done, current, open
+  (its %), weak (wrench and %), locked, and the challenge. The next mission's topic is the current
+  node, with a **You are here** tag beside it. Labels are clamped to three lines (the full name is
+  in the link's name) and use the app's text colour with a page-coloured halo.
+- **Higher side branch**: for a Foundation student, topics marked `tier: 'higher'` sit on an
+  optional dotted branch that forks off the route and rejoins it (smaller "H" nodes, "Higher ·
+  optional"). **Either order**: topics sharing an `orderGroup` sit side by side and the route splits
+  and rejoins. Both are optional fields on the map topic; without them nothing changes.
+- **Bridges** (discovered, never shown up front): with links from content (D7/D8), opening a linked
+  topic reveals its first bridge the next time the map shows (a note: "You might find this Physics
+  topic useful: …"); tapping a bridge says why it helps and reveals the next link a moment later.
+  Kept in memory for the session. With no links, nothing shows.
+- **The path breathes**: each node drifts a few px on a slow sine (8 to 12 s, a little per style)
+  and the road follows; off with reduced motion, under automation (so clicks find their target),
+  and paused while the tab is hidden. The current node bobs and the tag sways (transform only).
+- **Checks** (`e2e/tests/map.spec.ts`, ported from `docs/mockups/checks`): every unit's route at
+  320 and 390 px has no overlapping nodes, labels or tags, nothing off screen, and no crossings;
+  every done, current and open node clears 3:1 against the road and the page in every app style,
+  light and dark.
 
 ## Never (Children's Code and `REWARDS.md`)
 
