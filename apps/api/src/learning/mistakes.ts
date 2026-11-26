@@ -30,6 +30,7 @@ import {
   reviewAfterAnswer,
   type LearnItem,
   type ReviewOutcome,
+  INTERACTIVE_PILOT_TAG,
 } from '@revisionden/core';
 import { attempts, items, reviewPoints, topics, type Database } from '@revisionden/db';
 import { toLearnItem, type ItemRow } from './items';
@@ -47,6 +48,12 @@ function onPoint(learningPoint: string, topicId: string): SQL {
     ? and(eq(items.topicId, topicId), isNull(items.learningPoint))!
     : eq(items.learningPoint, learningPoint);
 }
+
+/**
+ * Interactive pilot steps (W8) only appear in their own lesson, in their own order, for a weak
+ * spot: never as a warm-up or a "similar question" retry (W8b, Codex review).
+ */
+const notPilotStep = sql`not (coalesce(${items.tags}, '[]'::jsonb) @> ${JSON.stringify([INTERACTIVE_PILOT_TAG])}::jsonb)`;
 
 /** Item ids the student answered on or after `since`. */
 async function answeredSince(db: Database, studentId: string, since: Date) {
@@ -81,6 +88,7 @@ async function freshOnPoint(
         servable,
         onPoint(point.learningPoint, point.topicId),
         notInArray(items.type, UNTIMED),
+        notPilotStep,
         skip.length > 0 ? notInArray(items.id, skip) : undefined,
       ),
     )
@@ -196,6 +204,7 @@ export async function warmUps(
               servable,
               onPoint(point.learningPoint, point.topicId),
               notInArray(items.type, UNTIMED),
+              notPilotStep,
               taken.length > 0 ? notInArray(items.id, taken) : undefined,
             ),
           )
