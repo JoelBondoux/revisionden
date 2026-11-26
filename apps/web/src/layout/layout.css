@@ -105,6 +105,11 @@
   color: inherit;
 }
 
+/* Each footer piece wraps as a whole, separator included (G7). */
+.version-footer-item {
+  white-space: nowrap;
+}
+
 .app-shell > .version-footer {
   margin-top: -72px;
   padding-bottom: calc(96px + env(safe-area-inset-bottom));
