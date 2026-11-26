@@ -4,6 +4,9 @@
  * Starlight: chimes, shimmer and soft swells. Comic Pop: punchy squares and whooshes.
  * Garden Grow: soft woodwind and chimes. Pixel Arcade: chiptune. Doodle Diary: pencil scratches,
  * page flips, biro clicks, a rubber squeak and a scribble flourish. Matched to J's mockup previews.
+ * Petal Glow: music-box bells and petal swishes. Turbo Drive: low thumps, clicks, whooshes and
+ * power-fifth stabs. Rainbow Parade: bright major-scale runs. Plus one shared reveal for the
+ * moment all three unlock.
  * Short and volume-balanced; square waves only in Comic Pop and Pixel Arcade, always low-passed,
  * and "wrong" stays soft (sine or triangle) in every style.
  */
@@ -20,6 +23,10 @@ export const FEEDBACK_STYLES = [
   'garden-grow',
   'pixel-arcade',
   'doodle-diary',
+  // U7: unlocked together by finishing the starting test. Ids are placeholders until J confirms.
+  'petal-glow',
+  'turbo-drive',
+  'rainbow-parade',
 ] as const;
 export type FeedbackStyle = (typeof FEEDBACK_STYLES)[number];
 /**
@@ -82,6 +89,46 @@ const louder =
   (...parts: (N | Noise)[]): SoundFn =>
     sound(...parts.map((p) => ({ ...p, peak: (p.peak ?? 0.3) * k })));
 
+// ---- U7: the "three styles unlocked" reveal, the same in every style ----
+/** A music-box bell: a sine with a soft swell and a faint triangle overtone. */
+const bell = (freq: number, at: number, dur: number, peak: number): (N | Noise)[] => [
+  sin(freq, at, dur, peak, undefined, 0.015),
+  tri(freq * 2, at, dur * 0.5, peak * 0.1),
+];
+/** A petal swish: soft, high, airy noise. */
+const swish = (at: number, peak = 0.08) =>
+  nz('bandpass', 4500, at, 0.14, peak, { q: 1.5, glideTo: 6500 });
+/** A low punchy thump, like a kick drum. */
+const thump = (at: number, peak = 0.4) => sin(150, at, 0.14, peak, 50);
+/** A crisp mechanical click. */
+const click = (at: number, peak = 0.25) => nz('highpass', 6000, at, 0.015, peak);
+/** A rising whoosh. */
+const whoosh = (at: number, dur = 0.3, peak = 0.2) =>
+  nz('bandpass', 500, at, dur, peak, { glideTo: 4000, q: 0.8 });
+/** A bold power-fifth stab (triangle, never square). */
+const stab = (freq: number, at: number): N[] => [
+  tri(freq, at, 0.12, 0.2),
+  tri(freq * 1.5, at, 0.12, 0.14),
+];
+/** C major, one colour-note per step: C D E F G A B (C). */
+const RAINBOW = [72, 74, 76, 77, 79, 81, 83, 84];
+
+const stylesUnlockedReveal: SoundFn = sound(
+  // Petal Glow's twinkle...
+  ...arp([88, 91, 95], (f, at) => bell(f, at, 0.3, 0.14), 0.08).flat(),
+  swish(0.05, 0.06),
+  // ...Turbo Drive's thump and whoosh...
+  thump(0.5, 0.36),
+  whoosh(0.5, 0.35, 0.18),
+  ...stab(m(55), 0.62),
+  // ...Rainbow Parade's run...
+  ...arp(RAINBOW.slice(0, 7), (f, at) => tri(f, at, 0.18, 0.16), 0.06, 1),
+  // ...and all three together in one held chord.
+  tri(m(84), 1.5, 0.9, 0.2),
+  sin(m(88), 1.5, 0.9, 0.16),
+  sin(m(91), 1.5, 0.9, 0.16),
+);
+
 // ---- Sticker Book: paper and ink ----
 /** A soft low thump, like a rubber stamp landing. */
 const stamp = (at: number, peak = 0.42) => sin(150, at, 0.12, peak, 55);
@@ -118,6 +165,7 @@ const stickerBook: Record<FeedbackEvent, SoundFn> = {
   nodePop: sound(tri(1500, 0, 0.04, 0.12, 1800)),
   // A dull little tap on a locked sticker: "not yet", never a buzzer.
   locked: sound(sin(220, 0, 0.12, 0.25, 180), sin(196, 0.1, 0.12, 0.2)),
+  stylesUnlocked: stylesUnlockedReveal,
 };
 
 // ---- Pop Burst: bubbles and jelly ----
@@ -169,6 +217,7 @@ const popBurst: Record<FeedbackEvent, SoundFn> = {
   homeEnter: sound(pop(520, 0, 0.2), pop(660, 0.06, 0.2), pop(780, 0.12, 0.22)),
   nodePop: sound(sin(600, 0, 0.05, 0.14, 1300)),
   locked: sound(...boing(240, 0, 0.24)),
+  stylesUnlocked: stylesUnlockedReveal,
 };
 
 // ---- Starlight: chimes, shimmer and swells ----
@@ -219,6 +268,7 @@ const starlight: Record<FeedbackEvent, SoundFn> = {
   homeEnter: sound(swell(523.25, 0, 0.5, 0.2), ...shimmer(0.1, 1568, 0.12)),
   nodePop: sound(sin(2349, 0, 0.05, 0.1)),
   locked: sound(sin(330, 0, 0.25, 0.2, 294, 0.06)),
+  stylesUnlocked: stylesUnlockedReveal,
 };
 
 // ---- Comic Pop: punchy squares, whooshes and POWs ----
@@ -249,6 +299,7 @@ const comicPop: Record<FeedbackEvent, SoundFn> = {
   homeEnter: sound(nz('bandpass', 400, 0, 0.25, 0.25, { glideTo: 3000 })),
   nodePop: sound(sq(m(64), 0, 0.05, 0.12)),
   locked: sound(sq(150, 0, 0.06, 0.12), sq(110, 0.07, 0.1, 0.12)),
+  stylesUnlocked: stylesUnlockedReveal,
 };
 
 // ---- Garden Grow: soft woodwind and chimes ----
@@ -286,6 +337,7 @@ const gardenGrow: Record<FeedbackEvent, SoundFn> = {
   homeEnter: gsound(...arp([67, 71, 74, 79], (f, at) => wood(f, at, 0.4, 0.11), 0.1).flat()),
   nodePop: gsound(tri(m(76), 0, 0.18, 0.12)),
   locked: gsound(tri(m(55), 0, 0.15, 0.12)),
+  stylesUnlocked: stylesUnlockedReveal,
 };
 
 // ---- Pixel Arcade: chiptune ----
@@ -316,6 +368,7 @@ const pixelArcade: Record<FeedbackEvent, SoundFn> = {
   homeEnter: sound(...arp([72, 76, 79, 84], (f, at) => sq(f, at, 0.06, 0.11), 0.06)),
   nodePop: sound(sq(m(72), 0, 0.04, 0.11)),
   locked: sound(sq(m(52), 0, 0.08, 0.12), sq(m(47), 0.08, 0.12, 0.12)),
+  stylesUnlocked: stylesUnlockedReveal,
 };
 
 // ---- Doodle Diary: pencil, paper and biro ----
@@ -374,6 +427,114 @@ const doodleDiary: Record<FeedbackEvent, SoundFn> = {
     nz('bandpass', 1300, 0.08, 0.06, 0.18, { q: 2 }),
     tri(560, 0.02, 0.1, 0.1, 660),
   ),
+  stylesUnlocked: stylesUnlockedReveal,
+};
+
+// ---- Petal Glow: music box, sparkle and petals ----
+const petalGlow: Record<FeedbackEvent, SoundFn> = {
+  buttonPress: sound(sin(m(98), 0, 0.05, 0.1)),
+  cardFlip: sound(swish(0, 0.1), sin(m(91), 0.04, 0.1, 0.08)),
+  correct: sound(...bell(m(84), 0, 0.3, 0.22), ...bell(m(88), 0.09, 0.4, 0.2)),
+  wrong: sound(sin(m(76), 0, 0.35, 0.16, m(72), 0.05)),
+  combo: sound(...bell(m(86), 0, 0.25, 0.2), ...bell(m(93), 0.07, 0.3, 0.17)),
+  xpTick: sound(sin(m(103), 0, 0.03, 0.07)),
+  ringFill: sound(sin(m(91), 0, 0.12, 0.08, m(95))),
+  rewardWobble: sound(
+    sin(m(93), 0, 0.06, 0.1),
+    sin(m(91), 0.06, 0.06, 0.1),
+    sin(m(93), 0.12, 0.08, 0.1),
+  ),
+  rewardOpen: sound(
+    sin(m(84), 0, 0.7, 0.2, undefined, 0.25),
+    swish(0.2),
+    ...bell(m(96), 0.4, 0.3, 0.12),
+    ...bell(m(100), 0.5, 0.3, 0.1),
+  ),
+  rewardUnlock: sound(
+    ...arp([84, 88, 91, 96], (f, at) => bell(f, at, 0.5, 0.17), 0.09).flat(),
+    swish(0),
+  ),
+  setComplete: sound(...arp([79, 84, 88, 91], (f, at) => bell(f, at, 0.6, 0.16), 0.12).flat()),
+  levelUp: sound(
+    sin(m(72), 0, 1.1, 0.14, undefined, 0.3),
+    ...arp([79, 84, 88, 91, 96], (f, at) => bell(f, at, 0.7, 0.15), 0.1).flat(),
+  ),
+  homeEnter: sound(swish(0), ...arp([88, 91], (f, at) => bell(f, at, 0.4, 0.12), 0.1, 0.08).flat()),
+  nodePop: sound(sin(m(93), 0, 0.08, 0.1)),
+  locked: sound(sin(m(67), 0, 0.2, 0.14, m(64), 0.04)),
+  stylesUnlocked: stylesUnlockedReveal,
+};
+
+// ---- Turbo Drive: bold, sporty, mechanical ----
+const turboDrive: Record<FeedbackEvent, SoundFn> = {
+  buttonPress: sound(click(0), tri(1200, 0, 0.02, 0.06)),
+  cardFlip: sound(whoosh(0, 0.12, 0.18)),
+  correct: sound(tri(m(67), 0, 0.08, 0.22), tri(m(74), 0.07, 0.18, 0.22)),
+  // Low and soft, never a buzzer.
+  wrong: sound(sin(m(55), 0, 0.25, 0.2, m(50))),
+  combo: sound(tri(m(64), 0, 0.1, 0.2, m(69)), click(0)),
+  xpTick: sound(tri(1800, 0, 0.02, 0.07)),
+  ringFill: sound(tri(m(60), 0, 0.18, 0.1, m(72))),
+  rewardWobble: sound(
+    tri(m(55), 0, 0.06, 0.14),
+    tri(m(50), 0.07, 0.06, 0.14),
+    tri(m(55), 0.14, 0.06, 0.14),
+  ),
+  rewardOpen: sound(thump(0), whoosh(0.05, 0.3, 0.22), ...stab(m(60), 0.3)),
+  rewardUnlock: sound(thump(0), whoosh(0, 0.35, 0.2), ...stab(m(60), 0.3), ...stab(m(67), 0.42)),
+  setComplete: sound(
+    thump(0),
+    thump(0.15),
+    whoosh(0.1, 0.3, 0.18),
+    ...stab(m(55), 0.35),
+    ...stab(m(62), 0.5),
+  ),
+  levelUp: sound(
+    thump(0),
+    thump(0.12),
+    thump(0.24),
+    whoosh(0, 0.45, 0.2),
+    ...stab(m(55), 0.45),
+    ...stab(m(60), 0.6),
+    ...stab(m(67), 0.75),
+  ),
+  homeEnter: sound(whoosh(0, 0.3, 0.2), thump(0.25, 0.3)),
+  nodePop: sound(click(0), tri(m(72), 0, 0.05, 0.1)),
+  locked: sound(sin(130, 0, 0.1, 0.25, 90), click(0.1)),
+  stylesUnlocked: stylesUnlockedReveal,
+};
+
+// ---- Rainbow Parade: joyful major-scale colour runs ----
+const sparkle = (at: number) => nz('highpass', 5000, at, 0.3, 0.08, { attack: 0.02 });
+const rainbowParade: Record<FeedbackEvent, SoundFn> = {
+  buttonPress: sound(tri(m(84), 0, 0.06, 0.14)),
+  cardFlip: sound(tri(m(76), 0, 0.05, 0.12), tri(m(79), 0.04, 0.06, 0.12)),
+  correct: sound(tri(m(72), 0, 0.1, 0.2), tri(m(76), 0.07, 0.1, 0.2), tri(m(79), 0.14, 0.25, 0.22)),
+  wrong: sound(sin(m(65), 0, 0.3, 0.18, m(62))),
+  combo: sound(...arp([76, 79, 84], (f, at) => tri(f, at, 0.15, 0.18), 0.05)),
+  xpTick: sound(tri(m(98), 0, 0.025, 0.07)),
+  ringFill: sound(tri(m(79), 0, 0.15, 0.1, m(84))),
+  rewardWobble: sound(
+    tri(m(79), 0, 0.06, 0.12),
+    tri(m(81), 0.06, 0.06, 0.12),
+    tri(m(79), 0.12, 0.06, 0.12),
+  ),
+  rewardOpen: sound(sparkle(0), ...arp([72, 76, 79, 84], (f, at) => tri(f, at, 0.2, 0.18), 0.06)),
+  rewardUnlock: sound(
+    ...arp(RAINBOW, (f, at) => tri(f, at, 0.25, 0.16), 0.06),
+    sin(m(96), 0.5, 0.4, 0.1),
+  ),
+  setComplete: sound(...arp([72, 76, 79, 84, 88], (f, at) => tri(f, at, 0.3, 0.17), 0.1)),
+  levelUp: sound(
+    ...arp(RAINBOW.slice(0, 7), (f, at) => tri(f, at, 0.25, 0.16), 0.08),
+    sin(m(84), 0.6, 0.7, 0.16),
+    sin(m(88), 0.6, 0.7, 0.14),
+    sin(m(91), 0.6, 0.7, 0.14),
+  ),
+  homeEnter: sound(sparkle(0), ...arp([72, 76, 79], (f, at) => tri(f, at, 0.2, 0.14), 0.06)),
+  nodePop: sound(tri(m(84), 0, 0.06, 0.12)),
+  locked: sound(sin(m(60), 0, 0.18, 0.16)),
+  stylesUnlocked: stylesUnlockedReveal,
 };
 
 export const stylePacks: Record<FeedbackStyle, Record<FeedbackEvent, SoundFn>> = {
@@ -384,4 +545,7 @@ export const stylePacks: Record<FeedbackStyle, Record<FeedbackEvent, SoundFn>> =
   'garden-grow': gardenGrow,
   'pixel-arcade': pixelArcade,
   'doodle-diary': doodleDiary,
+  'petal-glow': petalGlow,
+  'turbo-drive': turboDrive,
+  'rainbow-parade': rainbowParade,
 };

@@ -21,6 +21,8 @@ export const FEEDBACK_EVENTS = [
   'homeEnter',
   'nodePop',
   'locked',
+  // U7: the one-off reveal when the starting test unlocks three new styles at once.
+  'stylesUnlocked',
 ] as const;
 
 export type FeedbackEvent = (typeof FEEDBACK_EVENTS)[number];
@@ -42,6 +44,7 @@ const RULE: Record<FeedbackEvent, SoundEvent> = {
   homeEnter: 'cardFlip',
   nodePop: 'cardFlip',
   locked: 'cardFlip',
+  stylesUnlocked: 'rewardUnlocked',
 };
 
 export function feedbackAllowed(event: FeedbackEvent, mode?: SoundMode): boolean {
