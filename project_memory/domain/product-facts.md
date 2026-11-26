@@ -906,11 +906,31 @@ Tags: #product #rules #limits #defaults
   (Get help, About, policies, long explanations, parent stats) may scroll. At 320 px or 200% text,
   vertical scrolling is allowed, but never page sideways scrolling or clipped content. Contained scrollers are allowed (lead ruling): a sideways chip or badge row (snap, edge fade, Tab reaches every item, 44 px targets) or a labelled, focusable list scrolling inside a card; at 320 px, 200% text or on short screens, the inner vertical scroll gives way to page scrolling. Agreed, not yet
   applied everywhere: see `docs/PRODUCT_RULES.md` (Screen layout) and `docs/design/j12/`.
-- One look (J12, proposed, owner choice pending): the owner wants one consistent style across the
-  student app instead of the current mix of doodle and default. J12's proposal: Doodle Diary is
-  the app's base skin for every shared component, body text stays Nunito (the hand font is for
-  headings only), and the unlockable styles change effects, sounds and accents only. Mockups in
-  `docs/design/j12/SKIN.md`.
+- One look and full styles (settled, J15s, owner direction 2026-11-26): every effect style is a
+  full look for the whole student app, not just accents. A look sets the shared tokens (page,
+  surface, edge and text colours, the main colour, progress track, map hex fills, corner radii,
+  shadows, heading font, background pattern and its ink) in light and dark
+  (`apps/web/src/features/juice/styles/looks.ts`, mirrored in each style's stylesheet, plus
+  `styles/patterns/<id>.svg`). Doodle Diary is the base look. Cue colours (right, wrong, warning,
+  gold, streak) are never changed by a look, so colour-blind colours work everywhere; body text
+  stays Nunito. Every text pair is AA in every look, light, dark and colour-blind (`looks.test.ts`).
+  J12's earlier "styles change accents only" proposal and J13a (#268) are superseded.
+  Since the J15s revision (approved all-themes mockup rev 5.1) each look also has the mockup's page
+  art and heading font (self-hosted: Baloo 2, Bangers, Press Start 2P, Patrick Hand). Vivid and
+  night pages (Pop Burst purple, Starlight night sky, Pixel Arcade screen) show in dark mode only;
+  light mode keeps a light page there, because the shared status colours need a light page.
+  Settings always win over a look: the page texture (lines, halftone, scanlines, stars) shows only
+  with Background pattern on; high contrast gets a plain page; reading tints and the
+  dyslexia-friendly font override every look (`apps/web/src/design/base.css`).
+  Lead ruling (2026-11-26, accessibility comes first): rich pages are dark-mode only for Pop Burst,
+  Starlight and Pixel Arcade, light pages in light mode, and those looks use deeper button colours
+  with white text (the bright colour stays as the highlight). Every self-hosted font (Nunito,
+  OpenDyslexic, Baloo 2, Bangers, Press Start 2P, Patrick Hand; all SIL OFL 1.1, via @fontsource)
+  ships with its licence in `apps/web/public/licences/fonts/` (checked by `fonts.test.ts`).
+- Living progress bars (J15s revision): every horizontal progress bar's fill gently moves in the
+  style's own way (hatching, stripes, gloss, stars, dots, leaves, chase light) with a pulsing
+  leading edge; off with reduced motion, paused while the tab is hidden
+  (`apps/web/src/features/juice/styles/bars.css`).
 - Dev style tester (J12c, owner request 2026-11-26): on the dev environment only, Settings →
   Effect style offers "Tester: try any style" (all seven styles, Light/Dark, Standard/Colour-blind)
   marked "Dev only: doesn't unlock anything for real". Turned on by the API alone: `testerStyles`
@@ -1074,7 +1094,7 @@ Tags: #product #rules #limits #defaults
   `prefers-contrast: more` and forced colours. The public site uses the same tile (the older 240px
   grid tile `doodles.svg` was removed in M7).
   Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).
-- Effect styles (J10a, built): one active at a time; it restyles the game-feel moments, Home
+- Effect styles (J10a, built; full looks since J15s): one active at a time; it restyles the whole app (see "One look and full styles") plus the game-feel moments, Home
   (topic map) and Rewards. Default and always available: Doodle Diary (`doodle-diary`, owner decision 2026-11-26, J10d). Registry
   `apps/web/src/features/juice/styles/registry.ts`; one stylesheet per style, scoped to
   `:root[data-effect-style='<id>']`. Chosen per device in `localStorage` key

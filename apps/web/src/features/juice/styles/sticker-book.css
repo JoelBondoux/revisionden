@@ -1,3 +1,4 @@
+@import '@fontsource/baloo-2/800.css';
 /*
  * Sticker Book, the default effect style (J10a, docs/GAME_FEEL.md). Warm and hand-made: wins are
  * stickers slapped onto the page (white die-cut edge, a slight tilt, a soft offset shadow), with
@@ -325,3 +326,75 @@
     transform: rotate(5deg) translate(16px, -10px);
   }
 }
+
+/* J15s: the style's own background pattern, drawn in the look's ink. */
+:root[data-effect-style='sticker-book'][data-pattern='on'] body::before {
+  -webkit-mask-image: url('./patterns/sticker-book.svg');
+  mask-image: url('./patterns/sticker-book.svg');
+  -webkit-mask-size: 240px 240px;
+  mask-size: 240px 240px;
+}
+
+/* ---------- J15s: the full look (mirrors looks.ts; a test keeps them in step) ---------- */
+:root[data-effect-style='sticker-book']:not([data-theme='dark']) {
+  --color-background: #fff3df;
+  --color-surface: #ffffff;
+  --color-border: #3b3360;
+  --color-text: #2f2a3d;
+  --color-text-secondary: #5a5470;
+  --color-primary: #0d7a6e;
+  --color-primary-edge: #08564e;
+  --color-primary-soft: #d9f5f1;
+  --color-text-on-primary: #ffffff;
+  --color-track: #7f7a90;
+  --color-locked-soft: #ece4d4;
+  --color-mastery-fill: #d6f0ec;
+  --color-challenge: #2f2a3d;
+  --color-challenge-edge: #2f2a3d;
+  --shadow-3d-neutral: 0 0 0 3px #ffffff, 3px 5px 0 rgb(0 0 0 / 16%);
+  --shadow-3d-primary: 0 0 0 3px #ffffff, 3px 5px 0 rgb(0 0 0 / 22%);
+  --shadow-card: 0 0 0 2px #3b3360, 4px 6px 0 rgb(0 0 0 / 14%);
+  --radius-sm: 8px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --font-heading: 'Baloo 2', 'Nunito', system-ui, sans-serif;
+  --pattern-ink: rgb(201 58 43 / 8%);
+  --page-wash:
+    radial-gradient(circle at 20% 10%, rgba(255, 159, 28, 0.18), transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(31, 190, 170, 0.18), transparent 45%);
+  --page-texture: repeating-linear-gradient(
+    0deg,
+    transparent 0 27px,
+    rgba(80, 70, 140, 0.08) 27px 28px
+  );
+}
+
+:root[data-effect-style='sticker-book'][data-theme='dark'] {
+  --color-background: #201a2b;
+  --color-surface: #2b2438;
+  --color-border: #4a4060;
+  --color-text: #f3eefc;
+  --color-text-secondary: #c4bcd6;
+  --color-primary: #c93a2b;
+  --color-primary-edge: #ffa79b;
+  --color-primary-soft: #43242a;
+  --color-text-on-primary: #ffffff;
+  --color-track: #8a8299;
+  --color-locked-soft: #332b40;
+  --color-mastery-fill: #1f3d3a;
+  --color-challenge: #120e18;
+  --color-challenge-edge: #9a90b0;
+  --shadow-3d-neutral: 0 0 0 3px #3b3249, 3px 5px 0 rgb(0 0 0 / 40%);
+  --shadow-3d-primary: 0 0 0 3px #3b3249, 3px 5px 0 rgb(0 0 0 / 45%);
+  --shadow-card: 0 0 0 3px #3b3249, 2px 4px 0 rgb(0 0 0 / 35%);
+  --radius-sm: 8px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --font-heading: 'Baloo 2', 'Nunito', system-ui, sans-serif;
+  --pattern-ink: rgb(255 167 155 / 7%);
+  --page-wash:
+    radial-gradient(circle at 20% 10%, rgba(255, 159, 28, 0.14), transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(31, 190, 170, 0.14), transparent 45%);
+  --page-texture: none;
+}
+/* ---------- end of the full look ---------- */

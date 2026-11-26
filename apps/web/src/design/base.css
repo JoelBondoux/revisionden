@@ -23,7 +23,61 @@ body {
   font-size: var(--font-size-md);
   line-height: 1.5;
   color: var(--color-text);
-  background: var(--color-background);
+  /* J15s: the effect style's page wash (soft gradients) over the page colour. */
+  background: var(--page-wash, none), var(--color-background);
+  background-attachment: fixed;
+}
+
+/* The style's page texture (notebook lines, halftone, scanlines, stars) is part of the background
+   pattern, so "Background pattern: Off" removes it (Codex review of train #337). */
+:root[data-pattern='on'] body {
+  background: var(--page-texture, none), var(--page-wash, none), var(--color-background);
+  background-attachment: fixed;
+}
+
+/* High contrast and forced colours: a plain page, no wash or texture. */
+@media (prefers-contrast: more), (forced-colors: active) {
+  body,
+  :root[data-pattern='on'] body {
+    background: var(--color-background);
+  }
+}
+
+/* Reading comfort wins over every look (Codex review of train #337). The tint is the page, so the
+   look's wash and texture step aside; values mirror features/reading/reading.css and the dark
+   tints in themes.css (a test keeps them in step). Doubled :root outranks the look blocks. */
+:root:root[data-reading-tint][data-effect-style] {
+  --page-wash: none;
+  --page-texture: none;
+}
+
+:root:root[data-reading-tint='cream'][data-effect-style] {
+  --color-background: #f8f0d8;
+  --color-surface: #fdf8ea;
+}
+
+:root:root[data-reading-tint='blue'][data-effect-style] {
+  --color-background: #dfeaf6;
+  --color-surface: #eef4fb;
+}
+
+:root:root[data-reading-tint='cream'][data-effect-style][data-theme='dark'] {
+  --color-background: #1d1912;
+  --color-surface: #29241a;
+}
+
+:root:root[data-reading-tint='blue'][data-effect-style][data-theme='dark'] {
+  --color-background: #111a26;
+  --color-surface: #1a2535;
+}
+
+/* The dyslexia-friendly font wins over every heading font and every style's own fonts. */
+:root:root[data-reading-font='dyslexic'][data-effect-style] {
+  --font-heading: var(--font-family);
+}
+
+:root[data-reading-font='dyslexic'] body * {
+  font-family: var(--font-family) !important;
 }
 
 h1,
@@ -32,6 +86,12 @@ h3 {
   font-weight: var(--font-weight-black);
   line-height: 1.2;
   margin: 0 0 var(--space-3);
+}
+
+/* Page and card headings take the effect style's heading font (J15s); body text stays Nunito. */
+h1,
+h2 {
+  font-family: var(--font-heading, var(--font-family));
 }
 
 h1 {
