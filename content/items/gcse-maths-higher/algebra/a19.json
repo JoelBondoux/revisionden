@@ -591,6 +591,7 @@
     "expected_seconds": 15,
     "front": "x + y = 5 and x - y = 1. What is the value of x?",
     "back": "3",
+    "explanation": "Add the two equations: (x + y) + (x - y) = 5 + 1, so 2x = 6 and x = 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
     "checked_by": ["author"],
     "citations": [
@@ -616,7 +617,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A19). Checked with SymPy: x = 3, y = 2.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A19). Checked with SymPy: x = 3, y = 2. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:04:51Z"
         },
         {
@@ -636,20 +637,20 @@
           "notes": "model answered \"3\"; expected \"3\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:10:16Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:02:59Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -663,6 +664,7 @@
     "expected_seconds": 15,
     "front": "x + y = 5 and x - y = 1. What is the value of y?",
     "back": "2",
+    "explanation": "Adding the equations gives 2x = 6, so x = 3. Then x + y = 5 gives 3 + y = 5, so y = 2.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
     "checked_by": ["author"],
     "citations": [
@@ -688,7 +690,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A19). Checked with SymPy: x = 3, y = 2.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A19). Checked with SymPy: x = 3, y = 2. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:04:51Z"
         },
         {
@@ -708,20 +710,20 @@
           "notes": "model answered \"2\"; expected \"2\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:10:30Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:03:07Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -735,6 +737,7 @@
     "expected_seconds": 15,
     "front": "y = 2x and x + y = 9. What is the value of x?",
     "back": "3",
+    "explanation": "Substitute y = 2x into x + y = 9: x + 2x = 9, so 3x = 9 and x = 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
     "checked_by": ["author"],
     "citations": [
@@ -760,7 +763,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A19). Checked with SymPy: x = 3, y = 6.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A19). Checked with SymPy: x = 3, y = 6. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:04:51Z"
         },
         {
@@ -780,20 +783,20 @@
           "notes": "model answered \"3\"; expected \"3\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:10:44Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:03:14Z",
+          "notes": "no problems found"
         }
       ]
     }
