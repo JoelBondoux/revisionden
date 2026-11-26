@@ -2,6 +2,7 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { HOME_PATH, PipHomeButton } from './PipHomeButton';
+import { reactToAnswer } from './reactions';
 
 function renderAt(ui: React.ReactNode, path = '/somewhere') {
   return render(
@@ -92,6 +93,38 @@ describe('the Pip Home button', () => {
       await userEvent.click(screen.getByRole('button', { name: 'Home' }));
       await userEvent.click(screen.getByRole('button', { name: 'Leave' }));
       expect(screen.getByRole('heading', { name: 'Home page' })).toBeInTheDocument();
+    });
+
+    it('reacts to each marked answer, then goes back to rest (J14)', () => {
+      vi.useFakeTimers();
+      try {
+        const { container } = renderAt(<PipHomeButton env={env} inLesson />);
+        const svg = () => container.querySelector('svg')!;
+        act(() => reactToAnswer({ kind: 'right', combo: 1 }));
+        expect(svg()).toHaveClass('pip-figure--nod');
+        act(() => void vi.advanceTimersByTime(1000));
+        expect(svg()).toHaveClass('pip-figure--rest');
+        act(() => reactToAnswer({ kind: 'wrong', combo: 0 }));
+        expect(svg()).toHaveClass('pip-figure--hmm');
+        act(() => reactToAnswer({ kind: 'goal', combo: 4 }));
+        expect(svg()).toHaveClass('pip-figure--cheer');
+        act(() => void vi.advanceTimersByTime(1300));
+        expect(svg()).toHaveClass('pip-figure--rest');
+      } finally {
+        vi.useRealTimers();
+      }
+    });
+
+    it('ignores an answer from before he appeared, and stays still with reduced motion', () => {
+      reactToAnswer({ kind: 'right', combo: 1 });
+      const { container, unmount } = renderAt(<PipHomeButton env={env} inLesson />);
+      expect(container.querySelector('svg')).toHaveClass('pip-figure--rest');
+      unmount();
+      const still = renderAt(
+        <PipHomeButton env={{ ...env, reducedMotion: () => true }} inLesson />,
+      );
+      act(() => reactToAnswer({ kind: 'goal', combo: 1 }));
+      expect(still.container.querySelector('svg')).toHaveClass('pip-figure--rest');
     });
 
     it('keeps still: no idle actions', () => {

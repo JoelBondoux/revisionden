@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- In lessons Pip now reacts to your answers: a nod when you're right, a cheer for a streak or your daily goal, and an encouraging head tilt when it's not quite right. On small screens with big text, the answer box now fits without scrolling sideways.
 - In the interactive factorising lesson, picking the wrong pair of numbers now shows the gaps or the spare strips, instead of drawing a different shape.
 - Coming at version 1.0: everyone who has been practising with RevisionDen before then gets a special Founding Tester badge and title, as a thank-you for helping build it. It can never be earned later.
 - Every look now sounds more exciting: pops, whizzes and sparkles when you get answers right, build a combo, hit your daily goal, level up and open a prize, each in that look's own style.
@@ -156,6 +157,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- J14: the lesson's typed-answer field (`.field__row .field__input`) fills its row and can shrink, so at 320 px with 200% text it no longer pushes the page 120 px sideways (`e2e/tests/lesson.spec.ts`).
 - W8c: the interactive area model fits one phone screen again now that Pip has his own row in lessons (no gap under the question, and the hint and pair question in the small text size), so the `area-model` e2e "Check fits without scrolling" passes on dev.
 - Docs: content plan tasks D7 ("either order" topic groups) and D8 (cross-subject "bridge" topics, discovered on the map) added to `docs/BACKLOG.md`, from the owner's map review.
 - F11b (Codex review on train #311): an all-decks flashcard session is complete when today's offered cards are done, the daily 20 plus any "10 more", not the whole backlog. `POST /flashcards/sessions` takes `extra`, stored in `flashcard_sessions.extra_cards` (migration 0032); finish compares with `todaysCards(…, extraCards)`. The web app sends the extra it asked for.
@@ -247,6 +249,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- J14a: Pip reacts in lessons. `features/juice/pip/reactions.ts` (`pipReactionFor`, `reactToAnswer`, `usePipReaction`, `REACTION_POSE_MS`); `LessonPlayer`'s `onAnswerReaction` defaults to `reactToAnswer`; `PipHomeButton` plays the nod, cheer or hmm pose once per answer, then rests (none with reduced motion). The J14 lesson-screen spec is in `docs/GAME_FEEL.md`.
 - W8b (Codex review of #269): the area model keeps exactly b strips and c unit squares for any pair, outlining missing slots or leaving spare strips over (`fitStrips`); pilot steps are never picked as warm-ups or similar-question retries; "Did this help?" is one row per student and item, enforced by a unique partial index and an upsert (migration 0033).
 - Rewards R5: Founding Tester. One-off `special` reward (badge and "Founding"/"Tester" title words), `foundingTesterStat` in core, `BETA_ENDS_AT` Worker variable (unset everywhere until 1.0, with a test that `wrangler.toml` never sets it), awarded by the normal evaluator on answers, flashcard sessions and the Rewards page, a Special card and a badge moment on reveal (code-drawn Doodle Diary badge in `features/rewards/badges.tsx`), and the 1.0 release step in `docs/ENVIRONMENTS.md`.
 - Lesson reactions hook (F13, for J14, owner approved): `LessonPlayer` takes `onAnswerReaction({ kind, combo })`, called once per marked answer, after its feedback renders, with `right`, `wrong`, `helped` or `goal` (the first right answer that meets today's goal), from `answerReaction()` in `features/learn/reaction.ts`. Never called for an unmarked answer. No visible change yet: J wires Pip and the avatar to it.

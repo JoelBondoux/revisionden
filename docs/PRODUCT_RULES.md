@@ -511,6 +511,9 @@ or animation, the avatar's `react('nod' | 'hmm' | 'hop')`, placement and timing)
 - Reduced motion is J's side: E9's `react()` already does nothing then.
 - Implemented in `answerReaction()` (`apps/web/src/features/learn/reaction.ts`) and
   `LessonPlayer.tsx`.
+- J's side (J14): `onAnswerReaction` defaults to Pip's `reactToAnswer`
+  (`apps/web/src/features/juice/pip/reactions.ts`), so every lesson screen reacts without each page
+  passing it. How each kind looks is in `docs/GAME_FEEL.md` ("The lesson screen").
 
 ## Typed working without the maths engine (F12, 2026-11-26)
 

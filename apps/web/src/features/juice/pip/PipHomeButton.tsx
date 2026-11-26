@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../../../components/Button';
 import { PipFigure, type PipPose } from './PipFigure';
 import { nextIdle } from './idle';
+import { REACTION_POSE_MS, usePipReaction } from './reactions';
 import { lookFor, outfitFor } from './outfits';
 
 /** Where Pip takes you: the Home dashboard. */
@@ -54,6 +55,19 @@ export function PipHomeButton({
   const lastInput = useRef(Date.now());
   const [wake, setWake] = useState(0);
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // J14: a marked answer in the lesson plays one reaction pose, then Pip goes back to rest. An
+  // answer from before he appeared is ignored, and reduced motion keeps him still.
+  const reaction = usePipReaction();
+  const seenReaction = useRef(reaction.key);
+  useEffect(() => {
+    if (reaction.key === seenReaction.current || !reaction.pip) return;
+    seenReaction.current = reaction.key;
+    if (env.reducedMotion()) return;
+    setPose(reaction.pip);
+    const back = setTimeout(() => setPose('rest'), REACTION_POSE_MS[reaction.pip]);
+    return () => clearTimeout(back);
+  }, [reaction, env]);
 
   // Any tap or key press counts as activity, and wakes Pip if he had stopped.
   useEffect(() => {
