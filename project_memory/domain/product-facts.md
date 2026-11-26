@@ -797,7 +797,14 @@ Tags: #product #rules #limits #defaults
   #B34F00 (orange), checked by simulation (ΔE ≥ 20 for deuteranopia, protanopia, tritanopia) and
   4.5:1 contrast in all four combinations. Doodle tile `apps/web/src/design/doodles.svg` (original,
   240px, used as a CSS mask at 7% ink), hidden with `prefers-contrast: more` and forced colours.
-  Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).
+  Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map).
+- Effect styles (J10a, built): one active at a time; it restyles the game-feel moments, Home
+  (topic map) and Rewards. Default and always available: Sticker Book (`sticker-book`). Registry
+  `apps/web/src/features/juice/styles/registry.ts`; one stylesheet per style, scoped to
+  `:root[data-effect-style='<id>']`. Chosen per device in `localStorage` key
+  `revisionden.effectStyle` (cookies and storage policy 1.7); a style that is not unlocked falls
+  back to Sticker Book. Pop Burst and Starlight unlock through progress milestones (J10b, not yet
+  built). Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by

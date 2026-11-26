@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- A new look for rewards and celebrations, Sticker Book: your daily goal and next mission are cards taped into a sticker book, mastered topics are gold stickers, and combos, stars and confetti slap onto the page like stickers.
 - Fixed: the "We've updated our policies" message no longer comes back every time you return. Tap "I've read the changes" and it's gone for good; close it and it waits 24 hours. It now shows only what changed since you last agreed, with a link to each full policy.
 - Parents: a new "Worth a look together" card on the stats page lists topics your child has found tricky for a while, with a "Learn it first" lesson link where there is one. It only appears when there is something to look at, and your child never sees it.
 - Get help is easier to find: a calm Get help tile on your topic map and a Get help button at the top of every screen. On the page, Quick exit now stays at the top while you scroll, topics are grouped into a few clear sections, and you can type to find a topic. Each service is a short card with big Call, Text, chat and website buttons. It now follows your colour theme (light, dark or colour-blind). Still private: nothing is recorded.
@@ -120,6 +121,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Effect styles J10a (J): `features/juice/styles` (registry, `EffectStyleProvider`/`useEffectStyle`, `data-effect-style` on `<html>`, per-device choice in `revisionden.effectStyle`), and the default Sticker Book style (`sticker-book.css`, every rule scoped to the style) for the combo badge, stars, bursts, confetti, "+XP", the Home screen (daily goal, 5-a-day, next mission, streak, mastered hexes) and Rewards chapter steps. `index.html` starts in Sticker Book. Tests: registry, provider, stylesheet scoping and the game-feel CSS rules. Cookies and storage policy 1.7.
 - Dev and staging footers show the short commit next to the environment, e.g. "(Development, ef86a9a)", so a new build is easy to spot. The live app is unchanged (G5).
 - Policy notice fix (L9): closing the "We've updated" sheet saved nothing, so it reappeared on every visit to `/onboarding`. "I've read the changes" (was "Confirm") stores the versions as before; closing hides it on the device for 24 hours for those versions only (`policyNoticeSnooze.ts`, `revisionden.policyNotice`). Cookies and storage 1.6. The notice shows only the Changes lines newer than that parent's accepted version, per policy (`policyChanges.ts`, numeric version compare so 1.10 > 1.9), hides policies with nothing newer, and a policy never accepted now goes through "Before you start".
 - K11: "Worth a look together" card on the parent stats dashboard, from F5's flagged review points (`GET /v1/students/:id/worth-a-look`, parent only; `groupWorthALook` and `WorthALookSchema` in core). Hidden when empty.
