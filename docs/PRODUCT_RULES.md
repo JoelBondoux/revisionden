@@ -263,6 +263,16 @@ Product owner decision, 2026-11-25: **parent view only**.
 - **Lessons** run in Learn mode at feedback level 1: every answer is marked at once with the right
   answer, the explanation and, for maths working, the first line that goes wrong (maths engine,
   no AI). Long answers are shown with a "marked by AI soon" note and are not marked yet.
+- **Typed short answers** are marked fairly (workstream F6, `packages/core/src/answer-normalise.ts`):
+  word answers ignore case and extra spaces; maths answers also ignore every space, and treat the
+  unicode minus as `-`, `×`, `·`, `*` (and `x` between two numbers) as one multiply, `÷` as `/`,
+  superscripts as `^`, `≤`/`≥` as `<=`/`>=`, `√` as `sqrt`, and "and" or `;` in a list like `,`.
+  When the item sets `answer.any_order`, products and sums may be in any order (signs stay with
+  their terms), a list of values in any order, and an equation either way round; coordinates and
+  inequalities are never reordered. `answer.units` lists units the answer may end with or leave
+  off. Different forms of a value (`√32` and `4√2`, `three` and `3`) still need listing.
+- **Maths working** may end with a letter answer such as `x = 2a`: a solved value may use other
+  letters, never the unknown itself.
 - **Mastery** of a topic is recomputed from the student's last 30 attempts after every answer.
 - **Wrong answers** in a lesson (Learn mode, not the starting test) become a flashcard due at once,
   once per question.
