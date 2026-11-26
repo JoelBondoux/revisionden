@@ -7,14 +7,8 @@
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 60,
     "prompt": "Expand and simplify 3(2x - 5) - 2(x - 4)",
-    "answer": {
-      "expression": "4x - 7"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "3(2x - 5) - 2(x - 4)",
-      "form": "expanded"
-    },
+    "answer": { "expression": "4x - 7" },
+    "verify": { "method": "expression", "expression": "3(2x - 5) - 2(x - 4)", "form": "expanded" },
     "steps": ["3(2x - 5) - 2(x - 4)", "6x - 15 - 2x + 8", "4x - 7"],
     "marks": 2,
     "mark_scheme": ["M1 for 6x - 15 or -2x + 8", "A1 for 4x - 7"],
@@ -109,18 +103,13 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 60,
-    "prompt": "Expand and simplify (x + 5)(x - 3). Use ^ for powers.",
-    "answer": {
-      "expression": "x^2 + 2x - 15"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(x + 5)(x - 3)",
-      "form": "expanded"
-    },
+    "prompt": "Expand and simplify (x + 5)(x - 3). Use the Power key (^) for powers.",
+    "answer": { "expression": "x^2 + 2x - 15" },
+    "verify": { "method": "expression", "expression": "(x + 5)(x - 3)", "form": "expanded" },
     "steps": ["(x + 5)(x - 3)", "x^2 - 3x + 5x - 15", "x^2 + 2x - 15"],
     "marks": 2,
     "mark_scheme": ["M1 for at least three of the four terms correct", "A1 for x^2 + 2x - 15"],
+    "hint": "Multiply each term in the first bracket by each term in the second, then collect like terms.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -158,22 +147,6 @@
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:44Z",
-          "notes": "model answered \"x^2 + 2x - 15\"; expected \"x^2 + 2x - 15\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:51Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -188,6 +161,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:14:36Z",
+          "notes": "model answered \"x^2 + 2x - 15\"; expected \"x^2 + 2x - 15\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:14:37Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -199,15 +188,9 @@
     "difficulty": 4,
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 150,
-    "prompt": "Expand and simplify (x + 2)(x + 3)(x - 1). Use ^ for powers.",
-    "answer": {
-      "expression": "x^3 + 4x^2 + x - 6"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(x + 2)(x + 3)(x - 1)",
-      "form": "expanded"
-    },
+    "prompt": "Expand and simplify (x + 2)(x + 3)(x - 1). Use the Power key (^) for powers.",
+    "answer": { "expression": "x^3 + 4x^2 + x - 6" },
+    "verify": { "method": "expression", "expression": "(x + 2)(x + 3)(x - 1)", "form": "expanded" },
     "steps": [
       "(x + 2)(x + 3)(x - 1)",
       "(x^2 + 5x + 6)(x - 1)",
@@ -220,6 +203,7 @@
       "M1 for multiplying the result by the third bracket (at least 4 terms correct)",
       "A1 for x^3 + 4x^2 + x - 6"
     ],
+    "hint": "Multiply two of the brackets first, then multiply that result by the third bracket.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -257,22 +241,6 @@
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:38:02Z",
-          "notes": "model answered \"x^3 + 4x^2 + x - 6\"; expected \"x^3 + 4x^2 + x - 6\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:38:12Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -287,6 +255,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:14:40Z",
+          "notes": "model answered \"x^3 + 4x^2 + x - 6\"; expected \"x^3 + 4x^2 + x - 6\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:14:41Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -300,11 +284,10 @@
     "expected_seconds": 25,
     "prompt": "Which is the expansion of (2x - 3)^2?",
     "options": ["4x^2 - 9", "4x^2 + 9", "4x^2 - 12x + 9", "4x^2 - 6x + 9"],
-    "answer": {
-      "option": 2
-    },
+    "answer": { "option": 2 },
     "marks": 1,
     "explanation": "(2x - 3)^2 = (2x - 3)(2x - 3) = 4x^2 - 6x - 6x + 9 = 4x^2 - 12x + 9.",
+    "hint": "Write it as (2x - 3)(2x - 3) and multiply every term by every term.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["author"],
     "citations": [
@@ -360,9 +343,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:31:48Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:57Z",
           "notes": "no problems found"
         }
       ]
@@ -377,11 +360,10 @@
     "expected_seconds": 25,
     "prompt": "Factorise x^2 + 7x + 12",
     "options": ["(x + 3)(x + 4)", "(x + 2)(x + 6)", "(x + 1)(x + 12)", "(x - 3)(x - 4)"],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "3 × 4 = 12 and 3 + 4 = 7, so x^2 + 7x + 12 = (x + 3)(x + 4).",
+    "hint": "Look for two numbers that multiply to 12 and add to 7.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["author"],
     "citations": [
@@ -419,14 +401,6 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:29:40Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
@@ -441,6 +415,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:59Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -454,11 +436,10 @@
     "expected_seconds": 25,
     "prompt": "Factorise x^2 - 49",
     "options": ["(x - 7)^2", "(x + 7)(x - 7)", "(x - 49)(x + 1)", "x(x - 49)"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "x^2 - 49 is a difference of two squares, x^2 - 7^2 = (x + 7)(x - 7).",
+    "hint": "49 is a square number, so think about a difference of two squares.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["author"],
     "citations": [
@@ -514,9 +495,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:31:55Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:00Z",
           "notes": "no problems found"
         }
       ]
@@ -531,11 +512,10 @@
     "expected_seconds": 25,
     "prompt": "Factorise 2x^2 + 7x + 3",
     "options": ["(2x + 1)(x + 3)", "(2x + 3)(x + 1)", "(2x + 7)(x + 3)", "(x + 1)(x + 3)"],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "(2x + 1)(x + 3) = 2x^2 + 6x + x + 3 = 2x^2 + 7x + 3.",
+    "hint": "Try brackets that start (2x ...)(x ...) and expand each option to see which gives 7x in the middle.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["author"],
     "citations": [
@@ -573,14 +553,6 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:30:14Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
@@ -595,6 +567,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:02Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -607,18 +587,13 @@
     "learning_point": "gcse-maths-h-a4-lp-factorise",
     "expected_seconds": 45,
     "prompt": "Factorise fully 6x^2 - 15x",
-    "answer": {
-      "expression": "3x(2x - 5)"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "6x^2 - 15x",
-      "form": "factorised"
-    },
+    "answer": { "expression": "3x(2x - 5)" },
+    "verify": { "method": "expression", "expression": "6x^2 - 15x", "form": "factorised" },
     "marks": 2,
     "mark_scheme": [
       "B2 for 3x(2x - 5) (B1 for a partial factorisation such as 3(2x^2 - 5x) or x(6x - 15))"
     ],
+    "hint": "Find the highest common factor of the numbers and of the letters, then take it outside a bracket.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -664,14 +639,6 @@
           "notes": "model answered \"3x(2x - 5)\"; expected \"3x(2x - 5)\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:38:27Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -686,6 +653,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:04Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -699,11 +674,10 @@
     "expected_seconds": 25,
     "prompt": "Simplify x^5 × x^3",
     "options": ["x^15", "x^8", "x^2", "2x^8"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "Add the powers when multiplying: x^(5 + 3) = x^8.",
+    "hint": "When you multiply powers of the same letter, add the indices.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["author"],
     "citations": [
@@ -741,14 +715,6 @@
           "notes": "model answered \"1\"; expected \"1\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:30:40Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
@@ -763,6 +729,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:05Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -776,11 +750,10 @@
     "expected_seconds": 25,
     "prompt": "Simplify (y^4)^3",
     "options": ["y^7", "y^12", "y^64", "3y^4"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "Multiply the powers: y^(4 × 3) = y^12.",
+    "hint": "For a power of a power, multiply the indices.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["author"],
     "citations": [
@@ -818,14 +791,6 @@
           "notes": "model answered \"1\"; expected \"1\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:30:53Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
@@ -840,6 +805,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:07Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -853,11 +826,10 @@
     "expected_seconds": 25,
     "prompt": "Simplify 12a^6 ÷ 3a^2",
     "options": ["4a^3", "9a^4", "4a^4", "4a^8"],
-    "answer": {
-      "option": 2
-    },
+    "answer": { "option": 2 },
     "marks": 1,
     "explanation": "Divide the numbers and subtract the powers: (12 ÷ 3)a^(6 - 2) = 4a^4.",
+    "hint": "Divide the numbers, then subtract the indices of a.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["author"],
     "citations": [
@@ -913,9 +885,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:32:01Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:09Z",
           "notes": "no problems found"
         }
       ]
@@ -931,6 +903,7 @@
     "front": "The name for an expression such as x^2 - 25, which factorises to (x + 5)(x - 5)",
     "back": "Difference of two squares",
     "explanation": "x^2 - 25 is x^2 minus 5^2: one square minus another. That is why it is called the difference of two squares, and it factorises to (x + 5)(x - 5).",
+    "hint": "x^2 - 25 is one square take away another square.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -987,9 +960,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:51:00Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:10Z",
           "notes": "no problems found"
         }
       ]
@@ -1005,6 +978,7 @@
     "front": "x^0, for any x ≠ 0",
     "back": "1",
     "explanation": "x^n ÷ x^n = 1, and by the index law x^n ÷ x^n = x^(n - n) = x^0. So x^0 = 1 for any x that is not 0.",
+    "hint": "Think about x^n ÷ x^n: what do you get when you divide a number by itself?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["author"],
     "citations": [
@@ -1060,9 +1034,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:51:08Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:12Z",
           "notes": "no problems found"
         }
       ]
@@ -1078,6 +1052,7 @@
     "front": "Collect like terms: 2a + 3b - a + b",
     "back": "a + 4b",
     "explanation": "Group the a terms and the b terms: 2a - a = a and 3b + b = 4b. So 2a + 3b - a + b = a + 4b.",
+    "hint": "Group the a terms together and the b terms together, keeping each sign with its term.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["author"],
     "citations": [
@@ -1133,9 +1108,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:49:51Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:14Z",
           "notes": "no problems found"
         }
       ]

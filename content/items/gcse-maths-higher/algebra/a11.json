@@ -7,17 +7,12 @@
     "learning_point": "gcse-maths-h-a11-lp-roots",
     "expected_seconds": 75,
     "prompt": "Find the roots of y = x^2 - 5x + 6 (the x-values where the graph crosses the x-axis).",
-    "answer": {
-      "solutions": ["2", "3"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "x^2 - 5x + 6 = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["2", "3"] },
+    "verify": { "method": "solve", "equation": "x^2 - 5x + 6 = 0", "variable": "x" },
     "steps": ["x^2 - 5x + 6 = 0", "(x - 2)(x - 3) = 0", "x = 2 or x = 3"],
     "marks": 3,
     "mark_scheme": ["M1 for x^2 - 5x + 6 = 0", "M1 for (x - 2)(x - 3)", "A1 for x = 2 and x = 3"],
+    "hint": "Set the expression equal to 0 and factorise it into two brackets.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -63,14 +58,6 @@
           "notes": "model answered \"2, 3\"; expected \"2, 3\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:38:24Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -85,6 +72,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T11:13:10Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -97,17 +92,12 @@
     "learning_point": "gcse-maths-h-a11-lp-roots",
     "expected_seconds": 60,
     "prompt": "The graph of y = x^2 - 16 crosses the x-axis at two points. Find their x-coordinates.",
-    "answer": {
-      "solutions": ["4", "-4"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "x^2 - 16 = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["4", "-4"] },
+    "verify": { "method": "solve", "equation": "x^2 - 16 = 0", "variable": "x" },
     "steps": ["x^2 - 16 = 0", "(x - 4)(x + 4) = 0", "x = 4 or x = -4"],
     "marks": 2,
     "mark_scheme": ["M1 for (x - 4)(x + 4) = 0 or x^2 = 16", "A1 for x = 4 and x = -4"],
+    "hint": "Set x^2 - 16 equal to 0: it is a difference of two squares.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -153,14 +143,6 @@
           "notes": "model answered \"4, -4\"; expected \"4, -4\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:38:38Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -175,6 +157,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T11:13:19Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -187,16 +177,11 @@
     "learning_point": "gcse-maths-h-a11-lp-roots",
     "expected_seconds": 30,
     "prompt": "Write down the roots of y = (x + 1)(x - 7).",
-    "answer": {
-      "solutions": ["-1", "7"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "(x + 1)(x - 7) = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["-1", "7"] },
+    "verify": { "method": "solve", "equation": "(x + 1)(x - 7) = 0", "variable": "x" },
     "marks": 1,
     "mark_scheme": ["B1 for x = -1 and x = 7"],
+    "hint": "The graph crosses the x-axis where y = 0, so set each bracket equal to 0.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -242,14 +227,6 @@
           "notes": "model answered \"-1, 7\"; expected \"-1, 7\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:38:54Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -264,6 +241,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T11:13:35Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -282,6 +267,7 @@
     },
     "marks": 2,
     "explanation": "Half of 6 is 3: (x + 3)^2 = x^2 + 6x + 9, so x^2 + 6x + 11 = (x + 3)^2 + 2.",
+    "hint": "Halve the coefficient of x to find a, then adjust the number on the end.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
     "checked_by": ["author"],
     "citations": [
@@ -339,7 +325,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:29:14Z",
+          "at": "2026-11-26T11:13:46Z",
           "notes": "no problems found"
         }
       ]
@@ -353,11 +339,10 @@
     "learning_point": "gcse-maths-h-a11-lp-turning-points",
     "expected_seconds": 30,
     "prompt": "Write down the coordinates of the turning point of y = (x - 4)^2 + 3.",
-    "answer": {
-      "accepted": ["(4, 3)", "(4,3)", "4, 3", "x = 4, y = 3"]
-    },
+    "answer": { "accepted": ["(4, 3)", "(4,3)", "4, 3", "x = 4, y = 3"] },
     "marks": 1,
     "explanation": "For y = (x - a)^2 + b, the turning point is (a, b). Here a = 4 and b = 3, so the turning point is (4, 3). The smallest value of (x - 4)^2 is 0, when x = 4, giving y = 3.",
+    "hint": "For y = (x - a)^2 + b, the turning point is where the bracket equals 0.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
     "checked_by": ["author"],
     "citations": [
@@ -427,7 +412,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:29:30Z",
+          "at": "2026-11-26T11:13:57Z",
           "notes": "no problems found"
         }
       ]
@@ -441,11 +426,10 @@
     "learning_point": "gcse-maths-h-a11-lp-turning-points",
     "expected_seconds": 90,
     "prompt": "By completing the square, find the coordinates of the turning point of y = x^2 - 8x + 10.",
-    "answer": {
-      "accepted": ["(4, -6)", "(4,-6)", "(4, −6)", "(4,−6)", "4, -6", "x = 4, y = -6"]
-    },
+    "answer": { "accepted": ["(4, -6)", "(4,-6)", "(4, −6)", "(4,−6)", "4, -6", "x = 4, y = -6"] },
     "marks": 3,
     "explanation": "x^2 - 8x + 10 = (x - 4)^2 - 16 + 10 = (x - 4)^2 - 6, so the turning point is (4, -6).",
+    "hint": "Complete the square first: halve the -8, then tidy up the number on the end.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
     "checked_by": ["author"],
     "citations": [
@@ -503,7 +487,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:29:44Z",
+          "at": "2026-11-26T11:14:06Z",
           "notes": "no problems found"
         }
       ]
@@ -523,11 +507,10 @@
       "Maximum at (-2, 5)",
       "Minimum at (5, 2)"
     ],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "(x - 2)^2 is never negative, so y is largest, 5, when x = 2: a maximum at (2, 5).",
+    "hint": "(x - 2)^2 is never negative, so think about whether y can be bigger or smaller than 5, and at which x.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
     "checked_by": ["author"],
     "citations": [
@@ -585,20 +568,20 @@
           "notes": "model answered \"1\"; expected \"1\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:40:03Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T11:14:18Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -612,7 +595,8 @@
     "expected_seconds": 15,
     "front": "The turning point of y = (x - a)^2 + b",
     "back": "(a, b)",
-    "explanation": "(x - a)^2 is never negative, and it is 0 when x = a. So on this graph y is smallest at x = a, where y = b. The turning point (here the lowest point) is (a, b).",
+    "explanation": "(x - a)^2 is never negative, and it is 0 when x = a. So on this graph y is smallest at x = a, where y = b. This graph is U-shaped, so its turning point is a minimum: the point (a, b).",
+    "hint": "Think about the x-value that makes the bracket 0, and what y is there.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
     "checked_by": ["author"],
     "citations": [
@@ -668,9 +652,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:56:52Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:32:05Z",
           "notes": "no problems found"
         }
       ]
@@ -686,6 +670,7 @@
     "front": "The coordinates of the turning point of y = (x + 2)^2 - 5",
     "back": "(-2, -5)",
     "explanation": "The graph of y = (x - a)^2 + b has its turning point at (a, b). (x + 2)^2 is the same as (x - (-2))^2, so a = -2 and b = -5. The turning point is (-2, -5).",
+    "hint": "Ask which x-value makes the bracket 0, then read the number on the end.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
     "checked_by": ["author"],
     "citations": [
@@ -743,7 +728,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:57:00Z",
+          "at": "2026-11-26T11:14:58Z",
           "notes": "no problems found"
         }
       ]
@@ -759,6 +744,7 @@
     "front": "The x-coordinate of the turning point of y = x^2 + 10x + 3",
     "back": "-5",
     "explanation": "Complete the square: x^2 + 10x + 3 = (x + 5)^2 - 25 + 3 = (x + 5)^2 - 22. The turning point is where x + 5 = 0, so x = -5.",
+    "hint": "Complete the square: halve the 10, then think about which x makes the bracket 0.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
     "checked_by": ["author"],
     "citations": [
@@ -816,7 +802,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:51:54Z",
+          "at": "2026-11-26T11:15:06Z",
           "notes": "no problems found"
         }
       ]
