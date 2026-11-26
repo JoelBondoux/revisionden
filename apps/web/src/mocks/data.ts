@@ -32,11 +32,11 @@ const demoChild = (
   };
 };
 
-/** The demo parent's family (`GET /v1/onboarding/family`). */
+/** The demo parent's family (`GET /v1/onboarding/family`); the same ids as parent home's children (`DEMO_CHILDREN`). */
 export const family: OnboardingFamily = {
   children: [
-    demoChild('8f6d2b1e-4c3a-4d5e-9f00-000000000001', 'NovaFox', 11, { skin: 2 }),
-    demoChild('8f6d2b1e-4c3a-4d5e-9f00-000000000002', 'PixelOwl', 13, { skin: 3, eyes: 1 }),
+    demoChild('00000000-0000-4000-8000-0000000000a1', 'NovaFox', 11, { skin: 2 }),
+    demoChild('00000000-0000-4000-8000-0000000000a2', 'PixelOwl', 13, { skin: 3, eyes: 1 }),
   ],
 };
 
@@ -81,4 +81,5 @@ export const topicMap: TopicMap = {
   ],
 };
 
-export const cardsDue: CardsDue = { due: 12 };
+// Matches the cards due in the flashcards mock (features/learn/mocks.ts).
+export const cardsDue: CardsDue = { due: 2 };

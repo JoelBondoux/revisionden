@@ -71,7 +71,7 @@ describe('routes', () => {
 
   it('shows the number of flashcards due on the Cards tab', async () => {
     renderRoute('/map');
-    expect(await screen.findByRole('link', { name: 'Cards, 12 due' })).toHaveAttribute(
+    expect(await screen.findByRole('link', { name: 'Cards, 2 due' })).toHaveAttribute(
       'href',
       '/cards',
     );
