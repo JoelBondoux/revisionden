@@ -125,7 +125,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
-- S3-N2 batch 3: verified Explain walkthroughs (`explanation`) on 16 Algebra items in A20 to A24 and on pilot items n7-0001 and g9-0001.
+- S3-N2 batch 3: verified Explain walkthroughs (`explanation`) on 15 Algebra items in A20 to A24 (a20-0110 moves to S3-A's #170 with its new question) and on pilot items n7-0001 and g9-0001.
 - E5b: on the parent Subjects page, a failed add keeps the chosen subject, board and tier so the parent can try again (Codex review on #142).
 - Share invite links (I8): `ShareLink` and `browserShareApis` (`apps/web/src/pwa/{ShareLink.tsx,share.ts}`) give the second-parent invite (`ParentsPanel`, B3's lane, authorised by the lead) and the child device link (`LinkDeviceStep`) a big "Share link" button using `navigator.share` where it exists, "Copy link" otherwise or after a failed share, and treat a closed share sheet (`AbortError`) as no error. Share text names no child; the QR code and codes stay.
 - Dev and staging footers show the short commit next to the environment, e.g. "(Development, ef86a9a)", so a new build is easy to spot. The live app is unchanged (G5).
