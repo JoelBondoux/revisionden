@@ -174,6 +174,171 @@ async function settle(page: Page) {
   );
 }
 
+/**
+ * J15s-b, J15s-c: every piece of text drawn straight on the page (no box of its own behind it)
+ * must read AA on what is really painted behind it. Three more screenshots: the text hidden (the
+ * page as painted, halos included), then drawn in black and in white; the pixels either one
+ * changes are the letters, measured in the text's real colour against the hidden-text page.
+ */
+async function paintedTextFailures(page: Page): Promise<string[]> {
+  const texts = await page.evaluate(() => {
+    const clear = (el: Element) => {
+      const cs = getComputedStyle(el);
+      return (
+        (cs.backgroundColor === 'rgba(0, 0, 0, 0)' || cs.backgroundColor === 'transparent') &&
+        cs.backgroundImage === 'none'
+      );
+    };
+    const out: {
+      x: number;
+      y: number;
+      w: number;
+      h: number;
+      color: string;
+      large: boolean;
+      text: string;
+    }[] = [];
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+      const el = n.parentElement;
+      if (!el || !n.textContent?.trim() || el.closest('.visually-hidden')) continue;
+      let onPage = true;
+      for (let a: Element | null = el; a && a !== document.body; a = a.parentElement)
+        if (!clear(a)) onPage = false;
+      if (!onPage) continue;
+      const cs = getComputedStyle(el);
+      if (cs.visibility === 'hidden' || Number(cs.opacity) === 0) continue;
+      const range = document.createRange();
+      range.selectNodeContents(n);
+      // Lines hidden by a line clamp or other clipping are not drawn, so clip each line box to
+      // every ancestor that hides its overflow.
+      const clips = [] as DOMRect[];
+      for (let a: Element | null = el; a && a !== document.body; a = a.parentElement) {
+        const ac = getComputedStyle(a);
+        if (ac.overflowX !== 'visible' || ac.overflowY !== 'visible')
+          clips.push(a.getBoundingClientRect());
+      }
+      for (const box of Array.from(range.getClientRects())) {
+        let [left, top, right, bottom] = [box.left, box.top, box.right, box.bottom];
+        for (const c of clips) {
+          left = Math.max(left, c.left);
+          top = Math.max(top, c.top);
+          right = Math.min(right, c.right);
+          bottom = Math.min(bottom, c.bottom);
+        }
+        [left, top] = [Math.max(left, 0), Math.max(top, 0)];
+        [right, bottom] = [Math.min(right, innerWidth), Math.min(bottom, innerHeight)];
+        const r = { left, top, right, bottom, width: right - left, height: bottom - top };
+        if (r.width < 4 || r.height < 4) continue;
+        // Text under something else (the bottom nav, a sheet) is not on show.
+        const hit = document.elementFromPoint(left + r.width / 2, top + r.height / 2);
+        if (!hit || !(el.contains(hit) || hit.contains(el))) continue;
+        if (r.right < 0 || r.left > innerWidth) continue;
+        const size = parseFloat(cs.fontSize);
+        out.push({
+          x: r.left,
+          y: r.top,
+          w: r.width,
+          h: r.height,
+          color: cs.color,
+          large: size >= 24 || (size >= 18.66 && Number(cs.fontWeight) >= 700),
+          text: (n.textContent ?? '').trim().slice(0, 30),
+        });
+      }
+    }
+    return out;
+  });
+  const shotWith = async (css: string) => {
+    const tag = await page.addStyleTag({ content: css });
+    await settle(page);
+    const shot = await page.screenshot({ animations: 'disabled' });
+    await tag.evaluate((el) => (el as HTMLElement).remove());
+    return shot;
+  };
+  const fill = (c: string) =>
+    `*, *::before, *::after { color: ${c} !important; -webkit-text-fill-color: ${c} !important; transition: none !important; }`;
+  const without = await shotWith(fill('transparent'));
+  const black = await shotWith(fill('#000'));
+  const white = await shotWith(fill('#fff'));
+  const bad = await page.evaluate(
+    async ({ shots, texts }) => {
+      const pixels = async (b64: string) => {
+        const img = new Image();
+        img.src = `data:image/png;base64,${b64}`;
+        await img.decode();
+        const cv = document.createElement('canvas');
+        cv.width = img.width;
+        cv.height = img.height;
+        const g = cv.getContext('2d')!;
+        g.drawImage(img, 0, 0);
+        return {
+          w: img.width,
+          h: img.height,
+          d: g.getImageData(0, 0, img.width, img.height).data,
+        };
+      };
+      const [B, K, W] = [await pixels(shots[0]!), await pixels(shots[1]!), await pixels(shots[2]!)];
+      const A = B;
+      const scale = A.w / innerWidth;
+      const ctx = document.createElement('canvas').getContext('2d')!;
+      const rgb = (c: string) => {
+        ctx.clearRect(0, 0, 1, 1);
+        ctx.fillStyle = c;
+        ctx.fillRect(0, 0, 1, 1);
+        const d = ctx.getImageData(0, 0, 1, 1).data;
+        return [d[0]!, d[1]!, d[2]!, d[3]! / 255];
+      };
+      const lum = (c: number[]) => {
+        const f = (v: number) => ((v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+        return 0.2126 * f(c[0]!) + 0.7152 * f(c[1]!) + 0.0722 * f(c[2]!);
+      };
+      const ratio = (a: number[], b: number[]) => {
+        const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m) as [number, number];
+        return (x + 0.05) / (y + 0.05);
+      };
+      const out: string[] = [];
+      for (const t of texts) {
+        const ink = rgb(t.color);
+        const a = ink[3]!;
+        const samples: number[] = [];
+        const x0 = Math.max(0, Math.floor(t.x * scale));
+        const y0 = Math.max(0, Math.floor(t.y * scale));
+        const x1 = Math.min(A.w, Math.ceil((t.x + t.w) * scale));
+        const y1 = Math.min(A.h, Math.ceil((t.y + t.h) * scale));
+        for (let y = y0; y < y1; y++)
+          for (let x = x0; x < x1; x++) {
+            const k = (y * A.w + x) * 4;
+            const off = (S: { d: Uint8ClampedArray }) =>
+              Math.abs(S.d[k]! - B.d[k]!) +
+              Math.abs(S.d[k + 1]! - B.d[k + 1]!) +
+              Math.abs(S.d[k + 2]! - B.d[k + 2]!);
+            // A letter pixel: the text drawn in black or in white changes it, whatever its
+            // real colour (so faint text is found too). Behind it is what was painted.
+            if (off(K) < 60 && off(W) < 60) continue;
+            const bg = [B.d[k]!, B.d[k + 1]!, B.d[k + 2]!];
+            samples.push(
+              ratio(
+                [0, 1, 2].map((c) => ink[c]! * a + bg[c]! * (1 - a)),
+                bg,
+              ),
+            );
+          }
+        // Visible, non-empty text always has letter pixels; finding none is a failure.
+        if (samples.length < 8) {
+          out.push(`"${t.text}" has too few letter pixels to check`);
+          continue;
+        }
+        samples.sort((m, n) => m - n);
+        const p10 = samples[Math.floor(samples.length * 0.1)]!;
+        if (p10 < (t.large ? 3 : 4.5)) out.push(`"${t.text}" ${p10.toFixed(2)}`);
+      }
+      return [...new Set(out)];
+    },
+    { shots: [without, black, white].map((b) => b.toString('base64')), texts },
+  );
+  return bad;
+}
+
 // Codex review of train #343 (lead: J15s-b, before staging): text painted straight on the page
 // (headings, the version footer, page notes, map labels) must read AA on what is really painted
 // behind it, the page wash and texture included, not just on --color-background. The letters are
@@ -193,136 +358,33 @@ for (const scheme of ['light', 'dark'] as const) {
       for (const style of STYLES) {
         await page.evaluate((s) => (document.documentElement.dataset.effectStyle = s), style);
         await settle(page);
-        // Text drawn with no box of its own behind it, up to the page.
-        const texts = await page.evaluate(() => {
-          const clear = (el: Element) => {
-            const cs = getComputedStyle(el);
-            return (
-              (cs.backgroundColor === 'rgba(0, 0, 0, 0)' || cs.backgroundColor === 'transparent') &&
-              cs.backgroundImage === 'none'
-            );
-          };
-          const out: {
-            x: number;
-            y: number;
-            w: number;
-            h: number;
-            color: string;
-            large: boolean;
-            text: string;
-          }[] = [];
-          const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-          for (let n = walker.nextNode(); n; n = walker.nextNode()) {
-            const el = n.parentElement;
-            if (!el || !n.textContent?.trim() || el.closest('.visually-hidden')) continue;
-            let onPage = true;
-            for (let a: Element | null = el; a && a !== document.body; a = a.parentElement)
-              if (!clear(a)) onPage = false;
-            if (!onPage) continue;
-            const cs = getComputedStyle(el);
-            if (cs.visibility === 'hidden' || Number(cs.opacity) === 0) continue;
-            const range = document.createRange();
-            range.selectNodeContents(n);
-            for (const r of Array.from(range.getClientRects())) {
-              if (r.width < 4 || r.height < 4 || r.bottom < 0 || r.top > innerHeight) continue;
-              if (r.right < 0 || r.left > innerWidth) continue;
-              const size = parseFloat(cs.fontSize);
-              out.push({
-                x: r.left,
-                y: r.top,
-                w: r.width,
-                h: r.height,
-                color: cs.color,
-                large: size >= 24 || (size >= 18.66 && Number(cs.fontWeight) >= 700),
-                text: (n.textContent ?? '').trim().slice(0, 30),
-              });
-            }
-          }
-          return out;
-        });
-        await settle(page);
-        const withText = await page.screenshot({ animations: 'disabled' });
-        const hide = await page.addStyleTag({
-          content:
-            '*, *::before, *::after { color: transparent !important; -webkit-text-fill-color: transparent !important; transition: none !important; }',
-        });
-        await settle(page);
-        const without = await page.screenshot({ animations: 'disabled' });
-        await hide.evaluate((s) => (s as HTMLElement).remove());
-        const bad = await page.evaluate(
-          async ({ shots, texts }) => {
-            const pixels = async (b64: string) => {
-              const img = new Image();
-              img.src = `data:image/png;base64,${b64}`;
-              await img.decode();
-              const cv = document.createElement('canvas');
-              cv.width = img.width;
-              cv.height = img.height;
-              const g = cv.getContext('2d')!;
-              g.drawImage(img, 0, 0);
-              return {
-                w: img.width,
-                h: img.height,
-                d: g.getImageData(0, 0, img.width, img.height).data,
-              };
-            };
-            const [A, B] = [await pixels(shots[0]!), await pixels(shots[1]!)];
-            const scale = A.w / innerWidth;
-            const ctx = document.createElement('canvas').getContext('2d')!;
-            const rgb = (c: string) => {
-              ctx.clearRect(0, 0, 1, 1);
-              ctx.fillStyle = c;
-              ctx.fillRect(0, 0, 1, 1);
-              const d = ctx.getImageData(0, 0, 1, 1).data;
-              return [d[0]!, d[1]!, d[2]!, d[3]! / 255];
-            };
-            const lum = (c: number[]) => {
-              const f = (v: number) =>
-                (v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
-              return 0.2126 * f(c[0]!) + 0.7152 * f(c[1]!) + 0.0722 * f(c[2]!);
-            };
-            const ratio = (a: number[], b: number[]) => {
-              const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m) as [number, number];
-              return (x + 0.05) / (y + 0.05);
-            };
-            const out: string[] = [];
-            for (const t of texts) {
-              const ink = rgb(t.color);
-              const a = ink[3]!;
-              const samples: number[] = [];
-              const x0 = Math.max(0, Math.floor(t.x * scale));
-              const y0 = Math.max(0, Math.floor(t.y * scale));
-              const x1 = Math.min(A.w, Math.ceil((t.x + t.w) * scale));
-              const y1 = Math.min(A.h, Math.ceil((t.y + t.h) * scale));
-              for (let y = y0; y < y1; y++)
-                for (let x = x0; x < x1; x++) {
-                  const k = (y * A.w + x) * 4;
-                  const diff =
-                    Math.abs(A.d[k]! - B.d[k]!) +
-                    Math.abs(A.d[k + 1]! - B.d[k + 1]!) +
-                    Math.abs(A.d[k + 2]! - B.d[k + 2]!);
-                  // A letter pixel: drawing the text changed it. Behind it is what was painted.
-                  if (diff < 60) continue;
-                  const bg = [B.d[k]!, B.d[k + 1]!, B.d[k + 2]!];
-                  samples.push(
-                    ratio(
-                      [0, 1, 2].map((c) => ink[c]! * a + bg[c]! * (1 - a)),
-                      bg,
-                    ),
-                  );
-                }
-              if (samples.length < 8) continue;
-              samples.sort((m, n) => m - n);
-              const p10 = samples[Math.floor(samples.length * 0.1)]!;
-              if (p10 < (t.large ? 3 : 4.5)) out.push(`"${t.text}" ${p10.toFixed(2)}`);
-            }
-            return [...new Set(out)];
-          },
-          { shots: [withText.toString('base64'), without.toString('base64')], texts },
-        );
+        const bad = await paintedTextFailures(page);
         for (const b of bad) failures.push(`${style} ${scheme} ${path}: ${b}`);
       }
     }
     expect(failures).toEqual([]);
   });
 }
+
+// J15s-c (Codex review of train #350): the check must catch faint text, not skip it.
+test('the painted-page check fails on faint text (1.1:1)', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await asStudent(page);
+  await page.goto('/settings');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await page.evaluate(() => {
+    const p = document.createElement('p');
+    p.textContent = 'Faint demo text';
+    p.style.cssText = 'font-size: 20px; margin: 16px;';
+    // About 1.1:1 against the page: the page colour, a touch darker.
+    const [r, g, b] = getComputedStyle(document.body)
+      .backgroundColor.match(/\d+/g)!
+      .map(Number) as [number, number, number];
+    p.style.color = `rgb(${r - 12}, ${g - 12}, ${b - 12})`;
+    document.querySelector('main')!.prepend(p);
+  });
+  await settle(page);
+  const failures = await paintedTextFailures(page);
+  expect(failures.some((f) => f.startsWith('"Faint demo text"'))).toBe(true);
+});
