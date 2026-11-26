@@ -20,6 +20,14 @@ first line that does not follow from the line before (`null` when every step is 
 - `{"expression": "(x+2)(x+3)", "form": "factorised"}` for expressions; `form` is optional and
   can be `factorised` or `expanded`.
 
+- `form` can also be an answer form (`app/forms.py`): `fraction`, `simplest_fraction`,
+  `standard_form` (1 ≤ A < 10) or `index_form` (different primes with powers). The answer must
+  then have the right value and be written that way: `360` is not index form.
+
+Everyday notation is read first (`app/notation.py`, matching `packages/core`'s answer
+normaliser): `×`, `·` and `x` between numbers are times, superscripts are powers, `−` and dashes
+are minus, and thousands separators are dropped between groups of exactly three digits.
+
 `final_answer_correct` is `null` when no `expected` answer is given. Unreadable or unsafe input
 returns 400.
 
@@ -31,7 +39,7 @@ Decimals in working are read exactly (as fractions), so `(6*1.6)*10^10` equals
 
 ## Input safety
 
-Input is untrusted. Only digits, single letters, `sqrt sin cos tan log ln exp pi`, `+ - * / ^ ( )`,
+Input is untrusted. After the notation above is rewritten, only digits, single letters, `sqrt sin cos tan log ln exp pi`, `+ - * / ^ ( )`,
 `.` and spaces are allowed, at most 200 characters per expression. Python builtins are switched
 off during parsing, scientific-notation literals and powers inside exponents are refused, and
 numeric exponents are capped at 50, so input like `9^9^9^9` cannot hang the service. Implicit

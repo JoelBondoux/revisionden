@@ -341,6 +341,13 @@ Tags: #product #rules #limits #defaults
 - `services/maths`: SymPy, no AI. `POST /check-working` returns the 0-based index of the first
   line of working that does not follow from the previous line, and whether the final answer is
   correct. Input is limited to safe maths (single letters, a few functions, 200 characters).
+- The engine reads everyday notation before parsing (T2, `services/maths/app/notation.py`, same
+  rules as `packages/core/src/answer-normalise.ts`): × · ⋅ and x between numbers are times,
+  superscripts are powers, the unicode minus and dashes are minus, and thousands separators are
+  dropped only between groups of exactly three digits. Answer forms (`app/forms.py`):
+  `fraction`, `simplest_fraction`, `standard_form`, `index_form`, checked on how the answer is
+  written as well as its value (lead ruling 2026-11-26: an unsimplified fraction is wrong when
+  simplest form is asked for; ordinary form is wrong when standard form is asked for).
 - Lines of working are read exactly: decimals become fractions (`1.6` is 16/10), so steps with
   decimals are compared without floating-point rounding (T1, 2026-11-26).
 - Answer format (S3-A rulings, rules in `packages/core/src/answer-format.ts`): an answer may declare

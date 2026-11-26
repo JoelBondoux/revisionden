@@ -23,6 +23,8 @@ from sympy.parsing.sympy_parser import (
     standard_transformations,
 )
 
+from app.notation import normalise
+
 MAX_LENGTH = 200
 MAX_EXPONENT = 50
 
@@ -82,6 +84,7 @@ def parse(
     ``exact=True`` decimals are read as exact fractions (2.675 is 2675/1000), for rounding.
     """
     transformations = TRANSFORMATIONS + ((rationalize,) if exact else ())
+    text = normalise(text)
     _check_text(text)
     names = {**_names(), **(functions or {})}
     try:

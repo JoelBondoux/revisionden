@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Fixed: worked answers written the everyday way, like 2³ × 3² × 5, 1.5 × 10^11, −7 or 30,000, are now understood and marked properly instead of being refused.
 - Four more effect styles now have their own sounds and vibrations: Comic Pop (punchy and bold), Garden Grow (soft woodwind and chimes), Pixel Arcade (retro game blips) and Doodle Diary (pencil scratches, page flips and pen clicks). Doodle Diary is now the starting sound style; Sticker Book becomes one you can unlock.
 - Number answers can now be typed with their unit (15 m, £9600, 100p), with a − minus sign, or as a mixed number like 1 1/3.
 - Standard form answers such as 6.4 × 10⁸, 6.4x10^8 or 6.4e8 are now marked right.
@@ -114,6 +115,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Maths engine (T2): `app/notation.py` rewrites everyday notation before parsing (× · ⋅, x between numbers, superscripts and the superscript minus, unicode minus and dashes, thousands separators in exact groups of three), so `/check-working`, `/equivalent`, `/solutions` and the content checks no longer refuse `2^3 × 3^2 × 5`, `1.5 × 10^11`, `2³ × 3²`, `−7` or `30,000`, or read `1.5x10^11` as the letter x.
 - S3-N: the estimation questions n14-0001 and n14-0003 no longer require the estimate to a set number of significant figures (the question asks only for the numbers to be rounded), so an equal estimate written another way, such as 150.0, is marked right (Codex review of #115; needs S2's #178).
 - S3-N: the bounds questions n16-0002 and n16-0003 now say "correct to the nearest 0.1 kg" / "0.01 second" and no longer require the answer to a set number of decimal places, so equal answers such as 4.550 are marked right (Codex review of #115).
 - Visual fixes J10f (J, from the morning walkthrough #185): Doodle Diary's right answer uses `--color-success`/`--color-success-soft` (ring and wash) instead of a red-pen ring; new tokens `--color-track`, `--arena-track` (also in Sticker Book and Doodle Diary surrounds) and `--color-challenge-edge`, each 3:1 against what it sits on in light, dark and colour-blind palettes (`NON_TEXT_PAIRS` in `themes.ts`). `ProgressBar`, `ArenaProgress` and the Challenge hex use them (`components.css` and `pages.css` changed at the lead's request).
@@ -171,6 +173,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 ### Added
 
 - Maths templates design (T1, docs only): `docs/TEMPLATES.md` now describes how physics and chemistry calculation templates would work (units with pint, balancing with ChemPy, board data only, exact rounding, the three-way cross-check), and what must be sourced first. Nothing built.
+- Maths engine answer forms (T2, `app/forms.py`): `form` on `/check-working` expected answers and on content `value` and `expression` checks can be `fraction`, `simplest_fraction`, `standard_form` or `index_form`; the answer must have the right value and be written in that form.
 - U6c: sound and haptic packs for Comic Pop, Garden Grow, Pixel Arcade and Doodle Diary (all 15 feedback events), matched to J's mockup previews. The sound bank gains filtered noise (paper and pencil textures, from a fixed-seed buffer) and low-passed square waves, allowed only in Comic Pop and Pixel Arcade. `DEFAULT_STYLE` is now `doodle-diary` (owner-approved); Sticker Book is an unlockable pack.
 - E5c: the parent Subjects page groups the exam board and tier rows in fieldsets with visible legends ("Exam board", "Tier"), on each subject and in the add picker (screenshot review #185).
 - Morning walkthrough screenshots of the screens that changed overnight (child home, rewards, a lesson, flashcards, the style picker, Get help, parent Subjects) at phone width in light and dark, with a list of visual issues, in `docs/design/morning/` (I11).
