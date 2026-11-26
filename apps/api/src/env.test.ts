@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { parseEnv } from './env';
 
 const complete = {
@@ -160,6 +162,22 @@ describe('environment validation', () => {
     expect(
       parseEnv({ ...complete, APPDECK_OPERATOR_SHARED_SECRET: secret }).operatorBridge,
     ).toEqual({ secret });
+  });
+
+  it('leaves the 1.0 cut-off (Founding Tester) unset until it is configured', () => {
+    expect(parseEnv(complete).betaEndsAt).toBeUndefined();
+    expect(
+      parseEnv({ ...complete, BETA_ENDS_AT: '2027-09-01T00:00:00Z' }).betaEndsAt?.toISOString(),
+    ).toBe('2027-09-01T00:00:00.000Z');
+  });
+
+  it('refuses a 1.0 cut-off that is not a full UTC timestamp', () => {
+    expect(() => parseEnv({ ...complete, BETA_ENDS_AT: 'next September' })).toThrow(/BETA_ENDS_AT/);
+  });
+
+  it('has no 1.0 cut-off set in any environment today (wrangler.toml)', () => {
+    const toml = readFileSync(fileURLToPath(new URL('../wrangler.toml', import.meta.url)), 'utf8');
+    expect(toml).not.toMatch(/^\s*BETA_ENDS_AT\s*=/m);
   });
 
   it('refuses an AppDeck shared secret shorter than 32 characters', () => {

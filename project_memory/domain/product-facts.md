@@ -291,6 +291,9 @@ Tags: #product #rules #limits #defaults
   uses the card's interval, not its lateness). Parent stats show no backlog (API has `backlog`).
   An all-decks session is complete when today's offered cards are done, including a "10 more"
   batch (F11b, `flashcard_sessions.extra_cards`, migration 0032).
+- Lesson reactions (F13, for J14, owner 2026-11-26): `LessonPlayer` calls
+  `onAnswerReaction({ kind: 'right' | 'wrong' | 'helped' | 'goal', combo })` once per marked
+  answer (never for an unmarked one). F decides when; J decides how Pip and the avatar react.
 - Clues and help (F10, owner 2026-11-26): "Need a clue?" shows the verified hint (no penalty,
   no longer shown up front); then "Help me understand" steps through the verified worked
   solution. A right answer after help earns half XP (rounded down, owner), no combo, and is
@@ -767,9 +770,11 @@ Tags: #product #rules #limits #defaults
 - Interactive lesson pilot (owner, 2026-11-26; built W8): area model for factorising x² + bx + c
   (A4), b and c positive only; shown first in the A4 lesson when A4 mastery is below 60 (not at
   60, not with no history, not in unit or subject lessons); explore, 2 guided, 1 typed, then the
-  normal A4 questions; item type `area_model`; draft until verified, so dev only for now.
+  normal A4 questions; item type `area_model`; draft until verified, so dev only for now. The
+  picture always keeps b strips and c unit squares (a wrong pair shows gaps or spares), and pilot
+  steps are never warm-ups or retries (W8b).
 - Feedback kinds: bug, idea, something confusing, other (plus lesson_helped / lesson_not_helped,
-  the pilot's one-tap "Did this help?": item only, no text, outside the 5 a day); text up to 500 characters with personal
+  the pilot's one-tap "Did this help?": item only, no text, one per student and item (unique index, migration 0033), outside the 5 a day); text up to 500 characters with personal
   details refused; device details optional; parents see their family's feedback; never sent to
   GitHub automatically; 5 in any 24 hours per sender; device details off by default for students, on for parents; deleted 12 months after closing (cron).
   The form also offers "Prefer email? help@revisionden.com" and asks for only the personal details
@@ -944,6 +949,11 @@ Tags: #product #rules #limits #defaults
 
 ## Titles (owner, 2026-11-25; built R8) and Get help (built, workstream W)
 
+- Founding Tester (R5, owner 2026-11-26): one-off badge and title ("Founding" + "Tester") for
+  students with an answer or completed flashcard session strictly before the 1.0 cut-off
+  `BETA_ENDS_AT` (Worker variable, UTC, unset in every environment until release; set in the 1.0
+  release step, `docs/ENVIRONMENTS.md`). Awarded automatically and once by the reward evaluator
+  (stat `foundingTester`); reward source `special`, shown only once earned. No new data.
 - Two-part titles (built R8): 120 first words and 120 last words, each unlocked by one reward
   (levels, chapters, milestones, collections, seasons, hidden tracks, secrets); a word has its
   reward's rarity. The 99 old single titles were migrated into words (their rewards now give a

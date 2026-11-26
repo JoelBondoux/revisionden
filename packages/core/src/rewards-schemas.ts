@@ -82,6 +82,8 @@ export const RewardsOverviewSchema = z.object({
       steps: z.array(RewardCardSchema),
     }),
   ),
+  /** Earned one-off special rewards (R5), such as Founding Tester. Never shown before. */
+  special: z.array(RewardCardSchema),
   secrets: z.object({
     found: z.number().int(),
     total: z.number().int(),
@@ -252,6 +254,7 @@ const STAT_WORDS: Record<StatKey, (n: number) => string> = {
   practiceKindsTried: (n) => `${n} kinds of practice tried`,
   plannedWeeks: (n) => `${n} week${n === 1 ? '' : 's'} on plan`,
   perfectSetsLevel2: (n) => `${n} perfect set${n === 1 ? '' : 's'} at level 2+`,
+  foundingTester: () => 'Practised with RevisionDen before version 1.0',
 };
 
 /** The target in words, for the parent and student screens. */

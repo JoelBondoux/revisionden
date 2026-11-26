@@ -4,6 +4,7 @@ import {
   checkAreaModelPair,
   factorPairs,
   factorisedForm,
+  fitStrips,
   formatAreaModelAnswer,
   parseAreaModelAnswer,
   tileExplanation,
@@ -93,14 +94,7 @@ export function AreaModelStep({ item, draft, disabled, onChange }: AreaModelStep
       </p>
 
       <div className="area-board">
-        <Tiles
-          b={b}
-          c={c}
-          pair={pair}
-          fits={!showVerdict || !!check?.correct}
-          lit={lit}
-          onTile={light}
-        />
+        <Tiles b={b} c={c} pair={pair} lit={lit} onTile={light} />
       </div>
       <p
         className={`area-status${check && showVerdict ? (check.correct ? ' area-status--right' : ' area-status--try') : ''}`}
@@ -166,14 +160,12 @@ interface TilesProps {
   b: number;
   c: number;
   pair: readonly [number, number] | null;
-  /** False in explore mode when the chosen pair does not make a rectangle: units fade. */
-  fits: boolean;
   lit: AreaModelTile | null;
   onTile: (tile: AreaModelTile) => void;
 }
 
 /** The tiles as an SVG picture. One tile of each kind is a keyboard stop; all can be tapped. */
-function Tiles({ b, c, pair, fits, lit, onTile }: TilesProps) {
+function Tiles({ b, c, pair, lit, onTile }: TilesProps) {
   const seen = new Set<AreaModelTile>();
   const tile = (
     kind: AreaModelTile,
@@ -241,11 +233,43 @@ function Tiles({ b, c, pair, fits, lit, onTile }: TilesProps) {
     height = OY + X + 14 + Math.ceil(c / 8) * (U + 4) + 10;
   } else {
     const layout = areaModelLayout(pair);
-    for (let i = 0; i < layout.rightStrips; i++) {
+    // Exactly b strips, whatever the pair (W8b): a wrong pair shows outlined gaps or spare strips
+    // instead of quietly drawing a different rectangle.
+    const fit = fitStrips(b, pair);
+    for (let i = 0; i < fit.right; i++) {
       shapes.push(tile('strip', `r${i}`, OX + X + GAP + i * (U + GAP), OY, U, X));
     }
-    for (let i = 0; i < layout.bottomStrips; i++) {
+    for (let i = 0; i < fit.bottom; i++) {
       shapes.push(tile('strip', `d${i}`, OX, OY + X + GAP + i * (U + GAP), X, U));
+    }
+    for (const { side, index } of fit.missing) {
+      shapes.push(
+        side === 'right' ? (
+          <rect
+            key={`mr${index}`}
+            className="area-slot area-slot--missing"
+            x={OX + X + GAP + index * (U + GAP)}
+            y={OY}
+            width={U}
+            height={X}
+            rx={3}
+          />
+        ) : (
+          <rect
+            key={`md${index}`}
+            className="area-slot area-slot--missing"
+            x={OX}
+            y={OY + X + GAP + index * (U + GAP)}
+            width={X}
+            height={U}
+            rx={3}
+          />
+        ),
+      );
+    }
+    const frameRight = OX + X + GAP + layout.rightStrips * (U + GAP);
+    for (let i = 0; i < fit.extra; i++) {
+      shapes.push(tile('strip', `x${i}`, frameRight + 14 + i * (U + 4), OY, U, X, true));
     }
     for (const { row, col } of layout.units) {
       shapes.push(
@@ -256,7 +280,6 @@ function Tiles({ b, c, pair, fits, lit, onTile }: TilesProps) {
           OY + X + GAP + row * (U + GAP),
           U,
           U,
-          !fits,
         ),
       );
     }
@@ -270,7 +293,7 @@ function Tiles({ b, c, pair, fits, lit, onTile }: TilesProps) {
         {layout.sides.left[1]}
       </text>,
     );
-    width = OX + X + GAP + qw + 20;
+    width = OX + X + GAP + qw + 20 + (fit.extra ? 14 + fit.extra * (U + 4) : 0);
     height = OY + X + GAP + ph + 20;
   }
 
