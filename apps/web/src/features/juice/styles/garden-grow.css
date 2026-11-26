@@ -220,9 +220,13 @@
   --radius-lg: 26px;
   --font-heading: 'Baloo 2', 'Nunito', system-ui, sans-serif;
   --pattern-ink: rgb(44 127 65 / 10%);
-  --page-art:
-    radial-gradient(circle at 92% -4%, rgba(255, 214, 90, 0.55), transparent 140px),
-    linear-gradient(180deg, #dff4ff, #f2fbe6 62%, color-mix(in srgb, #3fae5a 28%, #f2fbe6));
+  --page-wash: linear-gradient(
+    180deg,
+    #dff4ff,
+    #f2fbe6 62%,
+    color-mix(in srgb, #3fae5a 28%, #f2fbe6)
+  );
+  --page-texture: radial-gradient(circle at 92% -4%, rgba(255, 214, 90, 0.55), transparent 140px);
 }
 
 :root[data-effect-style='garden-grow'][data-theme='dark'] {
@@ -248,8 +252,12 @@
   --radius-lg: 28px;
   --font-heading: 'Baloo 2', 'Nunito', system-ui, sans-serif;
   --pattern-ink: rgb(155 227 173 / 8%);
-  --page-art:
-    radial-gradient(circle at 92% -4%, rgba(255, 214, 90, 0.55), transparent 140px),
-    linear-gradient(180deg, #0f2433, #12281c 62%, color-mix(in srgb, #3fae5a 28%, #12281c));
+  --page-wash: linear-gradient(
+    180deg,
+    #0f2433,
+    #12281c 62%,
+    color-mix(in srgb, #3fae5a 28%, #12281c)
+  );
+  --page-texture: radial-gradient(circle at 92% -4%, rgba(255, 214, 90, 0.55), transparent 140px);
 }
 /* ---------- end of the full look ---------- */

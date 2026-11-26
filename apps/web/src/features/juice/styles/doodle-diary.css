@@ -366,7 +366,8 @@
   --radius-lg: 14px;
   --font-heading: 'Patrick Hand', 'Comic Neue', cursive;
   --pattern-ink: rgb(47 91 211 / 9%);
-  --page-art:
+  --page-wash: none;
+  --page-texture:
     linear-gradient(
       90deg,
       transparent 30px,
@@ -399,7 +400,8 @@
   --radius-lg: 14px;
   --font-heading: 'Patrick Hand', 'Comic Neue', cursive;
   --pattern-ink: rgb(169 189 255 / 8%);
-  --page-art:
+  --page-wash: none;
+  --page-texture:
     linear-gradient(
       90deg,
       transparent 30px,

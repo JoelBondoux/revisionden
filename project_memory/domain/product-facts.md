@@ -911,6 +911,9 @@ Tags: #product #rules #limits #defaults
   art and heading font (self-hosted: Baloo 2, Bangers, Press Start 2P, Patrick Hand). Vivid and
   night pages (Pop Burst purple, Starlight night sky, Pixel Arcade screen) show in dark mode only;
   light mode keeps a light page there, because the shared status colours need a light page.
+  Settings always win over a look: the page texture (lines, halftone, scanlines, stars) shows only
+  with Background pattern on; high contrast gets a plain page; reading tints and the
+  dyslexia-friendly font override every look (`apps/web/src/design/base.css`).
   Lead ruling (2026-11-26, accessibility comes first): rich pages are dark-mode only for Pop Burst,
   Starlight and Pixel Arcade, light pages in light mode, and those looks use deeper button colours
   with white text (the bright colour stays as the highlight). Every self-hosted font (Nunito,

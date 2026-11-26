@@ -225,9 +225,9 @@
   --radius-lg: 4px;
   --font-heading: 'Bangers', 'Baloo 2', 'Nunito', sans-serif;
   --pattern-ink: rgb(212 32 32 / 10%);
-  --page-art:
-    radial-gradient(circle, rgba(0, 0, 0, 0.13) 1.3px, transparent 1.7px) 0 0 / 9px 9px,
-    linear-gradient(160deg, #ffe14d, #ffb02e);
+  --page-wash: linear-gradient(160deg, #ffe14d, #ffb02e);
+  --page-texture: radial-gradient(circle, rgba(0, 0, 0, 0.13) 1.3px, transparent 1.7px) 0 0 / 9px
+    9px;
 }
 
 :root[data-effect-style='comic-pop'][data-theme='dark'] {
@@ -253,8 +253,8 @@
   --radius-lg: 4px;
   --font-heading: 'Bangers', 'Baloo 2', 'Nunito', sans-serif;
   --pattern-ink: rgb(255 225 77 / 9%);
-  --page-art:
-    radial-gradient(circle, rgba(255, 255, 255, 0.09) 1.3px, transparent 1.7px) 0 0 / 9px 9px,
-    linear-gradient(160deg, #2b2560, #1a1638);
+  --page-wash: linear-gradient(160deg, #2b2560, #1a1638);
+  --page-texture: radial-gradient(circle, rgba(255, 255, 255, 0.09) 1.3px, transparent 1.7px) 0 0 /
+    9px 9px;
 }
 /* ---------- end of the full look ---------- */

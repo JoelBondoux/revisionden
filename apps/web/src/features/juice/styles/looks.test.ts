@@ -128,10 +128,77 @@ const lum = (hex: string) => {
 describe('the looks follow the approved mockup', () => {
   it('paints every page with the style’s own art, in light and dark', () => {
     for (const id of EFFECT_STYLE_IDS)
+      for (const mode of ['light', 'dark'] as const) {
+        const look = LOOKS[id][mode];
+        expect(`${look['--page-wash']} ${look['--page-texture']}`, `${id} ${mode}`).toMatch(
+          /gradient\(/,
+        );
+      }
+  });
+
+  // Codex review of train #337 (lead: blocking): textures obey "Background pattern" and high
+  // contrast, and reading comfort settings win over every look.
+  it('keeps textures (lines, halftone, scanlines, stars) out of the washes', () => {
+    for (const id of EFFECT_STYLE_IDS)
       for (const mode of ['light', 'dark'] as const)
-        expect(LOOKS[id][mode]['--page-art'], `${id} ${mode}`).toMatch(/gradient\(/);
-    expect(read('../../../design/base.css')).toMatch(
-      /body\s*\{[^}]*background:\s*var\(--page-art, none\),\s*var\(--color-background\)/,
+        expect(LOOKS[id][mode]['--page-wash'], `${id} ${mode}`).not.toMatch(/repeating-|\dpx| \/ /);
+  });
+
+  const base = read('../../../design/base.css');
+  const rule = (selector: string) => {
+    const at = base.indexOf(`${selector} {`);
+    expect(at, selector).toBeGreaterThanOrEqual(0);
+    return base.slice(at, base.indexOf('}', at));
+  };
+
+  it('shows textures only with the pattern on, and no page art with high contrast', () => {
+    expect(rule('body')).toMatch(
+      /background:\s*var\(--page-wash, none\),\s*var\(--color-background\)/,
+    );
+    expect(rule(":root[data-pattern='on'] body")).toMatch(
+      /background:\s*var\(--page-texture, none\),\s*var\(--page-wash, none\),\s*var\(--color-background\)/,
+    );
+    const contrast = base.slice(
+      base.indexOf('@media (prefers-contrast: more), (forced-colors: active)'),
+    );
+    expect(contrast).toMatch(
+      /:root\[data-pattern='on'\] body\s*\{\s*background:\s*var\(--color-background\)/,
+    );
+  });
+
+  it('lets the reading tints win over every look, with no page art over them', () => {
+    const reading = read('../../reading/reading.css');
+    const themes = read('../../../design/themes.css');
+    const tintOf = (css: string, selector: string) => {
+      const at = css.indexOf(`${selector} {`);
+      const block = css.slice(at, css.indexOf('}', at));
+      return [
+        /--color-background:\s*(#\w+)/.exec(block)?.[1],
+        /--color-surface:\s*(#\w+)/.exec(block)?.[1],
+      ];
+    };
+    for (const tint of ['cream', 'blue']) {
+      expect(tintOf(base, `:root:root[data-reading-tint='${tint}'][data-effect-style]`)).toEqual(
+        tintOf(reading, `:root[data-reading-tint='${tint}']`),
+      );
+      expect(
+        tintOf(
+          base,
+          `:root:root[data-reading-tint='${tint}'][data-effect-style][data-theme='dark']`,
+        ),
+      ).toEqual(tintOf(themes, `:root[data-theme='dark'][data-reading-tint='${tint}']`));
+    }
+    expect(rule(':root:root[data-reading-tint][data-effect-style]')).toMatch(
+      /--page-wash:\s*none;\s*--page-texture:\s*none/,
+    );
+  });
+
+  it('lets the dyslexia-friendly font win over every heading and style font', () => {
+    expect(rule(":root:root[data-reading-font='dyslexic'][data-effect-style]")).toContain(
+      '--font-heading: var(--font-family);',
+    );
+    expect(rule(":root[data-reading-font='dyslexic'] body *")).toContain(
+      'font-family: var(--font-family) !important;',
     );
   });
 

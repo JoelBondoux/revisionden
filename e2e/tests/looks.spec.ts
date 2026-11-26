@@ -90,3 +90,70 @@ test('changing the style restyles the page itself, not just the accents', async 
   expect(after.card).not.toBe(before.card);
   expect(after.corners).toBe('0px');
 });
+
+// Codex review of train #337 (lead, 2026-11-26: blocking): a look must never undo a reading or
+// appearance setting. Reading tints and the dyslexia-friendly font win over every look, and the
+// page textures (notebook lines, halftone, scanlines, stars) obey "Background pattern: Off" and
+// high contrast, like the doodle pattern.
+const TINTS = {
+  cream: { light: 'rgb(248, 240, 216)', dark: 'rgb(29, 25, 18)' },
+  blue: { light: 'rgb(223, 234, 246)', dark: 'rgb(17, 26, 38)' },
+} as const;
+const hasTexture = (image: string) => /repeating-|\d(\.\d+)?px/.test(image);
+/** No page art: every background layer is `none`. */
+const NO_ART = /^none(, none)*$/;
+
+for (const scheme of ['light', 'dark'] as const) {
+  test(`reading and pattern settings win over every look, ${scheme} mode`, async ({ page }) => {
+    await page.emulateMedia({ colorScheme: scheme });
+    await asStudent(page);
+    await page.goto('/settings');
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    for (const style of STYLES) {
+      const seen = await page.evaluate((s) => {
+        const root = document.documentElement;
+        root.dataset.effectStyle = s;
+        const read = () => ({
+          page: getComputedStyle(document.body).backgroundColor,
+          image: getComputedStyle(document.body).backgroundImage,
+          heading: getComputedStyle(document.querySelector('h1')!).fontFamily,
+        });
+        const out: Record<string, ReturnType<typeof read>> = {};
+        for (const tint of ['cream', 'blue']) {
+          root.dataset.readingTint = tint;
+          out[tint] = read();
+        }
+        delete root.dataset.readingTint;
+        root.dataset.readingFont = 'dyslexic';
+        out.dyslexic = read();
+        delete root.dataset.readingFont;
+        root.dataset.pattern = 'off';
+        out.patternOff = read();
+        root.dataset.pattern = 'on';
+        return out;
+      }, style);
+      for (const tint of ['cream', 'blue'] as const) {
+        expect(seen[tint]!.page, `${style} ${tint}`).toBe(TINTS[tint][scheme]);
+        expect(seen[tint]!.image, `${style} ${tint} page art`).toMatch(NO_ART);
+      }
+      expect(seen.dyslexic!.heading, `${style} heading font`).toMatch(/^"?OpenDyslexic/);
+      expect(hasTexture(seen.patternOff!.image), `${style} textures with the pattern off`).toBe(
+        false,
+      );
+    }
+  });
+}
+
+test('high contrast drops the page art in every look', async ({ page }) => {
+  await page.emulateMedia({ contrast: 'more' });
+  await asStudent(page);
+  await page.goto('/settings');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  for (const style of STYLES) {
+    const image = await page.evaluate((s) => {
+      document.documentElement.dataset.effectStyle = s;
+      return getComputedStyle(document.body).backgroundImage;
+    }, style);
+    expect(image, style).toMatch(NO_ART);
+  }
+});

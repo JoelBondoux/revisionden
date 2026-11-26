@@ -248,9 +248,10 @@
   --radius-lg: 26px;
   --font-heading: 'Baloo 2', 'Nunito', system-ui, sans-serif;
   --pattern-ink: rgb(255 79 163 / 10%);
-  --page-art:
+  --page-wash:
     radial-gradient(circle at 15% 20%, rgba(255, 224, 102, 0.35), transparent 30%),
     radial-gradient(circle at 85% 70%, rgba(155, 92, 242, 0.18), transparent 35%);
+  --page-texture: none;
 }
 
 :root[data-effect-style='pop-burst'][data-theme='dark'] {
@@ -276,6 +277,7 @@
   --radius-lg: 22px;
   --font-heading: 'Baloo 2', 'Nunito', system-ui, sans-serif;
   --pattern-ink: rgb(255 122 192 / 9%);
-  --page-art: linear-gradient(165deg, #7b4dff 0%, #c94bff 48%, #ff7a59 100%);
+  --page-wash: linear-gradient(165deg, #7b4dff 0%, #c94bff 48%, #ff7a59 100%);
+  --page-texture: none;
 }
 /* ---------- end of the full look ---------- */

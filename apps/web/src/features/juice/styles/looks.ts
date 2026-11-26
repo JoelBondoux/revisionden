@@ -35,8 +35,10 @@ export const LOOK_TOKENS = [
   '--radius-lg',
   '--font-heading',
   '--pattern-ink',
-  /** The style's own page art (gradients and textures), layered over the page colour. */
-  '--page-art',
+  /** The style's page wash: soft gradients in its own colours, under everything. */
+  '--page-wash',
+  /** The style's page texture (lines, halftone, scanlines, stars): off with the pattern off or high contrast. */
+  '--page-texture',
 ] as const;
 
 export type LookToken = (typeof LOOK_TOKENS)[number];
@@ -72,7 +74,8 @@ export const LOOKS: Record<EffectStyleId, { light: Look; dark: Look }> = {
       '--radius-lg': '14px',
       '--font-heading': HAND,
       '--pattern-ink': 'rgb(47 91 211 / 9%)',
-      '--page-art':
+      '--page-wash': 'none',
+      '--page-texture':
         'linear-gradient(90deg, transparent 30px, rgba(217, 68, 58, 0.4) 30px 31.5px, transparent 31.5px), repeating-linear-gradient(0deg, transparent 0 25px, rgba(47, 91, 211, 0.16) 25px 26px)',
     },
     dark: {
@@ -98,7 +101,8 @@ export const LOOKS: Record<EffectStyleId, { light: Look; dark: Look }> = {
       '--radius-lg': '14px',
       '--font-heading': HAND,
       '--pattern-ink': 'rgb(169 189 255 / 8%)',
-      '--page-art':
+      '--page-wash': 'none',
+      '--page-texture':
         'linear-gradient(90deg, transparent 30px, rgba(255, 120, 110, 0.4) 30px 31.5px, transparent 31.5px), repeating-linear-gradient(0deg, transparent 0 25px, rgba(150, 170, 255, 0.14) 25px 26px)',
     },
   },
@@ -126,8 +130,10 @@ export const LOOKS: Record<EffectStyleId, { light: Look; dark: Look }> = {
       '--radius-lg': '10px',
       '--font-heading': BALOO,
       '--pattern-ink': 'rgb(201 58 43 / 8%)',
-      '--page-art':
-        'radial-gradient(circle at 20% 10%, rgba(255, 159, 28, 0.18), transparent 40%), radial-gradient(circle at 90% 80%, rgba(31, 190, 170, 0.18), transparent 45%), repeating-linear-gradient(0deg, transparent 0 27px, rgba(80, 70, 140, 0.08) 27px 28px)',
+      '--page-wash':
+        'radial-gradient(circle at 20% 10%, rgba(255, 159, 28, 0.18), transparent 40%), radial-gradient(circle at 90% 80%, rgba(31, 190, 170, 0.18), transparent 45%)',
+      '--page-texture':
+        'repeating-linear-gradient(0deg, transparent 0 27px, rgba(80, 70, 140, 0.08) 27px 28px)',
     },
     dark: {
       '--color-background': '#201a2b',
@@ -152,8 +158,9 @@ export const LOOKS: Record<EffectStyleId, { light: Look; dark: Look }> = {
       '--radius-lg': '10px',
       '--font-heading': BALOO,
       '--pattern-ink': 'rgb(255 167 155 / 7%)',
-      '--page-art':
+      '--page-wash':
         'radial-gradient(circle at 20% 10%, rgba(255, 159, 28, 0.14), transparent 40%), radial-gradient(circle at 90% 80%, rgba(31, 190, 170, 0.14), transparent 45%)',
+      '--page-texture': 'none',
     },
   },
   'pop-burst': {
@@ -180,8 +187,9 @@ export const LOOKS: Record<EffectStyleId, { light: Look; dark: Look }> = {
       '--radius-lg': '26px',
       '--font-heading': BALOO,
       '--pattern-ink': 'rgb(255 79 163 / 10%)',
-      '--page-art':
+      '--page-wash':
         'radial-gradient(circle at 15% 20%, rgba(255, 224, 102, 0.35), transparent 30%), radial-gradient(circle at 85% 70%, rgba(155, 92, 242, 0.18), transparent 35%)',
+      '--page-texture': 'none',
     },
     dark: {
       '--color-background': '#7a32e0',
@@ -206,7 +214,8 @@ export const LOOKS: Record<EffectStyleId, { light: Look; dark: Look }> = {
       '--radius-lg': '22px',
       '--font-heading': BALOO,
       '--pattern-ink': 'rgb(255 122 192 / 9%)',
-      '--page-art': 'linear-gradient(165deg, #7b4dff 0%, #c94bff 48%, #ff7a59 100%)',
+      '--page-wash': 'linear-gradient(165deg, #7b4dff 0%, #c94bff 48%, #ff7a59 100%)',
+      '--page-texture': 'none',
     },
   },
   starlight: {
@@ -233,8 +242,9 @@ export const LOOKS: Record<EffectStyleId, { light: Look; dark: Look }> = {
       '--radius-lg': '22px',
       '--font-heading': BALOO,
       '--pattern-ink': 'rgb(59 47 168 / 12%)',
-      '--page-art':
+      '--page-wash':
         'radial-gradient(ellipse at 20% 0%, rgba(80, 220, 255, 0.25), transparent 50%), radial-gradient(ellipse at 100% 60%, rgba(255, 90, 200, 0.16), transparent 50%)',
+      '--page-texture': 'none',
     },
     dark: {
       '--color-background': '#120d3a',
@@ -259,8 +269,10 @@ export const LOOKS: Record<EffectStyleId, { light: Look; dark: Look }> = {
       '--radius-lg': '20px',
       '--font-heading': BALOO,
       '--pattern-ink': 'rgb(255 255 255 / 6%)',
-      '--page-art':
-        'radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent), radial-gradient(1px 1px at 78% 12%, #fff, transparent), radial-gradient(1.5px 1.5px at 90% 40%, #fff, transparent), radial-gradient(1px 1px at 30% 52%, #fff, transparent), radial-gradient(1px 1px at 62% 70%, #fff, transparent), radial-gradient(1.5px 1.5px at 8% 88%, #fff, transparent), radial-gradient(1px 1px at 48% 30%, #fff, transparent), radial-gradient(1px 1px at 70% 92%, #fff, transparent), radial-gradient(ellipse at 20% 0%, rgba(80, 220, 255, 0.35), transparent 50%), radial-gradient(ellipse at 100% 60%, rgba(255, 90, 200, 0.3), transparent 55%), linear-gradient(170deg, #241a6b 0%, #120d3a 70%)',
+      '--page-wash':
+        'radial-gradient(ellipse at 20% 0%, rgba(80, 220, 255, 0.35), transparent 50%), radial-gradient(ellipse at 100% 60%, rgba(255, 90, 200, 0.3), transparent 55%), linear-gradient(170deg, #241a6b 0%, #120d3a 70%)',
+      '--page-texture':
+        'radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent), radial-gradient(1px 1px at 78% 12%, #fff, transparent), radial-gradient(1.5px 1.5px at 90% 40%, #fff, transparent), radial-gradient(1px 1px at 30% 52%, #fff, transparent), radial-gradient(1px 1px at 62% 70%, #fff, transparent), radial-gradient(1.5px 1.5px at 8% 88%, #fff, transparent), radial-gradient(1px 1px at 48% 30%, #fff, transparent), radial-gradient(1px 1px at 70% 92%, #fff, transparent)',
     },
   },
   'comic-pop': {
@@ -287,8 +299,9 @@ export const LOOKS: Record<EffectStyleId, { light: Look; dark: Look }> = {
       '--radius-lg': '4px',
       '--font-heading': BANGERS,
       '--pattern-ink': 'rgb(212 32 32 / 10%)',
-      '--page-art':
-        'radial-gradient(circle, rgba(0, 0, 0, 0.13) 1.3px, transparent 1.7px) 0 0 / 9px 9px, linear-gradient(160deg, #ffe14d, #ffb02e)',
+      '--page-wash': 'linear-gradient(160deg, #ffe14d, #ffb02e)',
+      '--page-texture':
+        'radial-gradient(circle, rgba(0, 0, 0, 0.13) 1.3px, transparent 1.7px) 0 0 / 9px 9px',
     },
     dark: {
       '--color-background': '#121212',
@@ -313,8 +326,9 @@ export const LOOKS: Record<EffectStyleId, { light: Look; dark: Look }> = {
       '--radius-lg': '4px',
       '--font-heading': BANGERS,
       '--pattern-ink': 'rgb(255 225 77 / 9%)',
-      '--page-art':
-        'radial-gradient(circle, rgba(255, 255, 255, 0.09) 1.3px, transparent 1.7px) 0 0 / 9px 9px, linear-gradient(160deg, #2b2560, #1a1638)',
+      '--page-wash': 'linear-gradient(160deg, #2b2560, #1a1638)',
+      '--page-texture':
+        'radial-gradient(circle, rgba(255, 255, 255, 0.09) 1.3px, transparent 1.7px) 0 0 / 9px 9px',
     },
   },
   'garden-grow': {
@@ -341,8 +355,10 @@ export const LOOKS: Record<EffectStyleId, { light: Look; dark: Look }> = {
       '--radius-lg': '26px',
       '--font-heading': BALOO,
       '--pattern-ink': 'rgb(44 127 65 / 10%)',
-      '--page-art':
-        'radial-gradient(circle at 92% -4%, rgba(255, 214, 90, 0.55), transparent 140px), linear-gradient(180deg, #dff4ff, #f2fbe6 62%, color-mix(in srgb, #3fae5a 28%, #f2fbe6))',
+      '--page-wash':
+        'linear-gradient(180deg, #dff4ff, #f2fbe6 62%, color-mix(in srgb, #3fae5a 28%, #f2fbe6))',
+      '--page-texture':
+        'radial-gradient(circle at 92% -4%, rgba(255, 214, 90, 0.55), transparent 140px)',
     },
     dark: {
       '--color-background': '#0f1d14',
@@ -367,8 +383,10 @@ export const LOOKS: Record<EffectStyleId, { light: Look; dark: Look }> = {
       '--radius-lg': '28px',
       '--font-heading': BALOO,
       '--pattern-ink': 'rgb(155 227 173 / 8%)',
-      '--page-art':
-        'radial-gradient(circle at 92% -4%, rgba(255, 214, 90, 0.55), transparent 140px), linear-gradient(180deg, #0f2433, #12281c 62%, color-mix(in srgb, #3fae5a 28%, #12281c))',
+      '--page-wash':
+        'linear-gradient(180deg, #0f2433, #12281c 62%, color-mix(in srgb, #3fae5a 28%, #12281c))',
+      '--page-texture':
+        'radial-gradient(circle at 92% -4%, rgba(255, 214, 90, 0.55), transparent 140px)',
     },
   },
   'pixel-arcade': {
@@ -395,7 +413,8 @@ export const LOOKS: Record<EffectStyleId, { light: Look; dark: Look }> = {
       '--radius-lg': '0',
       '--font-heading': PIXEL,
       '--pattern-ink': 'rgb(20 32 20 / 8%)',
-      '--page-art':
+      '--page-wash': 'none',
+      '--page-texture':
         'repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 3px)',
     },
     dark: {
@@ -421,8 +440,9 @@ export const LOOKS: Record<EffectStyleId, { light: Look; dark: Look }> = {
       '--radius-lg': '0',
       '--font-heading': PIXEL,
       '--pattern-ink': 'rgb(57 255 136 / 6%)',
-      '--page-art':
-        'repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 3px), radial-gradient(ellipse at 50% 25%, #2a1f6e, #0a0820 75%)',
+      '--page-wash': 'radial-gradient(ellipse at 50% 25%, #2a1f6e, #0a0820 75%)',
+      '--page-texture':
+        'repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 3px)',
     },
   },
 };

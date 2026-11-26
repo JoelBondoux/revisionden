@@ -359,10 +359,14 @@
   --radius-lg: 10px;
   --font-heading: 'Baloo 2', 'Nunito', system-ui, sans-serif;
   --pattern-ink: rgb(201 58 43 / 8%);
-  --page-art:
+  --page-wash:
     radial-gradient(circle at 20% 10%, rgba(255, 159, 28, 0.18), transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(31, 190, 170, 0.18), transparent 45%),
-    repeating-linear-gradient(0deg, transparent 0 27px, rgba(80, 70, 140, 0.08) 27px 28px);
+    radial-gradient(circle at 90% 80%, rgba(31, 190, 170, 0.18), transparent 45%);
+  --page-texture: repeating-linear-gradient(
+    0deg,
+    transparent 0 27px,
+    rgba(80, 70, 140, 0.08) 27px 28px
+  );
 }
 
 :root[data-effect-style='sticker-book'][data-theme='dark'] {
@@ -388,8 +392,9 @@
   --radius-lg: 10px;
   --font-heading: 'Baloo 2', 'Nunito', system-ui, sans-serif;
   --pattern-ink: rgb(255 167 155 / 7%);
-  --page-art:
+  --page-wash:
     radial-gradient(circle at 20% 10%, rgba(255, 159, 28, 0.14), transparent 40%),
     radial-gradient(circle at 90% 80%, rgba(31, 190, 170, 0.14), transparent 45%);
+  --page-texture: none;
 }
 /* ---------- end of the full look ---------- */

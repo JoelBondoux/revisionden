@@ -184,7 +184,12 @@ tab say so to screen readers.
   `e2e/tests/looks.spec.ts` runs axe on the map and Me in all 7 styles, light and dark. This
   replaces J13a's "styles change accents only" (#268, not merged).
 - **Looks match the approved all-themes mockup (J15s revision, rev 5.1, 2026-11-26).** Each look
-  takes the mockup's page art (`--page-art`, layered over the page colour by `design/base.css`) and
+  takes the mockup's page art, split into a wash (`--page-wash`, soft gradients) and a texture
+  (`--page-texture`: notebook lines, halftone, scanlines, stars), layered over the page colour by
+  `design/base.css`. **Settings always win over a look** (Codex review of train #337): the texture
+  shows only with Background pattern on; high contrast and forced colours get a plain page; a
+  reading tint replaces the page and surface colours and removes the wash and texture; the
+  dyslexia-friendly font replaces every heading and style font. A look also takes its
   heading font, self-hosted with @fontsource (Baloo 2 for Sticker Book, Pop Burst, Starlight and
   Garden Grow; Bangers for Comic Pop; Press Start 2P for Pixel Arcade; Patrick Hand for Doodle
   Diary). **Vivid and night pages show in dark mode**: Pop Burst's purple page, Starlight's night
