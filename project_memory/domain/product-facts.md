@@ -858,7 +858,9 @@ Tags: #product #rules #limits #defaults
   `apps/web/src/design/themes.ts` / `themes.css`: dark keeps button colours with white text and
   uses `--color-primary-edge` (#C4B5FF) for violet text; colour-blind right #1F6FD1 (blue), wrong
   #B34F00 (orange), checked by simulation (ΔE ≥ 20 for deuteranopia, protanopia, tritanopia) and
-  4.5:1 contrast in all four combinations. Doodle tile `apps/web/src/design/doodle-scatter.svg` (original,
+  4.5:1 contrast in all four combinations; shapes that carry meaning (empty progress tracks
+  `--color-track` / `--arena-track`, the Challenge hex outline `--color-challenge-edge`) reach 3:1
+  (`NON_TEXT_PAIRS`, J10f). Doodle tile `apps/web/src/design/doodle-scatter.svg` (original,
   1080px dense sticker sheet: 8 hero doodles, 420 medium (160 motifs, no copy of a motif within
   240px of itself) and 1,600 tiny fillers, no two outlines closer than 4px plus the line, tilted up
   to 25°, 1.4px lines; generated from a fixed seed by `doodleTile.ts`, used as a CSS mask at 7% ink;
