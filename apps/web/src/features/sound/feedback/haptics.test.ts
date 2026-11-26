@@ -92,4 +92,10 @@ describe('haptics', () => {
       }
     }
   });
+
+  it('the three-styles reveal has its own long celebration pattern', () => {
+    const p = hapticPattern('doodle-diary', 'stylesUnlocked')!;
+    expect(p.filter((_, i) => i % 2 === 0).length).toBeGreaterThanOrEqual(5);
+    expect(Math.max(...p)).toBeLessThanOrEqual(150);
+  });
 });

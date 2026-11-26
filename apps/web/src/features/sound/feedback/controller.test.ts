@@ -172,9 +172,17 @@ describe('feedback: sound and vibration for every animation', () => {
     t.engine.unlock();
     expect(t.feedback.emit('correct', { mode: 'test' })).toEqual({ sound: false, haptic: false });
     expect(t.feedback.emit('rewardUnlock', { mode: 'test' }).sound).toBe(false);
+    expect(t.feedback.emit('stylesUnlocked', { mode: 'test' }).sound).toBe(false);
     expect(t.feedback.emit('ringFill', { mode: 'test' }).sound).toBe(true);
     t.tick(1000);
     expect(t.feedback.emit('ringFill', { mode: 'timed' }).sound).toBe(false);
+  });
+
+  it('plays the three-styles reveal with its vibration, whatever the style', () => {
+    const t = setup();
+    t.engine.unlock();
+    t.feedback.setStyle('pixel-arcade');
+    expect(t.feedback.emit('stylesUnlocked')).toEqual({ sound: true, haptic: true });
   });
 
   it('copes with a device that cannot vibrate', () => {

@@ -799,11 +799,14 @@ Tags: #product #rules #limits #defaults
 - Original Web Audio sounds, no files. Header quick mute and Settings (on/off, volume, tap sounds
   off by default), per device; follows the iOS silent switch where possible. No correct/wrong
   sounds in Test mode before submit. Sound is never the only signal. Workstream U.
-- Style sounds and haptics (U6): every animation fires a feedback event (15: buttonPress, cardFlip,
+- Style sounds and haptics (U6): every animation fires a feedback event (16: buttonPress, cardFlip,
   correct, wrong, combo, xpTick, ringFill, rewardWobble, rewardOpen, rewardUnlock, setComplete,
-  levelUp, homeEnter, nodePop, locked) that plays the active effect style's synthesised sound plus a vibration. Packs: Doodle
+  levelUp, homeEnter, nodePop, locked, stylesUnlocked) that plays the active effect style's synthesised sound plus a vibration. Packs: Doodle
   Diary (default, owner-approved 2026-11-26), then the unlockable Sticker Book, Pop Burst,
-  Starlight, Comic Pop, Garden Grow and Pixel Arcade (U6c); unknown styles use the default.
+  Starlight, Comic Pop, Garden Grow and Pixel Arcade (U6c), plus three unlocked together by the
+  starting test (U7, owner-approved 2026-11-26: Petal Glow `petal-glow`, Turbo Drive
+  `turbo-drive`, Rainbow Parade `rainbow-parade`, never labelled by gender). `stylesUnlocked` is one
+  special reveal sound, the same in every style, up to 3 s; unknown styles use the default.
   Default is one value, `DEFAULT_STYLE` in `feedback/styles.ts`. Square waves
   only in Comic Pop and Pixel Arcade (low-passed at 2800 Hz); "wrong" soft in every style. Vibration switch on by
   default and independent of mute; no vibration on iPhone/iPad browsers (no Vibration API).

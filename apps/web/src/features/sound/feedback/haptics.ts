@@ -52,12 +52,15 @@ const BUZZES: Record<Exclude<FeedbackEvent, 'combo'>, number[] | null> = {
   // Map nodes pop in bursts: no buzzing.
   nodePop: null,
   locked: [30],
+  // A rolling celebration: three quick pulses (one per new style), then two big ones.
+  stylesUnlocked: [20, 20, 20, 60, 100],
 };
 
 /**
  * How each style feels: Sticker Book crisp, Pop Burst bouncy and quick, Starlight soft and long,
  * Comic Pop strong and snappy, Garden Grow gentle and unhurried, Pixel Arcade short rapid blips,
- * Doodle Diary light pen taps.
+ * Doodle Diary light pen taps, Petal Glow feather-light, Turbo Drive hard and quick, Rainbow
+ * Parade bouncy.
  */
 const FEEL: Record<FeedbackStyle, { scale: number; gap: number }> = {
   'sticker-book': { scale: 1, gap: 40 },
@@ -67,6 +70,9 @@ const FEEL: Record<FeedbackStyle, { scale: number; gap: number }> = {
   'garden-grow': { scale: 1.1, gap: 50 },
   'pixel-arcade': { scale: 0.9, gap: 20 },
   'doodle-diary': { scale: 0.9, gap: 45 },
+  'petal-glow': { scale: 0.85, gap: 40 },
+  'turbo-drive': { scale: 1.3, gap: 25 },
+  'rainbow-parade': { scale: 1, gap: 30 },
 };
 
 const MAX_COMBO = 6;
