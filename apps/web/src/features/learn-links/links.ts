@@ -107,7 +107,7 @@ export function checkedLinksFor(byTopic: Map<string, LearnLink[]>, topicId: stri
 /**
  * "Learn more" for a question: the most specific shown links, first those for the item, then
  * those for its learning point, then the whole topic's. `itemId` is the item's content id
- * (gcse-maths-h-n4-0001), which lessons do not receive yet, so the lesson passes its point only.
+ * (gcse-maths-h-n4-0001), sent with lesson items and flashcards as `contentId` (Q6b).
  */
 export function learnMoreLinks(
   byTopic: Map<string, LearnLink[]>,

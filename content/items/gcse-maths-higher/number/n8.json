@@ -95,7 +95,7 @@
     "verify": { "expression": "sqrt(108)/sqrt(3)" },
     "marks": 1,
     "explanation": "Find the largest square number that is a factor of 108: 108 = 36 × 3. So √108 = √36 × √3 = 6√3, and a = 6.",
-    "hint": "Find the largest square number that is a factor of 108, then split the square root into two.",
+    "hint": "Find the largest square number that is a factor of 108, then split the square root into two. a is the whole number in front of √3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -161,7 +161,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T10:13:46Z",
+          "at": "2026-11-26T12:08:56Z",
           "notes": "no problems found"
         }
       ]
@@ -179,7 +179,7 @@
     "verify": { "expression": "(sqrt(48) + sqrt(27))/sqrt(3)" },
     "marks": 1,
     "explanation": "Simplify each surd: √48 = √16 × √3 = 4√3 and √27 = √9 × √3 = 3√3. Add them like terms: 4√3 + 3√3 = 7√3, so k = 7.",
-    "hint": "Simplify each surd so it is a number times √3, then add them like terms.",
+    "hint": "Write each surd as a number times √3, then add them like terms. k is the number in front of √3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -245,7 +245,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T10:13:47Z",
+          "at": "2026-11-26T12:08:58Z",
           "notes": "no problems found"
         }
       ]
@@ -263,7 +263,7 @@
     "verify": { "expression": "(6/sqrt(3))/sqrt(3)" },
     "marks": 1,
     "explanation": "Multiply the top and bottom by √3: 6/√3 = 6√3/3 = 2√3, so k = 2.",
-    "hint": "Rationalise the denominator: multiply the top and bottom by √3, then simplify.",
+    "hint": "Rationalise the denominator: multiply the top and bottom by √3, then simplify. k is the number in front of √3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -329,7 +329,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T10:13:49Z",
+          "at": "2026-11-26T12:09:00Z",
           "notes": "no problems found"
         }
       ]
@@ -347,7 +347,7 @@
     "verify": { "expression": "(15/sqrt(5))/sqrt(5)" },
     "marks": 1,
     "explanation": "Multiply the top and bottom by √5: 15/√5 = 15√5/5 = 3√5, so a = 3.",
-    "hint": "Multiply the top and bottom by √5 to clear the root from the bottom, then simplify the fraction.",
+    "hint": "Multiply the top and bottom by √5 to clear the root from the bottom, then simplify. a is the number in front of √5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -413,7 +413,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T10:13:51Z",
+          "at": "2026-11-26T12:09:02Z",
           "notes": "no problems found"
         }
       ]
@@ -431,7 +431,7 @@
     "verify": { "expression": "(12/sqrt(2))/sqrt(2)" },
     "marks": 1,
     "explanation": "Multiply the top and bottom by √2: 12/√2 = 12√2/2 = 6√2, so k = 6.",
-    "hint": "Multiply the top and bottom by √2, then simplify.",
+    "hint": "Multiply the top and bottom by √2, then simplify. k is the number in front of √2.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -497,7 +497,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T10:13:52Z",
+          "at": "2026-11-26T12:09:04Z",
           "notes": "no problems found"
         }
       ]
@@ -600,7 +600,7 @@
     "verify": { "expression": "pi*6^2/pi" },
     "marks": 1,
     "explanation": "The area of a circle is π × radius^2. With radius 6 cm: π × 6^2 = 36π cm², so k = 36.",
-    "hint": "Use area = π × radius^2 and leave π in the answer.",
+    "hint": "Work out the area in terms of π using area = π × radius^2. Then give the number in front of π as k.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -678,7 +678,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T10:13:55Z",
+          "at": "2026-11-26T12:09:05Z",
           "notes": "no problems found"
         }
       ]
@@ -696,7 +696,7 @@
     "verify": { "expression": "pi*14/pi" },
     "marks": 1,
     "explanation": "The circumference of a circle is π × diameter. With diameter 14 cm: 14π cm, so k = 14.",
-    "hint": "Use circumference = π × diameter and leave π in the answer.",
+    "hint": "Work out the circumference in terms of π using circumference = π × diameter. Then give the number in front of π as k.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -774,7 +774,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T10:13:57Z",
+          "at": "2026-11-26T12:09:07Z",
           "notes": "no problems found"
         }
       ]
@@ -792,7 +792,7 @@
     "verify": { "expression": "(1/2)*pi*4^2/pi" },
     "marks": 1,
     "explanation": "A whole circle of radius 4 cm has area π × 4^2 = 16π cm². A semicircle is half of that: 8π cm², so k = 8.",
-    "hint": "Find the area of the whole circle with π left in, then take half of it.",
+    "hint": "Work out the area of the whole circle in terms of π, then halve it. Give the number in front of π as k.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -870,7 +870,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T10:13:59Z",
+          "at": "2026-11-26T12:09:09Z",
           "notes": "no problems found"
         }
       ]

@@ -1,6 +1,6 @@
 {
-  "id": "e775f7f4-38cc-405f-8a6e-3b58334ef72d",
-  "prevId": "597172a9-be93-4b73-9b35-3bcdee7b1f4b",
+  "id": "5516437f-9024-4844-b626-fce556c0d464",
+  "prevId": "8ca6dd4a-ca4d-43fd-8779-5c1d632f4ef6",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -2409,6 +2409,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "item_id": {
+          "name": "item_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
         "device": {
           "name": "device",
           "type": "jsonb",
@@ -2562,6 +2568,15 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
+        "feedback_item_id_items_id_fk": {
+          "name": "feedback_item_id_items_id_fk",
+          "tableFrom": "feedback",
+          "tableTo": "items",
+          "columnsFrom": ["item_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
         "feedback_duplicate_of_feedback_id_fk": {
           "name": "feedback_duplicate_of_feedback_id_fk",
           "tableFrom": "feedback",
@@ -2578,7 +2593,11 @@
       "checkConstraints": {
         "feedback_kind_values": {
           "name": "feedback_kind_values",
-          "value": "\"feedback\".\"kind\" in ('bug', 'idea', 'confusing', 'other')"
+          "value": "\"feedback\".\"kind\" in ('bug', 'idea', 'confusing', 'other', 'lesson_helped', 'lesson_not_helped')"
+        },
+        "feedback_lesson_tap": {
+          "name": "feedback_lesson_tap",
+          "value": "case when \"feedback\".\"kind\" in ('lesson_helped', 'lesson_not_helped') then \"feedback\".\"item_id\" is not null and \"feedback\".\"text\" is null else \"feedback\".\"item_id\" is null end"
         },
         "feedback_sender_role_values": {
           "name": "feedback_sender_role_values",

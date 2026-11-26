@@ -1,4 +1,4 @@
-import type { LearnItem } from '@revisionden/core';
+import { factorPairs, type LearnItem } from '@revisionden/core';
 
 const UNIT_WORDS: Record<string, string> = {
   mm: 'millimetres',
@@ -57,5 +57,9 @@ export function itemSpeechText(item: LearnItem): string {
     item.options.forEach((option, i) => parts.push(`Option ${i + 1}: ${mathsToSpeech(option)}.`));
   }
   if (item.type === 'numeric' && item.unit) parts.push(`Answer in ${mathsToSpeech(item.unit)}.`);
+  if (item.type === 'area_model') {
+    const pairs = factorPairs(item.quadratic.c).map(([p, q]) => `${p} and ${q}`);
+    parts.push(`Choose two numbers: ${pairs.join(', or ')}.`);
+  }
   return parts.join(' ');
 }
