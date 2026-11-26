@@ -1,8 +1,17 @@
 import '@testing-library/jest-dom/vitest';
+import { configure } from '@testing-library/react';
 import { server } from './mocks/server';
 import { findFakeMockRoutes } from './test/apiRoutes';
 import { resetLearnMocks } from './features/learn/mocks';
 import { resetRewardsMocks } from './features/rewards/mocks';
+
+/*
+ * Screens load their data through the mock API, which can take more than a second on a busy CI
+ * runner: every findBy and waitFor waits up to 5 seconds (the old per-file LOAD), and each test
+ * has room for a few such waits (I13).
+ */
+configure({ asyncUtilTimeout: 5000 });
+vi.setConfig({ testTimeout: 15_000 });
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
 afterEach(() => {

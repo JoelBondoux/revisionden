@@ -49,6 +49,7 @@ CI fails below the gate. Raising a gate is welcome; lowering one needs a reason 
   real models are called, and it is never run in CI by default.
 - Time and randomness are injected so tests are repeatable.
 - A flaky test is a bug: fix it or delete it the same day.
+- Web tests: every `findBy…` and `waitFor` waits up to 5 seconds for a screen's data and each test has 15 seconds (`apps/web/src/test-setup.ts`), so a slow CI runner does not time a test out while it is still loading. No per-file `LOAD` timeout is needed.
 
 ## 5. Running tests
 
