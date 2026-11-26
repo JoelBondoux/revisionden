@@ -10,3 +10,4 @@ export {
 } from './registry';
 export type { EffectStyle, EffectStyleId } from './registry';
 export { EffectStyleCard } from './EffectStyleCard';
+export { EffectStyleRoute } from './EffectStyleRoute';

@@ -54,11 +54,19 @@ const BUZZES: Record<Exclude<FeedbackEvent, 'combo'>, number[] | null> = {
   locked: [30],
 };
 
-/** How each style feels: Sticker Book crisp, Pop Burst bouncy and quick, Starlight soft and long. */
+/**
+ * How each style feels: Sticker Book crisp, Pop Burst bouncy and quick, Starlight soft and long,
+ * Comic Pop strong and snappy, Garden Grow gentle and unhurried, Pixel Arcade short rapid blips,
+ * Doodle Diary light pen taps.
+ */
 const FEEL: Record<FeedbackStyle, { scale: number; gap: number }> = {
   'sticker-book': { scale: 1, gap: 40 },
   'pop-burst': { scale: 0.8, gap: 25 },
   starlight: { scale: 1.3, gap: 55 },
+  'comic-pop': { scale: 1.2, gap: 30 },
+  'garden-grow': { scale: 1.1, gap: 50 },
+  'pixel-arcade': { scale: 0.9, gap: 20 },
+  'doodle-diary': { scale: 0.9, gap: 45 },
 };
 
 const MAX_COMBO = 6;

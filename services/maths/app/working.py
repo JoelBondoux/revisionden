@@ -87,15 +87,15 @@ def without_subject(text: str, subject: str | None) -> str | None:
 def _parse_line(text: str, subject: str | None = None) -> Line:
     rhs = without_subject(text, subject)
     if rhs is not None and not LETTER.fullmatch(_squash(subject or "")):
-        return Line(text=text, expression=parse(rhs), states_subject=True)
+        return Line(text=text, expression=parse(rhs, exact=True), states_subject=True)
     if "=" not in text:
-        return Line(text=text, expression=parse(text))
+        return Line(text=text, expression=parse(text, exact=True))
     equations = []
     for part in ALTERNATIVES.split(text):
         sides = part.split("=")
         if len(sides) != 2:
             raise ValueError(f"Each equation needs exactly one = sign: {part!r}")
-        equations.append(Equation(parse(sides[0]), parse(sides[1])))
+        equations.append(Equation(parse(sides[0], exact=True), parse(sides[1], exact=True)))
     return Line(text=text, equations=tuple(equations))
 
 
@@ -175,11 +175,11 @@ def _in_form(line: Line, form: str | None) -> bool:
 def _final_answer_correct(line: Line, expected: dict) -> bool:
     rhs = without_subject(line.text, expected.get("subject"))
     if rhs is not None and "expression" in expected:
-        line = Line(text=rhs, expression=parse(rhs))
+        line = Line(text=rhs, expression=parse(rhs, exact=True))
     if "solutions" in expected:
         if not line.is_equation:
             return False
-        wanted = FiniteSet(*(parse(s) for s in expected["solutions"]))
+        wanted = FiniteSet(*(parse(s, exact=True) for s in expected["solutions"]))
         candidates = []
         for eq in dict.fromkeys(line.equations):
             # Keep only the readings that are a wanted value: a choice of readings can only
@@ -193,7 +193,7 @@ def _final_answer_correct(line: Line, expected: dict) -> bool:
         return any(_same_sets(FiniteSet(*values), wanted) for values in product(*candidates))
     if line.is_equation:
         return False
-    return _same_values(line.expression, parse(expected["expression"])) and _in_form(
+    return _same_values(line.expression, parse(expected["expression"], exact=True)) and _in_form(
         line, expected.get("form")
     )
 

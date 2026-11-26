@@ -1,4 +1,12 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import type { ReactNode } from 'react';
 import {
   DEFAULT_EFFECT_STYLE,
@@ -28,6 +36,8 @@ export interface EffectStyleApi {
   /** Styles this child can use (Doodle Diary is always one of them). */
   unlocked: readonly EffectStyleId[];
   choose(id: EffectStyleId): void;
+  /** Checks the server again for styles earned since the last check (the picker calls it). */
+  refresh(): void;
 }
 
 const fallback: EffectStyleApi = {
@@ -35,6 +45,7 @@ const fallback: EffectStyleApi = {
   styleId: DEFAULT_EFFECT_STYLE,
   unlocked: [DEFAULT_EFFECT_STYLE],
   choose: () => undefined,
+  refresh: () => undefined,
 };
 
 const EffectStyleContext = createContext<EffectStyleApi>(fallback);
@@ -51,26 +62,52 @@ function deviceStorage(): StyleStorage | null {
 export function EffectStyleProvider({
   children,
   loadUnlocked = fetchUnlockedStyles,
+  quiet = false,
+  revalidateKey,
 }: {
   children: ReactNode;
   /** Loads the signed-in student's unlocked styles (tests pass their own). */
   loadUnlocked?: () => Promise<readonly string[]>;
+  /** True on screens that must make no API calls (Get help): nothing is loaded while quiet. */
+  quiet?: boolean;
+  /** Changes with each screen; a load that failed (say, before unlocking) is tried again. */
+  revalidateKey?: string;
 }) {
   const { studentId } = useStudent();
   const [saved, setSaved] = useState<EffectStyleId>(() => loadEffectStyle(deviceStorage()));
   const [earned, setEarned] = useState<readonly EffectStyleId[]>([]);
+  // Which student the last load was for, whether it worked, and whether one is in flight.
+  const status = useRef<{ for: string | null; ok: boolean; busy: boolean }>({
+    for: null,
+    ok: false,
+    busy: false,
+  });
+
+  const load = useCallback(() => {
+    if (!studentId || quiet || status.current.busy) return;
+    const forStudent = studentId;
+    status.current = { for: forStudent, ok: false, busy: true };
+    loadUnlocked()
+      .then((ids) => {
+        if (status.current.for !== forStudent) return;
+        status.current = { for: forStudent, ok: true, busy: false };
+        setEarned(ids.filter(isEffectStyleId));
+      })
+      .catch(() => {
+        if (status.current.for === forStudent) status.current.busy = false;
+      });
+  }, [studentId, quiet, loadUnlocked]);
+
+  // A new student starts from nothing; load for them as soon as the screen allows.
+  useEffect(() => {
+    if (status.current.for === studentId) return;
+    setEarned([]);
+    status.current = { for: studentId, ok: false, busy: false };
+  }, [studentId]);
 
   useEffect(() => {
-    setEarned([]);
-    if (!studentId) return;
-    let live = true;
-    loadUnlocked()
-      .then((ids) => live && setEarned(ids.filter(isEffectStyleId)))
-      .catch(() => undefined);
-    return () => {
-      live = false;
-    };
-  }, [studentId, loadUnlocked]);
+    if (!status.current.ok) load();
+  }, [load, revalidateKey]);
 
   const unlocked = useMemo(
     () => [DEFAULT_EFFECT_STYLE, ...earned.filter((id) => id !== DEFAULT_EFFECT_STYLE)],
@@ -90,8 +127,8 @@ export function EffectStyleProvider({
   }, []);
 
   const value = useMemo(
-    () => ({ style: EFFECT_STYLES[styleId], styleId, unlocked, choose }),
-    [styleId, unlocked, choose],
+    () => ({ style: EFFECT_STYLES[styleId], styleId, unlocked, choose, refresh: load }),
+    [styleId, unlocked, choose, load],
   );
   return <EffectStyleContext.Provider value={value}>{children}</EffectStyleContext.Provider>;
 }

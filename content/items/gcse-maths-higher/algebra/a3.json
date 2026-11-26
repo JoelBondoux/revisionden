@@ -437,6 +437,7 @@
       "accepted": ["3", "three", "3 terms", "3terms"]
     },
     "marks": 1,
+    "explanation": "Terms are separated by + and - signs. 4x^2 - 3x + 7 has three terms: 4x^2, -3x and 7.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -463,7 +464,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A3). The terms are 4x^2, -3x and 7 (standard meaning of a term). The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A3). The terms are 4x^2, -3x and 7 (standard meaning of a term). The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:55:46Z"
         },
         {
@@ -483,20 +484,20 @@
           "notes": "model answered \"3\"; expected \"3 | three | 3 terms | 3terms\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:56:50Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:12Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -591,6 +592,7 @@
       "accepted": ["-8x", "−8x"]
     },
     "marks": 1,
+    "explanation": "The terms are 5x^2, -8x and 2. The term in x is the one with x on its own (not x^2), and it keeps its sign: -8x.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -617,7 +619,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A3). The term in x is -8x (its sign belongs to the term). The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A3). The term in x is -8x (its sign belongs to the term). The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:17:06Z"
         },
         {
@@ -627,14 +629,6 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:27:19Z",
           "notes": "model answered \"-8x\"; expected \"-8x | −8x\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:27:25Z",
-          "notes": "no problems found"
         },
         {
           "name": "quote-check",
@@ -651,6 +645,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:21Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -664,6 +666,7 @@
     "expected_seconds": 15,
     "front": "The name for a statement such as 2(x + 1) ≡ 2x + 2 that is true for every value of x",
     "back": "Identity",
+    "explanation": "2(x + 1) ≡ 2x + 2 is true whatever number x is, because expanding the bracket gives the right-hand side. A statement like this is an identity, written with ≡.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -690,7 +693,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A3). Standard definition. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A3). Standard definition. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:17:06Z"
         },
         {
@@ -700,14 +703,6 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:27:32Z",
           "notes": "model answered \"Identity\"; expected \"Identity\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:27:38Z",
-          "notes": "no problems found"
         },
         {
           "name": "quote-check",
@@ -724,6 +719,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:56:21Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -737,6 +740,7 @@
     "expected_seconds": 15,
     "front": "The name for a statement such as 3x - 1 > 8 that compares two sides using <, >, ≤ or ≥",
     "back": "Inequality",
+    "explanation": "3x - 1 > 8 does not say the two sides are equal: it says the left side is greater. A statement that compares with <, >, ≤ or ≥ is an inequality.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -763,7 +767,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A3). Standard definition. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A3). Standard definition. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:17:06Z"
         },
         {
@@ -773,14 +777,6 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:27:44Z",
           "notes": "model answered \"Inequality\"; expected \"Inequality\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:27:50Z",
-          "notes": "no problems found"
         },
         {
           "name": "quote-check",
@@ -797,6 +793,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:39Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -810,6 +814,7 @@
     "expected_seconds": 15,
     "front": "In the expression 3x + 5y - 2, what is each of 3x, 5y and -2 called? (one word, singular)",
     "back": "Term",
+    "explanation": "An expression is made of parts added or subtracted. Each part, such as 3x, 5y or -2, is called a term.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -836,7 +841,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A3). Standard definition. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A3). Standard definition. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:32:27Z"
         },
         {
@@ -856,20 +861,20 @@
           "notes": "model answered \"term\"; expected \"Term\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:39Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:46Z",
+          "notes": "no problems found"
         }
       ]
     }

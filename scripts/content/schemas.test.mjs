@@ -149,6 +149,22 @@ test('an item may name its learning point and expected time (for similar-questio
   assert.equal(v.item({ ...item, expected_seconds: 12.5 }), false);
 });
 
+test('an item made by a maths template records the template, its version and the seed', () => {
+  const made = {
+    ...samples.worked_maths,
+    template: { id: 'gcse-maths-h-a17-unknown-both-sides', version: 1, seed: 3 },
+  };
+  assert.equal(v.item(made), true, JSON.stringify(v.item.errors));
+  for (const bad of [
+    { id: 'gcse-maths-h-a17-unknown-both-sides', version: 1 },
+    { id: 'Not An Id', version: 1, seed: 3 },
+    { id: 'gcse-maths-h-a17-unknown-both-sides', version: 0, seed: 3 },
+    { id: 'gcse-maths-h-a17-unknown-both-sides', version: 1, seed: 3, extra: true },
+  ]) {
+    assert.equal(v.item({ ...samples.worked_maths, template: bad }), false, JSON.stringify(bad));
+  }
+});
+
 test('an item may list the standard facts it rests on, for the fact-check stage', () => {
   const fact = {
     statement: 'The product of the gradients of two perpendicular lines is -1.',

@@ -114,6 +114,67 @@ describe('effect style provider', () => {
     await waitFor(() => expect(feedbackStyle).toHaveBeenLastCalledWith('pop-burst'));
   });
 
+  it('asks for nothing while quiet (Get help), and loads once it is not', async () => {
+    const load = vi.fn(async () => ['pop-burst']);
+    const view = (quiet: boolean) => (
+      <StudentProvider storage={childOnDevice}>
+        <EffectStyleProvider loadUnlocked={load} quiet={quiet}>
+          <Probe />
+        </EffectStyleProvider>
+      </StudentProvider>
+    );
+    const { rerender } = render(view(true));
+    expect(load).not.toHaveBeenCalled();
+    rerender(view(false));
+    await waitFor(() => expect(load).toHaveBeenCalledTimes(1));
+  });
+
+  it('tries again on the next screen after a failed load (for example before unlocking)', async () => {
+    localStorage.setItem(EFFECT_STYLE_KEY, 'pop-burst');
+    const load = vi
+      .fn<() => Promise<readonly string[]>>()
+      .mockRejectedValueOnce(new Error('401'))
+      .mockResolvedValue(['pop-burst']);
+    const view = (screenKey: string) => (
+      <StudentProvider storage={childOnDevice}>
+        <EffectStyleProvider loadUnlocked={load} revalidateKey={screenKey}>
+          <Probe />
+        </EffectStyleProvider>
+      </StudentProvider>
+    );
+    const { rerender } = render(view('/unlock'));
+    await waitFor(() => expect(load).toHaveBeenCalledTimes(1));
+    rerender(view('/map'));
+    expect(await screen.findByText('Pop Burst (pop-burst)')).toBeInTheDocument();
+    rerender(view('/settings'));
+    expect(load).toHaveBeenCalledTimes(2);
+  });
+
+  it('can be asked to check again, for a style earned since the last check', async () => {
+    const load = vi
+      .fn<() => Promise<readonly string[]>>()
+      .mockResolvedValueOnce([])
+      .mockResolvedValue(['pop-burst']);
+    function Refresh() {
+      const { refresh, unlocked } = useEffectStyle();
+      return (
+        <button type="button" onClick={refresh}>
+          Check ({unlocked.length})
+        </button>
+      );
+    }
+    render(
+      <StudentProvider storage={childOnDevice}>
+        <EffectStyleProvider loadUnlocked={load}>
+          <Refresh />
+        </EffectStyleProvider>
+      </StudentProvider>,
+    );
+    await waitFor(() => expect(load).toHaveBeenCalledTimes(1));
+    await userEvent.click(screen.getByRole('button', { name: 'Check (1)' }));
+    expect(await screen.findByRole('button', { name: 'Check (2)' })).toBeInTheDocument();
+  });
+
   it('still gives the default style outside the provider', () => {
     render(<Probe />);
     expect(screen.getByText('Doodle Diary (doodle-diary)')).toBeInTheDocument();

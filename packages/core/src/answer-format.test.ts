@@ -3,6 +3,7 @@ import {
   meetsRounding,
   roundingOf,
   shownPrecision,
+  standardForm,
   withoutSubject,
   withoutThousands,
 } from './answer-format';
@@ -104,5 +105,72 @@ describe('UK thousands separators', () => {
     expect(withoutThousands('38,700 000')).toBe('38,700 000'); // mixed separators
     expect(withoutThousands('1 234.567 8')).toBe('1 234.567 8'); // no grouping after the point
     expect(withoutThousands('3/4')).toBe('3/4');
+  });
+});
+
+describe('standard form', () => {
+  it('reads a × 10^n in its common spellings as an exact plain decimal', () => {
+    for (const text of [
+      '6.4 × 10^8',
+      '6.4×10^8',
+      '6.4 x 10^8',
+      '6.4X10^8',
+      '6.4 * 10^8',
+      '6.4 · 10^8',
+      '6.4 × 10⁸',
+      '6.4e8',
+      '6.4E+8',
+    ]) {
+      expect(standardForm(text)?.plain).toBe('640000000');
+    }
+    expect(standardForm('3.2 × 10^-4')?.plain).toBe('0.00032');
+    expect(standardForm('3.2 × 10^(−4)')?.plain).toBe('0.00032');
+    expect(standardForm('3.2 × 10⁻⁴')?.plain).toBe('0.00032');
+    expect(standardForm('3.20e-4')?.plain).toBe('0.000320');
+    expect(standardForm('-1.5 × 10^2')?.plain).toBe('-150');
+  });
+
+  it('knows the significant figures and whether it is proper standard form', () => {
+    expect(standardForm('6.40 × 10^8')).toMatchObject({ figures: 3, proper: true });
+    expect(standardForm('64 × 10^7')).toMatchObject({ plain: '640000000', proper: false });
+    expect(standardForm('0.64 × 10^9')?.proper).toBe(false);
+  });
+
+  it('refuses a power of ten beyond ±100 instead of building a huge number', () => {
+    for (const text of [
+      '1e999999999',
+      '1e-999999999',
+      '1 × 10^999999999',
+      '1 × 10⁹⁹⁹⁹⁹⁹⁹⁹⁹',
+      '1e101',
+    ]) {
+      expect(() => standardForm(text)).not.toThrow();
+      expect(standardForm(text)).toBeNull();
+      expect(shownPrecision(text)).toBeNull();
+      expect(meetsRounding(text, '1', { significant_figures: 1 })).toBe(false);
+    }
+    expect(standardForm('1e100')?.plain).toBe(`1${'0'.repeat(100)}`);
+    expect(standardForm('1e-100')?.plain).toBe(`0.${'0'.repeat(99)}1`);
+  });
+
+  it('is null for anything that is not a × 10^n', () => {
+    for (const text of [
+      '640000000',
+      '6.4 × 10',
+      '6.4 × 9^8',
+      '6.4 × 10^8.5',
+      '6.4 ×× 10^8',
+      'e8',
+      '6.4e',
+    ]) {
+      expect(standardForm(text)).toBeNull();
+    }
+  });
+
+  it('shows the accuracy of the number in front for significant figures', () => {
+    expect(shownPrecision('6.40 × 10^8')?.figures).toEqual([3, 3]);
+    expect(meetsRounding('6.4 × 10^8', '640000000', { significant_figures: 2 })).toBe(true);
+    expect(meetsRounding('6.40 × 10^8', '640000000', { significant_figures: 2 })).toBe(false);
+    expect(meetsRounding('6.4 × 10^-3', '0.0064', { decimal_places: 4 })).toBe(true);
   });
 });

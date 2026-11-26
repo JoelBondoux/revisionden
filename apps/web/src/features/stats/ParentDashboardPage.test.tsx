@@ -5,10 +5,14 @@ import { server } from '../../mocks/server';
 import { renderRoute } from '../../test/render';
 import { demoDashboard } from './mocks';
 
+// The dashboard loads its data after the first render; on a busy CI runner that can take
+// longer than the default 1 s, as in the sibling stats tests.
+const LOAD = { timeout: 5000 };
+
 const open = async () => {
   renderRoute('/parent/stats');
   await screen.findByRole('heading', { level: 1, name: 'Stats dashboard' });
-  return screen.findByRole('group', { name: 'Active study time' });
+  return screen.findByRole('group', { name: 'Active study time' }, LOAD);
 };
 
 describe('Parent stats dashboard', () => {
@@ -24,7 +28,9 @@ describe('Parent stats dashboard', () => {
 
   it('opens on the child chosen on "Who\'s revising?"', async () => {
     renderRoute('/parent/stats?student=00000000-0000-4000-8000-0000000000a2');
-    expect(await screen.findByRole('heading', { level: 2, name: 'demo_owl' })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('heading', { level: 2, name: 'demo_owl' }, LOAD),
+    ).toBeInTheDocument();
     expect(screen.getByLabelText('Student')).toHaveValue('00000000-0000-4000-8000-0000000000a2');
   });
 
@@ -32,7 +38,9 @@ describe('Parent stats dashboard', () => {
     await open();
     expect(screen.getByRole('heading', { level: 2, name: 'demo_fox' })).toBeInTheDocument();
     await userEvent.selectOptions(screen.getByLabelText('Student'), 'demo_owl');
-    expect(await screen.findByRole('heading', { level: 2, name: 'demo_owl' })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('heading', { level: 2, name: 'demo_owl' }, LOAD),
+    ).toBeInTheDocument();
   });
 
   it('shows subjects, weak spots and drops plainly to the parent', async () => {

@@ -2,8 +2,9 @@ import type { SoundEvent } from './events';
 
 /**
  * The sound bank: one original sound per event, synthesised at runtime with the Web Audio API.
- * No audio files and no third-party sounds. Every sound uses soft sine and triangle waves with
- * smooth envelopes, so nothing buzzes; "wrong" is low and quiet, never a buzzer.
+ * No audio files and no third-party sounds. The core bank uses soft sine and triangle waves with
+ * smooth envelopes, so nothing buzzes; "wrong" is low and quiet, never a buzzer. Style packs can
+ * also use filtered noise (paper, pencil) and, in two approved styles, low-passed square waves.
  */
 
 export interface ParamLike {
@@ -25,6 +26,18 @@ export interface SynthContext {
     stop(when?: number): void;
   };
   createGain(): AudioNodeLike & { gain: ParamLike };
+  createBiquadFilter(): AudioNodeLike & { type: string; frequency: ParamLike; Q: ParamLike };
+  readonly sampleRate: number;
+  createBuffer(
+    channels: number,
+    length: number,
+    sampleRate: number,
+  ): { getChannelData(channel: number): Float32Array };
+  createBufferSource(): AudioNodeLike & {
+    buffer: unknown;
+    start(when?: number): void;
+    stop(when?: number): void;
+  };
 }
 
 /** Plays a sound starting at `at` and returns when it ends (context time, in seconds). */
@@ -45,28 +58,95 @@ export interface Note {
   dur: number;
   /** Peak loudness, 0 to 1, before the master volume. */
   peak?: number;
-  wave?: 'sine' | 'triangle';
+  /** Square waves are only for approved styles, and always go through a low-pass filter. */
+  wave?: 'sine' | 'triangle' | 'square';
   /** Slide to this pitch over the note (for swoops). */
   glideTo?: number;
   /** Seconds to swell in (default: a quick 12 ms pluck). */
   attack?: number;
 }
 
+/** A burst of filtered noise: paper rustles, pencil scratches, page flips. */
+export interface Noise {
+  /** The filter that shapes the noise. */
+  noise: 'bandpass' | 'highpass' | 'lowpass';
+  /** Filter frequency in hertz. */
+  freq: number;
+  /** Sweep the filter to this frequency over the burst. */
+  glideTo?: number;
+  /** Filter sharpness (bandpass width); default 1. */
+  q?: number;
+  at: number;
+  dur: number;
+  peak?: number;
+  attack?: number;
+}
+
+/** Square waves are softened by this low-pass so they stay warm, never harsh. */
+export const SQUARE_LOWPASS_HZ = 2800;
+
+function envelope(ctx: SynthContext, t0: number, end: number, peak: number, attack: number) {
+  const env = ctx.createGain();
+  env.gain.setValueAtTime(0.0001, t0);
+  env.gain.linearRampToValueAtTime(peak, t0 + attack);
+  env.gain.exponentialRampToValueAtTime(0.0001, end);
+  return env;
+}
+
 /** One note with a quick soft attack and a smooth exponential fade (a gentle bell or pluck). */
 export function note(ctx: SynthContext, out: AudioNodeLike, start: number, n: Note): number {
   const osc = ctx.createOscillator();
-  const env = ctx.createGain();
   const t0 = start + n.at;
   const end = t0 + n.dur;
+  const env = envelope(ctx, t0, end, n.peak ?? 0.6, n.attack ?? Math.min(0.012, n.dur / 4));
   osc.type = n.wave ?? 'sine';
   osc.frequency.setValueAtTime(n.freq, t0);
   if (n.glideTo) osc.frequency.exponentialRampToValueAtTime(n.glideTo, end);
-  env.gain.setValueAtTime(0.0001, t0);
-  env.gain.linearRampToValueAtTime(n.peak ?? 0.6, t0 + (n.attack ?? Math.min(0.012, n.dur / 4)));
-  env.gain.exponentialRampToValueAtTime(0.0001, end);
-  osc.connect(env).connect(out);
+  if (n.wave === 'square') {
+    const soften = ctx.createBiquadFilter();
+    soften.type = 'lowpass';
+    soften.frequency.setValueAtTime(SQUARE_LOWPASS_HZ, t0);
+    osc.connect(soften).connect(env).connect(out);
+  } else {
+    osc.connect(env).connect(out);
+  }
   osc.start(t0);
   osc.stop(end + 0.02);
+  return end + 0.02;
+}
+
+/** One second of white noise per context, made once from a fixed seed (so tests repeat). */
+const noiseBuffers = new WeakMap<SynthContext, unknown>();
+function noiseBuffer(ctx: SynthContext): unknown {
+  const cached = noiseBuffers.get(ctx);
+  if (cached) return cached;
+  const length = Math.max(1, Math.round(ctx.sampleRate));
+  const buffer = ctx.createBuffer(1, length, ctx.sampleRate);
+  const data = buffer.getChannelData(0);
+  let seed = 0x2545f491;
+  for (let i = 0; i < length; i++) {
+    seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+    data[i] = seed / 0x80000000 - 1;
+  }
+  noiseBuffers.set(ctx, buffer);
+  return buffer;
+}
+
+/** One noise burst through its filter, with the same soft envelope as a note. */
+export function noise(ctx: SynthContext, out: AudioNodeLike, start: number, n: Noise): number {
+  const t0 = start + n.at;
+  const end = t0 + n.dur;
+  const filter = ctx.createBiquadFilter();
+  filter.type = n.noise;
+  filter.frequency.setValueAtTime(n.freq, t0);
+  if (n.glideTo) filter.frequency.exponentialRampToValueAtTime(n.glideTo, end);
+  filter.Q.setValueAtTime(n.q ?? 1, t0);
+  const src = ctx.createBufferSource();
+  src.buffer = noiseBuffer(ctx);
+  const env = envelope(ctx, t0, end, n.peak ?? 0.3, n.attack ?? Math.min(0.006, n.dur / 4));
+  src.connect(filter).connect(env).connect(out);
+  src.start(t0);
+  src.stop(end + 0.02);
   return end + 0.02;
 }
 
@@ -80,20 +160,15 @@ function bell(freq: number, at: number, dur: number, peak = 0.55): Note[] {
 
 /** A sound made of notes; `pitch` multiplies every note (combo steps). */
 export const sound =
-  (...notes: Note[]): SoundFn =>
+  (...parts: (Note | Noise)[]): SoundFn =>
   (ctx, out, at, pitch = 1) =>
-    notes.reduce(
-      (end, n) =>
-        Math.max(
-          end,
-          note(ctx, out, at, {
-            ...n,
-            freq: n.freq * pitch,
-            glideTo: n.glideTo && n.glideTo * pitch,
-          }),
-        ),
-      at,
-    );
+    parts.reduce((end, p) => {
+      const tuned = { ...p, freq: p.freq * pitch, glideTo: p.glideTo && p.glideTo * pitch };
+      return Math.max(
+        end,
+        'noise' in tuned ? noise(ctx, out, at, tuned) : note(ctx, out, at, tuned),
+      );
+    }, at);
 
 // Pitches (hertz), equal temperament.
 const G3 = 196.0;

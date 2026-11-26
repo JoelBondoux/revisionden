@@ -7,7 +7,7 @@
     "learning_point": "gcse-maths-h-n14-lp-estimate",
     "expected_seconds": 45,
     "prompt": "By rounding each number to 1 significant figure, estimate the value of 4.87 × 31.2",
-    "answer": { "value": "150", "significant_figures": 2 },
+    "answer": { "value": "150" },
     "verify": { "expression": "5*30" },
     "marks": 1,
     "explanation": "Round each number to 1 significant figure: 4.87 is about 5 and 31.2 is about 30. Then 5 × 30 = 150.",
@@ -36,7 +36,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N14). The method (round each number to 1 significant figure) is stated in the question, so the estimate is unique; rounding checked in Python. Answer backed by the maths engine (5 × 30). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N14). The method (round each number to 1 significant figure) is stated in the question, so the estimate is unique; rounding checked in Python. Answer backed by the maths engine (5 × 30). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Precision fix (Codex review of #115): significant_figures removed from the answer, since the question asks for the numbers to be rounded, not the estimate (with #178 the validator no longer reads that wording as answer rounding).",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -68,7 +68,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T20:09:55Z",
+          "at": "2026-11-26T04:53:11Z",
           "notes": "model answered \"150\"; expected \"150\""
         },
         {
@@ -76,7 +76,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:43:33Z",
+          "at": "2026-11-26T04:53:19Z",
           "notes": "no problems found"
         }
       ]
@@ -174,7 +174,7 @@
     "learning_point": "gcse-maths-h-n14-lp-estimate",
     "expected_seconds": 60,
     "prompt": "By rounding each number to 1 significant figure, estimate the value of (612 × 0.47) ÷ 2.9",
-    "answer": { "value": "100", "significant_figures": 1 },
+    "answer": { "value": "100" },
     "verify": { "expression": "600*(5/10)/3" },
     "marks": 1,
     "explanation": "Round each number to 1 significant figure: 612 is about 600, 0.47 is about 0.5 and 2.9 is about 3. Then 600 × 0.5 = 300, and 300 ÷ 3 = 100.",
@@ -203,7 +203,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N14). The method (round each number to 1 significant figure) is stated in the question, so the estimate is unique; rounding checked in Python. Answer backed by the maths engine (600 × 0.5 ÷ 3). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N14). The method (round each number to 1 significant figure) is stated in the question, so the estimate is unique; rounding checked in Python. Answer backed by the maths engine (600 × 0.5 ÷ 3). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Precision fix (Codex review of #115): significant_figures removed from the answer, since the question asks for the numbers to be rounded, not the estimate (with #178 the validator no longer reads that wording as answer rounding).",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -235,7 +235,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T20:10:01Z",
+          "at": "2026-11-26T04:53:26Z",
           "notes": "model answered \"100\"; expected \"100\""
         },
         {
@@ -243,7 +243,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:41:23Z",
+          "at": "2026-11-26T04:53:35Z",
           "notes": "no problems found"
         }
       ]

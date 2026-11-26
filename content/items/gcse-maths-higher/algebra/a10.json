@@ -7,8 +7,12 @@
     "learning_point": "gcse-maths-h-a10-lp-from-equation",
     "expected_seconds": 30,
     "prompt": "Write down the gradient of the line 2y = 6x + 8.",
-    "answer": { "value": "3" },
-    "verify": { "expression": "6/2" },
+    "answer": {
+      "value": "3"
+    },
+    "verify": {
+      "expression": "6/2"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for 3"],
     "explanation": "Divide by 2: y = 3x + 4, so the gradient is 3.",
@@ -91,8 +95,12 @@
     "learning_point": "gcse-maths-h-a10-lp-from-equation",
     "expected_seconds": 30,
     "prompt": "Write down the gradient of the line 3x + y = 7.",
-    "answer": { "value": "-3" },
-    "verify": { "expression": "-3" },
+    "answer": {
+      "value": "-3"
+    },
+    "verify": {
+      "expression": "-3"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for -3"],
     "explanation": "Rearrange: y = -3x + 7, so the gradient is -3.",
@@ -175,8 +183,13 @@
     "learning_point": "gcse-maths-h-a10-lp-from-equation",
     "expected_seconds": 40,
     "prompt": "Find the y-coordinate where the line 4y - 2x = 12 crosses the y-axis.",
-    "answer": { "value": "3", "subject": "y" },
-    "verify": { "expression": "12/4" },
+    "answer": {
+      "value": "3",
+      "subject": "y"
+    },
+    "verify": {
+      "expression": "12/4"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for 3"],
     "explanation": "Put x = 0: 4y = 12, so y = 3.",
@@ -259,8 +272,14 @@
     "learning_point": "gcse-maths-h-a10-lp-from-equation",
     "expected_seconds": 45,
     "prompt": "Find the x-coordinate where the line y = 3x - 6 crosses the x-axis.",
-    "answer": { "solutions": ["2"] },
-    "verify": { "method": "solve", "equation": "3x - 6 = 0", "variable": "x" },
+    "answer": {
+      "solutions": ["2"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "3x - 6 = 0",
+      "variable": "x"
+    },
     "steps": ["3x - 6 = 0", "3x = 6", "x = 2"],
     "marks": 2,
     "mark_scheme": ["M1 for 3x - 6 = 0", "A1 for x = 2"],
@@ -349,7 +368,9 @@
       "The length of the journey in miles",
       "The total cost in pounds"
     ],
-    "answer": { "option": 1 },
+    "answer": {
+      "option": 1
+    },
     "marks": 1,
     "explanation": "2.5 is the gradient: C goes up by £2.50 for each extra mile.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
@@ -429,7 +450,9 @@
       "The length of the journey in miles",
       "The total cost in pounds"
     ],
-    "answer": { "option": 0 },
+    "answer": {
+      "option": 0
+    },
     "marks": 1,
     "explanation": "4 is the intercept: the cost when d = 0, a fixed charge of £4.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
@@ -509,7 +532,9 @@
       "The tank gains 8 litres each minute",
       "The tank is empty after 8 minutes"
     ],
-    "answer": { "option": 0 },
+    "answer": {
+      "option": 0
+    },
     "marks": 1,
     "explanation": "The gradient -8 means V falls by 8 litres for every minute. (The tank is empty after 25 minutes.)",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
@@ -584,6 +609,7 @@
     "expected_seconds": 15,
     "front": "In y = mx + c, does m give the gradient or the y-intercept?",
     "back": "Gradient",
+    "explanation": "In y = mx + c, m multiplies x and tells you how steep the line is: it is the gradient. c is the y-intercept.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -610,7 +636,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A10). Standard meaning of m in y = mx + c. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A10). Standard meaning of m in y = mx + c. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:04:50Z"
         },
         {
@@ -630,20 +656,20 @@
           "notes": "model answered \"Gradient\"; expected \"Gradient\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:06:37Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:28Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -657,6 +683,7 @@
     "expected_seconds": 15,
     "front": "In y = mx + c, c is the value of y where the line crosses which axis?",
     "back": "The y-axis",
+    "explanation": "When x = 0, y = m × 0 + c = c. x = 0 on the y-axis, so c is where the line crosses the y-axis.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
     "checked_by": ["author"],
     "citations": [
@@ -682,7 +709,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A10). Put x = 0 in y = mx + c to get y = c.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A10). Put x = 0 in y = mx + c to get y = c. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:23:37Z"
         },
         {
@@ -702,20 +729,20 @@
           "notes": "model answered \"The y-axis\"; expected \"The y-axis\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:54Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:42Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -729,6 +756,7 @@
     "expected_seconds": 15,
     "front": "The gradient of the line x + 2y = 10",
     "back": "-1/2",
+    "explanation": "Rearrange into y = mx + c: 2y = -x + 10, so y = -1/2 x + 5. The gradient is the number multiplying x: -1/2.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
     "checked_by": ["author"],
     "citations": [
@@ -754,7 +782,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A10). Rearranged with SymPy: y = 5 - x/2.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A10). Rearranged with SymPy: y = 5 - x/2. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:23:37Z"
         },
         {
@@ -774,20 +802,20 @@
           "notes": "model answered \"-1/2\"; expected \"-1/2\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:38:06Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:49Z",
+          "notes": "no problems found"
         }
       ]
     }
