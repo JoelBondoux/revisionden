@@ -643,7 +643,8 @@ Mockups: screens 19 (student) and 20 (parent).
 - **Style sounds and haptics (U6, owner rule: "All animation should have an appropriate movement
   and sound").** Every animation fires one feedback event: `buttonPress`, `cardFlip`, `correct`,
   `wrong`, `combo` (step 1–6), `xpTick`, `ringFill`, `rewardWobble`, `rewardOpen`, `rewardUnlock`,
-  `setComplete`, `levelUp` (`useSound().emit(event)`). Each plays the active effect style's sound and
+  `setComplete`, `levelUp`, plus `homeEnter` (Home entrance, once per visit), `nodePop` (topic
+  nodes popping in on the map) and `locked` (tapping something locked) (`useSound().emit(event)`). Each plays the active effect style's sound and
   a vibration pattern. One sound pack per style, synthesised with Web Audio (no files): Sticker Book
   (default: paper peel, slap, stamp, pencil tick), Pop Burst (bubbly pops, jelly boings), Starlight
   (chimes, shimmer, soft swells). Styles without a pack yet use Sticker Book. J's style system calls
@@ -651,12 +652,14 @@ Mockups: screens 19 (student) and 20 (parent).
   wrong, card flip, celebration, level up and reward unlocked follow the style too; the rest keep
   the main bank, and reward tiers (U4) keep their own sounds but add the matching vibration.
   - Vibration: a light tick for presses and flips, a double pulse for right answers, a rising rhythm
-    for combos and a longer pattern for unlocks, set complete and level up; none for fast ticks.
+    for combos and a longer pattern for unlocks, set complete and level up; a light tick for the
+    Home entrance and one short buzz for a locked tap; none for fast ticks or map nodes popping in.
     Sticker Book feels crisp, Pop Burst bouncy, Starlight soft and long.
   - Settings: a **Vibration** switch next to Sound, on by default, saved per device
     (`vibration` in `revisionden.sound`). It works on its own: muting sound does not stop vibration,
     and turning vibration off does not mute sound.
-  - Limits: the same tick sounds at most every 70 ms (XP) or 90 ms (ring fill), presses every 40 ms,
+  - Limits: the same tick sounds at most every 70 ms (XP, map nodes) or 90 ms (ring fill), presses
+    every 40 ms,
     and no more than 10 feedback sounds a second; vibration needs 100 ms between buzzes and at
     most 4 a second. Nothing plays or vibrates before the first tap; mute, volume, tap sounds and
     the Test mode rule all apply.

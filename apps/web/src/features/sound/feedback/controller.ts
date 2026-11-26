@@ -34,6 +34,7 @@ export interface Feedback {
 /** Minimum gap between sounds of the same event, for events that fire in fast runs. */
 const SOUND_GAP_MS: Partial<Record<FeedbackEvent, number>> = {
   xpTick: 70,
+  nodePop: 70,
   ringFill: 90,
   buttonPress: 40,
 };

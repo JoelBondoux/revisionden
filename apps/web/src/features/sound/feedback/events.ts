@@ -17,6 +17,10 @@ export const FEEDBACK_EVENTS = [
   'rewardUnlock',
   'setComplete',
   'levelUp',
+  // Added with J for Home and the topic map.
+  'homeEnter',
+  'nodePop',
+  'locked',
 ] as const;
 
 export type FeedbackEvent = (typeof FEEDBACK_EVENTS)[number];
@@ -35,6 +39,9 @@ const RULE: Record<FeedbackEvent, SoundEvent> = {
   rewardUnlock: 'rewardUnlocked',
   setComplete: 'celebration',
   levelUp: 'levelUp',
+  homeEnter: 'cardFlip',
+  nodePop: 'cardFlip',
+  locked: 'cardFlip',
 };
 
 export function feedbackAllowed(event: FeedbackEvent, mode?: SoundMode): boolean {

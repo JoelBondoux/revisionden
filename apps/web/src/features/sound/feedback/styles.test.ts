@@ -41,7 +41,7 @@ describe('style sound packs', () => {
         expect(['sine', 'triangle']).toContain(o.type);
         expect(o.stop).not.toBeNull();
       }
-      const quick = ['buttonPress', 'xpTick', 'ringFill', 'cardFlip'].includes(event);
+      const quick = ['buttonPress', 'xpTick', 'ringFill', 'cardFlip', 'nodePop'].includes(event);
       expect(r.end).toBeLessThanOrEqual(quick ? 0.25 : 1.4);
       // Volume-balanced: nothing louder than the existing correct chime's peak.
       expect(r.peak).toBeLessThanOrEqual(0.55);
@@ -57,6 +57,14 @@ describe('style sound packs', () => {
     for (const event of FEEDBACK_EVENTS) {
       const sigs = new Set(FEEDBACK_STYLES.map((s) => render(s, event).signature));
       expect(sigs.size).toBe(FEEDBACK_STYLES.length);
+    }
+  });
+
+  it('locked is a gentle low "not yet", never a buzzer', () => {
+    for (const style of FEEDBACK_STYLES) {
+      const r = render(style, 'locked');
+      expect(Math.max(...r.ctx.oscillators.map((o) => o.frequencies[0]!))).toBeLessThan(700);
+      expect(r.peak).toBeLessThanOrEqual(0.3);
     }
   });
 

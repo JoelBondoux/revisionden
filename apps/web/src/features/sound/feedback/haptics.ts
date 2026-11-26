@@ -48,6 +48,10 @@ const BUZZES: Record<Exclude<FeedbackEvent, 'combo'>, number[] | null> = {
   rewardUnlock: [30, 30, 70],
   setComplete: [20, 20, 50],
   levelUp: [30, 40, 60, 90],
+  homeEnter: [10],
+  // Map nodes pop in bursts: no buzzing.
+  nodePop: null,
+  locked: [30],
 };
 
 /** How each style feels: Sticker Book crisp, Pop Burst bouncy and quick, Starlight soft and long. */
@@ -86,6 +90,8 @@ export function hapticPattern(
   if (!buzzes) return null;
   const pattern = weave(buzzes, style);
   // Presses and flips stay a light tick whatever the style.
-  if (event === 'buttonPress' || event === 'cardFlip') pattern[0] = Math.min(pattern[0]!, 15);
+  if (event === 'buttonPress' || event === 'cardFlip' || event === 'homeEnter') {
+    pattern[0] = Math.min(pattern[0]!, 15);
+  }
   return pattern;
 }

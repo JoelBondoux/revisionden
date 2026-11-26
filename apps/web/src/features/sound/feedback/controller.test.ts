@@ -108,6 +108,26 @@ describe('feedback: sound and vibration for every animation', () => {
     expect(played).toBeGreaterThan(0);
   });
 
+  it('throttles map nodes popping in a burst, with no buzzing', () => {
+    const t = setup();
+    t.engine.unlock();
+    let played = 0;
+    for (let i = 0; i < 12; i++) {
+      if (t.feedback.emit('nodePop').sound) played++;
+      t.tick(20);
+    }
+    // 12 pops over 240 ms: at most one every 70 ms.
+    expect(played).toBeLessThanOrEqual(4);
+    expect(played).toBeGreaterThan(1);
+    expect(t.vibrations).toHaveLength(0);
+  });
+
+  it('a locked tap gives a gentle sound and a short buzz, even in Test mode', () => {
+    const t = setup();
+    t.engine.unlock();
+    expect(t.feedback.emit('locked', { mode: 'test' })).toEqual({ sound: true, haptic: true });
+  });
+
   it('caps sounds per second across all events', () => {
     const t = setup();
     t.engine.unlock();

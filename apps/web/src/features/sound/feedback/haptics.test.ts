@@ -57,6 +57,19 @@ describe('haptics', () => {
     for (const style of FEEDBACK_STYLES) {
       expect(hapticPattern(style, 'xpTick')).toBeNull();
       expect(hapticPattern(style, 'ringFill')).toBeNull();
+      expect(hapticPattern(style, 'nodePop')).toBeNull();
+    }
+  });
+
+  it('Home entrance is a light tick; a locked tap is one short buzz', () => {
+    for (const style of FEEDBACK_STYLES) {
+      const home = hapticPattern(style, 'homeEnter')!;
+      const locked = hapticPattern(style, 'locked')!;
+      expect(home).toHaveLength(1);
+      expect(home[0]).toBeLessThanOrEqual(15);
+      expect(locked).toHaveLength(1);
+      expect(locked[0]).toBeGreaterThan(home[0]!);
+      expect(locked[0]).toBeLessThanOrEqual(40);
     }
   });
 

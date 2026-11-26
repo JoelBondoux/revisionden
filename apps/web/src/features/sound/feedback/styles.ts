@@ -67,6 +67,10 @@ const stickerBook: Record<FeedbackEvent, SoundFn> = {
     tri(1318.5, 0.4, 0.7, 0.2),
     tri(1568, 0.4, 0.7, 0.2),
   ),
+  homeEnter: sound(peel(0, 0.18, 0.18), tri(2600, 0.15, 0.03, 0.12), tri(2900, 0.22, 0.03, 0.12)),
+  nodePop: sound(tri(1500, 0, 0.04, 0.12, 1800)),
+  // A dull little tap on a locked sticker: "not yet", never a buzzer.
+  locked: sound(sin(220, 0, 0.12, 0.25, 180), sin(196, 0.1, 0.12, 0.2)),
 };
 
 // ---- Pop Burst: bubbles and jelly ----
@@ -115,6 +119,9 @@ const popBurst: Record<FeedbackEvent, SoundFn> = {
     ...boing(660, 0.44, 0.32),
     sin(880, 0.7, 0.5, 0.2),
   ),
+  homeEnter: sound(pop(520, 0, 0.2), pop(660, 0.06, 0.2), pop(780, 0.12, 0.22)),
+  nodePop: sound(sin(600, 0, 0.05, 0.14, 1300)),
+  locked: sound(...boing(240, 0, 0.24)),
 };
 
 // ---- Starlight: chimes, shimmer and swells ----
@@ -162,6 +169,9 @@ const starlight: Record<FeedbackEvent, SoundFn> = {
     ...chime(1568, 0.5, 0.4),
     ...shimmer(0.8, 2349),
   ),
+  homeEnter: sound(swell(523.25, 0, 0.5, 0.2), ...shimmer(0.1, 1568, 0.12)),
+  nodePop: sound(sin(2349, 0, 0.05, 0.1)),
+  locked: sound(sin(330, 0, 0.25, 0.2, 294, 0.06)),
 };
 
 export const stylePacks: Record<FeedbackStyle, Record<FeedbackEvent, SoundFn>> = {
