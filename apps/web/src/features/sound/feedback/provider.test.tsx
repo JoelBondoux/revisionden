@@ -6,7 +6,7 @@ import { SOUND_KEY } from '../settings';
 import { SoundProvider, useFeedbackStyle, useSound } from '../SoundProvider';
 import { SoundSettingsCard } from '../SoundSettingsCard';
 import { hapticPattern } from './haptics';
-import { stylePacks } from './styles';
+import { DEFAULT_STYLE, stylePacks } from './styles';
 
 function memoryStorage(initial: Record<string, string> = {}) {
   const data = new Map(Object.entries(initial));
@@ -48,7 +48,7 @@ function Emit({ event = 'rewardWobble' as const }) {
 
 describe('feedback through the provider', () => {
   it('emit() plays the style sound and vibrates', async () => {
-    const spy = vi.spyOn(stylePacks['sticker-book'], 'rewardWobble');
+    const spy = vi.spyOn(stylePacks[DEFAULT_STYLE], 'rewardWobble');
     const t = setup(<Emit />);
     await userEvent.click(screen.getByRole('button', { name: 'Animate' }));
     expect(spy).toHaveBeenCalledTimes(1);
@@ -86,7 +86,7 @@ describe('feedback through the provider', () => {
   });
 
   it('a right answer in a combo plays the combo sound', async () => {
-    const spy = vi.spyOn(stylePacks['sticker-book'], 'combo');
+    const spy = vi.spyOn(stylePacks[DEFAULT_STYLE], 'combo');
     function Lesson() {
       const { play } = useSound();
       return (
@@ -171,7 +171,7 @@ describe('Vibration in Settings', () => {
     }
     const t = setup(<Reward />, { storage: memoryStorage({ [SOUND_KEY]: '{"enabled":false}' }) });
     await userEvent.click(screen.getByRole('button', { name: 'Earn' }));
-    const rewardBuzz = hapticPattern('sticker-book', 'rewardOpen');
+    const rewardBuzz = hapticPattern(DEFAULT_STYLE, 'rewardOpen');
     if (buzzes) expect(t.vibrations).toContainEqual(rewardBuzz);
     else expect(t.vibrations).not.toContainEqual(rewardBuzz);
   });

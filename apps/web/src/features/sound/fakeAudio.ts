@@ -8,9 +8,20 @@ export interface FakeOscillator {
   stop: number | null;
 }
 
+/** A recorded noise burst: its filter type, every filter frequency, and when it ran. */
+export interface FakeNoise {
+  filter: string;
+  frequencies: number[];
+  start: number | null;
+  stop: number | null;
+}
+
 /** A stand-in for the browser's AudioContext that records what a sound would do. */
 export interface FakeAudioContext extends AudioContextLike {
   oscillators: FakeOscillator[];
+  noises: FakeNoise[];
+  /** Every filter made, with its type and the last frequency it was set to. */
+  filters: { type: string; frequency: number }[];
   gains: { value: number; peaks: number[] }[];
   resumeCalls: number;
   suspendCalls: number;
@@ -52,7 +63,10 @@ export function createFakeAudioContext(
     state,
     currentTime: 0,
     destination: node(),
+    sampleRate: 8000,
     oscillators: [],
+    noises: [],
+    filters: [],
     gains: [],
     resumeCalls: 0,
     suspendCalls: 0,
@@ -106,11 +120,55 @@ export function createFakeAudioContext(
       };
     },
     createBiquadFilter() {
+      const rec = { type: 'lowpass', frequency: 350, frequencies: [] as number[] };
+      ctx.filters.push(rec);
+      const frequency = param((v) => {
+        rec.frequency = v;
+        rec.frequencies.push(v);
+      }, 350);
       return {
         ...node(),
-        type: 'lowpass',
-        frequency: param(() => undefined),
+        get type() {
+          return rec.type;
+        },
+        set type(t: string) {
+          rec.type = t;
+        },
+        frequency: Object.defineProperty(frequency, 'value', {
+          get: () => rec.frequency,
+          set: (v: number) => {
+            rec.frequency = v;
+            rec.frequencies.push(v);
+          },
+        }),
         Q: param(() => undefined),
+      };
+    },
+    createBuffer(_channels: number, length: number) {
+      const data = new Float32Array(length);
+      return { getChannelData: () => data };
+    },
+    createBufferSource() {
+      let filter: { type: string; frequencies: number[] } | null = null;
+      const rec: FakeNoise = { filter: '', frequencies: [], start: null, stop: null };
+      ctx.noises.push(rec);
+      return {
+        buffer: null,
+        connect<T>(target: T): T {
+          // A noise always feeds its filter first: record which one.
+          if (!filter) {
+            filter = ctx.filters[ctx.filters.length - 1] as unknown as typeof filter;
+            rec.filter = filter!.type;
+            rec.frequencies = filter!.frequencies;
+          }
+          return target;
+        },
+        start(at = 0) {
+          rec.start = at;
+        },
+        stop(at = 0) {
+          rec.stop = at;
+        },
       };
     },
   };
