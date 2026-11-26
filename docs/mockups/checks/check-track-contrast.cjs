@@ -50,7 +50,7 @@ const over = ([r, g, b, a], bg) => [r * a + bg[0] * (1 - a), g * a + bg[1] * (1 
         const appCs = getComputedStyle(document.querySelector('#app'));
         const palette = ['--ink', '--card-bg', '--btn-bg', '--tag-bg'].map((v) => parse(appCs.getPropertyValue(v).trim())).filter((c) => c && c[3] > 0.9);
         const pick = (sel) => { const n = pg.querySelector(sel); return n ? layers(n) : null; };
-        return { road, done, palette, states: { done: pick('.node.done'), current: pick('.node.current'), locked: pick('.node.locked:not(.quest)') } };
+        return { road, done, palette, states: { done: pick('.node.done'), current: pick('.node.current'), locked: pick('.node.locked:not(.quest):not(.higher)') } };
       });
       // background: hide the trail and sample the page's real pixels (textures included)
       await page.addStyleTag({ content: '#pager .trail > *{visibility:hidden!important}' });

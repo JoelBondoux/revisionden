@@ -626,7 +626,7 @@ button { font: inherit; color: inherit; }
 @media (prefers-reduced-motion: reduce) { .bar i::before, .bar i::after { animation: none; } }
 
 /* Doodle: biro hatching scribbling along */
-.t-doodle-diary { --bar-fx: linear-gradient(45deg, rgba(43, 42, 58, .5) 0 7%, transparent 7% 50%, rgba(43, 42, 58, .5) 50% 57%, transparent 57%) 0 0 / 12px 12px; --bar-fx-to: 12px 0; --bar-fx-anim: bar-roll .7s steps(6) infinite; }
+.t-doodle-diary { --bar-fx: linear-gradient(45deg, rgba(43, 42, 58, .5) 0 7%, transparent 7% 50%, rgba(43, 42, 58, .5) 50% 57%, transparent 57%) 0 0 / 12px 12px; --bar-fx-to: 12px 0; --bar-fx-anim: bar-roll .9s linear infinite; }
 /* Sticker Book: a barber-shop rolling stripe */
 .t-sticker-book { --bar-fx: linear-gradient(45deg, rgba(255, 255, 255, .45) 25%, transparent 25% 50%, rgba(255, 255, 255, .45) 50% 75%, transparent 75%) 0 0 / 24px 24px; --bar-fx-to: 24px 0; --bar-fx-anim: bar-roll .9s linear infinite; }
 /* Pop Burst: a glossy shine sweep plus bubbles */
@@ -651,7 +651,7 @@ button { font: inherit; color: inherit; }
   --bar-fx-to: 16px 50%; --bar-fx-anim: bar-roll .4s linear infinite; }
 /* Rainbow Parade: a subtle glitter shimmer */
 .t-rainbow-parade { --bar-fx: radial-gradient(circle, rgba(255, 255, 255, .95) 1px, transparent 1.6px) 0 0 / 13px 9px, radial-gradient(circle, rgba(255, 237, 0, .8) .9px, transparent 1.5px) 6px 4px / 17px 9px;
-  --bar-fx-to: 13px 0, -17px 0; --bar-fx-anim: bar-roll 3s linear infinite, bar-twinkle .9s steps(2) infinite; }
+  --bar-fx-to: 13px 0, -17px 0; --bar-fx-anim: bar-roll 3s linear infinite, bar-twinkle 1.1s ease-in-out infinite; }
 
 /* Home: XP towards the next level */
 .xp { display: grid; gap: 4px; }
@@ -706,6 +706,14 @@ button { font: inherit; color: inherit; }
 .t-rainbow-parade { --road-done: #c79be0; --node-lock-border: 3px dashed #3d3557; }
 [data-mode='dark'] .t-rainbow-parade { --road-done: #6d3f8c; }
 [data-mode='dark'] .t-comic-pop { --node-done-border: 3px solid #111; --node-cur-border: 3px solid #111; }
+
+/* Revision 5: the Higher side path, branch labels */
+.road .rb { fill: none; stroke: var(--road-branch, var(--road)); stroke-width: calc(var(--road-w, 8px) * .6); stroke-dasharray: 2 9; stroke-linecap: round; vector-effect: non-scaling-stroke; opacity: .9; }
+.node.higher { width: 42px; height: 42px; margin: -21px 0 0 -21px; }
+.node.higher.open { background: var(--node-bg); border: var(--node-border); }
+.node-label .hl { display: block; font-size: 10px; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; opacity: .8; margin-top: 1px; }
+.node.higher + .node-label { margin-top: 24px; }
+.node-label { width: min(120px, 46%); }
 </style>
 </head>
 <body>
@@ -958,7 +966,7 @@ const PROPS = {
 };
 
 const SUBJECTS = [
-  { id: 'maths', name: 'Maths', prop: 'calculator', tint: '#e3ebff', units: [['Number', ['Place value', 'Decimals', 'Negative numbers', 'Fractions', 'Percentages', 'Powers and roots', 'Standard form']], ['Algebra', ['Expressions', 'Expanding', 'Factorising', 'Equations', 'Inequalities', 'Sequences', 'Graphs']], ['Ratio', ['Ratio basics', 'Sharing', 'Proportion', 'Speed', 'Density', 'Best buys']], ['Geometry', ['Angles', 'Polygons', 'Area', 'Volume', 'Pythagoras', 'Trigonometry']]] },
+  { id: 'maths', name: 'Maths', prop: 'calculator', tint: '#e3ebff', units: [['Number', ['Place value', 'Decimals', 'Negative numbers', 'Fractions', 'Percentages', { higher: ['Surds', 'Recurring decimals'] }, 'Powers and roots', 'Standard form']], ['Algebra', ['Expressions', 'Expanding', { either: ['Factorising', 'Equations'] }, 'Inequalities', 'Sequences', 'Graphs']], ['Ratio', ['Ratio basics', 'Sharing', 'Proportion', 'Speed', 'Density', 'Best buys']], ['Geometry', ['Angles', 'Polygons', 'Area', 'Volume', 'Pythagoras', 'Trigonometry']]] },
   { id: 'further-maths', name: 'Further Maths', head: 'glasses', prop: 'compass', tint: '#e8e2ff', units: [['Algebra', ['Surds', 'Quadratics', 'Functions', 'Inequalities', 'Proof']], ['Calculus', ['Gradients', 'Differentiation', 'Tangents', 'Stationary points']], ['Matrices', ['Adding', 'Multiplying', 'Transformations', 'Inverses']]] },
   { id: 'statistics', name: 'Statistics', head: 'visor', prop: 'chart', tint: '#dff5ee', units: [['Data', ['Types of data', 'Sampling', 'Bias', 'Tables', 'Charts']], ['Averages', ['Mean', 'Median', 'Mode', 'Range', 'Spread']], ['Probability', ['Outcomes', 'Tree diagrams', 'Venn diagrams', 'Expected values']]] },
   { id: 'english-language', name: 'English Language', head: 'bluepen', prop: 'bubble', tint: '#e6f0ff', units: [['Reading', ['Skimming', 'Inference', 'Language', 'Structure', 'Comparison']], ['Writing', ['Planning', 'Openings', 'Description', 'Persuasion', 'Editing']]] },
@@ -1219,10 +1227,10 @@ function countUp() {
   });
   setTimeout(() => snd('ringFill'), 500);
 }
-function currentTopic() { const t = state.subject.units[0][1]; return t[Math.min(state.progress, t.length - 1)]; }
+function currentTopic() { const t = stepsOf(state.subject.units[0][1]); return t[Math.min(state.progress, t.length - 1)]; }
 function drawHome() {
   $$('.cur-topic').forEach((el) => { el.textContent = currentTopic(); });
-  const all = state.subject.units.flatMap((u) => u[1]);
+  const all = state.subject.units.flatMap((u) => topicNames(u[1]));
   $('#fixes').innerHTML = [all[1], all[2], all[0]].map((t) => `<button type="button" class="chip">${t}</button>`).join('');
   $$('#fixes .chip').forEach((c) => c.addEventListener('click', () => show('lesson')));
 }
@@ -1230,42 +1238,144 @@ $('#homeGo').addEventListener('click', () => show('lesson'));
 
 /* ---------- Map ---------- */
 const GAP = 104;
-function nodeState(u, i, n) {
-  if (i === n) return 'quest';
-  if (u > 0) return 'locked';
-  return i < state.progress ? 'done' : i === state.progress ? 'current' : 'locked';
+/* A unit's topics are strings, or { higher: [...] } (an optional Higher side branch for a Foundation student),
+   or { either: [a, b] } (two topics that can be done in either order). Steps count the main route only. */
+const stepsOf = (topics) => topics.filter((t) => !t.higher).map((t) => (t.either ? t.either.join(' or ') : t));
+const topicNames = (topics) => topics.flatMap((t) => (t.higher || t.either || [t]));
+/* Seeded randomness, so a subject's unit always gets the same route. */
+function rngFor(key) { let h = 2166136261; for (const c of key) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return () => { h = Math.imul(h ^ (h >>> 15), 2246822507); h = Math.imul(h ^ (h >>> 13), 3266489909); return ((h ^= h >>> 16) >>> 0) / 4294967296; }; }
+const SHAPES = ['S-bends', 'switchbacks', 'a long sweep', 'a curl'];
+
+/** Lay out one unit, bottom to top: rows of nodes, plus the road segments that join them. */
+function layoutUnit(subject, u, topics) {
+  const rnd = rngFor(`${subject.id}:${u}`);
+  const shape = SHAPES[Math.floor(rnd() * SHAPES.length)];
+  const f = 0.8 + rnd() * 0.6, ph = rnd() * 6.28, side = rnd() < 0.5 ? -1 : 1;
+  const rows = []; // { nodes: [{ x, label, kind, step }] }
+  let step = 0;
+  for (const t of topics) {
+    if (t.either) { rows.push({ nodes: t.either.map((label, k) => ({ x: k ? 76 : 24, label, kind: 'either', step })) }); step++; }
+    else if (t.higher) t.higher.forEach((label) => rows.push({ nodes: [{ x: 0, label, kind: 'higher', step: step - 1 }] }));
+    else { rows.push({ nodes: [{ x: 0, label: t, kind: 'main', step }] }); step++; }
+  }
+  rows.push({ nodes: [{ x: 50, label: `${subject.units[u][0]} quest`, kind: 'quest', step }] });
+  const n = rows.length;
+  const laneX = (i) => {
+    if (shape === 'switchbacks') return i % 2 ? 72 - rnd() * 6 : 28 + rnd() * 6;
+    if (shape === 'a long sweep') return 50 + side * 27 * Math.sin((Math.PI * i) / Math.max(1, n - 1));
+    return 50 + 26 * Math.sin(i * f + ph);
+  };
+  rows.forEach((r, i) => { if (r.nodes[0].kind === 'main') r.nodes[0].x = Math.max(24, Math.min(76, laneX(i))); });
+  // keep branches readable: the route around a Higher branch hugs one side, the branch sits on the other;
+  // the rows either side of an either-order pair sit in the middle so the split is even
+  rows.forEach((r, i) => {
+    if (r.nodes[0].kind !== 'higher') return;
+    const before = rows.slice(0, i).reverse().find((q) => q.nodes[0].kind !== 'higher');
+    const after = rows.slice(i).find((q) => q.nodes[0].kind !== 'higher');
+    if (before) before.nodes[0].x = 30; if (after) after.nodes[0].x = 30; r.nodes[0].x = 72;
+  });
+  rows.forEach((r, i) => { if (r.nodes.length === 2) [rows[i - 1], rows[i + 1]].forEach((q) => { if (q && q.nodes.length === 1 && q.nodes[0].kind !== 'higher') q.nodes[0].x = 50; }); });
+  const H = n * GAP + 90;
+  const pts = []; // flat list of nodes with positions
+  rows.forEach((r, i) => r.nodes.forEach((nd) => pts.push({ ...nd, row: i, y: H - 60 - i * GAP, dx: 0, dy: 0 })));
+  const idx = (row, k = 0) => pts.findIndex((p) => p.row === row && (k === 0 || p.x === rows[row].nodes[k].x));
+  const segs = [];
+  const mainRows = rows.map((r, i) => i).filter((i) => rows[i].nodes[0].kind !== 'higher');
+  for (let m = 1; m < mainRows.length; m++) {
+    const a = mainRows[m - 1], b = mainRows[m];
+    const from = pts.filter((p) => p.row === a), to = pts.filter((p) => p.row === b);
+    for (const pa of from) for (const pb of to) segs.push({ a: pts.indexOf(pa), b: pts.indexOf(pb), kind: 'main' });
+  }
+  // the Higher side path forks from the route and rejoins it
+  rows.forEach((r, i) => {
+    if (r.nodes[0].kind !== 'higher') return;
+    const prev = rows[i - 1].nodes[0].kind === 'higher' ? idx(i - 1) : idx(i - 1);
+    segs.push({ a: prev, b: idx(i), kind: 'branch' });
+    if (rows[i + 1].nodes[0].kind !== 'higher') segs.push({ a: idx(i), b: idx(i + 1), kind: 'branch' });
+  });
+  if (shape === 'a curl') { const s = segs.find((q, j) => q.kind === 'main' && j >= 1 && pts[q.a].kind === 'main' && pts[q.b].kind === 'main'); if (s) s.curl = pts[s.a].x < 50 ? 34 : -34; }
+  void idx;
+  return { rows, pts, segs, H, shape };
 }
-function xAt(i) { return 50 + Math.sin(i * 1.15 + 0.4) * 30; }
+function segD(pts, s, w) {
+  const a = pts[s.a], b = pts[s.b], c = s.curl || 0;
+  const ax = a.x + (a.dx / w) * 100, ay = a.y + a.dy, bx = b.x + (b.dx / w) * 100, by = b.y + b.dy, k = (ay - by) / 2;
+  return `M ${ax} ${ay} C ${ax + c} ${ay - k} ${bx + c} ${by + k} ${bx} ${by}`;
+}
+const HNODE = (locked) => `<svg viewBox="-20 -20 40 40"><text y="6.5" text-anchor="middle" font-size="19" font-weight="900" font-family="Nunito, sans-serif" fill="currentColor">H</text>${locked ? LOCK_BADGE : ''}</svg>`;
+let mapPages = [];
+function nodeStateOf(u, p) {
+  if (p.kind === 'quest') return 'quest';
+  if (u > 0) return p.kind === 'higher' ? 'higher-locked' : 'locked';
+  if (p.kind === 'higher') return p.step < state.progress ? 'higher-open' : 'higher-locked';
+  return p.step < state.progress ? 'done' : p.step === state.progress ? 'current' : 'locked';
+}
 function drawMap() {
   const s = state.subject;
   $('#playBox').innerHTML = `<span class="pip-mini-slot" aria-hidden="true"></span><span class="t"><small>Your subject</small><b>${s.name}</b></span><span class="swap">Change</span>`;
   $('#playBox').setAttribute('aria-label', `Subject: ${s.name}. Change subject`);
   const render = NODES[state.theme];
-  $('#pager').innerHTML = s.units.map(([unit, topics], u) => {
-    const n = topics.length, H = (n + 1) * GAP + 40;
-    const pts = [...topics, 'Unit quest'].map((_, i) => [xAt(i), 50 + i * GAP]);
-    const seg = (a, b) => `C ${a[0]} ${a[1] + GAP / 2} ${b[0]} ${b[1] - GAP / 2} ${b[0]} ${b[1]}`;
-    const road = `M ${pts[0][0]} ${pts[0][1]} ` + pts.slice(1).map((p, i) => seg(pts[i], p)).join(' ');
-    const done = u === 0 && state.progress > 0 ? `M ${pts[0][0]} ${pts[0][1]} ` + pts.slice(1, state.progress + 1).map((p, i) => seg(pts[i], p)).join(' ') : '';
-    const nodes = pts.map(([x, y], i) => {
-      const st = nodeState(u, i, n), label = i === n ? `${unit} quest` : topics[i];
-      const how = st === 'locked' ? (u > 0 ? `Finish ${s.units[u - 1][0]} to open it` : `Finish ${topics[i - 1]} to open it`) : st === 'quest' ? `Finish every ${unit} topic to open it` : '';
-      const said = { done: 'done', current: 'start here', locked: 'locked', quest: 'locked' }[st];
-      return `<button type="button" class="node ${st === 'quest' ? 'locked quest' : st}" style="left:${x}%;top:${y}px" data-u="${u}" data-i="${i}" data-how="${how}" data-label="${label}" aria-label="${label}: ${said}">${render(st, i)}</button>`
-        + `<span class="node-label" style="left:${x}%;top:${y}px">${label}</span>`
-        + (st === 'current' ? `<span class="here" style="left:${x}%;top:${y}px">You are here</span>` : '');
+  mapPages = s.units.map(([unit, topics], u) => ({ unit, ...layoutUnit(s, u, topics) }));
+  $('#pager').innerHTML = mapPages.map(({ unit, pts, H, shape }, u) => {
+    let hereShown = false;
+    const nodes = pts.map((p, i) => {
+      const st = nodeStateOf(u, p);
+      const steps = stepsOf(s.units[u][1]);
+      const how = st === 'quest' ? `Finish every ${unit} topic to open it`
+        : st === 'higher-locked' ? `It's an optional Higher topic: it opens after ${u > 0 ? s.units[u - 1][0] : steps[p.step]}`
+        : st === 'locked' ? (u > 0 ? `Finish ${s.units[u - 1][0]} to open it` : `Finish ${steps[p.step - 1]} to open it`) : '';
+      const said = { done: 'done', current: 'start here', locked: 'locked', quest: 'locked', 'higher-open': 'optional Higher topic, open', 'higher-locked': 'optional Higher topic, locked' }[st];
+      const cls = st === 'quest' ? 'locked quest' : st === 'higher-locked' ? 'locked higher' : st === 'higher-open' ? 'higher open' : st;
+      const art = st.startsWith('higher') ? HNODE(st === 'higher-locked') : render(st, i);
+      const here = st === 'current' && !hereShown ? (hereShown = true, `<span class="here" data-p="${i}" style="left:${p.x}%;top:${p.y}px">You are here</span>`) : '';
+      const sub = p.kind === 'higher' ? '<small class="hl">Higher · optional</small>' : p.kind === 'either' && st !== 'done' ? '<small class="hl">either order</small>' : '';
+      return `<button type="button" class="node ${cls}" data-p="${i}" style="left:${p.x}%;top:${p.y}px" data-how="${how}" data-label="${p.label}" aria-label="${p.label}: ${said}">${art}</button>`
+        + `<span class="node-label" data-p="${i}" style="left:${p.x}%;top:${p.y}px">${p.label}${sub}</span>` + here;
     }).join('');
-    return `<section class="page" aria-label="${unit}"><div class="trail" style="height:${H}px">
-      <svg class="road" viewBox="0 0 100 ${H}" preserveAspectRatio="none" aria-hidden="true"><path class="re" d="${road}"/><path class="r" d="${road}"/><path class="rt" d="${road}"/>${done ? `<path class="d" d="${done}"/><path class="dd" d="${done}"/>` : ''}</svg>${nodes}</div></section>`;
+    return `<section class="page" aria-label="${unit}: ${shape}"><div class="trail" style="height:${H}px">
+      <svg class="road" viewBox="0 0 100 ${H}" preserveAspectRatio="none" aria-hidden="true"><path class="rb"/><path class="re"/><path class="r"/><path class="rt"/><path class="d"/><path class="dd"/></svg>${nodes}</div></section>`;
   }).join('');
+  mapPages.forEach((pg, u) => {
+    const page = $$('#pager .page')[u];
+    pg.page = page;
+    pg.els = pg.pts.map((_, i) => $$(`[data-p="${i}"]`, page));
+    const done = (sg) => u === 0 && pg.pts[sg.b].kind !== 'quest' && pg.pts[sg.a].step < state.progress && pg.pts[sg.b].step <= state.progress;
+    pg.paths = [['rb', pg.segs.filter((q) => q.kind === 'branch')], ...['re', 'r', 'rt'].map((c) => [c, pg.segs.filter((q) => q.kind === 'main')]),
+      ...['d', 'dd'].map((c) => [c, pg.segs.filter((q) => q.kind === 'main' && done(q))])].map(([c, list]) => [page.querySelector(`.road .${c}`), list]);
+    drawRoads(pg);
+  });
   $('#dots').innerHTML = s.units.map((_, i) => `<i class="${i === 0 ? 'on' : ''}"></i>`).join('');
   $$('#pager .node').forEach((b) => b.addEventListener('click', () => {
     if (b.classList.contains('locked')) { snd('locked'); toast(`${b.dataset.label} is locked. ${b.dataset.how}.`); return; }
     snd('nodePop'); $('#question').dataset.topic = b.dataset.label; show('lesson');
   }));
   state.unit = 0; pager.scrollLeft = 0; syncUnit();
+  requestAnimationFrame(scrollToHere);
   drawPip();
 }
+function drawRoads(pg) {
+  const w = pg.page.querySelector('.trail').clientWidth || 300;
+  pg.paths.forEach(([el, list]) => el.setAttribute('d', list.map((q) => segD(pg.pts, q, w)).join(' ')));
+}
+/* The path breathes: each node drifts a few px on a slow sine and the road follows. Per-style flavour. */
+const BREATH = { 'doodle-diary': [3, 9], 'sticker-book': [2.5, 10], 'pop-burst': [3, 8], starlight: [4, 12], 'comic-pop': [2, 8], 'garden-grow': [3.5, 11], 'pixel-arcade': [2, 10], 'petal-glow': [4, 12], 'turbo-drive': [2.5, 8], 'rainbow-parade': [3, 10] };
+function breathe(t) {
+  const pg = mapPages[state.unit];
+  if (pg && !$('#s-map').hidden && !reduced()) {
+    const [amp, period] = BREATH[state.theme], w = pg.page.querySelector('.trail').clientWidth || 300;
+    pg.pts.forEach((p, i) => {
+      p.dx = amp * Math.sin((2 * Math.PI * t) / (period * 1000) + i * 0.9);
+      p.dy = amp * 0.6 * Math.cos((2 * Math.PI * t) / (period * 1300) + i * 1.3);
+      pg.els[i].forEach((e) => { e.style.translate = `${p.dx.toFixed(2)}px ${p.dy.toFixed(2)}px`; });
+    });
+    pg.paths.forEach(([el, list]) => el.setAttribute('d', list.map((q) => segD(pg.pts, q, w)).join(' ')));
+  } else if (pg && reduced() && pg.pts.some((p) => p.dx || p.dy)) {
+    pg.pts.forEach((p, i) => { p.dx = 0; p.dy = 0; pg.els[i].forEach((e) => { e.style.translate = ''; }); }); drawRoads(pg);
+  }
+  requestAnimationFrame(breathe); // rAF itself pauses while the tab is hidden
+}
+requestAnimationFrame(breathe);
+
 function syncUnit() {
   const units = state.subject.units;
   $('#unitName').textContent = units[state.unit][0];
@@ -1287,9 +1397,9 @@ pager.tabIndex = 0;
 pager.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { e.preventDefault(); goUnit(state.unit + 1); } if (e.key === 'ArrowLeft') { e.preventDefault(); goUnit(state.unit - 1); } });
 $('#unitPrev').addEventListener('click', () => goUnit(state.unit - 1));
 $('#unitNext').addEventListener('click', () => goUnit(state.unit + 1));
-function scrollToHere() {
-  const cur = $('#pager .page .node.current'); const page = $('#pager .page');
-  if (cur && page) page.scrollTop = Math.max(0, cur.offsetTop - page.clientHeight / 2);
+function scrollToHere() { // open on the current topic; done topics sit below it
+  const page = $('#pager .page'); const cur = page && page.querySelector('.node.current');
+  if (cur) page.scrollTop = Math.max(0, cur.offsetTop - page.clientHeight / 2); else if (page) page.scrollTop = page.scrollHeight;
 }
 $('#playBox').addEventListener('click', () => show('subjects'));
 
@@ -1419,7 +1529,7 @@ $('#levelUp').addEventListener('click', async () => {
   pipAnim('a-cheer', 1200); ava.react('hop'); toast('Level 8! New things to unlock.');
 });
 $('#completeTopic').addEventListener('click', async () => {
-  const n = state.subject.units[0][1].length;
+  const n = stepsOf(state.subject.units[0][1]).length;
   if (state.progress >= n - 1) { state.progress = 3; drawMap(); }
   if ($('#s-map').hidden) { show('map'); await wait(reduced() ? 50 : 500); } else goUnit(0);
   const cur = $('#pager .node.current'); if (!cur) return;
@@ -1428,7 +1538,7 @@ $('#completeTopic').addEventListener('click', async () => {
   state.progress++; drawMap(); drawHome(); scrollToHere();
   const next = $('#pager .node.current');
   if (next) { snd('nodePop'); burstAt(next, { count: 8, power: 0.6 }); }
-  toast(`${state.subject.units[0][1][state.progress - 1]} done! ${currentTopic()} is open.`);
+  toast(`${stepsOf(state.subject.units[0][1])[state.progress - 1]} done! ${currentTopic()} is open.`);
 });
 $('#getReward').addEventListener('click', (e) => openPrize(e.currentTarget));
 

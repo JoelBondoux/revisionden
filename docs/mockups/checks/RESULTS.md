@@ -5,6 +5,7 @@ Run from the repo root after `pnpm install` (Playwright is a dev dependency):
 ```bash
 node docs/mockups/checks/check-track-contrast.cjs docs/mockups/all-themes-pip.html
 node docs/mockups/checks/check-pip-ring.cjs docs/mockups/all-themes-pip.html
+node docs/mockups/checks/check-routes.cjs docs/mockups/all-themes-pip.html
 ```
 
 ## Map nodes vs road and page (3:1, WCAG 1.4.11)
@@ -75,6 +76,15 @@ A node passes when its own art clears 3:1 against every road colour it touches a
 | rainbow-parade | dark | locked | border+fill | 5.48 | 3.5 | pass |
 
 60/60 pass
+
+## Routes stay readable (every subject, every unit, 320px and 390px)
+
+No overlapping nodes or labels, no label off screen, no road segments crossing.
+
+```
+route shapes used (both widths): {"a curl":30,"a long sweep":10,"S-bends":20,"switchbacks":32}
+no overlaps, no labels off screen, no road crossings
+```
 
 ## Pip ring vs disc, including the soft flag discs (3:1)
 
