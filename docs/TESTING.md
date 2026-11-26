@@ -98,4 +98,8 @@ one checks the "Ask a parent to link this device" message. The API is stubbed wi
 The whole-session smoke test (`e2e/tests/pupil-session.spec.ts`, phone only) walks one pupil
 through unlock (virtual authenticator), Home, the map, a lesson, a right answer, the prize box
 and back Home with Pip, running `axeWhenSettled` on every screen. It catches the pieces breaking
-each other, which the per-screen specs cannot.
+each other, which the per-screen specs cannot. It also runs at 320 x 640 with normal text and
+with text at 200% (W15): there each screen must not scroll sideways, and "You are here" must sit
+clear of the bottom nav and open the lesson when tapped. With 200% text the map starts below the
+fold, so the walk scrolls down to it first (lead ruling, 2026-11-26: vertical scrolling is fine at
+that size; auto-scrolling past the unit header would hide context).
