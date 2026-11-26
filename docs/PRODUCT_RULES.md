@@ -430,6 +430,9 @@ Mockups: screens 19 (student) and 20 (parent).
 
 ### Student: My stats (from the Progress tab)
 
+On a phone the panel scrolls into view above the bottom bar when it opens and on each step
+(F7b), instantly under reduced motion.
+
 - Period toggle: **Week** (Monday to Sunday, UK time), **Term** (weeks of the current term),
   **Year** (school year, September to August).
 - Headline tiles: XP, questions answered (and how many correct), accuracy, current streak. Each
