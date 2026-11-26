@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- On small phones with large text, the policy list and other link cards now wrap their words instead of running off the side of the screen.
 - Fixed: the About page no longer scrolls sideways on a small phone with large text; the version details and support email now wrap.
 - Fixed: on very narrow phones or with large text, the version line at the bottom of the screen now wraps neatly instead of running off the edge.
 - Fixed: on a small phone with large text, the Get help buttons (like "1-2-1 counsellor chat") now wrap onto two lines instead of running off the side of the screen.
@@ -124,6 +125,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Reflow J11 (J): `LinkTile` may shrink (`min-width: 0`, `max-width: 100%`) and wraps its text anywhere, so /legal fits a 320px screen with text at 200% (the version footer's reflow came with G's #224) (WCAG 1.4.4, 1.4.10). New e2e in `e2e/tests/pages.spec.ts`.
 - About page reflow (L10): at 320px with 200% text the version facts grid (`max-content` label column) and the support email pushed `/about` sideways. The grid columns can now shrink and long values wrap (`about.css`); new e2e checks the whole `/about` page at 320px and 200% text has no sideways scroll (with G's footer fix, #224).
 - Version footer (G9): the version, the "(environment, commit)" label and Get help are three flex pieces, each allowed to wrap inside itself (`overflow-wrap: anywhere`, no `nowrap`), so the footer never overflows at 320px or with large text. New e2e check at 320px with large footer text.
 - Get help (W6): service buttons overflowed to about 417px on a 320px screen at 200% text because the actions grid used `minmax(12rem, 1fr)`. It now uses `minmax(min(12rem, 100%), 1fr)`, and buttons and their list items have `min-width: 0` with wrapping text. New e2e at 320px with 200% text: no sideways scroll on `/help` and `/parent/help`, and every button fits.
