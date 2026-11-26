@@ -108,7 +108,8 @@ About page, the feedback form and some policies, `help@revisionden.com` when uns
 
 Workflows: `deploy-dev.yml` (push to `dev`), `deploy-staging.yml` (push to `staging`),
 `deploy-production.yml` (after "Release version bump" succeeds on `main`, or by hand); all call
-`deploy.yml`, which migrates the Neon branch (`db:migrate:deploy`, over HTTPS), deploys the API
+`deploy.yml`, which migrates the Neon branch (`db:migrate:deploy`, over HTTPS), loads `content/`
+into it (`content:sync`; dev and staging only), deploys the API
 Worker with the version from `VERSION`, builds and deploys the web app, then checks `/health`
 (`scripts/check-deploy.mjs`). Each can also be run by hand from the Actions tab.
 

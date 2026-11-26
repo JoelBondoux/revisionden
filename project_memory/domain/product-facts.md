@@ -428,7 +428,8 @@ Tags: #product #rules #limits #defaults
   prompts and answers are never stored, cache off, 120 requests a minute.
 - Deploys: GitHub Actions. Push to `dev` deploys dev, push to `staging` deploys staging, and
   production deploys after the release bump on `main`. Each deploy migrates the database first,
-  then the API, then the web app, then checks `/health` shows the new version.
+  then (dev and staging only) loads `content/` with `content:sync`, then the API, then the web
+  app, then checks `/health` shows the new version. Production content is not synced by deploys.
 - `GET /health` always answers with the version: `ok` (200) when configured, `misconfigured`
   (503) while a required secret is missing. Dev and staging deploys accept `misconfigured`;
   production does not.
