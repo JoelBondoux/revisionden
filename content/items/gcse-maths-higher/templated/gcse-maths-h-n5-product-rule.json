@@ -1,0 +1,322 @@
+[
+  {
+    "id": "gcse-maths-h-n5-t-product-rule-01",
+    "topic": "gcse-maths-h-n5",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n5-lp-product-rule",
+    "expected_seconds": 60,
+    "prompt": "A café offers 3 starters, 6 main courses and 2 desserts. A meal is one starter, one main course and one dessert. How many different meals can be chosen?",
+    "answer": {
+      "expression": "36"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "3*6*2"
+    },
+    "steps": ["3*6*2", "18*2", "36"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 3 × 6 × 2", "A1 for 36"],
+    "hint": "Multiply the number of choices for each course.",
+    "explanation": "Each of the 3 starters can go with each of the 6 main courses, which gives 3 × 6 = 18 pairs. Each pair can go with each of the 2 desserts: 18 × 2 = 36 meals.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N5",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N5 (page 12; PDF page 24)",
+        "quote": "apply systematic listing strategies, including use of the product rule for counting",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-n5-product-rule",
+      "version": 1,
+      "seed": 1
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-n5-product-rule v1",
+          "at": "2026-11-26T05:05:35Z",
+          "notes": "Generated from template gcse-maths-h-n5-product-rule (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:05:35Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n5-t-product-rule-02",
+    "topic": "gcse-maths-h-n5",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n5-lp-product-rule",
+    "expected_seconds": 60,
+    "prompt": "A café offers 3 starters, 6 main courses and 3 desserts. A meal is one starter, one main course and one dessert. How many different meals can be chosen?",
+    "answer": {
+      "expression": "54"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "3*6*3"
+    },
+    "steps": ["3*6*3", "18*3", "54"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 3 × 6 × 3", "A1 for 54"],
+    "hint": "Multiply the number of choices for each course.",
+    "explanation": "Each of the 3 starters can go with each of the 6 main courses, which gives 3 × 6 = 18 pairs. Each pair can go with each of the 3 desserts: 18 × 3 = 54 meals.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N5",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N5 (page 12; PDF page 24)",
+        "quote": "apply systematic listing strategies, including use of the product rule for counting",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-n5-product-rule",
+      "version": 1,
+      "seed": 2
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-n5-product-rule v1",
+          "at": "2026-11-26T05:05:35Z",
+          "notes": "Generated from template gcse-maths-h-n5-product-rule (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:05:35Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n5-t-product-rule-03",
+    "topic": "gcse-maths-h-n5",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n5-lp-product-rule",
+    "expected_seconds": 60,
+    "prompt": "A café offers 6 starters, 4 main courses and 2 desserts. A meal is one starter, one main course and one dessert. How many different meals can be chosen?",
+    "answer": {
+      "expression": "48"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "6*4*2"
+    },
+    "steps": ["6*4*2", "24*2", "48"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 6 × 4 × 2", "A1 for 48"],
+    "hint": "Multiply the number of choices for each course.",
+    "explanation": "Each of the 6 starters can go with each of the 4 main courses, which gives 6 × 4 = 24 pairs. Each pair can go with each of the 2 desserts: 24 × 2 = 48 meals.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N5",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N5 (page 12; PDF page 24)",
+        "quote": "apply systematic listing strategies, including use of the product rule for counting",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-n5-product-rule",
+      "version": 1,
+      "seed": 3
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-n5-product-rule v1",
+          "at": "2026-11-26T05:05:35Z",
+          "notes": "Generated from template gcse-maths-h-n5-product-rule (version 1, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:05:35Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n5-t-product-rule-04",
+    "topic": "gcse-maths-h-n5",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n5-lp-product-rule",
+    "expected_seconds": 60,
+    "prompt": "A café offers 7 starters, 6 main courses and 5 desserts. A meal is one starter, one main course and one dessert. How many different meals can be chosen?",
+    "answer": {
+      "expression": "210"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "7*6*5"
+    },
+    "steps": ["7*6*5", "42*5", "210"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 7 × 6 × 5", "A1 for 210"],
+    "hint": "Multiply the number of choices for each course.",
+    "explanation": "Each of the 7 starters can go with each of the 6 main courses, which gives 7 × 6 = 42 pairs. Each pair can go with each of the 5 desserts: 42 × 5 = 210 meals.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N5",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N5 (page 12; PDF page 24)",
+        "quote": "apply systematic listing strategies, including use of the product rule for counting",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-n5-product-rule",
+      "version": 1,
+      "seed": 4
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-n5-product-rule v1",
+          "at": "2026-11-26T05:05:35Z",
+          "notes": "Generated from template gcse-maths-h-n5-product-rule (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:05:35Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n5-t-product-rule-05",
+    "topic": "gcse-maths-h-n5",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n5-lp-product-rule",
+    "expected_seconds": 60,
+    "prompt": "A café offers 4 starters, 9 main courses and 7 desserts. A meal is one starter, one main course and one dessert. How many different meals can be chosen?",
+    "answer": {
+      "expression": "252"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "4*9*7"
+    },
+    "steps": ["4*9*7", "36*7", "252"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 4 × 9 × 7", "A1 for 252"],
+    "hint": "Multiply the number of choices for each course.",
+    "explanation": "Each of the 4 starters can go with each of the 9 main courses, which gives 4 × 9 = 36 pairs. Each pair can go with each of the 7 desserts: 36 × 7 = 252 meals.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N5",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N5 (page 12; PDF page 24)",
+        "quote": "apply systematic listing strategies, including use of the product rule for counting",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-n5-product-rule",
+      "version": 1,
+      "seed": 5
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-n5-product-rule v1",
+          "at": "2026-11-26T05:05:35Z",
+          "notes": "Generated from template gcse-maths-h-n5-product-rule (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:05:35Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        }
+      ]
+    }
+  }
+]

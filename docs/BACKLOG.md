@@ -187,7 +187,8 @@
 
 - [x] T1a Template core: typed parameters, rules, seeded deterministic draws, cross-check (content checks plus an independent recheck), build with review records kept and a `--check` drift test.
 - [x] T1b Pilot: 5 templates for 1MA1 Higher (A4, A17, A19, N12, N9), 25 draft items through quote check, blind answer and adversarial review; owner preview `docs/TEMPLATE_PREVIEW.md`.
-- [ ] T1c More templates for thin Algebra and Number topics (stacked PRs).
+- [x] T1c More templates for thin topics: A18, A25, N10, N5, A7 (25 more draft items).
+- [ ] T1e Further templates (stacked PRs) for the next thinnest topics.
 - [ ] T1d Fresh numbers per student at run time: the API asks the engine for a new seed of a verified template per attempt and marks against that instance's computed answer. Needs a ruling on how a verified template (not each instance) is approved, since instances would no longer pass through the review queue one by one.
 - Tests: parameter ranges and rules, determinism by seed, item shape and schema, citation reuse, each broken template caught, committed files match a fresh generation.
 

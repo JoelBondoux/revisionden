@@ -337,3 +337,59 @@ def test_the_standard_form_method_mark_also_accepts_the_ordinary_number():
     item = make_item(template, 4, NOW)
     assert len(item["steps"]) == 4
     assert item["mark_scheme"][0] == "M1 for 29.4 × 10^8 or 2 940 000 000"
+
+
+# --- T1c: more templates for thin topics ------------------------------------------------------
+
+def test_there_are_templates_for_the_thin_topics():
+    topics = {t.topic for t in TEMPLATES}
+    assert {"gcse-maths-h-a18", "gcse-maths-h-a25", "gcse-maths-h-n10", "gcse-maths-h-n5",
+            "gcse-maths-h-a7"} <= topics
+
+
+def test_a_wrong_quadratic_root_fails_generation():
+    template = _broken(_template("quadratic-factorising"),
+                       lambda q: {**q, "answer": {"solutions": [q["answer"]["solutions"][0], "99"]}})
+    with pytest.raises(GenerationError):
+        make_item(template, 1, NOW)
+
+
+def test_a_wrong_nth_term_fails_generation():
+    template = _broken(_template("linear-nth-term"),
+                       lambda q: {**q, "answer": {**q["answer"], "accepted": ["n + 1000"]}})
+    with pytest.raises(GenerationError, match="recheck"):
+        make_item(template, 1, NOW)
+
+
+def test_a_recurring_decimal_answer_not_in_simplest_form_fails_generation():
+    def unsimplified(q):
+        num, den = q["answer"]["value"].split("/")
+        return {**q, "answer": {"value": f"{int(num) * 2}/{int(den) * 2}"}}
+    template = _broken(_template("recurring-decimal"), unsimplified)
+    with pytest.raises(GenerationError, match="simplest"):
+        make_item(template, 1, NOW)
+
+
+def test_a_wrong_count_fails_generation():
+    template = _broken(_template("product-rule"), lambda q: {**q, "answer": {"expression": "1"}})
+    with pytest.raises(GenerationError):
+        make_item(template, 1, NOW)
+
+
+def test_a_composite_worked_the_wrong_way_round_fails_generation():
+    template = _template("composite-function")
+    seed = next(s for s in range(1, 50) if draw_params(template, s)["order"] == 0)
+    params = draw_params(template, seed)
+    f = lambda x: params["p"] * x + params["q"]  # noqa: E731
+    g = lambda x: x * x + params["r"]  # noqa: E731
+    wrong = g(f(params["k"]))  # gf instead of fg
+    assert wrong != f(g(params["k"]))
+    broken = _broken(template, lambda q: {**q, "answer": {"value": str(wrong)}})
+    with pytest.raises(GenerationError):
+        make_item(broken, seed, NOW)
+
+
+def test_composite_working_never_shows_adding_zero():
+    template = _template("composite-function")
+    for seed in range(1, 40):
+        assert "+ 0 " not in make_item(template, seed, NOW)["explanation"]

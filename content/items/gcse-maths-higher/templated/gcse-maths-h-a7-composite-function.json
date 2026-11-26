@@ -1,0 +1,312 @@
+[
+  {
+    "id": "gcse-maths-h-a7-t-composite-function-01",
+    "topic": "gcse-maths-h-a7",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a7-lp-composite",
+    "expected_seconds": 60,
+    "prompt": "f(x) = 4x + 3 and g(x) = x^2 - 4. Work out fg(-1).",
+    "answer": {
+      "value": "-9"
+    },
+    "verify": {
+      "expression": "4*((-1)^2 + (-4)) + (3)"
+    },
+    "marks": 2,
+    "mark_scheme": ["M1 for g(-1) = -3", "A1 for -9"],
+    "hint": "fg(-1) means f(g(-1)): work out g(-1) first.",
+    "explanation": "fg(-1) means f(g(-1)), so work out g first: g(-1) = (-1)^2 - 4 = -3. Then f(-3) = 4 × (-3) + 3 = -9.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A7 (page 14; PDF page 26)",
+        "quote": "interpret the succession of two functions as a ‘composite function’",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-a7-composite-function",
+      "version": 1,
+      "seed": 1
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-a7-composite-function v1",
+          "at": "2026-11-26T05:05:35Z",
+          "notes": "Generated from template gcse-maths-h-a7-composite-function (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:05:35Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a7-t-composite-function-02",
+    "topic": "gcse-maths-h-a7",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a7-lp-composite",
+    "expected_seconds": 60,
+    "prompt": "f(x) = 2x - 2 and g(x) = x^2. Work out gf(-3).",
+    "answer": {
+      "value": "64"
+    },
+    "verify": {
+      "expression": "((2)*(-3) + (-2))^2 + (0)"
+    },
+    "marks": 2,
+    "mark_scheme": ["M1 for f(-3) = -8", "A1 for 64"],
+    "hint": "gf(-3) means g(f(-3)): work out f(-3) first.",
+    "explanation": "gf(-3) means g(f(-3)), so work out f first: f(-3) = 2 × (-3) - 2 = -8. Then g(-8) = (-8)^2 = 64.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A7 (page 14; PDF page 26)",
+        "quote": "interpret the succession of two functions as a ‘composite function’",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-a7-composite-function",
+      "version": 1,
+      "seed": 2
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-a7-composite-function v1",
+          "at": "2026-11-26T05:05:59Z",
+          "notes": "Generated from template gcse-maths-h-a7-composite-function (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:05:59Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a7-t-composite-function-03",
+    "topic": "gcse-maths-h-a7",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a7-lp-composite",
+    "expected_seconds": 60,
+    "prompt": "f(x) = 3x + 4 and g(x) = x^2 - 2. Work out gf(2).",
+    "answer": {
+      "value": "98"
+    },
+    "verify": {
+      "expression": "((3)*(2) + (4))^2 + (-2)"
+    },
+    "marks": 2,
+    "mark_scheme": ["M1 for f(2) = 10", "A1 for 98"],
+    "hint": "gf(2) means g(f(2)): work out f(2) first.",
+    "explanation": "gf(2) means g(f(2)), so work out f first: f(2) = 3 × 2 + 4 = 10. Then g(10) = 10^2 - 2 = 98.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A7 (page 14; PDF page 26)",
+        "quote": "interpret the succession of two functions as a ‘composite function’",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-a7-composite-function",
+      "version": 1,
+      "seed": 3
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-a7-composite-function v1",
+          "at": "2026-11-26T05:05:35Z",
+          "notes": "Generated from template gcse-maths-h-a7-composite-function (version 1, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:05:35Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a7-t-composite-function-04",
+    "topic": "gcse-maths-h-a7",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a7-lp-composite",
+    "expected_seconds": 60,
+    "prompt": "f(x) = 5x - 9 and g(x) = x^2 + 1. Work out fg(3).",
+    "answer": {
+      "value": "41"
+    },
+    "verify": {
+      "expression": "5*((3)^2 + (1)) + (-9)"
+    },
+    "marks": 2,
+    "mark_scheme": ["M1 for g(3) = 10", "A1 for 41"],
+    "hint": "fg(3) means f(g(3)): work out g(3) first.",
+    "explanation": "fg(3) means f(g(3)), so work out g first: g(3) = 3^2 + 1 = 10. Then f(10) = 5 × 10 - 9 = 41.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A7 (page 14; PDF page 26)",
+        "quote": "interpret the succession of two functions as a ‘composite function’",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-a7-composite-function",
+      "version": 1,
+      "seed": 4
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-a7-composite-function v1",
+          "at": "2026-11-26T05:05:35Z",
+          "notes": "Generated from template gcse-maths-h-a7-composite-function (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:05:35Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a7-t-composite-function-05",
+    "topic": "gcse-maths-h-a7",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a7-lp-composite",
+    "expected_seconds": 60,
+    "prompt": "f(x) = 2x - 6 and g(x) = x^2 + 4. Work out gf(-2).",
+    "answer": {
+      "value": "104"
+    },
+    "verify": {
+      "expression": "((2)*(-2) + (-6))^2 + (4)"
+    },
+    "marks": 2,
+    "mark_scheme": ["M1 for f(-2) = -10", "A1 for 104"],
+    "hint": "gf(-2) means g(f(-2)): work out f(-2) first.",
+    "explanation": "gf(-2) means g(f(-2)), so work out f first: f(-2) = 2 × (-2) - 6 = -10. Then g(-10) = (-10)^2 + 4 = 104.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A7 (page 14; PDF page 26)",
+        "quote": "interpret the succession of two functions as a ‘composite function’",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-a7-composite-function",
+      "version": 1,
+      "seed": 5
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-a7-composite-function v1",
+          "at": "2026-11-26T05:05:35Z",
+          "notes": "Generated from template gcse-maths-h-a7-composite-function (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:05:35Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        }
+      ]
+    }
+  }
+]
