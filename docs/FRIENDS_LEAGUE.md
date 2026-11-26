@@ -201,7 +201,7 @@ New tables (one new migration):
 
 ### Built so far
 
-- **PR 1 (core, migration 0028, API):** `packages/core/src/league.ts` (week, league XP, places,
+- **PR 1 (core, migration 0030, API):** `packages/core/src/league.ts` (week, league XP, places,
   ties, win rule, codes, labels, limits); tables `friend_codes`, `friend_code_tries`,
   `friend_requests`, `friendships`, `friend_blocks`, `friend_reports` and
   `students.friends_allowed` / `league_hidden`; routes in `apps/api/src/routes/friends.ts` and

@@ -947,7 +947,7 @@ Owner decisions, 2026-11-26. Full design: `docs/FRIENDS_LEAGUE.md`.
   can remove, block, unblock and add a private label (30 characters, no email or phone).
   Reports are seen by both families' parents.
 - Implemented so far: `packages/core/src/league.ts`, `apps/api/src/routes/friends.ts`,
-  `apps/api/src/routes/friends-league.ts`; migration 0028. Screens to come.
+  `apps/api/src/routes/friends-league.ts`; migration 0030. Screens to come.
 
 ## Get help (support resources)
 
