@@ -74,7 +74,7 @@ describe('VersionFooter', () => {
     expect(screen.getByRole('contentinfo').textContent).not.toContain('·');
   });
 
-  it('lays the footer out as separate pieces: the version with its environment, then Get help', () => {
+  it('lays the footer out as separate pieces: the version, the environment, then Get help', () => {
     render(
       <MemoryRouter>
         <VersionFooter version="00.01.002" environment="Development" commit="ef86a9a" showHelp />
@@ -83,9 +83,11 @@ describe('VersionFooter', () => {
     const pieces = Array.from(
       screen.getByRole('contentinfo').querySelectorAll(':scope > .version-footer-item'),
     );
-    expect(pieces).toHaveLength(2);
-    expect(pieces[0]).toHaveTextContent('RevisionDen version 00.01.002 (Development, ef86a9a)');
-    expect(pieces[1]?.querySelector('a')).not.toBeNull();
-    expect(pieces[1]).not.toHaveTextContent('version');
+    expect(pieces.map((piece) => piece.textContent)).toEqual([
+      'RevisionDen version 00.01.002',
+      '(Development, ef86a9a)',
+      expect.any(String),
+    ]);
+    expect(pieces[2]?.querySelector('a')).not.toBeNull();
   });
 });

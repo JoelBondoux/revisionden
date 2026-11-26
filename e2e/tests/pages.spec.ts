@@ -521,17 +521,29 @@ test('a new parent sees the terms and privacy notice as cards before onboarding,
   await expect.poll(() => stored).toMatchObject({ acceptances: expect.any(Array) });
 });
 
-test('/about content reflows at 320px with text at 200% (WCAG 1.4.4, 1.4.10)', async ({ page }) => {
+test('/about reflows at 320px with text at 200% (WCAG 1.4.4, 1.4.10)', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 640 });
   await page.goto('/about');
   await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
   await expect(page.getByRole('heading', { level: 1, name: 'About RevisionDen' })).toBeVisible();
-  // The page's own content only: the shared version footer is workstream I's (reported to the lead).
-  const tooWide = await page.evaluate(() => {
-    const width = document.documentElement.clientWidth;
-    return Array.from(document.querySelectorAll('main *'))
-      .filter((el) => el.getBoundingClientRect().right > width + 0.5)
-      .map((el) => `${el.tagName.toLowerCase()}: ${(el.textContent ?? '').trim().slice(0, 40)}`);
-  });
-  expect(tooWide).toEqual([]);
+  await expectNoSidewaysScroll(page);
+});
+
+test('the footer fits a 320px screen with large text, wrapping instead of overflowing', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 700 });
+  await page.goto('/about');
+  // Large reading text in the footer (about twice the usual size).
+  await page.addStyleTag({ content: '.version-footer { font-size: 1.625rem !important; }' });
+  const footer = page.getByRole('contentinfo');
+  await footer.scrollIntoViewIfNeeded();
+  const overflow = await footer.evaluate((el) => el.scrollWidth - el.clientWidth);
+  expect(overflow).toBeLessThanOrEqual(0);
+  for (const item of await footer.locator('.version-footer-item').all()) {
+    const box = await item.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.x).toBeGreaterThanOrEqual(0);
+    expect(box!.x + box!.width).toBeLessThanOrEqual(320);
+  }
 });

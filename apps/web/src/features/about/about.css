@@ -15,11 +15,11 @@
   margin: 0;
 }
 
-/* Long words, version numbers and the support email wrap instead of scrolling sideways. */
-.about__facts dt,
-.about__facts dd,
-.about a {
+/* Long words, version numbers and the support email wrap instead of scrolling sideways, even at
+   320px with 200% text (WCAG 1.4.4 and 1.4.10). */
+.about {
   overflow-wrap: anywhere;
+  hyphens: auto;
 }
 
 .about__version h3 {

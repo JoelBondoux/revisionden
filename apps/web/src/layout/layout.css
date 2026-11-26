@@ -110,9 +110,12 @@
   color: inherit;
 }
 
-/* Each footer piece wraps as a whole; the flex gap separates them, so no "·" is needed (G8). */
+/* The flex gap separates the pieces, so no "·" is needed (G8). Pieces may wrap inside
+   themselves, so a narrow screen or large text never makes the footer overflow (G9). */
 .version-footer-item {
-  white-space: nowrap;
+  max-width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .app-shell > .version-footer {
