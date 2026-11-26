@@ -206,6 +206,19 @@ tab say so to screen readers.
 - Every style plays its own sounds and vibration through the sound workstream's events (U6).
   Wiring the style into those events follows once U's PR is on dev.
 
+## Dev style tester (J12c, owner request 2026-11-26)
+
+On the dev environment only, Settings → Effect style has a dashed "Tester: try any style" box
+("Dev only: doesn't unlock anything for real."): any of the seven styles, Light or Dark, and
+Standard or Colour-blind colours, applied at once. The API decides: `GET
+/v1/student/rewards/effect-styles` adds `testerStyles` only when `ENVIRONMENT=development` and
+`STYLE_TESTER=true` (set for `env.dev` in `apps/api/wrangler.toml`; a config test checks staging
+and production never set it, and local MSW mocks send it). The web shows the box only when that
+list arrives, so a stray build cannot show it. The style being tried is saved on the device
+(`revisionden.effectStyleTester`), apart from the real choice, and only counts while the server
+still sends the list; "Reset to my unlocked style" clears it. Trying a style grants no reward,
+changes no unlock and records nothing on the server.
+
 ## Never (Children's Code and `REWARDS.md`)
 
 - No lives or energy that run out and block learning; no waiting timers; no pay-to-continue.

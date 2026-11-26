@@ -26,9 +26,20 @@ const view = () => sampleRewards({ parentRewards });
 
 export const rewardsHandlers: RequestHandler[] = [
   http.get('*/v1/student/rewards', () => HttpResponse.json(view())),
-  // J10b: in development, Pop Burst is unlocked and Starlight is still locked.
+  // J10b: in development, Pop Burst is unlocked and Starlight is still locked. Local development
+  // is a dev environment, so the style tester (J12c) is on, as on dev.revisionden.com.
   http.get('*/v1/student/rewards/effect-styles', () =>
-    HttpResponse.json({ unlocked: ['pop-burst'] }),
+    HttpResponse.json({
+      unlocked: ['pop-burst'],
+      testerStyles: [
+        'sticker-book',
+        'pop-burst',
+        'garden-grow',
+        'starlight',
+        'comic-pop',
+        'pixel-arcade',
+      ],
+    }),
   ),
   http.get('*/v1/student/rewards/title', () => HttpResponse.json(title)),
   http.put('*/v1/student/rewards/title', async ({ request }) => {
