@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Starting test: screen readers now say "One minute left" when the time is nearly up, and "Time is up" at the end, without reading out the clock every second.
 - Fixed: "Best combo" at the end of a lesson is now easy to read in every style, light and dark.
 - On small phones, the map now opens with "You are here" clear of the bottom bar, so tapping it starts your topic. The RevisionDen title on the welcome page also fits small screens with large text.
 - Fixed: the "+XP" that pops up after a right answer is now easy to read in every style, in light and dark.
@@ -166,6 +167,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Send us a bug, an idea or something confusing from Settings, and see what happens to it.
 
 ### Fixed
+
+- F14 (found by W's starting-test e2e): the starting test's one-minute warning and time up reach screen readers, through a polite live region (`data-testid="timer-announcer"`) and a status on the results' time-up line; the clock stays `aria-live="off"`. Unit tests in `StartingTestPage.test.tsx`, e2e `starting-test-timer.spec.ts` with a fast-forwarded clock. The WCAG 2.2.1 question (turn off or extend the limit) is open for the owner; the limit is unchanged.
 
 - Set complete: "Best combo" uses the arena's own text accent (`--arena-gold` was 1.37:1 on the light arena of Doodle Diary and Sticker Book); checked AA in all 10 looks, light and dark (W18; J's `learn.css`, approved crossing).
 - Flashcards: "10 more" now starts one new session, not two; the finished session no longer restarts when `extra` changes, which left a stray open session on the server (it never counted towards XP or the daily limit) (W18; F's `FlashcardsPage.tsx`, approved crossing).

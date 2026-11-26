@@ -957,7 +957,11 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   `revisionden.sound`; if the browser cannot save, the choice still applies until the app closes.
   The Settings section has a "Play a sample" button and Common, Rare, Epic and Legend reward
   samples (each tap plays another variation). The starting test timer turns orange at
-  1 minute left, alongside the warning sound.
+  1 minute left, alongside the warning sound. Screen readers hear it too (F14): a polite live
+  region says "One minute left." once and "Time is up." at the end, and the results' "Time is
+  up" line is a status. The visible clock stays `aria-live="off"`, so it never reads every
+  second. Whether the 5-minute limit can be turned off or extended (WCAG 2.2.1) is an owner
+  decision still to be made; the limit is unchanged.
 - Implemented: `apps/web/src/features/sound/**` (`SoundProvider`, `useSound().play(event, { mode })`,
   `MuteButton`, `SoundSettingsCard`, the synthesised sound bank in `bank.ts`, the Test mode rule in
   `events.ts`), with one-line `play()` calls in lessons, the starting test and flashcards. Reward

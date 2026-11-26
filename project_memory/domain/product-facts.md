@@ -838,6 +838,9 @@ Tags: #product #rules #limits #defaults
   (storage errors are ignored). One AudioContext, made at the first tap or key press; paused when
   the app is hidden. Test mode: submit and one reveal for the set; timed papers: only the timer
   warning (once, at 1 minute left). Implemented in `apps/web/src/features/sound/`.
+- Starting test timer for screen readers (F14): a polite live region says "One minute left."
+  once and "Time is up." at the end; the visible clock is `aria-live="off"`. The 5-minute limit
+  itself (WCAG 2.2.1: turn off or extend) is an open owner decision; unchanged.
 - Wired so far: lessons (correct, wrong, part marks, daily goal met, lesson complete), starting
   test (submit, reveal, timer warning), flashcards (flip, rating) and the Rewards screen (new
   rewards, U4). Gifts and plan sounds exist in the bank but wait for their screens.
