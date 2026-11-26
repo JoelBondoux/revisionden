@@ -1,0 +1,61 @@
+{
+  "topic": "gcse-maths-h-a19",
+  "links": [
+    {
+      "title": "Solving simultaneous equations - Edexcel",
+      "url": "https://www.bbc.co.uk/bitesize/guides/z9y9jty/revision/1",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "board": "edexcel",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Simultaneous equations - Solving simultaneous equations - Edexcel - GCSE Maths Revision - Edexcel - BBC Bitesize",
+        "teaches": "Solving simultaneous equations by elimination and substitution, forming them from a context, linear with quadratic, and graphically.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Solving algebraic simultaneous equations by elimination",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/simultaneous-equations-2-variables/lessons/solving-algebraic-simultaneous-equations-by-elimination",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a19-lp-linear-linear"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Solving algebraic simultaneous equations by elimination GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can solve two linear simultaneous equations algebraically using elimination.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Solving simultaneous linear equations by substitution",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/simultaneous-equations-2-variables/lessons/solving-simultaneous-linear-equations-by-substitution",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a19-lp-linear-linear"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Solving simultaneous linear equations by substitution GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can solve two linear simultaneous equations algebraically using substitution.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Solving a quadratic and linear pair of simultaneous equations using substitution",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/simultaneous-equations-2-variables/lessons/solving-a-quadratic-and-linear-pair-of-simultaneous-equations-using-substitution",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a19-lp-linear-quadratic"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Solving a quadratic and linear pair of simultaneous equations using substitution GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can solve two (one linear, one quadratic) simultaneous equations algebraically using substitution.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

@@ -1027,8 +1027,8 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
 - **Allowed providers** (owner decision, 2026-11-26): **Oak National Academy**, **BBC Bitesize** and
   **Isaac Physics / Isaac Science** (University of Cambridge). No others. Criteria: free, made for UK
   secondary pupils, no ads, no comments or social feeds, no sign-up needed to read. Ad-supported
-  sites and exam-board pages were not chosen. Isaac links are refused until its exact host is
-  confirmed on Isaac's own site.
+  sites and exam-board pages were not chosen. Isaac's host is `isaacscience.org` (read on
+  2026-11-26: isaacphysics.org now redirects there and the site calls itself Isaac Science).
 - **External links are interim** (owner goal): all of this teaching is to be in-house, as our own
   verified notes. The data is ready for that: provider `revisionden` points at an in-app route (not
   a URL), is always listed first, and can hide the external links for the item, point or topic it
@@ -1040,8 +1040,9 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
 - **Learn more** (owner request, 2026-11-26: "link out to authoritative, age-appropriate sources
   for further tuition guidance when a question needs more explanation"): on a flashcard's Explain
   panel and after a wrong answer in a lesson, behind a "Learn more" tap. It shows the most specific
-  links: those for the item, else for its learning point, else the whole topic's. Flashcards use
-  the topic's (a card does not carry its learning point yet).
+  links: those for the item, else for its learning point, else the whole topic's. Lessons match by
+  learning point (a lesson item does not carry its content id yet, so item links cannot match);
+  flashcards use the topic's (a card does not carry its learning point yet).
 - Links only (open in a new tab on tap; nothing loaded from those sites until then, nothing
   recorded about taps), stored as data per topic with the page title, URL and dates.
 - A link shows only when it is both **reachable** (`checked_at`: the CI job requests every link and
@@ -1049,10 +1050,12 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   recorded its title as fetched, what it teaches, its level and the date). A page that was not
   opened is never recorded. The CI job also fails when a match-checked page's title changes, so the
   match is re-checked.
-- **Legacy** (lead decision, 2026-11-26): the 11 Oak links from Q5 were checked reachable before
-  match checks existed. Until each is re-read, they still show as whole-topic links (Learn it first
-  and Learn more's topic fallback), and the CI job lists them as a warning. Every other link needs
-  the full match check; the validator refuses a reachable link without one.
+- Every reachable link needs the full match check; the validator refuses one without it. (The 11
+  Oak links from Q5 were re-read and match-checked on 2026-11-26, so the temporary "legacy" path
+  for them was removed.)
+- Coverage (2026-11-26): every GCSE Maths topic and learning point with items has a shown link:
+  44 of 44 topics and 133 of 133 learning points, 69 of them with a page of their own (139 links:
+  Oak lessons and BBC Bitesize pages). `pnpm content:check-links --coverage` prints the numbers.
 - Links point at the right level (GCSE or A-Level) and the student's board where the page is
   board-specific.
 

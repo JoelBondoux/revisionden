@@ -2,11 +2,73 @@
   "topic": "gcse-maths-h-n7",
   "links": [
     {
-      "title": "The laws of indices - fractional exponents GCSE",
+      "title": "Laws of indices",
+      "url": "https://www.bbc.co.uk/bitesize/topics/zgnbxsg/articles/zf4s9ty",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Laws of indices - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Index notation and the laws of indices for multiplying, dividing and raising a power to a power.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "The laws of indices - fractional exponents",
       "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/arithmetic-procedures-index-laws/lessons/the-laws-of-indices-fractional-exponents",
       "provider": "oak",
       "level": "GCSE",
-      "checked_at": "2026-11-25"
+      "learning_points": ["gcse-maths-h-n7-lp-fractional-indices"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "The laws of indices - fractional exponents GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can use the laws of indices with fractional exponents.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Negative and fractional indices",
+      "url": "https://www.bbc.co.uk/bitesize/topics/zgnbxsg/articles/zrqr7v4",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n7-lp-fractional-indices"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Negative and fractional indices - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Negative and fractional indices: the denominator gives a root, the numerator a power, and a negative index a reciprocal (Higher).",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "The laws of indices - multiplication",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/arithmetic-procedures-index-laws/lessons/the-laws-of-indices-multiplication",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n7-lp-index-laws"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "The laws of indices - multiplication GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can use the laws of indices to multiply two powers where the bases are the same.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "The laws of indices - division",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/arithmetic-procedures-index-laws/lessons/the-laws-of-indices-division",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n7-lp-index-laws"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "The laws of indices - division GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can use the laws of indices to divide two powers where the bases are the same.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
     }
   ]
 }

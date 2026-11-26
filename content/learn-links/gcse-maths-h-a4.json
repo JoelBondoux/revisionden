@@ -2,11 +2,87 @@
   "topic": "gcse-maths-h-a4",
   "links": [
     {
-      "title": "Factorising a quadratic expression GCSE",
+      "title": "How to simplify expressions and expand brackets",
+      "url": "https://www.bbc.co.uk/bitesize/topics/z3hv2p3/articles/zkxk6rd",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "How to simplify expressions and expand brackets - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Algebraic definitions, writing expressions, simplifying by collecting like terms, and expanding single and double brackets.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Checking and securing understanding of the product of two binomials",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/algebraic-manipulation/lessons/checking-and-securing-understanding-of-the-product-of-two-binomials",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a4-lp-expand"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of the product of two binomials GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can use the distributive law to find the product of two binomials.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Checking and securing understanding of factorising",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/algebraic-manipulation/lessons/checking-and-securing-understanding-of-factorising",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a4-lp-factorise"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of factorising GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can use the distributive law to factorise expressions where there is a common factor.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Factorising a quadratic expression",
       "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/algebraic-manipulation/lessons/factorising-a-quadratic-expression",
       "provider": "oak",
       "level": "GCSE",
-      "checked_at": "2026-11-25"
+      "learning_points": ["gcse-maths-h-a4-lp-factorise"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Factorising a quadratic expression GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can factorise quadratics of the form x^2 + bx + c\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Factorising expressions",
+      "url": "https://www.bbc.co.uk/bitesize/topics/z3hv2p3/articles/zdtdh4j",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a4-lp-factorise"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "How to factorise an expression - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Factorising expressions as the reverse of expanding, including quadratics into two brackets (and a > 1 at Higher).",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "The laws of indices - multiplication",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/arithmetic-procedures-index-laws/lessons/the-laws-of-indices-multiplication",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a4-lp-indices"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "The laws of indices - multiplication GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can use the laws of indices to multiply two powers where the bases are the same.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
     }
   ]
 }

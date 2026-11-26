@@ -921,8 +921,9 @@ Tags: #product #rules #limits #defaults
 - Learn link providers (owner decision, 2026-11-26): only Oak National Academy, BBC Bitesize and
   Isaac Physics / Isaac Science (Cambridge). Criteria: free, made for UK secondary pupils, no ads,
   no comments or social feeds, no sign-up needed to read; ad-supported sites and exam-board pages
-  not chosen. Provider enum `oak | bitesize | isaac`; Isaac has no confirmed host yet, so Isaac
-  links are refused by validation (`PROVIDER_HOSTS` in `scripts/content/learn-links.mjs`).
+  not chosen. Provider enum `oak | bitesize | isaac` (plus `revisionden`, planned); hosts in
+  `PROVIDER_HOSTS` (`scripts/content/learn-links.mjs`): www.thenational.academy,
+  www.bbc.co.uk/bitesize/, isaacscience.org (isaacphysics.org redirects there, read 2026-11-26).
 - Learn more (Q6, owner request 2026-11-26): on the flashcard Explain panel and after a wrong
   lesson answer, behind a "Learn more" tap; most specific links first (item, then learning point,
   then whole topic; flashcards use the topic). A link may carry `learning_points` or `items`.
@@ -930,9 +931,12 @@ Tags: #product #rules #limits #defaults
   record (`page_title` as fetched, `teaches`, `level`, `checked_at`), recorded only for a page
   actually opened. The CI link check fails a match-checked page whose title changed; it also runs
   `--probe-providers` (what each provider's home page answers from the runner) and `--coverage`.
-  Legacy (lead decision 2026-11-26): the 11 Q5 Oak links (`LEGACY_UNMATCHED_URLS`) are reachable
-  with no match record; they still show as whole-topic links and CI warns about them. Any other
-  reachable link without a match check fails validation. On 2026-11-26 no link had a match record.
+  Any reachable link without a match check fails validation (the Q5 legacy path was removed once
+  its 11 links were re-read). Lessons match by learning point only: LearnItem has no content id
+  yet, so `items` links cannot match in the app (needs `contentId` on LearnItem from the API).
+  Coverage 2026-11-26: 139 links in 44 files; 44/44 topics and 133/133 learning points with items
+  have a shown link, 69 points with their own. Pages were opened in a browser and read; the
+  match `page_title` is the raw HTML title the CI check compares.
 - In-house notes (planned; external links are interim): provider `revisionden` with `route` (an
   app path, no URL), listed first, optional `hide_external`; refused by validation until the
   notes exist (`IN_HOUSE_NOTES_BUILT` in `scripts/content/learn-links.mjs`).
@@ -944,8 +948,8 @@ Tags: #product #rules #limits #defaults
   the button shows at the top of a topic lesson only for whole-topic links that are shown (above); plain links
   opening in a new tab (nothing loaded until tapped). Pilot: Oak KS4 Higher lessons for the 9 GCSE
   Maths topics with items (n4, n7, a4, a6, a17, a18, r9, g9, g17), URLs found by web search only.
-  All 11 returned 200 in the CI link check on 2026-11-25, so `checked_at` is set and the buttons
-  show. No Bitesize links yet: bbc.co.uk could not be reached from the build environment.
+  Superseded on 2026-11-26 by Q6 (above): every link re-read and match-checked, Bitesize added
+  once the provider hosts were allowed in the build environment.
 - Learn it first, in-house goal (owner direction 2026-11-26, not yet built): RevisionDen should
   eventually write its own verified teaching content (topic notes, explanations per learning
   point, worked examples, code-drawn diagrams) under `docs/VERIFICATION.md`, and retire each
