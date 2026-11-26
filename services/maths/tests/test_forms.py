@@ -64,3 +64,15 @@ def test_the_api_accepts_the_new_forms():
     response = client.post("/check-working", json=body)
     assert response.status_code == 200
     assert response.json()["final_answer_correct"] is False
+
+
+def test_the_forms_match_the_app_marking_rules_in_packages_core():
+    # packages/core/src/answer-format.ts (S2e): a/b needs b >= 2; simplest needs a != 0;
+    # standard form allows |n| <= 100 and 1 <= |a| < 10.
+    assert not in_form("4/1", "fraction")
+    assert not in_form("0/5", "simplest_fraction")
+    assert in_form("0", "simplest_fraction")
+    assert in_form("-9.5 × 10^(-4)", "standard_form")
+    assert not in_form("1 × 10^101", "standard_form")
+    assert in_form("1 × 10^100", "standard_form")
+    assert in_form("5^3", "index_form")
