@@ -393,3 +393,22 @@ def test_composite_working_never_shows_adding_zero():
     template = _template("composite-function")
     for seed in range(1, 40):
         assert "+ 0 " not in make_item(template, seed, NOW)["explanation"]
+
+
+def test_a_quadratic_gives_one_accuracy_mark_for_both_roots():
+    item = make_item(_template("quadratic-factorising"), 3, NOW)
+    assert item["marks"] == 2
+    assert item["mark_scheme"][1] == "A1 for both x = 5 and x = 3"
+
+
+def test_an_nth_term_accepts_the_first_term_form_and_a_factorised_form():
+    template = _template("linear-nth-term")
+    accepted = make_item(template, 3, NOW)["answer"]["accepted"]  # 20, 22, 24, 26, ...
+    assert accepted == ["2n + 18", "20 + 2(n - 1)", "2(n + 9)"]
+    down = make_item(template, 5, NOW)["answer"]["accepted"]  # 7, 0, -7, -14, ...
+    assert down == ["14 - 7n", "7 - 7(n - 1)", "7(2 - n)"]
+
+
+def test_the_recurring_decimal_explanation_shows_the_subtraction_in_full():
+    item = make_item(_template("recurring-decimal"), 4, NOW)
+    assert "100x - x = 26.2626... - 0.2626..., so 99x = 26" in item["explanation"]

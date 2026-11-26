@@ -230,7 +230,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Worked steps:** `x^2 + 11x + 24 = 0` → `(x + 3)(x + 8) = 0` → `x = -3 or x = -8`
 - **Explanation:** Find two numbers that multiply to give 24 and add to give 11: 3 and 8, because 3 × 8 = 24 and 3 + 8 = 11. So (x + 3)(x + 8) = 0. One of the brackets must be 0: x + 3 = 0 gives x = -3, and x + 8 = 0 gives x = -8.
 - **Hint:** Find two numbers that multiply to give 24 and add to give 11.
-- **Marks (3):** M1 for (x + 3)(x + 8); A1 for x = -3; A1 for x = -8
+- **Marks (2):** M1 for (x + 3)(x + 8); A1 for both x = -3 and x = -8
 - Seed 1, difficulty 3, `gcse-maths-h-a18-t-quadratic-factorising-01`. Checks: grounded-writing pass, maths-engine pass.
 
 ### 2. Solve x^2 - 8x + 15 = 0
@@ -239,7 +239,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Worked steps:** `x^2 - 8x + 15 = 0` → `(x - 5)(x - 3) = 0` → `x = 5 or x = 3`
 - **Explanation:** Find two numbers that multiply to give 15 and add to give -8: -5 and -3, because (-5) × (-3) = 15 and -5 + (-3) = -8. So (x - 5)(x - 3) = 0. One of the brackets must be 0: x - 5 = 0 gives x = 5, and x - 3 = 0 gives x = 3.
 - **Hint:** Find two numbers that multiply to give 15 and add to give -8.
-- **Marks (3):** M1 for (x - 5)(x - 3); A1 for x = 5; A1 for x = 3
+- **Marks (2):** M1 for (x - 5)(x - 3); A1 for both x = 5 and x = 3
 - Seed 3, difficulty 2, `gcse-maths-h-a18-t-quadratic-factorising-03`. Checks: grounded-writing pass, maths-engine pass.
 
 ### 3. Solve x^2 - 6x - 16 = 0
@@ -248,7 +248,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Worked steps:** `x^2 - 6x - 16 = 0` → `(x - 8)(x + 2) = 0` → `x = 8 or x = -2`
 - **Explanation:** Find two numbers that multiply to give -16 and add to give -6: -8 and 2, because (-8) × 2 = -16 and -8 + 2 = -6. So (x - 8)(x + 2) = 0. One of the brackets must be 0: x - 8 = 0 gives x = 8, and x + 2 = 0 gives x = -2.
 - **Hint:** Find two numbers that multiply to give -16 and add to give -6.
-- **Marks (3):** M1 for (x - 8)(x + 2); A1 for x = 8; A1 for x = -2
+- **Marks (2):** M1 for (x - 8)(x + 2); A1 for both x = 8 and x = -2
 - Seed 4, difficulty 2, `gcse-maths-h-a18-t-quadratic-factorising-04`. Checks: grounded-writing pass, maths-engine pass.
 
 ### 4. Solve x^2 + 7x - 18 = 0
@@ -257,7 +257,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Worked steps:** `x^2 + 7x - 18 = 0` → `(x - 2)(x + 9) = 0` → `x = 2 or x = -9`
 - **Explanation:** Find two numbers that multiply to give -18 and add to give 7: -2 and 9, because (-2) × 9 = -18 and -2 + 9 = 7. So (x - 2)(x + 9) = 0. One of the brackets must be 0: x - 2 = 0 gives x = 2, and x + 9 = 0 gives x = -9.
 - **Hint:** Find two numbers that multiply to give -18 and add to give 7.
-- **Marks (3):** M1 for (x - 2)(x + 9); A1 for x = 2; A1 for x = -9
+- **Marks (2):** M1 for (x - 2)(x + 9); A1 for both x = 2 and x = -9
 - Seed 5, difficulty 2, `gcse-maths-h-a18-t-quadratic-factorising-05`. Checks: grounded-writing pass, maths-engine pass.
 
 ### 5. Solve x^2 - 6x + 5 = 0
@@ -266,7 +266,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Worked steps:** `x^2 - 6x + 5 = 0` → `(x - 5)(x - 1) = 0` → `x = 5 or x = 1`
 - **Explanation:** Find two numbers that multiply to give 5 and add to give -6: -5 and -1, because (-5) × (-1) = 5 and -5 + (-1) = -6. So (x - 5)(x - 1) = 0. One of the brackets must be 0: x - 5 = 0 gives x = 5, and x - 1 = 0 gives x = 1.
 - **Hint:** Find two numbers that multiply to give 5 and add to give -6.
-- **Marks (3):** M1 for (x - 5)(x - 1); A1 for x = 5; A1 for x = 1
+- **Marks (2):** M1 for (x - 5)(x - 1); A1 for both x = 5 and x = 1
 - Seed 6, difficulty 2, `gcse-maths-h-a18-t-quadratic-factorising-06`. Checks: grounded-writing pass, maths-engine pass.
 
 ## gcse-maths-h-a25-linear-nth-term (gcse-maths-h-a25, 5 questions)
@@ -311,7 +311,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 ### 1. Write 0.696969... (the digits 69 recur) as a fraction in its simplest form.
 
 - **Answer:** 23/33
-- **Explanation:** Let x = 0.6969... Two digits recur, so multiply by 100: 100x = 69.6969... Subtract: 100x - x = 69, so 99x = 69 and x = 69/99. Simplify by dividing by 3: 23/33.
+- **Explanation:** Let x = 0.6969... Two digits recur, so multiply by 100: 100x = 69.6969... Subtract: 100x - x = 69.6969... - 0.6969..., so 99x = 69 and x = 69/99. Simplify by dividing by 3: 23/33.
 - **Hint:** Let x be the decimal. Two digits recur, so work out 100x - x.
 - **Marks (2):** M1 for 99x = 69 or 69/99; A1 for 23/33
 - Seed 1, difficulty 4, `gcse-maths-h-n10-t-recurring-decimal-01`. Checks: grounded-writing pass, maths-engine pass.
@@ -319,7 +319,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 ### 2. Write 0.292929... (the digits 29 recur) as a fraction in its simplest form.
 
 - **Answer:** 29/99
-- **Explanation:** Let x = 0.2929... Two digits recur, so multiply by 100: 100x = 29.2929... Subtract: 100x - x = 29, so 99x = 29 and x = 29/99. 29/99 is already in its simplest form.
+- **Explanation:** Let x = 0.2929... Two digits recur, so multiply by 100: 100x = 29.2929... Subtract: 100x - x = 29.2929... - 0.2929..., so 99x = 29 and x = 29/99. 29/99 is already in its simplest form.
 - **Hint:** Let x be the decimal. Two digits recur, so work out 100x - x.
 - **Marks (2):** M1 for 99x = 29 or 29/99; A1 for 29/99
 - Seed 2, difficulty 4, `gcse-maths-h-n10-t-recurring-decimal-02`. Checks: grounded-writing pass, maths-engine pass.
@@ -327,7 +327,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 ### 3. Write 0.676767... (the digits 67 recur) as a fraction in its simplest form.
 
 - **Answer:** 67/99
-- **Explanation:** Let x = 0.6767... Two digits recur, so multiply by 100: 100x = 67.6767... Subtract: 100x - x = 67, so 99x = 67 and x = 67/99. 67/99 is already in its simplest form.
+- **Explanation:** Let x = 0.6767... Two digits recur, so multiply by 100: 100x = 67.6767... Subtract: 100x - x = 67.6767... - 0.6767..., so 99x = 67 and x = 67/99. 67/99 is already in its simplest form.
 - **Hint:** Let x be the decimal. Two digits recur, so work out 100x - x.
 - **Marks (2):** M1 for 99x = 67 or 67/99; A1 for 67/99
 - Seed 3, difficulty 4, `gcse-maths-h-n10-t-recurring-decimal-03`. Checks: grounded-writing pass, maths-engine pass.
@@ -335,7 +335,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 ### 4. Write 0.262626... (the digits 26 recur) as a fraction in its simplest form.
 
 - **Answer:** 26/99
-- **Explanation:** Let x = 0.2626... Two digits recur, so multiply by 100: 100x = 26.2626... Subtract: 100x - x = 26, so 99x = 26 and x = 26/99. 26/99 is already in its simplest form.
+- **Explanation:** Let x = 0.2626... Two digits recur, so multiply by 100: 100x = 26.2626... Subtract: 100x - x = 26.2626... - 0.2626..., so 99x = 26 and x = 26/99. 26/99 is already in its simplest form.
 - **Hint:** Let x be the decimal. Two digits recur, so work out 100x - x.
 - **Marks (2):** M1 for 99x = 26 or 26/99; A1 for 26/99
 - Seed 4, difficulty 4, `gcse-maths-h-n10-t-recurring-decimal-04`. Checks: grounded-writing pass, maths-engine pass.
@@ -343,7 +343,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 ### 5. Write 0.343434... (the digits 34 recur) as a fraction in its simplest form.
 
 - **Answer:** 34/99
-- **Explanation:** Let x = 0.3434... Two digits recur, so multiply by 100: 100x = 34.3434... Subtract: 100x - x = 34, so 99x = 34 and x = 34/99. 34/99 is already in its simplest form.
+- **Explanation:** Let x = 0.3434... Two digits recur, so multiply by 100: 100x = 34.3434... Subtract: 100x - x = 34.3434... - 0.3434..., so 99x = 34 and x = 34/99. 34/99 is already in its simplest form.
 - **Hint:** Let x be the decimal. Two digits recur, so work out 100x - x.
 - **Marks (2):** M1 for 99x = 34 or 34/99; A1 for 34/99
 - Seed 5, difficulty 4, `gcse-maths-h-n10-t-recurring-decimal-05`. Checks: grounded-writing pass, maths-engine pass.
@@ -357,7 +357,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** Each of the 3 starters can go with each of the 6 main courses, which gives 3 × 6 = 18 pairs. Each pair can go with each of the 2 desserts: 18 × 2 = 36 meals.
 - **Hint:** Multiply the number of choices for each course.
 - **Marks (2):** M1 for 3 × 6 × 2; A1 for 36
-- Seed 1, difficulty 2, `gcse-maths-h-n5-t-product-rule-01`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 1, difficulty 2, `gcse-maths-h-n5-t-product-rule-01`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 2. A café offers 3 starters, 6 main courses and 3 desserts. A meal is one starter, one main course and one dessert. How many different meals can be chosen?
 
@@ -366,7 +366,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** Each of the 3 starters can go with each of the 6 main courses, which gives 3 × 6 = 18 pairs. Each pair can go with each of the 3 desserts: 18 × 3 = 54 meals.
 - **Hint:** Multiply the number of choices for each course.
 - **Marks (2):** M1 for 3 × 6 × 3; A1 for 54
-- Seed 2, difficulty 2, `gcse-maths-h-n5-t-product-rule-02`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 2, difficulty 2, `gcse-maths-h-n5-t-product-rule-02`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 3. A café offers 6 starters, 4 main courses and 2 desserts. A meal is one starter, one main course and one dessert. How many different meals can be chosen?
 
@@ -375,7 +375,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** Each of the 6 starters can go with each of the 4 main courses, which gives 6 × 4 = 24 pairs. Each pair can go with each of the 2 desserts: 24 × 2 = 48 meals.
 - **Hint:** Multiply the number of choices for each course.
 - **Marks (2):** M1 for 6 × 4 × 2; A1 for 48
-- Seed 3, difficulty 2, `gcse-maths-h-n5-t-product-rule-03`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 3, difficulty 2, `gcse-maths-h-n5-t-product-rule-03`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 4. A café offers 7 starters, 6 main courses and 5 desserts. A meal is one starter, one main course and one dessert. How many different meals can be chosen?
 
@@ -384,7 +384,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** Each of the 7 starters can go with each of the 6 main courses, which gives 7 × 6 = 42 pairs. Each pair can go with each of the 5 desserts: 42 × 5 = 210 meals.
 - **Hint:** Multiply the number of choices for each course.
 - **Marks (2):** M1 for 7 × 6 × 5; A1 for 210
-- Seed 4, difficulty 2, `gcse-maths-h-n5-t-product-rule-04`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 4, difficulty 2, `gcse-maths-h-n5-t-product-rule-04`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 5. A café offers 4 starters, 9 main courses and 7 desserts. A meal is one starter, one main course and one dessert. How many different meals can be chosen?
 
@@ -393,7 +393,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** Each of the 4 starters can go with each of the 9 main courses, which gives 4 × 9 = 36 pairs. Each pair can go with each of the 7 desserts: 36 × 7 = 252 meals.
 - **Hint:** Multiply the number of choices for each course.
 - **Marks (2):** M1 for 4 × 9 × 7; A1 for 252
-- Seed 5, difficulty 2, `gcse-maths-h-n5-t-product-rule-05`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 5, difficulty 2, `gcse-maths-h-n5-t-product-rule-05`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ## gcse-maths-h-a7-composite-function (gcse-maths-h-a7, 5 questions)
 
@@ -403,7 +403,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** fg(-1) means f(g(-1)), so work out g first: g(-1) = (-1)^2 - 4 = -3. Then f(-3) = 4 × (-3) + 3 = -9.
 - **Hint:** fg(-1) means f(g(-1)): work out g(-1) first.
 - **Marks (2):** M1 for g(-1) = -3; A1 for -9
-- Seed 1, difficulty 3, `gcse-maths-h-a7-t-composite-function-01`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 1, difficulty 3, `gcse-maths-h-a7-t-composite-function-01`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 2. f(x) = 2x - 2 and g(x) = x^2. Work out gf(-3).
 
@@ -411,7 +411,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** gf(-3) means g(f(-3)), so work out f first: f(-3) = 2 × (-3) - 2 = -8. Then g(-8) = (-8)^2 = 64.
 - **Hint:** gf(-3) means g(f(-3)): work out f(-3) first.
 - **Marks (2):** M1 for f(-3) = -8; A1 for 64
-- Seed 2, difficulty 3, `gcse-maths-h-a7-t-composite-function-02`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 2, difficulty 3, `gcse-maths-h-a7-t-composite-function-02`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 3. f(x) = 3x + 4 and g(x) = x^2 - 2. Work out gf(2).
 
@@ -419,7 +419,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** gf(2) means g(f(2)), so work out f first: f(2) = 3 × 2 + 4 = 10. Then g(10) = 10^2 - 2 = 98.
 - **Hint:** gf(2) means g(f(2)): work out f(2) first.
 - **Marks (2):** M1 for f(2) = 10; A1 for 98
-- Seed 3, difficulty 3, `gcse-maths-h-a7-t-composite-function-03`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 3, difficulty 3, `gcse-maths-h-a7-t-composite-function-03`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 4. f(x) = 5x - 9 and g(x) = x^2 + 1. Work out fg(3).
 
@@ -427,7 +427,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** fg(3) means f(g(3)), so work out g first: g(3) = 3^2 + 1 = 10. Then f(10) = 5 × 10 - 9 = 41.
 - **Hint:** fg(3) means f(g(3)): work out g(3) first.
 - **Marks (2):** M1 for g(3) = 10; A1 for 41
-- Seed 4, difficulty 3, `gcse-maths-h-a7-t-composite-function-04`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 4, difficulty 3, `gcse-maths-h-a7-t-composite-function-04`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 5. f(x) = 2x - 6 and g(x) = x^2 + 4. Work out gf(-2).
 
@@ -435,4 +435,4 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** gf(-2) means g(f(-2)), so work out f first: f(-2) = 2 × (-2) - 6 = -10. Then g(-10) = (-10)^2 + 4 = 104.
 - **Hint:** gf(-2) means g(f(-2)): work out f(-2) first.
 - **Marks (2):** M1 for f(-2) = -10; A1 for 104
-- Seed 5, difficulty 3, `gcse-maths-h-a7-t-composite-function-05`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 5, difficulty 3, `gcse-maths-h-a7-t-composite-function-05`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.

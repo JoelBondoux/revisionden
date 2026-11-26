@@ -456,7 +456,7 @@ def _quadratic_write(p: dict) -> dict:
         "answer": {"solutions": [str(r1), str(r2)]},
         "verify": {"method": "solve", "equation": equation, "variable": "x"},
         "steps": [equation, factorised, f"x = {r1} or x = {r2}"],
-        "mark_scheme": [f"M1 for ({first})({second})", f"A1 for x = {r1}", f"A1 for x = {r2}"],
+        "mark_scheme": [f"M1 for ({first})({second})", f"A1 for both x = {r1} and x = {r2}"],
         "hint": f"Find two numbers that multiply to give {c} and add to give {b}.",
         "explanation": (f"Find two numbers that multiply to give {c} and add to give {b}: "
                         f"{-r1} and {-r2}, because {bracket(-r1)} × {bracket(-r2)} = {c} and "
@@ -484,13 +484,13 @@ def _quadratic_recheck(p: dict, item: dict) -> list[str]:
 
 QUADRATIC_FACTORISING = Template(
     id="gcse-maths-h-a18-quadratic-factorising",
-    version=1,
+    version=2,  # v2: one accuracy mark for both roots (adversarial review)
     topic="gcse-maths-h-a18",
     learning_point="gcse-maths-h-a18-lp-factorising",
     type="worked_maths",
     difficulty=2,
     expected_seconds=60,
-    marks=3,
+    marks=2,
     source_ref=_ref("A18"),
     citations=(_cite("2. Algebra, Solving equations and inequalities, content reference A18 "
                      "(page 15; PDF page 27)",
@@ -523,13 +523,19 @@ def _nth_write(p: dict) -> dict:
     d, c = _nth(p)
     terms = _terms(p)
     answer = linear(d, c, "n") if d > 0 or c < 0 else f"{c} - {_mono(-d, 'n')}"
+    accepted = [answer, f"{terms[0]} {'+' if d > 0 else '-'} {abs(d)}(n - 1)"]
+    g = gcd(d, c)
+    if g > 1 and d > 0:
+        accepted.append(f"{g}({linear(d // g, c // g, 'n')})")
+    elif g > 1 and c > 0:
+        accepted.append(f"{g}({c // g} - {_mono(-d // g, 'n')})")
     move = f"add {c}" if c > 0 else f"subtract {-c}"
     return {
         "difficulty": 2 if d > 0 else 3,
         "expected_seconds": 45 if d > 0 else 60,
         "prompt": ("Find an expression for the nth term of the sequence "
                    f"{', '.join(map(str, terms))}, ..."),
-        "answer": {"accepted": [answer], "any_order": True},
+        "answer": {"accepted": list(dict.fromkeys(accepted)), "any_order": True},
         "hint": "Work out the difference between the terms first.",
         "explanation": (f"The terms go {'up' if d > 0 else 'down'} by {abs(d)} each time, so the "
                         f"nth term starts {_mono(d, 'n')}. When n = 1, {_mono(d, 'n')} = {d}, and "
@@ -558,7 +564,7 @@ def _nth_recheck(p: dict, item: dict) -> list[str]:
 
 LINEAR_NTH_TERM = Template(
     id="gcse-maths-h-a25-linear-nth-term",
-    version=1,
+    version=2,  # v2: also accepts the first-term and factorised forms (adversarial review)
     topic="gcse-maths-h-a25",
     learning_point="gcse-maths-h-a25-lp-linear-nth",
     type="short_answer",
@@ -598,8 +604,8 @@ def _recurring_write(p: dict) -> dict:
         "mark_scheme": [f"M1 for 99x = {k} or {k}/99", f"A1 for {simple}"],
         "hint": "Let x be the decimal. Two digits recur, so work out 100x - x.",
         "explanation": (f"Let x = 0.{digits * 2}... Two digits recur, so multiply by 100: "
-                        f"100x = {digits}.{digits * 2}... Subtract: 100x - x = {k}, so "
-                        f"99x = {k} and x = {k}/99.{tail}"),
+                        f"100x = {digits}.{digits * 2}... Subtract: 100x - x = {digits}.{digits * 2}... - "
+                        f"0.{digits * 2}..., so 99x = {k} and x = {k}/99.{tail}"),
     }
 
 
@@ -628,7 +634,7 @@ def _recurring_recheck(p: dict, item: dict) -> list[str]:
 
 RECURRING_DECIMAL = Template(
     id="gcse-maths-h-n10-recurring-decimal",
-    version=1,
+    version=2,  # v2: the subtraction is shown in full (adversarial review)
     topic="gcse-maths-h-n10",
     learning_point="gcse-maths-h-n10-lp-recurring",
     type="numeric",
