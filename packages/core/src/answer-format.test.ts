@@ -187,6 +187,18 @@ describe('answer forms', () => {
     }
   });
 
+  it('a fraction may have spaces around the "/" and the minus, never inside a number', () => {
+    for (const text of ['3 / 8', ' 3/ 8', '- 3 / 8', '− 3 / 8']) {
+      expect(inForm(text, 'fraction'), text).toBe(true);
+      expect(inForm(text, 'simplest_fraction'), text).toBe(true);
+      expect(inForm(text, 'improper_fraction'), text).toBe(true);
+    }
+    for (const text of ['1 1/3', '1 1 / 3', '3 8/8', '3 /8 1']) {
+      expect(inForm(text, 'fraction'), text).toBe(false);
+      expect(inForm(text, 'improper_fraction'), text).toBe(false);
+    }
+  });
+
   it('a simplest fraction is also in lowest terms', () => {
     for (const text of ['23/33', '-23/33', '49/20', '3']) {
       expect(inForm(text, 'simplest_fraction'), text).toBe(true);
