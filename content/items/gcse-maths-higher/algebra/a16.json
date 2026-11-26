@@ -178,6 +178,7 @@
       "any_order": true
     },
     "marks": 1,
+    "explanation": "A circle with centre (0, 0) and radius r has equation x^2 + y^2 = r^2. With r = 6, r^2 = 36, so the equation is x^2 + y^2 = 36.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
     "checked_by": ["author"],
     "citations": [
@@ -203,7 +204,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). x^2 + y^2 = r^2 with r = 6.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). x^2 + y^2 = r^2 with r = 6. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:55:48Z"
         },
         {
@@ -235,7 +236,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T01:17:44Z",
+          "at": "2026-11-26T04:03:24Z",
           "notes": "no problems found"
         }
       ]
@@ -708,6 +709,7 @@
     "expected_seconds": 15,
     "front": "The radius of the circle x^2 + y^2 = 81",
     "back": "9",
+    "explanation": "x^2 + y^2 = r^2 is a circle of radius r. Here r^2 = 81, so r = √81 = 9.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
     "checked_by": ["author"],
     "citations": [
@@ -733,7 +735,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). x^2 + y^2 = r^2 with r^2 = 81.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). x^2 + y^2 = r^2 with r^2 = 81. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -753,20 +755,20 @@
           "notes": "model answered \"9\"; expected \"9\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:57:45Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:03:31Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -780,6 +782,7 @@
     "expected_seconds": 15,
     "front": "The centre of the circle x^2 + y^2 = 16",
     "back": "(0, 0)",
+    "explanation": "An equation of the form x^2 + y^2 = r^2 is a circle with centre the origin, (0, 0). Here r = 4.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
     "checked_by": ["author"],
     "citations": [
@@ -805,7 +808,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). The specification point is about circles centred at the origin.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). The specification point is about circles centred at the origin. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -825,20 +828,20 @@
           "notes": "model answered \"(0, 0)\"; expected \"(0, 0)\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:57:56Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:03:37Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -852,8 +855,10 @@
     "expected_seconds": 15,
     "front": "A tangent to a circle is ... to the radius at the point where it touches (one word)",
     "back": "Perpendicular",
+    "explanation": "A tangent touches the circle at one point and meets the radius there at a right angle, so it is perpendicular to the radius.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
     "checked_by": ["author"],
+    "needs_human_approval": true,
     "citations": [
       {
         "source_type": "specification",
@@ -865,6 +870,18 @@
         "quote": "find the equation of a tangent to a circle at a given point",
         "retrieved_at": "2026-11-25",
         "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G10 (page 17; PDF page 29)",
+        "quote": "apply and prove the standard circle theorems concerning angles, radii, tangents and chords",
+        "retrieved_at": "2026-11-26",
+        "supports": ["question", "explanation"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
@@ -887,16 +904,8 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A16). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python. Added G10 citation (S3-N2): the specification names the circle theorems but does not state 'tangent perpendicular to radius', so under decision 0008 this needs individual human approval.",
           "at": "2026-11-25T17:26:22Z"
-        },
-        {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-25T17:27:35Z",
-          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
           "name": "blind-answer",
@@ -905,14 +914,6 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:58:01Z",
           "notes": "model answered \"perpendicular\"; expected \"Perpendicular\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:58:12Z",
-          "notes": "no problems found"
         },
         {
           "name": "schema",
@@ -929,6 +930,22 @@
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
           "at": "2026-11-25T18:45:31Z",
           "notes": "fact 1: maths engine proof pass; blind statement matches (\"A tangent to a circle is perpendicular to the radius drawn to the point of contact, so the angle between them is 90°.\")"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T04:04:27Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:04:51Z",
+          "notes": "no problems found"
         }
       ]
     }

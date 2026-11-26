@@ -725,6 +725,7 @@
     "expected_seconds": 15,
     "front": "In the term 7x, what is the number 7 called?",
     "back": "Coefficient",
+    "explanation": "In 7x, the number 7 multiplies the letter x. A number that multiplies a letter in a term is called its coefficient.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -751,7 +752,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). The specification names coefficients but does not define them. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). The specification names coefficients but does not define them. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:17:06Z"
         },
         {
@@ -761,14 +762,6 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:20:59Z",
           "notes": "model answered \"Coefficient\"; expected \"Coefficient\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:21:15Z",
-          "notes": "no problems found"
         },
         {
           "name": "quote-check",
@@ -785,6 +778,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:02:59Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -798,6 +799,7 @@
     "expected_seconds": 15,
     "front": "Write a × a × a in index notation (use ^ for powers)",
     "back": "a^3",
+    "explanation": "a × a × a is three a's multiplied together. Index notation writes this as a^3: the 3 counts the a's.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
     "checked_by": ["author"],
     "citations": [
@@ -823,7 +825,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). Back checked with SymPy: a^3 equals a*a*a.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). Back checked with SymPy: a^3 equals a*a*a. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:17:06Z"
         },
         {
@@ -833,14 +835,6 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:21:21Z",
           "notes": "model answered \"a^3\"; expected \"a^3\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:21:27Z",
-          "notes": "no problems found"
         },
         {
           "name": "quote-check",
@@ -857,6 +851,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:03:06Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -870,6 +872,7 @@
     "expected_seconds": 15,
     "front": "Write a ÷ b as an algebraic fraction (use / for the fraction line)",
     "back": "a/b",
+    "explanation": "In algebra we write a division as a fraction: a ÷ b is written a/b, with a on top and b underneath.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A1",
     "checked_by": ["author"],
     "citations": [
@@ -895,7 +898,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). Back checked with SymPy: a/b is a divided by b.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A1). Back checked with SymPy: a/b is a divided by b. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:17:06Z"
         },
         {
@@ -905,14 +908,6 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:21:34Z",
           "notes": "model answered \"a/b\"; expected \"a/b\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:21:39Z",
-          "notes": "no problems found"
         },
         {
           "name": "quote-check",
@@ -929,6 +924,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:03:13Z",
+          "notes": "no problems found"
         }
       ]
     }
