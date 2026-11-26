@@ -57,6 +57,30 @@
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-26T05:15:59Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:21:20Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:21:27Z",
+          "notes": "model answered \"23/33\"; expected \"23/33\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:21:35Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -119,6 +143,30 @@
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-26T05:15:59Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:21:35Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:21:42Z",
+          "notes": "model answered \"29/99\"; expected \"29/99\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:22:01Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -181,6 +229,30 @@
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-26T05:15:59Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:22:02Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:22:08Z",
+          "notes": "model answered \"67/99\"; expected \"67/99\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:22:18Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -243,6 +315,30 @@
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-26T05:15:59Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:22:19Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:22:25Z",
+          "notes": "model answered \"26/99\"; expected \"26/99\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:22:32Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -305,6 +401,30 @@
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-26T05:15:59Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:22:33Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:22:38Z",
+          "notes": "model answered \"34/99\"; expected \"34/99\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:22:46Z",
+          "notes": "no problems found"
         }
       ]
     }

@@ -412,3 +412,8 @@ def test_an_nth_term_accepts_the_first_term_form_and_a_factorised_form():
 def test_the_recurring_decimal_explanation_shows_the_subtraction_in_full():
     item = make_item(_template("recurring-decimal"), 4, NOW)
     assert "100x - x = 26.2626... - 0.2626..., so 99x = 26" in item["explanation"]
+
+
+def test_a_quadratic_question_names_the_method_its_mark_scheme_rewards():
+    item = make_item(_template("quadratic-factorising"), 1, NOW)
+    assert item["prompt"] == "Solve x^2 + 11x + 24 = 0 by factorising."

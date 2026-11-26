@@ -452,7 +452,7 @@ def _quadratic_write(p: dict) -> dict:
     factorised = f"({first})({second}) = 0"
     return {
         "difficulty": 3 if (r1 < 0 and r2 < 0) else 2,
-        "prompt": f"Solve {equation}",
+        "prompt": f"Solve {equation} by factorising.",
         "answer": {"solutions": [str(r1), str(r2)]},
         "verify": {"method": "solve", "equation": equation, "variable": "x"},
         "steps": [equation, factorised, f"x = {r1} or x = {r2}"],
@@ -467,7 +467,7 @@ def _quadratic_write(p: dict) -> dict:
 
 
 def _quadratic_recheck(p: dict, item: dict) -> list[str]:
-    match = re.fullmatch(r"Solve (.+) = 0", item["prompt"])
+    match = re.fullmatch(r"Solve (.+) = 0 by factorising\.", item["prompt"])
     if not match:
         return ["the question is not in the expected words"]
     errors = []
@@ -484,7 +484,7 @@ def _quadratic_recheck(p: dict, item: dict) -> list[str]:
 
 QUADRATIC_FACTORISING = Template(
     id="gcse-maths-h-a18-quadratic-factorising",
-    version=2,  # v2: one accuracy mark for both roots (adversarial review)
+    version=3,  # v2: one A1 for both roots; v3: "by factorising" in the question (review)
     topic="gcse-maths-h-a18",
     learning_point="gcse-maths-h-a18-lp-factorising",
     type="worked_maths",

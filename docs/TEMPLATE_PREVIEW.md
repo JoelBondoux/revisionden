@@ -224,7 +224,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 
 ## gcse-maths-h-a18-quadratic-factorising (gcse-maths-h-a18, 5 questions)
 
-### 1. Solve x^2 + 11x + 24 = 0
+### 1. Solve x^2 + 11x + 24 = 0 by factorising.
 
 - **Answer:** x = -3 or x = -8
 - **Worked steps:** `x^2 + 11x + 24 = 0` → `(x + 3)(x + 8) = 0` → `x = -3 or x = -8`
@@ -233,7 +233,16 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Marks (2):** M1 for (x + 3)(x + 8); A1 for both x = -3 and x = -8
 - Seed 1, difficulty 3, `gcse-maths-h-a18-t-quadratic-factorising-01`. Checks: grounded-writing pass, maths-engine pass.
 
-### 2. Solve x^2 - 8x + 15 = 0
+### 2. Solve x^2 + x - 12 = 0 by factorising.
+
+- **Answer:** x = 3 or x = -4
+- **Worked steps:** `x^2 + x - 12 = 0` → `(x - 3)(x + 4) = 0` → `x = 3 or x = -4`
+- **Explanation:** Find two numbers that multiply to give -12 and add to give 1: -3 and 4, because (-3) × 4 = -12 and -3 + 4 = 1. So (x - 3)(x + 4) = 0. One of the brackets must be 0: x - 3 = 0 gives x = 3, and x + 4 = 0 gives x = -4.
+- **Hint:** Find two numbers that multiply to give -12 and add to give 1.
+- **Marks (2):** M1 for (x - 3)(x + 4); A1 for both x = 3 and x = -4
+- Seed 2, difficulty 2, `gcse-maths-h-a18-t-quadratic-factorising-02`. Checks: grounded-writing pass, maths-engine pass.
+
+### 3. Solve x^2 - 8x + 15 = 0 by factorising.
 
 - **Answer:** x = 5 or x = 3
 - **Worked steps:** `x^2 - 8x + 15 = 0` → `(x - 5)(x - 3) = 0` → `x = 5 or x = 3`
@@ -242,7 +251,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Marks (2):** M1 for (x - 5)(x - 3); A1 for both x = 5 and x = 3
 - Seed 3, difficulty 2, `gcse-maths-h-a18-t-quadratic-factorising-03`. Checks: grounded-writing pass, maths-engine pass.
 
-### 3. Solve x^2 - 6x - 16 = 0
+### 4. Solve x^2 - 6x - 16 = 0 by factorising.
 
 - **Answer:** x = 8 or x = -2
 - **Worked steps:** `x^2 - 6x - 16 = 0` → `(x - 8)(x + 2) = 0` → `x = 8 or x = -2`
@@ -251,7 +260,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Marks (2):** M1 for (x - 8)(x + 2); A1 for both x = 8 and x = -2
 - Seed 4, difficulty 2, `gcse-maths-h-a18-t-quadratic-factorising-04`. Checks: grounded-writing pass, maths-engine pass.
 
-### 4. Solve x^2 + 7x - 18 = 0
+### 5. Solve x^2 + 7x - 18 = 0 by factorising.
 
 - **Answer:** x = 2 or x = -9
 - **Worked steps:** `x^2 + 7x - 18 = 0` → `(x - 2)(x + 9) = 0` → `x = 2 or x = -9`
@@ -260,15 +269,6 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Marks (2):** M1 for (x - 2)(x + 9); A1 for both x = 2 and x = -9
 - Seed 5, difficulty 2, `gcse-maths-h-a18-t-quadratic-factorising-05`. Checks: grounded-writing pass, maths-engine pass.
 
-### 5. Solve x^2 - 6x + 5 = 0
-
-- **Answer:** x = 5 or x = 1
-- **Worked steps:** `x^2 - 6x + 5 = 0` → `(x - 5)(x - 1) = 0` → `x = 5 or x = 1`
-- **Explanation:** Find two numbers that multiply to give 5 and add to give -6: -5 and -1, because (-5) × (-1) = 5 and -5 + (-1) = -6. So (x - 5)(x - 1) = 0. One of the brackets must be 0: x - 5 = 0 gives x = 5, and x - 1 = 0 gives x = 1.
-- **Hint:** Find two numbers that multiply to give 5 and add to give -6.
-- **Marks (2):** M1 for (x - 5)(x - 1); A1 for both x = 5 and x = 1
-- Seed 6, difficulty 2, `gcse-maths-h-a18-t-quadratic-factorising-06`. Checks: grounded-writing pass, maths-engine pass.
-
 ## gcse-maths-h-a25-linear-nth-term (gcse-maths-h-a25, 5 questions)
 
 ### 1. Find an expression for the nth term of the sequence 29, 36, 43, 50, ...
@@ -276,35 +276,35 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Answer:** 7n + 22
 - **Explanation:** The terms go up by 7 each time, so the nth term starts 7n. When n = 1, 7n = 7, and the first term is 29, so add 22: the nth term is 7n + 22. Check: n = 2 gives 7 × 2 + 22 = 36.
 - **Hint:** Work out the difference between the terms first.
-- Seed 1, difficulty 2, `gcse-maths-h-a25-t-linear-nth-term-01`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 1, difficulty 2, `gcse-maths-h-a25-t-linear-nth-term-01`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 2. Find an expression for the nth term of the sequence 17, 23, 29, 35, ...
 
 - **Answer:** 6n + 11
 - **Explanation:** The terms go up by 6 each time, so the nth term starts 6n. When n = 1, 6n = 6, and the first term is 17, so add 11: the nth term is 6n + 11. Check: n = 2 gives 6 × 2 + 11 = 23.
 - **Hint:** Work out the difference between the terms first.
-- Seed 2, difficulty 2, `gcse-maths-h-a25-t-linear-nth-term-02`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 2, difficulty 2, `gcse-maths-h-a25-t-linear-nth-term-02`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 3. Find an expression for the nth term of the sequence 20, 22, 24, 26, ...
 
 - **Answer:** 2n + 18
 - **Explanation:** The terms go up by 2 each time, so the nth term starts 2n. When n = 1, 2n = 2, and the first term is 20, so add 18: the nth term is 2n + 18. Check: n = 2 gives 2 × 2 + 18 = 22.
 - **Hint:** Work out the difference between the terms first.
-- Seed 3, difficulty 2, `gcse-maths-h-a25-t-linear-nth-term-03`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 3, difficulty 2, `gcse-maths-h-a25-t-linear-nth-term-03`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 4. Find an expression for the nth term of the sequence 2, 10, 18, 26, ...
 
 - **Answer:** 8n - 6
 - **Explanation:** The terms go up by 8 each time, so the nth term starts 8n. When n = 1, 8n = 8, and the first term is 2, so subtract 6: the nth term is 8n - 6. Check: n = 2 gives 8 × 2 - 6 = 10.
 - **Hint:** Work out the difference between the terms first.
-- Seed 4, difficulty 2, `gcse-maths-h-a25-t-linear-nth-term-04`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 4, difficulty 2, `gcse-maths-h-a25-t-linear-nth-term-04`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 5. Find an expression for the nth term of the sequence 7, 0, -7, -14, ...
 
 - **Answer:** 14 - 7n
 - **Explanation:** The terms go down by 7 each time, so the nth term starts -7n. When n = 1, -7n = -7, and the first term is 7, so add 14: the nth term is 14 - 7n. Check: n = 2 gives -7 × 2 + 14 = 0.
 - **Hint:** Work out the difference between the terms first.
-- Seed 5, difficulty 3, `gcse-maths-h-a25-t-linear-nth-term-05`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 5, difficulty 3, `gcse-maths-h-a25-t-linear-nth-term-05`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ## gcse-maths-h-n10-recurring-decimal (gcse-maths-h-n10, 5 questions)
 
@@ -314,7 +314,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** Let x = 0.6969... Two digits recur, so multiply by 100: 100x = 69.6969... Subtract: 100x - x = 69.6969... - 0.6969..., so 99x = 69 and x = 69/99. Simplify by dividing by 3: 23/33.
 - **Hint:** Let x be the decimal. Two digits recur, so work out 100x - x.
 - **Marks (2):** M1 for 99x = 69 or 69/99; A1 for 23/33
-- Seed 1, difficulty 4, `gcse-maths-h-n10-t-recurring-decimal-01`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 1, difficulty 4, `gcse-maths-h-n10-t-recurring-decimal-01`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 2. Write 0.292929... (the digits 29 recur) as a fraction in its simplest form.
 
@@ -322,7 +322,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** Let x = 0.2929... Two digits recur, so multiply by 100: 100x = 29.2929... Subtract: 100x - x = 29.2929... - 0.2929..., so 99x = 29 and x = 29/99. 29/99 is already in its simplest form.
 - **Hint:** Let x be the decimal. Two digits recur, so work out 100x - x.
 - **Marks (2):** M1 for 99x = 29 or 29/99; A1 for 29/99
-- Seed 2, difficulty 4, `gcse-maths-h-n10-t-recurring-decimal-02`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 2, difficulty 4, `gcse-maths-h-n10-t-recurring-decimal-02`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 3. Write 0.676767... (the digits 67 recur) as a fraction in its simplest form.
 
@@ -330,7 +330,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** Let x = 0.6767... Two digits recur, so multiply by 100: 100x = 67.6767... Subtract: 100x - x = 67.6767... - 0.6767..., so 99x = 67 and x = 67/99. 67/99 is already in its simplest form.
 - **Hint:** Let x be the decimal. Two digits recur, so work out 100x - x.
 - **Marks (2):** M1 for 99x = 67 or 67/99; A1 for 67/99
-- Seed 3, difficulty 4, `gcse-maths-h-n10-t-recurring-decimal-03`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 3, difficulty 4, `gcse-maths-h-n10-t-recurring-decimal-03`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 4. Write 0.262626... (the digits 26 recur) as a fraction in its simplest form.
 
@@ -338,7 +338,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** Let x = 0.2626... Two digits recur, so multiply by 100: 100x = 26.2626... Subtract: 100x - x = 26.2626... - 0.2626..., so 99x = 26 and x = 26/99. 26/99 is already in its simplest form.
 - **Hint:** Let x be the decimal. Two digits recur, so work out 100x - x.
 - **Marks (2):** M1 for 99x = 26 or 26/99; A1 for 26/99
-- Seed 4, difficulty 4, `gcse-maths-h-n10-t-recurring-decimal-04`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 4, difficulty 4, `gcse-maths-h-n10-t-recurring-decimal-04`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 5. Write 0.343434... (the digits 34 recur) as a fraction in its simplest form.
 
@@ -346,7 +346,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** Let x = 0.3434... Two digits recur, so multiply by 100: 100x = 34.3434... Subtract: 100x - x = 34.3434... - 0.3434..., so 99x = 34 and x = 34/99. 34/99 is already in its simplest form.
 - **Hint:** Let x be the decimal. Two digits recur, so work out 100x - x.
 - **Marks (2):** M1 for 99x = 34 or 34/99; A1 for 34/99
-- Seed 5, difficulty 4, `gcse-maths-h-n10-t-recurring-decimal-05`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 5, difficulty 4, `gcse-maths-h-n10-t-recurring-decimal-05`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ## gcse-maths-h-n5-product-rule (gcse-maths-h-n5, 5 questions)
 
