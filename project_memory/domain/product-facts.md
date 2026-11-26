@@ -409,9 +409,9 @@ Tags: #product #rules #limits #defaults
   change; original art only, no stock photos or AI-generated images.
   Links use the app's J7 styles (buttons, tiles, chips, bold inline links), never plain underlined
   text (owner, 2026-11-25). Light or dark follows the device only (no switch), with the app's dark
-  theme colours. Behind every page sits the app's doodle tile (`apps/web/src/design/doodles.svg`,
-  read at build time, 240px, 7% ink), always on with no switch, hidden for high contrast and forced
-  colours.
+  theme colours. Behind every page sits the app's doodle tile (`apps/web/src/design/doodle-scatter.svg`,
+  read at build time and served as `/doodle-scatter.svg`, 1080px, 7% ink), always on with no switch,
+  hidden for high contrast and forced colours.
 - Production passkeys use the RP ID `revisionden.com`; OAuth callbacks are on the API host, so the
   move to `app.` needed no change in Google or Microsoft. Dev and staging passkeys use their own
   hosts (`dev.revisionden.com`, `staging.revisionden.com`), so they work only there.
@@ -839,8 +839,8 @@ Tags: #product #rules #limits #defaults
   1080px dense sticker sheet: 8 hero doodles, 420 medium (160 motifs, no copy of a motif within
   240px of itself) and 1,600 tiny fillers, no two outlines closer than 4px plus the line, tilted up to 25°, 1.4px lines, about 35KB gzipped; generated from a fixed seed by `doodleTile.ts`, used as
   a CSS mask at 7% ink; J8b), hidden with `prefers-contrast: more` and
-  forced colours. The older 240px grid tile `doodles.svg` is kept only for the public site until it
-  moves to the new tile.
+  forced colours. The public site uses the same tile (the older 240px grid tile `doodles.svg` was
+  removed in M7).
   Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
