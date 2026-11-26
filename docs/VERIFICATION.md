@@ -281,8 +281,9 @@ and never the answer or a step that gives it away. `pnpm content:validate` refus
 contains the item's final answer (`scripts/content/hint-check.mjs`): the accepted text for short
 answers, the expression or solutions for worked maths, the correct option for multiple choice and
 the back of a flashcard (ignoring case, spaces next to symbols and the minus sign used), or, for a
-numeric answer, any number in the hint equal to it or within 0.5% of it (`1/2` for 0.5, `1.333`
-for 4/3) that the question itself does not already show.
+numeric answer, any number in the hint (standard form, mixed numbers, fractions and decimals
+with thousands separators all count) equal to it or within 0.5% of it (`1/2` for 0.5, `1.333` for
+4/3, `640000000` for 6.4 × 10^8), unless the question already shows that number written the same way.
 
 **Answer format (S3-A rulings, 2026-11-25).** One set of rules in `packages/core/src/answer-format.ts`
 serves student marking, content validation and the blind check, and the maths engine applies the same
