@@ -103,7 +103,7 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 60,
-    "prompt": "Expand and simplify (x + 5)(x - 3). Use ^ for powers.",
+    "prompt": "Expand and simplify (x + 5)(x - 3). Use the Power key (^) for powers.",
     "answer": { "expression": "x^2 + 2x - 15" },
     "verify": { "method": "expression", "expression": "(x + 5)(x - 3)", "form": "expanded" },
     "steps": ["(x + 5)(x - 3)", "x^2 - 3x + 5x - 15", "x^2 + 2x - 15"],
@@ -188,7 +188,7 @@
     "difficulty": 4,
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 150,
-    "prompt": "Expand and simplify (x + 2)(x + 3)(x - 1). Use ^ for powers.",
+    "prompt": "Expand and simplify (x + 2)(x + 3)(x - 1). Use the Power key (^) for powers.",
     "answer": { "expression": "x^3 + 4x^2 + x - 6" },
     "verify": { "method": "expression", "expression": "(x + 2)(x + 3)(x - 1)", "form": "expanded" },
     "steps": [

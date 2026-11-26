@@ -620,7 +620,7 @@
     "difficulty": 1,
     "learning_point": "gcse-maths-h-a25-lp-nth-term-cards",
     "expected_seconds": 15,
-    "front": "The nth term of 1, 4, 9, 16, ... (use ^ for powers)",
+    "front": "The nth term of 1, 4, 9, 16, ... (use the Power key (^) for powers)",
     "back": "n^2",
     "explanation": "The terms are 1 × 1, 2 × 2, 3 × 3, 4 × 4: the square numbers. So the nth term is n^2.",
     "hint": "What special kind of numbers are 1, 4, 9 and 16?",
