@@ -232,12 +232,12 @@ through the authenticated AI Gateway, set `<PROVIDER>_BASE_URL` to the gateway's
 https addresses on `gateway.ai.cloudflare.com`, never to a provider's own API. The blind answer must come from a different provider from the writer (Claude by default, read from
 the grounded-writing check). It sees no answer, hint or explanation, and passes only on a match
 with high confidence (multiple choice: same option; numeric: within the item tolerance, or, when the answer sets `decimal_places` or `significant_figures`, written to exactly that accuracy with the correctly rounded value (see "Answer format" below); short
-answers and flashcards: same words ignoring case and end punctuation; maths flashcards with a
+answers: same words ignoring case and end punctuation, or the same answer under the marking normaliser (`sameAnswer` in `packages/core`: maths notation such as `x²` for `x^2`, plus the item's `any_order` and `units`); flashcards: same words ignoring case and end punctuation; maths flashcards with a
 `back_formula`: the maths engine finds the same formula (`±` gives both branches, a bare right-hand
 side is compared with the expected one, notation is read strictly so `/ 2a` is not `/ (2a)`), and the
 answer states every listed condition such as `a ≠ 0` as a whole clause (`a ≠ 0.5` does not count), otherwise it fails for a person to check; worked maths: the same
 solutions in any order (a solution may use other letters, `x = 2a`), or the same expression; an answer written `<subject> = …` counts as its right-hand side when the item declares that `answer.subject`). The reviewer sees the whole item and the
-quoted sources and must report factual errors, a wrong answer, ambiguity, a second correct
+quoted sources (and, for `any_order` items, a note not to ask for reordered versions of the accepted answers) and must report factual errors, a wrong answer, ambiguity, a second correct
 option, content outside the specification, unsupported claims or poor wording; any problem or
 an unsure reviewer fails. Tests use recorded fixtures only.
 
