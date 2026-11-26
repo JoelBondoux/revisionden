@@ -70,12 +70,17 @@ function SubjectPicker({
             type="button"
             className="map-subject"
             aria-pressed={s.subjectId === current}
-            aria-label={s.hasContent ? s.subject : `${s.subject}, coming soon`}
             onClick={() => onChoose(s.subjectId)}
           >
+            {/* W20: the visible words are the name (WCAG 2.5.3), so speech users can say them. */}
             <PipFigure outfit={outfitFor(s.subjectId)} look={look} />
-            <span aria-hidden="true">{s.subject}</span>
-            {!s.hasContent && <small aria-hidden="true">Coming soon</small>}
+            <span>{s.subject}</span>
+            {!s.hasContent && (
+              <>
+                {' '}
+                <small>Coming soon</small>
+              </>
+            )}
           </button>
         ))}
       </div>

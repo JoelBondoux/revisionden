@@ -203,7 +203,7 @@ describe('Topic map for subjects with no questions yet (RD-MBXKTC)', () => {
       'aria-pressed',
       'true',
     );
-    await userEvent.click(within(picker).getByRole('button', { name: 'Chemistry, coming soon' }));
+    await userEvent.click(within(picker).getByRole('button', { name: 'Chemistry Coming soon' }));
     expect(
       await screen.findByText('Questions for Chemistry are on their way.'),
     ).toBeInTheDocument();
