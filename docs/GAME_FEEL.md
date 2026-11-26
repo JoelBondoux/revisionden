@@ -144,6 +144,12 @@ tab say so to screen readers.
   On Rewards, earned chapter steps are stickers and locked ones are dashed outlines. Stickers keep
   their paper colours in dark mode, like real stickers, with dark ink text (AA). The combo badge
   and stars "slap" in (transform and opacity only), with no animation under reduced motion.
+- The lesson surround follows the active style (J10a2, owner rule 2026-11-26: "not a school
+  app", "fun around the learning", "calm question screens"). The question and its answers sit on
+  `.lesson__stage`, which a style may give a plain, high-contrast card, but never texture,
+  stickers, tilt or motion behind the text. Sticker Book turns the dark arena into warm paper
+  (night paper in dark mode) by re-colouring the `--arena-*` tokens, with the question on a plain
+  white card (a dark card in dark mode); a test checks those colours meet AA.
 - Every style plays its own sounds and vibration through the sound workstream's events (U6).
   Wiring the style into those events follows once U's PR is on dev.
 
