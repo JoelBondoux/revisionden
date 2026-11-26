@@ -126,6 +126,17 @@ push to each device. The service worker then fetches the text and shows the noti
 
 Source of truth: `packages/db/src/schema.ts`; migrations in `packages/db/migrations`.
 
+**Migration order (lead ruling, 2026-11-26).** Deploys apply migrations with drizzle-orm's
+`neon-http` migrator, which only runs a migration whose journal `when` is later than the newest
+one already applied. A migration that lands out of order is skipped silently. So:
+
+- Migrations land on `dev` in number order. Two open PRs must not hold the same number; the lead
+  assigns numbers when they clash (the PR that trains first keeps the lower one).
+- Before a PR with a migration trains, merge the latest `dev` and regenerate its journal entry with
+  drizzle-kit (never copy an old timestamp), so its `idx` follows the last one on `dev` and its
+  `when` is later.
+- Never edit a migration that has already been applied on dev; add a new one instead.
+
 | Table                       | Key fields                                                                                                                                                                                                                                                                                                                                     |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `auth_users`                | id, email, email_verified, name (always blank), image (always null)                                                                                                                                                                                                                                                                            |
