@@ -7,7 +7,7 @@
     "learning_point": "gcse-maths-h-n8-lp-simplify-surds",
     "expected_seconds": 50,
     "prompt": "√50 can be written as k√2, where k is an integer. Find the value of k.",
-    "answer": { "value": "5" },
+    "answer": { "value": "5", "subject": "k" },
     "verify": { "expression": "sqrt(50)/sqrt(2)" },
     "marks": 1,
     "hint": "Find a square number that is a factor of 50.",
@@ -37,7 +37,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (√50 ÷ √2 = 5). Hint: 25 is a square factor of 50, checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (√50 ÷ √2 = 5). Hint: 25 is a square factor of 50, checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"k = 5\" is accepted, as the question asks for the value of k.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -91,7 +91,7 @@
     "learning_point": "gcse-maths-h-n8-lp-simplify-surds",
     "expected_seconds": 50,
     "prompt": "√108 can be written as a√3, where a is an integer. Find the value of a.",
-    "answer": { "value": "6" },
+    "answer": { "value": "6", "subject": "a" },
     "verify": { "expression": "sqrt(108)/sqrt(3)" },
     "marks": 1,
     "explanation": "Find the largest square number that is a factor of 108: 108 = 36 × 3. So √108 = √36 × √3 = 6√3, and a = 6.",
@@ -120,7 +120,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (√108 ÷ √3 = 6). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (√108 ÷ √3 = 6). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"a = 6\" is accepted, as the question asks for the value of a.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -174,7 +174,7 @@
     "learning_point": "gcse-maths-h-n8-lp-simplify-surds",
     "expected_seconds": 70,
     "prompt": "√48 + √27 can be written as k√3, where k is an integer. Find the value of k.",
-    "answer": { "value": "7" },
+    "answer": { "value": "7", "subject": "k" },
     "verify": { "expression": "(sqrt(48) + sqrt(27))/sqrt(3)" },
     "marks": 1,
     "explanation": "Simplify each surd: √48 = √16 × √3 = 4√3 and √27 = √9 × √3 = 3√3. Add them like terms: 4√3 + 3√3 = 7√3, so k = 7.",
@@ -203,7 +203,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (4√3 + 3√3 = 7√3). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (4√3 + 3√3 = 7√3). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"k = 7\" is accepted, as the question asks for the value of k.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -257,7 +257,7 @@
     "learning_point": "gcse-maths-h-n8-lp-rationalise",
     "expected_seconds": 60,
     "prompt": "6/√3 can be written as k√3, where k is an integer. Find the value of k.",
-    "answer": { "value": "2" },
+    "answer": { "value": "2", "subject": "k" },
     "verify": { "expression": "(6/sqrt(3))/sqrt(3)" },
     "marks": 1,
     "explanation": "Multiply the top and bottom by √3: 6/√3 = 6√3/3 = 2√3, so k = 2.",
@@ -286,7 +286,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (6/√3 = 6√3/3 = 2√3). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (6/√3 = 6√3/3 = 2√3). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"k = 2\" is accepted, as the question asks for the value of k.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -340,7 +340,7 @@
     "learning_point": "gcse-maths-h-n8-lp-rationalise",
     "expected_seconds": 60,
     "prompt": "15/√5 can be written as a√5, where a is an integer. Find the value of a.",
-    "answer": { "value": "3" },
+    "answer": { "value": "3", "subject": "a" },
     "verify": { "expression": "(15/sqrt(5))/sqrt(5)" },
     "marks": 1,
     "explanation": "Multiply the top and bottom by √5: 15/√5 = 15√5/5 = 3√5, so a = 3.",
@@ -369,7 +369,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (15/√5 = 15√5/5 = 3√5). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (15/√5 = 15√5/5 = 3√5). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"a = 3\" is accepted, as the question asks for the value of a.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -423,7 +423,7 @@
     "learning_point": "gcse-maths-h-n8-lp-rationalise",
     "expected_seconds": 60,
     "prompt": "12/√2 can be written as k√2, where k is an integer. Find the value of k.",
-    "answer": { "value": "6" },
+    "answer": { "value": "6", "subject": "k" },
     "verify": { "expression": "(12/sqrt(2))/sqrt(2)" },
     "marks": 1,
     "explanation": "Multiply the top and bottom by √2: 12/√2 = 12√2/2 = 6√2, so k = 6.",
@@ -452,7 +452,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (12/√2 = 12√2/2 = 6√2). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (12/√2 = 12√2/2 = 6√2). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"k = 6\" is accepted, as the question asks for the value of k.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -590,7 +590,7 @@
     "learning_point": "gcse-maths-h-n8-lp-exact-pi",
     "expected_seconds": 50,
     "prompt": "A circle has radius 6 cm. Its area is kπ cm². Find the value of k.",
-    "answer": { "value": "36" },
+    "answer": { "value": "36", "subject": "k" },
     "verify": { "expression": "pi*6^2/pi" },
     "marks": 1,
     "explanation": "The area of a circle is π × radius^2. With radius 6 cm: π × 6^2 = 36π cm², so k = 36.",
@@ -631,7 +631,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (area = π × 6^2). Area formula for a circle is the standard one (in scope under G17 of the same specification). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (area = π × 6^2). Area formula for a circle is the standard one (in scope under G17 of the same specification). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"k = 36\" is accepted, as the question asks for the value of k.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -685,7 +685,7 @@
     "learning_point": "gcse-maths-h-n8-lp-exact-pi",
     "expected_seconds": 50,
     "prompt": "A circle has diameter 14 cm. Its circumference is kπ cm. Find the value of k.",
-    "answer": { "value": "14" },
+    "answer": { "value": "14", "subject": "k" },
     "verify": { "expression": "pi*14/pi" },
     "marks": 1,
     "explanation": "The circumference of a circle is π × diameter. With diameter 14 cm: 14π cm, so k = 14.",
@@ -726,7 +726,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (circumference = π × diameter). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (circumference = π × diameter). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"k = 14\" is accepted, as the question asks for the value of k.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -780,7 +780,7 @@
     "learning_point": "gcse-maths-h-n8-lp-exact-pi",
     "expected_seconds": 60,
     "prompt": "A semicircle has radius 4 cm. Its area is kπ cm². Find the value of k.",
-    "answer": { "value": "8" },
+    "answer": { "value": "8", "subject": "k" },
     "verify": { "expression": "(1/2)*pi*4^2/pi" },
     "marks": 1,
     "explanation": "A whole circle of radius 4 cm has area π × 4^2 = 16π cm². A semicircle is half of that: 8π cm², so k = 8.",
@@ -821,7 +821,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (half of π × 4^2). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (half of π × 4^2). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"k = 8\" is accepted, as the question asks for the value of k.",
           "at": "2026-11-25T17:22:05Z"
         },
         {

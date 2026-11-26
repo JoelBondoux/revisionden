@@ -193,7 +193,7 @@
     "learning_point": "gcse-maths-h-n13-lp-convert-units",
     "expected_seconds": 30,
     "prompt": "Change 2.5 hours to minutes.",
-    "answer": { "value": "150", "unit": "min" },
+    "answer": { "value": "150", "unit": "minutes" },
     "verify": { "expression": "(25/10)*60" },
     "marks": 1,
     "explanation": "There are 60 minutes in 1 hour, so multiply by 60: 2.5 × 60 = 150 minutes.",
@@ -224,7 +224,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Conversion factor is the SI one (1 h = 60 min); the units checker (scripts/verify/exact/units.mjs) uses the same factor and checks the answer unit has the dimension of time. Answer backed by the maths engine. Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Conversion factor is the SI one (1 h = 60 min); the units checker (scripts/verify/exact/units.mjs) uses the same factor and checks the answer unit has the dimension of time. Answer backed by the maths engine. Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): unit changed from \"min\" to \"minutes\", which the marker knows, so \"150 minutes\" and \"150 mins\" are accepted.",
           "at": "2026-11-25T17:29:23Z"
         },
         {

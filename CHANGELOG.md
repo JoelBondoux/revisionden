@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- In Number questions that ask "find the value of k" (or n, or a), answers written like "k = 5" are now marked right, and "150 minutes" is accepted for a time in minutes.
 - Four more effect styles now have their own sounds and vibrations: Comic Pop (punchy and bold), Garden Grow (soft woodwind and chimes), Pixel Arcade (retro game blips) and Doodle Diary (pencil scratches, page flips and pen clicks). Doodle Diary is now the starting sound style; Sticker Book becomes one you can unlock.
 - Number answers can now be typed with their unit (15 m, £9600, 100p), with a − minus sign, or as a mixed number like 1 1/3.
 - Standard form answers such as 6.4 × 10⁸, 6.4x10^8 or 6.4e8 are now marked right.
@@ -108,6 +109,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- S3-N3 fairness sweep of the Number items: `answer.subject` on the 14 "find the value of k/n/a" items (n7-0006 to 0008, n8-0001 to 0006 and 0008 to 0010, n9-0001 and 0002) so "k = 5" is accepted, and n13-0003's unit is now "minutes" (the marker does not know "min"). Verification re-run on each.
 - S3-N: the estimation questions n14-0001 and n14-0003 no longer require the estimate to a set number of significant figures (the question asks only for the numbers to be rounded), so an equal estimate written another way, such as 150.0, is marked right (Codex review of #115; needs S2's #178).
 - S3-N: the bounds questions n16-0002 and n16-0003 now say "correct to the nearest 0.1 kg" / "0.01 second" and no longer require the answer to a set number of decimal places, so equal answers such as 4.550 are marked right (Codex review of #115).
 - Effect styles J10e (J): `EffectStyleProvider` moves inside the router (`EffectStyleRoute` in `routes.tsx`, out of `App.tsx`) and makes no request on `/help` or `/parent/help` (Get help makes no API calls, signed in or out). Unlocked styles are checked again when the Settings picker opens (one request at a time) and a failed load is retried on the next screen, so a newly earned style or a load that failed before unlocking no longer needs a reload (Codex review on #176). Tests: provider, picker, routes.
