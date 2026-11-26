@@ -7,6 +7,7 @@ import { ProgressBar } from '../../components/ProgressBar';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { BarChart } from './BarChart';
+import { EnterOnceScope, GrowIn } from './countUp';
 import { DailyLimitPanel } from './DailyLimit';
 import { ParentRewardsCard } from './ParentRewardsCard';
 import { TargetGradesPanel } from './TargetGrades';
@@ -68,21 +69,24 @@ function ChildDashboard({ choices }: { choices: Child[] }) {
           Save as PDF
         </Button>
       </div>
-      {dashboard.status === 'ready' ? (
-        <>
-          <DashboardView data={dashboard.data} savedTargets={savedTargets} />
-          <DailyLimitPanel key={childId} studentId={childId} />
-          <TargetGradesPanel
-            key={`targets-${childId}`}
-            studentId={childId}
-            onSaved={(next) =>
-              setSavedTargets(new Map(next.subjects.map((t) => [t.subjectId, t.parentTarget])))
-            }
-          />
-        </>
-      ) : (
-        <LoadingOrError resource={dashboard} />
-      )}
+      {/* One scope per child: a reload never replays; another child animates once. */}
+      <EnterOnceScope key={childId}>
+        {dashboard.status === 'ready' ? (
+          <>
+            <DashboardView data={dashboard.data} savedTargets={savedTargets} />
+            <DailyLimitPanel key={childId} studentId={childId} />
+            <TargetGradesPanel
+              key={`targets-${childId}`}
+              studentId={childId}
+              onSaved={(next) =>
+                setSavedTargets(new Map(next.subjects.map((t) => [t.subjectId, t.parentTarget])))
+              }
+            />
+          </>
+        ) : (
+          <LoadingOrError resource={dashboard} />
+        )}
+      </EnterOnceScope>
     </>
   );
 }
@@ -133,22 +137,41 @@ function DashboardView({
       <div className="stat-tiles">
         <Tile
           label="Active study time"
-          value={formatMinutes(tiles.activeMinutes.value)}
+          count={{ value: tiles.activeMinutes.value, format: formatMinutes }}
+          index={0}
+          of={4}
           note={minutesNote(tiles.activeMinutes.value, tiles.activeMinutes.previous)}
         />
         <Tile
           label="Plan kept"
-          value={tiles.planKept ? `${tiles.planKept.done} of ${tiles.planKept.planned}` : '–'}
+          value="–"
+          count={
+            tiles.planKept && {
+              value: tiles.planKept.done,
+              format: (n) => `${n} of ${tiles.planKept!.planned}`,
+            }
+          }
+          index={1}
+          of={4}
           note={tiles.planKept ? 'sessions done' : 'No plan yet'}
         />
         <Tile
           label="Accuracy"
-          value={tiles.accuracy.value === null ? '–' : `${tiles.accuracy.value}%`}
+          value="–"
+          count={
+            tiles.accuracy.value === null
+              ? null
+              : { value: tiles.accuracy.value, format: (n) => `${n}%` }
+          }
+          index={2}
+          of={4}
           note={signedNote(tiles.accuracy.value, tiles.accuracy.previous)}
         />
         <Tile
           label="Streak"
-          value={plural(tiles.streak.current, 'day')}
+          count={{ value: tiles.streak.current, format: (n) => plural(n, 'day') }}
+          index={3}
+          of={4}
           note={`best ${tiles.streak.best}`}
         />
       </div>
@@ -156,6 +179,7 @@ function DashboardView({
       <Card title="Study time">
         <BarChart
           title="Study time, last 8 weeks"
+          enterKey="study-time"
           buckets={studyTime.weeks}
           unit="min"
           format={formatMinutes}
@@ -171,34 +195,41 @@ function DashboardView({
         {data.subjects.length === 0 ? (
           <NotSetUp text="No lessons yet." />
         ) : (
-          <table className="stats-table">
-            <caption className="visually-hidden">Subjects</caption>
-            <thead>
-              <tr>
-                <th scope="col">Subject</th>
-                <th scope="col">Mastery</th>
-                <th scope="col">Predicted grade</th>
-                <th scope="col">Last 4 weeks</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.subjects.map((s) => (
-                <tr key={s.subjectId}>
-                  <th scope="row">{s.name}</th>
-                  <td>{s.mastery}%</td>
-                  <td>
-                    {grade(
-                      s.predictedGrade,
-                      savedTargets.has(s.subjectId)
-                        ? (savedTargets.get(s.subjectId) ?? null)
-                        : s.targetGrade,
-                    )}
-                  </td>
-                  <td>{s.change > 0 ? `+${s.change}` : String(s.change)}</td>
+          <div
+            className="stats-table-scroll"
+            role="region"
+            aria-label="Subjects table"
+            tabIndex={0}
+          >
+            <table className="stats-table">
+              <caption className="visually-hidden">Subjects</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Subject</th>
+                  <th scope="col">Mastery</th>
+                  <th scope="col">Predicted grade</th>
+                  <th scope="col">Last 4 weeks</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {data.subjects.map((s) => (
+                  <tr key={s.subjectId}>
+                    <th scope="row">{s.name}</th>
+                    <td>{s.mastery}%</td>
+                    <td>
+                      {grade(
+                        s.predictedGrade,
+                        savedTargets.has(s.subjectId)
+                          ? (savedTargets.get(s.subjectId) ?? null)
+                          : s.targetGrade,
+                      )}
+                    </td>
+                    <td>{s.change > 0 ? `+${s.change}` : String(s.change)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </Card>
 
@@ -278,12 +309,14 @@ function AiAllowanceCard({ allowance }: { allowance: ParentDashboard['aiAllowanc
   const resetDay = resetDayLabel(resetsOn);
   return (
     <Card title="AI marking allowance">
-      <ProgressBar
-        label="AI marking allowance"
-        value={percentUsed}
-        max={100}
-        valueText={`${percentUsed}% used`}
-      />
+      <GrowIn enterKey="ai-allowance">
+        <ProgressBar
+          label="AI marking allowance"
+          value={percentUsed}
+          max={100}
+          valueText={`${percentUsed}% used`}
+        />
+      </GrowIn>
       <p className="secondary-text">
         {usedUp
           ? `This month’s AI marking allowance is used up. It resets on ${resetDay}.`

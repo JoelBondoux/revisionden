@@ -1,0 +1,74 @@
+{
+  "topic": "gcse-maths-h-a13",
+  "links": [
+    {
+      "title": "Higher – Transformation of functions",
+      "url": "https://www.bbc.co.uk/bitesize/topics/z3hv2p3/articles/zftbh4j",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "What are transformation of functions? - BBC Bitesize",
+        "teaches": "Translating and reflecting graphs of functions, combined transformations and transformations of trigonometric graphs (Higher).",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Transforming graphs: y = f(x + a)",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/transformations-of-graphs/lessons/transforming-graphs-y-equals-f-x-plus-a",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a13-lp-translations"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Transforming graphs: y = f(x + a) GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can recognise the effect of applying the transformation y = f(x + a) to a graph.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Transforming graphs: y = f(x) + a",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/transformations-of-graphs/lessons/transforming-graphs-y-equals-f-x-plus-a-fg854",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a13-lp-translations"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Transforming graphs: y = f(x) + a GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can recognise the effect of applying the transformation y = f(x) + a to a graph.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Transforming graphs: y = f(−x)",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/transformations-of-graphs/lessons/transforming-graphs-y-equals-f-x",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a13-lp-reflections"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Transforming graphs: y = f(−x) GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can recognise the effect of applying the transformation y = f(−x) to a graph.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Transforming graphs: y = −f(x)",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/transformations-of-graphs/lessons/transforming-graphs-y-equals-f-x-fb856",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a13-lp-reflections"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Transforming graphs: y = −f(x) GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can recognise the effect of applying the transformation y = −f(x) to a graph.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

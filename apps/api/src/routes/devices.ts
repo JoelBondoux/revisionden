@@ -61,6 +61,14 @@ const invalidLinkToken = () =>
   );
 const invalidChallenge = () =>
   new ApiError(400, 'invalid_challenge', 'This sign-in attempt has expired. Please start again.');
+const linkCancelled = () =>
+  new ApiError(400, 'link_cancelled', 'This link was cancelled. Ask a parent for a new one.');
+const linkAlreadyUsed = () =>
+  new ApiError(
+    400,
+    'link_already_used',
+    'This link has already set up a device. Ask a parent for a new one.',
+  );
 const passkeyNotVerified = () =>
   new ApiError(400, 'passkey_not_verified', 'The passkey could not be checked.');
 
@@ -394,6 +402,17 @@ export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) 
     }
   }
 
+  /** Refuses a link that is gone, cancelled or already used, each with its own reason code. */
+  async function requireLiveLink(linkTokenId: string) {
+    const [token] = await db
+      .select({ usedAt: deviceLinkTokens.usedAt, cancelledAt: deviceLinkTokens.cancelledAt })
+      .from(deviceLinkTokens)
+      .where(eq(deviceLinkTokens.id, linkTokenId));
+    if (!token) throw invalidLinkToken();
+    if (token.cancelledAt) throw linkCancelled();
+    if (token.usedAt) throw linkAlreadyUsed();
+  }
+
   app.post('/link', async (c) => {
     const body = await readJson(c, redeemSchema);
     let match;
@@ -409,10 +428,12 @@ export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) 
         eq(deviceLinkTokens.familyId, body.familyId),
       );
     }
-    // Single use: the update succeeds only once, only before expiry, never once cancelled.
+    // Opening the link does not use it up (E8): a reload or a second try gets a fresh passkey
+    // challenge while the link is unused, not cancelled and not expired. Finishing the passkey
+    // at /link/verify is what uses it, once.
     const [used] = await db
-      .update(deviceLinkTokens)
-      .set({ usedAt: now() })
+      .select({ id: deviceLinkTokens.id, studentId: deviceLinkTokens.studentId })
+      .from(deviceLinkTokens)
       .where(
         and(
           match,
@@ -420,8 +441,7 @@ export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) 
           isNull(deviceLinkTokens.cancelledAt),
           gt(deviceLinkTokens.expiresAt, now()),
         ),
-      )
-      .returning({ id: deviceLinkTokens.id, studentId: deviceLinkTokens.studentId });
+      );
     if (!used) throw invalidLinkToken();
 
     const [student] = await db.select().from(students).where(eq(students.id, used.studentId));
@@ -440,19 +460,30 @@ export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) 
   app.post('/link/verify', async (c) => {
     const { challengeId, response, deviceType } = await readJson(c, linkVerifySchema);
     const challenge = await consumeChallenge(challengeId, 'register');
-    // A link the parent cancelled stops working even if its set-up had already started.
-    if (challenge.linkTokenId) {
-      const [token] = await db
-        .select({ cancelledAt: deviceLinkTokens.cancelledAt })
-        .from(deviceLinkTokens)
-        .where(eq(deviceLinkTokens.id, challenge.linkTokenId));
-      if (!token || token.cancelledAt) throw invalidLinkToken();
-    }
+    // A link the parent cancelled, or that another device has already used, stops working even
+    // if this set-up had already started. Each refusal has its own code in the error log.
+    if (challenge.linkTokenId) await requireLiveLink(challenge.linkTokenId);
     const credential = await passkeys.verifyRegistration({
       response: response as never,
       expectedChallenge: challenge.challenge,
     });
+    // A failed check leaves the link unused, so the child can open it and try again.
     if (!credential) throw passkeyNotVerified();
+    if (challenge.linkTokenId) {
+      // Single use, atomically: only one verify can mark the link used.
+      const [claimed] = await db
+        .update(deviceLinkTokens)
+        .set({ usedAt: now() })
+        .where(
+          and(
+            eq(deviceLinkTokens.id, challenge.linkTokenId),
+            isNull(deviceLinkTokens.usedAt),
+            isNull(deviceLinkTokens.cancelledAt),
+          ),
+        )
+        .returning({ id: deviceLinkTokens.id });
+      if (!claimed) await requireLiveLink(challenge.linkTokenId);
+    }
     const [device] = await db
       .insert(devices)
       .values({

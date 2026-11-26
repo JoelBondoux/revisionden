@@ -123,10 +123,23 @@ describe('device link tokens', () => {
     expect(await res.json()).toMatchObject({ error: { code: 'invalid_link_token' } });
   });
 
-  it('cannot be reused', async () => {
+  it('cannot be reused once a device has set up its passkey with it', async () => {
     const { headers, studentId } = await familyWithStudent();
     const { token, familyId } = await newToken(headers, studentId);
+    // Opening it again before finishing is fine (E8): the page can be reloaded.
     expect((await redeem(token, familyId)).status).toBe(200);
+    const redeemed = (await (await redeem(token, familyId)).json()) as {
+      challengeId: string;
+      options: { challenge: string };
+    };
+    const verified = await t.app.request(
+      '/v1/device/link/verify',
+      jsonRequest('POST', {
+        challengeId: redeemed.challengeId,
+        response: softDevice().register(redeemed.options),
+      }),
+    );
+    expect(verified.status).toBe(201);
     const again = await redeem(token, familyId);
     expect(again.status).toBe(400);
     expect(await again.json()).toMatchObject({ error: { code: 'invalid_link_token' } });

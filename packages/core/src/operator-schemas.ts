@@ -101,6 +101,7 @@ const ticketDevice = z
     browserFamily: z.string().optional(),
     screenSize: z.string().optional(),
     online: z.boolean().optional(),
+    lastProblem: z.string().optional(),
   })
   .strict();
 

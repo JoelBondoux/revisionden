@@ -1,0 +1,46 @@
+{
+  "topic": "gcse-maths-h-n1",
+  "links": [
+    {
+      "title": "Whole numbers",
+      "url": "https://www.bbc.co.uk/bitesize/topics/zgnbxsg/articles/z38vdnb",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "What are whole numbers? - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Ordering whole numbers by place value (ascending and descending) and using the inequality symbols < and >.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Decimals",
+      "url": "https://www.bbc.co.uk/bitesize/topics/zgnbxsg/articles/zd68tcw",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n1-lp-order-numbers"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "What are decimal numbers? - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Decimal place value, using it to order decimals, and adding, subtracting, multiplying and dividing decimals.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Converting between fractions, decimals and percentages",
+      "url": "https://www.bbc.co.uk/bitesize/topics/zgnbxsg/articles/zwtdh4j",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n1-lp-order-numbers"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "How to use fractions, decimals and percentages - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Converting between fractions, decimals and percentages, so values can be compared and ordered in the same form.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

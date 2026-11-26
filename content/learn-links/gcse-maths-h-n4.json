@@ -2,18 +2,62 @@
   "topic": "gcse-maths-h-n4",
   "links": [
     {
-      "title": "Checking and securing understanding of LCM and HCF GCSE",
+      "title": "Highest Common Factor and Lowest Common Multiple",
+      "url": "https://www.bbc.co.uk/bitesize/topics/zgnbxsg/articles/zscn46f",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Highest Common Factor and Lowest Common Multiple - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Finding the HCF and LCM by listing factors and multiples or from prime factors in a Venn diagram.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Checking and securing understanding of LCM and HCF",
       "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/arithmetic-procedures-index-laws/lessons/checking-and-securing-understanding-of-lcm-and-hcf",
       "provider": "oak",
       "level": "GCSE",
-      "checked_at": "2026-11-25"
+      "learning_points": ["gcse-maths-h-n4-lp-hcf", "gcse-maths-h-n4-lp-lcm"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of LCM and HCF GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can calculate the lowest common multiple or highest common factor efficiently.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
     },
     {
-      "title": "Checking and securing understanding of prime factorisation GCSE",
+      "title": "Checking and securing understanding of prime factorisation",
       "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/arithmetic-procedures-index-laws/lessons/checking-and-securing-understanding-of-prime-factorisation",
       "provider": "oak",
       "level": "GCSE",
-      "checked_at": "2026-11-25"
+      "learning_points": ["gcse-maths-h-n4-lp-prime-factorisation"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of prime factorisation GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can write any positive integer uniquely as a product of its prime factors.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Multiples and factors",
+      "url": "https://www.bbc.co.uk/bitesize/topics/zgnbxsg/articles/zpghrmn",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "learning_points": [
+        "gcse-maths-h-n4-lp-prime-factorisation",
+        "gcse-maths-h-n4-lp-quick-facts"
+      ],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Multiples and factors - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Multiples, factors, prime, square and cube numbers, and writing a number as a product of prime factors.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
     }
   ]
 }
