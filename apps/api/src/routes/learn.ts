@@ -15,6 +15,8 @@ import {
   comboBonusForSequence,
   comboBonusXp,
   createRng,
+  RETRY_WEIGHT,
+  isShaky,
   pickStartingTest,
   selectNextItems,
   topicMastery,
@@ -53,6 +55,13 @@ import type { MathsEngine } from '../learning/maths-engine';
 import { awardXp, getProgress } from '../learning/progress';
 import { creditableXp } from '../daily-limit/state';
 import { topicAndDescendants } from '../learning/topic-tree';
+import {
+  findConfidence,
+  findEasier,
+  findSimilar,
+  recordReview,
+  warmUps,
+} from '../learning/mistakes';
 
 /** How many recent answers to look back through for a combo (more is never needed in practice). */
 const COMBO_HISTORY = 100;
@@ -85,7 +94,12 @@ function lessonResponse(list: LearnItem[]) {
 /** Mastery (0–100) recomputed from the student's latest attempts in a topic. */
 async function updateMastery(db: Database, studentId: string, topicId: string, now: Date) {
   const recent = await db
-    .select({ score: attempts.score, correct: attempts.correct, at: attempts.createdAt })
+    .select({
+      score: attempts.score,
+      correct: attempts.correct,
+      at: attempts.createdAt,
+      retry: attempts.retry,
+    })
     .from(attempts)
     .innerJoin(items, eq(items.id, attempts.itemId))
     .where(
@@ -98,7 +112,12 @@ async function updateMastery(db: Database, studentId: string, topicId: string, n
     .orderBy(desc(attempts.createdAt))
     .limit(MASTERY_WINDOW);
   const value = topicMastery(
-    recent.map((r) => ({ score: r.score ?? (r.correct ? 1 : 0), at: r.at.getTime() })),
+    recent.map((r) => ({
+      score: r.score ?? (r.correct ? 1 : 0),
+      at: r.at.getTime(),
+      // A retry in the lesson counts at half weight (F5): it comes just after seeing the answer.
+      ...(r.retry ? { weight: RETRY_WEIGHT } : {}),
+    })),
     now.getTime(),
   );
   await db
@@ -164,6 +183,15 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
     return picked.map((c) => byId.get(c.itemId)!).map((r) => toLearnItem(r.item, r.topicTitle));
   }
 
+  /** The lesson with up to 2 warm-ups first: due learning points from the same subject (F5). */
+  async function withWarmUps(studentId: string, subjectId: string | undefined, list: LearnItem[]) {
+    if (!subjectId) return list;
+    // A warm-up already in the lesson moves to the front instead of showing twice.
+    const warm = await warmUps(db, servable, studentId, [subjectId], clock.now());
+    const warmIds = new Set(warm.map((i) => i.id));
+    return [...warm, ...list.filter((i) => !warmIds.has(i.id))];
+  }
+
   app.get('/lesson', async (c) => {
     const query = LessonQuerySchema.parse(c.req.query());
     const studentId = c.var.student.studentId;
@@ -171,9 +199,11 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
       // A unit's id gives its challenge: items from every topic in the unit.
       const topicIds = await topicAndDescendants(db, query.topicId);
       const rows = await loadItems(inArray(items.topicId, topicIds), query.count);
-      return c.json(lessonResponse(rows.map((r) => toLearnItem(r.item, r.topicTitle))));
+      const list = rows.map((r) => toLearnItem(r.item, r.topicTitle));
+      return c.json(lessonResponse(await withWarmUps(studentId, rows[0]?.subjectId, list)));
     }
-    return c.json(lessonResponse(await subjectLesson(studentId, query.subjectId!, query.count)));
+    const list = await subjectLesson(studentId, query.subjectId!, query.count);
+    return c.json(lessonResponse(await withWarmUps(studentId, query.subjectId, list)));
   });
 
   app.get('/command-words', async (c) => {
@@ -376,11 +406,43 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
         mode: input.recall ? RECALL_MODE : input.mode,
         xpEarned,
         startingTestId: input.startingTestId ?? null,
+        retry: learning && input.retry === true,
         createdAt: now,
       })
       .returning({ id: attempts.id, createdAt: attempts.createdAt });
     // A flashcard is a self-rating: it never changes mastery (or the predicted grade).
     if (row.type !== 'flashcard') await updateMastery(db, studentId, row.topicId, now);
+
+    // Learning from mistakes (F5): slow right answers are shaky; wrong and shaky answers put the
+    // learning point on the review ladder; a wrong answer offers a similar question.
+    const timed = learning && row.type !== 'flashcard' && row.type !== 'extended_answer';
+    const shaky =
+      timed &&
+      isShaky({
+        type: row.type as ItemType,
+        correct: marked.correct,
+        timeMs: input.timeMs,
+        expectedSeconds: row.expectedSeconds,
+      });
+    if (timed) {
+      await recordReview(
+        db,
+        studentId,
+        row,
+        marked.correct ? (shaky ? 'shaky' : 'right') : 'wrong',
+        now,
+      );
+    }
+    // Help after a miss: a similar question (unless this was the retry), an easier one for a
+    // step down after a second miss, and a confidence question the student got right before.
+    const missed = timed && !marked.correct;
+    const help = missed
+      ? {
+          similar: input.retry ? null : await findSimilar(db, servable, studentId, row, now),
+          easier: await findEasier(db, servable, studentId, row, now),
+          confidence: await findConfidence(db, servable, studentId, row),
+        }
+      : { similar: null };
 
     const flashcardAdded =
       learning && !marked.correct && row.type !== 'flashcard'
@@ -408,6 +470,7 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
       flashcardAdded,
       combo,
       comboBonusXp: comboBonus,
+      ...(timed ? { shaky, ...help } : {}),
       newlyEarned: await saveNewRewards(db, studentId, now),
     };
     return c.json(response);
