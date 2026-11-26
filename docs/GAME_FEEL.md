@@ -263,9 +263,19 @@ tab say so to screen readers.
 - The lesson surround follows the active style (J10a2, owner rule 2026-11-26: "not a school
   app", "fun around the learning", "calm question screens"). The question and its answers sit on
   `.lesson__stage`, which a style may give a plain, high-contrast card, but never texture,
-  stickers, tilt or motion behind the text. Sticker Book turns the dark arena into warm paper
-  (night paper in dark mode) by re-colouring the `--arena-*` tokens, with the question on a plain
-  white card (a dark card in dark mode); a test checks those colours meet AA.
+  stickers, tilt or motion behind the text. Sticker Book and Doodle Diary put the question on a
+  plain white card (a dark card in dark mode).
+- **Arena screens sit on the look's own page (J17x, owner report: white text on light pages).**
+  Lessons, practice, the 5-a-day, tests, flashcard review and set complete paint no page of their
+  own: the arena's page tokens come from the look (`ARENA_FROM_PAGE` in `looks.ts`): `--arena-bg`
+  is the look's page, `--arena-raised` its surface, `--arena-text` and `--arena-text-secondary`
+  its ink, `--arena-track` its track and `--arena-glow` its edge colour. `design/arena.css` sets
+  them on `.arena` itself, so no setting (background pattern, high contrast, reading tints) and no
+  style sheet can bring back the old dark arena's white text on a light page (before J17x the
+  look's page won only while the pattern was on, so 8 looks showed white words at 1.0 to 1.7:1).
+  The answer buttons keep their own fills with `--arena-on-option` (white) text, and gold stays
+  decoration. Tests: `looks.test.ts` (every look, light and dark) and `e2e/tests/arena-looks.spec.ts`
+  (a lesson in every look with the pattern on and off, high contrast, a reading tint, and dark).
 - Garden Grow (J10c): leafy cream cards with a soft green edge, today's mission as a garden
   patch, mastered topics in bloom (petal edge), petal confetti; wins grow up from their stem.
   Comic Pop (J10c): bold ink outlines and hard offset shadows, today's mission a yellow comic
@@ -275,7 +285,7 @@ tab say so to screen readers.
 - Empty progress tracks (the lesson and flashcard bars, `--arena-track`; other bars,
   `--color-track`) and the outline of a Challenge hex (`--color-challenge-edge`) reach 3:1 against
   what they sit on, in every theme and surround (WCAG 1.4.11, J10f, from the morning walkthrough
-  #185). Tests: `themes.test.ts` (`NON_TEXT_PAIRS`), `tokens.test.ts` and the surround test.
+  #185). Tests: `themes.test.ts` (`NON_TEXT_PAIRS`), `tokens.test.ts` and `looks.test.ts`.
   Since J10g an empty track is an outline (an inset 2px ring in the track colour) with nothing
   inside, so 0% reads as empty rather than a full grey bar; the fill sits inside the ring.
 - "+XP" in a lesson pops just above the feedback, in the gap under the question card, with a short
@@ -476,7 +486,7 @@ Ported from `docs/mockups/all-themes-pip.html` (`FX`, `burst`, `PRIZE_BOX`, `ope
   mid-range Android phone.
 - `prefers-reduced-motion` turns off particles, shakes, confetti and pulsing (state changes still
   shown with colour and text); screen readers get the result text through a live region.
-- Contrast meets WCAG 2.2 AA on the dark arena background.
+- Contrast meets WCAG 2.2 AA on the look's page behind the arena, in every look, light and dark (J17x).
 
 ## Build status (workstream J)
 
