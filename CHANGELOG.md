@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Parents can now change a child's subjects at any time: in Parent home, tap Subjects on your child's card to add a subject, remove one, or change its exam board or tier. Removing a subject keeps your child's progress, and it comes back if you add the subject again. Subjects without questions yet say "Questions coming soon".
 - Got one wrong? A similar question comes back a few questions later (or the same one at the end), and anything you found hard, or took a long time over, comes back as a warm-up over the next few days until it sticks.
 - Fairer marking: typed answers are no longer marked wrong just for spaces, capitals, a different minus or times sign, x² instead of x^2, or (where order doesn't matter) writing 2 + 3n instead of 3n + 2.
 - Moving to another screen now starts it at the top, instead of halfway down where the last screen was. The back button still takes you back to where you were.
@@ -115,6 +116,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- E5 manage subjects: parent Subjects page per child (`apps/web/src/features/onboarding/SubjectsPage.tsx`, `/parent/subjects/:studentId`, linked from each child's card in Parent home); API `GET`/`POST /v1/students/:id/subjects` (catalogue-checked, 409 `already_added`) and `DELETE /v1/students/:id/subjects/:subjectId` (keeps answers and mastery), each subject's `hasQuestions`; important family events `subject_added`, `subject_removed`, `subject_changed` (also logged for `PATCH /v1/students/:id/enrolments/:subjectId`). No migration.
 - Learning from mistakes (F5): `packages/core/src/mistakes.ts` (expected times, shaky, `insertRetry`, review ladder 1/3/7 days, `RETRY_WEIGHT`); migration 0026 (`items.learning_point`, `items.expected_seconds`, `attempts.retry`, `review_points`); attempts return `similar` and `shaky` and take `retry`; lessons and the 5-a-day start with up to 2 `warmUp` items; retries count at half weight for mastery; the family export includes `reviewPoints`; content sync reads optional `learning_point` and `expected_seconds`.
 - Fairer short-answer marking (F6): `packages/core/src/answer-normalise.ts` (`normaliseAnswer`, `sameAnswer`) used by `markShortAnswer`: spaces, case, unicode minus, ×/·/*/x between numbers, ÷, superscripts, ≤/≥, √/sqrt and list separators are normalised; optional `answer.any_order` (commuted products and sums, reordered lists, swapped equation sides; never coordinates or inequalities) and `answer.units` in the item schema. Maths engine: `_solved_value` accepts a solved value in other letters (`x = 2a`). No migration.
 - Data retention policy 1.10 (L): a device link sent instead of a QR code lasts 24 hours (QR code 10 minutes); expired link codes are deleted within 20 minutes of expiring (clean-up waits for a device set-up in progress). Settles E4's contradictions entry. Privacy notice 1.10 and young people's notice 1.7 mention the sent link and short code alongside the QR code.
