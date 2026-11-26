@@ -1,6 +1,6 @@
 # How we follow the Children's Code
 
-Version: 1.1
+Version: 1.2
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -84,9 +84,9 @@ is offered beyond the operator's family.
   email, phone, photo, location or school name. An automated test fails if the database gains a
   column that could hold these. Answers are not stored, only their results. Parents' names and
   pictures are blanked. IP addresses are not stored.
-- **To do:** the sign-in library stores Google or Microsoft tokens, which may contain the parent's
-  name; review whether they need to be kept. Expired sessions and link codes are not yet cleared
-  automatically.
+- Google and Microsoft sign-in tokens are not kept. Expired sessions and link codes stop working
+  straight away and are deleted automatically within 24 hours (see
+  [how long we keep data](data-retention.md)).
 
 #### 2.9 Data sharing
 
@@ -138,5 +138,6 @@ is offered beyond the operator's family.
 
 ## Changes
 
+- 1.2: Updated two out-of-date "to do" notes: sign-in tokens are not kept, and expired sessions and link codes are deleted automatically.
 - 1.1: Wording only: the student's own statistics view is now built, so it is no longer described as "not built yet".
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).

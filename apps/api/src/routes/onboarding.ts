@@ -9,6 +9,7 @@ import {
   toCheckLaterCount,
   UpdateAvatarRequestSchema,
   UpdateSubjectChoiceRequestSchema,
+  AddSubjectRequestSchema,
   validateAvatar,
   validateSubjectChoices,
   type Enrolment,
@@ -16,7 +17,16 @@ import {
   type SubjectProblem,
   type UpdateSubjectChoiceRequest,
 } from '@revisionden/core';
-import { devices, enrolments, rewards, students, type Database } from '@revisionden/db';
+import {
+  devices,
+  enrolments,
+  items,
+  rewards,
+  students,
+  topics,
+  type Database,
+} from '@revisionden/db';
+import { servableItem } from '../learning/items';
 import type { AppEnv } from '../context';
 import { ApiError, notFound } from '../errors';
 import { requireFamilyStudent } from '../families';
@@ -268,9 +278,86 @@ async function saveChoice(
   return toEnrolment(saved);
 }
 
-/** Parent route under /v1/students: set a child's board or tier (for example after Not sure). */
-export function parentSubjectRoutes({ db }: { db: Database }) {
+/** The subjects among these that have at least one question a student can be served. */
+async function subjectsWithQuestions(db: Database, subjectIds: string[], serveDrafts: boolean) {
+  if (subjectIds.length === 0) return new Set<string>();
+  const rows = await db
+    .selectDistinct({ subjectId: topics.subjectId })
+    .from(items)
+    .innerJoin(topics, eq(topics.id, items.topicId))
+    .where(and(inArray(topics.subjectId, subjectIds), servableItem(serveDrafts)));
+  return new Set(rows.map((r) => r.subjectId));
+}
+
+/**
+ * Parent routes under /v1/students for a child's subjects after onboarding (E5): list them (with
+ * "questions coming soon" when none are ready), add one from the catalogue, remove one, and set
+ * a board or tier. Removing a subject keeps the child's answers and mastery, so progress comes
+ * back if it is added again. Changes are logged as important family events (family-events.ts).
+ */
+export function parentSubjectRoutes({
+  db,
+  config,
+}: {
+  db: Database;
+  config: { serveDraftContent: boolean };
+}) {
   const app = new Hono<AppEnv>();
+
+  app.get('/:id/subjects', async (c) => {
+    const student = await requireFamilyStudent(db, c.var.parent.familyId, c.req.param('id'));
+    const rows = await db
+      .select()
+      .from(enrolments)
+      .where(eq(enrolments.studentId, student.id))
+      .orderBy(asc(enrolments.subjectId));
+    const ready = await subjectsWithQuestions(
+      db,
+      rows.map((r) => r.subjectId),
+      config.serveDraftContent,
+    );
+    return c.json({
+      subjects: rows.map((r) => ({ ...toEnrolment(r), hasQuestions: ready.has(r.subjectId) })),
+    });
+  });
+
+  app.post('/:id/subjects', async (c) => {
+    const student = await requireFamilyStudent(db, c.var.parent.familyId, c.req.param('id'));
+    const choice = await readJson(c, AddSubjectRequestSchema);
+    const problems = validateSubjectChoices(student.yearGroup, [choice]);
+    if (problems.length > 0) {
+      throw new ApiError(
+        400,
+        'invalid_subjects',
+        'That subject does not fit this school year',
+        problems.map((p) => `${p.subjectId}: ${SUBJECT_PROBLEMS[p.problem]}`),
+      );
+    }
+    const [row] = await db
+      .insert(enrolments)
+      .values({ studentId: student.id, ...choice })
+      .onConflictDoNothing()
+      .returning();
+    if (!row) throw new ApiError(409, 'already_added', 'This subject is already on the list');
+    return c.json(toEnrolment(row), 201);
+  });
+
+  app.delete('/:id/subjects/:subjectId', async (c) => {
+    const student = await requireFamilyStudent(db, c.var.parent.familyId, c.req.param('id'));
+    // Only the enrolment goes: answers and mastery stay, so progress returns if it is re-added.
+    const [gone] = await db
+      .delete(enrolments)
+      .where(
+        and(
+          eq(enrolments.studentId, student.id),
+          eq(enrolments.subjectId, c.req.param('subjectId')),
+        ),
+      )
+      .returning({ subjectId: enrolments.subjectId });
+    if (!gone) throw notFound('Subject not found');
+    return c.body(null, 204);
+  });
+
   app.patch('/:id/enrolments/:subjectId', async (c) => {
     const student = await requireFamilyStudent(db, c.var.parent.familyId, c.req.param('id'));
     const change = await readJson(c, UpdateSubjectChoiceRequestSchema);

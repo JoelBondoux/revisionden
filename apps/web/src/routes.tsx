@@ -4,6 +4,7 @@ import { RouteChange } from './layout/RouteChange';
 import { LinkPage } from './features/onboarding/LinkPage';
 import { UnlockPage } from './features/onboarding/UnlockPage';
 import { OnboardingPage } from './features/onboarding/OnboardingPage';
+import { SubjectsPage } from './features/onboarding/SubjectsPage';
 import { ComingSoon } from './pages/ComingSoon';
 import { FamilyPage } from './pages/FamilyPage';
 import { InstallHelpPage } from './pages/InstallHelpPage';
@@ -79,6 +80,8 @@ const screens: RouteObject[] = [
       { path: '/parent', element: <ParentHomePage /> },
       { path: '/parent/reminders/:studentId', element: <ParentRemindersPage /> },
       { path: '/parent/stats', element: <ParentDashboardPage /> },
+      // A child's subjects after onboarding (workstream E5).
+      { path: '/parent/subjects/:studentId', element: <SubjectsPage /> },
       // Formal complaints (workstream O4).
       { path: '/complaints', element: <ComplaintsPage /> },
       { path: '/ask-a-parent', element: <AskParentPage /> },
