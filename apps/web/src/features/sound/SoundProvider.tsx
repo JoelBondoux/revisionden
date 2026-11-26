@@ -17,8 +17,8 @@ import {
 import { createFeedback, type EmitOptions, type EmitResult } from './feedback/controller';
 import { STYLED_SOUNDS, type FeedbackEvent } from './feedback/events';
 import { createWebHaptics, type HapticsDriver } from './feedback/haptics';
-import type { EarnedReward, RewardTier } from './rewardSounds';
-import type { SoundEvent } from './events';
+import { biggestReward, rewardSoundSpec, type EarnedReward, type RewardTier } from './rewardSounds';
+import { allowedInMode, type SoundEvent } from './events';
 import {
   DEFAULT_SOUND_SETTINGS,
   loadSoundSettings,
@@ -202,7 +202,12 @@ export function SoundProvider({
   const playReward = useCallback(
     (rewards: readonly EarnedReward[], options?: PlayOptions) => {
       const played = engine.playReward(rewards, options);
-      if (played) feedback.vibrateFor(played.tier === 'common' ? 'rewardOpen' : 'rewardUnlock');
+      // Vibration is independent of mute: decide from the reward itself, not from the audio.
+      const biggest = biggestReward(rewards);
+      if (biggest && allowedInMode('rewardUnlocked', options?.mode)) {
+        const tier = rewardSoundSpec(biggest).tier;
+        feedback.vibrateFor(tier === 'common' ? 'rewardOpen' : 'rewardUnlock');
+      }
       return played;
     },
     [engine, feedback],

@@ -11,7 +11,7 @@ import { SOUND_EVENTS, type SoundEvent } from './events';
 import { createFakeAudioContext, type FakeAudioContext } from './fakeAudio';
 import { rewardSound } from './rewardBank';
 import { FEEDBACK_EVENTS, type FeedbackEvent } from './feedback/events';
-import { stylePacks } from './feedback/styles';
+import { DEFAULT_STYLE, stylePacks } from './feedback/styles';
 import { SoundProvider } from './SoundProvider';
 
 /** Renders the whole app with sound on, recording which sounds actually play. */
@@ -26,7 +26,7 @@ function renderWithSound(path: string) {
       return original(...args);
     });
   }
-  const pack = stylePacks['sticker-book'];
+  const pack = stylePacks[DEFAULT_STYLE];
   for (const event of FEEDBACK_EVENTS) {
     const original = pack[event];
     vi.spyOn(pack, event).mockImplementation((...args) => {

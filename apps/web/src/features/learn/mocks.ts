@@ -196,7 +196,11 @@ function marks(itemId: string, answer: unknown): boolean {
 }
 
 const deckCards = () => [
-  card(1, 'Demo front 1', 'Demo back 1', 'deck'),
+  {
+    ...card(1, 'Demo front 1', 'Demo back 1', 'deck'),
+    // Made-up steps (not educational) for the Explain walk-through (F7).
+    explain: ['Demo step one', 'Demo step two', 'Answer: Demo back 1'],
+  },
   card(2, 'Demo front 2', 'Demo back 2', 'wrong_answer'),
 ];
 

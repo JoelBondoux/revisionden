@@ -14,6 +14,16 @@ export function withoutSubject(answer: string, subject: string | undefined): str
   return right.trim();
 }
 
+// A UK thousands separator: a space (also thin or non-breaking) or a comma, between groups of
+// exactly three digits, and the same one throughout, as in "38 700" or "1,234,567.5".
+const GROUPED = /^-?\d{1,3}(?:([ \u00a0\u2009\u202f,])\d{3})(?:\1\d{3})*(?:\.\d+)?$/;
+
+/** A number written with thousands separators, without them ("38 700" -> "38700"), else `text`. */
+export function withoutThousands(text: string): string {
+  const trimmed = text.trim();
+  return GROUPED.test(trimmed) ? trimmed.replace(/[ \u00a0\u2009\u202f,]/g, '') : text;
+}
+
 export interface Rounding {
   decimal_places?: number;
   significant_figures?: number;

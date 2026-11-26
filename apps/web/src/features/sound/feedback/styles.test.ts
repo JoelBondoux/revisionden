@@ -32,7 +32,7 @@ function render(style: FeedbackStyle, event: FeedbackEvent, pitch = 1) {
 }
 
 describe('style sound packs', () => {
-  it("has a pack for each of J's seven styles; Sticker Book stays the default", () => {
+  it("has a pack for each of J's seven styles; Doodle Diary is the default", () => {
     expect(FEEDBACK_STYLES).toEqual([
       'sticker-book',
       'pop-burst',
@@ -42,12 +42,14 @@ describe('style sound packs', () => {
       'pixel-arcade',
       'doodle-diary',
     ]);
-    expect(DEFAULT_STYLE).toBe('sticker-book');
+    expect(DEFAULT_STYLE).toBe('doodle-diary');
     expect(resolveStyle('pop-burst')).toBe('pop-burst');
     expect(resolveStyle('doodle-diary')).toBe('doodle-diary');
     // Unknown styles fall back to the default.
-    expect(resolveStyle('neon-arcade')).toBe('sticker-book');
-    expect(resolveStyle(undefined)).toBe('sticker-book');
+    expect(resolveStyle('neon-arcade')).toBe('doodle-diary');
+    expect(resolveStyle(undefined)).toBe('doodle-diary');
+    // Sticker Book is now an unlockable style like the others.
+    expect(resolveStyle('sticker-book')).toBe('sticker-book');
   });
 
   describe.each(FEEDBACK_STYLES)('%s', (style) => {

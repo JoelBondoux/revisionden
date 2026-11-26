@@ -13,7 +13,13 @@ import type { Rng } from './rng';
 import { DAY_MS, reviewCard, type Card } from './spaced-repetition';
 import { recordDay, settleWeek, type StreakState } from './streaks';
 import type { ItemType } from './schemas';
-import { meetsRounding, roundingOf, withoutSubject, type Rounding } from './answer-format';
+import {
+  meetsRounding,
+  roundingOf,
+  withoutSubject,
+  withoutThousands,
+  type Rounding,
+} from './answer-format';
 import { sameAnswer } from './answer-normalise';
 
 // ---------------------------------------------------------------------------------------------
@@ -70,7 +76,8 @@ export function markShortAnswer(key: ShortAnswerKey, answer: unknown): MarkResul
 
 /** A plain decimal or a simple fraction such as `3/4`; anything else is not a number. */
 function parseNumber(text: string): number | null {
-  const value = text.replace(/\s+/g, '');
+  // Spaces may sit around a sign or "/", never between two digits ("3 87" is not 387).
+  const value = text.trim().replace(/(?<!\d)\s+|\s+(?!\d)/g, '');
   if (/^-?\d+(\.\d+)?$/.test(value)) return Number(value);
   const fraction = /^(-?\d+)\/(\d+)$/.exec(value);
   if (fraction && Number(fraction[2]) !== 0) return Number(fraction[1]) / Number(fraction[2]);
@@ -86,7 +93,7 @@ export interface NumericKey extends Rounding {
 
 export function markNumeric(key: NumericKey, raw: unknown): MarkResult {
   if (typeof raw !== 'string' || raw.trim() === '') return wrong;
-  const answer = withoutSubject(raw, key.subject);
+  const answer = withoutThousands(withoutSubject(raw, key.subject));
   const rounding = roundingOf(key);
   if (rounding) return mark(meetsRounding(answer, key.value, rounding));
   const expected = parseNumber(key.value);

@@ -23,10 +23,10 @@ export const FEEDBACK_STYLES = [
 ] as const;
 export type FeedbackStyle = (typeof FEEDBACK_STYLES)[number];
 /**
- * The style used until a child picks one. One value to change: Doodle Diary is built but waits
- * for the owner to approve J's mockup before it becomes the default.
+ * The style used until a child picks one: Doodle Diary (owner-approved, matching J's default
+ * look). The other six, Sticker Book included, are unlockable styles. One value to change.
  */
-export const DEFAULT_STYLE: FeedbackStyle = 'sticker-book';
+export const DEFAULT_STYLE: FeedbackStyle = 'doodle-diary';
 
 /** A style id from J's style system; styles without a pack yet use the default. */
 export function resolveStyle(id: string | null | undefined): FeedbackStyle {
@@ -341,7 +341,7 @@ const doodleDiary: Record<FeedbackEvent, SoundFn> = {
   ),
   // A soft rub of the eraser and a low "hmm".
   wrong: dsound(nz('bandpass', 1200, 0, 0.12, 0.12, { q: 2 }), sin(m(64), 0.05, 0.28, 0.16, m(60))),
-  combo: dsound(tri(m(74), 0.06, 0.18, 0.15), scratch(2400, 0, 0.08)),
+  combo: dsound(tri(m(81), 0.06, 0.18, 0.15), scratch(2400, 0, 0.08)),
   xpTick: dsound(nz('bandpass', 3500, 0, 0.02, 0.1, { q: 5 })),
   ringFill: dsound(scratch(2000, 0, 0.22, 0.12, 3500)),
   rewardWobble: dsound(

@@ -5,7 +5,8 @@ import { createFakeAudioContext, type FakeAudioContext } from '../fakeAudio';
 import { SOUND_KEY } from '../settings';
 import { SoundProvider, useFeedbackStyle, useSound } from '../SoundProvider';
 import { SoundSettingsCard } from '../SoundSettingsCard';
-import { stylePacks } from './styles';
+import { hapticPattern } from './haptics';
+import { DEFAULT_STYLE, stylePacks } from './styles';
 
 function memoryStorage(initial: Record<string, string> = {}) {
   const data = new Map(Object.entries(initial));
@@ -47,7 +48,7 @@ function Emit({ event = 'rewardWobble' as const }) {
 
 describe('feedback through the provider', () => {
   it('emit() plays the style sound and vibrates', async () => {
-    const spy = vi.spyOn(stylePacks['sticker-book'], 'rewardWobble');
+    const spy = vi.spyOn(stylePacks[DEFAULT_STYLE], 'rewardWobble');
     const t = setup(<Emit />);
     await userEvent.click(screen.getByRole('button', { name: 'Animate' }));
     expect(spy).toHaveBeenCalledTimes(1);
@@ -85,7 +86,7 @@ describe('feedback through the provider', () => {
   });
 
   it('a right answer in a combo plays the combo sound', async () => {
-    const spy = vi.spyOn(stylePacks['sticker-book'], 'combo');
+    const spy = vi.spyOn(stylePacks[DEFAULT_STYLE], 'combo');
     function Lesson() {
       const { play } = useSound();
       return (
@@ -153,6 +154,26 @@ describe('Vibration in Settings', () => {
     expect(screen.getByRole('checkbox', { name: 'Vibration' })).toBeEnabled();
     await userEvent.click(screen.getByRole('button', { name: 'Animate' }));
     expect(t.vibrations.length).toBeGreaterThan(0);
+  });
+
+  it.each([
+    ['vibrates with sound muted', [{ id: 'streak-7', rarity: 'common' as const }], 'learn', true],
+    ['stays still in Test mode', [{ id: 'streak-7', rarity: 'common' as const }], 'test', false],
+    ['stays still with nothing earned', [], 'learn', false],
+  ] as const)('a reward %s', async (_name, rewards, mode, buzzes) => {
+    function Reward() {
+      const { playReward } = useSound();
+      return (
+        <button type="button" onClick={() => playReward(rewards, { mode })}>
+          Earn
+        </button>
+      );
+    }
+    const t = setup(<Reward />, { storage: memoryStorage({ [SOUND_KEY]: '{"enabled":false}' }) });
+    await userEvent.click(screen.getByRole('button', { name: 'Earn' }));
+    const rewardBuzz = hapticPattern(DEFAULT_STYLE, 'rewardOpen');
+    if (buzzes) expect(t.vibrations).toContainEqual(rewardBuzz);
+    else expect(t.vibrations).not.toContainEqual(rewardBuzz);
   });
 
   it('says honestly when this device cannot vibrate', () => {

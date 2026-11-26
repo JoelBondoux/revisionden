@@ -191,6 +191,11 @@ export const FlashcardSchema = z.object({
   dueAt: IsoDateTimeSchema,
   /** Milliseconds until the card comes back for each rating. */
   nextReviewMs: z.record(FlashcardRatingSchema, z.number().int().min(0)),
+  /**
+   * "Explain" steps from the item's verified content, ending on the answer (F7,
+   * `flashcard-explain.ts`). Left out when the content has none: no Explain button.
+   */
+  explain: z.array(text).optional(),
 });
 export type Flashcard = z.infer<typeof FlashcardSchema>;
 

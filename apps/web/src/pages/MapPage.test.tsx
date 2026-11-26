@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { server } from '../mocks/server';
 import { renderRoute } from '../test/render';
+import { topicMap } from '../mocks/data';
 
 describe('Topic map screen', () => {
   it('sends you to choose a student when nobody is chosen yet', async () => {
@@ -50,10 +51,10 @@ describe('Topic map screen', () => {
     const unit = within(number);
     expect(unit.getByRole('link', { name: 'Fractions, mastered' })).toBeInTheDocument();
     expect(unit.getByRole('link', { name: 'Standard form, 45% mastered' })).toBeInTheDocument();
-    expect(unit.getByRole('link', { name: 'Surds, weak spot, 38% mastered' })).toBeInTheDocument();
+    expect(unit.getByRole('link', { name: 'Surds, weak, 38% mastered' })).toBeInTheDocument();
     expect(unit.getByRole('button', { name: 'Bounds, locked' })).toBeInTheDocument();
     expect(
-      unit.getByRole('button', { name: 'Number challenge, unlocks at 80% mastered' }),
+      unit.getByRole('button', { name: 'Challenge, unlocks at 80% mastered in Number' }),
     ).toBeInTheDocument();
   });
 
@@ -103,5 +104,79 @@ describe('Topic map screen', () => {
       'href',
       '/settings#my-subjects',
     );
+  });
+});
+
+describe('Topic map for subjects with no questions yet (RD-MBXKTC)', () => {
+  const subjects = [
+    { subjectId: 'gcse-chemistry', subject: 'Chemistry', hasContent: false },
+    { subjectId: 'gcse-maths', subject: 'Maths', hasContent: true },
+  ];
+  const comingSoon = {
+    subjectId: 'gcse-chemistry',
+    subject: 'Chemistry',
+    qualification: 'GCSE',
+    status: 'coming_soon',
+    streakDays: 0,
+    xpToday: 0,
+    dailyGoalXp: 50,
+    nextMission: null,
+    units: [],
+  };
+  /** Answers each subject from `maps`, and records which subject was asked for. */
+  function mapsBySubject(maps: Record<string, object>, asked: (string | null)[] = []) {
+    server.use(
+      http.get('*/v1/student/map', ({ request }) => {
+        const id = new URL(request.url).searchParams.get('subjectId');
+        asked.push(id);
+        return HttpResponse.json(maps[id ?? 'default']);
+      }),
+    );
+    return asked;
+  }
+
+  it('says the questions are on their way and offers a subject that has some', async () => {
+    const asked = mapsBySubject({
+      default: { ...comingSoon, subjects },
+      'gcse-maths': { ...topicMap, subjectId: 'gcse-maths', status: 'ready', subjects },
+    });
+    renderRoute('/map');
+    expect(
+      await screen.findByText('Questions for Chemistry are on their way.'),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/something went wrong/i)).not.toBeInTheDocument();
+    await userEvent.click(screen.getByRole('button', { name: 'Try Maths meanwhile' }));
+    expect(await screen.findByRole('region', { name: 'Number' })).toBeInTheDocument();
+    expect(asked).toContain('gcse-maths');
+  });
+
+  it('shows the friendly message alone when no subject has questions yet', async () => {
+    const only = [{ subjectId: 'gcse-chemistry', subject: 'Chemistry', hasContent: false }];
+    mapsBySubject({ default: { ...comingSoon, subjects: only } });
+    renderRoute('/map');
+    expect(
+      await screen.findByText('Questions for Chemistry are on their way.'),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /meanwhile/ })).not.toBeInTheDocument();
+  });
+
+  it('switches subject from the subject switcher', async () => {
+    const asked = mapsBySubject({
+      default: { ...topicMap, subjectId: 'gcse-maths', status: 'ready', subjects },
+      'gcse-chemistry': { ...comingSoon, subjects },
+    });
+    renderRoute('/map');
+    const switcher = await screen.findByRole('group', { name: 'Subject' });
+    expect(within(switcher).getByRole('button', { name: 'Maths' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+    await userEvent.click(
+      within(switcher).getByRole('button', { name: 'Chemistry (coming soon)' }),
+    );
+    expect(
+      await screen.findByText('Questions for Chemistry are on their way.'),
+    ).toBeInTheDocument();
+    expect(asked).toContain('gcse-chemistry');
   });
 });
