@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { LessonResponseSchema } from '@revisionden/core';
-import { mastery } from '@revisionden/db';
+import { mastery, reviewPoints } from '@revisionden/db';
 import { syncContent, type ContentItem } from './learning/content-sync';
 import { createTestContext, type TestContext } from './test/helpers';
 import { TEST_SUBJECT, testItems, testTopicTree } from './test/learning-fixtures';
@@ -12,7 +12,8 @@ const pilotStep: ContentItem = {
   topic: 'test-topic-a',
   type: 'area_model',
   mode: 'explore',
-  difficulty: 5,
+  // Easiest on the point, so a due review point would pick it as a warm-up if nothing stopped it.
+  difficulty: 1,
   prompt: 'Make x^2 + 5x + 6 into a rectangle.',
   quadratic: { b: 5, c: 6 },
   answer: { pair: [2, 3] },
@@ -34,10 +35,24 @@ afterAll(async () => {
   await t.close();
 });
 
-async function lessonTypes(headers: Record<string, string>, query: string) {
+async function lessonItems(headers: Record<string, string>, query: string) {
   const res = await t.app.request(`/v1/student/learn/lesson?${query}`, { headers });
   expect(res.status).toBe(200);
-  return LessonResponseSchema.parse(await res.json()).items.map((i) => i.type);
+  return LessonResponseSchema.parse(await res.json()).items;
+}
+
+async function lessonTypes(headers: Record<string, string>, query: string) {
+  return (await lessonItems(headers, query)).map((i) => i.type);
+}
+
+/** A learning point on the pilot's topic, due for review, so the lesson gets warm-ups. */
+async function duePoint(studentId: string) {
+  await t.db.insert(reviewPoints).values({
+    studentId,
+    learningPoint: 'test-topic-a',
+    topicId: 'test-topic-a',
+    dueDay: '2000-01-01',
+  });
 }
 
 async function studentWithMastery(nickname: string, value?: number) {
@@ -75,5 +90,34 @@ describe('the interactive pilot in the lesson route', () => {
     expect(await lessonTypes(headers, `subjectId=${TEST_SUBJECT}&count=20`)).not.toContain(
       'area_model',
     );
+  });
+
+  describe('with a learning point due on the topic (warm-ups, Codex P2)', () => {
+    it('never brings the pilot back as a warm-up in a subject lesson or unit challenge', async () => {
+      const { headers, studentId } = await studentWithMastery('pilot_warm_mixed', 30);
+      await duePoint(studentId);
+      expect(await lessonTypes(headers, `subjectId=${TEST_SUBJECT}&count=20`)).not.toContain(
+        'area_model',
+      );
+      expect(await lessonTypes(headers, 'topicId=test-unit&count=20')).not.toContain('area_model');
+    });
+
+    it('never brings the pilot back once the topic reaches 60', async () => {
+      const { headers, studentId } = await studentWithMastery('pilot_warm_sixty', 60);
+      await duePoint(studentId);
+      expect(await lessonTypes(headers, 'topicId=test-topic-a&count=20')).not.toContain(
+        'area_model',
+      );
+    });
+
+    it('keeps the pilot in its own place in an eligible lesson, not as a warm-up', async () => {
+      const { headers, studentId } = await studentWithMastery('pilot_warm_weak', 40);
+      await duePoint(studentId);
+      const list = await lessonItems(headers, 'topicId=test-topic-a&count=20');
+      const pilot = list.filter((i) => i.type === 'area_model');
+      expect(pilot).toHaveLength(1);
+      expect(pilot[0]!.warmUp).toBeFalsy();
+      expect(list.filter((i) => !i.warmUp)[0]!.type).toBe('area_model');
+    });
   });
 });
