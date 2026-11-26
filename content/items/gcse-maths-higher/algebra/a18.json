@@ -12,6 +12,7 @@
     "steps": ["x^2 + x - 12 = 0", "(x - 3)(x + 4) = 0", "x = 3 or x = -4"],
     "marks": 3,
     "mark_scheme": ["M1 for (x - 3)(x + 4)", "A1 for x = 3", "A1 for x = -4"],
+    "hint": "Find two numbers that multiply to -12 and add to 1, then factorise.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -57,14 +58,6 @@
           "notes": "model answered \"x = 3, x = -4\"; expected \"3, -4\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:35:49Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -79,6 +72,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:13:51Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -96,6 +97,7 @@
     "steps": ["2x^2 - 7x + 3 = 0", "(2x - 1)(x - 3) = 0", "x = 1/2 or x = 3"],
     "marks": 3,
     "mark_scheme": ["M1 for (2x - 1)(x - 3)", "A1 for x = 1/2", "A1 for x = 3"],
+    "hint": "Factorise into (2x ...)(x ...), then set each bracket equal to 0.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -141,14 +143,6 @@
           "notes": "model answered \"x = 3, x = 0.5\"; expected \"1/2, 3\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:36:11Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -163,6 +157,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:13:53Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -180,7 +182,7 @@
     "steps": ["x^2 = 5x", "x^2 - 5x = 0", "x(x - 5) = 0", "x = 0 or x = 5"],
     "marks": 2,
     "mark_scheme": ["M1 for x(x - 5) = 0", "A1 for x = 0 and x = 5"],
-    "hint": "Do not divide by x: you would lose the solution x = 0.",
+    "hint": "Do not divide both sides by x, or you will lose a solution: bring everything to one side and factorise.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -226,14 +228,6 @@
           "notes": "model answered \"0, 5\"; expected \"0, 5\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:36:29Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -248,6 +242,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:15Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -276,6 +278,7 @@
       "M1 for x - 4 = ±1",
       "A1 for x = 3 and x = 5"
     ],
+    "hint": "Halve the -8 to complete the square, move the number on its own to the other side, then take the square root of both sides, remembering ±.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -321,14 +324,6 @@
           "notes": "model answered \"x = 3, x = 5\"; expected \"3, 5\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:27:17Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -343,6 +338,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:18:02Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -363,6 +366,7 @@
       "M1 for x = -3 ± √11",
       "A1 for 0.32"
     ],
+    "hint": "Halve the 6 to complete the square, move the number on its own to the other side, then take the square root of both sides. Round only at the end.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -426,9 +430,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T20:09:35Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:18:04Z",
           "notes": "no problems found"
         }
       ]
@@ -446,6 +450,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "(x - 2)^2 = 5, so x - 2 = ±√5 and x = 2 ± √5.",
+    "hint": "Set (x - 2)^2 - 5 = 0, add 5 to both sides, then take the square root of both sides, remembering ±.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["author"],
     "citations": [
@@ -491,20 +496,20 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:46Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:13:58Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -525,6 +530,7 @@
       "M1 for the correct simplified expression",
       "A1 for 0.85"
     ],
+    "hint": "Use the quadratic formula with a = 2, b = 3 and c = -4, and take the + sign for the positive solution.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -600,9 +606,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T20:09:52Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:18:19Z",
           "notes": "no problems found"
         }
       ]
@@ -624,6 +630,7 @@
       "M1 for the correct simplified expression",
       "A1 for -1.19"
     ],
+    "hint": "Use the quadratic formula with a = 1, b = -3 and c = -5, and take the minus sign for the negative solution.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -699,9 +706,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T20:10:11Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:14:01Z",
           "notes": "no problems found"
         }
       ]
@@ -723,6 +730,7 @@
       "M1 for the correct simplified expression",
       "A1 for 0.77"
     ],
+    "hint": "Use the quadratic formula with a = 3, b = -1 and c = -1.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -798,9 +806,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T20:10:30Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:14:03Z",
           "notes": "no problems found"
         }
       ]
@@ -816,6 +824,7 @@
     "front": "The positive solution of x^2 = 64",
     "back": "8",
     "explanation": "x^2 = 64 means x × x = 64. 8 × 8 = 64 (and also -8 × -8 = 64), so the positive solution is 8.",
+    "hint": "Which number multiplied by itself gives 64?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["author"],
     "citations": [
@@ -871,9 +880,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:55:30Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:14:05Z",
           "notes": "no problems found"
         }
       ]
@@ -889,6 +898,7 @@
     "front": "The non-zero solution of x(x - 9) = 0",
     "back": "9",
     "explanation": "If two things multiply to 0, one of them must be 0. So x = 0 or x - 9 = 0. The non-zero solution is x = 9.",
+    "hint": "If two things multiply to give 0, one of them must be 0.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["author"],
     "citations": [
@@ -944,9 +954,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:55:37Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:14:06Z",
           "notes": "no problems found"
         }
       ]
@@ -962,6 +972,7 @@
     "front": "The negative solution of (x - 3)(x + 8) = 0",
     "back": "-8",
     "explanation": "If two brackets multiply to 0, one of them must be 0. So x - 3 = 0 or x + 8 = 0, giving x = 3 or x = -8. The negative solution is -8.",
+    "hint": "If two brackets multiply to give 0, one of them must be 0. Set each bracket equal to 0.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["author"],
     "citations": [
@@ -1017,9 +1028,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:55:46Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:14:08Z",
           "notes": "no problems found"
         }
       ]
