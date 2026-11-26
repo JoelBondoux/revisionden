@@ -56,7 +56,7 @@ export function reviewCard(card: Card, quality: number, now: number): Card {
 }
 
 /** How late a card is compared with its interval; relearning cards are always most urgent. */
-function urgency(card: Card, now: number): number {
+export function urgency(card: Card, now: number): number {
   if (card.intervalDays === 0) return Number.POSITIVE_INFINITY;
   return (now - card.dueAt) / (card.intervalDays * DAY_MS);
 }

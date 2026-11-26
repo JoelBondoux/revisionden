@@ -438,6 +438,18 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
 - Mastery 0–100: weighted average of the last 30 attempts; weights halve every 30 days; two
   imaginary wrong answers as a starting point, so mastery is earned and fades without practice.
   A weak spot is a topic below 60.
+- **Daily card limit (F11, owner 2026-11-26):** at most 20 review cards a day
+  (`DAILY_CARD_LIMIT`), so the Cards tab never shows a backlog like "99+". The Cards badge and
+  "Due today" show today's remaining number (0 to 20). Which 20: cards being relearned first, then
+  the most overdue for their interval; among equally overdue cards, weak-spot topics first, then
+  the most recent wrong answers, then the one due earliest. The student's own cards count; All
+  decks is browsing, not review, and is not limited. After 20 the Cards tab says "Done for today!"
+  (with the usual celebration sound and vibration) and offers "10 more" for keen students; extra
+  cards schedule normally. Cards past the cap stay due and roll to the next day with no penalty
+  and no overdue message: SM-2 sets the next gap from the card's own interval, never from how late
+  it was reviewed, so a held-back card is not treated as forgotten. The parent stats show no
+  flashcard backlog today (the API returns `backlog` for a later parent view). Implemented in
+  `packages/core/src/card-limit.ts` and `apps/api/src/learning/card-limit.ts`.
 - Implemented: `packages/core/src/spaced-repetition.ts`, `packages/core/src/mastery.ts`.
 - **Turning a card (F7, owner):** tap the card, or press Space or Enter, to turn it either way as
   often as you like. Turning it back to the question never counts as another try and never

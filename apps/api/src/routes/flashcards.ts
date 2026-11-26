@@ -39,6 +39,7 @@ import { correctAnswerText, servableItem } from '../learning/items';
 import type { ItemAnswer, ItemBody } from '../learning/content-sync';
 import { creditableXp } from '../daily-limit/state';
 import { awardXp } from '../learning/progress';
+import { todaysCards } from '../learning/card-limit';
 import { claimFinish, rewardedLeftToday, takeRewardSlot } from '../learning/flashcard-sessions';
 import { flashcardStore, toCard, type Loaded } from '../learning/flashcard-store';
 import { containsPersonalData, familyProfiles, personalDetails } from '../feedback/routes';
@@ -100,11 +101,10 @@ export function flashcardRoutes({ db, clock, config }: LearnDeps) {
     const now = clock.now();
     await addNewDeckCards(studentId, now);
     const loaded = await loadCards(studentId);
-    const byId = new Map(loaded.map((l) => [l.card.id, l]));
-    const due = dueCards(
-      loaded.map((l) => toCard(l.card)),
-      now.getTime(),
-    ).map((card) => toFlashcard(byId.get(card.id)!, now));
+    // Daily limit (F11): today's most useful cards, 20 a day, plus "10 more" on request.
+    const extra = Math.min(Math.max(Number(c.req.query('extra') ?? 0) || 0, 0), 100);
+    const today = await todaysCards(db, studentId, loaded, now, extra);
+    const due = today.due.map((l) => toFlashcard(l, now));
 
     const decks = new Map<string, FlashcardDeck>();
     for (const { card, topic } of loaded) {
@@ -125,6 +125,9 @@ export function flashcardRoutes({ db, clock, config }: LearnDeps) {
       decks: [...decks.values()].sort((a, b) => a.title.localeCompare(b.title)),
       mine: loaded.filter((l) => l.card.origin === 'own').map((l) => toFlashcard(l, now)),
       draftContent: all.some((card) => card.draft),
+      dueToday: due.length,
+      backlog: today.backlog,
+      doneToday: today.doneToday,
     });
   });
 

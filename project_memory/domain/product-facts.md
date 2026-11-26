@@ -256,6 +256,11 @@ Tags: #product #rules #limits #defaults
   with questions and answers `status: "coming_soon"` (plus `subjectId` and `subjects` with
   `hasContent` for the switcher) for one with none; 404 `no_subject` only with no subject at all
   or an unknown id. The web shows "Questions for <subject> are on their way." and a switcher.
+- Daily flashcard limit (F11, owner 2026-11-26): 20 review cards a day (`DAILY_CARD_LIMIT`),
+  "10 more" on request (`EXTRA_CARDS`). Badge and "Due today" show today's remaining (0–20).
+  Order: relearning, most overdue for its interval, then weak spots, then recent wrong answers.
+  Own cards count; All decks is not limited. Held-back cards roll over with no penalty (SM-2
+  uses the card's interval, not its lateness). Parent stats show no backlog (API has `backlog`).
 - Mascot: Pip, an angular geometric fox (orange `#FF7A2F`). Brand violet `#6C47F5`; font Nunito,
   self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
 - Works offline for the app shell; API calls are never cached. Pages always come fresh from the
