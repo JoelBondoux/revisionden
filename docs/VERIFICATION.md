@@ -260,6 +260,13 @@ ones:
   figures or the nearest whole number without one of these fields, one with a field but no such
   words, and one whose `answer.value` is not itself written to that accuracy.
 
+**Clean text.** Model output is recorded in check notes, and models sometimes return control
+characters. `withCheck` (`scripts/verify/record.mjs`), which writes every check record, replaces
+any control character other than tab and newline with a space, and `pnpm content:validate` refuses
+any that reach content by hand, naming the field (for example
+`control character U+0000 in verification.checks[5].notes`). Postgres cannot store `\u0000` in
+jsonb, so one such character fails the whole content sync (22P05).
+
 **Exact checks (step 5).** An item names the facts to check in an optional `exact` block:
 `quantity` (its `answer.unit` must have that dimension), `chemical_equation` (atoms and charge
 balance, coefficients in lowest terms) and `equation_sheet` (`sheet`, `equation`, optional

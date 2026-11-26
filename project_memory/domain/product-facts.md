@@ -255,6 +255,10 @@ Tags: #product #rules #limits #defaults
 - Content is JSON in `content/`, checked by `pnpm content:validate` (schemas in
   `content/schemas/`). Every item has `source_ref` and `checked_by`; every topic-tree leaf has a
   specification reference; trees are at most 3 levels deep. Detail: `docs/CONTENT_PLAN.md`.
+- No content string may hold a control character (U+0000 to U+001F except tab and newline):
+  `pnpm content:validate` refuses them with the field path, because Postgres refuses `\u0000` in
+  jsonb (22P05) and the content sync fails. Check records written by the pipeline
+  (`withCheck` in `scripts/verify/record.mjs`) have them replaced by a space first.
 - Every maths answer (numeric and worked maths items, and model solutions) is verified by the
   maths engine before content can merge.
 - Every item, topic leaf, mark scheme and diagram carries official citations and a verification

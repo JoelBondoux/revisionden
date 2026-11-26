@@ -82,6 +82,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Content sync (S2): `pnpm content:validate` now refuses control characters (U+0000 to U+001F except tab and newline) anywhere in content, naming the field, and `withCheck` replaces them with a space in every check record the pipeline writes, so recorded model output can no longer break the sync to Postgres (22P05, as with the S3-A review notes fixed in #137).
 - Scroll and focus on a screen change (I7): `RouteChange` (`apps/web/src/layout/RouteChange.tsx`) wraps every route. A new screen scrolls to the top and focuses its `h1` (or `#main`) without a focus ring; back and forward restore the position the reader last scrolled to (kept up to date as they scroll), waiting up to 5 seconds for a loading screen's content to make it reachable; `#id` links scroll to that part; a query-only change on the same screen keeps the position; the first screen is left alone.
 - Complaints (O): starting a complaint from a child's "ask a parent" request no longer pre-fills the child's nickname, which the API refused as personal details; the summary is "Raised for my child: <topic>." from `complaintSummaryFromRequest` (Codex review on #86).
 - Links (J7 follow-up): the no-plain-links guard test now also checks stats, the policy acceptance screen and the welcome page, now that K, L and I have converted their links; the per-workstream exclusion list is gone.
