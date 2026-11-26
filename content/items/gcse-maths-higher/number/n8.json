@@ -235,7 +235,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:23:41Z",
+          "at": "2026-11-26T05:32:38Z",
           "notes": "model answered \"7\"; expected \"7\""
         },
         {
@@ -243,7 +243,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:42:27Z",
+          "at": "2026-11-26T05:32:44Z",
           "notes": "no problems found"
         }
       ]
@@ -318,7 +318,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:23:54Z",
+          "at": "2026-11-26T05:32:51Z",
           "notes": "model answered \"2\"; expected \"2\""
         },
         {
@@ -326,7 +326,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:42:34Z",
+          "at": "2026-11-26T05:32:58Z",
           "notes": "no problems found"
         }
       ]
@@ -401,7 +401,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:24:08Z",
+          "at": "2026-11-26T05:33:05Z",
           "notes": "model answered \"3\"; expected \"3\""
         },
         {
@@ -409,7 +409,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:42:42Z",
+          "at": "2026-11-26T05:33:11Z",
           "notes": "no problems found"
         }
       ]
@@ -484,7 +484,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:24:20Z",
+          "at": "2026-11-26T05:33:19Z",
           "notes": "model answered \"6\"; expected \"6\""
         },
         {
@@ -492,7 +492,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:42:49Z",
+          "at": "2026-11-26T05:33:25Z",
           "notes": "no problems found"
         }
       ]
@@ -651,14 +651,6 @@
           "at": "2026-11-25T17:40:50Z"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:24:51Z",
-          "notes": "model answered \"36\"; expected \"36\""
-        },
-        {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
@@ -667,11 +659,19 @@
           "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:33:32Z",
+          "notes": "model answered \"36\"; expected \"36\""
+        },
+        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:45:31Z",
+          "at": "2026-11-26T05:33:39Z",
           "notes": "no problems found"
         }
       ]
@@ -746,14 +746,6 @@
           "at": "2026-11-25T17:40:50Z"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:25:06Z",
-          "notes": "model answered \"14\"; expected \"14\""
-        },
-        {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
@@ -762,11 +754,19 @@
           "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:33:44Z",
+          "notes": "model answered \"14\"; expected \"14\""
+        },
+        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:45:37Z",
+          "at": "2026-11-26T05:33:51Z",
           "notes": "no problems found"
         }
       ]
@@ -841,14 +841,6 @@
           "at": "2026-11-25T17:40:50Z"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:25:20Z",
-          "notes": "model answered \"8\"; expected \"8\""
-        },
-        {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
@@ -857,11 +849,19 @@
           "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:33:57Z",
+          "notes": "model answered \"8\"; expected \"8\""
+        },
+        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:45:45Z",
+          "at": "2026-11-26T05:34:05Z",
           "notes": "no problems found"
         }
       ]
