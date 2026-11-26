@@ -207,3 +207,21 @@ def test_too_many_lines_are_rejected():
 def test_unsafe_or_malformed_lines_are_rejected(line):
     with pytest.raises(ValueError):
         check_working(["x = 2", line])
+
+
+def test_a_solved_value_may_be_in_other_letters():
+    result = check_working(["x + a = 3a", "x = 2a"], expected={"solutions": ["2a"]})
+    assert result.final_answer_correct is True
+    result = check_working(["x + a = 3a", "x = 2a"], expected={"solutions": ["3a"]})
+    assert result.final_answer_correct is False
+
+
+def test_a_solved_value_never_contains_the_unknown_itself():
+    result = check_working(["2x = x + a", "x = (x + a)/2"], expected={"solutions": ["a"]})
+    assert result.final_answer_correct is False
+
+
+def test_a_letter_answer_may_be_written_either_way_round():
+    for final in ("a = x", "x = a"):
+        result = check_working(["x + a = 2a", final], expected={"solutions": ["a"]})
+        assert result.final_answer_correct is True, final

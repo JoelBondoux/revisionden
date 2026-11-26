@@ -51,6 +51,33 @@ describe('learning loop tables (workstream F)', () => {
     );
   });
 
+  it('keeps learning points, expected times and retries for learning from mistakes (F5)', async () => {
+    expect(await columns('items')).toEqual(
+      expect.arrayContaining(['learning_point', 'expected_seconds']),
+    );
+    expect(await columns('attempts')).toEqual(expect.arrayContaining(['retry']));
+    expect(await columns('review_points')).toEqual(
+      expect.arrayContaining([
+        'student_id',
+        'learning_point',
+        'topic_id',
+        'rung',
+        'due_day',
+        'misses',
+        'flagged',
+      ]),
+    );
+    const id = await student();
+    const point = (learningPoint: string) =>
+      client.query(
+        `insert into review_points (student_id, learning_point, topic_id, rung, due_day)
+         values ($1, $2, 't', 0, '2026-11-26')`,
+        [id, learningPoint],
+      );
+    await point('lp-a');
+    await expect(point('lp-a')).rejects.toThrow();
+  });
+
   it('stores flashcards with their SM-2 state', async () => {
     expect(await columns('flashcards')).toEqual(
       expect.arrayContaining([

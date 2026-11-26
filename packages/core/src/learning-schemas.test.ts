@@ -160,3 +160,28 @@ describe('learning schemas', () => {
     ).toBe(false);
   });
 });
+
+describe('learning from mistakes (F5)', () => {
+  const item = {
+    id: ID,
+    topicId: 't',
+    topicTitle: 'T',
+    draft: false,
+    type: 'short_answer' as const,
+    prompt: 'Q',
+  };
+
+  it('marks warm-up questions and retries', () => {
+    expect(LearnItemSchema.parse({ ...item, warmUp: true }).warmUp).toBe(true);
+    expect(LearnItemSchema.safeParse({ ...item, warmUp: false }).success).toBe(false);
+    expect(
+      LearnAttemptRequestSchema.parse({
+        itemId: ID,
+        answer: 'a',
+        timeMs: 1,
+        mode: 'learn',
+        retry: true,
+      }).retry,
+    ).toBe(true);
+  });
+});

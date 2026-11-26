@@ -423,3 +423,10 @@ test('check names follow the verification pipeline', () => {
     true,
   );
 });
+
+test('a short answer can say order does not matter and list optional units', () => {
+  const answer = { accepted: ['3n + 2'], any_order: true, units: ['cm'] };
+  assert.equal(v.item({ ...samples.short_answer, answer }), true);
+  assert.equal(v.item({ ...samples.short_answer, answer: { ...answer, any_order: 'yes' } }), false);
+  assert.equal(v.item({ ...samples.short_answer, answer: { ...answer, units: [] } }), false);
+});

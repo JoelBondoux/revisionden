@@ -1,8 +1,10 @@
 import { Navigate, useParams, type RouteObject } from 'react-router-dom';
 import { AppLayout, FocusLayout } from './layout/AppLayout';
+import { RouteChange } from './layout/RouteChange';
 import { LinkPage } from './features/onboarding/LinkPage';
 import { UnlockPage } from './features/onboarding/UnlockPage';
 import { OnboardingPage } from './features/onboarding/OnboardingPage';
+import { SubjectsPage } from './features/onboarding/SubjectsPage';
 import { ComingSoon } from './pages/ComingSoon';
 import { FamilyPage } from './pages/FamilyPage';
 import { InstallHelpPage } from './pages/InstallHelpPage';
@@ -41,7 +43,8 @@ function LessonRedirect() {
   return <Navigate to={`/learn/topic/${encodeURIComponent(lessonId)}`} replace />;
 }
 
-export const routes: RouteObject[] = [
+/** Every screen, inside `RouteChange` (scroll to top and focus on a new screen, I7). */
+const screens: RouteObject[] = [
   {
     // Get help (workstream W): a calm page with no navigation and no API calls, signed in or out.
     element: <HelpLayout />,
@@ -77,6 +80,8 @@ export const routes: RouteObject[] = [
       { path: '/parent', element: <ParentHomePage /> },
       { path: '/parent/reminders/:studentId', element: <ParentRemindersPage /> },
       { path: '/parent/stats', element: <ParentDashboardPage /> },
+      // A child's subjects after onboarding (workstream E5).
+      { path: '/parent/subjects/:studentId', element: <SubjectsPage /> },
       // Formal complaints (workstream O4).
       { path: '/complaints', element: <ComplaintsPage /> },
       { path: '/ask-a-parent', element: <AskParentPage /> },
@@ -128,3 +133,5 @@ export const routes: RouteObject[] = [
     ],
   },
 ];
+
+export const routes: RouteObject[] = [{ element: <RouteChange />, children: screens }];
