@@ -64,6 +64,17 @@ describe('topicMastery', () => {
   });
 });
 
+describe('retries in mastery', () => {
+  it('counts an attempt with weight 0.5 half as much as a first attempt', () => {
+    const now = Date.UTC(2026, 10, 25);
+    const first = topicMastery([{ score: 1, at: now }], now);
+    const retry = topicMastery([{ score: 1, at: now, weight: 0.5 }], now);
+    expect(retry).toBeLessThan(first);
+    // 1 right at weight 0.5 against the 2 imaginary wrong answers: 0.5 / 2.5 = 20%.
+    expect(retry).toBe(20);
+  });
+});
+
 describe('isWeakSpot', () => {
   it('marks topics below 60% mastery as weak spots', () => {
     expect(WEAK_SPOT_THRESHOLD).toBe(60);

@@ -1,6 +1,6 @@
 # Privacy notice for young people
 
-Version: 1.6
+Version: 1.7
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -44,7 +44,8 @@ information is used and we are responsible for looking after it. Contact us at {
 - You unlock the app with your device's fingerprint, face or PIN. We never see your fingerprint or face.
 
 Your parent or carer set up your profile. You don't have an email or password with us. Your
-device is linked with a QR code, and then you unlock the app with a passkey, which is your
+device is linked with a QR code, or with a link (and a short code) your parent sends you, and
+then you unlock the app with a passkey, which is your
 device's own fingerprint, face or PIN check. We never see your fingerprint or face: your device
 checks it and only tells us "yes, it's them".
 
@@ -235,6 +236,7 @@ in Settings. Only your parents see it, and they can make a complaint for you.
 
 ### Changes
 
+- 1.7: Your device can also be linked with a link your parent sends you, not just a QR code.
 - 1.6: You can ask a parent to raise something for you from Settings. Only your parents see it, and it's deleted after 90 days at most.
 - 1.5: Target grades: you can set your own target for each subject, and your parent can set one too. You both see both.
 
