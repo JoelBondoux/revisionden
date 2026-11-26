@@ -21,24 +21,17 @@ export function VersionFooter({
   const label = `RevisionDen version ${version}`;
   const knownCommit = commit && commit !== 'unknown' ? `, ${commit}` : '';
   return (
+    // Pieces sit in a wrapping flex row with a gap between them and no text separator, so a
+    // wrapped line never starts or ends with a stray "·" (G7, G8).
     <footer className="version-footer">
-      <TextLink to="/about">{label}</TextLink>
-      {environment === 'Live' ? null : (
-        <>
-          {' '}
-          <span className="version-footer-item">{`(${environment}${knownCommit})`}</span>
-        </>
-      )}
+      <span className="version-footer-item">
+        <TextLink to="/about">{label}</TextLink>
+        {environment === 'Live' ? null : ` (${environment}${knownCommit})`}
+      </span>
       {showHelp && (
-        <>
-          {' '}
-          {/* The dot travels with the link (no-break space, nowrap), so a wrapped line never ends
-              in a stray "·". */}
-          <span className="version-footer-item">
-            {'·\u00a0'}
-            <GetHelpLink />
-          </span>
-        </>
+        <span className="version-footer-item">
+          <GetHelpLink />
+        </span>
       )}
     </footer>
   );
