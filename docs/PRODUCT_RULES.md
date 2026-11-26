@@ -946,11 +946,34 @@ Requested by the product owner on 2026-11-25.
 - Implemented: `apps/api/src/routes/family-parents.ts`, `apps/api/src/family-events.ts`,
   `apps/web/src/features/parents/`; migration 0012.
 
+## Me page (`/settings`, workstream W9, owner feedback 2026-11-26)
+
+Owner: "The avatar/Me settings page is a little convoluted, and it doesn't allow customising your
+own avatar." The page is now short enough for one phone screen (390 × 844):
+
+- **Top:** heading "Me", the student's avatar (large) and nickname, and **Edit my avatar**. It opens
+  the avatar builder (E's, reused as it is) in a sheet with Save and Cancel. Cancel, Escape or the
+  close button ask "Throw away your changes?" (Keep editing or Throw away) if anything changed.
+  Save sends the look with `PUT /v1/student/avatar`; the nav's Me avatar changes as soon as the
+  server says yes. The API's only rule is that every item is unlocked (locked items need their
+  reward); there is no parent approval and no rate limit. The nickname comes from
+  `GET /v1/student/me`.
+- **Then:** Get help (always the first link on the page), My progress, My rewards.
+- **Look and sound** (`/settings/look-and-sound`): Reading comfort, Appearance (theme), Effect style
+  (students only; its picker is unchanged), Read aloud, Sound (with vibration).
+- **More** (`/settings/more`): My subjects, Reminders, This device (install, Switch profile, Show
+  the bug button), Parents (Parent home, Ask a parent), Feedback (send, yours, your family's),
+  Policies and About, and What your parent can see. Both sub-pages end with "Back to Me".
+- A parent on `/settings` (no student on the device) sees no avatar header, and gets a Parent home
+  tile on the main page as well as in More.
+- Code: `apps/web/src/pages/SettingsPage.tsx`, `apps/web/src/features/me/` (`MeHeader`,
+  `MyAvatarProvider` shared with the nav). Screenshots: `docs/design/w9/`.
+
 ## Get help (support resources)
 
 Requested by the product owner on 2026-11-25.
 
-- A **"Get help"** page for students, reachable from Settings (first thing on the page). Also
+- A **"Get help"** page for students, reachable from Settings (the Me page; first link on it). Also
   reachable signed out. Owner decision, 2026-11-26 (W7): students find Get help on Settings only,
   reached from the "Me" avatar item in the main nav; it is no longer in the student header or
   footer. (Was: Settings, the profile menu and the footer of every student screen.)
@@ -1100,9 +1123,8 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
 - **Learn more** (owner request, 2026-11-26: "link out to authoritative, age-appropriate sources
   for further tuition guidance when a question needs more explanation"): on a flashcard's Explain
   panel and after a wrong answer in a lesson, behind a "Learn more" tap. It shows the most specific
-  links: those for the item, else for its learning point, else the whole topic's. Lessons match by
-  learning point (a lesson item does not carry its content id yet, so item links cannot match);
-  flashcards use the topic's (a card does not carry its learning point yet).
+  links: those for the item, else for its learning point, else the whole topic's. Lesson items and
+  flashcards carry their content id and learning point (Q6b), so both match all three levels.
 - Links only (open in a new tab on tap; nothing loaded from those sites until then, nothing
   recorded about taps), stored as data per topic with the page title, URL and dates.
 - A link shows only when it is both **reachable** (`checked_at`: the CI job requests every link and
@@ -1118,6 +1140,13 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   Oak lessons and BBC Bitesize pages). `pnpm content:check-links --coverage` prints the numbers.
 - Links point at the right level (GCSE or A-Level) and the student's board where the page is
   board-specific.
+- **Oak links go to the pupil lesson page** (owner decision, 2026-11-26): the page made for
+  students, with the lesson video and no sign-in, not Oak's teacher page. The link is the pupil
+  lesson's overview page (`/pupils/lessons/<lesson>/overview`). The validator refuses an Oak
+  teacher page (`/teachers/...`) unless the link is marked `no_pupil_page` (the lesson has no
+  pupil page). BBC Bitesize and Isaac pages are already made for students.
+  All 90 Oak links (84 lessons) were switched and re-read on 2026-11-26; every lesson had a pupil
+  page, so none is marked `no_pupil_page`.
 
 ### Read aloud and reading comfort
 

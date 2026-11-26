@@ -10,7 +10,7 @@ import { FamilyPage } from './pages/FamilyPage';
 import { InstallHelpPage } from './pages/InstallHelpPage';
 import { MapPage } from './pages/MapPage';
 import { NotFoundPage } from './pages/NotFoundPage';
-import { SettingsPage } from './pages/SettingsPage';
+import { LookAndSoundPage, MoreSettingsPage, SettingsPage } from './pages/SettingsPage';
 import { WelcomePage } from './pages/WelcomePage';
 import { BatchReviewPage } from './features/review/BatchReviewPage';
 import { ReviewQueuePage } from './features/review/ReviewQueuePage';
@@ -122,7 +122,10 @@ const screens: RouteObject[] = [
       },
       // Statistics dashboards (workstream K): My stats, reached from "My progress" on Me (W7).
       { path: '/progress', element: <MyStatsPage /> },
+      // Me (W9): the main page plus two sub-pages, so the main one fits one phone screen.
       { path: '/settings', element: <SettingsPage /> },
+      { path: '/settings/look-and-sound', element: <LookAndSoundPage /> },
+      { path: '/settings/more', element: <MoreSettingsPage /> },
       { path: '/install', element: <InstallHelpPage /> },
       { path: '/about', element: <AboutPage /> },
       // Policies are reachable without signing in (workstream L).

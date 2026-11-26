@@ -18,6 +18,12 @@ export function fakeOnboardingApi(overrides: Partial<OnboardingApi> = {}): Onboa
     removeChildSubject: vi.fn(async () => undefined),
     getMySubjects: vi.fn(async () => ({ enrolments: [], toCheckLater: 0 })),
     updateMySubject: vi.fn(),
+    getMe: vi.fn(async () => ({
+      id: '00000000-0000-4000-8000-0000000000a1',
+      nickname: 'NovaFox',
+      avatarCode: '1' + '0'.repeat(28),
+      yearGroup: 11,
+    })),
     getMyAvatar: vi.fn(async () => ({ avatarCode: '1' + '0'.repeat(28), earnedRewardIds: [] })),
     saveMyAvatar: vi.fn(),
     reportPasskeyError: vi.fn(() => 'RD-TEST00'),

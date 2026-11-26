@@ -96,13 +96,35 @@ export function reviewPrompt(item) {
         'Typed answers are normalised before marking. For maths answers, spaces and case are ignored; ×, ·, * (and x between two numbers) are one multiply sign, left out where it is not needed; −, – and — are a minus; ÷ is /; superscripts are ^; ≤ and ≥ are <= and >=; √ and sqrt are the same. For word answers, case and extra spaces are ignored. So do not report missing versions that differ only in these ways.',
       ]
     : [];
-  // A hint nudges the method; the item's steps and explanation (checked by the maths engine) back
-  // it, not necessarily the specification text. A new fact in it still needs a source (rule 7).
+  // What the maths engine really checked (mathsChecks in scripts/content/validate.mjs): a numeric
+  // answer against verify.expression; a worked answer, and its model solution steps when it has
+  // them. Never the explanation or the hint, so the reviewer must not be told they were checked.
+  const checked =
+    item.type === 'numeric'
+      ? 'the answer'
+      : item.type === 'worked_maths'
+        ? Array.isArray(item.steps) && item.steps.length > 0
+          ? 'the answer and the model solution steps'
+          : 'the answer'
+        : null;
+  const engine = checked
+    ? `The maths engine has checked ${checked}, and nothing else.`
+    : 'The maths engine has not checked this item.';
+  // A hint nudges the method: what the engine checked backs it, not necessarily the specification
+  // text. A new fact in it still needs a source (rule 7).
   const hint =
     typeof item.hint === 'string' && item.hint.trim() !== ''
       ? [
           '',
-          "The hint is a method nudge, not a statement of the specification. Judge it against the item's steps and explanation, which the maths engine has checked, and the quoted sources. Report a problem only if the hint reveals the answer (wording), is not consistent with the verified steps or explanation (factual_error), is not mathematically correct and suitable for the age group (factual_error or wording), or makes a new factual claim beyond the steps and explanation; a new factual claim needs a quoted source like any other (unsupported_claim). Do not report a hint as outside_specification or unsupported_claim only because its method is not described in the quoted sources.",
+          `The hint is a method nudge, not a statement of the specification. ${engine} Judge the hint against ${checked ?? 'the quoted sources'}${checked ? ' and the quoted sources' : ''}. Report a problem only if the hint reveals the answer (wording), is not consistent with ${checked ?? 'the item'} (factual_error), is not mathematically correct and suitable for the age group (factual_error or wording), or makes a new factual claim that ${checked ? 'the checked work does not show' : 'the quoted sources do not support'}; a new factual claim needs a quoted source like any other (unsupported_claim), even if the explanation repeats it. Do not report a hint as outside_specification or unsupported_claim only because its method is not described in the quoted sources.`,
+        ]
+      : [];
+  // The explanation is never engine-checked: the reviewer checks it independently (Codex on #262).
+  const explanation =
+    typeof item.explanation === 'string' && item.explanation.trim() !== ''
+      ? [
+          '',
+          'The explanation has not been checked by the maths engine. Check it yourself, step by step, as independently as the rest of the item: any factual claim in it needs a quoted source (unsupported_claim), and any step that gives a wrong value is a factual_error.',
         ]
       : [];
   // any_order (#133): marking accepts reordered answers, so the reviewer must not ask for them.
@@ -128,6 +150,7 @@ export function reviewPrompt(item) {
       ...numbering,
       ...typed,
       ...hint,
+      ...explanation,
       ...order,
       '',
       'Official sources:',
