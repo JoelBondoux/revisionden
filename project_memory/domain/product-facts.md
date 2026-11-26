@@ -263,6 +263,11 @@ Tags: #product #rules #limits #defaults
   a time in a sideways pager (swipe, arrows, arrow keys, dots). Each unit's route is generated from
   a seed (subject + unit) and climbs from the first topic at the bottom to the unit challenge at
   the top, opening on the current topic (the next mission's topic, with a "You are here" tag).
+  On a short phone where the unit's scroller runs on under the bottom nav (320 x 640), the
+  current topic is centred in the part above the nav instead, so it is never behind the nav
+  (W15, `placeInView`). With text at 200% on a 320px phone the map starts below the fold and
+  the pupil scrolls down to it (lead ruling, 2026-11-26: vertical scrolling is fine; only
+  sideways scrolling breaks WCAG reflow).
   Nodes are each style's own tiles (done, current, open %, weak, locked, challenge). For a
   Foundation student, Higher-only topics (`tier: 'higher'` on the map topic) sit on an optional
   side branch; topics sharing an `orderGroup` sit side by side (either order); bridges to other
