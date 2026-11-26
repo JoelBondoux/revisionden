@@ -815,6 +815,7 @@
     "expected_seconds": 15,
     "front": "The positive solution of x^2 = 64",
     "back": "8",
+    "explanation": "x^2 = 64 means x × x = 64. 8 × 8 = 64 (and also -8 × -8 = 64), so the positive solution is 8.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["author"],
     "citations": [
@@ -840,7 +841,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Checked: 8^2 = 64.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Checked: 8^2 = 64. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:17Z"
         },
         {
@@ -860,20 +861,20 @@
           "notes": "model answered \"8\"; expected \"8\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:26Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:55:30Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -887,6 +888,7 @@
     "expected_seconds": 15,
     "front": "The non-zero solution of x(x - 9) = 0",
     "back": "9",
+    "explanation": "If two things multiply to 0, one of them must be 0. So x = 0 or x - 9 = 0. The non-zero solution is x = 9.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["author"],
     "citations": [
@@ -912,7 +914,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Checked: the solutions are 0 and 9.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Checked: the solutions are 0 and 9. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:17Z"
         },
         {
@@ -932,20 +934,20 @@
           "notes": "model answered \"9\"; expected \"9\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:39Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:55:37Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -959,6 +961,7 @@
     "expected_seconds": 15,
     "front": "The negative solution of (x - 3)(x + 8) = 0",
     "back": "-8",
+    "explanation": "If two brackets multiply to 0, one of them must be 0. So x - 3 = 0 or x + 8 = 0, giving x = 3 or x = -8. The negative solution is -8.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["author"],
     "citations": [
@@ -984,7 +987,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Checked: the solutions are 3 and -8.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A18). Checked: the solutions are 3 and -8. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:17Z"
         },
         {
@@ -1004,20 +1007,20 @@
           "notes": "model answered \"-8\"; expected \"-8\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:52Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:55:46Z",
+          "notes": "no problems found"
         }
       ]
     }

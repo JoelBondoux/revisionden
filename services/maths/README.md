@@ -26,6 +26,8 @@ returns 400.
 How steps are compared: expressions must be identical; equations in one unknown must have the
 same solutions (so losing a root, as in `x^2 = 9` to `x = 3`, is caught); equations in several
 letters (rearranging a formula) must be constant multiples of each other.
+Decimals in working are read exactly (as fractions), so `(6*1.6)*10^10` equals
+`(6*10^2)*(1.6*10^8)` without floating-point rounding.
 
 ## Input safety
 
@@ -39,6 +41,14 @@ multiplication (`3x`, `(x+1)(x+2)`) and `^` for powers are understood.
 
 `python -m app.content_check` reads `{"checks": [...]}` on stdin and writes results to stdout.
 `pnpm content:validate` uses it to verify every maths answer in `content/`.
+
+## Question templates
+
+`app/templates/` writes maths items from templates, correct by construction: SymPy builds the
+question, answer, steps and explanation from seeded parameters, and every instance is
+cross-checked by the content checks and an independent recheck before it is written.
+`pnpm content:templates` builds them; `python -m app.templates.build --check` fails if the
+committed items are stale. How to add one: `docs/TEMPLATES.md`.
 
 ## Run and test
 

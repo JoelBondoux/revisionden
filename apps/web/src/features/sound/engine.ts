@@ -25,10 +25,6 @@ export interface AudioContextLike extends SynthContext {
   destination: AudioNodeLike;
   resume(): Promise<void>;
   suspend(): Promise<void>;
-  createBiquadFilter(): AudioNodeLike & {
-    type: string;
-    frequency: { value: number };
-  };
 }
 
 /** Master loudness for each volume setting. */

@@ -671,6 +671,7 @@
     "expected_seconds": 15,
     "front": "The value of y on the graph of y = x^3 when x = -2",
     "back": "-8",
+    "explanation": "Substitute x = -2: (-2)^3 = (-2) × (-2) × (-2) = -8.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
     "checked_by": ["author"],
     "citations": [
@@ -696,7 +697,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Checked: (-2)^3 = -8.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Checked: (-2)^3 = -8. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:04:50Z"
         },
         {
@@ -716,20 +717,20 @@
           "notes": "model answered \"-8\"; expected \"-8\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:07:32Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:52:00Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -743,6 +744,7 @@
     "expected_seconds": 15,
     "front": "The value of x for which y = 1/x is undefined",
     "back": "x = 0",
+    "explanation": "1/x means 1 divided by x, and you cannot divide by 0. So y = 1/x is undefined when x = 0.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
     "checked_by": ["author"],
     "citations": [
@@ -768,7 +770,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Division by zero is undefined.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). Division by zero is undefined. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:04:50Z"
         },
         {
@@ -788,20 +790,20 @@
           "notes": "model answered \"x = 0\"; expected \"x = 0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:07:42Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:52:07Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -815,6 +817,7 @@
     "expected_seconds": 15,
     "front": "The value of y = k^x at x = 0, for any positive k",
     "back": "1",
+    "explanation": "Any positive number to the power 0 is 1, so k^0 = 1. Every graph of y = k^x passes through (0, 1).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
     "checked_by": ["author"],
     "citations": [
@@ -840,7 +843,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). k^0 = 1 for k > 0 (law of indices).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A12). k^0 = 1 for k > 0 (law of indices). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:23:37Z"
         },
         {
@@ -860,20 +863,20 @@
           "notes": "model answered \"1\"; expected \"1\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:45:13Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:52:27Z",
+          "notes": "no problems found"
         }
       ]
     }

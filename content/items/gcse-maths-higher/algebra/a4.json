@@ -930,6 +930,7 @@
     "expected_seconds": 15,
     "front": "The name for an expression such as x^2 - 25, which factorises to (x + 5)(x - 5)",
     "back": "Difference of two squares",
+    "explanation": "x^2 - 25 is x^2 minus 5^2: one square minus another. That is why it is called the difference of two squares, and it factorises to (x + 5)(x - 5).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -956,7 +957,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A4). The specification names the difference of two squares; the factorisation is checked with SymPy. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A4). The specification names the difference of two squares; the factorisation is checked with SymPy. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:17:06Z"
         },
         {
@@ -966,14 +967,6 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:31:12Z",
           "notes": "model answered \"Difference of two squares\"; expected \"Difference of two squares\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:31:18Z",
-          "notes": "no problems found"
         },
         {
           "name": "quote-check",
@@ -990,6 +983,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:51:00Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -1003,6 +1004,7 @@
     "expected_seconds": 15,
     "front": "x^0, for any x ≠ 0",
     "back": "1",
+    "explanation": "x^n ÷ x^n = 1, and by the index law x^n ÷ x^n = x^(n - n) = x^0. So x^0 = 1 for any x that is not 0.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["author"],
     "citations": [
@@ -1028,7 +1030,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A4). Law of indices: x^0 = x^n ÷ x^n = 1 for x ≠ 0 (checked with SymPy).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A4). Law of indices: x^0 = x^n ÷ x^n = 1 for x ≠ 0 (checked with SymPy). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:17:06Z"
         },
         {
@@ -1038,14 +1040,6 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:31:22Z",
           "notes": "model answered \"1\"; expected \"1\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:31:28Z",
-          "notes": "no problems found"
         },
         {
           "name": "quote-check",
@@ -1062,6 +1056,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:51:08Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -1075,6 +1077,7 @@
     "expected_seconds": 15,
     "front": "Collect like terms: 2a + 3b - a + b",
     "back": "a + 4b",
+    "explanation": "Group the a terms and the b terms: 2a - a = a and 3b + b = 4b. So 2a + 3b - a + b = a + 4b.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["author"],
     "citations": [
@@ -1100,7 +1103,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A4). Back checked with SymPy: 2a + 3b - a + b = a + 4b.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A4). Back checked with SymPy: 2a + 3b - a + b = a + 4b. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:17:06Z"
         },
         {
@@ -1110,14 +1113,6 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:31:34Z",
           "notes": "model answered \"a + 4b\"; expected \"a + 4b\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:31:39Z",
-          "notes": "no problems found"
         },
         {
           "name": "quote-check",
@@ -1134,6 +1129,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:49:51Z",
+          "notes": "no problems found"
         }
       ]
     }

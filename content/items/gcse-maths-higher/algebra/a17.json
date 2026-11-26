@@ -746,6 +746,7 @@
     "expected_seconds": 15,
     "front": "Solve x + 9 = 4",
     "back": "x = -5",
+    "explanation": "Subtract 9 from both sides: x = 4 - 9 = -5. Check: -5 + 9 = 4.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
     "checked_by": ["author"],
     "citations": [
@@ -771,7 +772,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Back checked with SymPy.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Back checked with SymPy. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:17Z"
         },
         {
@@ -791,20 +792,20 @@
           "notes": "model answered \"x = -5\"; expected \"x = -5\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:00:26Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:55:02Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -818,6 +819,7 @@
     "expected_seconds": 15,
     "front": "Solve 3x = 18",
     "back": "x = 6",
+    "explanation": "Divide both sides by 3: x = 18 ÷ 3 = 6. Check: 3 × 6 = 18.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
     "checked_by": ["author"],
     "citations": [
@@ -843,7 +845,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Back checked with SymPy.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Back checked with SymPy. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:17Z"
         },
         {
@@ -863,20 +865,20 @@
           "notes": "model answered \"x = 6\"; expected \"x = 6\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:00:38Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:55:09Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -890,6 +892,7 @@
     "expected_seconds": 15,
     "front": "Solve x/4 = 5",
     "back": "x = 20",
+    "explanation": "Multiply both sides by 4: x = 5 × 4 = 20. Check: 20 ÷ 4 = 5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
     "checked_by": ["author"],
     "citations": [
@@ -915,7 +918,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Back checked with SymPy.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Back checked with SymPy. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:17Z"
         },
         {
@@ -935,20 +938,20 @@
           "notes": "model answered \"x = 20\"; expected \"x = 20\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:00:49Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:55:16Z",
+          "notes": "no problems found"
         }
       ]
     }

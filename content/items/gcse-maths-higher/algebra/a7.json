@@ -7,8 +7,13 @@
     "learning_point": "gcse-maths-h-a7-lp-evaluate",
     "expected_seconds": 30,
     "prompt": "f(x) = 3x - 5. Work out f(4).",
-    "answer": { "value": "7", "subject": "f(4)" },
-    "verify": { "expression": "3*4 - 5" },
+    "answer": {
+      "value": "7",
+      "subject": "f(4)"
+    },
+    "verify": {
+      "expression": "3*4 - 5"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for 7"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
@@ -90,8 +95,13 @@
     "learning_point": "gcse-maths-h-a7-lp-evaluate",
     "expected_seconds": 30,
     "prompt": "g(x) = x^2 + 1. Work out g(-3).",
-    "answer": { "value": "10", "subject": "g(-3)" },
-    "verify": { "expression": "(-3)^2 + 1" },
+    "answer": {
+      "value": "10",
+      "subject": "g(-3)"
+    },
+    "verify": {
+      "expression": "(-3)^2 + 1"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for 10"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
@@ -173,8 +183,13 @@
     "learning_point": "gcse-maths-h-a7-lp-evaluate",
     "expected_seconds": 30,
     "prompt": "h(x) = (x + 6)/2. Work out h(-10).",
-    "answer": { "value": "-2", "subject": "h(-10)" },
-    "verify": { "expression": "(-10 + 6)/2" },
+    "answer": {
+      "value": "-2",
+      "subject": "h(-10)"
+    },
+    "verify": {
+      "expression": "(-10 + 6)/2"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for -2"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
@@ -256,8 +271,14 @@
     "learning_point": "gcse-maths-h-a7-lp-evaluate",
     "expected_seconds": 60,
     "prompt": "f(x) = 4x + 9. Find the value of a such that f(a) = 1.",
-    "answer": { "solutions": ["-2"] },
-    "verify": { "method": "solve", "equation": "4a + 9 = 1", "variable": "a" },
+    "answer": {
+      "solutions": ["-2"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "4a + 9 = 1",
+      "variable": "a"
+    },
     "steps": ["4a + 9 = 1", "4a = -8", "a = -2"],
     "marks": 2,
     "mark_scheme": ["M1 for 4a + 9 = 1", "A1 for a = -2"],
@@ -346,7 +367,9 @@
       "f^-1(x) = 2x - 3",
       "f^-1(x) = 1/(2x + 3)"
     ],
-    "answer": { "option": 0 },
+    "answer": {
+      "option": 0
+    },
     "marks": 1,
     "explanation": "Write x = 2y + 3 and make y the subject: y = (x - 3)/2. (1/(2x + 3) is the reciprocal, not the inverse.)",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
@@ -438,7 +461,9 @@
       "f^-1(x) = (x + 1)/5",
       "f^-1(x) = x/5 - 1"
     ],
-    "answer": { "option": 2 },
+    "answer": {
+      "option": 2
+    },
     "marks": 1,
     "explanation": "Write x = 5y - 1 and make y the subject: y = (x + 1)/5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
@@ -518,7 +543,9 @@
       "f^-1(x) = 3(x + 4)",
       "f^-1(x) = 3x - 4"
     ],
-    "answer": { "option": 3 },
+    "answer": {
+      "option": 3
+    },
     "marks": 1,
     "explanation": "Write x = (y + 4)/3 and make y the subject: 3x = y + 4, so y = 3x - 4.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
@@ -592,8 +619,13 @@
     "learning_point": "gcse-maths-h-a7-lp-composite",
     "expected_seconds": 45,
     "prompt": "f(x) = 2x + 1 and g(x) = x^2. Work out fg(3).",
-    "answer": { "value": "19", "subject": "fg(3)" },
-    "verify": { "expression": "2*(3^2) + 1" },
+    "answer": {
+      "value": "19",
+      "subject": "fg(3)"
+    },
+    "verify": {
+      "expression": "2*(3^2) + 1"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for g(3) = 9", "A1 for 19"],
     "hint": "fg(3) means f(g(3)): work out g(3) first.",
@@ -676,8 +708,13 @@
     "learning_point": "gcse-maths-h-a7-lp-composite",
     "expected_seconds": 45,
     "prompt": "f(x) = 2x + 1 and g(x) = x^2. Work out gf(3).",
-    "answer": { "value": "49", "subject": "gf(3)" },
-    "verify": { "expression": "(2*3 + 1)^2" },
+    "answer": {
+      "value": "49",
+      "subject": "gf(3)"
+    },
+    "verify": {
+      "expression": "(2*3 + 1)^2"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for f(3) = 7", "A1 for 49"],
     "hint": "gf(3) means g(f(3)): work out f(3) first.",
@@ -760,8 +797,14 @@
     "learning_point": "gcse-maths-h-a7-lp-composite",
     "expected_seconds": 60,
     "prompt": "f(x) = 3x - 2 and g(x) = x + 4. Find fg(x). Give your answer in its simplest form.",
-    "answer": { "expression": "3x + 10" },
-    "verify": { "method": "expression", "expression": "3(x + 4) - 2", "form": "expanded" },
+    "answer": {
+      "expression": "3x + 10"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "3(x + 4) - 2",
+      "form": "expanded"
+    },
     "steps": ["3(x + 4) - 2", "3x + 12 - 2", "3x + 10"],
     "marks": 2,
     "mark_scheme": ["M1 for 3(x + 4) - 2", "A1 for 3x + 10"],
@@ -845,6 +888,7 @@
     "expected_seconds": 15,
     "front": "f(x) = x + 7. Complete: f^-1(x) = ...",
     "back": "x - 7",
+    "explanation": "f adds 7, so the inverse does the opposite: it subtracts 7. f^-1(x) = x - 7.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
     "checked_by": ["author"],
     "citations": [
@@ -870,7 +914,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). Checked with SymPy: f(x - 7) = x.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). Checked with SymPy: f(x - 7) = x. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:04:50Z"
         },
         {
@@ -890,20 +934,20 @@
           "notes": "model answered \"x - 7\"; expected \"x - 7\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:12:11Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:37Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -917,6 +961,7 @@
     "expected_seconds": 15,
     "front": "f(x) = 4x. Complete: f^-1(x) = ...",
     "back": "x/4",
+    "explanation": "f multiplies by 4, so the inverse does the opposite: it divides by 4. f^-1(x) = x/4.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
     "checked_by": ["author"],
     "citations": [
@@ -942,7 +987,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). Checked with SymPy: f(x/4) = x.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). Checked with SymPy: f(x/4) = x. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:04:50Z"
         },
         {
@@ -962,20 +1007,20 @@
           "notes": "model answered \"x/4\"; expected \"x/4\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:12:26Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:46Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -989,6 +1034,7 @@
     "expected_seconds": 15,
     "front": "In fg(x), which function is applied first: f or g?",
     "back": "g",
+    "explanation": "fg(x) means f(g(x)). Work from the inside out: g is applied to x first, then f is applied to the result.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -1015,7 +1061,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). fg(x) means f(g(x)): the standard reading of composite function notation, which the specification expects but does not define. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A7). fg(x) means f(g(x)): the standard reading of composite function notation, which the specification expects but does not define. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:20:52Z"
         },
         {
@@ -1035,20 +1081,20 @@
           "notes": "model answered \"g\"; expected \"g\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:50:07Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:54Z",
+          "notes": "no problems found"
         }
       ]
     }
