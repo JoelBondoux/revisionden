@@ -431,6 +431,23 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
 - Implemented: `packages/core/src/mistakes.ts`, `apps/api/src/learning/mistakes.ts`, the attempts,
   lesson and daily routes, `apps/web/src/features/learn/LessonPlayer.tsx`. Migration 0026.
 
+## Showing maths (F9, owner 2026-11-26)
+
+- Powers are shown as superscripts wherever students see maths: x^2 is shown as x², 10^-3 as
+  10⁻³, 10^(2 + 8) as 10²⁺⁸ (a raised bracket loses its brackets). Only the power is raised
+  (x^2y is x²y), and a^b^c is a to the power b^c, read right to left as in maths. This covers
+  prompts, options, units, flashcards (both faces and the card list), Explain steps, answers and
+  explanations in feedback, hints, and the review batch screens. Stored content keeps its ^.
+- Screen readers hear the words from the read-aloud rules ("x squared", "to the power minus 3").
+- A ^ with nothing it can raise stays as it is (content says "Use ^ for powers", which is how a
+  power is typed).
+- Typed-answer boxes and worked maths have a "Power" key that types ^ where the cursor is, and a
+  "Shows as:" preview with the powers raised. ^ and ² typed straight in are still accepted.
+- Computing subjects (subject or topic id containing "comput") show ^ as typed, with no Power
+  key: there ^ is a real symbol (owner).
+- Implemented in `packages/core/src/powers.ts` and `apps/web/src/components/MathText.tsx`; the
+  e2e sweep `e2e/tests/powers.spec.ts` checks every real item that shows a power.
+
 ## Flashcards and mastery
 
 - Flashcards follow SM-2: intervals 1 day, 6 days, then interval × ease; a wrong card comes back

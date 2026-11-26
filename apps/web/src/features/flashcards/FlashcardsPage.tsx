@@ -11,6 +11,7 @@ import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
+import { MathText } from '../../components/MathText';
 import { ArenaProgress, useReducedMotion } from '../juice';
 import { subjectLabel, useLearnApi, type FlashcardRating } from '../learn/learnApi';
 import { NewRewards } from '../learn/NewRewards';
@@ -74,13 +75,17 @@ function FlipCard({
           <div className="flip-card__face flip-card__face--front" aria-hidden={flipped}>
             <span className="flip-card__label">Question</span>
             <span className="flip-card__topic">{card.topicTitle}</span>
-            <p className="flip-card__text">{card.front}</p>
+            <p className="flip-card__text">
+              <MathText text={card.front} subject={card.subjectId} />
+            </p>
           </div>
           <div className="flip-card__face flip-card__face--back" aria-hidden={!flipped}>
             {revealed && (
               <>
                 <span className="flip-card__label">Answer</span>
-                <p className="flip-card__text">{card.back}</p>
+                <p className="flip-card__text">
+                  <MathText text={card.back} subject={card.subjectId} />
+                </p>
                 {card.sourceRef && <small className="flip-card__ref">{card.sourceRef}</small>}
               </>
             )}
@@ -94,10 +99,12 @@ function FlipCard({
 /** Steps from the item's verified content, one at a time, ending on the answer (F7). */
 function ExplainSteps({
   steps,
+  subject,
   topicId,
   onClose,
 }: {
   steps: readonly string[];
+  subject?: string;
   topicId: string;
   onClose: () => void;
 }) {
@@ -116,7 +123,7 @@ function ExplainSteps({
         Step {step + 1} of {steps.length}
       </p>
       <p className="explain__step" aria-live="polite">
-        {steps[step]}
+        <MathText text={steps[step]!} subject={subject} />
       </p>
       <div className="explain__nav">
         <Button variant="secondary" disabled={step === 0} onClick={() => setStep(step - 1)}>
@@ -325,6 +332,7 @@ function ReviewSession({
       {explaining && card.explain && (
         <ExplainSteps
           steps={card.explain}
+          subject={card.subjectId}
           topicId={card.topicId}
           onClose={() => setExplaining(false)}
         />
@@ -443,8 +451,12 @@ function MyCardsPanel({ overview }: { overview: FlashcardsOverview }) {
           {mine.map((card) => (
             <li key={card.id} className="deck-list__item">
               <div>
-                <p className="deck-list__title">{card.front}</p>
-                <p className="secondary-text">{card.back}</p>
+                <p className="deck-list__title">
+                  <MathText text={card.front} subject={card.subjectId} />
+                </p>
+                <p className="secondary-text">
+                  <MathText text={card.back} subject={card.subjectId} />
+                </p>
               </div>
             </li>
           ))}
