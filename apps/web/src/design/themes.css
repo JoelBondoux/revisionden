@@ -38,7 +38,14 @@
   --color-pip-ears: #3a2622;
   --color-pip-muzzle: #f7f3ee;
   --shadow-3d-neutral: 0 5px 0 #3a3552;
-  --shadow-card: 0 2px 0 #3a3552;
+  --shadow-card: 3px 4px 0 #000000;
+  --ink: #ecebf6;
+  --ink-soft: #c2bed6;
+  --paper: #1f1b33;
+  --page: #14112a;
+  --highlight: #ffe45c;
+  --highlight-ink: #2b2a3a;
+  --lift: 3px 4px 0 #000000;
   --focus-ring: 0 0 0 3px #14112a, 0 0 0 6px #c4b5ff;
   --pattern-ink: rgb(196 181 255 / 7%);
   color-scheme: dark;

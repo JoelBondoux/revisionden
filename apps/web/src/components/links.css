@@ -44,10 +44,11 @@
   overflow-wrap: anywhere;
   min-height: var(--tap-target);
   padding: var(--space-3) var(--space-4);
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  /* The Doodle Diary skin (J13a): a pen-drawn card with a hard drawn shadow. */
+  border: 2px solid var(--ink);
+  border-radius: var(--wobble);
   background: var(--color-surface);
-  box-shadow: var(--shadow-3d-neutral);
+  box-shadow: var(--lift);
   color: var(--color-text);
   text-decoration: none;
   margin-bottom: 5px;
@@ -59,12 +60,18 @@
 
 .link-tile:hover {
   transform: translateY(-2px);
-  border-color: var(--color-primary);
 }
 
 .link-tile:active {
-  transform: translateY(5px) scale(0.99, 0.97);
-  box-shadow: none;
+  transform: translate(2px, 3px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link-tile:hover,
+  .link-tile:active {
+    transform: none;
+  }
 }
 
 .link-tile:focus-within {

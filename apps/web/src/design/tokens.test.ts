@@ -47,7 +47,42 @@ const requiredTokens = [
   '--shadow-3d-success',
   '--shadow-card',
   '--tap-target',
+  // The Doodle Diary skin, the app's base look (J13a).
+  '--ink',
+  '--ink-soft',
+  '--paper',
+  '--page',
+  '--highlight',
+  '--highlight-ink',
+  '--wobble',
+  '--wobble-sm',
+  '--lift',
+  '--scribble-a',
+  '--scribble-b',
+  '--font-hand',
 ] as const;
+
+describe('the Doodle Diary skin tokens (J13a)', () => {
+  it('draws on warm paper: cards are paper and the page is a notebook page', () => {
+    expect(tokens['--paper']).toBe('#FDFBF4');
+    expect(tokens['--page']).toBe('#F6F2E4');
+    expect(tokens['--color-surface']).toBe(tokens['--paper']);
+    expect(tokens['--color-background']).toBe(tokens['--page']);
+  });
+
+  it('edges cards and buttons in pen ink with a hard drawn shadow', () => {
+    expect(tokens['--ink']).toBe('#2B2A3A');
+    expect(tokens['--lift']).toBe('3px 4px 0 #2B2A3A');
+    expect(tokens['--shadow-card']).toBe(tokens['--lift']);
+    expect(tokens['--wobble']).toMatch(/\//);
+    expect(tokens['--wobble-sm']).toMatch(/\//);
+  });
+
+  it('keeps the hand-drawn font for headings, with plain fall-backs', () => {
+    expect(tokens['--font-hand']).toMatch(/^'Patrick Hand'/);
+    expect(tokens['--font-family']).toMatch(/^'Nunito'/);
+  });
+});
 
 describe('design tokens', () => {
   it('exports every named token', () => {

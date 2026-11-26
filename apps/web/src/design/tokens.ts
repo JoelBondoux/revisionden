@@ -14,8 +14,9 @@ export const tokens = {
   '--color-border': '#E3E3EA',
   /** An empty progress track: 3:1 on surface and background (WCAG 1.4.11). */
   '--color-track': '#7F7A90',
-  '--color-surface': '#FFFFFF',
-  '--color-background': '#F7F6FB',
+  /** Cards are paper and the page is a notebook page (the Doodle Diary skin, J13a). */
+  '--color-surface': '#FDFBF4',
+  '--color-background': '#F6F2E4',
   '--color-success': '#0B8457',
   '--color-success-edge': '#075C3C',
   '--color-success-soft': '#E3F5EC',
@@ -37,7 +38,22 @@ export const tokens = {
   '--color-pip-side': '#E35F17',
   '--color-pip-ears': '#3A2622',
   '--color-pip-muzzle': '#F7F3EE',
+  // The Doodle Diary skin, the app's base look (J13a, docs/design/j12/SKIN.md): pen ink edges with
+  // wobbly corners and a hard drawn shadow, highlighter for what is chosen, scribbled progress.
+  '--ink': '#2B2A3A',
+  '--ink-soft': '#57546A',
+  '--paper': '#FDFBF4',
+  '--page': '#F6F2E4',
+  '--highlight': '#FFE45C',
+  '--highlight-ink': '#2B2A3A',
+  '--scribble-a': '#FFC83D',
+  '--scribble-b': '#FFE45C',
+  '--wobble': '255px 12px 225px 12px / 12px 225px 12px 255px',
+  '--wobble-sm': '18px 6px 16px 7px / 7px 16px 6px 18px',
+  '--lift': '3px 4px 0 #2B2A3A',
   '--font-family': "'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif",
+  /** Headings only (h1 and card titles); never body text, questions or answers. */
+  '--font-hand': "'Patrick Hand', 'Comic Neue', cursive",
   '--font-weight-bold': '700',
   '--font-weight-extrabold': '800',
   '--font-weight-black': '900',
@@ -59,7 +75,7 @@ export const tokens = {
   '--shadow-3d-success': '0 5px 0 #075C3C',
   '--shadow-3d-danger': '0 5px 0 #8E1B1B',
   '--shadow-3d-neutral': '0 5px 0 #E3E3EA',
-  '--shadow-card': '0 2px 0 #E3E3EA',
+  '--shadow-card': '3px 4px 0 #2B2A3A',
   '--focus-ring': '0 0 0 3px #FFFFFF, 0 0 0 6px #6C47F5',
   '--tap-target': '44px',
   '--arena-bg': '#1A1033',

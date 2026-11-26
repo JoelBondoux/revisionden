@@ -1,0 +1,260 @@
+/*
+ * The Doodle Diary skin (J13a, owner decision 2026-11-26, docs/design/j12/SKIN.md): the app's base
+ * look for every shared component, whatever effect style is chosen. Pen-ink edges with wobbly
+ * corners and a hard drawn shadow, paper surfaces, highlighter for what is chosen, scribbled
+ * progress. The hand font is for page titles and card titles only; body text, questions and
+ * answers stay in Nunito. Unlockable styles change accents and effects, never these shapes.
+ * Every selector starts with :root so it wins over the components' own (older) rules.
+ */
+
+/* ---------- Headings: marker lettering, one size up because the hand font runs small ---------- */
+:root main h1 {
+  font-family: var(--font-hand);
+  font-size: 2.1rem;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+:root .card__title {
+  font-family: var(--font-hand);
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* ---------- Focus: an outline outside the drawn edge, so neither wobble nor shadow hides it ---------- */
+:root :focus-visible {
+  outline: 3px solid var(--color-primary-edge);
+  outline-offset: 3px;
+}
+
+/* ---------- Buttons ---------- */
+:root .btn {
+  border: 2px solid var(--ink);
+  border-radius: var(--wobble-sm);
+  box-shadow: var(--lift);
+}
+
+:root .btn--secondary {
+  background: var(--color-surface);
+}
+
+:root .btn:active:not(:disabled) {
+  transform: translate(2px, 3px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+:root .btn:disabled {
+  border-style: dashed;
+  border-color: var(--ink-soft);
+  box-shadow: none;
+}
+
+/* Quiet buttons stay quiet: no edge, no shadow. */
+:root .btn--quiet {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* Small icon buttons (sound, close): a drawn square. */
+:root .icon-button {
+  border: 2px solid var(--ink);
+  border-radius: var(--wobble-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+/* ---------- Cards and tiles ---------- */
+:root .card {
+  border: 2px solid var(--ink);
+  border-radius: var(--wobble);
+  background: var(--color-surface);
+  box-shadow: var(--lift);
+}
+
+/* ---------- Chips, tabs, toggles and pills ---------- */
+:root .chip {
+  border: 2px solid var(--ink);
+  border-radius: var(--wobble-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+:root .tabs__tab {
+  border: 2px solid var(--ink);
+  border-radius: var(--wobble-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+:root .period-toggle {
+  gap: var(--space-2);
+  padding: 0;
+  background: none;
+}
+
+:root .period-toggle__button {
+  border: 2px solid var(--ink);
+  border-radius: var(--wobble-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+/* What is chosen is coloured in with highlighter, with dark ink on it (11:1 in every theme). */
+:root .chip[aria-pressed='true'],
+:root .chip[aria-checked='true'] {
+  background: var(--highlight);
+  color: var(--highlight-ink);
+  box-shadow: 2px 3px 0 var(--ink);
+}
+
+:root .tabs__tab--active {
+  background: var(--highlight);
+  color: var(--highlight-ink);
+  box-shadow: 2px 3px 0 var(--ink);
+}
+
+:root .period-toggle__button[aria-pressed='true'] {
+  background: var(--highlight);
+  color: var(--highlight-ink);
+  box-shadow: 2px 3px 0 var(--ink);
+}
+
+:root .pill {
+  border: 2px solid var(--ink);
+  border-radius: var(--wobble-sm);
+}
+
+/* ---------- Progress bars: an inked outline and a highlighter scribble ---------- */
+:root .progress {
+  height: 16px;
+  border-radius: var(--wobble-sm);
+  background: var(--color-surface);
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+/* The scribble is pale on paper, so where it ends is marked in ink (3:1, WCAG 1.4.11). */
+:root .progress__fill {
+  background: repeating-linear-gradient(
+    -55deg,
+    var(--color-primary) 0 5px,
+    color-mix(in srgb, var(--color-primary) 70%, white) 5px 10px
+  );
+  box-shadow: inset -2px 0 0 var(--ink);
+}
+
+:root .progress--gold .progress__fill {
+  background: repeating-linear-gradient(
+    -55deg,
+    var(--scribble-a) 0 5px,
+    var(--scribble-b) 5px 10px
+  );
+}
+
+:root .progress--success .progress__fill {
+  background: repeating-linear-gradient(
+    -55deg,
+    var(--color-success) 0 5px,
+    color-mix(in srgb, var(--color-success) 70%, white) 5px 10px
+  );
+}
+
+/* ---------- Topic hexes: every outline in ink ---------- */
+:root .hex--in-progress .hex__shape {
+  --hex-border: var(--ink);
+}
+
+:root .hex--locked .hex__shape {
+  --hex-border: var(--ink-soft);
+}
+
+/* ---------- Inputs ---------- */
+:root main select,
+:root .field__input {
+  border: 2px solid var(--ink);
+  border-radius: var(--wobble-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+:root main select {
+  min-height: var(--tap-target);
+  padding: 0 var(--space-3);
+}
+
+/* ---------- Bottom bar and tablet rail: a paper strip, the current tab circled ---------- */
+:root .main-nav {
+  background: var(--color-surface);
+  border-color: var(--ink);
+}
+
+:root .main-nav__link {
+  border: 2px solid transparent;
+}
+
+/* Two classes deep, so dark mode's link colour (a:not(.btn)) cannot replace the dark ink. */
+:root .main-nav .main-nav__link[aria-current='page'] {
+  border: 2px solid var(--ink);
+  border-radius: var(--wobble-sm);
+  background: var(--highlight);
+  color: var(--highlight-ink);
+}
+
+/* ---------- Toasts and sheets ---------- */
+:root .toast {
+  border: 2px solid var(--ink);
+  border-radius: var(--wobble-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--lift);
+}
+
+:root .toast .icon-button {
+  border-color: transparent;
+  background: none;
+  color: var(--color-text);
+}
+
+:root .toast--success {
+  background: var(--color-success);
+  color: var(--color-text-on-primary);
+}
+
+:root .toast--success .icon-button {
+  color: var(--color-text-on-primary);
+}
+
+:root .sheet {
+  border: 2px solid var(--ink);
+  border-bottom: 0;
+  background: var(--color-surface);
+}
+
+/* ---------- Less motion: presses change the shadow only ---------- */
+@media (prefers-reduced-motion: reduce) {
+  :root .btn:active:not(:disabled) {
+    transform: none;
+  }
+}
+
+/* ---------- Forced colours (Windows contrast themes): edges, chosen items and focus stay ---------- */
+@media (forced-colors: active) {
+  :root .chip[aria-pressed='true'],
+  :root .chip[aria-checked='true'],
+  :root .tabs__tab--active,
+  :root .period-toggle__button[aria-pressed='true'],
+  :root .main-nav .main-nav__link[aria-current='page'] {
+    border-width: 4px;
+    border-color: Highlight;
+    text-decoration: underline;
+  }
+
+  :root .progress__fill {
+    forced-color-adjust: none;
+    background: Highlight;
+  }
+
+  :root :focus-visible {
+    outline: 3px solid Highlight;
+  }
+}

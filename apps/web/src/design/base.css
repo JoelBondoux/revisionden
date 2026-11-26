@@ -4,7 +4,9 @@
 @import './tokens.css';
 @import './arena.css';
 @import './motion.css';
+@import '@fontsource/patrick-hand/400.css';
 @import './themes.css';
+@import './skin.css';
 
 *,
 *::before,

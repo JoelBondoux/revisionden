@@ -39,6 +39,14 @@ export const darkTokens = {
   '--color-pip-side': '#E35F17',
   '--color-pip-ears': '#3A2622',
   '--color-pip-muzzle': '#F7F3EE',
+  // The Doodle Diary skin at night: light ink on night paper; the highlighter stays bright.
+  '--ink': '#ECEBF6',
+  '--ink-soft': '#C2BED6',
+  '--paper': '#1F1B33',
+  '--page': '#14112A',
+  '--highlight': '#FFE45C',
+  '--highlight-ink': '#2B2A3A',
+  '--lift': '3px 4px 0 #000000',
 } as const;
 
 /**
@@ -93,6 +101,12 @@ export const THEME_PAIRS: PairSpec[] = [
   ['gold on challenge hex', '--color-gold', '--color-challenge'],
   ['white on challenge hex', '--color-text-on-primary', '--color-challenge'],
   ['white on right answer (arena)', '--arena-text', '--arena-correct'],
+  // The Doodle Diary skin (J13a).
+  ['ink on paper', '--ink', '--paper'],
+  ['ink on page', '--ink', '--page'],
+  ['soft ink on paper', '--ink-soft', '--paper'],
+  ['soft ink on page', '--ink-soft', '--page'],
+  ['text on highlighter (chosen chip, tab, nav item)', '--highlight-ink', '--highlight'],
 ];
 
 /** Shapes that carry meaning, and what they sit on: these need 3:1 (WCAG 1.4.11, J10f). */
@@ -101,6 +115,11 @@ export const NON_TEXT_PAIRS: PairSpec[] = [
   ['empty progress track on background', '--color-track', '--color-background'],
   ['Challenge hex outline on background', '--color-challenge-edge', '--color-background'],
   ['Challenge hex outline on surface', '--color-challenge-edge', '--color-surface'],
+  // The skin's drawn edges (cards, buttons, chips, inputs, hexes) and the ink line that marks
+  // where a progress bar's scribble ends (the scribble itself is too pale on paper).
+  ['drawn ink edge on paper', '--ink', '--paper'],
+  ['drawn ink edge on page', '--ink', '--page'],
+  ['progress end mark on paper', '--ink', '--paper'],
 ];
 
 /** The non-text pairs with real colours from one palette. */
