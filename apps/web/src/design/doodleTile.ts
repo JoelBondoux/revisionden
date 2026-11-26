@@ -311,32 +311,48 @@ export interface Placement {
   readonly scale: number;
 }
 
+type Motifs = Readonly<Record<string, string>>;
+interface Footprint {
+  hull: Point[];
+  reach: number;
+}
+const footprintCache = new Map<Motifs, Map<string, Footprint>>();
+
 /** Each motif's convex outline in its own units, and how far it reaches from its centre. */
-const FOOTPRINTS = new Map(
-  Object.entries(MOTIFS).map(([name, markup]) => {
-    const hull = convexHull(footprintPoints(markup));
-    return [name, { hull, reach: Math.max(...hull.map((p) => Math.hypot(p.x, p.y))) }];
-  }),
-);
+function footprints(motifs: Motifs): Map<string, Footprint> {
+  let found = footprintCache.get(motifs);
+  if (!found) {
+    found = new Map(
+      Object.entries(motifs).map(([name, markup]) => {
+        const hull = convexHull(footprintPoints(markup));
+        return [name, { hull, reach: Math.max(...hull.map((p) => Math.hypot(p.x, p.y))) }];
+      }),
+    );
+    footprintCache.set(motifs, found);
+  }
+  return found;
+}
 
 /** How far a doodle's drawing reaches from its centre, at its size (any rotation). */
-export function radius(p: Pick<Placement, 'motif' | 'scale'>): number {
-  return FOOTPRINTS.get(p.motif)!.reach * p.scale;
+export function radius(p: Pick<Placement, 'motif' | 'scale'>, motifs: Motifs = MOTIFS): number {
+  return footprints(motifs).get(p.motif)!.reach * p.scale;
 }
 
 /** How far past an edge a doodle can poke out (line included), so it is drawn again there. */
-export function reach(p: Pick<Placement, 'motif' | 'scale'>): number {
-  return radius(p) + STROKE;
+export function reach(p: Pick<Placement, 'motif' | 'scale'>, motifs: Motifs = MOTIFS): number {
+  return radius(p, motifs) + STROKE;
 }
 
 /** A doodle's outline on the tile (optionally moved by dx, dy, for the copy across an edge). */
-export function outline(p: Placement, dx = 0, dy = 0): Point[] {
+export function outline(p: Placement, dx = 0, dy = 0, motifs: Motifs = MOTIFS): Point[] {
   const r = (p.rotate * Math.PI) / 180;
   const [cos, sin] = [Math.cos(r) * p.scale, Math.sin(r) * p.scale];
-  return FOOTPRINTS.get(p.motif)!.hull.map((v) => ({
-    x: p.x + dx + v.x * cos - v.y * sin,
-    y: p.y + dy + v.x * sin + v.y * cos,
-  }));
+  return footprints(motifs)
+    .get(p.motif)!
+    .hull.map((v) => ({
+      x: p.x + dx + v.x * cos - v.y * sin,
+      y: p.y + dy + v.x * sin + v.y * cos,
+    }));
 }
 
 /** A small seeded random number generator (mulberry32): numbers from 0 up to 1. */
@@ -414,7 +430,7 @@ const TIERS: readonly Tier[] = [
 ];
 
 /** Packs the doodles for a seed: heroes, then medium doodles, then fillers, every one kept clear. */
-export function placeDoodles(seed: number = DOODLE_SEED): Placement[] {
+export function placeDoodles(seed: number = DOODLE_SEED, motifs: Motifs = MOTIFS): Placement[] {
   const random = seededRandom(seed);
   const placed: Placement[] = [];
   const cell = 80;
@@ -425,17 +441,17 @@ export function placeDoodles(seed: number = DOODLE_SEED): Placement[] {
   const cellOf = (v: number) => Math.min(cells - 1, Math.floor(v / cellSize));
   /** True when c's outline stays GAP clear of every placed doodle's (heroes also spread out). */
   const clear = (c: Placement, spread: number) => {
-    const shape = outline(c);
+    const shape = outline(c, 0, 0, motifs);
     const fits = (p: Placement) => {
       const ox = Math.round((c.x - p.x) / TILE_SIZE) * TILE_SIZE;
       const oy = Math.round((c.y - p.y) / TILE_SIZE) * TILE_SIZE;
       const centres = Math.hypot(c.x - p.x - ox, c.y - p.y - oy);
       const extra = p.tier === 'hero' && c.tier === 'hero' ? spread : 0;
-      if (centres < radius(p) + radius(c) + extra && extra > 0) return false;
-      if (centres >= radius(p) + radius(c) + GAP + STROKE) return true;
+      if (centres < radius(p, motifs) + radius(c, motifs) + extra && extra > 0) return false;
+      if (centres >= radius(p, motifs) + radius(c, motifs) + GAP + STROKE) return true;
       // Two tiny fillers: their round reach is close to their shape, and checking it is quick.
       if (p.tier === 'filler' && c.tier === 'filler') return false;
-      return clearance(shape, outline(p, ox, oy)) >= GAP + STROKE;
+      return clearance(shape, outline(p, ox, oy, motifs)) >= GAP + STROKE;
     };
     if (!heroes.every(fits)) return false;
     const cx = cellOf(c.x);
@@ -495,12 +511,15 @@ export function placeDoodles(seed: number = DOODLE_SEED): Placement[] {
 }
 
 /** The tile as SVG markup: motifs defined once, each doodle (and its edge copies) a `<use>`. */
-export function renderDoodleTile(placements: readonly Placement[]): string {
-  const used = Object.keys(MOTIFS).filter((name) => placements.some((p) => p.motif === name));
-  const defs = used.map((name) => `<g id="${name}">${MOTIFS[name]}</g>`).join('\n');
+export function renderDoodleTile(
+  placements: readonly Placement[],
+  motifs: Motifs = MOTIFS,
+): string {
+  const used = Object.keys(motifs).filter((name) => placements.some((p) => p.motif === name));
+  const defs = used.map((name) => `<g id="${name}">${motifs[name]}</g>`).join('\n');
   const uses: string[] = [];
   for (const p of placements) {
-    const r = reach(p);
+    const r = reach(p, motifs);
     const xs = [p.x];
     const ys = [p.y];
     if (p.x < r) xs.push(round(p.x + TILE_SIZE, 1));

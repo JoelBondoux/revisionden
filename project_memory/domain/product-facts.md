@@ -844,6 +844,10 @@ Tags: #product #rules #limits #defaults
   a CSS mask at 7% ink; J8b), hidden with `prefers-contrast: more` and
   forced colours. The public site uses the same tile (the older 240px grid tile `doodles.svg` was
   removed in M7).
+  a CSS mask at 7% ink; J8b; hand-drawn since J8c: doodles redrawn by `doodleSketch.ts` with
+  wobble, corner overshoot, the odd double stroke and light scribble shading, about 58KB gzipped), hidden with `prefers-contrast: more` and
+  forced colours. The older 240px grid tile `doodles.svg` is kept only for the public site until it
+  moves to the new tile.
   Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
