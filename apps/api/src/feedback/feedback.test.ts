@@ -67,6 +67,20 @@ describe('sending feedback', () => {
     expect(await t.db.select().from(feedback)).toHaveLength(0);
   });
 
+  it("keeps the last problem's short code from a bug report, and refuses free text there", async () => {
+    const parent = await t.signInParent();
+    const ok = await sendAsParent(parent.headers, {
+      kind: 'bug',
+      device: { ...DEVICE, lastProblem: 'passkey:NotAllowedError:RD-7K2M9Q' },
+    });
+    expect(ok.status).toBe(201);
+    const text = await sendAsParent(parent.headers, {
+      kind: 'bug',
+      device: { ...DEVICE, lastProblem: 'Sam pressed cancel' },
+    });
+    expect(text.status).toBe(400);
+  });
+
   it('needs a signed-in student or parent', async () => {
     expect((await sendAsStudent({}, { kind: 'bug' })).status).toBe(401);
     expect((await sendAsParent({}, { kind: 'bug' })).status).toBe(401);

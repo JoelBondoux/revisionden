@@ -20,6 +20,7 @@ export function fakeOnboardingApi(overrides: Partial<OnboardingApi> = {}): Onboa
     updateMySubject: vi.fn(),
     getMyAvatar: vi.fn(async () => ({ avatarCode: '1' + '0'.repeat(28), earnedRewardIds: [] })),
     saveMyAvatar: vi.fn(),
+    reportPasskeyError: vi.fn(() => 'RD-TEST00'),
     unlockOptions: vi.fn(),
     unlockVerify: vi.fn(),
     ...overrides,
