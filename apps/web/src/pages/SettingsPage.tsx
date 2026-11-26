@@ -13,7 +13,7 @@ import {
   StarIcon,
   UsersIcon,
 } from '../components/icons';
-import { LinkButton, LinkTile } from '../components/links';
+import { ButtonTile, ButtonTiles, LinkButton } from '../components/links';
 import { useBugButton } from '../features/feedback/bugButtonContext';
 import { DeviceReminders } from '../features/notifications';
 import { AppearanceSettingsCard } from '../features/appearance';
@@ -37,68 +37,23 @@ export function SettingsPage() {
     <div className="stack">
       <h1>Me</h1>
       <MeHeader />
-      {/* Tapping Get help only opens the private Get help page; nothing is recorded. */}
-      <ul className="link-tiles">
-        <li>
-          <LinkTile
-            to="/help"
-            icon={<HeartIcon />}
-            title="Get help"
-            description="Private support if something is worrying you. Nobody is told you looked."
-          />
-        </li>
-        <li>
-          <LinkTile
-            to="/progress"
-            icon={<ProgressIcon />}
-            title="My progress"
-            description="Your stats, mastery and personal bests"
-          />
-        </li>
-        <li>
-          <LinkTile
-            to="/rewards"
-            icon={<CrownIcon />}
-            title="My rewards"
-            description="Your level, chapter and collections"
-          />
-        </li>
+      {/* Tapping Get help only opens the private Get help page; nothing is recorded. Short
+          labels, no helper sentences (owner, 2026-11-26, J15a). */}
+      <ButtonTiles label="Me">
+        <ButtonTile to="/help" icon={<HeartIcon />} label="Get help" tone="help" />
+        <ButtonTile to="/progress" icon={<ProgressIcon />} label="My progress" />
+        <ButtonTile to="/rewards" icon={<CrownIcon />} label="My rewards" />
         {/* A parent on this page (no student on the device) gets their way home straight away. */}
-        {!student && (
-          <li>
-            <ParentHomeTile />
-          </li>
-        )}
-        <li>
-          <LinkTile
-            to="/settings/look-and-sound"
-            icon={<StarIcon />}
-            title="Look and sound"
-            description="Effect style, theme, sound, reading comfort and read aloud"
-          />
-        </li>
-        <li>
-          <LinkTile
-            to="/settings/more"
-            icon={<SettingsIcon />}
-            title="More"
-            description="Subjects, reminders, profiles, parents, feedback, policies and about"
-          />
-        </li>
-      </ul>
+        {!student && <ParentHomeTile />}
+        <ButtonTile to="/settings/look-and-sound" icon={<StarIcon />} label="Look and sound" />
+        <ButtonTile to="/settings/more" icon={<SettingsIcon />} label="More" />
+      </ButtonTiles>
     </div>
   );
 }
 
 function ParentHomeTile() {
-  return (
-    <LinkTile
-      to="/parent"
-      icon={<HomeIcon />}
-      title="Parent home"
-      description="Stats, rewards you set and reminders"
-    />
-  );
+  return <ButtonTile to="/parent" icon={<HomeIcon />} label="Parent home" />;
 }
 
 function BackToMe() {
@@ -137,15 +92,10 @@ export function MoreSettingsPage() {
           <li>
             <InstallButton />
           </li>
-          <li>
-            <LinkTile
-              to="/family"
-              icon={<UsersIcon />}
-              title="Switch profile"
-              description="Choose who is revising"
-            />
-          </li>
         </ul>
+        <ButtonTiles>
+          <ButtonTile to="/family" icon={<UsersIcon />} label="Switch profile" />
+        </ButtonTiles>
         <label className="feedback__toggle">
           <input
             type="checkbox"
@@ -159,68 +109,28 @@ export function MoreSettingsPage() {
         </p>
       </Card>
       <Card title="Parents">
-        <ul className="link-tiles">
-          <li>
-            <ParentHomeTile />
-          </li>
-          <li>
-            <LinkTile
-              to="/ask-a-parent"
-              icon={<UsersIcon />}
-              title="Ask a parent to raise something"
-              description="If something feels wrong or unfair"
-            />
-          </li>
-        </ul>
+        <ButtonTiles>
+          <ParentHomeTile />
+          <ButtonTile to="/ask-a-parent" icon={<UsersIcon />} label="Ask a parent" />
+        </ButtonTiles>
       </Card>
       <Card title="Feedback">
-        <ul className="link-tiles">
-          <li>
-            <LinkTile
-              to="/feedback"
-              state={{ from: '/settings/more' }}
-              icon={<ChatIcon />}
-              title="Send feedback or report a bug"
-              description="Tell us what to fix or add"
-            />
-          </li>
-          <li>
-            <LinkTile
-              to="/feedback/mine"
-              icon={<DocumentIcon />}
-              title="Your feedback"
-              description="What you sent and what happened"
-            />
-          </li>
-          <li>
-            <LinkTile
-              to="/feedback/family"
-              icon={<UsersIcon />}
-              title="Your family's feedback (parents)"
-              description="Everything your family sent"
-            />
-          </li>
-        </ul>
+        <ButtonTiles>
+          <ButtonTile
+            to="/feedback"
+            state={{ from: '/settings/more' }}
+            icon={<ChatIcon />}
+            label="Send feedback"
+          />
+          <ButtonTile to="/feedback/mine" icon={<DocumentIcon />} label="My feedback" />
+          <ButtonTile to="/feedback/family" icon={<UsersIcon />} label="Family feedback" />
+        </ButtonTiles>
       </Card>
       <Card title="Policies and about">
-        <ul className="link-tiles">
-          <li>
-            <LinkTile
-              to="/legal"
-              icon={<ShieldIcon />}
-              title="Policies"
-              description="Privacy and terms in plain English"
-            />
-          </li>
-          <li>
-            <LinkTile
-              to="/about"
-              icon={<InfoIcon />}
-              title="About RevisionDen"
-              description="Version and what's new"
-            />
-          </li>
-        </ul>
+        <ButtonTiles>
+          <ButtonTile to="/legal" icon={<ShieldIcon />} label="Policies" />
+          <ButtonTile to="/about" icon={<InfoIcon />} label="About" />
+        </ButtonTiles>
       </Card>
       <ParentCanSee />
       <BackToMe />

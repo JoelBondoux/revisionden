@@ -26,6 +26,21 @@ describe('Me (the /settings page, W9)', () => {
     ]);
   });
 
+  it('shows them as chunky button tiles with short labels and no helper sentences (J15a)', async () => {
+    renderRoute('/settings');
+    await screen.findByRole('heading', { level: 1, name: 'Me' });
+    const main = screen.getByRole('main');
+    const names = within(main)
+      .getAllByRole('link')
+      .map((a) => a.textContent?.trim());
+    expect(names).toEqual(['Get help', 'My progress', 'My rewards', 'Look and sound', 'More']);
+    for (const name of names) {
+      expect(within(main).getByRole('link', { name: name! })).toHaveClass('button-tile');
+    }
+    expect(within(main).getByRole('link', { name: 'Get help' })).toHaveClass('button-tile--help');
+    expect(main.querySelector('.link-tile__description')).toBeNull();
+  });
+
   it('keeps the long settings off the main page', async () => {
     renderRoute('/settings');
     await screen.findByRole('heading', { level: 1, name: 'Me' });
@@ -75,6 +90,18 @@ describe('More (W9)', () => {
       '/about',
     ]) {
       expect(hrefs).toContain(href);
+    }
+    for (const name of [
+      'Switch profile',
+      'Parent home',
+      'Ask a parent',
+      'Send feedback',
+      'My feedback',
+      'Family feedback',
+      'Policies',
+      'About',
+    ]) {
+      expect(screen.getByRole('link', { name })).toHaveClass('button-tile');
     }
     expect(screen.getByRole('checkbox', { name: 'Show the bug button' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Back to Me/ })).toHaveAttribute('href', '/settings');

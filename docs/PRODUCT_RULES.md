@@ -941,12 +941,14 @@ own avatar." The page is now short enough for one phone screen (390 × 844):
   server says yes. The API's only rule is that every item is unlocked (locked items need their
   reward); there is no parent approval and no rate limit. The nickname comes from
   `GET /v1/student/me`.
-- **Then:** Get help (always the first link on the page), My progress, My rewards.
+- **Then:** Get help (always the first link on the page), My progress, My rewards, Look and sound, More, as J15a button tiles: an icon over a 2–3 word label, no helper sentences (owner, 2026-11-26). Get help uses `tone="help"` (calm, no page transition).
 - **Look and sound** (`/settings/look-and-sound`): Reading comfort, Appearance (theme), Effect style
   (students only; its picker is unchanged), Read aloud, Sound (with vibration).
 - **More** (`/settings/more`): My subjects, Reminders, This device (install, Switch profile, Show
   the bug button), Parents (Parent home, Ask a parent), Feedback (send, yours, your family's),
-  Policies and About, and What your parent can see. Both sub-pages end with "Back to Me".
+  Policies and About, and What your parent can see. Links there are button tiles too (Switch profile,
+  Parent home, Ask a parent, Send feedback, My feedback, Family feedback, Policies, About); the
+  install button keeps its own control. Both sub-pages end with "Back to Me".
 - A parent on `/settings` (no student on the device) sees no avatar header, and gets a Parent home
   tile on the main page as well as in More.
 - Code: `apps/web/src/pages/SettingsPage.tsx`, `apps/web/src/features/me/` (`MeHeader`,
