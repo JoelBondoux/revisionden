@@ -219,3 +219,9 @@ def test_a_solved_value_may_be_in_other_letters():
 def test_a_solved_value_never_contains_the_unknown_itself():
     result = check_working(["2x = x + a", "x = (x + a)/2"], expected={"solutions": ["a"]})
     assert result.final_answer_correct is False
+
+
+def test_a_letter_answer_may_be_written_either_way_round():
+    for final in ("a = x", "x = a"):
+        result = check_working(["x + a = 2a", final], expected={"solutions": ["a"]})
+        assert result.final_answer_correct is True, final
