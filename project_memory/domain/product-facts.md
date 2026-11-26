@@ -958,8 +958,11 @@ Tags: #product #rules #limits #defaults
   one, not family only. Development only (`FRIENDS_ENABLED`, lead 2026-11-26) until the notices
   are updated and the solicitor has reviewed them.
   Design approved 2026-11-26; screens (League page under Me, Home rank chip, parent Friends page), core rules, API and migration 0030 built
-  and weekly wins (settled on first open each week into `league_weeks`, 8 weeks kept; wins counted in
-  `students.league_wins` for the league rewards): `docs/FRIENDS_LEAGUE.md`
+  and weekly wins (finished weeks are settled into `league_weeks` when the child next opens the
+  league or their rewards, and also before any friendship ends: remove by the child or a parent,
+  block, report, or a parent turning friends off; 8 weeks kept; wins counted in
+  `students.league_wins` for the league rewards). A friendship is saved before its request is
+  marked started, so a failed save can be retried by approving again (FL4b): `docs/FRIENDS_LEAGUE.md`
   (nickname, avatar, title and weekly learning XP only; one parent per family approves; no chat;
   10-friend cap; siblings join automatically; reports seen by both families' parents and AppDeck;
   rank chip on Home (was the Map until Home landed), League page under Me; head-to-head challenges later).
