@@ -239,6 +239,29 @@ route) adds `page-enter` (and `page-enter--back` on Back) to `#main`; each style
 it. With reduced motion the page just swaps. Get help (`/help`, `/parent/help`) and the Quick exit
 never transition. An ordinary link does not either.
 
+## Pip, the Home button, and Home (J15b, owner direction 2026-11-26)
+
+- **Pip** (`features/juice/pip/`) is code-drawn original art in layers: the fox with shoulders, a
+  round frame he leans out of (the top of the ring behind his head, the bottom in front), the arm
+  always growing from the shoulder, one worn subject item, and on Home a subject prop and tint.
+  Outfits by subject: `outfits.ts` (`outfitFor`). Unisex touches (a moustache, a bow, freckles or
+  none, about half of days none) rotate by day (`touchFor`), never tied to the subject or student.
+- **The Home button**: Pip in a 56px round button, top left of every student screen and of
+  lessons and tests (a row of its own there). Accessible name "Home"; the tap target is the circle,
+  and his head leans out above it without covering anything. In a lesson or test, tapping him asks
+  **"Leave this lesson?"** (Keep going, focused first; Leave). The subject comes from the map or
+  Home, kept in memory only (`subject.ts`, nothing saved on the device).
+- **Idle loop** (`idle.ts`): one action about every 8 seconds (blink, wave, stretch, read, peek at
+  a timer), never the same twice running; naps outside 07:00 to 21:00; stops after a minute without
+  a tap or key; still in lessons and tests. Moves ease in and out through in-between frames and
+  return to rest, so nothing snaps. Reduced motion: a still pose.
+- **Home** (`/home`, `features/home/`) is the first screen after signing in or unlocking and where
+  Pip goes. One screen at 390 × 844, low on words: the level ring (count-up), streak, today's goal
+  rings (XP, 5-a-day with Start or Continue, cards due), **one** big bobbing next-mission button
+  (or "Pick a topic"), weak spots to fix, the friends league chip (soon), and this week's days with
+  the reward gift. It reads the map, the week's stats (read-only, so Rewards keeps its "New!"
+  moments), the 5-a-day and cards due. The map's Today strip moved here; the map is topics only.
+
 ## Never (Children's Code and `REWARDS.md`)
 
 - No lives or energy that run out and block learning; no waiting timers; no pay-to-continue.

@@ -6,6 +6,7 @@ import { BugButton } from '../features/feedback/BugButton';
 import { BugButtonProvider, useBugButtonVisible } from '../features/feedback/bugButtonContext';
 import { RewardNotices } from '../features/feedback/RewardNotices';
 import { MuteButton } from '../features/sound';
+import { PipHomeButton, usePipSubject } from '../features/juice/pip';
 import { OfflineBanner } from '../pwa/OfflineBanner';
 import { useStudent } from '../session/StudentContext';
 import { PublicHeader } from './PublicHeader';
@@ -60,6 +61,7 @@ function StudentLayout() {
   const cardsDue = useCardsDue();
   const avatarCode = useMyAvatarCode();
   const mainClass = useMainClass('app-main');
+  const pipSubject = usePipSubject();
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main">
@@ -69,6 +71,8 @@ function StudentLayout() {
       <BottomNav cardsDue={cardsDue} avatarCode={avatarCode} />
       <main id="main" className={mainClass} tabIndex={-1}>
         <header className="sound-header">
+          {/* Pip, the Home button, top left on every student screen (J15b). */}
+          <PipHomeButton subjectId={pipSubject} />
           <MuteButton />
           {/* In the top row, not floating, so it never covers the page (docs/PRODUCT_RULES.md). */}
           <BugButton />
@@ -110,12 +114,18 @@ export function FocusLayout() {
   );
 }
 
+/** Lessons and tests: Pip sits top left there too, and asks before leaving (J15b). */
+const isLessonPage = (pathname: string) =>
+  /^\/learn\/(topic\/[^/]+|daily|subject\/[^/]+\/(practice|start))$/.test(pathname);
+
 /** Parent screens: the bug button goes in a top row there, so it never covers the page (I15). */
 const isParentPage = (pathname: string) => /^\/(parent|family)(\/|$)/.test(pathname);
 
 function FocusPages() {
   const { pathname } = useLocation();
   const topRow = isParentPage(pathname);
+  const lesson = isLessonPage(pathname);
+  const pipSubject = usePipSubject();
   const floatingClass = useMainClass('focus-main');
   const mainClass = topRow ? 'focus-main' : floatingClass;
   return (
@@ -125,6 +135,11 @@ function FocusPages() {
         {topRow && (
           <header className="parent-top-row">
             <BugButton />
+          </header>
+        )}
+        {lesson && (
+          <header className="lesson-top-row">
+            <PipHomeButton subjectId={pipSubject} inLesson />
           </header>
         )}
         <Outlet />

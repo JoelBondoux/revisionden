@@ -1,0 +1,349 @@
+/* Home (J15b). Open layout on the page, no cards in cards: colour fields, rings and one big
+   button. Uses the look tokens, so every effect style restyles it. Fits 390 × 844 above the tab
+   bar; on smaller screens the page scrolls down, never sideways. */
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.home-hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.home-hero__pip {
+  width: 112px;
+  flex: none;
+}
+
+.home-hero__side {
+  display: grid;
+  flex: 1;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.home-ring {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+}
+
+.home-ring svg {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+
+.home-ring__track {
+  fill: none;
+  stroke: var(--color-locked-soft);
+}
+
+.home-ring__fill {
+  fill: none;
+  stroke-linecap: round;
+  stroke-dashoffset: var(--ring-full);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .home-ring__fill {
+    animation: home-ring-fill 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+}
+
+@keyframes home-ring-fill {
+  from {
+    stroke-dashoffset: var(--ring-empty);
+  }
+}
+
+.home-ring__inside {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  line-height: 1;
+  font-weight: var(--font-weight-black);
+}
+
+.home-ring__inside svg {
+  position: static;
+  width: 22px;
+  height: 22px;
+  transform: none;
+  color: var(--color-gold);
+}
+
+.home-ring__kicker {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.home-ring__big {
+  font-size: 2rem;
+}
+
+.home-streak {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-black);
+}
+
+.home-streak svg {
+  width: 28px;
+  height: 28px;
+  color: var(--color-streak);
+}
+
+.home-goals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-goals li {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+}
+
+.home-goals__label {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-extrabold);
+}
+
+.home-goals__cards {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 2px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-success-soft);
+  color: var(--color-text);
+}
+
+.home-goals__cards-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* The one big call to action, on a slanted colour field. */
+.home-next {
+  margin: var(--space-2) calc(-1 * var(--space-4)) 0;
+  padding: var(--space-4);
+  background: var(--color-mastery-fill);
+  clip-path: polygon(0 6%, 100% 0, 100% 94%, 0 100%);
+}
+
+.home-next__kicker {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-heading, var(--font-family));
+  font-size: var(--font-size-lg);
+}
+
+.home-cta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 80px;
+  padding: var(--space-3) var(--space-4);
+  border: 3px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-gold);
+  box-shadow: var(--shadow-3d-neutral);
+  color: var(--color-text-on-gold);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+/* Dark text on gold in every theme (beats the dark theme's link colour). */
+:root .home-cta.home-cta,
+:root .home-cta.home-cta * {
+  color: var(--color-text-on-gold);
+}
+
+.home-cta:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.home-cta__play {
+  display: grid;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 3px solid currentColor;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 40%);
+}
+
+.home-cta__text {
+  display: grid;
+  min-width: 0;
+}
+
+.home-cta__text b {
+  font-size: 1.35rem;
+  font-weight: var(--font-weight-black);
+  line-height: 1.15;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .home-cta {
+    animation: home-bob 2.6s ease-in-out infinite;
+  }
+}
+
+@keyframes home-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.home-row-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+}
+
+.home-row-title h2,
+h2.home-row-title {
+  margin: 0;
+}
+
+.home-league {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 36px;
+  padding: 2px var(--space-3);
+  border: 2px dashed var(--color-text-secondary);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.home-fix {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 2px 2px var(--space-2);
+  list-style: none;
+  overflow-x: auto;
+}
+
+.home-fix__chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target);
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid var(--color-weak);
+  border-radius: var(--radius-md);
+  background: var(--color-warning-soft);
+  box-shadow: var(--shadow-3d-neutral);
+  color: var(--color-text);
+  font-weight: var(--font-weight-black);
+  text-decoration: none;
+  width: max-content;
+  max-width: 15rem;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.home-fix li {
+  display: flex;
+  flex: none;
+}
+
+.home-fix__none {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+.home-week {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.home-week__days {
+  display: flex;
+  flex: 1;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-week__days li {
+  display: grid;
+  flex: 1;
+  max-width: 40px;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 2px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-black);
+}
+
+.home-week__days li.is-on {
+  background: var(--color-gold);
+  color: var(--color-text-on-gold);
+}
+
+.home-week__gift {
+  display: grid;
+  min-width: var(--tap-target);
+  min-height: var(--tap-target);
+  place-items: center;
+  color: var(--color-text);
+}
+
+.home-goals__start {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 var(--space-3);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-primary-edge);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-black);
+  text-decoration: none;
+}
+
+/* The install row (from the map's old Today strip) while the device can install. */
+.home-extras {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-extras:empty {
+  display: none;
+}

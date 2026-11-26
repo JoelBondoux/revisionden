@@ -1,5 +1,6 @@
 import { Navigate, useParams, type RouteObject } from 'react-router-dom';
 import { AppLayout, FocusLayout } from './layout/AppLayout';
+import { HomePage } from './features/home/HomePage';
 import { RouteChange } from './layout/RouteChange';
 import { LinkPage } from './features/onboarding/LinkPage';
 import { UnlockPage } from './features/onboarding/UnlockPage';
@@ -103,8 +104,9 @@ const screens: RouteObject[] = [
   {
     element: <AppLayout />,
     children: [
+      { path: '/home', element: <HomePage /> },
       { path: '/map', element: <MapPage /> },
-      { path: '/learn', element: <Navigate to="/map" replace /> },
+      { path: '/learn', element: <Navigate to="/home" replace /> },
       { path: '/learn/subject/:subjectId', element: <SubjectPage /> },
       { path: '/cards', element: <FlashcardsPage /> },
       { path: '/rewards', element: <RewardsPage /> },

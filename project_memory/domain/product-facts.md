@@ -224,10 +224,18 @@ Tags: #product #rules #limits #defaults
   (gold, tick), in progress (violet, fill level shows mastery %), weak spot (orange, pulsing
   glow), locked (grey). Each unit ends in a challenge that unlocks at 80% unit mastery. The Cards
   tab shows how many flashcards are due.
-- Map layout (J12b, design C "Your path", owner choice 2026-11-26): subject chips on one line that
-  scrolls sideways; one **Today** strip (daily goal, the Next mission row with its Go button, the
-  5-a-day row while there is one, and the install row while the device can install); then "Your
-  path": a row of unit badges that scrolls sideways, and the chosen unit's card with **all** its
+- Home and Pip (J15b, owner direction 2026-11-26): `/home` is the student's first screen after
+  signing in or unlocking (`/learn` and `DEFAULT_STUDENT_PAGE` go there). One screen: level ring,
+  streak, goal rings (daily XP, 5-a-day, cards due), one big next-mission button (else "Pick a
+  topic"), weak spots, a friends-league chip marked Soon, and this week's days studied with the
+  reward gift. Pip is a round "Home" button at the top left of every student screen and lesson; in
+  a lesson or test he asks "Leave this lesson?" first. He acts about every 8 s, naps 21:00 to 07:00,
+  stops after 60 s without input, keeps still in lessons and with reduced motion. He wears one item
+  for the current subject (and a prop on Home) plus a unisex touch that rotates by day. The map's
+  Today strip moved to Home: the map is now topics only. Code: `apps/web/src/features/home/`,
+  `apps/web/src/features/juice/pip/`; e2e `e2e/tests/home.spec.ts`.
+- Map layout (J12b, design C "Your path", owner choice 2026-11-26; Today strip moved to Home in
+  J15b): subject chips on one line that scrolls sideways; then "Your path": a row of unit badges that scrolls sideways, and the chosen unit's card with **all** its
   topics down a path that scrolls inside the card. The page itself never scrolls sideways.
   - The current unit is the one holding the next mission, else the first with an open topic. Its
     path opens on the next mission's topic, else the weakest weak spot, else the first topic in

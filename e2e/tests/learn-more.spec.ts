@@ -114,7 +114,8 @@ async function wrongAnswerFeedback(page: Page, baseURL: string) {
   await page.route('**/v1/student/learn/attempts', (route) => route.fulfill({ json: WRONG }));
   await page.goto('/');
   await page.getByRole('button', { name: "I'm a student: unlock with my passkey" }).click();
-  await expect(page.getByRole('heading', { level: 1, name: 'Topic map' })).toBeVisible();
+  // Unlocking lands on Home (J15b).
+  await expect(page).toHaveURL(/\/home$/);
   // Into the lesson without a reload (the unlocked session lives in the page).
   await page.evaluate(() => {
     window.history.pushState({}, '', '/learn/topic/gcse-maths-h-n4');
