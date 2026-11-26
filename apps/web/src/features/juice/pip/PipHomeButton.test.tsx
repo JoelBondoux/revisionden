@@ -48,6 +48,45 @@ describe('the Pip Home button', () => {
       expect(screen.queryByRole('heading', { name: 'Home page' })).not.toBeInTheDocument();
     });
 
+    it('keeps keyboard focus inside the question until you answer (J15b-2 focus trap)', async () => {
+      renderAt(<PipHomeButton env={env} inLesson />);
+      await userEvent.click(screen.getByRole('button', { name: 'Home' }));
+      const stay = screen.getByRole('button', { name: 'Keep going' });
+      const leave = screen.getByRole('button', { name: 'Leave' });
+      expect(stay).toHaveFocus();
+      await userEvent.tab();
+      expect(leave).toHaveFocus();
+      await userEvent.tab();
+      expect(stay).toHaveFocus();
+      await userEvent.tab({ shift: true });
+      expect(leave).toHaveFocus();
+    });
+
+    it('hides the rest of the page from assistive tech and taps while it asks', async () => {
+      renderAt(
+        <>
+          <PipHomeButton env={env} inLesson />
+          <main>
+            <button type="button">Check</button>
+          </main>
+        </>,
+      );
+      await userEvent.click(screen.getByRole('button', { name: 'Home' }));
+      expect(
+        screen.getByRole('button', { name: 'Check', hidden: true }).closest('[inert]'),
+      ).not.toBeNull();
+      await userEvent.keyboard('{Escape}');
+      expect(screen.getByRole('button', { name: 'Check' }).closest('[inert]')).toBeNull();
+    });
+
+    it('closes with Escape and puts focus back on Pip', async () => {
+      renderAt(<PipHomeButton env={env} inLesson />);
+      await userEvent.click(screen.getByRole('button', { name: 'Home' }));
+      await userEvent.keyboard('{Escape}');
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Home' })).toHaveFocus();
+    });
+
     it('goes Home when you choose Leave', async () => {
       renderAt(<PipHomeButton env={env} inLesson />);
       await userEvent.click(screen.getByRole('button', { name: 'Home' }));
@@ -74,7 +113,7 @@ describe('the Pip Home button', () => {
       const svg = () => container.querySelector('svg')!;
       expect(svg()).toHaveClass('pip-figure--rest');
       act(() => void vi.advanceTimersByTime(9000));
-      expect(svg().getAttribute('class')).toMatch(/pip-figure--(blink|wave|stretch|read|timer)/);
+      expect(svg().getAttribute('class')).toMatch(/pip-figure--(blink|tilt|ears|look)/);
       act(() => void vi.advanceTimersByTime(3500));
       expect(svg()).toHaveClass('pip-figure--rest');
     } finally {

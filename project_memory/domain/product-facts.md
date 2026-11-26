@@ -250,8 +250,12 @@ Tags: #product #rules #limits #defaults
   topic"), weak spots, a friends-league chip marked Soon, and this week's days studied with the
   reward gift. Pip is a round "Home" button at the top left of every student screen and lesson; in
   a lesson or test he asks "Leave this lesson?" first. He acts about every 8 s, naps 21:00 to 07:00,
-  stops after 60 s without input, keeps still in lessons and with reduced motion. He wears one item
-  for the current subject (and a prop on Home) plus a unisex touch that rotates by day. The map's
+  stops after 60 s without input, keeps still in lessons and with reduced motion. He wears one item for the current subject
+  and holds its prop in front of his ring (Pip v3, J15b-2: bigger head leaning out of the ring,
+  shoulders only, no arm; Maths a calculator, English Literature a book; soft flag washes for
+  French, German and Spanish), plus one of three gently-leaning looks that rotates by day (never
+  tied to subject or student). "Leave this lesson?" is a true modal: the page behind is inert and
+  focus stays in it. The student's avatar on the Me item sits in its own ring, head leaning out. The map's
   Today strip moved to Home: the map is now topics only. Code: `apps/web/src/features/home/`,
   `apps/web/src/features/juice/pip/`; e2e `e2e/tests/home.spec.ts`.
 - Map layout (J12b, design C "Your path", owner choice 2026-11-26; Today strip moved to Home in

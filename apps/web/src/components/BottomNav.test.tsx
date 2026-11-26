@@ -62,6 +62,12 @@ describe('BottomNav', () => {
     expect(me.querySelector('.main-nav__avatar--placeholder')).toBeNull();
   });
 
+  it('frames the avatar in its own ring, head leaning out, like Pip (J15b-2)', () => {
+    renderAt('/map', 0, AVATAR);
+    const me = screen.getByRole('link', { name: 'Me, settings and personalisation' });
+    expect(me.querySelector('.framed-avatar [data-frame="figure"] svg.avatar-svg')).not.toBeNull();
+  });
+
   it('shows a neutral placeholder on Me until there is an avatar', () => {
     for (const code of [undefined, null]) {
       const { unmount } = renderAt('/map', 0, code);
