@@ -90,8 +90,8 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-n16-lp-bounds",
     "expected_seconds": 30,
-    "prompt": "A mass is 4.6 kg, correct to 1 decimal place. Write down the lower bound of the mass.",
-    "answer": { "value": "4.55", "unit": "kg", "decimal_places": 2 },
+    "prompt": "A mass is 4.6 kg, correct to the nearest 0.1 kg. Write down the lower bound of the mass.",
+    "answer": { "value": "4.55", "unit": "kg" },
     "verify": { "expression": "46/10 - 5/100" },
     "marks": 1,
     "explanation": "Masses from 4.55 kg up to (but not including) 4.65 kg round to 4.6 kg. The lower bound is 4.55 kg: 0.05 kg below 4.6 kg.",
@@ -121,7 +121,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Answer backed by the maths engine. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Answer backed by the maths engine. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Precision fix (Codex review of #115): the prompt now says \"correct to the nearest\" and the answer has no decimal_places, since the question does not ask for the bound to be written to a set accuracy (4.550 and 91/20 are also right).",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -153,7 +153,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T20:10:32Z",
+          "at": "2026-11-26T04:25:39Z",
           "notes": "model answered \"4.55 kg\"; expected \"4.55\""
         },
         {
@@ -161,7 +161,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:46:01Z",
+          "at": "2026-11-26T04:25:45Z",
           "notes": "no problems found"
         }
       ]
@@ -174,8 +174,8 @@
     "difficulty": 3,
     "learning_point": "gcse-maths-h-n16-lp-bounds",
     "expected_seconds": 30,
-    "prompt": "A time is 3.20 seconds, correct to 2 decimal places. Write down the upper bound of the time.",
-    "answer": { "value": "3.205", "unit": "s", "decimal_places": 3 },
+    "prompt": "A time is 3.20 seconds, correct to the nearest 0.01 second. Write down the upper bound of the time.",
+    "answer": { "value": "3.205", "unit": "s" },
     "verify": { "expression": "320/100 + 5/1000" },
     "marks": 1,
     "explanation": "Times from 3.195 s up to (but not including) 3.205 s round to 3.20 s. The upper bound is 3.205 s: 0.005 s above 3.20 s.",
@@ -205,7 +205,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Answer backed by the maths engine. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Answer backed by the maths engine. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Precision fix (Codex review of #115): the prompt now says \"correct to the nearest\" and the answer has no decimal_places, since the question does not ask for the bound to be written to a set accuracy (4.550 and 91/20 are also right).",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -237,7 +237,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T20:10:40Z",
+          "at": "2026-11-26T04:25:51Z",
           "notes": "model answered \"3.205 seconds\"; expected \"3.205\""
         },
         {
@@ -245,7 +245,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:46:10Z",
+          "at": "2026-11-26T04:25:58Z",
           "notes": "no problems found"
         }
       ]

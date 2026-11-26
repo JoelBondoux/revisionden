@@ -6,6 +6,8 @@ import { sameAnswer } from '../../packages/core/src/answer-normalise.ts';
 import {
   meetsRounding,
   roundingOf,
+  standardForm,
+  withMinus,
   withoutSubject,
 } from '../../packages/core/src/answer-format.ts';
 
@@ -106,7 +108,18 @@ function expectation(item) {
       const value = item.answer.value;
       return {
         expected: value,
-        matches: (raw) => {
+        matches: (typed) => {
+          const raw = withMinus(String(typed));
+          // Standard form as marking reads it (markNumeric): any common spelling, and proper
+          // standard form when the answer is in standard form.
+          const said = withoutSubject(words(String(raw)), item.answer.subject);
+          const shown = standardForm(said);
+          const wanted = standardForm(value);
+          if (wanted && !shown?.proper) return false;
+          if (shown) {
+            if (rounding) return meetsRounding(said, value, rounding);
+            return closeEnough(shown.plain, wanted?.plain ?? value, item.answer.tolerance);
+          }
           const a = withoutSubject(String(raw), item.answer.subject);
           if (rounding) return meetsRounding(numberText(a) ?? '', value, rounding);
           return isPlainNumber(value)

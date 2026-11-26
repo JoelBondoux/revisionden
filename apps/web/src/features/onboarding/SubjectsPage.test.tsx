@@ -80,6 +80,23 @@ describe('SubjectsPage (parent)', () => {
     );
   });
 
+  it('labels the exam board and tier rows, each grouped for screen readers', async () => {
+    setup([subject('gcse-maths', 'Edexcel', 'higher'), subject('gcse-history', 'AQA', 'none')]);
+    const maths = await screen.findByRole('region', { name: 'Maths' });
+    const board = within(maths).getByRole('group', { name: 'Exam board' });
+    const tier = within(maths).getByRole('group', { name: 'Tier' });
+    expect(board.tagName).toBe('FIELDSET');
+    expect(within(board).getByRole('radio', { name: 'Pearson Edexcel' })).toBeInTheDocument();
+    expect(within(board).queryByRole('radio', { name: 'Higher' })).toBeNull();
+    expect(within(tier).getByRole('radio', { name: 'Higher' })).toBeInTheDocument();
+    expect(within(maths).getByText('Exam board')).toBeVisible();
+    expect(within(maths).getByText('Tier')).toBeVisible();
+    // A subject with no tiers has only the exam board row.
+    const history = within(card('History'));
+    expect(history.getByRole('group', { name: 'Exam board' })).toBeInTheDocument();
+    expect(history.queryByRole('group', { name: 'Tier' })).toBeNull();
+  });
+
   it('changes a board or tier', async () => {
     const { api, user } = setup([subject('gcse-maths', 'Edexcel', 'higher')]);
     await screen.findByRole('region', { name: 'Maths' });

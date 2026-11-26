@@ -132,6 +132,38 @@ test('a rounded numeric answer must be written to the asked accuracy, not just b
   assert.equal((await blind(item, '28.270')).result, 'fail');
 });
 
+test('a standard form answer matches in its common spellings, as marking does', async () => {
+  const item = draftItem('fixture-standard', undefined, {
+    type: 'numeric',
+    prompt: 'Fixture? Give your answer in standard form.',
+    answer: { value: '6.4 × 10^8' },
+    verify: { expression: '6.4 * 10^8' },
+  });
+  for (const answer of ['6.4 × 10⁸', '6.4x10^8', '6.4e8', '6.4 × 10^8.']) {
+    assert.equal((await blind(item, answer)).result, 'pass', answer);
+  }
+  assert.equal((await blind(item, '64 × 10^7')).result, 'fail');
+  assert.equal((await blind(item, '6.4 × 10^9')).result, 'fail');
+  const plain = draftItem('fixture-standard-plain', undefined, {
+    type: 'numeric',
+    prompt: 'Fixture?',
+    answer: { value: '0.00032', significant_figures: 2 },
+    verify: { expression: '0.00032' },
+  });
+  assert.equal((await blind(plain, '3.2 × 10⁻⁴')).result, 'pass');
+});
+
+test('a unicode minus in the blind answer is a minus', async () => {
+  const item = draftItem('fixture-minus', undefined, {
+    type: 'numeric',
+    prompt: 'Fixture?',
+    answer: { value: '-1' },
+    verify: { expression: '-1' },
+  });
+  assert.equal((await blind(item, '−1')).result, 'pass');
+  assert.equal((await blind(item, '1')).result, 'fail');
+});
+
 test('the blind model is asked to round as the question says', () => {
   const { prompt } = blindAnswerPrompt(mc);
   assert.doesNotMatch(prompt, /accuracy the question asks/);

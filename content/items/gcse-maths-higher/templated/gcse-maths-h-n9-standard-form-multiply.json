@@ -1,0 +1,502 @@
+[
+  {
+    "id": "gcse-maths-h-n9-t-standard-form-multiply-01",
+    "topic": "gcse-maths-h-n9",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n9-lp-calculate",
+    "expected_seconds": 80,
+    "prompt": "Work out (6 × 10^2) × (1.6 × 10^8). Give your answer in standard form.",
+    "answer": {
+      "expression": "9.6*10^10"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "(6*10^2)*(1.6*10^8)"
+    },
+    "steps": ["(6*10^2)*(1.6*10^8)", "(6*1.6)*10^(2+8)", "9.6*10^10"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 6 × 1.6 = 9.6 or 10^2 × 10^8 = 10^10", "A1 for 9.6 × 10^10"],
+    "hint": "Multiply the numbers, then multiply the powers of 10 by adding their indices.",
+    "explanation": "Multiply the numbers: 6 × 1.6 = 9.6. To multiply powers of 10, add their indices: 10^2 × 10^8 = 10^(2 + 8) = 10^10. This gives 9.6 × 10^10. 9.6 is at least 1 and less than 10, so this is already standard form.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "calculate with and interpret standard form",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "where 1 ≤ A < 10 and n is an integer",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-n9-standard-form-multiply",
+      "version": 3,
+      "seed": 1
+    },
+    "verification": {
+      "status": "draft",
+      "version": 4,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-n9-standard-form-multiply v3",
+          "at": "2026-11-26T04:59:35Z",
+          "notes": "Generated from template gcse-maths-h-n9-standard-form-multiply (version 3, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T04:59:35Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T04:59:46Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:59:51Z",
+          "notes": "model answered \"9.6 × 10^10\"; expected \"9.6*10^10\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:00:00Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n9-t-standard-form-multiply-02",
+    "topic": "gcse-maths-h-n9",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-n9-lp-calculate",
+    "expected_seconds": 100,
+    "prompt": "Work out (9 × 10^9) × (7.8 × 10^6). Give your answer in standard form.",
+    "answer": {
+      "expression": "7.02*10^16"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "(9*10^9)*(7.8*10^6)"
+    },
+    "steps": ["(9*10^9)*(7.8*10^6)", "(9*7.8)*10^(9+6)", "70.2*10^15", "7.02*10^16"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 70.2 × 10^15 or 70 200 000 000 000 000", "A1 for 7.02 × 10^16"],
+    "hint": "Multiply the numbers, then multiply the powers of 10 by adding their indices.",
+    "explanation": "Multiply the numbers: 9 × 7.8 = 70.2. To multiply powers of 10, add their indices: 10^9 × 10^6 = 10^(9 + 6) = 10^15. This gives 70.2 × 10^15. In standard form the first number is at least 1 and less than 10. 70.2 = 7.02 × 10^1, so 70.2 × 10^15 = 7.02 × 10^1 × 10^15 = 7.02 × 10^16.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "calculate with and interpret standard form",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "where 1 ≤ A < 10 and n is an integer",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-n9-standard-form-multiply",
+      "version": 3,
+      "seed": 2
+    },
+    "verification": {
+      "status": "draft",
+      "version": 3,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-n9-standard-form-multiply v3",
+          "at": "2026-11-26T04:59:35Z",
+          "notes": "Generated from template gcse-maths-h-n9-standard-form-multiply (version 3, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T04:59:35Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:00:01Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:00:08Z",
+          "notes": "model answered \"7.02 × 10^16\"; expected \"7.02*10^16\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:00:18Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n9-t-standard-form-multiply-03",
+    "topic": "gcse-maths-h-n9",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-n9-lp-calculate",
+    "expected_seconds": 100,
+    "prompt": "Work out (6.6 × 10^2) × (2 × 10^5). Give your answer in standard form.",
+    "answer": {
+      "expression": "1.32*10^8"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "(6.6*10^2)*(2*10^5)"
+    },
+    "steps": ["(6.6*10^2)*(2*10^5)", "(6.6*2)*10^(2+5)", "13.2*10^7", "1.32*10^8"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 13.2 × 10^7 or 132 000 000", "A1 for 1.32 × 10^8"],
+    "hint": "Multiply the numbers, then multiply the powers of 10 by adding their indices.",
+    "explanation": "Multiply the numbers: 6.6 × 2 = 13.2. To multiply powers of 10, add their indices: 10^2 × 10^5 = 10^(2 + 5) = 10^7. This gives 13.2 × 10^7. In standard form the first number is at least 1 and less than 10. 13.2 = 1.32 × 10^1, so 13.2 × 10^7 = 1.32 × 10^1 × 10^7 = 1.32 × 10^8.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "calculate with and interpret standard form",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "where 1 ≤ A < 10 and n is an integer",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-n9-standard-form-multiply",
+      "version": 3,
+      "seed": 3
+    },
+    "verification": {
+      "status": "draft",
+      "version": 3,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-n9-standard-form-multiply v3",
+          "at": "2026-11-26T04:59:35Z",
+          "notes": "Generated from template gcse-maths-h-n9-standard-form-multiply (version 3, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T04:59:35Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:00:19Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:00:28Z",
+          "notes": "model answered \"1.32 × 10^8\"; expected \"1.32*10^8\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:00:37Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n9-t-standard-form-multiply-04",
+    "topic": "gcse-maths-h-n9",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-n9-lp-calculate",
+    "expected_seconds": 100,
+    "prompt": "Work out (4.2 × 10^3) × (7 × 10^5). Give your answer in standard form.",
+    "answer": {
+      "expression": "2.94*10^9"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "(4.2*10^3)*(7*10^5)"
+    },
+    "steps": ["(4.2*10^3)*(7*10^5)", "(4.2*7)*10^(3+5)", "29.4*10^8", "2.94*10^9"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 29.4 × 10^8 or 2 940 000 000", "A1 for 2.94 × 10^9"],
+    "hint": "Multiply the numbers, then multiply the powers of 10 by adding their indices.",
+    "explanation": "Multiply the numbers: 4.2 × 7 = 29.4. To multiply powers of 10, add their indices: 10^3 × 10^5 = 10^(3 + 5) = 10^8. This gives 29.4 × 10^8. In standard form the first number is at least 1 and less than 10. 29.4 = 2.94 × 10^1, so 29.4 × 10^8 = 2.94 × 10^1 × 10^8 = 2.94 × 10^9.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "calculate with and interpret standard form",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "where 1 ≤ A < 10 and n is an integer",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-n9-standard-form-multiply",
+      "version": 3,
+      "seed": 4
+    },
+    "verification": {
+      "status": "draft",
+      "version": 3,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-n9-standard-form-multiply v3",
+          "at": "2026-11-26T04:59:35Z",
+          "notes": "Generated from template gcse-maths-h-n9-standard-form-multiply (version 3, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T04:59:35Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:00:38Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:00:49Z",
+          "notes": "model answered \"2.94 × 10^9\"; expected \"2.94*10^9\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:01:00Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n9-t-standard-form-multiply-05",
+    "topic": "gcse-maths-h-n9",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-n9-lp-calculate",
+    "expected_seconds": 100,
+    "prompt": "Work out (6 × 10^9) × (4.9 × 10^2). Give your answer in standard form.",
+    "answer": {
+      "expression": "2.94*10^12"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "(6*10^9)*(4.9*10^2)"
+    },
+    "steps": ["(6*10^9)*(4.9*10^2)", "(6*4.9)*10^(9+2)", "29.4*10^11", "2.94*10^12"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 29.4 × 10^11 or 2 940 000 000 000", "A1 for 2.94 × 10^12"],
+    "hint": "Multiply the numbers, then multiply the powers of 10 by adding their indices.",
+    "explanation": "Multiply the numbers: 6 × 4.9 = 29.4. To multiply powers of 10, add their indices: 10^9 × 10^2 = 10^(9 + 2) = 10^11. This gives 29.4 × 10^11. In standard form the first number is at least 1 and less than 10. 29.4 = 2.94 × 10^1, so 29.4 × 10^11 = 2.94 × 10^1 × 10^11 = 2.94 × 10^12.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "calculate with and interpret standard form",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "where 1 ≤ A < 10 and n is an integer",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-n9-standard-form-multiply",
+      "version": 3,
+      "seed": 5
+    },
+    "verification": {
+      "status": "draft",
+      "version": 3,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-n9-standard-form-multiply v3",
+          "at": "2026-11-26T04:59:35Z",
+          "notes": "Generated from template gcse-maths-h-n9-standard-form-multiply (version 3, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T04:59:35Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:01:01Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:01:09Z",
+          "notes": "model answered \"2.94 × 10^12\"; expected \"2.94*10^12\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:01:19Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  }
+]

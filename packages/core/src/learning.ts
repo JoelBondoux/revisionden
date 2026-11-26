@@ -16,8 +16,11 @@ import type { ItemType } from './schemas';
 import {
   meetsRounding,
   roundingOf,
+  standardForm,
   withoutSubject,
+  withMinus,
   withoutThousands,
+  withoutUnit,
   type Rounding,
 } from './answer-format';
 import { sameAnswer } from './answer-normalise';
@@ -76,6 +79,14 @@ export function markShortAnswer(key: ShortAnswerKey, answer: unknown): MarkResul
 
 /** A plain decimal or a simple fraction such as `3/4`; anything else is not a number. */
 function parseNumber(text: string): number | null {
+  // A mixed number: "1 1/3" is 4/3, never 11/3.
+  const mixed = /^(-?)(\d+)\s+(\d+)\/(\d+)$/.exec(text.trim());
+  if (mixed) {
+    const bottom = Number(mixed[4]);
+    if (bottom === 0) return null;
+    const size = Number(mixed[2]) + Number(mixed[3]) / bottom;
+    return mixed[1] ? -size : size;
+  }
   // Spaces may sit around a sign or "/", never between two digits ("3 87" is not 387).
   const value = text.trim().replace(/(?<!\d)\s+|\s+(?!\d)/g, '');
   if (/^-?\d+(\.\d+)?$/.test(value)) return Number(value);
@@ -89,16 +100,23 @@ export interface NumericKey extends Rounding {
   tolerance?: number;
   /** The answer may be written "<subject> = value", for example "t = 4". */
   subject?: string;
+  /** The answer's unit ("m", "cm^2", "pounds"): an answer may be typed with it. */
+  unit?: string;
 }
 
 export function markNumeric(key: NumericKey, raw: unknown): MarkResult {
   if (typeof raw !== 'string' || raw.trim() === '') return wrong;
-  const answer = withoutThousands(withoutSubject(raw, key.subject));
+  const answer = withoutThousands(
+    withoutUnit(withoutSubject(withMinus(raw), key.subject), key.unit),
+  );
+  // An answer in standard form needs proper standard form (1 <= a < 10) back, not 64 × 10^7.
+  const shown = standardForm(answer);
+  if (standardForm(key.value) && !shown?.proper) return wrong;
   const rounding = roundingOf(key);
   if (rounding) return mark(meetsRounding(answer, key.value, rounding));
-  const expected = parseNumber(key.value);
+  const expected = parseNumber(standardForm(key.value)?.plain ?? key.value);
   if (expected === null) return mark(squash(answer) === squash(key.value));
-  const given = parseNumber(answer);
+  const given = parseNumber(shown?.plain ?? answer);
   if (given === null) return wrong;
   return mark(Math.abs(given - expected) <= (key.tolerance ?? 1e-9));
 }

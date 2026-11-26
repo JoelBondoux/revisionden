@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import { useEffect, type CSSProperties } from 'react';
 import { Card } from '../../../components/Card';
 import './picker.css';
 import { useStudent } from '../../../session/StudentContext';
@@ -14,7 +14,9 @@ const swatchVars = (swatch: readonly [string, string, string]) =>
  */
 export function EffectStyleCard() {
   const { studentId } = useStudent();
-  const { styleId, unlocked, choose } = useEffectStyle();
+  const { styleId, unlocked, choose, refresh } = useEffectStyle();
+  // Check again on opening, so a style earned in the last lesson can be picked straight away.
+  useEffect(() => refresh(), [refresh]);
   if (!studentId) return null;
   return (
     <Card title="Effect style">

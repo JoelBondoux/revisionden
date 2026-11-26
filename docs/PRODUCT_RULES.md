@@ -201,7 +201,7 @@ formula and its assumptions. Summary of what is built:
 - Changing subjects later (E5): each child's card in Parent home links to "Subjects"
   (`/parent/subjects/:studentId`), where either parent can add a subject (the same picker as
   onboarding, with "Not sure" for the board, and only subjects for the child's level that they
-  do not already take), change its board or tier, or remove it. Removing asks first and says the
+  do not already take), change its board or tier (under the headings "Exam board" and "Tier"), or remove it. Removing asks first and says the
   child's progress is kept and comes back if the subject is added again: only the enrolment is
   deleted, never the answers or mastery. A subject with no questions ready yet shows "Questions
   coming soon". Adding, removing and changing a board or tier are important changes in the family
@@ -299,6 +299,19 @@ Product owner decision, 2026-11-25: **parent view only**.
   between groups of exactly three digits, the same one throughout, so `38 700` and `38,700` are
   38700, rounded or not. Any other space between two digits makes the answer wrong (`3 87` is not
   387); spaces around a sign or `/` are fine.
+- **Numeric answers** also read the unicode minus and dashes (`−1`, `–1`) as a minus, a mixed
+  number (`1 1/3` is 4/3, never 11/3; `withoutUnit`, `withMinus` in
+  `packages/core/src/answer-format.ts`), and an answer typed with the item's own `answer.unit`:
+  the unit as written (with `^2` or `²`), its words and symbols (`m` or `metres`, `£9600` or
+  `9600 pounds` for pounds, `100p` for pence, `4 h` for hours). A different unit (`15 cm` when the
+  unit is m) or a unit on an item without one stays wrong.
+- **Standard form** in numeric answers (`standardForm` in `packages/core/src/answer-format.ts`):
+  `a × 10^n` with ×, x, X, \*, · or ⋅ as the multiply sign and `^n`, `^(n)` or superscript
+  digits for the power, or e-notation (`6.4e8`), is read as its exact value. When the answer key is
+  in standard form, only proper standard form (1 ≤ a < 10) is right, so `64 × 10^7` and
+  `640000000` are wrong; when the key is a plain number, standard form is accepted by value. With
+  significant figures, the number in front shows the accuracy (`6.40 × 10^8` is 3 sf). A power of
+  ten beyond ±100 (`1e999999999`) is not read as standard form, so the answer is simply wrong.
 - **Maths working** may end with a letter answer such as `x = 2a` (or `2a = x`, or `a = x`
   either way round): a solved value may use other letters, never the unknown itself. Repeated
   alternatives count once, and a line with more than 64 ways to read it is marked wrong.
@@ -678,15 +691,24 @@ Mockups: screens 19 (student) and 20 (parent).
   `setComplete`, `levelUp`, plus `homeEnter` (Home entrance, once per visit), `nodePop` (topic
   nodes popping in on the map) and `locked` (tapping something locked) (`useSound().emit(event)`). Each plays the active effect style's sound and
   a vibration pattern. One sound pack per style, synthesised with Web Audio (no files): Sticker Book
-  (default: paper peel, slap, stamp, pencil tick), Pop Burst (bubbly pops, jelly boings), Starlight
-  (chimes, shimmer, soft swells). Styles without a pack yet use Sticker Book. J's style system calls
+  (paper peel, slap, stamp, pencil tick), Pop Burst (bubbly pops, jelly boings), Starlight
+  (chimes, shimmer, soft swells), Comic Pop (punchy low-passed squares, whooshes, POWs), Garden Grow
+  (soft woodwind and chimes), Pixel Arcade (chiptune arpeggios) and Doodle Diary (pencil scratches,
+  page flips, biro clicks, a rubber squeak for locked, a scribble flourish for unlocks), matched to
+  J's mockup previews (U6c). Square waves only in Comic Pop and Pixel Arcade, always low-passed
+  (2800 Hz) and under the loudness cap; "wrong" stays a soft sine or triangle in every style. The
+  default is one value, `DEFAULT_STYLE` in `features/sound/feedback/styles.ts` (Doodle Diary,
+  owner-approved; Sticker Book is now an unlockable style like the others). Unknown styles use the default. Style
+  ids: `sticker-book`, `pop-burst`, `starlight`, `comic-pop`, `garden-grow`, `pixel-arcade`,
+  `doodle-diary`. J's style system calls
   `useFeedbackStyle(styleId)`. Older `play()` calls for tap, correct (combo when it has a step),
   wrong, card flip, celebration, level up and reward unlocked follow the style too; the rest keep
   the main bank, and reward tiers (U4) keep their own sounds but add the matching vibration.
   - Vibration: a light tick for presses and flips, a double pulse for right answers, a rising rhythm
     for combos and a longer pattern for unlocks, set complete and level up; a light tick for the
     Home entrance and one short buzz for a locked tap; none for fast ticks or map nodes popping in.
-    Sticker Book feels crisp, Pop Burst bouncy, Starlight soft and long.
+    Sticker Book feels crisp, Pop Burst bouncy, Starlight soft and long, Comic Pop strong and
+    snappy, Garden Grow gentle, Pixel Arcade short rapid blips, Doodle Diary light pen taps.
   - Settings: a **Vibration** switch next to Sound, on by default, saved per device
     (`vibration` in `revisionden.sound`). It works on its own: muting sound does not stop vibration,
     and turning vibration off does not mute sound.
@@ -950,7 +972,9 @@ Requested by the product owner on 2026-11-25.
   to the organisation's name, and never hot-linked.
 - Privacy: its own layout with no navigation, sounds or API calls; nothing is fetched to show it
   (the data is built into the app); websites open in a new tab with `rel="noreferrer"`. A unit test
-  and an e2e test check that visiting it makes no API calls and no requests to other sites.
+  and an e2e test check that visiting it makes no API calls and no requests to other sites. The
+  effect style provider wraps every screen but loads nothing on Get help (J10e, tested in
+  `EffectStyleRoute.test.tsx`).
 - Style: calm, no game-feel effects (`features/help/help.css`). Follows the app's theme (light,
   dark, colour-blind) through its own `--help-*` colours; every text pair meets WCAG AA and Quick
   exit and control borders meet 3:1 in every theme (`helpTheme.test.ts`). The danger panel keeps a
