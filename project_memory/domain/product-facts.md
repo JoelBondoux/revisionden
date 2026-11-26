@@ -803,7 +803,8 @@ Tags: #product #rules #limits #defaults
   `apps/web/src/features/juice/styles/registry.ts`; one stylesheet per style, scoped to
   `:root[data-effect-style='<id>']`. Chosen per device in `localStorage` key
   `revisionden.effectStyle` (cookies and storage policy 1.7); a style that is not unlocked falls
-  back to Sticker Book. Pop Burst and Starlight unlock through progress milestones (J10b, not yet
+  back to Sticker Book. Lesson surround (J10a2): follows the style; the question and answers sit
+  on `.lesson__stage`, kept plain (Sticker Book: warm paper, night paper in dark mode, plain card). Pop Burst and Starlight unlock through progress milestones (J10b, not yet
   built). Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional

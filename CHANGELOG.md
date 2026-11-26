@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Lessons now match your look: in Sticker Book, practice happens on a warm paper page (or night paper in dark mode), with each question on a plain, easy-to-read card.
 - A new look for rewards and celebrations, Sticker Book: your daily goal and next mission are cards taped into a sticker book, mastered topics are gold stickers, and combos, stars and confetti slap onto the page like stickers.
 - Fixed: the "We've updated our policies" message no longer comes back every time you return. Tap "I've read the changes" and it's gone for good; close it and it waits 24 hours. It now shows only what changed since you last agreed, with a link to each full policy.
 - Parents: a new "Worth a look together" card on the stats page lists topics your child has found tricky for a while, with a "Learn it first" lesson link where there is one. It only appears when there is something to look at, and your child never sees it.
@@ -286,6 +287,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Changed
 
+- Lesson surround J10a2 (J): the lesson player wraps the question and answers in `.lesson__stage`; Sticker Book re-colours the `--arena-*` tokens to paper (night paper in dark mode) and gives the stage and answer options a plain card. Tests: the stage holds the question, nothing playful inside it, and the arena colours meet AA in light and dark.
 - Backlog: task B7 makes the "one new device a day" check for synced passkeys atomic with a unique constraint (follow-up to I5b #96; the rare duplicate is accepted until then).
 - AI marking allowance (K9): the parent dashboard's "AI marking spend" card (US$ figures) is now "AI marking allowance" with a percentage used and the reset date (`aiAllowance` in `packages/core/src/stats-allowance.ts`); no money leaves the API to a family client: the dashboard carries `aiAllowance`, `GET /v1/students/:id/ai-usage` returns `allowanceUsedPercent`/`usedUp`/`resetsOn`, and the family export shows `allowanceUsedPercent` per AI call instead of its cost (B2 cross-lane); the used-up message reads "You've used this month's AI marking allowance. It resets on 1 <month>."; policies ai-and-marking 1.1 and acceptable-use 1.2 (L cross-lane); "What your parent can see" says "How much of your AI marking allowance you have used this month". The raw cost stays operator-only.
 - Project memory: the public site's Open Graph card and touch icon (and how to remake them) recorded in product facts; duplicate hosting lines left by the domain move merged into one (workstream M).
