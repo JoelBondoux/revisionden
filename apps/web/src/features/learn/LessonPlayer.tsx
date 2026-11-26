@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
+import { reactToAnswer } from '../juice/pip/reactions';
 import { Link } from 'react-router-dom';
 import {
   endOnSuccess,
@@ -194,7 +195,8 @@ export function LessonPlayer({
   onFinish,
   aside,
   recall = false,
-  onAnswerReaction,
+  // J14: Pip in the lesson header reacts to every marked answer unless a page passes its own.
+  onAnswerReaction = reactToAnswer,
 }: LessonPlayerProps) {
   const api = useLearnApi();
   const { play } = useSound();
@@ -226,7 +228,7 @@ export function LessonPlayer({
   // J asked for the reaction to land with the feedback: this runs after the marked state renders.
   useEffect(() => {
     if (!reaction) return;
-    onAnswerReaction?.(reaction);
+    onAnswerReaction(reaction);
     setReaction(null);
   }, [reaction, onAnswerReaction]);
 
