@@ -2,11 +2,17 @@
   "topic": "gcse-maths-h-g9",
   "links": [
     {
-      "title": "Checking and securing understanding of the parts of a circle GCSE",
+      "title": "Checking and securing understanding of the parts of a circle",
       "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/circle-theorems/lessons/checking-and-securing-understanding-of-the-parts-of-a-circle",
       "provider": "oak",
       "level": "GCSE",
-      "checked_at": "2026-11-25"
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of the parts of a circle GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can identify the parts of a circle, including finding the area and perimeter of a sector.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
     }
   ]
 }
