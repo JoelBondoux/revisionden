@@ -282,12 +282,14 @@ Product owner decision, 2026-11-25: **parent view only**.
   word answers ignore case and extra spaces; maths answers also ignore every space, and treat the
   unicode minus as `-`, `×`, `·`, `*` (and `x` between two numbers) as one multiply, `÷` as `/`,
   superscripts as `^`, `≤`/`≥` as `<=`/`>=`, `√` as `sqrt`, and "and" or `;` in a list like `,`.
+  A multiply sign is kept between two numbers and before a sign (`3n × -2` is not `3n - 2`).
   When the item sets `answer.any_order`, products and sums may be in any order (signs stay with
-  their terms), a list of values in any order, and an equation either way round; coordinates and
+  their terms, and up to 4 letters on their own such as `pq` count as a product), a list of
+  values in any order, and an equation either way round; coordinates and
   inequalities are never reordered. `answer.units` lists units the answer may end with or leave
   off. Different forms of a value (`√32` and `4√2`, `three` and `3`) still need listing.
-- **Maths working** may end with a letter answer such as `x = 2a`: a solved value may use other
-  letters, never the unknown itself.
+- **Maths working** may end with a letter answer such as `x = 2a` (or `2a = x`, or `a = x`
+  either way round): a solved value may use other letters, never the unknown itself.
 - **Mastery** of a topic is recomputed from the student's last 30 attempts after every answer.
 - **Wrong answers** in a lesson (Learn mode, not the starting test) become a flashcard due at once,
   once per question.
