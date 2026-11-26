@@ -8,6 +8,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 ### What's new
 
 - Fixed: typed working questions no longer get stuck on "Couldn't check that answer" while we can't mark them. They're left out for now, and if one is already on screen it says it's skipped, with no XP lost, and Continue moves on.
+- Signing in on a computer: use your phone. On a computer or tablet that doesn't have your RevisionDen passkey, tap **Use my phone instead**, then scan the QR code your browser shows with the phone you use for RevisionDen. That computer then counts as one of your devices, and your parents are told. If it doesn't work, the page says why (for example, turn on Bluetooth and keep your phone close).
 - Tap any power to switch between x² and x^2 (tap again to switch back). It changes every power on the screen, and your device remembers which you prefer.
 - The Me page and its More page now use big, easy-to-tap buttons with short names, in the same style as the rest of the app.
 - Stuck on a question? Tap "Need a clue?" for a free hint. Still stuck? "Help me understand" walks you through how to solve it, step by step. You still answer it yourself afterwards (for half the XP), and it comes back later so it sticks.
@@ -147,6 +148,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 ### Fixed
 
 - Typed working without the maths engine (F12, bug RD-JE5DWP): with no `MATHS_ENGINE_URL`, `selectableItem` leaves `worked_maths` out of lessons, warm-ups, similar/easier/confidence picks, the daily set (stored sets too), recall and the starting test. An answer to one anyway returns `{ unmarked: true, itemId }` (`UnmarkedAttemptResponseSchema`, `LearnAttemptResultSchema`) instead of a 503 and saves nothing; the lesson says it is skipped and Continue moves on. Answers are still accepted through `servableItem`.
+- F10b (Codex review on train #303): dashboards now count a helped answer as wrong for mastery like the topic map (`StatsAnswer.helped`, loaded in `stats/load.ts`; accuracy keeps the raw score); help that arrives after the pupil has moved on no longer marks the next question as helped (`HelpPanel` ignores it once unmounted); and `x^(a+b)^2` keeps its brackets when raised again, so it no longer shows as x to the power a+b².
 
 - Topic map (J12d, owner feedback 2026-11-26): the Today strip shows "Goal smashed! <XP> XP" with a star once the daily goal is reached (the progress bar's value text says so too), and the sideways rows (`HScroller`) no longer centre the chosen item, which cut the item to its left mid-word: `map/hscroll.ts` `rowScrollTarget` moves only as far as needed and lines up on an item's edge (scroll padding now equals the gap; up to 40% extra space after the last item when needed). Unit and e2e tests.
 - S3-N-H: the eight N8 "Find k" (or "Find a") hints for surds and π now say to give the number in front of √ or π, so they no longer lead to answers like 36π that are marked wrong. Re-reviewed with the carry-out-the-steps rule.
@@ -231,6 +233,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Use my phone instead (E10): `POST /v1/device/unlock/options` takes `usePhone` and adds `hints: ['hybrid']`; the unlock screens offer the phone on computers and tablets and after no passkey was found, with plain messages for hybrid failures. Decision 0007 records the owner's choice.
 - Power switch (F9b, owner): a tap on any power in `MathText` switches every power on screen between raised and ^ (a shared store, remembered in `revisionden.powersSwitched`); computing starts with ^. The tap stops the event, so it never chooses an answer or turns a card. E2E tap test on a flashcard in `e2e/tests/powers.spec.ts`. Also fixes two F9 review findings: `2^(3)^2` now nests as 2 to the power 3^2, and read aloud and screen-reader words for powers now come from `parsePowers`, so 10^2.5 and 10^−3 are read as "to the power 2.5" and "to the power minus 3".
 - W9b fixes (Codex review of #277): the avatar editor re-reads unlocked items each time it opens, so a reward earned since the page loaded unlocks its item; keyboard focus now stays on the item just picked instead of jumping back to the top of the sheet.
 - W9b: Me and More use J15a `ButtonTiles` (2–3 word labels, no helper sentences; Get help `tone="help"`); screenshots in `docs/design/w9/` refreshed.

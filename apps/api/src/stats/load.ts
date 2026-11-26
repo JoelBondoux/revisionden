@@ -30,6 +30,7 @@ export async function loadStatsData(
     .select({
       at: attempts.createdAt,
       score: attempts.score,
+      helped: attempts.helped,
       mode: attempts.mode,
       startingTestId: attempts.startingTestId,
       topicId: topics.id,
@@ -59,6 +60,8 @@ export async function loadStatsData(
   const answers = rows.map((r) => ({
     at: r.at.getTime(),
     score: r.score,
+    // F10: a helped answer counts as wrong for mastery (masteryAt), not for accuracy.
+    helped: r.helped,
     topicId: r.topicId,
     subjectId: r.subjectId,
   }));

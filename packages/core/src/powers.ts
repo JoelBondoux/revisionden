@@ -6,7 +6,8 @@
  * - `^` raises a whole number or decimal, a single letter, or either with a minus sign
  *   (`10^-3`), or a bracket, shown without its brackets (`10^(2 + 8)` → 10²⁺⁸).
  * - Only the power is raised: `x^2y` is x²y.
- * - `a^b^c` is a to the power b^c (right to left, as in maths), and so is `2^(3)^2`.
+ * - `a^b^c` is a to the power b^c (right to left, as in maths), and so is `2^(3)^2`; a compound
+ *   power raised again keeps its brackets (`x^(a+b)^2` → x^((a+b)²)).
  * - A `^` with nothing it can raise (`Press ^`, `x^`, an unclosed bracket) stays as it is.
  * - Computing subjects keep `^`, a real symbol there (owner): see `showsPowers`.
  */
@@ -53,19 +54,29 @@ function exponent(text: string, start: number): { parts: PowerPart[]; end: numbe
   // a^b^c and 2^(3)^2: the power has its own power.
   const nested = text[base.end] === '^' ? exponent(text, base.end + 1) : null;
   if (!nested) return base;
-  return { parts: [...base.parts, { kind: 'sup', parts: nested.parts }], end: nested.end };
+  // x^(a+b)^2: a compound power raised again keeps its brackets, or it would read as a+b².
+  const raised = base.compound
+    ? [{ kind: 'text' as const, text: '(' }, ...base.parts, { kind: 'text' as const, text: ')' }]
+    : base.parts;
+  return { parts: [...raised, { kind: 'sup', parts: nested.parts }], end: nested.end };
 }
 
 /** A bracket (shown without its brackets) or a single number or letter, before any power of its own. */
-function powerBase(text: string, start: number): { parts: PowerPart[]; end: number } | null {
+function powerBase(
+  text: string,
+  start: number,
+): { parts: PowerPart[]; end: number; compound: boolean } | null {
   if (text[start] === '(') {
     const close = closing(text, start);
     if (close < 0) return null;
-    return { parts: parsePowers(text.slice(start + 1, close)), end: close + 1 };
+    const inner = text.slice(start + 1, close);
+    // More than one number or letter, as in (a+b) or (2y), is compound; (3) is not.
+    const compound = ATOM.exec(inner)?.[0] !== inner;
+    return { parts: parsePowers(inner), end: close + 1, compound };
   }
   const atom = ATOM.exec(text.slice(start));
   if (!atom) return null;
-  return { parts: [{ kind: 'text', text: atom[0] }], end: start + atom[0].length };
+  return { parts: [{ kind: 'text', text: atom[0] }], end: start + atom[0].length, compound: false };
 }
 
 function closing(text: string, open: number): number {

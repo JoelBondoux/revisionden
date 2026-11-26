@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { helpButton, type LearnItem } from '@revisionden/core';
 import { Button } from '../../components/Button';
 import { MathText } from '../../components/MathText';
@@ -26,16 +26,26 @@ export function HelpPanel({
   const [failed, setFailed] = useState(false);
   const [open, setOpen] = useState(false);
   const next = helpButton(item, clueShown);
+  // Help that arrives after the pupil has moved on belongs to the question they left: it must
+  // never mark the next question as helped (Codex review on #303).
+  const mounted = useRef(true);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
   async function help() {
     setFailed(false);
     try {
       const fetched = steps ?? (await api.getItemHelp(item.id));
+      if (!mounted.current) return;
       setSteps(fetched);
       setOpen(true);
       onHelped();
     } catch {
-      setFailed(true);
+      if (mounted.current) setFailed(true);
     }
   }
 

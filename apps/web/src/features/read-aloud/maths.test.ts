@@ -25,6 +25,7 @@ describe('reading maths aloud', () => {
     ['e^(x^2)', 'e to the power x squared'],
     ['x^n + 1', 'x to the power n plus 1'],
     ['Press ^ to raise', 'Press ^ to raise'],
+    ['x^(a+b)^2', 'x to the power (a plus b) squared'],
   ])('reads %s as "%s"', (text, spoken) => {
     expect(mathsToSpeech(text)).toBe(spoken);
   });
