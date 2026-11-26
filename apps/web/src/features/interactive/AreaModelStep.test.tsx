@@ -39,7 +39,11 @@ function Harness({ step, disabled = false }: { step: AreaItem; disabled?: boolea
 describe('the area model step', () => {
   it('shows the prompt and the quadratic as three terms', () => {
     render(<Harness step={item()} />);
-    expect(screen.getByText('Make x^2 + 5x + 6 into a rectangle.')).toBeInTheDocument();
+    // The prompt shows the power as a superscript, never a typed ^ (F9), and reads it aloud.
+    const prompt = document.querySelector('.question__prompt')!;
+    expect(prompt.querySelector('sup')).toHaveTextContent('2');
+    expect(prompt.querySelector('[aria-hidden="true"]')).not.toHaveTextContent('^');
+    expect(prompt).toHaveTextContent(/x squared/);
     const expr = screen.getByTestId('area-expression');
     expect(expr).toHaveTextContent('x² + 5x + 6');
   });

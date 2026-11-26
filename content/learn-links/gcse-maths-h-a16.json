@@ -1,0 +1,47 @@
+{
+  "topic": "gcse-maths-h-a16",
+  "links": [
+    {
+      "title": "Other graphs - Edexcel",
+      "url": "https://www.bbc.co.uk/bitesize/guides/zc62srd/revision/1",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "board": "edexcel",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Quadratic graphs - Other graphs - Edexcel - GCSE Maths Revision - Edexcel - BBC Bitesize",
+        "teaches": "Quadratic, cubic, reciprocal and exponential graphs, the equation of a circle and of a tangent to it, and sketching graphs (Higher parts).",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Drawing the graph for the equation of a circle",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/non-linear-graphs/lessons/drawing-the-graph-for-the-equation-of-a-circle",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a16-lp-circle-equation"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Drawing the graph for the equation of a circle GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can generate coordinate pairs using the equation of a circle in the form x^2 + y^2 = r^2 and then draw the graph.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Finding the equation of the tangent to a circle",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/real-life-graphs/lessons/finding-the-equation-of-the-tangent-to-a-circle",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a16-lp-tangents"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Finding the equation of the tangent to a circle GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can find the equation of the tangent to a circle at any given point.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

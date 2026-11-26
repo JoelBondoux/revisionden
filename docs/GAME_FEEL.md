@@ -71,6 +71,14 @@ No plain underlined text links. Use the shared components in `apps/web/src/compo
   such as the parent home, settings and stats; wrap a list in `<ul className="link-tiles">`. The
   link's text is the title (its screen reader name, matching what it shows, WCAG 2.5.3), the
   description is read as its description, and the link stretches over the whole card.
+- **ButtonTile** in a **ButtonTiles** grid (J15a, owner request 2026-11-26): a chunky button with
+  a big icon over a short label (2–3 words, no helper sentence), two to a row on phones and more on
+  wider screens. Used on parent home and Policies, and offered to W9 for Me; `LinkTile` stays where
+  a description is needed. Each effect style gives it its own look and press (inked sketch, peeled
+  sticker, glossy candy, starry glass, comic panel, garden pot, 8-bit block); the press sound and
+  vibration are U's `buttonPress` for the active style, which plays on every link tap. An optional
+  `badge` (a count, or who a policy is for) is read as part of its name. `tone="help"` is Get help's
+  own calm tile.
 - **LinkChip**: a small pill link inside a card ("Details", "Change").
 - **TextLink**: only for links inside sentences and long prose (policies). Bold, coloured, a soft
   bar under it and an underline on hover; it stays inline for readability.
@@ -205,6 +213,31 @@ tab say so to screen readers.
   Everything else stays transform and opacity only.
 - Every style plays its own sounds and vibration through the sound workstream's events (U6).
   Wiring the style into those events follows once U's PR is on dev.
+
+## Dev style tester (J12c, owner request 2026-11-26)
+
+On the dev environment only, Settings → Effect style has a dashed "Tester: try any style" box
+("Dev only: doesn't unlock anything for real."): any of the seven styles, Light or Dark, and
+Standard or Colour-blind colours, applied at once. The API decides: `GET
+/v1/student/rewards/effect-styles` adds `testerStyles` only when `ENVIRONMENT=development` and
+`STYLE_TESTER=true` (set for `env.dev` in `apps/api/wrangler.toml`; a config test checks staging
+and production never set it, and local MSW mocks send it). The web shows the box only when that
+list arrives, so a stray build cannot show it. The style being tried is saved on the device
+(`revisionden.effectStyleTester`), apart from the real choice, and only counts while the server
+still sends the list; "Reset to my unlocked style" clears it. Trying a style grants no reward,
+changes no unlock and records nothing on the server.
+
+## Page transitions (J15a, owner request 2026-11-26)
+
+Opening a page from a button tile plays the effect style's own move on the main area, and Back
+plays it in reverse: Doodle Diary a page turn, Sticker Book a peel, Pop Burst a bouncy pop-in,
+Starlight a twinkle fade, Comic Pop a panel zoom, Garden Grow a grow-in and Pixel Arcade a stepped
+8-bit slide. Each is 350ms at most, uses transform and opacity only, and never blocks a tap (it is
+a CSS animation on the page, nothing on top of it). `ButtonTile` marks the navigation
+(`state.via = 'tile'`) and `PageTransition` (in `features/juice/transitions/`, mounted for every
+route) adds `page-enter` (and `page-enter--back` on Back) to `#main`; each style's stylesheet draws
+it. With reduced motion the page just swaps. Get help (`/help`, `/parent/help`) and the Quick exit
+never transition. An ordinary link does not either.
 
 ## Never (Children's Code and `REWARDS.md`)
 

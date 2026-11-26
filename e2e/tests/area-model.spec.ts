@@ -39,6 +39,10 @@ const brackets: Record<string, string> = {
   [GUIDED]: '(x + 2)(x + 4)',
 };
 
+/** The step's question; the power shows as a superscript (F9), so match the rest of it. */
+const prompt = (page: Page, rest: string) =>
+  page.locator('.question__prompt', { hasText: `+ ${rest} into a rectangle` });
+
 async function stubLesson(page: Page, { draft = true } = {}) {
   const feedback: unknown[] = [];
   const attempts: unknown[] = [];
@@ -87,7 +91,7 @@ test('the area model lesson by touch: tap a tile, pick the pair, check, and say 
 }) => {
   const { feedback, attempts } = await stubLesson(page);
   await page.goto('/learn/topic/gcse-maths-h-a4');
-  await expect(page.getByText(/Make x\^2 \+ 5x \+ 6 into a rectangle/)).toBeVisible();
+  await expect(prompt(page, '5x + 6')).toBeVisible();
 
   await page.getByRole('button', { name: 'The x² square' }).click();
   await expect(page.getByTestId('area-term-square')).toHaveClass(/area-term--lit/);
@@ -98,7 +102,7 @@ test('the area model lesson by touch: tap a tile, pick the pair, check, and say 
   await page.getByRole('button', { name: 'Check' }).click();
   await page.getByRole('button', { name: /Continue|Finish/ }).click();
 
-  await expect(page.getByText(/Make x\^2 \+ 6x \+ 8 into a rectangle/)).toBeVisible();
+  await expect(prompt(page, '6x + 8')).toBeVisible();
   await page.getByRole('radio', { name: '2 and 4' }).check();
   await page.getByRole('button', { name: 'Check' }).click();
   const helped = page.getByRole('group', { name: 'Did this help?' });
@@ -179,7 +183,7 @@ test.describe('single screen for doing things (390 × 844, default text)', () =>
     await page.goto('/learn/topic/gcse-maths-h-a4');
     for (const pairChosen of [false, true]) {
       if (pairChosen) await page.getByRole('radio', { name: '2 and 3' }).check();
-      await expect(page.getByText(/Make x\^2 \+ 5x \+ 6 into a rectangle/)).toBeInViewport({
+      await expect(prompt(page, '5x + 6')).toBeInViewport({
         ratio: 1,
       });
       await expect(page.locator('.area-svg')).toBeInViewport({ ratio: 1 });

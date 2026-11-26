@@ -1,5 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { EffectStylesResponseSchema } from '@revisionden/core';
+import { EFFECT_STYLE_UNLOCKS, EffectStylesResponseSchema } from '@revisionden/core';
+import { eq } from 'drizzle-orm';
 import { rewards } from '@revisionden/db';
 import { createTestContext, type TestContext } from './test/helpers';
 
@@ -39,7 +40,38 @@ describe('effect styles a student has unlocked', () => {
     expect(await styles(headers)).toEqual({ unlocked: ['pop-burst', 'starlight'] });
   });
 
+  it('never lists tester styles outside development: a locked style stays locked', async () => {
+    const { headers } = await t.familyStudent('es_locked');
+    const body = await styles(headers);
+    expect(body.testerStyles).toBeUndefined();
+    expect(body.unlocked).not.toContain('pixel-arcade');
+  });
+
   it('needs a signed-in student device', async () => {
     expect((await t.app.request('/v1/student/rewards/effect-styles')).status).toBe(401);
+  });
+});
+
+// J12c: on the dev environment only (STYLE_TESTER with ENVIRONMENT=development), testers may try
+// every style. The response says so; nothing is unlocked or recorded for real.
+describe('the dev style tester', () => {
+  let dev: TestContext;
+
+  beforeAll(async () => {
+    dev = await createTestContext({ config: { styleTester: true } });
+  });
+
+  afterAll(async () => {
+    await dev.close();
+  });
+
+  it('lists every style a tester may try, and still only the really unlocked ones', async () => {
+    const { studentId, headers } = await dev.familyStudent('es_tester');
+    const res = await dev.app.request('/v1/student/rewards/effect-styles', { headers });
+    const body = EffectStylesResponseSchema.parse(await res.json());
+    expect(body.unlocked).toEqual([]);
+    expect(body.testerStyles).toEqual(EFFECT_STYLE_UNLOCKS.map((u) => u.style));
+    // Trying styles grants nothing.
+    expect(await dev.db.select().from(rewards).where(eq(rewards.studentId, studentId))).toEqual([]);
   });
 });

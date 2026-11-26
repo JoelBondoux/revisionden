@@ -1,7 +1,8 @@
 # 0010: Question generation rules (sampling, templates, set texts, fact tables, readability)
 
 - Status: accepted by the product owner on the lead's recommendations, relayed to workstream QG
-  by the lead, 2026-11-26. Item 9 goes to the owner's solicitor; item 10 is pending.
+  by the lead, 2026-11-26. Item 9 goes to the owner's solicitor; item 10 decided later the same
+  day (below).
 - Date: 2026-11-26
 
 ## Context
@@ -37,9 +38,21 @@ maths can reach 600 to 1,000 verified items at a review cost one parent can keep
 9. **Not decided here:** short quotes from in-copyright set texts and films go to the owner's
    solicitor. It stays open in `project_memory/operations/contradictions.md` and the owner's to-do
    list.
-10. **Pending** (the owner settles it now that Oak's licence is confirmed, below): intended
-    answer is individual approval of teaching notes at first, then sampling after 50 clean
-    approvals; Oak's open-licence text may inspire drafts but is never a citation source.
+10. **Decided** (owner, 2026-11-26, after Oak's licence was confirmed below):
+    - **In-house teaching notes** are approved individually at first. After 50 consecutive notes
+      approved with no corrections, notes move to batch sampling at the same rule as fact-table
+      items (10%, at least 30). Any correction resets the count to zero.
+    - **Oak lessons published after 1 September 2022** (Open Government Licence v3.0) may be
+      adapted as a **starting draft only**. Oak's required attribution is shown wherever adapted
+      text appears, and nothing implies Oak endorses RevisionDen.
+    - **Never used:** Oak content published before 1 September 2022, and anything Oak marks as
+      third-party.
+    - **Oak is never a citation source.** Every claim in a note is still cited to an official
+      source under `docs/VERIFICATION.md`.
+    - Not built yet: notes have no content schema. When it is added, it needs an
+      `adapted_from` field (for example `oak`, with the lesson URL and publication date) that the
+      validator refuses without the attribution statement, and refuses for a date before
+      1 September 2022.
 
 ## Oak's licence: confirmed (read directly, 2026-11-26)
 

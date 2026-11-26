@@ -3,6 +3,7 @@ import { readdir, readFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import { createValidators } from './schemas.mjs';
 import { learnLinkErrors } from './learn-links.mjs';
+import { hintErrors } from './hint-check.mjs';
 import { controlCharacters } from '../verify/record.mjs';
 import {
   roundingOf,
@@ -174,6 +175,7 @@ function linkErrors(content) {
     if (MATHS_TYPES.has(item.type) && !item.checked_by.includes('maths-engine')) {
       fail('checked_by must include maths-engine for maths items');
     }
+    hintErrors(item).forEach(fail);
     if (item.type === 'numeric') [...roundingErrors(item), ...formErrors(item)].forEach(fail);
     if (item.type === 'worked_maths') workedFormErrors(item).forEach(fail);
     if (item.type === 'area_model') areaModelErrors(item).forEach(fail);

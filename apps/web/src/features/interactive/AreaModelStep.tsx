@@ -11,6 +11,7 @@ import {
   type LearnItem,
 } from '@revisionden/core';
 import { Button } from '../../components/Button';
+import { MathText } from '../../components/MathText';
 import { sendLessonTap } from './lessonFeedback';
 import './interactive.css';
 
@@ -74,7 +75,9 @@ export function AreaModelStep({ item, draft, disabled, onChange }: AreaModelStep
 
   return (
     <div className="question area-model">
-      <p className="question__prompt">{item.prompt}</p>
+      <p className="question__prompt">
+        <MathText text={item.prompt} subject={item.topicId} />
+      </p>
       <p className="area-expression" data-testid="area-expression">
         <Term tile="square" lit={lit}>
           x²

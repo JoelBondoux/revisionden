@@ -11,6 +11,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "Triangular numbers count dots in triangles: 1, 1 + 2, 1 + 2 + 3, ... The others are square, cube and even numbers.",
+    "hint": "Triangular numbers count dots arranged in triangles: each new row has one more dot than the row before.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -57,20 +58,20 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:55:36Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T11:26:58Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -87,6 +88,7 @@
     "verify": { "expression": "6^3" },
     "marks": 1,
     "mark_scheme": ["B1 for 216"],
+    "hint": "Cube numbers are 1^3, 2^3, 3^3, ... so work out 6^3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -132,14 +134,6 @@
           "notes": "model answered \"216\"; expected \"216\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:55:48Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -154,6 +148,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:33:09Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -170,6 +172,7 @@
     "verify": { "expression": "12 + 19" },
     "marks": 1,
     "mark_scheme": ["B1 for 31"],
+    "hint": "Add the last two terms.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -215,14 +218,6 @@
           "notes": "model answered \"31\"; expected \"31\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:56:01Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -237,6 +232,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:33:19Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -254,6 +257,7 @@
     "marks": 1,
     "mark_scheme": ["B1 for 26"],
     "explanation": "The differences are 3, 5, 7, so the next difference is 9: 17 + 9 = 26.",
+    "hint": "The differences go up by 2 each time. Find the next difference and add it to the last term.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -299,14 +303,6 @@
           "notes": "model answered \"26\"; expected \"26\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:17:02Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -321,6 +317,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:33:29Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -338,6 +342,7 @@
     "steps": ["3 + (a + 3) = 11", "a + 6 = 11", "a = 5"],
     "marks": 3,
     "mark_scheme": ["M1 for 3 + (a + 3) = 11", "M1 for a + 6 = 11", "A1 for 5"],
+    "hint": "Write the fourth term as the sum of the second and third terms, set it equal to 11, and solve.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -383,14 +388,6 @@
           "notes": "model answered \"5\"; expected \"5\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:28:10Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -405,6 +402,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:33:39Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -421,6 +426,7 @@
     "verify": { "expression": "24*2" },
     "marks": 1,
     "mark_scheme": ["B1 for 48"],
+    "hint": "Find what each term is multiplied by to get the next one.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -466,14 +472,6 @@
           "notes": "model answered \"48\"; expected \"48\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:56:56Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -488,6 +486,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:33:49Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -504,6 +510,7 @@
     "verify": { "expression": "27/81" },
     "marks": 1,
     "mark_scheme": ["B1 for 1/3"],
+    "hint": "Divide any term by the one before it.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -567,9 +574,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:43:10Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:33:59Z",
           "notes": "no problems found"
         }
       ]
@@ -588,6 +595,7 @@
     },
     "marks": 1,
     "explanation": "Each term is the one before multiplied by √2: √2 × √2 = 2, 2 × √2 = 2√2, and 2√2 × √2 = 4. So the next term is 4 × √2 = 4√2.",
+    "hint": "Find what each term is multiplied by to get the next one, then multiply the last term by it.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["author"],
     "citations": [
@@ -643,9 +651,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:52:21Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:34:09Z",
           "notes": "no problems found"
         }
       ]
@@ -663,6 +671,7 @@
     "verify": { "expression": "5*3^3" },
     "marks": 1,
     "mark_scheme": ["B1 for 135"],
+    "hint": "Each term is the one before multiplied by 3, starting from 5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -708,14 +717,6 @@
           "notes": "model answered \"135\"; expected \"135\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:58:06Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -730,6 +731,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:34:19Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -744,6 +753,7 @@
     "front": "The next cube number after 27",
     "back": "64",
     "explanation": "Cube numbers are 1^3 = 1, 2^3 = 8, 3^3 = 27, 4^3 = 64. The next cube after 27 is 64.",
+    "hint": "Cube numbers are 1 × 1 × 1, 2 × 2 × 2, 3 × 3 × 3, ... Which one comes after 27?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["author"],
     "citations": [
@@ -799,9 +809,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:52:29Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:34:29Z",
           "notes": "no problems found"
         }
       ]
@@ -817,6 +827,7 @@
     "front": "The 5th triangular number",
     "back": "15",
     "explanation": "Triangular numbers add the next whole number each time: 1, 1 + 2 = 3, 3 + 3 = 6, 6 + 4 = 10, 10 + 5 = 15. The 5th is 15.",
+    "hint": "Triangular numbers add the next whole number each time: 1, then 1 + 2, and so on.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["author"],
     "citations": [
@@ -872,9 +883,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:52:41Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:34:38Z",
           "notes": "no problems found"
         }
       ]
@@ -890,6 +901,7 @@
     "front": "The common ratio of the geometric progression 5, 10, 20, 40, ...",
     "back": "2",
     "explanation": "In a geometric progression each term is the one before times the common ratio: 10 ÷ 5 = 2, 20 ÷ 10 = 2 and 40 ÷ 20 = 2. The common ratio is 2.",
+    "hint": "Divide any term by the one before it.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["author"],
     "citations": [
@@ -945,9 +957,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:52:49Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:34:48Z",
           "notes": "no problems found"
         }
       ]
