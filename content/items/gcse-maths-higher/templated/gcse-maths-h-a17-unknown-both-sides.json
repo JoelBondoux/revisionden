@@ -1,0 +1,397 @@
+[
+  {
+    "id": "gcse-maths-h-a17-t-unknown-both-sides-01",
+    "topic": "gcse-maths-h-a17",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a17-lp-solve-linear",
+    "expected_seconds": 50,
+    "prompt": "Solve 4x - 11 = x + 4",
+    "answer": { "solutions": ["5"] },
+    "verify": { "method": "solve", "equation": "4x - 11 = x + 4", "variable": "x" },
+    "steps": ["4x - 11 = x + 4", "3x - 11 = 4", "3x = 15", "x = 5"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 3x - 11 = 4 or 3x = 15", "A1 for x = 5"],
+    "hint": "Get the x terms on one side and the numbers on the other side.",
+    "explanation": "Subtract x from both sides: 3x - 11 = 4. Add 11 to both sides: 3x = 15. Divide both sides by 3: x = 5. Check: 4 × 5 - 11 = 9 and 5 + 4 = 9.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A17 (page 15; PDF page 27)",
+        "quote": "solve linear equations in one unknown algebraically (including those with the unknown on both sides of the equation)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": { "id": "gcse-maths-h-a17-unknown-both-sides", "version": 1, "seed": 1 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-a17-unknown-both-sides v1",
+          "at": "2026-11-26T04:44:22Z",
+          "notes": "Generated from template gcse-maths-h-a17-unknown-both-sides (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T04:44:22Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T04:45:57Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:46:37Z",
+          "notes": "model answered \"5\"; expected \"5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:46:44Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a17-t-unknown-both-sides-02",
+    "topic": "gcse-maths-h-a17",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a17-lp-solve-linear",
+    "expected_seconds": 50,
+    "prompt": "Solve 4x - 4 = x + 2",
+    "answer": { "solutions": ["2"] },
+    "verify": { "method": "solve", "equation": "4x - 4 = x + 2", "variable": "x" },
+    "steps": ["4x - 4 = x + 2", "3x - 4 = 2", "3x = 6", "x = 2"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 3x - 4 = 2 or 3x = 6", "A1 for x = 2"],
+    "hint": "Get the x terms on one side and the numbers on the other side.",
+    "explanation": "Subtract x from both sides: 3x - 4 = 2. Add 4 to both sides: 3x = 6. Divide both sides by 3: x = 2. Check: 4 × 2 - 4 = 4 and 2 + 2 = 4.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A17 (page 15; PDF page 27)",
+        "quote": "solve linear equations in one unknown algebraically (including those with the unknown on both sides of the equation)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": { "id": "gcse-maths-h-a17-unknown-both-sides", "version": 1, "seed": 2 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-a17-unknown-both-sides v1",
+          "at": "2026-11-26T04:44:22Z",
+          "notes": "Generated from template gcse-maths-h-a17-unknown-both-sides (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T04:44:22Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T04:45:57Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:46:50Z",
+          "notes": "model answered \"x = 2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:46:57Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a17-t-unknown-both-sides-03",
+    "topic": "gcse-maths-h-a17",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a17-lp-solve-linear",
+    "expected_seconds": 50,
+    "prompt": "Solve 6x - 5 = 2x - 1",
+    "answer": { "solutions": ["1"] },
+    "verify": { "method": "solve", "equation": "6x - 5 = 2x - 1", "variable": "x" },
+    "steps": ["6x - 5 = 2x - 1", "4x - 5 = -1", "4x = 4", "x = 1"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 4x - 5 = -1 or 4x = 4", "A1 for x = 1"],
+    "hint": "Get the x terms on one side and the numbers on the other side.",
+    "explanation": "Subtract 2x from both sides: 4x - 5 = -1. Add 5 to both sides: 4x = 4. Divide both sides by 4: x = 1. Check: 6 × 1 - 5 = 1 and 2 × 1 - 1 = 1.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A17 (page 15; PDF page 27)",
+        "quote": "solve linear equations in one unknown algebraically (including those with the unknown on both sides of the equation)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": { "id": "gcse-maths-h-a17-unknown-both-sides", "version": 1, "seed": 3 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-a17-unknown-both-sides v1",
+          "at": "2026-11-26T04:44:22Z",
+          "notes": "Generated from template gcse-maths-h-a17-unknown-both-sides (version 1, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T04:44:22Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T04:45:58Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:47:04Z",
+          "notes": "model answered \"x = 1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:47:21Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a17-t-unknown-both-sides-04",
+    "topic": "gcse-maths-h-a17",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a17-lp-solve-linear",
+    "expected_seconds": 50,
+    "prompt": "Solve 8x + 4 = 3x - 16",
+    "answer": { "solutions": ["-4"] },
+    "verify": { "method": "solve", "equation": "8x + 4 = 3x - 16", "variable": "x" },
+    "steps": ["8x + 4 = 3x - 16", "5x + 4 = -16", "5x = -20", "x = -4"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 5x + 4 = -16 or 5x = -20", "A1 for x = -4"],
+    "hint": "Get the x terms on one side and the numbers on the other side.",
+    "explanation": "Subtract 3x from both sides: 5x + 4 = -16. Subtract 4 from both sides: 5x = -20. Divide both sides by 5: x = -4. Check: 8 × (-4) + 4 = -28 and 3 × (-4) - 16 = -28.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A17 (page 15; PDF page 27)",
+        "quote": "solve linear equations in one unknown algebraically (including those with the unknown on both sides of the equation)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": { "id": "gcse-maths-h-a17-unknown-both-sides", "version": 1, "seed": 4 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-a17-unknown-both-sides v1",
+          "at": "2026-11-26T04:44:22Z",
+          "notes": "Generated from template gcse-maths-h-a17-unknown-both-sides (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T04:44:22Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T04:45:59Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:47:26Z",
+          "notes": "model answered \"x = -4\"; expected \"-4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:47:36Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a17-t-unknown-both-sides-05",
+    "topic": "gcse-maths-h-a17",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a17-lp-solve-linear",
+    "expected_seconds": 50,
+    "prompt": "Solve 7x - 3 = 3x + 25",
+    "answer": { "solutions": ["7"] },
+    "verify": { "method": "solve", "equation": "7x - 3 = 3x + 25", "variable": "x" },
+    "steps": ["7x - 3 = 3x + 25", "4x - 3 = 25", "4x = 28", "x = 7"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 4x - 3 = 25 or 4x = 28", "A1 for x = 7"],
+    "hint": "Get the x terms on one side and the numbers on the other side.",
+    "explanation": "Subtract 3x from both sides: 4x - 3 = 25. Add 3 to both sides: 4x = 28. Divide both sides by 4: x = 7. Check: 7 × 7 - 3 = 46 and 3 × 7 + 25 = 46.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Solving equations and inequalities, content reference A17 (page 15; PDF page 27)",
+        "quote": "solve linear equations in one unknown algebraically (including those with the unknown on both sides of the equation)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": { "id": "gcse-maths-h-a17-unknown-both-sides", "version": 1, "seed": 5 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-a17-unknown-both-sides v1",
+          "at": "2026-11-26T04:44:22Z",
+          "notes": "Generated from template gcse-maths-h-a17-unknown-both-sides (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T04:44:22Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T04:45:59Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:47:41Z",
+          "notes": "model answered \"7\"; expected \"7\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:47:50Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  }
+]
