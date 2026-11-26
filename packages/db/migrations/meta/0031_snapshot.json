@@ -1,6 +1,6 @@
 {
-  "id": "4d713f2a-5501-46de-b1eb-2bce64d6dbe8",
-  "prevId": "5516437f-9024-4844-b626-fce556c0d464",
+  "id": "7d9504ea-2489-4a59-b211-9ad0a794f731",
+  "prevId": "6f2bf9cf-830f-4ca3-98fb-70d2cd402576",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -180,6 +180,13 @@
         },
         "retry": {
           "name": "retry",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "helped": {
+          "name": "helped",
           "type": "boolean",
           "primaryKey": false,
           "notNull": true,
