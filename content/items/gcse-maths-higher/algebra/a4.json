@@ -7,14 +7,8 @@
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 60,
     "prompt": "Expand and simplify 3(2x - 5) - 2(x - 4)",
-    "answer": {
-      "expression": "4x - 7"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "3(2x - 5) - 2(x - 4)",
-      "form": "expanded"
-    },
+    "answer": { "expression": "4x - 7" },
+    "verify": { "method": "expression", "expression": "3(2x - 5) - 2(x - 4)", "form": "expanded" },
     "steps": ["3(2x - 5) - 2(x - 4)", "6x - 15 - 2x + 8", "4x - 7"],
     "marks": 2,
     "mark_scheme": ["M1 for 6x - 15 or -2x + 8", "A1 for 4x - 7"],
@@ -110,14 +104,8 @@
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 60,
     "prompt": "Expand and simplify (x + 5)(x - 3). Use ^ for powers.",
-    "answer": {
-      "expression": "x^2 + 2x - 15"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(x + 5)(x - 3)",
-      "form": "expanded"
-    },
+    "answer": { "expression": "x^2 + 2x - 15" },
+    "verify": { "method": "expression", "expression": "(x + 5)(x - 3)", "form": "expanded" },
     "steps": ["(x + 5)(x - 3)", "x^2 - 3x + 5x - 15", "x^2 + 2x - 15"],
     "marks": 2,
     "mark_scheme": ["M1 for at least three of the four terms correct", "A1 for x^2 + 2x - 15"],
@@ -200,14 +188,8 @@
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 150,
     "prompt": "Expand and simplify (x + 2)(x + 3)(x - 1). Use ^ for powers.",
-    "answer": {
-      "expression": "x^3 + 4x^2 + x - 6"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(x + 2)(x + 3)(x - 1)",
-      "form": "expanded"
-    },
+    "answer": { "expression": "x^3 + 4x^2 + x - 6" },
+    "verify": { "method": "expression", "expression": "(x + 2)(x + 3)(x - 1)", "form": "expanded" },
     "steps": [
       "(x + 2)(x + 3)(x - 1)",
       "(x^2 + 5x + 6)(x - 1)",
@@ -300,9 +282,7 @@
     "expected_seconds": 25,
     "prompt": "Which is the expansion of (2x - 3)^2?",
     "options": ["4x^2 - 9", "4x^2 + 9", "4x^2 - 12x + 9", "4x^2 - 6x + 9"],
-    "answer": {
-      "option": 2
-    },
+    "answer": { "option": 2 },
     "marks": 1,
     "explanation": "(2x - 3)^2 = (2x - 3)(2x - 3) = 4x^2 - 6x - 6x + 9 = 4x^2 - 12x + 9.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
@@ -377,9 +357,7 @@
     "expected_seconds": 25,
     "prompt": "Factorise x^2 + 7x + 12",
     "options": ["(x + 3)(x + 4)", "(x + 2)(x + 6)", "(x + 1)(x + 12)", "(x - 3)(x - 4)"],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "3 × 4 = 12 and 3 + 4 = 7, so x^2 + 7x + 12 = (x + 3)(x + 4).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
@@ -454,9 +432,7 @@
     "expected_seconds": 25,
     "prompt": "Factorise x^2 - 49",
     "options": ["(x - 7)^2", "(x + 7)(x - 7)", "(x - 49)(x + 1)", "x(x - 49)"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "x^2 - 49 is a difference of two squares, x^2 - 7^2 = (x + 7)(x - 7).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
@@ -531,9 +507,7 @@
     "expected_seconds": 25,
     "prompt": "Factorise 2x^2 + 7x + 3",
     "options": ["(2x + 1)(x + 3)", "(2x + 3)(x + 1)", "(2x + 7)(x + 3)", "(x + 1)(x + 3)"],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "(2x + 1)(x + 3) = 2x^2 + 6x + x + 3 = 2x^2 + 7x + 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
@@ -607,14 +581,8 @@
     "learning_point": "gcse-maths-h-a4-lp-factorise",
     "expected_seconds": 45,
     "prompt": "Factorise fully 6x^2 - 15x",
-    "answer": {
-      "expression": "3x(2x - 5)"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "6x^2 - 15x",
-      "form": "factorised"
-    },
+    "answer": { "expression": "3x(2x - 5)" },
+    "verify": { "method": "expression", "expression": "6x^2 - 15x", "form": "factorised" },
     "marks": 2,
     "mark_scheme": [
       "B2 for 3x(2x - 5) (B1 for a partial factorisation such as 3(2x^2 - 5x) or x(6x - 15))"
@@ -699,9 +667,7 @@
     "expected_seconds": 25,
     "prompt": "Simplify x^5 × x^3",
     "options": ["x^15", "x^8", "x^2", "2x^8"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "Add the powers when multiplying: x^(5 + 3) = x^8.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
@@ -776,9 +742,7 @@
     "expected_seconds": 25,
     "prompt": "Simplify (y^4)^3",
     "options": ["y^7", "y^12", "y^64", "3y^4"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "Multiply the powers: y^(4 × 3) = y^12.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
@@ -853,9 +817,7 @@
     "expected_seconds": 25,
     "prompt": "Simplify 12a^6 ÷ 3a^2",
     "options": ["4a^3", "9a^4", "4a^4", "4a^8"],
-    "answer": {
-      "option": 2
-    },
+    "answer": { "option": 2 },
     "marks": 1,
     "explanation": "Divide the numbers and subtract the powers: (12 ÷ 3)a^(6 - 2) = 4a^4.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
@@ -930,6 +892,7 @@
     "expected_seconds": 15,
     "front": "The name for an expression such as x^2 - 25, which factorises to (x + 5)(x - 5)",
     "back": "Difference of two squares",
+    "explanation": "x^2 - 25 is x^2 minus 5^2: one square minus another. That is why it is called the difference of two squares, and it factorises to (x + 5)(x - 5).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -956,7 +919,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A4). The specification names the difference of two squares; the factorisation is checked with SymPy. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A4). The specification names the difference of two squares; the factorisation is checked with SymPy. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:17:06Z"
         },
         {
@@ -966,14 +929,6 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:31:12Z",
           "notes": "model answered \"Difference of two squares\"; expected \"Difference of two squares\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:31:18Z",
-          "notes": "no problems found"
         },
         {
           "name": "quote-check",
@@ -990,6 +945,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:51:00Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -1003,6 +966,7 @@
     "expected_seconds": 15,
     "front": "x^0, for any x ≠ 0",
     "back": "1",
+    "explanation": "x^n ÷ x^n = 1, and by the index law x^n ÷ x^n = x^(n - n) = x^0. So x^0 = 1 for any x that is not 0.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["author"],
     "citations": [
@@ -1028,7 +992,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A4). Law of indices: x^0 = x^n ÷ x^n = 1 for x ≠ 0 (checked with SymPy).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A4). Law of indices: x^0 = x^n ÷ x^n = 1 for x ≠ 0 (checked with SymPy). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:17:06Z"
         },
         {
@@ -1038,14 +1002,6 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:31:22Z",
           "notes": "model answered \"1\"; expected \"1\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:31:28Z",
-          "notes": "no problems found"
         },
         {
           "name": "quote-check",
@@ -1062,6 +1018,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:51:08Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -1075,6 +1039,7 @@
     "expected_seconds": 15,
     "front": "Collect like terms: 2a + 3b - a + b",
     "back": "a + 4b",
+    "explanation": "Group the a terms and the b terms: 2a - a = a and 3b + b = 4b. So 2a + 3b - a + b = a + 4b.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
     "checked_by": ["author"],
     "citations": [
@@ -1100,7 +1065,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A4). Back checked with SymPy: 2a + 3b - a + b = a + 4b.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A4). Back checked with SymPy: 2a + 3b - a + b = a + 4b. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:17:06Z"
         },
         {
@@ -1110,14 +1075,6 @@
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T17:31:34Z",
           "notes": "model answered \"a + 4b\"; expected \"a + 4b\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:31:39Z",
-          "notes": "no problems found"
         },
         {
           "name": "quote-check",
@@ -1134,6 +1091,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:49:51Z",
+          "notes": "no problems found"
         }
       ]
     }

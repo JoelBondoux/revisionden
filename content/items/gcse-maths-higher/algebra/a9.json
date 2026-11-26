@@ -689,6 +689,7 @@
       "any_order": true
     },
     "marks": 1,
+    "explanation": "Parallel lines have the same gradient, so the gradient is 5. The line passes through (0, -3), so the y-intercept is -3. The equation is y = 5x - 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A9",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -734,7 +735,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Same gradient 5; (0, -3) is the y-intercept. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Same gradient 5; (0, -3) is the y-intercept. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:23:37Z"
         },
         {
@@ -762,20 +763,20 @@
           "notes": "model answered \"y = 5x - 3\"; expected \"y = 5x - 3 | y + 3 = 5x | y - 5x = -3 | 5x - y = 3 | 5x - y - 3 = 0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:03:21Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "fact-check",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
           "at": "2026-11-26T04:08:05Z",
           "notes": "fact 1: maths engine proof pass; blind statement matches (\"For two non-vertical straight lines to be parallel, their gradients must be equal: if the lines have equations y = m1x + c1 and y = m2x + c2, then they are parallel when m1 = m2. If c1 = c2 as well, the lines are the same line; for distinct parallel lines, c1 ≠ c2.\")"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:35:49Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -789,6 +790,7 @@
     "expected_seconds": 15,
     "front": "The gradient of the line y = 7x - 4",
     "back": "7",
+    "explanation": "In y = mx + c, the gradient is m, the number multiplying x. In y = 7x - 4 that is 7.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A9",
     "checked_by": ["author"],
     "citations": [
@@ -814,7 +816,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Read from y = mx + c.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Read from y = mx + c. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:23:37Z"
         },
         {
@@ -861,6 +863,7 @@
     "expected_seconds": 15,
     "front": "The y-intercept of the line y = 7x - 4 (give the y-value)",
     "back": "-4",
+    "explanation": "In y = mx + c, the line crosses the y-axis at y = c. In y = 7x - 4, c = -4. Check: when x = 0, y = 7 × 0 - 4 = -4.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A9",
     "checked_by": ["author"],
     "citations": [
@@ -898,7 +901,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Read from y = mx + c.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Read from y = mx + c. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:04:50Z"
         },
         {
@@ -945,6 +948,7 @@
     "expected_seconds": 15,
     "front": "The gradient of a line perpendicular to a line with gradient 2",
     "back": "-1/2",
+    "explanation": "The gradients of perpendicular lines multiply to -1. 2 × (-1/2) = -1, so the perpendicular gradient is -1/2 (flip 2 to 1/2 and change the sign).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A9",
     "checked_by": ["author"],
     "citations": [
@@ -977,7 +981,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A9). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:23:37Z"
         },
         {

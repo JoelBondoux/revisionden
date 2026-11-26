@@ -8,9 +8,7 @@
     "expected_seconds": 25,
     "prompt": "Which point is 3 units to the left of the y-axis and 2 units below the x-axis?",
     "options": ["(3, -2)", "(-3, -2)", "(-2, -3)", "(-3, 2)"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "Left of the y-axis means a negative x-coordinate and below the x-axis means a negative y-coordinate: (-3, -2).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
@@ -85,9 +83,7 @@
     "expected_seconds": 25,
     "prompt": "Which of these points lies on the x-axis?",
     "options": ["(0, -4)", "(-4, 0)", "(-4, -4)", "(4, 4)"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "Every point on the x-axis has y-coordinate 0, so (-4, 0) is on it. (0, -4) is on the y-axis.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
@@ -161,10 +157,9 @@
     "learning_point": "gcse-maths-h-a8-lp-read-points",
     "expected_seconds": 30,
     "prompt": "Three corners of a rectangle are at (-2, 3), (5, 3) and (5, -1). Write down the coordinates of the fourth corner.",
-    "answer": {
-      "accepted": ["(-2, -1)", "(-2,-1)", "(−2, −1)", "(−2,−1)"]
-    },
+    "answer": { "accepted": ["(-2, -1)", "(-2,-1)", "(−2, −1)", "(−2,−1)"] },
     "marks": 1,
+    "explanation": "The fourth corner lines up with the other corners. It has the same x-coordinate as (-2, 3) and the same y-coordinate as (5, -1), so it is (-2, -1).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
     "checked_by": ["author"],
     "citations": [
@@ -190,7 +185,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Sides of this rectangle are parallel to the axes: the fourth corner shares x = -2 with (-2, 3) and y = -1 with (5, -1).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Sides of this rectangle are parallel to the axes: the fourth corner shares x = -2 with (-2, 3) and y = -1 with (5, -1). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:55:47Z"
         },
         {
@@ -210,20 +205,20 @@
           "notes": "model answered \"(-2, -1)\"; expected \"(-2, -1) | (-2,-1) | (−2, −1) | (−2,−1)\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:00:18Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:13Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -236,12 +231,8 @@
     "learning_point": "gcse-maths-h-a8-lp-axis-distances",
     "expected_seconds": 30,
     "prompt": "A is the point (-3, 4) and B is the point (5, 4). How many units apart are A and B?",
-    "answer": {
-      "value": "8"
-    },
-    "verify": {
-      "expression": "5 - (-3)"
-    },
+    "answer": { "value": "8" },
+    "verify": { "expression": "5 - (-3)" },
     "marks": 1,
     "mark_scheme": ["B1 for 8"],
     "explanation": "Both points have y = 4, so count along: from x = -3 to x = 5 is 8 units.",
@@ -324,12 +315,8 @@
     "learning_point": "gcse-maths-h-a8-lp-axis-distances",
     "expected_seconds": 30,
     "prompt": "P is the point (2, -6) and Q is the point (2, 3). How many units apart are P and Q?",
-    "answer": {
-      "value": "9"
-    },
-    "verify": {
-      "expression": "3 - (-6)"
-    },
+    "answer": { "value": "9" },
+    "verify": { "expression": "3 - (-6)" },
     "marks": 1,
     "mark_scheme": ["B1 for 9"],
     "explanation": "Both points have x = 2, so count up: from y = -6 to y = 3 is 9 units.",
@@ -412,10 +399,9 @@
     "learning_point": "gcse-maths-h-a8-lp-axis-distances",
     "expected_seconds": 40,
     "prompt": "Start at the point (-4, -1). Move 6 units to the right and 5 units up. Write down the coordinates of the point you reach.",
-    "answer": {
-      "accepted": ["(2, 4)", "(2,4)"]
-    },
+    "answer": { "accepted": ["(2, 4)", "(2,4)"] },
     "marks": 1,
+    "explanation": "Moving right adds to the x-coordinate: -4 + 6 = 2. Moving up adds to the y-coordinate: -1 + 5 = 4. The point is (2, 4).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
     "checked_by": ["author"],
     "citations": [
@@ -441,7 +427,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Arithmetic checked: (-4 + 6, -1 + 5) = (2, 4).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Arithmetic checked: (-4 + 6, -1 + 5) = (2, 4). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:04:50Z"
         },
         {
@@ -461,20 +447,20 @@
           "notes": "model answered \"(2, 4)\"; expected \"(2, 4) | (2,4)\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:13:12Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:20Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -487,14 +473,8 @@
     "learning_point": "gcse-maths-h-a8-lp-axis-distances",
     "expected_seconds": 60,
     "prompt": "The points (k, 2) and (5, 2) are 9 units apart, and k is negative. Work out k.",
-    "answer": {
-      "solutions": ["-4"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "5 - k = 9",
-      "variable": "k"
-    },
+    "answer": { "solutions": ["-4"] },
+    "verify": { "method": "solve", "equation": "5 - k = 9", "variable": "k" },
     "steps": ["5 - k = 9", "-k = 4", "k = -4"],
     "marks": 2,
     "mark_scheme": [
@@ -583,6 +563,7 @@
     "expected_seconds": 15,
     "front": "The coordinates of the origin",
     "back": "(0, 0)",
+    "explanation": "The origin is where the x-axis and y-axis cross. It is 0 along and 0 up, so its coordinates are (0, 0).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -609,7 +590,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Standard coordinate convention. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Standard coordinate convention. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:20:52Z"
         },
         {
@@ -629,20 +610,20 @@
           "notes": "model answered \"(0, 0)\"; expected \"(0, 0)\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:52:47Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:25Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -656,6 +637,7 @@
     "expected_seconds": 15,
     "front": "The x-coordinate of every point on the y-axis",
     "back": "0",
+    "explanation": "Every point on the y-axis is 0 units left or right of the origin, so its x-coordinate is 0.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -682,7 +664,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Standard coordinate convention. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Standard coordinate convention. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:20:52Z"
         },
         {
@@ -702,20 +684,20 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:52:59Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:33Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -729,6 +711,7 @@
     "expected_seconds": 15,
     "front": "Is the y-coordinate of a point below the x-axis positive or negative?",
     "back": "Negative",
+    "explanation": "Points above the x-axis have positive y-coordinates and points below it have negative y-coordinates. So the y-coordinate is negative.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -755,7 +738,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Standard coordinate convention. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A8). Standard coordinate convention. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:20:52Z"
         },
         {
@@ -775,20 +758,20 @@
           "notes": "model answered \"Negative\"; expected \"Negative\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:53:11Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:42Z",
+          "notes": "no problems found"
         }
       ]
     }
