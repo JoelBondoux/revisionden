@@ -83,6 +83,8 @@ export const sampleParentFriends = (
   blocked: [{ id: 'b-1', nickname: 'Ember_8' }],
   reports: [
     {
+      id: 'rep-1',
+      closed: false,
       direction: 'made',
       reason: 'pressured',
       reporter: 'Lark_1',

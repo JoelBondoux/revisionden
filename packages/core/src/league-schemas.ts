@@ -65,11 +65,14 @@ export type LeagueResponse = z.infer<typeof LeagueResponseSchema>;
 const WaitingCardSchema = FriendCardSchema.extend({ requestId: z.string() });
 
 export const FriendReportViewSchema = z.object({
+  id: z.string(),
   direction: z.enum(['made', 'about']),
   reason: ReportReasonSchema,
   reporter: z.string().nullable(),
   reported: z.string().nullable(),
   at: z.string(),
+  /** Marked as dealt with by the reporting child's parents (then kept 12 months). */
+  closed: z.boolean(),
 });
 export type FriendReportView = z.infer<typeof FriendReportViewSchema>;
 

@@ -186,10 +186,22 @@ export function ParentFriendsPanel({
         <section aria-label="Reports">
           <h3>Reports</h3>
           <ul>
-            {d.reports.map((r, i) => (
-              <li key={i}>
+            {d.reports.map((r) => (
+              <li key={r.id}>
                 {r.reporter} reported {r.reported}: {REPORT_REASON_LABELS[r.reason]} (
                 {new Date(r.at).toLocaleDateString('en-GB')})
+                {r.closed ? (
+                  <span className="secondary-text"> (dealt with)</span>
+                ) : (
+                  r.direction === 'made' && (
+                    <Button
+                      variant="secondary"
+                      onClick={() => run(() => api.closeReport(studentId, r.id))}
+                    >
+                      Mark as dealt with
+                    </Button>
+                  )
+                )}
               </li>
             ))}
           </ul>

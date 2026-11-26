@@ -238,8 +238,13 @@ New tables (one new migration):
   `league-wins-5`, `league-wins-20`). The league shows last week's result ("You topped your
   league last week!" or "Last week you were 3rd. Nice effort!"). The clean-up deletes results
   older than 8 weeks; the win count stays.
-- **Still to come:** the AppDeck report view, and closing a report (until then reports
-  are kept until either child is deleted).
+- **Closing a report (PR 3, lead 2026-11-26):** the reporting child's parents mark a report as
+  dealt with (`POST /v1/students/:id/friends/reports/:reportId/close`, "Mark as dealt with" in
+  the parent Friends card); both families then see it as dealt with, and the daily clean-up
+  deletes it 12 months later. An open report is kept until it is closed or either child is
+  deleted.
+- **Still to come:** the AppDeck report view, where support can also close a report
+  (`docs/BACKLOG.md`).
 
 ## 10. Owner decisions (2026-11-26, via the lead)
 

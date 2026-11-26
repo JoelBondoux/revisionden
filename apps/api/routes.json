@@ -178,6 +178,7 @@
     "POST /v1/students/:id/daily-limit/suggestion",
     "POST /v1/students/:id/enrolments",
     "POST /v1/students/:id/friends/:otherId/block",
+    "POST /v1/students/:id/friends/reports/:reportId/close",
     "POST /v1/students/:id/friends/requests/:rid/approve",
     "POST /v1/students/:id/friends/requests/:rid/decline",
     "POST /v1/students/:id/link-tokens",

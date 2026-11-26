@@ -37,6 +37,8 @@ export interface ParentLeagueApi {
   parentBlock(studentId: string, friendId: string): Promise<void>;
   unblock(studentId: string, blockedId: string): Promise<void>;
   setLabel(studentId: string, friendId: string, label: string | null): Promise<void>;
+  /** Marks a report this child made as dealt with (then kept 12 months). */
+  closeReport(studentId: string, reportId: string): Promise<void>;
 }
 
 export type LeagueApi = StudentLeagueApi & ParentLeagueApi;
@@ -112,5 +114,6 @@ export function createLeagueApi(options: {
     parentBlock: (id, fid) => act(`${child(id)}/${e(fid)}/block`, 'POST', {}),
     unblock: (id, bid) => act(`${child(id)}/blocks/${e(bid)}`, 'DELETE'),
     setLabel: (id, fid, label) => act(`${child(id)}/${e(fid)}/label`, 'PUT', { label }),
+    closeReport: (id, rid) => act(`${child(id)}/reports/${e(rid)}/close`, 'POST', {}),
   };
 }

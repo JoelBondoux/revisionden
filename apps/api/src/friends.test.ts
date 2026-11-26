@@ -5,6 +5,7 @@ import {
   familyEvents,
   friendCodeTries,
   friendCodes,
+  friendReports,
   friendRequests,
   friendships,
   items,
@@ -781,5 +782,54 @@ describe('weekly results and league wins (PR 3)', () => {
       .where(eq(leagueWeeks.studentId, a.studentId));
     expect(rows).toHaveLength(0);
     expect(await winsOf(a)).toBe(1);
+  });
+});
+
+describe('closing a report', () => {
+  async function reported() {
+    const a = await kid();
+    const b = await kid();
+    await befriend(a, b);
+    await send('POST', `/v1/student/friends/${b.studentId}/report`, a.headers, { reason: 'other' });
+    const [report] = (await parentView(a)).reports as unknown as { id: string; closed: boolean }[];
+    return { a, b, report: report! };
+  }
+
+  it("lets the reporting child's parent mark it as dealt with", async () => {
+    const { a, b, report } = await reported();
+    expect(report.closed).toBe(false);
+    const res = await send(
+      'POST',
+      `/v1/students/${a.studentId}/friends/reports/${report.id}/close`,
+      a.parent.headers,
+    );
+    expect(res.status).toBe(200);
+    expect((await parentView(a)).reports[0]).toMatchObject({ closed: true });
+    expect((await parentView(b)).reports[0]).toMatchObject({ closed: true });
+  });
+
+  it('does not let the other family close it', async () => {
+    const { b, report } = await reported();
+    const res = await send(
+      'POST',
+      `/v1/students/${b.studentId}/friends/reports/${report.id}/close`,
+      b.parent.headers,
+    );
+    expect(res.status).toBe(404);
+  });
+
+  it('is deleted 12 months after it was closed, not before', async () => {
+    const { a, report } = await reported();
+    await send(
+      'POST',
+      `/v1/students/${a.studentId}/friends/reports/${report.id}/close`,
+      a.parent.headers,
+    );
+    const now = t.clock.now();
+    const left = () => t.db.select().from(friendReports).where(eq(friendReports.id, report.id));
+    await deleteExpiredFriendRecords(t.db, new Date(now.getTime() + 300 * DAY));
+    expect(await left()).toHaveLength(1);
+    await deleteExpiredFriendRecords(t.db, new Date(now.getTime() + 367 * DAY));
+    expect(await left()).toHaveLength(0);
   });
 });
