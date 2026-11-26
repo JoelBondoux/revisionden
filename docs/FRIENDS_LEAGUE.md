@@ -1,7 +1,9 @@
 # Friends league: design and privacy
 
 > Status: **approved by the owner, 2026-11-26** (workstream FL), with the decisions in section 10.
-> Not built yet. The solicitor items in section 11 stay open.
+> Build in progress (section 9 "Built so far"). The solicitor items in section 11 stay open.
+> **Development only** for now (lead ruling, 2026-11-26): the `FRIENDS_ENABLED` flag is on in dev and
+> off in staging and production until the notices are updated and the solicitor has reviewed them.
 > Owner decision, 2026-11-26: friends can come from **other families from day one**, not only
 > siblings. Planned in `docs/PLAN.md` (Stage 4, "Weekly XP league; head-to-head challenges;
 > parent-approved invites"), `docs/REWARDS.md` (league rewards), `docs/BACKLOG.md` (title under
@@ -160,15 +162,16 @@ In the parent area, per child ("Friends" card):
 
 New tables (one new migration):
 
-| Table                 | Holds                                                                                       | Kept until                                                     |
-| --------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| `friend_codes`        | code hash, child, expiry, used                                                              | used or expired, then deleted within 24 hours                  |
-| `friend_requests`     | the two children, status, which family has approved (parent number only), expiry            | started, declined or 7 days, then deleted within 24 hours      |
-| `friendships`         | the two children (stored once, lower id first), start date, optional private label per side | removed, either child deleted                                  |
-| `friend_blocks`       | blocking child, blocked child, date                                                         | unblocked, either child deleted                                |
-| `friend_reports`      | reporting child, reported child, reason code, date, outcome (seen as in section 7)          | 12 months after closing, or either child deleted               |
-| `league_weeks`        | per child per week: league XP, place, won (yes/no)                                          | last 8 weeks only; the win count lives on in the rewards stats |
-| `students` (2 fields) | `friends_allowed` (default false), `league_hidden` (default false)                          | with the student                                               |
+| Table                 | Holds                                                                                       | Kept until                                                       |
+| --------------------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `friend_codes`        | code hash, child, expiry, used                                                              | used or expired, then deleted within 24 hours                    |
+| `friend_code_tries`   | each typed code: child, family, right or wrong, time (for the try limits)                   | 24 hours                                                         |
+| `friend_requests`     | the two children, status, which family has approved (parent number only), expiry            | started, declined or 7 days, then deleted within 24 hours        |
+| `friendships`         | the two children (stored once, lower id first), start date, optional private label per side | removed, either child deleted                                    |
+| `friend_blocks`       | blocking child, blocked child, date                                                         | unblocked, either child deleted                                  |
+| `friend_reports`      | reporting child, reported child, reason code, date, outcome (seen as in section 7)          | 12 months after closing, or either child deleted                 |
+| `league_weeks`        | per child per week: league XP, place, won (yes/no)                                          | last 8 weeks only; the win count stays in `students.league_wins` |
+| `students` (2 fields) | `friends_allowed` (default false), `league_hidden` (default false)                          | with the student                                                 |
 
 - Weekly league XP is worked out from existing XP records; `league_weeks` only keeps the result.
 - **Deleting a student or family** deletes their codes, requests, friendships, blocks and reports,
@@ -197,6 +200,77 @@ New tables (one new migration):
   hookup and title.
 - Tests: every rule above has a plain-English test first; API tests on PGlite; e2e for two
   families making friends, the league, removing, blocking, and export and deletion.
+
+### Built so far
+
+- **PR 1 (core, migration 0030, API):** `packages/core/src/league.ts` (week, league XP, places,
+  ties, win rule, codes, labels, limits); tables `friend_codes`, `friend_code_tries`,
+  `friend_requests`, `friendships`, `friend_blocks`, `friend_reports` and
+  `students.friends_allowed` / `league_hidden`; routes in `apps/api/src/routes/friends.ts` and
+  `friends-league.ts`:
+  - Student: `GET /v1/student/friends`, `POST /v1/student/friends/codes`,
+    `POST /v1/student/friends/redeem`, `POST /v1/student/friends/requests/:id/confirm|cancel`,
+    `DELETE /v1/student/friends/:id`, `POST /v1/student/friends/:id/block|report`,
+    `GET /v1/student/league`, `PUT /v1/student/league/hidden`.
+  - Parent: `GET /v1/students/:id/friends`, `PUT /v1/students/:id/friends/allowed`,
+    `POST /v1/students/:id/friends/requests/:rid/approve|decline`,
+    `DELETE /v1/students/:id/friends/:friendId`, `POST /v1/students/:id/friends/:friendId/block`,
+    `DELETE /v1/students/:id/friends/blocks/:blockedId`,
+    `PUT /v1/students/:id/friends/:friendId/label`.
+  - Every step is in the family activity log (new kinds in `apps/api/src/family-events.ts`);
+    the family export has a `friends` block per child and the profile's two settings; the daily
+    clean-up deletes used or expired codes, tries after a day, and requests a day after they end.
+- **PR 2 (web):** `apps/web/src/features/league/`: the League page at `/league` (the table
+  of up to 11 fits one phone screen, with "Add a friend" and "Friends" always in view; adding,
+  friend actions, report reasons and "Hide me" sit in sheets), the self-contained rank chip
+  (`LeagueChip`, "You're 2nd this week") on Home in place of "Friends league Soon" (it
+  moved from the Map header when J15b's Home landed, as the owner asked), a "Friends league" tile on Me
+  (Settings), and the parent Friends page at `/parent/friends/:studentId` (from a "Friends" tile
+  on the child's card in the parent home). Shared shapes: `packages/core/src/league-schemas.ts`.
+  e2e: `e2e/tests/league.spec.ts`.
+  The Me tile, the parent tile and the chip appear only when the API has friends (`FRIENDS_ENABLED`,
+  dev only); otherwise the pages say "Friends aren't available yet."
+- **PR 3 (weekly results and rewards, migration 0031):** `league_weeks` (one row per child per
+  finished week: XP, place, won) and `students.league_wins`. There is no cron in dev, so weeks
+  are settled lazily: the first time a child opens the league or their rewards, each of the last
+  8 finished weeks without a result is worked out (`settleLeagueWeeks` in
+  `apps/api/src/routes/friends-league.ts`) from the friends they had by the end of that week. A
+  win adds 1 to `league_wins`, which the rewards read as `weeksTopOfLeague` (`league-top`,
+  `league-wins-5`, `league-wins-20`). The league shows last week's result ("You topped your
+  league last week!" or "Last week you were 3rd. Nice effort!"). The clean-up deletes results
+  older than 8 weeks; the win count stays.
+- **Closing a report (PR 3, lead 2026-11-26):** the reporting child's parents mark a report as
+  dealt with (`POST /v1/students/:id/friends/reports/:reportId/close`, "Mark as dealt with" in
+  the parent Friends card); both families then see it as dealt with, and the daily clean-up
+  deletes it 12 months later. An open report is kept until it is closed or either child is
+  deleted.
+- **Review fixes (FL4-fix, from the train #313 review):** approvals from both families at
+  once can no longer overwrite each other (each writes only its own column, then one
+  conditional UPDATE starts the friendship); typing a code checks both children's 3 waiting
+  requests before the code is used; ending a friendship (remove, block, report, or friends
+  turned off) first settles any unsettled finished weeks for both children, so leaving after
+  Sunday cannot change last week's result; and a request left waiting for the child's check can
+  be confirmed or cancelled later from the Friends sheet (`friend_checking` is what the other
+  child sees).
+- **Review fixes, part 2 (FL4b, from the train #317 review):** once both families approve, the
+  friendship is saved first and the request is marked started after, so if the save fails the
+  request stays waiting with both approvals and approving again finishes it (production uses
+  `neon-http`, which has no multi-statement transactions).
+- **Review fixes, part 3 (FL4c, from the train #322 review):** starting a friendship is now one
+  repeatable step (`finaliseRequest`). Saving the friendship is the single winner (the pair is the
+  primary key, `ON CONFLICT DO NOTHING`), the friendship existing counts as success, the request
+  is marked started only while still waiting, and a request whose pair is already friends is never
+  declined. A request left with both approvals (a save that failed) is finished the next time
+  either child or a parent opens Friends, so it never sits as "waiting for the other family". No
+  migration: the pair was already the primary key.
+- **Known behaviour (lead, 2026-11-26):** deleting a child does not settle their friends'
+  finished weeks first. The child's data goes at once, so a friend whose last weeks were not yet
+  settled simply has that rival missing from those weeks. Accepted.
+- **Still to come:** the AppDeck report view, where support can also close a report
+  (`docs/BACKLOG.md`).
+- **PR 4 (AppDeck reports):** `GET friend-reports` and `POST friend-reports/{id}/close` on the
+  operator bridge (`apps/api/src/routes/friends-operator.ts`, `docs/OPERATOR_CONSOLE.md`):
+  nicknames, reported avatar code, fixed reason and dates only; every read and close audited.
 
 ## 10. Owner decisions (2026-11-26, via the lead)
 

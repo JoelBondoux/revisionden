@@ -79,16 +79,16 @@ Every resource is named `revisionden` or starts `revisionden-` (decision 0003). 
 Generated and already set on each API Worker: `DATABASE_URL`, `BETTER_AUTH_SECRET`,
 `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `AI_GATEWAY_URL`.
 
-| Worker secret or variable                        | dev | staging | production | Effect until set                                                                             |
-| ------------------------------------------------ | --- | ------- | ---------- | -------------------------------------------------------------------------------------------- |
-| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`       | ✗   | ✗       | ✗          | One provider required: until one is set, every API route except `/health` gives 500          |
-| `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` | ✗   | ✗       | ✗          | Optional once Google is set: the sign-in page hides it                                       |
-| `ANTHROPIC_API_KEY`                              | ✗   | ✗       | ✗          | AI routes answer 503                                                                         |
-| `AI_GATEWAY_TOKEN`                               | ✗   | ✗       | ✗          | AI calls are refused by the authenticated gateway                                            |
-| `OPERATOR_EMAILS`                                | ✗   | ✗       | ✗          | Nobody can open `/admin/feedback`                                                            |
-| `APPDECK_OPERATOR_SHARED_SECRET`                 | ✗   | ✗       | ✗          | The AppDeck operator bridge (`/operator/appdeck`) answers 503; set the same value in AppDeck |
-| `MATHS_ENGINE_URL`                               | ✗   | ✗       | ✗          | Worked maths answers get 503 (needs G3)                                                      |
-| `OPENAI_API_KEY` (optional)                      | –   | –       | –          | No second checker                                                                            |
+| Worker secret or variable                        | dev | staging | production | Effect until set                                                                               |
+| ------------------------------------------------ | --- | ------- | ---------- | ---------------------------------------------------------------------------------------------- |
+| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`       | ✗   | ✗       | ✗          | One provider required: until one is set, every API route except `/health` gives 500            |
+| `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` | ✗   | ✗       | ✗          | Optional once Google is set: the sign-in page hides it                                         |
+| `ANTHROPIC_API_KEY`                              | ✗   | ✗       | ✗          | AI routes answer 503                                                                           |
+| `AI_GATEWAY_TOKEN`                               | ✗   | ✗       | ✗          | AI calls are refused by the authenticated gateway                                              |
+| `OPERATOR_EMAILS`                                | ✗   | ✗       | ✗          | Nobody can open `/admin/feedback`                                                              |
+| `APPDECK_OPERATOR_SHARED_SECRET`                 | ✗   | ✗       | ✗          | The AppDeck operator bridge (`/operator/appdeck`) answers 503; set the same value in AppDeck   |
+| `MATHS_ENGINE_URL`                               | ✗   | ✗       | ✗          | Typed working is left out of lessons; one answered anyway is skipped, unmarked (F12; needs G3) |
+| `OPENAI_API_KEY` (optional)                      | –   | –       | –          | No second checker                                                                              |
 
 Set each with
 `pnpm --filter @revisionden/api exec wrangler secret put <NAME> --env <dev|staging|production>`
@@ -213,7 +213,7 @@ nothing secret if one is missing; the missing names are written to the Worker lo
 | `ANTHROPIC_API_KEY`                              | H (now)     | Live AI (Claude). Optional: AI routes answer 503 until it is set      |
 | `OPENAI_API_KEY`                                 | H (now)     | Optional second checker through the gateway (see `AI_CHECKER_MODEL`)  |
 | `AI_GATEWAY_TOKEN`                               | H (now)     | Optional: only if the AI Gateway is set to "authenticated"            |
-| `MATHS_ENGINE_URL`                               | F (now)     | Cloud Run maths engine; without it worked maths answers get a 503     |
+| `MATHS_ENGINE_URL`                               | F (now)     | Cloud Run maths engine; without it typed working is skipped (F12)     |
 | `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`          | H (now)     | Web push. Both or neither; reminders stay off until set (see below)   |
 | `APPDECK_OPERATOR_SHARED_SECRET`                 | O (now)     | AppDeck operator bridge; 32+ characters, a different one per env      |
 
@@ -241,6 +241,25 @@ Optional AI settings (workstream H), set as plain variables when needed:
 | `AI_MONTHLY_CAP_USD` | `2.50`  | AI spend cap per child per calendar month (UTC), in US dollars (about £2)   |
 | `AI_CHECKER_MODEL`   | unset   | OpenAI model used as the second checker; off when unset                     |
 | `AI_CHECKER_PRICES`  | unset   | Its prices, `input/output` US dollars per million tokens; needed with model |
+
+Founding Tester (R5), a plain variable that stays **unset** until 1.0:
+
+| Name           | Default | What it does                                                                                                  |
+| -------------- | ------- | ------------------------------------------------------------------------------------------------------------- |
+| `BETA_ENDS_AT` | unset   | The 1.0 cut-off as a UTC timestamp. Once set and passed, students with activity before it get Founding Tester |
+
+### Releasing 1.0
+
+When RevisionDen reaches 1.0, before or as the 1.0 release reaches production:
+
+1. Pick the cut-off moment (UTC), normally the moment 1.0 goes live.
+2. Add `BETA_ENDS_AT = "<timestamp>"` to `[env.production.vars]` (and staging, to rehearse) in
+   `apps/api/wrangler.toml`, in the same PR as the release, and remove the "no cut-off set" check
+   in `apps/api/src/env.test.ts` in that PR.
+3. Do not touch `VERSION`: the release workflow bumps it.
+
+Students get Founding Tester the next time they answer, finish a flashcard session or open
+Rewards. Leave the variable set afterwards: it is what keeps later activity from counting.
 
 Feedback triage (workstream L), set as a secret so no email is in the code:
 
@@ -283,6 +302,13 @@ it. Set it in `apps/api/.dev.vars` to try the drafts locally; the app then shows
 is `development`. The dev Worker sets it so testers see "Tester: try any style" in Settings →
 Effect style (any effect style and theme, nothing unlocked for real); a config test fails if
 staging or production set it.
+
+`FRIENDS_ENABLED` (workstream FL, lead ruling 2026-11-26) works the same way: the friends league
+(friends, codes, the league and the parent Friends page) exists only in development until
+workstream L updates the notices and the owner's solicitor has reviewed them. When it is off,
+every friends and league route answers `404 friends_not_available` ("Friends aren't available
+yet.") and the web app shows no friends tiles, chip or switch. The dev Worker sets it; a config
+test fails if staging or production set it. Set it in `apps/api/.dev.vars` to try it locally.
 
 Local `wrangler dev` uses the top-level values (`localhost:8787` API, `localhost:5173` web).
 The rate limiters use Cloudflare's Workers rate limiting binding; their `namespace_id` values are

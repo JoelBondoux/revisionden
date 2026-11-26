@@ -28,6 +28,8 @@ import {
 } from '../juice';
 import { markSound, useSound } from '../sound';
 import { useLearnApi } from './learnApi';
+import { answerReaction, type AnswerReactionEvent } from './reaction';
+import { HelpPanel } from './HelpPanel';
 import { NewRewards } from './NewRewards';
 import {
   DailyGoal,
@@ -43,7 +45,9 @@ import { SetComplete } from './SetComplete';
 /** What read aloud says for the feedback box: the verdict, the answer and the explanation. */
 function feedbackSpeech(result: LearnAttemptResponse): string {
   const feedback = result.feedback;
-  const parts = [result.correct ? 'Correct!' : 'Not quite.'];
+  const parts = [
+    result.correct ? (result.helped ? 'Correct, with help.' : 'Correct!') : 'Not quite.',
+  ];
   if (!result.correct && feedback) parts.push(`Answer: ${feedback.correctAnswer}.`);
   if (feedback?.explanation) parts.push(feedback.explanation);
   return parts.join(' ');
@@ -71,7 +75,9 @@ function Feedback({
       aria-label="Answer feedback"
     >
       <div className="read-aloud-row">
-        <p className="feedback__title">{result.correct ? 'Correct!' : 'Not quite'}</p>
+        <p className="feedback__title">
+          {result.correct ? (result.helped ? 'Correct, with help' : 'Correct!') : 'Not quite'}
+        </p>
         <ReadAloudButton text={feedbackSpeech(result)} label="Read the feedback aloud" />
       </div>
       {result.correct ? (
@@ -93,6 +99,9 @@ function Feedback({
         <p>
           <MathText text={feedback.explanation} subject={item.topicId} />
         </p>
+      )}
+      {result.correct && result.helped && (
+        <p>Half XP after help. It&apos;ll come back to practise, so it sticks.</p>
       )}
       {result.flashcardAdded && <p>Added to your flashcards for another go later.</p>}
       {comeback && <p className="feedback__comeback">Comeback! You got it this time.</p>}
@@ -130,6 +139,11 @@ interface LessonPlayerProps {
   aside?: ReactNode;
   /** Recall check answers (Q4): sent as recall, so a wrong one never resets the combo. */
   recall?: boolean;
+  /**
+   * Lesson reactions (F13, for J14): called once per marked answer, so Pip and the avatar can
+   * react. F decides when; J decides how (docs/PRODUCT_RULES.md "Lesson reactions").
+   */
+  onAnswerReaction?: (event: AnswerReactionEvent) => void;
 }
 
 /** Why a question is showing, for questions that came back (learning from mistakes, F5). */
@@ -176,6 +190,7 @@ export function LessonPlayer({
   onFinish,
   aside,
   recall = false,
+  onAnswerReaction,
 }: LessonPlayerProps) {
   const api = useLearnApi();
   const { play } = useSound();
@@ -186,7 +201,13 @@ export function LessonPlayer({
   const [comeback, setComeback] = useState(false);
   const [index, setIndex] = useState(0);
   const [draft, setDraft] = useState<Draft>(null);
+  /** "Help me understand" was opened for this question (F10). */
+  const [helped, setHelped] = useState(false);
   const [result, setResult] = useState<LearnAttemptResponse | null>(null);
+  /** It couldn't be marked now (F12: typed working with no maths engine), so it is skipped. */
+  const [skipped, setSkipped] = useState(false);
+  /** The lesson reaction for the answer just marked (F13), sent once its feedback is shown. */
+  const [reaction, setReaction] = useState<AnswerReactionEvent | null>(null);
   const [checking, setChecking] = useState(false);
   const [error, setError] = useState(false);
   const [progress, setProgress] = useState<Progress | null>(null);
@@ -195,6 +216,13 @@ export function LessonPlayer({
   const [bestCombo, setBestCombo] = useState(0);
   const [done, setDone] = useState(false);
   const shownAt = useRef(Date.now());
+
+  // J asked for the reaction to land with the feedback: this runs after the marked state renders.
+  useEffect(() => {
+    if (!reaction) return;
+    onAnswerReaction?.(reaction);
+    setReaction(null);
+  }, [reaction, onAnswerReaction]);
 
   useEffect(() => {
     let live = true;
@@ -235,10 +263,16 @@ export function LessonPlayer({
         mode: 'learn',
         ...(recall ? { recall: true } : {}),
         ...(isRetryEntry(entry) ? { retry: true } : {}),
+        ...(helped ? { helped: true } : {}),
       });
+      if ('unmarked' in marked) {
+        setSkipped(true);
+        return;
+      }
       // Learning from mistakes (F5, owner guardrails): one retry per point and 2 per lesson, a
       // confidence question before each retry, and a step down after a second miss.
-      if (!marked.correct && !recall && canRetry(item)) {
+      // A helped answer (F10) is practised like a miss.
+      if ((!marked.correct || marked.helped) && !recall && canRetry(item)) {
         const plan = planAfterMiss(
           queue,
           index,
@@ -261,6 +295,15 @@ export function LessonPlayer({
       play(markSound(marked), { step: comboStep(streak - 1) });
       if (marked.progress.goalMet && progress && !progress.goalMet)
         play('streakDay', { delay: 0.4 });
+      setReaction({
+        kind: answerReaction({
+          correct: marked.correct,
+          helped: marked.helped === true,
+          goalWasMet: progress?.goalMet ?? false,
+          goalMet: marked.progress.goalMet,
+        }),
+        combo: streak,
+      });
       setResult(marked);
       setProgress(marked.progress);
       setCombo(streak);
@@ -297,7 +340,9 @@ export function LessonPlayer({
     if (extended !== queue) setQueue(extended);
     setIndex(index + 1);
     setDraft(null);
+    setHelped(false);
     setResult(null);
+    setSkipped(false);
     setMiss(null);
     setComeback(false);
     shownAt.current = Date.now();
@@ -331,7 +376,7 @@ export function LessonPlayer({
         </Link>
         <ArenaProgress
           label="Lesson progress"
-          value={index + (result || unmarked ? 1 : 0)}
+          value={index + (result || unmarked || skipped ? 1 : 0)}
           max={queue.length}
         />
         <span className="lesson__xp">
@@ -359,12 +404,20 @@ export function LessonPlayer({
             key={item.id}
             item={item}
             draft={draft}
-            disabled={result !== null || checking}
+            disabled={result !== null || skipped || checking}
             onChange={setDraft}
             onSelfCheck={(knewIt) => void submit(knewIt)}
             optionMark={optionMark}
           />
         </Shake>
+        {item.type !== 'flashcard' && item.type !== 'extended_answer' && (
+          <HelpPanel
+            key={`help-${index}`}
+            item={item}
+            disabled={result !== null || skipped}
+            onHelped={() => setHelped(true)}
+          />
+        )}
       </div>
       <div className="lesson__footer">
         {result?.correct && result.xpEarned > 0 && (
@@ -382,9 +435,14 @@ export function LessonPlayer({
             Couldn&apos;t check that answer. Please try again.
           </p>
         )}
+        {skipped && (
+          <p role="status" className="feedback">
+            We can&apos;t mark typed working right now, so this one&apos;s skipped. No XP lost.
+          </p>
+        )}
         {result && <Feedback result={result} item={item} miss={miss} comeback={comeback} />}
         {result && <NewRewards rewards={result.newlyEarned} />}
-        {result || unmarked ? (
+        {result || unmarked || skipped ? (
           <Button block variant={result?.correct ? 'success' : 'primary'} onClick={advance}>
             {finishing ? 'Finish' : 'Continue'}
           </Button>

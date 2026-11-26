@@ -37,6 +37,8 @@ const envSchema = z
     SERVE_DRAFT_CONTENT: z.enum(['true', 'false']).optional(),
     // Development only (J12c): testers may try every effect style. Ignored in staging and production.
     STYLE_TESTER: z.enum(['true', 'false']).optional(),
+    // Dev only until the notices are updated (FL, lead 2026-11-26).
+    FRIENDS_ENABLED: z.enum(['true', 'false']).optional(),
     MATHS_ENGINE_URL: url.optional(),
     // Workstream H: all optional, so push and live AI stay off until their secrets are set.
     VAPID_PUBLIC_KEY: secret.optional(),
@@ -54,6 +56,8 @@ const envSchema = z
     // Workstream O: AppDeck operator bridge. Off until set; a different secret per environment.
     APPDECK_OPERATOR_SHARED_SECRET: z.string().min(32).optional(),
     OPERATOR_RATE_LIMITER: optionalRateLimiter,
+    // R5 Founding Tester: the 1.0 cut-off as a UTC timestamp. Unset until release (docs/REWARDS.md).
+    BETA_ENDS_AT: z.string().datetime().optional(),
     // "input/output" US dollars per million tokens, e.g. "0.15/0.6".
     AI_CHECKER_PRICES: z
       .string()
@@ -93,6 +97,8 @@ export interface AppConfig {
   serveDraftContent: boolean;
   /** Let testers try every effect style (J12c). Only ever true in development. */
   styleTester?: boolean;
+  /** The friends league (FL): development only until L updates the notices. */
+  friendsEnabled?: boolean;
   /** Maths engine (services/maths) used to check worked maths answers. */
   mathsEngineUrl?: string;
   /** Web push; null until both VAPID keys are set. */
@@ -102,6 +108,8 @@ export interface AppConfig {
   operatorEmails: string[];
   /** AppDeck operator bridge (`/operator/appdeck`); unset means the bridge is off (503). */
   operatorBridge?: { secret: string };
+  /** 1.0 cut-off for Founding Tester (R5); unset until release, so nobody gets it early. */
+  betaEndsAt?: Date;
 }
 
 export type SignInProvider = 'google' | 'microsoft';
@@ -174,11 +182,13 @@ export function parseEnv(env: Record<string, unknown>): AppConfig & { raw: Worke
     passkeyRpId: e.PASSKEY_RP_ID ?? new URL(e.WEB_ORIGIN).hostname,
     serveDraftContent: e.ENVIRONMENT === 'development' && e.SERVE_DRAFT_CONTENT === 'true',
     styleTester: e.ENVIRONMENT === 'development' && e.STYLE_TESTER === 'true',
+    friendsEnabled: e.ENVIRONMENT === 'development' && e.FRIENDS_ENABLED === 'true',
     ...(e.MATHS_ENGINE_URL ? { mathsEngineUrl: e.MATHS_ENGINE_URL } : {}),
     operatorEmails: (e.OPERATOR_EMAILS ?? '')
       .split(',')
       .map((email) => email.trim().toLowerCase())
       .filter(Boolean),
+    ...(e.BETA_ENDS_AT ? { betaEndsAt: new Date(e.BETA_ENDS_AT) } : {}),
     ...(e.APPDECK_OPERATOR_SHARED_SECRET
       ? { operatorBridge: { secret: e.APPDECK_OPERATOR_SHARED_SECRET } }
       : {}),

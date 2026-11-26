@@ -86,7 +86,8 @@ export interface OnboardingApi {
     deviceType?: DeviceType;
   }): Promise<{ deviceId: string; deviceMarker?: string; student: Student }>;
   /** Starts a passkey unlock; no credential ids, so any RevisionDen passkey here can answer. */
-  unlockOptions(): Promise<UnlockStart>;
+  /** With `usePhone` (E10), the browser is hinted to offer the phone (a QR code to scan). */
+  unlockOptions(input?: { usePhone?: boolean }): Promise<UnlockStart>;
   /** Checks the passkey's answer and starts a new 12-hour student session. */
   unlockVerify(input: {
     challengeId: string;
@@ -118,7 +119,7 @@ export interface OnboardingApi {
    * Student device: tells the server a passkey set-up failed in the browser (E8), with the
    * error name only. Returns the reference code shown on screen. Best effort.
    */
-  reportPasskeyError(code: string): string;
+  reportPasskeyError(code: string, path?: string): string;
 }
 
 interface Options {
@@ -220,7 +221,12 @@ export function createOnboardingApi({
     },
     redeemLink: (body) => request('v1/device/link', linkStartSchema, body),
     verifyLink: (body) => request('v1/device/link/verify', linkDoneSchema, body),
-    unlockOptions: () => request('v1/device/unlock/options', unlockStartSchema, {}),
+    unlockOptions: (input) =>
+      request(
+        'v1/device/unlock/options',
+        unlockStartSchema,
+        input?.usePhone ? { usePhone: true } : {},
+      ),
     unlockVerify: (body) => request('v1/device/unlock/verify', unlockDoneSchema, body),
     updateChildSubject: (studentId, subjectId, change) =>
       request(
@@ -250,11 +256,11 @@ export function createOnboardingApi({
         change,
         'PATCH',
       ),
-    reportPasskeyError: (code) => {
+    reportPasskeyError: (code, path = '/link') => {
       const ref = makeErrorRef(Math.random);
       reportClientError(
         { baseUrl, fetch },
-        { ref, kind: 'passkey', code, url: new URL('/link', root) },
+        { ref, kind: 'passkey', code, url: new URL(path, root) },
       );
       return ref;
     },

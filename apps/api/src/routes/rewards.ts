@@ -31,6 +31,7 @@ import {
   rewardsOverview,
   seasonProgressFor,
   secretStats,
+  foundingTesterStat,
   chooseTitle,
   formatTitle,
   titleWordsFor,
@@ -52,6 +53,7 @@ import {
   attempts,
   dailyXp,
   enrolments,
+  flashcardSessions,
   items,
   mastery,
   parentRewards,
@@ -69,16 +71,29 @@ import { readJson } from '../http';
 import type { Clock } from '../rate-limit';
 import { bugRewardXp, confirmedBugCount } from '../feedback/bugHunter';
 import { isId } from '../validation';
+import { settleLeagueWeeks } from './friends-league';
 
 type ParentRewardRow = typeof parentRewards.$inferSelect;
 
 interface Deps {
   db: Database;
   clock: Clock;
-  config?: { styleTester?: boolean };
+  config?: { styleTester?: boolean; friendsEnabled?: boolean; betaEndsAt?: Date };
 }
 
-async function loadStats(db: Database, studentId: string, yearGroup: number, now: Date) {
+/** Options for reward evaluation that come from configuration. */
+export interface RewardOptions {
+  /** 1.0 cut-off for Founding Tester (R5); unset means nobody gets it. */
+  betaEndsAt?: Date;
+}
+
+async function loadStats(
+  db: Database,
+  studentId: string,
+  yearGroup: number,
+  now: Date,
+  options: RewardOptions = {},
+) {
   const answerRows = await db
     .select({
       at: attempts.createdAt,
@@ -140,6 +155,14 @@ async function loadStats(db: Database, studentId: string, yearGroup: number, now
       enrolledSubjects: enrolled.map((e) => e.subjectId),
     }),
     flashcardsReviewed: sessions.cardsReviewed,
+    // Friends league (FL): weekly wins, settled in routes/friends-league.ts.
+    weeksTopOfLeague:
+      (
+        await db
+          .select({ wins: students.leagueWins })
+          .from(students)
+          .where(eq(students.id, studentId))
+      )[0]?.wins ?? 0,
     // Hidden tracks (R7b). Comeback Kid and part of Explorer come from answers; the rest have
     // no data source yet and stay at 0 (see project_memory/operations/contradictions.md).
     // Flashcards are self-ratings and never change mastery (learn.ts), so they are left out.
@@ -162,6 +185,17 @@ async function loadStats(db: Database, studentId: string, yearGroup: number, now
     factChecks: 0, // item_reports has no student id yet (workstream V)
     plannedWeeks: 0, // no planned sessions yet (workstream P)
     perfectSetsLevel2: 0, // practice sets are not stored yet
+    // R5: answers and completed flashcard sessions before the 1.0 cut-off. Existing rows only.
+    foundingTester: options.betaEndsAt
+      ? foundingTesterStat({
+          betaEndsAt: options.betaEndsAt,
+          now,
+          activityAt: [
+            ...answerRows.map((a) => a.at),
+            ...(await completedSessionTimes(db, studentId)),
+          ],
+        })
+      : 0,
   };
   const seasonProgress = seasonProgressFor({
     now,
@@ -169,6 +203,21 @@ async function loadStats(db: Database, studentId: string, yearGroup: number, now
     goalDays: goalDays.map((g) => g.day),
   });
   return { stats, seasonProgress, totalRewardXp };
+}
+
+/** When the student's completed flashcard sessions finished (Founding Tester, R5). */
+async function completedSessionTimes(db: Database, studentId: string): Promise<Date[]> {
+  const rows = await db
+    .select({ at: flashcardSessions.finishedAt })
+    .from(flashcardSessions)
+    .where(
+      and(
+        eq(flashcardSessions.studentId, studentId),
+        eq(flashcardSessions.completed, true),
+        isNotNull(flashcardSessions.finishedAt),
+      ),
+    );
+  return rows.flatMap((r) => (r.at ? [r.at] : []));
 }
 
 /** Saves rewards not stored yet; returns the ids actually added (so gift days come once). */
@@ -235,8 +284,13 @@ function toParentReward(
 type RewardStudent = { id: string; yearGroup: number };
 
 /** Works out rewards earned since last time, saves them once each and returns them as cards. */
-async function earnRewards(db: Database, student: RewardStudent, now: Date) {
-  const loaded = await loadStats(db, student.id, student.yearGroup, now);
+async function earnRewards(
+  db: Database,
+  student: RewardStudent,
+  now: Date,
+  options: RewardOptions = {},
+) {
+  const loaded = await loadStats(db, student.id, student.yearGroup, now, options);
   const stored = await db
     .select({ rewardId: rewards.rewardId })
     .from(rewards)
@@ -274,13 +328,14 @@ export async function saveNewRewards(
   db: Database,
   studentId: string,
   now: Date,
+  options: RewardOptions = {},
 ): Promise<RewardCardResponse[]> {
   const [student] = await db
     .select({ id: students.id, yearGroup: students.yearGroup })
     .from(students)
     .where(eq(students.id, studentId));
   if (!student) throw notFound('Student not found');
-  return (await earnRewards(db, student, now)).newlyEarned;
+  return (await earnRewards(db, student, now, options)).newlyEarned;
 }
 
 /** Loads progress, saves anything newly earned and builds the rewards view. */
@@ -288,11 +343,13 @@ async function rewardsView(
   db: Database,
   student: RewardStudent,
   now: Date,
+  options: RewardOptions = {},
 ): Promise<StudentRewardsResponse> {
   const { stats, seasonProgress, totalRewardXp, earnedIds, newlyEarned } = await earnRewards(
     db,
     student,
     now,
+    options,
   );
   const overview = rewardsOverview({
     stats,
@@ -365,7 +422,13 @@ export function studentRewardRoutes({ db, clock, config }: Deps) {
       .from(students)
       .where(eq(students.id, c.var.student.studentId));
     if (!student) throw notFound('Student not found');
-    return c.json(await rewardsView(db, student, clock.now()));
+    const now = clock.now();
+    // Friends league (FL, dev only for now): settle last weeks so a win shows as a reward.
+    if (config?.friendsEnabled) {
+      const [row] = await db.select().from(students).where(eq(students.id, student.id));
+      if (row) await settleLeagueWeeks(db, row, now);
+    }
+    return c.json(await rewardsView(db, student, now, { betaEndsAt: config?.betaEndsAt }));
   });
 
   /** Two-part title (R8): the words this student has unlocked and the pair they picked. */
@@ -432,13 +495,13 @@ export function studentRewardRoutes({ db, clock, config }: Deps) {
 }
 
 /** Parent routes under /v1/students/:id/rewards and /v1/students/:id/parent-rewards. */
-export function parentRewardRoutes({ db, clock }: Deps) {
+export function parentRewardRoutes({ db, clock, config }: Deps) {
   const app = new Hono<AppEnv>();
   const family = (c: { var: AppEnv['Variables'] }) => c.var.parent.familyId;
 
   app.get('/:id/rewards', async (c) => {
     const student = await requireFamilyStudent(db, family(c), c.req.param('id'));
-    return c.json(await rewardsView(db, student, clock.now()));
+    return c.json(await rewardsView(db, student, clock.now(), { betaEndsAt: config?.betaEndsAt }));
   });
 
   /** Parent-set rewards with progress only (read by the parent dashboard, workstream K). */
@@ -456,7 +519,7 @@ export function parentRewardRoutes({ db, clock }: Deps) {
       .insert(parentRewards)
       .values({ studentId: student.id, title, note: note || null, ...targetColumns(target) })
       .returning();
-    const view = await rewardsView(db, student, clock.now());
+    const view = await rewardsView(db, student, clock.now(), { betaEndsAt: config?.betaEndsAt });
     return c.json(
       view.parentRewards.find((r) => r.id === row!.id)!,
       201,
@@ -480,7 +543,7 @@ export function parentRewardRoutes({ db, clock }: Deps) {
       .update(parentRewards)
       .set({ givenAt: row.givenAt ?? clock.now() })
       .where(eq(parentRewards.id, row.id));
-    const view = await rewardsView(db, student, clock.now());
+    const view = await rewardsView(db, student, clock.now(), { betaEndsAt: config?.betaEndsAt });
     return c.json(view.parentRewards.find((r) => r.id === row.id)!);
   });
 
@@ -500,7 +563,7 @@ export function parentRewardRoutes({ db, clock }: Deps) {
         ...(change.target && targetColumns(change.target)),
       })
       .where(eq(parentRewards.id, row.id));
-    const view = await rewardsView(db, student, clock.now());
+    const view = await rewardsView(db, student, clock.now(), { betaEndsAt: config?.betaEndsAt });
     return c.json(view.parentRewards.find((r) => r.id === row.id)!);
   });
 

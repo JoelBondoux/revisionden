@@ -37,6 +37,19 @@ function Harness({ step, disabled = false }: { step: AreaItem; disabled?: boolea
 }
 
 describe('the area model step', () => {
+  it('never adds or removes tiles: a wrong pair keeps b strips and c units (Codex P2)', async () => {
+    render(<Harness step={item()} />);
+    await userEvent.click(screen.getByRole('radio', { name: '1 and 6' }));
+    const svg = document.querySelector('.area-svg')!;
+    expect(svg.querySelectorAll('.area-tile--strip')).toHaveLength(5);
+    expect(svg.querySelectorAll('.area-tile--unit')).toHaveLength(6);
+    // The frame for 1 and 6 wants 7 strips: the 2 missing ones are outlined, not drawn.
+    expect(svg.querySelectorAll('.area-slot--missing')).toHaveLength(2);
+    await userEvent.click(screen.getByRole('radio', { name: '2 and 3' }));
+    expect(svg.querySelectorAll('.area-tile--strip')).toHaveLength(5);
+    expect(svg.querySelectorAll('.area-slot--missing')).toHaveLength(0);
+  });
+
   it('shows the prompt and the quadratic as three terms', () => {
     render(<Harness step={item()} />);
     // The prompt shows the power as a superscript, never a typed ^ (F9), and reads it aloud.

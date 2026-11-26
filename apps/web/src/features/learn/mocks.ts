@@ -257,7 +257,9 @@ export const learnHandlers: RequestHandler[] = [
     if (!body.success || !keys[body.data.itemId]) return new HttpResponse(null, { status: 400 });
     const key = keys[body.data.itemId]!;
     const correct = marks(body.data.itemId, body.data.answer);
-    const xpEarned = correct ? key.xp : 0;
+    // A right answer after Help me understand earns half XP (F10).
+    const helped = body.data.mode === 'learn' && body.data.helped === true;
+    const xpEarned = correct ? (helped ? Math.floor(key.xp / 2) : key.xp) : 0;
     earn(xpEarned);
     const working = typeof body.data.answer === 'object' && body.data.answer !== null;
     return HttpResponse.json({
@@ -267,6 +269,7 @@ export const learnHandlers: RequestHandler[] = [
       score: correct ? 1 : 0,
       xpEarned,
       createdAt: '2026-11-24T10:00:00.000Z',
+      ...(helped ? { helped: true } : {}),
       feedback:
         body.data.mode === 'test'
           ? null
@@ -282,6 +285,9 @@ export const learnHandlers: RequestHandler[] = [
       newlyEarned: takeRewards(),
     });
   }),
+
+  // No verified help steps for demo items unless a test adds some (F10).
+  http.get('*/v1/student/learn/items/:id/help', () => new HttpResponse(null, { status: 404 })),
 
   http.get('*/v1/student/flashcards', () => {
     const due = [...deckCards(), ...state.mine];

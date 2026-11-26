@@ -29,13 +29,14 @@ import {
   topics,
 } from '@revisionden/db';
 import type { AppEnv } from '../context';
-import { servableItem, toLearnItem } from '../learning/items';
+import { selectableItem, toLearnItem } from '../learning/items';
 import { dueLearningPoints, warmUps } from '../learning/mistakes';
 import type { LearnDeps } from './learn';
 
-export function studentDailyRoutes({ db, clock, config }: LearnDeps) {
+export function studentDailyRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
   const app = new Hono<AppEnv>();
-  const servable = servableItem(config.serveDraftContent);
+  // Picked for students: without the maths engine, no typed working (F12).
+  const servable = selectableItem(config.serveDraftContent, mathsEngine !== undefined);
 
   /** Picks today's item ids from the student's practised topics in their enrolled subjects. */
   async function pickSet(studentId: string, day: string, now: Date): Promise<string[]> {

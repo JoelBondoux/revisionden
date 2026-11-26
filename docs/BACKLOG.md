@@ -128,6 +128,26 @@
       record on every item, topic leaf, mark scheme and diagram, per `VERIFICATION.md`.
   - Tests: missing citation, quote, location or URL fails; verified item without required checks
     fails; `other_authoritative`-only item without `needs_human_approval` fails.
+- [ ] **D7 "Either order" topic groups (owner, 2026-11-26).** The new topic map (J15c) can fork
+      where two or more topics in a unit can genuinely be learned in either order, then rejoin.
+      Topic trees gain an optional `order_groups` list per unit (topic IDs that may be done in any
+      order). A group is added only with a reason a teacher would accept, recorded like any other
+      content decision (citation to the specification's ordering, or human approval per
+      `VERIFICATION.md`); with no group the unit stays in specification order. The Higher side
+      branch for Foundation students needs no new data (it uses each topic's tier).
+  - Tests: unknown topic ID in a group fails; a group spanning two units fails; a group without a
+    reason or approval fails; units with no groups keep specification order.
+- [ ] **D8 Cross-subject links ("bridge" topics) (owner, 2026-11-26).** On the map, a topic from
+      another subject the student also studies can appear as an optional side node where it helps
+      (for example Physics "speed, distance and time" next to Maths "rearranging formulae"). It is
+      discovered: hidden until the student first opens the linked topic, then it pops in on its own
+      side branch with "You might find this Physics topic useful", and stays there; a bridge topic's
+      own links are discovered the same way (chains). Topic trees gain optional `links` (target
+      subject and topic ID, a one-line plain-English reason, and a citation showing the overlap,
+      for example both specifications' references, or human approval). Starts once a second
+      subject (Physics) has verified content; Astronomy is not yet a subject.
+  - Tests: link to an unknown subject or topic fails; a link without a reason or citation fails;
+    links only show for subjects the student is enrolled in; discovery is remembered per student.
 
 ---
 
@@ -333,6 +353,11 @@ Broken down into tasks when Stage 1 ships, following the same format. Headline o
 7. Stage 3: past papers, maths working, essays and Mark my homework, access arrangements,
    A-Level extras.
 8. Stage 4: rewards UI, friends league, skip and gift days UI, mascot kits, interactive lessons.
-   - Friends league: show each student's two-part title under their nickname (R8). The title is
-     `formatTitle` of `students.title_first` and `title_last`; `GET /v1/student/rewards/title`
-     shows the shape (`docs/REWARDS.md` "Two-part titles").
+   - [x] Friends league: show each student's two-part title under their nickname (R8). Done in FL
+         PR 2 (`apps/web/src/features/league/LeaguePage.tsx`). The title is
+         `formatTitle` of `students.title_first` and `title_last`; `GET /v1/student/rewards/title`
+         shows the shape (`docs/REWARDS.md` "Two-part titles").
+   - [x] Friends league follow-up (FL, lead 2026-11-26; done in FL PR 4): an AppDeck support view of friend reports
+         (nicknames, avatar code, fixed reason and date only), where support can also close a report.
+         Parents can already close a report their child made, and closed reports are deleted 12 months
+         later (FL PR 3); see `docs/FRIENDS_LEAGUE.md` sections 7 and 8.
