@@ -167,6 +167,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- F11c: a regression test that "10 more" still starts a new flashcard session when it brings back the same due cards (`FlashcardsPage.limit.test.tsx`). No code change: the page reloads the overview on "10 more", which always mounts a fresh review session.
+
 - Set complete: "Best combo" uses the arena's own text accent (`--arena-gold` was 1.37:1 on the light arena of Doodle Diary and Sticker Book); checked AA in all 10 looks, light and dark (W18; J's `learn.css`, approved crossing).
 - Flashcards: "10 more" now starts one new session, not two; the finished session no longer restarts when `extra` changes, which left a stray open session on the server (it never counted towards XP or the daily limit) (W18; F's `FlashcardsPage.tsx`, approved crossing).
 - Docs: `docs/GAME_FEEL.md` brought up to date with dev (ten styles in the checks and the dev tester; Doodle Diary and Sticker Book's Home notes no longer describe the old Today strip; Doodle Diary has its own sound pack; lesson "+XP" colour since J16b).
