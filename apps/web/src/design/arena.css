@@ -1,27 +1,31 @@
 /*
- * The dark "arena" theme for practice screens (docs/GAME_FEEL.md, mockup 22). Wrap a screen in
- * `.arena`. Transforms and opacity only for motion; reduced motion is handled in base.css.
+ * The "arena" for practice screens (docs/GAME_FEEL.md, mockup 22). Wrap a screen in `.arena`.
+ * Transforms and opacity only for motion; reduced motion is handled in base.css.
+ *
+ * J17x (owner report: white text on light pages): the arena sits on the look's own page, light and
+ * dark (J15s). It used to paint its own dark page under white text, but the look's page (base.css,
+ * same specificity, later) won whenever the background pattern was on, leaving white text on a
+ * light page in 8 looks, and the dark page came back with the pattern off or high contrast. Now
+ * the arena paints no page of its own and takes its page tokens from the look, set here on the
+ * arena itself: a value set on the element beats one inherited from the root, so no setting or
+ * style sheet changes which colours the words get (`ARENA_FROM_PAGE` in looks.ts, tested there).
  */
-body:has(.arena:not(.review)) {
-  background:
-    radial-gradient(120% 50% at 50% 0%, var(--arena-raised) 0%, transparent 70%) no-repeat,
-    var(--arena-bg);
-}
-
-body:has(.arena:not(.review)) footer,
-body:has(.arena:not(.review)) footer a {
-  color: var(--arena-text-secondary);
-}
-
 .arena {
+  --arena-bg: var(--color-background);
+  --arena-raised: var(--color-surface);
+  --arena-track: var(--color-track);
+  --arena-text: var(--color-text);
+  --arena-text-secondary: var(--color-text-secondary);
+  --arena-glow: var(--color-primary-edge);
+
   color: var(--arena-text);
 }
 
-/* An arena panel inside a light page (the Cards tab), until that page goes fully immersive. */
+/* An arena panel inside a page (the Cards tab), until that page goes fully immersive. */
 .arena.review {
   padding: var(--space-4);
   border-radius: var(--radius-lg);
-  background: var(--arena-bg);
+  background: var(--arena-raised);
 }
 
 .arena h1,
@@ -93,7 +97,8 @@ body:has(.arena:not(.review)) footer a {
   padding: var(--space-3);
   border: 3px solid transparent;
   border-radius: var(--radius-lg);
-  color: var(--arena-text);
+  /* The answer buttons keep their own fills, so their text is the arena's on-option white. */
+  color: var(--arena-on-option);
   font-weight: var(--font-weight-black);
   text-align: center;
   cursor: pointer;
@@ -126,7 +131,7 @@ body:has(.arena:not(.review)) footer a {
 }
 
 .answer-option:has(input:checked) {
-  border-color: var(--arena-text);
+  border-color: var(--arena-on-option);
 }
 
 .answer-option:has(input:focus-visible) {
