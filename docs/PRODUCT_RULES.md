@@ -1101,6 +1101,11 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   Oak lessons and BBC Bitesize pages). `pnpm content:check-links --coverage` prints the numbers.
 - Links point at the right level (GCSE or A-Level) and the student's board where the page is
   board-specific.
+- **Oak links go to the pupil lesson page** (owner decision, 2026-11-26): the page made for
+  students, with the lesson video and no sign-in, not Oak's teacher page. The link is the pupil
+  lesson's overview page (`/pupils/lessons/<lesson>/overview`). The validator refuses an Oak
+  teacher page (`/teachers/...`) unless the link is marked `no_pupil_page` (the lesson has no
+  pupil page). BBC Bitesize and Isaac pages are already made for students.
 
 ### Read aloud and reading comfort
 

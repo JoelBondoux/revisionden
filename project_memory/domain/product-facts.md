@@ -1000,6 +1000,13 @@ Tags: #product #rules #limits #defaults
   Coverage 2026-11-26: 139 links in 44 files; 44/44 topics and 133/133 learning points with items
   have a shown link, 69 points with their own. Pages were opened in a browser and read; the
   match `page_title` is the raw HTML title the CI check compares.
+- Oak links go to the pupil lesson page (owner decision 2026-11-26, Q6c): URL
+  `https://www.thenational.academy/pupils/lessons/<lesson>/overview` (the bare
+  `/pupils/lessons/<lesson>` answers 308 to it; the link check reads titles only on a 200). Pupil
+  pages have the lesson video and need no sign-in; titles read "<lesson> | Oak National Academy".
+  The teacher page shows the pupil link, so pupil URLs were taken from it, not guessed. The
+  validator (`OAK_PUPIL_PAGE` in `scripts/content/learn-links.mjs`) refuses any other Oak path
+  unless the link has `no_pupil_page: true`, which is allowed only on an Oak `/teachers/` page.
 - In-house notes (planned; external links are interim): provider `revisionden` with `route` (an
   app path, no URL), listed first, optional `hide_external`; refused by validation until the
   notes exist (`IN_HOUSE_NOTES_BUILT` in `scripts/content/learn-links.mjs`).
