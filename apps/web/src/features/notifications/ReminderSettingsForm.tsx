@@ -103,6 +103,11 @@ export function ReminderSettingsForm({ api, studentId }: ReminderSettingsFormPro
           {settings.enabled && (
             <>
               <p>At most {settings.maxPerDay} reminders a day.</p>
+              <p>
+                Reminders are checked every half hour, so one can arrive up to 30 minutes after the
+                time you set. A time later than the last check before quiet hours is sent at that
+                last check instead.
+              </p>
               <Toggle
                 label="Planned session reminders"
                 checked={settings.sessionReminders}
