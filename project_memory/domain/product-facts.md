@@ -817,6 +817,14 @@ Tags: #product #rules #limits #defaults
   the app's base skin for every shared component, body text stays Nunito (the hand font is for
   headings only), and the unlockable styles change effects, sounds and accents only. Mockups in
   `docs/design/j12/SKIN.md`.
+- Dev style tester (J12c, owner request 2026-11-26): on the dev environment only, Settings →
+  Effect style offers "Tester: try any style" (all seven styles, Light/Dark, Standard/Colour-blind)
+  marked "Dev only: doesn't unlock anything for real". Turned on by the API alone: `testerStyles`
+  in `GET /v1/student/rewards/effect-styles` only when `ENVIRONMENT=development` and
+  `STYLE_TESTER=true` (dev env in `apps/api/wrangler.toml`; never staging or production, config
+  tested). The tried style is saved on the device as `revisionden.effectStyleTester`, separate from
+  the real choice, ignored unless the server sends the list, and cleared by "Reset to my unlocked
+  style". It grants no reward and changes no unlock.
 
 ## Exam practice (planned)
 
@@ -876,6 +884,11 @@ Tags: #product #rules #limits #defaults
   each (or none) on the Rewards page; saved as `students.title_first` / `title_last` (migration
   0019); `GET`/`PUT /v1/student/rewards/title`; free to change any time; included in the family data export. Shown under the nickname
   on the Rewards page; the friends league is not built yet, so it shows there once it is.
+- Friends league (FL): owner decision 2026-11-26, friends may come from other families from day
+  one, not family only. Design approved 2026-11-26, not built yet: `docs/FRIENDS_LEAGUE.md`
+  (nickname, avatar, title and weekly learning XP only; one parent per family approves; no chat;
+  10-friend cap; siblings join automatically; reports seen by both families' parents and AppDeck;
+  rank chip on Map, League page under Me; head-to-head challenges later).
 - "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
   NSPCC adult helpline, parent-only). Students reach it only from Settings, where it is the
   first tile (via the Me nav item); there is no Get help link in the student header or footer

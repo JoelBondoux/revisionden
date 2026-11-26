@@ -55,6 +55,9 @@ PASSKEY_RP_ID = "dev.revisionden.com"
 # Dev only: also serve the pilot drafts so the family can try them. The API ignores this outside
 # development, and the config test checks staging and production never set it.
 SERVE_DRAFT_CONTENT = "true"
+# Dev only (J12c): testers may try every effect style in Settings; nothing is unlocked for real.
+# The API ignores this outside development, and the config test checks staging and production.
+STYLE_TESTER = "true"
 
 # No cron in dev: it would wake the database every few minutes for nobody. The explicit empty
 # list removes the cron already deployed; leaving [triggers] out would keep it.
