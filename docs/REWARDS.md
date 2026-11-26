@@ -202,7 +202,7 @@ service worker fetches "<nickname> reached a reward target: <title>" from
 that child; the weekday school-hours window and the child's reminder switch do not apply. It is
 not one of the child's 2 reminders a day. If no parent device has it on, nothing is used up: the
 parent is told once they turn it on (while the reward is still not given). Code:
-`apps/api/src/notifications/parent-rewards.ts`, run by the 15-minute cron.
+`apps/api/src/notifications/parent-rewards.ts`, run by the reminder cron (every 30 minutes in UK daytime, see `apps/api/src/crons.ts`).
 
 ## Bug Hunter track (hidden)
 
