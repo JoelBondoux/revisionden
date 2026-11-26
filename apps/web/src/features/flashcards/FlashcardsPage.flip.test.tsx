@@ -5,7 +5,7 @@ import { renderRoute } from '../../test/render';
 
 const click = (name: string | RegExp) => userEvent.click(screen.getByRole('button', { name }));
 const flipCard = () => screen.getByTestId('flip-card');
-const turn = () => screen.getByRole('button', { name: /^Turn (over|back)/ });
+const turn = () => screen.getByTestId('flip-card');
 
 async function openCards() {
   renderRoute('/cards');
@@ -53,6 +53,20 @@ describe('Turning flashcards (F7)', () => {
     await userEvent.keyboard('{Enter}');
     expect(flipCard()).toHaveClass('flip-card--flipped');
     expect(screen.getByText('Demo back 1')).toBeInTheDocument();
+  });
+});
+
+describe('The card’s accessible name (F8b, WCAG 2.5.3 Label in Name)', () => {
+  it('is the text shown on the card, with the turn hint as its description', async () => {
+    await openCards();
+    const card = screen.getByRole('button', { name: /^Question/ });
+    expect(card).toBe(flipCard());
+    expect(card).not.toHaveAttribute('aria-label');
+    expect(card).toHaveAccessibleName(expect.stringContaining('Demo front 1'));
+    expect(card).toHaveAccessibleDescription('Turn over to see the answer');
+    await click('Show answer');
+    expect(card).toHaveAccessibleName(expect.stringMatching(/^Answer.*Demo back 1/));
+    expect(card).toHaveAccessibleDescription('Turn back to the question');
   });
 });
 
