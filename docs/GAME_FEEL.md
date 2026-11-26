@@ -184,7 +184,7 @@ tab say so to screen readers.
   streak) are never part of a look, so the colour-blind palette works in every style. Body text,
   questions and answers stay Nunito. `looks.test.ts` checks every look sets every token, matches its
   stylesheet, and keeps every text pair at AA (and shapes at 3:1) in light, dark and colour-blind;
-  `e2e/tests/looks.spec.ts` runs axe on the map and Me in all 7 styles, light and dark. This
+  `e2e/tests/looks.spec.ts` runs axe on the map and Me in every style (ten since J16), light and dark. This
   replaces J13a's "styles change accents only" (#268, not merged).
 - **Looks match the approved all-themes mockup (J15s revision, rev 5.1, 2026-11-26).** Each look
   takes the mockup's page art, split into a wash (`--page-wash`, soft gradients) and a texture
@@ -241,22 +241,21 @@ tab say so to screen readers.
   load (for example a 401 before unlocking) on the next screen change.
 - Doodle Diary (J10d, the default): a diary full of pen doodles. On Home, page titles are
   handwritten (Patrick Hand, self-hosted, SIL Open Font Licence, listed under open-source
-  licences) with a wavy biro underline; the Today strip and the chosen unit's card are boxes sketched in
-  pen with wobbly corners (the rows inside stay plain), and the chosen unit badge is coloured in
-  with highlighter (J12b); mastered topics are outlined in ink and coloured in
+  licences) with a wavy biro underline; the next-mission card is a box sketched in pen with wobbly
+  corners, and the chosen unit badge is coloured in with highlighter (J12b); mastered topics are outlined in ink and coloured in
   with highlighter scribbles. On Rewards, earned steps are solid highlighter yellow with dark ink numbers (AA in light and
   dark, J10g) and locked ones are dashed
   pencil outlines. In lessons the surround is diary paper (night paper in dark mode) and the
   question sits on a plain white card (dark card in dark mode); a right answer gets a ring and a light
   wash in the success colour (green; blue with colour-blind friendly colours), so it never reads
-  as a red "wrong" mark (J10f; red is for wrong only). The combo badge and "+XP" are written in red pen, stars are drawn in pen and coloured
-  in, and bursts and confetti are quick pen strokes. Sounds use U's paper-and-ink pack (Sticker
-  Book's until a Doodle Diary pack lands): `EffectStyleProvider` calls `useFeedbackStyle` with the
-  active style.
+  as a red "wrong" mark (J10f; red is for wrong only). The combo badge is written in red pen ("+XP" too, except in the lesson,
+  where it takes the look's main colour, J16b), stars are drawn in pen and coloured in, and bursts
+  and confetti are quick pen strokes. Sounds use U's Doodle Diary pack: `EffectStyleProvider` calls
+  `useFeedbackStyle` with the active style.
 - Sticker Book (J10a): wins are stickers slapped onto the page. Each sticker has a white die-cut
   edge, a slight tilt and a soft offset shadow; bursts and confetti are paper scraps. On Home, the
-  Today strip and its Next mission row are cards taped into the book, the 5-a-day row is a paper
-  note, the streak is a sticker, and mastered topics are gold stickers stuck on at slight angles.
+  next-mission card is taped into the book and its button is a sticker, the streak is a sticker,
+  and mastered topics are gold stickers stuck on at slight angles.
   On Rewards, earned chapter steps are stickers and locked ones are dashed outlines. Stickers keep
   their paper colours in dark mode, like real stickers, with dark ink text (AA). The combo badge
   and stars "slap" in (transform and opacity only), with no animation under reduced motion.
@@ -287,12 +286,11 @@ tab say so to screen readers.
   short paths, a handful at a time, never behind question text, and off under reduced motion.
   Everything else stays transform and opacity only.
 - Every style plays its own sounds and vibration through the sound workstream's events (U6).
-  Wiring the style into those events follows once U's PR is on dev.
 
 ## Dev style tester (J12c, owner request 2026-11-26)
 
 On the dev environment only, Settings → Effect style has a dashed "Tester: try any style" box
-("Dev only: doesn't unlock anything for real."): any of the seven styles, Light or Dark, and
+("Dev only: doesn't unlock anything for real."): any style (all ten), Light or Dark, and
 Standard or Colour-blind colours, applied at once. The API decides: `GET
 /v1/student/rewards/effect-styles` adds `testerStyles` only when `ENVIRONMENT=development` and
 `STYLE_TESTER=true` (set for `env.dev` in `apps/api/wrangler.toml`; a config test checks staging
