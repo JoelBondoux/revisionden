@@ -1,0 +1,313 @@
+{
+  "student/daily-limit": {
+    "limitMinutes": 60,
+    "usedMinutes": 25,
+    "leftMinutes": 35,
+    "reached": false,
+    "dayType": "school",
+    "examSeason": false,
+    "changed": null
+  },
+  "students": {
+    "students": [
+      {
+        "id": "00000000-0000-4000-8000-0000000000a1",
+        "nickname": "demo_fox"
+      },
+      {
+        "id": "00000000-0000-4000-8000-0000000000a2",
+        "nickname": "demo_owl"
+      }
+    ]
+  },
+  "students/:child/dashboard": {
+    "student": {
+      "id": "00000000-0000-4000-8000-0000000000a1",
+      "nickname": "demo_fox"
+    },
+    "week": {
+      "start": "2026-11-23",
+      "end": "2026-11-30",
+      "label": "Week of 23 Nov"
+    },
+    "timeZone": "Europe/London",
+    "tiles": {
+      "activeMinutes": {
+        "value": 95,
+        "previous": 110
+      },
+      "planKept": null,
+      "accuracy": {
+        "value": 79,
+        "previous": 74
+      },
+      "streak": {
+        "current": 3,
+        "best": 9
+      }
+    },
+    "studyTime": {
+      "weeks": [
+        {
+          "start": "2026-10-01",
+          "label": "Week 1",
+          "value": 40
+        },
+        {
+          "start": "2026-10-02",
+          "label": "Week 2",
+          "value": 65
+        },
+        {
+          "start": "2026-10-03",
+          "label": "Week 3",
+          "value": 90
+        },
+        {
+          "start": "2026-11-04",
+          "label": "Week 4",
+          "value": 80
+        },
+        {
+          "start": "2026-11-05",
+          "label": "Week 5",
+          "value": 120
+        },
+        {
+          "start": "2026-11-06",
+          "label": "Week 6",
+          "value": 70
+        },
+        {
+          "start": "2026-11-07",
+          "label": "Week 7",
+          "value": 110
+        },
+        {
+          "start": "2026-11-08",
+          "label": "Week 8",
+          "value": 95
+        }
+      ],
+      "planMinutes": null
+    },
+    "subjects": [
+      {
+        "subjectId": "gcse-maths",
+        "name": "Maths",
+        "mastery": 64,
+        "change": 4,
+        "predictedGrade": null,
+        "targetGrade": null
+      },
+      {
+        "subjectId": "gcse-physics",
+        "name": "Physics",
+        "mastery": 48,
+        "change": -3,
+        "predictedGrade": null,
+        "targetGrade": null
+      }
+    ],
+    "weakSpots": [
+      {
+        "topicId": "demo-topic-c",
+        "title": "Demo topic C",
+        "subjectId": "gcse-physics",
+        "then": 30,
+        "now": 35
+      },
+      {
+        "topicId": "demo-topic-b",
+        "title": "Demo topic B",
+        "subjectId": "gcse-maths",
+        "then": 50,
+        "now": 44
+      }
+    ],
+    "effortScores": null,
+    "rewards": [],
+    "healthyHabits": {
+      "quietHourSessions": 1,
+      "daysOverCap": 0,
+      "restDays": 1,
+      "dailyCapMinutes": 120
+    },
+    "aiAllowance": {
+      "percentUsed": 16,
+      "usedUp": false,
+      "resetsOn": "2026-12-01"
+    },
+    "recentActivity": [
+      {
+        "kind": "flashcards",
+        "at": "2026-11-24T17:10:00.000Z",
+        "count": 6,
+        "subjectId": null
+      },
+      {
+        "kind": "lesson",
+        "at": "2026-11-24T16:30:00.000Z",
+        "count": 8,
+        "subjectId": "gcse-maths"
+      }
+    ]
+  },
+  "students/:child/daily-limit": {
+    "settings": {
+      "schoolDayMinutes": 60,
+      "otherDayMinutes": 90,
+      "examSeasonExtra": false
+    },
+    "custom": {
+      "school": false,
+      "other": false
+    },
+    "defaults": {
+      "school": 60,
+      "other": 90
+    },
+    "ceilings": {
+      "school": 120,
+      "other": 180
+    },
+    "today": {
+      "limitMinutes": 60,
+      "usedMinutes": 25,
+      "leftMinutes": 35,
+      "reached": false,
+      "dayType": "school",
+      "examSeason": false
+    },
+    "suggestion": null
+  },
+  "students/:child/worth-a-look": {
+    "topics": []
+  },
+  "students/:child/target-grades": {
+    "subjects": [
+      {
+        "subjectId": "gcse-maths",
+        "name": "Maths",
+        "parentTarget": null,
+        "studentTarget": null,
+        "grades": ["9", "8", "7", "6", "5", "4", "3", "U"]
+      },
+      {
+        "subjectId": "gcse-physics",
+        "name": "Physics",
+        "parentTarget": null,
+        "studentTarget": null,
+        "grades": null
+      }
+    ]
+  },
+  "students/:child/parent-rewards": {
+    "parentRewards": []
+  },
+  "student/stats": {
+    "period": "week",
+    "range": {
+      "start": "2026-11-23",
+      "end": "2026-11-30",
+      "label": "Week of 23 Nov"
+    },
+    "tiles": {
+      "xp": {
+        "value": 95,
+        "previous": 80
+      },
+      "answered": {
+        "value": 14,
+        "correct": 11,
+        "previous": 16
+      },
+      "accuracy": {
+        "value": 79,
+        "previous": 79
+      },
+      "streak": {
+        "current": 3
+      }
+    },
+    "chart": {
+      "buckets": [
+        {
+          "start": "2026-11-23",
+          "label": "Mon",
+          "value": 60
+        },
+        {
+          "start": "2026-11-24",
+          "label": "Tue",
+          "value": 35
+        },
+        {
+          "start": "2026-11-25",
+          "label": "Wed",
+          "value": 0
+        },
+        {
+          "start": "2026-11-26",
+          "label": "Thu",
+          "value": 0
+        },
+        {
+          "start": "2026-11-27",
+          "label": "Fri",
+          "value": 0
+        },
+        {
+          "start": "2026-11-28",
+          "label": "Sat",
+          "value": 0
+        },
+        {
+          "start": "2026-11-29",
+          "label": "Sun",
+          "value": 0
+        }
+      ],
+      "goal": 50
+    },
+    "mastery": [
+      {
+        "subjectId": "gcse-maths",
+        "name": "Maths",
+        "mastery": 64,
+        "change": 4
+      },
+      {
+        "subjectId": "gcse-physics",
+        "name": "Physics",
+        "mastery": 48,
+        "change": -3
+      }
+    ],
+    "personalBests": {
+      "longestStreak": 9,
+      "longestCorrectRun": 12,
+      "bestWeek": {
+        "weekStart": "2026-11-16",
+        "xp": 260
+      }
+    },
+    "targets": [
+      {
+        "subjectId": "gcse-maths",
+        "name": "Maths",
+        "parentTarget": null,
+        "studentTarget": null,
+        "grades": ["9", "8", "7", "6", "5", "4", "3", "U"]
+      },
+      {
+        "subjectId": "gcse-physics",
+        "name": "Physics",
+        "parentTarget": null,
+        "studentTarget": null,
+        "grades": null
+      }
+    ],
+    "level": null
+  }
+}

@@ -99,7 +99,17 @@ Tags: #product #rules #limits #defaults
   plays, all 7 19th-century novels and Animal Farm). Embedded third-party widgets (GeoGebra, Desmos,
   PhET) break the no-third-parties rule unless self-hosted and need commercial licences for a paid
   tier; Mathpix's terms are adults-only. Detail: `docs/research/specialist-tools-2026-11.md`.
-- Question generation research (QG, 2026-11-26, not yet a decision): four guarantee tiers
+- Question generation rules (decision 0010, owner 2026-11-26): batches made only of items from
+  owner-approved templates (a `template-approval` check naming the template id and version) with
+  their cross-check passed are sampled at 3%, at least 10; every other batch 10%, at least 30
+  (`packages/core/src/review-sampling.ts`). Public-domain set texts count as official for
+  quotations only, from one fixed edition per text; items from individually approved fact-table
+  rows may be batch-sampled; board-neutral physics and chemistry calculations from DfE content
+  may be built now; awrt rounding is settled; spreadsheet citations use "sheet, row, cell";
+  readability (textstat) warns only, aiming at reading age 13 to 14 (GCSE), 15 to 16 (A-Level).
+  Pending owner sign-off: in-house notes review and use of Oak. Oak's licence was read directly on 2026-11-26: lessons published after 1 September 2022 are OGL v3.0 (commercial use and adapting allowed, with Oak's attribution statement, no endorsement claim, third-party content excluded); earlier lessons are non-commercial only. In-copyright quotes: with
+  the owner's solicitor.
+- Question generation research (QG, 2026-11-26; owner decisions in decision 0010, above): four guarantee tiers
   (computed, source-quoted, fact, judgement). Computable or source-quotable share is highest for
   A-Level Maths and Further Maths, A-Level Computer Science, physics, chemistry and French
   vocabulary; English Language, Drama and Film Studies are mostly judgement. The DfE GCSE science
@@ -142,6 +152,12 @@ Tags: #product #rules #limits #defaults
   F5-flagged points (one row per topic, a count, "Learn it first" where checked lessons exist),
   from `GET /v1/students/:id/worth-a-look`. Hidden when empty; never shown to the child. Learning
   point ids are internal, so parents see topic titles only.
+- Stats motion (K5, owner 2026-11-26): stat tiles count up and bar charts / progress bars grow
+  in once when first in view (700ms ease-out, stagger ≤60ms, all within 1s), and never again on
+  that page (a period switch shows values at once; `EnterOnceScope`); none with reduced motion;
+  print always shows final values; screen readers get final values only. Parent pages silent; My stats plays
+  one soft `ringFill` settle sound when the counts finish. Helpers: `packages/core/src/count-up.ts`,
+  `apps/web/src/features/stats/countUp.tsx`. Detail: `docs/PRODUCT_RULES.md`.
 - XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, working 20,
   long answer 30; part marks earn part.
 - The 14 original rewards keep their ids and avatar items (the 100-day streak unlocks two: crown
@@ -204,8 +220,24 @@ Tags: #product #rules #limits #defaults
   origin and its API host. The deployed smoke test fails otherwise.
 - The learning path is a topic map: one hexagon per topic, grouped by unit. States: mastered
   (gold, tick), in progress (violet, fill level shows mastery %), weak spot (orange, pulsing
-  glow), locked (grey). Each unit ends in a challenge that unlocks at 80% unit mastery. A Next
-  mission card suggests what to do next. The Cards tab shows how many flashcards are due.
+  glow), locked (grey). Each unit ends in a challenge that unlocks at 80% unit mastery. The Cards
+  tab shows how many flashcards are due.
+- Map layout (J12b, design C "Your path", owner choice 2026-11-26): subject chips on one line that
+  scrolls sideways; one **Today** strip (daily goal, the Next mission row with its Go button, the
+  5-a-day row while there is one, and the install row while the device can install); then "Your
+  path": a row of unit badges that scrolls sideways, and the chosen unit's card with **all** its
+  topics down a path that scrolls inside the card. The page itself never scrolls sideways.
+  - The current unit is the one holding the next mission, else the first with an open topic. Its
+    path opens on the next mission's topic, else the weakest weak spot, else the first topic in
+    progress. Each unit keeps its scroll position while the map is open.
+  - The path scrolls inside its card when there are at least 11 rem below it (above the tab bar)
+    and the screen is at least 20 rem wide; otherwise (short or narrow screens, big text) the page
+    scrolls instead, so there is never a scroll inside a scroll. At 390 × 844 the whole map fits
+    above the tab bar (the version footer sits below).
+  - A locked unit (no questions yet) says "Questions for <unit> are on their way. It unlocks as
+    soon as they're ready." See all opens a sheet of every unit with its progress.
+  - Code: `apps/web/src/map/` (`path.ts` rules, `UnitPath.tsx`, `TodayStrip.tsx`, `HScroller.tsx`,
+    `InstallRow.tsx`), `apps/web/src/features/daily/DailyRow.tsx`; e2e `e2e/tests/map.spec.ts`.
 - Topic map data (F2, `GET /v1/student/map`): units are the top-level topics of the subject's tree,
   leaf topics in specification order. Locked = no item may be served yet; mastered at 80%; weak
   spot = tried and below 60%; otherwise in progress (including not tried). Unit mastery averages
@@ -222,8 +254,8 @@ Tags: #product #rules #limits #defaults
   server when online. The app checks `/version.json` on start, on return to the foreground and
   every 15 minutes and shows "A new version of RevisionDen is ready." with Refresh; an API reply
   that suggests the app is out of date makes it reload by itself once per new build.
-- "Add RevisionDen to this device" (I6): a card with Pip on the topic map and the parent home, and
-  a button in Settings. Chrome, Edge and Android show the browser's own install prompt on tap;
+- "Add RevisionDen to this device" (I6): a row in the topic map's Today strip (J12b,
+  `apps/web/src/map/InstallRow.tsx`), a card with Pip on the parent home, and a button in Settings. Chrome, Edge and Android show the browser's own install prompt on tap;
   iPhone and iPad Safari open a sheet with Share → Add to Home Screen steps (`/install` shows the
   steps for the device in use); browsers that cannot install get no card. Hidden once installed
   and for 30 days after "Not now" (local storage `revisionden.installDismissed`). Implemented in
@@ -762,7 +794,7 @@ Tags: #product #rules #limits #defaults
   reason from the reward's one catalogue target ("For: 7-day streak"); epic and legendary add a
   particle burst, legendary a shine. No reason is shown for a reward missing from the catalogue.
 - Settled in J2/J3: lessons, the starting test and flashcard review use the arena. Set complete's
-  Next mission goes to the map (`/map`, next mission card). "Or take a break. Your streak is safe for
+  Next mission goes to the map (`/map`, the Today strip's Next mission row). "Or take a break. Your streak is safe for
   today." shows when today's daily goal is met (`progress.goalMet`). The "daily cap" for "See you
   tomorrow" is the daily reward XP cap (`DAILY_REWARD_XP_CAP`, 300 XP today), confirmed by the lead
   on 2026-11-25 for now: the lesson only knows XP, not study minutes.

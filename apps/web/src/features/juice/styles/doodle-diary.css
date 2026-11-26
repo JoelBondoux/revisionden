@@ -60,10 +60,9 @@
   color: var(--dd-ink);
 }
 
-/* Summary, today's mission and the 5-a-day card are boxes sketched in pen. */
-:root[data-effect-style='doodle-diary'] .map-summary,
-:root[data-effect-style='doodle-diary'] .mission,
-:root[data-effect-style='doodle-diary'] .daily-card {
+/* The Today strip and the chosen unit are boxes sketched in pen; the rows inside stay plain. */
+:root[data-effect-style='doodle-diary'] .today-strip,
+:root[data-effect-style='doodle-diary'] .unit-card {
   border: 2px solid var(--dd-ink);
   border-radius: var(--dd-sketch);
   background: var(--dd-paper);
@@ -71,16 +70,33 @@
   box-shadow: var(--dd-lift);
 }
 
-:root[data-effect-style='doodle-diary'] .map-summary {
-  padding: var(--space-4);
+:root[data-effect-style='doodle-diary'] .today-strip__mission,
+:root[data-effect-style='doodle-diary'] .today-strip__daily {
+  border-top: 2px dashed var(--dd-ink-soft);
+  color: var(--dd-ink);
 }
 
-:root[data-effect-style='doodle-diary'] .mission {
-  margin-top: var(--space-3);
+:root[data-effect-style='doodle-diary'] .unit-card__mastery {
+  color: var(--dd-biro);
 }
 
-:root[data-effect-style='doodle-diary'] .map-summary__subject,
-:root[data-effect-style='doodle-diary'] .mission__eyebrow {
+/* The chosen unit badge is coloured in with highlighter. */
+:root[data-effect-style='doodle-diary'] .unit-badge[aria-pressed='true'] {
+  border-color: var(--dd-ink);
+  border-radius: var(--dd-sketch);
+  background: var(--dd-paper);
+}
+
+:root[data-effect-style='doodle-diary'] .unit-badge[aria-pressed='true'] .unit-badge__hex {
+  --badge-fill: #ffe45c;
+}
+
+:root[data-effect-style='doodle-diary'] .unit-badge[aria-pressed='true'] .unit-badge__inner {
+  color: #2b2a3a;
+}
+
+:root[data-effect-style='doodle-diary'] .today-strip__heading,
+:root[data-effect-style='doodle-diary'] .today-strip__mission .today-strip__eyebrow {
   font-family: var(--dd-hand);
   font-size: 1.2em;
   font-weight: 400;
@@ -88,18 +104,18 @@
   text-transform: none;
 }
 
-:root[data-effect-style='doodle-diary'] .map-summary__subject {
+:root[data-effect-style='doodle-diary'] .today-strip__heading {
   color: var(--dd-biro);
 }
 
-:root[data-effect-style='doodle-diary'] .mission__eyebrow {
+:root[data-effect-style='doodle-diary'] .today-strip__mission .today-strip__eyebrow {
   color: var(--dd-red);
 }
 
-:root[data-effect-style='doodle-diary'] .map-summary .secondary-text,
-:root[data-effect-style='doodle-diary'] .mission__time,
-:root[data-effect-style='doodle-diary'] .daily-card .secondary-text,
-:root[data-effect-style='doodle-diary'] .daily-card__count {
+:root[data-effect-style='doodle-diary'] .today-strip__xp,
+:root[data-effect-style='doodle-diary'] .today-strip__mission .today-strip__meta,
+:root[data-effect-style='doodle-diary'] .today-strip__daily .today-strip__eyebrow,
+:root[data-effect-style='doodle-diary'] .today-strip__daily .today-strip__title {
   color: var(--dd-ink-soft);
 }
 

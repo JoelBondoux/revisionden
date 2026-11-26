@@ -73,10 +73,10 @@ describe('Flashcards screen', () => {
   it('shows when each rating brings the card back', async () => {
     await openCards();
     await click('Show answer');
-    expect(screen.getByRole('button', { name: 'Again, back in 10 min' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Hard, back in 1 day' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Good, back in 1 day' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Easy, back in 4 days' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Again 10 min' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Hard 1 day' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Good 1 day' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Easy 4 days' })).toBeInTheDocument();
   });
 
   it('tells you a finished session earns 20 XP', async () => {

@@ -31,7 +31,7 @@ function watchDaily() {
 }
 
 describe('Daily 5-a-day', () => {
-  it('shows a 5-a-day card at the top of the topic map until it is done', async () => {
+  it('shows the 5-a-day in the Today strip of the topic map until it is done', async () => {
     useDaily();
     renderRoute('/map');
     const card = await screen.findByRole('region', { name: '5-a-day' }, WAIT);
@@ -40,9 +40,11 @@ describe('Daily 5-a-day', () => {
       'href',
       '/learn/daily',
     );
-    // It comes before the next mission.
+    // It sits in the Today strip, after the next mission (the main call to action).
+    const today = screen.getByRole('region', { name: 'Today' });
+    expect(today).toContainElement(card);
     const mission = screen.getByRole('region', { name: 'Next mission' });
-    expect(card.compareDocumentPosition(mission) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(mission.compareDocumentPosition(card) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 
   it('says Continue once some are answered', async () => {

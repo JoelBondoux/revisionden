@@ -881,7 +881,10 @@ export const quarantinedItems = pgTable('quarantined_items', {
   since: timestamp('since', { withTimezone: true }).notNull().defaultNow(),
 });
 
-/** A batch of generated items released by the sampling rule (10%, at least 30). */
+/**
+ * A batch of generated items released by the sampling rule (10%, at least 30; 3%, at least 10 when
+ * every item is from an approved template, decision 0010).
+ */
 export const reviewBatches = pgTable('review_batches', {
   id: uuid('id').primaryKey().defaultRandom(),
   title: text('title').notNull(),

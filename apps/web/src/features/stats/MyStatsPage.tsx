@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { kindChange, STATS_PERIODS, type StatsPeriod, type StudentStats } from '@revisionden/core';
 import { Card } from '../../components/Card';
 import { ProgressBar } from '../../components/ProgressBar';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { BarChart } from './BarChart';
+import { EnterOnceScope, GrowIn } from './countUp';
 import { DailyLimitToday } from './DailyLimit';
+import { useSound } from '../sound';
 import { MyTargetGrades } from './TargetGrades';
 import { kindNote } from './format';
 import { NotSetUp, Tile } from './Tile';
@@ -32,6 +34,23 @@ const SINCE: Record<StatsPeriod, string> = {
 const days = (n: number) => `${n} ${n === 1 ? 'day' : 'days'}`;
 
 /**
+ * One soft "settle" sound and vibration when every counting tile has finished (K5), in the
+ * active sound pack and respecting mute. Only after a real count: never with reduced motion,
+ * never per digit, and never on the parent's pages.
+ */
+function useSettleSound(counting: number): () => void {
+  const { emit } = useSound();
+  const settled = useRef(0);
+  const played = useRef(false);
+  return useCallback(() => {
+    settled.current += 1;
+    if (played.current || settled.current < counting) return;
+    played.current = true;
+    emit('ringFill');
+  }, [emit, counting]);
+}
+
+/**
  * Student "My stats" ("My progress" on the Me page). Kind framing: gains and "same" only, never red or
  * "worse"; drops are shown to the parent and in the topic list, not here.
  */
@@ -41,46 +60,55 @@ export function MyStatsPage() {
   const stats = useApiResource(() => api.getMyStats(period), [api, period]);
 
   return (
-    <div className="stack stats">
-      <h1>My stats</h1>
-      <DailyLimitToday />
-      <div role="group" aria-label="Period" className="period-toggle">
-        {STATS_PERIODS.map((p) => (
-          <button
-            key={p}
-            type="button"
-            aria-pressed={p === period}
-            className="period-toggle__button"
-            onClick={() => setPeriod(p)}
-          >
-            {PERIOD_LABELS[p]}
-          </button>
-        ))}
+    <EnterOnceScope>
+      <div className="stack stats">
+        <h1>My stats</h1>
+        <DailyLimitToday />
+        <div role="group" aria-label="Period" className="period-toggle">
+          {STATS_PERIODS.map((p) => (
+            <button
+              key={p}
+              type="button"
+              aria-pressed={p === period}
+              className="period-toggle__button"
+              onClick={() => setPeriod(p)}
+            >
+              {PERIOD_LABELS[p]}
+            </button>
+          ))}
+        </div>
+        {stats.status === 'ready' ? (
+          <StatsView stats={stats.data} />
+        ) : (
+          <LoadingOrError resource={stats} />
+        )}
       </div>
-      {stats.status === 'ready' ? (
-        <StatsView stats={stats.data} />
-      ) : (
-        <LoadingOrError resource={stats} />
-      )}
-    </div>
+    </EnterOnceScope>
   );
 }
 
 function StatsView({ stats }: { stats: StudentStats }) {
   const { period, tiles, chart, personalBests: bests, level } = stats;
   const goal = chart.goal === null ? null : { value: chart.goal, label: GOAL_LABELS[period] };
+  const settle = useSettleSound(tiles.accuracy.value === null ? 3 : 4);
   return (
     <>
       <p className="secondary-text">{stats.range.label}</p>
       <div className="stat-tiles">
         <Tile
           label="XP"
-          value={String(tiles.xp.value)}
+          count={{ value: tiles.xp.value, format: String }}
+          index={0}
+          of={4}
+          onSettled={settle}
           note={kindNote(tiles.xp.value, tiles.xp.previous, period)}
         />
         <Tile
           label="Questions"
-          value={String(tiles.answered.value)}
+          count={{ value: tiles.answered.value, format: String }}
+          index={1}
+          of={4}
+          onSettled={settle}
           note={[
             `${tiles.answered.correct} correct`,
             kindNote(tiles.answered.value, tiles.answered.previous, period),
@@ -90,18 +118,38 @@ function StatsView({ stats }: { stats: StudentStats }) {
         />
         <Tile
           label="Accuracy"
-          value={tiles.accuracy.value === null ? '–' : `${tiles.accuracy.value}%`}
+          value="–"
+          count={
+            tiles.accuracy.value === null
+              ? null
+              : { value: tiles.accuracy.value, format: (n) => `${n}%` }
+          }
+          index={2}
+          of={4}
+          onSettled={settle}
           note={
             tiles.accuracy.value === null
               ? 'No marked answers yet'
               : kindNote(tiles.accuracy.value, tiles.accuracy.previous, period)
           }
         />
-        <Tile label="Streak" value={days(tiles.streak.current)} />
+        <Tile
+          label="Streak"
+          count={{ value: tiles.streak.current, format: days }}
+          index={3}
+          of={4}
+          onSettled={settle}
+        />
       </div>
 
       <Card title={CHART_TITLES[period]}>
-        <BarChart title={CHART_TITLES[period]} buckets={chart.buckets} unit="XP" reference={goal} />
+        <BarChart
+          title={CHART_TITLES[period]}
+          buckets={chart.buckets}
+          unit="XP"
+          reference={goal}
+          enterKey="xp-chart"
+        />
       </Card>
 
       <Card title="Mastery by subject">
@@ -117,7 +165,9 @@ function StatsView({ stats }: { stats: StudentStats }) {
                     <span>{m.name}</span>
                     <span>{m.mastery}%</span>
                   </div>
-                  <ProgressBar label={`${m.name} mastery`} value={m.mastery} max={100} />
+                  <GrowIn enterKey={`mastery:${m.subjectId}`}>
+                    <ProgressBar label={`${m.name} mastery`} value={m.mastery} max={100} />
+                  </GrowIn>
                   {change.trend === 'up' && (
                     <span className="stat-tile__note">{`+${change.by} ${SINCE[period]}`}</span>
                   )}
@@ -144,13 +194,15 @@ function StatsView({ stats }: { stats: StudentStats }) {
 
       <Card title="Level">
         {level ? (
-          <ProgressBar
-            label={`Level ${level.level}`}
-            value={level.xpIntoLevel}
-            max={level.xpForNextLevel}
-            valueText={`${level.xpIntoLevel} of ${level.xpForNextLevel} XP to level ${level.level + 1}`}
-            tone="gold"
-          />
+          <GrowIn enterKey="level">
+            <ProgressBar
+              label={`Level ${level.level}`}
+              value={level.xpIntoLevel}
+              max={level.xpForNextLevel}
+              valueText={`${level.xpIntoLevel} of ${level.xpForNextLevel} XP to level ${level.level + 1}`}
+              tone="gold"
+            />
+          </GrowIn>
         ) : (
           <NotSetUp />
         )}
