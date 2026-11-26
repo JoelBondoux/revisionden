@@ -4,6 +4,7 @@ import { createPythonChecker } from '../content/maths-engine.mjs';
 import { stamp } from './record.mjs';
 import { sameAnswer } from '../../packages/core/src/answer-normalise.ts';
 import {
+  compactSpaces,
   meetsRounding,
   roundingOf,
   indexForm,
@@ -57,9 +58,12 @@ export function blindAnswerPrompt(item) {
 }
 
 const NUMBER = /-?\d+(?:\.\d+)?(?:\s*\/\s*-?\d+(?:\.\d+)?)?/;
-/** The first number in the text as written ("1,250.0 cm" gives "1250.0"), or null. */
+/**
+ * The first number in the text as written ("1,250.0 cm" gives "1250.0"), or null. Spaces around a
+ * sign or "/" go first, as marking reads them (compactSpaces), so "- 3 / 8" keeps its minus.
+ */
 function numberText(text) {
-  const m = String(text)
+  const m = compactSpaces(withMinus(String(text)))
     .replace(/,(?=\d{3})/g, '')
     .match(NUMBER);
   return m ? m[0] : null;
