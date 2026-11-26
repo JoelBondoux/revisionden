@@ -167,6 +167,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Docs: contrast policy (decision 0012): every look meets WCAG 2.2 AA on the painted page, enforced by a CI sweep; PR template checkbox.
+
 - Set complete: "Best combo" uses the arena's own text accent (`--arena-gold` was 1.37:1 on the light arena of Doodle Diary and Sticker Book); checked AA in all 10 looks, light and dark (W18; J's `learn.css`, approved crossing).
 - Flashcards: "10 more" now starts one new session, not two; the finished session no longer restarts when `extra` changes, which left a stray open session on the server (it never counted towards XP or the daily limit) (W18; F's `FlashcardsPage.tsx`, approved crossing).
 - Docs: `docs/GAME_FEEL.md` brought up to date with dev (ten styles in the checks and the dev tester; Doodle Diary and Sticker Book's Home notes no longer describe the old Today strip; Doodle Diary has its own sound pack; lesson "+XP" colour since J16b).
