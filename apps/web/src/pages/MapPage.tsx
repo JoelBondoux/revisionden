@@ -2,59 +2,17 @@ import { useCallback, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useApi } from '../api/ApiContext';
 import { LoadingOrError } from '../api/LoadingOrError';
-import type { MapSubject, MapUnit as Unit } from '@revisionden/core';
+import type { MapSubject } from '@revisionden/core';
 import { useApiResource } from '../api/useApiResource';
 import { FlameIcon } from '../components/icons';
 import { Pill } from '../components/Pill';
-import { ProgressBar } from '../components/ProgressBar';
 import { Toast } from '../components/Toast';
-import { honeycombRows } from '../map/honeycomb';
-import { DailyCard } from '../features/daily';
 import { SubjectsNudge } from '../features/onboarding/checksUi';
-import { NextMissionCard } from '../map/NextMissionCard';
-import { ChallengeHex, TopicHex } from '../map/TopicHex';
+import { HScroller } from '../map/HScroller';
+import { TodayStrip } from '../map/TodayStrip';
+import { UnitPath } from '../map/UnitPath';
+import '../map/map.css';
 import { useStudent } from '../session/StudentContext';
-import { InstallCard } from '../pwa/InstallCard';
-
-/** Hexes in the widest honeycomb row. Three fit a 360px phone; CSS handles the rest. */
-const HEXES_PER_ROW = 3;
-
-type MapCell = { kind: 'topic'; topic: Unit['topics'][number] } | { kind: 'challenge' };
-
-function UnitMap({ unit, onLocked }: { unit: Unit; onLocked: (message: string) => void }) {
-  const headingId = `unit-${unit.id}`;
-  const cells: MapCell[] = [
-    ...unit.topics.map((topic) => ({ kind: 'topic' as const, topic })),
-    { kind: 'challenge' as const },
-  ];
-  return (
-    <section className="unit" aria-labelledby={headingId}>
-      <div className="unit__header">
-        <h2 id={headingId}>{unit.title}</h2>
-        <p className="unit__mastery">{unit.masteryPercent}% mastered</p>
-      </div>
-      <div className="honeycomb">
-        {honeycombRows(cells, HEXES_PER_ROW).map((row, r) => (
-          <ul key={r} className="honeycomb__row">
-            {row.map((cell) => (
-              <li key={cell.kind === 'topic' ? cell.topic.id : 'challenge'}>
-                {cell.kind === 'topic' ? (
-                  <TopicHex topic={cell.topic} onLocked={onLocked} />
-                ) : (
-                  <ChallengeHex
-                    unitTitle={unit.title}
-                    challenge={unit.challenge}
-                    onLocked={onLocked}
-                  />
-                )}
-              </li>
-            ))}
-          </ul>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 /** Chips for the student's subjects; a subject without questions yet says so. */
 function SubjectSwitcher({
@@ -68,7 +26,7 @@ function SubjectSwitcher({
 }) {
   if (subjects.length < 2) return null;
   return (
-    <div role="group" aria-label="Subject" className="chip-row">
+    <HScroller label="Subject" selectedKey={current} className="map-subjects">
       {subjects.map((s) => (
         <button
           key={s.subjectId}
@@ -80,7 +38,7 @@ function SubjectSwitcher({
           {s.hasContent ? s.subject : `${s.subject} (coming soon)`}
         </button>
       ))}
-    </div>
+    </HScroller>
   );
 }
 
@@ -124,7 +82,7 @@ export function MapPage() {
   if (!studentId) return <Navigate to="/family" replace />;
 
   return (
-    <div className="stack">
+    <div className="stack map-page">
       <div className="page-header">
         <h1>Topic map</h1>
         {map.status === 'ready' && (
@@ -153,27 +111,12 @@ export function MapPage() {
               onChoose={setSubjectId}
             />
           )}
-          <div className="map-summary">
-            <p className="map-summary__subject">
-              {map.data.qualification} {map.data.subject}
-            </p>
-            <ProgressBar
-              label="Daily goal"
-              tone="gold"
-              value={map.data.xpToday}
-              max={map.data.dailyGoalXp}
-              valueText={`${map.data.xpToday} of ${map.data.dailyGoalXp} XP`}
-            />
-            <p className="secondary-text">
-              Daily goal: {map.data.xpToday} / {map.data.dailyGoalXp} XP
-            </p>
-          </div>
-          <DailyCard />
-          {map.data.nextMission && <NextMissionCard mission={map.data.nextMission} />}
-          <InstallCard />
-          {map.data.units.map((unit) => (
-            <UnitMap key={unit.id} unit={unit} onLocked={setToast} />
-          ))}
+          <TodayStrip
+            xpToday={map.data.xpToday}
+            dailyGoalXp={map.data.dailyGoalXp}
+            mission={map.data.nextMission}
+          />
+          <UnitPath key={map.data.subjectId} map={map.data} onLocked={setToast} />
         </>
       )}
       {toast && <Toast message={toast} onDismiss={dismissToast} />}

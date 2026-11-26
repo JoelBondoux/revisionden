@@ -3,6 +3,7 @@ import type { ParentDailyLimit } from '@revisionden/core';
 import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { ProgressBar } from '../../components/ProgressBar';
+import { GrowIn } from './countUp';
 import { useApiResource } from '../../api/useApiResource';
 import { useStatsApi } from './statsApi';
 
@@ -39,12 +40,14 @@ export function DailyLimitToday() {
         </div>
       )}
       <Card title="Today">
-        <ProgressBar
-          label="Daily limit"
-          value={today.usedMinutes}
-          max={today.limitMinutes}
-          valueText={`${today.usedMinutes} of ${today.limitMinutes} minutes`}
-        />
+        <GrowIn enterKey="daily-limit">
+          <ProgressBar
+            label="Daily limit"
+            value={today.usedMinutes}
+            max={today.limitMinutes}
+            valueText={`${today.usedMinutes} of ${today.limitMinutes} minutes`}
+          />
+        </GrowIn>
         <p>
           {today.reached
             ? 'Great work today. See you tomorrow'
