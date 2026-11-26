@@ -87,6 +87,14 @@ export function reviewPrompt(item) {
         '"distractor:N" means wrong option N, also counted from 0.',
       ]
     : [];
+  // The answer normaliser (#133) marks typed answers fairly, so the reviewer must not ask for
+  // forms it already accepts (packages/core/src/answer-normalise.ts).
+  const typed = Array.isArray(item.answer?.accepted)
+    ? [
+        '',
+        'Typed answers are normalised before marking. For maths answers, spaces and case are ignored; ×, ·, * (and x between two numbers) are one multiply sign, left out where it is not needed; −, – and — are a minus; ÷ is /; superscripts are ^; ≤ and ≥ are <= and >=; √ and sqrt are the same. For word answers, case and extra spaces are ignored. So do not report missing versions that differ only in these ways.',
+      ]
+    : [];
   // any_order (#133): marking accepts reordered answers, so the reviewer must not ask for them.
   const order =
     item.answer?.any_order === true
@@ -108,6 +116,7 @@ export function reviewPrompt(item) {
     prompt: [
       `Item:\n${JSON.stringify(shown, null, 2)}`,
       ...numbering,
+      ...typed,
       ...order,
       '',
       'Official sources:',
