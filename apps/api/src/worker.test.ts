@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { createWorker } from './worker';
+import { CLEANUP_CRON, REMINDER_CRONS } from './crons';
 
 const fullEnv = {
   ENVIRONMENT: 'development',
@@ -94,6 +95,81 @@ describe('worker entry', () => {
         },
       };
     }
+
+    describe('split schedules (production)', () => {
+      const at = Date.parse('2026-11-24T19:00:00Z');
+      const reminderTick = { scheduledTime: at, cron: REMINDER_CRONS[1] };
+      const cleanupTick = { scheduledTime: at, cron: CLEANUP_CRON };
+      const pushEnv = { ...fullEnv, VAPID_PUBLIC_KEY: 'BPUB', VAPID_PRIVATE_KEY: 'priv' };
+      const idle = {
+        runParentRewardNotifications: async () => ({ rewards: 0, pushes: 0, removed: 0 }),
+        runFamilyEventNotifications: async () => ({ events: 0, pushes: 0, removed: 0 }),
+      };
+
+      it('on a reminder tick without web push, does nothing (no clean-up, no database work)', async () => {
+        let cleaned = 0;
+        const runner = recordingRunner();
+        const worker = createWorker('00.01.000', {
+          ...idle,
+          runReminders: runner.run,
+          cleanUp: async () => {
+            cleaned += 1;
+            return {};
+          },
+        });
+        await worker.scheduled(reminderTick as never, fullEnv);
+        expect(cleaned).toBe(0);
+        expect(runner.calls).toHaveLength(0);
+      });
+
+      it('on the daily clean-up tick, only cleans up', async () => {
+        const runner = recordingRunner();
+        let cleaned = 0;
+        const worker = createWorker('00.01.000', {
+          ...idle,
+          runReminders: runner.run,
+          cleanUp: async () => {
+            cleaned += 1;
+            return {};
+          },
+        });
+        await worker.scheduled(cleanupTick as never, pushEnv);
+        expect(cleaned).toBe(1);
+        expect(runner.calls).toHaveLength(0);
+      });
+
+      it('on a reminder tick with web push, sends reminders and does not clean up', async () => {
+        const runner = recordingRunner();
+        let cleaned = 0;
+        const worker = createWorker('00.01.000', {
+          ...idle,
+          runReminders: runner.run,
+          cleanUp: async () => {
+            cleaned += 1;
+            return {};
+          },
+        });
+        await worker.scheduled(reminderTick as never, pushEnv);
+        expect(cleaned).toBe(0);
+        expect(runner.calls).toHaveLength(1);
+      });
+
+      it('on an unknown schedule, does everything so nothing is silently dropped', async () => {
+        const runner = recordingRunner();
+        let cleaned = 0;
+        const worker = createWorker('00.01.000', {
+          ...idle,
+          runReminders: runner.run,
+          cleanUp: async () => {
+            cleaned += 1;
+            return {};
+          },
+        });
+        await worker.scheduled({ scheduledTime: at, cron: '*/15 * * * *' } as never, pushEnv);
+        expect(cleaned).toBe(1);
+        expect(runner.calls).toHaveLength(1);
+      });
+    });
 
     it('sends no reminders while web push is not configured', async () => {
       const runner = recordingRunner();

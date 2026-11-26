@@ -7,7 +7,7 @@
     "learning_point": "gcse-maths-h-a14-lp-models",
     "expected_seconds": 40,
     "prompt": "The number of bacteria in a dish after t hours is modelled by the exponential function N = 200 × 2^t. Use the model to work out N when t = 3.",
-    "answer": { "value": "1600" },
+    "answer": { "value": "1600", "subject": "N" },
     "verify": { "expression": "200*2^3" },
     "marks": 2,
     "mark_scheme": ["M1 for 200 × 2^3", "A1 for 1600"],
@@ -60,22 +60,6 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:21:49Z",
-          "notes": "model answered \"1600\"; expected \"1600\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:21:57Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -90,6 +74,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:39:02Z",
+          "notes": "model answered \"1600\"; expected \"1600\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:39:10Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -102,7 +102,7 @@
     "learning_point": "gcse-maths-h-a14-lp-models",
     "expected_seconds": 45,
     "prompt": "The value, V pounds, of a car t years after it is bought is modelled by the exponential function V = 15000 × 0.8^t. Use the model to work out V when t = 2.",
-    "answer": { "value": "9600", "unit": "pounds" },
+    "answer": { "value": "9600", "unit": "pounds", "subject": "V" },
     "verify": { "expression": "15000*(4/5)^2" },
     "marks": 2,
     "mark_scheme": ["M1 for 15000 × 0.8^2", "A1 for 9600"],
@@ -155,22 +155,6 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:22:06Z",
-          "notes": "model answered \"£9600\"; expected \"9600\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:22:15Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -185,6 +169,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:39:17Z",
+          "notes": "model answered \"£9600\"; expected \"9600\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:39:27Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -197,7 +197,7 @@
     "learning_point": "gcse-maths-h-a14-lp-models",
     "expected_seconds": 30,
     "prompt": "The time, T hours, that x people take to paint a hall is modelled by the reciprocal function T = 24/x. Use the model to work out T when x = 6.",
-    "answer": { "value": "4", "unit": "hours" },
+    "answer": { "value": "4", "unit": "hours", "subject": "T" },
     "verify": { "expression": "24/6" },
     "marks": 1,
     "mark_scheme": ["B1 for 4"],
@@ -250,22 +250,6 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:22:21Z",
-          "notes": "model answered \"4 hours\"; expected \"4\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:22:30Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -280,6 +264,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:39:34Z",
+          "notes": "model answered \"4 hours\"; expected \"4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:39:41Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -388,7 +388,7 @@
     "learning_point": "gcse-maths-h-a14-lp-kinematics",
     "expected_seconds": 40,
     "prompt": "A ball is thrown upwards. Its height after t seconds is h = 20t - 5t^2 metres. Work out its height after 1 second.",
-    "answer": { "value": "15", "unit": "m" },
+    "answer": { "value": "15", "unit": "m", "subject": "h" },
     "verify": { "expression": "20*1 - 5*1^2" },
     "marks": 1,
     "mark_scheme": ["B1 for 15"],
@@ -429,22 +429,6 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:49:54Z",
-          "notes": "model answered \"15 metres\"; expected \"15\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:50:03Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -459,6 +443,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:39:48Z",
+          "notes": "model answered \"15 metres\"; expected \"15\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:39:56Z",
+          "notes": "no problems found"
         }
       ]
     }

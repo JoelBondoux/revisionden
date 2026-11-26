@@ -35,7 +35,7 @@ Tags: #product #rules #limits #defaults
   is deleted automatically with everything in it, including the parents' sign-in records. Use is
   recorded at most hourly in `families.last_active_at`. A parent returning after 11 months or
   more sees a warning (`GET /v1/family/activity`); no emails.
-- The 15-minute cron also deletes expired link codes, student and parent sessions, passkey
+- The daily clean-up (03:17 UTC, production only) also deletes expired link codes, student and parent sessions, passkey
   challenges and sign-in checks (`apps/api/src/cleanup.ts`).
 - The link token is redeemed with the family id from the QR code; a wrong family id does not use
   the token up. Tokens and sessions are stored only as hashes.
@@ -345,7 +345,9 @@ Tags: #product #rules #limits #defaults
   rules as `packages/core/src/answer-normalise.ts`): × · ⋅ and x between numbers are times,
   superscripts are powers, the unicode minus and dashes are minus, and thousands separators are
   dropped only between groups of exactly three digits. Answer forms (`app/forms.py`):
-  `fraction`, `simplest_fraction`, `standard_form`, `index_form`, checked on how the answer is
+  `fraction`, `simplest_fraction`, `improper_fraction` (lowest terms, never a mixed number;
+  the engine reads no mixed numbers), `standard_form`, `index_form` (one shared `answer.form`
+  enum with S2e), checked on how the answer is
   written as well as its value (lead ruling 2026-11-26: an unsimplified fraction is wrong when
   simplest form is asked for; ordinary form is wrong when standard form is asked for).
 - Lines of working are read exactly: decimals become fractions (`1.6` is 16/10), so steps with
@@ -388,7 +390,7 @@ Tags: #product #rules #limits #defaults
   The parent can change all these times, the time zone (default Europe/London) and switch each
   kind or all reminders off. Implemented in `apps/api/src/notifications/schedule.ts`.
 - Pushes carry no text; the service worker fetches it from the API (generic text if locked).
-  The cron runs every 15 minutes and does nothing until the VAPID keys are set.
+  The reminder cron runs every 30 minutes from 06:30 to 20:30 UTC in production only, and does nothing (and does not open the database) until the VAPID keys are set.
 - Parent devices (H2): the parent turns on "Reward news" on the parent home (`/parent`), saved
   in `parent_push_subscriptions`. One push per parent-set reward when its target is met and it is
   not given (`parent_rewards.reached_notified_at`). It does not count towards the child's 2 a

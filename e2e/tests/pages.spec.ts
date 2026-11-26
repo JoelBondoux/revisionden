@@ -241,6 +241,31 @@ test('the bug button never covers a button or link on a student page, however fa
   expect(overlaps).toEqual([]);
 });
 
+test('the bug button in the top row shows the focus ring when reached with the keyboard', async ({
+  page,
+}) => {
+  await page.addInitScript(() => localStorage.setItem('revisionden.studentId', 'student-e2e'));
+  await page.goto('/settings');
+  const bug = page.getByRole('button', { name: 'Report a bug' });
+  await expect(bug).toBeVisible();
+  // Tab until the bug button has focus, so :focus-visible applies as it does for a keyboard user.
+  for (let i = 0; i < 20 && !(await bug.evaluate((el) => el === document.activeElement)); i++) {
+    await page.keyboard.press('Tab');
+  }
+  await expect(bug).toBeFocused();
+  const ring = await bug.evaluate((el) => getComputedStyle(el).boxShadow);
+  const expected = await bug.evaluate((el) => {
+    const probe = document.createElement('div');
+    probe.style.boxShadow = 'var(--focus-ring)';
+    el.parentElement!.appendChild(probe);
+    const value = getComputedStyle(probe).boxShadow;
+    probe.remove();
+    return value;
+  });
+  expect(expected).not.toBe('none');
+  expect(ring).toBe(expected);
+});
+
 test('the install help shows illustrated iPhone and iPad steps, accessibly', async ({ page }) => {
   await page.goto('/install');
   await expect(page.getByRole('list', { name: 'Steps for iPhone' })).toBeVisible();

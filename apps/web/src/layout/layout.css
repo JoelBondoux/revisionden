@@ -181,6 +181,10 @@
   position: static;
   width: var(--tap-target);
   height: var(--tap-target);
+}
+
+/* Flat in the row, but keyboard focus still shows the ring (.bug-button:focus-visible). */
+.app-shell .sound-header .bug-button:not(:focus-visible) {
   box-shadow: none;
 }
 

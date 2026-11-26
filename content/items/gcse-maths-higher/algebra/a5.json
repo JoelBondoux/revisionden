@@ -312,7 +312,7 @@
     "learning_point": "gcse-maths-h-a5-lp-use-formulae",
     "expected_seconds": 40,
     "prompt": "The area of a trapezium is A = (1/2)(a + b)h. Work out A when a = 5, b = 9 and h = 4.",
-    "answer": { "value": "28" },
+    "answer": { "value": "28", "subject": "A" },
     "verify": { "expression": "(1/2)*(5 + 9)*4" },
     "marks": 2,
     "mark_scheme": ["M1 for (1/2) × (5 + 9) × 4", "A1 for 28"],
@@ -353,22 +353,6 @@
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:40Z",
-          "notes": "model answered \"28\"; expected \"28\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:48Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -383,6 +367,22 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:37:34Z",
+          "notes": "model answered \"28\"; expected \"28\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:37:41Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -395,7 +395,7 @@
     "learning_point": "gcse-maths-h-a5-lp-use-formulae",
     "expected_seconds": 45,
     "prompt": "A circle has radius 3 cm. Use A = πr^2 to work out its area. Give your answer correct to 1 decimal place.",
-    "answer": { "value": "28.3", "unit": "cm^2", "decimal_places": 1 },
+    "answer": { "value": "28.3", "unit": "cm^2", "decimal_places": 1, "subject": "A" },
     "verify": { "expression": "pi*3^2" },
     "marks": 2,
     "mark_scheme": ["M1 for π × 3^2", "A1 for 28.3"],
@@ -456,7 +456,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T20:08:55Z",
+          "at": "2026-11-26T04:37:46Z",
           "notes": "model answered \"28.3 cm²\"; expected \"28.3\""
         },
         {
@@ -464,7 +464,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T20:09:03Z",
+          "at": "2026-11-26T04:37:56Z",
           "notes": "no problems found"
         }
       ]

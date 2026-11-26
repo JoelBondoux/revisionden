@@ -1,5 +1,5 @@
 /**
- * The scheduled clean-up (cron every 15 minutes, see worker.ts): deletes data whose retention
+ * The scheduled clean-up (daily cron, see crons.ts and worker.ts): deletes data whose retention
  * period is over, as `docs/legal/data-retention.md` describes.
  */
 import { and, eq, gte, inArray, lt, notExists } from 'drizzle-orm';

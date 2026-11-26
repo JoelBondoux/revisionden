@@ -609,7 +609,7 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
 - Never sent automatically to GitHub (the repository is public). The operator may copy a report
   into an issue by hand, without any text that could identify the family.
 - Rate limit 5 in any 24 hours per sender (each student, each parent sign-in). Deleted 12 months
-  after it is closed (fixed or will not fix), by the 15-minute cron. The operator is any parent
+  after it is closed (fixed or will not fix), by the daily clean-up. The operator is any parent
   whose sign-in email is in `OPERATOR_EMAILS`; anyone else gets a 404 from `/v1/admin/feedback`.
 - Until real parent and student sign-in is wired in the web app, the form sends as the student when
   the device has a chosen student, otherwise as the parent.
@@ -628,13 +628,13 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
 - **Activity:** any parent or student request marks the family as used (`families.last_active_at`,
   written at most once an hour).
 - **Inactive accounts:** a family nobody has used for more than 12 calendar months is deleted by
-  the 15-minute clean-up, with its students and all their records and the parents' sign-in
+  the daily clean-up, with its students and all their records and the parents' sign-in
   records. A sign-in that never became a family is deleted 12 months after it was made.
 - **Warning:** the parent area always says the date the account will be deleted if nobody uses it.
   If the family comes back after 11 months or more without use, the parent area shows a warning
   with the date it would have been deleted (for that visit: until the next hourly activity
   write). No emails are sent.
-- **Clean-up** (every 15 minutes): expired device link codes, student sessions, parent sessions,
+- **Clean-up** (once a day, 03:17 UTC; production only): expired device link codes, student sessions, parent sessions,
   passkey challenges and sign-in checks are deleted.
 - **Sign-in tokens:** the Google or Microsoft access, refresh and ID tokens are never kept.
 - Implemented: `apps/api/src/cleanup.ts`, `apps/api/src/routes/{family,export}.ts`,
@@ -871,7 +871,7 @@ Requested by the product owner on 2026-11-25.
   joining, removal, deletion). Important ones (children added or removed, limit changed, reward
   given, data downloaded, deletion asked or cancelled, parent joined or removed) count as new for
   the other parent until "Mark as seen", and are pushed to the other parent's devices once by the
-  15-minute cron (not in UK nightly quiet hours, not after a day). Entries about a child go with
+  reminder cron (every 30 minutes, 06:30 to 20:30 UTC; not in UK nightly quiet hours, not after a day). Entries about a child go with
   the child; entries are kept 12 months.
 - Implemented: `apps/api/src/routes/family-parents.ts`, `apps/api/src/family-events.ts`,
   `apps/web/src/features/parents/`; migration 0012.

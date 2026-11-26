@@ -7,7 +7,7 @@
     "learning_point": "gcse-maths-h-a25-lp-linear-nth",
     "expected_seconds": 45,
     "prompt": "Find an expression for the nth term of the sequence 5, 8, 11, 14, ...",
-    "answer": { "accepted": ["3n + 2"], "any_order": true },
+    "answer": { "accepted": ["3n + 2", "5 + 3(n - 1)"], "any_order": true },
     "marks": 2,
     "explanation": "The terms go up by 3, so start with 3n: 3, 6, 9, ... Add 2.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
@@ -59,15 +59,15 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T00:48:17Z",
-          "notes": "model answered \"3n + 2\"; expected \"3n + 2\""
+          "at": "2026-11-26T04:44:46Z",
+          "notes": "model answered \"3n + 2\"; expected \"3n + 2 | 5 + 3(n - 1)\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T00:48:28Z",
+          "at": "2026-11-26T04:44:56Z",
           "notes": "no problems found"
         }
       ]
@@ -230,7 +230,10 @@
     "learning_point": "gcse-maths-h-a25-lp-quadratic-nth",
     "expected_seconds": 120,
     "prompt": "Find an expression for the nth term of the quadratic sequence 2, 6, 12, 20, 30, ...",
-    "answer": { "accepted": ["n^2 + n", "n² + n", "n(n + 1)", "n^2+n", "n²+n", "n(n+1)"] },
+    "answer": {
+      "accepted": ["n^2 + n", "n² + n", "n(n + 1)", "n^2+n", "n²+n", "n(n+1)"],
+      "any_order": true
+    },
     "marks": 3,
     "explanation": "The second difference is 2, so start with n^2: 1, 4, 9, 16, 25. What is left is 1, 2, 3, 4, 5, which is n.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
@@ -270,11 +273,19 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T19:05:18Z"
+        },
+        {
           "name": "blind-answer",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:04:00Z",
+          "at": "2026-11-26T04:43:36Z",
           "notes": "model answered \"n² + n\"; expected \"n^2 + n | n² + n | n(n + 1) | n^2+n | n²+n | n(n+1)\""
         },
         {
@@ -282,16 +293,8 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:04:10Z",
+          "at": "2026-11-26T04:43:47Z",
           "notes": "no problems found"
-        },
-        {
-          "name": "schema",
-          "result": "pass",
-          "tool": "revisionden-content-validate",
-          "tool_version": "00.01.002",
-          "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-25T19:05:18Z"
         }
       ]
     }
@@ -304,7 +307,7 @@
     "learning_point": "gcse-maths-h-a25-lp-quadratic-nth",
     "expected_seconds": 90,
     "prompt": "Find an expression for the nth term of the quadratic sequence 4, 7, 12, 19, 28, ...",
-    "answer": { "accepted": ["n^2 + 3", "n² + 3", "n^2+3", "n²+3"] },
+    "answer": { "accepted": ["n^2 + 3", "n² + 3", "n^2+3", "n²+3"], "any_order": true },
     "marks": 2,
     "explanation": "The differences are 3, 5, 7, 9 and the second difference is 2, so the nth term starts with n^2. Subtract n^2 (1, 4, 9, 16, 25) from the terms: 3, 3, 3, 3, 3. So the nth term is n^2 + 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
@@ -344,14 +347,6 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:04:20Z",
-          "notes": "model answered \"n² + 3\"; expected \"n^2 + 3 | n² + 3 | n^2+3 | n²+3\""
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -360,11 +355,19 @@
           "at": "2026-11-25T19:05:18Z"
         },
         {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:43:55Z",
+          "notes": "model answered \"n² + 3\"; expected \"n^2 + 3 | n² + 3 | n^2+3 | n²+3\""
+        },
+        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:03:32Z",
+          "at": "2026-11-26T04:44:01Z",
           "notes": "no problems found"
         }
       ]

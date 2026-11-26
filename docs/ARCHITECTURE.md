@@ -118,7 +118,7 @@ deletes them as soon as the user confirms what was read.
 **AI gateway.** All AI calls go through Cloudflare AI Gateway: provider routing, logs without
 personal data, spend tracking and the monthly cap per child. Detail: `docs/AI.md`.
 
-**Reminders.** A cron trigger (every 15 minutes) works out each subscribed student's due
+**Reminders.** A cron trigger (every 30 minutes, 06:30 to 20:30 UTC, production only; `apps/api/src/crons.ts`) works out each subscribed student's due
 reminders (`apps/api/src/notifications/schedule.ts`), logs them and sends an empty VAPID-signed
 push to each device. The service worker then fetches the text and shows the notification.
 
