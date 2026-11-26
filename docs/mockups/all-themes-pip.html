@@ -554,43 +554,19 @@ button { font: inherit; color: inherit; }
 .node.current { box-shadow: 0 0 0 var(--h2w, 0px) var(--h2, transparent), var(--node-cur-shadow, var(--node-shadow, 0 0 transparent)); }
 .node.locked { box-shadow: 0 0 0 var(--h2w, 0px) var(--h2, transparent), var(--node-lock-shadow, 0 0 transparent); }
 .node:focus-visible { outline: 4px solid var(--focus, #1a73e8); outline-offset: calc(var(--h2w, 0px) + 3px); }
-.t-doodle-diary .node.done { --h1: #2b2a3a; --h2: #fdfbf4; --h2w: 2.5px; }
-.t-doodle-diary .node.current { --h1: #2b2a3a; --h2: #fdfbf4; --h2w: 2.5px; }
-.t-doodle-diary .node.locked { --h1: #2b2a3a; --h2: #fdfbf4; --h2w: 2.5px; }
 .t-sticker-book .node.done { --h1: #2f2a3d; }
 .t-sticker-book .node.current { --h1: #2f2a3d; }
 .t-sticker-book .node.locked { --h1: #2f2a3d; }
 .t-pop-burst .node.done { --h1: #1a1628; }
 .t-pop-burst .node.current { --h1: #1a1628; }
 .t-pop-burst .node.locked { --h1: #1a1628; }
-.t-starlight .node.done { --h1: #f2f0ff; --h2: #000000; --h2w: 2.5px; }
-.t-starlight .node.current { --h1: #f2f0ff; --h2: #000000; --h2w: 2.5px; }
-.t-starlight .node.locked { --h1: #f2f0ff; }
-.t-garden-grow .node.done { --h1: #24412e; }
-.t-garden-grow .node.current { --h1: #24412e; }
-.t-garden-grow .node.locked { --h1: #24412e; }
-.t-petal-glow .node.done { --h1: #4a1d3f; }
-.t-petal-glow .node.current { --h1: #4a1d3f; }
-.t-petal-glow .node.locked { --h1: #4a1d3f; }
 .t-turbo-drive .node.done { --h1: #20232c; }
 .t-turbo-drive .node.locked { --h1: #f4f6fb; }
-[data-mode='dark'] .t-doodle-diary .node.done { --h1: #ecebf6; --h2: #1e1c2a; --h2w: 2.5px; }
-[data-mode='dark'] .t-doodle-diary .node.current { --h1: #ecebf6; --h2: #1e1c2a; --h2w: 2.5px; }
-[data-mode='dark'] .t-doodle-diary .node.locked { --h1: #ecebf6; --h2: #1e1c2a; --h2w: 2.5px; }
 [data-mode='dark'] .t-pop-burst .node.done { --h1: #1a1628; }
 [data-mode='dark'] .t-pop-burst .node.current { --h1: #1a1628; }
 [data-mode='dark'] .t-pop-burst .node.locked { --h1: #1a1628; }
-[data-mode='dark'] .t-starlight .node.done { --h1: #f2f0ff; --h2: #000000; --h2w: 2.5px; }
-[data-mode='dark'] .t-starlight .node.current { --h1: #f2f0ff; --h2: #000000; --h2w: 2.5px; }
-[data-mode='dark'] .t-starlight .node.locked { --h1: #f2f0ff; }
 [data-mode='dark'] .t-comic-pop .node.done { --h1: #24204a; }
 [data-mode='dark'] .t-comic-pop .node.current { --h1: #24204a; }
-[data-mode='dark'] .t-garden-grow .node.done { --h1: #e7f6ea; }
-[data-mode='dark'] .t-garden-grow .node.current { --h1: #e7f6ea; }
-[data-mode='dark'] .t-garden-grow .node.locked { --h1: #e7f6ea; }
-[data-mode='dark'] .t-petal-glow .node.done { --h1: #ffe9f5; --h2: #3a2140; --h2w: 2.5px; }
-[data-mode='dark'] .t-petal-glow .node.current { --h1: #ffe9f5; --h2: #3a2140; --h2w: 2.5px; }
-[data-mode='dark'] .t-petal-glow .node.locked { --h1: #ffe9f5; }
 [data-mode='dark'] .t-turbo-drive .node.done { --h1: #20232c; }
 [data-mode='dark'] .t-turbo-drive .node.locked { --h1: #f4f6fb; }
 .t-rainbow-parade .node.done { --h1: #ffffff; }
@@ -700,6 +676,42 @@ button { font: inherit; color: inherit; }
 .xp .bar { height: 14px; }
 .xp .bar i { width: 40%; }
 .xp small { font-weight: 800; font-size: 12.5px; opacity: .9; }
+
+/* ---------- Revision 4: solid node tiles with a clear silhouette, and Garden Grow's stepping-stone path ---------- */
+.road .re { stroke: var(--road-edge, none); stroke-width: var(--road-edge-w, 0); stroke-dasharray: var(--road-dash, none); }
+.road .rt { stroke: var(--road-tuft, none); stroke-width: var(--road-tuft-w, 0); stroke-dasharray: var(--road-tuft-dash, none); stroke-dashoffset: var(--road-tuft-off, 0); }
+.road .dd { stroke: var(--road-deco, none); stroke-width: var(--road-deco-w, 0); stroke-dasharray: var(--road-deco-dash, none); }
+.road .re, .road .rt, .road .dd { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.node .sway { transform-box: view-box; transform-origin: 50% 52%; }
+@media (prefers-reduced-motion: no-preference) { :root:not([data-motion='reduced']) .node .sway { animation: g-sway 2.6s ease-in-out infinite; } }
+@keyframes g-sway { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+
+.t-garden-grow { --road: #f3ead6; --road-w: 18px; --road-dash: 9 21; --road-edge: #a8987a; --road-edge-w: 22px;
+  --road-tuft: #4f9d55; --road-tuft-w: 5px; --road-tuft-dash: .1 9.9 .1 20; --road-tuft-off: -24;
+  --road-done: #3f8f4e; --road-done-w: 4px; --road-done-dash: none; --road-deco: #ff6f91; --road-deco-w: 7px; --road-deco-dash: .1 19;
+  --node-bg: #fff8e8; --node-border: 3px solid #2f6b3a; --node-shadow: 0 3px 0 rgba(47, 107, 58, .35);
+  --node-done-bg: #fff8e8; --node-done-border: 3px solid #2f6b3a; --node-cur-bg: #fffbe0; --node-cur-border: 3px solid #2f6b3a;
+  --node-cur-shadow: 0 0 0 4px #ffe680, 0 0 18px rgba(255, 200, 40, .85); --node-lock-bg: #efe6d2; --node-lock-border: 3px solid #6e5a3a; --node-lock-shadow: 0 3px 0 rgba(110, 90, 58, .3); --node-lock-op: 1; }
+[data-mode='dark'] .t-garden-grow { --road: #5d554a; --road-edge: #2d2822; --road-tuft: #7fd18a; --road-done: #9be0a4; --road-deco: #ff9fc0;
+  --node-bg: #1f3527; --node-border: 3px solid #b5e8bc; --node-done-bg: #1f3527; --node-done-border: 3px solid #b5e8bc; --node-cur-bg: #24402c; --node-cur-border: 3px solid #b5e8bc;
+  --node-cur-shadow: 0 0 0 4px #e8c94a, 0 0 18px rgba(255, 210, 80, .7); --node-lock-bg: #2b2a22; --node-lock-border: 3px solid #d8c79c; --node-shadow: none; --node-lock-shadow: none; }
+
+.t-petal-glow { --node-bg: #fff4fa; --node-border: 3px solid #6e2a58; --node-shadow: 0 3px 10px rgba(162, 69, 127, .25);
+  --node-done-bg: #ffe3f1; --node-done-border: 3px solid #6e2a58; --node-cur-bg: #ffffff; --node-cur-border: 3px solid #5a24b0;
+  --node-cur-shadow: 0 0 0 4px rgba(183, 156, 255, .55), 0 0 18px rgba(167, 123, 255, .8); --node-lock-bg: #f5eef4; --node-lock-border: 3px solid #5e4a60; --node-lock-shadow: none; --node-lock-op: 1; }
+[data-mode='dark'] .t-petal-glow { --node-bg: #3a2140; --node-border: 3px solid #ffc6e5; --node-done-bg: #4a2552; --node-done-border: 3px solid #ffc6e5;
+  --node-cur-bg: #3a2140; --node-cur-border: 3px solid #d9c4ff; --node-lock-bg: #2c1c30; --node-lock-border: 3px solid #c9b3cc; --node-shadow: none; }
+
+.t-starlight { --node-bg: #1a2156; --node-border: 2.5px solid #c9c2ff; --node-shadow: 0 0 10px rgba(201, 194, 255, .35);
+  --node-done-bg: #1a2156; --node-done-border: 2.5px solid #fff6b0; --node-cur-bg: #101a4a; --node-cur-border: 3px solid #4be3ff;
+  --node-cur-shadow: 0 0 0 3px rgba(75, 227, 255, .35), 0 0 18px #4be3ff; --node-lock-bg: #232745; --node-lock-border: 2.5px dashed #d4d6ff; --node-lock-shadow: none; --node-lock-op: 1; }
+
+.t-doodle-diary { --node-r: 48% 52% 50% 50% / 52% 48% 52% 48%; --node-bg: #fffdf6; --node-ink: var(--ink); --node-border: 2.5px solid var(--ink); --node-shadow: 2px 3px 0 rgba(43, 42, 58, .18);
+  --node-done-bg: var(--hi); --node-done-ink: var(--biro); --node-done-border: 2.5px solid var(--ink); --node-cur-bg: #fffdf6; --node-cur-border: 2.5px solid var(--biro);
+  --node-cur-shadow: 0 0 0 3px rgba(47, 91, 211, .25), 2px 3px 0 rgba(43, 42, 58, .18); --node-lock-bg: #f1efe8; --node-lock-border: 2.5px dashed #5f5c70; --node-lock-shadow: none; --node-lock-op: 1; }
+.t-doodle-diary .node.locked { color: #5f5c70; }
+[data-mode='dark'] .t-doodle-diary { --node-bg: #2a2838; --node-done-bg: #4a4320; --node-done-ink: var(--hi); --node-cur-bg: #2a2838; --node-lock-bg: #23212f; --node-lock-border: 2.5px dashed #b9b5cc; --node-shadow: none; }
+[data-mode='dark'] .t-doodle-diary .node.locked { color: #b9b5cc; }
 </style>
 </head>
 <body>
@@ -1067,18 +1079,31 @@ const CHEV = (c) => `<svg viewBox="-20 -20 40 40"><path d="M-10 -6 L0 4 L10 -6 M
 /* The pip head on its own, for the current node */
 const PIP_MINI = () => `<svg viewBox="8 2 104 108" style="width:76%;height:76%">${HEAD}</svg>`;
 
+
+/* ---------- Revision 4: solid node tiles ---------- */
+const LOCK_BADGE = '<g transform="translate(11.5 11.5)"><circle r="7.5" fill="#2b2a3a" stroke="#fff" stroke-width="1.6"/><path d="M-2.4 -.6 v-1.6 a2.4 2.4 0 0 1 4.8 0 v1.6" fill="none" stroke="#fff" stroke-width="1.5"/><rect x="-3.6" y="-.8" width="7.2" height="5" rx="1" fill="#fff"/></g>';
+/* Garden Grow: a terracotta pot; the plant is drawn first so the soil covers its stem. */
+const POT = (plant, extra = '') => `<svg viewBox="-20 -20 40 40">${plant}<path d="M-11.5 4 H11.5 L9 17.5 H-9 Z" fill="#d9774a" stroke="#6e3519" stroke-width="1.6" stroke-linejoin="round"/><path d="M-8 7 L-6.6 16" stroke="#f0a27a" stroke-width="1.6" stroke-linecap="round"/><rect x="-13.5" y="0" width="27" height="5.5" rx="2.2" fill="#e88a5a" stroke="#6e3519" stroke-width="1.6"/><ellipse cx="0" cy="1" rx="10.5" ry="2" fill="#5a3b26"/>${extra}</svg>`;
+const SEEDLING = '<g class="sway"><path d="M0 1 C0 -4 .5 -7 0 -10" stroke="#2f6b3a" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M0 -5 C-7 -5 -11 -10 -10 -14 C-4 -14.5 -.5 -10.5 0 -5Z" fill="#5cb85c" stroke="#2f6b3a" stroke-width="1.3"/><path d="M0 -8 C6 -8 10 -13 9 -17 C3.5 -17 .5 -13 0 -8Z" fill="#8bd47a" stroke="#2f6b3a" stroke-width="1.3"/></g>';
+const BLOOM = (c) => `<path d="M0 1 V-8" stroke="#2f6b3a" stroke-width="2.2"/><path d="M0 -3 C-5 -3 -8 -6 -8 -9 C-4 -9 -1 -7 0 -3Z" fill="#5cb85c" stroke="#2f6b3a" stroke-width="1.1"/><g transform="translate(0 -11)" stroke="#2f6b3a" stroke-width="1">${[0, 72, 144, 216, 288].map((a) => `<ellipse rx="3.6" ry="5.4" cy="-4.6" fill="${c}" transform="rotate(${a})"/>`).join('')}<circle r="3.2" fill="#ffd166"/></g>`;
+const SEED_PACKET = '<g transform="rotate(-10 6 -2)"><path d="M6 1 V-6" stroke="#7a5a2e" stroke-width="1.4"/><rect x="1" y="-17" width="10.5" height="11.5" rx="1.5" fill="#fff3c4" stroke="#7a5a2e" stroke-width="1.2"/><circle cx="6.2" cy="-12.6" r="2.6" fill="#ff8fb1" stroke="#7a5a2e" stroke-width=".8"/><path d="M3 -8.2 h6.4" stroke="#7a5a2e" stroke-width="1"/></g>';
+const BUSH = '<g stroke="#2f6b3a" stroke-width="1.2"><circle cx="-6.5" cy="-5" r="7" fill="#4f9d55"/><circle cx="6.5" cy="-6" r="7.5" fill="#5cb85c"/><circle cx="0" cy="-11.5" r="8" fill="#6cc46a"/></g><g stroke="#6e3519" stroke-width=".6"><circle cx="-5" cy="-9" r="2" fill="#ff8fb1"/><circle cx="4" cy="-14" r="2" fill="#ffd166"/><circle cx="7" cy="-5" r="2" fill="#ff6f91"/><circle cx="-1" cy="-4" r="1.8" fill="#fff"/></g>';
+const BLOOMS = ['#ff6f91', '#ffb347', '#b28dff', '#ff8fb1', '#6ec6ff', '#ffe066'];
+/* Petal Glow: a closed bud for locked topics */
+const PETAL_BUD = '<svg viewBox="-20 -20 40 40"><path d="M0 14 V2" stroke="#9a86a6" stroke-width="2.4" stroke-linecap="round"/><path d="M0 4 C-7 0 -6 -10 0 -14 C6 -10 7 0 0 4Z" fill="#e6d6ee" stroke="#9a86a6" stroke-width="1.4"/>' + LOCK_BADGE + '</svg>';
+const PETAL_T = (p, c, badge = '') => PETAL(p, c).replace('</svg>', `${badge}</svg>`).replace('viewBox="-20 -20 40 40"', 'viewBox="-23 -23 46 46"');
+/* Starlight: a star inside a night-sky tile */
+const STAR_T = (fill, glow, badge = '') => `<svg viewBox="-24 -24 48 48"><path d="M0 -15 l4.4 9.3 10.2 1.1 -7.6 6.9 2.1 10.1 -9.1 -5.2 -9.1 5.2 2.1 -10.1 -7.6 -6.9 10.2 -1.1z" fill="${fill}" ${glow ? `style="filter:drop-shadow(0 0 ${glow}px ${fill})"` : 'stroke="#8d8fbf" stroke-width="1.6"'}/>${badge}</svg>`;
 /* Each theme's path nodes: done, current, locked and the unit quest at the end. */
 const NODES = {
-  'doodle-diary': (st) => st === 'done' ? `<svg viewBox="-20 -20 40 40"><path d="M-9 6l12-12M-11 0l9-9M-6 10l14-14M-1 12l11-11" stroke="var(--hi)" stroke-width="3" stroke-linecap="round"/><path d="${G_LOOP}" fill="none" stroke="currentColor" stroke-width="2"/><path d="M-6 0l4 5 9-10" fill="none" stroke="var(--biro)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`
-    : st === 'current' ? PIP_MINI() : st === 'quest' ? '<svg viewBox="-20 -20 40 40"><path d="M0-14l4 9 10 1-8 7 3 10-9-5-9 5 3-10-8-7 10-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3" stroke-linejoin="round"/></svg>'
-    : `<svg viewBox="-20 -20 40 40"><path d="${G_LOOP}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-dasharray="3 3"/><path d="M-4-1v-3a4 4 0 0 1 8 0v3M-6-1h12v8h-12z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>`,
+  'doodle-diary': (st) => st === 'done' ? IC.check('currentColor') : st === 'current' ? PIP_MINI() : st === 'quest' ? '<svg viewBox="-20 -20 40 40"><path d="M0-14l4 9 10 1-8 7 3 10-9-5-9 5 3-10-8-7 10-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3" stroke-linejoin="round"/></svg>' : IC.lock('currentColor'),
   'sticker-book': (st) => st === 'done' ? IC.star('#ff9f1c', '#fff', 2) : st === 'current' ? PIP_MINI() : st === 'quest' ? IC.trophy() : IC.lock(),
   'pop-burst': (st) => st === 'done' ? IC.star('#fff7c2', '#e0a800', 2) : st === 'current' ? PIP_MINI() : st === 'quest' ? IC.trophy('#fff') : IC.lock('#fff'),
-  starlight: (st) => STAR_PATH(st === 'done' ? '#fff6b0' : st === 'current' ? '#4be3ff' : 'rgba(255,255,255,.35)', st === 'locked' || st === 'quest' ? 0 : 6),
+  starlight: (st) => st === 'done' ? STAR_T('#fff6b0', 4) : st === 'current' ? STAR_T('#4be3ff', 6) : STAR_T('none', 0, LOCK_BADGE),
   'comic-pop': (st) => st === 'done' ? IC.check('#fff') : st === 'current' ? PIP_MINI() : st === 'quest' ? IC.trophy() : IC.lock(),
-  'garden-grow': (st) => st === 'done' ? FLOWER() : st === 'current' ? BUD : st === 'quest' ? TREE : SEED,
+  'garden-grow': (st, i = 0) => st === 'done' ? POT(BLOOM(BLOOMS[i % BLOOMS.length])) : st === 'current' ? POT(SEEDLING) : st === 'quest' ? POT(BUSH, LOCK_BADGE) : POT(SEED_PACKET, LOCK_BADGE),
   'pixel-arcade': (st) => st === 'done' ? PX_STAR : st === 'current' ? PX_FOX : st === 'quest' ? PX_CHEST : PX_LOCK,
-  'petal-glow': (st) => st === 'done' ? PETAL('#ff9fcb', '#ffe07a') : st === 'current' ? PETAL('#b79cff', '#fff', 1) : st === 'quest' ? PETAL('#8fe3cf', '#ffe07a') : PETAL('#e6d8ef', '#f5eef8', .9),
+  'petal-glow': (st) => st === 'done' ? PETAL_T('#ff7fb8', '#ffe07a') : st === 'current' ? PETAL_T('#a77bff', '#fff') : st === 'quest' ? PETAL_T('#5fd3b8', '#ffe07a', LOCK_BADGE) : PETAL_BUD,
   'turbo-drive': (st) => st === 'done' ? CHEV('#15171d') : st === 'current' ? BOLT('#22d3ee') : st === 'quest' ? IC.trophy('#ff7a1a') : IC.lock('#8a90a2'),
   'rainbow-parade': (st) => st === 'done' ? IC.check('currentColor') : st === 'current' ? PIP_MINI() : st === 'quest' ? IC.star('none', 'currentColor', 2.2) : IC.lock('currentColor'),
 };
@@ -1232,12 +1257,12 @@ function drawMap() {
       const st = nodeState(u, i, n), label = i === n ? `${unit} quest` : topics[i];
       const how = st === 'locked' ? (u > 0 ? `Finish ${s.units[u - 1][0]} to open it` : `Finish ${topics[i - 1]} to open it`) : st === 'quest' ? `Finish every ${unit} topic to open it` : '';
       const said = { done: 'done', current: 'start here', locked: 'locked', quest: 'locked' }[st];
-      return `<button type="button" class="node ${st === 'quest' ? 'locked quest' : st}" style="left:${x}%;top:${y}px" data-u="${u}" data-i="${i}" data-how="${how}" data-label="${label}" aria-label="${label}: ${said}">${render(st)}</button>`
+      return `<button type="button" class="node ${st === 'quest' ? 'locked quest' : st}" style="left:${x}%;top:${y}px" data-u="${u}" data-i="${i}" data-how="${how}" data-label="${label}" aria-label="${label}: ${said}">${render(st, i)}</button>`
         + `<span class="node-label" style="left:${x}%;top:${y}px">${label}</span>`
         + (st === 'current' ? `<span class="here" style="left:${x}%;top:${y}px">You are here</span>` : '');
     }).join('');
     return `<section class="page" aria-label="${unit}"><div class="trail" style="height:${H}px">
-      <svg class="road" viewBox="0 0 100 ${H}" preserveAspectRatio="none" aria-hidden="true"><path class="r" d="${road}"/>${done ? `<path class="d" d="${done}"/>` : ''}</svg>${nodes}</div></section>`;
+      <svg class="road" viewBox="0 0 100 ${H}" preserveAspectRatio="none" aria-hidden="true"><path class="re" d="${road}"/><path class="r" d="${road}"/><path class="rt" d="${road}"/>${done ? `<path class="d" d="${done}"/><path class="dd" d="${done}"/>` : ''}</svg>${nodes}</div></section>`;
   }).join('');
   $('#dots').innerHTML = s.units.map((_, i) => `<i class="${i === 0 ? 'on' : ''}"></i>`).join('');
   $$('#pager .node').forEach((b) => b.addEventListener('click', () => {
