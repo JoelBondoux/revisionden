@@ -521,6 +521,14 @@ test('a new parent sees the terms and privacy notice as cards before onboarding,
   await expect.poll(() => stored).toMatchObject({ acceptances: expect.any(Array) });
 });
 
+test('/about reflows at 320px with text at 200% (WCAG 1.4.4, 1.4.10)', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 640 });
+  await page.goto('/about');
+  await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+  await expect(page.getByRole('heading', { level: 1, name: 'About RevisionDen' })).toBeVisible();
+  await expectNoSidewaysScroll(page);
+});
+
 test('the footer fits a 320px screen with large text, wrapping instead of overflowing', async ({
   page,
 }) => {
