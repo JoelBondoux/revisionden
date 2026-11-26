@@ -546,7 +546,7 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
   (with the usual celebration sound and vibration) and offers "10 more" for keen students; extra
   cards schedule normally. A review session over all decks is complete (and earns its session XP
   under the usual rules) when the cards offered today are done, the daily 20 plus any "10 more",
-  not when the whole backlog is (F11b; the session stores `extra_cards`, migration 0030). Cards past the cap stay due and roll to the next day with no penalty
+  not when the whole backlog is (F11b; the session stores `extra_cards`, migration 0032). Cards past the cap stay due and roll to the next day with no penalty
   and no overdue message: SM-2 sets the next gap from the card's own interval, never from how late
   it was reviewed, so a held-back card is not treated as forgotten. The parent stats show no
   flashcard backlog today (the API returns `backlog` for a later parent view). Implemented in
@@ -1043,6 +1043,35 @@ Requested by the product owner on 2026-11-25.
   the child; entries are kept 12 months.
 - Implemented: `apps/api/src/routes/family-parents.ts`, `apps/api/src/family-events.ts`,
   `apps/web/src/features/parents/`; migration 0012.
+
+## Friends league (workstream FL)
+
+Owner decisions, 2026-11-26. Full design: `docs/FRIENDS_LEAGUE.md`.
+
+- **Development only for now** (lead ruling, 2026-11-26): behind `FRIENDS_ENABLED` (dev only);
+  in staging and production every friends route answers `404 friends_not_available`. It turns on
+  in production only after L updates the notices and the owner's solicitor reviews them.
+
+- Friends can come from other families. Off per child until a parent turns on "Allow friends".
+  A child shares a one-time 8-character code in person; the friend types it and confirms; then
+  one parent from **each** family approves (7 days). Codes: 48 hours, used once, hashed, 3 a
+  day; 3 waiting requests; 5 wrong tries an hour per child, 20 a day per family; every failure
+  says only "That code isn't valid".
+- Friends see nickname, avatar, title and this week's league XP only. No chat or free text.
+  Brothers and sisters join automatically when friends is on for both. At most 10 friends.
+- League XP: reward XP from answers and flashcard sessions this UK week (Monday to Sunday);
+  friends see totals up to the end of yesterday. Equal XP share a place; no XP has no place; a
+  win needs 50 XP and someone else with XP; ties share the win.
+- The child can hide from the league, remove, block or report (fixed reasons) a friend; parents
+  can remove, block, unblock and add a private label (30 characters, no email or phone).
+  Reports are seen by both families' parents.
+- Implemented so far: `packages/core/src/league.ts`, `apps/api/src/routes/friends.ts`,
+  `apps/api/src/routes/friends-league.ts`; migration 0030.
+- Screens: the League page at `/league` (from a "Friends league" tile on Me, and a rank chip
+  "You're 2nd this week" on Home, in place of "Friends league Soon" where friends are
+  available; it moved from the Map header when Home landed); the parent
+  Friends page at `/parent/friends/:studentId` (a "Friends" tile on the child's card). Code:
+  `apps/web/src/features/league/`. Weekly wins and rewards come next.
 
 ## Me page (`/settings`, workstream W9, owner feedback 2026-11-26)
 

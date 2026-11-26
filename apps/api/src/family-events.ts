@@ -71,6 +71,44 @@ export const EVENT_KINDS = {
     important: true,
     system: true,
   },
+  // Friends league (workstream FL, docs/FRIENDS_LEAGUE.md). The other family is never named.
+  friends_allowed: { what: 'turned on friends for {nickname}', important: true },
+  friends_turned_off: { what: 'turned off friends for {nickname}', important: true },
+  friend_requested: {
+    what: 'noticed {nickname} asking to add a friend',
+    important: true,
+    message: '{nickname} has a friend request waiting for a parent',
+    system: true,
+  },
+  friend_approved: { what: 'approved a friend for {nickname}', important: true },
+  friend_declined: { what: 'declined a friend for {nickname}', important: false },
+  friend_removed: { what: 'removed a friend of {nickname}', important: true },
+  friend_blocked: { what: 'blocked a friend of {nickname}', important: true },
+  friend_unblocked: { what: 'lifted a block for {nickname}', important: false },
+  friend_ended: {
+    what: 'noticed a friendship of {nickname} ending',
+    important: false,
+    message: '{nickname} and a friend are no longer friends',
+    system: true,
+  },
+  friend_blocked_by_child: {
+    what: 'noticed {nickname} blocking a friend',
+    important: true,
+    message: '{nickname} blocked a friend',
+    system: true,
+  },
+  friend_reported: {
+    what: 'noticed {nickname} reporting a friend',
+    important: true,
+    message: '{nickname} reported a friend. See Friends for the reason.',
+    system: true,
+  },
+  friend_reported_about: {
+    what: 'noticed a report about {nickname}',
+    important: true,
+    message: 'A friend reported {nickname}. See Friends for the reason.',
+    system: true,
+  },
 } satisfies Record<string, Kind>;
 
 export type EventKind = keyof typeof EVENT_KINDS;

@@ -1,5 +1,5 @@
 {
-  "id": "188541be-d62a-4fa8-b98c-340f815952ae",
+  "id": "6f2bf9cf-830f-4ca3-98fb-70d2cd402576",
   "prevId": "49d90404-cc61-46ad-b716-64782a4e2847",
   "version": "7",
   "dialect": "postgresql",
@@ -2764,13 +2764,6 @@
           "primaryKey": false,
           "notNull": false
         },
-        "extra_cards": {
-          "name": "extra_cards",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 0
-        },
         "rewarded_day": {
           "name": "rewarded_day",
           "type": "date",
@@ -2989,6 +2982,596 @@
         "flashcards_origin_values": {
           "name": "flashcards_origin_values",
           "value": "\"flashcards\".\"origin\" in ('deck', 'wrong_answer', 'own')"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.friend_blocks": {
+      "name": "friend_blocks",
+      "schema": "",
+      "columns": {
+        "blocker_id": {
+          "name": "blocker_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "blocked_id": {
+          "name": "blocked_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "friend_blocks_blocked_idx": {
+          "name": "friend_blocks_blocked_idx",
+          "columns": [
+            {
+              "expression": "blocked_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "friend_blocks_blocker_id_students_id_fk": {
+          "name": "friend_blocks_blocker_id_students_id_fk",
+          "tableFrom": "friend_blocks",
+          "tableTo": "students",
+          "columnsFrom": ["blocker_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "friend_blocks_blocked_id_students_id_fk": {
+          "name": "friend_blocks_blocked_id_students_id_fk",
+          "tableFrom": "friend_blocks",
+          "tableTo": "students",
+          "columnsFrom": ["blocked_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "friend_blocks_blocker_id_blocked_id_pk": {
+          "name": "friend_blocks_blocker_id_blocked_id_pk",
+          "columns": ["blocker_id", "blocked_id"]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.friend_code_tries": {
+      "name": "friend_code_tries",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "student_id": {
+          "name": "student_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "family_id": {
+          "name": "family_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ok": {
+          "name": "ok",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "friend_code_tries_student_idx": {
+          "name": "friend_code_tries_student_idx",
+          "columns": [
+            {
+              "expression": "student_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "friend_code_tries_family_idx": {
+          "name": "friend_code_tries_family_idx",
+          "columns": [
+            {
+              "expression": "family_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "friend_code_tries_student_id_students_id_fk": {
+          "name": "friend_code_tries_student_id_students_id_fk",
+          "tableFrom": "friend_code_tries",
+          "tableTo": "students",
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "friend_code_tries_family_id_families_id_fk": {
+          "name": "friend_code_tries_family_id_families_id_fk",
+          "tableFrom": "friend_code_tries",
+          "tableTo": "families",
+          "columnsFrom": ["family_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.friend_codes": {
+      "name": "friend_codes",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "student_id": {
+          "name": "student_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "code_hash": {
+          "name": "code_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "used_at": {
+          "name": "used_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "friend_codes_student_id_idx": {
+          "name": "friend_codes_student_id_idx",
+          "columns": [
+            {
+              "expression": "student_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "friend_codes_student_id_students_id_fk": {
+          "name": "friend_codes_student_id_students_id_fk",
+          "tableFrom": "friend_codes",
+          "tableTo": "students",
+          "columnsFrom": ["student_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "friend_codes_code_hash_unique": {
+          "name": "friend_codes_code_hash_unique",
+          "nullsNotDistinct": false,
+          "columns": ["code_hash"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.friend_reports": {
+      "name": "friend_reports",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "reporter_id": {
+          "name": "reporter_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reported_id": {
+          "name": "reported_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reason": {
+          "name": "reason",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "closed_at": {
+          "name": "closed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "friend_reports_reporter_idx": {
+          "name": "friend_reports_reporter_idx",
+          "columns": [
+            {
+              "expression": "reporter_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "friend_reports_reported_idx": {
+          "name": "friend_reports_reported_idx",
+          "columns": [
+            {
+              "expression": "reported_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "friend_reports_reporter_id_students_id_fk": {
+          "name": "friend_reports_reporter_id_students_id_fk",
+          "tableFrom": "friend_reports",
+          "tableTo": "students",
+          "columnsFrom": ["reporter_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "friend_reports_reported_id_students_id_fk": {
+          "name": "friend_reports_reported_id_students_id_fk",
+          "tableFrom": "friend_reports",
+          "tableTo": "students",
+          "columnsFrom": ["reported_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "friend_reports_reason": {
+          "name": "friend_reports_reason",
+          "value": "\"friend_reports\".\"reason\" in ('upsetting_name', 'do_not_know', 'pressured', 'other')"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.friend_requests": {
+      "name": "friend_requests",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "from_student_id": {
+          "name": "from_student_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "to_student_id": {
+          "name": "to_student_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'child_confirm'"
+        },
+        "from_approved_by": {
+          "name": "from_approved_by",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "to_approved_by": {
+          "name": "to_approved_by",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ended_at": {
+          "name": "ended_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "friend_requests_from_idx": {
+          "name": "friend_requests_from_idx",
+          "columns": [
+            {
+              "expression": "from_student_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "friend_requests_to_idx": {
+          "name": "friend_requests_to_idx",
+          "columns": [
+            {
+              "expression": "to_student_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "friend_requests_from_student_id_students_id_fk": {
+          "name": "friend_requests_from_student_id_students_id_fk",
+          "tableFrom": "friend_requests",
+          "tableTo": "students",
+          "columnsFrom": ["from_student_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "friend_requests_to_student_id_students_id_fk": {
+          "name": "friend_requests_to_student_id_students_id_fk",
+          "tableFrom": "friend_requests",
+          "tableTo": "students",
+          "columnsFrom": ["to_student_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "friend_requests_status": {
+          "name": "friend_requests_status",
+          "value": "\"friend_requests\".\"status\" in ('child_confirm', 'parents', 'started', 'declined')"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.friendships": {
+      "name": "friendships",
+      "schema": "",
+      "columns": {
+        "student_a": {
+          "name": "student_a",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "student_b": {
+          "name": "student_b",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "label_a": {
+          "name": "label_a",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "label_b": {
+          "name": "label_b",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "friendships_student_b_idx": {
+          "name": "friendships_student_b_idx",
+          "columns": [
+            {
+              "expression": "student_b",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "friendships_student_a_students_id_fk": {
+          "name": "friendships_student_a_students_id_fk",
+          "tableFrom": "friendships",
+          "tableTo": "students",
+          "columnsFrom": ["student_a"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "friendships_student_b_students_id_fk": {
+          "name": "friendships_student_b_students_id_fk",
+          "tableFrom": "friendships",
+          "tableTo": "students",
+          "columnsFrom": ["student_b"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "friendships_student_a_student_b_pk": {
+          "name": "friendships_student_a_student_b_pk",
+          "columns": ["student_a", "student_b"]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "friendships_order": {
+          "name": "friendships_order",
+          "value": "\"friendships\".\"student_a\" < \"friendships\".\"student_b\""
+        },
+        "friendships_label_a_length": {
+          "name": "friendships_label_a_length",
+          "value": "char_length(\"friendships\".\"label_a\") between 1 and 30"
+        },
+        "friendships_label_b_length": {
+          "name": "friendships_label_b_length",
+          "value": "char_length(\"friendships\".\"label_b\") between 1 and 30"
         }
       },
       "isRLSEnabled": false
@@ -5443,6 +6026,20 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
+        },
+        "friends_allowed": {
+          "name": "friends_allowed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "league_hidden": {
+          "name": "league_hidden",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
         },
         "created_at": {
           "name": "created_at",

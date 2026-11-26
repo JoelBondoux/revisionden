@@ -215,8 +215,22 @@
     {
       "idx": 30,
       "version": "7",
-      "when": 1795703708113,
-      "tag": "0030_flashcard_session_extra",
+      "when": 1795701789738,
+      "tag": "0030_friends_league",
+      "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "7",
+      "when": 1795702396220,
+      "tag": "0031_league_weeks",
+      "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "7",
+      "when": 1795705249894,
+      "tag": "0032_flashcard_session_extra",
       "breakpoints": true
     }
   ]

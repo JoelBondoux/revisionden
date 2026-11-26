@@ -90,7 +90,20 @@ describe('Home', () => {
     );
   });
 
-  it('shows the friends league as coming soon (not a link yet)', async () => {
+  it("shows the student's place in the friends league when friends are available (FL)", async () => {
+    renderRoute('/home');
+    expect(await screen.findByRole('link', { name: "You're 2nd this week" })).toHaveAttribute(
+      'href',
+      '/league',
+    );
+  });
+
+  it('shows the friends league as coming soon where friends are not available yet', async () => {
+    server.use(
+      http.get('*/v1/student/league', () =>
+        HttpResponse.json({ error: { code: 'friends_not_available' } }, { status: 404 }),
+      ),
+    );
     renderRoute('/home');
     const league = await screen.findByText('Friends league');
     expect(league.closest('a')).toBeNull();

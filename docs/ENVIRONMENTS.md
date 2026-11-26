@@ -284,6 +284,13 @@ is `development`. The dev Worker sets it so testers see "Tester: try any style" 
 Effect style (any effect style and theme, nothing unlocked for real); a config test fails if
 staging or production set it.
 
+`FRIENDS_ENABLED` (workstream FL, lead ruling 2026-11-26) works the same way: the friends league
+(friends, codes, the league and the parent Friends page) exists only in development until
+workstream L updates the notices and the owner's solicitor has reviewed them. When it is off,
+every friends and league route answers `404 friends_not_available` ("Friends aren't available
+yet.") and the web app shows no friends tiles, chip or switch. The dev Worker sets it; a config
+test fails if staging or production set it. Set it in `apps/api/.dev.vars` to try it locally.
+
 Local `wrangler dev` uses the top-level values (`localhost:8787` API, `localhost:5173` web).
 The rate limiters use Cloudflare's Workers rate limiting binding; their `namespace_id` values are
 our own numbers, not account ids.
