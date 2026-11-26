@@ -780,6 +780,9 @@ Tags: #product #rules #limits #defaults
   out for now: Papyrus (site redirects to an administrator's page), Mind, Carers Trust (bot checks block automated checking). Kooth ("Soluna by Kooth") was added for
   students under feeling low: website only, with the owner's note "Free in some parts of the UK.
   Check if it's available where you live." (a `note` needs `confirmed_by`). See `docs/PRODUCT_RULES.md` (Get help).
+- Logos: none shown yet. No organisation's own guidance clearly permits it, so each service has a
+  neutral icon and its exact name. Findings and permission-request template:
+  `docs/LOGO_PERMISSIONS.md` (W4).
 - Private: the page uses its own layout with no API calls (no cards-due badge, no sounds), loads
   nothing from other sites, and opens websites with `rel="noreferrer"`. Quick exit replaces the
   history entry and goes to `/map`. Service worker v3 precaches `/help` and the built files.
