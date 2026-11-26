@@ -252,8 +252,18 @@ New tables (one new migration):
   Sunday cannot change last week's result; and a request left waiting for the child's check can
   be confirmed or cancelled later from the Friends sheet (`friend_checking` is what the other
   child sees).
+- **Review fixes, part 2 (FL4b, from the train #317 review):** once both families approve, the
+  friendship is saved first and the request is marked started after, so if the save fails the
+  request stays waiting with both approvals and approving again finishes it (production uses
+  `neon-http`, which has no multi-statement transactions).
+- **Known behaviour (lead, 2026-11-26):** deleting a child does not settle their friends'
+  finished weeks first. The child's data goes at once, so a friend whose last weeks were not yet
+  settled simply has that rival missing from those weeks. Accepted.
 - **Still to come:** the AppDeck report view, where support can also close a report
   (`docs/BACKLOG.md`).
+- **PR 4 (AppDeck reports):** `GET friend-reports` and `POST friend-reports/{id}/close` on the
+  operator bridge (`apps/api/src/routes/friends-operator.ts`, `docs/OPERATOR_CONSOLE.md`):
+  nicknames, reported avatar code, fixed reason and dates only; every read and close audited.
 
 ## 10. Owner decisions (2026-11-26, via the lead)
 

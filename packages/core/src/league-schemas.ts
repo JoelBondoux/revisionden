@@ -101,3 +101,23 @@ export function ordinal(n: number): string {
   const suffix = teen ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' } as Record<number, string>)[n % 10];
   return `${n}${suffix ?? 'th'}`;
 }
+
+/** AppDeck's view of friend reports (FL PR 4): nicknames, the reported avatar, reason, dates. */
+export const OperatorFriendReportsSchema = z
+  .object({
+    reports: z.array(
+      z
+        .object({
+          id: z.string(),
+          reason: ReportReasonSchema,
+          reporter: z.string().nullable(),
+          reported: z.string().nullable(),
+          reportedAvatarCode: z.string().nullable(),
+          createdAt: z.string(),
+          closedAt: z.string().nullable(),
+        })
+        .strict(),
+    ),
+  })
+  .strict();
+export type OperatorFriendReports = z.infer<typeof OperatorFriendReportsSchema>;
