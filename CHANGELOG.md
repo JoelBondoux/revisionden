@@ -9,6 +9,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 - Lessons now match your look: in Sticker Book, practice happens on a warm paper page (or night paper in dark mode), with each question on a plain, easy-to-read card.
 - A new look for rewards and celebrations, Sticker Book: your daily goal and next mission are cards taped into a sticker book, mastered topics are gold stickers, and combos, stars and confetti slap onto the page like stickers.
+- Fixed: with sound switched off, earning a reward now still gives a little buzz on phones that can vibrate (Vibration is its own setting).
 - Every animation now has its own sound, matched to your effect style (paper and stamps for Sticker Book, pops and boings for Pop Burst, chimes for Starlight), and phones that can vibrate give a little buzz too. Turn vibration off in Settings next to Sound. iPhones and iPads don't allow websites to vibrate.
 - The doodle background is now a busy, hand-drawn sticker sheet: lots more little sketches packed close together, a few big ones (Pip reading, a rocket, a globe, a stack of books) and tiny stars and sparkles in the gaps, with no visible grid and no two of the same sketch side by side.
 - Taking a subject we don't have questions for yet (like Chemistry or Drama)? The topic map now says the questions are on their way and offers a subject you can practise meanwhile, instead of an error. If you take more than one subject, you can switch between them at the top of the map.
@@ -96,6 +97,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- U6b: `playReward` vibration no longer depends on the reward sound playing; it follows the biggest reward and the Test mode rule, so muted sound still buzzes when Vibration is on.
 - Avatar builder (J9b, Codex review of #134): picking a tab after scrolling part-way down now brings the new tab's first options into view just below the pinned stage (level with its top when wide), allowing for the compact stage growing back; instant with reduced motion.
 - Numeric marking (S2): `withoutThousands` accepts a UK thousands separator (space, thin or non-breaking space, or comma) between groups of exactly three digits, with or without rounding; a space between other digits (`3 87`) is now wrong instead of being read as 387.
 - Adversarial review (S2, from S3-A on a1-0103): for typed answers the reviewer is told the marking normaliser's rules (spaces, case, multiply signs, minus signs, superscripts, √), so it no longer asks for `p^3*q` or `p^3 q` when `p^3q` is accepted.
