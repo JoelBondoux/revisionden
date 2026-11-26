@@ -801,8 +801,12 @@ Tags: #product #rules #limits #defaults
   `apps/web/src/design/themes.ts` / `themes.css`: dark keeps button colours with white text and
   uses `--color-primary-edge` (#C4B5FF) for violet text; colour-blind right #1F6FD1 (blue), wrong
   #B34F00 (orange), checked by simulation (ΔE ≥ 20 for deuteranopia, protanopia, tritanopia) and
-  4.5:1 contrast in all four combinations. Doodle tile `apps/web/src/design/doodles.svg` (original,
-  240px, used as a CSS mask at 7% ink), hidden with `prefers-contrast: more` and forced colours.
+  4.5:1 contrast in all four combinations. Doodle tile `apps/web/src/design/doodle-scatter.svg` (original,
+  1080px dense sticker sheet: 8 hero doodles, 420 medium (160 motifs, no copy of a motif within
+  240px of itself) and 1,600 tiny fillers, no two outlines closer than 4px plus the line, tilted up to 25°, 1.4px lines, about 35KB gzipped; generated from a fixed seed by `doodleTile.ts`, used as
+  a CSS mask at 7% ink; J8b), hidden with `prefers-contrast: more` and
+  forced colours. The older 240px grid tile `doodles.svg` is kept only for the public site until it
+  moves to the new tile.
   Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
