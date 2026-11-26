@@ -1,3 +1,4 @@
+@import '@fontsource/press-start-2p/400.css';
 /*
  * Pixel Arcade, an unlockable effect style (J10c, docs/GAME_FEEL.md). A retro arcade: square
  * corners, chunky borders, neon on night blue and stepped motion. Every rule is scoped to the
@@ -184,3 +185,67 @@
 :root[data-effect-style='pixel-arcade'] .unit-path__step--next .hex__shape {
   filter: drop-shadow(0 0 6px var(--px-green));
 }
+
+/* J15s: the style's own background pattern, drawn in the look's ink. */
+:root[data-effect-style='pixel-arcade'][data-pattern='on'] body::before {
+  -webkit-mask-image: url('./patterns/pixel-arcade.svg');
+  mask-image: url('./patterns/pixel-arcade.svg');
+  -webkit-mask-size: 240px 240px;
+  mask-size: 240px 240px;
+}
+
+/* ---------- J15s: the full look (mirrors looks.ts; a test keeps them in step) ---------- */
+:root[data-effect-style='pixel-arcade']:not([data-theme='dark']) {
+  --color-background: #e6f2dc;
+  --color-surface: #f6fff0;
+  --color-border: #142014;
+  --color-text: #142014;
+  --color-text-secondary: #3a573a;
+  --color-primary: #2a5d2a;
+  --color-primary-edge: #1f4a1f;
+  --color-primary-soft: #d4ecc8;
+  --color-text-on-primary: #ffffff;
+  --color-track: #5f7a5f;
+  --color-locked-soft: #dce8d4;
+  --color-mastery-fill: #fff09a;
+  --color-challenge: #142014;
+  --color-challenge-edge: #142014;
+  --shadow-3d-neutral: 4px 4px 0 #142014;
+  --shadow-3d-primary: 4px 4px 0 #142014;
+  --shadow-card: 4px 4px 0 #142014;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --font-heading: 'Press Start 2P', ui-monospace, monospace;
+  --pattern-ink: rgb(20 32 20 / 8%);
+  --page-wash: none;
+  --page-texture: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 3px);
+}
+
+:root[data-effect-style='pixel-arcade'][data-theme='dark'] {
+  --color-background: #0a0820;
+  --color-surface: #141238;
+  --color-border: #39ff88;
+  --color-text: #e8fff4;
+  --color-text-secondary: #b5d9c8;
+  --color-primary: #0f8040;
+  --color-primary-edge: #9dffc4;
+  --color-primary-soft: #0f3322;
+  --color-text-on-primary: #ffffff;
+  --color-track: #2f8f5a;
+  --color-locked-soft: #1c1a44;
+  --color-mastery-fill: #1d5a3a;
+  --color-challenge: #000000;
+  --color-challenge-edge: #39ff88;
+  --shadow-3d-neutral: 4px 4px 0 #000000;
+  --shadow-3d-primary: 4px 4px 0 #000000;
+  --shadow-card: 4px 4px 0 #000000;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --font-heading: 'Press Start 2P', ui-monospace, monospace;
+  --pattern-ink: rgb(57 255 136 / 6%);
+  --page-wash: radial-gradient(ellipse at 50% 25%, #2a1f6e, #0a0820 75%);
+  --page-texture: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 3px);
+}
+/* ---------- end of the full look ---------- */

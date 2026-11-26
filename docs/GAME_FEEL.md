@@ -168,6 +168,46 @@ tab say so to screen readers.
   Arcade at level 40. The child picks in Settings → Effect style, where
   locked styles show a three-colour preview and "Locked. Unlock: …". More styles may follow once
   the owner has reviewed them.
+- **Full looks (J15s, owner direction 2026-11-26).** The owner, trying styles on dev: "When I
+  change theme only the Today box on the Map page changes." Each style is now a full look for the
+  **whole** app: it sets the shared design tokens (page and surface colours, edges, text, the main
+  colour, the progress track, map hex fills, corner radii, shadows, the heading font and the
+  background pattern's ink) in light and dark, in `features/juice/styles/looks.ts`, mirrored in
+  the style's stylesheet. Every shared component reads those tokens, so cards, buttons, button
+  tiles, chips, the bottom nav, the map, progress bars and headings all follow the style, and each
+  style has its own background pattern (`styles/patterns/`). Doodle Diary is the base look (paper,
+  biro ink, hand-lettered headings); Pixel Arcade squares every corner, Comic Pop inks every edge,
+  Starlight swaps hard shadows for glows, and so on. Cue colours (right, wrong, warning, gold,
+  streak) are never part of a look, so the colour-blind palette works in every style. Body text,
+  questions and answers stay Nunito. `looks.test.ts` checks every look sets every token, matches its
+  stylesheet, and keeps every text pair at AA (and shapes at 3:1) in light, dark and colour-blind;
+  `e2e/tests/looks.spec.ts` runs axe on the map and Me in all 7 styles, light and dark. This
+  replaces J13a's "styles change accents only" (#268, not merged).
+- **Looks match the approved all-themes mockup (J15s revision, rev 5.1, 2026-11-26).** Each look
+  takes the mockup's page art, split into a wash (`--page-wash`, soft gradients) and a texture
+  (`--page-texture`: notebook lines, halftone, scanlines, stars), layered over the page colour by
+  `design/base.css`. **Settings always win over a look** (Codex review of train #337): the texture
+  shows only with Background pattern on; high contrast and forced colours get a plain page; a
+  reading tint replaces the page and surface colours and removes the wash and texture; the
+  dyslexia-friendly font replaces every heading and style font. A look also takes its
+  heading font, self-hosted with @fontsource (Baloo 2 for Sticker Book, Pop Burst, Starlight and
+  Garden Grow; Bangers for Comic Pop; Press Start 2P for Pixel Arcade; Patrick Hand for Doodle
+  Diary). **Vivid and night pages show in dark mode**: Pop Burst's purple page, Starlight's night
+  sky and Pixel Arcade's arcade screen need light text, which the shared warning, danger and success
+  colours are not made for, so light mode keeps a light page in those styles. To keep white text on
+  the success button readable, night and vivid looks use a deeper main colour for buttons (Starlight
+  violet, Pixel Arcade green, Pop Burst pink) and keep their bright colour (cyan, neon green, sunny
+  yellow) as the highlight (`--color-primary-edge`). Lead ruling, 2026-11-26: accessibility comes
+  first. The heading fonts are SIL OFL 1.1; every self-hosted font's licence ships in
+  `apps/web/public/licences/fonts/`.
+- **Living progress bars (J15s revision).** Every horizontal bar's fill (`.progress__fill`,
+  `.arena-progress__fill`) is always gently on the move, in each style's own way: biro hatching
+  (Doodle Diary), a rolling barber stripe (Sticker Book), a gloss sweep with bubbles (Pop Burst),
+  drifting twinkling stars (Starlight), racing halftone dots (Comic Pop), drifting leaves (Garden
+  Grow) and a marching chase light (Pixel Arcade). The motion stays inside the fill, the leading
+  edge pulses, only background-position, transform and opacity animate, smooth timing only (no
+  steps), off with reduced motion, and paused while the tab is hidden (`tab-hidden` on the root,
+  set by `EffectStyleProvider`). In `features/juice/styles/bars.css`, checked by `bars.test.ts`.
 - Pop Burst (J10b): jelly cards with a chunky bottom edge, a gold jelly mission card, gold wins,
   round confetti; the badge stamps in from big and the stars drop in. Starlight (J10b): night-sky
   cards with a soft glow, mastered topics are outlined in starlight and earned steps glow; the badge brightens
