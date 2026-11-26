@@ -19,6 +19,12 @@ Tags: #product #rules #limits #defaults
   ends at once, notice next sign-in); deleting the family needs both when there are two; family
   activity log names parents only by number, important changes pushed to the other parent and
   shown as new in the parent home; log kept 12 months. Migration 0012.
+- Sharing invite links (I8, `apps/web/src/pwa/ShareLink.tsx`): the second-parent invite and the
+  child's device link show a big "Share link" button that opens the device's own share sheet
+  where the browser has one (`navigator.share`), and "Copy link" otherwise or if sharing fails;
+  closing the share sheet is not an error. Messages are short and name no child: "Join our family
+  on RevisionDen as a parent: <link>" and "Set up RevisionDen on your phone: <link>". The QR code
+  and short codes stay for setting up in person.
 - Year group: Years 9 to 13 only (core schema and database check `students_year_group_range`,
   migration 0006).
 - Google and Microsoft access, refresh and ID tokens are never stored: blanked in Better Auth's
@@ -70,6 +76,11 @@ Tags: #product #rules #limits #defaults
 - "Not sure" boards and tiers never block onboarding. They show on the finish screen, in Parent
   home ("Things to check: N", parent can set them) and in the student's Settings > My subjects
   (student can only turn Not sure into a value), with a nudge on the student's home until set.
+- After onboarding, either parent can add, remove or change a child's subjects in Parent home >
+  Subjects (E5; same picker as onboarding, Not sure allowed). Removing keeps the child's answers
+  and mastery (only the enrolment goes), so progress comes back if re-added. Subjects with no
+  questions yet say "Questions coming soon". Adds, removes and board or tier changes are important
+  family log events.
 - New children start from a Boy, Girl or Neutral look (Neutral preselected); only the avatar code
   is stored, never a gender. A newly linked device offers "Make it yours" (with "Maybe later").
 - Most-used board per subject in England (Ofqual market report 2024 to 2025, share of
@@ -105,6 +116,21 @@ Tags: #product #rules #limits #defaults
   365, 1,000 days), added once when the reward is saved (`GET /v1/student/rewards`), only
   given away (arrive as a skip day for the friend), +20 XP for gifting. Implemented in
   `packages/core/src/streaks.ts` and `xp.ts`.
+- Learning from mistakes (F5, 2026-11-25): a wrong Learn mode answer brings a similar question
+  (same learning point: the item's `learning_point` tag or its topic; not seen for 7 days) 2 to 4
+  questions later, else the same question at the end; one retry per point and 2 per lesson,
+  skippable, no penalty, a confidence question (got right before) before each retry, a second
+  miss steps down (easier question, "Learn it first" links), lessons end on a success.
+  A right answer slower than 2x the expected time (item `expected_seconds`, else flashcard 15 s,
+  multiple choice 20, numeric 40, short answer 45, worked maths 120) is shaky. Wrong or shaky
+  points go on the review ladder (`review_points`, with misses and a flag: next day, 3 days, 7 days; each right answer on
+  time climbs a rung, the 7-day one clears it, a slip restarts; missed on 3 visits it is parked a
+  week and flagged "worth a look" for the parent dashboard). Lessons and the 5-a-day open with
+  up to 2 warm-ups on due points. Retries count at half weight for mastery. Migration 0026.
+- Worth a look together (K11, lead 2026-11-25): parent stats dashboard card listing the topics with
+  F5-flagged points (one row per topic, a count, "Learn it first" where checked lessons exist),
+  from `GET /v1/students/:id/worth-a-look`. Hidden when empty; never shown to the child. Learning
+  point ids are internal, so parents see topic titles only.
 - XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, working 20,
   long answer 30; part marks earn part.
 - The 14 original rewards keep their ids and avatar items (the 100-day streak unlocks two: crown
@@ -196,6 +222,10 @@ Tags: #product #rules #limits #defaults
 - Parent onboarding is at `/onboarding` (family list, add a child, school report, link a device,
   finish); the student scans the QR code to `/link` and sets up a passkey.
 - Avatars are drawn as layered SVG from the avatar code (`apps/web/src/features/avatar`).
+- Avatar builder layout (J9): the preview always stays in view. Under 600px of builder width
+  (phones, the sheet) it is pinned on top and shrinks once the options scroll. At 600px or more
+  it is a sticky column on the left. Arrow-key tabs; a gentle pop on each change, off with
+  reduced motion. `apps/web/src/features/avatar/AvatarBuilder.tsx`, `avatar.css`.
 
 ## Operator console (AppDeck)
 
@@ -255,6 +285,10 @@ Tags: #product #rules #limits #defaults
 - Content is JSON in `content/`, checked by `pnpm content:validate` (schemas in
   `content/schemas/`). Every item has `source_ref` and `checked_by`; every topic-tree leaf has a
   specification reference; trees are at most 3 levels deep. Detail: `docs/CONTENT_PLAN.md`.
+- No content string may hold a control character (U+0000 to U+001F except tab and newline):
+  `pnpm content:validate` refuses them with the field path, because Postgres refuses `\u0000` in
+  jsonb (22P05) and the content sync fails. Check records written by the pipeline
+  (`withCheck` in `scripts/verify/record.mjs`) have them replaced by a space first.
 - Every maths answer (numeric and worked maths items, and model solutions) is verified by the
   maths engine before content can merge.
 - Every item, topic leaf, mark scheme and diagram carries official citations and a verification
@@ -290,8 +324,9 @@ Tags: #product #rules #limits #defaults
   "Learning loop"): spaces, case, minus signs, multiply and divide signs, superscripts, ≤/≥ and √
   are normalised, so content lists one written form. `answer.any_order: true` also accepts
   commuted products and sums, reordered lists and swapped equation sides (never coordinates or
-  inequalities); `answer.units` lists optional units. The maths engine accepts a solved value in
-  other letters (`x = 2a`).
+  inequalities); `answer.units` lists optional units. A multiply sign before a sign is kept
+  (`3n × -2` is not `3n - 2`). The maths engine accepts a solved value in other letters (`x = 2a`,
+  and `a = x` either way round).
 
 ## Reminders
 
@@ -382,7 +417,7 @@ Tags: #product #rules #limits #defaults
 - `GET /health` always answers with the version: `ok` (200) when configured, `misconfigured`
   (503) while a required secret is missing. Dev and staging deploys accept `misconfigured`;
   production does not.
-- The app shows its version in a small footer on every page (links to About).
+- The app shows its version in a small footer on every page (links to About). Outside the live app the footer also names the environment and the short commit, e.g. "(Development, ef86a9a)", so testers can tell builds apart; the live app never shows the commit.
 
 ## Verification (no mistakes on the education side)
 
@@ -573,7 +608,11 @@ Tags: #product #rules #limits #defaults
   `policy_acceptances`) on a "Before you start" page that shows each policy's plain-English
   bullets as cards (word for word, from the policy files; 4 chosen ones first, then "Show all N
   points") with the full text behind "Show the
-  details"; a changed version shows a "We've updated" prompt. A newly linked student
+  details"; a changed version shows a "We've updated" prompt listing, per changed policy, its new version and
+  only the Changes lines newer than the version that parent accepted (plus a link to the policy;
+  a policy never accepted goes through "Before you start" instead): "I've read the changes" stores the new
+  versions for that parent (each parent for themselves); closing it hides it on that device for 24
+  hours for those versions only (`revisionden.policyNotice`). A newly linked student
   device shows the young people's notice once (`revisionden.youngPeopleNotice` in local storage).
 - The young people's notice has a friendly view built from the same file: 6 short-version cards,
   2 to 4 key points per part always visible, "Read more" and "Expand all", original icons and Pip;
@@ -702,7 +741,10 @@ Tags: #product #rules #limits #defaults
   on the Rewards page; the friends league is not built yet, so it shows there once it is.
 - "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
   NSPCC adult helpline, parent-only). Reached from Settings, the heart link in the student footer,
-  the signed-out header and parent home. There is no separate profile menu yet.
+  the signed-out header and parent home, plus (W3) a Get help tile on the topic map and a chip in
+  the student header. There is no separate profile menu yet. Quick exit is sticky at the top;
+  topics are in five categories (Right now first and always open) with a private "Find a topic"
+  filter (`features/help/categories.ts`).
 - Data: `content/support/uk-services.json` (schema `content/schemas/support-services.schema.json`).
   Every phone, text, link, opening time and age range has the URL of the service's own page it was
   copied from; `checked_at` per service. `pnpm content:validate` (and `scripts/content/support.test.mjs`)
@@ -764,7 +806,7 @@ Tags: #product #rules #limits #defaults
   #B34F00 (orange), checked by simulation (ΔE ≥ 20 for deuteranopia, protanopia, tritanopia) and
   4.5:1 contrast in all four combinations. Doodle tile `apps/web/src/design/doodles.svg` (original,
   240px, used as a CSS mask at 7% ink), hidden with `prefers-contrast: more` and forced colours.
-  Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help keeps light colours in dark.
+  Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by

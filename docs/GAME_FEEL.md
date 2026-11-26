@@ -39,6 +39,15 @@
 - **Set complete:** stars pop in one by one with rising notes (3 stars at 5/5, 2 at 3–4, 1
   otherwise), confetti, XP tally, best combo, daily-goal bar fills, then **Next mission**
   (pulsing) and the line "Or take a break. Your streak is safe for today." when that is true.
+- **A question coming back** (learning from mistakes, F5): a gold line above the question says
+  why: "Here's another one like it. You've got this.", "Another go at this one: you've got
+  this.", "Let's try an easier one on this.", "A quick one you know." or "Warm-up: this one
+  came up last time." After a wrong answer the feedback adds "No worries: we'll have another go
+  at this in a moment"; after a second miss, "This one's tricky today, so we'll come back to it
+  another day" with the "Learn it first" links. A right retry adds "Comeback! You got it this
+  time." A slow right answer adds "Nice one. That took a little while, so it'll come back
+  another day to make it stick." Same sounds as any answer; no penalty or fail words, retries
+  can build a combo, and a lesson always ends on a success.
 - **Pip the fox** reacts with a short line (warm-up, combo, last question).
 - **Reward reveals** use U's tiered reward sounds with a matching visual tier (common to
   legendary). A reveal always shows exactly what was earned and why: no mystery boxes.
@@ -82,6 +91,25 @@ tab say so to screen readers.
   contrast and forced colours, and switchable off. Tokens and checks: `apps/web/src/design/themes.ts`.
 - **Text on gold** always uses `--color-text-on-gold` (dark), in every theme: gold buttons,
   gold and streak pills, earned reward steps, the combo badge and the mastered-topic checkmark on the map.
+
+## Avatar builder layout (J9, owner request 2026-11-25)
+
+- The preview never scrolls away; only the options scroll or change tab. The layout follows the
+  builder's own width (a container query), so it is the same on the "Make it yours" page and in
+  the parent's "Build an avatar" sheet.
+- Narrow (under 600px of builder: phones and the sheet): the preview, Shuffle and the tabs are
+  pinned at the top. Once the options have scrolled up about a preview's height, the preview
+  shrinks (160px to 96px tall). Its bottom margin grows by the same amount, so the options never
+  move.
+- Wide (600px or more: tablets and desktops): the preview, Shuffle and the tabs are a sticky
+  column on the left, with the options on the right.
+- Tabs follow the ARIA tabs pattern: arrow keys move and select, wrapping round; Home and End;
+  only the selected tab is in the Tab order.
+- Every change (an item or Shuffle) gives the preview a short squash-and-pop (transform only;
+  none with reduced motion). The options panel keeps a minimum height, so switching tabs never
+  moves what comes after the builder.
+- Locked items get their spoken name from the visible text plus hidden words ("Crown, locked.
+  Unlock: 100-day streak"), so what is seen is what is said (WCAG 2.5.3).
 
 ## Never (Children's Code and `REWARDS.md`)
 

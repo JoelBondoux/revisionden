@@ -2,21 +2,11 @@ import { useCallback, useEffect, useState } from 'react';
 import type { LinkToken, OnboardedChild } from '@revisionden/core';
 import { Button } from '../../components';
 import type { OnboardingApi } from './api';
+import { ShareLink } from '../../pwa/ShareLink';
+import { browserShareApis, type ShareApis } from '../../pwa/share';
 import { QrCode } from './QrCode';
 
-/** The phone's share sheet and clipboard; left out when the browser has neither. */
-export interface ShareApis {
-  share?: (data: { text: string }) => Promise<void>;
-  copy?: (text: string) => Promise<void>;
-}
-
-function browserShareApis(): ShareApis {
-  const nav = typeof navigator === 'undefined' ? undefined : navigator;
-  return {
-    ...(nav?.share ? { share: (data: { text: string }) => nav.share(data) } : {}),
-    ...(nav?.clipboard ? { copy: (text: string) => nav.clipboard.writeText(text) } : {}),
-  };
-}
+export type { ShareApis };
 
 interface LinkDeviceStepProps {
   child: OnboardedChild;
@@ -37,7 +27,7 @@ type State =
 type Shared =
   | { status: 'none' }
   | { status: 'loading' }
-  | { status: 'ready'; token: LinkToken; copied?: boolean }
+  | { status: 'ready'; token: LinkToken }
   | { status: 'cancelled' }
   | { status: 'error'; message: string };
 
@@ -64,7 +54,7 @@ export function LinkDeviceStep({
   api,
   now = () => new Date(),
   onDone,
-  share = browserShareApis(),
+  share = browserShareApis(typeof navigator === 'undefined' ? undefined : navigator),
   pollMs = 3000,
 }: LinkDeviceStepProps) {
   const [state, setState] = useState<State>({ status: 'loading' });
@@ -195,29 +185,7 @@ export function LinkDeviceStep({
         {shared.status === 'ready' && (
           <>
             <p>Send this to {nickname} in a message. Works once, for 24 hours.</p>
-            {share.share && (
-              <Button
-                onClick={() =>
-                  share.share!({ text: shareMessage(shared.token.linkUrl) }).catch(() => undefined)
-                }
-              >
-                Share the link
-              </Button>
-            )}
-            {share.copy && (
-              <Button
-                variant="secondary"
-                onClick={() =>
-                  share.copy!(shareMessage(shared.token.linkUrl)).then(
-                    () => setShared({ ...shared, copied: true }),
-                    () => undefined,
-                  )
-                }
-              >
-                Copy link
-              </Button>
-            )}
-            {shared.copied && <p aria-live="polite">Copied</p>}
+            <ShareLink text={shareMessage(shared.token.linkUrl)} share={share} />
             <p className="secondary-text">
               Or {nickname} can type this code at {typeAt(shared.token.linkUrl)}:
             </p>

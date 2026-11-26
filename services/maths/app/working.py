@@ -17,12 +17,16 @@ is read as its RHS, and follows from a line ``y = E`` when E is the same as RHS.
 
 import re
 from dataclasses import dataclass
+from itertools import product
+from math import prod
 
 from sympy import Expr, FiniteSet, Mul, Pow, S, Symbol, Union, expand, simplify, solveset
 
 from app.equivalence import parse
 
 MAX_LINES = 50
+# At most this many ways to read a final line of letter-to-letter alternatives (a = x).
+MAX_READINGS = 64
 ALTERNATIVES = re.compile(r"\s+or\s+|,")
 
 
@@ -148,14 +152,16 @@ def _follows(before: Line, after: Line, subject: Symbol | None = None) -> bool:
     return _same_values(before.expression, after.expression)
 
 
-def _solved_value(eq: Equation) -> Expr | None:
-    """The value in ``x = value`` (either way round). The value may use other letters
-    (``x = 2a``) but never the unknown itself."""
+def _solved_values(eq: Equation) -> list[Expr]:
+    """The possible values in ``x = value`` (either way round). A value may use other letters
+    (``x = 2a``) but never the unknown itself. With a letter on each side (``a = x``) either
+    letter may be the unknown, so both are candidates."""
+    values = []
     if isinstance(eq.lhs, Symbol) and eq.lhs not in eq.rhs.free_symbols:
-        return eq.rhs
+        values.append(eq.rhs)
     if isinstance(eq.rhs, Symbol) and eq.rhs not in eq.lhs.free_symbols:
-        return eq.lhs
-    return None
+        values.append(eq.lhs)
+    return values
 
 
 def _in_form(line: Line, form: str | None) -> bool:
@@ -173,11 +179,18 @@ def _final_answer_correct(line: Line, expected: dict) -> bool:
     if "solutions" in expected:
         if not line.is_equation:
             return False
-        values = [_solved_value(eq) for eq in line.equations]
-        if any(v is None for v in values):
-            return False
         wanted = FiniteSet(*(parse(s) for s in expected["solutions"]))
-        return _same_sets(FiniteSet(*values), wanted)
+        candidates = []
+        for eq in dict.fromkeys(line.equations):
+            # Keep only the readings that are a wanted value: a choice of readings can only
+            # match the wanted set when every chosen value is in it.
+            kept = [v for v in _solved_values(eq) if any(_same_values(v, w) for w in wanted)]
+            if not kept:
+                return False
+            candidates.append(kept)
+        if prod(len(c) for c in candidates) > MAX_READINGS:
+            return False
+        return any(_same_sets(FiniteSet(*values), wanted) for values in product(*candidates))
     if line.is_equation:
         return False
     return _same_values(line.expression, parse(expected["expression"])) and _in_form(

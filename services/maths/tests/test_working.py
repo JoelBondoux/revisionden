@@ -219,3 +219,24 @@ def test_a_solved_value_may_be_in_other_letters():
 def test_a_solved_value_never_contains_the_unknown_itself():
     result = check_working(["2x = x + a", "x = (x + a)/2"], expected={"solutions": ["a"]})
     assert result.final_answer_correct is False
+
+
+def test_a_letter_answer_may_be_written_either_way_round():
+    for final in ("a = x", "x = a"):
+        result = check_working(["x + a = 2a", final], expected={"solutions": ["a"]})
+        assert result.final_answer_correct is True, final
+
+
+def test_many_repeated_letter_alternatives_are_checked_quickly():
+    import time
+
+    start = time.monotonic()
+    line = ", ".join(["a = x"] * 30)
+    result = check_working(["x + a = 2a", line], expected={"solutions": ["2"]})
+    assert result.final_answer_correct is False
+    result = check_working(["x + a = 2a", line], expected={"solutions": ["a"]})
+    assert result.final_answer_correct is True
+    many = ", ".join(f"{a} = {b}" for a, b in zip("abcdefghijklm", "nopqrstuvwxyz"))
+    result = check_working([many], expected={"solutions": list("abcdefghijklm")})
+    assert result.final_answer_correct is True
+    assert time.monotonic() - start < 5

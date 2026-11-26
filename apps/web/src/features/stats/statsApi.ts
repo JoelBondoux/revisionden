@@ -9,12 +9,14 @@ import {
   type TargetGrades,
   StudentDailyLimitSchema,
   StudentStatsSchema,
+  WorthALookSchema,
   type ParentDailyLimit,
   type ParentDashboard,
   type StatsPeriod,
   type StudentDailyLimit,
   type StudentStats,
   type UpdateDailyLimitRequest,
+  type WorthALook,
 } from '@revisionden/core';
 import { apiRequest } from '../../api/client';
 import { defaultBaseUrl } from '../../api/ApiContext';
@@ -47,6 +49,8 @@ export interface StatsApi {
     subjectId: string,
     targetGrade: string | null,
   ): Promise<TargetGrades>;
+  /** Topics flagged as tricky across several days (parent only, workstream K11). */
+  getWorthALook(studentId: string): Promise<WorthALook>;
 }
 
 /** Client for the stats routes (apps/api/src/stats). Sends the session cookies. */
@@ -90,6 +94,7 @@ export function createStatsApi({
       send('PUT', `${targetPath(id)}/${encodeURIComponent(subjectId)}`, TargetGradesSchema, {
         targetGrade,
       }),
+    getWorthALook: (id) => get(`students/${encodeURIComponent(id)}/worth-a-look`, WorthALookSchema),
   };
 }
 

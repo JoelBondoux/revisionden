@@ -192,6 +192,19 @@ formula and its assumptions. Summary of what is built:
   code is stored, never a gender. On the child's first open on a newly linked device, "Make it
   yours" shows the avatar builder with "Maybe later" (`GET`/`PUT /v1/student/avatar`; locked items
   still need their reward).
+- Changing subjects later (E5): each child's card in Parent home links to "Subjects"
+  (`/parent/subjects/:studentId`), where either parent can add a subject (the same picker as
+  onboarding, with "Not sure" for the board, and only subjects for the child's level that they
+  do not already take), change its board or tier, or remove it. Removing asks first and says the
+  child's progress is kept and comes back if the subject is added again: only the enrolment is
+  deleted, never the answers or mastery. A subject with no questions ready yet shows "Questions
+  coming soon". Adding, removing and changing a board or tier are important changes in the family
+  activity log ("added a subject for …", "removed a subject from …", "changed a board or tier
+  for …"), so the other parent is told. A board or tier change clears a target grade that is no
+  longer on the scale. The child's own Settings > My subjects works as before. API:
+  `GET`/`POST /v1/students/:id/subjects` (400 `invalid_subjects`, 409 `already_added`),
+  `DELETE /v1/students/:id/subjects/:subjectId` (404 if not taken) and
+  `PATCH /v1/students/:id/enrolments/:subjectId`.
 - Final exams are in the summer: Years 11 and 13 at the end of the current school year (which
   starts in September), Years 10 and 12 a year later, Year 9 two years later.
 - A new child has earned no rewards, so their avatar cannot use locked items.
@@ -263,16 +276,21 @@ Product owner decision, 2026-11-25: **parent view only**.
 - **Lessons** run in Learn mode at feedback level 1: every answer is marked at once with the right
   answer, the explanation and, for maths working, the first line that goes wrong (maths engine,
   no AI). Long answers are shown with a "marked by AI soon" note and are not marked yet.
+- **Mastery** of a topic is recomputed from the student's last 30 attempts after every answer;
+  a retry after a wrong answer counts at half weight (see Learning from mistakes).
 - **Typed short answers** are marked fairly (workstream F6, `packages/core/src/answer-normalise.ts`):
   word answers ignore case and extra spaces; maths answers also ignore every space, and treat the
   unicode minus as `-`, `×`, `·`, `*` (and `x` between two numbers) as one multiply, `÷` as `/`,
   superscripts as `^`, `≤`/`≥` as `<=`/`>=`, `√` as `sqrt`, and "and" or `;` in a list like `,`.
+  A multiply sign is kept between two numbers and before a sign (`3n × -2` is not `3n - 2`).
   When the item sets `answer.any_order`, products and sums may be in any order (signs stay with
-  their terms), a list of values in any order, and an equation either way round; coordinates and
+  their terms, and up to 4 letters on their own such as `pq` count as a product), a list of
+  values in any order, and an equation either way round; coordinates and
   inequalities are never reordered. `answer.units` lists units the answer may end with or leave
   off. Different forms of a value (`√32` and `4√2`, `three` and `3`) still need listing.
-- **Maths working** may end with a letter answer such as `x = 2a`: a solved value may use other
-  letters, never the unknown itself.
+- **Maths working** may end with a letter answer such as `x = 2a` (or `2a = x`, or `a = x`
+  either way round): a solved value may use other letters, never the unknown itself. Repeated
+  alternatives count once, and a line with more than 64 ways to read it is marked wrong.
 - **Mastery** of a topic is recomputed from the student's last 30 attempts after every answer.
 - **Wrong answers** in a lesson (Learn mode, not the starting test) become a flashcard due at once,
   once per question.
@@ -308,6 +326,51 @@ Product owner decision, 2026-11-25: **parent view only**.
   `packages/core/src/map.ts` and `apps/api/src/routes/map.ts`.
 - Implemented: `packages/core/src/learning.ts`, `apps/api/src/routes/learn.ts`,
   `apps/api/src/routes/flashcards.ts`.
+
+## Learning from mistakes (workstream F5, owner request 2026-11-25)
+
+A wrong or very slow answer is not just marked and forgotten: the learning point comes back.
+
+- **Learning point:** an item's optional `learning_point` tag in `content/`, or its topic when it
+  has none. Content writers should give each learning point at least 3 items.
+- **In-lesson retry:** after a wrong answer (Learn mode, not flashcards, long answers or recall
+  checks), a similar question (another item on the same learning point, not answered in the last
+  7 days, closest difficulty first) comes back 2 to 4 questions later. With no similar question,
+  the same question comes back at the end: "Another go at this one: you've got this." There is
+  no penalty, a retry earns the same XP as a first try and can build a combo, and a right retry
+  gets a small "Comeback!" celebration. A question that came back can be skipped ("Skip this
+  one"); the lesson finishes once every retry is answered or skipped.
+- **No repeat-after-repeat** (owner guardrails, 2026-11-25), so the child always feels they are
+  progressing:
+  - At most **one retry per learning point** and **2 retries per lesson**.
+  - A **second miss** on a point (its retry, or another question on it) ends retries for it today
+    and **steps down** instead: "This one's tricky today, so we'll come back to it another day",
+    the topic's "Learn it first" links, and an easier question on the same topic (lower
+    difficulty) next if there is one. The point then waits for the review ladder.
+  - **Never 2 hard retries in a row:** a **confidence question** (one the student has answered
+    right before, same subject, another learning point) goes just before each retry; without one,
+    a retry that would sit next to another waits for the ladder instead.
+  - A lesson **ends on a success:** if the last answer was wrong, one confidence question comes
+    before the summary.
+- **Slow = shaky:** a right answer that takes more than **twice the expected time** still scores
+  in full, but its learning point is shaky. Expected time is the item's `expected_seconds` when
+  set, else a rough guide by type (owner, 2026-11-25): flashcard 15 s, multiple choice 20 s,
+  numeric 40 s, short answer 45 s, worked maths 120 s. Long answers are never timed.
+- **Review ladder:** a learning point with a wrong or shaky answer comes back the next day, then
+  after 3 days, then after 7 days (`review_points`). Each right answer on time, on or after the
+  day it is due, climbs a rung; a right answer at the 7-day rung takes it off the ladder. A
+  right answer before it is due (such as the retry in the same lesson) changes nothing; a wrong
+  or slow answer starts it again from the next day. A point clears after three right answers on
+  time (days 1, 3 and 7; lead and owner, 2026-11-25). A point still missed on **3 ladder visits**
+  is **parked for a week** and flagged as "worth a look with a teacher or parent" for the parent
+  dashboard (`worthALook`; never shown to the child as a failure), instead of looping.
+- **Where it comes back:** lessons and the 5-a-day open with up to **2 warm-up** questions on due
+  learning points from the same subject ("Warm-up: this one came up last time"), preferring a
+  question not seen for 7 days.
+- **Mastery:** first attempts count as before; a retry counts at **half weight**, because it shows
+  learning but is easier just after seeing the answer.
+- Implemented: `packages/core/src/mistakes.ts`, `apps/api/src/learning/mistakes.ts`, the attempts,
+  lesson and daily routes, `apps/web/src/features/learn/LessonPlayer.tsx`. Migration 0026.
 
 ## Flashcards and mastery
 
@@ -348,6 +411,11 @@ Mockups: screens 19 (student) and 20 (parent).
 - Subjects table: mastery (average of topics), predicted grade and target (with "on target" or
   how far below), change in mastery over the last 4 weeks.
 - Weak spots: the three weakest topics, 4 weeks ago and now.
+- **Worth a look together** (K11): topics holding learning points the child has missed on
+  several review-ladder visits across days (flagged by F5's `worthALook`), one row per topic
+  with how many points, and "Learn it first" where the topic has checked lessons. Wording:
+  "These have been tricky for a while. A chat or a look with their teacher may help." No card
+  at all when nothing is flagged. Parent only: never on the child's My stats.
 - Latest school report effort scores (for example CBI), shown on the school's own scale.
 - Rewards (workstream K10, owner request 2026-11-25): every parent-set reward for the child with
   its progress bar, and add, edit and remove right on the dashboard ("Add a reward", "Edit",
@@ -507,7 +575,7 @@ Mockups: screens 19 (student) and 20 (parent).
   downloads `GET /v1/export`: one JSON file with the parent's sign-in email, provider account id,
   policy confirmations, the family, and for each of that parent's own children the profile and
   every record (courses, devices, answers, mastery, exams, reports, plans, rewards, streak, daily
-  XP, starting tests, flashcards and flashcard sessions, reminders, AI usage, parent-set rewards), plus the family's
+  XP, starting tests, flashcards and flashcard sessions, the review ladder, reminders, AI usage, parent-set rewards), plus the family's
   feedback and question reports. Secrets are left out (session and link-code hashes, passkey keys
   and credential ids, push keys). Never another family's data.
 - **Activity:** any parent or student request marks the family as used (`families.last_active_at`,
@@ -758,8 +826,28 @@ Requested by the product owner on 2026-11-25.
 
 - Pages: `/help` (students, also signed out) and `/parent/help` (parent area; adds a "Worried about a
   child?" card with the NSPCC Helpline). Links: Settings (Help and information), a small heart
-  "Get help" link in the student footer, the signed-out header, and parent home. The app has no
-  separate profile menu yet; add a link there when one exists.
+  "Get help" link in the student footer, the signed-out header, and parent home. Since W3 also: a
+  calm "Get help" tile on the topic map (the student's home) and a "Get help" chip in the student
+  header on every student screen (the app has no separate menu yet; add it there when one exists).
+  All use the shared link components; tapping them records nothing.
+- Layout (W3, 2026-11-25): the "Quick exit" button sits in a bar that stays at the top of the
+  screen while scrolling (sticky, padded for phone notches with `env(safe-area-inset-*)`, first
+  control after the skip link). Topics are grouped into categories
+  (`apps/web/src/features/help/categories.ts`): **Right now** (In danger right now, Thinking about
+  suicide) is always first and always open; **Feelings and mental health** starts open; **Staying
+  safe**, **Home, school and friends** and **Body and health** are collapsible (native
+  `<details>`), each summary listing its topics. A "Find a topic" box filters by the words of the
+  topics and their services; "In danger right now" always stays; a live status says how many
+  topics match. The search is component state only: never stored, sent or put in the address.
+  Grouping is presentation only: every verified entry and all wording are unchanged.
+- Service cards (W3): each service is a compact card with its name, its one-line description (and
+  any confirmed note), and its contact actions as clear buttons (shared `LinkButton`, at least
+  48px tall): **Call** and **Text** are primary buttons (`tel:`/`sms:` links unchanged); chat,
+  website, WhatsApp and email are secondary buttons (new tab, no referrer). Opening hours show
+  under each button. Age range and area sit behind "More about <service>". No plain text links,
+  no new wording. Buttons are calm on this page (normal case, no 3D shadow or press movement), and
+  in forced colours (Windows High Contrast) the danger panel, Quick exit, category headings and
+  search box keep visible borders.
 - Data: `content/support/uk-services.json`, schema `content/schemas/support-services.schema.json`.
   Each service has topics, one plain sentence of our own (`helps_with`), its official domains,
   optional age range and area, contacts (phone as `tel:`, text number with keyword as
@@ -804,7 +892,11 @@ Requested by the product owner on 2026-11-25.
 - Privacy: its own layout with no navigation, sounds or API calls; nothing is fetched to show it
   (the data is built into the app); websites open in a new tab with `rel="noreferrer"`. A unit test
   and an e2e test check that visiting it makes no API calls and no requests to other sites.
-- Style: calm and light, no game-feel effects (`features/help/help.css`).
+- Style: calm, no game-feel effects (`features/help/help.css`). Follows the app's theme (light,
+  dark, colour-blind) through its own `--help-*` colours; every text pair meets WCAG AA and Quick
+  exit and control borders meet 3:1 in every theme (`helpTheme.test.ts`). The danger panel keeps a
+  thick border and bold text in each theme (red, or orange-brown in the colour-blind palette);
+  Quick exit is solid (dark in light themes, white in dark themes).
 
 ## Quick wins from the competitor research (owner approved 2026-11-25)
 
@@ -852,5 +944,6 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   deuteranopia, protanopia and tritanopia; icons and words always carry the meaning too);
   Background pattern On (default) or Off. Applied before the first paint, so there is no flash.
   The doodle pattern is our own original art, very faint, and is never shown in high contrast or
-  forced colours. Get help stays a calm light page in every theme. The sales site follows the
+  forced colours. Get help follows the theme too (light, dark, colour-blind), with its own calm,
+  high-contrast colours (owner, 2026-11-25, W3). The sales site follows the
   device's theme only.
