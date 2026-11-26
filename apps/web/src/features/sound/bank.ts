@@ -48,6 +48,8 @@ export interface Note {
   wave?: 'sine' | 'triangle';
   /** Slide to this pitch over the note (for swoops). */
   glideTo?: number;
+  /** Seconds to swell in (default: a quick 12 ms pluck). */
+  attack?: number;
 }
 
 /** One note with a quick soft attack and a smooth exponential fade (a gentle bell or pluck). */
@@ -60,7 +62,7 @@ export function note(ctx: SynthContext, out: AudioNodeLike, start: number, n: No
   osc.frequency.setValueAtTime(n.freq, t0);
   if (n.glideTo) osc.frequency.exponentialRampToValueAtTime(n.glideTo, end);
   env.gain.setValueAtTime(0.0001, t0);
-  env.gain.linearRampToValueAtTime(n.peak ?? 0.6, t0 + Math.min(0.012, n.dur / 4));
+  env.gain.linearRampToValueAtTime(n.peak ?? 0.6, t0 + (n.attack ?? Math.min(0.012, n.dur / 4)));
   env.gain.exponentialRampToValueAtTime(0.0001, end);
   osc.connect(env).connect(out);
   osc.start(t0);
@@ -76,7 +78,8 @@ function bell(freq: number, at: number, dur: number, peak = 0.55): Note[] {
   ];
 }
 
-const sound =
+/** A sound made of notes; `pitch` multiplies every note (combo steps). */
+export const sound =
   (...notes: Note[]): SoundFn =>
   (ctx, out, at, pitch = 1) =>
     notes.reduce(

@@ -19,6 +19,12 @@ Tags: #product #rules #limits #defaults
   ends at once, notice next sign-in); deleting the family needs both when there are two; family
   activity log names parents only by number, important changes pushed to the other parent and
   shown as new in the parent home; log kept 12 months. Migration 0012.
+- Sharing invite links (I8, `apps/web/src/pwa/ShareLink.tsx`): the second-parent invite and the
+  child's device link show a big "Share link" button that opens the device's own share sheet
+  where the browser has one (`navigator.share`), and "Copy link" otherwise or if sharing fails;
+  closing the share sheet is not an error. Messages are short and name no child: "Join our family
+  on RevisionDen as a parent: <link>" and "Set up RevisionDen on your phone: <link>". The QR code
+  and short codes stay for setting up in person.
 - Year group: Years 9 to 13 only (core schema and database check `students_year_group_range`,
   migration 0006).
 - Google and Microsoft access, refresh and ID tokens are never stored: blanked in Better Auth's
@@ -617,6 +623,14 @@ Tags: #product #rules #limits #defaults
 - Original Web Audio sounds, no files. Header quick mute and Settings (on/off, volume, tap sounds
   off by default), per device; follows the iOS silent switch where possible. No correct/wrong
   sounds in Test mode before submit. Sound is never the only signal. Workstream U.
+- Style sounds and haptics (U6): every animation fires a feedback event (15: buttonPress, cardFlip,
+  correct, wrong, combo, xpTick, ringFill, rewardWobble, rewardOpen, rewardUnlock, setComplete,
+  levelUp, homeEnter, nodePop, locked) that plays the active effect style's synthesised sound plus a vibration. Packs: Sticker
+  Book (default), Pop Burst, Starlight; unknown styles use Sticker Book. Vibration switch on by
+  default and independent of mute; no vibration on iPhone/iPad browsers (no Vibration API).
+  Throttled: ticks and map nodes 70 ms, ring fill 90 ms, ≤10 sounds/s, buzzes ≥100 ms apart and ≤4/s. Reduced motion: half
+  loudness, shorter buzzes. `apps/web/src/features/sound/feedback/`; `HapticsDriver` lets a native
+  wrapper add real haptics later.
 - Reward sounds scale with rarity (common, rare, epic, legendary; 4+ variations each, no repeat
   in a row); milestone ladders and levels climb in pitch and fullness; one sound for several
   rewards at once; legendary at most 3 s and skippable (owner, 2026-11-25; U4).
@@ -805,6 +819,13 @@ Tags: #product #rules #limits #defaults
   `revisionden.effectStyle` (cookies and storage policy 1.7); a style that is not unlocked falls
   back to Sticker Book. Pop Burst and Starlight unlock through progress milestones (J10b, not yet
   built). Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).
+  4.5:1 contrast in all four combinations. Doodle tile `apps/web/src/design/doodle-scatter.svg` (original,
+  1080px dense sticker sheet: 8 hero doodles, 420 medium (160 motifs, no copy of a motif within
+  240px of itself) and 1,600 tiny fillers, no two outlines closer than 4px plus the line, tilted up to 25°, 1.4px lines, about 35KB gzipped; generated from a fixed seed by `doodleTile.ts`, used as
+  a CSS mask at 7% ink; J8b), hidden with `prefers-contrast: more` and
+  forced colours. The older 240px grid tile `doodles.svg` is kept only for the public site until it
+  moves to the new tile.
+  Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by

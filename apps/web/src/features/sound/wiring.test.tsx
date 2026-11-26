@@ -10,15 +10,26 @@ import { soundBank } from './bank';
 import { SOUND_EVENTS, type SoundEvent } from './events';
 import { createFakeAudioContext, type FakeAudioContext } from './fakeAudio';
 import { rewardSound } from './rewardBank';
+import { FEEDBACK_EVENTS, type FeedbackEvent } from './feedback/events';
+import { stylePacks } from './feedback/styles';
 import { SoundProvider } from './SoundProvider';
 
 /** Renders the whole app with sound on, recording which sounds actually play. */
 function renderWithSound(path: string) {
-  const played: SoundEvent[] = [];
+  // Sound events from the main bank, and feedback events from the default style pack.
+  const played: (SoundEvent | FeedbackEvent)[] = [];
   const contexts: FakeAudioContext[] = [];
   for (const event of SOUND_EVENTS) {
     const original = soundBank[event];
     vi.spyOn(soundBank, event).mockImplementation((...args) => {
+      played.push(event);
+      return original(...args);
+    });
+  }
+  const pack = stylePacks['sticker-book'];
+  for (const event of FEEDBACK_EVENTS) {
+    const original = pack[event];
+    vi.spyOn(pack, event).mockImplementation((...args) => {
       played.push(event);
       return original(...args);
     });
@@ -76,9 +87,10 @@ describe('sounds in the app', () => {
     await userEvent.type(await screen.findByLabelText('Your answer'), '4');
     await click('Check');
     await screen.findByRole('status', { name: 'Answer feedback' });
-    expect(played).toEqual(['correct', 'correct', 'streakDay']);
+    // The second right answer in a row is a combo (U5/U6).
+    expect(played).toEqual(['correct', 'combo', 'streakDay']);
     await click('Finish');
-    expect(played.at(-1)).toBe('celebration');
+    expect(played.at(-1)).toBe('setComplete');
   });
 
   it('Learn mode: a gentle sound for a wrong answer', async () => {
@@ -185,7 +197,7 @@ describe('combo chime in lessons', () => {
     await userEvent.type(await screen.findByLabelText('Your answer'), '4');
     await click('Check');
     await screen.findByRole('status', { name: 'Answer feedback' });
-    expect(played.slice(0, 2)).toEqual(['correct', 'correct']);
+    expect(played.slice(0, 2)).toEqual(['correct', 'combo']);
     const secondChime = contexts[0]!.oscillators[after]!.frequencies[0]!;
     expect(secondChime).toBeGreaterThan(firstChime);
   });
