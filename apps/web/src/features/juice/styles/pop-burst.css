@@ -263,7 +263,7 @@
   --radius-lg: 22px;
   --font-heading: 'Baloo 2', 'Nunito', system-ui, sans-serif;
   --pattern-ink: rgb(255 122 192 / 9%);
-  --page-wash: linear-gradient(165deg, #7b4dff 0%, #c94bff 48%, #ff7a59 100%);
+  --page-wash: linear-gradient(165deg, #4a1fa8 0%, #6a2bc4 48%, #8a2f6e 100%);
   --page-texture: none;
 }
 /* ---------- end of the full look ---------- */
