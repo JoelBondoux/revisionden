@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- A shorter topic map that fits on one phone screen. Today's goal, your next mission and your 5-a-day are now in one "Today" box at the top. Below it, "Your path" shows your units as a row of badges (swipe for more), and the unit you pick shows all of its topics down a path you can scroll inside the card. Subjects stay on one line too.
 - We have worked out how to make verified questions for every subject, not just maths, and which subjects can be built fastest.
 - On small phones with large text, the policy list and other link cards now wrap their words instead of running off the side of the screen.
 - Fixed: the About page no longer scrolls sideways on a small phone with large text; the version details and support email now wrap.
@@ -199,6 +200,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Topic map, design C "Your path" (J12b, owner choice): `MapPage` now shows a Today strip (`map/TodayStrip.tsx`: daily goal, Next mission row with Go, `features/daily/DailyRow.tsx`, `map/InstallRow.tsx`) and `map/UnitPath.tsx` (sideways unit badges and subject chips via `map/HScroller.tsx` with snap, edge fades, focus scroll and pointer arrows; the chosen unit's full topic path in a labelled, focusable region that scrolls inside the card, keeps its place per unit, and gives way to page scrolling below 11 rem of room or 20 rem of width, per `map/path.ts`; See all opens an all-units sheet). Replaces the honeycomb, `NextMissionCard` and `DailyCard`; the effect-style hooks move from `.map-summary`, `.mission` and `.daily-card` to `.today-strip`, `.today-strip__mission` and `.today-strip__daily`. New e2e `e2e/tests/map.spec.ts` (390 × 844 fits with Go in view, 320 px and 200% text with no sideways scroll, keyboard through chips, badges and topics, axe light and dark).
 - Research (QG): how to generate verified questions per subject, with four guarantee tiers, distractor and diagram methods, owner review estimates, licensing, gaps, a ranked plan and two proofs of concept (physics templates with pint, French vocabulary from DfE annex E), and a plan for in-house teaching notes to replace external "Learn it first" links (`docs/research/question-generation-2026-11.md`, scripts in `docs/research/question-generation-poc/`).
 - Maths templates design (T1, docs only): `docs/TEMPLATES.md` now describes how physics and chemistry calculation templates would work (units with pint, balancing with ChemPy, board data only, exact rounding, the three-way cross-check), and what must be sourced first. Nothing built.
 - Maths engine answer forms (T2, `app/forms.py`): `form` on `/check-working` expected answers and on content `value` and `expression` checks can be `fraction`, `simplest_fraction`, `improper_fraction`, `standard_form` or `index_form`; the answer must have the right value and be written in that form.

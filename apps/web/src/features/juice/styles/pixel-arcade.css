@@ -18,9 +18,9 @@
   box-shadow: 3px 3px 0 #000;
 }
 
-:root[data-effect-style='pixel-arcade'] .map-summary,
-:root[data-effect-style='pixel-arcade'] .daily-card,
-:root[data-effect-style='pixel-arcade'] .mission {
+:root[data-effect-style='pixel-arcade'] .today-strip,
+:root[data-effect-style='pixel-arcade'] .today-strip__daily,
+:root[data-effect-style='pixel-arcade'] .today-strip__mission {
   border: 3px solid var(--px-text);
   border-radius: 0;
   background: var(--px-panel);
@@ -28,26 +28,26 @@
   box-shadow: 5px 5px 0 #000;
 }
 
-:root[data-effect-style='pixel-arcade'] .map-summary {
-  padding: var(--space-4);
+:root[data-effect-style='pixel-arcade'] .today-strip {
+  padding: var(--space-2) var(--space-3) var(--space-1);
 }
 
-:root[data-effect-style='pixel-arcade'] .map-summary__subject,
-:root[data-effect-style='pixel-arcade'] .mission__eyebrow {
+:root[data-effect-style='pixel-arcade'] .today-strip__heading,
+:root[data-effect-style='pixel-arcade'] .today-strip__mission .today-strip__eyebrow {
   color: var(--px-gold);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
-:root[data-effect-style='pixel-arcade'] .map-summary .secondary-text,
-:root[data-effect-style='pixel-arcade'] .daily-card .secondary-text,
-:root[data-effect-style='pixel-arcade'] .daily-card__count,
-:root[data-effect-style='pixel-arcade'] .mission__time {
+:root[data-effect-style='pixel-arcade'] .today-strip__xp,
+:root[data-effect-style='pixel-arcade'] .today-strip__daily .today-strip__eyebrow,
+:root[data-effect-style='pixel-arcade'] .today-strip__daily .today-strip__title,
+:root[data-effect-style='pixel-arcade'] .today-strip__mission .today-strip__meta {
   color: var(--px-text);
 }
 
 /* Today's mission is the level-select screen's next stage. */
-:root[data-effect-style='pixel-arcade'] .mission {
+:root[data-effect-style='pixel-arcade'] .today-strip__mission {
   border-color: var(--px-green);
 }
 
