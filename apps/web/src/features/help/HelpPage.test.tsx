@@ -175,3 +175,17 @@ describe('ways to reach Get help', () => {
     expect(screen.getByRole('link', { name: 'Get help' })).toHaveAttribute('href', '/parent/help');
   });
 });
+
+describe('organisation icons', () => {
+  it('shows a neutral icon beside every organisation until a logo is permitted', () => {
+    const { container } = renderRoute('/parent/help', { studentId: null });
+    const services = container.querySelectorAll('.help-service');
+    expect(services.length).toBeGreaterThan(0);
+    for (const s of services) {
+      const icon = s.querySelector('.help-org-icon');
+      expect(icon).not.toBeNull();
+      expect(icon).toHaveAttribute('aria-hidden', 'true');
+      expect(s.querySelector('img')).toBeNull();
+    }
+  });
+});

@@ -784,6 +784,13 @@ Requested by the product owner on 2026-11-25.
   seen from outside the UK), Beat's email and web chat hours, and Childline's message service. Grief has
   no specialist service yet (none was on the list to check) and young carers' one (Carers Trust)
   could not be checked, so both topics list Childline and Samaritans.
+- Logos (W4, 2026-11-26): organisations' logos are trademarks, so one is shown only when the
+  organisation's own guidance clearly allows this use or it gives written permission. None does
+  yet: every service shows a neutral icon beside its exact name. Findings per organisation, and an
+  email template for the owner to request permission, are in
+  `docs/legal/logo-permission-requests.md` (a test checks it covers every service). A permitted
+  logo would be self-hosted under `apps/web/public/support-logos/`, unaltered, with alt text equal
+  to the organisation's name, and never hot-linked.
 - Privacy: its own layout with no navigation, sounds or API calls; nothing is fetched to show it
   (the data is built into the app); websites open in a new tab with `rel="noreferrer"`. A unit test
   and an e2e test check that visiting it makes no API calls and no requests to other sites.
