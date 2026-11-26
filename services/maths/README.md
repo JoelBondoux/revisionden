@@ -21,7 +21,7 @@ first line that does not follow from the line before (`null` when every step is 
   can be `factorised` or `expanded`.
 
 - `form` can also be an answer form (`app/forms.py`): `fraction`, `simplest_fraction`,
-  `standard_form` (1 ≤ A < 10) or `index_form` (different primes with powers). The answer must
+  `improper_fraction` (lowest terms, never a mixed number), `standard_form` (1 ≤ A < 10) or `index_form` (different primes with powers). The answer must
   then have the right value and be written that way: `360` is not index form.
 
 Everyday notation is read first (`app/notation.py`, matching `packages/core`'s answer
