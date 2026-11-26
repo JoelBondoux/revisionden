@@ -119,28 +119,9 @@ export const NextItemsRequestSchema = z.object({
 });
 export const NextItemsResponseSchema = z.object({ items: z.array(ItemSchema) });
 
-// Attempts
+// Attempts (the request is LearnAttemptRequestSchema in learning-schemas.ts)
 
 export const ModeSchema = z.enum(['learn', 'test']);
-
-export const AttemptRequestSchema = z.object({
-  itemId: IdSchema,
-  answer: z.custom<unknown>((value) => value !== undefined, 'Required'),
-  timeMs: z.number().int().min(0),
-  mode: ModeSchema,
-});
-export type AttemptRequest = z.infer<typeof AttemptRequestSchema>;
-
-export const AttemptResponseSchema = z.object({
-  id: IdSchema,
-  itemId: IdSchema,
-  correct: z.boolean(),
-  /** Fraction of marks, 0 to 1. */
-  score: z.number().min(0).max(1),
-  xpEarned: z.number().int().min(0),
-  createdAt: IsoDateTimeSchema,
-});
-export type AttemptResponse = z.infer<typeof AttemptResponseSchema>;
 
 // Plans
 
