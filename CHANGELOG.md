@@ -116,6 +116,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Maths engine (T2): a rounded `value` check whose answer is an expression (`6.4*10^8` with `significant_figures`, as standard-form items send it) is now read exactly before the rounding is compared, instead of failing with InvalidOperation (Codex on train #208).
 - Maths engine (T2): `app/notation.py` rewrites everyday notation before parsing (× · ⋅, x between numbers, superscripts and the superscript minus, unicode minus and dashes, thousands separators in exact groups of three), so `/check-working`, `/equivalent`, `/solutions` and the content checks no longer refuse `2^3 × 3^2 × 5`, `1.5 × 10^11`, `2³ × 3²`, `−7` or `30,000`, or read `1.5x10^11` as the letter x.
 - S3-N: the estimation questions n14-0001 and n14-0003 no longer require the estimate to a set number of significant figures (the question asks only for the numbers to be rounded), so an equal estimate written another way, such as 150.0, is marked right (Codex review of #115; needs S2's #178).
 - S3-N: the bounds questions n16-0002 and n16-0003 now say "correct to the nearest 0.1 kg" / "0.01 second" and no longer require the answer to a set number of decimal places, so equal answers such as 4.550 are marked right (Codex review of #115).
