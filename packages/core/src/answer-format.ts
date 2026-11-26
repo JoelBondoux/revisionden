@@ -43,6 +43,9 @@ const SUPERSCRIPT: Record<string, string> = {
   '⁹': '9',
 };
 
+/** The largest power of ten standard form is read with, either way (10^100 and 10^-100). */
+export const MAX_POWER = 100;
+
 export interface StandardForm {
   /** The same number as a plain decimal, keeping the digits shown ("3.20e-4" -> "0.000320"). */
   plain: string;
@@ -69,10 +72,13 @@ export function standardForm(text: string): StandardForm | null {
     mantissa = e[1]!;
     power = e[2]!;
   }
+  // A power beyond ±100 is no school answer, and expanding it would build a huge string.
+  const exponent = Number(power);
+  if (!Number.isInteger(exponent) || Math.abs(exponent) > MAX_POWER) return null;
   const negative = mantissa.startsWith('-');
   const [whole = '', fraction = ''] = mantissa.replace('-', '').split('.');
   const digits = whole + fraction;
-  const point = whole.length + Number(power);
+  const point = whole.length + exponent;
   let plain: string;
   if (point <= 0) plain = `0.${'0'.repeat(-point)}${digits}`;
   else if (point >= digits.length) plain = digits + '0'.repeat(point - digits.length);
