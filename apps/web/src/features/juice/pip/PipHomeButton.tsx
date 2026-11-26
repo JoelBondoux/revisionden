@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../../components/Button';
 import { PipFigure, type PipPose } from './PipFigure';
 import { nextIdle } from './idle';
-import { outfitFor, touchFor } from './outfits';
+import { lookFor, outfitFor } from './outfits';
 
 /** Where Pip takes you: the Home dashboard. */
 export const HOME_PATH = '/home';
@@ -48,7 +49,8 @@ export function PipHomeButton({
   const navigate = useNavigate();
   const [pose, setPose] = useState<PipPose>('rest');
   const [asking, setAsking] = useState(false);
-  const [touch] = useState(() => touchFor(today()));
+  const [look] = useState(() => lookFor(today()));
+  const returnFocus = useRef(false);
   const lastInput = useRef(Date.now());
   const [wake, setWake] = useState(0);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -108,6 +110,14 @@ export function PipHomeButton({
 
   const goHome = useCallback(() => navigate(HOME_PATH), [navigate]);
 
+  // Once the question has gone (and the page is no longer inert), focus goes back to Pip.
+  useEffect(() => {
+    if (!asking && returnFocus.current) {
+      returnFocus.current = false;
+      buttonRef.current?.focus();
+    }
+  }, [asking]);
+
   return (
     <>
       <button
@@ -117,13 +127,13 @@ export function PipHomeButton({
         aria-label="Home"
         onClick={() => (inLesson ? setAsking(true) : goHome())}
       >
-        <PipFigure outfit={outfitFor(subjectId)} touch={touch} framed pose={pose} />
+        <PipFigure outfit={outfitFor(subjectId)} look={look} pose={pose} />
       </button>
       {asking && (
         <LeaveDialog
           onStay={() => {
+            returnFocus.current = true;
             setAsking(false);
-            buttonRef.current?.focus();
           }}
           onLeave={goHome}
         />
@@ -132,25 +142,54 @@ export function PipHomeButton({
   );
 }
 
+/**
+ * "Leave this lesson?" as a modal (J15b-2 focus trap): it sits in its own layer, everything else
+ * on the page is inert while it asks, Tab and Shift+Tab stay on its two buttons, and Escape or a
+ * tap outside means Keep going.
+ */
 function LeaveDialog({ onStay, onLeave }: { onStay: () => void; onLeave: () => void }) {
   const titleId = useId();
   const stayRef = useRef<HTMLButtonElement>(null);
+  const layerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    const layer = layerRef.current;
+    const others = Array.from(document.body.children).filter(
+      (el) => el !== layer && !el.hasAttribute('inert'),
+    );
+    for (const el of others) el.setAttribute('inert', '');
     stayRef.current?.focus();
-    const onKey = (event: KeyboardEvent) => {
+    const onKey = (event: globalThis.KeyboardEvent) => {
       if (event.key === 'Escape') onStay();
     };
     document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      for (const el of others) el.removeAttribute('inert');
+    };
   }, [onStay]);
-  return (
-    <div className="pip-leave__backdrop" onClick={onStay}>
+  const trapTab = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== 'Tab') return;
+    const buttons = Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>('button'));
+    const first = buttons[0];
+    const last = buttons[buttons.length - 1];
+    if (!first || !last) return;
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+  return createPortal(
+    <div ref={layerRef} className="pip-leave__backdrop" onClick={onStay}>
       <div
         className="pip-leave"
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
         onClick={(event) => event.stopPropagation()}
+        onKeyDown={trapTab}
       >
         <h2 id={titleId}>Leave this lesson?</h2>
         <div className="pip-leave__actions">
@@ -162,6 +201,7 @@ function LeaveDialog({ onStay, onLeave }: { onStay: () => void; onLeave: () => v
           </Button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

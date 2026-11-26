@@ -9,7 +9,7 @@ import { InstallRow } from '../../map/InstallRow';
 import { useStudent } from '../../session/StudentContext';
 import { useDailyApi } from '../daily/dailyApi';
 import { PipFigure, setPipSubject } from '../juice/pip';
-import { outfitFor, touchFor } from '../juice/pip/outfits';
+import { lookFor, outfitFor } from '../juice/pip/outfits';
 import { CountUp } from '../stats/countUp';
 import { useStatsApi } from '../stats/statsApi';
 import '../../map/map.css';
@@ -175,12 +175,7 @@ function HomeBody({
           </Ring>
         ) : (
           <div className="home-hero__pip" aria-hidden="true">
-            <PipFigure
-              outfit={outfit}
-              touch={touchFor(new Date().toISOString().slice(0, 10))}
-              framed
-              showProp
-            />
+            <PipFigure outfit={outfit} look={lookFor(new Date().toISOString().slice(0, 10))} />
           </div>
         )}
         <div className="home-hero__side">
