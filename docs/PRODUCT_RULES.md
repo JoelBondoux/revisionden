@@ -444,6 +444,9 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
   changes the rating; the rating buttons stay once the answer has been seen. The answer face is
   empty until the answer is revealed, and each new card starts on its question with no turn, so
   the next card's answer never flashes while the card turns.
+  The card and the rating buttons are named by the words they show (F8b, WCAG 2.5.3 Label in
+  Name): the card reads its showing face, with "Turn over to see the answer" (or "Turn back to
+  the question") as its description, and a rating reads, for example, "Good 1 day".
 - **Explain (F7, owner):** on the answer side, "Explain" walks through the item's verified
   content one step at a time ("Next step", "Back", ending on the answer): its worked steps, else
   its inline mark scheme, then its `back_formula` and each condition, then the answer, then its
