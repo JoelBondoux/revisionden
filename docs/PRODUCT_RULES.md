@@ -929,6 +929,26 @@ Requested by the product owner on 2026-11-25.
 - Implemented: `apps/api/src/routes/family-parents.ts`, `apps/api/src/family-events.ts`,
   `apps/web/src/features/parents/`; migration 0012.
 
+## Friends league (workstream FL)
+
+Owner decisions, 2026-11-26. Full design: `docs/FRIENDS_LEAGUE.md`.
+
+- Friends can come from other families. Off per child until a parent turns on "Allow friends".
+  A child shares a one-time 8-character code in person; the friend types it and confirms; then
+  one parent from **each** family approves (7 days). Codes: 48 hours, used once, hashed, 3 a
+  day; 3 waiting requests; 5 wrong tries an hour per child, 20 a day per family; every failure
+  says only "That code isn't valid".
+- Friends see nickname, avatar, title and this week's league XP only. No chat or free text.
+  Brothers and sisters join automatically when friends is on for both. At most 10 friends.
+- League XP: reward XP from answers and flashcard sessions this UK week (Monday to Sunday);
+  friends see totals up to the end of yesterday. Equal XP share a place; no XP has no place; a
+  win needs 50 XP and someone else with XP; ties share the win.
+- The child can hide from the league, remove, block or report (fixed reasons) a friend; parents
+  can remove, block, unblock and add a private label (30 characters, no email or phone).
+  Reports are seen by both families' parents.
+- Implemented so far: `packages/core/src/league.ts`, `apps/api/src/routes/friends.ts`,
+  `apps/api/src/routes/friends-league.ts`; migration 0028. Screens to come.
+
 ## Get help (support resources)
 
 Requested by the product owner on 2026-11-25.

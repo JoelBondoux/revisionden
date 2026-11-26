@@ -63,7 +63,7 @@ VAPID contact is our web address, never a personal email.
 Nickname, avatar and XP only. Invite codes need parent approval. No chat, no free text between
 students.
 
-### Friends league: children's data impact note (approved, not built)
+### Friends league: children's data impact note (approved; API built, screens to come)
 
 Design: `docs/FRIENDS_LEAGUE.md`, approved by the owner on 2026-11-26. Friends can be from other families
 (owner, 2026-11-26), so this is the first time one child's data is shown to children outside
