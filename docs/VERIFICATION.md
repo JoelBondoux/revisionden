@@ -263,7 +263,7 @@ answers: same words ignoring case and end punctuation, or the same answer under 
 side is compared with the expected one, notation is read strictly so `/ 2a` is not `/ (2a)`), and the
 answer states every listed condition such as `a ≠ 0` as a whole clause (`a ≠ 0.5` does not count), otherwise it fails for a person to check; worked maths: the same
 solutions in any order (a solution may use other letters, `x = 2a`), or the same expression; an answer written `<subject> = …` counts as its right-hand side when the item declares that `answer.subject`). The reviewer sees the whole item and the
-quoted sources (and, for typed answers, a note of the marking normaliser's rules such as spaces and multiply signs, and for `any_order` items a note not to ask for reordered versions of the accepted answers, so it does not ask for forms marking already accepts) and must report factual errors, a wrong answer, ambiguity, a second correct
+quoted sources (and, for typed answers, a note of the marking normaliser's rules such as spaces and multiply signs, and for `any_order` items a note not to ask for reordered versions of the accepted answers, so it does not ask for forms marking already accepts; and, for an item with a hint, that a hint is a method nudge judged against the item's engine-checked steps and explanation: it must not reveal the answer, must agree with the steps, must be mathematically correct and suitable for the age group, and any new factual claim in it still needs a quoted source) and must report factual errors, a wrong answer, ambiguity, a second correct
 option, content outside the specification, unsupported claims or poor wording; any problem or
 an unsure reviewer fails. Tests use recorded fixtures only.
 

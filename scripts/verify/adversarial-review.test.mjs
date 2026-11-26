@@ -127,3 +127,27 @@ test('the reviewer is told how typed answers are normalised, so it does not ask 
   // Multiple choice has no typed answer, so no note.
   assert.doesNotMatch(reviewPrompt(item).prompt, /spaces and case are ignored/i);
 });
+
+test('the reviewer judges a hint as a method nudge backed by the steps, and still wants a source for a new fact', () => {
+  const hinted = {
+    ...item,
+    type: 'worked_maths',
+    options: undefined,
+    hint: 'Collect the x terms on one side first.',
+    steps: ['5x - 2x = 7 + 2', '3x = 9', 'x = 3'],
+  };
+  const { prompt } = reviewPrompt(hinted);
+  assert.match(prompt, /hint is a method nudge/i);
+  assert.match(prompt, /reveals? the answer/i);
+  assert.match(prompt, /consistent with the (?:item's )?(?:verified |checked )?steps/i);
+  assert.match(prompt, /mathematically correct and suitable for the age group/i);
+  assert.match(prompt, /new factual claim .* needs a quoted source/i);
+  assert.match(
+    prompt,
+    /do not report .* method .* not (?:described|named) in the (?:quoted )?sources/i,
+  );
+  assert.doesNotMatch(
+    reviewPrompt({ ...hinted, hint: undefined }).prompt,
+    /hint is a method nudge/i,
+  );
+});
