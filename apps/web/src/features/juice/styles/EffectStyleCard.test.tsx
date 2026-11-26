@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { StudentProvider } from '../../../session/StudentContext';
 import { renderRoute } from '../../../test/render';
@@ -36,6 +36,22 @@ describe('effect style picker', () => {
     expect(within(group).getByRole('radio', { name: /^Sticker Book/ })).toHaveAccessibleName(
       expect.stringMatching(/Locked\. Unlock: Reach level 3/),
     );
+  });
+
+  it('checks again for newly earned styles each time it opens', async () => {
+    const load = vi
+      .fn<() => Promise<readonly string[]>>()
+      .mockResolvedValueOnce([])
+      .mockResolvedValue(['pop-burst']);
+    const view = (open: boolean) => (
+      <StudentProvider storage={childOnDevice}>
+        <EffectStyleProvider loadUnlocked={load}>{open && <EffectStyleCard />}</EffectStyleProvider>
+      </StudentProvider>
+    );
+    const { rerender } = render(view(false));
+    await waitFor(() => expect(load).toHaveBeenCalledTimes(1));
+    rerender(view(true));
+    expect(await screen.findByRole('radio', { name: /^Pop Burst/ })).toBeEnabled();
   });
 
   it('shows how to unlock a locked style, and it cannot be chosen yet', async () => {

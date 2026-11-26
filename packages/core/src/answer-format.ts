@@ -14,6 +14,63 @@ export function withoutSubject(answer: string, subject: string | undefined): str
   return right.trim();
 }
 
+/** The unicode minus and the dashes people type for one (−, –, —, ‒) as a plain "-". */
+export const withMinus = (text: string): string => text.replace(/[−–—‒]/g, '-');
+
+// Other spellings of the units content uses: symbols before the number (£) and words or
+// symbols after it. The unit as written always counts, with ^2 and ^3 as ² and ³ too.
+const UNIT_SPELLINGS: Record<string, { before?: string[]; after?: string[] }> = {
+  '£': { before: ['£'], after: ['pounds', 'pound'] },
+  pounds: { before: ['£'], after: ['pounds', 'pound'] },
+  pence: { after: ['p', 'pence', 'penny'] },
+  p: { after: ['p', 'pence', 'penny'] },
+  mm: { after: ['mm', 'millimetres', 'millimetre', 'millimeters', 'millimeter'] },
+  cm: { after: ['cm', 'centimetres', 'centimetre', 'centimeters', 'centimeter'] },
+  m: { after: ['m', 'metres', 'metre', 'meters', 'meter'] },
+  km: { after: ['km', 'kilometres', 'kilometre', 'kilometers', 'kilometer'] },
+  g: { after: ['g', 'grams', 'gram'] },
+  kg: { after: ['kg', 'kilograms', 'kilogram'] },
+  s: { after: ['s', 'seconds', 'second', 'secs', 'sec'] },
+  seconds: { after: ['s', 'seconds', 'second', 'secs', 'sec'] },
+  minutes: { after: ['minutes', 'minute', 'mins', 'min'] },
+  hours: { after: ['hours', 'hour', 'hrs', 'hr', 'h'] },
+  'km/h': { after: ['km/h', 'kph', 'km per hour'] },
+  'm/s': { after: ['m/s', 'metres per second'] },
+};
+
+const POWERS: [string, string][] = [
+  ['^2', '²'],
+  ['^3', '³'],
+];
+const escape = (text: string) => text.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&');
+
+/**
+ * `text` without the item's own unit ("15 m" -> "15", "£9600" -> "9600", "28.3 cm²" -> "28.3"),
+ * or `text` unchanged. A different unit is left in place, so the answer stays wrong.
+ */
+export function withoutUnit(text: string, unit: string | undefined): string {
+  if (!unit) return text;
+  const trimmed = text.trim();
+  const known = UNIT_SPELLINGS[unit.trim().toLowerCase()] ?? {};
+  for (const before of known.before ?? []) {
+    if (trimmed.startsWith(before)) return trimmed.slice(before.length).trim();
+  }
+  const written = unit.trim();
+  const spellings = new Set([written, ...(known.after ?? [])]);
+  for (const [caret, superscript] of POWERS) {
+    for (const spelling of [...spellings]) {
+      spellings.add(spelling.replace(caret, superscript)).add(spelling.replace(superscript, caret));
+    }
+  }
+  // Longest first, so "cm" is tried before "m"; words ignore case, symbols do not.
+  for (const spelling of [...spellings].sort((a, b) => b.length - a.length)) {
+    const flags = /^[a-z ]{3,}$/i.test(spelling) ? 'i' : '';
+    const m = new RegExp(`^(.*[\\d)])\\s*${escape(spelling)}$`, flags).exec(trimmed);
+    if (m) return m[1]!.trim();
+  }
+  return text;
+}
+
 // A UK thousands separator: a space (also thin or non-breaking) or a comma, between groups of
 // exactly three digits, and the same one throughout, as in "38 700" or "1,234,567.5".
 const GROUPED = /^-?\d{1,3}(?:([ \u00a0\u2009\u202f,])\d{3})(?:\1\d{3})*(?:\.\d+)?$/;
@@ -43,6 +100,9 @@ const SUPERSCRIPT: Record<string, string> = {
   '⁹': '9',
 };
 
+/** The largest power of ten standard form is read with, either way (10^100 and 10^-100). */
+export const MAX_POWER = 100;
+
 export interface StandardForm {
   /** The same number as a plain decimal, keeping the digits shown ("3.20e-4" -> "0.000320"). */
   plain: string;
@@ -69,10 +129,13 @@ export function standardForm(text: string): StandardForm | null {
     mantissa = e[1]!;
     power = e[2]!;
   }
+  // A power beyond ±100 is no school answer, and expanding it would build a huge string.
+  const exponent = Number(power);
+  if (!Number.isInteger(exponent) || Math.abs(exponent) > MAX_POWER) return null;
   const negative = mantissa.startsWith('-');
   const [whole = '', fraction = ''] = mantissa.replace('-', '').split('.');
   const digits = whole + fraction;
-  const point = whole.length + Number(power);
+  const point = whole.length + exponent;
   let plain: string;
   if (point <= 0) plain = `0.${'0'.repeat(-point)}${digits}`;
   else if (point >= digits.length) plain = digits + '0'.repeat(point - digits.length);

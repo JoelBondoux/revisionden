@@ -151,6 +151,10 @@ tab say so to screen readers.
   `data-effect-style` on `<html>` and remembers the choice on this device (`localStorage`
   `revisionden.effectStyle`). A saved style that isn't unlocked falls back to Doodle Diary.
   `index.html` starts with Doodle Diary, so the first paint is already in the default style.
+  The provider sits inside the router (`EffectStyleRoute`, J10e): it makes no request at all on Get
+  help (`/help`, `/parent/help`), checks again each time the picker
+  opens (so a style earned in the last lesson can be picked straight away), and retries a failed
+  load (for example a 401 before unlocking) on the next screen change.
 - Doodle Diary (J10d, the default): a diary full of pen doodles. On Home, page titles are
   handwritten (Patrick Hand, self-hosted, SIL Open Font Licence, listed under open-source
   licences) with a wavy biro underline; the daily goal, today's mission and the 5-a-day card are
