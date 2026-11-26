@@ -26,9 +26,16 @@ page, lesson "+XP", "Best combo", header XP and comeback text), each fixed one a
 - **Token rules** (`docs/GAME_FEEL.md`): text on the page uses `--color-text*` or
   `--color-primary-edge`; text on the lesson arena uses `--arena-glow`; gold (`--arena-gold`) is
   never used as text on the page; white text is only allowed on a fill that is measured to pass.
-- **Enforced in CI.** A contrast sweep (W21, `e2e/tests/contrast-sweep.spec.ts`, being added after this decision) checks every
-  route, its main dialogs, all looks, light and dark. It fails if a new route is not in its list.
-  A new look, route or dialog is not finished until the sweep passes for it.
+- **Enforced in CI** (W21, `e2e/tests/contrast-sweep.spec.ts`, being added after this decision), in two
+  tiers over every route, its main dialogs, all looks, light and dark:
+  - every pull request: a fast check of each text and UI colour against its nearest painted
+    background (blocking), plus a guard that fails if a route is missing from the sweep;
+  - the full painted-page sweep: nightly, on any pull request that changes a look's styles, and as
+    a required check before anything is promoted to staging.
+    Known failures are listed in `e2e/tests/contrast-known.json` (one open entry in
+    `operations/contradictions.md`) and are marked expected-to-fail, so each fix turns its check
+    green and a regression turns it red. A new look, route or dialog is not finished until both
+    tiers pass for it.
 - **Accessibility beats a look.** If a look's colour cannot pass on a surface, the colour changes,
   or the look keeps that surface plain in that mode (as with the dark-only night pages).
 

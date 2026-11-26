@@ -1367,8 +1367,9 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   arena, a button's fill), not a theme colour token. Text too faint to measure fails.
 - Text on the page uses the text colours or `--color-primary-edge`; text on the lesson arena uses
   `--arena-glow`; gold is never text on the page; white text only on a fill measured to pass.
-- Enforced by the CI contrast sweep (W21, being added; every route and its main dialogs, all looks, light and dark).
-  A new look, route or dialog is not done until the sweep passes for it.
+- Enforced by the CI contrast sweep (W21, being added; every route and its main dialogs, all looks,
+  light and dark): a fast check on every pull request, and the full painted sweep nightly, on style
+  changes and before promotion to staging. A new look, route or dialog is not done until it passes.
 - If a look's colour cannot pass, the colour changes or that surface stays plain in that mode.
 - Decision: `project_memory/decisions/0012-contrast-policy.md`.
 
