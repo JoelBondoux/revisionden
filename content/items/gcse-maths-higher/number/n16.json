@@ -11,6 +11,7 @@
     "verify": { "expression": "12 + 1/2" },
     "marks": 1,
     "explanation": "Lengths from 11.5 cm up to (but not including) 12.5 cm round to 12 cm. The upper bound is 12.5 cm: half a centimetre above 12 cm.",
+    "hint": "The bounds are half of the rounding unit either side of the value. Here the unit is 1 cm.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N16",
     "checked_by": ["maths-engine", "author"],
     "needs_human_approval": true,
@@ -37,7 +38,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Answer backed by the maths engine. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Answer backed by the maths engine. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -75,9 +76,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:45:54Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:51Z",
           "notes": "no problems found"
         }
       ]
@@ -95,6 +96,7 @@
     "verify": { "expression": "46/10 - 5/100" },
     "marks": 1,
     "explanation": "Masses from 4.55 kg up to (but not including) 4.65 kg round to 4.6 kg. The lower bound is 4.55 kg: 0.05 kg below 4.6 kg.",
+    "hint": "The value was rounded to the nearest 0.1 kg. Go half of 0.1 below 4.6.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N16",
     "checked_by": ["maths-engine", "author"],
     "needs_human_approval": true,
@@ -121,7 +123,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Answer backed by the maths engine. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Precision fix (Codex review of #115): the prompt now says \"correct to the nearest\" and the answer has no decimal_places, since the question does not ask for the bound to be written to a set accuracy (4.550 and 91/20 are also right).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Answer backed by the maths engine. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Precision fix (Codex review of #115): the prompt now says \"correct to the nearest\" and the answer has no decimal_places, since the question does not ask for the bound to be written to a set accuracy (4.550 and 91/20 are also right). Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -159,9 +161,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:25:45Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:53Z",
           "notes": "no problems found"
         }
       ]
@@ -179,6 +181,7 @@
     "verify": { "expression": "320/100 + 5/1000" },
     "marks": 1,
     "explanation": "Times from 3.195 s up to (but not including) 3.205 s round to 3.20 s. The upper bound is 3.205 s: 0.005 s above 3.20 s.",
+    "hint": "The value was rounded to the nearest 0.01 second. Go half of 0.01 above 3.20.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N16",
     "checked_by": ["maths-engine", "author"],
     "needs_human_approval": true,
@@ -205,7 +208,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Answer backed by the maths engine. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Precision fix (Codex review of #115): the prompt now says \"correct to the nearest\" and the answer has no decimal_places, since the question does not ask for the bound to be written to a set accuracy (4.550 and 91/20 are also right).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Answer backed by the maths engine. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Precision fix (Codex review of #115): the prompt now says \"correct to the nearest\" and the answer has no decimal_places, since the question does not ask for the bound to be written to a set accuracy (4.550 and 91/20 are also right). Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -243,9 +246,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:25:58Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:55Z",
           "notes": "no problems found"
         }
       ]
@@ -264,6 +267,7 @@
     "marks": 2,
     "mark_scheme": ["M1 for 8.5 × 5.5", "A1 for 46.75"],
     "explanation": "The largest area uses the upper bound of each length: 8.5 cm and 5.5 cm. Upper bound of the area = 8.5 × 5.5 = 46.75 cm².",
+    "hint": "To get the largest area, use the upper bound of each length, then multiply.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N16",
     "checked_by": ["maths-engine", "author"],
     "needs_human_approval": true,
@@ -290,7 +294,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Upper bound of a product uses both upper bounds. Answer and every step backed by the maths engine. Mark points written by this session. Changed from worked maths to numeric with unit cm^2 after the blind answer gave \"46.75 cm^2\" (worked-maths answers are compared as text); n16-0005 is now the worked example. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Upper bound of a product uses both upper bounds. Answer and every step backed by the maths engine. Mark points written by this session. Changed from worked maths to numeric with unit cm^2 after the blind answer gave \"46.75 cm^2\" (worked-maths answers are compared as text); n16-0005 is now the worked example. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -336,9 +340,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:43:14Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:56Z",
           "notes": "no problems found"
         }
       ]
@@ -358,6 +362,7 @@
     "steps": ["(6.2 + 0.05) - (2.4 - 0.05)", "6.25 - 2.35", "3.9"],
     "marks": 2,
     "mark_scheme": ["M1 for 6.25 - 2.35 (upper bound of a minus lower bound of b)", "A1 for 3.9"],
+    "hint": "To make a - b as big as possible, use the largest possible a and the smallest possible b.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N16",
     "checked_by": ["maths-engine", "author"],
     "needs_human_approval": true,
@@ -384,7 +389,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Upper bound of a difference is the upper bound of a minus the lower bound of b: 6.25 - 2.35. Answer backed by the maths engine. Changed to worked maths with steps (the worked example for N16). Mark points written by this session. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Upper bound of a difference is the upper bound of a minus the lower bound of b: 6.25 - 2.35. Answer backed by the maths engine. Changed to worked maths with steps (the worked example for N16). Mark points written by this session. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -422,9 +427,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:11Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:58Z",
           "notes": "no problems found"
         }
       ]
@@ -442,6 +447,7 @@
     "verify": { "expression": "(100 - 1/2)/(125/10 + 5/100)" },
     "marks": 3,
     "explanation": "The lowest speed comes from the shortest distance and the longest time. Lower bound of the distance = 99.5 m; upper bound of the time = 12.55 s. Speed = 99.5 ÷ 12.55 = 7.928..., which is 7.93 m/s to 3 significant figures.",
+    "hint": "The lowest speed comes from the shortest distance and the longest time. Find those bounds, then divide and round.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N16",
     "checked_by": ["maths-engine", "author"],
     "needs_human_approval": true,
@@ -468,7 +474,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Lower bound of speed = lower bound of distance ÷ upper bound of time = 99.5 ÷ 12.55 = 7.928..., 7.93 to 3 s.f. (checked in Python). Answer backed by the maths engine within the tolerance. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python. Lower bound of speed = lower bound of distance ÷ upper bound of time = 99.5 ÷ 12.55 = 7.928..., 7.93 to 3 s.f. (checked in Python). Answer backed by the maths engine within the tolerance. Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -506,9 +512,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:43:26Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:16:00Z",
           "notes": "no problems found"
         }
       ]
@@ -524,6 +530,7 @@
     "front": "A value is 7, correct to the nearest whole number. Its upper bound",
     "back": "7.5",
     "explanation": "Values from 6.5 up to (but not including) 7.5 round to 7. The upper bound is 7.5: half a unit above 7.",
+    "hint": "The value was rounded to the nearest whole number. The upper bound is half a unit above it.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N16",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -550,7 +557,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Front cited to spec N16. Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python.  Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Front cited to spec N16. Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python.  Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -570,20 +577,20 @@
           "at": "2026-11-25T17:40:50Z"
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:46:18Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "blind-answer",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-26T03:46:46Z",
           "notes": "model answered \"7.5\"; expected \"7.5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:16:02Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -598,6 +605,7 @@
     "front": "A value is 3.4, correct to 1 decimal place. Its lower bound",
     "back": "3.35",
     "explanation": "Values from 3.35 up to (but not including) 3.45 round to 3.4. The lower bound is 3.35: 0.05 below 3.4.",
+    "hint": "The value was rounded to 1 decimal place, so go half of 0.1 below it.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N16",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -624,7 +632,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Front cited to spec N16. Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python.  Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Front cited to spec N16. Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python.  Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -644,20 +652,20 @@
           "at": "2026-11-25T17:40:50Z"
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:46:24Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "blind-answer",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-26T03:46:53Z",
           "notes": "model answered \"3.35\"; expected \"3.35\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:16:04Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -672,6 +680,7 @@
     "front": "A value is 250, correct to the nearest 10. Its upper bound",
     "back": "255",
     "explanation": "Values from 245 up to (but not including) 255 round to 250. The upper bound is 255: 5 above 250.",
+    "hint": "The value was rounded to the nearest 10, so go half of 10 above it.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N16",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -698,7 +707,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Front cited to spec N16. Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python.  Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N16). Front cited to spec N16. Bounds are the value ± half the unit of rounding (the same convention as the N15 error intervals), checked in Python.  Decision 0008: the answer rests on the standard definition of upper and lower bounds (the value ± half the unit of rounding), which the 1MA1 spec names (N16) but does not define, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -718,20 +727,20 @@
           "at": "2026-11-25T17:40:50Z"
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:46:38Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "blind-answer",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-26T03:47:00Z",
           "notes": "model answered \"255\"; expected \"255\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:16:06Z",
+          "notes": "no problems found"
         }
       ]
     }

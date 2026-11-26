@@ -11,6 +11,7 @@
     "verify": { "expression": "46/10000" },
     "marks": 1,
     "explanation": "The first significant figure is the first non-zero digit, 4. Keep two: 0.0046|37. The next digit is 3, which is less than 5, so round down: 0.0046.",
+    "hint": "The first significant figure is the first digit that is not zero. Count two from there, then look at the next digit.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -36,7 +37,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). The maths engine confirms the stated value. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). The maths engine confirms the stated value. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -74,9 +75,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:41:52Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:34Z",
           "notes": "no problems found"
         }
       ]
@@ -94,6 +95,7 @@
     "verify": { "expression": "38700" },
     "marks": 1,
     "explanation": "Keep the first three figures: 386|52. The next digit is 5, so round up: 387. Fill the other places with zeros to keep the size: 38 700.",
+    "hint": "Keep the first three figures, look at the next digit to round, then fill the other places with zeros.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -119,7 +121,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). The maths engine confirms the stated value. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). The maths engine confirms the stated value. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -157,9 +159,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:42:00Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:35Z",
           "notes": "no problems found"
         }
       ]
@@ -177,6 +179,7 @@
     "verify": { "expression": "785/100" },
     "marks": 1,
     "explanation": "Keep two digits after the decimal point: 7.84|63. The next digit is 6, which is 5 or more, so round up: 7.85.",
+    "hint": "Keep two digits after the decimal point, then look at the next digit to decide whether to round up.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -202,7 +205,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). The maths engine confirms the stated value. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). The maths engine confirms the stated value. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -240,9 +243,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:42:07Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:37Z",
           "notes": "no problems found"
         }
       ]
@@ -260,6 +263,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "Numbers from 8.35 up to (but not including) 8.45 round to 8.4. 8.35 rounds up to 8.4, but 8.45 rounds up to 8.5.",
+    "hint": "The error interval goes half a unit either side of 8.4. The lower end is included and the upper end is not.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -286,7 +290,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. 8.35 rounds to 8.4 and 8.45 to 8.5 (ROUND_HALF_UP). Decision 0008: the answer rests on the standard definition of an error interval (rounding: lower bound ≤ x < upper bound; truncation: stated value ≤ x < next value), which the 1MA1 spec names (N15) but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. 8.35 rounds to 8.4 and 8.45 to 8.5 (ROUND_HALF_UP). Decision 0008: the answer rests on the standard definition of an error interval (rounding: lower bound ≤ x < upper bound; truncation: stated value ≤ x < next value), which the 1MA1 spec names (N15) but does not define, so needs_human_approval is set and the owner approves this item individually. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -316,9 +320,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:35:23Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:39Z",
           "notes": "no problems found"
         }
       ]
@@ -336,6 +340,7 @@
     "answer": { "option": 1 },
     "marks": 1,
     "explanation": "Truncating cuts off the digits after the first decimal place. Any number from 5.7 up to (but not including) 5.8 truncates to 5.7.",
+    "hint": "Truncating chops off digits without rounding. Which numbers start with 5.7 when you cut them off after the first decimal place?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -362,7 +367,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. Checked in Python: truncation of 5.7 and 5.7999 gives 5.7, of 5.8 gives 5.8, of 5.65 gives 5.6. Decision 0008: the answer rests on the standard definition of an error interval (rounding: lower bound ≤ x < upper bound; truncation: stated value ≤ x < next value), which the 1MA1 spec names (N15) but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. Checked in Python: truncation of 5.7 and 5.7999 gives 5.7, of 5.8 gives 5.8, of 5.65 gives 5.6. Decision 0008: the answer rests on the standard definition of an error interval (rounding: lower bound ≤ x < upper bound; truncation: stated value ≤ x < next value), which the 1MA1 spec names (N15) but does not define, so needs_human_approval is set and the owner approves this item individually. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -392,9 +397,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:45:03Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:41Z",
           "notes": "no problems found"
         }
       ]
@@ -412,6 +417,7 @@
     "answer": { "option": 2 },
     "marks": 1,
     "explanation": "Half of 10 g is 5 g, so m is from 295 g up to (but not including) 305 g.",
+    "hint": "Go half of 10 g below and above 300 g. The lower end is included and the upper end is not.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -438,7 +444,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. 295 rounds to 300 and 305 to 310 (nearest 10, ROUND_HALF_UP). Decision 0008: the answer rests on the standard definition of an error interval (rounding: lower bound ≤ x < upper bound; truncation: stated value ≤ x < next value), which the 1MA1 spec names (N15) but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. 295 rounds to 300 and 305 to 310 (nearest 10, ROUND_HALF_UP). Decision 0008: the answer rests on the standard definition of an error interval (rounding: lower bound ≤ x < upper bound; truncation: stated value ≤ x < next value), which the 1MA1 spec names (N15) but does not define, so needs_human_approval is set and the owner approves this item individually. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -468,9 +474,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:45:13Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:43Z",
           "notes": "no problems found"
         }
       ]
@@ -488,6 +494,7 @@
     "answer": { "option": 3 },
     "marks": 1,
     "explanation": "n is 2400 correct to 2 significant figures, so n was rounded to the nearest 100. Half of 100 is 50, so n is from 2350 up to (but not including) 2450.",
+    "hint": "To 2 significant figures, 2400 was rounded to the nearest 100. Go half of 100 either side.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -514,7 +521,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. 2350 rounds to 2400 and 2450 to 2500 (2 s.f., ROUND_HALF_UP). Explanation reworded after adversarial review: it is n that was rounded to the nearest 100, not 2400. Explanation now starts from the question's own information (adversarial review, second run). Decision 0008: the answer rests on the standard definition of an error interval (rounding: lower bound ≤ x < upper bound; truncation: stated value ≤ x < next value), which the 1MA1 spec names (N15) but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. 2350 rounds to 2400 and 2450 to 2500 (2 s.f., ROUND_HALF_UP). Explanation reworded after adversarial review: it is n that was rounded to the nearest 100, not 2400. Explanation now starts from the question's own information (adversarial review, second run). Decision 0008: the answer rests on the standard definition of an error interval (rounding: lower bound ≤ x < upper bound; truncation: stated value ≤ x < next value), which the 1MA1 spec names (N15) but does not define, so needs_human_approval is set and the owner approves this item individually. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -544,9 +551,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:50:42Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:44Z",
           "notes": "no problems found"
         }
       ]
@@ -562,6 +569,7 @@
     "front": "3.456 to 1 decimal place",
     "back": "3.5",
     "explanation": "Keep one digit after the decimal point: 3.4|56. The next digit is 5, so round up: 3.5.",
+    "hint": "Keep one digit after the decimal point, then look at the next digit to decide whether to round up.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["author"],
     "citations": [
@@ -587,7 +595,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Front cited to spec N15. Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Front cited to spec N15. Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -617,9 +625,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:42:15Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:46Z",
           "notes": "no problems found"
         }
       ]
@@ -635,6 +643,7 @@
     "front": "0.0719 to 1 significant figure",
     "back": "0.07",
     "explanation": "The first significant figure is 7: 0.07|19. The next digit is 1, which is less than 5, so round down: 0.07.",
+    "hint": "Find the first non-zero digit, then look at the digit after it to decide whether to round up.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["author"],
     "citations": [
@@ -660,7 +669,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Front cited to spec N15. Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Front cited to spec N15. Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -690,9 +699,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:42:21Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:48Z",
           "notes": "no problems found"
         }
       ]
@@ -708,6 +717,7 @@
     "front": "4561 to the nearest hundred",
     "back": "4600",
     "explanation": "Look at the hundreds: 45|61. The tens digit is 6, which is 5 or more, so round up: 4600.",
+    "hint": "Look at the tens digit to decide whether to round the hundreds up or down.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["author"],
     "citations": [
@@ -733,7 +743,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Front cited to spec N15. Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Front cited to spec N15. Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -763,9 +773,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:42:29Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:15:50Z",
           "notes": "no problems found"
         }
       ]
