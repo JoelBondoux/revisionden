@@ -5,6 +5,28 @@ import { ProgressBar } from '../components/ProgressBar';
 import { DailyRow } from '../features/daily';
 import { InstallRow } from './InstallRow';
 
+/** A small filled star for a smashed goal (decorative). */
+function StarIcon() {
+  return (
+    <svg
+      className="today-strip__star"
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21l1.5-7L2 9.3l7-.8z"
+        fill="var(--color-gold)"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 interface TodayStripProps {
   xpToday: number;
   dailyGoalXp: number;
@@ -19,6 +41,8 @@ interface TodayStripProps {
 export function TodayStrip({ xpToday, dailyGoalXp, mission }: TodayStripProps) {
   const headingId = useId();
   const missionId = useId();
+  // Past the goal, celebrate rather than show "195 / 50" (J12d).
+  const smashed = dailyGoalXp > 0 && xpToday >= dailyGoalXp;
   return (
     <section className="today-strip" aria-labelledby={headingId}>
       <div className="today-strip__head">
@@ -29,13 +53,24 @@ export function TodayStrip({ xpToday, dailyGoalXp, mission }: TodayStripProps) {
           <ProgressBar
             label="Daily goal"
             tone="gold"
-            value={xpToday}
+            value={Math.min(xpToday, dailyGoalXp)}
             max={dailyGoalXp}
-            valueText={`${xpToday} of ${dailyGoalXp} XP`}
+            valueText={
+              smashed
+                ? `Goal smashed: ${xpToday} XP, goal ${dailyGoalXp} XP`
+                : `${xpToday} of ${dailyGoalXp} XP`
+            }
           />
-          <span className="today-strip__xp">
-            {xpToday} / {dailyGoalXp} XP
-          </span>
+          {smashed ? (
+            <span className="today-strip__xp today-strip__xp--smashed">
+              <StarIcon />
+              <span className="today-strip__smashed">Goal smashed!</span> {xpToday} XP
+            </span>
+          ) : (
+            <span className="today-strip__xp">
+              {xpToday} / {dailyGoalXp} XP
+            </span>
+          )}
         </div>
       </div>
       <ul className="today-strip__list">
