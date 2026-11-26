@@ -30,6 +30,13 @@ export const MapTopicSchema = z.object({
   status: TopicStatusSchema,
   /** Topic mastery, 0 to 100. */
   mastery: z.number().int().min(0).max(100),
+  /**
+   * J15c: 'higher' when the topic is in the Higher tier only. A Foundation student's map shows it
+   * on an optional side branch. Optional: left out, the topic is on the main route.
+   */
+  tier: z.enum(['higher']).optional(),
+  /** J15c: topics sharing a group may be done in either order (shown side by side). Optional. */
+  orderGroup: z.string().optional(),
 });
 export type MapTopic = z.infer<typeof MapTopicSchema>;
 

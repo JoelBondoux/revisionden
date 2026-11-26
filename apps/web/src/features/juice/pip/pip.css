@@ -59,8 +59,8 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .pip-figure--rest .pip-figure__shoulders {
-    animation: pip-breathe 6.4s ease-in-out infinite;
+  .pip-figure--alive.pip-figure--rest .pip-figure__shoulders {
+    animation: pip-breathe calc(var(--motion-pulse) * 4) ease-in-out infinite;
   }
 
   .pip-figure--blink .pip-figure__eye {
@@ -215,6 +215,12 @@
   25%,
   75% {
     transform: rotate(-8deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pip-figure * {
+    animation: none !important;
   }
 }
 

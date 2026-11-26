@@ -54,12 +54,12 @@ export function InstallRow({ store = appInstallStore, env, storage, now }: Insta
   if (hidden || state === 'installed' || state === 'unsupported') return null;
 
   return (
-    <li className="today-strip__row today-strip__install">
-      <p className="today-strip__what">
-        <span className="today-strip__title">{INSTALL_TITLE}</span>
-        <span className="today-strip__eyebrow">Open it like an app</span>
+    <li className="install-row">
+      <p className="install-row__what">
+        <span className="install-row__title">{INSTALL_TITLE}</span>
+        <span className="install-row__eyebrow">Open it like an app</span>
       </p>
-      <span className="today-strip__actions">
+      <span className="install-row__actions">
         <Button
           variant="secondary"
           aria-label={INSTALL_TITLE}
@@ -70,7 +70,7 @@ export function InstallRow({ store = appInstallStore, env, storage, now }: Insta
         </Button>
         <button
           type="button"
-          className="today-strip__not-now"
+          className="install-row__not-now"
           onClick={() => {
             dismissInstall(saved, today());
             setHidden(true);

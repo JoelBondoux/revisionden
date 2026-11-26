@@ -7,38 +7,79 @@ import { useApiResource } from '../api/useApiResource';
 import { FlameIcon } from '../components/icons';
 import { Pill } from '../components/Pill';
 import { Toast } from '../components/Toast';
-import { setPipSubject } from '../features/juice/pip';
+import { PipFigure, setPipSubject } from '../features/juice/pip';
+import { lookFor, outfitFor } from '../features/juice/pip/outfits';
 import { SubjectsNudge } from '../features/onboarding/checksUi';
-import { HScroller } from '../map/HScroller';
-import { UnitPath } from '../map/UnitPath';
+import { WigglyMap } from '../map/WigglyMap';
 import '../map/map.css';
 import { useStudent } from '../session/StudentContext';
 
-/** Chips for the student's subjects; a subject without questions yet says so. */
-function SubjectSwitcher({
+const today = () => new Date().toISOString().slice(0, 10);
+
+/** The big subject box at the top of the map: Pip dressed for it, and Change (J15c). */
+function PlayBox({
+  subjectId,
+  subject,
+  qualification,
+  onChange,
+}: {
+  subjectId: string | undefined;
+  subject: string;
+  qualification: string;
+  onChange: () => void;
+}) {
+  return (
+    <div className="map-play-wrap">
+      <button type="button" className="map-play" onClick={onChange}>
+        <PipFigure outfit={outfitFor(subjectId ?? subject)} look={lookFor(today())} />
+        <span className="map-play__text">
+          <small>Your subject</small> <b>{subject}</b>
+        </span>{' '}
+        <span className="map-play__change">Change</span>
+      </button>
+      <p className="map-play__qualification">
+        {qualification} {subject}
+      </p>
+    </div>
+  );
+}
+
+/** Subject selection (J15c): every subject, each with Pip dressed for it. */
+function SubjectPicker({
   subjects,
   current,
   onChoose,
+  onBack,
 }: {
   subjects: readonly MapSubject[];
   current: string | undefined;
   onChoose: (subjectId: string) => void;
+  onBack: () => void;
 }) {
-  if (subjects.length < 2) return null;
+  const look = lookFor(today());
   return (
-    <HScroller label="Subject" selectedKey={current} className="map-subjects">
-      {subjects.map((s) => (
-        <button
-          key={s.subjectId}
-          type="button"
-          className="chip"
-          aria-pressed={s.subjectId === current}
-          onClick={() => onChoose(s.subjectId)}
-        >
-          {s.hasContent ? s.subject : `${s.subject} (coming soon)`}
-        </button>
-      ))}
-    </HScroller>
+    <section className="map-subjects-page" role="region" aria-label="Pick a subject">
+      <button type="button" className="btn btn--secondary" onClick={onBack}>
+        Back to the map
+      </button>
+      <h2>Pick a subject</h2>
+      <div className="map-subjects-grid">
+        {subjects.map((s) => (
+          <button
+            key={s.subjectId}
+            type="button"
+            className="map-subject"
+            aria-pressed={s.subjectId === current}
+            aria-label={s.hasContent ? s.subject : `${s.subject}, coming soon`}
+            onClick={() => onChoose(s.subjectId)}
+          >
+            <PipFigure outfit={outfitFor(s.subjectId)} look={look} />
+            <span aria-hidden="true">{s.subject}</span>
+            {!s.hasContent && <small aria-hidden="true">Coming soon</small>}
+          </button>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -73,6 +114,7 @@ export function MapPage() {
   const { studentId } = useStudent();
   const [toast, setToast] = useState<string | null>(null);
   const [subjectId, setSubjectId] = useState<string | undefined>(undefined);
+  const [picking, setPicking] = useState(false);
   const map = useApiResource(
     () => (studentId ? api.getTopicMap(subjectId) : new Promise<never>(() => {})),
     [api, studentId, subjectId],
@@ -102,12 +144,35 @@ export function MapPage() {
         <LoadingOrError resource={map} />
       ) : (
         <>
-          <SubjectSwitcher
-            subjects={map.data.subjects ?? []}
-            current={map.data.subjectId}
-            onChoose={setSubjectId}
-          />
-          {map.data.status === 'coming_soon' && (
+          {picking ? (
+            <SubjectPicker
+              subjects={
+                map.data.subjects?.length
+                  ? map.data.subjects
+                  : [
+                      {
+                        subjectId: map.data.subjectId ?? map.data.subject,
+                        subject: map.data.subject,
+                        hasContent: true,
+                      },
+                    ]
+              }
+              current={map.data.subjectId}
+              onChoose={(id) => {
+                setPicking(false);
+                setSubjectId(id);
+              }}
+              onBack={() => setPicking(false)}
+            />
+          ) : (
+            <PlayBox
+              subjectId={map.data.subjectId}
+              subject={map.data.subject}
+              qualification={map.data.qualification}
+              onChange={() => setPicking(true)}
+            />
+          )}
+          {!picking && map.data.status === 'coming_soon' && (
             <ComingSoon
               subject={map.data.subject}
               other={(map.data.subjects ?? []).find(
@@ -116,7 +181,7 @@ export function MapPage() {
               onChoose={setSubjectId}
             />
           )}
-          <UnitPath key={map.data.subjectId} map={map.data} onLocked={setToast} />
+          {!picking && <WigglyMap key={map.data.subjectId} map={map.data} onLocked={setToast} />}
         </>
       )}
       {toast && <Toast message={toast} onDismiss={dismissToast} />}

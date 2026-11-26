@@ -1,0 +1,1140 @@
+/* Generated from the owner-approved all-themes mockup (docs/mockups/all-themes-pip.html): each
+   effect style's path tiles, road and tag, scoped to the map. Regenerate rather than hand-edit;
+   the styles not in the app yet (petal-glow, turbo-drive, rainbow-parade) are ready for J16. */
+:root[data-effect-style='doodle-diary'] .wiggly-map {
+  --paper: #fdfbf4;
+  --ink: #2b2a3a;
+  --rule: rgba(47, 91, 211, 0.16);
+  --margin: rgba(217, 68, 58, 0.4);
+  --biro: #2f5bd3;
+  --red: #c8382e;
+  --hi: #ffe45c;
+  --soft: #5b5870;
+  --sketch: 255px 12px 225px 12px / 12px 225px 12px 255px;
+  --app-bg:
+    linear-gradient(90deg, transparent 30px, var(--margin) 30px 31.5px, transparent 31.5px),
+    repeating-linear-gradient(0deg, transparent 0 25px, var(--rule) 25px 26px), var(--paper);
+  --font-display: 'Patrick Hand', 'Comic Neue', cursive;
+  --display-weight: 400;
+  --title-size: 32px;
+  --num-size: 44px;
+  --play-size: 32px;
+  --button-size: 22px;
+  --font-chip: 'Patrick Hand', cursive;
+  --card-bg: var(--paper);
+  --card-border: 2px solid var(--ink);
+  --r-card: var(--sketch);
+  --card-shadow: 4px 5px 0 rgba(0, 0, 0, 0.12);
+  --btn-bg: var(--hi);
+  --btn-ink: #2b2a3a;
+  --btn-border: 2px solid var(--ink);
+  --r-btn: var(--sketch);
+  --btn-shadow: 3px 4px 0 var(--ink);
+  --btn-shadow-pressed: 1px 1px 0 var(--ink);
+  --chip-bg: var(--paper);
+  --chip-ink: var(--ink);
+  --chip-border: 2px solid var(--ink);
+  --r-chip: 18px 6px 16px 7px / 7px 16px 6px 18px;
+  --nav-bg: var(--paper);
+  --nav-border: 2px solid var(--ink);
+  --nav-ink: var(--soft);
+  --nav-current-ink: var(--ink);
+  --nav-current-bg: var(--hi);
+  --field-bg: color-mix(in srgb, var(--hi) 45%, var(--paper));
+  --ring-track: rgba(43, 42, 58, 0.15);
+  --road: var(--soft);
+  --road-w: 2px;
+  --road-dash: 1 7;
+  --road-done: var(--biro);
+  --road-done-w: 2.5px;
+  --tag-bg: var(--hi);
+  --tag-ink: #2b2a3a;
+  --pip-ring: var(--ink);
+  --pip-disc: #fff4c2;
+  --day-on-bg: var(--hi);
+  --bar-bg: transparent;
+  --bar-border: 2px solid var(--ink);
+  --r-bar: var(--sketch);
+  --bar-fill: repeating-linear-gradient(-55deg, var(--biro) 0 2px, transparent 2px 6px);
+  --q-bg: var(--paper);
+  --q-ink: var(--ink);
+  --q-border: 2px solid var(--ink);
+  --r-q: var(--sketch);
+  --ans-border: 2px solid var(--ink);
+  --ans-shadow: 3px 3px 0 rgba(0, 0, 0, 0.12);
+  --combo-bg: transparent;
+  --combo-ink: var(--red);
+  --float: var(--red);
+  --focus: var(--biro);
+  --focus-back: var(--paper);
+  --enter: dd-turn;
+  --enter-back: dd-turn-back;
+}
+:root[data-effect-style='doodle-diary'][data-theme='dark'] .wiggly-map {
+  --paper: #1e1c2a;
+  --ink: #ecebf6;
+  --rule: rgba(150, 170, 255, 0.14);
+  --margin: rgba(255, 120, 110, 0.4);
+  --biro: #8fb0ff;
+  --red: #ff8a80;
+  --hi: #ffe45c;
+  --soft: #b9b5cc;
+  --pip-disc: #2b2840;
+  --field-bg: #3a3420;
+  --ring-track: rgba(236, 235, 246, 0.2);
+  --card-shadow: 4px 5px 0 #000;
+}
+:root[data-effect-style='sticker-book'] .wiggly-map {
+  --paper: #fff8ec;
+  --ink: #2f2a3d;
+  --edge: rgba(80, 70, 140, 0.28);
+  --coral: #d9493a;
+  --teal: #13897a;
+  --app-bg:
+    radial-gradient(circle at 20% 10%, rgba(255, 159, 28, 0.18), transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(31, 190, 170, 0.18), transparent 45%),
+    repeating-linear-gradient(0deg, transparent 0 27px, rgba(80, 70, 140, 0.08) 27px 28px),
+    var(--paper);
+  --font-display: 'Baloo 2', var(--font-body);
+  --display-weight: 800;
+  --title-size: 30px;
+  --card-bg: #fff;
+  --card-ink: #2f2a3d;
+  --card-border: 5px solid #fff;
+  --r-card: 8px;
+  --card-shadow: 0 0 0 2px var(--edge), 4px 6px 0 rgba(0, 0, 0, 0.14);
+  --btn-bg: var(--teal);
+  --btn-ink: #fff;
+  --btn-border: 3px solid #fff;
+  --r-btn: 14px;
+  --btn-shadow: 0 0 0 2px var(--edge), 0 4px 0 #0d6156;
+  --chip-bg: #fff;
+  --chip-ink: #2f2a3d;
+  --chip-border: 2px dashed rgba(80, 70, 140, 0.45);
+  --r-chip: 999px;
+  --nav-bg: #fff;
+  --nav-shadow: 0 -2px 0 var(--edge);
+  --nav-ink: #5a5470;
+  --nav-current-ink: #2f2a3d;
+  --nav-current-bg: #ffd166;
+  --field-bg: #ffe3dc;
+  --play-tilt: rotate(-1.5deg);
+  --tile-tilt: rotate(-1.5deg);
+  --tile-tilt-alt: rotate(1.5deg);
+  --road: rgba(80, 70, 140, 0.55);
+  --road-w: 3px;
+  --road-dash: 2 9;
+  --road-done: var(--coral);
+  --road-done-w: 3.5px;
+  --road-done-dash: 9 7;
+  --node-bg: #fff;
+  --node-border: 4px solid #fff;
+  --node-shadow: 0 0 0 2px var(--edge), 3px 4px 0 rgba(0, 0, 0, 0.14);
+  --node-done-bg: #ffd166;
+  --node-cur-bg: #1fbeaa;
+  --node-lock-bg: transparent;
+  --node-lock-border: 2px dashed rgba(80, 70, 140, 0.55);
+  --node-lock-shadow: 0 0 transparent;
+  --tag-bg: var(--coral);
+  --tag-ink: #fff;
+  --pip-ring: #fff;
+  --pip-disc: #ffe9c7;
+  --day-on-bg: #ffd166;
+  --bar-bg: rgba(80, 70, 140, 0.12);
+  --bar-border: 2px dashed rgba(80, 70, 140, 0.35);
+  --bar-fill: repeating-linear-gradient(45deg, #1fbeaa 0 10px, #19a593 10px 20px);
+  --combo-bg: var(--coral);
+  --combo-ink: #fff;
+  --float: var(--coral);
+  --focus: var(--teal);
+  --focus-back: #fff;
+  --enter: sb-peel;
+  --enter-back: sb-peel-back;
+}
+:root[data-effect-style='sticker-book'] .wiggly-map .path-node.path-node--done:nth-of-type(4n + 1) {
+  rotate: -9deg;
+}
+:root[data-effect-style='sticker-book'] .wiggly-map .path-node.path-node--done:nth-of-type(4n + 3) {
+  rotate: 7deg;
+}
+:root[data-effect-style='sticker-book'][data-theme='dark'] .wiggly-map {
+  --paper: #2a2440;
+  --ink: #f3eefc;
+  --app-bg:
+    radial-gradient(circle at 20% 10%, rgba(255, 159, 28, 0.14), transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(31, 190, 170, 0.14), transparent 45%), var(--paper);
+  --nav-bg: #352d4d;
+  --nav-ink: #c4bcd6;
+  --nav-current-ink: #fff;
+  --field-bg: #4a2c33;
+  --pip-disc: #3b3249;
+  --chip-bg: #352d4d;
+  --chip-ink: #f3eefc;
+  --node-lock-border: 2px dashed rgba(243, 238, 252, 0.5);
+}
+:root[data-effect-style='pop-burst'] .wiggly-map {
+  --ink: #fff;
+  --app-bg: linear-gradient(165deg, #7b4dff 0%, #c94bff 48%, #ff7a59 100%);
+  --font-display: 'Baloo 2', var(--font-body);
+  --display-weight: 800;
+  --title-size: 32px;
+  --play-size: 30px;
+  --card-bg: rgba(255, 255, 255, 0.18);
+  --card-ink: #fff;
+  --r-card: 22px;
+  --btn-bg: #ffe066;
+  --btn-ink: #4a1fa8;
+  --r-btn: 22px;
+  --btn-shadow: 0 6px 0 #e0a800, 0 14px 26px -12px rgba(0, 0, 0, 0.45);
+  --btn-shadow-pressed: 0 2px 0 #e0a800;
+  --button-case: uppercase;
+  --chip-bg: rgba(255, 255, 255, 0.22);
+  --chip-ink: #fff;
+  --chip-border: 0;
+  --nav-bg: rgba(40, 10, 90, 0.35);
+  --nav-ink: #f3e8ff;
+  --nav-current-ink: #fff;
+  --nav-current-bg: rgba(255, 224, 102, 0.9);
+  --field-bg: rgba(255, 255, 255, 0.16);
+  --play-bg: #ffe066;
+  --play-ink: #4a1fa8;
+  --play-shadow: 0 6px 0 #e0a800, 0 16px 30px -12px rgba(0, 0, 0, 0.45);
+  --r-play: 26px;
+  --tile-bg: rgba(255, 255, 255, 0.95);
+  --tile-ink: #3a1a7a;
+  --tile-shadow: 0 6px 0 #5a2fc0;
+  --r-tile: 24px;
+  --ti-bg: #ffe066;
+  --ti-ink: #4a1fa8;
+  --ring-track: rgba(255, 255, 255, 0.3);
+  --road: rgba(255, 255, 255, 0.3);
+  --road-w: 16px;
+  --road-done: #ffe066;
+  --road-done-w: 16px;
+  --node-bg: rgba(255, 255, 255, 0.3);
+  --node-ink: #fff;
+  --node-done-bg: #ffe066;
+  --node-done-ink: #5a2fc0;
+  --node-shadow: 0 4px 0 rgba(90, 47, 192, 0.6);
+  --node-cur-bg: #fff;
+  --node-cur-shadow: 0 4px 0 #5a2fc0, 0 0 0 6px rgba(255, 255, 255, 0.35);
+  --tag-bg: #fff;
+  --tag-ink: #4a1fa8;
+  --tag-shadow: 0 3px 0 #5a2fc0;
+  --pip-ring: #ffe066;
+  --pip-disc: #fff3c4;
+  --day-on-bg: #ffe066;
+  --day-on-ink: #4a1fa8;
+  --weak-bg: rgba(255, 255, 255, 0.28);
+  --bar-bg: rgba(255, 255, 255, 0.25);
+  --bar-fill: linear-gradient(90deg, #ffe066, #ffb703);
+  --q-bg: rgba(255, 255, 255, 0.95);
+  --q-ink: #3a1a7a;
+  --ans-border: 0;
+  --ans-shadow: 0 5px 0 rgba(60, 20, 140, 0.45);
+  --combo-bg: #ffe066;
+  --combo-ink: #5a2fc0;
+  --float: #ffe066;
+  --float-shadow: 0 3px 0 #5a2fc0;
+  --label-ink: #fff;
+  --enter: pb-pop;
+  --enter-back: pb-pop-back;
+  --enter-ease: cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+:root[data-effect-style='starlight'] .wiggly-map {
+  --ink: #f2f0ff;
+  --app-bg:
+    radial-gradient(ellipse at 20% 0%, rgba(80, 220, 255, 0.35), transparent 50%),
+    radial-gradient(ellipse at 100% 60%, rgba(255, 90, 200, 0.3), transparent 55%),
+    linear-gradient(170deg, #241a6b 0%, #120d3a 70%);
+  --app-texture:
+    radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent),
+    radial-gradient(1px 1px at 78% 12%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 90% 40%, #fff, transparent),
+    radial-gradient(1px 1px at 30% 52%, #fff, transparent),
+    radial-gradient(1px 1px at 62% 70%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 8% 88%, #fff, transparent),
+    radial-gradient(1px 1px at 48% 30%, #fff, transparent),
+    radial-gradient(1px 1px at 70% 92%, #fff, transparent);
+  --font-display: 'Baloo 2', var(--font-body);
+  --display-weight: 800;
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --card-ink: #f2f0ff;
+  --card-border: 1px solid rgba(255, 255, 255, 0.2);
+  --r-card: 20px;
+  --card-shadow: 0 0 24px rgba(180, 140, 255, 0.18);
+  --btn-bg: linear-gradient(90deg, #4be3ff, #b48cff);
+  --btn-ink: #120d3a;
+  --r-btn: 999px;
+  --btn-shadow: 0 0 22px rgba(120, 220, 255, 0.55);
+  --chip-bg: rgba(255, 255, 255, 0.1);
+  --chip-ink: #fff;
+  --chip-border: 1px solid rgba(255, 255, 255, 0.25);
+  --nav-bg: rgba(10, 6, 40, 0.6);
+  --nav-border: 1px solid rgba(255, 255, 255, 0.15);
+  --nav-ink: #c9c3ef;
+  --nav-current-ink: #fff;
+  --nav-current-bg: rgba(75, 227, 255, 0.3);
+  --field-bg: rgba(255, 255, 255, 0.06);
+  --play-bg: transparent;
+  --play-border: 0;
+  --play-shadow: none;
+  --tile-bg: linear-gradient(160deg, #2b2080, #160f46);
+  --tile-ink: #f2f0ff;
+  --tile-border: 1px solid rgba(180, 140, 255, 0.5);
+  --ti-bg: radial-gradient(circle, #fff6b0, #ffd86b 70%);
+  --ti-ink: #120d3a;
+  --ring-track: rgba(255, 255, 255, 0.2);
+  --road: rgba(255, 255, 255, 0.28);
+  --road-w: 1.5px;
+  --road-dash: 1 6;
+  --road-done: #fff6b0;
+  --road-done-w: 1.8px;
+  --road-done-filter: drop-shadow(0 0 3px #fff6b0);
+  --tag-bg: rgba(20, 14, 60, 0.92);
+  --tag-ink: #fff;
+  --tag-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
+  --pip-ring: #b48cff;
+  --pip-disc: #2b2080;
+  --day-on-bg: #fff6b0;
+  --day-on-ink: #120d3a;
+  --bar-bg: rgba(255, 255, 255, 0.12);
+  --bar-fill: linear-gradient(90deg, #4be3ff, #b48cff, #ff7ad9);
+  --bar-glow: 0 0 14px rgba(180, 140, 255, 0.8);
+  --q-bg: #1d1652;
+  --q-ink: #f2f0ff;
+  --q-border: 1px solid rgba(255, 255, 255, 0.25);
+  --ans-border: 1px solid rgba(255, 255, 255, 0.25);
+  --ans-shadow: none;
+  --combo-bg: linear-gradient(90deg, #4be3ff, #ff7ad9);
+  --combo-ink: #120d3a;
+  --float: #fff;
+  --float-shadow: 0 0 10px #4be3ff;
+  --label-ink: #e6e2ff;
+  --enter: sl-twinkle;
+  --enter-back: sl-twinkle-back;
+}
+:root[data-effect-style='comic-pop'] .wiggly-map {
+  --page1: #ffe14d;
+  --page2: #ffb02e;
+  --dots: rgba(0, 0, 0, 0.13);
+  --panelc: #fff;
+  --line: #111;
+  --ink: #111;
+  --app-bg:
+    radial-gradient(circle, var(--dots) 1.3px, transparent 1.7px) 0 0 / 9px 9px,
+    linear-gradient(160deg, var(--page1), var(--page2));
+  --font-display: 'Bangers', 'Baloo 2', var(--font-body);
+  --display-weight: 400;
+  --display-spacing: 0.04em;
+  --title-size: 36px;
+  --num-size: 48px;
+  --play-size: 40px;
+  --button-size: 24px;
+  --font-chip: 'Bangers', var(--font-body);
+  --card-bg: var(--panelc);
+  --card-ink: var(--ink);
+  --card-border: 3px solid var(--line);
+  --r-card: 4px;
+  --card-shadow: 5px 5px 0 var(--line);
+  --btn-bg: #1e9bff;
+  --btn-ink: #fff;
+  --btn-border: 3px solid #111;
+  --r-btn: 6px;
+  --btn-shadow: 4px 4px 0 #111;
+  --btn-shadow-pressed: 1px 1px 0 #111;
+  --chip-bg: var(--panelc);
+  --chip-ink: var(--ink);
+  --chip-border: 2px solid var(--line);
+  --r-chip: 4px;
+  --chip-shadow: 2px 2px 0 var(--line);
+  --nav-bg: var(--panelc);
+  --nav-border: 3px solid var(--line);
+  --nav-ink: #333;
+  --nav-current-ink: #111;
+  --nav-current-bg: #ffe14d;
+  --field-bg: #ff3b3b;
+  --field-ink: #fff;
+  --play-tilt: rotate(-1deg);
+  --tile-tilt: rotate(-1deg);
+  --tile-tilt-alt: rotate(1deg);
+  --r-pill: 6px;
+  --r-day: 4px;
+  --ring-track: rgba(0, 0, 0, 0.15);
+  --road: var(--line);
+  --road-w: 4px;
+  --road-dash: 10 8;
+  --road-cap: butt;
+  --road-done: #1e9bff;
+  --road-done-w: 9px;
+  --node-bg: var(--panelc);
+  --node-ink: var(--ink);
+  --node-border: 3px solid var(--line);
+  --node-shadow: 3px 3px 0 var(--line);
+  --node-done-bg: #1e9bff;
+  --node-done-ink: #fff;
+  --node-cur-bg: #ff3b3b;
+  --tag-bg: #ffe14d;
+  --tag-ink: #111;
+  --tag-shadow: 0 0 0 2px #111;
+  --pip-ring: #111;
+  --pip-disc: #fff;
+  --day-on-bg: #1e9bff;
+  --day-on-ink: #fff;
+  --bar-bg: var(--panelc);
+  --bar-border: 3px solid var(--line);
+  --r-bar: 6px;
+  --bar-fill: repeating-linear-gradient(-45deg, #ff3b3b 0 8px, #e02424 8px 16px);
+  --q-bg: #fff;
+  --q-ink: #111;
+  --q-border: 3px solid #111;
+  --r-q: 4px;
+  --ans-border: 3px solid #111;
+  --ans-shadow: 4px 4px 0 #111;
+  --combo-bg: #ff3b3b;
+  --combo-ink: #fff;
+  --float: #ff3b3b;
+  --float-shadow: 2px 2px 0 #fff;
+  --enter: cp-zoom;
+  --enter-back: cp-zoom-back;
+  --enter-ease: cubic-bezier(0.2, 1.3, 0.4, 1);
+}
+:root[data-effect-style='comic-pop'][data-theme='dark'] .wiggly-map {
+  --page1: #2b2560;
+  --page2: #1a1638;
+  --dots: rgba(255, 255, 255, 0.09);
+  --panelc: #24204a;
+  --line: #ffe14d;
+  --ink: #fff;
+  --nav-ink: #e8e4ff;
+  --nav-current-ink: #111;
+  --pip-disc: #24204a;
+  --chip-ink: #fff;
+  --label-ink: #fff;
+}
+:root[data-effect-style='garden-grow'] .wiggly-map {
+  --sky1: #dff4ff;
+  --sky2: #f2fbe6;
+  --ink: #24412e;
+  --soil: #8b5a3c;
+  --leaf: #2c7f41;
+  --leaf-l: #3fae5a;
+  --petal: #ff8fb1;
+  --panelg: #fffdf6;
+  --app-bg:
+    radial-gradient(circle at 92% -4%, rgba(255, 214, 90, 0.55), transparent 140px),
+    linear-gradient(
+      180deg,
+      var(--sky1),
+      var(--sky2) 62%,
+      color-mix(in srgb, var(--leaf-l) 28%, var(--sky2))
+    );
+  --font-display: 'Baloo 2', var(--font-body);
+  --display-weight: 800;
+  --card-bg: var(--panelg);
+  --card-ink: var(--ink);
+  --r-card: 28px 28px 28px 8px;
+  --card-shadow: 0 5px 0 color-mix(in srgb, var(--leaf-l) 45%, transparent);
+  --btn-bg: var(--leaf);
+  --btn-ink: #fff;
+  --r-btn: 28px 28px 28px 8px;
+  --btn-shadow: 0 4px 0 #1d5a2d;
+  --chip-bg: var(--panelg);
+  --chip-ink: var(--ink);
+  --chip-border: 0;
+  --r-chip: 999px 999px 999px 4px;
+  --nav-bg: color-mix(in srgb, var(--panelg) 85%, transparent);
+  --nav-ink: #3e5f47;
+  --nav-current-ink: var(--ink);
+  --nav-current-bg: #cfeed4;
+  --field-bg: color-mix(in srgb, var(--leaf-l) 22%, var(--panelg));
+  --ring-track: rgba(44, 127, 65, 0.2);
+  --road: color-mix(in srgb, var(--soil) 55%, transparent);
+  --road-w: 14px;
+  --road-dash: 0.1 24;
+  --road-done: color-mix(in srgb, var(--leaf-l) 80%, transparent);
+  --road-done-w: 4px;
+  --tag-bg: var(--soil);
+  --tag-ink: #fff;
+  --pip-ring: var(--leaf);
+  --pip-disc: #fffbe0;
+  --day-on-bg: var(--petal);
+  --day-on-ink: #3a1424;
+  --bar-bg: color-mix(in srgb, var(--soil) 25%, transparent);
+  --bar-fill: linear-gradient(90deg, #7bd389, var(--leaf-l));
+  --q-bg: var(--panelg);
+  --q-ink: var(--ink);
+  --r-q: 18px;
+  --ans-border: 2px solid color-mix(in srgb, var(--leaf-l) 40%, transparent);
+  --combo-bg: var(--leaf);
+  --combo-ink: #fff;
+  --float: var(--leaf);
+  --enter: gg-grow;
+  --enter-back: gg-grow-back;
+  --enter-ease: cubic-bezier(0.3, 1.3, 0.5, 1);
+}
+:root[data-effect-style='garden-grow'][data-theme='dark'] .wiggly-map {
+  --sky1: #0f2433;
+  --sky2: #12281c;
+  --ink: #e7f6ea;
+  --panelg: #1b3226;
+  --soil: #b07a55;
+  --leaf: #2c7f41;
+  --nav-ink: #c2dcc8;
+  --nav-current-bg: #2c5a38;
+  --pip-disc: #1b3226;
+  --label-ink: #e7f6ea;
+}
+:root[data-effect-style='pixel-arcade'] .wiggly-map {
+  --ink: #e8fff4;
+  --acc1: #39ff88;
+  --acc2: #ff4fd8;
+  --acc3: #ffd23f;
+  --app-bg:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at 50% 25%, #2a1f6e, #0a0820 75%);
+  --font-display: 'Press Start 2P', monospace;
+  --display-weight: 400;
+  --title-size: 15px;
+  --num-size: 20px;
+  --play-size: 15px;
+  --button-size: 11px;
+  --font-chip: 'Press Start 2P', monospace;
+  --font-button: 'Press Start 2P', monospace;
+  --font-tile: 'Press Start 2P', monospace;
+  --tile-size: 9px;
+  --font-nav: 'Press Start 2P', monospace;
+  --card-bg: rgba(0, 0, 0, 0.45);
+  --card-ink: var(--ink);
+  --card-border: 3px solid var(--ink);
+  --r-card: 0;
+  --card-shadow: 4px 4px 0 #000;
+  --btn-bg: var(--acc1);
+  --btn-ink: #000;
+  --r-btn: 0;
+  --btn-shadow: 4px 4px 0 #000;
+  --chip-bg: #000;
+  --chip-ink: var(--acc3);
+  --chip-border: 2px solid var(--acc3);
+  --r-chip: 0;
+  --r-pill: 0;
+  --r-day: 0;
+  --r-bar: 0;
+  --node-r: 0;
+  --nav-bg: #000;
+  --nav-border: 3px solid var(--ink);
+  --nav-ink: #b9e8d2;
+  --nav-current-ink: var(--acc1);
+  --nav-current-bg: #1c3a2a;
+  --field-bg: rgba(0, 0, 0, 0.5);
+  --field-ink: var(--acc1);
+  --ring-track: rgba(232, 255, 244, 0.25);
+  --ring-cap: butt;
+  --road: rgba(232, 255, 244, 0.35);
+  --road-w: 6px;
+  --road-dash: 6 6;
+  --road-cap: butt;
+  --road-done: var(--acc1);
+  --road-done-w: 6px;
+  --node-bg: #000;
+  --node-border: 3px solid var(--ink);
+  --node-done-border: 3px solid var(--acc3);
+  --node-cur-border: 3px solid var(--acc1);
+  --node-cur-shadow: 0 0 0 3px #000, 0 0 0 6px var(--acc1);
+  --tag-bg: #000;
+  --tag-ink: var(--acc1);
+  --tag-shadow: 0 0 0 2px var(--acc1);
+  --pip-ring: var(--acc1);
+  --pip-disc: #15123a;
+  --day-on-bg: var(--acc3);
+  --day-on-ink: #000;
+  --bar-bg: #000;
+  --bar-border: 3px solid var(--ink);
+  --bar-fill: repeating-linear-gradient(90deg, var(--acc1) 0 10px, transparent 10px 12px);
+  --q-bg: #0a0820;
+  --q-ink: var(--ink);
+  --q-border: 3px solid var(--ink);
+  --r-q: 0;
+  --ans-border: 3px solid rgba(232, 255, 244, 0.6);
+  --ans-shadow: 3px 3px 0 #000;
+  --combo-bg: var(--acc2);
+  --combo-ink: #000;
+  --float: var(--acc1);
+  --float-shadow: 2px 2px 0 #000;
+  --label-ink: var(--ink);
+  --enter: px-slide;
+  --enter-back: px-slide-back;
+  --enter-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+:root[data-effect-style='pixel-arcade'] .wiggly-map .path-node__label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  line-height: 1.6;
+}
+:root[data-effect-style='pixel-arcade'] .wiggly-map .path-here {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  line-height: 1.6;
+}
+:root[data-effect-style='petal-glow'] .wiggly-map {
+  --ink: #4a1d3f;
+  --rose: #ff7eb6;
+  --lilac: #b79cff;
+  --mint: #8fe3cf;
+  --panelp: #fffafd;
+  --app-bg:
+    radial-gradient(circle at 15% 8%, rgba(255, 182, 216, 0.7), transparent 45%),
+    radial-gradient(circle at 95% 55%, rgba(183, 156, 255, 0.5), transparent 45%),
+    radial-gradient(circle at 30% 100%, rgba(143, 227, 207, 0.45), transparent 50%), #fff3f9;
+  --app-texture: radial-gradient(circle, rgba(255, 126, 182, 0.35) 1.2px, transparent 1.6px) 0 0 /
+    22px 22px;
+  --font-display: 'Fredoka', 'Baloo 2', var(--font-body);
+  --display-weight: 700;
+  --card-bg: var(--panelp);
+  --card-ink: var(--ink);
+  --r-card: 30px 30px 30px 30px / 24px 24px 24px 24px;
+  --card-shadow: 0 6px 18px rgba(214, 120, 180, 0.25), 0 0 0 2px #ffd6ea;
+  --btn-bg: linear-gradient(180deg, #ffc2de, #ff9fcb);
+  --btn-ink: #4a1d3f;
+  --r-btn: 999px;
+  --btn-shadow: 0 5px 0 #e57aac, 0 10px 20px -8px rgba(229, 122, 172, 0.6);
+  --chip-bg: #fff;
+  --chip-ink: var(--ink);
+  --chip-border: 2px solid #ffd6ea;
+  --nav-bg: rgba(255, 250, 253, 0.9);
+  --nav-shadow: 0 -4px 16px rgba(214, 120, 180, 0.18);
+  --nav-ink: #8a4f7a;
+  --nav-current-ink: var(--ink);
+  --nav-current-bg: #ffd6ea;
+  --field-bg: linear-gradient(120deg, #ffe0ef, #ece4ff);
+  --ring-track: rgba(183, 156, 255, 0.3);
+  --road: rgba(183, 156, 255, 0.55);
+  --road-w: 10px;
+  --road-dash: 0.1 18;
+  --road-done: var(--rose);
+  --road-done-w: 4px;
+  --tag-bg: #fff;
+  --tag-ink: #4a1d3f;
+  --tag-shadow: 0 0 0 2px #ffb3d6;
+  --pip-ring: #ff9fcb;
+  --pip-disc: #fff0f7;
+  --day-on-bg: #ffb3d6;
+  --day-on-ink: #4a1d3f;
+  --bar-bg: #ffe6f2;
+  --bar-fill: linear-gradient(90deg, #ffb3d6, #b79cff);
+  --q-bg: #fff;
+  --q-ink: #3a1630;
+  --r-q: 22px;
+  --ans-border: 2px solid #ffd6ea;
+  --ans-shadow: 0 4px 0 #ffd6ea;
+  --combo-bg: #ffb3d6;
+  --combo-ink: #4a1d3f;
+  --float: #c2397f;
+  --enter: pg-bloom;
+  --enter-back: pg-bloom-back;
+  --enter-ease: cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+:root[data-effect-style='petal-glow'][data-theme='dark'] .wiggly-map {
+  --ink: #ffe9f5;
+  --panelp: #3a2140;
+  --app-bg:
+    radial-gradient(circle at 15% 8%, rgba(255, 126, 182, 0.3), transparent 45%),
+    radial-gradient(circle at 95% 55%, rgba(183, 156, 255, 0.25), transparent 45%), #241328;
+  --nav-bg: rgba(58, 33, 64, 0.92);
+  --nav-ink: #f0c8e2;
+  --nav-current-ink: #fff;
+  --nav-current-bg: #6b3a62;
+  --chip-bg: #3a2140;
+  --chip-ink: #ffe9f5;
+  --chip-border: 2px solid #6b3a62;
+  --pip-disc: #3a2140;
+  --field-bg: linear-gradient(120deg, #4a2448, #34295a);
+  --label-ink: #ffe9f5;
+}
+:root[data-effect-style='turbo-drive'] .wiggly-map {
+  --ink: #f4f6fb;
+  --orange: #ff7a1a;
+  --cyan: #22d3ee;
+  --asphalt: #15171d;
+  --app-bg:
+    linear-gradient(
+      115deg,
+      transparent 0 62%,
+      rgba(255, 122, 26, 0.9) 62% 66%,
+      transparent 66% 69%,
+      rgba(34, 211, 238, 0.85) 69% 72%,
+      transparent 72%
+    ),
+    radial-gradient(ellipse at 50% 0%, #2a2f3d, var(--asphalt) 70%);
+  --app-texture: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 0 2px,
+    transparent 2px 6px
+  );
+  --font-display: 'Russo One', 'Baloo 2', var(--font-body);
+  --display-weight: 400;
+  --title-size: 28px;
+  --button-case: uppercase;
+  --button-spacing: 0.04em;
+  --card-bg: #20232c;
+  --card-ink: var(--ink);
+  --card-border: 2px solid #3a3f4d;
+  --r-card: 4px 18px 4px 18px;
+  --card-shadow: 0 6px 0 #0b0c10;
+  --btn-bg: var(--orange);
+  --btn-ink: #15171d;
+  --r-btn: 4px 16px 4px 16px;
+  --btn-shadow: 0 5px 0 #a8460a;
+  --chip-bg: #20232c;
+  --chip-ink: var(--ink);
+  --chip-border: 2px solid var(--cyan);
+  --r-chip: 2px 12px 2px 12px;
+  --nav-bg: #0e1015;
+  --nav-border: 2px solid var(--orange);
+  --nav-ink: #c3c8d4;
+  --nav-current-ink: #fff;
+  --nav-current-bg: #8a3c0b;
+  --field-bg: repeating-linear-gradient(-45deg, #1f2229 0 14px, #262a33 14px 28px);
+  --field-ink: var(--orange);
+  --ring-track: rgba(255, 255, 255, 0.15);
+  --field-clip: polygon(0 0, 100% 10%, 100% 100%, 0 90%);
+  --road: #3a3f4d;
+  --road-w: 14px;
+  --road-dash: none;
+  --road-cap: butt;
+  --road-done: var(--cyan);
+  --road-done-w: 4px;
+  --road-done-dash: 14 10;
+  --node-r: 6px;
+  --node-bg: #20232c;
+  --node-ink: var(--ink);
+  --node-border: 3px solid #3a3f4d;
+  --node-done-bg: var(--orange);
+  --node-done-ink: #15171d;
+  --node-done-border: 3px solid #ffb27a;
+  --node-cur-bg: #15171d;
+  --node-cur-border: 3px solid var(--cyan);
+  --node-cur-shadow: 0 0 0 3px #15171d, 0 0 18px var(--cyan);
+  --tag-bg: var(--cyan);
+  --tag-ink: #0b0c10;
+  --pip-ring: var(--orange);
+  --pip-disc: #20232c;
+  --day-on-bg: var(--orange);
+  --day-on-ink: #15171d;
+  --r-day: 4px;
+  --bar-bg: #20232c;
+  --bar-border: 2px solid #3a3f4d;
+  --r-bar: 2px;
+  --bar-fill: repeating-linear-gradient(-45deg, var(--orange) 0 10px, #ff9a4d 10px 20px);
+  --q-bg: #20232c;
+  --q-ink: var(--ink);
+  --q-border: 2px solid #3a3f4d;
+  --r-q: 4px 16px 4px 16px;
+  --ans-border: 2px solid #3a3f4d;
+  --ans-shadow: 0 4px 0 #0b0c10;
+  --combo-bg: var(--cyan);
+  --combo-ink: #0b0c10;
+  --float: var(--cyan);
+  --label-ink: var(--ink);
+  --enter: td-zoom;
+  --enter-back: td-zoom-back;
+  --enter-ease: cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+:root[data-effect-style='turbo-drive'] .wiggly-map .path-node {
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+  border-radius: 0;
+}
+:root[data-effect-style='turbo-drive'] .wiggly-map .path-node.path-node--current {
+  clip-path: none;
+  transform: rotate(45deg);
+  border-radius: 8px;
+}
+:root[data-effect-style='turbo-drive'] .wiggly-map .path-node.path-node--current > * {
+  transform: rotate(-45deg);
+}
+:root[data-effect-style='rainbow-parade'] .wiggly-map {
+  --ink: #2a2140;
+  --panelr: #ffffff;
+  --accent: #732982;
+  --app-bg:
+    linear-gradient(
+      118deg,
+      transparent 0 56%,
+      color-mix(in srgb, #e40303 50%, #fffaf2) 56% 59%,
+      color-mix(in srgb, #ff8c00 50%, #fffaf2) 59% 62%,
+      color-mix(in srgb, #ffed00 50%, #fffaf2) 62% 65%,
+      color-mix(in srgb, #008026 50%, #fffaf2) 65% 68%,
+      color-mix(in srgb, #24408e 50%, #fffaf2) 68% 71%,
+      color-mix(in srgb, #732982 50%, #fffaf2) 71% 74%,
+      transparent 74%
+    ),
+    #fffaf2;
+  --app-texture: none;
+  --font-display: 'Baloo 2', var(--font-body);
+  --display-weight: 800;
+  --card-bg: var(--panelr);
+  --card-ink: var(--ink);
+  --r-card: 20px;
+  --card-shadow: 0 4px 0 #e6e0f2;
+  --btn-bg: #2a2140;
+  --btn-ink: #fff;
+  --r-btn: 999px;
+  --btn-shadow: 0 4px 0 #000;
+  --chip-bg: #fff;
+  --chip-ink: var(--ink);
+  --chip-border: 2px solid #2a2140;
+  --nav-bg: #fff;
+  --nav-ink: #4d4466;
+  --nav-current-ink: #2a2140;
+  --nav-current-bg: #f3e6f7;
+  --nav-shadow: 0 -2px 0 #e6e0f2;
+  --field-bg: #fff;
+  --ring-track: rgba(42, 33, 64, 0.15);
+  --road: #e2dcef;
+  --road-w: 10px;
+  --road-done: var(--accent);
+  --road-done-w: 5px;
+  --node-bg: #fff;
+  --node-ink: var(--ink);
+  --node-border: 3px solid #2a2140;
+  --node-done-bg: var(--accent);
+  --node-done-ink: #fff;
+  --node-cur-bg: #fff;
+  --node-cur-border: 3px solid #2a2140;
+  --node-cur-shadow: 0 0 0 4px var(--accent);
+  --node-lock-bg: #f4f1fa;
+  --node-lock-border: 3px dashed #6f6888;
+  --tag-bg: #2a2140;
+  --tag-ink: #fff;
+  --pip-ring: #2a2140;
+  --pip-disc: #fff4c2;
+  --day-on-bg: #2a2140;
+  --day-on-ink: #fff;
+  --bar-bg: #eee8fb;
+  --bar-fill: var(--accent);
+  --q-bg: #fff;
+  --q-ink: var(--ink);
+  --r-q: 18px;
+  --ans-border: 2px solid #2a2140;
+  --combo-bg: #2a2140;
+  --combo-ink: #fff;
+  --float: var(--accent);
+  --enter: rp-parade;
+  --enter-back: rp-parade-back;
+  --enter-ease: cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+:root[data-effect-style='rainbow-parade'][data-theme='dark'] .wiggly-map {
+  --ink: #f4efff;
+  --panelr: #2a2140;
+  --accent: #d7a6ee;
+  --app-bg:
+    linear-gradient(
+      118deg,
+      transparent 0 56%,
+      color-mix(in srgb, #e40303 45%, #17121f) 56% 59%,
+      color-mix(in srgb, #ff8c00 45%, #17121f) 59% 62%,
+      color-mix(in srgb, #ffed00 45%, #17121f) 62% 65%,
+      color-mix(in srgb, #008026 45%, #17121f) 65% 68%,
+      color-mix(in srgb, #24408e 45%, #17121f) 68% 71%,
+      color-mix(in srgb, #732982 45%, #17121f) 71% 74%,
+      transparent 74%
+    ),
+    #17121f;
+  --btn-bg: #fff;
+  --btn-ink: #2a2140;
+  --btn-shadow: 0 4px 0 #000;
+  --chip-bg: #2a2140;
+  --chip-ink: #f4efff;
+  --chip-border: 2px solid #f4efff;
+  --nav-bg: #2a2140;
+  --nav-ink: #d8d0ee;
+  --nav-current-ink: #f4efff;
+  --nav-current-bg: #3d2a55;
+  --nav-shadow: 0 -2px 0 #3a3150;
+  --field-bg: #2a2140;
+  --pip-disc: #2a2140;
+  --road: #3a3150;
+  --node-bg: #2a2140;
+  --node-border: 3px solid #f4efff;
+  --node-done-ink: #2a2140;
+  --node-cur-bg: #2a2140;
+  --node-cur-border: 3px solid #f4efff;
+  --node-lock-bg: #221a30;
+  --node-lock-border: 3px dashed #b3aac8;
+  --card-shadow: 0 4px 0 #000;
+  --label-ink: #f4efff;
+  --tag-bg: #f4efff;
+  --tag-ink: #2a2140;
+  --q-bg: #2a2140;
+  --ans-border: 2px solid #f4efff;
+  --day-on-bg: #f4efff;
+  --day-on-ink: #2a2140;
+  --bar-bg: #3a3150;
+  --combo-bg: #f4efff;
+  --combo-ink: #2a2140;
+}
+:root[data-effect-style='doodle-diary'] .wiggly-map {
+  --bar-fx: linear-gradient(
+      45deg,
+      rgba(43, 42, 58, 0.5) 0 7%,
+      transparent 7% 50%,
+      rgba(43, 42, 58, 0.5) 50% 57%,
+      transparent 57%
+    )
+    0 0 / 12px 12px;
+  --bar-fx-to: 12px 0;
+  --bar-fx-anim: bar-roll 0.9s linear infinite;
+}
+:root[data-effect-style='sticker-book'] .wiggly-map {
+  --bar-fx: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.45) 25%,
+      transparent 25% 50%,
+      rgba(255, 255, 255, 0.45) 50% 75%,
+      transparent 75%
+    )
+    0 0 / 24px 24px;
+  --bar-fx-to: 24px 0;
+  --bar-fx-anim: bar-roll 0.9s linear infinite;
+}
+:root[data-effect-style='pop-burst'] .wiggly-map {
+  --bar-fx:
+    linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.7) 45%, transparent 60%) 0 0 /
+      200% 100%,
+    radial-gradient(circle, rgba(255, 255, 255, 0.55) 2px, transparent 2.6px) 0 0 / 18px 18px;
+  --bar-fx-anim: bar-sweep 1.8s linear infinite;
+}
+:root[data-effect-style='starlight'] .wiggly-map {
+  --bar-fx:
+    radial-gradient(circle, #fff 1.2px, transparent 1.8px) 0 0 / 22px 18px,
+    radial-gradient(circle, rgba(75, 227, 255, 0.9) 0.9px, transparent 1.5px) 7px 9px / 14px 18px;
+  --bar-fx-to: 22px -18px, 21px -9px;
+  --bar-fx-anim: bar-roll 2.4s linear infinite, bar-twinkle 1.2s ease-in-out infinite;
+  --bar-edge: rgba(190, 240, 255, 0.95);
+}
+:root[data-effect-style='comic-pop'] .wiggly-map {
+  --bar-fx: radial-gradient(circle, rgba(0, 0, 0, 0.3) 1.6px, transparent 2.1px) 0 0 / 8px 8px;
+  --bar-fx-to: 16px 0;
+  --bar-fx-anim: bar-roll 0.45s linear infinite;
+}
+:root[data-effect-style='garden-grow'] .wiggly-map {
+  --bar-fx:
+    radial-gradient(ellipse 4px 2.2px, rgba(255, 255, 255, 0.6) 96%, transparent) 0 0 / 16px 18px,
+    radial-gradient(ellipse 2.2px 4px, rgba(220, 255, 200, 0.55) 96%, transparent) 8px 9px / 16px
+      18px;
+  --bar-fx-to: 16px 4px, 24px 5px;
+  --bar-fx-anim: bar-roll 1.8s ease-in-out infinite alternate;
+}
+:root[data-effect-style='pixel-arcade'] .wiggly-map {
+  --bar-fx:
+    repeating-linear-gradient(90deg, transparent 0 10px, rgba(0, 0, 0, 0.45) 10px 12px) 0 0 / auto,
+    linear-gradient(90deg, transparent 0 40%, rgba(255, 255, 255, 0.7) 40% 60%, transparent 60%) 0
+      0 / 60px 100%;
+  --bar-fx-to: 0 0, 60px 0;
+  --bar-fx-anim: bar-roll 1.1s linear infinite;
+}
+:root[data-effect-style='petal-glow'] .wiggly-map {
+  --bar-fx:
+    radial-gradient(ellipse 3.5px 2px, rgba(255, 255, 255, 0.7) 96%, transparent) 0 0 / 18px 16px,
+    radial-gradient(circle, #fff 1px, transparent 1.6px) 9px 5px / 18px 16px;
+  --bar-fx-to: 18px -6px, 27px -11px;
+  --bar-fx-anim: bar-roll 2.2s linear infinite, bar-twinkle 1.6s ease-in-out infinite;
+}
+:root[data-effect-style='turbo-drive'] .wiggly-map {
+  --bar-fx: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='18'%3E%3Cpath d='M4 3 L11 9 L4 15' fill='none' stroke='white' stroke-opacity='.55' stroke-width='3'/%3E%3C/svg%3E")
+    0 50% / 16px 100% repeat-x;
+  --bar-fx-to: 16px 50%;
+  --bar-fx-anim: bar-roll 0.4s linear infinite;
+}
+:root[data-effect-style='rainbow-parade'] .wiggly-map {
+  --bar-fx:
+    radial-gradient(circle, rgba(255, 255, 255, 0.95) 1px, transparent 1.6px) 0 0 / 13px 9px,
+    radial-gradient(circle, rgba(255, 237, 0, 0.8) 0.9px, transparent 1.5px) 6px 4px / 17px 9px;
+  --bar-fx-to: 13px 0, -17px 0;
+  --bar-fx-anim: bar-roll 3s linear infinite, bar-twinkle 1.1s ease-in-out infinite;
+}
+:root[data-effect-style='garden-grow'] .wiggly-map {
+  --road: #f3ead6;
+  --road-w: 18px;
+  --road-dash: 9 21;
+  --road-edge: #a8987a;
+  --road-edge-w: 22px;
+  --road-tuft: #4f9d55;
+  --road-tuft-w: 5px;
+  --road-tuft-dash: 0.1 9.9 0.1 20;
+  --road-tuft-off: -24;
+  --road-done: #3f8f4e;
+  --road-done-w: 4px;
+  --road-done-dash: none;
+  --road-deco: #ff6f91;
+  --road-deco-w: 7px;
+  --road-deco-dash: 0.1 19;
+  --node-bg: #fff8e8;
+  --node-border: 3px solid #2f6b3a;
+  --node-shadow: 0 3px 0 rgba(47, 107, 58, 0.35);
+  --node-done-bg: #fff8e8;
+  --node-done-border: 3px solid #2f6b3a;
+  --node-cur-bg: #fffbe0;
+  --node-cur-border: 3px solid #2f6b3a;
+  --node-cur-shadow: 0 0 0 4px #ffe680, 0 0 18px rgba(255, 200, 40, 0.85);
+  --node-lock-bg: #efe6d2;
+  --node-lock-border: 3px solid #6e5a3a;
+  --node-lock-shadow: 0 3px 0 rgba(110, 90, 58, 0.3);
+  --node-lock-op: 1;
+}
+:root[data-effect-style='garden-grow'][data-theme='dark'] .wiggly-map {
+  --road: #5d554a;
+  --road-edge: #2d2822;
+  --road-tuft: #7fd18a;
+  --road-done: #9be0a4;
+  --road-deco: #ff9fc0;
+  --node-bg: #1f3527;
+  --node-border: 3px solid #b5e8bc;
+  --node-done-bg: #1f3527;
+  --node-done-border: 3px solid #b5e8bc;
+  --node-cur-bg: #24402c;
+  --node-cur-border: 3px solid #b5e8bc;
+  --node-cur-shadow: 0 0 0 4px #e8c94a, 0 0 18px rgba(255, 210, 80, 0.7);
+  --node-lock-bg: #2b2a22;
+  --node-lock-border: 3px solid #d8c79c;
+  --node-shadow: none;
+  --node-lock-shadow: none;
+}
+:root[data-effect-style='petal-glow'] .wiggly-map {
+  --node-bg: transparent;
+  --node-border: 0;
+  --node-shadow: none;
+  --node-done-bg: transparent;
+  --node-done-border: 0;
+  --node-cur-bg: transparent;
+  --node-cur-border: 0;
+  --node-cur-shadow: none;
+  --node-lock-bg: transparent;
+  --node-lock-border: 0;
+  --node-lock-shadow: none;
+  --node-lock-op: 1;
+  --petal-edge: #6e2a58;
+  --petal-shade: rgba(110, 42, 88, 0.35);
+}
+:root[data-effect-style='petal-glow'][data-theme='dark'] .wiggly-map {
+  --petal-edge: #ffd6ec;
+  --petal-shade: rgba(0, 0, 0, 0.5);
+  --road-done: #a8306f;
+}
+:root[data-effect-style='petal-glow'] .wiggly-map .path-node {
+  width: 58px;
+  height: 58px;
+  margin: -29px 0 0 -29px;
+  outline: 0;
+}
+:root[data-effect-style='petal-glow'] .wiggly-map .path-node.path-node--current {
+  width: 74px;
+  height: 74px;
+  margin: -37px 0 0 -37px;
+}
+:root[data-effect-style='petal-glow'] .wiggly-map .path-node svg {
+  filter: drop-shadow(0 2px 3px var(--petal-shade));
+}
+:root[data-effect-style='petal-glow'] .wiggly-map .path-node.path-node--current svg {
+  filter: drop-shadow(0 0 8px rgba(167, 123, 255, 0.9)) drop-shadow(0 2px 3px var(--petal-shade));
+}
+:root[data-effect-style='petal-glow'] .wiggly-map .path-node .edge {
+  stroke: var(--petal-edge);
+}
+:root[data-effect-style='petal-glow'] .wiggly-map .path-node:focus-visible {
+  outline: 4px solid var(--focus, #1a73e8);
+  outline-offset: 2px;
+}
+:root[data-effect-style='starlight'] .wiggly-map {
+  --node-bg: #1a2156;
+  --node-border: 2.5px solid #c9c2ff;
+  --node-shadow: 0 0 10px rgba(201, 194, 255, 0.35);
+  --node-done-bg: #1a2156;
+  --node-done-border: 2.5px solid #fff6b0;
+  --node-cur-bg: #101a4a;
+  --node-cur-border: 3px solid #4be3ff;
+  --node-cur-shadow: 0 0 0 3px rgba(75, 227, 255, 0.35), 0 0 18px #4be3ff;
+  --node-lock-bg: #232745;
+  --node-lock-border: 2.5px dashed #d4d6ff;
+  --node-lock-shadow: none;
+  --node-lock-op: 1;
+}
+:root[data-effect-style='doodle-diary'] .wiggly-map {
+  --node-r: 48% 52% 50% 50% / 52% 48% 52% 48%;
+  --node-bg: #fffdf6;
+  --node-ink: var(--ink);
+  --node-border: 2.5px solid var(--ink);
+  --node-shadow: 2px 3px 0 rgba(43, 42, 58, 0.18);
+  --node-done-bg: var(--hi);
+  --node-done-ink: var(--biro);
+  --node-done-border: 2.5px solid var(--ink);
+  --node-cur-bg: #fffdf6;
+  --node-cur-border: 2.5px solid var(--biro);
+  --node-cur-shadow: 0 0 0 3px rgba(47, 91, 211, 0.25), 2px 3px 0 rgba(43, 42, 58, 0.18);
+  --node-lock-bg: #f1efe8;
+  --node-lock-border: 2.5px dashed #5f5c70;
+  --node-lock-shadow: none;
+  --node-lock-op: 1;
+}
+:root[data-effect-style='doodle-diary'] .wiggly-map .path-node.path-node--locked {
+  color: #5f5c70;
+}
+:root[data-effect-style='doodle-diary'][data-theme='dark'] .wiggly-map {
+  --node-bg: #2a2838;
+  --node-done-bg: #4a4320;
+  --node-done-ink: var(--hi);
+  --node-cur-bg: #2a2838;
+  --node-lock-bg: #23212f;
+  --node-lock-border: 2.5px dashed #b9b5cc;
+  --node-shadow: none;
+}
+:root[data-effect-style='doodle-diary'][data-theme='dark']
+  .wiggly-map
+  .path-node.path-node--locked {
+  color: #b9b5cc;
+}
+:root[data-effect-style='sticker-book'] .wiggly-map {
+  --node-shadow: 0 0 0 2.5px #3b3360, 3px 4px 0 rgba(0, 0, 0, 0.14);
+  --node-cur-shadow: 0 0 0 2.5px #3b3360, 3px 4px 0 rgba(0, 0, 0, 0.14);
+  --node-lock-shadow: 0 0 0 2.5px #3b3360;
+}
+:root[data-effect-style='pop-burst'] .wiggly-map {
+  --node-border: 3px solid #fff;
+  --node-done-border: 3px solid #fff;
+  --node-cur-border: 3px solid #fff;
+  --node-lock-bg: #c9b6f5;
+  --node-lock-border: 3px solid #fff;
+  --node-lock-op: 1;
+  --node-ink: #4a1fa8;
+  --node-shadow: 0 0 0 2.5px #4a1fa8, 0 4px 0 rgba(90, 47, 192, 0.6);
+  --node-cur-shadow: 0 0 0 2.5px #4a1fa8, 0 0 16px rgba(255, 255, 255, 0.8);
+  --node-lock-shadow: 0 0 0 2.5px #4a1fa8;
+}
+:root[data-effect-style='turbo-drive'] .wiggly-map {
+  --node-done-border: 3px solid #0b0c10;
+  --node-lock-border: 3px solid #8a90a2;
+}
+:root[data-effect-style='turbo-drive'][data-theme='dark'] .wiggly-map {
+  --node-done-border: 3px solid #0b0c10;
+  --node-lock-border: 3px solid #8a90a2;
+}
+:root[data-effect-style='rainbow-parade'] .wiggly-map {
+  --road-done: #c79be0;
+  --node-lock-border: 3px dashed #3d3557;
+}
+:root[data-effect-style='rainbow-parade'][data-theme='dark'] .wiggly-map {
+  --road-done: #6d3f8c;
+}
+:root[data-effect-style='comic-pop'][data-theme='dark'] .wiggly-map {
+  --node-done-border: 3px solid #111;
+  --node-cur-border: 3px solid #111;
+}
+:root[data-effect-style='comic-pop'] .wiggly-map .path-node__label {
+  letter-spacing: 0.08em;
+}
+:root[data-effect-style='comic-pop'] .wiggly-map .path-here {
+  letter-spacing: 0.08em;
+}
+:root[data-effect-style='comic-pop'] .wiggly-map .path-node__label .hl {
+  letter-spacing: 0.08em;
+}
