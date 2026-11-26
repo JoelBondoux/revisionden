@@ -31,7 +31,7 @@ describe('effect style picker', () => {
   it('offers every style with Doodle Diary chosen by default', async () => {
     renderCard([]);
     const group = screen.getByRole('group', { name: 'Effect style' });
-    expect(within(group).getAllByRole('radio')).toHaveLength(7);
+    expect(within(group).getAllByRole('radio')).toHaveLength(10);
     expect(within(group).getByRole('radio', { name: /^Doodle Diary/ })).toBeChecked();
     expect(within(group).getByRole('radio', { name: /^Sticker Book/ })).toHaveAccessibleName(
       expect.stringMatching(/Locked\. Unlock: Reach level 3/),

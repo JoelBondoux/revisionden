@@ -256,6 +256,23 @@
   --tag-bg: #8f5f40;
 }
 
+/* J16: Petal Glow's open and weak topics get a soft petal-edged tile (the mockup drew only done,
+   current and locked as flowers), and Turbo Drive's open tiles a light edge that stands out from
+   the asphalt road (3:1, checked in e2e map.spec.ts). */
+:root[data-effect-style='petal-glow'] .wiggly-map .path-node--open,
+:root[data-effect-style='petal-glow'] .wiggly-map .path-node--weak {
+  background: var(--petal-open-bg, #fff7fb);
+  border: 2.5px solid var(--petal-edge);
+}
+
+:root[data-effect-style='petal-glow'][data-theme='dark'] .wiggly-map {
+  --petal-open-bg: #3a2140;
+}
+
+:root[data-effect-style='turbo-drive'] .wiggly-map.wiggly-map {
+  --node-border: 3px solid #c3c8d4;
+}
+
 .path-node__pct {
   font-size: 0.75rem;
   font-weight: 900;

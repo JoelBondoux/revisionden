@@ -13,6 +13,9 @@ const STYLES = [
   ['comic-pop', 'cp-panel-zoom'],
   ['garden-grow', 'gg-grow-in'],
   ['pixel-arcade', 'px-slide-in'],
+  ['petal-glow', 'pg-bloom'],
+  ['turbo-drive', 'td-zoom'],
+  ['rainbow-parade', 'rp-parade'],
 ] as const;
 
 /** A made-up family with one child, for the parent home page. */
