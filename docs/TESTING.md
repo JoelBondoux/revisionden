@@ -129,7 +129,8 @@ to. Updated by W, 2026-11-26 (W17).
 | Map: units, swipe, Subject selection, node contrast                              | `map`                                                         | phone                          |
 | Home and Pip (fits one screen, Leave this lesson?)                               | `home`                                                        | phone                          |
 | Me: edit avatar (touch and keyboard), Cancel                                     | `me-page`                                                     | all                            |
-| Flashcards: one card, both sides                                                 | `cards`                                                       | all                            |
+| 5-a-day: Home → every item → Lesson complete → Home shows it done                | `daily-and-cards`                                             | phone                          |
+| Flashcards: a whole session, Again, Done for today, 10 more, Deck done           | `daily-and-cards`, `cards`                                    | phone; all (`cards`)           |
 | Friends league: add a friend with a code                                         | `league`                                                      | phone                          |
 | Get help (student and parent): Quick exit, filters                               | `help`                                                        | all                            |
 | Looks: every style, light and dark, contrast                                     | `looks`, `tiles`                                              | phone (`looks`); all (`tiles`) |
@@ -137,21 +138,19 @@ to. Updated by W, 2026-11-26 (W17).
 
 ### Gaps to fill next (suggested, in order)
 
-1. **Daily dose and flashcard session to the end**: start `/learn/daily`, answer every item, see
-   "Done for today!"; on `/cards`, rate a full session through to its finished screen and "10
-   more". Only single screens are covered today.
-2. **Starting test**: `/learn/subject/:subjectId/start` from first question to result, including
+1. **Starting test**: `/learn/subject/:subjectId/start` from first question to result, including
    the one-minute timer warning (inject the clock).
-3. **Parent settings that change what a pupil sees**: Subjects (board and tier), Reminders and
+2. **Parent settings that change what a pupil sees**: Subjects (board and tier), Reminders and
    Friends on `/parent/subjects|reminders|friends/:studentId`, then the pupil's side reflecting
    the change. Today only the bug-button layout is checked there.
-4. **Second parent**: invite → `/join` → both parents listed, and the removal notice.
-5. **Plan, Papers and Progress as journeys**: `/plan` and `/papers` are only checked for the
+3. **Second parent**: invite → `/join` → both parents listed, and the removal notice.
+4. **Plan, Papers and Progress as journeys**: `/plan` and `/papers` are only checked for the
    bottom nav at 320px/200% (`help`), and `/progress` for layout (`pages`).
-6. **Feedback and complaints**: send feedback from a pupil and read it in `/feedback/family`;
+5. **Feedback and complaints**: send feedback from a pupil and read it in `/feedback/family`;
    the complaints page.
-7. **Sign out and session expiry**: parent sign-out, and a pupil's 12-hour session ending
+6. **Sign out and session expiry**: parent sign-out, and a pupil's 12-hour session ending
    mid-lesson (back to unlock with `returnTo`).
-8. **The parent journey at 320px with 200% text**, as the pupil journey already is (W15).
+7. **The parent journey at 320px with 200% text**, as the pupil journey already is (W15).
 
-These are suggestions only: none is started until the lead or owner says so.
+These are suggestions only: none is started until the lead or owner says so. Gap 1 of the
+W17 list (the 5-a-day and a whole flashcard session) is done (W18).
