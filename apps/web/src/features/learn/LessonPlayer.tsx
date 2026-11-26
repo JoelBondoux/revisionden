@@ -11,6 +11,7 @@ import {
 import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { CloseIcon } from '../../components/icons';
+import { MathText } from '../../components/MathText';
 import { ReadAloudButton, itemSpeechText } from '../read-aloud';
 import { LearnMore, learnLinksByTopic, learnMoreLinks } from '../learn-links';
 import {
@@ -27,6 +28,7 @@ import {
 } from '../juice';
 import { markSound, useSound } from '../sound';
 import { useLearnApi } from './learnApi';
+import { HelpPanel } from './HelpPanel';
 import { NewRewards } from './NewRewards';
 import {
   DailyGoal,
@@ -42,7 +44,9 @@ import { SetComplete } from './SetComplete';
 /** What read aloud says for the feedback box: the verdict, the answer and the explanation. */
 function feedbackSpeech(result: LearnAttemptResponse): string {
   const feedback = result.feedback;
-  const parts = [result.correct ? 'Correct!' : 'Not quite.'];
+  const parts = [
+    result.correct ? (result.helped ? 'Correct, with help.' : 'Correct!') : 'Not quite.',
+  ];
   if (!result.correct && feedback) parts.push(`Answer: ${feedback.correctAnswer}.`);
   if (feedback?.explanation) parts.push(feedback.explanation);
   return parts.join(' ');
@@ -70,7 +74,9 @@ function Feedback({
       aria-label="Answer feedback"
     >
       <div className="read-aloud-row">
-        <p className="feedback__title">{result.correct ? 'Correct!' : 'Not quite'}</p>
+        <p className="feedback__title">
+          {result.correct ? (result.helped ? 'Correct, with help' : 'Correct!') : 'Not quite'}
+        </p>
         <ReadAloudButton text={feedbackSpeech(result)} label="Read the feedback aloud" />
       </div>
       {result.correct ? (
@@ -79,12 +85,23 @@ function Feedback({
           {result.comboBonusXp ? ` (Includes +${result.comboBonusXp} XP combo bonus)` : ''}
         </p>
       ) : (
-        feedback && <p>Answer: {feedback.correctAnswer}</p>
+        feedback && (
+          <p>
+            Answer: <MathText text={feedback.correctAnswer} subject={item.topicId} />
+          </p>
+        )
       )}
       {!result.correct && typeof wrongLine === 'number' && (
         <p>Line {wrongLine + 1} is where it first goes wrong.</p>
       )}
-      {feedback?.explanation && <p>{feedback.explanation}</p>}
+      {feedback?.explanation && (
+        <p>
+          <MathText text={feedback.explanation} subject={item.topicId} />
+        </p>
+      )}
+      {result.correct && result.helped && (
+        <p>Half XP after help. It&apos;ll come back to practise, so it sticks.</p>
+      )}
       {result.flashcardAdded && <p>Added to your flashcards for another go later.</p>}
       {comeback && <p className="feedback__comeback">Comeback! You got it this time.</p>}
       {miss === 'retry' && <p>No worries: we&apos;ll have another go at this in a moment.</p>}
@@ -96,6 +113,7 @@ function Feedback({
           links={learnMoreLinks(learnLinksByTopic, {
             topicId: item.topicId,
             learningPoint: item.learningPoint,
+            itemId: item.contentId,
           })}
         />
       )}
@@ -176,6 +194,8 @@ export function LessonPlayer({
   const [comeback, setComeback] = useState(false);
   const [index, setIndex] = useState(0);
   const [draft, setDraft] = useState<Draft>(null);
+  /** "Help me understand" was opened for this question (F10). */
+  const [helped, setHelped] = useState(false);
   const [result, setResult] = useState<LearnAttemptResponse | null>(null);
   const [checking, setChecking] = useState(false);
   const [error, setError] = useState(false);
@@ -225,10 +245,12 @@ export function LessonPlayer({
         mode: 'learn',
         ...(recall ? { recall: true } : {}),
         ...(isRetryEntry(entry) ? { retry: true } : {}),
+        ...(helped ? { helped: true } : {}),
       });
       // Learning from mistakes (F5, owner guardrails): one retry per point and 2 per lesson, a
       // confidence question before each retry, and a step down after a second miss.
-      if (!marked.correct && !recall && canRetry(item)) {
+      // A helped answer (F10) is practised like a miss.
+      if ((!marked.correct || marked.helped) && !recall && canRetry(item)) {
         const plan = planAfterMiss(
           queue,
           index,
@@ -287,6 +309,7 @@ export function LessonPlayer({
     if (extended !== queue) setQueue(extended);
     setIndex(index + 1);
     setDraft(null);
+    setHelped(false);
     setResult(null);
     setMiss(null);
     setComeback(false);
@@ -355,6 +378,14 @@ export function LessonPlayer({
             optionMark={optionMark}
           />
         </Shake>
+        {item.type !== 'flashcard' && item.type !== 'extended_answer' && (
+          <HelpPanel
+            key={`help-${index}`}
+            item={item}
+            disabled={result !== null}
+            onHelped={() => setHelped(true)}
+          />
+        )}
       </div>
       <div className="lesson__footer">
         {result?.correct && result.xpEarned > 0 && (

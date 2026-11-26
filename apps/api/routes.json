@@ -63,6 +63,7 @@
     "GET /v1/student/flashcards",
     "GET /v1/student/flashcards/decks/:topicId",
     "GET /v1/student/learn/command-words",
+    "GET /v1/student/learn/items/:id/help",
     "GET /v1/student/learn/lesson",
     "GET /v1/student/learn/progress",
     "GET /v1/student/learn/subjects/:subjectId/topics",

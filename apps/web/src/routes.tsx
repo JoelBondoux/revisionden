@@ -1,5 +1,6 @@
 import { Navigate, useParams, type RouteObject } from 'react-router-dom';
 import { AppLayout, FocusLayout } from './layout/AppLayout';
+import { HomePage } from './features/home/HomePage';
 import { RouteChange } from './layout/RouteChange';
 import { LinkPage } from './features/onboarding/LinkPage';
 import { UnlockPage } from './features/onboarding/UnlockPage';
@@ -10,7 +11,7 @@ import { FamilyPage } from './pages/FamilyPage';
 import { InstallHelpPage } from './pages/InstallHelpPage';
 import { MapPage } from './pages/MapPage';
 import { NotFoundPage } from './pages/NotFoundPage';
-import { SettingsPage } from './pages/SettingsPage';
+import { LookAndSoundPage, MoreSettingsPage, SettingsPage } from './pages/SettingsPage';
 import { WelcomePage } from './pages/WelcomePage';
 import { BatchReviewPage } from './features/review/BatchReviewPage';
 import { ReviewQueuePage } from './features/review/ReviewQueuePage';
@@ -103,8 +104,9 @@ const screens: RouteObject[] = [
   {
     element: <AppLayout />,
     children: [
+      { path: '/home', element: <HomePage /> },
       { path: '/map', element: <MapPage /> },
-      { path: '/learn', element: <Navigate to="/map" replace /> },
+      { path: '/learn', element: <Navigate to="/home" replace /> },
       { path: '/learn/subject/:subjectId', element: <SubjectPage /> },
       { path: '/cards', element: <FlashcardsPage /> },
       { path: '/rewards', element: <RewardsPage /> },
@@ -122,7 +124,10 @@ const screens: RouteObject[] = [
       },
       // Statistics dashboards (workstream K): My stats, reached from "My progress" on Me (W7).
       { path: '/progress', element: <MyStatsPage /> },
+      // Me (W9): the main page plus two sub-pages, so the main one fits one phone screen.
       { path: '/settings', element: <SettingsPage /> },
+      { path: '/settings/look-and-sound', element: <LookAndSoundPage /> },
+      { path: '/settings/more', element: <MoreSettingsPage /> },
       { path: '/install', element: <InstallHelpPage /> },
       { path: '/about', element: <AboutPage /> },
       // Policies are reachable without signing in (workstream L).

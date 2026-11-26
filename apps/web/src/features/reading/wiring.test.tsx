@@ -9,7 +9,7 @@ const readJson = (path: string) => JSON.parse(readFileSync(path, 'utf8')) as Rec
 
 describe('reading comfort wiring', () => {
   it('shows the Reading comfort section in Settings', async () => {
-    renderRoute('/settings');
+    renderRoute('/settings/look-and-sound');
     expect(await screen.findByRole('heading', { name: 'Reading comfort' })).toBeInTheDocument();
   });
 

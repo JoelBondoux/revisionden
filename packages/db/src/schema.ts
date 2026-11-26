@@ -455,6 +455,8 @@ export const attempts = pgTable(
     }),
     // F5: a retry in the lesson after a wrong answer (counts at half weight for mastery).
     retry: boolean('retry').notNull().default(false),
+    // Added by workstream F10: answered after "Help me understand" (half XP, practised like a miss).
+    helped: boolean('helped').notNull().default(false),
   },
   (t) => [index('attempts_student_created_idx').on(t.studentId, t.createdAt)],
 );
@@ -987,7 +989,19 @@ export const parentRewards = pgTable(
 // 12 months after it is closed.
 // ---------------------------------------------------------------------------------------------
 
-export const FEEDBACK_KINDS = ['bug', 'idea', 'confusing', 'other'] as const;
+/**
+ * lesson_helped / lesson_not_helped: the one-tap "Did this help?" after an interactive lesson
+ * (W8). They carry the item and never any text.
+ */
+export const FEEDBACK_KINDS = [
+  'bug',
+  'idea',
+  'confusing',
+  'other',
+  'lesson_helped',
+  'lesson_not_helped',
+] as const;
+export const LESSON_FEEDBACK_KINDS = ['lesson_helped', 'lesson_not_helped'] as const;
 export const FEEDBACK_STATUSES = ['new', 'looking_into_it', 'fixed', 'will_not_fix'] as const;
 export const FEEDBACK_MAX_TEXT = 500;
 
@@ -1016,6 +1030,8 @@ export const feedback = pgTable(
     }),
     kind: text('kind', { enum: FEEDBACK_KINDS }).notNull(),
     text: text('text'),
+    // Lesson feedback (W8): the interactive lesson item it is about.
+    itemId: uuid('item_id').references(() => items.id, { onDelete: 'cascade' }),
     device: jsonb('device').$type<FeedbackDevice>(),
     status: text('status', { enum: FEEDBACK_STATUSES }).notNull().default('new'),
     createdAt: createdAt(),
@@ -1037,7 +1053,15 @@ export const feedback = pgTable(
   (t) => [
     index('feedback_family_id_idx').on(t.familyId),
     index('feedback_created_at_idx').on(t.createdAt),
-    check('feedback_kind_values', sql`${t.kind} in ('bug', 'idea', 'confusing', 'other')`),
+    check(
+      'feedback_kind_values',
+      sql`${t.kind} in ('bug', 'idea', 'confusing', 'other', 'lesson_helped', 'lesson_not_helped')`,
+    ),
+    // A lesson tap has an item and no text; other feedback has no item.
+    check(
+      'feedback_lesson_tap',
+      sql`case when ${t.kind} in ('lesson_helped', 'lesson_not_helped') then ${t.itemId} is not null and ${t.text} is null else ${t.itemId} is null end`,
+    ),
     check('feedback_sender_role_values', sql`${t.senderRole} in ('student', 'parent')`),
     check(
       'feedback_status_values',

@@ -6,11 +6,12 @@ import { BugButton } from '../features/feedback/BugButton';
 import { BugButtonProvider, useBugButtonVisible } from '../features/feedback/bugButtonContext';
 import { RewardNotices } from '../features/feedback/RewardNotices';
 import { MuteButton } from '../features/sound';
+import { PipHomeButton, usePipSubject } from '../features/juice/pip';
 import { OfflineBanner } from '../pwa/OfflineBanner';
 import { useStudent } from '../session/StudentContext';
 import { PublicHeader } from './PublicHeader';
 import { VersionFooter } from './VersionFooter';
-import { useOnboardingApi } from '../features/onboarding/OnboardingApiContext';
+import { MyAvatarProvider, useMyAvatar } from '../features/me';
 
 /** Flashcards due for the chosen student; zero while loading, on error or with nobody chosen. */
 function useCardsDue(): number {
@@ -25,13 +26,7 @@ function useCardsDue(): number {
 
 /** The chosen student's own avatar code for the Me nav item; null while loading or on error. */
 function useMyAvatarCode(): string | null {
-  const onboarding = useOnboardingApi();
-  const { studentId } = useStudent();
-  const avatar = useApiResource(
-    () => (studentId ? onboarding.getMyAvatar() : Promise.resolve(null)),
-    [onboarding, studentId],
-  );
-  return avatar.status === 'ready' ? (avatar.data?.avatarCode ?? null) : null;
+  return useMyAvatar()?.code ?? null;
 }
 
 /** Marks the main area while the bug button is showing (focused and public pages pad it). */
@@ -53,13 +48,19 @@ function AppPages() {
   // Only a student's linked device gets the student app nav; anyone else (signed out, or a
   // parent) gets the small public header on these pages.
   if (!studentId) return <PublicLayout />;
-  return <StudentLayout />;
+  // The nav's Me item and the Me page share one avatar, so an edit shows everywhere at once (W9).
+  return (
+    <MyAvatarProvider studentId={studentId}>
+      <StudentLayout />
+    </MyAvatarProvider>
+  );
 }
 
 function StudentLayout() {
   const cardsDue = useCardsDue();
   const avatarCode = useMyAvatarCode();
   const mainClass = useMainClass('app-main');
+  const pipSubject = usePipSubject();
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main">
@@ -69,6 +70,8 @@ function StudentLayout() {
       <BottomNav cardsDue={cardsDue} avatarCode={avatarCode} />
       <main id="main" className={mainClass} tabIndex={-1}>
         <header className="sound-header">
+          {/* Pip, the Home button, top left on every student screen (J15b). */}
+          <PipHomeButton subjectId={pipSubject} />
           <MuteButton />
           {/* In the top row, not floating, so it never covers the page (docs/PRODUCT_RULES.md). */}
           <BugButton />
@@ -110,12 +113,18 @@ export function FocusLayout() {
   );
 }
 
+/** Lessons and tests: Pip sits top left there too, and asks before leaving (J15b). */
+const isLessonPage = (pathname: string) =>
+  /^\/learn\/(topic\/[^/]+|daily|subject\/[^/]+\/(practice|start))$/.test(pathname);
+
 /** Parent screens: the bug button goes in a top row there, so it never covers the page (I15). */
 const isParentPage = (pathname: string) => /^\/(parent|family)(\/|$)/.test(pathname);
 
 function FocusPages() {
   const { pathname } = useLocation();
   const topRow = isParentPage(pathname);
+  const lesson = isLessonPage(pathname);
+  const pipSubject = usePipSubject();
   const floatingClass = useMainClass('focus-main');
   const mainClass = topRow ? 'focus-main' : floatingClass;
   return (
@@ -125,6 +134,11 @@ function FocusPages() {
         {topRow && (
           <header className="parent-top-row">
             <BugButton />
+          </header>
+        )}
+        {lesson && (
+          <header className="lesson-top-row">
+            <PipHomeButton subjectId={pipSubject} inLesson />
           </header>
         )}
         <Outlet />
