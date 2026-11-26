@@ -250,8 +250,12 @@ Tags: #product #rules #limits #defaults
   topic"), weak spots, a friends-league chip marked Soon, and this week's days studied with the
   reward gift. Pip is a round "Home" button at the top left of every student screen and lesson; in
   a lesson or test he asks "Leave this lesson?" first. He acts about every 8 s, naps 21:00 to 07:00,
-  stops after 60 s without input, keeps still in lessons and with reduced motion. He wears one item
-  for the current subject (and a prop on Home) plus a unisex touch that rotates by day. The map's
+  stops after 60 s without input, keeps still in lessons and with reduced motion. He wears one item for the current subject
+  and holds its prop in front of his ring (Pip v3, J15b-2: bigger head leaning out of the ring,
+  shoulders only, no arm; Maths a calculator, English Literature a book; soft flag washes for
+  French, German and Spanish), plus one of three gently-leaning looks that rotates by day (never
+  tied to subject or student). "Leave this lesson?" is a true modal: the page behind is inert and
+  focus stays in it. The student's avatar on the Me item sits in its own ring, head leaning out. The map's
   Today strip moved to Home: the map is now topics only. Code: `apps/web/src/features/home/`,
   `apps/web/src/features/juice/pip/`; e2e `e2e/tests/home.spec.ts`.
 - Map layout (J12b, design C "Your path", owner choice 2026-11-26; Today strip moved to Home in
@@ -799,11 +803,18 @@ Tags: #product #rules #limits #defaults
 - Original Web Audio sounds, no files. Header quick mute and Settings (on/off, volume, tap sounds
   off by default), per device; follows the iOS silent switch where possible. No correct/wrong
   sounds in Test mode before submit. Sound is never the only signal. Workstream U.
-- Style sounds and haptics (U6): every animation fires a feedback event (15: buttonPress, cardFlip,
+- Style sounds and haptics (U6): every animation fires a feedback event (21: buttonPress, cardFlip,
   correct, wrong, combo, xpTick, ringFill, rewardWobble, rewardOpen, rewardUnlock, setComplete,
-  levelUp, homeEnter, nodePop, locked) that plays the active effect style's synthesised sound plus a vibration. Packs: Doodle
+  levelUp, homeEnter, nodePop, locked, stylesUnlocked, and U8's goalHit, nodeComplete,
+  pageTransition, particleBurst, prizeBox) that plays the active effect style's synthesised sound plus a vibration. Packs: Doodle
   Diary (default, owner-approved 2026-11-26), then the unlockable Sticker Book, Pop Burst,
-  Starlight, Comic Pop, Garden Grow and Pixel Arcade (U6c); unknown styles use the default.
+  Starlight, Comic Pop, Garden Grow and Pixel Arcade (U6c), plus three unlocked together by the
+  starting test (U7, owner-approved 2026-11-26: Petal Glow `petal-glow`, Turbo Drive
+  `turbo-drive`, Rainbow Parade `rainbow-parade`, never labelled by gender). `stylesUnlocked` is one
+  special reveal sound, the same in every style, up to 3 s. U8 (owner: "more exciting sounds,
+  lots of pops & whizzes"): every style has pops, whizzes, sparkles and fizz in its own flavour,
+  layered on correct, combo, set complete, level up and the prize box, plus the five new events;
+  pops wobble up to ±3% in pitch (combos and prize pops climb exactly a whole tone per step); unknown styles use the default.
   Default is one value, `DEFAULT_STYLE` in `feedback/styles.ts`. Square waves
   only in Comic Pop and Pixel Arcade (low-passed at 2800 Hz); "wrong" soft in every style. Vibration switch on by
   default and independent of mute; no vibration on iPhone/iPad browsers (no Vibration API).
@@ -985,7 +996,8 @@ Tags: #product #rules #limits #defaults
   block, report, or a parent turning friends off; 8 weeks kept; wins counted in
   `students.league_wins` for the league rewards). A friendship is saved before its request is
   marked started; starting is safe to repeat, and a request left with both approvals is finished
-  the next time the child or a parent opens Friends (FL4b, FL4c): `docs/FRIENDS_LEAGUE.md`
+  the next time the child or a parent opens Friends (FL4b, FL4c). A removal is never undone:
+  removing, blocking, reporting or turning friends off first declines the open requests (FL4d): `docs/FRIENDS_LEAGUE.md`
   (nickname, avatar, title and weekly learning XP only; one parent per family approves; no chat;
   10-friend cap; siblings join automatically; reports seen by both families' parents and AppDeck;
   rank chip on Home (was the Map until Home landed), League page under Me; head-to-head challenges later).

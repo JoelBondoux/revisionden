@@ -5,7 +5,8 @@ export const IDLE_GAP_MS = 8000;
 /** Pip stops acting after this long without a tap or key press, so he never nags. */
 export const IDLE_STOP_MS = 60_000;
 
-const ACTIONS: readonly PipPose[] = ['blink', 'wave', 'stretch', 'read', 'timer'];
+/** J15b-2: Pip v3 has no arm, so he idles with his head, ears and eyes. */
+const ACTIONS: readonly PipPose[] = ['blink', 'tilt', 'ears', 'look'];
 /** Study hours: outside them Pip naps instead. */
 const AWAKE_FROM = 7;
 const AWAKE_UNTIL = 21;

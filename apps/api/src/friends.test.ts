@@ -1064,3 +1064,87 @@ describe('review fixes, part 3 (FL4c)', () => {
     expect((await friendsOf(a)).friends.map((f) => f.id)).toEqual([b.studentId]);
   });
 });
+
+describe('review fixes, part 4 (FL4d): a removal is never undone', () => {
+  const failStarts = async () => {
+    await t.db.execute(sql`
+      create or replace function fl4d_fail() returns trigger as $$
+      begin
+        if new.status = 'started' then raise exception 'fl4d: mark failed'; end if;
+        return new;
+      end $$ language plpgsql`);
+    await t.db.execute(
+      sql`create trigger fl4d_fail before update on friend_requests for each row execute function fl4d_fail()`,
+    );
+  };
+  const allowStarts = () => t.db.execute(sql`drop trigger fl4d_fail on friend_requests`);
+  const statusOf = async (id: string) =>
+    (await t.db.select().from(friendRequests).where(eq(friendRequests.id, id)))[0]!.status;
+
+  /** Both families approve; the friendship is saved but the request is never marked started. */
+  async function halfStarted(a: Kid, b: Kid) {
+    const id = await request(a, b);
+    expect((await approve(a, id)).status).toBe(200);
+    await failStarts();
+    try {
+      expect((await approve(b, id)).status).toBe(500);
+    } finally {
+      await allowStarts();
+    }
+    expect(await statusOf(id)).toBe('parents');
+    expect((await friendsOf(a)).friends.map((f) => f.id)).toEqual([b.studentId]);
+    return id;
+  }
+
+  it('does not bring back a friendship a parent removed', async () => {
+    const a = await kid();
+    const b = await kid();
+    const id = await halfStarted(a, b);
+    // friendsOf above healed it; leave it half-started again for the real case.
+    await t.db.update(friendRequests).set({ status: 'parents' }).where(eq(friendRequests.id, id));
+    const res = await send(
+      'DELETE',
+      `/v1/students/${a.studentId}/friends/${b.studentId}`,
+      a.parent.headers,
+    );
+    expect(res.status).toBe(204);
+    expect(await statusOf(id)).toBe('declined');
+    expect((await friendsOf(a)).friends).toEqual([]);
+    expect((await friendsOf(b)).friends).toEqual([]);
+    expect((await parentView(b)).waitingForOther).toEqual([]);
+  });
+
+  it('does not bring back a friendship the child removed', async () => {
+    const a = await kid();
+    const b = await kid();
+    const id = await halfStarted(a, b);
+    await t.db.update(friendRequests).set({ status: 'parents' }).where(eq(friendRequests.id, id));
+    expect((await send('DELETE', `/v1/student/friends/${a.studentId}`, b.headers)).status).toBe(
+      204,
+    );
+    expect(await statusOf(id)).toBe('declined');
+    expect((await friendsOf(a)).friends).toEqual([]);
+  });
+
+  it('does not bring back a friendship after a block', async () => {
+    const a = await kid();
+    const b = await kid();
+    const id = await halfStarted(a, b);
+    await t.db.update(friendRequests).set({ status: 'parents' }).where(eq(friendRequests.id, id));
+    const res = await send('POST', `/v1/student/friends/${a.studentId}/block`, b.headers);
+    expect(res.status).toBeLessThan(300);
+    expect(await statusOf(id)).toBe('declined');
+    expect((await friendsOf(a)).friends).toEqual([]);
+  });
+
+  it("closes the child's open requests when a parent turns friends off", async () => {
+    const a = await kid();
+    const b = await kid();
+    const id = await request(a, b);
+    expect((await approve(a, id)).status).toBe(200);
+    await allow(a, false);
+    expect(await statusOf(id)).toBe('declined');
+    await allow(a, true);
+    expect((await friendsOf(a)).friends).toEqual([]);
+  });
+});

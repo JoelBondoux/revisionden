@@ -263,6 +263,13 @@ New tables (one new migration):
   declined. A request left with both approvals (a save that failed) is finished the next time
   either child or a parent opens Friends, so it never sits as "waiting for the other family". No
   migration: the pair was already the primary key.
+- **Review fixes, part 4 (FL4d, from the train #330 review; child safety):** a removal is never
+  undone automatically. Removing a friend (by the child or a parent), blocking or reporting
+  first declines every open request between the two children, and turning friends off declines
+  all of that child's open requests, so a request left with both approvals cannot be finished
+  later by a Friends view. The requests are closed before the friendship is deleted: if closing
+  fails, the removal fails and can be tried again, rather than half-working. Deleting a child or
+  a family deletes their requests with them.
 - **Known behaviour (lead, 2026-11-26):** deleting a child does not settle their friends'
   finished weeks first. The child's data goes at once, so a friend whose last weeks were not yet
   settled simply has that rival missing from those weeks. Accepted.

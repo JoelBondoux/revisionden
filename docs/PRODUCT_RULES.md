@@ -896,7 +896,13 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   and sound").** Every animation fires one feedback event: `buttonPress`, `cardFlip`, `correct`,
   `wrong`, `combo` (step 1–6), `xpTick`, `ringFill`, `rewardWobble`, `rewardOpen`, `rewardUnlock`,
   `setComplete`, `levelUp`, plus `homeEnter` (Home entrance, once per visit), `nodePop` (topic
-  nodes popping in on the map) and `locked` (tapping something locked) (`useSound().emit(event)`). Each plays the active effect style's sound and
+  nodes popping in on the map), `locked` (tapping something locked) and `stylesUnlocked` (U7: the
+  one-off moment the starting test unlocks three styles together; one special reveal, the same in
+  every style, at most 3 s, never in Test mode before submit), and U8's `goalHit` (daily goal
+  ring completes), `nodeComplete` (a topic node completes), `pageTransition` (a soft whoosh
+  between screens, no vibration), `particleBurst` (synced with J's particle bursts; waits for
+  submit in Test mode) and `prizeBox` (one prize popping out of the prize box, `step` 1, 2, 3...
+  climbing) (`useSound().emit(event)`). Each plays the active effect style's sound and
   a vibration pattern. One sound pack per style, synthesised with Web Audio (no files): Sticker Book
   (paper peel, slap, stamp, pencil tick), Pop Burst (bubbly pops, jelly boings), Starlight
   (chimes, shimmer, soft swells), Comic Pop (punchy low-passed squares, whooshes, POWs), Garden Grow
@@ -907,10 +913,23 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   default is one value, `DEFAULT_STYLE` in `features/sound/feedback/styles.ts` (Doodle Diary,
   owner-approved; Sticker Book is now an unlockable style like the others). Unknown styles use the default. Style
   ids: `sticker-book`, `pop-burst`, `starlight`, `comic-pop`, `garden-grow`, `pixel-arcade`,
-  `doodle-diary`. J's style system calls
+  `doodle-diary`. U7 (owner-approved 2026-11-26) adds three styles
+  unlocked together by the starting test, never labelled by gender: Petal Glow (`petal-glow`,
+  music-box bells and petal swishes), Turbo Drive (`turbo-drive`, low thumps, clicks, whooshes and
+  power-fifth stabs) and Rainbow Parade (`rainbow-parade`, bright major-scale colour runs). J's style system calls
   `useFeedbackStyle(styleId)`. Older `play()` calls for tap, correct (combo when it has a step),
   wrong, card flip, celebration, level up and reward unlocked follow the style too; the rest keep
   the main bank, and reward tiers (U4) keep their own sounds but add the matching vibration.
+  - Juice (U8, owner 2026-11-26: "more exciting sounds, lots of pops & whizzes"): each style has
+    a flavour of pops, whizzes, sparkles, fizz and a whoosh (paper pocks for Sticker Book, coin
+    pops for Pop Burst, glassy chimes for Starlight, POW blips for Comic Pop, seed pops for
+    Garden Grow, chiptune blips for Pixel Arcade, pencil taps for Doodle Diary, bubble pops for
+    Petal Glow, click-thumps for Turbo Drive, colour pops for Rainbow Parade), layered on correct
+    (pop and sparkle), combo (a rising whizz that climbs with the step), set complete and level
+    up (whizz up, then a pop cascade) and the prize box (rattle, big POP, rewards popping out).
+    Pops vary their pitch by up to 3% either way so repeats never sound robotic; combos and
+    prize pops climb exactly a whole tone per step. Same rules: mute, first tap, Test mode,
+    throttling (bursts 60 ms, prize pops 50 ms, page whooshes 150 ms), similar loudness.
   - Vibration: a light tick for presses and flips, a double pulse for right answers, a rising rhythm
     for combos and a longer pattern for unlocks, set complete and level up; a light tick for the
     Home entrance and one short buzz for a locked tap; none for fast ticks or map nodes popping in.

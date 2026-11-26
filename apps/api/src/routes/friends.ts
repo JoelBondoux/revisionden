@@ -293,6 +293,25 @@ async function healApprovedRequests(db: Database, studentId: string, now: Date) 
 }
 
 /**
+ * Declines every open request (waiting for the child's check or for parents) between `x` and `y`,
+ * or, with no `y`, every open request of `x` (FL4d). Run before a friendship ends or friends is
+ * turned off, so a request left with both approvals cannot be finished later.
+ */
+async function closeOpenRequests(db: Database, now: Date, x: string, y?: string) {
+  const involves = (id: string) =>
+    or(eq(friendRequests.fromStudentId, id), eq(friendRequests.toStudentId, id));
+  await db
+    .update(friendRequests)
+    .set({ status: 'declined', endedAt: now })
+    .where(
+      and(
+        inArray(friendRequests.status, ['child_confirm', 'parents']),
+        y === undefined ? involves(x) : and(involves(x), involves(y)),
+      ),
+    );
+}
+
+/**
  * Ends a friendship, if any. Finished weeks are settled first for both children (review fix,
  * FL4-fix), so leaving after Sunday cannot change last week's result. Returns whether there was one.
  */
@@ -301,6 +320,9 @@ async function unfriend(db: Database, x: string, y: string, now: Date) {
     const s = await loadStudent(db, id);
     if (s) await settleLeagueWeeks(db, s, now);
   }
+  // Close the pair's open requests first (FL4d), so nothing can start the friendship again
+  // without fresh approval. If this fails, the friendship is not removed (no silent undo).
+  await closeOpenRequests(db, now, x, y);
   const [a, b] = pair(x, y);
   const gone = await db
     .delete(friendships)
@@ -701,7 +723,10 @@ export function parentFriendRoutes(deps: FriendDeps) {
     const { allowed } = await readJson(c, allowedSchema);
     const self = await child(c.var.parent.familyId, c.req.param('id'));
     // Settle finished weeks while the child's friends still count (FL4-fix).
-    if (!allowed) await settleLeagueWeeks(db, self, clock.now());
+    if (!allowed) {
+      await settleLeagueWeeks(db, self, clock.now());
+      await closeOpenRequests(db, clock.now(), self.id);
+    }
     await db.update(students).set({ friendsAllowed: allowed }).where(eq(students.id, self.id));
     await logFor(
       db,

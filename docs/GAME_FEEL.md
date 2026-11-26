@@ -292,18 +292,29 @@ never transition. An ordinary link does not either.
 
 ## Pip, the Home button, and Home (J15b, owner direction 2026-11-26)
 
-- **Pip** (`features/juice/pip/`) is code-drawn original art in layers: the fox with shoulders, a
-  round frame he leans out of (the top of the ring behind his head, the bottom in front), the arm
-  always growing from the shoulder, one worn subject item, and on Home a subject prop and tint.
-  Outfits by subject: `outfits.ts` (`outfitFor`). Unisex touches (a moustache, a bow, freckles or
-  none, about half of days none) rotate by day (`touchFor`), never tied to the subject or student.
+- **Pip v3** (`features/juice/pip/`, J15b-2, from the owner-approved all-themes mockup
+  `docs/mockups/all-themes-pip.html`) is code-drawn original art in layers: a bigger head leaning
+  out over the top of a round ring, **shoulders only** (no arm), the body clipped to the disc, a
+  thin dark keyline inside the ring so it reads on any disc, the subject's worn item, and the
+  subject **prop held in front of the ring** so it reads at button size. Outfits for all 16
+  subjects: `outfits.ts` (`outfitFor`), art in `art.tsx` (generated from the mockup). Maths holds a
+  calculator (no pencil); English Literature holds a book. French, German and Spanish wash the disc
+  with soft flag colours (38%). Three gently-leaning looks with two versions each rotate by day
+  (`lookFor`: A a tuft or tiny moustache; B a bow with lashes, or a clip with a little blush; C a
+  stud earring with freckles, or a beanie, which becomes a bandana under a hat); never tied to the
+  subject or the student, no flags or symbols, and Pip keeps his name.
+- **The player's avatar** (`FramedAvatar.tsx`) sits in its own ring on the Me item, a little
+  smaller than Pip: the body clipped to the disc, the head leaning out over the top, the avatar's
+  square background hidden. E9 motion is untouched (idle, still with reduced motion).
 - **The Home button**: Pip in a 56px round button, top left of every student screen and of
   lessons and tests (a row of its own there). Accessible name "Home"; the tap target is the circle,
   and his head leans out above it without covering anything. In a lesson or test, tapping him asks
-  **"Leave this lesson?"** (Keep going, focused first; Leave). The subject comes from the map or
+  **"Leave this lesson?"** (Keep going, focused first; Leave). It is a true modal (J15b-2): it
+  renders in its own layer, the rest of the page is `inert` while it asks, Tab and Shift+Tab stay
+  on its two buttons, and Escape, Keep going or a tap outside close it and put focus back on Pip. The subject comes from the map or
   Home, kept in memory only (`subject.ts`, nothing saved on the device).
-- **Idle loop** (`idle.ts`): one action about every 8 seconds (blink, wave, stretch, read, peek at
-  a timer), never the same twice running; naps outside 07:00 to 21:00; stops after a minute without
+- **Idle loop** (`idle.ts`): one action about every 8 seconds (blink, a head tilt, an ear twitch,
+  a look around; v3 has no arm), with slow shoulder breathing at rest, never the same twice running; naps outside 07:00 to 21:00; stops after a minute without
   a tap or key; still in lessons and tests. Moves ease in and out through in-between frames and
   return to rest, so nothing snaps. Reduced motion: a still pose.
 - **Home** (`/home`, `features/home/`) is the first screen after signing in or unlocking and where
