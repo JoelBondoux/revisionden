@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Inviting the other parent or sending your child their set-up link is quicker on a phone: tap Share link to send it with any app you like (Messages, WhatsApp, email). Where your device can't share, Copy link is still there.
 - Got one wrong? A similar question comes back a few questions later (or the same one at the end), and anything you found hard, or took a long time over, comes back as a warm-up over the next few days until it sticks.
 - Fairer marking: typed answers are no longer marked wrong just for spaces, capitals, a different minus or times sign, x² instead of x^2, or (where order doesn't matter) writing 2 + 3n instead of 3n + 2.
 - Moving to another screen now starts it at the top, instead of halfway down where the last screen was. The back button still takes you back to where you were.
@@ -113,6 +114,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Share invite links (I8): `ShareLink` and `browserShareApis` (`apps/web/src/pwa/{ShareLink.tsx,share.ts}`) give the second-parent invite (`ParentsPanel`, B3's lane, authorised by the lead) and the child device link (`LinkDeviceStep`) a big "Share link" button using `navigator.share` where it exists, "Copy link" otherwise or after a failed share, and treat a closed share sheet (`AbortError`) as no error. Share text names no child; the QR code and codes stay.
 - Learning from mistakes (F5): `packages/core/src/mistakes.ts` (expected times, shaky, `insertRetry`, review ladder 1/3/7 days, `RETRY_WEIGHT`); migration 0026 (`items.learning_point`, `items.expected_seconds`, `attempts.retry`, `review_points`); attempts return `similar` and `shaky` and take `retry`; lessons and the 5-a-day start with up to 2 `warmUp` items; retries count at half weight for mastery; the family export includes `reviewPoints`; content sync reads optional `learning_point` and `expected_seconds`.
 - Fairer short-answer marking (F6): `packages/core/src/answer-normalise.ts` (`normaliseAnswer`, `sameAnswer`) used by `markShortAnswer`: spaces, case, unicode minus, ×/·/*/x between numbers, ÷, superscripts, ≤/≥, √/sqrt and list separators are normalised; optional `answer.any_order` (commuted products and sums, reordered lists, swapped equation sides; never coordinates or inequalities) and `answer.units` in the item schema. Maths engine: `_solved_value` accepts a solved value in other letters (`x = 2a`). No migration.
 - Data retention policy 1.10 (L): a device link sent instead of a QR code lasts 24 hours (QR code 10 minutes); expired link codes are deleted within 20 minutes of expiring (clean-up waits for a device set-up in progress). Settles E4's contradictions entry. Privacy notice 1.10 and young people's notice 1.7 mention the sent link and short code alongside the QR code.

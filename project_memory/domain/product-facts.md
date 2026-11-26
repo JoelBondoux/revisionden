@@ -19,6 +19,12 @@ Tags: #product #rules #limits #defaults
   ends at once, notice next sign-in); deleting the family needs both when there are two; family
   activity log names parents only by number, important changes pushed to the other parent and
   shown as new in the parent home; log kept 12 months. Migration 0012.
+- Sharing invite links (I8, `apps/web/src/pwa/ShareLink.tsx`): the second-parent invite and the
+  child's device link show a big "Share link" button that opens the device's own share sheet
+  where the browser has one (`navigator.share`), and "Copy link" otherwise or if sharing fails;
+  closing the share sheet is not an error. Messages are short and name no child: "Join our family
+  on RevisionDen as a parent: <link>" and "Set up RevisionDen on your phone: <link>". The QR code
+  and short codes stay for setting up in person.
 - Year group: Years 9 to 13 only (core schema and database check `students_year_group_range`,
   migration 0006).
 - Google and Microsoft access, refresh and ID tokens are never stored: blanked in Better Auth's

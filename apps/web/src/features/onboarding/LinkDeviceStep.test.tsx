@@ -106,7 +106,7 @@ describe('LinkDeviceStep', () => {
     const { api } = setup({}, { share: { share: shareSheet } });
     await user.click(await screen.findByRole('button', { name: 'Send a link instead' }));
     expect(api.createLinkToken).toHaveBeenCalledWith(child.student.id, 'share');
-    await user.click(await screen.findByRole('button', { name: 'Share the link' }));
+    await user.click(await screen.findByRole('button', { name: 'Share link' }));
     const sent = (shareSheet.mock.calls[0] as unknown as [{ text: string; url?: string }])[0];
     expect(sent.text).toBe(
       'Set up RevisionDen on your phone: https://dev.revisionden.test/link?token=token-2&family=family-1',
@@ -121,12 +121,30 @@ describe('LinkDeviceStep', () => {
     const user = userEvent.setup();
     setup({}, { share: { copy } });
     await user.click(await screen.findByRole('button', { name: 'Send a link instead' }));
-    expect(screen.queryByRole('button', { name: 'Share the link' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Share link' })).toBeNull();
     await user.click(await screen.findByRole('button', { name: 'Copy link' }));
     expect(copy).toHaveBeenCalledWith(
       'Set up RevisionDen on your phone: https://dev.revisionden.test/link?token=token-2&family=family-1',
     );
     expect(await screen.findByText('Copied')).toBeInTheDocument();
+  });
+
+  it('treats closing the share sheet without sharing as nothing went wrong', async () => {
+    const shareSheet = vi.fn(async () =>
+      Promise.reject(Object.assign(new Error('cancelled'), { name: 'AbortError' })),
+    );
+    const user = userEvent.setup();
+    setup({}, { share: { share: shareSheet } });
+    await user.click(await screen.findByRole('button', { name: 'Send a link instead' }));
+    await user.click(await screen.findByRole('button', { name: 'Share link' }));
+    expect(shareSheet).toHaveBeenCalled();
+    expect(screen.queryByRole('alert')).toBeNull();
+    expect(screen.getByText('WXYZ-2345')).toBeInTheDocument();
+  });
+
+  it('keeps the QR code on screen for setting up in person', async () => {
+    setup({}, { share: { share: vi.fn(async () => undefined) } });
+    expect(await screen.findByRole('img', { name: /QR code/ })).toBeInTheDocument();
   });
 
   it('waits for the device, then says it is set up', async () => {
