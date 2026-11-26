@@ -164,6 +164,30 @@ test('a unicode minus in the blind answer is a minus', async () => {
   assert.equal((await blind(item, '1')).result, 'fail');
 });
 
+test('an answer form (fraction, simplest fraction, index form) is checked as marking does', async () => {
+  const item = draftItem('fixture-simplest', undefined, {
+    type: 'numeric',
+    prompt: 'Fixture? Give your answer as a fraction in its simplest form.',
+    answer: { value: '23/33', form: 'simplest_fraction' },
+    verify: { expression: '23/33' },
+  });
+  assert.equal((await blind(item, '23/33')).result, 'pass');
+  assert.equal((await blind(item, '69/99')).result, 'fail');
+  assert.equal((await blind(item, '0.697')).result, 'fail');
+  const fraction = { ...item, answer: { value: '3/8', form: 'fraction' } };
+  assert.equal((await blind(fraction, '6/16')).result, 'pass');
+  assert.equal((await blind(fraction, '0.375')).result, 'fail');
+  const index = draftItem('fixture-index', undefined, {
+    type: 'numeric',
+    prompt: 'Fixture? Write 360 in index form.',
+    answer: { value: '2^3 × 3^2 × 5', form: 'index_form' },
+    verify: { expression: '2^3 * 3^2 * 5' },
+  });
+  assert.equal((await blind(index, '2³ × 3² × 5')).result, 'pass');
+  assert.equal((await blind(index, '360')).result, 'fail');
+  assert.equal((await blind(index, '2^3 × 3^2 × 7')).result, 'fail');
+});
+
 test('the blind model is asked to round as the question says', () => {
   const { prompt } = blindAnswerPrompt(mc);
   assert.doesNotMatch(prompt, /accuracy the question asks/);

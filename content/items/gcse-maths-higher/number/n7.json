@@ -91,7 +91,7 @@
     "learning_point": "gcse-maths-h-n7-lp-fractional-indices",
     "expected_seconds": 60,
     "prompt": "Work out 16^(-3/4). Give your answer as a fraction.",
-    "answer": { "value": "1/8" },
+    "answer": { "value": "1/8", "form": "fraction" },
     "verify": { "expression": "16^(-3/4)" },
     "marks": 1,
     "explanation": "The minus sign means a reciprocal. The 4 means a fourth root and the 3 means a cube. The fourth root of 16 is 2, 2^3 = 8, and the reciprocal of 8 is 1/8.",
@@ -174,7 +174,7 @@
     "learning_point": "gcse-maths-h-n7-lp-fractional-indices",
     "expected_seconds": 60,
     "prompt": "Work out (4/9)^(-1/2). Give your answer as a fraction.",
-    "answer": { "value": "3/2" },
+    "answer": { "value": "3/2", "form": "fraction" },
     "verify": { "expression": "(4/9)^(-1/2)" },
     "marks": 1,
     "explanation": "The minus sign means a reciprocal: (4/9)^(-1/2) = (9/4)^(1/2). The power 1/2 means a square root: √9 = 3 and √4 = 2, so the answer is 3/2.",
@@ -341,7 +341,7 @@
     "learning_point": "gcse-maths-h-n7-lp-index-laws",
     "expected_seconds": 50,
     "prompt": "5^7 × 5^(-3) ÷ 5^2 = 5^n. Find the value of n.",
-    "answer": { "value": "2" },
+    "answer": { "value": "2", "subject": "n" },
     "verify": { "expression": "log(5^7 * 5^(-3) / 5^2) / log(5)" },
     "marks": 1,
     "explanation": "When you multiply powers of the same number, add the indices; when you divide, subtract them. 7 + (-3) - 2 = 2, so n = 2.",
@@ -370,7 +370,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N7). Answer backed by the maths engine (n = log of the left side to base 5). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N7). Answer backed by the maths engine (n = log of the left side to base 5). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"n = 2\" is accepted, as the question asks for the value of n.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -402,7 +402,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:24:14Z",
+          "at": "2026-11-26T05:31:22Z",
           "notes": "model answered \"2\"; expected \"2\""
         },
         {
@@ -410,7 +410,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:41:33Z",
+          "at": "2026-11-26T05:31:31Z",
           "notes": "no problems found"
         }
       ]
@@ -424,7 +424,7 @@
     "learning_point": "gcse-maths-h-n7-lp-index-laws",
     "expected_seconds": 50,
     "prompt": "(2^3)^4 ÷ 2^5 = 2^n. Find the value of n.",
-    "answer": { "value": "7" },
+    "answer": { "value": "7", "subject": "n" },
     "verify": { "expression": "log((2^3)^4 / 2^5) / log(2)" },
     "marks": 1,
     "explanation": "For a power of a power, multiply the indices: (2^3)^4 = 2^12. Then divide by subtracting: 12 - 5 = 7, so n = 7.",
@@ -453,7 +453,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N7). Answer backed by the maths engine (n = log of the left side to base 2). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N7). Answer backed by the maths engine (n = log of the left side to base 2). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"n = 7\" is accepted, as the question asks for the value of n.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -485,7 +485,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:24:29Z",
+          "at": "2026-11-26T05:31:38Z",
           "notes": "model answered \"7\"; expected \"7\""
         },
         {
@@ -493,7 +493,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:41:40Z",
+          "at": "2026-11-26T05:31:44Z",
           "notes": "no problems found"
         }
       ]
@@ -507,7 +507,7 @@
     "learning_point": "gcse-maths-h-n7-lp-index-laws",
     "expected_seconds": 60,
     "prompt": "3^(-2) × 3^6 ÷ (3^2)^3 = 3^n. Find the value of n.",
-    "answer": { "value": "-2" },
+    "answer": { "value": "-2", "subject": "n" },
     "verify": { "expression": "log(3^(-2) * 3^6 / (3^2)^3) / log(3)" },
     "marks": 1,
     "explanation": "First (3^2)^3 = 3^6. Then add the indices when multiplying and subtract when dividing: -2 + 6 - 6 = -2, so n = -2.",
@@ -536,7 +536,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N7). Answer backed by the maths engine (n = log of the left side to base 3). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N7). Answer backed by the maths engine (n = log of the left side to base 3). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"n = -2\" is accepted, as the question asks for the value of n.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -568,7 +568,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:24:43Z",
+          "at": "2026-11-26T05:31:51Z",
           "notes": "model answered \"-2\"; expected \"-2\""
         },
         {
@@ -576,7 +576,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:41:47Z",
+          "at": "2026-11-26T05:32:00Z",
           "notes": "no problems found"
         }
       ]

@@ -8,7 +8,8 @@
     "expected_seconds": 90,
     "prompt": "Write 0.696969... (the digits 69 recur) as a fraction in its simplest form.",
     "answer": {
-      "value": "23/33"
+      "value": "23/33",
+      "form": "simplest_fraction"
     },
     "verify": {
       "expression": "69/99"
@@ -94,7 +95,8 @@
     "expected_seconds": 90,
     "prompt": "Write 0.292929... (the digits 29 recur) as a fraction in its simplest form.",
     "answer": {
-      "value": "29/99"
+      "value": "29/99",
+      "form": "simplest_fraction"
     },
     "verify": {
       "expression": "29/99"
@@ -180,7 +182,8 @@
     "expected_seconds": 90,
     "prompt": "Write 0.676767... (the digits 67 recur) as a fraction in its simplest form.",
     "answer": {
-      "value": "67/99"
+      "value": "67/99",
+      "form": "simplest_fraction"
     },
     "verify": {
       "expression": "67/99"
@@ -266,7 +269,8 @@
     "expected_seconds": 90,
     "prompt": "Write 0.262626... (the digits 26 recur) as a fraction in its simplest form.",
     "answer": {
-      "value": "26/99"
+      "value": "26/99",
+      "form": "simplest_fraction"
     },
     "verify": {
       "expression": "26/99"
@@ -352,7 +356,8 @@
     "expected_seconds": 90,
     "prompt": "Write 0.343434... (the digits 34 recur) as a fraction in its simplest form.",
     "answer": {
-      "value": "34/99"
+      "value": "34/99",
+      "form": "simplest_fraction"
     },
     "verify": {
       "expression": "34/99"

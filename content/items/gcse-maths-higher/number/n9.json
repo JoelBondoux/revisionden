@@ -7,7 +7,7 @@
     "learning_point": "gcse-maths-h-n9-lp-convert",
     "expected_seconds": 40,
     "prompt": "0.00045 is written in standard form as A × 10^n. Find the value of n.",
-    "answer": { "value": "-4" },
+    "answer": { "value": "-4", "subject": "n" },
     "verify": { "expression": "log((45/100000)/(45/10))/log(10)" },
     "marks": 1,
     "explanation": "Move the decimal point to get a number between 1 and 10: 0.00045 becomes 4.5. The point moves 4 places to the right, and the number is less than 1, so the power is negative: 4.5 × 10^-4, so n = -4.",
@@ -48,7 +48,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer backed by the maths engine: 0.00045 = 4.5 × 10^-4, n = log10(0.00045 / 4.5). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer backed by the maths engine: 0.00045 = 4.5 × 10^-4, n = log10(0.00045 / 4.5). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"n = -4\" is accepted, as the question asks for the value of n.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -80,7 +80,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:30:32Z",
+          "at": "2026-11-26T05:34:12Z",
           "notes": "model answered \"-4\"; expected \"-4\""
         },
         {
@@ -88,7 +88,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:39:12Z",
+          "at": "2026-11-26T05:34:19Z",
           "notes": "no problems found"
         }
       ]
@@ -102,7 +102,7 @@
     "learning_point": "gcse-maths-h-n9-lp-convert",
     "expected_seconds": 40,
     "prompt": "3 870 000 is written in standard form as A × 10^n. Find the value of n.",
-    "answer": { "value": "6" },
+    "answer": { "value": "6", "subject": "n" },
     "verify": { "expression": "log(3870000/(387/100))/log(10)" },
     "marks": 1,
     "explanation": "Move the decimal point to get a number between 1 and 10: 3 870 000 becomes 3.87. The point moves 6 places to the left, so 3 870 000 = 3.87 × 10^6, and n = 6.",
@@ -143,7 +143,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer backed by the maths engine: 3 870 000 = 3.87 × 10^6. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer backed by the maths engine: 3 870 000 = 3.87 × 10^6. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"n = 6\" is accepted, as the question asks for the value of n.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -175,7 +175,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:30:49Z",
+          "at": "2026-11-26T05:34:29Z",
           "notes": "model answered \"6\"; expected \"6\""
         },
         {
@@ -183,7 +183,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:39:21Z",
+          "at": "2026-11-26T05:34:37Z",
           "notes": "no problems found"
         }
       ]
@@ -459,7 +459,7 @@
     "learning_point": "gcse-maths-h-n9-lp-calculate",
     "expected_seconds": 60,
     "prompt": "Work out (6 × 10^8) + (4 × 10^7). Give your answer in standard form.",
-    "answer": { "value": "6.4*10^8" },
+    "answer": { "value": "6.4*10^8", "form": "standard_form" },
     "verify": { "expression": "(6*10^8) + (4*10^7)" },
     "marks": 2,
     "explanation": "Write both with the same power of 10: 4 × 10^7 = 0.4 × 10^8. Add: 6 × 10^8 + 0.4 × 10^8 = 6.4 × 10^8.",
