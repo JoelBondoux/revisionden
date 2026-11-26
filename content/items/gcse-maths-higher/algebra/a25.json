@@ -81,7 +81,7 @@
     "learning_point": "gcse-maths-h-a25-lp-linear-nth",
     "expected_seconds": 60,
     "prompt": "Find an expression for the nth term of the sequence 20, 16, 12, 8, ...",
-    "answer": { "accepted": ["24 - 4n"], "any_order": true },
+    "answer": { "accepted": ["24 - 4n", "20 - 4(n - 1)", "4(6 - n)"], "any_order": true },
     "marks": 2,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
     "checked_by": ["author"],
@@ -132,16 +132,16 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T00:48:35Z",
-          "notes": "model answered \"24 - 4n\"; expected \"24 - 4n\""
+          "at": "2026-11-26T01:18:40Z",
+          "notes": "model answered \"24 - 4n\"; expected \"24 - 4n | 20 - 4(n - 1) | 4(6 - n)\""
         },
         {
           "name": "adversarial-review",
-          "result": "fail",
+          "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T00:48:46Z",
-          "notes": "second_correct_option (answer): The list of accepted answers only includes \"24 - 4n\". Other mathematically equivalent expressions, such as \"-4n + 24\" or the unsimplified form \"20 - 4(n-1)\", are also correct and should be accepted."
+          "at": "2026-11-26T01:18:49Z",
+          "notes": "no problems found"
         }
       ]
     }

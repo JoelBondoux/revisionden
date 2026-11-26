@@ -173,7 +173,10 @@
     "learning_point": "gcse-maths-h-a16-lp-circle-equation",
     "expected_seconds": 30,
     "prompt": "Write down the equation of the circle with centre (0, 0) and radius 6.",
-    "answer": { "accepted": ["x^2 + y^2 = 36", "x^2 + y^2 = 6^2"], "any_order": true },
+    "answer": {
+      "accepted": ["x^2 + y^2 = 36", "x^2 + y^2 = 6^2", "x^2 + y^2 - 36 = 0"],
+      "any_order": true
+    },
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
     "checked_by": ["author"],
@@ -221,18 +224,18 @@
         },
         {
           "name": "blind-answer",
-          "result": "fail",
+          "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T00:46:40Z",
-          "notes": "model answered \"x² + y² = 36\"; expected \"x^2 + y^2 = 36 | x^2 + y^2 = 6^2\""
+          "at": "2026-11-26T01:17:38Z",
+          "notes": "model answered \"x² + y² = 36\"; expected \"x^2 + y^2 = 36 | x^2 + y^2 = 6^2 | x^2 + y^2 - 36 = 0\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T00:46:47Z",
+          "at": "2026-11-26T01:17:44Z",
           "notes": "no problems found"
         }
       ]
