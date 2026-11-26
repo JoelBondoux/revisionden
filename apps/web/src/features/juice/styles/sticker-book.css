@@ -277,3 +277,63 @@
     opacity: 1;
   }
 }
+
+/* J15s: the style's own background pattern, drawn in the look's ink. */
+:root[data-effect-style='sticker-book'][data-pattern='on'] body::before {
+  -webkit-mask-image: url('./patterns/sticker-book.svg');
+  mask-image: url('./patterns/sticker-book.svg');
+  -webkit-mask-size: 240px 240px;
+  mask-size: 240px 240px;
+}
+
+/* ---------- J15s: the full look (mirrors looks.ts; a test keeps them in step) ---------- */
+:root[data-effect-style='sticker-book']:not([data-theme='dark']) {
+  --color-background: #f6efe0;
+  --color-surface: #fffdf7;
+  --color-border: #e2d6c2;
+  --color-text: #2f2a3d;
+  --color-text-secondary: #5a5470;
+  --color-primary: #b53022;
+  --color-primary-edge: #9e2a1e;
+  --color-primary-soft: #fde4df;
+  --color-text-on-primary: #ffffff;
+  --color-track: #7f7a90;
+  --color-locked-soft: #ece4d4;
+  --color-mastery-fill: #d6f0ec;
+  --color-challenge: #2f2a3d;
+  --color-challenge-edge: #2f2a3d;
+  --shadow-3d-neutral: 0 0 0 3px #ffffff, 3px 5px 0 rgb(0 0 0 / 16%);
+  --shadow-3d-primary: 0 0 0 3px #ffffff, 3px 5px 0 rgb(0 0 0 / 22%);
+  --shadow-card: 0 0 0 3px #ffffff, 2px 4px 0 rgb(0 0 0 / 12%);
+  --radius-sm: 18px;
+  --radius-md: 20px;
+  --radius-lg: 24px;
+  --font-heading: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --pattern-ink: rgb(201 58 43 / 8%);
+}
+
+:root[data-effect-style='sticker-book'][data-theme='dark'] {
+  --color-background: #201a2b;
+  --color-surface: #2b2438;
+  --color-border: #4a4060;
+  --color-text: #f3eefc;
+  --color-text-secondary: #c4bcd6;
+  --color-primary: #c93a2b;
+  --color-primary-edge: #ffa79b;
+  --color-primary-soft: #43242a;
+  --color-text-on-primary: #ffffff;
+  --color-track: #8a8299;
+  --color-locked-soft: #332b40;
+  --color-mastery-fill: #1f3d3a;
+  --color-challenge: #120e18;
+  --color-challenge-edge: #9a90b0;
+  --shadow-3d-neutral: 0 0 0 3px #3b3249, 3px 5px 0 rgb(0 0 0 / 40%);
+  --shadow-3d-primary: 0 0 0 3px #3b3249, 3px 5px 0 rgb(0 0 0 / 45%);
+  --shadow-card: 0 0 0 3px #3b3249, 2px 4px 0 rgb(0 0 0 / 35%);
+  --radius-sm: 18px;
+  --radius-md: 20px;
+  --radius-lg: 24px;
+  --font-heading: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --pattern-ink: rgb(255 167 155 / 7%);
+}
+/* ---------- end of the full look ---------- */

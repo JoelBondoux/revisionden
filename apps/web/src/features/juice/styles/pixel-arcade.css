@@ -138,3 +138,63 @@
     opacity: 1;
   }
 }
+
+/* J15s: the style's own background pattern, drawn in the look's ink. */
+:root[data-effect-style='pixel-arcade'][data-pattern='on'] body::before {
+  -webkit-mask-image: url('./patterns/pixel-arcade.svg');
+  mask-image: url('./patterns/pixel-arcade.svg');
+  -webkit-mask-size: 240px 240px;
+  mask-size: 240px 240px;
+}
+
+/* ---------- J15s: the full look (mirrors looks.ts; a test keeps them in step) ---------- */
+:root[data-effect-style='pixel-arcade']:not([data-theme='dark']) {
+  --color-background: #e6f2dc;
+  --color-surface: #f6fff0;
+  --color-border: #142014;
+  --color-text: #142014;
+  --color-text-secondary: #3a573a;
+  --color-primary: #2a5d2a;
+  --color-primary-edge: #1f4a1f;
+  --color-primary-soft: #d4ecc8;
+  --color-text-on-primary: #ffffff;
+  --color-track: #5f7a5f;
+  --color-locked-soft: #dce8d4;
+  --color-mastery-fill: #fff09a;
+  --color-challenge: #142014;
+  --color-challenge-edge: #142014;
+  --shadow-3d-neutral: 4px 4px 0 #142014;
+  --shadow-3d-primary: 4px 4px 0 #142014;
+  --shadow-card: 4px 4px 0 #142014;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --font-heading: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --pattern-ink: rgb(20 32 20 / 8%);
+}
+
+:root[data-effect-style='pixel-arcade'][data-theme='dark'] {
+  --color-background: #0a0820;
+  --color-surface: #15123a;
+  --color-border: #39ff88;
+  --color-text: #e8fff4;
+  --color-text-secondary: #a8d8c0;
+  --color-primary: #7a2fd6;
+  --color-primary-edge: #39ff88;
+  --color-primary-soft: #231c58;
+  --color-text-on-primary: #ffffff;
+  --color-track: #6f6ab0;
+  --color-locked-soft: #1a1640;
+  --color-mastery-fill: #3a3410;
+  --color-challenge: #000000;
+  --color-challenge-edge: #39ff88;
+  --shadow-3d-neutral: 4px 4px 0 #000000;
+  --shadow-3d-primary: 4px 4px 0 #000000;
+  --shadow-card: 4px 4px 0 #000000;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --font-heading: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --pattern-ink: rgb(57 255 136 / 7%);
+}
+/* ---------- end of the full look ---------- */

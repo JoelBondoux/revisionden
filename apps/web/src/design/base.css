@@ -34,6 +34,12 @@ h3 {
   margin: 0 0 var(--space-3);
 }
 
+/* Page and card headings take the effect style's heading font (J15s); body text stays Nunito. */
+h1,
+h2 {
+  font-family: var(--font-heading, var(--font-family));
+}
+
 h1 {
   font-size: var(--font-size-xl);
 }

@@ -293,3 +293,55 @@
     opacity: 1;
   }
 }
+
+/* ---------- J15s: the full look (mirrors looks.ts; a test keeps them in step) ---------- */
+:root[data-effect-style='doodle-diary']:not([data-theme='dark']) {
+  --color-background: #f6f2e4;
+  --color-surface: #fdfbf4;
+  --color-border: #2b2a3a;
+  --color-text: #2b2a3a;
+  --color-text-secondary: #57546a;
+  --color-primary: #2f5bd3;
+  --color-primary-edge: #1f3f9e;
+  --color-primary-soft: #e3ebff;
+  --color-text-on-primary: #ffffff;
+  --color-track: #7f7a90;
+  --color-locked-soft: #ebe6d6;
+  --color-mastery-fill: #fff1a8;
+  --color-challenge: #2b2a3a;
+  --color-challenge-edge: #2b2a3a;
+  --shadow-3d-neutral: 3px 4px 0 #2b2a3a;
+  --shadow-3d-primary: 3px 4px 0 #2b2a3a;
+  --shadow-card: 3px 4px 0 #2b2a3a;
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 14px;
+  --font-heading: 'Patrick Hand', 'Comic Neue', cursive;
+  --pattern-ink: rgb(47 91 211 / 9%);
+}
+
+:root[data-effect-style='doodle-diary'][data-theme='dark'] {
+  --color-background: #1a1926;
+  --color-surface: #232233;
+  --color-border: #b9b6cc;
+  --color-text: #ecebf6;
+  --color-text-secondary: #b9b6cc;
+  --color-primary: #3d64d6;
+  --color-primary-edge: #a9bdff;
+  --color-primary-soft: #26305a;
+  --color-text-on-primary: #ffffff;
+  --color-track: #7c7699;
+  --color-locked-soft: #2c2b40;
+  --color-mastery-fill: #3d3518;
+  --color-challenge: #0e0c1a;
+  --color-challenge-edge: #b9b6cc;
+  --shadow-3d-neutral: 3px 4px 0 #000000;
+  --shadow-3d-primary: 3px 4px 0 #000000;
+  --shadow-card: 3px 4px 0 #000000;
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 14px;
+  --font-heading: 'Patrick Hand', 'Comic Neue', cursive;
+  --pattern-ink: rgb(169 189 255 / 8%);
+}
+/* ---------- end of the full look ---------- */

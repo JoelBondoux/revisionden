@@ -144,3 +144,63 @@
     opacity: 1;
   }
 }
+
+/* J15s: the style's own background pattern, drawn in the look's ink. */
+:root[data-effect-style='garden-grow'][data-pattern='on'] body::before {
+  -webkit-mask-image: url('./patterns/garden-grow.svg');
+  mask-image: url('./patterns/garden-grow.svg');
+  -webkit-mask-size: 240px 240px;
+  mask-size: 240px 240px;
+}
+
+/* ---------- J15s: the full look (mirrors looks.ts; a test keeps them in step) ---------- */
+:root[data-effect-style='garden-grow']:not([data-theme='dark']) {
+  --color-background: #f1f7ec;
+  --color-surface: #fffdf6;
+  --color-border: #c7dfbe;
+  --color-text: #22402c;
+  --color-text-secondary: #4a6953;
+  --color-primary: #26703a;
+  --color-primary-edge: #1f5e30;
+  --color-primary-soft: #e3f4e4;
+  --color-text-on-primary: #ffffff;
+  --color-track: #788c7c;
+  --color-locked-soft: #e6eddf;
+  --color-mastery-fill: #ffe0ea;
+  --color-challenge: #22402c;
+  --color-challenge-edge: #22402c;
+  --shadow-3d-neutral: 0 5px 0 #c4b29a;
+  --shadow-3d-primary: 0 5px 0 #8b5a3c;
+  --shadow-card: 0 4px 0 #d7c7af;
+  --radius-sm: 18px;
+  --radius-md: 22px;
+  --radius-lg: 28px;
+  --font-heading: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --pattern-ink: rgb(44 127 65 / 10%);
+}
+
+:root[data-effect-style='garden-grow'][data-theme='dark'] {
+  --color-background: #0f1d14;
+  --color-surface: #17291d;
+  --color-border: #335040;
+  --color-text: #eef7ee;
+  --color-text-secondary: #bcd4c0;
+  --color-primary: #2c7f41;
+  --color-primary-edge: #9be3ad;
+  --color-primary-soft: #1d3a25;
+  --color-text-on-primary: #ffffff;
+  --color-track: #7f9a86;
+  --color-locked-soft: #1e2f23;
+  --color-mastery-fill: #3d2230;
+  --color-challenge: #08110b;
+  --color-challenge-edge: #8fb79a;
+  --shadow-3d-neutral: 0 5px 0 #08110b;
+  --shadow-3d-primary: 0 5px 0 #08110b;
+  --shadow-card: 0 4px 0 #08110b;
+  --radius-sm: 18px;
+  --radius-md: 22px;
+  --radius-lg: 28px;
+  --font-heading: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --pattern-ink: rgb(155 227 173 / 8%);
+}
+/* ---------- end of the full look ---------- */

@@ -155,3 +155,63 @@
     opacity: 1;
   }
 }
+
+/* J15s: the style's own background pattern, drawn in the look's ink. */
+:root[data-effect-style='pop-burst'][data-pattern='on'] body::before {
+  -webkit-mask-image: url('./patterns/pop-burst.svg');
+  mask-image: url('./patterns/pop-burst.svg');
+  -webkit-mask-size: 240px 240px;
+  mask-size: 240px 240px;
+}
+
+/* ---------- J15s: the full look (mirrors looks.ts; a test keeps them in step) ---------- */
+:root[data-effect-style='pop-burst']:not([data-theme='dark']) {
+  --color-background: #fff1fa;
+  --color-surface: #ffffff;
+  --color-border: #efc6e2;
+  --color-text: #2e1660;
+  --color-text-secondary: #62468e;
+  --color-primary: #5b33d6;
+  --color-primary-edge: #4a22b8;
+  --color-primary-soft: #efe6ff;
+  --color-text-on-primary: #ffffff;
+  --color-track: #8a6fa8;
+  --color-locked-soft: #f3e8f5;
+  --color-mastery-fill: #ffd9ee;
+  --color-challenge: #3a1a7a;
+  --color-challenge-edge: #3a1a7a;
+  --shadow-3d-neutral: 0 6px 0 #e4b8dc;
+  --shadow-3d-primary: 0 6px 0 #3a1a7a;
+  --shadow-card: 0 6px 0 #f2cfe8;
+  --radius-sm: 20px;
+  --radius-md: 22px;
+  --radius-lg: 26px;
+  --font-heading: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --pattern-ink: rgb(255 79 163 / 10%);
+}
+
+:root[data-effect-style='pop-burst'][data-theme='dark'] {
+  --color-background: #1b1030;
+  --color-surface: #2a1747;
+  --color-border: #4f3080;
+  --color-text: #fbefff;
+  --color-text-secondary: #d6c2f0;
+  --color-primary: #6c47f5;
+  --color-primary-edge: #d8c0ff;
+  --color-primary-soft: #3a2466;
+  --color-text-on-primary: #ffffff;
+  --color-track: #8f78b8;
+  --color-locked-soft: #2f1d4a;
+  --color-mastery-fill: #4a1f45;
+  --color-challenge: #0f0820;
+  --color-challenge-edge: #a98bd6;
+  --shadow-3d-neutral: 0 6px 0 #0f0820;
+  --shadow-3d-primary: 0 6px 0 #0f0820;
+  --shadow-card: 0 6px 0 #140a28;
+  --radius-sm: 20px;
+  --radius-md: 22px;
+  --radius-lg: 26px;
+  --font-heading: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --pattern-ink: rgb(255 122 192 / 9%);
+}
+/* ---------- end of the full look ---------- */
