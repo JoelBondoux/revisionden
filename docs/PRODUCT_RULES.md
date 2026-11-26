@@ -386,7 +386,8 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
   the next card's answer never flashes while the card turns.
 - **Explain (F7, owner):** on the answer side, "Explain" walks through the item's verified
   content one step at a time ("Next step", "Back", ending on the answer): its worked steps, else
-  its inline mark scheme, then its `back_formula` and each condition. No AI-made explanation
+  its inline mark scheme, then its `back_formula` and each condition, then the answer, then its
+  verified `explanation` as a final "Why" step (enough on its own for a button). No AI-made explanation
   (CLAUDE.md rule 7). Cards without such content, and the student's own cards, have no Explain
   button. Implemented in `packages/core/src/flashcard-explain.ts` (`explain` on each card).
 

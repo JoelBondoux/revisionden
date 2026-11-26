@@ -2,8 +2,8 @@
  * The flashcard "Explain" walk-through (workstream F7; docs/PRODUCT_RULES.md "Flashcards and
  * mastery"). Built only from the item's verified content (CLAUDE.md rule 7: no AI-made
  * explanation): its worked steps, else its inline mark scheme, then its formula and every
- * condition the formula needs, ending on the answer. No such content means no steps, and the
- * card shows no Explain button.
+ * condition the formula needs, then the answer, then its verified explanation as a final "why"
+ * step. No such content means no steps, and the card shows no Explain button.
  */
 
 export interface ExplainSource {
@@ -13,8 +13,10 @@ export interface ExplainSource {
   markScheme?: readonly string[];
   /** Maths flashcards: the back as a formula, with the conditions it needs. */
   backFormula?: { formula: string; conditions?: readonly string[] };
-  /** The card's answer (its back), always the last step. */
+  /** The card's answer (its back), the last step before "why". */
   answer: string;
+  /** The item's verified explanation: the final "why" step, after the answer. */
+  explanation?: string;
 }
 
 export function explainSteps(source: ExplainSource): string[] {
@@ -26,5 +28,7 @@ export function explainSteps(source: ExplainSource): string[] {
       ]
     : [];
   const steps = [...working, ...formula];
-  return steps.length === 0 ? [] : [...steps, `Answer: ${source.answer}`];
+  const why = source.explanation?.trim() ? [`Why: ${source.explanation.trim()}`] : [];
+  if (steps.length === 0 && why.length === 0) return [];
+  return [...steps, `Answer: ${source.answer}`, ...why];
 }

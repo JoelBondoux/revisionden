@@ -59,6 +59,7 @@ function explainOf({ item }: Loaded, back: string): { explain?: string[] } {
     steps: answer.steps,
     markScheme: answer.markScheme,
     backFormula: answer.backFormula,
+    explanation: answer.explanation,
     answer: back,
   });
   return steps.length > 0 ? { explain: steps } : {};

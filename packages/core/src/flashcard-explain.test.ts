@@ -36,3 +36,21 @@ describe('Explain steps for a flashcard (verified content only)', () => {
     expect(explainSteps({ steps: [], markScheme: [], answer: 'tangent' })).toEqual([]);
   });
 });
+
+describe('the verified explanation as a final "why" step', () => {
+  it('ends on why, after the answer', () => {
+    expect(explainSteps({ steps: ['a', 'b'], answer: 'c', explanation: 'Because of d.' })).toEqual([
+      'a',
+      'b',
+      'Answer: c',
+      'Why: Because of d.',
+    ]);
+  });
+
+  it('gives steps when the explanation is all there is', () => {
+    expect(explainSteps({ answer: 'c', explanation: 'Because of d.' })).toEqual([
+      'Answer: c',
+      'Why: Because of d.',
+    ]);
+  });
+});

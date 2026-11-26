@@ -33,6 +33,14 @@ const content: ContentItem[] = [
   },
   { ...card, id: 'ex-plain', topic: 'ex-topic', front: 'Plain front', back: 'Plain back' },
   {
+    ...card,
+    id: 'ex-why',
+    topic: 'ex-topic',
+    front: 'Why front',
+    back: 'Why back',
+    explanation: 'Why explanation',
+  },
+  {
     ...short,
     id: 'ex-short',
     topic: 'ex-topic',
@@ -74,6 +82,15 @@ describe('Explain steps on flashcards (F7, verified content only)', () => {
       'Formula: y = m*x + c',
       'Condition: m is the gradient',
       'Answer: Formula back',
+    ]);
+  });
+
+  it('explains a card that only has a verified explanation, ending on why', async () => {
+    const { headers } = await t.familyStudent('ex_why', [SUBJECT]);
+    const due = await cards(headers);
+    expect(due.find((c) => c.front === 'Why front')?.explain).toEqual([
+      'Answer: Why back',
+      'Why: Why explanation',
     ]);
   });
 
