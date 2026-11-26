@@ -125,7 +125,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Correct option and explanation checked with exact fractions in Python: -3 < -1.25 < -0.5 < -2/5 = -0.4 < 0.2; each wrong option is out of order. Explanation reworded to state the comparison directly, after the adversarial review twice misread it.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Correct option and explanation checked with exact fractions in Python: -3 < -1.25 < -0.5 < -2/5 = -0.4 < 0.2; each wrong option is out of order. Explanation reworded to state the comparison directly, after the adversarial review twice misread it. Lead ruling: keep as is for the owner's hand review. The adversarial review failed it 3 times by contradicting itself (it called option 0 wrong, then gave option 0's list as the correct order); the order -3 < -1.25 < -0.5 < -2/5 < 0.2 was checked with exact fractions.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -161,7 +161,8 @@
           "notes": "wrong_answer (answer): The selected answer is option 0, which gives the order as \"-3, -1.25, -0.5, -2/5, 0.2\". This is incorrect. -2/5 is equal to -0.4. Since -0.4 is greater (less negative) than -0.5, the correct order should be \"-3, -1.25, -0.5, -2/5, 0.2\". The question appears to have two identical correct options (the text for option 0 is correct) and has marked one as the answer, but the explanation implies a different order.; factual_error (explanation): The explanation correctly states that \"-0.5 is less than -0.4 ... so -0.5 comes before -2/5\". However, the final sentence states \"The order is -3, -1.25, -0.5, -2/5, 0.2\". This list places -2/5 after -0.5, which is mathematically correct, but this seems to be a mistake in the question design where the explanation and the options are misaligned. Based on common errors, it is likely that one of the options or the explanation contains a mistake about the order of -0.5 and -2/5.; ambiguity (question): The item is fundamentally flawed as presented. The mathematically correct answer is \"-3, -1.25, -0.5, -2/5, 0.2\". This exact text is provided for option 0, marked as the correct answer, and stated in the explanation. There appears to be no error in the item as written, which is highly unusual and suggests a transcription error in the item provided for review. Assuming a typo, either the answer key is wrong, or the explanation contradicts itself, or option 0 has the wrong text.; confidence low"
         }
       ]
-    }
+    },
+    "needs_human_approval": true
   },
   {
     "id": "gcse-maths-h-n1-0003",
