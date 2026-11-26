@@ -129,6 +129,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Project memory: product-facts records the E8/E8b passkey set-up messages and Chrome hand-off, and F8b's flashcard Label in Name contract (Codex review of #250).
 - Reflow J11 (J): `LinkTile` may shrink (`min-width: 0`, `max-width: 100%`) and wraps its text anywhere, so /legal fits a 320px screen with text at 200% (the version footer's reflow came with G's #224) (WCAG 1.4.4, 1.4.10). New e2e in `e2e/tests/pages.spec.ts`.
 - Project memory (J): product-facts records the J11 LinkTile reflow guarantee (320px, 200% text) and its e2e test (Codex review on #231).
 - About page reflow (L10): at 320px with 200% text the version facts grid (`max-content` label column) and the support email pushed `/about` sideways. The grid columns can now shrink and long values wrap (`about.css`); new e2e checks the whole `/about` page at 320px and 200% text has no sideways scroll (with G's footer fix, #224).

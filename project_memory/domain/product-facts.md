@@ -13,6 +13,7 @@ Tags: #product #rules #limits #defaults
   the configured ones (`GET /v1/auth/providers`). The owner is starting with Google only.
 - Students have no outside account: nickname (2–16 letters, numbers, underscores and single spaces between words, trimmed at the ends), avatar code and
   year group only. Devices linked by a one-time QR token (10 minutes, single use: used up when the device finishes its passkey; reopening before then gets a fresh challenge, E8), then a passkey.
+- Passkey set-up (E8, E8b): a failure shows a plain reason (try again, set up a screen lock, unlock instead, open in Chrome, or ask a parent for a new link) and a "Details: <error name> (RD-…)" line; only the error name is reported, as client-error kind `passkey`. Browsers without WebAuthn and in-app browsers (Google app/Lens, webviews, Instagram and similar) get "Open this page in Chrome" with Copy link and an Android intent link before the tap. When the child typed a short code, that card also shows "In Chrome, enter your code again: <code>"; the code is never put in the handed-over URL.
 - Nicknames are unique within a family. A family is created the first time a parent signs in.
 - Two parents (B3): a family can have two parents with equal control (Parent 1, Parent 2).
   Invite code or link 7 days, single use, hashed, 5 a day; either parent removes the other (access
@@ -196,6 +197,7 @@ Tags: #product #rules #limits #defaults
   `explanation` as "Why: …"), hidden when there are none (`learning_point` is never used). On
   2026-11-26, 89 of 287 marked items had none of these: 75 of 78 flashcards, 13 short answers and
   1 numeric (`gcse-maths-h-n7-0001`).
+- Flashcard accessibility (F8b): the flip card has no aria-label; its accessible name is the visible face and the turn hint is in `aria-describedby`. Rating buttons are named by their visible text (for example "Good · 1 day"). `e2e/tests/cards.spec.ts` runs axe on both sides of a card at all three sizes (WCAG 2.5.3, Label in Name).
 - Installable PWA. Main nav: five items, Map, Cards, Plan, Papers, then **Me** last (bottom bar
   on phones, side rail from 768px wide). Me shows the student's own avatar (a neutral person icon
   until it loads) and opens `/settings`, "settings and personalisation"; Get help and My progress
