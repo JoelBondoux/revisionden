@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- We have worked out how to make verified questions for every subject, not just maths, and which subjects can be built fastest.
 - On small phones with large text, the policy list and other link cards now wrap their words instead of running off the side of the screen.
 - Fixed: the About page no longer scrolls sideways on a small phone with large text; the version details and support email now wrap.
 - Fixed: on very narrow phones or with large text, the version line at the bottom of the screen now wraps neatly instead of running off the edge.
@@ -198,6 +199,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Research (QG): how to generate verified questions per subject, with four guarantee tiers, distractor and diagram methods, owner review estimates, licensing, gaps, a ranked plan and two proofs of concept (physics templates with pint, French vocabulary from DfE annex E) (`docs/research/question-generation-2026-11.md`, scripts in `docs/research/question-generation-poc/`).
 - Maths templates design (T1, docs only): `docs/TEMPLATES.md` now describes how physics and chemistry calculation templates would work (units with pint, balancing with ChemPy, board data only, exact rounding, the three-way cross-check), and what must be sourced first. Nothing built.
 - Maths engine answer forms (T2, `app/forms.py`): `form` on `/check-working` expected answers and on content `value` and `expression` checks can be `fraction`, `simplest_fraction`, `improper_fraction`, `standard_form` or `index_form`; the answer must have the right value and be written in that form.
 - U6c: sound and haptic packs for Comic Pop, Garden Grow, Pixel Arcade and Doodle Diary (all 15 feedback events), matched to J's mockup previews. The sound bank gains filtered noise (paper and pencil textures, from a fixed-seed buffer) and low-passed square waves, allowed only in Comic Pop and Pixel Arcade. `DEFAULT_STYLE` is now `doodle-diary` (owner-approved); Sticker Book is an unlockable pack.
