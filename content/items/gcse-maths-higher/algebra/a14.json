@@ -87,9 +87,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:39:10Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:32:46Z",
           "notes": "no problems found"
         }
       ]
@@ -185,7 +185,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:39:27Z",
+          "at": "2026-11-26T11:19:17Z",
           "notes": "no problems found"
         }
       ]
@@ -281,7 +281,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:39:41Z",
+          "at": "2026-11-26T11:19:30Z",
           "notes": "no problems found"
         }
       ]
@@ -358,14 +358,6 @@
           "notes": "model answered \"8\"; expected \"8\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:22:41Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -380,6 +372,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:32:55Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -411,6 +411,18 @@
         "retrieved_at": "2026-11-25",
         "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A2 (page 13; PDF page 25)",
+        "quote": "substitute numerical values into formulae and expressions, including scientific formulae",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
     "verification": {
@@ -424,14 +436,6 @@
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A14). Answer backed by the maths engine.",
           "at": "2026-11-25T17:26:22Z"
-        },
-        {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-25T17:27:16Z",
-          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
           "name": "schema",
@@ -459,11 +463,19 @@
         },
         {
           "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:33:07Z",
+          "notes": "unsupported_claim (question): The cited source only mentions finding approximate solutions to simple kinematic problems involving distance, speed and acceleration. It does not specifically support substituting into a quadratic height formula to calculate a value after 1 second.; outside_specification (question): The item uses a projectile-style height equation h = 20t - 5t^2, but the cited specification point is only a broad statement about simple kinematic problems and does not explicitly cover use of a quadratic model for vertical motion.; confidence medium"
+        },
+        {
+          "name": "quote-check",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:39:56Z",
-          "notes": "no problems found"
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T11:33:40Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
     }
@@ -527,14 +539,6 @@
           "notes": "model answered \"0, 4\"; expected \"0, 4\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:50:26Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -549,6 +553,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:33:20Z",
+          "notes": "outside_specification (question): The item requires solving the quadratic equation h = 20t - 5t^2 exactly by factorisation to find t = 0 and t = 4. The cited source only mentions finding approximate solutions to simple kinematic problems; it does not specifically support exact algebraic solution of a quadratic by factorising.; unsupported_claim (mark_scheme): The method marks assume factorisation as the intended assessed method, but the quoted source does not back up this specific algebraic method from the provided citation.; unsupported_claim (hint): The hint directs students to factorise using a common factor, but the quoted official source does not support this specific method from the citation given."
         }
       ]
     }
@@ -616,14 +628,6 @@
           "notes": "model answered \"20 metres\"; expected \"20\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:50:53Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -638,6 +642,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:33:33Z",
+          "notes": "unsupported_claim (question): The cited source only supports 'approximate solutions to problems such as simple kinematic problems involving distance, speed and acceleration'. It does not specifically support finding the maximum of a quadratic height function by algebraic methods such as completing the square.; outside_specification (mark_scheme): The mark scheme requires or rewards completing the square / using symmetry of roots to find the maximum. The quoted specification point does not evidence this specific skill in the context of the item.; unsupported_claim (hint): The hint directs students to complete the square or use the midpoint of the roots. Those methods are not supported by the single quoted specification extract.; unsupported_claim (explanation): The explanation relies on completing the square to identify the maximum, which is not backed up by the quoted source provided."
         }
       ]
     }
@@ -728,11 +740,11 @@
         },
         {
           "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:54:02Z",
-          "notes": "no problems found"
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:33:45Z",
+          "notes": "unsupported_claim (question): The cited source only mentions solving simple kinematic problems involving distance, speed and acceleration. It does not specifically support interpreting a horizontal segment on a distance-time graph as meaning the object is stationary.; unsupported_claim (answer): The answer 'Stationary' may be mathematically correct in context, but the quoted specification excerpt does not explicitly back this specific graph interpretation.; unsupported_claim (hint): The hint explains the meaning of a horizontal line on a distance-time graph, but this interpretation is not supported by the quoted source excerpt.; unsupported_claim (explanation): The explanation gives a correct interpretation of a distance-time graph, but the quoted specification excerpt does not explicitly support this statement."
         }
       ]
     }
@@ -802,11 +814,11 @@
         },
         {
           "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:54:10Z",
-          "notes": "no problems found"
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:33:56Z",
+          "notes": "outside_specification (question): The item assesses direct substitution into an exponential formula and evaluation of 2^0 rather than plotting or interpreting graphs. The cited source only supports 'plot and interpret graphs ... including exponential graphs' in real contexts, so it does not directly back this flashcard as written."
         }
       ]
     }
@@ -897,11 +909,11 @@
         },
         {
           "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:54:20Z",
-          "notes": "no problems found"
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:34:10Z",
+          "notes": "outside_specification (question): The item asks students to distinguish between 'constant speed' and 'acceleration' from a distance-time graph. The cited source only broadly mentions 'simple kinematic problems involving distance, speed and acceleration' and does not explicitly require interpreting qualitative features of distance-time graphs in this way.; unsupported_claim (hint): The hint states 'On a distance-time graph the gradient is the speed.' The quoted official source does not explicitly support this graph interpretation statement.; unsupported_claim (explanation): The explanation states that a straight line on a distance-time graph has constant gradient and therefore constant speed. That may be mathematically valid, but the quoted source does not explicitly back up this interpretation.; wording (question): The phrase 'sloping upwards' is imprecise in this context. On a distance-time graph, a horizontal straight line is also a straight line and represents constant speed (zero), so the wording may confuse students about whether only positive constant speed is intended."
         }
       ]
     }

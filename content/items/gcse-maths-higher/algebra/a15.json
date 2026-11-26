@@ -82,14 +82,6 @@
           "notes": "model answered \"3 m/s²\"; expected \"3\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:52:04Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -112,6 +104,14 @@
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
           "at": "2026-11-25T20:40:56Z",
           "notes": "fact 1: maths engine proof pass; blind statement matches (\"The gradient of a velocity–time graph represents the acceleration: the rate of change of velocity with respect to time. A positive gradient means positive acceleration, a negative gradient means deceleration (negative acceleration), and zero gradient means constant velocity.\")"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:12:47Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -199,14 +199,6 @@
           "notes": "model answered \"50 km/h\"; expected \"50\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:52:18Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -229,6 +221,14 @@
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
           "at": "2026-11-25T20:40:35Z",
           "notes": "fact 1: maths engine proof pass; blind statement matches (\"The gradient of a distance–time graph represents the speed of the object. On a straight-line section it gives the constant speed, and on a curve the gradient at a point gives the instantaneous speed.\")"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:12:49Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -291,14 +291,6 @@
           "notes": "model answered \"-5\"; expected \"-5\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:52:36Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -313,6 +305,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:12:51Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -401,14 +401,6 @@
           "notes": "model answered \"100 m\"; expected \"100\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:52:54Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -431,6 +423,14 @@
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
           "at": "2026-11-25T20:43:05Z",
           "notes": "fact 1: maths engine proof pass; blind statement differs (\"The area under a velocity–time graph between two times represents the displacement over that time interval. If the graph is below the time axis, that area counts as negative displacement; the total distance travelled is the area under a speed–time graph, or the sum of the absolute areas on a velocity–time graph.\")"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:12:53Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -519,14 +519,6 @@
           "notes": "model answered \"50 m\"; expected \"50\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:53:12Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -549,6 +541,14 @@
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
           "at": "2026-11-25T20:41:47Z",
           "notes": "fact 1: maths engine proof pass; blind statement matches (\"The area under a velocity–time graph represents the displacement over that time interval. If velocity stays positive, this area also equals the distance travelled; if velocity is negative or changes sign, you must use signed area for displacement.\")"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:12:55Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -616,14 +616,6 @@
           "notes": "model answered \"24\"; expected \"24\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:11:26Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -638,6 +630,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:12:57Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -665,6 +665,18 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A15 (page 15; PDF page 27)",
         "quote": "results in cases such as distance-time graphs, velocity-time graphs",
         "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A15 (page 15; PDF page 27)",
+        "quote": "calculate or estimate gradients of graphs and areas under graphs",
+        "retrieved_at": "2026-11-26",
         "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
@@ -695,14 +707,6 @@
           "at": "2026-11-25T17:26:22Z"
         },
         {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-25T17:27:25Z",
-          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
-        },
-        {
           "name": "blind-answer",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
@@ -727,11 +731,19 @@
           "notes": "fact 1: maths engine proof pass; blind statement matches (\"The gradient of a velocity–time graph represents the acceleration, i.e. the rate of change of velocity with respect to time. A positive gradient means positive acceleration, a negative gradient means deceleration (negative acceleration), and a zero gradient means constant velocity.\")"
         },
         {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T11:16:38Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:45:01Z",
+          "at": "2026-11-26T11:17:06Z",
           "notes": "no problems found"
         }
       ]
@@ -762,6 +774,18 @@
         "retrieved_at": "2026-11-25",
         "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A15 (page 15; PDF page 27)",
+        "quote": "calculate or estimate gradients of graphs and areas under graphs",
+        "retrieved_at": "2026-11-26",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
     "facts": [
@@ -790,14 +814,6 @@
           "at": "2026-11-25T17:26:22Z"
         },
         {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-25T17:27:26Z",
-          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -822,11 +838,19 @@
           "notes": "fact 1: maths engine proof pass; blind statement matches (\"The gradient of a distance–time graph represents the object's speed, provided distance is plotted against time. A steeper gradient means a greater speed; a zero gradient means the object is stationary.\")"
         },
         {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T11:16:44Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:44:45Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:16:45Z",
           "notes": "no problems found"
         }
       ]
@@ -919,9 +943,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:45:09Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:13:08Z",
           "notes": "no problems found"
         }
       ]
