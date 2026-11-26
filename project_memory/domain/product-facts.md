@@ -291,6 +291,9 @@ Tags: #product #rules #limits #defaults
   uses the card's interval, not its lateness). Parent stats show no backlog (API has `backlog`).
   An all-decks session is complete when today's offered cards are done, including a "10 more"
   batch (F11b, `flashcard_sessions.extra_cards`, migration 0032).
+- Lesson reactions (F13, for J14, owner 2026-11-26): `LessonPlayer` calls
+  `onAnswerReaction({ kind: 'right' | 'wrong' | 'helped' | 'goal', combo })` once per marked
+  answer (never for an unmarked one). F decides when; J decides how Pip and the avatar react.
 - Clues and help (F10, owner 2026-11-26): "Need a clue?" shows the verified hint (no penalty,
   no longer shown up front); then "Help me understand" steps through the verified worked
   solution. A right answer after help earns half XP (rounded down, owner), no combo, and is
@@ -969,7 +972,8 @@ Tags: #product #rules #limits #defaults
   league or their rewards, and also before any friendship ends: remove by the child or a parent,
   block, report, or a parent turning friends off; 8 weeks kept; wins counted in
   `students.league_wins` for the league rewards). A friendship is saved before its request is
-  marked started, so a failed save can be retried by approving again (FL4b): `docs/FRIENDS_LEAGUE.md`
+  marked started; starting is safe to repeat, and a request left with both approvals is finished
+  the next time the child or a parent opens Friends (FL4b, FL4c): `docs/FRIENDS_LEAGUE.md`
   (nickname, avatar, title and weekly learning XP only; one parent per family approves; no chat;
   10-friend cap; siblings join automatically; reports seen by both families' parents and AppDeck;
   rank chip on Home (was the Map until Home landed), League page under Me; head-to-head challenges later).

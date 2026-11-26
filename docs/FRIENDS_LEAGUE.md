@@ -256,6 +256,13 @@ New tables (one new migration):
   friendship is saved first and the request is marked started after, so if the save fails the
   request stays waiting with both approvals and approving again finishes it (production uses
   `neon-http`, which has no multi-statement transactions).
+- **Review fixes, part 3 (FL4c, from the train #322 review):** starting a friendship is now one
+  repeatable step (`finaliseRequest`). Saving the friendship is the single winner (the pair is the
+  primary key, `ON CONFLICT DO NOTHING`), the friendship existing counts as success, the request
+  is marked started only while still waiting, and a request whose pair is already friends is never
+  declined. A request left with both approvals (a save that failed) is finished the next time
+  either child or a parent opens Friends, so it never sits as "waiting for the other family". No
+  migration: the pair was already the primary key.
 - **Known behaviour (lead, 2026-11-26):** deleting a child does not settle their friends'
   finished weeks first. The child's data goes at once, so a friend whose last weeks were not yet
   settled simply has that rival missing from those weeks. Accepted.
