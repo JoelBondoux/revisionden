@@ -7,7 +7,7 @@
     "learning_point": "gcse-maths-h-n4-lp-prime-factorisation",
     "expected_seconds": 120,
     "prompt": "Write 360 as a product of its prime factors. Give your answer in index form, using ^ for powers (for example 2^3).",
-    "answer": { "expression": "2^3 * 3^2 * 5" },
+    "answer": { "expression": "2^3 * 3^2 * 5", "form": "index_form" },
     "verify": { "method": "expression", "expression": "360" },
     "marks": 2,
     "mark_scheme": [
@@ -40,7 +40,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer and every step backed by the maths engine. Every base checked prime and the product checked in Python. Mark points written by this session. Prompt asks for ^ notation and the A1 mark allows any order of factors (after adversarial review of n4-0002). Explanation (repeated division) added and the A1 mark reworded after adversarial review of n4-0003 and n4-0004; every division checked in Python. Explanation reworded to follow the steps line by line (adversarial review, second run). Model-solution steps removed (the explanation's repeated division is the method; n4-0003 keeps steps as the worked example), after the adversarial review found the steps and explanation described the method two ways.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer and every step backed by the maths engine. Every base checked prime and the product checked in Python. Mark points written by this session. Prompt asks for ^ notation and the A1 mark allows any order of factors (after adversarial review of n4-0002). Explanation (repeated division) added and the A1 mark reworded after adversarial review of n4-0003 and n4-0004; every division checked in Python. Explanation reworded to follow the steps line by line (adversarial review, second run). Model-solution steps removed (the explanation's repeated division is the method; n4-0003 keeps steps as the worked example), after the adversarial review found the steps and explanation described the method two ways. Fairness sweep (S3-N3): answer.form index_form added, as the question asks for the answer in index form (a product of primes with powers); the value alone is no longer accepted.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -72,7 +72,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:32:40Z",
+          "at": "2026-11-26T06:21:24Z",
           "notes": "model answered \"2^3 * 3^2 * 5\"; expected \"2^3 * 3^2 * 5\""
         },
         {
@@ -80,7 +80,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:32:53Z",
+          "at": "2026-11-26T06:21:33Z",
           "notes": "no problems found"
         }
       ]
@@ -94,7 +94,7 @@
     "learning_point": "gcse-maths-h-n4-lp-prime-factorisation",
     "expected_seconds": 120,
     "prompt": "Write 1764 as a product of its prime factors. Give your answer in index form, using ^ for powers (for example 2^3).",
-    "answer": { "expression": "2^2 * 3^2 * 7^2" },
+    "answer": { "expression": "2^2 * 3^2 * 7^2", "form": "index_form" },
     "verify": { "method": "expression", "expression": "1764" },
     "steps": ["1764", "2 * 882", "2^2 * 441", "2^2 * 3 * 147", "2^2 * 3^2 * 49", "2^2 * 3^2 * 7^2"],
     "marks": 2,
@@ -128,7 +128,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer and every step backed by the maths engine. Every base checked prime and the product checked in Python. Mark points written by this session. Prompt asks for ^ notation and the A1 mark allows any order of factors (after adversarial review of n4-0002). Explanation (repeated division) added and the A1 mark reworded after adversarial review of n4-0003 and n4-0004; every division checked in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer and every step backed by the maths engine. Every base checked prime and the product checked in Python. Mark points written by this session. Prompt asks for ^ notation and the A1 mark allows any order of factors (after adversarial review of n4-0002). Explanation (repeated division) added and the A1 mark reworded after adversarial review of n4-0003 and n4-0004; every division checked in Python. Fairness sweep (S3-N3): answer.form index_form added, as the question asks for the answer in index form (a product of primes with powers); the value alone is no longer accepted.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -160,7 +160,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:30:07Z",
+          "at": "2026-11-26T06:21:42Z",
           "notes": "model answered \"2^2 * 3^2 * 7^2\"; expected \"2^2 * 3^2 * 7^2\""
         },
         {
@@ -168,7 +168,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:30:30Z",
+          "at": "2026-11-26T06:23:09Z",
           "notes": "no problems found"
         }
       ]
@@ -182,7 +182,7 @@
     "learning_point": "gcse-maths-h-n4-lp-prime-factorisation",
     "expected_seconds": 120,
     "prompt": "Write 2200 as a product of its prime factors. Give your answer in index form, using ^ for powers (for example 2^3).",
-    "answer": { "expression": "2^3 * 5^2 * 11" },
+    "answer": { "expression": "2^3 * 5^2 * 11", "form": "index_form" },
     "verify": { "method": "expression", "expression": "2200" },
     "marks": 2,
     "mark_scheme": [
@@ -215,7 +215,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer and every step backed by the maths engine. Every base checked prime and the product checked in Python. Mark points written by this session. Prompt asks for ^ notation and the A1 mark allows any order of factors (after adversarial review of n4-0002). Explanation (repeated division) added and the A1 mark reworded after adversarial review of n4-0003 and n4-0004; every division checked in Python. Model-solution steps removed (the explanation's repeated division is the method), after the adversarial review said the steps did not model a factor tree or repeated division.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer and every step backed by the maths engine. Every base checked prime and the product checked in Python. Mark points written by this session. Prompt asks for ^ notation and the A1 mark allows any order of factors (after adversarial review of n4-0002). Explanation (repeated division) added and the A1 mark reworded after adversarial review of n4-0003 and n4-0004; every division checked in Python. Model-solution steps removed (the explanation's repeated division is the method), after the adversarial review said the steps did not model a factor tree or repeated division. Fairness sweep (S3-N3): answer.form index_form added, as the question asks for the answer in index form (a product of primes with powers); the value alone is no longer accepted.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -247,7 +247,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:33:03Z",
+          "at": "2026-11-26T06:22:13Z",
           "notes": "model answered \"2^3 * 5^2 * 11\"; expected \"2^3 * 5^2 * 11\""
         },
         {
@@ -255,7 +255,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:33:12Z",
+          "at": "2026-11-26T06:23:22Z",
           "notes": "no problems found"
         }
       ]
