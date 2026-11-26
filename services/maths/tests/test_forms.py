@@ -76,3 +76,23 @@ def test_the_forms_match_the_app_marking_rules_in_packages_core():
     assert not in_form("1 × 10^101", "standard_form")
     assert in_form("1 × 10^100", "standard_form")
     assert in_form("5^3", "index_form")
+
+
+def test_a_rounded_standard_form_value_is_read_exactly_before_rounding():
+    # Codex on train #208: Decimal("6.4*10^8") raised InvalidOperation.
+    checks = [
+        {"id": "a", "kind": "value", "expression": "6.38*10^8", "answer": "6.4*10^8",
+         "form": "standard_form", "significant_figures": 2},
+        {"id": "b", "kind": "value", "expression": "6.38*10^8", "answer": "6.3*10^8",
+         "form": "standard_form", "significant_figures": 2},
+        {"id": "c", "kind": "value", "expression": "6.38*10^8", "answer": "640000000",
+         "form": "standard_form", "significant_figures": 2},
+        {"id": "d", "kind": "value", "expression": "0.0004567", "answer": "4.57 × 10^-4",
+         "form": "standard_form", "significant_figures": 3},
+        {"id": "e", "kind": "value", "expression": "6.38*10^8", "answer": "6.4*10^8",
+         "significant_figures": 2},
+    ]
+    results = run_checks(checks)
+    assert [r["ok"] for r in results] == [True, False, False, True, True], results
+    assert "could not check" not in results[1]["error"]
+    assert "standard_form" in results[2]["error"]
