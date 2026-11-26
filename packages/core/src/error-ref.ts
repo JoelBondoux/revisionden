@@ -46,8 +46,14 @@ export function maskIdsInPath(path: string): string {
 export const ClientErrorReportSchema = z
   .object({
     ref: ErrorRefSchema,
-    kind: z.enum(['http', 'schema']),
+    /** `passkey`: the device's passkey set-up failed in the browser (E8). */
+    kind: z.enum(['http', 'schema', 'passkey']),
     status: z.number().int().min(0).max(599).optional(),
+    /** For `passkey`: the browser's error name only (for example NotAllowedError). */
+    code: z
+      .string()
+      .regex(/^[A-Za-z0-9_]{1,60}$/)
+      .optional(),
     /** The request path with ids masked (`maskIdsInPath`); no query string. */
     path: z
       .string()

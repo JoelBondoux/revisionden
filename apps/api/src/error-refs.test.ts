@@ -88,6 +88,13 @@ describe('POST /v1/client-errors', () => {
     expect(logged.at(-1)).toEqual({ source: 'web', ...report });
   });
 
+  it("logs a phone's failed passkey set-up with the browser error name only (E8)", async () => {
+    const report = { ref: 'RD-7K2M9Q', kind: 'passkey', path: '/link', code: 'NotAllowedError' };
+    const res = await t.app.request('/v1/client-errors', jsonRequest('POST', report));
+    expect(res.status).toBe(204);
+    expect(logged.at(-1)).toEqual({ source: 'web', ...report });
+  });
+
   it('refuses a report with free text in it', async () => {
     const before = logged.length;
     const res = await t.app.request(
