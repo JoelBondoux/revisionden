@@ -123,7 +123,9 @@
 :root[data-effect-style='doodle-diary'] .rewards__step--earned {
   border: 2px solid var(--dd-ink);
   border-radius: var(--dd-blob);
-  background: repeating-linear-gradient(-45deg, var(--dd-hi) 0 3px, var(--dd-hi-soft) 3px 6px);
+  /* Solid highlighter behind the number (J10g): hatching made it hard to read in dark mode. */
+  background: #ffe45c;
+  color: #2b2a3a;
 }
 
 /* ---------- Lesson surround ---------- */

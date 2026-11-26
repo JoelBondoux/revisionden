@@ -142,14 +142,10 @@ function rightOption(item: LearnItem, result: LearnAttemptResponse, chosen: Draf
   return index >= 0 ? index : null;
 }
 
-/** The celebration on a right answer: particles burst and the XP floats up. */
-function RightAnswerEffects({ xp }: { xp: number }) {
-  return (
-    <>
-      <ParticleBurst />
-      {xp > 0 && <FloatUp>+{xp} XP</FloatUp>}
-    </>
-  );
+/** The celebration on a right answer: particles burst from it. "+XP" pops just above the
+ * feedback instead, so nothing crosses the question (J10g). */
+function RightAnswerEffects() {
+  return <ParticleBurst />;
 }
 
 /**
@@ -310,7 +306,7 @@ export function LessonPlayer({
   const right = result ? rightOption(item, result, draft) : null;
   const optionMark = (option: number): OptionMark => ({
     right: option === right,
-    extra: result?.correct && option === right ? <RightAnswerEffects xp={result.xpEarned} /> : null,
+    extra: result?.correct && option === right ? <RightAnswerEffects /> : null,
   });
   return (
     <form className="lesson arena" onSubmit={check}>
@@ -356,9 +352,14 @@ export function LessonPlayer({
         </Shake>
       </div>
       <div className="lesson__footer">
+        {result?.correct && result.xpEarned > 0 && (
+          <span className="lesson__xp-pop">
+            <FloatUp key={index}>+{result.xpEarned} XP</FloatUp>
+          </span>
+        )}
         {result?.correct && item.type !== 'multiple_choice' && (
           <span className="lesson__burst">
-            <RightAnswerEffects xp={result.xpEarned} />
+            <RightAnswerEffects />
           </span>
         )}
         {error && (

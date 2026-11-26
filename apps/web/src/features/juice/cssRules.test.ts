@@ -72,11 +72,12 @@ describe('game feel stylesheets (performance and accessibility rules)', () => {
   });
 
   it('draws empty progress tracks and Challenge hex outlines in their contrast-checked colours', () => {
+    // J10g: an empty track is an outline (3:1) with nothing inside, so 0% never reads as full.
     expect(read('features/juice/juice.css')).toMatch(
-      /\.arena-progress \{[^}]*background: var\(--arena-track\)/,
+      /\.arena-progress \{[^}]*background: transparent;[^}]*box-shadow: inset 0 0 0 2px var\(--arena-track\)/,
     );
     expect(read('components/components.css')).toMatch(
-      /\.progress \{[^}]*background: var\(--color-track\)/,
+      /\.progress \{[^}]*background: transparent;[^}]*box-shadow: inset 0 0 0 2px var\(--color-track\)/,
     );
     expect(read('pages/pages.css')).toMatch(
       /\.hex--challenge \.hex__shape \{[^}]*--hex-border: var\(--color-challenge-edge\)/,
