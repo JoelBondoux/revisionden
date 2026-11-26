@@ -8,13 +8,24 @@ import {
   loadEffectStyle,
   saveEffectStyle,
 } from './registry';
+import { isEffectStyleId } from './registry';
 import type { EffectStyle, EffectStyleId, StyleStorage } from './registry';
+import { useStudent } from '../../../session/StudentContext';
+import { useFeedbackStyle } from '../../sound/SoundProvider';
+import { fetchUnlockedStyles } from './effectStylesApi';
+import '@fontsource/patrick-hand/400.css';
+import './doodle-diary.css';
 import './sticker-book.css';
+import './pop-burst.css';
+import './starlight.css';
+import './garden-grow.css';
+import './comic-pop.css';
+import './pixel-arcade.css';
 
 export interface EffectStyleApi {
   style: EffectStyle;
   styleId: EffectStyleId;
-  /** Styles this child can use (Sticker Book is always one of them). */
+  /** Styles this child can use (Doodle Diary is always one of them). */
   unlocked: readonly EffectStyleId[];
   choose(id: EffectStyleId): void;
 }
@@ -39,17 +50,39 @@ function deviceStorage(): StyleStorage | null {
 /** Applies the active effect style to the page and lets screens read or change it. */
 export function EffectStyleProvider({
   children,
-  unlocked = [DEFAULT_EFFECT_STYLE],
+  loadUnlocked = fetchUnlockedStyles,
 }: {
   children: ReactNode;
-  unlocked?: readonly EffectStyleId[];
+  /** Loads the signed-in student's unlocked styles (tests pass their own). */
+  loadUnlocked?: () => Promise<readonly string[]>;
 }) {
+  const { studentId } = useStudent();
   const [saved, setSaved] = useState<EffectStyleId>(() => loadEffectStyle(deviceStorage()));
+  const [earned, setEarned] = useState<readonly EffectStyleId[]>([]);
+
+  useEffect(() => {
+    setEarned([]);
+    if (!studentId) return;
+    let live = true;
+    loadUnlocked()
+      .then((ids) => live && setEarned(ids.filter(isEffectStyleId)))
+      .catch(() => undefined);
+    return () => {
+      live = false;
+    };
+  }, [studentId, loadUnlocked]);
+
+  const unlocked = useMemo(
+    () => [DEFAULT_EFFECT_STYLE, ...earned.filter((id) => id !== DEFAULT_EFFECT_STYLE)],
+    [earned],
+  );
   const styleId = chooseEffectStyle(saved, unlocked);
 
   useEffect(() => {
     applyEffectStyle(document.documentElement, styleId);
   }, [styleId]);
+  // Sounds and vibration follow the style (U's feedback packs; unknown ids get the default pack).
+  useFeedbackStyle(styleId);
 
   const choose = useCallback((id: EffectStyleId) => {
     setSaved(id);
@@ -63,7 +96,7 @@ export function EffectStyleProvider({
   return <EffectStyleContext.Provider value={value}>{children}</EffectStyleContext.Provider>;
 }
 
-/** The active effect style (Sticker Book outside a provider). */
+/** The active effect style (Doodle Diary outside a provider). */
 export function useEffectStyle(): EffectStyleApi {
   return useContext(EffectStyleContext);
 }

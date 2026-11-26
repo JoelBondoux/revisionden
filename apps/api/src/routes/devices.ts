@@ -1,6 +1,6 @@
 import { Hono, type MiddlewareHandler } from 'hono';
 import { deleteCookie, getCookie, setCookie } from 'hono/cookie';
-import { and, asc, desc, eq, gt, inArray, isNull } from 'drizzle-orm';
+import { and, asc, desc, eq, gt, gte, inArray, isNull, lt } from 'drizzle-orm';
 import { z } from 'zod';
 import {
   CreateLinkTokenRequestSchema,
@@ -17,6 +17,7 @@ import {
   deviceMarkers,
   devices,
   passkeyChallenges,
+  passkeyNewDeviceClaims,
   students,
   studentSessions,
   type Database,
@@ -259,6 +260,32 @@ export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) 
   }
 
   /**
+   * The device added under today's new-device claim for this passkey (B7). The browser that won
+   * the claim may still be adding it, so look again briefly before giving up.
+   */
+  async function todaysNewDevice(credentialId: string) {
+    for (let attempt = 0; attempt < 10; attempt += 1) {
+      const [claim] = await db
+        .select({ claimedAt: passkeyNewDeviceClaims.claimedAt })
+        .from(passkeyNewDeviceClaims)
+        .where(eq(passkeyNewDeviceClaims.credentialId, credentialId));
+      if (claim) {
+        const [device] = await db
+          .select()
+          .from(devices)
+          .where(
+            and(eq(devices.credentialId, credentialId), gte(devices.linkedAt, claim.claimedAt)),
+          )
+          .orderBy(desc(devices.linkedAt))
+          .limit(1);
+        if (device) return device;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    }
+    return undefined;
+  }
+
+  /**
    * Which device a verified passkey is being used on (I5b, synced passkeys: allow, and tell the
    * parents). `rows` are the student's devices with this passkey. Returns the device and, when
    * this browser needs one, a new marker; throws if a parent unlinked this browser's device.
@@ -292,15 +319,26 @@ export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) 
     if (markers.length === 0 && rows.length === 1) {
       return { device: rows[0]!, marker: await issueMarker(rows[0]!.id, studentId) };
     }
-    // Browser storage cleared again today: reuse today's new device rather than add another.
-    const since = new Date(now().getTime() - NEW_DEVICE_WINDOW_MS);
-    const [recent] = rows
-      .filter((r) => r.linkedAt > since)
-      .sort((a, b) => b.linkedAt.getTime() - a.linkedAt.getTime());
-    if (recent && rows.length > 1) {
-      return { device: recent, marker: await issueMarker(recent.id, studentId) };
-    }
+    // One new device a day per passkey (B7). A single conditional upsert claims the day, so two
+    // new browsers unlocking at the same moment cannot both add a device and alert the parents.
+    const at = now();
+    const since = new Date(at.getTime() - NEW_DEVICE_WINDOW_MS);
     const source = rows[0]!;
+    const won = await db
+      .insert(passkeyNewDeviceClaims)
+      .values({ credentialId: source.credentialId, studentId, claimedAt: at })
+      .onConflictDoUpdate({
+        target: passkeyNewDeviceClaims.credentialId,
+        set: { claimedAt: at },
+        setWhere: lt(passkeyNewDeviceClaims.claimedAt, since),
+      })
+      .returning({ credentialId: passkeyNewDeviceClaims.credentialId });
+    if (won.length === 0) {
+      // Browser storage cleared again today, or another browser won a moment ago: reuse today's
+      // new device rather than add another.
+      const device = (await todaysNewDevice(source.credentialId)) ?? source;
+      return { device, marker: await issueMarker(device.id, studentId) };
+    }
     const [device] = await db
       .insert(devices)
       .values({
@@ -309,7 +347,7 @@ export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) 
         publicKey: source.publicKey,
         counter: source.counter,
         transports: source.transports,
-        linkedAt: now(),
+        linkedAt: at,
       })
       .returning();
     const [student] = await db

@@ -8,7 +8,13 @@ const files = [
   'features/juice/juice.css',
   'features/rewards/reveal.css',
   'features/avatar/avatar.css',
+  'features/juice/styles/doodle-diary.css',
   'features/juice/styles/sticker-book.css',
+  'features/juice/styles/pop-burst.css',
+  'features/juice/styles/starlight.css',
+  'features/juice/styles/garden-grow.css',
+  'features/juice/styles/comic-pop.css',
+  'features/juice/styles/pixel-arcade.css',
 ];
 const read = (file: string) => readFileSync(join(src, file), 'utf8');
 
@@ -34,8 +40,13 @@ describe('game feel stylesheets (performance and accessibility rules)', () => {
   it.each(files)('%s animates only transform and opacity', (file) => {
     for (const { name, body } of keyframes(read(file))) {
       const properties = [...body.matchAll(/([a-z-]+)\s*:/g)].map((m) => m[1]);
+      // The approved pen-line exception (docs/GAME_FEEL.md): small SVG pen lines may draw on
+      // with stroke-dashoffset, in keyframes named pen-*.
+      const allowed = name.startsWith('pen-')
+        ? ['transform', 'opacity', 'stroke-dashoffset']
+        : ['transform', 'opacity'];
       for (const property of properties) {
-        expect(['transform', 'opacity'], `${file} @keyframes ${name}`).toContain(property);
+        expect(allowed, `${file} @keyframes ${name}`).toContain(property);
       }
     }
   });

@@ -1,0 +1,274 @@
+/*
+ * Doodle Diary, the default effect style (J10d, docs/GAME_FEEL.md). A diary full of pen doodles:
+ * sketched boxes with wobbly corners, scribbled colouring-in, handwritten headings (Patrick Hand,
+ * self-hosted) and red-pen marks on wins. Every rule is scoped to the style, so another style can
+ * replace it completely. In dark mode the paper turns to night paper. Transforms and opacity only.
+ */
+:root[data-effect-style='doodle-diary'] {
+  --dd-paper: #fdfbf4;
+  --dd-ink: #2b2a3a;
+  --dd-ink-soft: #57546a;
+  --dd-biro: #2f5bd3;
+  --dd-red: #b8322a;
+  --dd-hi: #ffe45c;
+  --dd-hi-soft: #fff4b8;
+  --dd-hand: 'Patrick Hand', 'Comic Neue', cursive;
+  --dd-sketch: 255px 12px 225px 12px / 12px 225px 12px 255px;
+  --dd-blob: 50% 45% 55% 48%;
+  --dd-lift: 4px 5px 0 rgb(0 0 0 / 10%);
+  /* The lesson surround turns to diary paper (J10a2); the question stays on a plain card. */
+  --arena-bg: #f6f2e4;
+  --arena-raised: #fdfbf4;
+  --arena-text: #2b2a3a;
+  --arena-text-secondary: #57546a;
+  --arena-glow: #2a51bd;
+}
+
+/* In dark mode the diary is night paper, so the screen stays dark. */
+:root[data-effect-style='doodle-diary'][data-theme='dark'] {
+  --dd-paper: #1e1c2a;
+  --dd-ink: #ecebf6;
+  --dd-ink-soft: #c2bed6;
+  --dd-biro: #8fb0ff;
+  --dd-red: #ff8a80;
+  --dd-hi: #8a7420;
+  --dd-hi-soft: #4a4020;
+  --dd-lift: 4px 5px 0 rgb(0 0 0 / 35%);
+  --arena-bg: #1e1c2a;
+  --arena-raised: #27243a;
+  --arena-text: #ecebf6;
+  --arena-text-secondary: #c2bed6;
+  --arena-glow: #8fb0ff;
+}
+
+/* ---------- Home ---------- */
+/* Page titles are handwritten and underlined with a wavy biro line. */
+:root[data-effect-style='doodle-diary'] .page-header h1 {
+  font-family: var(--dd-hand);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-decoration: underline wavy var(--dd-biro) 2px;
+  text-underline-offset: 6px;
+}
+
+:root[data-effect-style='doodle-diary'] .page-header .pill {
+  border: 2px solid var(--dd-ink);
+  border-radius: var(--dd-sketch);
+  background: var(--dd-paper);
+  color: var(--dd-ink);
+}
+
+/* Summary, today's mission and the 5-a-day card are boxes sketched in pen. */
+:root[data-effect-style='doodle-diary'] .map-summary,
+:root[data-effect-style='doodle-diary'] .mission,
+:root[data-effect-style='doodle-diary'] .daily-card {
+  border: 2px solid var(--dd-ink);
+  border-radius: var(--dd-sketch);
+  background: var(--dd-paper);
+  color: var(--dd-ink);
+  box-shadow: var(--dd-lift);
+}
+
+:root[data-effect-style='doodle-diary'] .map-summary {
+  padding: var(--space-4);
+}
+
+:root[data-effect-style='doodle-diary'] .mission {
+  margin-top: var(--space-3);
+}
+
+:root[data-effect-style='doodle-diary'] .map-summary__subject,
+:root[data-effect-style='doodle-diary'] .mission__eyebrow {
+  font-family: var(--dd-hand);
+  font-size: 1.2em;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+:root[data-effect-style='doodle-diary'] .map-summary__subject {
+  color: var(--dd-biro);
+}
+
+:root[data-effect-style='doodle-diary'] .mission__eyebrow {
+  color: var(--dd-red);
+}
+
+:root[data-effect-style='doodle-diary'] .map-summary .secondary-text,
+:root[data-effect-style='doodle-diary'] .mission__time,
+:root[data-effect-style='doodle-diary'] .daily-card .secondary-text,
+:root[data-effect-style='doodle-diary'] .daily-card__count {
+  color: var(--dd-ink-soft);
+}
+
+/* Mastered topics are outlined in pen and coloured in with highlighter scribbles. */
+:root[data-effect-style='doodle-diary'] .hex--mastered .hex__shape {
+  --hex-border: var(--dd-ink);
+  --hex-fill: var(--dd-hi);
+  color: #2b2a3a;
+}
+
+:root[data-effect-style='doodle-diary'] .hex--mastered .hex__shape::before {
+  background: repeating-linear-gradient(-45deg, #ffe45c 0 3px, #fff4b8 3px 6px);
+}
+
+/* ---------- Rewards ---------- */
+:root[data-effect-style='doodle-diary'] .rewards__step {
+  border: 2px dashed var(--dd-ink-soft);
+  border-radius: var(--dd-blob);
+}
+
+:root[data-effect-style='doodle-diary'] .rewards__step--earned {
+  border: 2px solid var(--dd-ink);
+  border-radius: var(--dd-blob);
+  background: repeating-linear-gradient(-45deg, var(--dd-hi) 0 3px, var(--dd-hi-soft) 3px 6px);
+}
+
+/* ---------- Lesson surround ---------- */
+/* The question and answers sit on a plain paper card: no lines, texture, tilt or motion. */
+:root[data-effect-style='doodle-diary'] .lesson__stage {
+  padding: var(--space-4);
+  border: 2px solid var(--dd-ink);
+  border-radius: var(--dd-sketch);
+  background: #fff;
+  color: #2b2a3a;
+}
+
+:root[data-effect-style='doodle-diary'] .answer-option {
+  border: 2px solid var(--dd-ink);
+  border-radius: var(--dd-sketch);
+  background: #fff;
+  color: #2b2a3a;
+  box-shadow: 3px 3px 0 var(--dd-ink);
+}
+
+:root[data-effect-style='doodle-diary'] .answer-option:has(input:checked) {
+  border-color: var(--dd-biro);
+  box-shadow: 3px 3px 0 var(--dd-biro);
+}
+
+/* A right answer gets a red-pen ring round it, like a teacher's mark (written to outrank the
+   chosen-answer rule above). */
+:root[data-effect-style='doodle-diary'] .answer-option.answer-option--right:has(input) {
+  background: #fff !important;
+  border-color: #0b8457;
+  box-shadow:
+    0 0 0 3px #fff,
+    0 0 0 5px var(--dd-red) !important;
+  color: #2b2a3a;
+}
+
+:root[data-effect-style='doodle-diary'][data-theme='dark'] .lesson__stage,
+:root[data-effect-style='doodle-diary'][data-theme='dark'] .answer-option {
+  background: var(--arena-raised);
+  color: var(--arena-text);
+}
+
+:root[data-effect-style='doodle-diary'][data-theme='dark']
+  .answer-option.answer-option--right:has(input) {
+  background: var(--arena-raised) !important;
+  border-color: #3ccf91;
+  box-shadow:
+    0 0 0 3px var(--arena-raised),
+    0 0 0 5px var(--dd-red) !important;
+  color: var(--arena-text);
+}
+
+/* ---------- Lesson moments ---------- */
+/* COMBO ×n is scribbled in red pen and settles with a little shake. */
+:root[data-effect-style='doodle-diary'] .combo-badge {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--dd-red);
+  font-family: var(--dd-hand);
+  font-size: 1.5em;
+  font-weight: 400;
+  letter-spacing: 0;
+  box-shadow: none;
+  rotate: -4deg;
+  animation: dd-scribble var(--motion-medium) var(--ease-spring);
+}
+
+/* Set-complete stars are drawn in pen and coloured in with highlighter. */
+:root[data-effect-style='doodle-diary'] .star--earned polygon {
+  fill: var(--dd-hi);
+  stroke: var(--dd-ink);
+  stroke-width: 4;
+  stroke-linejoin: round;
+}
+
+:root[data-effect-style='doodle-diary'] .star--earned {
+  animation: dd-scribble var(--motion-medium) var(--ease-spring) forwards;
+}
+
+:root[data-effect-style='doodle-diary'] .star--earned:nth-child(2) {
+  rotate: 5deg;
+}
+
+:root[data-effect-style='doodle-diary'] .star--earned:nth-child(3) {
+  rotate: -4deg;
+}
+
+/* Bursts and confetti are quick pen and pencil strokes. */
+:root[data-effect-style='doodle-diary'] .burst__particle {
+  width: 3px;
+  height: calc(var(--size) * 1.4);
+  border-radius: 2px;
+}
+
+:root[data-effect-style='doodle-diary'] .confetti__piece {
+  width: 3px;
+  height: 14px;
+  border-radius: 2px;
+}
+
+:root[data-effect-style='doodle-diary'] .spark-0 {
+  background: #2f5bd3;
+}
+
+:root[data-effect-style='doodle-diary'] .spark-1 {
+  background: #c8382e;
+}
+
+:root[data-effect-style='doodle-diary'] .spark-2 {
+  background: #f2c200;
+}
+
+:root[data-effect-style='doodle-diary'] .spark-3 {
+  background: #2b2a3a;
+}
+
+/* "+XP" is handwritten in red pen. */
+:root[data-effect-style='doodle-diary'] .float-up {
+  color: var(--dd-red);
+  font-family: var(--dd-hand);
+  font-weight: 400;
+  text-shadow: none;
+}
+
+@keyframes dd-scribble {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) rotate(-10deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.1) rotate(4deg);
+  }
+  80% {
+    transform: scale(0.98) rotate(-2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-effect-style='doodle-diary'] .combo-badge,
+  :root[data-effect-style='doodle-diary'] .star--earned {
+    animation: none;
+    opacity: 1;
+  }
+}
