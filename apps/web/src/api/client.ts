@@ -38,7 +38,8 @@ export interface ApiClient {
   /** The signed-in parent's children (`GET /v1/onboarding/family`). */
   getFamily(): Promise<OnboardingFamily>;
   /** The student device's topic map (`GET /v1/student/map`, workstream F2). */
-  getTopicMap(): Promise<TopicMap>;
+  /** The topic map for a subject (default: the first enrolled subject with questions). */
+  getTopicMap(subjectId?: string): Promise<TopicMap>;
   /** Flashcards due on the student device (`GET /v1/student/cards/due`, workstream F2). */
   getCardsDue(): Promise<CardsDue>;
 }
@@ -169,7 +170,12 @@ export async function apiRequest<T>(
 export function createApiClient(options: ClientOptions): ApiClient {
   return {
     getFamily: () => apiRequest(options, 'v1/onboarding/family', OnboardingFamilySchema),
-    getTopicMap: () => apiRequest(options, 'v1/student/map', topicMapSchema),
+    getTopicMap: (subjectId) =>
+      apiRequest(
+        options,
+        subjectId ? `v1/student/map?subjectId=${encodeURIComponent(subjectId)}` : 'v1/student/map',
+        topicMapSchema,
+      ),
     getCardsDue: () => apiRequest(options, 'v1/student/cards/due', cardsDueSchema),
   };
 }

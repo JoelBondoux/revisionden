@@ -113,6 +113,18 @@ describe('marking', () => {
     expect(markNumeric({ value: '4' }, 't = 4').correct).toBe(false);
   });
 
+  it('accepts a UK thousands separator in groups of three, but not stray spaces inside a number', () => {
+    for (const given of ['38 700', '38\u2009700', '38\u00a0700', '38,700', '38700']) {
+      expect(markNumeric({ value: '38700' }, given).correct).toBe(true);
+      expect(markNumeric({ value: '38700', significant_figures: 3 }, given).correct).toBe(true);
+    }
+    expect(markNumeric({ value: '387' }, '3 87').correct).toBe(false);
+    expect(markNumeric({ value: '38700' }, '38 70 0').correct).toBe(false);
+    expect(markNumeric({ value: '1234.5', decimal_places: 1 }, '1 234.5').correct).toBe(true);
+    expect(markNumeric({ value: '0.75' }, '3 / 4').correct).toBe(true);
+    expect(markNumeric({ value: '4' }, ' 4 ').correct).toBe(true);
+  });
+
   it('does not divide by zero in a fraction answer', () => {
     expect(markNumeric({ value: '1' }, '1/0').correct).toBe(false);
   });

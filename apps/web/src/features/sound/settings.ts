@@ -7,12 +7,15 @@ export interface SoundSettings {
   volume: SoundVolume;
   /** Subtle sounds on every button tap; off by default. */
   taps: boolean;
+  /** Vibration with animations, where the device supports it; on by default. */
+  vibration: boolean;
 }
 
 export const DEFAULT_SOUND_SETTINGS: SoundSettings = Object.freeze({
   enabled: true,
   volume: 'medium',
   taps: false,
+  vibration: true,
 });
 
 export const SOUND_KEY = 'revisionden.sound';
@@ -40,6 +43,7 @@ export function loadSoundSettings(storage: SettingsStorage | null): SoundSetting
       ? (s.volume as SoundVolume)
       : DEFAULT_SOUND_SETTINGS.volume,
     taps: typeof s.taps === 'boolean' ? s.taps : DEFAULT_SOUND_SETTINGS.taps,
+    vibration: typeof s.vibration === 'boolean' ? s.vibration : DEFAULT_SOUND_SETTINGS.vibration,
   };
 }
 

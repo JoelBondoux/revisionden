@@ -1,0 +1,282 @@
+/*
+ * Sticker Book, the default effect style (J10a, docs/GAME_FEEL.md). Warm and hand-made: wins are
+ * stickers slapped onto the page (white die-cut edge, a slight tilt, a soft offset shadow), with
+ * paper confetti. Every rule is scoped to the style, so another style can replace it completely.
+ * Stickers keep their paper colours in dark mode, like real stickers. Transforms and opacity only.
+ */
+:root[data-effect-style='sticker-book'] {
+  --sb-paper: #fffdf7;
+  --sb-ink: #2f2a3d;
+  --sb-ink-soft: #5a5470;
+  --sb-coral: #c93a2b;
+  --sb-teal: #13897a;
+  --sb-tape: rgb(255 209 102 / 85%);
+  --sb-edge: rgb(80 70 140 / 28%);
+  --sb-shadow: rgb(0 0 0 / 16%);
+  --sb-sticker: 0 0 0 3px #fff, 0 0 0 5px var(--sb-edge), 3px 5px 0 var(--sb-shadow);
+  /* The lesson surround turns to paper (J10a2); the moments stay stickers. */
+  --arena-bg: #f6efe0;
+  --arena-raised: #fffdf7;
+  --arena-text: #2f2a3d;
+  --arena-text-secondary: #57516b;
+  --arena-glow: #0e6b60;
+}
+
+/* In dark mode the lesson surround is night paper, so the screen stays dark. */
+:root[data-effect-style='sticker-book'][data-theme='dark'] {
+  --arena-bg: #221d33;
+  --arena-raised: #2c2640;
+  --arena-text: #f3eefc;
+  --arena-text-secondary: #c9c2e0;
+  --arena-glow: #6fe0cf;
+}
+
+/* ---------- Home ---------- */
+:root[data-effect-style='sticker-book'] .page-header .pill {
+  rotate: -3deg;
+  box-shadow: var(--sb-sticker);
+}
+
+:root[data-effect-style='sticker-book'] .map-summary {
+  position: relative;
+  padding: var(--space-4);
+  border-radius: 6px;
+  background: var(--sb-paper);
+  color: var(--sb-ink);
+  box-shadow: var(--sb-sticker);
+  rotate: -0.6deg;
+}
+
+:root[data-effect-style='sticker-book'] .map-summary .secondary-text {
+  color: var(--sb-ink-soft);
+}
+
+/* Today's mission: a card taped into the book. */
+:root[data-effect-style='sticker-book'] .mission {
+  position: relative;
+  margin-top: var(--space-3);
+  border-radius: 6px;
+  background: var(--sb-paper);
+  color: var(--sb-ink);
+  box-shadow: var(--sb-sticker);
+  rotate: -1.2deg;
+}
+
+:root[data-effect-style='sticker-book'] .mission::before,
+:root[data-effect-style='sticker-book'] .map-summary::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  width: 84px;
+  height: 22px;
+  margin-left: -42px;
+  background: var(--sb-tape);
+  rotate: 3deg;
+  pointer-events: none;
+}
+
+:root[data-effect-style='sticker-book'] .mission__eyebrow {
+  color: var(--sb-coral);
+}
+
+:root[data-effect-style='sticker-book'] .mission__time {
+  color: var(--sb-ink-soft);
+}
+
+/* The 5-a-day card sits on the page like a paper note, tilted the other way. */
+:root[data-effect-style='sticker-book'] .daily-card {
+  border: 0;
+  border-radius: 6px;
+  background: var(--sb-paper);
+  color: var(--sb-ink);
+  box-shadow: var(--sb-sticker);
+  rotate: 0.8deg;
+}
+
+:root[data-effect-style='sticker-book'] .daily-card .secondary-text,
+:root[data-effect-style='sticker-book'] .daily-card__count {
+  color: var(--sb-ink-soft);
+}
+
+/* Mastered topics are gold stickers, each stuck on at its own slight angle. */
+:root[data-effect-style='sticker-book'] .hex--mastered {
+  filter: drop-shadow(2px 3px 0 var(--sb-shadow));
+}
+
+:root[data-effect-style='sticker-book'] .hex--mastered .hex__shape {
+  --hex-border: #fff;
+  rotate: -5deg;
+}
+
+:root[data-effect-style='sticker-book']
+  .honeycomb__row
+  > :nth-child(even)
+  .hex--mastered
+  .hex__shape {
+  rotate: 4deg;
+}
+
+/* ---------- Rewards ---------- */
+:root[data-effect-style='sticker-book'] .rewards__step {
+  border: 2px dashed var(--sb-edge);
+}
+
+:root[data-effect-style='sticker-book'] .rewards__step--earned {
+  border: 2px solid #fff;
+  box-shadow:
+    0 0 0 2px var(--sb-edge),
+    2px 3px 0 var(--sb-shadow);
+  rotate: -6deg;
+}
+
+:root[data-effect-style='sticker-book'] .rewards__step--earned:nth-child(even) {
+  rotate: 5deg;
+}
+
+/* ---------- Lesson surround ---------- */
+/* The question and answers sit on a plain white card: no tilt, tape, texture or motion. */
+:root[data-effect-style='sticker-book'] .lesson__stage {
+  padding: var(--space-4);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--sb-ink);
+  box-shadow: 0 0 0 2px var(--sb-edge);
+}
+
+:root[data-effect-style='sticker-book'] .answer-option {
+  border: 2px solid var(--sb-edge);
+  background: #fff;
+  color: var(--sb-ink);
+  box-shadow: 0 4px 0 var(--sb-edge);
+}
+
+:root[data-effect-style='sticker-book'] .answer-option:has(input:checked) {
+  border-color: var(--sb-ink);
+}
+
+:root[data-effect-style='sticker-book'] .answer-option--right {
+  background: #dff5ec !important;
+  border-color: #0b8457;
+  box-shadow: 0 4px 0 #0b8457 !important;
+  color: var(--sb-ink);
+}
+
+:root[data-effect-style='sticker-book'][data-theme='dark'] .lesson__stage,
+:root[data-effect-style='sticker-book'][data-theme='dark'] .answer-option {
+  background: var(--arena-raised);
+  color: var(--arena-text);
+}
+
+:root[data-effect-style='sticker-book'][data-theme='dark'] .lesson__stage {
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 18%);
+}
+
+:root[data-effect-style='sticker-book'][data-theme='dark'] .answer-option {
+  border-color: rgb(255 255 255 / 22%);
+  box-shadow: 0 4px 0 rgb(0 0 0 / 35%);
+}
+
+:root[data-effect-style='sticker-book'][data-theme='dark'] .answer-option:has(input:checked) {
+  border-color: var(--arena-text);
+}
+
+:root[data-effect-style='sticker-book'][data-theme='dark'] .answer-option--right {
+  background: #163a2c !important;
+  border-color: #3ccf91;
+  box-shadow: 0 4px 0 #0b8457 !important;
+  color: var(--arena-text);
+}
+
+/* ---------- Lesson moments ---------- */
+/* COMBO ×n: a slanted label sticker slaps down and settles. */
+:root[data-effect-style='sticker-book'] .combo-badge {
+  border-radius: 6px;
+  background: var(--sb-coral);
+  color: #fff;
+  box-shadow: var(--sb-sticker);
+  rotate: -4deg;
+  animation: sb-slap var(--motion-medium) var(--ease-spring);
+}
+
+/* Set-complete stars: star stickers stuck on one by one, slightly crooked. */
+:root[data-effect-style='sticker-book'] .star--earned polygon {
+  stroke: #fff;
+  stroke-width: 5;
+}
+
+:root[data-effect-style='sticker-book'] .star--earned {
+  filter: drop-shadow(2px 3px 0 var(--sb-shadow));
+  rotate: -8deg;
+  animation: sb-slap var(--motion-medium) var(--ease-spring) forwards;
+}
+
+:root[data-effect-style='sticker-book'] .star--earned:nth-child(2) {
+  rotate: 4deg;
+}
+
+:root[data-effect-style='sticker-book'] .star--earned:nth-child(3) {
+  rotate: -3deg;
+}
+
+/* Bursts and confetti are paper scraps in the sticker colours. */
+:root[data-effect-style='sticker-book'] .burst__particle {
+  width: calc(var(--size) * 1.4);
+  height: calc(var(--size) * 0.8);
+  border-radius: 1px;
+}
+
+:root[data-effect-style='sticker-book'] .confetti__piece {
+  width: 12px;
+  height: 8px;
+  border-radius: 1px;
+}
+
+:root[data-effect-style='sticker-book'] .spark-0 {
+  background: #ff6b5c;
+}
+
+:root[data-effect-style='sticker-book'] .spark-1 {
+  background: #ffd166;
+}
+
+:root[data-effect-style='sticker-book'] .spark-2 {
+  background: #1fbeaa;
+}
+
+:root[data-effect-style='sticker-book'] .spark-3 {
+  background: #8f71ff;
+}
+
+/* "+XP" is lettered like a sticker: white edge round the gold. */
+:root[data-effect-style='sticker-book'] .float-up {
+  text-shadow:
+    0 2px 0 #fff,
+    2px 0 0 #fff,
+    -2px 0 0 #fff,
+    0 -2px 0 #fff,
+    2px 4px 0 var(--sb-shadow);
+}
+
+@keyframes sb-slap {
+  0% {
+    opacity: 0;
+    transform: translateY(-24px) rotate(-18deg) scale(1.4);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(0) rotate(3deg) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-effect-style='sticker-book'] .combo-badge,
+  :root[data-effect-style='sticker-book'] .star--earned {
+    animation: none;
+    opacity: 1;
+  }
+}

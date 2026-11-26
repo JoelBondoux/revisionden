@@ -54,7 +54,7 @@ body {
   line-height: 1.6;
 }
 
-/* The app's line-doodle tile (apps/web/src/design/doodles.svg, J8) as a fixed layer behind
+/* The app's doodle tile (apps/web/src/design/doodle-scatter.svg, J8b) as a fixed layer behind
    everything: decorative only, very low contrast. Colour comes from the theme via the mask. */
 body::before {
   content: '';
@@ -63,8 +63,8 @@ body::before {
   z-index: -1;
   pointer-events: none;
   background-color: var(--site-pattern-ink);
-  -webkit-mask: url('/doodles.svg') 0 0 / 240px 240px repeat;
-  mask: url('/doodles.svg') 0 0 / 240px 240px repeat;
+  -webkit-mask: url('/doodle-scatter.svg') 0 0 / 1080px 1080px repeat;
+  mask: url('/doodle-scatter.svg') 0 0 / 1080px 1080px repeat;
 }
 
 /* No pattern for high contrast or forced colours (Windows High Contrast). */

@@ -33,7 +33,7 @@ file's `verification.checks`.
 | `gcse-maths-h-n4-0001`  | multiple_choice | Ready (explanation arithmetic checked with SymPy)                                                                                                                                                                                                          |
 | `gcse-maths-h-a6-0001`  | extended_answer | Ready; needs individual approval. Exemplars (top 3, middle 2, low 1 marks) written from the mark scheme; blind marking matched all three                                                                                                                   |
 | `gcse-maths-h-g9-0001`  | short_answer    | Ready; needs individual approval. No official source defines a tangent, so it rests on the G9 spec point plus a standard definition under decision 0008 (owner, 2026-11-25)                                                                                |
-| `gcse-maths-h-a18-0002` | flashcard       | Ready (#111): `back_formula` added, so the blind answer is compared by the maths engine. Gemini gave "x = (-b +- sqrt(b^2 - 4*a*c)) / (2*a) where a != 0": same formula, condition stated. Review re-run: no problems                                      |
+| `gcse-maths-h-a18-0002` | flashcard       | Ready (#111): `back_formula` added, so the blind answer is compared by the maths engine. Gemini gave "x = (-b +- sqrt(b^2 - 4*a*c)) / (2\*a) where a != 0": same formula, condition stated. Review re-run: no problems                                     |
 
 **Decisions (settled by the owner, 2026-11-25)**
 

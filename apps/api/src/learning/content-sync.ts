@@ -47,6 +47,8 @@ export interface ContentItem {
   verify?: Record<string, unknown>;
   steps?: string[];
   mark_scheme?: string[];
+  /** Maths flashcards: the back as a formula, with the conditions it needs. */
+  back_formula?: { formula: string; conditions?: string[] };
   [key: string]: unknown;
 }
 
@@ -72,6 +74,8 @@ export interface ItemAnswer {
   explanation?: string;
   steps?: string[];
   markScheme?: string[];
+  /** A maths flashcard's formula and conditions, for its Explain steps (F7). */
+  backFormula?: { formula: string; conditions?: string[] };
 }
 
 const defined = <T extends object>(value: T): T =>
@@ -97,6 +101,7 @@ export function itemAnswer(item: ContentItem): ItemAnswer {
     explanation: item.explanation,
     steps: item.steps,
     markScheme: item.mark_scheme,
+    backFormula: item.back_formula,
   });
 }
 

@@ -295,6 +295,60 @@ test('a student unlocks with the passkey on this device and lands on the topic m
   expect(verified()?.response?.id).toBe(credentialId);
 });
 
+test("the topic map's links say what they show: each name starts with its visible text", async ({
+  page,
+  baseURL,
+}) => {
+  const rpId = new URL(baseURL!).hostname;
+  await virtualPasskeyDevice(page, rpId, true);
+  routeUnlock(page, rpId);
+  // Made-up topics, one in each state, and cards due so the Cards tab shows its badge.
+  const topic = (id: string, title: string, status: string, mastery: number) => ({
+    id,
+    title,
+    lessonId: id,
+    status,
+    mastery,
+  });
+  await page.route('**/v1/student/cards/due', (route) => route.fulfill({ json: { due: 3 } }));
+  await page.route('**/v1/student/map', (route) =>
+    route.fulfill({
+      json: {
+        subject: 'Maths',
+        qualification: 'GCSE',
+        streakDays: 2,
+        xpToday: 10,
+        dailyGoalXp: 50,
+        nextMission: null,
+        units: [
+          {
+            id: 'u1',
+            title: 'Algebra',
+            masteryPercent: 40,
+            topics: [
+              topic('t1', 'Expressions', 'mastered', 100),
+              topic('t2', 'Equations', 'in-progress', 45),
+              topic('t3', 'Inequalities', 'weak', 20),
+              topic('t4', 'Sequences', 'locked', 0),
+            ],
+            challenge: { lessonId: 'c1', unlockAtPercent: 80, unlocked: false },
+          },
+        ],
+      },
+    }),
+  );
+  await page.goto('/');
+  await page.getByRole('button', { name: "I'm a student: unlock with my passkey" }).click();
+  await expect(page.getByRole('heading', { level: 1, name: 'Topic map' })).toBeVisible();
+  await expect(page.locator('.hex').first()).toBeVisible();
+  const results = await new AxeBuilder({ page })
+    .withRules(['label-content-name-mismatch'])
+    .analyze();
+  expect(
+    results.violations.flatMap((v) => v.nodes.map((n) => `${v.id}: ${n.target.join(' ')}`)),
+  ).toEqual([]);
+});
+
 test('a device with no passkey is told to ask a parent, accessibly', async ({ page, baseURL }) => {
   const rpId = new URL(baseURL!).hostname;
   await virtualPasskeyDevice(page, rpId, false);

@@ -19,14 +19,17 @@ import {
   renderDoodleTile,
   seededRandom,
 } from './doodleTile';
+import { SKETCH_MOTIFS } from './doodleSketch';
 import { clearance } from './doodleGeometry';
 
 // J8b: the background doodles as a dense, hand-drawn sticker sheet (WhatsApp-wallpaper technique,
 // our own motifs): a few big hero doodles, lots of medium ones, and tiny fillers in every gap.
 // Generated from a fixed seed, so it is the same on every build and can be checked here.
 const css = readFileSync(join(import.meta.dirname, 'themes.css'), 'utf8');
-const placements = placeDoodles();
-const tile = renderDoodleTile(placements);
+// The shipped tile is the hand-drawn one (J8c); every placement rule is checked on it.
+const motifs = SKETCH_MOTIFS;
+const placements = placeDoodles(DOODLE_SEED, motifs);
+const tile = renderDoodleTile(placements, motifs);
 const tier = (t: Placement['tier']) => placements.filter((p) => p.tier === t);
 
 /** The shortest distance between two points on a tile that wraps round at both edges. */
@@ -64,8 +67,8 @@ describe('the doodle tile', () => {
     expect(tier('filler').length).toBeGreaterThanOrEqual(200);
     const meanMedium = tier('medium').reduce((n, p) => n + p.scale, 0) / tier('medium').length;
     for (const h of tier('hero')) expect(h.scale).toBeGreaterThanOrEqual(meanMedium * 2.5);
-    const smallestMedium = Math.min(...tier('medium').map(radius));
-    for (const f of tier('filler')) expect(radius(f)).toBeLessThan(smallestMedium / 2);
+    const smallestMedium = Math.min(...tier('medium').map((p) => radius(p, motifs)));
+    for (const f of tier('filler')) expect(radius(f, motifs)).toBeLessThan(smallestMedium / 2);
   });
 
   it('draws from a large set of original motifs and uses every one', () => {
@@ -101,11 +104,11 @@ describe('the doodle tile', () => {
       const p = placements[i]!;
       for (let j = i + 1; j < placements.length; j++) {
         const q = placements[j]!;
-        if (wrappedDistance(p, q) > radius(p) + radius(q) + GAP + STROKE) continue;
+        if (wrappedDistance(p, q) > radius(p, motifs) + radius(q, motifs) + GAP + STROKE) continue;
         // Compare q with p moved to the copy of itself nearest q.
         const dx = Math.round((q.x - p.x) / TILE_SIZE) * TILE_SIZE;
         const dy = Math.round((q.y - p.y) / TILE_SIZE) * TILE_SIZE;
-        const gap = clearance(outline(p, dx, dy), outline(q));
+        const gap = clearance(outline(p, dx, dy, motifs), outline(q, 0, 0, motifs));
         if (gap < GAP + STROKE - 0.01) overlaps++;
         closest = Math.min(closest, gap);
       }
@@ -121,7 +124,7 @@ describe('the doodle tile', () => {
       for (let x = 0; x < TILE_SIZE; x += 20) {
         let nearest = Infinity;
         for (const p of placements)
-          nearest = Math.min(nearest, wrappedDistance(p, { x, y }) - radius(p));
+          nearest = Math.min(nearest, wrappedDistance(p, { x, y }) - radius(p, motifs));
         worst = Math.max(worst, nearest);
       }
     }
@@ -160,7 +163,7 @@ describe('the doodle tile', () => {
   it('draws a doodle again on the opposite side when it crosses an edge, so the seams never show', () => {
     const drawn = (tile.match(/<use /g) ?? []).length;
     const copies = placements.reduce((n, p) => {
-      const r = reach(p);
+      const r = reach(p, motifs);
       const xs = p.x < r || p.x > TILE_SIZE - r ? 2 : 1;
       const ys = p.y < r || p.y > TILE_SIZE - r ? 2 : 1;
       return n + xs * ys;
@@ -170,8 +173,8 @@ describe('the doodle tile', () => {
   });
 
   it('is the same every time for the same seed, and different for another', () => {
-    expect(renderDoodleTile(placeDoodles(DOODLE_SEED))).toBe(tile);
-    expect(renderDoodleTile(placeDoodles(DOODLE_SEED + 1))).not.toBe(tile);
+    expect(renderDoodleTile(placeDoodles(DOODLE_SEED, motifs), motifs)).toBe(tile);
+    expect(renderDoodleTile(placeDoodles(DOODLE_SEED + 1, motifs), motifs)).not.toBe(tile);
   });
 
   it('is one small square SVG, under 60KB gzipped', () => {

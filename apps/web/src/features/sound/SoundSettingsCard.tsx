@@ -19,7 +19,7 @@ const VOLUMES: { value: SoundVolume; label: string }[] = [
 
 /** The Sound section in Settings: on/off, volume and tap sounds, saved on this device. */
 export function SoundSettingsCard() {
-  const { settings, update, play, sampleReward } = useSound();
+  const { settings, update, play, sampleReward, vibrationSupported } = useSound();
   const off = !settings.enabled;
   return (
     <Card title="Sound">
@@ -56,6 +56,20 @@ export function SoundSettingsCard() {
           />
           <span>Tap sounds</span>
         </label>
+        <label className="sound-settings__row">
+          <input
+            type="checkbox"
+            checked={vibrationSupported && settings.vibration}
+            disabled={!vibrationSupported}
+            onChange={(e) => update({ vibration: e.target.checked })}
+          />
+          <span>Vibration</span>
+        </label>
+        {!vibrationSupported && (
+          <p className="secondary-text">
+            This device can't vibrate. iPhone and iPad browsers don't allow it.
+          </p>
+        )}
         <p className="secondary-text">
           Saved on this device. On iPhone and iPad, sounds follow the silent switch.
         </p>

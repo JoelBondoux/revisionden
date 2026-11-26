@@ -724,7 +724,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:54:28Z",
+          "at": "2026-11-26T04:45:01Z",
           "notes": "no problems found"
         }
       ]
@@ -737,7 +737,7 @@
     "difficulty": 1,
     "learning_point": "gcse-maths-h-a15-lp-graph-meaning-cards",
     "expected_seconds": 15,
-    "front": "On a distance-time graph, what does the gradient represent? (one word)",
+    "front": "On a distance-time graph showing the total distance travelled, what does the gradient represent? (one word)",
     "back": "Speed",
     "explanation": "The gradient is the change in distance divided by the change in time. That is the rate of change of distance, which is speed.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
@@ -790,14 +790,6 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:53:51Z",
-          "notes": "model answered \"Speed\"; expected \"Speed\""
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -806,20 +798,28 @@
           "at": "2026-11-25T19:05:18Z"
         },
         {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:07:03Z",
+          "notes": "model answered \"Speed\"; expected \"Speed\""
+        },
+        {
           "name": "fact-check",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T20:40:46Z",
-          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The gradient of a distance–time graph represents the object's speed: gradient = change in distance ÷ change in time. On a straight-line section it gives the constant speed on that interval, and on a curved graph the gradient of the tangent at a point gives the instantaneous speed.\")"
+          "at": "2026-11-26T04:07:54Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"The gradient of a distance–time graph represents the object's speed, provided distance is plotted against time. A steeper gradient means a greater speed; a zero gradient means the object is stationary.\")"
         },
         {
           "name": "adversarial-review",
-          "result": "fail",
+          "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:54:46Z",
-          "notes": "ambiguity (front): The question asks what the gradient of a distance-time graph represents. While \"Speed\" is the expected answer at the GCSE level, \"Velocity\" is also a correct, and in some cases more precise, answer. The gradient can be negative if the object returns towards its starting point, which represents a negative velocity. Speed, as a scalar quantity, cannot be negative. A student who correctly understands the distinction between speed and velocity might answer \"Velocity\", which would be a valid response."
+          "at": "2026-11-26T04:44:45Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -912,7 +912,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:54:54Z",
+          "at": "2026-11-26T04:45:09Z",
           "notes": "no problems found"
         }
       ]

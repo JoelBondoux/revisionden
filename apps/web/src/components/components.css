@@ -215,6 +215,8 @@
 .main-nav__icon {
   position: relative;
   display: inline-flex;
+  /* After the label in the page (for its accessible name), but shown first. */
+  order: -1;
 }
 
 .main-nav__badge {

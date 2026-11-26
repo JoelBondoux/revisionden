@@ -594,6 +594,7 @@
     "expected_seconds": 15,
     "front": "x_(n+1) = 1 + 6/x_n and x_1 = 3. Work out x_2.",
     "back": "3",
+    "explanation": "Put x_1 = 3 into the formula: x_2 = 1 + 6/3 = 1 + 2 = 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["author"],
     "citations": [
@@ -619,7 +620,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). Checked: 1 + 6/3 = 3.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). Checked: 1 + 6/3 = 3. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:17Z"
         },
         {
@@ -639,20 +640,20 @@
           "notes": "model answered \"3\"; expected \"3\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:45:08Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:31Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -666,6 +667,7 @@
     "expected_seconds": 15,
     "front": "The name for using a formula such as x_(n+1) = g(x_n) again and again to find an approximate solution (one word)",
     "back": "Iteration",
+    "explanation": "Using a formula again and again, each time putting in the last answer, is called iteration. When the values settle down, they give closer and closer approximations to a solution.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -692,7 +694,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). The specification names iteration; standard description. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). The specification names iteration; standard description. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:17Z"
         },
         {
@@ -712,20 +714,20 @@
           "notes": "model answered \"Iteration\"; expected \"Iteration\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:45:22Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:57:26Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -737,8 +739,9 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a20-lp-iteration-cards",
     "expected_seconds": 15,
-    "front": "x_(n+1) = (x_n + 10)/3 and x_1 = 2. Work out x_2.",
-    "back": "4",
+    "front": "The iteration x_(n+1) = (x_n + 10)/3 is used to solve an equation. Starting with x_1 = 2, work out x_3.",
+    "back": "14/3",
+    "explanation": "Put x_1 = 2 into the formula: x_2 = (2 + 10)/3 = 12/3 = 4. Then put in x_2 = 4: x_3 = (4 + 10)/3 = 14/3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["author"],
     "citations": [
@@ -764,7 +767,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). Checked: (2 + 10)/3 = 4.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A20). Checked: (2 + 10)/3 = 4, then (4 + 10)/3 = 14/3 (question revised 2026-11-26 to ask for x_3).",
           "at": "2026-11-25T17:29:17Z"
         },
         {
@@ -776,28 +779,28 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:45:28Z",
-          "notes": "model answered \"4\"; expected \"4\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:45:35Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:17:28Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:17:43Z",
+          "notes": "model answered \"14/3\"; expected \"14/3\""
         }
       ]
     }

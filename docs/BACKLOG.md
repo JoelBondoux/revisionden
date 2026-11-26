@@ -298,6 +298,7 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [x] M5 Links in the app's J7 styles (buttons, tiles, chips, inline links; owner request).
 - [x] M6 Dark theme from the device setting with the app's dark values (J8; owner request).
 - [x] M7 The app's doodle background behind every page (J8), hidden for high contrast and forced colours.
+- [x] M7b The site uses the app's scattered 1080px doodle tile (J8b); the old 240px tile is removed.
 - [ ] M4 First live deploy (lead): staging, then production once the app is on `app.revisionden.com` and the Cloudflare secrets are set.
 - Tests: page render, every internal link resolves, no third-party origins, policies come from `docs/legal`, production build refuses missing operator details.
 
