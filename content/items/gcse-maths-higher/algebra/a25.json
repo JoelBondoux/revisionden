@@ -10,6 +10,7 @@
     "answer": { "accepted": ["3n + 2", "5 + 3(n - 1)"], "any_order": true },
     "marks": 2,
     "explanation": "The terms go up by 3, so start with 3n: 3, 6, 9, ... Add 2.",
+    "hint": "Find the common difference, then compare the sequence with that number times n.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
     "checked_by": ["author"],
     "citations": [
@@ -65,9 +66,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:44:56Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:34:58Z",
           "notes": "no problems found"
         }
       ]
@@ -84,6 +85,7 @@
     "answer": { "accepted": ["24 - 4n", "20 - 4(n - 1)", "4(6 - n)"], "any_order": true },
     "marks": 2,
     "explanation": "The terms go down by 4 each time, so the nth term starts -4n. When n = 1, -4n = -4, and the first term is 20, so add 24: the nth term is 24 - 4n. Check: n = 2 gives 24 - 8 = 16.",
+    "hint": "The terms go down by the same amount each time, so the nth term has a negative multiple of n in it.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
     "checked_by": ["author"],
     "citations": [
@@ -139,9 +141,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:03:24Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:35:08Z",
           "notes": "no problems found"
         }
       ]
@@ -159,6 +161,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "The terms go up by 5, so 5n; 5 × 1 + 2 = 7.",
+    "hint": "Find the common difference, then check which expression gives 7 when n = 1.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
     "checked_by": ["author"],
     "citations": [
@@ -204,20 +207,20 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:59:33Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:35:18Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -236,6 +239,7 @@
     },
     "marks": 3,
     "explanation": "The second difference is 2, so start with n^2: 1, 4, 9, 16, 25. What is left is 1, 2, 3, 4, 5, which is n.",
+    "hint": "Find the second difference: if it is 2, start with n^2 and see what is left over.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
     "checked_by": ["author"],
     "citations": [
@@ -291,9 +295,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:43:47Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:35:28Z",
           "notes": "no problems found"
         }
       ]
@@ -310,6 +314,7 @@
     "answer": { "accepted": ["n^2 + 3", "n² + 3", "n^2+3", "n²+3"], "any_order": true },
     "marks": 2,
     "explanation": "The differences are 3, 5, 7, 9 and the second difference is 2, so the nth term starts with n^2. Subtract n^2 (1, 4, 9, 16, 25) from the terms: 3, 3, 3, 3, 3. So the nth term is n^2 + 3.",
+    "hint": "Find the second difference, start with n^2, and look at what is left when you take n^2 away from each term.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
     "checked_by": ["author"],
     "citations": [
@@ -365,9 +370,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:44:01Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:35:38Z",
           "notes": "no problems found"
         }
       ]
@@ -385,6 +390,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "The second difference is 4, so start with 2n^2: 2, 8, 18, 32, 50. Each term is 1 more, so 2n^2 + 1.",
+    "hint": "Find the second difference: half of it is the number in front of n^2.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
     "checked_by": ["author"],
     "citations": [
@@ -430,20 +436,20 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:00:31Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:35:48Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -543,6 +549,7 @@
     "front": "The nth term of 2, 4, 6, 8, ...",
     "back": "2n",
     "explanation": "The terms go up by 2 each time, so the nth term starts 2n. When n = 1, 2n = 2, which is the first term, so the nth term is 2n.",
+    "hint": "Find the common difference, then compare the sequence with that number times n.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
     "checked_by": ["author"],
     "citations": [
@@ -598,9 +605,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:03:40Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:35:58Z",
           "notes": "no problems found"
         }
       ]
@@ -616,6 +623,7 @@
     "front": "The nth term of 1, 4, 9, 16, ... (use ^ for powers)",
     "back": "n^2",
     "explanation": "The terms are 1 × 1, 2 × 2, 3 × 3, 4 × 4: the square numbers. So the nth term is n^2.",
+    "hint": "What special kind of numbers are 1, 4, 9 and 16?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
     "checked_by": ["author"],
     "citations": [
@@ -671,9 +679,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:03:48Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:36:07Z",
           "notes": "no problems found"
         }
       ]
@@ -689,6 +697,7 @@
     "front": "The second difference of the sequence with nth term n^2 + 5n",
     "back": "2",
     "explanation": "Work out the terms: n = 1 gives 6, n = 2 gives 14, n = 3 gives 24, n = 4 gives 36. The first differences are 8, 10, 12, and the second difference is 2.",
+    "hint": "Work out the first few terms, then their differences, then the differences of those.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
     "checked_by": ["author"],
     "citations": [
@@ -744,9 +753,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:03:56Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:36:17Z",
           "notes": "no problems found"
         }
       ]
