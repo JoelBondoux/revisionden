@@ -39,9 +39,9 @@
   box-shadow: var(--sb-sticker);
 }
 
-:root[data-effect-style='sticker-book'] .map-summary {
+:root[data-effect-style='sticker-book'] .today-strip {
   position: relative;
-  padding: var(--space-4);
+  padding: var(--space-2) var(--space-3) var(--space-1);
   border-radius: 6px;
   background: var(--sb-paper);
   color: var(--sb-ink);
@@ -49,12 +49,12 @@
   rotate: -0.6deg;
 }
 
-:root[data-effect-style='sticker-book'] .map-summary .secondary-text {
+:root[data-effect-style='sticker-book'] .today-strip__xp {
   color: var(--sb-ink-soft);
 }
 
 /* Today's mission: a card taped into the book. */
-:root[data-effect-style='sticker-book'] .mission {
+:root[data-effect-style='sticker-book'] .today-strip__mission {
   position: relative;
   margin-top: var(--space-3);
   border-radius: 6px;
@@ -64,8 +64,8 @@
   rotate: -1.2deg;
 }
 
-:root[data-effect-style='sticker-book'] .mission::before,
-:root[data-effect-style='sticker-book'] .map-summary::before {
+:root[data-effect-style='sticker-book'] .today-strip__mission::before,
+:root[data-effect-style='sticker-book'] .today-strip::before {
   content: '';
   position: absolute;
   top: -12px;
@@ -78,16 +78,16 @@
   pointer-events: none;
 }
 
-:root[data-effect-style='sticker-book'] .mission__eyebrow {
+:root[data-effect-style='sticker-book'] .today-strip__mission .today-strip__eyebrow {
   color: var(--sb-coral);
 }
 
-:root[data-effect-style='sticker-book'] .mission__time {
+:root[data-effect-style='sticker-book'] .today-strip__mission .today-strip__meta {
   color: var(--sb-ink-soft);
 }
 
 /* The 5-a-day card sits on the page like a paper note, tilted the other way. */
-:root[data-effect-style='sticker-book'] .daily-card {
+:root[data-effect-style='sticker-book'] .today-strip__daily {
   border: 0;
   border-radius: 6px;
   background: var(--sb-paper);
@@ -96,8 +96,8 @@
   rotate: 0.8deg;
 }
 
-:root[data-effect-style='sticker-book'] .daily-card .secondary-text,
-:root[data-effect-style='sticker-book'] .daily-card__count {
+:root[data-effect-style='sticker-book'] .today-strip__daily .today-strip__eyebrow,
+:root[data-effect-style='sticker-book'] .today-strip__daily .today-strip__title {
   color: var(--sb-ink-soft);
 }
 
@@ -108,8 +108,7 @@
 }
 
 :root[data-effect-style='sticker-book']
-  .honeycomb__row
-  > :nth-child(even)
+  .unit-path__step:nth-child(even)
   .hex--mastered
   .hex__shape {
   rotate: 4deg;
