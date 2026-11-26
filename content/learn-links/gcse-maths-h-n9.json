@@ -1,0 +1,74 @@
+{
+  "topic": "gcse-maths-h-n9",
+  "links": [
+    {
+      "title": "Standard form",
+      "url": "https://www.bbc.co.uk/bitesize/topics/zgnbxsg/articles/zc7c239",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "What is standard form? - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Writing very large and very small numbers in standard form A × 10^n and converting back to ordinary numbers.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Checking and securing understanding of writing large numbers in standard form",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/standard-form-calculations/lessons/checking-and-securing-understanding-of-writing-large-numbers-in-standard-form",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n9-lp-convert"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of writing large numbers in standard form GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can write very large numbers in the form A × 10^n, (where 1 ≤ A < 10) and appreciate the real-life contexts where this format is usefully used.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Checking and securing understanding of writing small numbers in standard form",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/standard-form-calculations/lessons/checking-and-securing-understanding-of-writing-small-numbers-in-standard-form",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n9-lp-convert"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of writing small numbers in standard form GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can write very small numbers in the form A × 10^(−n), (where 1 ≤ A < 10) and appreciate the real-life contexts where this format is usefully used.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Multiplying numbers in standard form",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/standard-form-calculations/lessons/multiplying-numbers-in-standard-form",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n9-lp-calculate"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Multiplying numbers in standard form GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can appreciate the mathematical structures that underpin multiplication of numbers represented in standard form.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Calculations using standard form",
+      "url": "https://www.bbc.co.uk/bitesize/topics/zgnbxsg/articles/z424mbk",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n9-lp-calculate"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Calculations using standard form - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Adding, subtracting, multiplying and dividing numbers in standard form, with and without a calculator.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

@@ -254,8 +254,23 @@ Product owner decision, 2026-11-25: **parent view only**.
   hold no nickname or other personal data (only the token and the family id).
 - Each QR code and shared link also has a short code (8 characters, no look-alikes: no 0/O,
   1/I/L, shown as ABCD-EFGH) the child can type at `/link` when the camera or link is awkward.
-  Codes and tokens are single use and stored only as hashes. Code attempts at `/link` have their
-  own rate limit per address.
+  Codes and tokens are single use and stored only as hashes: a link is used up when a device
+  finishes setting up its passkey with it (`/v1/device/link/verify`, atomically, so only one
+  device can). Opening it before then (a reload, or trying again) is fine and gets a fresh
+  5-minute passkey challenge each time while the link is unused, not cancelled and not expired
+  (E8). Code attempts at `/link` have their own rate limit per address.
+- Passkey set-up on the child's device (E8): if it fails, the page says why in plain words and
+  shows "Details: <error name> (RD-XXXXXX)". Cancelled or timed out: "Try again" (with a fresh
+  challenge fetched straight away); no screen lock: set up a PIN, pattern, fingerprint or face
+  unlock first; this device already has a passkey for the child: "Unlock with my passkey";
+  unsupported browser: open the page in Chrome (or Safari on an iPhone); link cancelled, used or
+  expired: ask a parent for a new one. Before the tap, a browser without passkeys, or an in-app
+  browser (the Google app or Lens, Instagram, Facebook, TikTok and the like), shows "Open this
+  page in Chrome" with "Copy link" and, on Android, an "Open in Chrome" link; a device that says
+  it has no screen lock gets a warning. The failure is reported with the error name only
+  (`POST /v1/client-errors`, kind `passkey`) and carried into a bug report sent from that screen
+  (`lastProblem`); a refused verify is logged with its own code (`invalid_challenge`,
+  `passkey_not_verified`, `link_cancelled`, `link_already_used`, `invalid_link_token`).
 - The parent sees "Waiting for <nickname>'s device…" and "Cancel this link" (a cancelled link no
   longer works, even on a device that had already opened it and not yet finished its passkey).
   The screen updates once the device that used that link has set up its passkey (each link
@@ -389,7 +404,7 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
   - At most **one retry per learning point** and **2 retries per lesson**.
   - A **second miss** on a point (its retry, or another question on it) ends retries for it today
     and **steps down** instead: "This one's tricky today, so we'll come back to it another day",
-    the topic's "Learn it first" links, and an easier question on the same topic (lower
+    with "Learn more" (as after any wrong answer), and an easier question on the same topic (lower
     difficulty) next if there is one. The point then waits for the review ladder.
   - **Never 2 hard retries in a row:** a **confidence question** (one the student has answered
     right before, same subject, another learning point) goes just before each retry; without one,
@@ -429,6 +444,9 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
   changes the rating; the rating buttons stay once the answer has been seen. The answer face is
   empty until the answer is revealed, and each new card starts on its question with no turn, so
   the next card's answer never flashes while the card turns.
+  The card and the rating buttons are named by the words they show (F8b, WCAG 2.5.3 Label in
+  Name): the card reads its showing face, with "Turn over to see the answer" (or "Turn back to
+  the question") as its description, and a rating reads, for example, "Good 1 day".
 - **Explain (F7, owner):** on the answer side, "Explain" walks through the item's verified
   content one step at a time ("Next step", "Back", ending on the answer): its worked steps, else
   its inline mark scheme, then its `back_formula` and each condition, then the answer, then its
@@ -495,6 +513,25 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
 - Recent activity: the last 10 events (lessons, flashcards, papers, homework marked, plan edits).
   No free text written by the student is shown.
 - **Save as PDF**: made in the browser, nicknames only, nothing stored on the server.
+
+### Motion on the stats pages (K5, owner 2026-11-26)
+
+- Every stat tile number counts up from 0 to its value, and the bar charts and progress bars
+  grow in (bars from the baseline, progress bars from the left). About 700ms, ease-out, a
+  stagger of 60ms or less, the whole set within 1 second.
+- Each runs once, the first time it comes into view; never again on a re-render, refetch or
+  new period (switching Week, Term or Year shows the new values at once, with no second settle
+  sound). A value that changes later shows at once. On the parent dashboard each child's
+  dashboard animates once.
+- Reduced motion (the device setting; the app has no motion setting of its own): no animation,
+  final values at once. Printing (Save as PDF), even mid-count, shows the final numbers and
+  full bars.
+- Screen readers only ever get the final value (the moving digits are hidden from them), with
+  no live announcements. Digits use tabular figures and keep the final width, so nothing shifts,
+  and every frame is formatted like the final value (%, "1 h 20 min", "3 of 4").
+- Sound: the parent pages are silent. On the student's My stats, one soft "settle" sound and
+  vibration (`ringFill`, in the active sound pack, respecting mute) when the counts finish;
+  never per digit, and none with reduced motion.
 
 ### Rules for the numbers
 
@@ -773,19 +810,21 @@ So nobody runs an old copy of the app for long after a deploy (decided 2026-11-2
 
 Owner request, 2026-11-25: a clear install button, not only a text link in Settings.
 
-- A card with Pip, "Add RevisionDen to this device", on the child's topic map and the parent home.
-  It is a card in the page, never a pop-up. Settings has the same entry as a button.
+- "Add RevisionDen to this device": a short row in the Today strip of the child's topic map (J12b)
+  and a card with Pip on the parent home. Both are part of the page, never a pop-up. Settings has
+  the same entry as a button. "Not now" in either hides both.
 - **Chrome, Edge and Android:** the app keeps the browser's install prompt (`beforeinstallprompt`)
   and shows it when the button is tapped.
 - **iPhone and iPad Safari** (no install prompt): the button opens a sheet with three illustrated
   steps (Share, Add to Home Screen, Add), worded for an iPhone or an iPad. `/install` shows the
   same steps for the device in use (both, plus the Chrome and Edge way, on other devices).
-- **Browsers that cannot install** (for example Firefox on a computer): no card; Settings links to
+- **Browsers that cannot install** (for example Firefox on a computer): no card or row; Settings links to
   `/install`.
 - Hidden once installed (opened from the Home Screen, `display-mode: standalone`, or the
   `appinstalled` event), and for 30 days after "Not now" on this device (local storage
   `revisionden.installDismissed`).
-- Implemented: `apps/web/src/pwa/{install.ts,InstallCard.tsx,IosSteps.tsx,installStore.ts}`.
+- Implemented: `apps/web/src/pwa/{install.ts,InstallCard.tsx,IosSteps.tsx,installStore.ts}` and
+  `apps/web/src/map/InstallRow.tsx`.
 
 ## Daily limit (wellbeing)
 
@@ -1014,7 +1053,8 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   practised, chosen by spaced repetition and weak spots (never brand-new topics), across their
   subjects. Takes about 5–8 minutes.
 - Learn mode, normal XP and combos; finishing it counts as a lesson for the streak and daily goal.
-  It appears at the top of the topic map until done; it never nags (no push just for 5-a-day).
+  It appears in the topic map's Today strip, under the next mission, until done; it never nags (no
+  push just for 5-a-day).
 
 ### Recall checks
 
@@ -1025,13 +1065,40 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
 - Combos (owner decision, 2026-11-25): a wrong recall answer never resets the combo, because recall
   checks test older topics and should feel safe. A right one still adds to the combo.
 
-### Learn it first
+### Learn it first and Learn more
 
-- Each topic can link to free official lessons: Oak National Academy lessons and BBC Bitesize pages
-  that match the topic (and, later, our own verified notes).
-- Links only (open in a new tab on tap; nothing loaded from those sites until then), stored as data
-  per topic with the page title, URL, and the date checked. A CI job checks every link still works
-  (HTTP status) and fails on broken links. A topic shows the button only when it has a checked link.
+- **Allowed providers** (owner decision, 2026-11-26): **Oak National Academy**, **BBC Bitesize** and
+  **Isaac Physics / Isaac Science** (University of Cambridge). No others. Criteria: free, made for UK
+  secondary pupils, no ads, no comments or social feeds, no sign-up needed to read. Ad-supported
+  sites and exam-board pages were not chosen. Isaac's host is `isaacscience.org` (read on
+  2026-11-26: isaacphysics.org now redirects there and the site calls itself Isaac Science).
+- **External links are interim** (owner goal): all of this teaching is to be in-house, as our own
+  verified notes. The data is ready for that: provider `revisionden` points at an in-app route (not
+  a URL), is always listed first, and can hide the external links for the item, point or topic it
+  covers (`hide_external`). The notes are not built yet, so the validator refuses them for now.
+- Each topic can link to free lessons from those providers (and, later, our own verified notes).
+  A link can be for the whole topic, or only for some of its learning points or items.
+- **Learn it first**: at the top of a topic lesson (and on the parent's "Worth a look together"),
+  the topic's whole-topic links.
+- **Learn more** (owner request, 2026-11-26: "link out to authoritative, age-appropriate sources
+  for further tuition guidance when a question needs more explanation"): on a flashcard's Explain
+  panel and after a wrong answer in a lesson, behind a "Learn more" tap. It shows the most specific
+  links: those for the item, else for its learning point, else the whole topic's. Lessons match by
+  learning point (a lesson item does not carry its content id yet, so item links cannot match);
+  flashcards use the topic's (a card does not carry its learning point yet).
+- Links only (open in a new tab on tap; nothing loaded from those sites until then, nothing
+  recorded about taps), stored as data per topic with the page title, URL and dates.
+- A link shows only when it is both **reachable** (`checked_at`: the CI job requests every link and
+  fails on broken ones) and **match-checked** (`match`: someone opened and read the page and
+  recorded its title as fetched, what it teaches, its level and the date). A page that was not
+  opened is never recorded. The CI job also fails when a match-checked page's title changes, so the
+  match is re-checked.
+- Every reachable link needs the full match check; the validator refuses one without it. (The 11
+  Oak links from Q5 were re-read and match-checked on 2026-11-26, so the temporary "legacy" path
+  for them was removed.)
+- Coverage (2026-11-26): every GCSE Maths topic and learning point with items has a shown link:
+  44 of 44 topics and 133 of 133 learning points, 69 of them with a page of their own (139 links:
+  Oak lessons and BBC Bitesize pages). `pnpm content:check-links --coverage` prints the numbers.
 - Links point at the right level (GCSE or A-Level) and the student's board where the page is
   board-specific.
 
@@ -1053,3 +1120,27 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   forced colours. Get help follows the theme too (light, dark, colour-blind), with its own calm,
   high-contrast colours (owner, 2026-11-25, W3). The sales site follows the
   device's theme only.
+
+## Screen layout
+
+- **Single screen for doing things** (owner design rule, 2026-11-26; how to apply it: lead ruling,
+  same day). On screens where the student does something, the main task fits on one screen
+  without scrolling, at 390 × 844 with default text: the question or card, the answer input, and
+  the primary button. The primary action is always in view (for example a sticky action bar).
+  Secondary detail sits behind a tap (expand, sheet or tab).
+  - Covered: the lesson and question player, flashcards (including Explain), the starting test,
+    the daily 5-a-day and recall, the map, Plan, the papers chooser, set complete and reward
+    moments, and the Me page.
+  - Not covered: reading pages (Get help, About, policies, long explanations, parent stats). These
+    may scroll.
+  - Contained scrollers are allowed (lead ruling, 2026-11-26): a row of chips or badges that
+    scrolls sideways, or a list inside a card that scrolls up and down. The page itself never
+    scrolls sideways. Sideways rows use scroll snap and an edge fade that shows there is more,
+    bring the selected item into view on load, keep every item reachable with Tab (focus scrolls
+    it into view), have touch targets of at least 44 px, and show a scrollbar or arrow buttons on
+    pointer devices. A scrolling list in a card is a labelled, focusable region.
+  - Accessibility wins: at 320 px or 200% text, with a short screen, or with a very long question,
+    the page may scroll up and down, and an inner up-and-down scroller gives way to normal page
+    scrolling (no scroll inside a scroll). The page must never scroll sideways or clip content.
+  - Status: agreed, not yet applied everywhere. Mockups and the current heights are in
+    `docs/design/j12/` (AUDIT.md); the proposed e2e check is in `docs/design/j12/SKIN.md`.

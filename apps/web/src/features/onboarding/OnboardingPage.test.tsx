@@ -64,6 +64,7 @@ function fakeApi(initial: OnboardedChild[] = []): OnboardingApi & { children: On
     updateMySubject: vi.fn(),
     getMyAvatar: vi.fn(),
     saveMyAvatar: vi.fn(),
+    reportPasskeyError: vi.fn(() => 'RD-TEST00'),
     unlockOptions: vi.fn(),
     unlockVerify: vi.fn(),
   };

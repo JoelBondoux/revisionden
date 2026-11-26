@@ -1,2 +1,2 @@
-export { LearnItFirst } from './LearnItFirst';
-export { checkedLinksFor, learnLinksByTopic, type LearnLink } from './links';
+export { LearnItFirst, LearnMore } from './LearnItFirst';
+export { checkedLinksFor, learnLinksByTopic, learnMoreLinks, type LearnLink } from './links';

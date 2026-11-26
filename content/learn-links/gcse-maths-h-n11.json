@@ -1,0 +1,31 @@
+{
+  "topic": "gcse-maths-h-n11",
+  "links": [
+    {
+      "title": "Checking and securing understanding of converting between ratios, percentages and fractions",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/ratio/lessons/checking-and-securing-understanding-of-converting-between-ratios-percentages-and-fractions",
+      "provider": "oak",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of converting between ratios, percentages and fractions GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can move fluently between a ratio, percentage and fractions and compare these.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Ratio and fractions, and sharing in a ratio",
+      "url": "https://www.bbc.co.uk/bitesize/topics/zyxsj6f/articles/zcm9xg8",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Ratio and fractions, and sharing in a ratio - BBC Bitesize",
+        "teaches": "Writing each part of a ratio as a fraction of the whole and sharing an amount in a ratio, using bar models.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

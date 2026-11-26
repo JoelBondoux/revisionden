@@ -43,6 +43,14 @@ describe('Parent stats dashboard', () => {
     ).toBeInTheDocument();
   });
 
+  it('lets the wide Subjects table scroll in its own box, reachable by keyboard, not the whole page', async () => {
+    await open();
+    const box = screen.getByRole('region', { name: 'Subjects table' });
+    expect(box).toHaveClass('stats-table-scroll');
+    expect(box).toHaveAttribute('tabindex', '0');
+    expect(within(box).getByRole('table', { name: 'Subjects' })).toBeInTheDocument();
+  });
+
   it('shows subjects, weak spots and drops plainly to the parent', async () => {
     await open();
     const subjects = screen.getByRole('table', { name: 'Subjects' });

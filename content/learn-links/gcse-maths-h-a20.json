@@ -1,0 +1,60 @@
+{
+  "topic": "gcse-maths-h-a20",
+  "links": [
+    {
+      "title": "Higher – Iterative techniques",
+      "url": "https://www.bbc.co.uk/bitesize/topics/z3hv2p3/articles/zs63tcw",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "What is iteration? - BBC Bitesize",
+        "teaches": "Iteration: rearranging an equation into an iterative formula and using it to find an approximate solution (Higher).",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Evaluating iterative formulas",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/iteration/lessons/evaluating-iterative-formulas",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a20-lp-iterate"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Evaluating iterative formulas GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can evaluate and interpret iterative formula for various real-world situations.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Approximating solutions to equations",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/iteration/lessons/approximating-solutions-to-equations",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a20-lp-iterate"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Approximating solutions to equations GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can use iteration to find approximate solutions to equations.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Signs of a solution",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/iteration/lessons/signs-of-a-solution",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a20-lp-sign-change"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Signs of a solution GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can deduce why a change of sign may indicate a solution.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

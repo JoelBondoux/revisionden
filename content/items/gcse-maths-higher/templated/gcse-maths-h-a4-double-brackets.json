@@ -6,7 +6,7 @@
     "difficulty": 3,
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 90,
-    "prompt": "Expand and simplify (x - 5)(3x - 4). Use ^ for powers.",
+    "prompt": "Expand and simplify (x - 5)(3x - 4). Use the Power key (^) for powers.",
     "answer": {
       "expression": "3x^2 - 19x + 20"
     },
@@ -38,27 +38,27 @@
     ],
     "template": {
       "id": "gcse-maths-h-a4-double-brackets",
-      "version": 1,
+      "version": 2,
       "seed": 1
     },
     "verification": {
       "status": "draft",
-      "version": 2,
+      "version": 3,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
-          "tool_version": "gcse-maths-h-a4-double-brackets v1",
-          "at": "2026-11-26T04:45:01Z",
-          "notes": "Generated from template gcse-maths-h-a4-double-brackets (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+          "tool_version": "gcse-maths-h-a4-double-brackets v2",
+          "at": "2026-11-26T10:41:22Z",
+          "notes": "Generated from template gcse-maths-h-a4-double-brackets (version 2, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
           "name": "maths-engine",
           "result": "pass",
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-26T04:45:01Z",
+          "at": "2026-11-26T10:41:22Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
         },
         {
@@ -66,23 +66,23 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-26T04:46:03Z",
+          "at": "2026-11-26T10:41:40Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
           "name": "blind-answer",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:49:54Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:06:09Z",
           "notes": "model answered \"3x^2 - 19x + 20\"; expected \"3x^2 - 19x + 20\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:50:03Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:06:10Z",
           "notes": "no problems found"
         }
       ]
@@ -95,7 +95,7 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 60,
-    "prompt": "Expand and simplify (x - 1)(x - 5). Use ^ for powers.",
+    "prompt": "Expand and simplify (x - 1)(x - 5). Use the Power key (^) for powers.",
     "answer": {
       "expression": "x^2 - 6x + 5"
     },
@@ -127,27 +127,27 @@
     ],
     "template": {
       "id": "gcse-maths-h-a4-double-brackets",
-      "version": 1,
+      "version": 2,
       "seed": 2
     },
     "verification": {
       "status": "draft",
-      "version": 1,
+      "version": 2,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
-          "tool_version": "gcse-maths-h-a4-double-brackets v1",
-          "at": "2026-11-26T04:44:22Z",
-          "notes": "Generated from template gcse-maths-h-a4-double-brackets (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+          "tool_version": "gcse-maths-h-a4-double-brackets v2",
+          "at": "2026-11-26T10:41:22Z",
+          "notes": "Generated from template gcse-maths-h-a4-double-brackets (version 2, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
           "name": "maths-engine",
           "result": "pass",
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-26T04:44:22Z",
+          "at": "2026-11-26T10:41:22Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
         },
         {
@@ -155,23 +155,23 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-26T04:46:04Z",
+          "at": "2026-11-26T10:41:41Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
           "name": "blind-answer",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:50:10Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:05:23Z",
           "notes": "model answered \"x^2 - 6x + 5\"; expected \"x^2 - 6x + 5\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:50:19Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:05:24Z",
           "notes": "no problems found"
         }
       ]
@@ -184,7 +184,7 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 60,
-    "prompt": "Expand and simplify (x - 4)(x - 8). Use ^ for powers.",
+    "prompt": "Expand and simplify (x - 4)(x - 8). Use the Power key (^) for powers.",
     "answer": {
       "expression": "x^2 - 12x + 32"
     },
@@ -216,27 +216,27 @@
     ],
     "template": {
       "id": "gcse-maths-h-a4-double-brackets",
-      "version": 1,
+      "version": 2,
       "seed": 3
     },
     "verification": {
       "status": "draft",
-      "version": 2,
+      "version": 3,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
-          "tool_version": "gcse-maths-h-a4-double-brackets v1",
-          "at": "2026-11-26T04:45:01Z",
-          "notes": "Generated from template gcse-maths-h-a4-double-brackets (version 1, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+          "tool_version": "gcse-maths-h-a4-double-brackets v2",
+          "at": "2026-11-26T10:41:22Z",
+          "notes": "Generated from template gcse-maths-h-a4-double-brackets (version 2, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
           "name": "maths-engine",
           "result": "pass",
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-26T04:45:01Z",
+          "at": "2026-11-26T10:41:22Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
         },
         {
@@ -244,23 +244,23 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-26T04:46:05Z",
+          "at": "2026-11-26T10:41:42Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
           "name": "blind-answer",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:50:25Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:05:26Z",
           "notes": "model answered \"x^2 - 12x + 32\"; expected \"x^2 - 12x + 32\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:50:34Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:05:27Z",
           "notes": "no problems found"
         }
       ]
@@ -273,7 +273,7 @@
     "difficulty": 3,
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 90,
-    "prompt": "Expand and simplify (2x - 3)(2x + 7). Use ^ for powers.",
+    "prompt": "Expand and simplify (2x - 3)(2x + 7). Use the Power key (^) for powers.",
     "answer": {
       "expression": "4x^2 + 8x - 21"
     },
@@ -305,27 +305,27 @@
     ],
     "template": {
       "id": "gcse-maths-h-a4-double-brackets",
-      "version": 1,
+      "version": 2,
       "seed": 4
     },
     "verification": {
       "status": "draft",
-      "version": 1,
+      "version": 2,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
-          "tool_version": "gcse-maths-h-a4-double-brackets v1",
-          "at": "2026-11-26T04:44:22Z",
-          "notes": "Generated from template gcse-maths-h-a4-double-brackets (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+          "tool_version": "gcse-maths-h-a4-double-brackets v2",
+          "at": "2026-11-26T10:41:22Z",
+          "notes": "Generated from template gcse-maths-h-a4-double-brackets (version 2, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
           "name": "maths-engine",
           "result": "pass",
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-26T04:44:22Z",
+          "at": "2026-11-26T10:41:22Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
         },
         {
@@ -333,23 +333,23 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-26T04:46:05Z",
+          "at": "2026-11-26T10:41:43Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
           "name": "blind-answer",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:50:41Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:05:30Z",
           "notes": "model answered \"4x^2 + 8x - 21\"; expected \"4x^2 + 8x - 21\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:50:55Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:05:33Z",
           "notes": "no problems found"
         }
       ]
@@ -362,7 +362,7 @@
     "difficulty": 3,
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 90,
-    "prompt": "Expand and simplify (x + 1)(2x - 3). Use ^ for powers.",
+    "prompt": "Expand and simplify (x + 1)(2x - 3). Use the Power key (^) for powers.",
     "answer": {
       "expression": "2x^2 - x - 3"
     },
@@ -394,27 +394,27 @@
     ],
     "template": {
       "id": "gcse-maths-h-a4-double-brackets",
-      "version": 1,
+      "version": 2,
       "seed": 5
     },
     "verification": {
       "status": "draft",
-      "version": 1,
+      "version": 2,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
-          "tool_version": "gcse-maths-h-a4-double-brackets v1",
-          "at": "2026-11-26T04:44:22Z",
-          "notes": "Generated from template gcse-maths-h-a4-double-brackets (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+          "tool_version": "gcse-maths-h-a4-double-brackets v2",
+          "at": "2026-11-26T10:41:22Z",
+          "notes": "Generated from template gcse-maths-h-a4-double-brackets (version 2, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
           "name": "maths-engine",
           "result": "pass",
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-26T04:44:22Z",
+          "at": "2026-11-26T10:41:22Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
         },
         {
@@ -422,23 +422,23 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-26T04:46:06Z",
+          "at": "2026-11-26T10:41:44Z",
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
           "name": "blind-answer",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:51:03Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:05:34Z",
           "notes": "model answered \"2x^2 - x - 3\"; expected \"2x^2 - x - 3\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:51:10Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:05:35Z",
           "notes": "no problems found"
         }
       ]
