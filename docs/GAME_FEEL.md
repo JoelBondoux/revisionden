@@ -92,6 +92,25 @@ tab say so to screen readers.
 - **Text on gold** always uses `--color-text-on-gold` (dark), in every theme: gold buttons,
   gold and streak pills, earned reward steps, the combo badge and the mastered-topic checkmark on the map.
 
+## Avatar builder layout (J9, owner request 2026-11-25)
+
+- The preview never scrolls away; only the options scroll or change tab. The layout follows the
+  builder's own width (a container query), so it is the same on the "Make it yours" page and in
+  the parent's "Build an avatar" sheet.
+- Narrow (under 600px of builder: phones and the sheet): the preview, Shuffle and the tabs are
+  pinned at the top. Once the options have scrolled up about a preview's height, the preview
+  shrinks (160px to 96px tall). Its bottom margin grows by the same amount, so the options never
+  move.
+- Wide (600px or more: tablets and desktops): the preview, Shuffle and the tabs are a sticky
+  column on the left, with the options on the right.
+- Tabs follow the ARIA tabs pattern: arrow keys move and select, wrapping round; Home and End;
+  only the selected tab is in the Tab order.
+- Every change (an item or Shuffle) gives the preview a short squash-and-pop (transform only;
+  none with reduced motion). The options panel keeps a minimum height, so switching tabs never
+  moves what comes after the builder.
+- Locked items get their spoken name from the visible text plus hidden words ("Crown, locked.
+  Unlock: 100-day streak"), so what is seen is what is said (WCAG 2.5.3).
+
 ## Never (Children's Code and `REWARDS.md`)
 
 - No lives or energy that run out and block learning; no waiting timers; no pay-to-continue.
