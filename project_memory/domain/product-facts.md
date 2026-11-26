@@ -795,8 +795,8 @@ Tags: #product #rules #limits #defaults
   on the Rewards page; the friends league is not built yet, so it shows there once it is.
 - "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
   NSPCC adult helpline, parent-only). Reached from Settings, the heart link in the student footer,
-  the signed-out header and parent home, plus (W3) a Get help tile on the topic map and a chip in
-  the student header. There is no separate profile menu yet. Quick exit is sticky at the top;
+  the signed-out header and parent home, plus (W3) a chip in the student header. No tile on the
+  topic map (removed in W5: header chip and footer link only). There is no separate profile menu yet. Quick exit is sticky at the top;
   topics are in five categories (Right now first and always open) with a private "Find a topic"
   filter (`features/help/categories.ts`).
 - Data: `content/support/uk-services.json` (schema `content/schemas/support-services.schema.json`).
