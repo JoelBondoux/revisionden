@@ -16,6 +16,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "Adding 3 to f(x) adds 3 to every y-value, so the graph moves 3 units up.",
+    "hint": "Adding 3 to f(x) changes every y-value. Which way does that move the graph?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
     "citations": [
@@ -111,6 +112,7 @@
     "answer": { "option": 2 },
     "marks": 1,
     "explanation": "The value of f(x - 2) at x is the value f had at x - 2, so each point of the graph moves 2 units to the right.",
+    "hint": "A change inside the bracket moves the graph sideways, the opposite way to the sign you might expect.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
     "citations": [
@@ -206,6 +208,7 @@
     "answer": { "option": 3 },
     "marks": 1,
     "explanation": "The value of f(x + 4) at x is the value f had at x + 4, so each point of the graph moves 4 units to the left.",
+    "hint": "A change inside the bracket moves the graph sideways, the opposite way to the sign you might expect.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
     "citations": [
@@ -295,6 +298,7 @@
     "answer": { "accepted": ["(3, 1)", "(3,1)", "3, 1", "x = 3, y = 1"] },
     "marks": 1,
     "explanation": "y = f(x) - 4 moves the graph 4 units down. The x-coordinate stays the same and 4 is taken off the y-coordinate: (3, 5 - 4) = (3, 1).",
+    "hint": "Taking 4 off f(x) changes only the y-coordinate.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
     "citations": [
@@ -390,6 +394,7 @@
       "M1 for (x - 3)(x + 3) = 0 or x^2 = 9",
       "A1 for x = 3 and x = -3"
     ],
+    "hint": "Translating 10 units down takes 10 off the equation. Then set the new expression equal to 0 and solve.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -494,6 +499,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "Every y-value changes sign, so the graph is reflected in the x-axis.",
+    "hint": "Putting a minus sign in front of f(x) changes the sign of every y-value.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
     "citations": [
@@ -589,6 +595,7 @@
     "answer": { "option": 1 },
     "marks": 1,
     "explanation": "The value at x is the old value at -x, so the graph is reflected in the y-axis.",
+    "hint": "Replacing x with -x changes the sign of every x-coordinate.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
     "citations": [
@@ -680,6 +687,7 @@
     },
     "marks": 1,
     "explanation": "y = f(-x) reflects the graph in the y-axis. The x-coordinate changes sign and the y-coordinate stays the same: (2, -7) moves to (-2, -7).",
+    "hint": "y = f(-x) changes the sign of the x-coordinate only.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
     "citations": [
@@ -768,6 +776,7 @@
     "front": "y = f(x) + a, with a > 0, moves the graph of y = f(x) which way? (one word: left, right, up or down)",
     "back": "Up",
     "explanation": "Adding a to f(x) adds a to every y-value, so every point moves up by a.",
+    "hint": "Adding a positive number to f(x) increases every y-value.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
     "citations": [
@@ -856,6 +865,7 @@
     "front": "y = f(x - a), with a > 0, moves the graph of y = f(x) which way? (one word: left, right, up or down)",
     "back": "Right",
     "explanation": "To get the same y-value as y = f(x) gives at x = 0, y = f(x - a) needs x - a = 0, so x = a. Every point happens a units further along, so the graph moves a units to the right.",
+    "hint": "A change inside the bracket moves the graph sideways, the opposite way to the sign you might expect.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
     "citations": [
@@ -944,6 +954,7 @@
     "front": "y = -f(x) is a reflection of y = f(x) in which axis? (x-axis or y-axis)",
     "back": "x-axis",
     "explanation": "-f(x) changes the sign of every y-value and keeps every x-value, which reflects the graph in the x-axis.",
+    "hint": "-f(x) changes the sign of every y-value but keeps every x-value.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
     "citations": [

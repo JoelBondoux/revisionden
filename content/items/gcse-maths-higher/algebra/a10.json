@@ -7,15 +7,12 @@
     "learning_point": "gcse-maths-h-a10-lp-from-equation",
     "expected_seconds": 30,
     "prompt": "Write down the gradient of the line 2y = 6x + 8.",
-    "answer": {
-      "value": "3"
-    },
-    "verify": {
-      "expression": "6/2"
-    },
+    "answer": { "value": "3" },
+    "verify": { "expression": "6/2" },
     "marks": 1,
     "mark_scheme": ["B1 for 3"],
     "explanation": "Divide by 2: y = 3x + 4, so the gradient is 3.",
+    "hint": "Divide every term by 2 so the equation is in the form y = mx + c.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -61,14 +58,6 @@
           "notes": "model answered \"3\"; expected \"3\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:35:47Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -83,6 +72,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:38:01Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -95,15 +92,12 @@
     "learning_point": "gcse-maths-h-a10-lp-from-equation",
     "expected_seconds": 30,
     "prompt": "Write down the gradient of the line 3x + y = 7.",
-    "answer": {
-      "value": "-3"
-    },
-    "verify": {
-      "expression": "-3"
-    },
+    "answer": { "value": "-3" },
+    "verify": { "expression": "-3" },
     "marks": 1,
     "mark_scheme": ["B1 for -3"],
     "explanation": "Rearrange: y = -3x + 7, so the gradient is -3.",
+    "hint": "Rearrange to get y on its own, in the form y = mx + c.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -149,14 +143,6 @@
           "notes": "model answered \"-3\"; expected \"-3\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:36:01Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -171,6 +157,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:38:03Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -183,16 +177,12 @@
     "learning_point": "gcse-maths-h-a10-lp-from-equation",
     "expected_seconds": 40,
     "prompt": "Find the y-coordinate where the line 4y - 2x = 12 crosses the y-axis.",
-    "answer": {
-      "value": "3",
-      "subject": "y"
-    },
-    "verify": {
-      "expression": "12/4"
-    },
+    "answer": { "value": "3", "subject": "y" },
+    "verify": { "expression": "12/4" },
     "marks": 1,
     "mark_scheme": ["B1 for 3"],
     "explanation": "Put x = 0: 4y = 12, so y = 3.",
+    "hint": "Every point on the y-axis has x = 0. Put that into the equation and solve for y.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -256,9 +246,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:42:25Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:38:05Z",
           "notes": "no problems found"
         }
       ]
@@ -272,17 +262,12 @@
     "learning_point": "gcse-maths-h-a10-lp-from-equation",
     "expected_seconds": 45,
     "prompt": "Find the x-coordinate where the line y = 3x - 6 crosses the x-axis.",
-    "answer": {
-      "solutions": ["2"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "3x - 6 = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["2"] },
+    "verify": { "method": "solve", "equation": "3x - 6 = 0", "variable": "x" },
     "steps": ["3x - 6 = 0", "3x = 6", "x = 2"],
     "marks": 2,
     "mark_scheme": ["M1 for 3x - 6 = 0", "A1 for x = 2"],
+    "hint": "On the x-axis y = 0, so set 3x - 6 equal to 0 and solve.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -328,14 +313,6 @@
           "notes": "model answered \"2\"; expected \"2\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:36:28Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -350,6 +327,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:38:06Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -368,11 +353,10 @@
       "The length of the journey in miles",
       "The total cost in pounds"
     ],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "2.5 is the gradient: C goes up by £2.50 for each extra mile.",
+    "hint": "Think about what happens to C each time d goes up by one mile.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
     "checked_by": ["author"],
     "citations": [
@@ -428,9 +412,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:32:26Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:38:08Z",
           "notes": "no problems found"
         }
       ]
@@ -450,11 +434,10 @@
       "The length of the journey in miles",
       "The total cost in pounds"
     ],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "4 is the intercept: the cost when d = 0, a fixed charge of £4.",
+    "hint": "Think about the cost when d = 0, before any miles are travelled.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
     "checked_by": ["author"],
     "citations": [
@@ -500,20 +483,20 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:01Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:38:10Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -532,11 +515,10 @@
       "The tank gains 8 litres each minute",
       "The tank is empty after 8 minutes"
     ],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "The gradient -8 means V falls by 8 litres for every minute. (The tank is empty after 25 minutes.)",
+    "hint": "Think about what happens to V each time t goes up by one minute.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
     "checked_by": ["author"],
     "citations": [
@@ -582,20 +564,20 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:19Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:38:11Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -610,6 +592,7 @@
     "front": "In y = mx + c, does m give the gradient or the y-intercept?",
     "back": "Gradient",
     "explanation": "In y = mx + c, m multiplies x and tells you how steep the line is: it is the gradient. c is the y-intercept.",
+    "hint": "m is the number multiplying x: it tells you how steep the line is.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -666,9 +649,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:50:28Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:38:13Z",
           "notes": "no problems found"
         }
       ]
@@ -684,6 +667,7 @@
     "front": "In y = mx + c, c is the value of y where the line crosses which axis?",
     "back": "The y-axis",
     "explanation": "When x = 0, y = m × 0 + c = c. x = 0 on the y-axis, so c is where the line crosses the y-axis.",
+    "hint": "Put x = 0 into y = mx + c. Where on the grid is x always 0?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
     "checked_by": ["author"],
     "citations": [
@@ -739,9 +723,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:50:42Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:38:15Z",
           "notes": "no problems found"
         }
       ]
@@ -757,6 +741,7 @@
     "front": "The gradient of the line x + 2y = 10",
     "back": "-1/2",
     "explanation": "Rearrange into y = mx + c: 2y = -x + 10, so y = -1/2 x + 5. The gradient is the number multiplying x: -1/2.",
+    "hint": "Rearrange to get y on its own, then read off the number multiplying x.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A10",
     "checked_by": ["author"],
     "citations": [

@@ -11,6 +11,7 @@
     "verify": { "expression": "200*2^3" },
     "marks": 2,
     "mark_scheme": ["M1 for 200 × 2^3", "A1 for 1600"],
+    "hint": "Work out 2^3 first, then multiply by 200.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -106,6 +107,7 @@
     "verify": { "expression": "15000*(4/5)^2" },
     "marks": 2,
     "mark_scheme": ["M1 for 15000 × 0.8^2", "A1 for 9600"],
+    "hint": "Work out 0.8^2 first, then multiply by 15000.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -201,6 +203,7 @@
     "verify": { "expression": "24/6" },
     "marks": 1,
     "mark_scheme": ["B1 for 4"],
+    "hint": "Divide 24 by the number of people.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -297,6 +300,7 @@
     "steps": ["24/x = 3", "24 = 3x", "x = 8"],
     "marks": 2,
     "mark_scheme": ["M1 for 24/x = 3", "A1 for 8"],
+    "hint": "Set 24/x equal to 3, then multiply both sides by x.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -392,6 +396,7 @@
     "verify": { "expression": "20*1 - 5*1^2" },
     "marks": 1,
     "mark_scheme": ["B1 for 15"],
+    "hint": "Put t = 1 into the formula, and square t before multiplying by 5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -476,6 +481,7 @@
     "steps": ["20t - 5t^2 = 0", "5t(4 - t) = 0", "t = 0 or t = 4"],
     "marks": 3,
     "mark_scheme": ["M1 for 20t - 5t^2 = 0", "M1 for 5t(4 - t) = 0", "A1 for t = 0 and t = 4"],
+    "hint": "Set 20t - 5t^2 equal to 0 and factorise: 5t is a common factor.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -564,6 +570,7 @@
       "A1 for 20"
     ],
     "explanation": "h = 20 - 5(t - 2)^2, which is largest when t = 2: h = 20.",
+    "hint": "Complete the square, or find the time halfway between the two times when h = 0, then put that time into the formula.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -645,6 +652,7 @@
     "front": "On a distance-time graph, what does a horizontal line segment show about the object? (one word)",
     "back": "Stationary",
     "explanation": "A horizontal line means the distance does not change as time goes on, so the object is not moving: it is stationary.",
+    "hint": "A horizontal line means the distance does not change as time goes on.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["author"],
     "citations": [
@@ -739,6 +747,7 @@
     "front": "N = 200 × 2^t. The value of N when t = 0",
     "back": "200",
     "explanation": "Substitute t = 0: 2^0 = 1, so N = 200 × 1 = 200.",
+    "hint": "Put t = 0 into the formula: what is any number to the power 0?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["author"],
     "citations": [
@@ -812,6 +821,7 @@
     "front": "On a distance-time graph, what does a straight line sloping upwards show: constant speed or acceleration?",
     "back": "Constant speed",
     "explanation": "A straight line has the same gradient all the way along. On a distance-time graph the gradient is the speed, so the speed is constant.",
+    "hint": "On a distance-time graph the gradient is the speed. What does a straight line tell you about its gradient?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["author"],
     "citations": [

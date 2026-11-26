@@ -11,6 +11,7 @@
     "answer": { "option": 1 },
     "marks": 1,
     "explanation": "y = 1/x is the reciprocal function. The others are quadratic, exponential and cubic.",
+    "hint": "A reciprocal function has x on the bottom of a fraction.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
     "checked_by": ["author"],
     "citations": [
@@ -86,6 +87,7 @@
     "answer": { "option": 2 },
     "marks": 1,
     "explanation": "The highest power of x in y = x^3 - 2x is 3, so it is a cubic.",
+    "hint": "Look for the equation whose highest power of x is 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
     "checked_by": ["author"],
     "citations": [
@@ -161,6 +163,7 @@
     "answer": { "option": 1 },
     "marks": 1,
     "explanation": "y = 5 - 2x has the form y = mx + c, so its graph is a straight line.",
+    "hint": "A straight line has x only to the power 1, as in y = mx + c.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
     "checked_by": ["author"],
     "citations": [
@@ -236,6 +239,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "At x = 0: 2^0 = 1, 0^2 - 1 = -1 and 0^3 = 0, and 1/x has no value at x = 0.",
+    "hint": "Put x = 0 into each equation and see which one gives y = 1.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
     "checked_by": ["author"],
     "citations": [
@@ -335,6 +339,7 @@
     "verify": { "expression": "cos(pi)" },
     "marks": 1,
     "mark_scheme": ["B1 for -1"],
+    "hint": "Picture the cos graph from 0° to 360°: where is it halfway along, at 180°?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -418,6 +423,7 @@
     "verify": { "expression": "sin(3pi/2)" },
     "marks": 1,
     "mark_scheme": ["B1 for -1"],
+    "hint": "Picture the sin graph from 0° to 360°: where is it three quarters of the way along, at 270°?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -501,6 +507,7 @@
     "verify": { "expression": "tan(pi/4)" },
     "marks": 1,
     "mark_scheme": ["B1 for 1"],
+    "hint": "Think about a right-angled triangle whose two shorter sides are equal.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -584,6 +591,7 @@
     "answer": { "option": 2 },
     "marks": 1,
     "explanation": "tan x = sin x / cos x and cos 90° = 0, so tan 90° is undefined (the graph has an asymptote there).",
+    "hint": "tan x = sin x / cos x, so look for the angle where you would be dividing by zero.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
     "checked_by": ["author"],
     "citations": [
@@ -672,6 +680,7 @@
     "front": "The value of y on the graph of y = x^3 when x = -2",
     "back": "-8",
     "explanation": "Substitute x = -2: (-2)^3 = (-2) × (-2) × (-2) = -8.",
+    "hint": "Cube -2: multiply -2 by itself three times, watching the sign.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
     "checked_by": ["author"],
     "citations": [
@@ -745,6 +754,7 @@
     "front": "The value of x for which y = 1/x is undefined",
     "back": "x = 0",
     "explanation": "1/x means 1 divided by x, and you cannot divide by 0. So y = 1/x is undefined when x = 0.",
+    "hint": "1/x means 1 divided by x. Which number can you never divide by?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
     "checked_by": ["author"],
     "citations": [
@@ -818,6 +828,7 @@
     "front": "The value of y = k^x at x = 0, for any positive k",
     "back": "1",
     "explanation": "Any positive number to the power 0 is 1, so k^0 = 1. Every graph of y = k^x passes through (0, 1).",
+    "hint": "Think about what any positive number to the power 0 equals.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A12",
     "checked_by": ["author"],
     "citations": [
