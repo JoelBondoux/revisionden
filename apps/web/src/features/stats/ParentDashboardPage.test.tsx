@@ -29,7 +29,7 @@ describe('Parent stats dashboard', () => {
   it('opens on the child chosen on "Who\'s revising?"', async () => {
     renderRoute('/parent/stats?student=00000000-0000-4000-8000-0000000000a2');
     expect(
-      await screen.findByRole('heading', { level: 2, name: 'demo_owl' }, {}, LOAD),
+      await screen.findByRole('heading', { level: 2, name: 'demo_owl' }, LOAD),
     ).toBeInTheDocument();
     expect(screen.getByLabelText('Student')).toHaveValue('00000000-0000-4000-8000-0000000000a2');
   });
@@ -39,7 +39,7 @@ describe('Parent stats dashboard', () => {
     expect(screen.getByRole('heading', { level: 2, name: 'demo_fox' })).toBeInTheDocument();
     await userEvent.selectOptions(screen.getByLabelText('Student'), 'demo_owl');
     expect(
-      await screen.findByRole('heading', { level: 2, name: 'demo_owl' }, {}, LOAD),
+      await screen.findByRole('heading', { level: 2, name: 'demo_owl' }, LOAD),
     ).toBeInTheDocument();
   });
 
