@@ -462,7 +462,10 @@ test('Oak links point to the pupil lesson page, not the teacher page', () => {
 test('a teacher page is allowed only for a lesson marked as having no pupil page', () => {
   assert.deepEqual(
     learnLinkErrors(
-      content({ topic: 'gcse-maths-h-a17', links: [oakPupil({ url: oakTeacher, no_pupil_page: true })] }),
+      content({
+        topic: 'gcse-maths-h-a17',
+        links: [oakPupil({ url: oakTeacher, no_pupil_page: true })],
+      }),
     ),
     [],
   );

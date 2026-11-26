@@ -1007,6 +1007,8 @@ Tags: #product #rules #limits #defaults
   The teacher page shows the pupil link, so pupil URLs were taken from it, not guessed. The
   validator (`OAK_PUPIL_PAGE` in `scripts/content/learn-links.mjs`) refuses any other Oak path
   unless the link has `no_pupil_page: true`, which is allowed only on an Oak `/teachers/` page.
+  Switched 2026-11-26: all 90 Oak links (84 lessons), each re-read (200, lesson outcome, Year 10
+  or 11, video player, no sign-in); none kept as a teacher page.
 - In-house notes (planned; external links are interim): provider `revisionden` with `route` (an
   app path, no URL), listed first, optional `hide_external`; refused by validation until the
   notes exist (`IN_HOUSE_NOTES_BUILT` in `scripts/content/learn-links.mjs`).

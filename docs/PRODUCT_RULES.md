@@ -1106,6 +1106,8 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   lesson's overview page (`/pupils/lessons/<lesson>/overview`). The validator refuses an Oak
   teacher page (`/teachers/...`) unless the link is marked `no_pupil_page` (the lesson has no
   pupil page). BBC Bitesize and Isaac pages are already made for students.
+  All 90 Oak links (84 lessons) were switched and re-read on 2026-11-26; every lesson had a pupil
+  page, so none is marked `no_pupil_page`.
 
 ### Read aloud and reading comfort
 

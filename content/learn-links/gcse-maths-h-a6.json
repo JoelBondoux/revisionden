@@ -16,42 +16,42 @@
     },
     {
       "title": "Proving or disproving a statement",
-      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/functions-and-proof/lessons/proving-or-disproving-a-statement",
+      "url": "https://www.thenational.academy/pupils/lessons/proving-or-disproving-a-statement/overview",
       "provider": "oak",
       "level": "GCSE",
       "learning_points": ["gcse-maths-h-a6-lp-proof"],
       "checked_at": "2026-11-26",
       "match": {
-        "page_title": "Proving or disproving a statement GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
-        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can appreciate what constitutes the proof of a statement and what is required to disprove.\"",
+        "page_title": "Proving or disproving a statement | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 11, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can appreciate what constitutes the proof of a statement and what is required to disprove.\"",
         "level": "GCSE",
         "checked_at": "2026-11-26"
       }
     },
     {
       "title": "Writing a proof",
-      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/functions-and-proof/lessons/writing-a-proof",
+      "url": "https://www.thenational.academy/pupils/lessons/writing-a-proof/overview",
       "provider": "oak",
       "level": "GCSE",
       "learning_points": ["gcse-maths-h-a6-lp-proof", "gcse-maths-h-a6-lp-show-equivalent"],
       "checked_at": "2026-11-26",
       "match": {
-        "page_title": "Writing a proof GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
-        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can manipulate and transform algebraic expressions in order to prove or show a result.\"",
+        "page_title": "Writing a proof | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 11, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can manipulate and transform algebraic expressions in order to prove or show a result.\"",
         "level": "GCSE",
         "checked_at": "2026-11-26"
       }
     },
     {
       "title": "Further algebraic terminology",
-      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/algebraic-manipulation/lessons/further-algebraic-terminology",
+      "url": "https://www.thenational.academy/pupils/lessons/further-algebraic-terminology/overview",
       "provider": "oak",
       "level": "GCSE",
       "learning_points": ["gcse-maths-h-a6-lp-identity-or-equation"],
       "checked_at": "2026-11-26",
       "match": {
-        "page_title": "Further algebraic terminology GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
-        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can appreciate the difference between an equation, an identity, an expression, a term and a formula.\"",
+        "page_title": "Further algebraic terminology | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 10, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can appreciate the difference between an equation, an identity, an expression, a term and a formula.\"",
         "level": "GCSE",
         "checked_at": "2026-11-26"
       }
