@@ -11,7 +11,7 @@
     "verify": { "expression": "375/1000" },
     "marks": 1,
     "explanation": "0.375 has 3 decimal places, so write it over 1000: 375/1000. Divide the top and bottom by 125: 3/8.",
-    "hint": "Count the decimal places to write 0.375 over 1000, then simplify by dividing the top and bottom by the same number.",
+    "hint": "0.375 has three decimal places, so write the digits 375 over 1000. Then simplify by dividing the top and bottom by the same number.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N10",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -75,9 +75,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "openai:gpt-5.4-2026-03-05",
-          "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T10:14:24Z",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T11:13:08Z",
           "notes": "no problems found"
         }
       ]
@@ -179,7 +179,7 @@
     "verify": { "expression": "245/100" },
     "marks": 1,
     "explanation": "2.45 = 245/100. Divide the top and bottom by 5: 49/20.",
-    "hint": "Write 2.45 over 100, then divide the top and bottom by a common factor.",
+    "hint": "2.45 has two decimal places, so write the digits 245 over 100. Then divide the top and bottom by a common factor.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N10",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -243,9 +243,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "openai:gpt-5.4-2026-03-05",
-          "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T10:14:27Z",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T11:13:16Z",
           "notes": "no problems found"
         }
       ]
