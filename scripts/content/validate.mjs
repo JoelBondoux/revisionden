@@ -4,7 +4,7 @@ import { join, relative } from 'node:path';
 import { createValidators } from './schemas.mjs';
 import { learnLinkErrors } from './learn-links.mjs';
 import { controlCharacters } from '../verify/record.mjs';
-import { roundingOf, showsRounding } from '../../packages/core/src/answer-format.ts';
+import { roundingOf, showsRounding, standardForm } from '../../packages/core/src/answer-format.ts';
 
 const FOLDERS = {
   subjects: 'subjects',
@@ -421,7 +421,8 @@ export function mathsChecks(items) {
         id: item.id,
         kind: 'value',
         expression: item.verify.expression,
-        answer: item.answer.value,
+        // The engine reads plain numbers: standard form (6.4 × 10^8) goes as 640000000.
+        answer: standardForm(item.answer.value)?.plain ?? item.answer.value,
       };
       for (const key of ['tolerance', 'decimal_places', 'significant_figures']) {
         if (item.answer[key] !== undefined) check[key] = item.answer[key];

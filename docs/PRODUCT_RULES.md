@@ -299,6 +299,12 @@ Product owner decision, 2026-11-25: **parent view only**.
   between groups of exactly three digits, the same one throughout, so `38 700` and `38,700` are
   38700, rounded or not. Any other space between two digits makes the answer wrong (`3 87` is not
   387); spaces around a sign or `/` are fine.
+- **Standard form** in numeric answers (`standardForm` in `packages/core/src/answer-format.ts`):
+  `a × 10^n` with ×, x, X, \*, · or ⋅ as the multiply sign and `^n`, `^(n)` or superscript
+  digits for the power, or e-notation (`6.4e8`), is read as its exact value. When the answer key is
+  in standard form, only proper standard form (1 ≤ a < 10) is right, so `64 × 10^7` and
+  `640000000` are wrong; when the key is a plain number, standard form is accepted by value. With
+  significant figures, the number in front shows the accuracy (`6.40 × 10^8` is 3 sf).
 - **Maths working** may end with a letter answer such as `x = 2a` (or `2a = x`, or `a = x`
   either way round): a solved value may use other letters, never the unknown itself. Repeated
   alternatives count once, and a line with more than 64 ways to read it is marked wrong.
