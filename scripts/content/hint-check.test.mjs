@@ -86,3 +86,35 @@ test('a hint that repeats the back of a flashcard is refused', () => {
   assert.equal(hintErrors(card).length, 1);
   assert.deepEqual(hintErrors({ ...card, hint: 'Think about distance divided by time.' }), []);
 });
+
+test('a standard-form answer is read as the whole number, not its first digits (n9-0006)', () => {
+  const sf = (hint) =>
+    hintErrors({
+      type: 'numeric',
+      prompt: 'Work out (3.2 × 10^4) × (2 × 10^4). Give your answer in standard form.',
+      answer: { value: '6.4*10^8', form: 'standard_form' },
+      hint,
+    });
+  assert.equal(sf('It comes to 640000000.').length, 1);
+  assert.equal(sf('It comes to 640,000,000.').length, 1);
+  assert.equal(sf('Write it as 6.4 × 10^8.').length, 1);
+  assert.deepEqual(sf('Multiply 3.2 by 2 to get 6.4, then add the powers of 10.'), []);
+});
+
+test('a hint with the plain value of a standard-form answer is refused (n9-0006)', () => {
+  const sf = (hint) =>
+    hintErrors({
+      type: 'numeric',
+      prompt: 'Write 6.4 × 10^8 as an ordinary number.',
+      answer: { value: '640000000' },
+      hint,
+    });
+  assert.equal(sf('It is 640000000.').length, 1);
+  assert.equal(sf('It is 640,000,000.').length, 1);
+  assert.equal(sf('It is 640 000 000.').length, 1);
+  assert.deepEqual(sf('Multiply 6.4 by 10 eight times.'), []);
+});
+
+test('a hint with the answer as a mixed number is refused', () => {
+  assert.equal(hintErrors(numeric('4/3', 'That is 1 1/3.', 'Find the gradient.')).length, 1);
+});
