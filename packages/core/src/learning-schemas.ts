@@ -22,6 +22,8 @@ const itemBase = {
   warmUp: z.literal(true).optional(),
   /** The finer learning point the item tests, when content tags one (else its topic). F5. */
   learningPoint: text.optional(),
+  /** The item's id in content/ (for example gcse-maths-h-n4-0001), for Learn more links (Q6b). */
+  contentId: text.optional(),
 };
 
 export const LearnItemSchema = z.discriminatedUnion('type', [
@@ -210,6 +212,9 @@ export const FlashcardSchema = z.object({
    * `flashcard-explain.ts`). Left out when the content has none: no Explain button.
    */
   explain: z.array(text).optional(),
+  /** Deck and wrong-answer cards: the content item's id and learning point, for Learn more (Q6b). */
+  contentId: text.optional(),
+  learningPoint: text.optional(),
 });
 export type Flashcard = z.infer<typeof FlashcardSchema>;
 

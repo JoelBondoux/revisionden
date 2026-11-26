@@ -139,7 +139,7 @@ test('the reviewer judges a hint as a method nudge backed by the steps, and stil
   const { prompt } = reviewPrompt(hinted);
   assert.match(prompt, /hint is a method nudge/i);
   assert.match(prompt, /reveals? the answer/i);
-  assert.match(prompt, /consistent with the (?:item's )?(?:verified |checked )?steps/i);
+  assert.match(prompt, /consistent with the answer and the model solution steps/i);
   assert.match(prompt, /mathematically correct and suitable for the age group/i);
   assert.match(prompt, /new factual claim .* needs a quoted source/i);
   assert.match(
@@ -203,4 +203,34 @@ test('a hint that gives a wrong value when followed literally fails the review',
   assert.match(asked.prompt, /Write 2\.45 over 100\./);
   assert.equal(r.result, 'fail');
   assert.match(r.check.notes, /^factual_error \(hint\): Writing 2\.45 over 100 gives/);
+});
+
+test('the reviewer is told only what the maths engine really checked, never the explanation', () => {
+  // A claim that the explanation WAS checked: the engine names what it checked, never this.
+  const calledChecked =
+    /has checked[^.]*explanation|explanation[^.]*(?:engine-checked|which the maths engine has checked)/i;
+  const worked = {
+    ...item,
+    type: 'worked_maths',
+    options: undefined,
+    hint: 'Collect the x terms on one side first.',
+    steps: ['5x - 2x = 7 + 2', '3x = 9', 'x = 3'],
+    explanation: 'Subtract 2x from both sides, then divide by 3.',
+  };
+  const w = reviewPrompt(worked).prompt;
+  assert.doesNotMatch(w, calledChecked);
+  assert.match(w, /The maths engine has checked the answer and the model solution steps/);
+  assert.match(w, /The explanation has not been checked by the maths engine/);
+  assert.match(w, /factual claim in it .* quoted source/i);
+
+  const numeric = { ...worked, type: 'numeric', steps: undefined, answer: { value: '3' } };
+  const n = reviewPrompt(numeric).prompt;
+  assert.doesNotMatch(n, calledChecked);
+  assert.match(n, /The maths engine has checked the answer/);
+  assert.doesNotMatch(n, /model solution steps/);
+
+  const choice = { ...item, hint: 'Think about which option is a prime.' };
+  const c = reviewPrompt(choice).prompt;
+  assert.doesNotMatch(c, /The maths engine has checked/);
+  assert.match(c, /hint is a method nudge/i);
 });
