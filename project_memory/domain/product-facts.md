@@ -162,6 +162,12 @@ Tags: #product #rules #limits #defaults
   rail from 768px wide). Welcome and lessons hide the nav to keep focus. Only a linked student
   device gets the student nav: elsewhere (signed out, or a parent) About, Policies, Feedback and
   the other app pages show a small header with the logo, Sign in, Policies and About.
+- Changing screen (I7, `apps/web/src/layout/RouteChange.tsx` around every route): the new screen
+  starts at the top and focus moves to its main heading (or the main area) for screen readers.
+  Back and forward put the reader back where they were (waiting up to 5 seconds for a loading
+  screen's content); a `#part` link scrolls to that part; a
+  change of query on the same screen (a tab, a chosen child) keeps the scroll position. The first
+  screen when the app opens is left to the browser.
 - The web app loads nothing from third parties (no analytics, fonts or beacons): only its own
   origin and its API host. The deployed smoke test fails otherwise.
 - The learning path is a topic map: one hexagon per topic, grouped by unit. States: mastered
@@ -295,6 +301,12 @@ Tags: #product #rules #limits #defaults
   `tolerance`): only the value rounded half up and written to that accuracy is right (28.274 and
   28.270 are wrong for 2 dp). Validation requires the field whenever the question asks for
   rounding.
+- Typed short answers (F6, `packages/core/src/answer-normalise.ts`; rules in PRODUCT_RULES
+  "Learning loop"): spaces, case, minus signs, multiply and divide signs, superscripts, ≤/≥ and √
+  are normalised, so content lists one written form. `answer.any_order: true` also accepts
+  commuted products and sums, reordered lists and swapped equation sides (never coordinates or
+  inequalities); `answer.units` lists optional units. The maths engine accepts a solved value in
+  other letters (`x = 2a`).
 
 ## Reminders
 
