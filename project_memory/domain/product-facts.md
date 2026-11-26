@@ -268,10 +268,17 @@ Tags: #product #rules #limits #defaults
   with questions and answers `status: "coming_soon"` (plus `subjectId` and `subjects` with
   `hasContent` for the switcher) for one with none; 404 `no_subject` only with no subject at all
   or an unknown id. The web shows "Questions for <subject> are on their way." and a switcher.
+- Clues and help (F10, owner 2026-11-26): "Need a clue?" shows the verified hint (no penalty,
+  no longer shown up front); then "Help me understand" steps through the verified worked
+  solution. A right answer after help earns half XP (rounded down, owner), no combo, and is
+  practised like a miss (mastery 0, review ladder, flashcard). Learn mode only.
+  `attempts.helped` (migration 0029).
 - Powers (F9, owner 2026-11-26): shown as superscripts everywhere students see maths
   (`packages/core/src/powers.ts`, web `MathText`), with spoken words for screen readers; stored
   content keeps ^. A lone ^ stays ("Use ^ for powers"). Answer boxes have a Power key and a
   "Shows as:" preview. Computing subjects (id containing "comput") keep ^ as typed (owner).
+  A tap on any power switches every power on screen between x² and x^2 (F9b, owner), remembered
+  on the device; it never chooses an answer or turns a card.
 - Mascot: Pip, an angular geometric fox (orange `#FF7A2F`). Brand violet `#6C47F5`; font Nunito,
   self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
 - Works offline for the app shell; API calls are never cached. Pages always come fresh from the

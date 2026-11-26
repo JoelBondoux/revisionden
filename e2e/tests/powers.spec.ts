@@ -44,6 +44,8 @@ function learnItem(i: Raw, n: number) {
     type: i.type,
     prompt: i.prompt,
     ...(i.options ? { options: i.options } : {}),
+    // Interactive tiles (W8) carry their quadratic, as the API sends them.
+    ...(i.type === 'area_model' ? { mode: i.mode, quadratic: i.quadratic } : {}),
     ...(typeof (i.answer as { unit?: unknown })?.unit === 'string'
       ? { unit: (i.answer as { unit: string }).unit }
       : {}),
@@ -123,4 +125,40 @@ test('real flashcards show powers as superscripts, with no visible ^', async ({ 
   await expect(page.locator('.deck-list__title').first()).toBeVisible();
   expect(await page.locator('.deck-list__title').count()).toBe(cards.length);
   expect(await visibleText(page)).not.toMatch(RAW_POWER);
+});
+
+test('a tap on a power switches every power between x² and x^2, and it is remembered', async ({
+  page,
+}) => {
+  const card = {
+    ...learnItem(
+      { id: 'demo', type: 'flashcard', topic: 'demo-topic', front: 'x^2 + 10^3', back: 'y^2' },
+      901,
+    ),
+    subjectId: 'gcse-maths',
+    origin: 'own',
+    dueAt: '2026-11-24T10:00:00.000Z',
+    nextReviewMs: { again: 600_000, hard: 86_400_000, good: 518_400_000, easy: 864_000_000 },
+  };
+  await page.route('**/v1/student/flashcards', (route) =>
+    route.fulfill({ json: { due: [card], decks: [], mine: [], draftContent: false } }),
+  );
+  await page.route('**/v1/student/flashcards/sessions', (route) =>
+    route.fulfill({
+      status: 201,
+      json: { id: uuid(777), maxCards: 20, minCards: 5, xp: 20, rewardedLeftToday: 2 },
+    }),
+  );
+  await page.goto('/cards');
+  const flip = page.getByTestId('flip-card');
+  await expect(flip.locator('sup')).toHaveCount(2);
+  await flip.locator('.math-text').first().click();
+  // The tap switched the powers, and did not turn the card.
+  await expect(flip).not.toHaveClass(/flip-card--flipped/);
+  await expect(flip.locator('sup')).toHaveCount(0);
+  await expect(flip).toContainText('x^2 + 10^3');
+  await page.reload();
+  await expect(page.getByTestId('flip-card')).toContainText('x^2 + 10^3');
+  await page.getByTestId('flip-card').locator('.math-text').first().click();
+  await expect(page.getByTestId('flip-card').locator('sup')).toHaveCount(2);
 });

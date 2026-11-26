@@ -198,11 +198,6 @@ function TextAnswer({
         disabled={disabled}
         onChange={onChange}
       />
-      {item.hint && (
-        <p className="secondary-text">
-          Hint: <MathText text={item.hint} subject={item.topicId} />
-        </p>
-      )}
     </div>
   );
 }

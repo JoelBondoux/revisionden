@@ -467,6 +467,25 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
 - Implemented: `packages/core/src/mistakes.ts`, `apps/api/src/learning/mistakes.ts`, the attempts,
   lesson and daily routes, `apps/web/src/features/learn/LessonPlayer.tsx`. Migration 0026.
 
+## Clues and help (F10, owner 2026-11-26)
+
+- **Need a clue?** shows the item's verified hint, with no penalty. It is offered only when a
+  verified hint exists; the hint is no longer shown up front.
+- The button then becomes **Help me understand**: the item's verified worked solution, one step
+  at a time (worked steps, else the inline mark scheme, then its explanation, ending on the
+  answer; the F7 Explain steps). With no hint but verified steps, it starts there. With neither,
+  there is no button. Never AI-made (CLAUDE.md rule 7).
+- Both open in place under the question, so the answer box and Check stay on screen.
+- After help the student still has to answer: help is never a free answer. The answer is
+  **helped**. A right helped answer earns half the usual XP, rounded down (owner), and never a
+  combo. It is practised like a miss: it counts as wrong for mastery, goes on the review ladder,
+  becomes a flashcard, and can come back in the lesson. The feedback says "Correct, with help".
+  A clue on its own changes nothing.
+- Learn mode only: there is no clue or help in Test mode or the starting test (the API refuses a
+  helped Test mode answer).
+- Implemented in `packages/core/src/help.ts`, `GET /v1/student/learn/items/:id/help`,
+  `attempts.helped` (migration 0029) and `apps/web/src/features/learn/HelpPanel.tsx`.
+
 ## Showing maths (F9, owner 2026-11-26)
 
 - Powers are shown as superscripts wherever students see maths: x^2 is shown as x², 10^-3 as
@@ -475,6 +494,10 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
   prompts, options, units, flashcards (both faces and the card list), Explain steps, answers and
   explanations in feedback, hints, and the review batch screens. Stored content keeps its ^.
 - Screen readers hear the words from the read-aloud rules ("x squared", "to the power minus 3").
+- A tap on any power switches every power on screen between x² and x^2, and back on another tap
+  (F9b, owner). The choice is remembered on this device (`revisionden.powersSwitched`). In
+  computing, powers start as ^ and a tap raises them. The tap only switches: it never chooses an
+  answer or turns a flashcard. Screen readers hear the same words either way.
 - A ^ with nothing it can raise stays as it is (content says "Use ^ for powers", which is how a
   power is typed).
 - Typed-answer boxes and worked maths have a "Power" key that types ^ where the cursor is, and a
