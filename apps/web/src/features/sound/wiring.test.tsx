@@ -71,7 +71,7 @@ afterEach(() => vi.restoreAllMocks());
 
 describe('sounds in the app', () => {
   it('puts a quick mute in the header and a Sound section in Settings', async () => {
-    renderWithSound('/settings');
+    renderWithSound('/settings/look-and-sound');
     expect(screen.getByRole('button', { name: 'Mute sounds' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Sound' })).toBeInTheDocument();
   });
@@ -168,7 +168,7 @@ describe('reward sounds in the app', () => {
     );
     const { played, contexts, router } = renderWithSound('/settings');
     // The student taps something first (sound waits for a tap), then opens Rewards.
-    await userEvent.click(screen.getByRole('heading', { level: 1, name: 'Settings' }));
+    await userEvent.click(screen.getByRole('heading', { level: 1, name: 'Me' }));
     await act(() => router.navigate('/rewards'));
     await screen.findByText('New: streak-100');
     await waitFor(() => expect(contexts[0]?.oscillators.length).toBeGreaterThan(0));

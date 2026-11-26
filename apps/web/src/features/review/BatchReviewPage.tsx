@@ -5,6 +5,7 @@ import { LinkButton } from '../../components/links';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { Button } from '../../components/Button';
+import { MathText } from '../../components/MathText';
 import { Pill } from '../../components/Pill';
 import { ConfirmError } from './ConfirmError';
 import { STATUS_LABEL, STATUS_TONE } from './ReviewQueuePage';
@@ -56,11 +57,13 @@ function shownLines(key: string, snapshot: Record<string, unknown>): string[] {
 }
 
 function ShownValue({ lines }: { lines: string[] }) {
-  if (lines.length === 1) return <>{lines[0]}</>;
+  if (lines.length === 1) return <MathText text={lines[0]!} />;
   return (
     <ul>
       {lines.map((line, i) => (
-        <li key={i}>{line}</li>
+        <li key={i}>
+          <MathText text={line} />
+        </li>
       ))}
     </ul>
   );
@@ -178,7 +181,9 @@ function SampledItemCard({
           <h3>Mark scheme</h3>
           <ul>
             {scheme.map((line, i) => (
-              <li key={i}>{line}</li>
+              <li key={i}>
+                <MathText text={line} />
+              </li>
             ))}
           </ul>
         </>

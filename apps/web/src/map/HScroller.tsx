@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import { rowScrollTarget } from './hscroll';
 
 function Chevron({ direction }: { direction: 'before' | 'after' }) {
   return (
@@ -24,11 +25,27 @@ export function prefersReducedMotion(): boolean {
   }
 }
 
-/** Scrolls a row sideways so `item` sits in the middle, never past either end. */
-function centreInRow(track: HTMLElement, item: HTMLElement, smooth: boolean) {
-  const left = item.offsetLeft - (track.clientWidth - item.offsetWidth) / 2;
-  const max = track.scrollWidth - track.clientWidth;
-  const target = Math.max(0, Math.min(max, Math.round(left)));
+/** Scrolls a row sideways just far enough to show `item` whole, lined up on an item's edge. */
+function bringIntoRow(track: HTMLElement, item: HTMLElement, smooth: boolean) {
+  const children = Array.from(track.children) as HTMLElement[];
+  const chosen = children.findIndex((child) => child === item || child.contains(item));
+  if (chosen < 0) return;
+  const origin = track.getBoundingClientRect().left - track.scrollLeft;
+  const items = children.map((child) => {
+    const box = child.getBoundingClientRect();
+    return { start: box.left - origin, end: box.right - origin };
+  });
+  const pad = parseFloat(getComputedStyle(track).scrollPaddingInlineStart) || 0;
+  track.style.removeProperty('--hscroll-extra-end');
+  const { left: target, extraEnd } = rowScrollTarget(items, chosen, {
+    width: track.clientWidth,
+    pad,
+    current: track.scrollLeft,
+    max: track.scrollWidth - track.clientWidth,
+  });
+  // Near the end, a little space after the last item lets the row stop on a whole item.
+  if (extraEnd > 0) track.style.setProperty('--hscroll-extra-end', `${extraEnd}px`);
+  if (target === track.scrollLeft) return;
   if (typeof track.scrollTo === 'function') {
     track.scrollTo({
       left: target,
@@ -50,8 +67,9 @@ interface HScrollerProps {
 
 /**
  * A row that scrolls sideways when it is wider than the page (J12b): the page itself never does.
- * Items snap into place, a fade shows there is more, the chosen item is in view on load, focus
- * brings an item into view, and arrow buttons show on devices with a mouse or trackpad.
+ * Items snap into place, a fade shows there is more, the chosen item is in view on load (the row
+ * moves only as far as it must, so the first item you see is whole: J12d), focus brings an item into
+ * view, and arrow buttons show on devices with a mouse or trackpad.
  */
 export function HScroller({ label, selectedKey, className, children }: HScrollerProps) {
   const track = useRef<HTMLDivElement>(null);
@@ -68,7 +86,7 @@ export function HScroller({ label, selectedKey, className, children }: HScroller
   useLayoutEffect(() => {
     const el = track.current;
     const chosen = el?.querySelector<HTMLElement>('[aria-pressed="true"]');
-    if (el && chosen) centreInRow(el, chosen, false);
+    if (el && chosen) bringIntoRow(el, chosen, false);
     measure();
   }, [selectedKey, measure]);
 
@@ -113,7 +131,7 @@ export function HScroller({ label, selectedKey, className, children }: HScroller
         onFocus={(event) => {
           const el = track.current;
           const item = event.target as HTMLElement;
-          if (el && item !== el && el.contains(item)) centreInRow(el, item, true);
+          if (el && item !== el && el.contains(item)) bringIntoRow(el, item, true);
         }}
       >
         {children}

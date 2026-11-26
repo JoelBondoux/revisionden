@@ -55,7 +55,7 @@ describe('read aloud wiring', () => {
   });
 
   it('shows the Read aloud section in Settings', async () => {
-    renderWithSpeech('/settings');
+    renderWithSpeech('/settings/look-and-sound');
     expect(await screen.findByRole('heading', { name: 'Read aloud' })).toBeInTheDocument();
   });
 });

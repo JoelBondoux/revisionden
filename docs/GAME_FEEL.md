@@ -71,6 +71,14 @@ No plain underlined text links. Use the shared components in `apps/web/src/compo
   such as the parent home, settings and stats; wrap a list in `<ul className="link-tiles">`. The
   link's text is the title (its screen reader name, matching what it shows, WCAG 2.5.3), the
   description is read as its description, and the link stretches over the whole card.
+- **ButtonTile** in a **ButtonTiles** grid (J15a, owner request 2026-11-26): a chunky button with
+  a big icon over a short label (2–3 words, no helper sentence), two to a row on phones and more on
+  wider screens. Used on parent home and Policies, and offered to W9 for Me; `LinkTile` stays where
+  a description is needed. Each effect style gives it its own look and press (inked sketch, peeled
+  sticker, glossy candy, starry glass, comic panel, garden pot, 8-bit block); the press sound and
+  vibration are U's `buttonPress` for the active style, which plays on every link tap. An optional
+  `badge` (a count, or who a policy is for) is read as part of its name. `tone="help"` is Get help's
+  own calm tile.
 - **LinkChip**: a small pill link inside a card ("Details", "Change").
 - **TextLink**: only for links inside sentences and long prose (policies). Bold, coloured, a soft
   bar under it and an underline on hover; it stays inline for readability.
@@ -218,6 +226,18 @@ list arrives, so a stray build cannot show it. The style being tried is saved on
 (`revisionden.effectStyleTester`), apart from the real choice, and only counts while the server
 still sends the list; "Reset to my unlocked style" clears it. Trying a style grants no reward,
 changes no unlock and records nothing on the server.
+
+## Page transitions (J15a, owner request 2026-11-26)
+
+Opening a page from a button tile plays the effect style's own move on the main area, and Back
+plays it in reverse: Doodle Diary a page turn, Sticker Book a peel, Pop Burst a bouncy pop-in,
+Starlight a twinkle fade, Comic Pop a panel zoom, Garden Grow a grow-in and Pixel Arcade a stepped
+8-bit slide. Each is 350ms at most, uses transform and opacity only, and never blocks a tap (it is
+a CSS animation on the page, nothing on top of it). `ButtonTile` marks the navigation
+(`state.via = 'tile'`) and `PageTransition` (in `features/juice/transitions/`, mounted for every
+route) adds `page-enter` (and `page-enter--back` on Back) to `#main`; each style's stylesheet draws
+it. With reduced motion the page just swaps. Get help (`/help`, `/parent/help`) and the Quick exit
+never transition. An ordinary link does not either.
 
 ## Never (Children's Code and `REWARDS.md`)
 

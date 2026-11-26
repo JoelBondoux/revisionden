@@ -48,6 +48,12 @@ export const onboardingHandlers: RequestHandler[] = [
   http.get('*/v1/student/avatar', () =>
     HttpResponse.json({ avatarCode: family.children[0]!.student.avatarCode, earnedRewardIds: [] }),
   ),
+  // W9 Me page: the student's own nickname, and saving a new look (nothing is kept).
+  http.get('*/v1/student/me', () => HttpResponse.json(family.children[0]!.student)),
+  http.put('*/v1/student/avatar', async ({ request }) => {
+    const { avatarCode } = (await request.json()) as { avatarCode: string };
+    return HttpResponse.json({ ...family.children[0]!.student, avatarCode });
+  }),
   http.get('*/v1/onboarding/family', () => HttpResponse.json(family)),
 
   http.post('*/v1/onboarding/children', async ({ request }) => {

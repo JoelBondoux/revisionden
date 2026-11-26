@@ -49,3 +49,5 @@ export * from './worth-a-look';
 export * from './count-up';
 export * from './flashcard-explain';
 export * from './founding-tester';
+export * from './interactive';
+export * from './powers';

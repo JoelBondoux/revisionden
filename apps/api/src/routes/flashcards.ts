@@ -78,6 +78,8 @@ export function toFlashcard(loaded: Loaded, now: Date): Flashcard {
     ...text,
     ...explainOf(loaded, text.back),
     ...(item?.sourceRef ? { sourceRef: item.sourceRef } : {}),
+    ...(item?.contentId ? { contentId: item.contentId } : {}),
+    ...(item?.learningPoint ? { learningPoint: item.learningPoint } : {}),
     draft: item !== null && item.status !== 'verified',
     dueAt: card.dueAt.toISOString(),
     nextReviewMs: {
