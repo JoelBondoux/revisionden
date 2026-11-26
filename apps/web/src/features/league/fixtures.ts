@@ -10,6 +10,7 @@ export const AVATAR = '10000000000000000000000000000';
 export const sampleLeague = (over: Partial<LeagueResponse> = {}): LeagueResponse => ({
   week: { start: '2026-11-23', end: '2026-11-29' },
   hidden: false,
+  lastWeek: null,
   entries: [
     {
       nickname: 'Wren_2',

@@ -25,7 +25,9 @@ import {
   MAX_WAITING_REQUESTS,
   REPORT_REASONS,
   WRONG_CODE_TRIES_PER_HOUR,
+  LEAGUE_WEEKS_KEPT,
   formatFriendCode,
+  previousLeagueWeeks,
   formatTitle,
   newFriendCode,
   normaliseFriendCode,
@@ -38,6 +40,7 @@ import {
   friendReports,
   friendRequests,
   friendships,
+  leagueWeeks,
   students,
   type Database,
 } from '@revisionden/db';
@@ -111,7 +114,7 @@ async function friendshipIds(db: Database, studentId: string): Promise<string[]>
 }
 
 /** Brothers and sisters with friends on; none when friends is off for this child. */
-async function siblings(db: Database, me: StudentRow): Promise<StudentRow[]> {
+export async function siblings(db: Database, me: StudentRow): Promise<StudentRow[]> {
   if (!me.friendsAllowed) return [];
   return db
     .select()
@@ -791,7 +794,14 @@ export async function deleteExpiredFriendRecords(db: Database, now: Date) {
     .delete(friendRequests)
     .where(or(lt(friendRequests.endedAt, dayAgo), lt(friendRequests.expiresAt, dayAgo)))
     .returning({ id: friendRequests.id });
+  // League results are kept for the last 8 finished weeks; the win count stays on the student.
+  const oldest = previousLeagueWeeks(now, LEAGUE_WEEKS_KEPT).at(-1)!.start;
+  const weeks = await db
+    .delete(leagueWeeks)
+    .where(lt(leagueWeeks.weekStart, oldest))
+    .returning({ id: leagueWeeks.studentId });
   return {
+    leagueWeeksDeleted: weeks.length,
     friendCodesDeleted: codes.length,
     friendCodeTriesDeleted: tries.length,
     friendRequestsDeleted: requests.length,

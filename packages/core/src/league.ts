@@ -22,6 +22,8 @@ export const MAX_WAITING_REQUESTS = 3;
 export const WRONG_CODE_TRIES_PER_HOUR = 5;
 export const FAMILY_CODE_TRIES_PER_DAY = 20;
 export const FRIEND_LABEL_MAX = 30;
+/** Finished weeks of league results kept (docs/FRIENDS_LEAGUE.md section 8). */
+export const LEAGUE_WEEKS_KEPT = 8;
 
 export const REPORT_REASONS = ['upsetting_name', 'do_not_know', 'pressured', 'other'] as const;
 export type ReportReason = (typeof REPORT_REASONS)[number];
@@ -107,4 +109,28 @@ export const formatFriendCode = (code: string) => `${code.slice(0, 4)}-${code.sl
 export function validFriendLabel(label: string): boolean {
   const trimmed = label.trim();
   return trimmed.length >= 1 && trimmed.length <= FRIEND_LABEL_MAX && !/[\r\n\t]/.test(trimmed);
+}
+
+/** The `count` finished weeks before the one `now` is in, most recent first. */
+export function previousLeagueWeeks(now: Date, count: number): LeagueWeek[] {
+  const { start } = leagueWeek(now);
+  return Array.from({ length: count }, (_, i) => {
+    const s = addDays(start, -7 * (i + 1));
+    return { start: s, end: addDays(s, 6) };
+  });
+}
+
+/** The instant a week ends: midnight at the start of the next Monday, UK time. */
+export function leagueWeekEndsAt(week: LeagueWeek, timeZone = DEFAULT_TIME_ZONE): Date {
+  const guess = new Date(`${addDays(week.end, 1)}T00:00:00Z`);
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone,
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  }).formatToParts(guess);
+  const hour = Number(parts.find((p) => p.type === 'hour')?.value ?? 0);
+  const minute = Number(parts.find((p) => p.type === 'minute')?.value ?? 0);
+  // UK time is UTC or one hour ahead, so the local clock at the guess is the offset.
+  return new Date(guess.getTime() - (hour * 60 + minute) * 60 * 1000);
 }

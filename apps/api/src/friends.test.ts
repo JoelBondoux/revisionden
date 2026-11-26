@@ -1,12 +1,14 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { eq } from 'drizzle-orm';
+import { and, eq, inArray, or } from 'drizzle-orm';
 import {
   attempts,
   familyEvents,
   friendCodeTries,
   friendCodes,
   friendRequests,
+  friendships,
   items,
+  leagueWeeks,
   students,
   topics,
 } from '@revisionden/db';
@@ -17,6 +19,7 @@ import {
   RedeemFriendCodeResponseSchema,
   StudentFriendsResponseSchema,
   localDate,
+  previousLeagueWeeks,
 } from '@revisionden/core';
 import { createTestContext, jsonRequest, type TestContext } from './test/helpers';
 import { deleteExpiredFriendRecords } from './routes/friends';
@@ -658,5 +661,125 @@ describe('the friends flag (dev only until the notices are updated)', () => {
     } finally {
       await off.close();
     }
+  });
+});
+
+describe('weekly results and league wins (PR 3)', () => {
+  let topicDone = false;
+  let itemIdForWins = '';
+  async function earnAt(k: Kid, xp: number, at: Date) {
+    if (!topicDone) {
+      await t.db
+        .insert(topics)
+        .values({ id: 'fl-wins', subjectId: 'gcse-maths', board: 'aqa', title: 'W' })
+        .onConflictDoNothing();
+      const [item] = await t.db
+        .insert(items)
+        .values({ topicId: 'fl-wins', type: 'multiple_choice', body: {}, answer: {} })
+        .returning();
+      itemIdForWins = item!.id;
+      topicDone = true;
+    }
+    await t.db.insert(attempts).values({
+      studentId: k.studentId,
+      itemId: itemIdForWins,
+      correct: true,
+      xpEarned: xp,
+      createdAt: at,
+    });
+  }
+  /** Friends since well before last week, and both children created then too. */
+  async function oldFriends(a: Kid, b: Kid) {
+    await befriend(a, b);
+    const long = new Date(t.clock.now().getTime() - 30 * DAY);
+    await t.db
+      .update(friendships)
+      .set({ createdAt: long })
+      .where(
+        or(
+          and(eq(friendships.studentA, a.studentId), eq(friendships.studentB, b.studentId)),
+          and(eq(friendships.studentA, b.studentId), eq(friendships.studentB, a.studentId)),
+        ),
+      );
+    await t.db
+      .update(students)
+      .set({ createdAt: long })
+      .where(inArray(students.id, [a.studentId, b.studentId]));
+  }
+  const tuesdayOf = () => {
+    const [week] = previousLeagueWeeks(t.clock.now(), 1);
+    return new Date(new Date(`${week!.start}T12:00:00Z`).getTime() + DAY);
+  };
+  async function leagueOf(k: Kid) {
+    return (await (await get('/v1/student/league', k.headers)).json()) as {
+      lastWeek: { xp: number; place: number | null; won: boolean } | null;
+    };
+  }
+  const winsOf = async (k: Kid) =>
+    (await t.db.select().from(students).where(eq(students.id, k.studentId)))[0]!.leagueWins;
+
+  it('settles last week when the league opens: the top child wins, once', async () => {
+    const a = await kid('Victor_1');
+    const b = await kid('Second_2');
+    await oldFriends(a, b);
+    await earnAt(a, 120, tuesdayOf());
+    await earnAt(b, 60, tuesdayOf());
+    expect((await leagueOf(a)).lastWeek).toEqual({ xp: 120, place: 1, won: true });
+    expect((await leagueOf(b)).lastWeek).toEqual({ xp: 60, place: 2, won: false });
+    await leagueOf(a);
+    expect(await winsOf(a)).toBe(1);
+    expect(await winsOf(b)).toBe(0);
+  });
+
+  it('counts only friends who were friends by the end of the week', async () => {
+    const a = await kid();
+    const b = await kid();
+    await befriend(a, b); // friends only from now
+    await t.db
+      .update(students)
+      .set({ createdAt: new Date(t.clock.now().getTime() - 30 * DAY) })
+      .where(inArray(students.id, [a.studentId, b.studentId]));
+    await earnAt(a, 120, tuesdayOf());
+    await earnAt(b, 60, tuesdayOf());
+    expect((await leagueOf(a)).lastWeek).toMatchObject({ won: false });
+  });
+
+  it('gives no win to a child hidden from the league', async () => {
+    const a = await kid();
+    const b = await kid();
+    await oldFriends(a, b);
+    await earnAt(a, 120, tuesdayOf());
+    await earnAt(b, 60, tuesdayOf());
+    await send('PUT', '/v1/student/league/hidden', a.headers, { hidden: true });
+    await leagueOf(a);
+    expect(await winsOf(a)).toBe(0);
+  });
+
+  it('turns a win into the "Top of the friends league" reward', async () => {
+    const a = await kid();
+    const b = await kid();
+    await oldFriends(a, b);
+    await earnAt(a, 150, tuesdayOf());
+    await earnAt(b, 70, tuesdayOf());
+    const res = await get('/v1/student/rewards', a.headers);
+    expect(res.status).toBe(200);
+    const view = (await res.json()) as { newlyEarned: { id: string }[] };
+    expect(view.newlyEarned.map((r) => r.id)).toContain('league-top');
+  });
+
+  it('keeps 8 weeks of results, but the win count stays', async () => {
+    const a = await kid();
+    const b = await kid();
+    await oldFriends(a, b);
+    await earnAt(a, 150, tuesdayOf());
+    await earnAt(b, 70, tuesdayOf());
+    await leagueOf(a);
+    await deleteExpiredFriendRecords(t.db, new Date(t.clock.now().getTime() + 9 * 7 * DAY));
+    const rows = await t.db
+      .select()
+      .from(leagueWeeks)
+      .where(eq(leagueWeeks.studentId, a.studentId));
+    expect(rows).toHaveLength(0);
+    expect(await winsOf(a)).toBe(1);
   });
 });

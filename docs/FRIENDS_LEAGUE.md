@@ -162,16 +162,16 @@ In the parent area, per child ("Friends" card):
 
 New tables (one new migration):
 
-| Table                 | Holds                                                                                       | Kept until                                                     |
-| --------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| `friend_codes`        | code hash, child, expiry, used                                                              | used or expired, then deleted within 24 hours                  |
-| `friend_code_tries`   | each typed code: child, family, right or wrong, time (for the try limits)                   | 24 hours                                                       |
-| `friend_requests`     | the two children, status, which family has approved (parent number only), expiry            | started, declined or 7 days, then deleted within 24 hours      |
-| `friendships`         | the two children (stored once, lower id first), start date, optional private label per side | removed, either child deleted                                  |
-| `friend_blocks`       | blocking child, blocked child, date                                                         | unblocked, either child deleted                                |
-| `friend_reports`      | reporting child, reported child, reason code, date, outcome (seen as in section 7)          | 12 months after closing, or either child deleted               |
-| `league_weeks`        | per child per week: league XP, place, won (yes/no)                                          | last 8 weeks only; the win count lives on in the rewards stats |
-| `students` (2 fields) | `friends_allowed` (default false), `league_hidden` (default false)                          | with the student                                               |
+| Table                 | Holds                                                                                       | Kept until                                                       |
+| --------------------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `friend_codes`        | code hash, child, expiry, used                                                              | used or expired, then deleted within 24 hours                    |
+| `friend_code_tries`   | each typed code: child, family, right or wrong, time (for the try limits)                   | 24 hours                                                         |
+| `friend_requests`     | the two children, status, which family has approved (parent number only), expiry            | started, declined or 7 days, then deleted within 24 hours        |
+| `friendships`         | the two children (stored once, lower id first), start date, optional private label per side | removed, either child deleted                                    |
+| `friend_blocks`       | blocking child, blocked child, date                                                         | unblocked, either child deleted                                  |
+| `friend_reports`      | reporting child, reported child, reason code, date, outcome (seen as in section 7)          | 12 months after closing, or either child deleted                 |
+| `league_weeks`        | per child per week: league XP, place, won (yes/no)                                          | last 8 weeks only; the win count stays in `students.league_wins` |
+| `students` (2 fields) | `friends_allowed` (default false), `league_hidden` (default false)                          | with the student                                                 |
 
 - Weekly league XP is worked out from existing XP records; `league_weeks` only keeps the result.
 - **Deleting a student or family** deletes their codes, requests, friendships, blocks and reports,
@@ -229,8 +229,16 @@ New tables (one new migration):
   e2e: `e2e/tests/league.spec.ts`.
   The Me tile, the parent tile and the chip appear only when the API has friends (`FRIENDS_ENABLED`,
   dev only); otherwise the pages say "Friends aren't available yet."
-- **Still to come:** `league_weeks`, weekly wins into rewards and the
-  title in the league (PR 3); the AppDeck report view, and closing a report (until then reports
+- **PR 3 (weekly results and rewards, migration 0031):** `league_weeks` (one row per child per
+  finished week: XP, place, won) and `students.league_wins`. There is no cron in dev, so weeks
+  are settled lazily: the first time a child opens the league or their rewards, each of the last
+  8 finished weeks without a result is worked out (`settleLeagueWeeks` in
+  `apps/api/src/routes/friends-league.ts`) from the friends they had by the end of that week. A
+  win adds 1 to `league_wins`, which the rewards read as `weeksTopOfLeague` (`league-top`,
+  `league-wins-5`, `league-wins-20`). The league shows last week's result ("You topped your
+  league last week!" or "Last week you were 3rd. Nice effort!"). The clean-up deletes results
+  older than 8 weeks; the win count stays.
+- **Still to come:** the AppDeck report view, and closing a report (until then reports
   are kept until either child is deleted).
 
 ## 10. Owner decisions (2026-11-26, via the lead)

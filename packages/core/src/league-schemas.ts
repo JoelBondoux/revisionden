@@ -54,6 +54,10 @@ export type LeagueEntry = z.infer<typeof LeagueEntrySchema>;
 export const LeagueResponseSchema = z.object({
   week: z.object({ start: z.string(), end: z.string() }),
   hidden: z.boolean(),
+  /** The student's own result for last week, once settled. */
+  lastWeek: z
+    .object({ xp: z.number().int(), place: z.number().int().nullable(), won: z.boolean() })
+    .nullable(),
   entries: z.array(LeagueEntrySchema),
 });
 export type LeagueResponse = z.infer<typeof LeagueResponseSchema>;

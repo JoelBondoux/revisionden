@@ -24,6 +24,7 @@ const entry = (nickname: string, xp: number, place: number | null, you = false) 
 const league = {
   week: { start: '2026-11-23', end: '2026-11-29' },
   hidden: false,
+  lastWeek: { xp: 200, place: 1, won: true },
   entries: [
     entry('Wren_2', 240, 1),
     entry('Lark_1', 180, 2, true),

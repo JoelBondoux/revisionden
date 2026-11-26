@@ -50,6 +50,24 @@ function LeagueTable({ entries }: { entries: LeagueEntry[] }) {
   );
 }
 
+/** Last week's result: a small celebration for a win, kind words otherwise (never "last"). */
+function LastWeek({ result }: { result: LeagueResponse['lastWeek'] }) {
+  if (!result) return null;
+  if (result.won) {
+    return (
+      <p role="status" className="league-last league-last--won">
+        You topped your league last week with {result.xp} XP!
+      </p>
+    );
+  }
+  if (!result.place) return null;
+  return (
+    <p className="league-last secondary-text">
+      Last week you were {ordinal(result.place)} with {result.xp} XP. Nice effort!
+    </p>
+  );
+}
+
 const codeMessage = (err: unknown) => {
   const status = err instanceof ApiError ? err.status : undefined;
   if (status === 429) return 'Too many tries. Try again later.';
@@ -349,6 +367,7 @@ export function LeagueScreen({ api }: { api: StudentLeagueApi }) {
   return (
     <div className="stack league-page">
       <h1>Friends league</h1>
+      <LastWeek result={league.lastWeek} />
       <Card className="league-card">
         {league.hidden ? (
           <p>You're hidden from the league. Your friends can't see your XP.</p>
