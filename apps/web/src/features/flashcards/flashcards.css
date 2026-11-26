@@ -165,3 +165,33 @@
   display: grid;
   gap: var(--space-3);
 }
+
+/* F7: the card turns by tap or keyboard. */
+.flip-card {
+  cursor: pointer;
+  border-radius: var(--radius-lg, 16px);
+}
+
+.flip-card:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+/* F7: Explain, one step at a time. */
+.explain {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.explain__step {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.explain__nav {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
