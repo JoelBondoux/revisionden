@@ -153,6 +153,17 @@ test('a standard form answer matches in its common spellings, as marking does', 
   assert.equal((await blind(plain, '3.2 × 10⁻⁴')).result, 'pass');
 });
 
+test('a unicode minus in the blind answer is a minus', async () => {
+  const item = draftItem('fixture-minus', undefined, {
+    type: 'numeric',
+    prompt: 'Fixture?',
+    answer: { value: '-1' },
+    verify: { expression: '-1' },
+  });
+  assert.equal((await blind(item, '−1')).result, 'pass');
+  assert.equal((await blind(item, '1')).result, 'fail');
+});
+
 test('the blind model is asked to round as the question says', () => {
   const { prompt } = blindAnswerPrompt(mc);
   assert.doesNotMatch(prompt, /accuracy the question asks/);

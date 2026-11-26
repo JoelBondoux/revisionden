@@ -7,6 +7,7 @@ import {
   meetsRounding,
   roundingOf,
   standardForm,
+  withMinus,
   withoutSubject,
 } from '../../packages/core/src/answer-format.ts';
 
@@ -107,7 +108,8 @@ function expectation(item) {
       const value = item.answer.value;
       return {
         expected: value,
-        matches: (raw) => {
+        matches: (typed) => {
+          const raw = withMinus(String(typed));
           // Standard form as marking reads it (markNumeric): any common spelling, and proper
           // standard form when the answer is in standard form.
           const said = withoutSubject(words(String(raw)), item.answer.subject);

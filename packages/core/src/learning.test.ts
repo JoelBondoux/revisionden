@@ -162,6 +162,50 @@ describe('marking', () => {
     );
   });
 
+  it('reads the unicode minus and dash minus signs as a minus', () => {
+    expect(markNumeric({ value: '-1' }, '−1').correct).toBe(true);
+    expect(markNumeric({ value: '-0.25' }, '−1/4').correct).toBe(true);
+    expect(markNumeric({ value: '-1/4' }, '−1/4').correct).toBe(true);
+    expect(markNumeric({ value: '-1' }, '–1').correct).toBe(true);
+    expect(markNumeric({ value: '-1' }, '1').correct).toBe(false);
+    expect(markNumeric({ value: '-3.2', decimal_places: 1 }, '−3.2').correct).toBe(true);
+  });
+
+  it("accepts an answer typed with the item's own unit, and refuses a different unit", () => {
+    expect(markNumeric({ value: '15', unit: 'm' }, '15 m').correct).toBe(true);
+    expect(markNumeric({ value: '15', unit: 'm' }, '15m').correct).toBe(true);
+    expect(markNumeric({ value: '15', unit: 'm' }, '15 metres').correct).toBe(true);
+    expect(markNumeric({ value: '15', unit: 'm' }, '15 cm').correct).toBe(false);
+    expect(markNumeric({ value: '9600', unit: 'pounds' }, '£9600').correct).toBe(true);
+    expect(markNumeric({ value: '9600', unit: 'pounds' }, '£9 600').correct).toBe(true);
+    expect(markNumeric({ value: '9600', unit: 'pounds' }, '9600 pounds').correct).toBe(true);
+    expect(markNumeric({ value: '92', unit: '£' }, '£92').correct).toBe(true);
+    expect(markNumeric({ value: '100', unit: 'pence' }, '100p').correct).toBe(true);
+    expect(markNumeric({ value: '100', unit: 'pence' }, '£100').correct).toBe(false);
+    expect(markNumeric({ value: '5', unit: 'cm' }, '5 cm').correct).toBe(true);
+    expect(markNumeric({ value: '5', unit: 'cm' }, '5 m').correct).toBe(false);
+    expect(markNumeric({ value: '5', unit: 'cm' }, '5 mm').correct).toBe(false);
+    const area = { value: '28.3', unit: 'cm^2', significant_figures: 3 };
+    expect(markNumeric(area, '28.3 cm^2').correct).toBe(true);
+    expect(markNumeric(area, '28.3 cm²').correct).toBe(true);
+    expect(markNumeric(area, '28.3 cm').correct).toBe(false);
+    expect(markNumeric({ value: '4', unit: 'hours' }, '4 hours').correct).toBe(true);
+    expect(markNumeric({ value: '4', unit: 'hours' }, '4 h').correct).toBe(true);
+    expect(markNumeric({ value: '3', unit: 'm/s^2' }, '3 m/s²').correct).toBe(true);
+    expect(markNumeric({ value: '50', unit: 'km/h' }, '50 km/h').correct).toBe(true);
+    expect(markNumeric({ value: '50', unit: 'km/h' }, '50 m/s').correct).toBe(false);
+    expect(markNumeric({ value: '15' }, '15 m').correct).toBe(false);
+  });
+
+  it('reads a mixed number such as "1 1/3", never as 11/3', () => {
+    expect(markNumeric({ value: '4/3' }, '1 1/3').correct).toBe(true);
+    expect(markNumeric({ value: '11/3' }, '1 1/3').correct).toBe(false);
+    expect(markNumeric({ value: '-4/3' }, '−1 1/3').correct).toBe(true);
+    expect(markNumeric({ value: '2.5' }, '2 1/2').correct).toBe(true);
+    expect(markNumeric({ value: '1500.5' }, '1 500 1/2').correct).toBe(false);
+    expect(markNumeric({ value: '4/3' }, '1 1/0').correct).toBe(false);
+  });
+
   it('does not divide by zero in a fraction answer', () => {
     expect(markNumeric({ value: '1' }, '1/0').correct).toBe(false);
   });
