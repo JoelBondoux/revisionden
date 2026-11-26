@@ -16,6 +16,7 @@
       "M1 for a common denominator, e.g. 28/12 + 21/12",
       "A1 for 49/12"
     ],
+    "hint": "Change each mixed number into an improper fraction first, then use a common denominator to add.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -41,7 +42,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer and every step backed by the maths engine. 49/12 is in lowest terms (gcd 1, checked in Python). Mark points written by this session, not from an official mark scheme. Revised after adversarial review: steps now start by converting each mixed number to an improper fraction.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer and every step backed by the maths engine. 49/12 is in lowest terms (gcd 1, checked in Python). Mark points written by this session, not from an official mark scheme. Revised after adversarial review: steps now start by converting each mixed number to an improper fraction. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -79,9 +80,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:26:55Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:29Z",
           "notes": "no problems found"
         }
       ]
@@ -100,6 +101,7 @@
     "steps": ["(3*2 + 1)/2 * (1*5 + 2)/5", "7/2 * 7/5", "49/10"],
     "marks": 2,
     "mark_scheme": ["M1 for 7/2 × 7/5", "A1 for 49/10"],
+    "hint": "Change both mixed numbers into improper fractions, then multiply the tops and multiply the bottoms.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -125,7 +127,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer and every step backed by the maths engine. 49/10 is in lowest terms (checked in Python). Mark points written by this session. Revised after adversarial review: steps now start by converting each mixed number to an improper fraction.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer and every step backed by the maths engine. 49/10 is in lowest terms (checked in Python). Mark points written by this session. Revised after adversarial review: steps now start by converting each mixed number to an improper fraction. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -163,9 +165,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:27:12Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:31Z",
           "notes": "no problems found"
         }
       ]
@@ -188,6 +190,7 @@
       "M1 for 8/3 × 9/10",
       "A1 for 12/5"
     ],
+    "hint": "Change both mixed numbers into improper fractions. To divide, flip the second fraction and multiply, then simplify.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -213,7 +216,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer and every step backed by the maths engine. 12/5 is in lowest terms (checked in Python). Mark points written by this session. Steps changed to match n2-0001 (conversion shown first).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer and every step backed by the maths engine. 12/5 is in lowest terms (checked in Python). Mark points written by this session. Steps changed to match n2-0001 (conversion shown first). Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -251,9 +254,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:27:36Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:33Z",
           "notes": "no problems found"
         }
       ]
@@ -276,6 +279,7 @@
       "M1 for a common denominator, e.g. 63/15 - 40/15",
       "A1 for 23/15"
     ],
+    "hint": "Change each mixed number into an improper fraction, then use a common denominator to subtract.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -301,7 +305,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer and every step backed by the maths engine. 23/15 is in lowest terms (checked in Python). Mark points written by this session. Revised after adversarial review: steps now start by converting each mixed number to an improper fraction.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer and every step backed by the maths engine. 23/15 is in lowest terms (checked in Python). Mark points written by this session. Revised after adversarial review: steps now start by converting each mixed number to an improper fraction. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -339,9 +343,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:27:54Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:34Z",
           "notes": "no problems found"
         }
       ]
@@ -359,6 +363,7 @@
     "verify": { "expression": "-3.6 * -2.5" },
     "marks": 1,
     "explanation": "A negative times a negative is positive. 3.6 × 2.5 = 9, so -3.6 × -2.5 = 9.",
+    "hint": "Work out 3.6 × 2.5 first, then decide the sign: what is a negative times a negative?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -384,7 +389,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -422,9 +427,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:36:56Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:36Z",
           "notes": "no problems found"
         }
       ]
@@ -442,6 +447,7 @@
     "verify": { "expression": "-7.2 / 0.9" },
     "marks": 1,
     "explanation": "A negative divided by a positive is negative. Multiply both numbers by 10: 72 ÷ 9 = 8, so -7.2 ÷ 0.9 = -8.",
+    "hint": "Multiply both numbers by 10 so you divide by a whole number, then think about the sign.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -467,7 +473,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -505,9 +511,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:37:03Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:38Z",
           "notes": "no problems found"
         }
       ]
@@ -525,6 +531,7 @@
     "verify": { "expression": "4.8 - (-2.35)" },
     "marks": 1,
     "explanation": "Subtracting a negative is the same as adding: 4.8 - (-2.35) = 4.8 + 2.35 = 7.15.",
+    "hint": "Subtracting a negative number is the same as adding the positive number.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -550,7 +557,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -588,9 +595,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:37:10Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:39Z",
           "notes": "no problems found"
         }
       ]
@@ -608,6 +615,7 @@
     "verify": { "expression": "-0.6 * 0.04" },
     "marks": 1,
     "explanation": "6 × 4 = 24. There are 1 + 2 = 3 decimal places in 0.6 and 0.04, so 0.6 × 0.04 = 0.024. A negative times a positive is negative: -0.024.",
+    "hint": "Multiply the digits as whole numbers, then count the decimal places in the two numbers. Then decide the sign.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -633,7 +641,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -671,9 +679,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:37:17Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:41Z",
           "notes": "no problems found"
         }
       ]
@@ -691,6 +699,7 @@
     "verify": { "expression": "(37/10) * (64/100)" },
     "marks": 1,
     "explanation": "3.7 is 37 ÷ 10 and 0.64 is 64 ÷ 100. So 3.7 × 0.64 = 2368 ÷ (10 × 100) = 2368 ÷ 1000 = 2.368.",
+    "hint": "Compare 3.7 with 37 and 0.64 with 64. How many times smaller is each one?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -716,7 +725,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine (decimals written as exact fractions, 3.7 = 37/10, 0.64 = 64/100). The given fact 37 × 64 = 2368 checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine (decimals written as exact fractions, 3.7 = 37/10, 0.64 = 64/100). The given fact 37 × 64 = 2368 checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -754,9 +763,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:37:25Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:43Z",
           "notes": "no problems found"
         }
       ]
@@ -774,6 +783,7 @@
     "verify": { "expression": "(23/100) * (45/10)" },
     "marks": 1,
     "explanation": "0.23 is 23 ÷ 100 and 4.5 is 45 ÷ 10. So 0.23 × 4.5 = 1035 ÷ (100 × 10) = 1035 ÷ 1000 = 1.035.",
+    "hint": "Compare 0.23 with 23 and 4.5 with 45. How many times smaller is each one?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -799,7 +809,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine (decimals written as exact fractions, 0.23 = 23/100, 4.5 = 45/10). The given fact 23 × 45 = 1035 checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine (decimals written as exact fractions, 0.23 = 23/100, 4.5 = 45/10). The given fact 23 × 45 = 1035 checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -837,9 +847,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:37:32Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:44Z",
           "notes": "no problems found"
         }
       ]
@@ -857,6 +867,7 @@
     "verify": { "expression": "3744 / 2.4" },
     "marks": 1,
     "explanation": "From 156 × 24 = 3744, we know 3744 ÷ 24 = 156. Dividing by 2.4 instead of 24 means dividing by a number 10 times smaller, so the answer is 10 times bigger: 1560.",
+    "hint": "Use 156 × 24 = 3744 to find 3744 ÷ 24. Then think: if you divide by a number 10 times smaller, what happens to the answer?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -882,7 +893,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine. The given fact 156 × 24 = 3744 checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine. The given fact 156 × 24 = 3744 checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -920,9 +931,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:37:41Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:46Z",
           "notes": "no problems found"
         }
       ]
@@ -938,6 +949,7 @@
     "front": "-6 × -7",
     "back": "42",
     "explanation": "6 × 7 = 42, and a negative times a negative is positive, so -6 × -7 = 42.",
+    "hint": "Multiply the numbers without their signs, then decide the sign: what is a negative times a negative?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["author"],
     "citations": [
@@ -963,7 +975,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Front cited to spec N2. Back checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Front cited to spec N2. Back checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -993,9 +1005,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:37:48Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:47Z",
           "notes": "no problems found"
         }
       ]
@@ -1011,6 +1023,7 @@
     "front": "0.3 × 0.2",
     "back": "0.06",
     "explanation": "3 × 2 = 6. There are 2 decimal places in total (one in each number), so 0.3 × 0.2 = 0.06.",
+    "hint": "Multiply the digits as if there were no decimal points, then count the decimal places in the two numbers.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["author"],
     "citations": [
@@ -1036,7 +1049,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Front cited to spec N2. Back checked with exact decimals in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Front cited to spec N2. Back checked with exact decimals in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -1066,9 +1079,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:37:54Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:49Z",
           "notes": "no problems found"
         }
       ]
@@ -1084,6 +1097,7 @@
     "front": "-24 ÷ 4",
     "back": "-6",
     "explanation": "24 ÷ 4 = 6, and a negative divided by a positive is negative, so -24 ÷ 4 = -6.",
+    "hint": "Divide without the minus sign first, then think about the sign when a negative is divided by a positive.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["author"],
     "citations": [
@@ -1109,7 +1123,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Front cited to spec N2. Back checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Front cited to spec N2. Back checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -1139,9 +1153,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:38:00Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:51Z",
           "notes": "no problems found"
         }
       ]
