@@ -89,6 +89,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Avatar builder (J9b, Codex review of #134): picking a tab after scrolling part-way down now brings the new tab's first options into view just below the pinned stage (level with its top when wide), allowing for the compact stage growing back; instant with reduced motion.
 - Adversarial review (S2, from S3-A on a1-0103): for typed answers the reviewer is told the marking normaliser's rules (spaces, case, multiply signs, minus signs, superscripts, √), so it no longer asks for `p^3*q` or `p^3 q` when `p^3q` is accepted.
 - Maths engine (F6, from Codex on #139): a final line of many letter-to-letter alternatives (`a = x, a = x, …`) no longer ties up the engine. Repeats are dropped, only readings that are an expected solution are tried, and at most 64 ways to read a line (`MAX_READINGS`).
 - Blind answer and review (S2, after #133): the blind check compares short answers with the same normaliser as marking (`x² + y² = 36` matches `x^2 + y^2 = 36`; `any_order` and `units` honoured), and the adversarial review is told when an item has `any_order: true` so it does not ask for reordered variants.
