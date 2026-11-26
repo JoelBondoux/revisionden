@@ -7,7 +7,7 @@
     "learning_point": "gcse-maths-h-a22-lp-linear",
     "expected_seconds": 45,
     "prompt": "Solve 3x - 5 < 16",
-    "answer": { "accepted": ["x < 7", "x<7"] },
+    "answer": { "accepted": ["x < 7", "x<7", "7 > x"] },
     "marks": 2,
     "explanation": "Add 5: 3x < 21. Divide by 3: x < 7.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
@@ -81,7 +81,7 @@
     "learning_point": "gcse-maths-h-a22-lp-linear",
     "expected_seconds": 60,
     "prompt": "Solve 7 - 2x ≥ 1",
-    "answer": { "accepted": ["x ≤ 3", "x<=3", "x <= 3", "x≤3"] },
+    "answer": { "accepted": ["x ≤ 3", "x<=3", "x <= 3", "x≤3", "3 ≥ x", "3 >= x"] },
     "marks": 2,
     "explanation": "Subtract 7: -2x ≥ -6. Divide by -2 and reverse the sign: x ≤ 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
@@ -155,7 +155,9 @@
     "learning_point": "gcse-maths-h-a22-lp-linear",
     "expected_seconds": 90,
     "prompt": "n is an integer and -3 < 2n + 1 ≤ 7. List all the possible values of n, from smallest to largest.",
-    "answer": { "accepted": ["-1, 0, 1, 2, 3", "-1,0,1,2,3", "−1, 0, 1, 2, 3", "−1,0,1,2,3"] },
+    "answer": {
+      "accepted": ["-1, 0, 1, 2, 3", "-1,0,1,2,3", "−1, 0, 1, 2, 3", "−1,0,1,2,3", "-1 0 1 2 3"]
+    },
     "marks": 3,
     "explanation": "Subtract 1: -4 < 2n ≤ 6. Divide by 2: -2 < n ≤ 3, so the possible values of n are -1, 0, 1, 2 and 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",

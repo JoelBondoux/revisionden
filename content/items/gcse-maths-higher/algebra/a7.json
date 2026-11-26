@@ -7,9 +7,7 @@
     "learning_point": "gcse-maths-h-a7-lp-evaluate",
     "expected_seconds": 30,
     "prompt": "f(x) = 3x - 5. Work out f(4).",
-    "answer": {
-      "value": "7"
-    },
+    "answer": { "value": "7", "subject": "f(4)" },
     "verify": {
       "expression": "3*4 - 5"
     },
@@ -94,9 +92,7 @@
     "learning_point": "gcse-maths-h-a7-lp-evaluate",
     "expected_seconds": 30,
     "prompt": "g(x) = x^2 + 1. Work out g(-3).",
-    "answer": {
-      "value": "10"
-    },
+    "answer": { "value": "10", "subject": "g(-3)" },
     "verify": {
       "expression": "(-3)^2 + 1"
     },
@@ -181,9 +177,7 @@
     "learning_point": "gcse-maths-h-a7-lp-evaluate",
     "expected_seconds": 30,
     "prompt": "h(x) = (x + 6)/2. Work out h(-10).",
-    "answer": {
-      "value": "-2"
-    },
+    "answer": { "value": "-2", "subject": "h(-10)" },
     "verify": {
       "expression": "(-10 + 6)/2"
     },
@@ -616,9 +610,7 @@
     "learning_point": "gcse-maths-h-a7-lp-composite",
     "expected_seconds": 45,
     "prompt": "f(x) = 2x + 1 and g(x) = x^2. Work out fg(3).",
-    "answer": {
-      "value": "19"
-    },
+    "answer": { "value": "19", "subject": "fg(3)" },
     "verify": {
       "expression": "2*(3^2) + 1"
     },
@@ -704,9 +696,7 @@
     "learning_point": "gcse-maths-h-a7-lp-composite",
     "expected_seconds": 45,
     "prompt": "f(x) = 2x + 1 and g(x) = x^2. Work out gf(3).",
-    "answer": {
-      "value": "49"
-    },
+    "answer": { "value": "49", "subject": "gf(3)" },
     "verify": {
       "expression": "(2*3 + 1)^2"
     },

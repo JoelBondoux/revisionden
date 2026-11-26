@@ -173,7 +173,7 @@
     "learning_point": "gcse-maths-h-a23-lp-term-to-term",
     "expected_seconds": 45,
     "prompt": "A sequence has u_1 = 2 and u_(n+1) = 3u_n - 1. Work out u_3.",
-    "answer": { "value": "14" },
+    "answer": { "value": "14", "subject": "u_3" },
     "verify": { "expression": "3*(3*2 - 1) - 1" },
     "marks": 2,
     "mark_scheme": ["M1 for u_2 = 5", "A1 for 14"],

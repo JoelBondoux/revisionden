@@ -183,9 +183,7 @@
     "learning_point": "gcse-maths-h-a10-lp-from-equation",
     "expected_seconds": 40,
     "prompt": "Find the y-coordinate where the line 4y - 2x = 12 crosses the y-axis.",
-    "answer": {
-      "value": "3"
-    },
+    "answer": { "value": "3", "subject": "y" },
     "verify": {
       "expression": "12/4"
     },

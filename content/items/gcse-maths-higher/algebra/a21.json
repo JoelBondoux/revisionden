@@ -442,7 +442,7 @@
     "learning_point": "gcse-maths-h-a21-lp-form-harder",
     "expected_seconds": 150,
     "prompt": "A rectangle is (x + 3) cm long and x cm wide. Its area is 40 cm^2. Form and solve an equation to find the width of the rectangle.",
-    "answer": { "value": "5", "unit": "cm" },
+    "answer": { "value": "5", "unit": "cm", "subject": "x" },
     "verify": { "expression": "(-3 + sqrt(9 + 160))/2" },
     "marks": 4,
     "mark_scheme": [

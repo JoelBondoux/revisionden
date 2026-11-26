@@ -155,7 +155,7 @@
     "learning_point": "gcse-maths-h-a19-lp-linear-linear",
     "expected_seconds": 40,
     "prompt": "x + y = 10 and x - y = 4. Work out the value of x.",
-    "answer": { "value": "7" },
+    "answer": { "value": "7", "subject": "x" },
     "verify": { "expression": "(10 + 4)/2" },
     "marks": 2,
     "mark_scheme": ["M1 for adding the equations, 2x = 14", "A1 for 7"],

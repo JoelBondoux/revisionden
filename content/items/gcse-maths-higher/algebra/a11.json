@@ -277,7 +277,8 @@
     "expected_seconds": 60,
     "prompt": "Write x^2 + 6x + 11 in the form (x + a)^2 + b.",
     "answer": {
-      "accepted": ["(x + 3)^2 + 2", "(x+3)^2+2", "(x + 3)² + 2", "(x+3)²+2"]
+      "accepted": ["(x + 3)^2 + 2", "(x+3)^2+2", "(x + 3)² + 2", "(x+3)²+2"],
+      "any_order": true
     },
     "marks": 2,
     "explanation": "Half of 6 is 3: (x + 3)^2 = x^2 + 6x + 9, so x^2 + 6x + 11 = (x + 3)^2 + 2.",
@@ -352,9 +353,7 @@
     "learning_point": "gcse-maths-h-a11-lp-turning-points",
     "expected_seconds": 30,
     "prompt": "Write down the coordinates of the turning point of y = (x - 4)^2 + 3.",
-    "answer": {
-      "accepted": ["(4, 3)", "(4,3)"]
-    },
+    "answer": { "accepted": ["(4, 3)", "(4,3)", "4, 3", "x = 4, y = 3"] },
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
     "checked_by": ["author"],
@@ -439,9 +438,7 @@
     "learning_point": "gcse-maths-h-a11-lp-turning-points",
     "expected_seconds": 90,
     "prompt": "By completing the square, find the coordinates of the turning point of y = x^2 - 8x + 10.",
-    "answer": {
-      "accepted": ["(4, -6)", "(4,-6)", "(4, −6)", "(4,−6)"]
-    },
+    "answer": { "accepted": ["(4, -6)", "(4,-6)", "(4, −6)", "(4,−6)", "4, -6", "x = 4, y = -6"] },
     "marks": 3,
     "explanation": "x^2 - 8x + 10 = (x - 4)^2 - 16 + 10 = (x - 4)^2 - 6, so the turning point is (4, -6).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",

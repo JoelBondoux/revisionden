@@ -162,7 +162,7 @@
     "expected_seconds": 30,
     "prompt": "Three corners of a rectangle are at (-2, 3), (5, 3) and (5, -1). Write down the coordinates of the fourth corner.",
     "answer": {
-      "accepted": ["(-2, -1)", "(-2,-1)", "(−2, −1)", "(−2,−1)"]
+      "accepted": ["(-2, -1)", "(-2,-1)", "(−2, −1)", "(−2,−1)", "-2, -1", "x = -2, y = -1"]
     },
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
@@ -412,9 +412,7 @@
     "learning_point": "gcse-maths-h-a8-lp-axis-distances",
     "expected_seconds": 40,
     "prompt": "Start at the point (-4, -1). Move 6 units to the right and 5 units up. Write down the coordinates of the point you reach.",
-    "answer": {
-      "accepted": ["(2, 4)", "(2,4)"]
-    },
+    "answer": { "accepted": ["(2, 4)", "(2,4)", "2, 4", "x = 2, y = 4"] },
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
     "checked_by": ["author"],
