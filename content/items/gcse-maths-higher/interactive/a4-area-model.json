@@ -1,0 +1,204 @@
+[
+  {
+    "id": "gcse-maths-h-a4-area-0001",
+    "topic": "gcse-maths-h-a4",
+    "type": "area_model",
+    "mode": "explore",
+    "difficulty": 1,
+    "expected_seconds": 90,
+    "prompt": "Make x^2 + 5x + 6 into a rectangle.",
+    "quadratic": {
+      "b": 5,
+      "c": 6
+    },
+    "answer": {
+      "pair": [2, 3]
+    },
+    "marks": 1,
+    "explanation": "2 × 3 = 6 and 2 + 3 = 5, so the tiles make a rectangle with sides x + 2 and x + 3: x^2 + 5x + 6 = (x + 2)(x + 3).",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
+    "checked_by": ["maths-engine", "author"],
+    "tags": ["interactive-pilot"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26). The bullet continues \"x² + bx + c, including the difference of two squares\"; the quote stops before the superscript, which PDF text extraction reads as \"x 2\".",
+        "quote": "factorising quadratic expressions of the form",
+        "retrieved_at": "2026-11-26",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T10:25:55Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a4-area-0002",
+    "topic": "gcse-maths-h-a4",
+    "type": "area_model",
+    "mode": "guided",
+    "difficulty": 1,
+    "expected_seconds": 60,
+    "prompt": "Make x^2 + 6x + 8 into a rectangle.",
+    "quadratic": {
+      "b": 6,
+      "c": 8
+    },
+    "answer": {
+      "pair": [2, 4]
+    },
+    "marks": 1,
+    "hint": "List the pairs of numbers that multiply to 8, then find the pair that adds to 6.",
+    "explanation": "2 × 4 = 8 and 2 + 4 = 6, so x^2 + 6x + 8 = (x + 2)(x + 4).",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
+    "checked_by": ["maths-engine", "author"],
+    "tags": ["interactive-pilot"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26). The bullet continues \"x² + bx + c, including the difference of two squares\"; the quote stops before the superscript, which PDF text extraction reads as \"x 2\".",
+        "quote": "factorising quadratic expressions of the form",
+        "retrieved_at": "2026-11-26",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T10:25:56Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a4-area-0003",
+    "topic": "gcse-maths-h-a4",
+    "type": "area_model",
+    "mode": "guided",
+    "difficulty": 1,
+    "expected_seconds": 60,
+    "prompt": "Make x^2 + 8x + 12 into a rectangle.",
+    "quadratic": {
+      "b": 8,
+      "c": 12
+    },
+    "answer": {
+      "pair": [2, 6]
+    },
+    "marks": 1,
+    "ask_helped": true,
+    "hint": "Three pairs of numbers multiply to 12. Only one of them adds to 8.",
+    "explanation": "2 × 6 = 12 and 2 + 6 = 8, so x^2 + 8x + 12 = (x + 2)(x + 6).",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
+    "checked_by": ["maths-engine", "author"],
+    "tags": ["interactive-pilot"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26). The bullet continues \"x² + bx + c, including the difference of two squares\"; the quote stops before the superscript, which PDF text extraction reads as \"x 2\".",
+        "quote": "factorising quadratic expressions of the form",
+        "retrieved_at": "2026-11-26",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T10:25:57Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a4-area-0004",
+    "topic": "gcse-maths-h-a4",
+    "type": "worked_maths",
+    "difficulty": 2,
+    "expected_seconds": 60,
+    "learning_point": "gcse-maths-h-a4-lp-factorise",
+    "prompt": "Factorise x^2 + 9x + 20",
+    "answer": {
+      "expression": "(x + 4)(x + 5)"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "x^2 + 9x + 20",
+      "form": "factorised"
+    },
+    "steps": ["x^2 + 9x + 20", "(x + 4)(x + 5)"],
+    "marks": 2,
+    "mark_scheme": ["M1 for (x + a)(x + b) with a × b = 20 or a + b = 9", "A1 for (x + 4)(x + 5)"],
+    "explanation": "4 × 5 = 20 and 4 + 5 = 9, so x^2 + 9x + 20 = (x + 4)(x + 5).",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
+    "checked_by": ["maths-engine", "author"],
+    "tags": ["interactive-pilot"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26). The bullet continues \"x² + bx + c, including the difference of two squares\"; the quote stops before the superscript, which PDF text extraction reads as \"x 2\".",
+        "quote": "factorising quadratic expressions of the form",
+        "retrieved_at": "2026-11-26",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T10:25:58Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  }
+]

@@ -252,6 +252,13 @@ describe('onboarding API client', () => {
     expect(save.mock.calls[0]![1]?.method).toBe('PUT');
   });
 
+  it('reads the student’s own nickname and avatar (W9 Me page)', async () => {
+    const read = fakeFetch(200, child.student);
+    const api = createOnboardingApi({ baseUrl: 'https://api.test', fetch: read });
+    expect(await api.getMe()).toEqual(child.student);
+    expect(String(read.mock.calls[0]![0])).toBe('https://api.test/v1/student/me');
+  });
+
   it('unlocks a student device with a passkey already on it', async () => {
     const fetch = vi
       .fn()

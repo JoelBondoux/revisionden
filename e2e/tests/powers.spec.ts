@@ -44,6 +44,8 @@ function learnItem(i: Raw, n: number) {
     type: i.type,
     prompt: i.prompt,
     ...(i.options ? { options: i.options } : {}),
+    // Interactive tiles (W8) carry their quadratic, as the API sends them.
+    ...(i.type === 'area_model' ? { mode: i.mode, quadratic: i.quadratic } : {}),
     ...(typeof (i.answer as { unit?: unknown })?.unit === 'string'
       ? { unit: (i.answer as { unit: string }).unit }
       : {}),
