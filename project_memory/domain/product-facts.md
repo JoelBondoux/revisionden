@@ -149,7 +149,8 @@ Tags: #product #rules #limits #defaults
   the other app pages show a small header with the logo, Sign in, Policies and About.
 - Changing screen (I7, `apps/web/src/layout/RouteChange.tsx` around every route): the new screen
   starts at the top and focus moves to its main heading (or the main area) for screen readers.
-  Back and forward put the reader back where they were; a `#part` link scrolls to that part; a
+  Back and forward put the reader back where they were (waiting up to 5 seconds for a loading
+  screen's content); a `#part` link scrolls to that part; a
   change of query on the same screen (a tab, a chosen child) keeps the scroll position. The first
   screen when the app opens is left to the browser.
 - The web app loads nothing from third parties (no analytics, fonts or beacons): only its own

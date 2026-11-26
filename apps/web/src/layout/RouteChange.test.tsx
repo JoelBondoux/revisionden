@@ -4,8 +4,14 @@ import { Link, Outlet, createMemoryRouter, RouterProvider } from 'react-router-d
 import { RouteChange } from './RouteChange';
 
 /** Pretend the window is scrolled to `y` (jsdom never scrolls on its own). */
-function scrolledTo(y: number) {
+function windowAt(y: number) {
   Object.defineProperty(window, 'scrollY', { configurable: true, value: y });
+}
+
+/** The reader scrolls to `y`: the window moves and the browser says so. */
+function scrolledTo(y: number) {
+  windowAt(y);
+  window.dispatchEvent(new Event('scroll'));
 }
 
 function Page({ title, children }: { title: string; children?: React.ReactNode }) {
@@ -64,7 +70,12 @@ let scrollTo: ReturnType<typeof vi.fn>;
 beforeEach(() => {
   scrollTo = vi.fn();
   window.scrollTo = scrollTo as unknown as typeof window.scrollTo;
-  scrolledTo(0);
+  windowAt(0);
+  // Long enough to scroll anywhere unless a test says otherwise.
+  Object.defineProperty(document.documentElement, 'scrollHeight', {
+    configurable: true,
+    value: 10_000,
+  });
 });
 
 describe('changing screen', () => {
@@ -119,5 +130,38 @@ describe('changing screen', () => {
     scrolledTo(300);
     await userEvent.click(screen.getByRole('link', { name: 'Other tab' }));
     expect(scrollTo).not.toHaveBeenCalled();
+  });
+
+  it('remembers where the reader was before the old screen was replaced', async () => {
+    const router = setup();
+    scrolledTo(640);
+    // The next screen is short: by the time it shows, the window has been clamped near the top.
+    windowAt(40);
+    await act(() => router.navigate('/two'));
+    await act(() => router.navigate(-1));
+    expect(scrollTo).toHaveBeenLastCalledWith(0, 640);
+  });
+
+  it('finishes putting the reader back once a loading screen has its content', async () => {
+    const router = setup();
+    scrolledTo(640);
+    await act(() => router.navigate('/two'));
+    // Back to a screen still loading: only 100px can be scrolled yet.
+    Object.defineProperty(document.documentElement, 'scrollHeight', {
+      configurable: true,
+      value: 100 + window.innerHeight,
+    });
+    await act(() => router.navigate(-1));
+    scrollTo.mockClear();
+    // The content arrives and the page grows.
+    Object.defineProperty(document.documentElement, 'scrollHeight', {
+      configurable: true,
+      value: 2000 + window.innerHeight,
+    });
+    await act(async () => {
+      document.getElementById('main')!.append(document.createElement('section'));
+      await new Promise((r) => setTimeout(r, 0));
+    });
+    expect(scrollTo).toHaveBeenLastCalledWith(0, 640);
   });
 });
