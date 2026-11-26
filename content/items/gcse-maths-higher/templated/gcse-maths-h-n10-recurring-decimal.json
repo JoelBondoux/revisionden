@@ -7,8 +7,13 @@
     "learning_point": "gcse-maths-h-n10-lp-recurring",
     "expected_seconds": 90,
     "prompt": "Write 0.696969... (the digits 69 recur) as a fraction in its simplest form.",
-    "answer": { "value": "23/33", "form": "simplest_fraction" },
-    "verify": { "expression": "69/99" },
+    "answer": {
+      "value": "23/33",
+      "form": "simplest_fraction"
+    },
+    "verify": {
+      "expression": "69/99"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for 99x = 69 or 69/99", "A1 for 23/33"],
     "hint": "Let x be the decimal. Two digits recur, so work out 100x - x.",
@@ -29,7 +34,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-n10-recurring-decimal", "version": 3, "seed": 1 },
+    "template": {
+      "id": "gcse-maths-h-n10-recurring-decimal",
+      "version": 3,
+      "seed": 1
+    },
     "verification": {
       "status": "draft",
       "version": 3,
@@ -85,8 +94,13 @@
     "learning_point": "gcse-maths-h-n10-lp-recurring",
     "expected_seconds": 90,
     "prompt": "Write 0.292929... (the digits 29 recur) as a fraction in its simplest form.",
-    "answer": { "value": "29/99", "form": "simplest_fraction" },
-    "verify": { "expression": "29/99" },
+    "answer": {
+      "value": "29/99",
+      "form": "simplest_fraction"
+    },
+    "verify": {
+      "expression": "29/99"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for 99x = 29 or 29/99", "A1 for 29/99"],
     "hint": "Let x be the decimal. Two digits recur, so work out 100x - x.",
@@ -107,7 +121,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-n10-recurring-decimal", "version": 3, "seed": 2 },
+    "template": {
+      "id": "gcse-maths-h-n10-recurring-decimal",
+      "version": 3,
+      "seed": 2
+    },
     "verification": {
       "status": "draft",
       "version": 3,
@@ -163,8 +181,13 @@
     "learning_point": "gcse-maths-h-n10-lp-recurring",
     "expected_seconds": 90,
     "prompt": "Write 0.676767... (the digits 67 recur) as a fraction in its simplest form.",
-    "answer": { "value": "67/99", "form": "simplest_fraction" },
-    "verify": { "expression": "67/99" },
+    "answer": {
+      "value": "67/99",
+      "form": "simplest_fraction"
+    },
+    "verify": {
+      "expression": "67/99"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for 99x = 67 or 67/99", "A1 for 67/99"],
     "hint": "Let x be the decimal. Two digits recur, so work out 100x - x.",
@@ -185,7 +208,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-n10-recurring-decimal", "version": 3, "seed": 3 },
+    "template": {
+      "id": "gcse-maths-h-n10-recurring-decimal",
+      "version": 3,
+      "seed": 3
+    },
     "verification": {
       "status": "draft",
       "version": 3,
@@ -241,8 +268,13 @@
     "learning_point": "gcse-maths-h-n10-lp-recurring",
     "expected_seconds": 90,
     "prompt": "Write 0.262626... (the digits 26 recur) as a fraction in its simplest form.",
-    "answer": { "value": "26/99", "form": "simplest_fraction" },
-    "verify": { "expression": "26/99" },
+    "answer": {
+      "value": "26/99",
+      "form": "simplest_fraction"
+    },
+    "verify": {
+      "expression": "26/99"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for 99x = 26 or 26/99", "A1 for 26/99"],
     "hint": "Let x be the decimal. Two digits recur, so work out 100x - x.",
@@ -263,7 +295,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-n10-recurring-decimal", "version": 3, "seed": 4 },
+    "template": {
+      "id": "gcse-maths-h-n10-recurring-decimal",
+      "version": 3,
+      "seed": 4
+    },
     "verification": {
       "status": "draft",
       "version": 3,
@@ -319,8 +355,13 @@
     "learning_point": "gcse-maths-h-n10-lp-recurring",
     "expected_seconds": 90,
     "prompt": "Write 0.343434... (the digits 34 recur) as a fraction in its simplest form.",
-    "answer": { "value": "34/99", "form": "simplest_fraction" },
-    "verify": { "expression": "34/99" },
+    "answer": {
+      "value": "34/99",
+      "form": "simplest_fraction"
+    },
+    "verify": {
+      "expression": "34/99"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for 99x = 34 or 34/99", "A1 for 34/99"],
     "hint": "Let x be the decimal. Two digits recur, so work out 100x - x.",
@@ -341,7 +382,11 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": { "id": "gcse-maths-h-n10-recurring-decimal", "version": 3, "seed": 5 },
+    "template": {
+      "id": "gcse-maths-h-n10-recurring-decimal",
+      "version": 3,
+      "seed": 5
+    },
     "verification": {
       "status": "draft",
       "version": 3,

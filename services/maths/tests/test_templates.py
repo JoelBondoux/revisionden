@@ -451,3 +451,11 @@ def test_the_engine_cross_check_also_checks_the_answer_form():
     checks = engine_checks(sf)
     assert checks[0]["form"] == "standard_form"
     assert checks[1]["expected"]["form"] == "standard_form"
+
+
+def test_standard_form_answers_and_steps_use_the_times_sign_like_the_question():
+    item = make_item(_template("standard-form-multiply"), 2, NOW)
+    assert item["answer"]["expression"] == "7.02 × 10^16"
+    assert item["steps"] == ["(9 × 10^9) × (7.8 × 10^6)", "(9 × 7.8) × 10^(9+6)", "70.2 × 10^15",
+                             "7.02 × 10^16"]
+    assert "*" not in item["verify"]["expression"]

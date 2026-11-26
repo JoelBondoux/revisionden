@@ -366,8 +366,9 @@ def _standard_write(p: dict) -> dict:
     product = a * b
     mantissa, shift = _standard(product)
     sp, sm, power = _decimal(product), _decimal(mantissa), m + n + shift
-    answer = f"{sm}*10^{power}"
-    steps = [f"({sa}*10^{m})*({sb}*10^{n})", f"({sa}*{sb})*10^({m}+{n})", f"{sp}*10^{m + n}"]
+    answer = f"{sm} × 10^{power}"
+    steps = [f"({sa} × 10^{m}) × ({sb} × 10^{n})", f"({sa} × {sb}) × 10^({m}+{n})",
+             f"{sp} × 10^{m + n}"]
     explanation = (f"Multiply the numbers: {sa} × {sb} = {sp}. To multiply powers of 10, add "
                    f"their indices: 10^{m} × 10^{n} = 10^({m} + {n}) = 10^{m + n}. This gives "
                    f"{sp} × 10^{m + n}.")
@@ -404,9 +405,9 @@ def _standard_recheck(p: dict, item: dict) -> list[str]:
     errors = []
     if (a, b, m, n) != (Fraction(p["at"], 10), Fraction(p["bt"], 10), p["m"], p["n"]):
         errors.append("the question's numbers are not the parameters")
-    answer = re.fullmatch(r"(\d+(?:\.\d+)?)\*10\^(\d+)", item["answer"]["expression"])
+    answer = re.fullmatch(r"(\d+(?:\.\d+)?) × 10\^(\d+)", item["answer"]["expression"])
     if not answer:
-        return [*errors, f"answer {item['answer']['expression']} is not written A*10^n"]
+        return [*errors, f"answer {item['answer']['expression']} is not written A × 10^n"]
     mantissa, power = Fraction(answer.group(1)), int(answer.group(2))
     if not 1 <= mantissa < 10:
         errors.append(f"answer {item['answer']['expression']} is not in standard form")
@@ -417,7 +418,7 @@ def _standard_recheck(p: dict, item: dict) -> list[str]:
 
 STANDARD_FORM_MULTIPLY = Template(
     id="gcse-maths-h-n9-standard-form-multiply",
-    version=4,  # v2: "add their indices"; v3: M1 also for the ordinary number; v4: answer.form
+    version=5,  # v2: indices; v3: M1 ordinary number; v4: answer.form; v5: × not * (review)
     topic="gcse-maths-h-n9",
     learning_point="gcse-maths-h-n9-lp-calculate",
     type="worked_maths",
