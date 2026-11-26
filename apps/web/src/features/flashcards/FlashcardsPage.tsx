@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useId, useState, type FormEvent } from 'react';
 import {
+  EXTRA_CARDS,
   FLASHCARD_SESSION_MAX_CARDS,
   formatReviewDelay,
   type Flashcard,
@@ -106,6 +107,22 @@ const OUTCOME_TEXT: Record<FlashcardSessionResult['reason'], string> = {
   left_early: 'Finish every due card (or 20 cards) in one go to earn 20 XP.',
 };
 
+/** Daily limit reached (F11): a calm "Done for today!", with "10 more" for keen students. */
+function DoneForToday({ onMore }: { onMore: () => void }) {
+  const { play } = useSound();
+  useEffect(() => {
+    play('celebration');
+  }, [play]);
+  return (
+    <Card title="Done for today!" className="deck-done">
+      <p>You&apos;ve reviewed today&apos;s cards. The rest will come back tomorrow, no rush.</p>
+      <Button variant="secondary" onClick={onMore}>
+        {EXTRA_CARDS} more
+      </Button>
+    </Card>
+  );
+}
+
 /**
  * Reviews cards in one session (at most 20). A card rated Again comes back once before the
  * session ends. XP is paid per completed session, never per card (F3).
@@ -114,11 +131,14 @@ function ReviewSession({
   cards,
   topicId,
   onExit,
+  onMore,
 }: {
   cards: Flashcard[];
   /** Set when reviewing one deck: the session is complete when that deck is done. */
   topicId?: string;
   onExit?: () => void;
+  /** Daily limit (F11): more cards are due after today's, so the end offers "10 more". */
+  onMore?: () => void;
 }) {
   const api = useLearnApi();
   const { play } = useSound();
@@ -164,7 +184,7 @@ function ReviewSession({
 
   if (result) {
     return (
-      <Card title="Deck done!" className="deck-done">
+      <Card title={onMore ? 'Done for today!' : 'Deck done!'} className="deck-done">
         {result.xpEarned > 0 ? (
           <p className="deck-done__xp">+{result.xpEarned} XP</p>
         ) : (
@@ -176,6 +196,11 @@ function ReviewSession({
             ? 'No cards come back sooner.'
             : `${cardsText(sooner)} ${sooner === 1 ? 'comes' : 'come'} back sooner`}
         </p>
+        {onMore && (
+          <Button variant="secondary" onClick={onMore}>
+            {EXTRA_CARDS} more
+          </Button>
+        )}
         {onExit ? (
           <Button onClick={onExit}>Back to decks</Button>
         ) : (
@@ -480,7 +505,13 @@ function MyCardsPanel({ overview }: { overview: FlashcardsOverview }) {
 
 type Tab = 'due' | 'decks' | 'mine';
 
-function FlashcardsScreen({ overview }: { overview: FlashcardsOverview }) {
+function FlashcardsScreen({
+  overview,
+  onMore,
+}: {
+  overview: FlashcardsOverview;
+  onMore: () => void;
+}) {
   const [tab, setTab] = useState<Tab>('due');
   const tabs: { id: Tab; label: string }[] = [
     { id: 'due', label: `Due today (${overview.due.length})` },
@@ -515,9 +546,17 @@ function FlashcardsScreen({ overview }: { overview: FlashcardsOverview }) {
       >
         {tab === 'due' &&
           (overview.due.length === 0 ? (
-            <p>Nothing is due right now. Nice work!</p>
+            overview.doneToday ? (
+              <DoneForToday onMore={onMore} />
+            ) : (
+              <p>Nothing is due right now. Nice work!</p>
+            )
           ) : (
-            <ReviewSession cards={overview.due} />
+            <ReviewSession
+              key={overview.due.map((c) => c.id).join()}
+              cards={overview.due}
+              {...((overview.backlog ?? 0) > overview.due.length ? { onMore } : {})}
+            />
           ))}
         {tab === 'decks' && <DecksPanel overview={overview} />}
         {tab === 'mine' && <MyCardsPanel overview={overview} />}
@@ -529,7 +568,11 @@ function FlashcardsScreen({ overview }: { overview: FlashcardsOverview }) {
 /** The Cards tab: due cards, all decks and the student's own cards (`/cards`). */
 export function FlashcardsPage() {
   const api = useLearnApi();
-  const overview = useApiResource(() => api.getFlashcards(), [api]);
+  // "10 more" (F11) asks for that many extra cards beyond today's limit.
+  const [extra, setExtra] = useState(0);
+  const overview = useApiResource(() => api.getFlashcards(extra), [api, extra]);
   if (overview.status !== 'ready') return <LoadingOrError resource={overview} />;
-  return <FlashcardsScreen overview={overview.data} />;
+  return (
+    <FlashcardsScreen overview={overview.data} onMore={() => setExtra((e) => e + EXTRA_CARDS)} />
+  );
 }

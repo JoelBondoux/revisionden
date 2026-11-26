@@ -284,6 +284,11 @@ Tags: #product #rules #limits #defaults
   with questions and answers `status: "coming_soon"` (plus `subjectId` and `subjects` with
   `hasContent` for the switcher) for one with none; 404 `no_subject` only with no subject at all
   or an unknown id. The web shows "Questions for <subject> are on their way." and a switcher.
+- Daily flashcard limit (F11, owner 2026-11-26): 20 review cards a day (`DAILY_CARD_LIMIT`),
+  "10 more" on request (`EXTRA_CARDS`). Badge and "Due today" show today's remaining (0–20).
+  Order: relearning, most overdue for its interval, then weak spots, then recent wrong answers.
+  Own cards count; All decks is not limited. Held-back cards roll over with no penalty (SM-2
+  uses the card's interval, not its lateness). Parent stats show no backlog (API has `backlog`).
 - Clues and help (F10, owner 2026-11-26): "Need a clue?" shows the verified hint (no penalty,
   no longer shown up front); then "Help me understand" steps through the verified worked
   solution. A right answer after help earns half XP (rounded down, owner), no combo, and is
