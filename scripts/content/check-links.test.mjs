@@ -65,3 +65,68 @@ test('passes with nothing to check', async () => {
     0,
   );
 });
+
+test('--probe-providers prints what each provider home page answered and never fails', async () => {
+  const out = capture();
+  const code = await run(['--probe-providers'], {
+    fetch: async (url) => {
+      if (url.includes('bbc')) throw new Error('fetch failed');
+      return { status: 200 };
+    },
+    out: out.log,
+    err: out.log,
+  });
+  assert.equal(code, 0);
+  assert.deepEqual(out.lines, [
+    'provider oak https://www.thenational.academy/ 200',
+    'provider bitesize https://www.bbc.co.uk/bitesize/ fetch failed',
+  ]);
+});
+
+test('--coverage prints how many topics and learning points with items have a shown link', async () => {
+  const root = mkdtempSync(join(tmpdir(), 'check-links-coverage-'));
+  for (const dir of ['learn-links', 'items', 'subjects', 'topic-trees']) mkdirSync(join(root, dir));
+  writeFileSync(
+    join(root, 'items', 'a.json'),
+    JSON.stringify([
+      { id: 't-0001', topic: 't', learning_point: 't-lp-one' },
+      { id: 'u-0001', topic: 'u', learning_point: 'u-lp-two' },
+    ]),
+  );
+  writeFileSync(
+    join(root, 'learn-links', 't.json'),
+    JSON.stringify({
+      topic: 't',
+      links: [
+        {
+          title: 'T',
+          url: 'https://www.thenational.academy/t',
+          provider: 'oak',
+          level: 'GCSE',
+          checked_at: '2026-11-26',
+          match: {
+            page_title: 'T',
+            teaches: 'Teaches topic t.',
+            level: 'GCSE',
+            checked_at: '2026-11-26',
+          },
+        },
+      ],
+    }),
+  );
+  const out = capture();
+  const code = await run(['--coverage', '--content', root], {
+    fetch: async () => {
+      throw new Error('no requests for coverage');
+    },
+    out: out.log,
+    err: out.log,
+  });
+  assert.equal(code, 0);
+  assert.deepEqual(out.lines, [
+    'Topics with items: 2; with a shown link: 1',
+    'Learning points with items: 2; with a link of their own: 0; covered by any link: 1',
+    'No link yet: u',
+    'Learning points with no link yet: u-lp-two',
+  ]);
+});

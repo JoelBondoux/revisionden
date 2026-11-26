@@ -1,12 +1,16 @@
 #!/usr/bin/env node
-// pnpm content:check-links [--content <dir>]
-// Requests every "Learn it first" link (content/learn-links/*.json) and fails if any answers with
-// anything other than 2xx or 3xx, or cannot be reached. Run by .github/workflows/learn-links.yml.
+// pnpm content:check-links [--content <dir>] [--probe-providers] [--coverage]
+// Requests every learn link (content/learn-links/*.json) and fails if any answers with anything
+// other than 2xx or 3xx, cannot be reached, or (when match-checked) now has a different page title.
+// --probe-providers only reports what each provider's home page answers from this machine.
+// --coverage only prints how many topics and learning points with items have a shown link.
+// Run by .github/workflows/learn-links.yml.
 import { dirname, join, relative, resolve } from 'node:path';
 import { readdir, readFile } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
-import { checkLinks, listLinks } from './learn-links.mjs';
+import { checkLinks, linkCoverage, listLinks, probeProviders } from './learn-links.mjs';
+import { loadContent } from './validate.mjs';
 
 const DEFAULT_CONTENT = join(dirname(fileURLToPath(import.meta.url)), '../../content');
 
@@ -30,8 +34,31 @@ export async function run(
   argv,
   { fetch = globalThis.fetch, out = console.log, err = console.error } = {},
 ) {
-  const { values } = parseArgs({ args: argv, options: { content: { type: 'string' } } });
+  const { values } = parseArgs({
+    args: argv,
+    options: {
+      content: { type: 'string' },
+      'probe-providers': { type: 'boolean' },
+      coverage: { type: 'boolean' },
+    },
+  });
   const root = resolve(values.content ?? DEFAULT_CONTENT);
+  if (values['probe-providers']) {
+    for (const r of await probeProviders({ fetch }))
+      out(`provider ${r.provider} ${r.url} ${r.status}`);
+    return 0;
+  }
+  if (values.coverage) {
+    const { topics, points } = linkCoverage(await loadContent(root));
+    out(`Topics with items: ${topics.withItems}; with a shown link: ${topics.withLink}`);
+    out(
+      `Learning points with items: ${points.withItems}; with a link of their own: ${points.withOwnLink}; covered by any link: ${points.withAnyLink}`,
+    );
+    if (topics.missing.length) out(`No link yet: ${topics.missing.join(', ')}`);
+    if (points.missing.length)
+      out(`Learning points with no link yet: ${points.missing.join(', ')}`);
+    return 0;
+  }
   const links = listLinks(await loadLearnLinks(root));
   const results = await checkLinks(links, { fetch });
   const broken = results.filter((r) => !r.ok);

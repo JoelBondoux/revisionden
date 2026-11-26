@@ -2,9 +2,13 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   checkLinks,
+  isShownLink,
   isWorkingStatus,
   learnLinkErrors,
+  linkCoverage,
   listLinks,
+  pageTitle,
+  probeProviders,
   PROVIDER_HOSTS,
 } from './learn-links.mjs';
 import { createValidators } from './schemas.mjs';
@@ -27,10 +31,27 @@ const link = (extra = {}) => ({
   checked_at: '2026-11-25',
   ...extra,
 });
+const item = (id, learning_point) => ({
+  file: 'items/a17.json',
+  data: { id, topic: 'gcse-maths-h-a17', ...(learning_point ? { learning_point } : {}) },
+});
+const items = [
+  item('gcse-maths-h-a17-0001', 'gcse-maths-h-a17-lp-solve-linear'),
+  item('gcse-maths-h-a17-0002', 'gcse-maths-h-a17-lp-solve-linear'),
+  item('gcse-maths-h-a17-0003', 'gcse-maths-h-a17-lp-fractions-negatives'),
+];
 const content = (data, file = 'learn-links/gcse-maths-h-a17.json') => ({
   subjects: [subject],
   topicTrees: [tree],
+  items,
   learnLinks: [{ file, data }],
+});
+const match = (extra = {}) => ({
+  page_title: 'Solving linear equations - GCSE Maths Revision - BBC Bitesize',
+  teaches: 'Solving linear equations with unknowns on both sides, at GCSE.',
+  level: 'GCSE',
+  checked_at: '2026-11-26',
+  ...extra,
 });
 
 test('the learn links schema accepts a well-formed file', () => {
@@ -87,7 +108,7 @@ test("a link's host must match its provider", () => {
   );
   assert.equal(errors.length, 2);
   assert.match(errors[0].message, /oak links must be on www\.thenational\.academy/);
-  assert.deepEqual(PROVIDER_HOSTS.oak, { host: 'www.thenational.academy', path: '/' });
+  assert.deepEqual(PROVIDER_HOSTS.oak, [{ host: 'www.thenational.academy', path: '/' }]);
 });
 
 test("a link's level and board must match the topic's subject and topic tree", () => {
@@ -183,4 +204,158 @@ test('content validation includes the learn links checks', async () => {
     errors.some((e) => /oak links must be on/.test(e.message)),
     JSON.stringify(errors),
   );
+});
+
+test('the schema accepts Isaac, links for learning points or items, and a recorded match check', () => {
+  const { learnLinks } = createValidators();
+  const ok = (l) => learnLinks({ topic: 'gcse-maths-h-a17', links: [l] });
+  assert.equal(ok(link({ provider: 'isaac' })), true);
+  assert.equal(ok(link({ learning_points: ['gcse-maths-h-a17-lp-solve-linear'] })), true);
+  assert.equal(ok(link({ items: ['gcse-maths-h-a17-0001'] })), true);
+  assert.equal(ok(link({ match: match() })), true);
+  assert.equal(ok(link({ learning_points: [] })), false);
+  assert.equal(ok(link({ match: match({ page_title: '' }) })), false);
+  assert.equal(ok(link({ match: match({ level: 'KS3' }) })), false);
+  assert.equal(ok(link({ match: match({ checked_at: null }) })), false);
+  const noTeaches = match();
+  delete noTeaches.teaches;
+  assert.equal(ok(link({ match: noTeaches })), false);
+});
+
+test('a link for a learning point or item must belong to its topic and have items', () => {
+  const errors = learnLinkErrors(
+    content({
+      topic: 'gcse-maths-h-a17',
+      links: [
+        link({ learning_points: ['gcse-maths-h-a17-lp-solve-linear'] }),
+        link({
+          url: 'https://www.bbc.co.uk/bitesize/b',
+          learning_points: ['gcse-maths-h-a17-lp-made-up'],
+        }),
+        link({ url: 'https://www.bbc.co.uk/bitesize/c', items: ['gcse-maths-h-a17-0003'] }),
+        link({ url: 'https://www.bbc.co.uk/bitesize/d', items: ['gcse-maths-h-n1-0001'] }),
+      ],
+    }),
+  );
+  assert.deepEqual(
+    errors.map((e) => e.message),
+    [
+      'learning point gcse-maths-h-a17-lp-made-up has no items in gcse-maths-h-a17: https://www.bbc.co.uk/bitesize/b',
+      'item gcse-maths-h-n1-0001 is not in gcse-maths-h-a17: https://www.bbc.co.uk/bitesize/d',
+    ],
+  );
+});
+
+test('Isaac links are refused until its host is confirmed on its own site', () => {
+  assert.deepEqual(PROVIDER_HOSTS.isaac, []);
+  const errors = learnLinkErrors(
+    content({
+      topic: 'gcse-maths-h-a17',
+      links: [link({ provider: 'isaac', url: 'https://example.org/x' })],
+    }),
+  );
+  assert.match(errors[0].message, /isaac has no confirmed host yet/);
+});
+
+test("the match check's level must be the link's level", () => {
+  const errors = learnLinkErrors(
+    content({ topic: 'gcse-maths-h-a17', links: [link({ match: match({ level: 'A-Level' }) })] }),
+  );
+  assert.match(errors[0].message, /match check says A-Level but the link is GCSE/);
+});
+
+test('a link is shown only when it is both reachable and match-checked', () => {
+  assert.equal(isShownLink(link({ match: match() })), true);
+  assert.equal(isShownLink(link()), false);
+  assert.equal(isShownLink(link({ checked_at: null, match: match() })), false);
+});
+
+test('pageTitle reads the <title>, decoding entities and squashing spaces', () => {
+  assert.equal(
+    pageTitle('<html><head><TITLE>\n  Ratio &amp; proportion &#8211; GCSE\n</TITLE></head>'),
+    'Ratio & proportion – GCSE',
+  );
+  assert.equal(pageTitle('<html><body>no title</body></html>'), null);
+});
+
+test('the link check fails a match-checked page whose title has changed since it was read', async () => {
+  const pages = {
+    'https://x/same': `<title>${match().page_title}</title>`,
+    'https://x/changed': '<title>Something else entirely</title>',
+  };
+  const fakeFetch = async (url) => ({ status: 200, text: async () => pages[url] ?? '' });
+  const results = await checkLinks(
+    [
+      { file: 'a.json', url: 'https://x/same', match: match() },
+      { file: 'a.json', url: 'https://x/changed', match: match() },
+      { file: 'a.json', url: 'https://x/unchecked' },
+    ],
+    { fetch: fakeFetch },
+  );
+  assert.deepEqual(
+    results.map((r) => [r.url, r.ok, r.status]),
+    [
+      ['https://x/same', true, 200],
+      [
+        'https://x/changed',
+        false,
+        'title changed to "Something else entirely": re-check the match',
+      ],
+      ['https://x/unchecked', true, 200],
+    ],
+  );
+});
+
+test('listLinks keeps the match check so the title can be compared', () => {
+  const [one] = listLinks([
+    { file: 'f.json', data: { topic: 't', links: [link({ match: match() })] } },
+  ]);
+  assert.deepEqual(one.match, match());
+});
+
+test('the provider probe requests each provider home page and reports what it got', async () => {
+  const fakeFetch = async (url) => {
+    if (url.includes('bbc')) throw new Error('fetch failed');
+    return { status: 200 };
+  };
+  assert.deepEqual(await probeProviders({ fetch: fakeFetch }), [
+    { provider: 'oak', url: 'https://www.thenational.academy/', status: 200 },
+    { provider: 'bitesize', url: 'https://www.bbc.co.uk/bitesize/', status: 'fetch failed' },
+  ]);
+});
+
+test('coverage counts topics and learning points with items that have a shown link', () => {
+  const shown = (extra) => link({ match: match(), ...extra });
+  const report = linkCoverage({
+    ...content({
+      topic: 'gcse-maths-h-a17',
+      links: [
+        shown({ learning_points: ['gcse-maths-h-a17-lp-solve-linear'] }),
+        link({ url: 'https://www.bbc.co.uk/bitesize/unmatched' }),
+      ],
+    }),
+    items: [
+      ...items,
+      {
+        file: 'items/n1.json',
+        data: {
+          id: 'gcse-maths-h-n1-0001',
+          topic: 'gcse-maths-h-n1',
+          learning_point: 'gcse-maths-h-n1-lp-order',
+        },
+      },
+    ],
+  });
+  assert.deepEqual(report, {
+    topics: { withItems: 2, withLink: 1, missing: ['gcse-maths-h-n1'] },
+    points: {
+      withItems: 3,
+      withOwnLink: 1,
+      withAnyLink: 1,
+      missing: ['gcse-maths-h-a17-lp-fractions-negatives', 'gcse-maths-h-n1-lp-order'],
+    },
+  });
+  // A topic-wide link covers every point in the topic, though not with a link of its own.
+  const wide = linkCoverage(content({ topic: 'gcse-maths-h-a17', links: [shown()] }));
+  assert.deepEqual(wide.points, { withItems: 2, withOwnLink: 0, withAnyLink: 2, missing: [] });
 });
