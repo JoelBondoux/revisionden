@@ -240,3 +240,16 @@ def test_many_repeated_letter_alternatives_are_checked_quickly():
     result = check_working([many], expected={"solutions": list("abcdefghijklm")})
     assert result.final_answer_correct is True
     assert time.monotonic() - start < 5
+
+
+def test_decimals_in_working_are_compared_exactly_not_as_rounded_floats():
+    # 600 × 1.6 × 10^8 and 6 × 1.6 × 10^10 differ in floating point but are the same number.
+    result = check_working(["(6*10^2)*(1.6*10^8)", "(6*1.6)*10^(2+8)", "9.6*10^10"],
+                           {"expression": "(6*10^2)*(1.6*10^8)"})
+    assert result.first_wrong_line is None
+    assert result.final_answer_correct is True
+
+
+def test_a_wrong_decimal_step_is_still_caught():
+    result = check_working(["(6*10^2)*(1.6*10^8)", "9.7*10^10"])
+    assert result.first_wrong_line == 1

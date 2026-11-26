@@ -17,6 +17,7 @@
     "test:scripts": "node --test scripts/*.test.mjs 'scripts/verify/**/*.test.mjs' 'evals/*.test.mjs'",
     "content:validate": "node scripts/content/cli.mjs",
     "content:check-links": "node scripts/content/check-links.mjs",
+    "content:templates": "cd services/maths && ${MATHS_PYTHON:-python3} -m app.templates.build && ${MATHS_PYTHON:-python3} -m app.templates.build --preview ../../docs/TEMPLATE_PREVIEW.md && cd ../.. && prettier --write content/items/gcse-maths-higher/templated docs/TEMPLATE_PREVIEW.md",
     "version:show": "node scripts/bump-version.mjs --show",
     "version:bump": "node scripts/bump-version.mjs",
     "content:quote-check": "node scripts/verify/quote-check-cli.mjs",
