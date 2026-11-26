@@ -982,8 +982,10 @@ Tags: #product #rules #limits #defaults
   actually opened. The CI link check fails a match-checked page whose title changed; it also runs
   `--probe-providers` (what each provider's home page answers from the runner) and `--coverage`.
   Any reachable link without a match check fails validation (the Q5 legacy path was removed once
-  its 11 links were re-read). Lessons match by learning point only: LearnItem has no content id
-  yet, so `items` links cannot match in the app (needs `contentId` on LearnItem from the API).
+  its 11 links were re-read). Lesson items (`LearnItem.contentId`, from
+  `items.content_id`) and flashcards (`Flashcard.contentId`, `Flashcard.learningPoint`, from the
+  card's item) carry their content id and learning point (Q6b), so Learn more matches item, then
+  point, then topic in lessons and on the flashcard Explain panel.
   Coverage 2026-11-26: 139 links in 44 files; 44/44 topics and 133/133 learning points with items
   have a shown link, 69 points with their own. Pages were opened in a browser and read; the
   match `page_title` is the raw HTML title the CI check compares.

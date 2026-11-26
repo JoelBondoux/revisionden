@@ -33,6 +33,24 @@ vi.mock('./links', async (importOriginal) => {
             match,
           },
           {
+            title: 'Demo question lesson',
+            url: 'https://www.thenational.academy/teachers/demo-question',
+            provider: 'oak',
+            level: 'GCSE',
+            items: ['demo-content-1'],
+            checked_at: '2026-11-25',
+            match,
+          },
+          {
+            title: 'Demo card point lesson',
+            url: 'https://www.thenational.academy/teachers/demo-card-point',
+            provider: 'oak',
+            level: 'GCSE',
+            learning_points: ['demo-topic-a-lp-card'],
+            checked_at: '2026-11-25',
+            match,
+          },
+          {
             title: 'Demo point lesson',
             url: 'https://www.thenational.academy/teachers/demo-point',
             provider: 'oak',
@@ -123,7 +141,73 @@ describe('Learn more after a wrong answer', () => {
   });
 });
 
+describe('Learn more for the exact question (Q6b)', () => {
+  it("offers the item's own lesson ahead of its learning point's", async () => {
+    server.use(
+      http.get('*/v1/student/learn/lesson', () =>
+        HttpResponse.json({
+          items: [
+            { ...demoItems[0], learningPoint: 'demo-topic-a-lp-demo', contentId: 'demo-content-1' },
+          ],
+          draftContent: true,
+        }),
+      ),
+    );
+    renderRoute('/learn/topic/demo-topic-a');
+    const feedback = await answer('Option A');
+    await userEvent.click(within(feedback).getByRole('button', { name: 'Learn more' }));
+    expect(
+      within(feedback).getByRole('link', { name: /Demo question lesson/ }),
+    ).toBeInTheDocument();
+    expect(within(feedback).queryByRole('link', { name: /Demo point lesson/ })).toBeNull();
+  });
+});
+
+const taggedCard = {
+  id: '00000000-0000-4000-8000-000000000c01',
+  topicId: 'demo-topic-a',
+  topicTitle: 'Demo topic A',
+  subjectId: 'gcse-maths',
+  origin: 'deck',
+  front: 'Tagged front',
+  back: 'Tagged back',
+  draft: true,
+  dueAt: '2026-11-26T09:00:00.000Z',
+  nextReviewMs: { again: 60000, hard: 86400000, good: 86400000, easy: 345600000 },
+  explain: ['Tagged step', 'Answer: Tagged back'],
+  learningPoint: 'demo-topic-a-lp-card',
+};
+
 describe('Learn more on a flashcard Explain', () => {
+  it("offers the card's learning point lessons when the card has one (Q6b)", async () => {
+    server.use(
+      http.get('*/v1/student/flashcards', () =>
+        HttpResponse.json({
+          due: [taggedCard],
+          decks: [
+            {
+              topicId: 'demo-topic-a',
+              title: 'Demo topic A',
+              subjectId: 'gcse-maths',
+              total: 1,
+              due: 1,
+            },
+          ],
+          mine: [],
+          draftContent: true,
+        }),
+      ),
+    );
+    renderRoute('/cards');
+    await screen.findByText('Tagged front', {}, WAIT);
+    await userEvent.click(screen.getByRole('button', { name: 'Show answer' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Explain' }));
+    const panel = screen.getByRole('region', { name: 'Explain' });
+    await userEvent.click(within(panel).getByRole('button', { name: 'Learn more' }));
+    expect(within(panel).getByRole('link', { name: /Demo card point lesson/ })).toBeInTheDocument();
+    expect(within(panel).queryByRole('link', { name: /^Demo lesson/ })).toBeNull();
+  });
+
   it("offers the card's topic lessons inside the Explain panel", async () => {
     renderRoute('/cards');
     await screen.findByText('Demo front 1', {}, WAIT);

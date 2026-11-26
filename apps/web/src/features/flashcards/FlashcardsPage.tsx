@@ -95,10 +95,14 @@ function FlipCard({
 function ExplainSteps({
   steps,
   topicId,
+  learningPoint,
+  itemId,
   onClose,
 }: {
   steps: readonly string[];
   topicId: string;
+  learningPoint?: string;
+  itemId?: string;
   onClose: () => void;
 }) {
   const [step, setStep] = useState(0);
@@ -130,7 +134,7 @@ function ExplainSteps({
           <Button onClick={() => setStep(step + 1)}>Next step</Button>
         )}
       </div>
-      <LearnMore links={learnMoreLinks(learnLinksByTopic, { topicId })} />
+      <LearnMore links={learnMoreLinks(learnLinksByTopic, { topicId, learningPoint, itemId })} />
     </section>
   );
 }
@@ -326,6 +330,8 @@ function ReviewSession({
         <ExplainSteps
           steps={card.explain}
           topicId={card.topicId}
+          learningPoint={card.learningPoint}
+          itemId={card.contentId}
           onClose={() => setExplaining(false)}
         />
       )}

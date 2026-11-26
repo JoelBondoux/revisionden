@@ -1083,9 +1083,8 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
 - **Learn more** (owner request, 2026-11-26: "link out to authoritative, age-appropriate sources
   for further tuition guidance when a question needs more explanation"): on a flashcard's Explain
   panel and after a wrong answer in a lesson, behind a "Learn more" tap. It shows the most specific
-  links: those for the item, else for its learning point, else the whole topic's. Lessons match by
-  learning point (a lesson item does not carry its content id yet, so item links cannot match);
-  flashcards use the topic's (a card does not carry its learning point yet).
+  links: those for the item, else for its learning point, else the whole topic's. Lesson items and
+  flashcards carry their content id and learning point (Q6b), so both match all three levels.
 - Links only (open in a new tab on tap; nothing loaded from those sites until then, nothing
   recorded about taps), stored as data per topic with the page title, URL and dates.
 - A link shows only when it is both **reachable** (`checked_at`: the CI job requests every link and
