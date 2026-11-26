@@ -626,7 +626,10 @@ Tags: #product #rules #limits #defaults
 - Style sounds and haptics (U6): every animation fires a feedback event (15: buttonPress, cardFlip,
   correct, wrong, combo, xpTick, ringFill, rewardWobble, rewardOpen, rewardUnlock, setComplete,
   levelUp, homeEnter, nodePop, locked) that plays the active effect style's synthesised sound plus a vibration. Packs: Sticker
-  Book (default), Pop Burst, Starlight; unknown styles use Sticker Book. Vibration switch on by
+  Book (default), Pop Burst, Starlight, Comic Pop, Garden Grow, Pixel Arcade, Doodle Diary (U6c);
+  unknown styles use the default. Default is one value, `DEFAULT_STYLE` in `feedback/styles.ts`;
+  Doodle Diary is built but not the default until the owner approves J's mockup. Square waves
+  only in Comic Pop and Pixel Arcade (low-passed at 2800 Hz); "wrong" soft in every style. Vibration switch on by
   default and independent of mute; no vibration on iPhone/iPad browsers (no Vibration API).
   Throttled: ticks and map nodes 70 ms, ring fill 90 ms, ≤10 sounds/s, buzzes ≥100 ms apart and ≤4/s. Reduced motion: half
   loudness, shorter buzzes. `apps/web/src/features/sound/feedback/`; `HapticsDriver` lets a native

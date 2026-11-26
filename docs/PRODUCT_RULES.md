@@ -648,14 +648,23 @@ Mockups: screens 19 (student) and 20 (parent).
   nodes popping in on the map) and `locked` (tapping something locked) (`useSound().emit(event)`). Each plays the active effect style's sound and
   a vibration pattern. One sound pack per style, synthesised with Web Audio (no files): Sticker Book
   (default: paper peel, slap, stamp, pencil tick), Pop Burst (bubbly pops, jelly boings), Starlight
-  (chimes, shimmer, soft swells). Styles without a pack yet use Sticker Book. J's style system calls
+  (chimes, shimmer, soft swells), Comic Pop (punchy low-passed squares, whooshes, POWs), Garden Grow
+  (soft woodwind and chimes), Pixel Arcade (chiptune arpeggios) and Doodle Diary (pencil scratches,
+  page flips, biro clicks, a rubber squeak for locked, a scribble flourish for unlocks), matched to
+  J's mockup previews (U6c). Square waves only in Comic Pop and Pixel Arcade, always low-passed
+  (2800 Hz) and under the loudness cap; "wrong" stays a soft sine or triangle in every style. The
+  default is one value, `DEFAULT_STYLE` in `features/sound/feedback/styles.ts` (Sticker Book;
+  Doodle Diary waits for the owner's approval of J's mockup). Unknown styles use the default. Style
+  ids: `sticker-book`, `pop-burst`, `starlight`, `comic-pop`, `garden-grow`, `pixel-arcade`,
+  `doodle-diary`. J's style system calls
   `useFeedbackStyle(styleId)`. Older `play()` calls for tap, correct (combo when it has a step),
   wrong, card flip, celebration, level up and reward unlocked follow the style too; the rest keep
   the main bank, and reward tiers (U4) keep their own sounds but add the matching vibration.
   - Vibration: a light tick for presses and flips, a double pulse for right answers, a rising rhythm
     for combos and a longer pattern for unlocks, set complete and level up; a light tick for the
     Home entrance and one short buzz for a locked tap; none for fast ticks or map nodes popping in.
-    Sticker Book feels crisp, Pop Burst bouncy, Starlight soft and long.
+    Sticker Book feels crisp, Pop Burst bouncy, Starlight soft and long, Comic Pop strong and
+    snappy, Garden Grow gentle, Pixel Arcade short rapid blips, Doodle Diary light pen taps.
   - Settings: a **Vibration** switch next to Sound, on by default, saved per device
     (`vibration` in `revisionden.sound`). It works on its own: muting sound does not stop vibration,
     and turning vibration off does not mute sound.

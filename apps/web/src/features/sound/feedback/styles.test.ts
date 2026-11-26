@@ -1,30 +1,51 @@
 import { createFakeAudioContext } from '../fakeAudio';
-import { FEEDBACK_EVENTS } from './events';
-import { FEEDBACK_STYLES, resolveStyle, stylePacks } from './styles';
+import { FEEDBACK_EVENTS, type FeedbackEvent } from './events';
+import {
+  DEFAULT_STYLE,
+  FEEDBACK_STYLES,
+  SQUARE_LOWPASS_HZ,
+  resolveStyle,
+  stylePacks,
+  type FeedbackStyle,
+} from './styles';
 
-function render(
-  style: (typeof FEEDBACK_STYLES)[number],
-  event: (typeof FEEDBACK_EVENTS)[number],
-  pitch = 1,
-) {
+/** Styles allowed square waves (always low-passed): the owner approved them for these only. */
+const SQUARE_STYLES: readonly FeedbackStyle[] = ['comic-pop', 'pixel-arcade'];
+
+function render(style: FeedbackStyle, event: FeedbackEvent, pitch = 1) {
   const ctx = createFakeAudioContext('running');
   const end = stylePacks[style][event](ctx, ctx.createGain(), 0, pitch);
   return {
     ctx,
     end,
-    signature: ctx.oscillators
-      .map((o) => `${o.type}:${o.frequencies.map((f) => f.toFixed(0)).join('>')}`)
-      .join(','),
+    signature: [
+      ...ctx.oscillators.map(
+        (o) => `${o.type}:${o.frequencies.map((f) => f.toFixed(0)).join('>')}`,
+      ),
+      ...ctx.noises.map(
+        (n) => `noise:${n.filter}:${n.frequencies.map((f) => f.toFixed(0)).join('>')}`,
+      ),
+    ].join(','),
     peak: Math.max(...ctx.gains.flatMap((g) => g.peaks)),
-    first: ctx.oscillators[0]!.frequencies[0]!,
+    first: ctx.oscillators[0]?.frequencies[0] ?? ctx.noises[0]!.frequencies[0]!,
   };
 }
 
 describe('style sound packs', () => {
-  it('has Sticker Book (default), Pop Burst and Starlight', () => {
-    expect(FEEDBACK_STYLES).toEqual(['sticker-book', 'pop-burst', 'starlight']);
+  it("has a pack for each of J's seven styles; Sticker Book stays the default", () => {
+    expect(FEEDBACK_STYLES).toEqual([
+      'sticker-book',
+      'pop-burst',
+      'starlight',
+      'comic-pop',
+      'garden-grow',
+      'pixel-arcade',
+      'doodle-diary',
+    ]);
+    expect(DEFAULT_STYLE).toBe('sticker-book');
     expect(resolveStyle('pop-burst')).toBe('pop-burst');
-    // Styles still to come fall back to the default until they get a pack.
+    expect(resolveStyle('doodle-diary')).toBe('doodle-diary');
+    // Unknown styles fall back to the default.
     expect(resolveStyle('neon-arcade')).toBe('sticker-book');
     expect(resolveStyle(undefined)).toBe('sticker-book');
   });
@@ -36,11 +57,15 @@ describe('style sound packs', () => {
 
     it.each(FEEDBACK_EVENTS)('%s is short, soft and balanced', (event) => {
       const r = render(style, event);
-      expect(r.ctx.oscillators.length).toBeGreaterThan(0);
+      expect(r.ctx.oscillators.length + r.ctx.noises.length).toBeGreaterThan(0);
+      const waves = SQUARE_STYLES.includes(style)
+        ? ['sine', 'triangle', 'square']
+        : ['sine', 'triangle'];
       for (const o of r.ctx.oscillators) {
-        expect(['sine', 'triangle']).toContain(o.type);
+        expect(waves).toContain(o.type);
         expect(o.stop).not.toBeNull();
       }
+      for (const n of r.ctx.noises) expect(n.stop).not.toBeNull();
       const quick = ['buttonPress', 'xpTick', 'ringFill', 'cardFlip', 'nodePop'].includes(event);
       expect(r.end).toBeLessThanOrEqual(quick ? 0.25 : 1.4);
       // Volume-balanced: nothing louder than the existing correct chime's peak.
@@ -51,6 +76,12 @@ describe('style sound packs', () => {
     it('raises the combo with its step', () => {
       expect(render(style, 'combo', 1.5).first).toBeGreaterThan(render(style, 'combo', 1).first);
     });
+
+    it('"wrong" is soft in every style: no square waves, never loud', () => {
+      const r = render(style, 'wrong');
+      for (const o of r.ctx.oscillators) expect(['sine', 'triangle']).toContain(o.type);
+      expect(r.peak).toBeLessThanOrEqual(0.3);
+    });
   });
 
   it('sounds different in each style', () => {
@@ -60,21 +91,69 @@ describe('style sound packs', () => {
     }
   });
 
+  it('every square wave is low-passed, short and quieter than soft waves', () => {
+    for (const style of SQUARE_STYLES) {
+      for (const event of FEEDBACK_EVENTS) {
+        const r = render(style, event);
+        const squares = r.ctx.oscillators.filter((o) => o.type === 'square');
+        const lowpasses = r.ctx.filters.filter(
+          (f) => f.type === 'lowpass' && f.frequency <= SQUARE_LOWPASS_HZ,
+        );
+        expect(lowpasses.length).toBeGreaterThanOrEqual(squares.length);
+        for (const o of squares) expect(o.stop! - o.start!).toBeLessThanOrEqual(0.5);
+      }
+    }
+    expect(SQUARE_LOWPASS_HZ).toBeLessThanOrEqual(3000);
+    const squaresUsed = SQUARE_STYLES.some((s) =>
+      render(s, 'correct').ctx.oscillators.some((o) => o.type === 'square'),
+    );
+    expect(squaresUsed).toBe(true);
+  });
+
   it('locked is a gentle low "not yet", never a buzzer', () => {
     for (const style of FEEDBACK_STYLES) {
       const r = render(style, 'locked');
-      expect(Math.max(...r.ctx.oscillators.map((o) => o.frequencies[0]!))).toBeLessThan(700);
+      for (const o of r.ctx.oscillators) expect(o.frequencies[0]!).toBeLessThan(700);
       expect(r.peak).toBeLessThanOrEqual(0.3);
     }
   });
 
-  it('Starlight swells in slowly; Sticker Book and Pop Burst hit straight away', () => {
-    const attackOf = (style: (typeof FEEDBACK_STYLES)[number]) => {
+  it('Starlight and Garden Grow swell in; the others hit straight away', () => {
+    const attackOf = (style: FeedbackStyle) => {
       const ctx = createFakeAudioContext('running');
       stylePacks[style].rewardOpen(ctx, ctx.createGain(), 0);
       return ctx.attacks[0]!;
     };
-    expect(attackOf('starlight')).toBeGreaterThan(attackOf('sticker-book'));
-    expect(attackOf('starlight')).toBeGreaterThan(attackOf('pop-burst'));
+    for (const soft of ['starlight', 'garden-grow'] as const) {
+      for (const punchy of ['sticker-book', 'pop-burst', 'comic-pop', 'pixel-arcade'] as const) {
+        expect(attackOf(soft)).toBeGreaterThan(attackOf(punchy));
+      }
+    }
+  });
+
+  it('Doodle Diary is paper and pen: clicks, page flips, scratches and a scribble', () => {
+    for (const event of [
+      'buttonPress',
+      'cardFlip',
+      'homeEnter',
+      'locked',
+      'rewardUnlock',
+    ] as const) {
+      expect(render('doodle-diary', event).ctx.noises.length).toBeGreaterThan(0);
+    }
+    // The unlock flourish is a scribble: several quick pen strokes.
+    expect(render('doodle-diary', 'rewardUnlock').ctx.noises.length).toBeGreaterThanOrEqual(3);
+  });
+
+  it('Pixel Arcade is chiptune: fast square arpeggios for big moments', () => {
+    const r = render('pixel-arcade', 'levelUp');
+    expect(r.ctx.oscillators.filter((o) => o.type === 'square').length).toBeGreaterThanOrEqual(6);
+  });
+
+  it('Garden Grow is woodwind and chimes, with no square waves', () => {
+    for (const event of FEEDBACK_EVENTS) {
+      const r = render('garden-grow', event);
+      expect(r.ctx.oscillators.every((o) => o.type !== 'square')).toBe(true);
+    }
   });
 });

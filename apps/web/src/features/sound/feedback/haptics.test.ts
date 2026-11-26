@@ -78,4 +78,18 @@ describe('haptics', () => {
     expect(sigs.size).toBe(FEEDBACK_STYLES.length);
     expect(FEEDBACK_EVENTS.length).toBeGreaterThan(10);
   });
+
+  it('every style has a pattern for each buzzing event, light ticks stay light', () => {
+    for (const style of FEEDBACK_STYLES) {
+      for (const event of FEEDBACK_EVENTS) {
+        const p = hapticPattern(style, event, 3);
+        if (event === 'xpTick' || event === 'ringFill' || event === 'nodePop') {
+          expect(p).toBeNull();
+          continue;
+        }
+        expect(p!.length).toBeGreaterThan(0);
+        expect(Math.max(...p!)).toBeLessThanOrEqual(150);
+      }
+    }
+  });
 });
