@@ -299,6 +299,12 @@ Product owner decision, 2026-11-25: **parent view only**.
   between groups of exactly three digits, the same one throughout, so `38 700` and `38,700` are
   38700, rounded or not. Any other space between two digits makes the answer wrong (`3 87` is not
   387); spaces around a sign or `/` are fine.
+- **Standard form** in numeric answers (`standardForm` in `packages/core/src/answer-format.ts`):
+  `a × 10^n` with ×, x, X, \*, · or ⋅ as the multiply sign and `^n`, `^(n)` or superscript
+  digits for the power, or e-notation (`6.4e8`), is read as its exact value. When the answer key is
+  in standard form, only proper standard form (1 ≤ a < 10) is right, so `64 × 10^7` and
+  `640000000` are wrong; when the key is a plain number, standard form is accepted by value. With
+  significant figures, the number in front shows the accuracy (`6.40 × 10^8` is 3 sf).
 - **Maths working** may end with a letter answer such as `x = 2a` (or `2a = x`, or `a = x`
   either way round): a solved value may use other letters, never the unknown itself. Repeated
   alternatives count once, and a line with more than 64 ways to read it is marked wrong.
@@ -676,15 +682,24 @@ Mockups: screens 19 (student) and 20 (parent).
   `setComplete`, `levelUp`, plus `homeEnter` (Home entrance, once per visit), `nodePop` (topic
   nodes popping in on the map) and `locked` (tapping something locked) (`useSound().emit(event)`). Each plays the active effect style's sound and
   a vibration pattern. One sound pack per style, synthesised with Web Audio (no files): Sticker Book
-  (default: paper peel, slap, stamp, pencil tick), Pop Burst (bubbly pops, jelly boings), Starlight
-  (chimes, shimmer, soft swells). Styles without a pack yet use Sticker Book. J's style system calls
+  (paper peel, slap, stamp, pencil tick), Pop Burst (bubbly pops, jelly boings), Starlight
+  (chimes, shimmer, soft swells), Comic Pop (punchy low-passed squares, whooshes, POWs), Garden Grow
+  (soft woodwind and chimes), Pixel Arcade (chiptune arpeggios) and Doodle Diary (pencil scratches,
+  page flips, biro clicks, a rubber squeak for locked, a scribble flourish for unlocks), matched to
+  J's mockup previews (U6c). Square waves only in Comic Pop and Pixel Arcade, always low-passed
+  (2800 Hz) and under the loudness cap; "wrong" stays a soft sine or triangle in every style. The
+  default is one value, `DEFAULT_STYLE` in `features/sound/feedback/styles.ts` (Doodle Diary,
+  owner-approved; Sticker Book is now an unlockable style like the others). Unknown styles use the default. Style
+  ids: `sticker-book`, `pop-burst`, `starlight`, `comic-pop`, `garden-grow`, `pixel-arcade`,
+  `doodle-diary`. J's style system calls
   `useFeedbackStyle(styleId)`. Older `play()` calls for tap, correct (combo when it has a step),
   wrong, card flip, celebration, level up and reward unlocked follow the style too; the rest keep
   the main bank, and reward tiers (U4) keep their own sounds but add the matching vibration.
   - Vibration: a light tick for presses and flips, a double pulse for right answers, a rising rhythm
     for combos and a longer pattern for unlocks, set complete and level up; a light tick for the
     Home entrance and one short buzz for a locked tap; none for fast ticks or map nodes popping in.
-    Sticker Book feels crisp, Pop Burst bouncy, Starlight soft and long.
+    Sticker Book feels crisp, Pop Burst bouncy, Starlight soft and long, Comic Pop strong and
+    snappy, Garden Grow gentle, Pixel Arcade short rapid blips, Doodle Diary light pen taps.
   - Settings: a **Vibration** switch next to Sound, on by default, saved per device
     (`vibration` in `revisionden.sound`). It works on its own: muting sound does not stop vibration,
     and turning vibration off does not mute sound.

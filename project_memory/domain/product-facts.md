@@ -311,6 +311,10 @@ Tags: #product #rules #limits #defaults
 - Diagrams are SVG drawn by code from verified data; no AI-generated or raster teaching images.
 - Items may carry `learning_point` (finer skill id; at least 3 items per learning point, for
   similar-question retries) and `expected_seconds` (5 to 900; slower than twice it is shaky).
+- Every item needs an "Explain" walkthrough (F7, #156; lead ruling for S3-N2, 2026-11-26): an
+  `explanation`, plus the working for a calculation (`steps` on worked_maths, otherwise written
+  out in the explanation, as the schema allows `steps` only on worked_maths). Rule in
+  `docs/CONTENT_RUN_1MA1.md`; validation does not enforce it yet.
 - Pilot: GCSE Maths Higher, Pearson Edexcel 1MA1 (content references N1 to S6). Every pilot
   citation has a verbatim quote from the 1MA1 specification Issue 2 (or, for the quadratic
   formula, the DfE subject content DFE-00233-2013), with page and SHA-256. All pilot content is
@@ -333,10 +337,15 @@ Tags: #product #rules #limits #defaults
   blind check. Rounded numeric answers set `decimal_places` or `significant_figures` (not
   `tolerance`): only the value rounded half up and written to that accuracy is right (28.274 and
   28.270 are wrong for 2 dp). Validation requires the field whenever the question asks for
-  rounding.
+  the answer itself to be rounded ("give your answer correct to…", "round … to…"), not for
+  accuracy words about the working or a given measurement ("by rounding each number to 1
+  significant figure, estimate…").
 - Numeric answers accept a UK thousands separator: a space (also thin or non-breaking) or a comma
   between groups of exactly three digits (`38 700`, `38,700`); `3 87` is wrong, not 387 (S2, rule
   in PRODUCT_RULES "Learning loop").
+- Numeric answers read standard form (`6.4 × 10^8`, `6.4x10⁸`, `6.4e8`) by value; a standard form
+  answer key needs proper standard form back (1 ≤ a < 10), and the validator sends the engine the
+  plain value (S2, rule in PRODUCT_RULES "Learning loop").
 - Typed short answers (F6, `packages/core/src/answer-normalise.ts`; rules in PRODUCT_RULES
   "Learning loop"): spaces, case, minus signs, multiply and divide signs, superscripts, ≤/≥ and √
   are normalised, so content lists one written form. `answer.any_order: true` also accepts
@@ -432,7 +441,8 @@ Tags: #product #rules #limits #defaults
   prompts and answers are never stored, cache off, 120 requests a minute.
 - Deploys: GitHub Actions. Push to `dev` deploys dev, push to `staging` deploys staging, and
   production deploys after the release bump on `main`. Each deploy migrates the database first,
-  then the API, then the web app, then checks `/health` shows the new version.
+  then (dev and staging only) loads `content/` with `content:sync`, then the API, then the web
+  app, then checks `/health` shows the new version. Production content is not synced by deploys.
 - `GET /health` always answers with the version: `ok` (200) when configured, `misconfigured`
   (503) while a required secret is missing. Dev and staging deploys accept `misconfigured`;
   production does not.
@@ -644,8 +654,11 @@ Tags: #product #rules #limits #defaults
   sounds in Test mode before submit. Sound is never the only signal. Workstream U.
 - Style sounds and haptics (U6): every animation fires a feedback event (15: buttonPress, cardFlip,
   correct, wrong, combo, xpTick, ringFill, rewardWobble, rewardOpen, rewardUnlock, setComplete,
-  levelUp, homeEnter, nodePop, locked) that plays the active effect style's synthesised sound plus a vibration. Packs: Sticker
-  Book (default), Pop Burst, Starlight; unknown styles use Sticker Book. Vibration switch on by
+  levelUp, homeEnter, nodePop, locked) that plays the active effect style's synthesised sound plus a vibration. Packs: Doodle
+  Diary (default, owner-approved 2026-11-26), then the unlockable Sticker Book, Pop Burst,
+  Starlight, Comic Pop, Garden Grow and Pixel Arcade (U6c); unknown styles use the default.
+  Default is one value, `DEFAULT_STYLE` in `feedback/styles.ts`. Square waves
+  only in Comic Pop and Pixel Arcade (low-passed at 2800 Hz); "wrong" soft in every style. Vibration switch on by
   default and independent of mute; no vibration on iPhone/iPad browsers (no Vibration API).
   Throttled: ticks and map nodes 70 ms, ring fill 90 ms, ≤10 sounds/s, buzzes ≥100 ms apart and ≤4/s. Reduced motion: half
   loudness, shorter buzzes. `apps/web/src/features/sound/feedback/`; `HapticsDriver` lets a native

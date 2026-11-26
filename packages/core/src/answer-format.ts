@@ -24,6 +24,68 @@ export function withoutThousands(text: string): string {
   return GROUPED.test(trimmed) ? trimmed.replace(/[ \u00a0\u2009\u202f,]/g, '') : text;
 }
 
+// Standard form, a × 10^n: the multiply sign may be ×, x, X, *, · or ⋅, the power ^n, ^(n) or
+// superscript digits; e-notation (6.4e8) is the same number. Read exactly, never through floats.
+const STANDARD =
+  /^(-?\d+(?:\.\d+)?)\s*[×xX*·⋅]\s*10\s*(?:\^\s*(\(\s*[-−]?\d+\s*\)|[-−]?\d+)|([⁻]?[⁰¹²³⁴-⁹]+))$/;
+const E_NOTATION = /^(-?\d+(?:\.\d+)?)[eE]([+-]?\d+)$/;
+const SUPERSCRIPT: Record<string, string> = {
+  '⁻': '-',
+  '⁰': '0',
+  '¹': '1',
+  '²': '2',
+  '³': '3',
+  '⁴': '4',
+  '⁵': '5',
+  '⁶': '6',
+  '⁷': '7',
+  '⁸': '8',
+  '⁹': '9',
+};
+
+export interface StandardForm {
+  /** The same number as a plain decimal, keeping the digits shown ("3.20e-4" -> "0.000320"). */
+  plain: string;
+  /** Significant figures of the number in front. */
+  figures: number;
+  /** Whether the number in front is at least 1 and less than 10. */
+  proper: boolean;
+}
+
+/** A number written as a × 10^n (or a e n), or null when the text is not one. */
+export function standardForm(text: string): StandardForm | null {
+  const trimmed = text.trim();
+  let mantissa: string;
+  let power: string;
+  const sf = STANDARD.exec(trimmed);
+  if (sf) {
+    mantissa = sf[1]!;
+    power = sf[2]
+      ? sf[2].replace(/[()\s]/g, '').replace('−', '-')
+      : [...sf[3]!].map((c) => SUPERSCRIPT[c]).join('');
+  } else {
+    const e = E_NOTATION.exec(trimmed);
+    if (!e) return null;
+    mantissa = e[1]!;
+    power = e[2]!;
+  }
+  const negative = mantissa.startsWith('-');
+  const [whole = '', fraction = ''] = mantissa.replace('-', '').split('.');
+  const digits = whole + fraction;
+  const point = whole.length + Number(power);
+  let plain: string;
+  if (point <= 0) plain = `0.${'0'.repeat(-point)}${digits}`;
+  else if (point >= digits.length) plain = digits + '0'.repeat(point - digits.length);
+  else plain = `${digits.slice(0, point)}.${digits.slice(point)}`;
+  plain = plain.replace(/^0+(?=\d)/, '');
+  const size = Math.abs(Number(mantissa));
+  return {
+    plain: negative ? `-${plain}` : plain,
+    figures: Math.max(digits.replace(/^0+/, '').length, 1),
+    proper: size >= 1 && size < 10,
+  };
+}
+
 export interface Rounding {
   decimal_places?: number;
   significant_figures?: number;
@@ -39,6 +101,12 @@ const PLAIN_DECIMAL = /^-?(\d+)(?:\.(\d+))?$/;
 
 /** The accuracy a plain decimal is written to, or null when the text is not one. */
 export function shownPrecision(text: string): ShownPrecision | null {
+  const sf = standardForm(text);
+  if (sf) {
+    // The number in front shows the significant figures: 6.40 × 10^8 is exactly 3.
+    const plain = shownPrecision(sf.plain);
+    return plain && { decimalPlaces: plain.decimalPlaces, figures: [sf.figures, sf.figures] };
+  }
   const m = PLAIN_DECIMAL.exec(text.trim());
   if (!m) return null;
   const whole = m[1] ?? '';
@@ -69,7 +137,7 @@ export function showsRounding(text: string, rounding: Rounding): boolean {
 
 /** A plain decimal as an exact scaled integer (digits, places), or null. */
 function exactDecimal(text: string): { digits: bigint; places: number } | null {
-  const m = /^(-?)(\d+)(?:\.(\d+))?$/.exec(text.trim());
+  const m = /^(-?)(\d+)(?:\.(\d+))?$/.exec((standardForm(text)?.plain ?? text).trim());
   if (!m) return null;
   const fraction = m[3] ?? '';
   const digits = BigInt(`${m[2]}${fraction}`);

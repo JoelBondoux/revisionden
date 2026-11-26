@@ -356,6 +356,7 @@
       "accepted": ["(4, 3)", "(4,3)"]
     },
     "marks": 1,
+    "explanation": "For y = (x - a)^2 + b, the turning point is (a, b). Here a = 4 and b = 3, so the turning point is (4, 3). The smallest value of (x - 4)^2 is 0, when x = 4, giving y = 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
     "checked_by": ["author"],
     "citations": [
@@ -393,7 +394,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). The minimum of (x - 4)^2 + 3 is 3, at x = 4 (a square is never negative).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). The minimum of (x - 4)^2 + 3 is 3, at x = 4 (a square is never negative). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:23:37Z"
         },
         {
@@ -413,20 +414,20 @@
           "notes": "model answered \"(4, 3)\"; expected \"(4, 3) | (4,3)\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:26Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:51:00Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -610,6 +611,7 @@
     "expected_seconds": 15,
     "front": "The turning point of y = (x - a)^2 + b",
     "back": "(a, b)",
+    "explanation": "(x - a)^2 is never negative, and it is 0 when x = a. So on this graph y is smallest at x = a, where y = b. The turning point (here the lowest point) is (a, b).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
     "checked_by": ["author"],
     "citations": [
@@ -635,7 +637,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). Follows from (x - a)^2 ≥ 0 with equality at x = a.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). Follows from (x - a)^2 ≥ 0 with equality at x = a. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:23:37Z"
         },
         {
@@ -655,20 +657,20 @@
           "notes": "model answered \"(a, b)\"; expected \"(a, b)\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:40:36Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:56:52Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -682,6 +684,7 @@
     "expected_seconds": 15,
     "front": "The coordinates of the turning point of y = (x + 2)^2 - 5",
     "back": "(-2, -5)",
+    "explanation": "The graph of y = (x - a)^2 + b has its turning point at (a, b). (x + 2)^2 is the same as (x - (-2))^2, so a = -2 and b = -5. The turning point is (-2, -5).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
     "checked_by": ["author"],
     "citations": [
@@ -707,7 +710,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). Follows from (x + 2)^2 ≥ 0 with equality at x = -2.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). Follows from (x + 2)^2 ≥ 0 with equality at x = -2. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:04:50Z"
         },
         {
@@ -727,20 +730,20 @@
           "notes": "model answered \"(-2, -5)\"; expected \"(-2, -5)\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:06:52Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:57:00Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -754,6 +757,7 @@
     "expected_seconds": 15,
     "front": "The x-coordinate of the turning point of y = x^2 + 10x + 3",
     "back": "-5",
+    "explanation": "Complete the square: x^2 + 10x + 3 = (x + 5)^2 - 25 + 3 = (x + 5)^2 - 22. The turning point is where x + 5 = 0, so x = -5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A11",
     "checked_by": ["author"],
     "citations": [
@@ -779,7 +783,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). Checked with SymPy: x^2 + 10x + 3 = (x + 5)^2 - 22.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A11). Checked with SymPy: x^2 + 10x + 3 = (x + 5)^2 - 22. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:23:37Z"
         },
         {
@@ -799,20 +803,20 @@
           "notes": "model answered \"-5\"; expected \"-5\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:41:22Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:51:54Z",
+          "notes": "no problems found"
         }
       ]
     }

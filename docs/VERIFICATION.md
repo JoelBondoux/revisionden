@@ -231,7 +231,7 @@ through the authenticated AI Gateway, set `<PROVIDER>_BASE_URL` to the gateway's
 `cf-aig-collect-log-payload: false` so prompts and answers are not logged. The token is sent only to
 https addresses on `gateway.ai.cloudflare.com`, never to a provider's own API. The blind answer must come from a different provider from the writer (Claude by default, read from
 the grounded-writing check). It sees no answer, hint or explanation, and passes only on a match
-with high confidence (multiple choice: same option; numeric: within the item tolerance, or, when the answer sets `decimal_places` or `significant_figures`, written to exactly that accuracy with the correctly rounded value (see "Answer format" below); short
+with high confidence (multiple choice: same option; numeric: within the item tolerance, or, when the answer sets `decimal_places` or `significant_figures`, written to exactly that accuracy with the correctly rounded value (see "Answer format" below); standard form in any common spelling, and proper standard form when the answer is in standard form, as marking reads it; short
 answers: same words ignoring case and end punctuation, or the same answer under the marking normaliser (`sameAnswer` in `packages/core`: maths notation such as `x²` for `x^2`, plus the item's `any_order` and `units`); flashcards: same words ignoring case and end punctuation; maths flashcards with a
 `back_formula`: the maths engine finds the same formula (`±` gives both branches, a bare right-hand
 side is compared with the expected one, notation is read strictly so `/ 2a` is not `/ (2a)`), and the
@@ -256,9 +256,13 @@ ones:
   together). A right answer has the correctly rounded value and is written to that accuracy:
   `28.274` and `28.270` are wrong for 2 decimal places. Whole numbers with trailing zeros may count
   them or not (4500 is 2, 3 or 4 significant figures). The engine rounds the exact value half up,
-  as UK exams do. Validation fails an item whose question mentions decimal places, significant
-  figures or the nearest whole number without one of these fields, one with a field but no such
-  words, and one whose `answer.value` is not itself written to that accuracy.
+  as UK exams do. Validation fails an item whose question asks for the answer itself to be rounded
+  ("give your answer correct to 2 decimal places", "give the positive solution correct to…",
+  "round 7.8463 to 2 decimal places") without one of these fields, one with a field whose question
+  never mentions decimal places, significant figures or the nearest whole number, and one whose
+  `answer.value` is not itself written to that accuracy. Accuracy words about the working or a given
+  measurement ("by rounding each number to 1 significant figure, estimate…", "a mass is 4.6 kg,
+  correct to 1 decimal place") do not ask for a rounded answer.
 
 **Clean text.** Model output is recorded in check notes, and models sometimes return control
 characters. `withCheck` (`scripts/verify/record.mjs`), which writes every check record, replaces

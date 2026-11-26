@@ -795,6 +795,7 @@
     "expected_seconds": 15,
     "front": "The value of x^2 when x = -3",
     "back": "9",
+    "explanation": "Substitute x = -3: x^2 = (-3) × (-3). A negative times a negative is positive, so the answer is 9.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A2",
     "checked_by": ["author"],
     "citations": [
@@ -820,7 +821,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A2). Back backed by arithmetic checked with SymPy: (-3)^2 = 9.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A2). Back backed by arithmetic checked with SymPy: (-3)^2 = 9. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:17:06Z"
         },
         {
@@ -840,20 +841,20 @@
           "notes": "model answered \"9\"; expected \"9\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:23:47Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:49:51Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -867,6 +868,7 @@
     "expected_seconds": 15,
     "front": "The value of -x^2 when x = 3",
     "back": "-9",
+    "explanation": "Square first, then apply the minus sign: x^2 = 3 × 3 = 9, so -x^2 = -9.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A2",
     "checked_by": ["author"],
     "citations": [
@@ -892,7 +894,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A2). Back backed by arithmetic checked with SymPy: -(3^2) = -9.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A2). Back backed by arithmetic checked with SymPy: -(3^2) = -9. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:17:06Z"
         },
         {
@@ -912,20 +914,20 @@
           "notes": "model answered \"-9\"; expected \"-9\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:24:02Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:49:58Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -939,6 +941,7 @@
     "expected_seconds": 15,
     "front": "The value of 2x^3 when x = -1",
     "back": "-2",
+    "explanation": "Substitute x = -1: x^3 = (-1) × (-1) × (-1) = -1. Then 2x^3 = 2 × (-1) = -2.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A2",
     "checked_by": ["author"],
     "citations": [
@@ -964,7 +967,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A2). Back backed by arithmetic checked with SymPy: 2 × (-1)^3 = -2.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A2). Back backed by arithmetic checked with SymPy: 2 × (-1)^3 = -2. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:17:06Z"
         },
         {
@@ -984,20 +987,20 @@
           "notes": "model answered \"-2\"; expected \"-2\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:24:14Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:04Z",
+          "notes": "no problems found"
         }
       ]
     }
