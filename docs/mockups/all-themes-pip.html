@@ -313,7 +313,7 @@ button { font: inherit; color: inherit; }
   --field-bg: #ffe3dc; --play-tilt: rotate(-1.5deg); --tile-tilt: rotate(-1.5deg); --tile-tilt-alt: rotate(1.5deg);
   --road: rgba(80, 70, 140, .55); --road-w: 3px; --road-dash: 2 9; --road-done: var(--coral); --road-done-w: 3.5px; --road-done-dash: 9 7;
   --node-bg: #fff; --node-border: 4px solid #fff; --node-shadow: 0 0 0 2px var(--edge), 3px 4px 0 rgba(0, 0, 0, .14); --node-done-bg: #ffd166; --node-cur-bg: #1fbeaa;
-  --node-lock-bg: transparent; --node-lock-border: 2px dashed rgba(80, 70, 140, .55); --node-lock-shadow: none;
+  --node-lock-bg: transparent; --node-lock-border: 2px dashed rgba(80, 70, 140, .55); --node-lock-shadow: 0 0 transparent;
   --tag-bg: var(--coral); --tag-ink: #fff; --pip-ring: #fff; --pip-disc: #ffe9c7; --day-on-bg: #ffd166;
   --bar-bg: rgba(80, 70, 140, .12); --bar-border: 2px dashed rgba(80, 70, 140, .35); --bar-fill: repeating-linear-gradient(45deg, #1fbeaa 0 10px, #19a593 10px 20px);
   --combo-bg: var(--coral); --combo-ink: #fff; --float: var(--coral); --focus: var(--teal); --focus-back: #fff;
@@ -544,6 +544,112 @@ button { font: inherit; color: inherit; }
 @media (prefers-reduced-motion: reduce){.avatar-svg [data-motion-part]{animation:none !important}}
 /* the tester's Reduced motion switch stills the avatar too */
 :root[data-motion='reduced'] .avatar-svg [data-motion-part]{animation:none !important}
+/* ---------- Track visibility: halos so every node stands out from the road and the page ----------
+   Rules below are produced by check-track-contrast.cjs (3:1 non-text contrast, per style, mode and node state),
+   picking colours from each style's own palette; a second inner ring is added only where one colour cannot clear both. */
+.node { outline: 3px solid var(--h1, transparent); outline-offset: var(--h2w, 0px);
+  box-shadow: 0 0 0 var(--h2w, 0px) var(--h2, transparent), var(--node-shadow, 0 0 transparent); }
+.node.current { box-shadow: 0 0 0 var(--h2w, 0px) var(--h2, transparent), var(--node-cur-shadow, var(--node-shadow, 0 0 transparent)); }
+.node.locked { box-shadow: 0 0 0 var(--h2w, 0px) var(--h2, transparent), var(--node-lock-shadow, 0 0 transparent); }
+.node:focus-visible { outline: 4px solid var(--focus, #1a73e8); outline-offset: calc(var(--h2w, 0px) + 3px); }
+.t-doodle-diary .node.done { --h1: #2b2a3a; --h2: #fdfbf4; --h2w: 2.5px; }
+.t-doodle-diary .node.current { --h1: #2b2a3a; --h2: #fdfbf4; --h2w: 2.5px; }
+.t-doodle-diary .node.locked { --h1: #2b2a3a; --h2: #fdfbf4; --h2w: 2.5px; }
+.t-sticker-book .node.done { --h1: #2f2a3d; }
+.t-sticker-book .node.current { --h1: #2f2a3d; }
+.t-sticker-book .node.locked { --h1: #2f2a3d; }
+.t-pop-burst .node.done { --h1: #1a1628; }
+.t-pop-burst .node.current { --h1: #1a1628; }
+.t-pop-burst .node.locked { --h1: #1a1628; }
+.t-starlight .node.done { --h1: #f2f0ff; --h2: #000000; --h2w: 2.5px; }
+.t-starlight .node.current { --h1: #f2f0ff; --h2: #000000; --h2w: 2.5px; }
+.t-starlight .node.locked { --h1: #f2f0ff; }
+.t-garden-grow .node.done { --h1: #24412e; }
+.t-garden-grow .node.current { --h1: #24412e; }
+.t-garden-grow .node.locked { --h1: #24412e; }
+.t-petal-glow .node.done { --h1: #4a1d3f; }
+.t-petal-glow .node.current { --h1: #4a1d3f; }
+.t-petal-glow .node.locked { --h1: #4a1d3f; }
+.t-turbo-drive .node.done { --h1: #20232c; }
+.t-turbo-drive .node.locked { --h1: #f4f6fb; }
+.t-rainbow-parade .node.done { --h1: #ffffff; }
+.t-rainbow-parade .node.locked { --h1: #2a2140; }
+[data-mode='dark'] .t-doodle-diary .node.done { --h1: #ecebf6; --h2: #1e1c2a; --h2w: 2.5px; }
+[data-mode='dark'] .t-doodle-diary .node.current { --h1: #ecebf6; --h2: #1e1c2a; --h2w: 2.5px; }
+[data-mode='dark'] .t-doodle-diary .node.locked { --h1: #ecebf6; --h2: #1e1c2a; --h2w: 2.5px; }
+[data-mode='dark'] .t-pop-burst .node.done { --h1: #1a1628; }
+[data-mode='dark'] .t-pop-burst .node.current { --h1: #1a1628; }
+[data-mode='dark'] .t-pop-burst .node.locked { --h1: #1a1628; }
+[data-mode='dark'] .t-starlight .node.done { --h1: #f2f0ff; --h2: #000000; --h2w: 2.5px; }
+[data-mode='dark'] .t-starlight .node.current { --h1: #f2f0ff; --h2: #000000; --h2w: 2.5px; }
+[data-mode='dark'] .t-starlight .node.locked { --h1: #f2f0ff; }
+[data-mode='dark'] .t-comic-pop .node.done { --h1: #24204a; }
+[data-mode='dark'] .t-comic-pop .node.current { --h1: #24204a; }
+[data-mode='dark'] .t-garden-grow .node.done { --h1: #e7f6ea; }
+[data-mode='dark'] .t-garden-grow .node.current { --h1: #e7f6ea; }
+[data-mode='dark'] .t-garden-grow .node.locked { --h1: #e7f6ea; }
+[data-mode='dark'] .t-petal-glow .node.done { --h1: #ffe9f5; --h2: #3a2140; --h2w: 2.5px; }
+[data-mode='dark'] .t-petal-glow .node.current { --h1: #ffe9f5; --h2: #3a2140; --h2w: 2.5px; }
+[data-mode='dark'] .t-petal-glow .node.locked { --h1: #ffe9f5; }
+[data-mode='dark'] .t-turbo-drive .node.done { --h1: #20232c; }
+[data-mode='dark'] .t-turbo-drive .node.locked { --h1: #f4f6fb; }
+[data-mode='dark'] .t-rainbow-parade .node.done { --h1: #2a2140; }
+[data-mode='dark'] .t-rainbow-parade .node.locked { --h1: #f4efff; }
+[data-mode='dark'] .t-rainbow-parade .node.current { --h1: #f4efff; }
+/* ---------- Avatar in its ring, head leaning out over the top (mirrors Pip, a little smaller) ---------- */
+.avatar-svg .disc { fill: var(--pip-disc, #fff4d6); }
+.avatar-svg .ring { fill: none; stroke: var(--pip-ring, currentColor); stroke-width: 4.5; }
+.me-btn { width: 56px; height: 56px; }
+.me-btn .ring-me { display: none; }
+.me-btn .avatar-svg { left: -9px; top: -20px; bottom: auto; width: 74px; height: 76.5px; overflow: visible; pointer-events: none; }
+.me-btn .me-label { bottom: -18px; }
+.me-head .big-ava { width: 92px; height: 95px; margin-top: -6px; }
+.me-head .big-ava .avatar-svg { width: 100%; height: 100%; overflow: visible; }
+
+/* ---------- Particles: each style has its own flavour; none with reduced motion ---------- */
+.fx { position: absolute; inset: 0; z-index: 60; pointer-events: none; overflow: hidden; }
+.fx .pt { position: absolute; left: 0; top: 0; width: var(--s, 14px); height: var(--s, 14px); will-change: transform, opacity; }
+.fx .pt svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.fx .word { position: absolute; left: 0; top: 0; font: 400 34px/1 'Bangers', cursive; letter-spacing: .04em; color: #ffe14d; -webkit-text-stroke: 2px #111; paint-order: stroke; white-space: nowrap; }
+.fx .flash { position: absolute; left: 0; top: 0; width: 20px; height: 20px; border-radius: 50%; border: 4px solid var(--fx-ring, #fff); }
+:root[data-motion='reduced'] .fx { display: none; }
+
+/* ---------- Prize box ---------- */
+.prize { position: absolute; inset: 0; z-index: 55; display: grid; align-content: center; justify-items: center; gap: 10px; padding: 22px 16px; text-align: center; color: #fff;
+  background: radial-gradient(circle at 50% 62%, rgba(255, 224, 102, .35), transparent 55%), rgba(14, 10, 40, .86); }
+.prize[hidden] { display: none; }
+.prize h2 { margin: 0; font: 800 30px/1.05 'Baloo 2', var(--font-body); }
+.pz-hint { margin: 0; font-weight: 800; min-height: 1.3em; }
+.pz-stage { position: relative; width: 100%; height: 330px; }
+.pz-box { position: absolute; left: 50%; bottom: 6px; width: 170px; height: 170px; margin-left: -85px; padding: 0; border: 0; background: none; cursor: pointer; }
+.pz-box svg { width: 100%; height: 100%; overflow: visible; display: block; }
+.pz-box .lid { transform-box: view-box; transform-origin: 100px 82px; }
+.pz-box .body { transform-box: view-box; transform-origin: 100px 190px; }
+.pz-box:focus-visible { outline: 3px solid #ffe066; outline-offset: 4px; border-radius: 18px; }
+.pz-rewards { position: absolute; left: 0; right: 0; top: 0; display: flex; justify-content: center; gap: 8px; list-style: none; margin: 0; padding: 0; }
+.pz-rewards li { width: 104px; padding: 10px 6px 10px; border-radius: 18px; background: #fff; color: #23213a; box-shadow: 0 6px 0 rgba(0, 0, 0, .25); display: grid; justify-items: center; gap: 4px; }
+.pz-rewards li svg { width: 54px; height: 54px; }
+.pz-rewards li b { font-size: 14px; line-height: 1.1; }
+.pz-rewards li small { font-size: 11px; font-weight: 800; color: #6a6488; text-transform: uppercase; letter-spacing: .05em; }
+.prize .close { justify-self: center; min-height: 44px; padding: 6px 22px; border-radius: 999px; border: 0; background: #ffe066; color: #3a1a7a; font-weight: 900; font-size: 16px; cursor: pointer; }
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-motion='reduced']) .pz-box.drop { animation: pz-drop 700ms cubic-bezier(.34, 1.56, .64, 1) both; }
+  :root:not([data-motion='reduced']) .pz-box.wob .body, :root:not([data-motion='reduced']) .pz-box.wob .lid { animation: pz-wob 420ms ease-in-out; }
+  :root:not([data-motion='reduced']) .pz-box.wob2 .body, :root:not([data-motion='reduced']) .pz-box.wob2 .lid { animation: pz-wob2 420ms ease-in-out; }
+  :root:not([data-motion='reduced']) .pz-box.open .lid { animation: pz-lid 700ms cubic-bezier(.2, .8, .3, 1) forwards; }
+  :root:not([data-motion='reduced']) .pz-box.open .body { animation: pz-squash 500ms cubic-bezier(.34, 1.56, .64, 1); }
+  :root:not([data-motion='reduced']) .pz-box.idle-glow .shine { animation: pz-shine 1.6s ease-in-out infinite; }
+}
+:root[data-motion='reduced'] .pz-box.open .lid, .pz-box.opened .lid { transform: translate(0, -40px) rotate(-18deg); opacity: 0; }
+@keyframes pz-drop { 0% { transform: translateY(-420px) scale(.9); } 70% { transform: translateY(0) scale(1.08, .9); } 100% { transform: none; } }
+@keyframes pz-wob { 0%, 100% { transform: none; } 25% { transform: rotate(-7deg) scale(1.03, .97); } 75% { transform: rotate(6deg) scale(.98, 1.03); } }
+@keyframes pz-wob2 { 0%, 100% { transform: none; } 20% { transform: rotate(-11deg) scale(1.06, .94); } 50% { transform: rotate(10deg) scale(.96, 1.06); } 80% { transform: rotate(-5deg); } }
+@keyframes pz-lid { 0% { transform: none; } 30% { transform: translateY(-60px) rotate(-14deg); } 100% { transform: translate(-70px, -170px) rotate(-60deg); opacity: 0; } }
+@keyframes pz-squash { 0% { transform: scale(1.18, .8); } 60% { transform: scale(.95, 1.06); } 100% { transform: none; } }
+@keyframes pz-shine { 0%, 100% { opacity: .2; } 50% { opacity: .75; } }
+.prize { --pz-box: #6c47f5; --pz-ribbon: #ffd34d; }
+.pip .flag { opacity: var(--flag-a, .38); }
+.pip .keyline { fill: none; stroke: var(--pip-keyline, #2b2a3a); stroke-width: 1.8; }
 </style>
 </head>
 <body>
@@ -558,7 +664,7 @@ button { font: inherit; color: inherit; }
 <div class="wrap">
   <header class="intro">
     <h1>RevisionDen: every style, one app</h1>
-    <p>Pick a style and the whole phone changes: background, lettering, shapes, cards, buttons, the menu bar, the map's path and nodes, Pip's frame and the move between pages. The seven signed-off looks follow the Juice Directions page; the three marked <b>DRAFT</b> are the new first-unlock styles for the owner to approve. Made-up demo data; original art only. Tap Pip (top left) for Home, the avatar (bottom right) for Me.</p>
+    <p>Pick a style and the whole phone changes: background, lettering, shapes, cards, buttons, the menu bar, the map's path and nodes, Pip's frame and the move between pages. The seven signed-off looks follow the Juice Directions page; the three marked <b>DRAFT</b> are the new first-unlock styles for the owner to approve. Made-up demo data; original art only. Tap Pip (top left) for Home, the avatar (bottom right) for Me. The buttons under “Try a moment” play the big moments: right answers, goals, levelling up, finishing a topic, a prize box and the style unlock, each with its own style of particles.</p>
   </header>
   <div class="layout">
     <aside class="panel" aria-label="Tester controls">
@@ -590,6 +696,9 @@ button { font: inherit; color: inherit; }
       <div class="seg">
         <button type="button" class="act" id="goLesson">Answer a question</button>
         <button type="button" class="act" id="goalHit">Goal hit</button>
+        <button type="button" class="act" id="levelUp">Level up</button>
+        <button type="button" class="act" id="completeTopic">Complete a topic</button>
+        <button type="button" class="act" id="getReward">Get a reward</button>
       </div>
       <button type="button" class="act big" id="finishTest">Finish starting test (unlock 3 styles)</button>
     </aside>
@@ -683,7 +792,14 @@ button { font: inherit; color: inherit; }
             <button type="button" class="me-btn" id="meBtn" aria-label="Me"><span class="ring-me" aria-hidden="true"></span><span id="navAva" aria-hidden="true"></span><span class="me-label" aria-hidden="true">Me</span></button>
           </nav>
 
+          <div class="fx" id="fx" aria-hidden="true"></div>
           <div class="toast" id="toast" role="status" aria-live="polite"></div>
+          <div class="prize" id="prize" role="dialog" aria-modal="true" aria-labelledby="pz-h" hidden>
+            <h2 id="pz-h">A prize box!</h2>
+            <p class="pz-hint" id="pzHint">Tap the box to open it</p>
+            <div class="pz-stage"><ul class="pz-rewards" id="pzRewards" aria-live="polite"></ul><button type="button" class="pz-box" id="pzBox" aria-label="Open the prize box"></button></div>
+            <button type="button" class="close" id="pzCollect" hidden>Collect</button>
+          </div>
           <div class="reveal" id="reveal" role="dialog" aria-modal="true" aria-labelledby="rv-h" hidden>
             <h2 id="rv-h">3 new styles unlocked!</h2>
             <p style="margin:0;font-weight:700">For finishing your starting test. Pick one to try, or keep your style.</p>
@@ -728,6 +844,7 @@ window.AvatarMotion=(()=>{
 </script>
 <script>
 /* ===================== ART (original, code-drawn) ===================== */
+let pipId = 0;
 const INK = '#2b2a3a', ORANGE = '#FF7A2F', ORANGE_SIDE = '#E35F17', DARK = '#3A2622', CREAM = '#F7F3EE';
 
 /* Pip's head, in the original 120 × 120 head space (scaled into the frame by the head group). */
@@ -763,6 +880,8 @@ const WEAR_BODY = {
   neckerchief: `<g stroke="${INK}" stroke-width="1.8"><path d="M38 98 Q60 108 82 98 L66 118 Q60 122 54 118 Z" fill="#e0453a"/></g>`,
 };
 const PROPS = {
+  calculator: `<g stroke="${INK}" stroke-width="1.8"><rect x="8" y="94" width="24" height="28" rx="4" fill="#4f5b77"/><rect x="11.5" y="97.5" width="17" height="7" rx="1.5" fill="#cfeedd"/><g fill="#ffd34d" stroke-width="1.2"><circle cx="14" cy="110" r="2.2"/><circle cx="20" cy="110" r="2.2"/><circle cx="26" cy="110" r="2.2"/><circle cx="14" cy="116.5" r="2.2"/><circle cx="20" cy="116.5" r="2.2"/></g><rect x="23.8" y="114.3" width="4.4" height="4.4" rx="1" fill="#ff8fb1" stroke-width="1.2"/></g>`,
+  book: `<g stroke="${INK}" stroke-width="1.8" stroke-linejoin="round"><path d="M3 101 Q11 96 20 101 Q29 96 37 101 V123 Q29 118 20 123 Q11 118 3 123 Z" fill="#7b3fe4"/><path d="M5 99 Q12 94.5 20 99.5 V120 Q12 115.5 5 119 Z" fill="#fffaf0"/><path d="M35 99 Q28 94.5 20 99.5 V120 Q28 115.5 35 119 Z" fill="#fffaf0"/><path d="M8.5 104 Q13 102 17 104 M8.5 108.5 Q13 106.5 17 108.5 M23 104 Q27 102 31.5 104 M23 108.5 Q27 106.5 31.5 108.5" fill="none" stroke-width="1.2"/><path d="M27 99 V108 l2.2 -2 2.2 2 V98" fill="#e0453a" stroke-width="1.2"/></g>`,
   protractor: `<g stroke="${INK}" stroke-width="1.8"><path d="M6 118 A14 14 0 0 1 34 118 Z" fill="#fffbe0"/><path d="M20 118 V110 M13 113 L15 115 M27 113 L25 115"/></g>`,
   compass: `<g stroke="${INK}" stroke-width="2.2" stroke-linecap="round"><path d="M20 96 L10 120 M20 96 L30 120"/><circle cx="20" cy="95" r="3" fill="#ffc83d"/></g>`,
   chart: `<g stroke="${INK}" stroke-width="1.6"><rect x="6" y="110" width="7" height="10" fill="#2fae8f"/><rect x="15" y="102" width="7" height="18" fill="#ffc83d"/><rect x="24" y="106" width="7" height="14" fill="#ff8fb1"/></g>`,
@@ -782,19 +901,19 @@ const PROPS = {
 };
 
 const SUBJECTS = [
-  { id: 'maths', name: 'Maths', head: 'pencil', prop: 'protractor', tint: '#e3ebff', units: [['Number', ['Place value', 'Decimals', 'Negative numbers', 'Fractions', 'Percentages', 'Powers and roots', 'Standard form']], ['Algebra', ['Expressions', 'Expanding', 'Factorising', 'Equations', 'Inequalities', 'Sequences', 'Graphs']], ['Ratio', ['Ratio basics', 'Sharing', 'Proportion', 'Speed', 'Density', 'Best buys']], ['Geometry', ['Angles', 'Polygons', 'Area', 'Volume', 'Pythagoras', 'Trigonometry']]] },
+  { id: 'maths', name: 'Maths', prop: 'calculator', tint: '#e3ebff', units: [['Number', ['Place value', 'Decimals', 'Negative numbers', 'Fractions', 'Percentages', 'Powers and roots', 'Standard form']], ['Algebra', ['Expressions', 'Expanding', 'Factorising', 'Equations', 'Inequalities', 'Sequences', 'Graphs']], ['Ratio', ['Ratio basics', 'Sharing', 'Proportion', 'Speed', 'Density', 'Best buys']], ['Geometry', ['Angles', 'Polygons', 'Area', 'Volume', 'Pythagoras', 'Trigonometry']]] },
   { id: 'further-maths', name: 'Further Maths', head: 'glasses', prop: 'compass', tint: '#e8e2ff', units: [['Algebra', ['Surds', 'Quadratics', 'Functions', 'Inequalities', 'Proof']], ['Calculus', ['Gradients', 'Differentiation', 'Tangents', 'Stationary points']], ['Matrices', ['Adding', 'Multiplying', 'Transformations', 'Inverses']]] },
   { id: 'statistics', name: 'Statistics', head: 'visor', prop: 'chart', tint: '#dff5ee', units: [['Data', ['Types of data', 'Sampling', 'Bias', 'Tables', 'Charts']], ['Averages', ['Mean', 'Median', 'Mode', 'Range', 'Spread']], ['Probability', ['Outcomes', 'Tree diagrams', 'Venn diagrams', 'Expected values']]] },
   { id: 'english-language', name: 'English Language', head: 'bluepen', prop: 'bubble', tint: '#e6f0ff', units: [['Reading', ['Skimming', 'Inference', 'Language', 'Structure', 'Comparison']], ['Writing', ['Planning', 'Openings', 'Description', 'Persuasion', 'Editing']]] },
-  { id: 'english-literature', name: 'English Literature', body: 'ruff', prop: 'quill', tint: '#f6ead8', units: [['Poetry', ['Imagery', 'Form', 'Tone', 'Comparing poems', 'Unseen poems']], ['Drama', ['Character', 'Themes', 'Context', 'Key scenes']], ['Prose', ['Narrator', 'Setting', 'Symbols', 'Quotations']]] },
+  { id: 'english-literature', name: 'English Literature', prop: 'book', tint: '#f6ead8', units: [['Poetry', ['Imagery', 'Form', 'Tone', 'Comparing poems', 'Unseen poems']], ['Drama', ['Character', 'Themes', 'Context', 'Key scenes']], ['Prose', ['Narrator', 'Setting', 'Symbols', 'Quotations']]] },
   { id: 'biology', name: 'Biology', head: 'leaf', prop: 'magnifier', tint: '#e3f4e4', units: [['Cells', ['Cell parts', 'Microscopes', 'Transport', 'Cell division', 'Stem cells']], ['Organisms', ['Digestion', 'Circulation', 'Breathing', 'Disease', 'Immunity']], ['Ecology', ['Food webs', 'Cycles', 'Adaptation', 'Biodiversity']]] },
   { id: 'chemistry', name: 'Chemistry', body: 'labcollar', prop: 'tube', tint: '#dff5f0', units: [['Atoms', ['Atom parts', 'Isotopes', 'Electron shells', 'The periodic table', 'Groups']], ['Bonding', ['Ionic', 'Covalent', 'Metallic', 'Structures']], ['Reactions', ['Rates', 'Energy', 'Acids', 'Electrolysis']]] },
   { id: 'physics', name: 'Physics', head: 'goggles', prop: 'magnet', tint: '#e6e0ff', units: [['Energy', ['Stores', 'Transfers', 'Power', 'Efficiency', 'Resources']], ['Forces', ['Vectors', 'Motion graphs', 'Newton’s laws', 'Momentum']], ['Waves', ['Wave types', 'Sound', 'Light', 'Spectrum']]] },
   { id: 'combined-science', name: 'Combined Science', head: 'specs', prop: 'flask', tint: '#e0f3ff', units: [['Biology', ['Cells', 'Organisms', 'Ecology', 'Genetics']], ['Chemistry', ['Atoms', 'Bonding', 'Reactions', 'Earth']], ['Physics', ['Energy', 'Electricity', 'Forces', 'Waves']]] },
   { id: 'history', name: 'History', head: 'explorer', prop: 'scroll', tint: '#f3ead2', units: [['Medicine', ['Medieval', 'Renaissance', 'Industrial', 'Modern']], ['Conflict', ['Causes', 'Key battles', 'Home front', 'Peace']], ['Sources', ['Provenance', 'Utility', 'Interpretations']]] },
-  { id: 'french', name: 'French', head: 'beret', prop: 'croissant', tint: '#ffe8e3', units: [['Me', ['Introductions', 'Family', 'Hobbies', 'Food']], ['My town', ['Places', 'Directions', 'Shopping', 'Weather']], ['Grammar', ['Present tense', 'Past tense', 'Future', 'Adjectives']]] },
-  { id: 'german', name: 'German', head: 'alpine', prop: 'pretzel', tint: '#e8f2e0', units: [['Me', ['Introductions', 'Family', 'School', 'Free time']], ['Travel', ['Holidays', 'Transport', 'Directions']], ['Grammar', ['Cases', 'Word order', 'Past tense', 'Modal verbs']]] },
-  { id: 'spanish', name: 'Spanish', body: 'neckerchief', prop: 'guitar', tint: '#fff0dc', units: [['Me', ['Introductions', 'Family', 'Hobbies', 'Routine']], ['My world', ['Town', 'Holidays', 'Food', 'Weather']], ['Grammar', ['Ser and estar', 'Past tense', 'Future', 'Questions']]] },
+  { id: 'french', name: 'French', head: 'beret', prop: 'croissant', tint: '#ffe8e3', flag: [['v', '#0055a4', '#ffffff', '#ef4135']], units: [['Me', ['Introductions', 'Family', 'Hobbies', 'Food']], ['My town', ['Places', 'Directions', 'Shopping', 'Weather']], ['Grammar', ['Present tense', 'Past tense', 'Future', 'Adjectives']]] },
+  { id: 'german', name: 'German', head: 'alpine', prop: 'pretzel', tint: '#e8f2e0', flag: [['h', '#000000', '#dd0000', '#ffce00']], units: [['Me', ['Introductions', 'Family', 'School', 'Free time']], ['Travel', ['Holidays', 'Transport', 'Directions']], ['Grammar', ['Cases', 'Word order', 'Past tense', 'Modal verbs']]] },
+  { id: 'spanish', name: 'Spanish', body: 'neckerchief', prop: 'guitar', tint: '#fff0dc', flag: [['h', '#aa151b', '#f1bf00', '#f1bf00', '#aa151b']], units: [['Me', ['Introductions', 'Family', 'Hobbies', 'Routine']], ['My world', ['Town', 'Holidays', 'Food', 'Weather']], ['Grammar', ['Ser and estar', 'Past tense', 'Future', 'Questions']]] },
   { id: 'computer-science', name: 'Computer Science', head: 'headset', prop: 'laptop', tint: '#dff1ff', units: [['Programming', ['Variables', 'Selection', 'Loops', 'Lists', 'Functions']], ['Systems', ['Binary', 'Hardware', 'Networks', 'Security']], ['Algorithms', ['Searching', 'Sorting', 'Flowcharts', 'Testing']]] },
   { id: 'drama', name: 'Drama', body: 'bowtie', prop: 'mask', tint: '#f6e2f4', units: [['Devising', ['Ideas', 'Rehearsal', 'Staging', 'Evaluation']], ['Set text', ['Character', 'Context', 'Design', 'Key scenes']]] },
   { id: 'film-studies', name: 'Film Studies', head: 'darkglasses', prop: 'clapper', tint: '#ececec', units: [['Film form', ['Cinematography', 'Editing', 'Sound', 'Mise-en-scène']], ['Contexts', ['History', 'Genre', 'Audiences', 'Stars']]] },
@@ -818,32 +937,48 @@ const FAMILY = {
 };
 
 /** Pip in his round frame, leaning out over the top. Head first; just the shoulders below. */
-function pipSvg({ subject, look, prop = false, cls = '' }) {
-  const s = subject;
+function flagBands(flag, cx, cy, r) { // soft national colours behind Pip for the language subjects
+  const [dir, ...cols] = flag[0]; const n = cols.length, x0 = cx - r, y0 = cy - r, w = (2 * r) / n;
+  return cols.map((c, i) => dir === 'v'
+    ? `<rect x="${x0 + i * w}" y="${y0}" width="${w + 0.3}" height="${2 * r}" fill="${c}"/>`
+    : `<rect x="${x0}" y="${y0 + i * w}" width="${2 * r}" height="${w + 0.3}" fill="${c}"/>`).join('');
+}
+/** Pip in his round frame, leaning out over the top. Head first; just the shoulders below; the subject prop held at the chest. */
+function pipSvg({ subject, look, prop = true, cls = '' }) {
+  const s = subject, id = pipId++;
   const fam = FAMILY[look.family][look.variant];
   const hatOn = Boolean(s.head && ['explorer', 'beret', 'alpine', 'visor', 'headset'].includes(s.head));
   const famHead = fam.isHat && hatOn ? '' : fam.head;
   const famBody = fam.isHat && hatOn ? fam.body : '';
   return `<svg class="pip ${cls}" viewBox="0 0 120 130" aria-hidden="true" focusable="false">
-    <defs><clipPath id="pc-${pipId}"><rect x="0" y="0" width="120" height="74"/><circle cx="60" cy="74" r="44"/></clipPath></defs>
+    <defs><clipPath id="pc-${id}"><rect x="0" y="0" width="120" height="74"/><circle cx="60" cy="74" r="44"/></clipPath><clipPath id="pd-${id}"><circle cx="60" cy="74" r="44"/></clipPath></defs>
     <circle class="disc" cx="60" cy="74" r="44" style="fill:${s.tint}"/>
+    ${s.flag ? `<g class="flag" clip-path="url(#pd-${id})">${flagBands(s.flag, 60, 74, 44)}</g>` : ''}
+    <circle class="keyline" cx="60" cy="74" r="42.6"/>
     <path class="ring ring-back" d="M14 74 A46 46 0 0 1 106 74"/>
-    <g clip-path="url(#pc-${pipId++})">
+    <g clip-path="url(#pc-${id})">
       <g class="shoulders"><polygon points="30,98 60,96 60,132 10,132" fill="${ORANGE}"/><polygon points="60,96 90,98 110,132 60,132" fill="${ORANGE_SIDE}"/><polygon points="48,99 72,99 60,124" fill="${CREAM}"/>
-        <g class="outfit">${s.body ? WEAR_BODY[s.body] : ''}${famBody}</g></g>
-      ${prop && s.prop ? `<g class="outfit">${PROPS[s.prop]}</g>` : ''}
+        <g class="outfit">${s.body ? WEAR_BODY[s.body] : ''}${famBody}</g>
+</g>
     </g>
+    <path class="keyline" d="M102.6 74 A42.6 42.6 0 0 1 17.4 74"/>
     <g class="head"><g transform="translate(60 52) scale(.82) translate(-60 -57)">${HEAD}<g class="outfit">${famHead}${s.head ? WEAR_HEAD[s.head] : ''}</g></g></g>
     <path class="ring ring-front" d="M106 74 A46 46 0 0 1 14 74"/>
+    ${prop && s.prop ? `<g class="outfit prop"><g transform="translate(88 104) scale(1.12) translate(-20 -108)">${PROPS[s.prop]}</g></g>` : ''}
   </svg>`;
 }
-let pipId = 0;
 
 /* The player's avatar, made-up and original, built to E's motion contract (groups move, art never changes). */
-const AVATAR = `<svg class="avatar-svg" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+/* The player's avatar, made-up and original, built to E's motion contract (groups move, art never changes).
+   It sits in a ring like Pip's: the body is clipped to the disc, the head leans out over the top. */
+const AVATAR = () => { const id = pipId++; return `<svg class="avatar-svg framed" viewBox="0 12 120 124" aria-hidden="true" focusable="false">
+  <defs><clipPath id="ac-${id}"><rect x="0" y="0" width="120" height="90"/><circle cx="60" cy="90" r="42"/></clipPath></defs>
+  <circle class="disc" cx="60" cy="90" r="42"/>
+  <path class="ring ring-back" d="M16 90 A44 44 0 0 1 104 90"/>
+  <g clip-path="url(#ac-${id})">
   <g data-motion-part="figure">
     <g data-motion-part="head-back"><path d="M30 52 Q28 86 40 96 L80 96 Q92 86 90 52 Z" fill="#4a2f22"/></g>
-    <path d="M24 120 Q26 92 60 90 Q94 92 96 120 Z" fill="#2fb3a3"/><path d="M48 92 Q60 104 72 92" fill="none" stroke="#fff" stroke-width="3"/>
+    <path d="M22 140 L23 118 Q26 92 60 90 Q94 92 97 118 L98 140 Z" fill="#2fb3a3"/><path d="M48 92 Q60 104 72 92" fill="none" stroke="#fff" stroke-width="3"/>
     <rect x="52" y="74" width="16" height="18" rx="6" fill="#c98a5e"/>
     <g data-motion-part="head">
       <circle cx="60" cy="54" r="26" fill="#d9a074"/>
@@ -852,7 +987,9 @@ const AVATAR = `<svg class="avatar-svg" viewBox="0 0 120 120" aria-hidden="true"
       <g data-motion-part="mouth"><path d="M52 66 Q60 72 68 66" fill="none" stroke="#2b2a3a" stroke-width="3" stroke-linecap="round"/></g>
     </g>
   </g>
-</svg>`;
+  </g>
+  <path class="ring ring-front" d="M104 90 A44 44 0 0 1 16 90"/>
+</svg>`; };
 
 /* Small icons */
 const IC = {
@@ -912,7 +1049,7 @@ const Sound = window.RevisionDenSound;
 Sound.setMuted(true);
 
 const pager = $('#pager');
-const state = { theme: 'doodle-diary', subject: SUBJECTS[0], family: 'auto', variant: 0, unit: 0 };
+const state = { theme: 'doodle-diary', subject: SUBJECTS[0], family: 'auto', variant: 0, unit: 0, progress: 3 };
 const reduced = () => root.dataset.motion === 'reduced';
 const snd = (event, step) => { try { Sound.playSound(state.theme, event, step); } catch { /* sound is optional */ } };
 
@@ -928,7 +1065,7 @@ function todaysLook() {
 }
 const pipEl = () => $('#pipBtn .pip');
 function drawPip(changing = false) {
-  $('#pipBtn').innerHTML = pipSvg({ subject: state.subject, look: todaysLook(), cls: `idle${changing ? ' changing' : ''}` });
+  $('#pipBtn').innerHTML = pipSvg({ subject: state.subject, look: todaysLook(), prop: true, cls: `idle${changing ? ' changing' : ''}` });
   if (changing) requestAnimationFrame(() => requestAnimationFrame(() => pipEl()?.classList.remove('changing')));
   $$('.pip-mini-slot').forEach((el) => { el.innerHTML = pipSvg({ subject: state.subject, look: todaysLook(), prop: true, cls: 'pip-mini' }); });
 }
@@ -958,8 +1095,8 @@ setInterval(() => {
 addEventListener('pointerdown', () => { lastTouch = Date.now(); }, { capture: true });
 
 /* ---------- avatar ---------- */
-$('#navAva').innerHTML = AVATAR;
-$('#bigAva').innerHTML = AVATAR;
+$('#navAva').innerHTML = AVATAR();
+$('#bigAva').innerHTML = AVATAR();
 const avatars = $$('.avatar-svg').map((svg) => AvatarMotion.attach(svg));
 const ava = { react: (k) => avatars.forEach((a) => a.react(k)), pause: (on) => avatars.forEach((a) => a.pause(on)) };
 
@@ -1012,7 +1149,7 @@ function countUp() {
   });
   setTimeout(() => snd('ringFill'), 500);
 }
-function currentTopic() { return state.subject.units[0][1][3]; }
+function currentTopic() { const t = state.subject.units[0][1]; return t[Math.min(state.progress, t.length - 1)]; }
 function drawHome() {
   $$('.cur-topic').forEach((el) => { el.textContent = currentTopic(); });
   const all = state.subject.units.flatMap((u) => u[1]);
@@ -1026,7 +1163,7 @@ const GAP = 104;
 function nodeState(u, i, n) {
   if (i === n) return 'quest';
   if (u > 0) return 'locked';
-  return i < 3 ? 'done' : i === 3 ? 'current' : 'locked';
+  return i < state.progress ? 'done' : i === state.progress ? 'current' : 'locked';
 }
 function xAt(i) { return 50 + Math.sin(i * 1.15 + 0.4) * 30; }
 function drawMap() {
@@ -1039,7 +1176,7 @@ function drawMap() {
     const pts = [...topics, 'Unit quest'].map((_, i) => [xAt(i), 50 + i * GAP]);
     const seg = (a, b) => `C ${a[0]} ${a[1] + GAP / 2} ${b[0]} ${b[1] - GAP / 2} ${b[0]} ${b[1]}`;
     const road = `M ${pts[0][0]} ${pts[0][1]} ` + pts.slice(1).map((p, i) => seg(pts[i], p)).join(' ');
-    const done = u === 0 ? `M ${pts[0][0]} ${pts[0][1]} ` + pts.slice(1, 4).map((p, i) => seg(pts[i], p)).join(' ') : '';
+    const done = u === 0 && state.progress > 0 ? `M ${pts[0][0]} ${pts[0][1]} ` + pts.slice(1, state.progress + 1).map((p, i) => seg(pts[i], p)).join(' ') : '';
     const nodes = pts.map(([x, y], i) => {
       const st = nodeState(u, i, n), label = i === n ? `${unit} quest` : topics[i];
       const how = st === 'locked' ? (u > 0 ? `Finish ${s.units[u - 1][0]} to open it` : `Finish ${topics[i - 1]} to open it`) : st === 'quest' ? `Finish every ${unit} topic to open it` : '';
@@ -1089,7 +1226,7 @@ $('#playBox').addEventListener('click', () => show('subjects'));
 /* ---------- Subjects ---------- */
 function setSubject(s) {
   if (s === state.subject) return;
-  state.subject = s;
+  state.subject = s; state.progress = 3;
   changeOutfit();
   drawHome(); drawMap(); drawSubjects();
 }
@@ -1129,7 +1266,8 @@ function answer(b) {
   if (right) {
     $$('#answers .ans').forEach((x) => { x.disabled = true; });
     b.classList.add('right');
-    snd('correct'); combo++; setTimeout(() => snd('combo', combo - 3), 260);
+    snd('correct'); combo++; burstAt(b, { count: 18 });
+    setTimeout(() => { snd('combo', combo - 3); if (combo >= 4) burstAt($('#combo'), { count: 10 + combo, power: 0.6 + combo * 0.1 }); }, 260);
     pipAnim('a-nod', 900); ava.react('nod');
     $('#feedback').textContent = 'Right! ¾ − ½ = ¾ − ²⁄₄ = ¼';
     $('#combo').textContent = `×${combo}`;
@@ -1197,9 +1335,32 @@ $$('#familySeg button').forEach((b) => b.addEventListener('click', () => {
 
 $('#goLesson').addEventListener('click', () => show('lesson'));
 $('#goalHit').addEventListener('click', () => {
-  snd('levelUp'); pipAnim('a-cheer', 1200); ava.react('hop');
+  snd('setComplete'); pipAnim('a-cheer', 1200); ava.react('hop');
+  burstAt($('#pipBtn'), { count: 18, power: 1.1 }); setTimeout(() => burstAt($('#meBtn'), { count: 14 }), 200);
   toast('Daily goal smashed! +50 XP');
 });
+$('#levelUp').addEventListener('click', async () => {
+  show('home'); await wait(reduced() ? 0 : 900);
+  const b = $('#s-home .lvl b'), ring = $('#s-home .lvl .val');
+  b.dataset.count = '8'; b.textContent = '8'; $('#s-home .lvl').setAttribute('aria-label', 'Level 8');
+  ring.style.strokeDashoffset = ring.getAttribute('stroke-dasharray'); void ring.getBoundingClientRect();
+  requestAnimationFrame(() => { ring.style.strokeDashoffset = 301.6 * 0.95; });
+  snd('levelUp'); burstAt($('#s-home .lvl'), { count: 28, power: 1.5, word: true });
+  pipAnim('a-cheer', 1200); ava.react('hop'); toast('Level 8! New things to unlock.');
+});
+$('#completeTopic').addEventListener('click', async () => {
+  const n = state.subject.units[0][1].length;
+  if (state.progress >= n - 1) { state.progress = 3; drawMap(); }
+  if ($('#s-map').hidden) { show('map'); await wait(reduced() ? 50 : 500); } else goUnit(0);
+  const cur = $('#pager .node.current'); if (!cur) return;
+  snd('setComplete'); burstAt(cur, { count: 22, power: 1.2, word: true });
+  await wait(reduced() ? 0 : 420);
+  state.progress++; drawMap(); drawHome(); scrollToHere();
+  const next = $('#pager .node.current');
+  if (next) { snd('nodePop'); burstAt(next, { count: 8, power: 0.6 }); }
+  toast(`${state.subject.units[0][1][state.progress - 1]} done! ${currentTopic()} is open.`);
+});
+$('#getReward').addEventListener('click', (e) => openPrize(e.currentTarget));
 
 /* ---------- Finish starting test: unlock the three new styles ---------- */
 const reveal = $('#reveal');
@@ -1211,6 +1372,8 @@ $('#finishTest').addEventListener('click', (e) => {
   snd('stylesUnlocked');
   reveal.hidden = false;
   pipAnim('a-cheer', 1200); ava.react('hop');
+  burstAt($('#rv-h'), { count: 30, power: 1.6, word: true });
+  $$('#trio .swatch').forEach((sw, i) => setTimeout(() => burstAt(sw, { count: 12, power: 0.8 }), 350 + i * 180));
   setTimeout(() => $('#trio .try')?.focus(), 50);
 });
 $$('#trio .try').forEach((b) => b.addEventListener('click', () => {
@@ -1218,18 +1381,163 @@ $$('#trio .try').forEach((b) => b.addEventListener('click', () => {
   toast(`Trying ${THEMES.find((t) => t.id === b.dataset.theme).name}. Change it any time in Me.`);
 }));
 $('#rvClose').addEventListener('click', closeReveal);
-reveal.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeReveal();
-  if (e.key === 'Tab') { // keep focus inside the reveal
-    const f = $$('button', reveal); const first = f[0], last = f[f.length - 1];
-    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-  }
-});
+function trapFocus(dlg, onClose) {
+  dlg.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') onClose();
+    if (e.key === 'Tab') { // keep focus inside the dialog
+      const f = $$('button', dlg).filter((b) => !b.hidden); const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+}
+trapFocus(reveal, closeReveal);
+trapFocus($('#prize'), closePrize);
 
 /* ---------- start ---------- */
 drawSubjects(); drawHome(); drawMap();
 $('#s-home').hidden = false; countUp();
+
+/* ===================== PARTICLES: one flavour per style ===================== */
+const pick = (a) => a[Math.floor(Math.random() * a.length)];
+const rnd = (a, b) => a + Math.random() * (b - a);
+const SQUIG = (c) => `<svg viewBox="-10 -10 20 20"><path d="M-8 2 Q-5 -6 -2 2 T4 2 T9 -2" fill="none" stroke="${c}" stroke-width="2.4" stroke-linecap="round"/></svg>`;
+const LOOPY = (c) => `<svg viewBox="-10 -10 20 20"><path d="M-7 0 C-7 -8 6 -8 6 0 S-4 8 -4 0" fill="none" stroke="${c}" stroke-width="2.2" stroke-linecap="round"/></svg>`;
+const STAR5 = (f, s = 'none', w = 0) => `<svg viewBox="-10 -10 20 20"><path d="M0 -9l2.6 5.6 6.1.7-4.5 4.2 1.2 6L0 14.5l-5.4 3 1.2-6-4.5-4.2 6.1-.7z" transform="scale(.8)" fill="${f}" stroke="${s}" stroke-width="${w}" stroke-linejoin="round"/></svg>`;
+const STAR4 = (c) => `<svg viewBox="-10 -10 20 20"><path d="M0 -10 C1 -2 2 -1 10 0 C2 1 1 2 0 10 C-1 2 -2 1 -10 0 C-2 -1 -1 -2 0 -10Z" fill="${c}" style="filter:drop-shadow(0 0 3px ${c})"/></svg>`;
+const HEART = (c) => `<svg viewBox="-10 -10 20 20"><path d="M0 7 C-9 0 -8 -8 -3 -8 C-1 -8 0 -6 0 -5 C0 -6 1 -8 3 -8 C8 -8 9 0 0 7Z" fill="${c}" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/></svg>`;
+const COIN = () => '<svg viewBox="-10 -10 20 20"><circle r="9" fill="#ffc83d" stroke="#b7791f" stroke-width="2"/><circle r="5.5" fill="none" stroke="#fff3b0" stroke-width="1.6"/></svg>';
+const DOT = (c) => `<svg viewBox="-10 -10 20 20"><circle r="7" fill="${c}"/></svg>`;
+const PETAL_P = (c) => `<svg viewBox="-10 -10 20 20"><path d="M0 -9 C6 -4 6 4 0 9 C-6 4 -6 -4 0 -9Z" fill="${c}"/></svg>`;
+const LEAF = (c) => `<svg viewBox="-10 -10 20 20"><path d="M-8 6 C-8 -4 0 -9 9 -8 C8 2 2 8 -8 6Z" fill="${c}"/><path d="M-7 5 L6 -6" stroke="rgba(0,0,0,.25)" stroke-width="1"/></svg>`;
+const PIXEL = (c) => `<svg viewBox="0 0 10 10" shape-rendering="crispEdges"><rect width="10" height="10" fill="${c}"/></svg>`;
+const STREAK = (c) => `<svg viewBox="-10 -3 20 6"><rect x="-10" y="-1.6" width="20" height="3.2" rx="1.6" fill="${c}"/></svg>`;
+const CONF = (c) => `<svg viewBox="-6 -10 12 20"><rect x="-4" y="-8" width="8" height="16" rx="1.5" fill="${c}"/></svg>`;
+const RAINBOW = ['#e40303', '#ff8c00', '#ffed00', '#008026', '#24408e', '#732982'];
+
+/* shape makers, sizes, how they move (gravity, drag, spin), and extras like a comic word */
+const FX = {
+  'doodle-diary': { make: () => pick([SQUIG, LOOPY, (c) => STAR5('none', c, 2)])(pick(['#2f5fd0', '#e0453a', '#2b2a3a', '#f2b400'])), size: [14, 22], g: 260, speed: [140, 300], spin: 200, dur: [900, 1300], ring: '#2f5fd0' },
+  'sticker-book': { make: () => pick([(c) => STAR5(c, '#fff', 2.4), HEART])(pick(['#ff6b6b', '#1fbeaa', '#ffd166', '#9b6bff'])), size: [16, 24], g: 420, speed: [180, 360], spin: 120, dur: [900, 1200], ring: '#fff' },
+  'pop-burst': { make: () => (Math.random() < 0.7 ? COIN() : STAR4('#fff7c2')), size: [14, 22], g: 700, speed: [260, 460], spin: 360, dur: [800, 1100], ring: '#ffe066' },
+  starlight: { make: () => STAR4(pick(['#fff6b0', '#4be3ff', '#ffffff', '#c7b8ff'])), size: [10, 20], g: -40, speed: [60, 190], spin: 90, dur: [1100, 1700], ring: '#4be3ff' },
+  'comic-pop': { make: () => DOT(pick(['#ff3b30', '#1e9bff', '#ffe14d', '#111'])), size: [6, 12], g: 300, speed: [220, 420], spin: 0, dur: [600, 900], word: ['POW!', 'ZAP!', 'WOW!', 'BAM!'], ring: '#111' },
+  'garden-grow': { make: () => (Math.random() < 0.6 ? PETAL_P(pick(['#ff8fb1', '#ffd1e0', '#ffffff', '#ffd166'])) : LEAF(pick(['#3fae5a', '#7ccf6b']))), size: [12, 18], g: 90, speed: [100, 230], spin: 260, sway: 28, dur: [1300, 1900], ring: '#3fae5a' },
+  'pixel-arcade': { make: () => PIXEL(pick(['#39ff88', '#ff3cac', '#ffd23f', '#4be3ff'])), size: [6, 10], g: 520, speed: [180, 380], spin: 0, steps: 10, dur: [700, 1000], ring: '#39ff88' },
+  'petal-glow': { make: () => (Math.random() < 0.65 ? PETAL_P(pick(['#ffb6d8', '#d9c4ff', '#ffe07a', '#bff0e3'])) : STAR4('#ffffff')), size: [10, 18], g: 40, speed: [80, 200], spin: 180, sway: 20, dur: [1300, 1900], ring: '#ffb6d8' },
+  'turbo-drive': { make: () => STREAK(pick(['#ff7a1a', '#22d3ee', '#ffffff'])), size: [18, 30], g: 0, speed: [320, 560], spin: 0, align: true, dur: [450, 700], ring: '#22d3ee' },
+  'rainbow-parade': { make: () => CONF(pick(RAINBOW)), size: [8, 14], g: 380, speed: [200, 400], spin: 540, dur: [1000, 1500], ring: '#ffed00' },
+};
+
+/** A burst of the current style's particles at (x, y) in the phone's coordinates. */
+function burst(x, y, { count = 16, power = 1, word = false } = {}) {
+  if (reduced()) return;
+  const fx = FX[state.theme], layer = $('#fx');
+  const flash = document.createElement('div'); flash.className = 'flash'; flash.style.setProperty('--fx-ring', fx.ring);
+  layer.appendChild(flash);
+  flash.animate([{ transform: `translate(${x - 10}px, ${y - 10}px) scale(.3)`, opacity: 0.9 }, { transform: `translate(${x - 10}px, ${y - 10}px) scale(${4 * power})`, opacity: 0 }], { duration: 450, easing: 'ease-out' }).onfinish = () => flash.remove();
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('span'); p.className = 'pt'; p.innerHTML = fx.make();
+    const s = rnd(...fx.size); p.style.setProperty('--s', `${s}px`); layer.appendChild(p);
+    const ang = (i / count) * Math.PI * 2 + rnd(-0.3, 0.3), v = rnd(...fx.speed) * power, t = rnd(...fx.dur) / 1000;
+    const dx = Math.cos(ang) * v * t * 0.6, dy = Math.sin(ang) * v * t * 0.6;
+    const rot = fx.align ? (ang * 180) / Math.PI : rnd(-fx.spin, fx.spin), sway = fx.sway || 0;
+    const at = (k) => { // position along a simple ballistic path with a little sway
+      const px = x + dx * (1 - (1 - k) ** 2) + Math.sin(k * 6) * sway, py = y + dy * (1 - (1 - k) ** 2) + 0.5 * fx.g * (k * t) ** 2;
+      return `translate(${px - s / 2}px, ${py - s / 2}px) rotate(${fx.align ? rot : rot * k}deg) scale(${k < 0.1 ? 0.4 + k * 6 : 1})`;
+    };
+    const frames = [0, 0.1, 0.35, 0.65, 1].map((k) => ({ transform: at(k), opacity: k > 0.7 ? 1 - (k - 0.7) / 0.3 : 1, offset: k }));
+    p.animate(frames, { duration: t * 1000, easing: fx.steps ? `steps(${fx.steps})` : 'linear' }).onfinish = () => p.remove();
+  }
+  if (fx.word && (word || power >= 1.3)) {
+    const w = document.createElement('span'); w.className = 'word'; w.textContent = pick(fx.word); layer.appendChild(w);
+    w.animate([{ transform: `translate(${x - 40}px, ${y - 30}px) rotate(-12deg) scale(.2)`, opacity: 1 }, { transform: `translate(${x - 40}px, ${y - 40}px) rotate(-8deg) scale(1.15)`, opacity: 1, offset: 0.35 }, { transform: `translate(${x - 40}px, ${y - 50}px) rotate(-6deg) scale(1)`, opacity: 0 }], { duration: 900, easing: 'cubic-bezier(.34,1.56,.64,1)' }).onfinish = () => w.remove();
+  }
+}
+/** Burst centred on an element. */
+function burstAt(el, opts) {
+  if (!el) return;
+  const r = el.getBoundingClientRect(), a = app.getBoundingClientRect();
+  burst(r.left - a.left + r.width / 2, r.top - a.top + r.height / 2, opts);
+}
+
+/* ===================== PRIZE BOX (original art: a den box with fox-ear knobs and a star latch) ===================== */
+const PRIZE_BOX = `<svg viewBox="0 0 200 200" aria-hidden="true">
+  <ellipse cx="100" cy="192" rx="70" ry="8" fill="rgba(0,0,0,.3)"/>
+  <g class="body">
+    <path d="M34 96 H166 V178 Q166 188 156 188 H44 Q34 188 34 178 Z" fill="var(--pz-box, #6c47f5)" stroke="#1d1640" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M34 96 H70 V188 H44 Q34 188 34 178 Z" fill="rgba(255,255,255,.18)"/>
+    <rect x="88" y="96" width="24" height="92" fill="var(--pz-ribbon, #ffd34d)" stroke="#1d1640" stroke-width="4"/>
+    <path class="shine" d="M48 112 l8 -8 M48 128 l18 -18" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".35"/>
+    <path d="M100 124 l5 10 11 1.5 -8 7.5 2 11 -10 -5.5 -10 5.5 2 -11 -8 -7.5 11 -1.5z" fill="#fff6b0" stroke="#1d1640" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <g class="lid">
+    <path d="M58 70 L66 44 L80 66 Z M142 70 L134 44 L120 66 Z" fill="var(--pz-ribbon, #ffd34d)" stroke="#1d1640" stroke-width="4" stroke-linejoin="round"/>
+    <rect x="24" y="66" width="152" height="34" rx="9" fill="var(--pz-box, #6c47f5)" stroke="#1d1640" stroke-width="5"/>
+    <rect x="24" y="66" width="152" height="12" rx="6" fill="rgba(255,255,255,.22)"/>
+    <rect x="86" y="66" width="28" height="34" fill="var(--pz-ribbon, #ffd34d)" stroke="#1d1640" stroke-width="4"/>
+  </g>
+</svg>`;
+const REWARD_ART = {
+  badge: '<svg viewBox="-30 -30 60 60"><path d="M-10 8 L-16 28 L-6 23 L0 30 L4 10 Z M10 8 L16 28 L6 23 L0 30 L-4 10 Z" fill="#e0453a" stroke="#2b2a3a" stroke-width="2"/><path d="M0 -26 L20 -14 V8 L0 20 L-20 8 V-14 Z" fill="#ffc83d" stroke="#2b2a3a" stroke-width="3"/><text y="5" text-anchor="middle" font-size="17" font-weight="900" fill="#2b2a3a" font-family="Nunito,sans-serif">½</text></svg>',
+  title: '<svg viewBox="-30 -30 60 60"><path d="M-28 -6 H28 L22 4 L28 14 H-28 L-22 4 Z" fill="#1fbeaa" stroke="#2b2a3a" stroke-width="2.5" stroke-linejoin="round"/><path d="M-6 -24 l3 7 7 .8 -5 4.6 1.4 7 -6.4-3.6 -6.4 3.6 1.4-7 -5-4.6 7-.8z" transform="translate(6 0)" fill="#fff6b0" stroke="#2b2a3a" stroke-width="2"/><path d="M-16 4 H16" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>',
+  item: '<svg viewBox="-30 -30 60 60"><path d="M-22 10 Q-22 -20 0 -20 Q22 -20 22 10 Z" fill="#6a7fd1" stroke="#2b2a3a" stroke-width="2.5"/><rect x="-25" y="6" width="50" height="11" rx="5" fill="#5468b8" stroke="#2b2a3a" stroke-width="2.5"/><path d="M0 -14 l3 6.5 7 .8 -5.2 4.6 1.4 7 -6.2-3.5 -6.2 3.5 1.4-7 -5.2-4.6 7-.8z" fill="#ffd34d" stroke="#2b2a3a" stroke-width="1.6"/></svg>',
+};
+const REWARDS = [
+  { art: 'badge', kind: 'Badge', name: 'Fraction Fixer' },
+  { art: 'title', kind: 'Title', name: 'Quick Thinker' },
+  { art: 'item', kind: 'Avatar item', name: 'Star beanie' },
+];
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+let prizeFrom = null, prizeRun = 0, prizeOpening = null;
+async function openPrize(from) {
+  const run = ++prizeRun; prizeFrom = from;
+  const box = $('#pzBox'), list = $('#pzRewards'), hint = $('#pzHint'), collect = $('#pzCollect');
+  box.innerHTML = PRIZE_BOX; box.className = 'pz-box'; list.innerHTML = ''; collect.hidden = true;
+  $('#pz-h').textContent = 'A prize box!'; hint.textContent = 'Tap the box to open it';
+  $('#prize').hidden = false; box.focus();
+  if (reduced()) { await burstOpen(run); return; }
+  void box.offsetWidth; box.classList.add('drop');
+  await wait(650); if (run !== prizeRun) return;
+  snd('rewardWobble');
+  let skip = false; prizeOpening = () => { skip = true; };
+  for (const [cls, ms] of [['wob', 520], ['wob', 520], ['wob2', 560]]) {
+    if (skip || run !== prizeRun) break;
+    box.classList.remove('wob', 'wob2'); void box.offsetWidth; box.classList.add(cls); snd('rewardWobble'); burstAt(box, { count: 6, power: 0.5 });
+    await wait(ms);
+  }
+  if (run === prizeRun) await burstOpen(run);
+}
+async function burstOpen(run) {
+  prizeOpening = null;
+  const box = $('#pzBox'), list = $('#pzRewards'), hint = $('#pzHint'), collect = $('#pzCollect');
+  if (box.classList.contains('open') || box.classList.contains('opened')) return;
+  box.classList.remove('wob', 'wob2', 'drop'); box.classList.add(reduced() ? 'opened' : 'open');
+  box.setAttribute('aria-label', 'Prize box, open');
+  snd('rewardOpen'); burstAt(box, { count: 26, power: 1.4, word: true });
+  hint.textContent = '';
+  $('#pz-h').textContent = `You earned ${REWARDS.length} rewards!`;
+  for (const r of REWARDS) {
+    if (run !== prizeRun) return;
+    const li = document.createElement('li');
+    li.innerHTML = `${REWARD_ART[r.art]}<small>${r.kind}</small><b>${r.name}</b>`;
+    list.appendChild(li);
+    if (!reduced()) {
+      const b = box.getBoundingClientRect(), l = li.getBoundingClientRect();
+      const dx = b.left + b.width / 2 - (l.left + l.width / 2), dy = b.top + b.height * 0.45 - (l.top + l.height / 2);
+      li.animate([{ transform: `translate(${dx}px, ${dy}px) scale(.15) rotate(-20deg)`, opacity: 0 }, { transform: 'translate(0, -14px) scale(1.12) rotate(4deg)', opacity: 1, offset: 0.7 }, { transform: 'none', opacity: 1 }], { duration: 620, easing: 'cubic-bezier(.34,1.56,.64,1)', fill: 'backwards' });
+      setTimeout(() => burstAt(li, { count: 12, power: 0.7 }), 420);
+    }
+    snd('rewardUnlock');
+    await wait(reduced() ? 0 : 650);
+  }
+  if (run !== prizeRun) return;
+  ava.react('hop'); pipAnim('a-cheer', 1200);
+  collect.hidden = false; collect.focus();
+}
+function closePrize() { prizeRun++; $('#prize').hidden = true; prizeFrom?.focus(); }
+$('#pzBox').addEventListener('click', () => { if (prizeOpening) { prizeOpening(); } });
+$('#pzCollect').addEventListener('click', () => { snd('buttonPress'); closePrize(); toast('Rewards saved to Me → Rewards.'); });
 
 </script>
 </body>
