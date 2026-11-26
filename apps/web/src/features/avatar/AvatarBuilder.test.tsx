@@ -218,6 +218,91 @@ describe('AvatarBuilder', () => {
     });
   });
 
+  describe('switching tabs after scrolling (J9)', () => {
+    afterEach(() => vi.unstubAllGlobals());
+
+    /** Renders inside a scrolling box and fakes where the stage and panel sit on screen. */
+    function setup(panelTop: number) {
+      const utils = render(
+        <div data-testid="scroller" style={{ overflowY: 'auto' }}>
+          <Harness />
+        </div>,
+      );
+      const scroller = screen.getByTestId('scroller');
+      const scrollBy = vi.fn();
+      scroller.scrollBy = scrollBy as unknown as typeof scroller.scrollBy;
+      const rect = (top: number, bottom: number) => () => ({ top, bottom }) as DOMRect;
+      utils.container.querySelector('.avatar-builder__stage')!.getBoundingClientRect = rect(0, 300);
+      screen.getByRole('tabpanel').getBoundingClientRect = rect(panelTop, panelTop + 900);
+      return { scrollBy };
+    }
+
+    it("brings the new tab's first options into view just below the pinned stage", async () => {
+      stubReducedMotion(false);
+      const user = userEvent.setup();
+      const { scrollBy } = setup(-420);
+      await user.click(screen.getByRole('tab', { name: 'Hair' }));
+      expect(scrollBy).toHaveBeenCalledWith({ top: -720, behavior: 'smooth' });
+    });
+
+    it('does the same for the arrow keys, and jumps instead of gliding with reduced motion', async () => {
+      stubReducedMotion(true);
+      const user = userEvent.setup();
+      const { scrollBy } = setup(-100);
+      await user.click(screen.getByRole('tab', { name: 'Face' }));
+      scrollBy.mockClear();
+      await user.keyboard('{ArrowRight}');
+      expect(scrollBy).toHaveBeenCalledWith({ top: -400, behavior: 'auto' });
+    });
+
+    it('lines the options up with the top of the stage when they sit side by side (wide)', async () => {
+      stubReducedMotion(false);
+      const user = userEvent.setup();
+      const { container } = render(
+        <div data-testid="scroller" style={{ overflowY: 'auto' }}>
+          <Harness />
+        </div>,
+      );
+      const scroller = screen.getByTestId('scroller');
+      const scrollBy = vi.fn();
+      scroller.scrollBy = scrollBy as unknown as typeof scroller.scrollBy;
+      container.querySelector('.avatar-builder__stage')!.getBoundingClientRect = () =>
+        ({ top: 16, bottom: 420, left: 0, right: 240 }) as DOMRect;
+      screen.getByRole('tabpanel').getBoundingClientRect = () =>
+        ({ top: -600, bottom: 300, left: 264, right: 700 }) as DOMRect;
+      await user.click(screen.getByRole('tab', { name: 'Hair' }));
+      expect(scrollBy).toHaveBeenCalledWith({ top: -616, behavior: 'smooth' });
+    });
+
+    it('aims below the full-size stage while it is compact, as it grows back near the top', async () => {
+      stubReducedMotion(false);
+      const user = userEvent.setup();
+      const { container } = render(
+        <div data-testid="scroller" style={{ overflowY: 'auto' }}>
+          <Harness />
+        </div>,
+      );
+      const scroller = screen.getByTestId('scroller');
+      const scrollBy = vi.fn();
+      scroller.scrollBy = scrollBy as unknown as typeof scroller.scrollBy;
+      const stage = container.querySelector<HTMLElement>('.avatar-builder__stage')!;
+      // Compact: 64px shorter, with a 64px bottom margin standing in for the lost height.
+      stage.style.marginBottom = '64px';
+      stage.getBoundingClientRect = () => ({ top: 0, bottom: 241 }) as DOMRect;
+      screen.getByRole('tabpanel').getBoundingClientRect = () =>
+        ({ top: -500, bottom: 400 }) as DOMRect;
+      await user.click(screen.getByRole('tab', { name: 'Hair' }));
+      expect(scrollBy).toHaveBeenCalledWith({ top: -805, behavior: 'smooth' });
+    });
+
+    it('leaves the scroll alone when the options already start below the stage', async () => {
+      const user = userEvent.setup();
+      const { scrollBy } = setup(320);
+      await user.click(screen.getByRole('tab', { name: 'Hair' }));
+      expect(scrollBy).not.toHaveBeenCalled();
+    });
+  });
+
   describe('live preview juice (J9)', () => {
     afterEach(() => vi.unstubAllGlobals());
 
