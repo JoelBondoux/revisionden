@@ -191,6 +191,10 @@ Tags: #product #rules #limits #defaults
   its open topics. Next mission: weakest weak spot, else first topic not mastered, else review
   the weakest mastered topic (5 minutes). A unit id opens its challenge lesson (all its topics).
   Implemented in `packages/core/src/map.ts`.
+- Subjects with no questions yet (F8, RD-MBXKTC): the map defaults to the first enrolled subject
+  with questions and answers `status: "coming_soon"` (plus `subjectId` and `subjects` with
+  `hasContent` for the switcher) for one with none; 404 `no_subject` only with no subject at all
+  or an unknown id. The web shows "Questions for <subject> are on their way." and a switcher.
 - Mascot: Pip, an angular geometric fox (orange `#FF7A2F`). Brand violet `#6C47F5`; font Nunito,
   self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
 - Works offline for the app shell; API calls are never cached. Pages always come fresh from the
@@ -326,7 +330,9 @@ Tags: #product #rules #limits #defaults
   commuted products and sums, reordered lists and swapped equation sides (never coordinates or
   inequalities); `answer.units` lists optional units. A multiply sign before a sign is kept
   (`3n × -2` is not `3n - 2`). The maths engine accepts a solved value in other letters (`x = 2a`,
-  and `a = x` either way round).
+  and `a = x` either way round). Repeated alternatives on a final line count once, and a line
+  with more than 64 ways to read it (`MAX_READINGS` in `services/maths/app/working.py`) is
+  marked wrong, so a long run of `a = x` cannot tie up the engine (#151).
 
 ## Reminders
 
