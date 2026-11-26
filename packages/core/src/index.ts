@@ -45,3 +45,4 @@ export * from './family-tags';
 export * from './discount-codes';
 export * from './titles';
 export * from './stats-allowance';
+export * from './worth-a-look';

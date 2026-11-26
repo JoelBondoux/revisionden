@@ -14,6 +14,8 @@ import { LinkButton } from '../../components/links';
 import { Sheet } from '../../components/Sheet';
 import { BeforeYouStart } from './BeforeYouStart';
 import { Markdown } from './Markdown';
+import { changesSince } from './policyChanges';
+import { deviceStorage, isSnoozed, snooze, type SnoozeStorage } from './policyNoticeSnooze';
 import { usePolicyLibrary } from './PolicyLibraryContext';
 import './legal.css';
 
@@ -63,9 +65,19 @@ export const LegalApiProvider = Context.Provider;
 export const useLegalApi = () => useContext(Context);
 
 export type AcceptanceStatus =
-  { kind: 'ok' } | { kind: 'first' } | { kind: 'changed'; policies: AcceptedPolicy[] };
+  | { kind: 'ok' }
+  | { kind: 'first' }
+  | {
+      kind: 'changed';
+      policies: AcceptedPolicy[];
+      /** The version this parent last accepted, per policy. */
+      accepted: Partial<Record<AcceptedPolicy, string>>;
+    };
 
-/** Compares stored versions with the policies in this build. */
+/**
+ * Compares stored versions with the policies in this build. A policy this parent never accepted
+ * goes through the normal first confirmation, even if they accepted another one before.
+ */
 export function acceptanceStatus(
   accepted: Acceptance[],
   current: Partial<Record<AcceptedPolicy, string>>,
@@ -73,17 +85,30 @@ export function acceptanceStatus(
   const relevant = POLICIES_TO_ACCEPT.filter((p) => current[p] !== undefined);
   if (relevant.length === 0) return { kind: 'ok' };
   const stored = new Map(accepted.map((a) => [a.policy, a.version]));
-  if (!relevant.some((p) => stored.has(p))) return { kind: 'first' };
+  if (!relevant.every((p) => stored.has(p))) return { kind: 'first' };
   const changed = relevant.filter((p) => stored.get(p) !== current[p]);
-  return changed.length ? { kind: 'changed', policies: changed } : { kind: 'ok' };
+  if (!changed.length) return { kind: 'ok' };
+  const versions = Object.fromEntries(relevant.map((p) => [p, stored.get(p)!]));
+  return { kind: 'changed', policies: changed, accepted: versions };
 }
 
 /**
  * Wraps parent screens: a new parent confirms the terms and privacy notice once (versions
- * stored); after a policy changes, a sheet shows what changed and asks them to confirm.
- * If the check cannot be made (offline, API down), the screen is shown anyway.
+ * stored); after a policy changes, a sheet shows only the Changes lines newer than the version
+ * this parent accepted, per policy. "I've read the changes" stores
+ * the new versions for this parent; closing it hides it on this device for 24 hours (those
+ * versions only). If the check cannot be made (offline, API down), the screen is shown anyway.
  */
-export function PolicyGate({ children }: { children: ReactNode }) {
+export function PolicyGate({
+  children,
+  storage = deviceStorage(),
+  now = Date.now,
+}: {
+  children: ReactNode;
+  /** Where a closed notice is remembered (this device's local storage by default). */
+  storage?: SnoozeStorage;
+  now?: () => number;
+}) {
   const api = useLegalApi();
   const library = usePolicyLibrary();
   const [status, setStatus] = useState<AcceptanceStatus | 'loading'>('loading');
@@ -102,13 +127,23 @@ export function PolicyGate({ children }: { children: ReactNode }) {
   useEffect(() => {
     let live = true;
     api.list().then(
-      (accepted) => live && setStatus(acceptanceStatus(accepted, current)),
+      (accepted) => {
+        if (!live) return;
+        const next = acceptanceStatus(accepted, current);
+        const closed =
+          next.kind === 'changed' && isSnoozed(storage, versionsOf(next.policies), now());
+        setStatus(closed ? { kind: 'ok' } : next);
+      },
       () => live && setStatus({ kind: 'ok' }),
     );
     return () => {
       live = false;
     };
+    // storage and now are fixed for the life of the gate.
   }, [api, current]);
+
+  const versionsOf = (policies: AcceptedPolicy[]) =>
+    Object.fromEntries(policies.map((p) => [p, current[p]!]));
 
   const accept = useCallback(
     async (policies: AcceptedPolicy[]) => {
@@ -144,25 +179,41 @@ export function PolicyGate({ children }: { children: ReactNode }) {
   }
 
   const changed = status.kind === 'changed' ? status.policies : [];
-  const titles = changed.map((p) => library.get(p)?.title ?? p);
+  // Each changed policy with its lines since this parent's version; none left means nothing to show.
+  const updates = changed.flatMap((name) => {
+    const policy = library.get(name);
+    const since = status.kind === 'changed' ? status.accepted[name] : undefined;
+    const lines = policy && since ? changesSince(policy.changes, since) : [];
+    return policy && lines.length ? [{ name, title: policy.title, lines }] : [];
+  });
+  const titles = updates.map((u) => u.title);
   return (
     <>
       {children}
       <Sheet
-        open={changed.length > 0}
+        open={updates.length > 0}
         title={`We've updated our ${titles.join(' and ')}`}
-        onClose={() => setStatus({ kind: 'ok' })}
+        onClose={() => {
+          snooze(storage, versionsOf(changed), now());
+          setStatus({ kind: 'ok' });
+        }}
       >
         <div className="stack">
-          {changed.map((p) => (
-            <div key={p}>
+          {updates.map((u) => (
+            <section key={u.name} aria-labelledby={`policy-update-${u.name}`}>
+              <h3 id={`policy-update-${u.name}`}>
+                {u.title}, version {current[u.name]}
+              </h3>
+              <Markdown
+                text={u.lines.map((l) => `- ${l.version}: ${l.text}`).join('\n')}
+                headingOffset={2}
+              />
               <p>
-                <LinkButton to={`/legal/${p}`} variant="secondary">
-                  Read the {library.get(p)?.title ?? p}
+                <LinkButton to={`/legal/${u.name}`} variant="secondary">
+                  Read the {u.title}
                 </LinkButton>
               </p>
-              <Markdown text={library.get(p)?.changes ?? ''} headingOffset={2} />
-            </div>
+            </section>
           ))}
           {error && (
             <p role="alert" className="field__error">
@@ -170,7 +221,7 @@ export function PolicyGate({ children }: { children: ReactNode }) {
             </p>
           )}
           <Button block onClick={() => void accept(changed)}>
-            Confirm
+            I&apos;ve read the changes
           </Button>
         </div>
       </Sheet>
