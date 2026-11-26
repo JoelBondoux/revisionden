@@ -197,6 +197,8 @@ export function LessonPlayer({
   /** "Help me understand" was opened for this question (F10). */
   const [helped, setHelped] = useState(false);
   const [result, setResult] = useState<LearnAttemptResponse | null>(null);
+  /** It couldn't be marked now (F12: typed working with no maths engine), so it is skipped. */
+  const [skipped, setSkipped] = useState(false);
   const [checking, setChecking] = useState(false);
   const [error, setError] = useState(false);
   const [progress, setProgress] = useState<Progress | null>(null);
@@ -247,6 +249,10 @@ export function LessonPlayer({
         ...(isRetryEntry(entry) ? { retry: true } : {}),
         ...(helped ? { helped: true } : {}),
       });
+      if ('unmarked' in marked) {
+        setSkipped(true);
+        return;
+      }
       // Learning from mistakes (F5, owner guardrails): one retry per point and 2 per lesson, a
       // confidence question before each retry, and a step down after a second miss.
       // A helped answer (F10) is practised like a miss.
@@ -311,6 +317,7 @@ export function LessonPlayer({
     setDraft(null);
     setHelped(false);
     setResult(null);
+    setSkipped(false);
     setMiss(null);
     setComeback(false);
     shownAt.current = Date.now();
@@ -344,7 +351,7 @@ export function LessonPlayer({
         </Link>
         <ArenaProgress
           label="Lesson progress"
-          value={index + (result || unmarked ? 1 : 0)}
+          value={index + (result || unmarked || skipped ? 1 : 0)}
           max={queue.length}
         />
         <span className="lesson__xp">
@@ -372,7 +379,7 @@ export function LessonPlayer({
             key={item.id}
             item={item}
             draft={draft}
-            disabled={result !== null || checking}
+            disabled={result !== null || skipped || checking}
             onChange={setDraft}
             onSelfCheck={(knewIt) => void submit(knewIt)}
             optionMark={optionMark}
@@ -382,7 +389,7 @@ export function LessonPlayer({
           <HelpPanel
             key={`help-${index}`}
             item={item}
-            disabled={result !== null}
+            disabled={result !== null || skipped}
             onHelped={() => setHelped(true)}
           />
         )}
@@ -403,9 +410,14 @@ export function LessonPlayer({
             Couldn&apos;t check that answer. Please try again.
           </p>
         )}
+        {skipped && (
+          <p role="status" className="feedback">
+            We can&apos;t mark typed working right now, so this one&apos;s skipped. No XP lost.
+          </p>
+        )}
         {result && <Feedback result={result} item={item} miss={miss} comeback={comeback} />}
         {result && <NewRewards rewards={result.newlyEarned} />}
-        {result || unmarked ? (
+        {result || unmarked || skipped ? (
           <Button block variant={result?.correct ? 'success' : 'primary'} onClick={advance}>
             {finishing ? 'Finish' : 'Continue'}
           </Button>

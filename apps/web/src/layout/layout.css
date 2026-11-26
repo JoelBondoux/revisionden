@@ -220,3 +220,9 @@
   outline: none;
   box-shadow: none;
 }
+
+/* Lessons and tests: a row just for Pip, the Home button, top left (J15b). */
+.lesson-top-row {
+  display: flex;
+  margin-bottom: var(--space-2);
+}

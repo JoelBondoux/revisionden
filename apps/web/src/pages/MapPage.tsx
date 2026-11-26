@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useApi } from '../api/ApiContext';
 import { LoadingOrError } from '../api/LoadingOrError';
@@ -7,13 +7,12 @@ import { useApiResource } from '../api/useApiResource';
 import { FlameIcon } from '../components/icons';
 import { Pill } from '../components/Pill';
 import { Toast } from '../components/Toast';
+import { setPipSubject } from '../features/juice/pip';
 import { SubjectsNudge } from '../features/onboarding/checksUi';
 import { HScroller } from '../map/HScroller';
-import { TodayStrip } from '../map/TodayStrip';
 import { UnitPath } from '../map/UnitPath';
 import '../map/map.css';
 import { useStudent } from '../session/StudentContext';
-import { LeagueChip } from '../features/league';
 
 /** Chips for the student's subjects; a subject without questions yet says so. */
 function SubjectSwitcher({
@@ -79,6 +78,11 @@ export function MapPage() {
     [api, studentId, subjectId],
   );
   const dismissToast = useCallback(() => setToast(null), []);
+  // Pip, the Home button, dresses for the subject on the map (J15b).
+  const shownSubject = map.status === 'ready' ? (map.data.subjectId ?? map.data.subject) : null;
+  useEffect(() => {
+    if (shownSubject) setPipSubject(shownSubject);
+  }, [shownSubject]);
 
   if (!studentId) return <Navigate to="/family" replace />;
 
@@ -92,7 +96,6 @@ export function MapPage() {
             {map.data.streakDays} day streak
           </Pill>
         )}
-        <LeagueChip />
       </div>
       <SubjectsNudge />
       {map.status !== 'ready' ? (
@@ -113,11 +116,6 @@ export function MapPage() {
               onChoose={setSubjectId}
             />
           )}
-          <TodayStrip
-            xpToday={map.data.xpToday}
-            dailyGoalXp={map.data.dailyGoalXp}
-            mission={map.data.nextMission}
-          />
           <UnitPath key={map.data.subjectId} map={map.data} onLocked={setToast} />
         </>
       )}

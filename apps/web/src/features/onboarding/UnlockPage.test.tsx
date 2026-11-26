@@ -38,7 +38,7 @@ describe('Student passkey unlock', () => {
     ).toBeInTheDocument();
   });
 
-  it('unlocks with the passkey on this device and lands the student on their topic map', async () => {
+  it('unlocks with the passkey on this device and lands the student on Home', async () => {
     let optionsBody: unknown;
     let verifyBody: unknown;
     server.use(
@@ -56,8 +56,8 @@ describe('Student passkey unlock', () => {
     await userEvent.click(
       await screen.findByRole('button', { name: "I'm a student: unlock with my passkey" }),
     );
-    expect(await screen.findByRole('heading', { level: 1, name: 'Topic map' })).toBeInTheDocument();
-    expect(router.state.location.pathname).toBe('/map');
+    expect(await screen.findByRole('heading', { level: 1, name: 'Home' })).toBeInTheDocument();
+    expect(router.state.location.pathname).toBe('/home');
     expect(optionsBody).toEqual({});
     expect(authenticate).toHaveBeenCalledWith({ challenge: 'abc' });
     expect(verifyBody).toEqual({ challengeId: 'c1', response: { id: 'cred-1', response: {} } });
@@ -77,7 +77,7 @@ describe('Student passkey unlock', () => {
     stubPasskey(async () => ({ id: 'cred-1', response: {} }));
     const { router } = renderRoute('/unlock?returnTo=%2F%2Fevil.example', { studentId: null });
     await userEvent.click(await screen.findByRole('button', { name: 'Unlock with my passkey' }));
-    await waitFor(() => expect(router.state.location.pathname).toBe('/map'));
+    await waitFor(() => expect(router.state.location.pathname).toBe('/home'));
   });
 
   it('asks a parent to link this device when no passkey is found here, showing no account details', async () => {
@@ -182,7 +182,7 @@ describe('Student passkey unlock', () => {
     stubPasskey(async () => ({ id: 'cred-1', response: {} }));
     const { router } = renderRoute('/unlock', { studentId: null });
     await userEvent.click(await screen.findByRole('button', { name: 'Unlock with my passkey' }));
-    await waitFor(() => expect(router.state.location.pathname).toBe('/map'));
+    await waitFor(() => expect(router.state.location.pathname).toBe('/home'));
     expect(verifyBody).toMatchObject({ deviceMarker: 'old-marker-old-marker-old' });
     expect(window.localStorage.getItem('revisionden.deviceMarker')).toBe(
       'new-marker-new-marker-new',
@@ -200,7 +200,7 @@ describe('Student passkey unlock', () => {
     stubPasskey(async () => ({ id: 'cred-1', response: {} }));
     const { router } = renderRoute('/unlock', { studentId: null });
     await userEvent.click(await screen.findByRole('button', { name: 'Unlock with my passkey' }));
-    await waitFor(() => expect(router.state.location.pathname).toBe('/map'));
+    await waitFor(() => expect(router.state.location.pathname).toBe('/home'));
     expect(verifyBody).not.toHaveProperty('deviceMarker');
   });
 

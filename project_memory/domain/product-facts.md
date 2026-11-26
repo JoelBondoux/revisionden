@@ -193,7 +193,9 @@ Tags: #product #rules #limits #defaults
 - XP is totalled per day in UK time; a streak day counts once, the first time the day reaches the
   daily goal. Command-word lessons are items tagged `command-word` (none verified yet).
 - Worked maths answers are checked by the maths engine (`MATHS_ENGINE_URL`); long answers are not
-  marked yet ("marked by AI soon").
+  marked yet ("marked by AI soon"). Without the engine (F12), typed working is never picked for
+  students, and one answered anyway is "unmarked": nothing saved, no XP, streak or mastery
+  change, and the lesson says it was skipped.
 - Effort scores (e.g. CBI: Commitment, Behaviour and Inspiration, 1–4, 4 best) shape habits, never
   the predicted grade.
 
@@ -236,10 +238,18 @@ Tags: #product #rules #limits #defaults
   (gold, tick), in progress (violet, fill level shows mastery %), weak spot (orange, pulsing
   glow), locked (grey). Each unit ends in a challenge that unlocks at 80% unit mastery. The Cards
   tab shows how many flashcards are due.
-- Map layout (J12b, design C "Your path", owner choice 2026-11-26): subject chips on one line that
-  scrolls sideways; one **Today** strip (daily goal, the Next mission row with its Go button, the
-  5-a-day row while there is one, and the install row while the device can install); then "Your
-  path": a row of unit badges that scrolls sideways, and the chosen unit's card with **all** its
+- Home and Pip (J15b, owner direction 2026-11-26): `/home` is the student's first screen after
+  signing in or unlocking (`/learn` and `DEFAULT_STUDENT_PAGE` go there). One screen: level ring,
+  streak, goal rings (daily XP, 5-a-day, cards due), one big next-mission button (else "Pick a
+  topic"), weak spots, a friends-league chip marked Soon, and this week's days studied with the
+  reward gift. Pip is a round "Home" button at the top left of every student screen and lesson; in
+  a lesson or test he asks "Leave this lesson?" first. He acts about every 8 s, naps 21:00 to 07:00,
+  stops after 60 s without input, keeps still in lessons and with reduced motion. He wears one item
+  for the current subject (and a prop on Home) plus a unisex touch that rotates by day. The map's
+  Today strip moved to Home: the map is now topics only. Code: `apps/web/src/features/home/`,
+  `apps/web/src/features/juice/pip/`; e2e `e2e/tests/home.spec.ts`.
+- Map layout (J12b, design C "Your path", owner choice 2026-11-26; Today strip moved to Home in
+  J15b): subject chips on one line that scrolls sideways; then "Your path": a row of unit badges that scrolls sideways, and the chosen unit's card with **all** its
   topics down a path that scrolls inside the card. The page itself never scrolls sideways.
   - The current unit is the one holding the next mission, else the first with an open topic. Its
     path opens on the next mission's topic, else the weakest weak spot, else the first topic in
@@ -934,11 +944,11 @@ Tags: #product #rules #limits #defaults
 - Friends league (FL): owner decision 2026-11-26, friends may come from other families from day
   one, not family only. Development only (`FRIENDS_ENABLED`, lead 2026-11-26) until the notices
   are updated and the solicitor has reviewed them.
-  Design approved 2026-11-26; screens (League page under Me, Map rank chip, parent Friends page), core rules, API and migration 0030 built
+  Design approved 2026-11-26; screens (League page under Me, Home rank chip, parent Friends page), core rules, API and migration 0030 built
   (weekly wins to come): `docs/FRIENDS_LEAGUE.md`
   (nickname, avatar, title and weekly learning XP only; one parent per family approves; no chat;
   10-friend cap; siblings join automatically; reports seen by both families' parents and AppDeck;
-  rank chip on Map, League page under Me; head-to-head challenges later).
+  rank chip on Home (was the Map until Home landed), League page under Me; head-to-head challenges later).
 - "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
   NSPCC adult helpline, parent-only). Students reach it only from Settings, where it is the
   first tile (via the Me nav item); there is no Get help link in the student header or footer

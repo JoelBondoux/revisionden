@@ -62,3 +62,17 @@ describe('the league rank chip', () => {
     expect(failing.container).toBeEmptyDOMElement();
   });
 });
+
+describe('the league chip on Home', () => {
+  it('shows the fallback where there is no league to show', async () => {
+    render(
+      <MemoryRouter>
+        <LeagueChip
+          api={fakeLeagueApi({ getLeague: async () => Promise.reject(new Error('404')) })}
+          fallback={<span>Friends league Soon</span>}
+        />
+      </MemoryRouter>,
+    );
+    expect(await screen.findByText('Friends league Soon')).toBeInTheDocument();
+  });
+});
