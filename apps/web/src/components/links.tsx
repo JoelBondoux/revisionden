@@ -154,6 +154,85 @@ export function LinkTile({
   );
 }
 
+/** Pages that always open calmly and at once: Get help (J15a, owner rule). */
+const CALM_PATHS = /^\/(parent\/)?help(\/|$)/;
+
+/** What a button tile puts in the router state, so the page transition knows to play (J15a). */
+export const TILE_VIA = 'tile';
+
+type ButtonTileProps = AnchorProps &
+  Destination & {
+    /** Two or three words: the tile's whole name. No helper sentence. */
+    label: string;
+    icon: ReactNode;
+    /** A very short extra (a count, or who a policy is for), read as part of the name. */
+    badge?: string;
+    /** `help`: Get help's own calm look, and never a page transition. */
+    tone?: 'help';
+  };
+
+const withVia = (state: unknown) =>
+  state && typeof state === 'object' ? { ...state, via: TILE_VIA } : { via: TILE_VIA };
+
+/**
+ * A chunky, tappable button for "go to X" (J15a): a big icon over a short label, laid out in a
+ * `ButtonTiles` grid. Each effect style gives it its own look and press. Opening an app page
+ * from one plays the style's page transition (Back reverses it), except Get help, which stays calm.
+ */
+export function ButtonTile({
+  to,
+  href,
+  newTab,
+  state,
+  label,
+  icon,
+  badge,
+  tone,
+  className,
+  ...rest
+}: ButtonTileProps) {
+  const calm = tone === 'help' || (to !== undefined && CALM_PATHS.test(to));
+  const dest = destOf({
+    to,
+    href,
+    newTab,
+    state: to !== undefined && !calm ? withVia(state) : state,
+  } as Parameters<typeof destOf>[0]);
+  return (
+    <li className="button-tiles__item">
+      <AnyLink
+        dest={dest}
+        className={cx('button-tile', tone && `button-tile--${tone}`, className)}
+        {...rest}
+      >
+        <span className="button-tile__icon" aria-hidden="true">
+          {icon}
+        </span>
+        <span className="button-tile__label">{label}</span>
+        {badge && <span className="button-tile__badge"> {badge}</span>}
+      </AnyLink>
+    </li>
+  );
+}
+
+/** The grid of button tiles: two to a row on phones, more on wider screens. */
+export function ButtonTiles({
+  label,
+  className,
+  children,
+}: {
+  /** Names the list for screen readers when there is no heading right above it. */
+  label?: string;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <ul className={cx('button-tiles', className)} aria-label={label}>
+      {children}
+    </ul>
+  );
+}
+
 type SimpleLinkProps = AnchorProps & Destination & { children: ReactNode };
 
 /** A small pill-shaped link for use inside cards ("Details", "Change"). */

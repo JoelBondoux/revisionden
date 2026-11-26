@@ -2,9 +2,9 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { MapIcon } from './icons';
-import { LinkButton, LinkChip, LinkTile, TextLink } from './links';
+import { ButtonTile, ButtonTiles, LinkButton, LinkChip, LinkTile, TextLink } from './links';
 
 const inRouter = (ui: React.ReactNode) =>
   render(
@@ -122,6 +122,101 @@ describe('LinkTile', () => {
   });
 });
 
+// J15a (owner, 2026-11-26): "change the horizontal blocks to buttons that are in theme". Chunky
+// tappable buttons in a grid, with an icon and a short label; each opens its page with the effect
+// style's page transition.
+describe('ButtonTile', () => {
+  function StateProbe() {
+    const location = useLocation();
+    return <p data-testid="state">{JSON.stringify(location.state)}</p>;
+  }
+  const tilesThen = (ui: React.ReactNode) =>
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <Routes>
+          <Route path="/" element={ui} />
+          <Route path="*" element={<StateProbe />} />
+        </Routes>
+      </MemoryRouter>,
+    );
+
+  it('is a real link in a list, named by its short label, with the icon hidden', () => {
+    tilesThen(
+      <ButtonTiles label="Family">
+        <ButtonTile to="/stats" icon={<MapIcon />} label="Stats" />
+        <ButtonTile to="/kids" icon={<MapIcon />} label="Children" />
+      </ButtonTiles>,
+    );
+    const list = screen.getByRole('list', { name: 'Family' });
+    expect(list).toHaveClass('button-tiles');
+    const link = screen.getByRole('link', { name: 'Stats' });
+    expect(link).toHaveAttribute('href', '/stats');
+    expect(link).toHaveClass('button-tile');
+    expect(link.closest('li')!.parentElement).toBe(list);
+    expect(link.querySelector('.button-tile__icon')).toHaveAttribute('aria-hidden', 'true');
+    expect(screen.getAllByRole('listitem')).toHaveLength(2);
+  });
+
+  it('can show a short badge as part of its name', () => {
+    tilesThen(
+      <ButtonTiles>
+        <ButtonTile to="/legal/terms" icon={<MapIcon />} label="Terms" badge="Everyone" />
+      </ButtonTiles>,
+    );
+    expect(screen.getByRole('link', { name: 'Terms Everyone' })).toBeInTheDocument();
+  });
+
+  it('opens its page with the page transition, keeping any state it was given', async () => {
+    tilesThen(
+      <ButtonTiles>
+        <ButtonTile
+          to="/feedback"
+          state={{ from: '/settings' }}
+          icon={<MapIcon />}
+          label="Feedback"
+        />
+      </ButtonTiles>,
+    );
+    await userEvent.click(screen.getByRole('link', { name: 'Feedback' }));
+    expect(JSON.parse(screen.getByTestId('state').textContent!)).toEqual({
+      from: '/settings',
+      via: 'tile',
+    });
+  });
+
+  it('keeps Get help calm: no transition, and its own look', async () => {
+    tilesThen(
+      <ButtonTiles>
+        <ButtonTile to="/help" icon={<MapIcon />} label="Get help" tone="help" />
+      </ButtonTiles>,
+    );
+    const link = screen.getByRole('link', { name: 'Get help' });
+    expect(link).toHaveClass('button-tile--help');
+    await userEvent.click(link);
+    expect(screen.getByTestId('state')).toHaveTextContent('null');
+  });
+
+  it('never adds the transition to a Get help page, whatever its tone', async () => {
+    tilesThen(
+      <ButtonTiles>
+        <ButtonTile to="/parent/help" icon={<MapIcon />} label="Help" />
+      </ButtonTiles>,
+    );
+    await userEvent.click(screen.getByRole('link', { name: 'Help' }));
+    expect(screen.getByTestId('state')).toHaveTextContent('null');
+  });
+
+  it('can open an outside address in a new tab, safely and saying so', () => {
+    render(
+      <ButtonTiles>
+        <ButtonTile href="https://example.com/guide" newTab icon={<MapIcon />} label="Guide" />
+      </ButtonTiles>,
+    );
+    const link = screen.getByRole('link', { name: 'Guide (opens in a new tab)' });
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+  });
+});
+
 describe('LinkChip', () => {
   it('is a small pill-shaped link for use inside cards', () => {
     inRouter(<LinkChip to="/stats">Details</LinkChip>);
@@ -170,9 +265,9 @@ describe('link styles', () => {
   });
 
   it('gives every link a target of at least 44px', () => {
-    for (const selector of ['.link-tile', '.link-chip', '.btn--quiet']) {
+    for (const selector of ['.link-tile', '.link-chip', '.btn--quiet', '.button-tile']) {
       expect(rule(selector), selector).toMatch(
-        /min-height: (var\(--tap-target\)|4[4-9]px|[5-9]\dpx)/,
+        /min-height: (var\(--tap-target\)|4[4-9]px|[5-9]\dpx|[3-9](\.\d+)?rem)/,
       );
     }
   });
@@ -182,6 +277,7 @@ describe('link styles', () => {
       '.link-tile:focus-within',
       '.link-chip:focus-visible',
       '.text-link:focus-visible',
+      '.button-tile:focus-visible',
     ]) {
       expect(rule(selector), selector).toMatch(/outline: 3px solid/);
     }
@@ -204,6 +300,29 @@ describe('link styles', () => {
         );
       }
     }
+  });
+});
+
+describe('button tile styles', () => {
+  const css = readFileSync(join(__dirname, 'links.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+
+  it('lays tiles out two to a row on phones and more on wider screens, never sideways', () => {
+    expect(css).toMatch(
+      /\.button-tiles\s*\{[^}]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/,
+    );
+    expect(css).toMatch(
+      /@media \(min-width: [^)]+\)\s*\{\s*\.button-tiles\s*\{[^}]*repeat\((3|4|auto-fill)/,
+    );
+  });
+
+  it('squishes when pressed, and holds still with reduced motion', () => {
+    expect(css).toMatch(/\.button-tile:active\s*\{[^}]*transform:/);
+    expect(css).toMatch(/prefers-reduced-motion: reduce\)\s*\{[^@]*\.button-tile/);
+  });
+
+  it('wraps a long label instead of overflowing a 320px screen with text at 200%', () => {
+    expect(css).toMatch(/\.button-tile\s*\{[^}]*overflow-wrap:\s*anywhere/);
+    expect(css).toMatch(/\.button-tile\s*\{[^}]*min-width:\s*0/);
   });
 });
 

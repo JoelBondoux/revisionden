@@ -133,6 +133,26 @@ describe('Topic map screen', () => {
     expect(message.closest('[role="status"]')).not.toBeNull();
   });
 
+  // J12d (owner, 2026-11-26): "195 / 50 XP" with a full bar looked odd. Past the goal, the strip
+  // celebrates instead.
+  it('celebrates a smashed daily goal instead of showing an odd fraction', async () => {
+    server.use(
+      http.get('*/v1/student/map', async () => {
+        const { topicMap } = await import('../mocks/data');
+        return HttpResponse.json({ ...topicMap, xpToday: 195, dailyGoalXp: 50 });
+      }),
+    );
+    renderRoute('/map');
+    const today = await screen.findByRole('region', { name: 'Today' });
+    await within(today).findByText('Goal smashed!');
+    expect(today).toHaveTextContent('195 XP');
+    expect(today).not.toHaveTextContent('195 / 50');
+    expect(within(today).getByRole('progressbar', { name: 'Daily goal' })).toHaveAttribute(
+      'aria-valuetext',
+      'Goal smashed: 195 XP, goal 50 XP',
+    );
+  });
+
   it('leaves the next mission out of the Today strip when there is none', async () => {
     server.use(
       http.get('*/v1/student/map', async () => {

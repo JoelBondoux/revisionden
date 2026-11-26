@@ -128,3 +128,17 @@ describe('gold surfaces on the map', () => {
     }
   });
 });
+
+// Found by the J15a dark-mode checks on parent home: form error text used the danger fill
+// colour, which is too dim as text on a dark surface (2.95:1). In dark mode it uses the lighter
+// danger edge colour instead (AA).
+describe('form error text in dark mode', () => {
+  it('uses the readable danger edge colour', () => {
+    expect(themesCss).toMatch(
+      /:root\[data-theme='dark'\] \.field__error \{\s*color: var\(--color-danger-edge\);/,
+    );
+    expect(
+      contrastRatio(dark['--color-danger-edge']!, dark['--color-surface']!),
+    ).toBeGreaterThanOrEqual(4.5);
+  });
+});

@@ -202,3 +202,109 @@
 .arena a.link-chip.link-chip {
   color: var(--color-primary-edge);
 }
+
+/* ButtonTile (J15a): chunky, tappable buttons in a grid, an icon over a short label. The base look
+   is here; each effect style adds its own in its stylesheet (`.button-tile`). Two to a row on
+   phones, more on wider screens; a long label wraps, so 320px with text at 200% never scrolls
+   sideways (WCAG 1.4.10). Motion is transform and shadow only. */
+.button-tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0 0 5px;
+  list-style: none;
+}
+
+@media (min-width: 40rem) {
+  .button-tiles {
+    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  }
+}
+
+.button-tiles__item {
+  display: flex;
+  min-width: 0;
+}
+
+.button-tile {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-width: 0;
+  min-height: 6.5rem;
+  padding: var(--space-3) var(--space-2);
+  overflow-wrap: anywhere;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-3d-neutral);
+  color: var(--color-text);
+  font-weight: var(--font-weight-black);
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    transform var(--motion-fast) var(--ease-spring),
+    box-shadow var(--motion-fast) var(--ease-out);
+}
+
+.button-tile:hover {
+  transform: translateY(-2px);
+}
+
+.button-tile:active {
+  transform: translateY(4px) scale(0.96, 0.92);
+  box-shadow: none;
+}
+
+.button-tile:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.button-tile__icon {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-edge);
+}
+
+.button-tile__icon svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.button-tile__badge {
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill, 999px);
+  background: var(--color-background);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Get help keeps its own calm, prominent look in every style (it never transitions). */
+.button-tile--help .button-tile__icon {
+  background: var(--color-help-soft, var(--color-primary-soft));
+  color: var(--color-help, var(--color-primary-edge));
+}
+
+.arena a.button-tile.button-tile {
+  color: var(--color-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button-tile,
+  .button-tile:hover,
+  .button-tile:active {
+    transform: none;
+  }
+}

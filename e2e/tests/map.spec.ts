@@ -131,6 +131,45 @@ test('the subject chips and unit badges stay on one line and scroll sideways', a
   }
 });
 
+// J12d (owner, 2026-11-26): the subject row opened scrolled so the chip on the left was cut
+// mid-word. Each row now opens showing the chosen item whole, lined up on an item's edge.
+test('each sideways row opens with the chosen item whole and no item cut at the left edge', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  const many = {
+    ...topicMap,
+    subjects: [
+      { subjectId: 'gcse-physics', subject: 'Physics', hasContent: false },
+      { subjectId: 'gcse-chemistry', subject: 'Chemistry', hasContent: false },
+      { subjectId: 'gcse-english-literature', subject: 'English Literature', hasContent: false },
+      { subjectId: 'gcse-maths', subject: 'Maths', hasContent: true },
+      { subjectId: 'gcse-biology', subject: 'Biology', hasContent: false },
+    ],
+  };
+  await openMap(page);
+  await page.route('**/v1/student/map**', (route) => route.fulfill({ json: many }));
+  await page.reload();
+  await expect(page.getByRole('region', { name: 'Algebra topics' })).toBeVisible();
+  for (const name of ['Subject', 'Units']) {
+    const row = page.getByRole('group', { name });
+    const cut = await row.evaluate((track) => {
+      const edge = track.getBoundingClientRect();
+      return Array.from(track.children)
+        .map((el) => el.getBoundingClientRect())
+        .filter((box) => box.left < edge.left - 1 && box.right > edge.left + 1).length;
+    });
+    expect(cut, name).toBe(0);
+  }
+  const maths = page.getByRole('group', { name: 'Subject' }).getByRole('button', { name: 'Maths' });
+  const inView = await maths.evaluate((el) => {
+    const box = el.getBoundingClientRect();
+    const track = el.parentElement!.getBoundingClientRect();
+    return box.left >= track.left - 1 && box.right <= track.right + 1;
+  });
+  expect(inView).toBe(true);
+});
+
 test('the keyboard reaches every chip, badge and topic, and focus scrolls each into view', async ({
   page,
 }) => {

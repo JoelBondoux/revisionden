@@ -15,7 +15,7 @@ import {
   ShieldIcon,
   UsersIcon,
 } from '../../components/icons';
-import { LinkButton, LinkTile } from '../../components/links';
+import { ButtonTile, ButtonTiles, LinkButton } from '../../components/links';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { ChildReminderSettings, ParentRewardNews } from '../notifications';
@@ -58,83 +58,27 @@ export function ParentHomePage() {
       <InstallCard />
       <div className="parent-home__grid">
         <Card title="Progress">
-          <ul className="link-tiles">
-            <li>
-              <LinkTile
-                to="/parent/stats"
-                icon={<ProgressIcon />}
-                title="Stats dashboard"
-                description="XP, accuracy, streaks and mastery"
-              />
-            </li>
-          </ul>
+          <ButtonTiles>
+            <ButtonTile to="/parent/stats" icon={<ProgressIcon />} label="Stats dashboard" />
+          </ButtonTiles>
         </Card>
         <Card title="Family">
-          <ul className="link-tiles">
-            <li>
-              <LinkTile
-                to="/onboarding"
-                icon={<UsersIcon />}
-                title="Add or manage children"
-                description="Profiles, subjects and device links"
-              />
-            </li>
-            <li>
-              <LinkTile
-                to="/feedback/family"
-                icon={<ChatIcon />}
-                title="Family feedback"
-                description="What your family has sent us"
-              />
-            </li>
-            <li>
-              <LinkTile
-                to="/complaints"
-                icon={<DocumentIcon />}
-                title="Make a complaint"
-                description="Tell us formally if something went wrong"
-              />
-            </li>
-            <li>
-              <LinkTile
-                to="/onboarding"
-                icon={<DownloadIcon />}
-                title="Download your family's data"
-                description="Everything we hold, in one file"
-              />
-            </li>
-          </ul>
+          <ButtonTiles>
+            <ButtonTile to="/onboarding" icon={<UsersIcon />} label="Children" />
+            <ButtonTile to="/feedback/family" icon={<ChatIcon />} label="Family feedback" />
+            <ButtonTile to="/complaints" icon={<DocumentIcon />} label="Complaints" />
+            <ButtonTile to="/onboarding" icon={<DownloadIcon />} label="Your data" />
+          </ButtonTiles>
         </Card>
         <ParentRewardNews />
         <ParentsPanel onDeleted={() => navigate('/', { replace: true })} />
         <FamilyLog />
         <Card title="Settings and policies">
-          <ul className="link-tiles">
-            <li>
-              <LinkTile
-                to="/settings"
-                icon={<SettingsIcon />}
-                title="App settings"
-                description="Sound, reading and reminders"
-              />
-            </li>
-            <li>
-              <LinkTile
-                to="/legal"
-                icon={<ShieldIcon />}
-                title="Policies"
-                description="Privacy and terms in plain English"
-              />
-            </li>
-            <li>
-              <LinkTile
-                to="/parent/help"
-                icon={<HeartIcon />}
-                title="Get help"
-                description="Support for you and your child"
-              />
-            </li>
-          </ul>
+          <ButtonTiles>
+            <ButtonTile to="/settings" icon={<SettingsIcon />} label="App settings" />
+            <ButtonTile to="/legal" icon={<ShieldIcon />} label="Policies" />
+            <ButtonTile to="/parent/help" icon={<HeartIcon />} label="Get help" tone="help" />
+          </ButtonTiles>
         </Card>
       </div>
     </div>
@@ -163,40 +107,16 @@ function ChildCard({ choices }: { choices: Child[] }) {
         </label>
       )}
       <Card title={child.nickname} className="parent-home__child">
-        <ul className="link-tiles">
-          <li>
-            <LinkTile
-              to={`/family/${id}/rewards`}
-              icon={<CrownIcon />}
-              title="Rewards you set"
-              description="Treats for targets they reach"
-            />
-          </li>
-          <li>
-            <LinkTile
-              to={`/parent/reminders/${id}`}
-              icon={<BellIcon />}
-              title="Reminder times"
-              description="When reminders come, and quiet hours"
-            />
-          </li>
-          <li>
-            <LinkTile
-              to={`/parent/subjects/${id}`}
-              icon={<LearnIcon />}
-              title="Subjects"
-              description="Add or remove subjects, change boards and tiers"
-            />
-          </li>
-          <li>
-            <LinkTile
-              to={`/parent/friends/${id}?name=${encodeURIComponent(child.nickname)}`}
-              icon={<UsersIcon />}
-              title="Friends"
-              description="Allow friends, approve requests, and see the friends league"
-            />
-          </li>
-        </ul>
+        <ButtonTiles>
+          <ButtonTile to={`/family/${id}/rewards`} icon={<CrownIcon />} label="Rewards you set" />
+          <ButtonTile to={`/parent/reminders/${id}`} icon={<BellIcon />} label="Reminder times" />
+          <ButtonTile to={`/parent/subjects/${id}`} icon={<LearnIcon />} label="Subjects" />
+          <ButtonTile
+            to={`/parent/friends/${id}?name=${encodeURIComponent(child.nickname)}`}
+            icon={<UsersIcon />}
+            label="Friends"
+          />
+        </ButtonTiles>
       </Card>
     </>
   );

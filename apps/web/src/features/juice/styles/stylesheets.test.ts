@@ -171,3 +171,40 @@ describe('the Doodle Diary earned level', () => {
     expect(css).not.toMatch(/\[data-theme='dark'\] \.rewards__step--earned/);
   });
 });
+
+// J15a (owner, 2026-11-26): button tiles are "in theme", and the pages they open come in with a
+// move of the style's own (a page turn, a pop, a pixel wipe...), reversed on Back. Short (350ms at
+// most) so it never feels slow.
+describe.each(EFFECT_STYLE_IDS)('the %s button tiles and page transition', (id) => {
+  const css = read(`${id}.css`);
+  const scope = `:root[data-effect-style='${id}']`;
+  const rule = (selector: string) => {
+    const start = css.indexOf(`${selector} {`);
+    return start < 0 ? '' : css.slice(start, css.indexOf('}', start));
+  };
+
+  it('gives the button tiles its own look and press', () => {
+    expect(css).toContain(`${scope} .button-tile {`);
+    expect(css).toContain(`${scope} .button-tile:active`);
+  });
+
+  it.each(['.page-enter', '.page-enter--back'])('animates %s with its own keyframes', (cls) => {
+    const selector =
+      cls === '.page-enter' ? `${scope} .page-enter` : `${scope} .page-enter.page-enter--back`;
+    const body = rule(selector);
+    const animation = /animation:\s*([\w-]+)\s+(\d+)ms/.exec(body);
+    expect(animation, selector).not.toBeNull();
+    expect(Number(animation![2])).toBeLessThanOrEqual(350);
+    expect(css).toContain(`@keyframes ${animation![1]}`);
+  });
+});
+
+describe('the page transitions with reduced motion', () => {
+  it('are switched off by the shared transitions stylesheet', () => {
+    const css = read('../transitions/transitions.css');
+    expect(css).toMatch(
+      /@media \(prefers-reduced-motion: reduce\)\s*\{[^}]*\.page-enter[^{]*\{[^}]*animation:\s*none/,
+    );
+    expect(read('../transitions/PageTransition.tsx')).toContain(`import './transitions.css';`);
+  });
+});

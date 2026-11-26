@@ -6,7 +6,7 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-n4-lp-prime-factorisation",
     "expected_seconds": 120,
-    "prompt": "Write 360 as a product of its prime factors. Give your answer in index form, using ^ for powers (for example 2^3).",
+    "prompt": "Write 360 as a product of its prime factors. Give your answer in index form, using the Power key (^) for powers (for example 2^3).",
     "answer": { "expression": "2^3 * 3^2 * 5", "form": "index_form" },
     "verify": { "method": "expression", "expression": "360" },
     "marks": 2,
@@ -15,6 +15,7 @@
       "A1 for a fully correct product of prime factors in index form (factors in any order)"
     ],
     "explanation": "Divide by the smallest prime that goes in each time: 360 ÷ 2 = 180, 180 ÷ 2 = 90, 90 ÷ 2 = 45, 45 ÷ 3 = 15, 15 ÷ 3 = 5, and 5 is prime. So 360 = 2^3 × 3^2 × 5.",
+    "hint": "Keep dividing by the smallest prime that goes in exactly (2, then 3, then 5, ...) until you reach 1. Then group the repeated primes as powers.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N4",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -40,7 +41,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer and every step backed by the maths engine. Every base checked prime and the product checked in Python. Mark points written by this session. Prompt asks for ^ notation and the A1 mark allows any order of factors (after adversarial review of n4-0002). Explanation (repeated division) added and the A1 mark reworded after adversarial review of n4-0003 and n4-0004; every division checked in Python. Explanation reworded to follow the steps line by line (adversarial review, second run). Model-solution steps removed (the explanation's repeated division is the method; n4-0003 keeps steps as the worked example), after the adversarial review found the steps and explanation described the method two ways. Fairness sweep (S3-N3): answer.form index_form added, as the question asks for the answer in index form (a product of primes with powers); the value alone is no longer accepted.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer and every step backed by the maths engine. Every base checked prime and the product checked in Python. Mark points written by this session. Prompt asks for ^ notation and the A1 mark allows any order of factors (after adversarial review of n4-0002). Explanation (repeated division) added and the A1 mark reworded after adversarial review of n4-0003 and n4-0004; every division checked in Python. Explanation reworded to follow the steps line by line (adversarial review, second run). Model-solution steps removed (the explanation's repeated division is the method; n4-0003 keeps steps as the worked example), after the adversarial review found the steps and explanation described the method two ways. Fairness sweep (S3-N3): answer.form index_form added, as the question asks for the answer in index form (a product of primes with powers); the value alone is no longer accepted. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer. Prompt reworded (F9, #254): \"using ^ for powers\" became \"using the Power key (^) for powers\", to match the answer box; maths unchanged.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -70,17 +71,17 @@
         {
           "name": "blind-answer",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T06:21:24Z",
-          "notes": "model answered \"2^3 * 3^2 * 5\"; expected \"2^3 * 3^2 * 5\""
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:36:09Z",
+          "notes": "model answered \"2^3 × 3^2 × 5\"; expected \"2^3 * 3^2 * 5\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T06:21:33Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:36:10Z",
           "notes": "no problems found"
         }
       ]
@@ -93,7 +94,7 @@
     "difficulty": 3,
     "learning_point": "gcse-maths-h-n4-lp-prime-factorisation",
     "expected_seconds": 120,
-    "prompt": "Write 1764 as a product of its prime factors. Give your answer in index form, using ^ for powers (for example 2^3).",
+    "prompt": "Write 1764 as a product of its prime factors. Give your answer in index form, using the Power key (^) for powers (for example 2^3).",
     "answer": { "expression": "2^2 * 3^2 * 7^2", "form": "index_form" },
     "verify": { "method": "expression", "expression": "1764" },
     "steps": ["1764", "2 * 882", "2^2 * 441", "2^2 * 3 * 147", "2^2 * 3^2 * 49", "2^2 * 3^2 * 7^2"],
@@ -103,6 +104,7 @@
       "A1 for a fully correct product of prime factors in index form (factors in any order)"
     ],
     "explanation": "Divide by the smallest prime that goes in each time: 1764 ÷ 2 = 882, 882 ÷ 2 = 441, 441 ÷ 3 = 147, 147 ÷ 3 = 49, 49 ÷ 7 = 7, and 7 is prime. So 1764 = 2^2 × 3^2 × 7^2.",
+    "hint": "Divide by 2 as many times as you can, then by 3, then by the next prime. Group repeated primes as powers.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N4",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -128,7 +130,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer and every step backed by the maths engine. Every base checked prime and the product checked in Python. Mark points written by this session. Prompt asks for ^ notation and the A1 mark allows any order of factors (after adversarial review of n4-0002). Explanation (repeated division) added and the A1 mark reworded after adversarial review of n4-0003 and n4-0004; every division checked in Python. Fairness sweep (S3-N3): answer.form index_form added, as the question asks for the answer in index form (a product of primes with powers); the value alone is no longer accepted.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer and every step backed by the maths engine. Every base checked prime and the product checked in Python. Mark points written by this session. Prompt asks for ^ notation and the A1 mark allows any order of factors (after adversarial review of n4-0002). Explanation (repeated division) added and the A1 mark reworded after adversarial review of n4-0003 and n4-0004; every division checked in Python. Fairness sweep (S3-N3): answer.form index_form added, as the question asks for the answer in index form (a product of primes with powers); the value alone is no longer accepted. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer. Prompt reworded (F9, #254): \"using ^ for powers\" became \"using the Power key (^) for powers\", to match the answer box; maths unchanged.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -158,17 +160,17 @@
         {
           "name": "blind-answer",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T06:21:42Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:36:12Z",
           "notes": "model answered \"2^2 * 3^2 * 7^2\"; expected \"2^2 * 3^2 * 7^2\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T06:23:09Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:36:13Z",
           "notes": "no problems found"
         }
       ]
@@ -181,7 +183,7 @@
     "difficulty": 3,
     "learning_point": "gcse-maths-h-n4-lp-prime-factorisation",
     "expected_seconds": 120,
-    "prompt": "Write 2200 as a product of its prime factors. Give your answer in index form, using ^ for powers (for example 2^3).",
+    "prompt": "Write 2200 as a product of its prime factors. Give your answer in index form, using the Power key (^) for powers (for example 2^3).",
     "answer": { "expression": "2^3 * 5^2 * 11", "form": "index_form" },
     "verify": { "method": "expression", "expression": "2200" },
     "marks": 2,
@@ -190,6 +192,7 @@
       "A1 for a fully correct product of prime factors in index form (factors in any order)"
     ],
     "explanation": "Divide by the smallest prime that goes in each time: 2200 ÷ 2 = 1100, 1100 ÷ 2 = 550, 550 ÷ 2 = 275, 275 ÷ 5 = 55, 55 ÷ 5 = 11, and 11 is prime. So 2200 = 2^3 × 5^2 × 11.",
+    "hint": "Divide by 2 as many times as you can, then try 5. Write repeated primes as powers.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N4",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -215,7 +218,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer and every step backed by the maths engine. Every base checked prime and the product checked in Python. Mark points written by this session. Prompt asks for ^ notation and the A1 mark allows any order of factors (after adversarial review of n4-0002). Explanation (repeated division) added and the A1 mark reworded after adversarial review of n4-0003 and n4-0004; every division checked in Python. Model-solution steps removed (the explanation's repeated division is the method), after the adversarial review said the steps did not model a factor tree or repeated division. Fairness sweep (S3-N3): answer.form index_form added, as the question asks for the answer in index form (a product of primes with powers); the value alone is no longer accepted.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer and every step backed by the maths engine. Every base checked prime and the product checked in Python. Mark points written by this session. Prompt asks for ^ notation and the A1 mark allows any order of factors (after adversarial review of n4-0002). Explanation (repeated division) added and the A1 mark reworded after adversarial review of n4-0003 and n4-0004; every division checked in Python. Model-solution steps removed (the explanation's repeated division is the method), after the adversarial review said the steps did not model a factor tree or repeated division. Fairness sweep (S3-N3): answer.form index_form added, as the question asks for the answer in index form (a product of primes with powers); the value alone is no longer accepted. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer. Prompt reworded (F9, #254): \"using ^ for powers\" became \"using the Power key (^) for powers\", to match the answer box; maths unchanged.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -245,17 +248,17 @@
         {
           "name": "blind-answer",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T06:22:13Z",
-          "notes": "model answered \"2^3 * 5^2 * 11\"; expected \"2^3 * 5^2 * 11\""
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:36:15Z",
+          "notes": "model answered \"2^3 × 5^2 × 11\"; expected \"2^3 * 5^2 * 11\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T06:23:22Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:36:16Z",
           "notes": "no problems found"
         }
       ]
@@ -273,6 +276,7 @@
     "verify": { "expression": "2^2 * 3" },
     "marks": 1,
     "explanation": "Write each number as a product of primes: 84 = 2^2 × 3 × 7 and 120 = 2^3 × 3 × 5. The HCF uses the primes in both, with the lower power of each: 2^2 × 3 = 12.",
+    "hint": "Write both numbers as products of primes. The HCF uses the primes they share, each with the lower power.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N4",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -298,7 +302,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer checked in Python with math.gcd / math.lcm; the maths engine confirms the value of the prime-factor product used as verify.expression. 84 = 2^2 × 3 × 7, 120 = 2^3 × 3 × 5, HCF = 2^2 × 3. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer checked in Python with math.gcd / math.lcm; the maths engine confirms the value of the prime-factor product used as verify.expression. 84 = 2^2 × 3 × 7, 120 = 2^3 × 3 × 5, HCF = 2^2 × 3. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -336,9 +340,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:39:22Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:20Z",
           "notes": "no problems found"
         }
       ]
@@ -356,6 +360,7 @@
     "verify": { "expression": "2 * 3^2" },
     "marks": 1,
     "explanation": "Write each number as a product of primes: 90 = 2 × 3^2 × 5 and 126 = 2 × 3^2 × 7. The HCF uses the primes in both, with the lower power of each: 2 × 3^2 = 18.",
+    "hint": "Write each number as a product of primes, then multiply the primes they have in common, using the lower power of each.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N4",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -381,7 +386,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer checked in Python with math.gcd / math.lcm; the maths engine confirms the value of the prime-factor product used as verify.expression. 90 = 2 × 3^2 × 5, 126 = 2 × 3^2 × 7, HCF = 2 × 3^2. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer checked in Python with math.gcd / math.lcm; the maths engine confirms the value of the prime-factor product used as verify.expression. 90 = 2 × 3^2 × 5, 126 = 2 × 3^2 × 7, HCF = 2 × 3^2. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -419,9 +424,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:39:29Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:21Z",
           "notes": "no problems found"
         }
       ]
@@ -439,6 +444,7 @@
     "verify": { "expression": "2^2 * 3^2" },
     "marks": 1,
     "explanation": "Take each prime that is in both A and B, with the lower power: 2^2 (from B) and 3^2 (from A). 5 and 7 are each in only one, so leave them out. HCF = 2^2 × 3^2 = 4 × 9 = 36.",
+    "hint": "Use only the primes that appear in both A and B, and take the lower power of each.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N4",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -464,7 +470,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer checked in Python with math.gcd / math.lcm; the maths engine confirms the value of the prime-factor product used as verify.expression. A = 360, B = 756, gcd = 36 = 2^2 × 3^2. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer checked in Python with math.gcd / math.lcm; the maths engine confirms the value of the prime-factor product used as verify.expression. A = 360, B = 756, gcd = 36 = 2^2 × 3^2. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -502,9 +508,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:39:37Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:23Z",
           "notes": "no problems found"
         }
       ]
@@ -522,6 +528,7 @@
     "verify": { "expression": "2 * 3^2 * 5" },
     "marks": 1,
     "explanation": "Write each number as a product of primes: 18 = 2 × 3^2 and 30 = 2 × 3 × 5. The LCM uses every prime that appears, with the higher power of each: 2 × 3^2 × 5 = 90.",
+    "hint": "Write both numbers as products of primes. The LCM uses every prime that appears, each with the higher power.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N4",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -547,7 +554,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer checked in Python with math.gcd / math.lcm; the maths engine confirms the value of the prime-factor product used as verify.expression. 18 = 2 × 3^2, 30 = 2 × 3 × 5, LCM = 2 × 3^2 × 5. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer checked in Python with math.gcd / math.lcm; the maths engine confirms the value of the prime-factor product used as verify.expression. 18 = 2 × 3^2, 30 = 2 × 3 × 5, LCM = 2 × 3^2 × 5. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -585,9 +592,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:39:45Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:25Z",
           "notes": "no problems found"
         }
       ]
@@ -605,6 +612,7 @@
     "verify": { "expression": "2^2 * 3 * 5" },
     "marks": 1,
     "explanation": "The buses leave together again after a number of minutes that is a multiple of both 12 and 20. That is the LCM. 12 = 2^2 × 3 and 20 = 2^2 × 5, so the LCM is 2^2 × 3 × 5 = 60 minutes.",
+    "hint": "The buses leave together again after a time that is a multiple of both 12 and 20. Look for the smallest one.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N4",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -630,7 +638,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer checked in Python with math.gcd / math.lcm; the maths engine confirms the value of the prime-factor product used as verify.expression. LCM of 12 and 20 = 60 = 2^2 × 3 × 5. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer checked in Python with math.gcd / math.lcm; the maths engine confirms the value of the prime-factor product used as verify.expression. LCM of 12 and 20 = 60 = 2^2 × 3 × 5. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -668,9 +676,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:39:54Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:26Z",
           "notes": "no problems found"
         }
       ]
@@ -688,6 +696,7 @@
     "verify": { "expression": "2^2 * 3^2 * 5" },
     "marks": 1,
     "explanation": "Take every prime that appears in A or B, with the higher power: 2^2 (from A), 3^2 (from B) and 5 (from A). LCM = 2^2 × 3^2 × 5 = 4 × 9 × 5 = 180.",
+    "hint": "Use every prime that appears in A or B, and take the higher power of each.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N4",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -713,7 +722,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer checked in Python with math.gcd / math.lcm; the maths engine confirms the value of the prime-factor product used as verify.expression. A = 60, B = 18, lcm = 180 = 2^2 × 3^2 × 5. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Answer checked in Python with math.gcd / math.lcm; the maths engine confirms the value of the prime-factor product used as verify.expression. A = 60, B = 18, lcm = 180 = 2^2 × 3^2 × 5. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -751,9 +760,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:40:04Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:28Z",
           "notes": "no problems found"
         }
       ]
@@ -769,6 +778,7 @@
     "front": "The smallest prime number greater than 50",
     "back": "53",
     "explanation": "51 = 3 × 17 and 52 = 2 × 26, so neither is prime. 53 is only divisible by 1 and 53 (it is not divisible by 2, 3, 5 or 7), so 53 is the next prime after 50.",
+    "hint": "Test the whole numbers just above 50, one at a time. A prime has no factors except 1 and itself.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N4",
     "checked_by": ["author"],
     "citations": [
@@ -794,7 +804,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Front cited to spec N4. Back checked with sympy.nextprime(50) = 53. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Front cited to spec N4. Back checked with sympy.nextprime(50) = 53. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -824,9 +834,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:40:15Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:30Z",
           "notes": "no problems found"
         }
       ]
@@ -842,6 +852,7 @@
     "front": "How many factors does 36 have?",
     "back": "9",
     "explanation": "List the factors in pairs that multiply to 36: 1 × 36, 2 × 18, 3 × 12, 4 × 9 and 6 × 6. That gives 1, 2, 3, 4, 6, 9, 12, 18 and 36, which is 9 factors.",
+    "hint": "List the factors in pairs that multiply to 36. Be careful not to count 6 twice.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N4",
     "checked_by": ["author"],
     "citations": [
@@ -867,7 +878,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Front cited to spec N4. Back checked with sympy.divisors(36): 1, 2, 3, 4, 6, 9, 12, 18, 36. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Front cited to spec N4. Back checked with sympy.divisors(36): 1, 2, 3, 4, 6, 9, 12, 18, 36. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -897,9 +908,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:40:22Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:31Z",
           "notes": "no problems found"
         }
       ]
@@ -915,6 +926,7 @@
     "front": "The only even prime number",
     "back": "2",
     "explanation": "Every other even number can be divided by 2, so it has more than two factors. 2 has exactly two factors, 1 and 2, so it is the only even prime.",
+    "hint": "A prime has exactly two factors. Every even number can be halved: which one has no other factors?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N4",
     "checked_by": ["author"],
     "citations": [
@@ -940,7 +952,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Front cited to spec N4. Back: 2 is prime and every other even number has 2 as a factor (checked in Python for even numbers up to 10^4). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N4). Front cited to spec N4. Back: 2 is prime and every other even number has 2 as a factor (checked in Python for even numbers up to 10^4). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -970,9 +982,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:41:24Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:33Z",
           "notes": "no problems found"
         }
       ]

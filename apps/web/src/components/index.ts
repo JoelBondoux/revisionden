@@ -6,4 +6,12 @@ export { Pill, type PillTone } from './Pill';
 export { ProgressBar } from './ProgressBar';
 export { Sheet } from './Sheet';
 export { Toast } from './Toast';
-export { LinkButton, LinkChip, LinkTile, TextLink, type LinkButtonVariant } from './links';
+export {
+  ButtonTile,
+  ButtonTiles,
+  LinkButton,
+  LinkChip,
+  LinkTile,
+  TextLink,
+  type LinkButtonVariant,
+} from './links';
