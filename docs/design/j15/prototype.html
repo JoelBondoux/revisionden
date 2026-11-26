@@ -1,0 +1,2042 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>J15 mockups</title>
+    <style>
+      @font-face {
+        font-family: Nunito;
+        font-weight: 400;
+        src: url(../../../apps/web/node_modules/@fontsource/nunito/files/nunito-latin-400-normal.woff2);
+      }
+      @font-face {
+        font-family: Nunito;
+        font-weight: 700;
+        src: url(../../../apps/web/node_modules/@fontsource/nunito/files/nunito-latin-700-normal.woff2);
+      }
+      @font-face {
+        font-family: Nunito;
+        font-weight: 800;
+        src: url(../../../apps/web/node_modules/@fontsource/nunito/files/nunito-latin-800-normal.woff2);
+      }
+      @font-face {
+        font-family: Nunito;
+        font-weight: 900;
+        src: url(../../../apps/web/node_modules/@fontsource/nunito/files/nunito-latin-900-normal.woff2);
+      }
+      @font-face {
+        font-family: 'Patrick Hand';
+        src: url(../../../apps/web/node_modules/@fontsource/patrick-hand/files/patrick-hand-latin-400-normal.woff2);
+      }
+
+      :root {
+        --ink: #2b2a3a;
+        --ink-soft: #57546a;
+        --paper: #fdfbf4;
+        --page: #f6f2e4;
+        --highlight: #ffe45c;
+        --highlight-ink: #2b2a3a;
+        --scribble-a: #ffc83d;
+        --scribble-b: #ffe45c;
+        --success: #1e7a3c;
+        --success-soft: #e3f4e8;
+        --brand: #6d4aff;
+        --warn: #b4501a;
+        --warn-soft: #fdeadf;
+        --rule: #d9e4f2;
+        --margin: #f2b8b8;
+        --wobble: 255px 12px 225px 12px / 12px 225px 12px 255px;
+        --wobble-sm: 18px 6px 16px 7px / 7px 16px 6px 18px;
+        --lift: 3px 4px 0 var(--ink);
+        --hand: 'Patrick Hand', 'Comic Sans MS', cursive;
+        --cta-bg: var(--highlight);
+        --cta-ink: var(--highlight-ink);
+        --field-a: #ffe9a8;
+        --field-b: #cfe8ff;
+        --field-c: #ffd6e0;
+        color-scheme: light;
+      }
+      :root[data-theme='dark'] {
+        --ink: #ecebf6;
+        --ink-soft: #b9b6cc;
+        --paper: #232233;
+        --page: #1a1926;
+        --success: #6fd28f;
+        --success-soft: #1f3a2a;
+        --warn: #ffab7a;
+        --warn-soft: #3a2a20;
+        --rule: #2c2b40;
+        --margin: #4a2a33;
+        --lift: 3px 4px 0 #000;
+        --field-a: #3d3518;
+        --field-b: #1c2f45;
+        --field-c: #3d2030;
+        color-scheme: dark;
+      }
+      /* Pop Burst accents: the same layout, candy colours and gloss. */
+      :root[data-style='pop'] {
+        --highlight: #ff4fa3;
+        --highlight-ink: #ffffff;
+        --scribble-a: #ff4fa3;
+        --scribble-b: #ffb84d;
+        --cta-bg: linear-gradient(180deg, #f0479d 0%, #d10f6c 55%, #b80a5c 100%);
+        --cta-ink: #fff;
+        --field-a: #ffe1f1;
+        --field-b: #e6dcff;
+        --field-c: #ffeccc;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+      body {
+        font-family: Nunito, system-ui, sans-serif;
+        color: var(--ink);
+        background: var(--page);
+        -webkit-font-smoothing: antialiased;
+        overflow: hidden;
+      }
+      button {
+        font: inherit;
+        color: inherit;
+      }
+      .screen {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        background:
+          linear-gradient(
+            90deg,
+            transparent 38px,
+            var(--margin) 38px,
+            var(--margin) 40px,
+            transparent 40px
+          ),
+          repeating-linear-gradient(180deg, transparent 0 31px, var(--rule) 31px 32px), var(--page);
+        padding: 12px 16px 0;
+      }
+      :root[data-style='pop'] .screen {
+        background:
+          radial-gradient(circle at 20% 0%, #ffd1ec 0, transparent 50%),
+          radial-gradient(circle at 100% 40%, #e2d6ff 0, transparent 45%), #fff6fb;
+      }
+      :root[data-style='pop'][data-theme='dark'] .screen {
+        background: radial-gradient(circle at 20% 0%, #4a1a3a 0, transparent 50%), #1b1427;
+      }
+      .screen > * {
+        flex-shrink: 0;
+      }
+      .screen {
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      .screen > .trail {
+        flex-shrink: 1;
+        min-height: 360px;
+      }
+      .screen[hidden] {
+        display: none;
+      }
+      .hand {
+        font-family: var(--hand);
+        font-weight: 400;
+      }
+      .sr {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+      }
+
+      /* ---------- header ---------- */
+      .top {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 64px;
+      }
+      .top__spacer {
+        flex: 1;
+      }
+      .icon-btn {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 2px solid var(--ink);
+        background: var(--paper);
+        display: grid;
+        place-items: center;
+        box-shadow: 2px 3px 0 var(--ink);
+      }
+      :root[data-theme='dark'] .icon-btn {
+        box-shadow: 2px 3px 0 #000;
+      }
+      .icon-btn svg {
+        width: 22px;
+        height: 22px;
+      }
+
+      /* ---------- Pip home button ---------- */
+      .pip-btn {
+        position: relative;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        padding: 0;
+        cursor: pointer;
+        border: 2.5px solid var(--ink);
+        background: radial-gradient(circle at 50% 60%, var(--field-a), var(--paper) 70%);
+        box-shadow: var(--lift);
+        display: grid;
+        place-items: center;
+        overflow: visible;
+        flex: none;
+      }
+      .pip-btn::after {
+        /* highlighter ring */
+        content: '';
+        position: absolute;
+        inset: -6px;
+        border-radius: 50%;
+        border: 3px solid var(--highlight);
+        opacity: 0.9;
+        pointer-events: none;
+      }
+      :root[data-style='pop'] .pip-btn {
+        background: radial-gradient(circle at 35% 30%, #fff 0, #ffd6ec 45%, #ff9ccc 100%);
+      }
+      .pip-btn:active {
+        transform: translate(2px, 3px);
+        box-shadow: 1px 1px 0 var(--ink);
+      }
+      .pip-btn svg.pip {
+        width: 50px;
+        height: 50px;
+        overflow: visible;
+      }
+      .pip-btn .prop {
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+      .pip .eye {
+        transform-box: fill-box;
+        transform-origin: center;
+      }
+      .pip .head {
+        transform-box: view-box;
+        transform-origin: 60px 100px;
+      }
+      .pip .paw {
+        transform-box: fill-box;
+        transform-origin: 50% 100%;
+        opacity: 0;
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        :root:not([data-motion='off']) .pip-btn.is-blink .eye {
+          animation: blink 0.5s ease-in-out 2;
+        }
+        :root:not([data-motion='off']) .pip-btn.is-wave .paw {
+          opacity: 1;
+          animation: wave 0.45s ease-in-out 3 alternate;
+        }
+        :root:not([data-motion='off']) .pip-btn.is-stretch .head {
+          animation: stretch 1.2s ease-in-out;
+        }
+        :root:not([data-motion='off']) .pip-btn.is-read .prop--book {
+          opacity: 1;
+        }
+        :root:not([data-motion='off']) .pip-btn.is-read .head {
+          animation: read 1.6s ease-in-out infinite alternate;
+        }
+        :root:not([data-motion='off']) .pip-btn.is-timer .prop--timer {
+          opacity: 1;
+          animation: peek 1.4s ease-in-out;
+        }
+        :root:not([data-motion='off']) .pip-btn.is-timer .head {
+          transform: rotate(-10deg);
+          transition: transform 0.3s;
+        }
+        :root:not([data-motion='off']) .pip-btn.is-nap .eye {
+          transform: scaleY(0.15);
+        }
+        :root:not([data-motion='off']) .pip-btn.is-nap .prop--zzz {
+          opacity: 1;
+          animation: zzz 1.8s ease-in-out infinite;
+        }
+        :root:not([data-motion='off']) .pip-btn.is-nap .head {
+          transform: rotate(8deg) translateY(3px);
+          transition: transform 0.4s;
+        }
+        :root:not([data-motion='off']) .pip-btn.is-cheer .head {
+          animation: hop 0.4s ease-out 3;
+        }
+        :root:not([data-motion='off']) .pip-btn.is-cheer .prop--stars {
+          opacity: 1;
+          animation: sparkle 0.6s ease-out 2;
+        }
+        :root:not([data-motion='off']) .pip-btn.is-nod .head {
+          animation: nod 0.35s ease-in-out 2;
+        }
+      }
+      /* Reduced motion: still poses only (the book or the stars show, nothing moves). */
+      @media (prefers-reduced-motion: reduce) {
+        .pip-btn.is-read .prop--book,
+        .pip-btn.is-cheer .prop--stars {
+          opacity: 1;
+        }
+      }
+      :root[data-motion='off'] .pip-btn.is-read .prop--book,
+      :root[data-motion='off'] .pip-btn.is-cheer .prop--stars {
+        opacity: 1;
+      }
+      @keyframes blink {
+        0%,
+        40%,
+        100% {
+          transform: scaleY(1);
+        }
+        50%,
+        60% {
+          transform: scaleY(0.1);
+        }
+      }
+      @keyframes wave {
+        from {
+          transform: rotate(-18deg);
+        }
+        to {
+          transform: rotate(22deg);
+        }
+      }
+      @keyframes stretch {
+        0%,
+        100% {
+          transform: scale(1, 1);
+        }
+        40% {
+          transform: scale(0.94, 1.12) translateY(-4px);
+        }
+        70% {
+          transform: scale(1.04, 0.96);
+        }
+      }
+      @keyframes read {
+        from {
+          transform: rotate(-3deg) translateY(2px);
+        }
+        to {
+          transform: rotate(3deg) translateY(2px);
+        }
+      }
+      @keyframes peek {
+        0% {
+          transform: translateX(14px);
+        }
+        30%,
+        80% {
+          transform: none;
+        }
+        100% {
+          transform: translateX(14px);
+        }
+      }
+      @keyframes zzz {
+        0% {
+          transform: translate(0, 0);
+          opacity: 0;
+        }
+        30% {
+          opacity: 1;
+        }
+        100% {
+          transform: translate(8px, -14px);
+          opacity: 0;
+        }
+      }
+      @keyframes hop {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+      }
+      @keyframes sparkle {
+        from {
+          transform: scale(0.6);
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        to {
+          transform: scale(1.15);
+          opacity: 0;
+        }
+      }
+      @keyframes nod {
+        0%,
+        100% {
+          transform: rotate(0);
+        }
+        50% {
+          transform: rotate(6deg) translateY(3px);
+        }
+      }
+
+      /* ---------- rings ---------- */
+      .ring {
+        --p: 0;
+        --c: var(--scribble-a);
+        position: relative;
+        display: grid;
+        place-items: center;
+      }
+      .ring svg {
+        transform: rotate(-90deg);
+      }
+      .ring .track {
+        stroke: color-mix(in srgb, var(--ink) 14%, transparent);
+      }
+      .ring .fill {
+        stroke: var(--c);
+        stroke-linecap: round;
+        transition: stroke-dashoffset 1.1s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      .ring .edge {
+        stroke: var(--ink);
+      }
+      .ring__label {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        line-height: 1;
+      }
+
+      /* ---------- HOME ---------- */
+      .hero {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-top: 10px;
+      }
+      .hero__level {
+        font-weight: 900;
+      }
+      .hero__level b {
+        display: block;
+        font-size: 34px;
+      }
+      .hero__level small {
+        font-size: 13px;
+        font-weight: 800;
+        color: var(--ink-soft);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .hero__side {
+        display: grid;
+        gap: 10px;
+        flex: 1;
+        min-width: 0;
+      }
+      @media (max-width: 370px) {
+        .hero {
+          gap: 8px;
+        }
+        .hero > .ring > svg {
+          width: 104px;
+          height: 104px;
+        }
+        .hero__level b {
+          font-size: 28px;
+        }
+        .goals {
+          gap: 6px;
+        }
+        .goal .ring > svg {
+          width: 46px;
+          height: 46px;
+        }
+      }
+      .streak {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 900;
+        font-size: 22px;
+      }
+      .streak svg {
+        width: 34px;
+        height: 34px;
+      }
+      .goals {
+        display: flex;
+        gap: 10px;
+      }
+      .goal {
+        display: grid;
+        justify-items: center;
+        gap: 2px;
+        font-size: 12px;
+        font-weight: 800;
+        color: var(--ink-soft);
+      }
+      .goal svg.ic {
+        width: 18px;
+        height: 18px;
+      }
+
+      .field {
+        /* colour field, not a card */
+        position: relative;
+        margin: 28px -16px 0;
+        padding: 18px 16px 22px;
+        background: var(--field-a);
+        clip-path: polygon(0 8%, 100% 0, 100% 92%, 0 100%);
+      }
+      :root[data-style='pop'] .field {
+        background: linear-gradient(120deg, #ffd6ec, #e6dcff);
+      }
+      .field__kicker {
+        font-family: var(--hand);
+        font-size: 22px;
+        margin: 0 0 6px;
+      }
+      .cta {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        width: 100%;
+        min-height: 84px;
+        padding: 10px 18px;
+        border: 3px solid var(--ink);
+        border-radius: var(--wobble-sm);
+        background: var(--cta-bg);
+        color: var(--cta-ink);
+        box-shadow: 4px 6px 0 var(--ink);
+        text-align: left;
+        cursor: pointer;
+        position: relative;
+      }
+      :root[data-theme='dark'] .cta {
+        box-shadow: 4px 6px 0 #000;
+      }
+      .cta__play {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        border: 3px solid currentColor;
+        display: grid;
+        place-items: center;
+        flex: none;
+        background: rgba(255, 255, 255, 0.35);
+      }
+      .cta__play svg {
+        width: 24px;
+        height: 24px;
+        margin-left: 4px;
+      }
+      .cta__text b {
+        display: block;
+        font-size: 28px;
+        font-weight: 900;
+        line-height: 1;
+      }
+      .cta__text span {
+        font-size: 15px;
+        font-weight: 800;
+        opacity: 0.85;
+      }
+      :root[data-style='pop'] .cta {
+        border-radius: 26px;
+        box-shadow:
+          0 8px 0 #9e0f55,
+          0 14px 24px rgba(229, 25, 122, 0.35);
+        border-color: #9e0f55;
+      }
+      :root[data-style='pop'] .cta::before {
+        content: '';
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        top: 6px;
+        height: 34%;
+        border-radius: 20px;
+        background: linear-gradient(rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+        pointer-events: none;
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        :root:not([data-motion='off']) .cta--bob {
+          animation: bob 2.4s ease-in-out infinite;
+        }
+        :root:not([data-motion='off']) .cta--bob .cta__play {
+          animation: pulse 2.4s ease-in-out infinite;
+        }
+      }
+      @keyframes bob {
+        0%,
+        100% {
+          transform: translateY(0) rotate(-0.6deg);
+        }
+        50% {
+          transform: translateY(-5px) rotate(0.6deg);
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(43, 42, 58, 0);
+        }
+        50% {
+          box-shadow: 0 0 0 7px rgba(43, 42, 58, 0.12);
+        }
+      }
+
+      .row-title {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin: 26px 0 8px;
+      }
+      .row-title h2 {
+        font-family: var(--hand);
+        font-weight: 400;
+        font-size: 24px;
+        margin: 0;
+      }
+      .chips {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding: 2px 2px 8px;
+        scrollbar-width: none;
+      }
+      .fix {
+        flex: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 48px;
+        padding: 6px 14px 6px 8px;
+        border: 2px solid var(--ink);
+        border-radius: var(--wobble-sm);
+        background: var(--warn-soft);
+        font-weight: 800;
+        font-size: 15px;
+        box-shadow: 2px 3px 0 var(--ink);
+      }
+      .fix i {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--paper);
+        border: 2px solid var(--warn);
+        display: grid;
+        place-items: center;
+      }
+      .fix i svg {
+        width: 18px;
+        height: 18px;
+        color: var(--warn);
+      }
+      .bottom-row {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 12px;
+        align-items: center;
+        margin: 22px 0 18px;
+      }
+      .days {
+        display: flex;
+        gap: 6px;
+        margin-top: 6px;
+      }
+      .days i {
+        flex: 1;
+        height: 10px;
+        border-radius: 6px;
+        border: 2px solid var(--ink);
+        background: var(--paper);
+      }
+      .days i.on {
+        background: var(--scribble-a);
+      }
+      .doodle-stars {
+        position: absolute;
+        right: 22px;
+        top: 12px;
+        width: 70px;
+        height: 40px;
+      }
+      .week {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .week__days {
+        list-style: none;
+        display: flex;
+        gap: 6px;
+        margin: 0;
+        padding: 0;
+        flex: 1;
+      }
+      .week__days li {
+        flex: 1;
+        aspect-ratio: 1;
+        max-width: 40px;
+        display: grid;
+        place-items: center;
+        border: 2px solid var(--ink);
+        border-radius: 50%;
+        font-weight: 900;
+        font-size: 14px;
+        background: var(--paper);
+        color: var(--ink-soft);
+      }
+      .week__days li.on {
+        background: var(--scribble-a);
+        color: var(--highlight-ink);
+      }
+      :root[data-style='pop'] .week__days li.on {
+        color: #fff;
+      }
+      .week__days li.today {
+        box-shadow:
+          0 0 0 3px var(--paper),
+          0 0 0 5px var(--ink);
+      }
+      .week .gift {
+        width: 52px;
+        height: 52px;
+        flex: none;
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        :root:not([data-motion='off']) .week .gift {
+          animation: wiggle 3s ease-in-out infinite;
+          transform-origin: 50% 90%;
+        }
+      }
+      @keyframes wiggle {
+        0%,
+        80%,
+        100% {
+          transform: rotate(0);
+        }
+        85% {
+          transform: rotate(-8deg);
+        }
+        90% {
+          transform: rotate(8deg);
+        }
+        95% {
+          transform: rotate(-4deg);
+        }
+      }
+      .league {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 12px;
+        min-height: 48px;
+        font-weight: 900;
+        border: 2px dashed var(--ink-soft);
+        border-radius: 999px;
+        color: var(--ink-soft);
+        min-height: 40px;
+        padding: 4px 12px;
+      }
+      .league svg {
+        width: 22px;
+        height: 22px;
+      }
+      .weekly {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .weekly svg.gift {
+        width: 40px;
+        height: 40px;
+        flex: none;
+      }
+      .weekly__bar {
+        flex: 1;
+        height: 18px;
+        border: 2px solid var(--ink);
+        border-radius: 10px;
+        overflow: hidden;
+        background: var(--paper);
+      }
+      .weekly__bar i {
+        display: block;
+        height: 100%;
+        width: 0;
+        background: repeating-linear-gradient(
+          -45deg,
+          var(--scribble-a) 0 6px,
+          var(--scribble-b) 6px 12px
+        );
+        transition: width 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s;
+      }
+      .weekly small {
+        font-weight: 900;
+        font-size: 14px;
+      }
+
+      /* ---------- tab bar ---------- */
+      .tabs {
+        position: sticky;
+        bottom: 0;
+        z-index: 2;
+        margin: auto -16px 0;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        border-top: 2px solid var(--ink);
+        background: var(--paper);
+        padding: 6px 4px 10px;
+      }
+      .tab {
+        display: grid;
+        justify-items: center;
+        gap: 2px;
+        font-size: 12px;
+        font-weight: 800;
+        color: var(--ink-soft);
+        padding: 4px 0;
+      }
+      .tab svg {
+        width: 24px;
+        height: 24px;
+      }
+      .tab[aria-current] {
+        color: var(--ink);
+      }
+      .tab[aria-current] svg {
+        background: var(--highlight);
+        border-radius: 50%;
+        box-shadow: 0 0 0 6px var(--highlight);
+      }
+      :root[data-style='pop'] .tab[aria-current] svg {
+        color: #fff;
+      }
+
+      /* ---------- MAP (topics only) ---------- */
+      .subjects {
+        display: flex;
+        gap: 8px;
+      }
+      .subj {
+        min-height: 44px;
+        padding: 6px 16px;
+        border: 2px solid var(--ink);
+        border-radius: var(--wobble-sm);
+        background: var(--paper);
+        font-weight: 900;
+      }
+      .subj[aria-pressed='true'] {
+        background: var(--highlight);
+        color: var(--highlight-ink);
+      }
+      .units {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        margin: 10px -16px 0;
+        padding: 0 16px 6px;
+        scrollbar-width: none;
+      }
+      .unit {
+        flex: none;
+        display: grid;
+        justify-items: center;
+        gap: 4px;
+        padding: 4px 6px;
+        border: 0;
+        background: none;
+        font-weight: 800;
+        font-size: 12px;
+        min-width: 64px;
+      }
+      .unit .hx {
+        width: 44px;
+        height: 48px;
+      }
+      .unit[aria-current] .hx path {
+        fill: var(--highlight);
+      }
+      .unit[aria-current] span {
+        text-decoration: underline wavy var(--highlight) 3px;
+        text-underline-offset: 4px;
+      }
+      .unit-band {
+        margin: 6px -16px 0;
+        padding: 10px 16px;
+        background: var(--field-b);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        clip-path: polygon(0 0, 100% 10%, 100% 100%, 0 90%);
+      }
+      .unit-band h2 {
+        margin: 0;
+        font-family: var(--hand);
+        font-weight: 400;
+        font-size: 30px;
+      }
+      .unit-band .ring__label {
+        font-weight: 900;
+        font-size: 13px;
+      }
+      .trail {
+        position: relative;
+        flex: 1;
+        margin: 4px -16px 0;
+      }
+      .trail svg.line {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .node {
+        position: absolute;
+        display: grid;
+        justify-items: center;
+        gap: 2px;
+        width: 120px;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        font-weight: 800;
+        font-size: 13px;
+        line-height: 1.15;
+        border: 0;
+        background: none;
+        padding: 0;
+      }
+      .node .hx {
+        width: 66px;
+        height: 72px;
+      }
+      .node--done .hx path {
+        fill: var(--success-soft);
+      }
+      .node--weak .hx path {
+        fill: var(--warn-soft);
+        stroke: var(--warn);
+      }
+      .node--next .hx {
+        width: 92px;
+        height: 100px;
+      }
+      .node--next .hx path {
+        fill: var(--highlight);
+      }
+      .node--locked .hx path {
+        fill: url(#hatch);
+      }
+      .node--locked {
+        color: var(--ink-soft);
+      }
+      .node b.pct {
+        position: absolute;
+        top: 22px;
+        font-weight: 900;
+        font-size: 16px;
+      }
+      .node--next b.pct {
+        top: 30px;
+        font-size: 22px;
+      }
+      .go-flag {
+        margin-top: 8px;
+        position: relative;
+        z-index: 1;
+        padding: 8px 22px;
+        min-height: 48px;
+        border: 3px solid var(--ink);
+        border-radius: var(--wobble-sm);
+        background: var(--cta-bg);
+        color: var(--cta-ink);
+        font-weight: 900;
+        font-size: 20px;
+        box-shadow: 3px 4px 0 var(--ink);
+      }
+      :root[data-style='pop'] .go-flag {
+        border-radius: 20px;
+        border-color: #9e0f55;
+        box-shadow: 0 5px 0 #9e0f55;
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        :root:not([data-motion='off']) .node--next .hx {
+          animation: halo 2.4s ease-in-out infinite;
+        }
+        :root:not([data-motion='off']) .go-flag {
+          animation: bob 2.4s ease-in-out infinite;
+        }
+      }
+      @keyframes halo {
+        0%,
+        100% {
+          filter: drop-shadow(0 0 0 var(--highlight));
+        }
+        50% {
+          filter: drop-shadow(0 0 10px var(--highlight));
+        }
+      }
+
+      /* ---------- LESSON ---------- */
+      .l-top {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 64px;
+      }
+      .l-progress {
+        flex: 1;
+        height: 20px;
+        border: 2px solid var(--ink);
+        border-radius: 12px;
+        background: var(--paper);
+        overflow: hidden;
+      }
+      .l-progress i {
+        display: block;
+        height: 100%;
+        width: 40%;
+        background: repeating-linear-gradient(
+          -45deg,
+          var(--scribble-a) 0 6px,
+          var(--scribble-b) 6px 12px
+        );
+        transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+      .combo {
+        font-weight: 900;
+        padding: 6px 10px;
+        border: 2px solid var(--ink);
+        border-radius: var(--wobble-sm);
+        background: var(--highlight);
+        color: var(--highlight-ink);
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+      }
+      .pip-react {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: 2px solid var(--ink);
+        background: var(--paper);
+        display: grid;
+        place-items: center;
+        flex: none;
+      }
+      .pip-react svg {
+        width: 42px;
+        height: 42px;
+      }
+      .q {
+        margin: 34px 4px 0 30px;
+      }
+      .q__fig {
+        display: flex;
+        justify-content: center;
+        margin-top: 26px;
+      }
+      .q__kicker {
+        font-family: var(--hand);
+        font-size: 20px;
+        color: var(--ink-soft);
+        margin: 0;
+      }
+      .q h1 {
+        font-size: 30px;
+        font-weight: 900;
+        margin: 4px 0 0;
+        line-height: 1.2;
+      }
+      .q__fig {
+        margin: 18px 0 0;
+        display: flex;
+        gap: 6px;
+        align-items: flex-end;
+      }
+      .answers {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin: auto 0 0;
+      }
+      .ans {
+        min-height: 84px;
+        border: 2.5px solid var(--ink);
+        border-radius: var(--wobble-sm);
+        background: var(--paper);
+        font-weight: 900;
+        font-size: 26px;
+        box-shadow: var(--lift);
+        cursor: pointer;
+        position: relative;
+      }
+      .ans[aria-pressed='true'] {
+        background: var(--highlight);
+        color: var(--highlight-ink);
+        transform: translate(1px, 2px);
+        box-shadow: 2px 2px 0 var(--ink);
+      }
+      .ans--right {
+        background: var(--success-soft) !important;
+        border-color: var(--success) !important;
+        color: var(--ink) !important;
+      }
+      .ans--right::after {
+        content: '✓';
+        position: absolute;
+        right: 10px;
+        top: 6px;
+        font-size: 22px;
+        color: var(--success);
+      }
+      .l-foot {
+        padding: 18px 0 22px;
+        min-height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+      .feedback {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+        font-weight: 900;
+        font-size: 22px;
+        color: var(--success);
+      }
+      .feedback .hand {
+        font-size: 28px;
+      }
+      .float {
+        position: absolute;
+        font-weight: 900;
+        font-size: 26px;
+        color: var(--success);
+        pointer-events: none;
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        :root:not([data-motion='off']) .float {
+          animation: floatup 1.2s ease-out forwards;
+        }
+        :root:not([data-motion='off']) .combo.pop {
+          animation: pop 0.4s cubic-bezier(0.3, 1.6, 0.5, 1);
+        }
+      }
+      @keyframes floatup {
+        from {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateY(-40px);
+          opacity: 0;
+        }
+      }
+      @keyframes pop {
+        0% {
+          transform: scale(0.6);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .btn-wide {
+        width: 100%;
+        min-height: 64px;
+        font-size: 24px;
+        font-weight: 900;
+        justify-content: center;
+      }
+
+      /* ---------- page turn (Doodle) and pop-in (Pop Burst) ---------- */
+      .turn-out {
+        animation: turnout 0.34s ease-in forwards;
+        transform-origin: left center;
+      }
+      .turn-in {
+        animation: turnin 0.34s ease-out;
+        transform-origin: right center;
+      }
+      @keyframes turnout {
+        to {
+          transform: perspective(900px) rotateY(-70deg);
+          opacity: 0;
+        }
+      }
+      @keyframes turnin {
+        from {
+          transform: perspective(900px) rotateY(50deg);
+          opacity: 0;
+        }
+      }
+      :root[data-style='pop'] .turn-out {
+        animation: popout 0.2s ease-in forwards;
+      }
+      :root[data-style='pop'] .turn-in {
+        animation: popin 0.34s cubic-bezier(0.3, 1.5, 0.5, 1);
+      }
+      @keyframes popout {
+        to {
+          transform: scale(0.9);
+          opacity: 0;
+        }
+      }
+      @keyframes popin {
+        from {
+          transform: scale(0.85);
+          opacity: 0;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .turn-out,
+        .turn-in {
+          animation: none !important;
+        }
+      }
+      :root[data-motion='off'] .turn-out,
+      :root[data-motion='off'] .turn-in {
+        animation: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <defs>
+        <pattern
+          id="hatch"
+          width="8"
+          height="8"
+          patternUnits="userSpaceOnUse"
+          patternTransform="rotate(45)"
+        >
+          <rect width="8" height="8" fill="var(--paper)" />
+          <line
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="8"
+            stroke="var(--ink-soft)"
+            stroke-width="1.5"
+            opacity=".45"
+          />
+        </pattern>
+        <symbol id="pip" viewBox="0 0 120 120">
+          <g class="head">
+            <polygon points="18,52 30,8 54,36" fill="#FF7A2F" />
+            <polygon points="102,52 90,8 66,36" fill="#E35F17" />
+            <polygon points="27,42 31,20 45,35" fill="#3A2622" />
+            <polygon points="93,42 89,20 75,35" fill="#3A2622" />
+            <polygon points="18,52 54,36 60,36 60,106 32,82" fill="#FF7A2F" />
+            <polygon points="60,36 66,36 102,52 88,82 60,106" fill="#E35F17" />
+            <polygon points="36,74 60,64 84,74 60,106" fill="#F7F3EE" />
+            <polygon class="eye" points="40,58 47,52 52,59 45,63" fill="#3A2622" />
+            <polygon class="eye" points="80,58 73,52 68,59 75,63" fill="#3A2622" />
+            <polygon points="53,90 67,90 60,98" fill="#3A2622" />
+          </g>
+        </symbol>
+      </defs>
+    </svg>
+
+    <template id="pip-svg">
+      <svg class="pip" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+        <g class="head">
+          <polygon points="18,52 30,8 54,36" fill="#FF7A2F" />
+          <polygon points="102,52 90,8 66,36" fill="#E35F17" />
+          <polygon points="27,42 31,20 45,35" fill="#3A2622" />
+          <polygon points="93,42 89,20 75,35" fill="#3A2622" />
+          <polygon points="18,52 54,36 60,36 60,106 32,82" fill="#FF7A2F" />
+          <polygon points="60,36 66,36 102,52 88,82 60,106" fill="#E35F17" />
+          <polygon points="36,74 60,64 84,74 60,106" fill="#F7F3EE" />
+          <polygon class="eye" points="40,58 47,52 52,59 45,63" fill="#3A2622" />
+          <polygon class="eye" points="80,58 73,52 68,59 75,63" fill="#3A2622" />
+          <polygon points="53,90 67,90 60,98" fill="#3A2622" />
+        </g>
+        <g class="paw">
+          <path d="M98 104 L104 78" stroke="#E35F17" stroke-width="12" stroke-linecap="round" />
+          <circle cx="105" cy="72" r="10" fill="#FF7A2F" stroke="#3A2622" stroke-width="2.5" />
+          <path
+            d="M100 66v-4M105 64v-4M110 66v-4"
+            stroke="#3A2622"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </g>
+        <g class="prop prop--book">
+          <polygon
+            points="28,104 60,96 92,104 92,120 60,112 28,120"
+            fill="#4f7cff"
+            stroke="#2b2a3a"
+            stroke-width="3"
+          />
+          <line x1="60" y1="96" x2="60" y2="112" stroke="#2b2a3a" stroke-width="3" />
+        </g>
+        <g class="prop prop--timer">
+          <circle cx="106" cy="92" r="14" fill="#fff" stroke="#2b2a3a" stroke-width="3" />
+          <path d="M106 84v8l5 4" stroke="#2b2a3a" stroke-width="3" fill="none" />
+          <rect x="102" y="74" width="8" height="5" fill="#2b2a3a" />
+        </g>
+        <g
+          class="prop prop--zzz"
+          fill="#4f7cff"
+          stroke="#2b2a3a"
+          stroke-width="1"
+          font-family="Patrick Hand, cursive"
+          font-weight="700"
+          font-size="34"
+        >
+          <text x="84" y="34">Z</text>
+          <text x="104" y="14" font-size="24">z</text>
+        </g>
+        <g class="prop prop--stars" fill="#ffc83d" stroke="#2b2a3a" stroke-width="2">
+          <path d="M8 20l4 8 8 1-6 5 2 8-8-4-7 4 2-8-6-5 8-1z" />
+          <path d="M104 14l3 6 6 1-4 4 1 6-6-3-5 3 1-6-4-4 6-1z" />
+        </g>
+      </svg>
+    </template>
+
+    <!-- =================== HOME =================== -->
+    <main class="screen" id="home" aria-labelledby="home-h">
+      <h1 id="home-h" class="sr">Home</h1>
+      <div class="top">
+        <button class="pip-btn" aria-label="Home" data-pip></button>
+        <div class="top__spacer"></div>
+        <button class="icon-btn" aria-label="Sound on">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.4"
+            stroke-linecap="round"
+          >
+            <path d="M4 9h4l5-4v14l-5-4H4z" />
+            <path d="M16 9c1.5 1.5 1.5 4.5 0 6M19 6c3 3 3 9 0 12" />
+          </svg>
+        </button>
+        <button class="icon-btn" aria-label="Report a bug">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="round"
+          >
+            <rect x="7" y="7" width="10" height="13" rx="5" />
+            <path
+              d="M12 7V4M9 4l1.5 2M15 4l-1.5 2M3 12h4M17 12h4M4 18l3-2M20 18l-3-2M4 7l3 2M20 7l-3 2"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <section class="hero" aria-label="Where you stand">
+        <div class="ring" style="--c: var(--brand)">
+          <svg width="132" height="132" viewBox="0 0 132 132">
+            <circle class="track" cx="66" cy="66" r="56" fill="none" stroke-width="14" />
+            <circle
+              class="fill"
+              data-ring="0.68"
+              cx="66"
+              cy="66"
+              r="56"
+              fill="none"
+              stroke-width="14"
+              stroke-dasharray="351.9"
+              stroke-dashoffset="351.9"
+            />
+            <circle class="edge" cx="66" cy="66" r="64" fill="none" stroke-width="2" />
+          </svg>
+          <div class="ring__label hero__level">
+            <div>
+              <small>Level</small><b data-count="7">7</b
+              ><small><span data-count="340">340</span> XP</small>
+            </div>
+          </div>
+        </div>
+        <div class="hero__side">
+          <div class="streak" aria-label="6 day streak">
+            <svg viewBox="0 0 32 32">
+              <path
+                d="M16 3c2 6 9 8 9 17a9 9 0 0 1-18 0c0-5 3-7 4-11 1 3 2 4 3 4 0-4 0-7 2-10z"
+                fill="#ff7a2f"
+                stroke="var(--ink)"
+                stroke-width="2"
+                stroke-linejoin="round"
+              />
+              <path d="M16 17c2 2 4 3 4 6a4 4 0 0 1-8 0c0-2 2-3 4-6z" fill="#ffd34d" /></svg
+            ><span
+              ><span data-count="6">6</span>
+              <span class="hand" style="font-size: 22px">days</span></span
+            >
+          </div>
+          <div class="goals" aria-label="Today's goals">
+            <div class="goal">
+              <div class="ring" style="--c: var(--scribble-a)">
+                <svg width="56" height="56" viewBox="0 0 56 56">
+                  <circle class="track" cx="28" cy="28" r="22" fill="none" stroke-width="8" />
+                  <circle
+                    class="fill"
+                    data-ring="0.6"
+                    cx="28"
+                    cy="28"
+                    r="22"
+                    fill="none"
+                    stroke-width="8"
+                    stroke-dasharray="138.2"
+                    stroke-dashoffset="138.2"
+                  />
+                </svg>
+                <div class="ring__label">
+                  <svg class="ic" viewBox="0 0 24 24">
+                    <path
+                      d="M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.6 5.7 21l1.5-7L2 9.3l7-.8z"
+                      fill="#ffc83d"
+                      stroke="var(--ink)"
+                      stroke-width="1.6"
+                    />
+                  </svg>
+                </div>
+              </div>
+              30/50
+            </div>
+            <div class="goal">
+              <div class="ring" style="--c: #3cb4ff">
+                <svg width="56" height="56" viewBox="0 0 56 56">
+                  <circle class="track" cx="28" cy="28" r="22" fill="none" stroke-width="8" />
+                  <circle
+                    class="fill"
+                    data-ring="0.5"
+                    cx="28"
+                    cy="28"
+                    r="22"
+                    fill="none"
+                    stroke-width="8"
+                    stroke-dasharray="138.2"
+                    stroke-dashoffset="138.2"
+                  />
+                </svg>
+                <div class="ring__label" style="font-weight: 900; font-size: 15px">5</div>
+              </div>
+              1/2
+            </div>
+            <div class="goal">
+              <div class="ring" style="--c: #43c46b">
+                <svg width="56" height="56" viewBox="0 0 56 56">
+                  <circle class="track" cx="28" cy="28" r="22" fill="none" stroke-width="8" />
+                  <circle
+                    class="fill"
+                    data-ring="0.25"
+                    cx="28"
+                    cy="28"
+                    r="22"
+                    fill="none"
+                    stroke-width="8"
+                    stroke-dasharray="138.2"
+                    stroke-dashoffset="138.2"
+                  />
+                </svg>
+                <div class="ring__label">
+                  <svg
+                    class="ic"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="var(--ink)"
+                    stroke-width="2"
+                  >
+                    <rect x="4" y="6" width="12" height="15" rx="2" fill="var(--paper)" />
+                    <rect x="8" y="3" width="12" height="15" rx="2" fill="#bdf0cc" />
+                  </svg>
+                </div>
+              </div>
+              4 due
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="field" aria-label="Next mission">
+        <p class="field__kicker">Up next</p>
+        <svg
+          class="doodle-stars"
+          viewBox="0 0 70 40"
+          aria-hidden="true"
+          fill="none"
+          stroke="var(--ink)"
+          stroke-width="2"
+          stroke-linecap="round"
+        >
+          <path d="M12 6v12M6 12h12M50 4l2 6 6 2-6 2-2 6-2-6-6-2 6-2z" />
+          <circle cx="34" cy="30" r="3" />
+        </svg>
+        <button class="cta cta--bob">
+          <span class="cta__play"
+            ><svg viewBox="0 0 24 24"><path d="M5 3l16 9-16 9z" fill="currentColor" /></svg
+          ></span>
+          <span class="cta__text"><b>Fractions</b><span>5 min · +50 XP</span></span>
+        </button>
+      </section>
+
+      <div class="row-title">
+        <h2>Fix these</h2>
+        <span class="league" aria-label="Friends league: 3rd (coming soon)"
+          ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+              d="M7 4h10v5a5 5 0 0 1-10 0zM7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4M12 14v4M8 20h8"
+            /></svg
+          >#3</span
+        >
+      </div>
+      <div class="chips" role="list">
+        <span class="fix" role="listitem"
+          ><i
+            ><svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.4"
+              stroke-linecap="round"
+            >
+              <path d="M14 6a4 4 0 0 0 5 5l-9 9a2 2 0 0 1-3-3l9-9a4 4 0 0 0-2-2z" /></svg></i
+          >Factorising</span
+        >
+        <span class="fix" role="listitem"
+          ><i
+            ><svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.4"
+              stroke-linecap="round"
+            >
+              <path d="M14 6a4 4 0 0 0 5 5l-9 9a2 2 0 0 1-3-3l9-9a4 4 0 0 0-2-2z" /></svg></i
+          >Ratio</span
+        >
+        <span class="fix" role="listitem"
+          ><i
+            ><svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.4"
+              stroke-linecap="round"
+            >
+              <path d="M14 6a4 4 0 0 0 5 5l-9 9a2 2 0 0 1-3-3l9-9a4 4 0 0 0-2-2z" /></svg></i
+          >Angles</span
+        >
+      </div>
+
+      <div class="row-title"><h2>This week</h2></div>
+      <div class="week" aria-label="This week's reward: 4 of 7 days done">
+        <ol class="week__days">
+          <li class="on" data-pop>M</li>
+          <li class="on" data-pop>T</li>
+          <li class="on" data-pop>W</li>
+          <li class="on today" data-pop>T</li>
+          <li>F</li>
+          <li>S</li>
+          <li>S</li>
+        </ol>
+        <svg class="gift" viewBox="0 0 40 40">
+          <rect
+            x="5"
+            y="15"
+            width="30"
+            height="21"
+            rx="3"
+            fill="#ff8fb8"
+            stroke="var(--ink)"
+            stroke-width="2.5"
+          />
+          <rect
+            x="3"
+            y="10"
+            width="34"
+            height="7"
+            rx="2"
+            fill="#ffb3cf"
+            stroke="var(--ink)"
+            stroke-width="2.5"
+          />
+          <path d="M20 10v26" stroke="var(--ink)" stroke-width="2.5" />
+          <path
+            d="M20 10c-4-6-11-5-9 0zM20 10c4-6 11-5 9 0z"
+            fill="#ffe45c"
+            stroke="var(--ink)"
+            stroke-width="2.2"
+          />
+        </svg>
+      </div>
+
+      <nav class="tabs" aria-label="Main">
+        <a class="tab"
+          ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+              d="M12 3l4 2.3v4.6L12 12 8 9.9V5.3zM7 12l4 2.3v4.6L7 21l-4-2.1v-4.6zM17 12l4 2.3v4.6L17 21l-4-2.1v-4.6z"
+            /></svg
+          >Map</a
+        >
+        <a class="tab"
+          ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="4" y="6" width="12" height="15" rx="2" />
+            <path d="M8 3h10a2 2 0 0 1 2 2v12" /></svg
+          >Cards</a
+        >
+        <a class="tab"
+          ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="5" width="18" height="16" rx="2" />
+            <path d="M3 10h18M8 3v4M16 3v4" /></svg
+          >Plan</a
+        >
+        <a class="tab"
+          ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 3h8l4 4v14H6z" />
+            <path d="M9 12h6M9 16h6" /></svg
+          >Papers</a
+        >
+        <a class="tab"
+          ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /></svg
+          >Progress</a
+        >
+      </nav>
+    </main>
+
+    <!-- =================== MAP (topics only) =================== -->
+    <main class="screen" id="map" aria-labelledby="map-h" hidden>
+      <div class="top">
+        <button class="pip-btn" aria-label="Home" data-pip data-go="home"></button>
+        <h1 id="map-h" class="hand" style="font-size: 32px; margin: 0">Topics</h1>
+        <div class="top__spacer"></div>
+        <button class="icon-btn" aria-label="Sound on">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.4"
+            stroke-linecap="round"
+          >
+            <path d="M4 9h4l5-4v14l-5-4H4z" />
+            <path d="M16 9c1.5 1.5 1.5 4.5 0 6" />
+          </svg>
+        </button>
+      </div>
+      <div class="subjects">
+        <button class="subj" aria-pressed="true">Maths</button
+        ><button class="subj" aria-pressed="false">Physics</button>
+      </div>
+      <div class="units" role="list">
+        <button class="unit" role="listitem">
+          <svg class="hx" viewBox="0 0 44 48">
+            <path
+              d="M22 2l19 11v22L22 46 3 35V13z"
+              fill="var(--success-soft)"
+              stroke="var(--ink)"
+              stroke-width="2.5"
+            />
+            <text
+              x="22"
+              y="29"
+              text-anchor="middle"
+              font-size="12"
+              font-weight="900"
+              fill="var(--ink)"
+            >
+              46%
+            </text></svg
+          ><span>Number</span>
+        </button>
+        <button class="unit" role="listitem" aria-current="true">
+          <svg class="hx" viewBox="0 0 44 48">
+            <path
+              d="M22 2l19 11v22L22 46 3 35V13z"
+              fill="var(--paper)"
+              stroke="var(--ink)"
+              stroke-width="2.5"
+            />
+            <text
+              x="22"
+              y="29"
+              text-anchor="middle"
+              font-size="12"
+              font-weight="900"
+              fill="var(--highlight-ink)"
+            >
+              8%
+            </text></svg
+          ><span>Algebra</span>
+        </button>
+        <button class="unit" role="listitem">
+          <svg class="hx" viewBox="0 0 44 48">
+            <path
+              d="M22 2l19 11v22L22 46 3 35V13z"
+              fill="url(#hatch)"
+              stroke="var(--ink-soft)"
+              stroke-width="2.5"
+            /></svg
+          ><span>Ratio</span>
+        </button>
+        <button class="unit" role="listitem">
+          <svg class="hx" viewBox="0 0 44 48">
+            <path
+              d="M22 2l19 11v22L22 46 3 35V13z"
+              fill="url(#hatch)"
+              stroke="var(--ink-soft)"
+              stroke-width="2.5"
+            /></svg
+          ><span>Geometry</span>
+        </button>
+        <button class="unit" role="listitem">
+          <svg class="hx" viewBox="0 0 44 48">
+            <path
+              d="M22 2l19 11v22L22 46 3 35V13z"
+              fill="url(#hatch)"
+              stroke="var(--ink-soft)"
+              stroke-width="2.5"
+            /></svg
+          ><span>Probability</span>
+        </button>
+      </div>
+      <div class="unit-band">
+        <h2>Algebra</h2>
+        <div class="ring" style="--c: var(--brand)">
+          <svg width="54" height="54" viewBox="0 0 54 54">
+            <circle class="track" cx="27" cy="27" r="21" fill="none" stroke-width="7" />
+            <circle
+              class="fill"
+              data-ring="0.08"
+              cx="27"
+              cy="27"
+              r="21"
+              fill="none"
+              stroke-width="7"
+              stroke-dasharray="131.9"
+              stroke-dashoffset="131.9"
+            />
+          </svg>
+          <div class="ring__label">8%</div>
+        </div>
+      </div>
+      <div class="trail" aria-label="Algebra topics">
+        <svg class="line" viewBox="0 0 390 470" preserveAspectRatio="none" aria-hidden="true">
+          <path
+            d="M100 40 C 300 60, 330 120, 265 160 S 80 230, 125 280 S 300 340, 280 400"
+            fill="none"
+            stroke="var(--ink)"
+            stroke-width="3"
+            stroke-dasharray="2 9"
+            stroke-linecap="round"
+          />
+        </svg>
+        <button class="node node--done" style="left: 26%; top: 9%">
+          <svg class="hx" viewBox="0 0 66 72">
+            <path d="M33 3l28 16v34L33 69 5 53V19z" stroke="var(--ink)" stroke-width="3" /></svg
+          ><b class="pct">✓</b>Substituting
+        </button>
+        <button class="node node--weak" style="left: 68%; top: 33%">
+          <svg class="hx" viewBox="0 0 66 72">
+            <path d="M33 3l28 16v34L33 69 5 53V19z" stroke-width="3" /></svg
+          ><b class="pct" style="color: var(--warn)">40%</b>Expressions
+        </button>
+        <div class="node node--next" style="left: 32%; top: 60%">
+          <svg class="hx" viewBox="0 0 66 72">
+            <path d="M33 3l28 16v34L33 69 5 53V19z" stroke="var(--ink)" stroke-width="3" /></svg
+          ><b class="pct" style="color: var(--highlight-ink)">20%</b><span>Factorising</span
+          ><button class="go-flag">Go!</button>
+        </div>
+        <button class="node node--locked" style="left: 72%; top: 86%">
+          <svg class="hx" viewBox="0 0 66 72">
+            <path
+              d="M33 3l28 16v34L33 69 5 53V19z"
+              stroke="var(--ink-soft)"
+              stroke-width="3"
+            /></svg
+          ><b class="pct">🔒</b>Rearranging
+        </button>
+      </div>
+      <nav class="tabs" aria-label="Main">
+        <a class="tab" aria-current="page"
+          ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+              d="M12 3l4 2.3v4.6L12 12 8 9.9V5.3zM7 12l4 2.3v4.6L7 21l-4-2.1v-4.6zM17 12l4 2.3v4.6L17 21l-4-2.1v-4.6z"
+            /></svg
+          >Map</a
+        >
+        <a class="tab"
+          ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="4" y="6" width="12" height="15" rx="2" />
+            <path d="M8 3h10a2 2 0 0 1 2 2v12" /></svg
+          >Cards</a
+        >
+        <a class="tab"
+          ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="5" width="18" height="16" rx="2" />
+            <path d="M3 10h18M8 3v4M16 3v4" /></svg
+          >Plan</a
+        >
+        <a class="tab"
+          ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 3h8l4 4v14H6z" />
+            <path d="M9 12h6M9 16h6" /></svg
+          >Papers</a
+        >
+        <a class="tab"
+          ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /></svg
+          >Progress</a
+        >
+      </nav>
+    </main>
+
+    <!-- =================== LESSON =================== -->
+    <main class="screen" id="lesson" aria-labelledby="lesson-h" hidden>
+      <div class="l-top">
+        <button class="icon-btn" aria-label="Leave this set">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+          >
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+        <div
+          class="l-progress"
+          role="progressbar"
+          aria-label="Question 3 of 8"
+          aria-valuenow="3"
+          aria-valuemax="8"
+        >
+          <i></i>
+        </div>
+        <span class="combo" hidden>×3</span>
+        <span
+          class="pip-react pip-btn"
+          style="width: 52px; height: 52px"
+          data-pip
+          aria-hidden="true"
+        ></span>
+      </div>
+      <div class="q">
+        <p class="q__kicker">Factorising</p>
+        <h1 id="lesson-h">Factorise x² + 5x + 6</h1>
+        <div class="q__fig" aria-hidden="true">
+          <svg
+            width="220"
+            height="150"
+            viewBox="0 0 220 150"
+            fill="none"
+            stroke="var(--ink)"
+            stroke-width="2.5"
+            stroke-linejoin="round"
+          >
+            <rect x="40" y="20" width="100" height="100" fill="var(--field-b)" />
+            <rect x="140" y="20" width="50" height="100" fill="var(--field-a)" />
+            <rect x="40" y="120" width="100" height="22" fill="var(--field-c)" />
+            <rect x="140" y="120" width="50" height="22" fill="var(--field-a)" />
+            <text
+              x="90"
+              y="76"
+              font-family="Nunito"
+              font-weight="900"
+              font-size="22"
+              fill="var(--ink)"
+              stroke="none"
+              text-anchor="middle"
+            >
+              x²
+            </text>
+            <text
+              x="165"
+              y="76"
+              font-family="Patrick Hand"
+              font-size="22"
+              fill="var(--ink)"
+              stroke="none"
+              text-anchor="middle"
+            >
+              ?
+            </text>
+            <text
+              x="90"
+              y="138"
+              font-family="Patrick Hand"
+              font-size="18"
+              fill="var(--ink)"
+              stroke="none"
+              text-anchor="middle"
+            >
+              ?
+            </text>
+            <text
+              x="165"
+              y="138"
+              font-family="Nunito"
+              font-weight="900"
+              font-size="16"
+              fill="var(--ink)"
+              stroke="none"
+              text-anchor="middle"
+            >
+              6
+            </text>
+          </svg>
+        </div>
+      </div>
+      <div class="answers" role="group" aria-label="Answers">
+        <button class="ans" aria-pressed="false">(x+1)(x+6)</button>
+        <button class="ans" aria-pressed="false" data-right>(x+2)(x+3)</button>
+        <button class="ans" aria-pressed="false">(x−2)(x−3)</button>
+        <button class="ans" aria-pressed="false">x(x+5)+6</button>
+      </div>
+      <div class="l-foot">
+        <div class="feedback" hidden><span class="hand">Nailed it!</span> <span>+10 XP</span></div>
+        <button class="cta btn-wide" data-check>Check</button>
+      </div>
+    </main>
+
+    <script>
+      const q = new URLSearchParams(location.search);
+      const root = document.documentElement;
+      root.dataset.theme = q.get('theme') || 'light';
+      root.dataset.style = q.get('style') || 'doodle';
+      root.dataset.motion = q.get('motion') || 'on';
+      const screenId = q.get('screen') || 'home';
+      const tpl = document.getElementById('pip-svg');
+      document.querySelectorAll('[data-pip]').forEach((b) => b.append(tpl.content.cloneNode(true)));
+
+      function show(id) {
+        document.querySelectorAll('.screen').forEach((s) => (s.hidden = s.id !== id));
+        if (id === 'home') countUp(document.getElementById('home'));
+        if (id === 'map') countUp(document.getElementById('map'));
+      }
+      function countUp(scope) {
+        const motion =
+          root.dataset.motion !== 'off' && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+        scope.querySelectorAll('[data-ring]').forEach((c) => {
+          const len = parseFloat(c.getAttribute('stroke-dasharray'));
+          if (!motion) c.style.transition = 'none';
+          c.style.strokeDashoffset = len;
+          requestAnimationFrame(() =>
+            requestAnimationFrame(() => {
+              c.style.strokeDashoffset = len * (1 - parseFloat(c.dataset.ring));
+            }),
+          );
+        });
+        scope.querySelectorAll('[data-width]').forEach((b) => {
+          if (!motion) b.style.transition = 'none';
+          b.style.width = '0';
+          requestAnimationFrame(() =>
+            requestAnimationFrame(() => (b.style.width = b.dataset.width)),
+          );
+        });
+        scope.querySelectorAll('[data-count]').forEach((el) => {
+          const to = +el.dataset.count;
+          if (!motion) {
+            el.textContent = to;
+            return;
+          }
+          const t0 = performance.now();
+          const step = (t) => {
+            const k = Math.min(1, (t - t0) / 900);
+            el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3)));
+            if (k < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        });
+      }
+      // Pip's idle loop (never in the lesson): one action at a time, then rest.
+      const ACTIONS = (q.get('actions') || 'blink,wave,stretch,read,timer,cheer,nap').split(',');
+      const gap = +(q.get('gap') || 2600);
+      let i = 0;
+      function idle() {
+        const btns = document.querySelectorAll('.screen:not([hidden]):not(#lesson) .pip-btn');
+        btns.forEach((b) => {
+          b.className = 'pip-btn';
+          void b.offsetWidth;
+          b.classList.add('is-' + ACTIONS[i % ACTIONS.length]);
+        });
+        i++;
+      }
+      if (q.get('pose'))
+        document
+          .querySelectorAll('.pip-btn')
+          .forEach((b) => b.classList.add('is-' + q.get('pose')));
+      else if (q.get('idle') !== 'off') {
+        setTimeout(idle, 600);
+        setInterval(idle, gap);
+      }
+
+      // Tap Pip on the map: the theme's page transition into Home.
+      document.querySelectorAll('[data-go]').forEach((b) =>
+        b.addEventListener('click', () => {
+          const from = b.closest('.screen');
+          const to = document.getElementById(b.dataset.go);
+          from.classList.add('turn-out');
+          setTimeout(
+            () => {
+              from.classList.remove('turn-out');
+              show(b.dataset.go);
+              to.classList.add('turn-in');
+              setTimeout(() => to.classList.remove('turn-in'), 400);
+            },
+            root.dataset.motion === 'off' ? 0 : 300,
+          );
+        }),
+      );
+      // Lesson: choose, check, react.
+      const ans = [...document.querySelectorAll('.ans')];
+      ans.forEach((a) =>
+        a.addEventListener('click', () =>
+          ans.forEach((x) => x.setAttribute('aria-pressed', String(x === a))),
+        ),
+      );
+      document.querySelector('[data-check]').addEventListener('click', (e) => {
+        const right = document.querySelector('.ans[data-right]');
+        right.classList.add('ans--right');
+        document.querySelector('.feedback').hidden = false;
+        const combo = document.querySelector('.combo');
+        combo.hidden = false;
+        combo.classList.add('pop');
+        document.querySelector('.l-progress i').style.width = '52%';
+        const react = document.querySelector('.pip-react');
+        react.classList.add('is-nod', 'is-cheer');
+        const f = document.createElement('span');
+        f.className = 'float';
+        f.textContent = '+10';
+        const r = right.getBoundingClientRect();
+        f.style.left = r.right - 60 + 'px';
+        f.style.top = r.top - 10 + 'px';
+        document.body.append(f);
+        e.currentTarget.textContent = 'Continue';
+      });
+      if (q.get('lesson') === 'chosen' || q.get('lesson') === 'right')
+        document.querySelector('.ans[data-right]').click();
+      if (q.get('lesson') === 'right') document.querySelector('[data-check]').click();
+      show(screenId);
+    </script>
+  </body>
+</html>
