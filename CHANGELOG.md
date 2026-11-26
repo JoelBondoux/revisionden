@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Fixed: when the version line at the bottom of a phone screen wraps, Get help now simply moves to the next line, with no stray dot at the start or end of either line.
 - Questions that ask for a fraction, simplest form, standard form or index form now need the answer in that form, as in the exam (69/99 is wrong when 23/33 is asked for, 0.375 is wrong "as a fraction"). Area answers can be typed as "8 square metres".
 - Fixed: a reminder time set after the last reminder check of the day (for example 20:45 when quiet hours start at 21:00) was never sent. It now goes at that last check, and the reminder settings say how reminder times work.
 - Fixed: worked answers written the everyday way, like 2³ × 3² × 5, 1.5 × 10^11, −7 or 30,000, are now understood and marked properly instead of being refused.
@@ -118,6 +119,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Version footer (G8): laid out as a wrapping flex row with a gap and no "·" text separator, so the separator can no longer start or end a wrapped line. Pieces: the version link with its environment and commit, then Get help.
 - S3-N3 forms: `answer.form` on the worked items that ask for a form: `index_form` on n4-0002 to 0004 (prime factors) and `standard_form` on n9-0004, so the plain value (360, 150000000000) is no longer accepted. Verification re-run on each.
 - Web tests no longer time out on a busy CI runner while a screen is still loading its data (I13, seen on `FlashcardsPage.flip`): `test-setup.ts` sets the Testing Library wait to 5 seconds for every `findBy…` and `waitFor` (the stats tests' per-file `LOAD`, now for all 564 finds) and gives each test 15 seconds. `docs/TESTING.md` says so.
 - Maths engine (T2): a rounded `value` check whose answer is an expression (`6.4*10^8` with `significant_figures`, as standard-form items send it) is now read exactly before the rounding is compared, instead of failing with InvalidOperation (Codex on train #208).
