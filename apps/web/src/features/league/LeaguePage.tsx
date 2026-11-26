@@ -269,6 +269,7 @@ function FriendsSheet({
   const [hidden, setHidden] = useState(data.hidden);
   const waitingText = {
     confirm: 'Waiting for you to check',
+    friend_checking: 'Waiting for your friend to check',
     parents: 'Waiting for parents',
     not_going_ahead: "Didn't go ahead",
   };
@@ -298,6 +299,30 @@ function FriendsSheet({
                 <li key={w.requestId}>
                   <span>{w.nickname}</span>
                   <span className="secondary-text">{waitingText[w.status]}</span>
+                  {/* Resume a check left half-done (sheet closed or page reloaded), FL4-fix. */}
+                  {w.status === 'confirm' && (
+                    <span className="league-check">
+                      <Button
+                        aria-label={`Yes, ${w.nickname} is my friend`}
+                        onClick={async () => {
+                          await api.confirm(w.requestId);
+                          onChanged();
+                        }}
+                      >
+                        Yes, my friend
+                      </Button>
+                      <Button
+                        variant="secondary"
+                        aria-label={`Cancel request from ${w.nickname}`}
+                        onClick={async () => {
+                          await api.cancel(w.requestId);
+                          onChanged();
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                    </span>
+                  )}
                 </li>
               ))}
             </ul>

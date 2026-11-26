@@ -153,3 +153,45 @@ describe("last week's result", () => {
     ).toBeInTheDocument();
   });
 });
+
+describe('a friend request waiting for this child to check (FL4-fix)', () => {
+  const waitingForMe = () =>
+    fakeLeagueApi({
+      getFriends: async () =>
+        sampleFriends({
+          waiting: [{ requestId: 'r-9', nickname: 'Nova_7', avatarCode: 'x', status: 'confirm' }],
+        }),
+    });
+
+  it('can be confirmed later, after the sheet was closed or the page reloaded', async () => {
+    const api = waitingForMe();
+    show(api);
+    await userEvent.click(await screen.findByRole('button', { name: 'Friends' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Yes, Nova_7 is my friend' }));
+    expect(api.confirm).toHaveBeenCalledWith('r-9');
+  });
+
+  it('can be cancelled', async () => {
+    const api = waitingForMe();
+    show(api);
+    await userEvent.click(await screen.findByRole('button', { name: 'Friends' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Cancel request from Nova_7' }));
+    expect(api.cancel).toHaveBeenCalledWith('r-9');
+  });
+
+  it('tells the child who made the code that their friend is checking', async () => {
+    show(
+      fakeLeagueApi({
+        getFriends: async () =>
+          sampleFriends({
+            waiting: [
+              { requestId: 'r-9', nickname: 'Nova_7', avatarCode: 'x', status: 'friend_checking' },
+            ],
+          }),
+      }),
+    );
+    await userEvent.click(await screen.findByRole('button', { name: 'Friends' }));
+    expect(screen.getByText('Waiting for your friend to check')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Yes, Nova_7/ })).not.toBeInTheDocument();
+  });
+});

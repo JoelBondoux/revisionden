@@ -23,7 +23,7 @@ import {
   previousLeagueWeeks,
 } from '@revisionden/core';
 import { createTestContext, jsonRequest, type TestContext } from './test/helpers';
-import { deleteExpiredFriendRecords } from './routes/friends';
+import { approveRequest, deleteExpiredFriendRecords } from './routes/friends';
 
 type H = Record<string, string>;
 let t: TestContext;
@@ -831,5 +831,114 @@ describe('closing a report', () => {
     expect(await left()).toHaveLength(1);
     await deleteExpiredFriendRecords(t.db, new Date(now.getTime() + 367 * DAY));
     expect(await left()).toHaveLength(0);
+  });
+});
+
+describe('review fixes (FL4-fix)', () => {
+  it('starts the friendship when both families approve at the same moment', async () => {
+    const a = await kid();
+    const b = await kid();
+    const id = await request(a, b);
+    const [ra, rb] = await Promise.all([approve(a, id), approve(b, id)]);
+    expect([ra.status, rb.status]).toEqual([200, 200]);
+    expect((await friendsOf(a)).friends.map((f) => f.id)).toEqual([b.studentId]);
+  });
+
+  it('starts the friendship even when each family approved from an old copy of the request', async () => {
+    const a = await kid();
+    const b = await kid();
+    const id = await request(a, b);
+    const [stale] = await t.db.select().from(friendRequests).where(eq(friendRequests.id, id));
+    // Both reads happened before either write: the race the review found.
+    await approveRequest(t.db, stale!, 'from', 1, t.clock.now());
+    const result = await approveRequest(t.db, stale!, 'to', 1, t.clock.now());
+    expect(result).toBe('started');
+    expect((await friendsOf(a)).friends.map((f) => f.id)).toEqual([b.studentId]);
+  });
+
+  it('stops a child with 3 waiting requests from entering another code', async () => {
+    const b = await kid();
+    for (let i = 0; i < 3; i++) {
+      const other = await kid();
+      const { code } = await makeCode(other);
+      expect((await redeem(b, code)).status).toBe(201);
+    }
+    const fourth = await kid();
+    const { code } = await makeCode(fourth);
+    const res = await redeem(b, code);
+    expect(res.status).toBe(409);
+    // The code was not used up, so the friend can still give it to someone else.
+    const c = await kid();
+    expect((await redeem(c, code)).status).toBe(201);
+  });
+
+  it('refuses a code whose owner already has 3 waiting requests, without saying why', async () => {
+    const a = await kid();
+    const { code } = await makeCode(a);
+    for (let i = 0; i < 3; i++) {
+      const other = await kid();
+      const theirs = await makeCode(other);
+      expect((await redeem(a, theirs.code)).status).toBe(201);
+    }
+    const b = await kid();
+    const res = await redeem(b, code);
+    expect(res.status).toBe(404);
+  });
+
+  it('settles finished weeks before a friendship ends, so leaving cannot turn a loss into a win', async () => {
+    const a = await kid();
+    const b = await kid();
+    const c = await kid();
+    const long = new Date(t.clock.now().getTime() - 30 * DAY);
+    for (const other of [b, c]) {
+      await befriend(a, other);
+      await t.db
+        .update(friendships)
+        .set({ createdAt: long })
+        .where(
+          or(
+            and(eq(friendships.studentA, a.studentId), eq(friendships.studentB, other.studentId)),
+            and(eq(friendships.studentA, other.studentId), eq(friendships.studentB, a.studentId)),
+          ),
+        );
+    }
+    await t.db
+      .update(students)
+      .set({ createdAt: long })
+      .where(inArray(students.id, [a.studentId, b.studentId, c.studentId]));
+    const [week] = previousLeagueWeeks(t.clock.now(), 1);
+    const tuesday = new Date(new Date(`${week!.start}T12:00:00Z`).getTime() + DAY);
+    const [topic] = await t.db.select().from(topics).limit(1);
+    const [item] = await t.db.select().from(items).where(eq(items.topicId, topic!.id)).limit(1);
+    for (const [k, xp] of [
+      [a, 60],
+      [b, 120],
+      [c, 10],
+    ] as const) {
+      await t.db.insert(attempts).values({
+        studentId: k.studentId,
+        itemId: item!.id,
+        correct: true,
+        xpEarned: xp,
+        createdAt: tuesday,
+      });
+    }
+    // a leaves b before anyone has opened the league this week.
+    expect((await send('DELETE', `/v1/student/friends/${b.studentId}`, a.headers)).status).toBe(
+      204,
+    );
+    const league = (await (await get('/v1/student/league', a.headers)).json()) as {
+      lastWeek: { place: number | null; won: boolean } | null;
+    };
+    expect(league.lastWeek).toMatchObject({ place: 2, won: false });
+  });
+
+  it('tells only the child who typed the code that they need to confirm', async () => {
+    const a = await kid();
+    const b = await kid();
+    const { code } = await makeCode(a);
+    await redeem(b, code);
+    expect((await friendsOf(b)).waiting[0]!.status).toBe('confirm');
+    expect((await friendsOf(a)).waiting[0]!.status).toBe('friend_checking');
   });
 });
