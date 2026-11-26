@@ -763,7 +763,7 @@ Tags: #product #rules #limits #defaults
   recall, map, Plan, papers chooser, set complete and rewards moments, Me page) show the main task
   and the primary button without scrolling, with the primary action always in view. Reading pages
   (Get help, About, policies, long explanations, parent stats) may scroll. At 320 px or 200% text,
-  vertical scrolling is allowed, but never sideways scrolling or clipped content. Agreed, not yet
+  vertical scrolling is allowed, but never page sideways scrolling or clipped content. Contained scrollers are allowed (lead ruling): a sideways chip or badge row (snap, edge fade, Tab reaches every item, 44 px targets) or a labelled, focusable list scrolling inside a card; at 320 px, 200% text or on short screens, the inner vertical scroll gives way to page scrolling. Agreed, not yet
   applied everywhere: see `docs/PRODUCT_RULES.md` (Screen layout) and `docs/design/j12/`.
 - One look (J12, proposed, owner choice pending): the owner wants one consistent style across the
   student app instead of the current mix of doodle and default. J12's proposal: Doodle Diary is

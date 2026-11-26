@@ -1063,7 +1063,14 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
     moments, and the Me page.
   - Not covered: reading pages (Get help, About, policies, long explanations, parent stats). These
     may scroll.
-  - Accessibility wins: at 320 px or 200% text, or with a very long question, the page may scroll
-    up and down. It must never scroll sideways or clip content.
+  - Contained scrollers are allowed (lead ruling, 2026-11-26): a row of chips or badges that
+    scrolls sideways, or a list inside a card that scrolls up and down. The page itself never
+    scrolls sideways. Sideways rows use scroll snap and an edge fade that shows there is more,
+    bring the selected item into view on load, keep every item reachable with Tab (focus scrolls
+    it into view), have touch targets of at least 44 px, and show a scrollbar or arrow buttons on
+    pointer devices. A scrolling list in a card is a labelled, focusable region.
+  - Accessibility wins: at 320 px or 200% text, with a short screen, or with a very long question,
+    the page may scroll up and down, and an inner up-and-down scroller gives way to normal page
+    scrolling (no scroll inside a scroll). The page must never scroll sideways or clip content.
   - Status: agreed, not yet applied everywhere. Mockups and the current heights are in
     `docs/design/j12/` (AUDIT.md); the proposed e2e check is in `docs/design/j12/SKIN.md`.
