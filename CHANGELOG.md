@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- The Me page and its More page now use big, easy-to-tap buttons with short names, in the same style as the rest of the app.
 - "Learn more" now points to a lesson on the exact question or skill on flashcards too, not just the topic.
 - Learn more and Learn it first now open Oak National Academy's lessons made for students, with the lesson video and no sign-in, instead of the teacher's page.
 - Trying something new: if factorising quadratics is a weak spot, its lesson now starts with an interactive picture. You build x² + 5x + 6 out of tiles, pick the two numbers that split the middle, and watch the tiles make a rectangle whose sides are the brackets. Tap any tile to see which part of the expression it is. At the end, one tap tells us whether it helped. (On the test version first, while its content is checked.)
@@ -224,6 +225,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- W9b fixes (Codex review of #277): the avatar editor re-reads unlocked items each time it opens, so a reward earned since the page loaded unlocks its item; keyboard focus now stays on the item just picked instead of jumping back to the top of the sheet.
+- W9b: Me and More use J15a `ButtonTiles` (2–3 word labels, no helper sentences; Get help `tone="help"`); screenshots in `docs/design/w9/` refreshed.
 - Learn more targets (Q6b): `LearnItem.contentId` (from `items.content_id`) and `Flashcard.contentId` / `Flashcard.learningPoint` (from the card's item), so Learn more matches the exact item, then its learning point, then the topic, in lessons and on the flashcard Explain panel. Test `apps/api/src/learn-more-targets.test.ts`.
 - Oak pupil pages (Q6c, owner decision 2026-11-26): all 90 Oak learn links (84 lessons) switched from the teacher page to the pupil lesson page `/pupils/lessons/<lesson>/overview`, each re-read and match-checked (title as fetched, lesson outcome, Year 10 or 11, lesson video present, no sign-in); none kept as a teacher page. The validator refuses any other Oak path unless the link is marked `no_pupil_page: true` (new schema field, only on an Oak `/teachers/` page). The CI title check already reads pupil pages; a test now guards it.
 - Interactive lesson pilot (W8; owner decision 2026-11-26, A4, scope A, pulled forward from Stage 4): `area_model` item type (content schema and validator with maths-engine check, core logic in `packages/core/src/interactive/`, API serving and marking, `features/interactive/AreaModelStep` via a 3-line `parts.tsx` hook); four draft A4 items quote-checked against the 1MA1 spec (page 26); shown first in a one-topic lesson only when the topic is a weak spot (`showsInteractivePilot`); one-tap "Did this help?" as feedback kinds `lesson_helped` / `lesson_not_helped` with an item id and no text (migration 0028, DB check, outside the daily limit, one per student and item). No tile-movement logging.

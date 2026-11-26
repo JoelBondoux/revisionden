@@ -10,6 +10,8 @@ export interface MyAvatar {
   earnedRewardIds: readonly string[];
   /** Saves a new look; the nav and the Me page show it as soon as the server says yes. */
   save: (code: string) => Promise<void>;
+  /** Re-reads which items are unlocked (a reward may have been earned since the page loaded). */
+  refreshUnlocks: () => void;
 }
 
 const Context = createContext<MyAvatar | null>(null);
@@ -58,7 +60,17 @@ export function MyAvatarProvider({
     [api],
   );
 
-  const value = useMemo(() => ({ ...loaded, save }), [loaded, save]);
+  const refreshUnlocks = useCallback(() => {
+    api.getMyAvatar().then(
+      ({ earnedRewardIds }) => setLoaded((l) => ({ ...l, earnedRewardIds })),
+      () => undefined,
+    );
+  }, [api]);
+
+  const value = useMemo(
+    () => ({ ...loaded, save, refreshUnlocks }),
+    [loaded, save, refreshUnlocks],
+  );
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
