@@ -199,6 +199,8 @@
 
 /* Border colour shows through a 4px gap between the outer and inner hexagon. */
 .hex__shape {
+  /* After the title in the page (for its accessible name), but shown above it. */
+  order: -1;
   --hex-border: var(--color-border);
   --hex-fill: var(--color-surface);
   position: relative;

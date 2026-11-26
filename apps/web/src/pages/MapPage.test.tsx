@@ -51,10 +51,10 @@ describe('Topic map screen', () => {
     const unit = within(number);
     expect(unit.getByRole('link', { name: 'Fractions, mastered' })).toBeInTheDocument();
     expect(unit.getByRole('link', { name: 'Standard form, 45% mastered' })).toBeInTheDocument();
-    expect(unit.getByRole('link', { name: 'Surds, weak spot, 38% mastered' })).toBeInTheDocument();
+    expect(unit.getByRole('link', { name: 'Surds, weak, 38% mastered' })).toBeInTheDocument();
     expect(unit.getByRole('button', { name: 'Bounds, locked' })).toBeInTheDocument();
     expect(
-      unit.getByRole('button', { name: 'Number challenge, unlocks at 80% mastered' }),
+      unit.getByRole('button', { name: 'Challenge, unlocks at 80% mastered in Number' }),
     ).toBeInTheDocument();
   });
 
