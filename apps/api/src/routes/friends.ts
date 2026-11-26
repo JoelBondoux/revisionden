@@ -53,7 +53,7 @@ import { readJson } from '../http';
 import type { Clock } from '../rate-limit';
 import { hashToken } from '../tokens';
 import { isId } from '../validation';
-import { leagueFor } from './friends-league';
+import { leagueFor, settleLeagueWeeks } from './friends-league';
 
 const HOUR_MS = 60 * 60 * 1000;
 /** 12 months after a report is closed. */
@@ -206,8 +206,64 @@ async function canBefriend(
   return (await friendCount(db, me)) < MAX_FRIENDS && (await friendCount(db, other)) < MAX_FRIENDS;
 }
 
-/** Ends a friendship, if any. Returns whether there was one. */
-async function unfriend(db: Database, x: string, y: string) {
+/**
+ * One family's approval (review fix, FL4-fix): only that family's column is written, so two
+ * approvals at once cannot overwrite each other, then a single conditional UPDATE claims the start
+ * once both columns are set. Whoever wins the claim checks the rules again and adds the friendship.
+ */
+export async function approveRequest(
+  db: Database,
+  r: RequestRow,
+  side: 'from' | 'to',
+  position: number,
+  now: Date,
+): Promise<'waiting_for_other_family' | 'started' | 'closed'> {
+  const open = and(
+    eq(friendRequests.id, r.id),
+    eq(friendRequests.status, 'parents'),
+    gt(friendRequests.expiresAt, now),
+  );
+  const marked = await db
+    .update(friendRequests)
+    .set(side === 'from' ? { fromApprovedBy: position } : { toApprovedBy: position })
+    .where(open)
+    .returning({ id: friendRequests.id });
+  if (marked.length === 0) return 'closed';
+  const claimed = await db
+    .update(friendRequests)
+    .set({ status: 'started', endedAt: now })
+    .where(
+      and(open, isNotNull(friendRequests.fromApprovedBy), isNotNull(friendRequests.toApprovedBy)),
+    )
+    .returning({ id: friendRequests.id });
+  if (claimed.length === 0) return 'waiting_for_other_family';
+  // Both families said yes: check again (a block or a full list since), then start.
+  const from = await loadStudent(db, r.fromStudentId);
+  const to = await loadStudent(db, r.toStudentId);
+  if (!from || !to || !(await canBefriend(db, from, to, now, r.id))) {
+    await db
+      .update(friendRequests)
+      .set({ status: 'declined', endedAt: now })
+      .where(eq(friendRequests.id, r.id));
+    return 'closed';
+  }
+  const [a, b] = pair(from.id, to.id);
+  await db
+    .insert(friendships)
+    .values({ studentA: a, studentB: b, createdAt: now })
+    .onConflictDoNothing();
+  return 'started';
+}
+
+/**
+ * Ends a friendship, if any. Finished weeks are settled first for both children (review fix,
+ * FL4-fix), so leaving after Sunday cannot change last week's result. Returns whether there was one.
+ */
+async function unfriend(db: Database, x: string, y: string, now: Date) {
+  for (const id of [x, y]) {
+    const s = await loadStudent(db, id);
+    if (s) await settleLeagueWeeks(db, s, now);
+  }
   const [a, b] = pair(x, y);
   const gone = await db
     .delete(friendships)
@@ -217,7 +273,7 @@ async function unfriend(db: Database, x: string, y: string) {
 }
 
 async function block(db: Database, blockerId: string, blockedId: string, now: Date) {
-  await unfriend(db, blockerId, blockedId);
+  await unfriend(db, blockerId, blockedId, now);
   await db
     .insert(friendBlocks)
     .values({ blockerId, blockedId, createdAt: now })
@@ -251,9 +307,11 @@ const allowedSchema = z.object({ allowed: z.boolean() }).strict();
 const labelSchema = z.object({ label: z.string().max(100).nullable() }).strict();
 
 /** How a request looks to one of the children. */
-function waitingStatus(r: RequestRow, now: Date) {
+function waitingStatus(r: RequestRow, now: Date, studentId: string) {
   if (r.status === 'declined' || r.expiresAt <= now) return 'not_going_ahead';
-  return r.status === 'child_confirm' ? 'confirm' : 'parents';
+  if (r.status !== 'child_confirm') return 'parents';
+  // Only the child who typed the code confirms; the other waits for them.
+  return r.toStudentId === studentId ? 'confirm' : 'friend_checking';
 }
 
 export function studentFriendRoutes(deps: FriendDeps) {
@@ -293,7 +351,7 @@ export function studentFriendRoutes(deps: FriendDeps) {
         requestId: r.id,
         nickname: other.nickname,
         avatarCode: other.avatarCode,
-        status: waitingStatus(r, now),
+        status: waitingStatus(r, now, self.id),
       });
     }
     return c.json({
@@ -387,8 +445,19 @@ export function studentFriendRoutes(deps: FriendDeps) {
           gt(friendCodes.expiresAt, now),
         ),
       );
+    // Waiting-request limit for this child (review fix, FL4-fix): checked before the code is
+    // used, so the code still works for someone else. Not counted as a wrong try.
+    if ((await openRequests(db, self.id, now)).length >= MAX_WAITING_REQUESTS) {
+      throw new ApiError(
+        409,
+        'waiting_limit',
+        'You have 3 friend requests waiting. Wait for those first.',
+      );
+    }
     const owner = found ? await loadStudent(db, found.studentId) : undefined;
-    if (!found || !owner || !(await canBefriend(db, self, owner, now))) {
+    const ownerFull =
+      owner && (await openRequests(db, owner.id, now)).length >= MAX_WAITING_REQUESTS;
+    if (!found || !owner || ownerFull || !(await canBefriend(db, self, owner, now))) {
       await tried(false);
       throw codeNotValid();
     }
@@ -455,7 +524,7 @@ export function studentFriendRoutes(deps: FriendDeps) {
     const now = clock.now();
     const self = await me(c.var.student.studentId);
     const other = await requireFriend(db, self, c.req.param('id'));
-    await unfriend(db, self.id, other.id);
+    await unfriend(db, self.id, other.id, now);
     await logFor(db, self, 'friend_ended', now);
     await logFor(db, other, 'friend_ended', now);
     return c.body(null, 204);
@@ -592,6 +661,8 @@ export function parentFriendRoutes(deps: FriendDeps) {
   app.put('/:id/friends/allowed', async (c) => {
     const { allowed } = await readJson(c, allowedSchema);
     const self = await child(c.var.parent.familyId, c.req.param('id'));
+    // Settle finished weeks while the child's friends still count (FL4-fix).
+    if (!allowed) await settleLeagueWeeks(db, self, clock.now());
     await db.update(students).set({ friendsAllowed: allowed }).where(eq(students.id, self.id));
     await logFor(
       db,
@@ -618,33 +689,11 @@ export function parentFriendRoutes(deps: FriendDeps) {
     const { position, familyId } = c.var.parent;
     const { self, r } = await parentRequest(familyId, c.req.param('id'), c.req.param('rid'));
     if (r.status !== 'parents' || r.expiresAt <= now) throw requestClosed();
-    const mine = r.fromStudentId === self.id;
-    const next = {
-      fromApprovedBy: mine ? position : r.fromApprovedBy,
-      toApprovedBy: mine ? r.toApprovedBy : position,
-    };
-    await db.update(friendRequests).set(next).where(eq(friendRequests.id, r.id));
+    const side = r.fromStudentId === self.id ? 'from' : 'to';
+    const status = await approveRequest(db, r, side, position, now);
     await logFor(db, self, 'friend_approved', now, position);
-    if (next.fromApprovedBy === null || next.toApprovedBy === null) {
-      return c.json({ status: 'waiting_for_other_family' });
-    }
-    // Both families said yes: check again (a block or a full list since), then start.
-    const from = await loadStudent(db, r.fromStudentId);
-    const to = await loadStudent(db, r.toStudentId);
-    if (!from || !to || !(await canBefriend(db, from, to, now, r.id))) {
-      await db
-        .update(friendRequests)
-        .set({ status: 'declined', endedAt: now })
-        .where(eq(friendRequests.id, r.id));
-      throw requestClosed();
-    }
-    const [a, b] = pair(from.id, to.id);
-    await db.insert(friendships).values({ studentA: a, studentB: b, createdAt: now });
-    await db
-      .update(friendRequests)
-      .set({ status: 'started', endedAt: now })
-      .where(eq(friendRequests.id, r.id));
-    return c.json({ status: 'started' });
+    if (status === 'closed') throw requestClosed();
+    return c.json({ status });
   });
 
   app.post('/:id/friends/requests/:rid/decline', async (c) => {
@@ -694,7 +743,7 @@ export function parentFriendRoutes(deps: FriendDeps) {
     const now = clock.now();
     const self = await child(c.var.parent.familyId, c.req.param('id'));
     const other = await requireFriend(db, self, c.req.param('otherId'));
-    await unfriend(db, self.id, other.id);
+    await unfriend(db, self.id, other.id, now);
     await logFor(db, self, 'friend_removed', now, c.var.parent.position);
     await logFor(db, other, 'friend_ended', now);
     return c.body(null, 204);

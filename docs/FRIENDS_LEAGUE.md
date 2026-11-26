@@ -244,6 +244,14 @@ New tables (one new migration):
   the parent Friends card); both families then see it as dealt with, and the daily clean-up
   deletes it 12 months later. An open report is kept until it is closed or either child is
   deleted.
+- **Review fixes (FL4-fix, from the train #313 review):** approvals from both families at
+  once can no longer overwrite each other (each writes only its own column, then one
+  conditional UPDATE starts the friendship); typing a code checks both children's 3 waiting
+  requests before the code is used; ending a friendship (remove, block, report, or friends
+  turned off) first settles any unsettled finished weeks for both children, so leaving after
+  Sunday cannot change last week's result; and a request left waiting for the child's check can
+  be confirmed or cancelled later from the Friends sheet (`friend_checking` is what the other
+  child sees).
 - **Still to come:** the AppDeck report view, where support can also close a report
   (`docs/BACKLOG.md`).
 

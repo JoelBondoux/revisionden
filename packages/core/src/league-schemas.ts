@@ -15,7 +15,13 @@ export type FriendCard = z.infer<typeof FriendCardSchema>;
 export const FriendSchema = FriendCardSchema.extend({ id: z.string(), sibling: z.boolean() });
 export type Friend = z.infer<typeof FriendSchema>;
 
-export const WaitingStatusSchema = z.enum(['confirm', 'parents', 'not_going_ahead']);
+/** `confirm`: this child must check it is their friend; `friend_checking`: waiting for the friend. */
+export const WaitingStatusSchema = z.enum([
+  'confirm',
+  'friend_checking',
+  'parents',
+  'not_going_ahead',
+]);
 
 export const StudentFriendsResponseSchema = z.object({
   allowed: z.boolean(),
