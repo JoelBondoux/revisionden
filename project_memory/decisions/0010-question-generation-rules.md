@@ -37,13 +37,43 @@ maths can reach 600 to 1,000 verified items at a review cost one parent can keep
 9. **Not decided here:** short quotes from in-copyright set texts and films go to the owner's
    solicitor. It stays open in `project_memory/operations/contradictions.md` and the owner's to-do
    list.
-10. **Pending** until Oak's licence is read directly: intended answer is individual approval of
-    teaching notes at first, then sampling after 50 clean approvals; Oak's open-licence text may
-    inspire drafts but is never a citation source.
-11. **Readability warns, never blocks.** `textstat` scores notes and explanations; the aim is a
-    reading age of 13 to 14 for GCSE and 15 to 16 for A-Level (the A-Level figure is QG's
-    proposal, not stated by the owner). Subject terms from the specification are left out before
-    scoring.
+10. **Pending** (the owner settles it now that Oak's licence is confirmed, below): intended
+    answer is individual approval of teaching notes at first, then sampling after 50 clean
+    approvals; Oak's open-licence text may inspire drafts but is never a citation source.
+
+## Oak's licence: confirmed (read directly, 2026-11-26)
+
+Source: Oak National Academy, Terms and conditions, https://www.thenational.academy/legal/terms-and-conditions
+(HTML SHA-256 `58b15955b7d2568b299edd0da0f00a1232ebfa14f2d23623c51f437adee73a35`, which can change
+on every fetch). Section on lesson content:
+
+- **Collection 1** ("Lesson content originally published before 1st September 2022"): "made
+  available to teachers on a revocable, non-exclusive, non-transferable, limited licence to use for
+  non-commercial educational purposes". Not usable in RevisionDen.
+- **Collection 2** ("Lesson content published after 1st September 2022, which is hosted on
+  www.thenational.academy"): "made available to use under an Open Government Licence (OGL) v3.0,
+  except where otherwise stated". Permitted uses listed: "copy, publish, distribute and transmit
+  the content", "adapt the content", "exploit the content commercially and non-commercially for
+  example, by combining it with other information, or by including it in your own product or
+  application".
+- **Attribution required**: "A [subject - English etc] lesson by Oak National Academy licensed
+  under Open Government Licence (OGL)", plus a link to
+  https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/.
+- **Exclusions**: "Respect the rights of third parties for content which contains third-party
+  copyright, trademarks or other licensing restrictions. So far as reasonably practicable, we have
+  marked this content in the resource that is not covered by the OGL licence." Some resources are
+  available only after signing in "Due to the terms of the licence we have with the rightsholder".
+- **No endorsement**: users must not "say your organisation or website is associated with or
+  endorsed by us".
+- **Accuracy**: the terms say materials "may contain inaccuracies, errors and/or contain content
+  which is not OGL compliant (Collection 2 lesson content only)". This supports the intended answer
+  that Oak is never a citation source under `docs/VERIFICATION.md`.
+
+Not read: Oak's "Guide to website licensing" on `support.thenational.academy` (still blocked), and
+the OGL v3.0 text on `www.nationalarchives.gov.uk` (blocked). 11. **Readability warns, never blocks.** `textstat` scores notes and explanations; the aim is a
+reading age of 13 to 14 for GCSE and 15 to 16 for A-Level (the A-Level figure is QG's
+proposal, not stated by the owner). Subject terms from the specification are left out before
+scoring.
 
 ## Consequences
 

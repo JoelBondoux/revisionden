@@ -107,7 +107,7 @@ Tags: #product #rules #limits #defaults
   rows may be batch-sampled; board-neutral physics and chemistry calculations from DfE content
   may be built now; awrt rounding is settled; spreadsheet citations use "sheet, row, cell";
   readability (textstat) warns only, aiming at reading age 13 to 14 (GCSE), 15 to 16 (A-Level).
-  Pending: in-house notes review and Oak (until Oak's licence is read). In-copyright quotes: with
+  Pending owner sign-off: in-house notes review and use of Oak. Oak's licence was read directly on 2026-11-26: lessons published after 1 September 2022 are OGL v3.0 (commercial use and adapting allowed, with Oak's attribution statement, no endorsement claim, third-party content excluded); earlier lessons are non-commercial only. In-copyright quotes: with
   the owner's solicitor.
 - Onboarding takes Years 9 to 13 (9–11 GCSE, 12–13 A-Level). Exams are worked out from the year:
   Year 11 and 13 sit them next summer (2027 in school year 2026/27), Year 10 and 12 a year later,
