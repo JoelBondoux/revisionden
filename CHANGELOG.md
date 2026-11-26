@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Fixed: finishing the "10 more" flashcards now counts as a finished session and earns its XP, instead of saying you left early.
 - Friends league (while it's being tried in development): topping your league for a week now earns the league rewards, and the league page cheers last week's result.
 - A new friends league, off until a parent turns it on. Children add friends with a one-time code shared in person, and a parent in each family approves. You see this week's league from Me, or from "You're 2nd this week" on Home. Friends only ever see a nickname, avatar, title and this week's XP, with no chat. Parents manage friends from the child's card.
 - Fixed: typed working questions no longer get stuck on "Couldn't check that answer" while we can't mark them. They're left out for now, and if one is already on screen it says it's skipped, with no XP lost, and Continue moves on.
@@ -150,6 +151,9 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- F11b (Codex review on train #311): an all-decks flashcard session is complete when today's offered cards are done, the daily 20 plus any "10 more", not the whole backlog. `POST /flashcards/sessions` takes `extra`, stored in `flashcard_sessions.extra_cards` (migration 0032); finish compares with `todaysCards(…, extraCards)`. The web app sends the extra it asked for.
+
+- Docs: migration order rule in `docs/ARCHITECTURE.md` (land in number order, regenerate the journal `when` after merging `dev`), after a near-miss where a later-numbered migration could have made the deploy skip two earlier ones.
 - Typed working without the maths engine (F12, bug RD-JE5DWP): with no `MATHS_ENGINE_URL`, `selectableItem` leaves `worked_maths` out of lessons, warm-ups, similar/easier/confidence picks, the daily set (stored sets too), recall and the starting test. An answer to one anyway returns `{ unmarked: true, itemId }` (`UnmarkedAttemptResponseSchema`, `LearnAttemptResultSchema`) instead of a 503 and saves nothing; the lesson says it is skipped and Continue moves on. Answers are still accepted through `servableItem`.
 - F10b (Codex review on train #303): dashboards now count a helped answer as wrong for mastery like the topic map (`StatsAnswer.helped`, loaded in `stats/load.ts`; accuracy keeps the raw score); help that arrives after the pupil has moved on no longer marks the next question as helped (`HelpPanel` ignores it once unmounted); and `x^(a+b)^2` keeps its brackets when raised again, so it no longer shows as x to the power a+b².
 
@@ -257,6 +261,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - FL4-fix (review of train #313): concurrent approvals start the friendship (`approveRequest`, conditional UPDATE), the 3-waiting-requests limit also applies when typing a code, finished weeks are settled before a friendship ends, and a request waiting for the child's check can be confirmed or cancelled later (new waiting status `friend_checking`).
 - FL4b (review of train #317): once both families approve, the friendship is saved before the request is marked started, so a failed save leaves the request open and approving again finishes it; product facts now list every point where finished league weeks are settled.
 - FL4c (review of train #322): starting a friendship is one repeatable step (`finaliseRequest`); two at once start it once, a pair that is already friends is never declined, and a request left with both approvals is finished when the child or a parent next opens Friends.
+- FL (PR 4): friend reports in AppDeck: `GET friend-reports` and `POST friend-reports/{id}/close` on the operator bridge (`apps/api/src/routes/friends-operator.ts`, `OperatorFriendReportsSchema`), nicknames, reported avatar code, fixed reason and dates only, audited. Cross-lane: `apps/api/src/operator/routes.ts`, `docs/OPERATOR_CONSOLE.md`.
 - FL (PR 3): closing a report: the reporting child's parents mark it as dealt with (`POST /v1/students/:id/friends/reports/:reportId/close`, parent Friends card); the daily clean-up deletes closed reports after 12 months.
 - FL (PR 3): weekly league results (`league_weeks`, migration 0031) and `students.league_wins`, settled lazily on the first league or rewards visit each week from the friends a child had by the end of that week; wins feed `weeksTopOfLeague` (league rewards); last week's result on the League page; 8 weeks kept by the clean-up. Cross-lane: `apps/api/src/routes/rewards.ts`.
 - FL: the friends league is behind `FRIENDS_ENABLED` (development only; staging and production answer `404 friends_not_available`), with env and wrangler config tests (lead ruling, 2026-11-26).
