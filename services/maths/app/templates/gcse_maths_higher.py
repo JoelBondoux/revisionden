@@ -376,7 +376,8 @@ def _standard_write(p: dict) -> dict:
         explanation += (f" In standard form the first number is at least 1 and less than 10. "
                         f"{sp} = {sm} × 10^1, so {sp} × 10^{m + n} = {sm} × 10^1 × 10^{m + n} = "
                         f"{sm} × 10^{power}.")
-        mark = f"M1 for {sp} × 10^{m + n}"
+        ordinary = f"{int(product * 10 ** (m + n)):,}".replace(",", " ")
+        mark = f"M1 for {sp} × 10^{m + n} or {ordinary}"
     else:
         explanation += f" {sp} is at least 1 and less than 10, so this is already standard form."
         mark = f"M1 for {sa} × {sb} = {sp} or 10^{m} × 10^{n} = 10^{m + n}"
@@ -416,7 +417,7 @@ def _standard_recheck(p: dict, item: dict) -> list[str]:
 
 STANDARD_FORM_MULTIPLY = Template(
     id="gcse-maths-h-n9-standard-form-multiply",
-    version=2,  # v2: "add their indices", and the move into standard form shown (review)
+    version=3,  # v2: "add their indices" (review); v3: M1 also for the ordinary number
     topic="gcse-maths-h-n9",
     learning_point="gcse-maths-h-n9-lp-calculate",
     type="worked_maths",

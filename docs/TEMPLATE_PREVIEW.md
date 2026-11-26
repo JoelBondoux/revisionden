@@ -103,35 +103,35 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Answer:** x = 2, y = -1
 - **Explanation:** Add the equations to eliminate y: 7x = 14, so x = 2. Substitute x = 2 into 6x + 3y = 9: 12 + 3y = 9, so 3y = -3 and y = -1. Check in x - 3y = 5: 2 - 3 × (-1) = 5.
 - **Hint:** The y terms have opposite signs, so add the equations to make y disappear.
-- Seed 1, difficulty 2, `gcse-maths-h-a19-t-elimination-01`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 1, difficulty 2, `gcse-maths-h-a19-t-elimination-01`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 2. Solve the simultaneous equations x + 4y = -13 and 3x - 4y = 25.
 
 - **Answer:** x = 3, y = -4
 - **Explanation:** Add the equations to eliminate y: 4x = 12, so x = 3. Substitute x = 3 into x + 4y = -13: 3 + 4y = -13, so 4y = -16 and y = -4. Check in 3x - 4y = 25: 3 × 3 - 4 × (-4) = 25.
 - **Hint:** The y terms have opposite signs, so add the equations to make y disappear.
-- Seed 2, difficulty 2, `gcse-maths-h-a19-t-elimination-02`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 2, difficulty 2, `gcse-maths-h-a19-t-elimination-02`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 3. Solve the simultaneous equations 6x + 2y = -20 and 5x - 2y = -35.
 
 - **Answer:** x = -5, y = 5
 - **Explanation:** Add the equations to eliminate y: 11x = -55, so x = -5. Substitute x = -5 into 6x + 2y = -20: -30 + 2y = -20, so 2y = 10 and y = 5. Check in 5x - 2y = -35: 5 × (-5) - 2 × 5 = -35.
 - **Hint:** The y terms have opposite signs, so add the equations to make y disappear.
-- Seed 3, difficulty 2, `gcse-maths-h-a19-t-elimination-03`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 3, difficulty 2, `gcse-maths-h-a19-t-elimination-03`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 4. Solve the simultaneous equations 2x + 3y = -9 and 4x - 3y = 27.
 
 - **Answer:** x = 3, y = -5
 - **Explanation:** Add the equations to eliminate y: 6x = 18, so x = 3. Substitute x = 3 into 2x + 3y = -9: 6 + 3y = -9, so 3y = -15 and y = -5. Check in 4x - 3y = 27: 4 × 3 - 3 × (-5) = 27.
 - **Hint:** The y terms have opposite signs, so add the equations to make y disappear.
-- Seed 4, difficulty 2, `gcse-maths-h-a19-t-elimination-04`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 4, difficulty 2, `gcse-maths-h-a19-t-elimination-04`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 5. Solve the simultaneous equations 6x + 4y = -8 and 6x - 4y = 32.
 
 - **Answer:** x = 2, y = -5
 - **Explanation:** Add the equations to eliminate y: 12x = 24, so x = 2. Substitute x = 2 into 6x + 4y = -8: 12 + 4y = -8, so 4y = -20 and y = -5. Check in 6x - 4y = 32: 6 × 2 - 4 × (-5) = 32.
 - **Hint:** The y terms have opposite signs, so add the equations to make y disappear.
-- Seed 5, difficulty 2, `gcse-maths-h-a19-t-elimination-05`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 5, difficulty 2, `gcse-maths-h-a19-t-elimination-05`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ## gcse-maths-h-n12-percentage-change (gcse-maths-h-n12, 5 questions)
 
@@ -192,7 +192,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Worked steps:** `(9*10^9)*(7.8*10^6)` → `(9*7.8)*10^(9+6)` → `70.2*10^15` → `7.02*10^16`
 - **Explanation:** Multiply the numbers: 9 × 7.8 = 70.2. To multiply powers of 10, add their indices: 10^9 × 10^6 = 10^(9 + 6) = 10^15. This gives 70.2 × 10^15. In standard form the first number is at least 1 and less than 10. 70.2 = 7.02 × 10^1, so 70.2 × 10^15 = 7.02 × 10^1 × 10^15 = 7.02 × 10^16.
 - **Hint:** Multiply the numbers, then multiply the powers of 10 by adding their indices.
-- **Marks (2):** M1 for 70.2 × 10^15; A1 for 7.02 × 10^16
+- **Marks (2):** M1 for 70.2 × 10^15 or 70 200 000 000 000 000; A1 for 7.02 × 10^16
 - Seed 2, difficulty 3, `gcse-maths-h-n9-t-standard-form-multiply-02`. Checks: grounded-writing pass, maths-engine pass.
 
 ### 3. Work out (6.6 × 10^2) × (2 × 10^5). Give your answer in standard form.
@@ -201,7 +201,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Worked steps:** `(6.6*10^2)*(2*10^5)` → `(6.6*2)*10^(2+5)` → `13.2*10^7` → `1.32*10^8`
 - **Explanation:** Multiply the numbers: 6.6 × 2 = 13.2. To multiply powers of 10, add their indices: 10^2 × 10^5 = 10^(2 + 5) = 10^7. This gives 13.2 × 10^7. In standard form the first number is at least 1 and less than 10. 13.2 = 1.32 × 10^1, so 13.2 × 10^7 = 1.32 × 10^1 × 10^7 = 1.32 × 10^8.
 - **Hint:** Multiply the numbers, then multiply the powers of 10 by adding their indices.
-- **Marks (2):** M1 for 13.2 × 10^7; A1 for 1.32 × 10^8
+- **Marks (2):** M1 for 13.2 × 10^7 or 132 000 000; A1 for 1.32 × 10^8
 - Seed 3, difficulty 3, `gcse-maths-h-n9-t-standard-form-multiply-03`. Checks: grounded-writing pass, maths-engine pass.
 
 ### 4. Work out (4.2 × 10^3) × (7 × 10^5). Give your answer in standard form.
@@ -210,7 +210,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Worked steps:** `(4.2*10^3)*(7*10^5)` → `(4.2*7)*10^(3+5)` → `29.4*10^8` → `2.94*10^9`
 - **Explanation:** Multiply the numbers: 4.2 × 7 = 29.4. To multiply powers of 10, add their indices: 10^3 × 10^5 = 10^(3 + 5) = 10^8. This gives 29.4 × 10^8. In standard form the first number is at least 1 and less than 10. 29.4 = 2.94 × 10^1, so 29.4 × 10^8 = 2.94 × 10^1 × 10^8 = 2.94 × 10^9.
 - **Hint:** Multiply the numbers, then multiply the powers of 10 by adding their indices.
-- **Marks (2):** M1 for 29.4 × 10^8; A1 for 2.94 × 10^9
+- **Marks (2):** M1 for 29.4 × 10^8 or 2 940 000 000; A1 for 2.94 × 10^9
 - Seed 4, difficulty 3, `gcse-maths-h-n9-t-standard-form-multiply-04`. Checks: grounded-writing pass, maths-engine pass.
 
 ### 5. Work out (6 × 10^9) × (4.9 × 10^2). Give your answer in standard form.
@@ -219,5 +219,5 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Worked steps:** `(6*10^9)*(4.9*10^2)` → `(6*4.9)*10^(9+2)` → `29.4*10^11` → `2.94*10^12`
 - **Explanation:** Multiply the numbers: 6 × 4.9 = 29.4. To multiply powers of 10, add their indices: 10^9 × 10^2 = 10^(9 + 2) = 10^11. This gives 29.4 × 10^11. In standard form the first number is at least 1 and less than 10. 29.4 = 2.94 × 10^1, so 29.4 × 10^11 = 2.94 × 10^1 × 10^11 = 2.94 × 10^12.
 - **Hint:** Multiply the numbers, then multiply the powers of 10 by adding their indices.
-- **Marks (2):** M1 for 29.4 × 10^11; A1 for 2.94 × 10^12
+- **Marks (2):** M1 for 29.4 × 10^11 or 2 940 000 000 000; A1 for 2.94 × 10^12
 - Seed 5, difficulty 3, `gcse-maths-h-n9-t-standard-form-multiply-05`. Checks: grounded-writing pass, maths-engine pass.

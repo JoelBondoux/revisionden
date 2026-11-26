@@ -330,3 +330,10 @@ def test_standard_form_wording_says_the_indices_are_added_and_shows_why():
         assert "indices" in item["hint"] and "indices" in item["explanation"]
         if len(item["steps"]) == 4:  # the product had to be moved into standard form
             assert "× 10^1 ×" in item["explanation"]
+
+
+def test_the_standard_form_method_mark_also_accepts_the_ordinary_number():
+    template = _template("standard-form-multiply")
+    item = make_item(template, 4, NOW)
+    assert len(item["steps"]) == 4
+    assert item["mark_scheme"][0] == "M1 for 29.4 × 10^8 or 2 940 000 000"
