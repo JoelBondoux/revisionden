@@ -248,28 +248,7 @@ describe('answering (feedback level 1: instant feedback)', () => {
     expect(bad.feedback).toMatchObject({ correctAnswer: 'x = 2', firstWrongLine: 1 });
   });
 
-  it('says the maths engine is unavailable when it is not configured', async () => {
-    const plain = await createTestContext();
-    try {
-      await syncContent(plain.db, { topicTrees: [testTopicTree], items: testItems });
-      const { headers } = await plain.familyStudent('no_engine_kid');
-      const [work] = await plain.db
-        .select()
-        .from(items)
-        .where(eq(items.contentId, 'test-work-0001'));
-      const res = await plain.app.request(
-        '/v1/student/learn/attempts',
-        jsonRequest(
-          'POST',
-          { itemId: work!.id, answer: { lines: ['x = 2'] }, timeMs: 1, mode: 'learn' },
-          headers,
-        ),
-      );
-      expect(res.status).toBe(503);
-    } finally {
-      await plain.close();
-    }
-  });
+  // Without a maths engine, typed working is skipped, not a 503 (F12): no-maths-engine.test.ts.
 
   it('rejects an answer of the wrong shape for the item type', async () => {
     const { headers } = await t.familyStudent('shape_kid');

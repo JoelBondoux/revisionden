@@ -53,6 +53,7 @@ import {
   explanationOf,
   helpSteps,
   markItem,
+  selectableItem,
   servableItem,
   toLearnItem,
   type ItemRow,
@@ -140,6 +141,8 @@ async function updateMastery(db: Database, studentId: string, topicId: string, n
 export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
   const app = new Hono<AppEnv>();
   const servable = servableItem(config.serveDraftContent);
+  // What is picked for students: without the maths engine, no typed working (F12).
+  const selectable = selectableItem(config.serveDraftContent, mathsEngine !== undefined);
 
   /** Servable items with their topic titles, in a stable order. */
   async function loadItems(where: SQL, limit?: number) {
@@ -147,7 +150,7 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
       .select({ item: items, topicTitle: topics.title, subjectId: topics.subjectId })
       .from(items)
       .innerJoin(topics, eq(topics.id, items.topicId))
-      .where(and(servable, where))
+      .where(and(selectable, where))
       .orderBy(asc(items.difficulty), asc(items.contentId));
     return limit === undefined ? query : query.limit(limit);
   }
@@ -199,7 +202,7 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
   async function withWarmUps(studentId: string, subjectId: string | undefined, list: LearnItem[]) {
     if (!subjectId) return list;
     // A warm-up already in the lesson moves to the front instead of showing twice.
-    const warm = await warmUps(db, servable, studentId, [subjectId], clock.now());
+    const warm = await warmUps(db, selectable, studentId, [subjectId], clock.now());
     const warmIds = new Set(warm.map((i) => i.id));
     return [...warm, ...list.filter((i) => !warmIds.has(i.id))];
   }
@@ -424,6 +427,8 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
     }
 
     const marked = await markItem(row, input.answer, mathsEngine);
+    // F12: it can't be marked now. Nothing is saved, so no XP, streak or mastery change.
+    if (!marked) return c.json({ unmarked: true as const, itemId: row.id });
     const learning = input.mode === 'learn';
     // F10: answered after "Help me understand" (only for items that have help steps).
     const helped = learning && input.helped === true && helpSteps(row).length > 0;
@@ -487,9 +492,9 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
     const missed = timed && (!marked.correct || helped);
     const help = missed
       ? {
-          similar: input.retry ? null : await findSimilar(db, servable, studentId, row, now),
-          easier: await findEasier(db, servable, studentId, row, now),
-          confidence: await findConfidence(db, servable, studentId, row),
+          similar: input.retry ? null : await findSimilar(db, selectable, studentId, row, now),
+          easier: await findEasier(db, selectable, studentId, row, now),
+          confidence: await findConfidence(db, selectable, studentId, row),
         }
       : { similar: null };
 
