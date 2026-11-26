@@ -130,12 +130,15 @@ function DoneForToday({ onMore }: { onMore: () => void }) {
 function ReviewSession({
   cards,
   topicId,
+  extra,
   onExit,
   onMore,
 }: {
   cards: Flashcard[];
   /** Set when reviewing one deck: the session is complete when that deck is done. */
   topicId?: string;
+  /** "10 more" cards asked for today (F11b): the session is complete when they are done. */
+  extra?: number;
   onExit?: () => void;
   /** Daily limit (F11): more cards are due after today's, so the end offers "10 more". */
   onMore?: () => void;
@@ -158,11 +161,11 @@ function ReviewSession({
   const start = useCallback(async () => {
     setError(null);
     try {
-      setSession(await api.startFlashcardSession(topicId));
+      setSession(await api.startFlashcardSession(topicId, extra));
     } catch {
       setError('start');
     }
-  }, [api, topicId]);
+  }, [api, topicId, extra]);
 
   useEffect(() => {
     void start();
@@ -507,9 +510,11 @@ type Tab = 'due' | 'decks' | 'mine';
 
 function FlashcardsScreen({
   overview,
+  extra,
   onMore,
 }: {
   overview: FlashcardsOverview;
+  extra: number;
   onMore: () => void;
 }) {
   const [tab, setTab] = useState<Tab>('due');
@@ -555,6 +560,7 @@ function FlashcardsScreen({
             <ReviewSession
               key={overview.due.map((c) => c.id).join()}
               cards={overview.due}
+              extra={extra}
               {...((overview.backlog ?? 0) > overview.due.length ? { onMore } : {})}
             />
           ))}
@@ -573,6 +579,10 @@ export function FlashcardsPage() {
   const overview = useApiResource(() => api.getFlashcards(extra), [api, extra]);
   if (overview.status !== 'ready') return <LoadingOrError resource={overview} />;
   return (
-    <FlashcardsScreen overview={overview.data} onMore={() => setExtra((e) => e + EXTRA_CARDS)} />
+    <FlashcardsScreen
+      overview={overview.data}
+      extra={extra}
+      onMore={() => setExtra((e) => e + EXTRA_CARDS)}
+    />
   );
 }

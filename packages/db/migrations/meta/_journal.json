@@ -225,6 +225,13 @@
       "when": 1795702396220,
       "tag": "0031_league_weeks",
       "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "7",
+      "when": 1795705249894,
+      "tag": "0032_flashcard_session_extra",
+      "breakpoints": true
     }
   ]
 }
