@@ -337,3 +337,94 @@ def test_the_standard_form_method_mark_also_accepts_the_ordinary_number():
     item = make_item(template, 4, NOW)
     assert len(item["steps"]) == 4
     assert item["mark_scheme"][0] == "M1 for 29.4 × 10^8 or 2 940 000 000"
+
+
+# --- T1c: more templates for thin topics ------------------------------------------------------
+
+def test_there_are_templates_for_the_thin_topics():
+    topics = {t.topic for t in TEMPLATES}
+    assert {"gcse-maths-h-a18", "gcse-maths-h-a25", "gcse-maths-h-n10", "gcse-maths-h-n5",
+            "gcse-maths-h-a7"} <= topics
+
+
+def test_a_wrong_quadratic_root_fails_generation():
+    template = _broken(_template("quadratic-factorising"),
+                       lambda q: {**q, "answer": {"solutions": [q["answer"]["solutions"][0], "99"]}})
+    with pytest.raises(GenerationError):
+        make_item(template, 1, NOW)
+
+
+def test_a_wrong_nth_term_fails_generation():
+    template = _broken(_template("linear-nth-term"),
+                       lambda q: {**q, "answer": {**q["answer"], "accepted": ["n + 1000"]}})
+    with pytest.raises(GenerationError, match="recheck"):
+        make_item(template, 1, NOW)
+
+
+def test_a_recurring_decimal_answer_not_in_simplest_form_fails_generation():
+    def unsimplified(q):
+        num, den = q["answer"]["value"].split("/")
+        return {**q, "answer": {"value": f"{int(num) * 2}/{int(den) * 2}"}}
+    template = _broken(_template("recurring-decimal"), unsimplified)
+    with pytest.raises(GenerationError, match="simplest"):
+        make_item(template, 1, NOW)
+
+
+def test_a_wrong_count_fails_generation():
+    template = _broken(_template("product-rule"), lambda q: {**q, "answer": {"expression": "1"}})
+    with pytest.raises(GenerationError):
+        make_item(template, 1, NOW)
+
+
+def test_a_composite_worked_the_wrong_way_round_fails_generation():
+    template = _template("composite-function")
+    seed = next(s for s in range(1, 50) if draw_params(template, s)["order"] == 0)
+    params = draw_params(template, seed)
+    f = lambda x: params["p"] * x + params["q"]  # noqa: E731
+    g = lambda x: x * x + params["r"]  # noqa: E731
+    wrong = g(f(params["k"]))  # gf instead of fg
+    assert wrong != f(g(params["k"]))
+    broken = _broken(template, lambda q: {**q, "answer": {"value": str(wrong)}})
+    with pytest.raises(GenerationError):
+        make_item(broken, seed, NOW)
+
+
+def test_composite_working_never_shows_adding_zero():
+    template = _template("composite-function")
+    for seed in range(1, 40):
+        assert "+ 0 " not in make_item(template, seed, NOW)["explanation"]
+
+
+def test_a_quadratic_gives_one_accuracy_mark_for_both_roots():
+    item = make_item(_template("quadratic-factorising"), 3, NOW)
+    assert item["marks"] == 2
+    assert item["mark_scheme"][1] == "A1 for both x = 5 and x = 3"
+
+
+def test_an_nth_term_accepts_the_first_term_form_and_a_factorised_form():
+    template = _template("linear-nth-term")
+    accepted = make_item(template, 3, NOW)["answer"]["accepted"]  # 20, 22, 24, 26, ...
+    assert accepted == ["2n + 18", "20 + 2(n - 1)", "2(n + 9)"]
+    down = make_item(template, 5, NOW)["answer"]["accepted"]  # 7, 0, -7, -14, ...
+    assert down == ["14 - 7n", "7 - 7(n - 1)", "7(2 - n)"]
+
+
+def test_the_recurring_decimal_explanation_shows_the_subtraction_in_full():
+    item = make_item(_template("recurring-decimal"), 4, NOW)
+    assert "100x - x = 26.2626... - 0.2626..., so 99x = 26" in item["explanation"]
+
+
+def test_a_quadratic_question_names_the_method_its_mark_scheme_rewards():
+    item = make_item(_template("quadratic-factorising"), 1, NOW)
+    assert item["prompt"] == "Solve x^2 + 11x + 24 = 0 by factorising."
+
+
+def test_a_question_that_only_adds_words_to_a_hand_written_one_is_a_repeat():
+    from app.templates.core import repeats
+    assert repeats("Solve x^2 + x - 12 = 0 by factorising.", {"Solve x^2 + x - 12 = 0"})
+    assert repeats("Solve 4x + 7 = 31", {"Solve 4x + 7 = 31."})
+    assert not repeats("Solve x^2 + x - 20 = 0 by factorising.", {"Solve x^2 + x - 2 = 0"})
+    written = build.existing_prompts(REPO / "content/items")
+    for path in (REPO / build.OUT_DIR).glob("*.json"):
+        for item in json.loads(path.read_text()):
+            assert not repeats(item["prompt"], written), item["id"]

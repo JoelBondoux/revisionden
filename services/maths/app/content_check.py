@@ -6,9 +6,10 @@ Each check has an ``id`` and a ``kind``:
 - ``solve``: ``equation``, optional ``variable`` (default x), ``solutions``.
 - ``value``: ``expression`` and ``answer``; optional ``tolerance``, or ``decimal_places`` or
   ``significant_figures`` when the question asks for rounding (the answer must be the value
-  rounded half up to that accuracy).
-- ``expression``: ``expression`` and ``answer``; optional ``form`` (factorised or expanded) and
-  ``subject`` (an answer may read ``<subject> = ...``).
+  rounded half up to that accuracy); optional ``form`` that the answer must be written in
+  (``app/forms.py``: fraction, simplest_fraction, standard_form, index_form).
+- ``expression``: ``expression`` and ``answer``; optional ``form`` (factorised, expanded or an
+  answer form from ``app/forms.py``) and ``subject`` (an answer may read ``<subject> = ...``).
 - ``working``: ``lines`` of a model solution and the ``expected`` final answer.
 - ``formula``: ``expected`` and ``given`` formulas (``x = ...``, ``±`` allowed), for flashcards.
 - ``identity``: an ``equation`` that must hold for every value of its letters (fact checks).
@@ -27,6 +28,7 @@ from sympy import N, simplify
 
 from app import facts
 from app.equivalence import are_equivalent, parse, parse_equation, solutions_match
+from app.forms import in_form
 from app.formula import formulas_match
 from app.working import check_working
 
@@ -55,7 +57,12 @@ def _value(check: dict) -> str | None:
         ok = are_equivalent(check["expression"], check["answer"])
     else:
         ok = abs(N(parse(check["expression"]) - parse(check["answer"]))) <= tolerance
-    return None if ok else f"{check['answer']} is not the value of {check['expression']}"
+    if not ok:
+        return f"{check['answer']} is not the value of {check['expression']}"
+    form = check.get("form")
+    if form and not in_form(check["answer"], form):
+        return f"{check['answer']} is not written as {form}"
+    return None
 
 
 def _expression(check: dict) -> str | None:

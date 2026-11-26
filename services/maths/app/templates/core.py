@@ -202,21 +202,36 @@ def make_item(template: Template, seed: int, now: str) -> dict:
     return item
 
 
+def _core(prompt: str) -> str:
+    return prompt.strip().rstrip(".").strip()
+
+
+def repeats(prompt: str, others) -> bool:
+    """True when the question is one of ``others``, or one only adds words to the other
+    (``Solve x^2 + x - 12 = 0 by factorising.`` repeats ``Solve x^2 + x - 12 = 0``)."""
+    mine = _core(prompt)
+    for other in others:
+        short, long = sorted((mine, _core(other)), key=len)
+        if long == short or long.startswith(short + " "):
+            return True
+    return False
+
+
 def generate(template: Template, count: int, now: str, avoid=frozenset()) -> list[dict]:
     """``count`` items with different questions, from seeds 1, 2, 3, ...
 
     Seeds that repeat an earlier question, or a question in ``avoid`` (the hand-written bank),
     are skipped, so each item still records the one seed that remakes it.
     """
-    items, prompts = [], set(avoid)
+    items, prompts = [], list(avoid)
     seed = 0
     while len(items) < count:
         seed += 1
         if seed > count * 50:
             raise GenerationError(f"{template.id}: fewer than {count} different questions")
         item = make_item(template, seed, now)
-        if item["prompt"] in prompts:
+        if repeats(item["prompt"], prompts):
             continue
-        prompts.add(item["prompt"])
+        prompts.append(item["prompt"])
         items.append(item)
     return items
