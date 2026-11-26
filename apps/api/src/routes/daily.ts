@@ -9,7 +9,9 @@
 import { Hono } from 'hono';
 import { and, asc, eq, gt, inArray, isNotNull, max, ne } from 'drizzle-orm';
 import {
+  DAILY_SET_SIZE,
   createRng,
+  learningPointOf,
   dailySeed,
   dailySetProgress,
   localDate,
@@ -28,6 +30,7 @@ import {
 } from '@revisionden/db';
 import type { AppEnv } from '../context';
 import { servableItem, toLearnItem } from '../learning/items';
+import { dueLearningPoints, warmUps } from '../learning/mistakes';
 import type { LearnDeps } from './learn';
 
 export function studentDailyRoutes({ db, clock, config }: LearnDeps) {
@@ -79,6 +82,8 @@ export function studentDailyRoutes({ db, clock, config }: LearnDeps) {
       .where(and(eq(flashcards.studentId, studentId), isNotNull(flashcards.itemId)));
     const dueAt = new Map(cards.map((c) => [c.itemId, c.dueAt.getTime()]));
     const nowMs = now.getTime();
+    // Learning points due on the review ladder come first (F5), then the usual picks.
+    const warm = (await warmUps(db, servable, studentId, subjectIds, now)).map((i) => i.id);
     const candidates: Candidate[] = rows.map((r) =>
       r.type === 'flashcard'
         ? {
@@ -89,7 +94,7 @@ export function studentDailyRoutes({ db, clock, config }: LearnDeps) {
           }
         : { itemId: r.id, topicId: r.topicId, kind: 'question' },
     );
-    return selectDailySet({
+    const picked = selectDailySet({
       topics: practised.map((p) => ({
         topicId: p.topicId,
         subjectId: p.subjectId,
@@ -100,6 +105,7 @@ export function studentDailyRoutes({ db, clock, config }: LearnDeps) {
       now: nowMs,
       rng: createRng(dailySeed(studentId, day)),
     }).map((c) => c.itemId);
+    return [...warm, ...picked.filter((id) => !warm.includes(id))].slice(0, DAILY_SET_SIZE);
   }
 
   /** Today's stored set, made on the first request of the day. */
@@ -166,7 +172,12 @@ export function studentDailyRoutes({ db, clock, config }: LearnDeps) {
                 gt(attempts.createdAt, set.createdAt),
               ),
             );
-    const list = live.map((id) => toLearnItem(byId.get(id)!.item, byId.get(id)!.topicTitle));
+    const due = await dueLearningPoints(db, studentId, now);
+    const list = live.map((id) => {
+      const { item, topicTitle } = byId.get(id)!;
+      const learnItem = toLearnItem(item, topicTitle);
+      return due.has(learningPointOf(item)) ? { ...learnItem, warmUp: true as const } : learnItem;
+    });
     const body: DailySetResponse = {
       day,
       items: list,

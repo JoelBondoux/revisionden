@@ -118,3 +118,17 @@ export const StudentSubjectsSchema = z.object({
   toCheckLater: z.number().int().min(0),
 });
 export type StudentSubjects = z.infer<typeof StudentSubjectsSchema>;
+
+/** POST /v1/students/:id/subjects: a parent adds a subject after onboarding (E5). */
+export const AddSubjectRequestSchema = SubjectChoiceSchema;
+export type AddSubjectRequest = z.infer<typeof AddSubjectRequestSchema>;
+
+/**
+ * GET /v1/students/:id/subjects: the child's subjects for the parent's Subjects page, each saying
+ * whether any questions are ready yet ("questions coming soon" when not).
+ */
+export const ParentSubjectsSchema = z.object({
+  subjects: z.array(EnrolmentSchema.extend({ hasQuestions: z.boolean() })),
+});
+export type ParentSubjects = z.infer<typeof ParentSubjectsSchema>;
+export type ParentSubject = ParentSubjects['subjects'][number];

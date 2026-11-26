@@ -34,6 +34,7 @@ export function toLearnItem(row: ItemRow, topicTitle: string): LearnItem {
     topicTitle,
     draft: row.status !== 'verified',
     ...(b.hint ? { hint: b.hint } : {}),
+    ...(row.learningPoint ? { learningPoint: row.learningPoint } : {}),
   };
   const prompt = b.prompt ?? '';
   switch (row.type) {

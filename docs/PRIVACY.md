@@ -116,8 +116,9 @@ family (`apps/api/src/routes/flashcards.ts`).
   family not used for over 12 months, with its students, all their records and the parents'
   sign-in records. A parent who comes back after 11 months or more without use sees a warning
   in the parent area. We send no emails, so there is no warning before deletion if nobody signs in.
-- The same clean-up (every 15 minutes) deletes expired device link codes, student and parent
-  sessions, passkey challenges and sign-in checks (`apps/api/src/cleanup.ts`).
+- The same clean-up deletes expired device link codes, student and parent
+  sessions, passkey challenges and sign-in checks within 24 hours of expiry; they are refused as
+  soon as they expire (`apps/api/src/cleanup.ts`).
 
 ## Before any public release
 

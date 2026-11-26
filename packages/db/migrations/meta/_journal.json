@@ -183,6 +183,13 @@
       "when": 1795648437653,
       "tag": "0025_device_share_links",
       "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1795650029767,
+      "tag": "0026_learning_from_mistakes",
+      "breakpoints": true
     }
   ]
 }
