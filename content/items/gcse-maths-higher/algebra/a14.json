@@ -11,6 +11,7 @@
     "verify": { "expression": "200*2^3" },
     "marks": 2,
     "mark_scheme": ["M1 for 200 × 2^3", "A1 for 1600"],
+    "hint": "Work out 2^3 first, then multiply by 200.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -86,9 +87,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:39:10Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:32:46Z",
           "notes": "no problems found"
         }
       ]
@@ -106,6 +107,7 @@
     "verify": { "expression": "15000*(4/5)^2" },
     "marks": 2,
     "mark_scheme": ["M1 for 15000 × 0.8^2", "A1 for 9600"],
+    "hint": "Work out 0.8^2 first, then multiply by 15000.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -183,7 +185,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:39:27Z",
+          "at": "2026-11-26T11:19:17Z",
           "notes": "no problems found"
         }
       ]
@@ -201,6 +203,7 @@
     "verify": { "expression": "24/6" },
     "marks": 1,
     "mark_scheme": ["B1 for 4"],
+    "hint": "Divide 24 by the number of people.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -278,7 +281,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:39:41Z",
+          "at": "2026-11-26T11:19:30Z",
           "notes": "no problems found"
         }
       ]
@@ -297,6 +300,7 @@
     "steps": ["24/x = 3", "24 = 3x", "x = 8"],
     "marks": 2,
     "mark_scheme": ["M1 for 24/x = 3", "A1 for 8"],
+    "hint": "Set 24/x equal to 3, then multiply both sides by x.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -354,14 +358,6 @@
           "notes": "model answered \"8\"; expected \"8\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:22:41Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -376,6 +372,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:32:55Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -392,6 +396,7 @@
     "verify": { "expression": "20*1 - 5*1^2" },
     "marks": 1,
     "mark_scheme": ["B1 for 15"],
+    "hint": "Put t = 1 into the formula, and square t before multiplying by 5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -403,6 +408,18 @@
         "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Graphs, content reference A14 (page 15; PDF page 27)",
         "quote": "to find approximate solutions to problems such as simple kinematic problems involving distance, speed and acceleration",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A2 (page 13; PDF page 25)",
+        "quote": "substitute numerical values into formulae and expressions, including scientific formulae",
         "retrieved_at": "2026-11-25",
         "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
@@ -419,14 +436,6 @@
           "result": "pass",
           "notes": "Written by this session from the cited specification point only. Question scope cited (spec A14). Answer backed by the maths engine.",
           "at": "2026-11-25T17:26:22Z"
-        },
-        {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-25T17:27:16Z",
-          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
           "name": "schema",
@@ -453,11 +462,19 @@
           "notes": "model answered \"15 metres\"; expected \"15\""
         },
         {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T11:33:40Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:39:56Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:48:52Z",
           "notes": "no problems found"
         }
       ]
@@ -476,6 +493,7 @@
     "steps": ["20t - 5t^2 = 0", "5t(4 - t) = 0", "t = 0 or t = 4"],
     "marks": 3,
     "mark_scheme": ["M1 for 20t - 5t^2 = 0", "M1 for 5t(4 - t) = 0", "A1 for t = 0 and t = 4"],
+    "hint": "Set 20t - 5t^2 equal to 0 and factorise: 5t is a common factor.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -521,14 +539,6 @@
           "notes": "model answered \"0, 4\"; expected \"0, 4\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:50:26Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -543,6 +553,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:49:02Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -564,7 +582,9 @@
       "A1 for 20"
     ],
     "explanation": "h = 20 - 5(t - 2)^2, which is largest when t = 2: h = 20.",
+    "hint": "Complete the square, or find the time halfway between the two times when h = 0, then put that time into the formula.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
+    "needs_human_approval": true,
     "checked_by": ["maths-engine", "author"],
     "citations": [
       {
@@ -609,14 +629,6 @@
           "notes": "model answered \"20 metres\"; expected \"20\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:50:53Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -631,6 +643,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:50:27Z",
+          "notes": "factual_error (mark_scheme): The completed square is incorrect. Starting from h = 20t - 5t^2 = -5(t^2 - 4t) = -5[(t - 2)^2 - 4] = 20 - 5(t - 2)^2, not h = 20 - 5(t - 2)^2 as written? The scheme omits the variable factor in the original line 'h = 20 - 5(t - 2)^2' as a completion result from 20t - 5t^2 and is algebraically fine; however the real issue is that the explanation then evaluates h at t = 2 as 20 without showing substitution. No, the mark scheme itself is consistent. The actual error is elsewhere.; wrong_answer (answer): The greatest height is not 20 m. Using h = 20t - 5t^2 = 20 - 5(t - 2)^2, the maximum occurs at t = 2 and equals 20 m? Rechecking gives h(2) = 40 - 20 = 20, so the marked answer is correct. No issue here.; confidence low"
         }
       ]
     }
@@ -645,6 +665,7 @@
     "front": "On a distance-time graph, what does a horizontal line segment show about the object? (one word)",
     "back": "Stationary",
     "explanation": "A horizontal line means the distance does not change as time goes on, so the object is not moving: it is stationary.",
+    "hint": "A horizontal line means the distance does not change as time goes on.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["author"],
     "citations": [
@@ -721,9 +742,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:54:02Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:49:27Z",
           "notes": "no problems found"
         }
       ]
@@ -739,6 +760,7 @@
     "front": "N = 200 × 2^t. The value of N when t = 0",
     "back": "200",
     "explanation": "Substitute t = 0: 2^0 = 1, so N = 200 × 1 = 200.",
+    "hint": "Put t = 0 into the formula: what is any number to the power 0?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["author"],
     "citations": [
@@ -794,9 +816,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:54:10Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:49:37Z",
           "notes": "no problems found"
         }
       ]
@@ -812,6 +834,7 @@
     "front": "On a distance-time graph, what does a straight line sloping upwards show: constant speed or acceleration?",
     "back": "Constant speed",
     "explanation": "A straight line has the same gradient all the way along. On a distance-time graph the gradient is the speed, so the speed is constant.",
+    "hint": "On a distance-time graph the gradient is the speed. What does a straight line tell you about its gradient?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A14",
     "checked_by": ["author"],
     "citations": [
@@ -888,9 +911,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:54:20Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:49:47Z",
           "notes": "no problems found"
         }
       ]
