@@ -192,6 +192,19 @@ formula and its assumptions. Summary of what is built:
   code is stored, never a gender. On the child's first open on a newly linked device, "Make it
   yours" shows the avatar builder with "Maybe later" (`GET`/`PUT /v1/student/avatar`; locked items
   still need their reward).
+- Changing subjects later (E5): each child's card in Parent home links to "Subjects"
+  (`/parent/subjects/:studentId`), where either parent can add a subject (the same picker as
+  onboarding, with "Not sure" for the board, and only subjects for the child's level that they
+  do not already take), change its board or tier, or remove it. Removing asks first and says the
+  child's progress is kept and comes back if the subject is added again: only the enrolment is
+  deleted, never the answers or mastery. A subject with no questions ready yet shows "Questions
+  coming soon". Adding, removing and changing a board or tier are important changes in the family
+  activity log ("added a subject for …", "removed a subject from …", "changed a board or tier
+  for …"), so the other parent is told. A board or tier change clears a target grade that is no
+  longer on the scale. The child's own Settings > My subjects works as before. API:
+  `GET`/`POST /v1/students/:id/subjects` (400 `invalid_subjects`, 409 `already_added`),
+  `DELETE /v1/students/:id/subjects/:subjectId` (404 if not taken) and
+  `PATCH /v1/students/:id/enrolments/:subjectId`.
 - Final exams are in the summer: Years 11 and 13 at the end of the current school year (which
   starts in September), Years 10 and 12 a year later, Year 9 two years later.
 - A new child has earned no rewards, so their avatar cannot use locked items.
