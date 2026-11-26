@@ -69,13 +69,14 @@ import { readJson } from '../http';
 import type { Clock } from '../rate-limit';
 import { bugRewardXp, confirmedBugCount } from '../feedback/bugHunter';
 import { isId } from '../validation';
+import { settleLeagueWeeks } from './friends-league';
 
 type ParentRewardRow = typeof parentRewards.$inferSelect;
 
 interface Deps {
   db: Database;
   clock: Clock;
-  config?: { styleTester?: boolean };
+  config?: { styleTester?: boolean; friendsEnabled?: boolean };
 }
 
 async function loadStats(db: Database, studentId: string, yearGroup: number, now: Date) {
@@ -140,6 +141,14 @@ async function loadStats(db: Database, studentId: string, yearGroup: number, now
       enrolledSubjects: enrolled.map((e) => e.subjectId),
     }),
     flashcardsReviewed: sessions.cardsReviewed,
+    // Friends league (FL): weekly wins, settled in routes/friends-league.ts.
+    weeksTopOfLeague:
+      (
+        await db
+          .select({ wins: students.leagueWins })
+          .from(students)
+          .where(eq(students.id, studentId))
+      )[0]?.wins ?? 0,
     // Hidden tracks (R7b). Comeback Kid and part of Explorer come from answers; the rest have
     // no data source yet and stay at 0 (see project_memory/operations/contradictions.md).
     // Flashcards are self-ratings and never change mastery (learn.ts), so they are left out.
@@ -365,7 +374,13 @@ export function studentRewardRoutes({ db, clock, config }: Deps) {
       .from(students)
       .where(eq(students.id, c.var.student.studentId));
     if (!student) throw notFound('Student not found');
-    return c.json(await rewardsView(db, student, clock.now()));
+    const now = clock.now();
+    // Friends league (FL, dev only for now): settle last weeks so a win shows as a reward.
+    if (config?.friendsEnabled) {
+      const [row] = await db.select().from(students).where(eq(students.id, student.id));
+      if (row) await settleLeagueWeeks(db, row, now);
+    }
+    return c.json(await rewardsView(db, student, now));
   });
 
   /** Two-part title (R8): the words this student has unlocked and the pair they picked. */

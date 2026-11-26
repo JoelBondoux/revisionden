@@ -5,6 +5,14 @@
 
 ## Open
 
+- [ ] **Friends league is built, but the policies still say friends are not available.** The
+      friends screens (`apps/web/src/features/league/`, FL PR 2) and API (`apps/api/src/routes/friends.ts`)
+      exist, while `docs/legal/acceptable-use.md` 4.2 says "Friends are not available yet" and lists only
+      nickname, avatar and XP (the league also shows the two-part title and this week's XP, and reports are
+      seen by both families' parents and AppDeck). Not settled here: FL may not write legal text (CLAUDE.md,
+      `docs/FRIENDS_LEAGUE.md` section 11); workstream L and the owner's solicitor must update the notices
+      before friends is released.
+
 - [x] **Clean-up cadence vs "within 15 minutes" retention promise.** The clean-up now runs once
       a day in production (`apps/api/src/crons.ts`, `apps/api/wrangler.toml`) to let the Neon database
       suspend, but `docs/legal/data-retention.md` (summary, and the table rows for parent sessions, invite

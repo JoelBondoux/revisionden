@@ -188,7 +188,7 @@ test.describe('students find Get help on Settings, through Me (owner, 2026-11-26
     );
     await expect(me.locator('svg.avatar-svg')).toBeVisible();
     await me.click();
-    await expect(page.getByRole('heading', { level: 1, name: 'Settings' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'Me' })).toBeVisible();
     await expect(me).toHaveAttribute('aria-current', 'page');
     const pageLinks = page.locator('main > :not(header) a');
     await expect(pageLinks.first()).toHaveAttribute('href', '/help');
@@ -200,7 +200,7 @@ test.describe('students find Get help on Settings, through Me (owner, 2026-11-26
     await expect(page).toHaveURL(/\/progress$/);
     await expect(me).toHaveAttribute('aria-current', 'page');
     await page.goBack();
-    await expect(page.getByRole('heading', { level: 1, name: 'Settings' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'Me' })).toBeVisible();
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
       .analyze();
@@ -212,9 +212,8 @@ test.describe('students find Get help on Settings, through Me (owner, 2026-11-26
 
     // J found the bottom nav wider than the screen at 320px/200%, so check the nav's own width
     // on several student pages, not just Settings. (On phones, anything wider than the screen
-    // widens the page and the fixed nav with it; /progress's period toggle does that today and
-    // is reported to its workstream, K.)
-    for (const path of ['/map', '/cards', '/plan', '/papers', '/settings']) {
+    // widens the page and the fixed nav with it; K fixed /progress's period toggle in #235.)
+    for (const path of ['/map', '/cards', '/plan', '/papers', '/progress', '/settings']) {
       test(`${path}: the five nav items fit and nothing scrolls sideways`, async ({ page }) => {
         await asStudent(page);
         await page.goto(path);

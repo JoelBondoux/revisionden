@@ -55,6 +55,12 @@ Tags: #product #rules #limits #defaults
   parents and students; the sales site's "Sign in" goes there
   (`decisions/0007-student-passkey-unlock.md`). Implemented in
   `apps/web/src/features/onboarding/StudentUnlock.tsx`.
+- "Use my phone instead" (E10, owner decision 2026-11-26): on computers and tablets, and anywhere
+  after no passkey was found, the student can sign in with the passkey on their phone (WebAuthn
+  hybrid: the browser shows a QR code). The API adds `hints: ['hybrid']` only for
+  `{ usePhone: true }`; the normal unlock is unchanged. The computer becomes a new linked device,
+  parents are told, one new device a day, as for synced passkeys. Parent-approved sessions were not
+  chosen. `decisions/0007-student-passkey-unlock.md` "Using your phone".
 - A passkey synced to another device (iCloud Keychain, Google Password Manager) unlocks there
   too, as a new device of its own (owner decision: allow, and tell the parents). Each device keeps
   a random marker in local storage (`revisionden.deviceMarker`; the API stores its hash in
@@ -86,6 +92,11 @@ Tags: #product #rules #limits #defaults
   family log events.
 - New children start from a Boy, Girl or Neutral look (Neutral preselected); only the avatar code
   is stored, never a gender. A newly linked device offers "Make it yours" (with "Maybe later").
+- Avatar motion (E9, 2026-11-26): `AvatarSvg` takes `motion` (`idle`, `nod` right answer, `hop`
+  goal or level, `hmm` wrong answer, `tap`, `still` default) and `paused` (questions and Test mode: no
+  idle loop, reactions still play); `useAvatarMotion` in `features/avatar/motion.ts`. Whole parts
+  (figure, head, eyes, mouth) move by CSS transforms, so any outfit moves together. Still with
+  reduced motion; paused in a hidden tab. Placement in the nav is J15b. `docs/GAME_FEEL.md`.
 - Most-used board per subject in England (Ofqual market report 2024 to 2025, share of
   certificates): AQA for GCSE English Language, English Literature, Biology, Chemistry, Physics,
   Combined Science, Drama, French and A-Level Physics; Pearson Edexcel for GCSE Maths, History and
@@ -188,7 +199,9 @@ Tags: #product #rules #limits #defaults
 - XP is totalled per day in UK time; a streak day counts once, the first time the day reaches the
   daily goal. Command-word lessons are items tagged `command-word` (none verified yet).
 - Worked maths answers are checked by the maths engine (`MATHS_ENGINE_URL`); long answers are not
-  marked yet ("marked by AI soon").
+  marked yet ("marked by AI soon"). Without the engine (F12), typed working is never picked for
+  students, and one answered anyway is "unmarked": nothing saved, no XP, streak or mastery
+  change, and the lesson says it was skipped.
 - Effort scores (e.g. CBI: Commitment, Behaviour and Inspiration, 1–4, 4 best) shape habits, never
   the predicted grade.
 
@@ -208,7 +221,14 @@ Tags: #product #rules #limits #defaults
   on phones, side rail from 768px wide). Me shows the student's own avatar (a neutral person icon
   until it loads) and opens `/settings`, "settings and personalisation"; Get help and My progress
   (`/progress`) live there, and Me is marked current on `/settings` and `/progress` (and anything
-  under them). Progress is no longer a nav tab (owner, 2026-11-26, W7). Items share the bar and
+  under them). Progress is no longer a nav tab (owner, 2026-11-26, W7). The Me page (W9) fits one
+  phone screen: avatar, nickname and **Edit my avatar** (E's builder in a sheet; Save, or Cancel
+  with a "Throw away your changes?" check; the nav avatar updates at once; the API only checks
+  items are unlocked, no parent approval or rate limit), then Get help, My progress, My rewards,
+  as button tiles with 2–3 word labels (J15a), and two sub-pages: Look and sound (`/settings/look-and-sound`: reading comfort, appearance,
+  effect style, read aloud, sound) and More (`/settings/more`: subjects, reminders, device,
+  parents, feedback, policies, about, what your parent can see). A parent on `/settings` gets a
+  Parent home tile instead of the avatar header. Items share the bar and
   labels wrap, so they fit 320px with text at 200%. Welcome and lessons hide the nav to keep focus. Only a linked student
   device gets the student nav: elsewhere (signed out, or a parent) About, Policies, Feedback and
   the other app pages show a small header with the logo, Sign in, Policies and About.
@@ -224,10 +244,18 @@ Tags: #product #rules #limits #defaults
   (gold, tick), in progress (violet, fill level shows mastery %), weak spot (orange, pulsing
   glow), locked (grey). Each unit ends in a challenge that unlocks at 80% unit mastery. The Cards
   tab shows how many flashcards are due.
-- Map layout (J12b, design C "Your path", owner choice 2026-11-26): subject chips on one line that
-  scrolls sideways; one **Today** strip (daily goal, the Next mission row with its Go button, the
-  5-a-day row while there is one, and the install row while the device can install); then "Your
-  path": a row of unit badges that scrolls sideways, and the chosen unit's card with **all** its
+- Home and Pip (J15b, owner direction 2026-11-26): `/home` is the student's first screen after
+  signing in or unlocking (`/learn` and `DEFAULT_STUDENT_PAGE` go there). One screen: level ring,
+  streak, goal rings (daily XP, 5-a-day, cards due), one big next-mission button (else "Pick a
+  topic"), weak spots, a friends-league chip marked Soon, and this week's days studied with the
+  reward gift. Pip is a round "Home" button at the top left of every student screen and lesson; in
+  a lesson or test he asks "Leave this lesson?" first. He acts about every 8 s, naps 21:00 to 07:00,
+  stops after 60 s without input, keeps still in lessons and with reduced motion. He wears one item
+  for the current subject (and a prop on Home) plus a unisex touch that rotates by day. The map's
+  Today strip moved to Home: the map is now topics only. Code: `apps/web/src/features/home/`,
+  `apps/web/src/features/juice/pip/`; e2e `e2e/tests/home.spec.ts`.
+- Map layout (J12b, design C "Your path", owner choice 2026-11-26; Today strip moved to Home in
+  J15b): subject chips on one line that scrolls sideways; then "Your path": a row of unit badges that scrolls sideways, and the chosen unit's card with **all** its
   topics down a path that scrolls inside the card. The page itself never scrolls sideways.
   - The current unit is the one holding the next mission, else the first with an open topic. Its
     path opens on the next mission's topic, else the weakest weak spot, else the first topic in
@@ -256,10 +284,24 @@ Tags: #product #rules #limits #defaults
   with questions and answers `status: "coming_soon"` (plus `subjectId` and `subjects` with
   `hasContent` for the switcher) for one with none; 404 `no_subject` only with no subject at all
   or an unknown id. The web shows "Questions for <subject> are on their way." and a switcher.
+- Daily flashcard limit (F11, owner 2026-11-26): 20 review cards a day (`DAILY_CARD_LIMIT`),
+  "10 more" on request (`EXTRA_CARDS`). Badge and "Due today" show today's remaining (0–20).
+  Order: relearning, most overdue for its interval, then weak spots, then recent wrong answers.
+  Own cards count; All decks is not limited. Held-back cards roll over with no penalty (SM-2
+  uses the card's interval, not its lateness). Parent stats show no backlog (API has `backlog`).
+  An all-decks session is complete when today's offered cards are done, including a "10 more"
+  batch (F11b, `flashcard_sessions.extra_cards`, migration 0032).
+- Clues and help (F10, owner 2026-11-26): "Need a clue?" shows the verified hint (no penalty,
+  no longer shown up front); then "Help me understand" steps through the verified worked
+  solution. A right answer after help earns half XP (rounded down, owner), no combo, and is
+  practised like a miss (mastery 0 on the map and dashboards, review ladder, flashcard). Learn mode only.
+  `attempts.helped` (migration 0029).
 - Powers (F9, owner 2026-11-26): shown as superscripts everywhere students see maths
   (`packages/core/src/powers.ts`, web `MathText`), with spoken words for screen readers; stored
   content keeps ^. A lone ^ stays ("Use ^ for powers"). Answer boxes have a Power key and a
   "Shows as:" preview. Computing subjects (id containing "comput") keep ^ as typed (owner).
+  A tap on any power switches every power on screen between x² and x^2 (F9b, owner), remembered
+  on the device; it never chooses an answer or turns a card.
 - Mascot: Pip, an angular geometric fox (orange `#FF7A2F`). Brand violet `#6C47F5`; font Nunito,
   self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
 - Works offline for the app shell; API calls are never cached. Pages always come fresh from the
@@ -563,7 +605,8 @@ Tags: #product #rules #limits #defaults
   `markScheme`). Defined in `apps/api/src/learning/content-sync.ts`.
 - Hints (`hint`, shown by the "Need a clue?" button) nudge toward the method and never contain the
   item's final answer: `pnpm content:validate` refuses one that does (text, option or flashcard back,
-  or a number equal to a numeric answer within 0.5% that the question does not show). Rule in
+  or a number equal to a numeric answer within 0.5% that the question does not show, in any
+  written form, including standard form with `^` or superscript powers). Rule in
   `scripts/content/hint-check.mjs`, described in `docs/VERIFICATION.md` ("Hints").
 - Extended answers: blind marking replaces the blind answer (three exemplars, top, middle and low,
   marked by a second provider without the intended levels; all three must match exactly), and
@@ -721,7 +764,12 @@ Tags: #product #rules #limits #defaults
   unset; on About, the feedback form, the accessibility statement and community rules); privacy,
   data rights and security `privacy@revisionden.com` (`VITE_CONTACT_EMAIL`). Both forward to the
   product owner (Cloudflare Email Routing).
-- Feedback kinds: bug, idea, something confusing, other; text up to 500 characters with personal
+- Interactive lesson pilot (owner, 2026-11-26; built W8): area model for factorising x² + bx + c
+  (A4), b and c positive only; shown first in the A4 lesson when A4 mastery is below 60 (not at
+  60, not with no history, not in unit or subject lessons); explore, 2 guided, 1 typed, then the
+  normal A4 questions; item type `area_model`; draft until verified, so dev only for now.
+- Feedback kinds: bug, idea, something confusing, other (plus lesson_helped / lesson_not_helped,
+  the pilot's one-tap "Did this help?": item only, no text, outside the 5 a day); text up to 500 characters with personal
   details refused; device details optional; parents see their family's feedback; never sent to
   GitHub automatically; 5 in any 24 hours per sender; device details off by default for students, on for parents; deleted 12 months after closing (cron).
   The form also offers "Prefer email? help@revisionden.com" and asks for only the personal details
@@ -908,12 +956,19 @@ Tags: #product #rules #limits #defaults
   `REVIEWED_BLOCKED_PAIRS` is the manual review list the picker refuses. The student picks one of
   each (or none) on the Rewards page; saved as `students.title_first` / `title_last` (migration
   0019); `GET`/`PUT /v1/student/rewards/title`; free to change any time; included in the family data export. Shown under the nickname
-  on the Rewards page; the friends league is not built yet, so it shows there once it is.
+  on the Rewards page and under each nickname in the friends league (FL, dev only for now).
 - Friends league (FL): owner decision 2026-11-26, friends may come from other families from day
-  one, not family only. Design approved 2026-11-26, not built yet: `docs/FRIENDS_LEAGUE.md`
+  one, not family only. Development only (`FRIENDS_ENABLED`, lead 2026-11-26) until the notices
+  are updated and the solicitor has reviewed them.
+  Design approved 2026-11-26; screens (League page under Me, Home rank chip, parent Friends page), core rules, API and migration 0030 built
+  and weekly wins (finished weeks are settled into `league_weeks` when the child next opens the
+  league or their rewards, and also before any friendship ends: remove by the child or a parent,
+  block, report, or a parent turning friends off; 8 weeks kept; wins counted in
+  `students.league_wins` for the league rewards). A friendship is saved before its request is
+  marked started, so a failed save can be retried by approving again (FL4b): `docs/FRIENDS_LEAGUE.md`
   (nickname, avatar, title and weekly learning XP only; one parent per family approves; no chat;
   10-friend cap; siblings join automatically; reports seen by both families' parents and AppDeck;
-  rank chip on Map, League page under Me; head-to-head challenges later).
+  rank chip on Home (was the Map until Home landed), League page under Me; head-to-head challenges later).
 - "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
   NSPCC adult helpline, parent-only). Students reach it only from Settings, where it is the
   first tile (via the Me nav item); there is no Get help link in the student header or footer
@@ -1020,11 +1075,22 @@ Tags: #product #rules #limits #defaults
   actually opened. The CI link check fails a match-checked page whose title changed; it also runs
   `--probe-providers` (what each provider's home page answers from the runner) and `--coverage`.
   Any reachable link without a match check fails validation (the Q5 legacy path was removed once
-  its 11 links were re-read). Lessons match by learning point only: LearnItem has no content id
-  yet, so `items` links cannot match in the app (needs `contentId` on LearnItem from the API).
+  its 11 links were re-read). Lesson items (`LearnItem.contentId`, from
+  `items.content_id`) and flashcards (`Flashcard.contentId`, `Flashcard.learningPoint`, from the
+  card's item) carry their content id and learning point (Q6b), so Learn more matches item, then
+  point, then topic in lessons and on the flashcard Explain panel.
   Coverage 2026-11-26: 139 links in 44 files; 44/44 topics and 133/133 learning points with items
   have a shown link, 69 points with their own. Pages were opened in a browser and read; the
   match `page_title` is the raw HTML title the CI check compares.
+- Oak links go to the pupil lesson page (owner decision 2026-11-26, Q6c): URL
+  `https://www.thenational.academy/pupils/lessons/<lesson>/overview` (the bare
+  `/pupils/lessons/<lesson>` answers 308 to it; the link check reads titles only on a 200). Pupil
+  pages have the lesson video and need no sign-in; titles read "<lesson> | Oak National Academy".
+  The teacher page shows the pupil link, so pupil URLs were taken from it, not guessed. The
+  validator (`OAK_PUPIL_PAGE` in `scripts/content/learn-links.mjs`) refuses any other Oak path
+  unless the link has `no_pupil_page: true`, which is allowed only on an Oak `/teachers/` page.
+  Switched 2026-11-26: all 90 Oak links (84 lessons), each re-read (200, lesson outcome, Year 10
+  or 11, video player, no sign-in); none kept as a teacher page.
 - In-house notes (planned; external links are interim): provider `revisionden` with `route` (an
   app path, no URL), listed first, optional `hide_external`; refused by validation until the
   notes exist (`IN_HOUSE_NOTES_BUILT` in `scripts/content/learn-links.mjs`).

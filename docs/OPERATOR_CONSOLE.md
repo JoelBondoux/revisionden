@@ -151,6 +151,16 @@ days. Recording a refund or goodwill payment waits for payments (workstream $).
 
 Still to come: discount codes (O5), family tags (O6).
 
+#### Friend reports (FL)
+
+| Route                            | Role  | Body | What it does                                                                                                                                                                                                                            | Audit action          |
+| -------------------------------- | ----- | ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| `GET friend-reports`             | Agent |      | `{ reports: [{ id, reason, reporter, reported, reportedAvatarCode, createdAt, closedAt }] }`, newest 500 (`OperatorFriendReportsSchema`). Only the two nicknames, the reported avatar code and the fixed reason; never ids or free text | `friend_reports.list` |
+| `POST friend-reports/{id}/close` | Agent | `{}` | Marks it dealt with; both families then see it as dealt with, and it is deleted 12 months later. 409 `report_closed` if already closed                                                                                                  | `friend_report.close` |
+
+The friends league is development only for now (`FRIENDS_ENABLED`), so there are no reports in
+staging or production yet. Design: `docs/FRIENDS_LEAGUE.md` section 7.
+
 ## What the operator can see and do
 
 | Area                         | View                                                                                                                                                                                                    | Actions (role)                                                                                                 |

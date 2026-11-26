@@ -4,6 +4,7 @@ import { Button } from '../../components/Button';
 import { MathText } from '../../components/MathText';
 import { Pill } from '../../components/Pill';
 import { ProgressBar } from '../../components/ProgressBar';
+import { AreaModelStep } from '../interactive';
 import './learn.css';
 
 /** Shown whenever unverified (draft) content is on screen. Only possible in development. */
@@ -197,11 +198,6 @@ function TextAnswer({
         disabled={disabled}
         onChange={onChange}
       />
-      {item.hint && (
-        <p className="secondary-text">
-          Hint: <MathText text={item.hint} subject={item.topicId} />
-        </p>
-      )}
     </div>
   );
 }
@@ -288,6 +284,8 @@ export function ItemInput({
           )}
         </div>
       );
+    case 'area_model':
+      return <AreaModelStep item={item} draft={text} disabled={disabled} onChange={onChange} />;
     default:
       return <TextAnswer item={item} text={text} disabled={disabled} onChange={onChange} />;
   }

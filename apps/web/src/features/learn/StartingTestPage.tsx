@@ -125,7 +125,8 @@ function Runner({
           startingTestId: test.id,
         });
         // Test mode stays quiet: rewards are announced on the results screen.
-        earned.current = [...earned.current, ...marked.newlyEarned];
+        // Unmarked (F12) earns nothing; the test moves on as usual.
+        if (!('unmarked' in marked)) earned.current = [...earned.current, ...marked.newlyEarned];
       }
       if (isLast) {
         await finish(false);

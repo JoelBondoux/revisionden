@@ -12,15 +12,16 @@ import { z } from 'zod';
 import { createRng, selectRecallItems, type Candidate } from '@revisionden/core';
 import { attempts, enrolments, items, mastery, topics } from '@revisionden/db';
 import type { AppEnv } from '../context';
-import { servableItem, toLearnItem } from '../learning/items';
+import { selectableItem, toLearnItem } from '../learning/items';
 import { topicAndDescendants } from '../learning/topic-tree';
 import type { LearnDeps } from './learn';
 
 const RecallQuerySchema = z.object({ topicId: z.string().min(1) });
 
-export function studentRecallRoutes({ db, clock, config }: LearnDeps) {
+export function studentRecallRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
   const app = new Hono<AppEnv>();
-  const servable = servableItem(config.serveDraftContent);
+  // Picked for students: without the maths engine, no typed working (F12).
+  const servable = selectableItem(config.serveDraftContent, mathsEngine !== undefined);
 
   app.get('/recall', async (c) => {
     const { topicId } = RecallQuerySchema.parse(c.req.query());
