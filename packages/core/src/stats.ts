@@ -12,6 +12,7 @@
  *   answers (score null, such as "check with your teacher") are left out.
  */
 import { localDate, weekStartOf } from './learning';
+import { helpedMasteryScore } from './help';
 import { topicMastery, type MasteryAttempt } from './mastery';
 import type { DayXp } from './reward-xp';
 
@@ -200,6 +201,8 @@ export interface StatsAnswer {
   score: number | null;
   topicId: string;
   subjectId: string;
+  /** Answered after "Help me understand" (F10): counts as wrong for mastery, not for accuracy. */
+  helped?: boolean;
 }
 
 export interface AnswerTotals {
@@ -316,7 +319,7 @@ export function restDays(activeDays: ReadonlySet<string>, range: DateRange, toda
 const markedUpTo = (answers: readonly StatsAnswer[], topicId: string, at: number) =>
   answers
     .filter((a) => a.topicId === topicId && a.score !== null && a.at <= at)
-    .map((a): MasteryAttempt => ({ score: a.score!, at: a.at }));
+    .map((a): MasteryAttempt => ({ score: a.helped ? helpedMasteryScore() : a.score!, at: a.at }));
 
 /** Topic mastery (0 to 100) as it stood at `at`, replayed from the marked answers. */
 export function masteryAt(

@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { server } from '../../mocks/server';
 import { renderRoute } from '../../test/render';
-import { demoItems } from './mocks';
+import { demoItems, demoSimilar } from './mocks';
 
 const short = demoItems[1]!;
 const lesson = (...list: unknown[]) =>
@@ -84,6 +84,33 @@ describe('Need a clue? then Help me understand (F10)', () => {
     await click('Help me understand');
     const panel = await screen.findByRole('region', { name: 'Help me understand' });
     expect(panel.querySelector('sup')).toHaveTextContent('3');
+  });
+
+  it('ignores help that arrives after the pupil has moved on to the next question', async () => {
+    const bodies = attemptBodies();
+    const next = { ...demoSimilar, prompt: 'Demo next' };
+    lesson({ ...short, canHelp: true }, { ...next, canHelp: true });
+    let release!: () => void;
+    const slow = new Promise<void>((resolve) => (release = resolve));
+    server.use(
+      http.get(`*/v1/student/learn/items/${short.id}/help`, async () => {
+        await slow;
+        return HttpResponse.json({ steps: ['Late step', 'Answer: demo answer'] });
+      }),
+    );
+    renderRoute('/learn/topic/demo-topic-a');
+    await screen.findByLabelText('Your answer');
+    await click('Help me understand');
+    // The pupil answers and moves on before the help arrives.
+    await answerRight();
+    await click('Continue');
+    await screen.findByText('Demo next');
+    release();
+    await new Promise((r) => setTimeout(r, 50));
+    expect(screen.queryByRole('region', { name: 'Help me understand' })).toBeNull();
+    await answerRight();
+    await screen.findByRole('status', { name: 'Answer feedback' });
+    expect(bodies[1]!.helped).toBeUndefined();
   });
 
   it('goes straight to Help me understand when there is no clue', async () => {

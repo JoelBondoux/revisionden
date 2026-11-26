@@ -35,7 +35,9 @@ describe('powers shown as superscripts (F9)', () => {
 
   it('gives a bracketed power its own power too (2^(3)^2 is 2 to the power 3^2)', () => {
     expect(sup('2^(3)^2')).toBe('2{3{2}}');
-    expect(sup('x^(a+b)^2 + 1')).toBe('x{a+b{2}} + 1');
+    // A compound power raised again keeps its brackets: x to the power (a+b)², not a+b².
+    expect(sup('x^(a+b)^2 + 1')).toBe('x{(a+b){2}} + 1');
+    expect(sup('x^(2y)^3')).toBe('x{(2y){3}}');
   });
 
   it('reads powers inside a raised bracket too', () => {
