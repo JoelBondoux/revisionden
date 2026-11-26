@@ -1,5 +1,5 @@
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { axeWhenSettled } from './support/axe';
 
 /** Made-up cards (not educational) for one made-up student, served in place of the API. */
 const STUDENT_ID = '00000000-0000-4000-8000-0000000000c1';
@@ -56,9 +56,7 @@ async function openCards(page: Page) {
 }
 
 async function expectAccessible(page: Page) {
-  const results = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-    .analyze();
+  const results = await axeWhenSettled(page);
   expect(
     results.violations.map(
       (v) => `${v.id}: ${v.help} [${v.nodes.map((n) => n.target.join(' ')).join(', ')}]`,

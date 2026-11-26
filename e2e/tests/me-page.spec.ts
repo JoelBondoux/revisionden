@@ -1,5 +1,5 @@
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { axeWhenSettled } from './support/axe';
 
 /**
  * The Me page (W9): avatar and nickname at the top, Edit my avatar, Get help first, and the
@@ -104,17 +104,13 @@ test('the Me page and its sheet are accessible', async ({ page }) => {
   for (const path of ['/settings', '/settings/look-and-sound', '/settings/more']) {
     await page.goto(path);
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-    const results = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-      .analyze();
+    const results = await axeWhenSettled(page);
     expect(results.violations.map((v) => `${path} ${v.id}: ${v.help}`)).toEqual([]);
   }
   await page.goto('/settings');
   await page.getByRole('button', { name: 'Edit my avatar' }).click();
   await expect(page.getByRole('dialog', { name: 'Edit my avatar' })).toBeVisible();
-  const results = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-    .analyze();
+  const results = await axeWhenSettled(page);
   expect(results.violations.map((v) => `sheet ${v.id}: ${v.help}`)).toEqual([]);
 });
 

@@ -1,5 +1,5 @@
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { axeWhenSettled } from './support/axe';
 import topicMap from './fixtures/topic-map-gcse-maths.json' with { type: 'json' };
 
 /*
@@ -89,9 +89,7 @@ test('at 390 × 844 the league of 11 and its buttons fit one screen, with no sid
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
     ),
   ).toBe(0);
-  const results = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-    .analyze();
+  const results = await axeWhenSettled(page);
   expect(results.violations).toEqual([]);
 });
 
