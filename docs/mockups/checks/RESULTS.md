@@ -23,9 +23,9 @@ A node passes when its own art clears 3:1 against every road colour it touches a
 | pop-burst | light | done | edge ring+border+fill | 7.85 | 3.25 | pass |
 | pop-burst | light | current | edge ring+border+fill | 3.93 | 3.25 | pass |
 | pop-burst | light | locked | edge ring+border+fill | 3.93 | 3.25 | pass |
-| starlight | light | done | border+fill | 13.66 | 11.4 | pass |
-| starlight | light | current | border+fill | 3.3 | 8.21 | pass |
-| starlight | light | locked | border+fill | 3.55 | 8.89 | pass |
+| starlight | light | done | border+fill | 13.66 | 11.36 | pass |
+| starlight | light | current | border+fill | 3.3 | 8.18 | pass |
+| starlight | light | locked | border+fill | 3.55 | 8.86 | pass |
 | comic-pop | light | done | border+fill | 6.46 | 10.02 | pass |
 | comic-pop | light | current | border+fill | 5.34 | 10.02 | pass |
 | comic-pop | light | locked | border+fill | 18.88 | 10.02 | pass |
@@ -38,12 +38,12 @@ A node passes when its own art clears 3:1 against every road colour it touches a
 | petal-glow | light | done | art outline | 4.17 | 7.15 | pass |
 | petal-glow | light | current | art outline | 4.17 | 7.15 | pass |
 | petal-glow | light | locked | art outline | 5.66 | 7.15 | pass |
-| turbo-drive | light | done | border+fill | 10.82 | 5.87 | pass |
+| turbo-drive | light | done | border+fill | 10.82 | 5.93 | pass |
 | turbo-drive | light | current | edge ring+border+fill | 5.82 | 7.45 | pass |
-| turbo-drive | light | locked | border+fill | 3.3 | 4.81 | pass |
-| rainbow-parade | light | done | border+fill | 6.61 | 5.67 | pass |
-| rainbow-parade | light | current | edge ring+border+fill | 6.61 | 5.67 | pass |
-| rainbow-parade | light | locked | border+fill | 8.52 | 4.27 | pass |
+| turbo-drive | light | locked | border+fill | 3.3 | 4.85 | pass |
+| rainbow-parade | light | done | border+fill | 6.61 | 5.68 | pass |
+| rainbow-parade | light | current | edge ring+border+fill | 6.61 | 5.68 | pass |
+| rainbow-parade | light | locked | border+fill | 8.52 | 4.28 | pass |
 | doodle-diary | dark | done | border+fill | 4.64 | 14.17 | pass |
 | doodle-diary | dark | current | border+fill | 6.73 | 7.83 | pass |
 | doodle-diary | dark | locked | border+fill | 7.93 | 8.4 | pass |
@@ -53,9 +53,9 @@ A node passes when its own art clears 3:1 against every road colour it touches a
 | pop-burst | dark | done | edge ring+border+fill | 7.85 | 3.25 | pass |
 | pop-burst | dark | current | edge ring+border+fill | 3.93 | 3.25 | pass |
 | pop-burst | dark | locked | edge ring+border+fill | 3.93 | 3.25 | pass |
-| starlight | dark | done | border+fill | 13.66 | 11.4 | pass |
-| starlight | dark | current | border+fill | 3.3 | 8.21 | pass |
-| starlight | dark | locked | border+fill | 3.55 | 8.89 | pass |
+| starlight | dark | done | border+fill | 13.66 | 11.36 | pass |
+| starlight | dark | current | border+fill | 3.3 | 8.18 | pass |
+| starlight | dark | locked | border+fill | 3.55 | 8.86 | pass |
 | comic-pop | dark | done | border+fill | 6.46 | 4.7 | pass |
 | comic-pop | dark | current | border+fill | 6.46 | 3.89 | pass |
 | comic-pop | dark | locked | border+fill | 11.68 | 10.56 | pass |
@@ -68,18 +68,18 @@ A node passes when its own art clears 3:1 against every road colour it touches a
 | petal-glow | dark | done | art outline | 4.85 | 9.9 | pass |
 | petal-glow | dark | current | art outline | 3.67 | 9.9 | pass |
 | petal-glow | dark | locked | art outline | 3.67 | 9.9 | pass |
-| turbo-drive | dark | done | border+fill | 10.82 | 5.87 | pass |
+| turbo-drive | dark | done | border+fill | 10.82 | 5.93 | pass |
 | turbo-drive | dark | current | edge ring+border+fill | 5.82 | 7.45 | pass |
-| turbo-drive | dark | locked | border+fill | 3.3 | 4.81 | pass |
+| turbo-drive | dark | locked | border+fill | 3.3 | 4.85 | pass |
 | rainbow-parade | dark | done | border+fill | 6.8 | 6.51 | pass |
 | rainbow-parade | dark | current | edge ring+border+fill | 6.8 | 6.51 | pass |
-| rainbow-parade | dark | locked | border+fill | 5.48 | 3.5 | pass |
+| rainbow-parade | dark | locked | border+fill | 5.48 | 3.54 | pass |
 
 60/60 pass
 
-## Routes stay readable (every subject, every unit, 320px and 390px)
+## Routes stay readable (every subject, every unit, every bridge found, 320px and 390px)
 
-No overlapping nodes or labels, no label off screen, no road segments crossing.
+No overlapping nodes or labels, no label off screen, no road, branch or bridge connector crossing.
 
 ```
 route shapes used (both widths): {"a curl":30,"a long sweep":10,"S-bends":20,"switchbacks":32}

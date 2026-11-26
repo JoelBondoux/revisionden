@@ -1,4 +1,4 @@
-// Every subject's every unit route stays readable: no overlapping nodes or labels, labels on screen,
+// Every subject's every unit route (with every bridge found) stays readable: no overlapping nodes or labels, labels on screen,
 // road segments never cross, at 320px and 390px.
 const { chromium } = require('playwright');
 (async () => {
@@ -11,6 +11,7 @@ const { chromium } = require('playwright');
     const subs = await p.$$eval('#subjectSeg button', (bs) => bs.map((x) => x.dataset.sub));
     for (const sub of subs) {
       await p.click(`#subjectSeg [data-sub=${sub}]`); await p.waitForTimeout(120);
+      await p.evaluate(() => window.__mockFindAll && window.__mockFindAll()); // include every bridge, chains too
       const r = await p.evaluate(() => {
         const out = [];
         document.querySelectorAll('#pager .page').forEach((pg, u) => {
@@ -25,7 +26,7 @@ const { chromium } = require('playwright');
           }
           labels.forEach((x, i) => { if (x.l < -2 || x.r > pr.width + 2) out.push(`unit ${u + 1}: label ${i} off screen`); });
           // road crossings: sample each segment and test segment pairs that are not joined
-          const paths = [...pg.querySelectorAll('.road .r, .road .rb')].flatMap((el) => (el.getAttribute('d') || '').split('M').filter(Boolean).map((d) => {
+          const paths = [...pg.querySelectorAll('.road .r, .road .rb, .road .rx')].flatMap((el) => (el.getAttribute('d') || '').split('M').filter(Boolean).map((d) => {
             const n = d.trim().split(/[\sC]+/).map(Number); const [ax, ay, c1x, c1y, c2x, c2y, bx, by] = n;
             return Array.from({ length: 25 }, (_, k) => { const t = k / 24, m = 1 - t; return [m * m * m * ax + 3 * m * m * t * c1x + 3 * m * t * t * c2x + t * t * t * bx, m * m * m * ay + 3 * m * m * t * c1y + 3 * m * t * t * c2y + t * t * t * by]; });
           }));

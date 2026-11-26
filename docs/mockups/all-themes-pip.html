@@ -714,6 +714,16 @@ button { font: inherit; color: inherit; }
 .node-label .hl { display: block; font-size: 10px; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; opacity: .8; margin-top: 1px; }
 .node.higher + .node-label { margin-top: 24px; }
 .node-label { width: min(120px, 46%); }
+
+/* Revision 5b: bridge nodes to another subject: small, round, the other subject's tint, a dotted connector */
+.road .rx { fill: none; stroke: var(--road-branch, var(--road)); stroke-width: 3px; stroke-dasharray: 1 6; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.node.bridge { width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%;
+  background: color-mix(in srgb, var(--tint) 75%, #fff); border: 2.5px solid var(--node-ink, var(--ink, #2b2a3a)); box-shadow: 0 2px 0 rgba(0, 0, 0, .18); padding: 3px; }
+[data-mode='dark'] .node.bridge { background: color-mix(in srgb, var(--tint) 30%, #1d1b2a); border-color: #f2f0ff; }
+.node.bridge + .node-label { margin-top: 22px; }
+/* Comic Pop: open up the tracking on small lettering */
+.t-comic-pop .chip, .t-comic-pop .goals li, .t-comic-pop .node-label, .t-comic-pop .here, .t-comic-pop .nav a, .t-comic-pop .me-label,
+.t-comic-pop .lvl small, .t-comic-pop .week li, .t-comic-pop .play .swap, .t-comic-pop .play .t small, .t-comic-pop .cta small, .t-comic-pop .combo, .t-comic-pop .node-label .hl, .t-comic-pop .xp small { letter-spacing: .08em; }
 </style>
 </head>
 <body>
@@ -764,6 +774,12 @@ button { font: inherit; color: inherit; }
         <button type="button" class="act" id="completeTopic">Complete a topic</button>
         <button type="button" class="act" id="getReward">Get a reward</button>
       </div>
+      <h2 id="h-bridge">Bridges to other subjects</h2>
+      <div class="seg" role="group" aria-labelledby="h-bridge">
+        <button type="button" id="linkedToggle" aria-pressed="true">Also studying the linked subject</button>
+        <button type="button" class="act" id="resetFinds">Reset discoveries</button>
+      </div>
+      <p class="note">Maths: open Algebra → Rearranging formulae, then come back to the map. Tap the new Physics node to find the next one. Physics: open Forces → Vectors.</p>
       <button type="button" class="act big" id="finishTest">Finish starting test (unlock 3 styles)</button>
     </aside>
 
@@ -966,7 +982,7 @@ const PROPS = {
 };
 
 const SUBJECTS = [
-  { id: 'maths', name: 'Maths', prop: 'calculator', tint: '#e3ebff', units: [['Number', ['Place value', 'Decimals', 'Negative numbers', 'Fractions', 'Percentages', { higher: ['Surds', 'Recurring decimals'] }, 'Powers and roots', 'Standard form']], ['Algebra', ['Expressions', 'Expanding', { either: ['Factorising', 'Equations'] }, 'Inequalities', 'Sequences', 'Graphs']], ['Ratio', ['Ratio basics', 'Sharing', 'Proportion', 'Speed', 'Density', 'Best buys']], ['Geometry', ['Angles', 'Polygons', 'Area', 'Volume', 'Pythagoras', 'Trigonometry']]] },
+  { id: 'maths', name: 'Maths', prop: 'calculator', tint: '#e3ebff', units: [['Number', ['Place value', 'Decimals', 'Negative numbers', 'Fractions', 'Percentages', { higher: ['Surds', 'Recurring decimals'] }, 'Powers and roots', 'Standard form']], ['Algebra', ['Expressions', 'Expanding', { either: ['Factorising', 'Equations'] }, 'Rearranging formulae', 'Inequalities', 'Sequences', 'Graphs']], ['Ratio', ['Ratio basics', 'Sharing', 'Proportion', 'Speed', 'Density', 'Best buys']], ['Geometry', ['Angles', 'Polygons', 'Area', 'Volume', 'Pythagoras', 'Trigonometry']]] },
   { id: 'further-maths', name: 'Further Maths', head: 'glasses', prop: 'compass', tint: '#e8e2ff', units: [['Algebra', ['Surds', 'Quadratics', 'Functions', 'Inequalities', 'Proof']], ['Calculus', ['Gradients', 'Differentiation', 'Tangents', 'Stationary points']], ['Matrices', ['Adding', 'Multiplying', 'Transformations', 'Inverses']]] },
   { id: 'statistics', name: 'Statistics', head: 'visor', prop: 'chart', tint: '#dff5ee', units: [['Data', ['Types of data', 'Sampling', 'Bias', 'Tables', 'Charts']], ['Averages', ['Mean', 'Median', 'Mode', 'Range', 'Spread']], ['Probability', ['Outcomes', 'Tree diagrams', 'Venn diagrams', 'Expected values']]] },
   { id: 'english-language', name: 'English Language', head: 'bluepen', prop: 'bubble', tint: '#e6f0ff', units: [['Reading', ['Skimming', 'Inference', 'Language', 'Structure', 'Comparison']], ['Writing', ['Planning', 'Openings', 'Description', 'Persuasion', 'Editing']]] },
@@ -1096,6 +1112,8 @@ const PETAL_N = (p, c, badge = '') => `<svg viewBox="-21 -21 42 42"><g class="ed
 const PETAL_BUD = '<svg viewBox="-21 -21 42 42"><path d="M0 16 V3" class="edge" stroke-width="2.6" stroke-linecap="round" fill="none"/><path d="M0 6 C-9 1 -8 -12 0 -17 C8 -12 9 1 0 6Z" class="edge" fill="#eadcf2" stroke-width="1.8"/><path d="M0 5 C-3 -2 -3 -9 0 -15" fill="none" stroke="#c7b2d6" stroke-width="1.4"/>' + LOCK_BADGE + '</svg>';
 /* Starlight: a star inside a night-sky tile */
 const STAR_T = (fill, glow, badge = '') => `<svg viewBox="-24 -24 48 48"><path d="M0 -15 l4.4 9.3 10.2 1.1 -7.6 6.9 2.1 10.1 -9.1 -5.2 -9.1 5.2 2.1 -10.1 -7.6 -6.9 10.2 -1.1z" fill="${fill}" ${glow ? `style="filter:drop-shadow(0 0 ${glow}px ${fill})"` : 'stroke="#8d8fbf" stroke-width="1.6"'}/>${badge}</svg>`;
+/* A bridge to another subject: that subject's prop on its own colour tint */
+const BRIDGE_ART = (s) => `<svg viewBox="0 88 40 40">${PROPS[s.prop]}</svg>`;
 /* Each theme's path nodes: done, current, locked and the unit quest at the end. */
 const NODES = {
   'doodle-diary': (st) => st === 'done' ? IC.check('currentColor') : st === 'current' ? PIP_MINI() : st === 'quest' ? '<svg viewBox="-20 -20 40 40"><path d="M0-14l4 9 10 1-8 7 3 10-9-5-9 5 3-10-8-7 10-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3" stroke-linejoin="round"/></svg>' : IC.lock('currentColor'),
@@ -1127,7 +1145,7 @@ const Sound = window.RevisionDenSound;
 Sound.setMuted(true);
 
 const pager = $('#pager');
-const state = { theme: 'doodle-diary', subject: SUBJECTS[0], family: 'auto', variant: 0, unit: 0, progress: 3 };
+const state = { linked: true, theme: 'doodle-diary', subject: SUBJECTS[0], family: 'auto', variant: 0, unit: 0, progress: 3 };
 const reduced = () => root.dataset.motion === 'reduced';
 const snd = (event, step) => { try { Sound.playSound(state.theme, event, step); } catch { /* sound is optional */ } };
 
@@ -1196,7 +1214,7 @@ function show(id, { back = false, push = true } = {}) {
   if (id === 'home') { snd('homeEnter'); countUp(); }
   else snd('pageTransition');
   if (id === 'lesson') resetLesson();
-  if (id === 'map') requestAnimationFrame(scrollToHere);
+  if (id === 'map') { if (pendingFind) { const f = pendingFind; pendingFind = null; setTimeout(() => discover(f), reduced() ? 50 : 500); } else requestAnimationFrame(scrollToHere); }
 }
 $$('.screen').forEach((s) => s.addEventListener('animationend', () => s.classList.remove('enter', 'back')));
 function back() { stack.pop(); show(stack[stack.length - 1] || 'home', { back: true, push: false }); }
@@ -1240,6 +1258,18 @@ $('#homeGo').addEventListener('click', () => show('lesson'));
 const GAP = 104;
 /* A unit's topics are strings, or { higher: [...] } (an optional Higher side branch for a Foundation student),
    or { either: [a, b] } (two topics that can be done in either order). Steps count the main route only. */
+const progressOf = (u) => (u === 0 ? state.progress : u === 1 ? 3 : 0);
+/* Cross-subject bridges: opening a topic can reveal a related topic from another subject the pupil studies.
+   Each entry is a chain: the second link is found by opening the first. */
+const BRIDGES = {
+  maths: { 'Rearranging formulae': [
+    { subj: 'physics', topic: 'Speed, distance and time', why: 'speed = distance ÷ time, rearranged three ways' },
+    { subj: 'physics', topic: 'Acceleration', why: 'another formula to rearrange' }] },
+  physics: { Vectors: [{ subj: 'maths', topic: 'Vectors', why: 'adding arrows tip to tail' }] },
+};
+const found = new Set(); let pendingFind = null;
+const bridgeKey = (subj, topic, k) => `${subj}|${topic}|${k}`;
+const subjectById = (id) => SUBJECTS.find((x) => x.id === id);
 const stepsOf = (topics) => topics.filter((t) => !t.higher).map((t) => (t.either ? t.either.join(' or ') : t));
 const topicNames = (topics) => topics.flatMap((t) => (t.higher || t.either || [t]));
 /* Seeded randomness, so a subject's unit always gets the same route. */
@@ -1275,9 +1305,18 @@ function layoutUnit(subject, u, topics) {
     if (before) before.nodes[0].x = 30; if (after) after.nodes[0].x = 30; r.nodes[0].x = 72;
   });
   rows.forEach((r, i) => { if (r.nodes.length === 2) [rows[i - 1], rows[i + 1]].forEach((q) => { if (q && q.nodes.length === 1 && q.nodes[0].kind !== 'higher') q.nodes[0].x = 50; }); });
-  const H = n * GAP + 90;
+  const BGAP = 80, chains = (BRIDGES[subject.id] || {}), extra = rows.map(() => 0);
+  rows.forEach((r, i) => {
+    const nd = r.nodes[0], chain = state.linked && r.nodes.length === 1 && nd.kind === 'main' && chains[nd.label];
+    if (!chain) return;
+    extra[i] = chain.filter((_, k) => found.has(bridgeKey(subject.id, nd.label, k))).length;
+    if (!extra[i]) return;
+    nd.x = 30; const nxt = rows.slice(i + 1).find((q) => q.nodes[0].kind !== 'higher'); if (nxt && nxt.nodes.length === 1) nxt.nodes[0].x = 30;
+  });
+  const lift = extra.map((_, i) => extra.slice(0, i).reduce((a, b) => a + b, 0) * BGAP);
+  const H = n * GAP + 90 + extra.reduce((a, b) => a + b, 0) * BGAP;
   const pts = []; // flat list of nodes with positions
-  rows.forEach((r, i) => r.nodes.forEach((nd) => pts.push({ ...nd, row: i, y: H - 60 - i * GAP, dx: 0, dy: 0 })));
+  rows.forEach((r, i) => r.nodes.forEach((nd) => pts.push({ ...nd, row: i, y: H - 60 - i * GAP - lift[i], dx: 0, dy: 0 })));
   const idx = (row, k = 0) => pts.findIndex((p) => p.row === row && (k === 0 || p.x === rows[row].nodes[k].x));
   const segs = [];
   const mainRows = rows.map((r, i) => i).filter((i) => rows[i].nodes[0].kind !== 'higher');
@@ -1295,10 +1334,32 @@ function layoutUnit(subject, u, topics) {
   });
   if (shape === 'a curl') { const s = segs.find((q, j) => q.kind === 'main' && j >= 1 && pts[q.a].kind === 'main' && pts[q.b].kind === 'main'); if (s) s.curl = pts[s.a].x < 50 ? 34 : -34; }
   void idx;
+  addBridges(subject, pts, segs);
   return { rows, pts, segs, H, shape };
 }
+function addBridges(subject, pts, segs) {
+  if (!state.linked) return;
+  const map = BRIDGES[subject.id] || {};
+  pts.slice().forEach((p, i) => {
+    const chain = map[p.label]; if (!chain) return;
+    if (p.kind !== 'main') return;
+    let from = i;
+    chain.forEach((link, k) => { // a column of bridge nodes beside the topic, climbing into the space made for them
+      if (!found.has(bridgeKey(subject.id, p.label, k))) return;
+      const x = 72, y = p.y - 46 - k * 80;
+      pts.push({ x, y, label: link.topic, kind: 'bridge', link, src: p.label, k, row: -1, dx: 0, dy: 0, grow: 1 });
+      segs.push({ a: from, b: pts.length - 1, kind: 'bridge', side: true });
+      from = pts.length - 1;
+    });
+  });
+}
 function segD(pts, s, w) {
-  const a = pts[s.a], b = pts[s.b], c = s.curl || 0;
+  const a = pts[s.a], b0 = pts[s.b], c = s.curl || 0, g = b0.grow ?? 1;
+  const b = { x: a.x + (b0.x - a.x) * g, y: a.y + (b0.y - a.y) * g, dx: b0.dx * g + a.dx * (1 - g), dy: b0.dy * g + a.dy * (1 - g) };
+  if (s.side) { // a short sideways connector for a bridge
+    const ax = a.x + (a.dx / w) * 100, ay = a.y + a.dy, bx = b.x + (b.dx / w) * 100, by = b.y + b.dy;
+    return `M ${ax} ${ay} C ${(ax + bx) / 2} ${ay} ${bx} ${(ay + by) / 2} ${bx} ${by}`;
+  }
   const ax = a.x + (a.dx / w) * 100, ay = a.y + a.dy, bx = b.x + (b.dx / w) * 100, by = b.y + b.dy, k = (ay - by) / 2;
   return `M ${ax} ${ay} C ${ax + c} ${ay - k} ${bx + c} ${by + k} ${bx} ${by}`;
 }
@@ -1306,11 +1367,12 @@ const HNODE = (locked) => `<svg viewBox="-20 -20 40 40"><text y="6.5" text-ancho
 let mapPages = [];
 function nodeStateOf(u, p) {
   if (p.kind === 'quest') return 'quest';
-  if (u > 0) return p.kind === 'higher' ? 'higher-locked' : 'locked';
-  if (p.kind === 'higher') return p.step < state.progress ? 'higher-open' : 'higher-locked';
-  return p.step < state.progress ? 'done' : p.step === state.progress ? 'current' : 'locked';
+  if (p.kind === 'bridge') return 'bridge';
+  const pr = progressOf(u);
+  if (p.kind === 'higher') return pr > 0 && p.step < pr ? 'higher-open' : 'higher-locked';
+  return p.step < pr ? 'done' : p.step === pr && pr > 0 ? 'current' : u === 0 && p.step === pr ? 'current' : 'locked';
 }
-function drawMap() {
+function drawMap(keep = null) {
   const s = state.subject;
   $('#playBox').innerHTML = `<span class="pip-mini-slot" aria-hidden="true"></span><span class="t"><small>Your subject</small><b>${s.name}</b></span><span class="swap">Change</span>`;
   $('#playBox').setAttribute('aria-label', `Subject: ${s.name}. Change subject`);
@@ -1324,34 +1386,64 @@ function drawMap() {
       const how = st === 'quest' ? `Finish every ${unit} topic to open it`
         : st === 'higher-locked' ? `It's an optional Higher topic: it opens after ${u > 0 ? s.units[u - 1][0] : steps[p.step]}`
         : st === 'locked' ? (u > 0 ? `Finish ${s.units[u - 1][0]} to open it` : `Finish ${steps[p.step - 1]} to open it`) : '';
-      const said = { done: 'done', current: 'start here', locked: 'locked', quest: 'locked', 'higher-open': 'optional Higher topic, open', 'higher-locked': 'optional Higher topic, locked' }[st];
-      const cls = st === 'quest' ? 'locked quest' : st === 'higher-locked' ? 'locked higher' : st === 'higher-open' ? 'higher open' : st;
-      const art = st.startsWith('higher') ? HNODE(st === 'higher-locked') : render(st, i);
+      const said = { bridge: `optional ${p.link ? subjectById(p.link.subj).name : ''} topic`, done: 'done', current: 'start here', locked: 'locked', quest: 'locked', 'higher-open': 'optional Higher topic, open', 'higher-locked': 'optional Higher topic, locked' }[st];
+      const cls = st === 'bridge' ? 'bridge' : st === 'quest' ? 'locked quest' : st === 'higher-locked' ? 'locked higher' : st === 'higher-open' ? 'higher open' : st;
+      const art = st === 'bridge' ? BRIDGE_ART(subjectById(p.link.subj)) : st.startsWith('higher') ? HNODE(st === 'higher-locked') : render(st, i);
       const here = st === 'current' && !hereShown ? (hereShown = true, `<span class="here" data-p="${i}" style="left:${p.x}%;top:${p.y}px">You are here</span>`) : '';
-      const sub = p.kind === 'higher' ? '<small class="hl">Higher · optional</small>' : p.kind === 'either' && st !== 'done' ? '<small class="hl">either order</small>' : '';
-      return `<button type="button" class="node ${cls}" data-p="${i}" style="left:${p.x}%;top:${p.y}px" data-how="${how}" data-label="${p.label}" aria-label="${p.label}: ${said}">${art}</button>`
+      const sub = p.kind === 'bridge' ? `<small class="hl">From ${subjectById(p.link.subj).name} · optional</small>` : p.kind === 'higher' ? '<small class="hl">Higher · optional</small>' : p.kind === 'either' && st !== 'done' ? '<small class="hl">either order</small>' : '';
+      return `<button type="button" class="node ${cls}" data-p="${i}" style="left:${p.x}%;top:${p.y}px;${st === 'bridge' ? `--tint:${subjectById(p.link.subj).tint}` : ''}" data-how="${how}" data-label="${p.label}" aria-label="${p.label}: ${said}">${art}</button>`
         + `<span class="node-label" data-p="${i}" style="left:${p.x}%;top:${p.y}px">${p.label}${sub}</span>` + here;
     }).join('');
     return `<section class="page" aria-label="${unit}: ${shape}"><div class="trail" style="height:${H}px">
-      <svg class="road" viewBox="0 0 100 ${H}" preserveAspectRatio="none" aria-hidden="true"><path class="rb"/><path class="re"/><path class="r"/><path class="rt"/><path class="d"/><path class="dd"/></svg>${nodes}</div></section>`;
+      <svg class="road" viewBox="0 0 100 ${H}" preserveAspectRatio="none" aria-hidden="true"><path class="rx"/><path class="rb"/><path class="re"/><path class="r"/><path class="rt"/><path class="d"/><path class="dd"/></svg>${nodes}</div></section>`;
   }).join('');
   mapPages.forEach((pg, u) => {
     const page = $$('#pager .page')[u];
     pg.page = page;
     pg.els = pg.pts.map((_, i) => $$(`[data-p="${i}"]`, page));
-    const done = (sg) => u === 0 && pg.pts[sg.b].kind !== 'quest' && pg.pts[sg.a].step < state.progress && pg.pts[sg.b].step <= state.progress;
-    pg.paths = [['rb', pg.segs.filter((q) => q.kind === 'branch')], ...['re', 'r', 'rt'].map((c) => [c, pg.segs.filter((q) => q.kind === 'main')]),
+    const done = (sg) => progressOf(u) > 0 && pg.pts[sg.b].kind !== 'quest' && pg.pts[sg.a].step < progressOf(u) && pg.pts[sg.b].step <= progressOf(u);
+    pg.paths = [['rx', pg.segs.filter((q) => q.kind === 'bridge')], ['rb', pg.segs.filter((q) => q.kind === 'branch')], ...['re', 'r', 'rt'].map((c) => [c, pg.segs.filter((q) => q.kind === 'main')]),
       ...['d', 'dd'].map((c) => [c, pg.segs.filter((q) => q.kind === 'main' && done(q))])].map(([c, list]) => [page.querySelector(`.road .${c}`), list]);
     drawRoads(pg);
   });
   $('#dots').innerHTML = s.units.map((_, i) => `<i class="${i === 0 ? 'on' : ''}"></i>`).join('');
   $$('#pager .node').forEach((b) => b.addEventListener('click', () => {
+    const u = $$('#pager .page').indexOf(b.closest('.page')), p = mapPages[u].pts[Number(b.dataset.p)];
+    if (p.kind === 'bridge') { bridgeTap(u, p); return; }
     if (b.classList.contains('locked')) { snd('locked'); toast(`${b.dataset.label} is locked. ${b.dataset.how}.`); return; }
+    const chain = state.linked && (BRIDGES[s.id] || {})[p.label];
+    if (chain && !found.has(bridgeKey(s.id, p.label, 0))) pendingFind = { u, src: p.label, k: 0 };
     snd('nodePop'); $('#question').dataset.topic = b.dataset.label; show('lesson');
   }));
-  state.unit = 0; pager.scrollLeft = 0; syncUnit();
-  requestAnimationFrame(scrollToHere);
+  if (keep) { state.unit = keep.unit; pager.scrollLeft = keep.unit * pager.clientWidth; syncUnit(); mapPages[keep.unit].page.scrollTop = keep.top; }
+  else { state.unit = 0; pager.scrollLeft = 0; syncUnit(); requestAnimationFrame(scrollToHere); }
   drawPip();
+}
+function bridgeTap(u, p) {
+  const subj = subjectById(p.link.subj);
+  snd('nodePop'); toast(`Practise this in ${subj.name}: ${p.link.why}.`);
+  const next = (BRIDGES[state.subject.id] || {})[p.src]?.[p.k + 1];
+  if (next && !found.has(bridgeKey(state.subject.id, p.src, p.k + 1))) setTimeout(() => discover({ u, src: p.src, k: p.k + 1 }), 900);
+}
+/** A bridge appears the first time: a branch grows out of its topic, the node bursts into place, a friendly note. */
+async function discover({ u, src, k }) {
+  const s = state.subject, link = BRIDGES[s.id][src][k];
+  found.add(bridgeKey(s.id, src, k));
+  if (state.unit !== u) { goUnit(u); await wait(reduced() ? 0 : 450); }
+  const top = mapPages[u].page.scrollTop;
+  drawMap({ unit: u, top });
+  const pg = mapPages[u], i = pg.pts.findIndex((p) => p.kind === 'bridge' && p.src === src && p.k === k);
+  const el = pg.els[i][0];
+  el.scrollIntoView({ block: 'center', behavior: reduced() ? 'auto' : 'smooth' });
+  toast(`You might find this ${subjectById(link.subj).name} topic useful: ${link.topic}`);
+  if (reduced()) return;
+  pg.els[i].forEach((e) => { e.style.opacity = '0'; });
+  pg.pts[i].grow = 0;
+  const t0 = performance.now();
+  await new Promise((res) => { const step = (t) => { const g = Math.min(1, (t - t0) / 520); pg.pts[i].grow = 1 - (1 - g) ** 3; drawRoads(pg); if (g < 1) requestAnimationFrame(step); else res(); }; requestAnimationFrame(step); });
+  pg.els[i].forEach((e) => { e.style.opacity = ''; });
+  el.animate([{ transform: 'scale(0)' }, { transform: 'scale(1.25)', offset: 0.6 }, { transform: 'scale(1)' }], { duration: 520, easing: 'cubic-bezier(.34,1.56,.64,1)' });
+  snd('nodePop'); burstAt(el, { count: 16, power: 0.9 });
 }
 function drawRoads(pg) {
   const w = pg.page.querySelector('.trail').clientWidth || 300;
@@ -1580,6 +1672,14 @@ $('#s-home').hidden = false; countUp();
 
 /* living bars pause when the tab is hidden */
 document.addEventListener('visibilitychange', () => root.classList.toggle('tab-hidden', document.hidden));
+
+$('#linkedToggle').addEventListener('click', (e) => {
+  state.linked = e.currentTarget.getAttribute('aria-pressed') !== 'true';
+  e.currentTarget.setAttribute('aria-pressed', String(state.linked)); drawMap(); snd('buttonPress');
+});
+$('#resetFinds').addEventListener('click', () => { found.clear(); pendingFind = null; drawMap(); snd('buttonPress'); toast('Discoveries reset. Open Algebra → Rearranging formulae (Maths) or Forces → Vectors (Physics) to find them again.'); });
+/* test hook for the route check: find every bridge at once */
+window.__mockFindAll = () => { for (const [subj, map] of Object.entries(BRIDGES)) for (const [topic, chain] of Object.entries(map)) chain.forEach((_, k) => found.add(bridgeKey(subj, topic, k))); drawMap(); };
 
 /* ===================== PARTICLES: one flavour per style ===================== */
 const pick = (a) => a[Math.floor(Math.random() * a.length)];
