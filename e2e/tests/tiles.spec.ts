@@ -1,5 +1,5 @@
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { axeWhenSettled } from './support/axe';
 
 // J15a (owner, 2026-11-26): the parent and policy pages show their links as button tiles in the
 // effect style's own look, and a tile opens its page with the style's page transition (Back plays
@@ -76,9 +76,7 @@ async function settle(page: Page) {
 
 async function expectAccessible(page: Page) {
   await settle(page);
-  const results = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-    .analyze();
+  const results = await axeWhenSettled(page);
   expect(
     results.violations.map(
       (v) =>

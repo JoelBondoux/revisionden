@@ -1,5 +1,5 @@
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { axeWhenSettled } from './support/axe';
 import topicMap from './fixtures/topic-map-gcse-maths.json' with { type: 'json' };
 
 /*
@@ -225,9 +225,7 @@ for (const scheme of ['light', 'dark'] as const) {
           .map((a) => a.finished),
       ),
     );
-    const results = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-      .analyze();
+    const results = await axeWhenSettled(page);
     expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
   });
 }

@@ -1,26 +1,7 @@
-import AxeBuilder from '@axe-core/playwright';
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+import { axeWhenSettled } from './support/axe';
 
 /** Get help (workstream W): private, accessible and request-free. */
-
-/**
- * Waits for every entrance animation to end, then runs axe. Axe measures colours as drawn, so
- * a button still fading in reads paler than it is (a flaky 4.44:1 instead of 4.5:1). Endless
- * animations (the gentle pulse) never finish, so they are left out; the rule itself is unchanged.
- */
-async function axeWhenSettled(page: Page) {
-  await page.evaluate(() =>
-    Promise.all(
-      document
-        .getAnimations()
-        .filter((a) => a.effect?.getComputedTiming().iterations !== Infinity)
-        .map((a) => a.finished.catch(() => undefined)),
-    ),
-  );
-  return new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-    .analyze();
-}
 
 for (const path of ['/help', '/parent/help']) {
   test(`${path} is accessible and fits the screen`, async ({ page }) => {
