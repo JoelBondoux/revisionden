@@ -8,12 +8,12 @@
     "expected_seconds": 25,
     "prompt": "Which of these is true for every value of x (an identity)?",
     "options": ["2(x + 4) = 2x + 4", "(x + 1)^2 = x^2 + 2x + 1", "x^2 = 2x", "3x + 1 = 10"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "(x + 1)^2 = (x + 1)(x + 1) = x^2 + 2x + 1 for every x. 2(x + 4) is 2x + 8, and the other two are equations true only for some values.",
+    "hint": "Expand each left-hand side and see which one matches its right-hand side exactly.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
+    "needs_human_approval": true,
     "checked_by": ["author"],
     "citations": [
       {
@@ -58,20 +58,20 @@
           "notes": "model answered \"1\"; expected \"1\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:41:38Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:29:15Z",
+          "notes": "wrong_answer (answer): The marked answer is option 1, but options are numbered from 0. Option 1 is \"(x + 1)^2 = x^2 + 2x + 1\", which is the second option, so this is internally consistent only if 0-based indexing is used correctly. However the item states \"answer\": {\"option\": 1, \"correct_option_text\": \"(x + 1)^2 = x^2 + 2x + 1\"}; this is actually correct under the stated numbering, so no issue there. The real problem is that the prompt asks for what is true for every value of x (an identity), but the answer metadata risks confusion because students/reviewers may expect 1-based numbering. This should be clarified.; wording (prompt): The phrasing \"Which of these is true for every value of x (an identity)?\" is slightly imprecise pedagogically. An identity is not just something true for every value of x, but an equation true for all values in its domain. At GCSE this may be acceptable, but clearer wording would be \"Which equation is an identity?\"; confidence medium"
         }
       ]
     }
@@ -90,11 +90,10 @@
       "(x + 2)^2 = x^2 + 4",
       "4(x - 1) = 4x - 4"
     ],
-    "answer": {
-      "option": 2
-    },
+    "answer": { "option": 2 },
     "marks": 1,
-    "explanation": "(x + 2)^2 = x^2 + 4x + 4, not x^2 + 4, so that statement is only true when x = 0.",
+    "explanation": "(x + 2)^2 = x^2 + 4x + 4, not x^2 + 4, so the two sides are not equal for every x: for example, x = 1 gives 9 on the left and 5 on the right.",
+    "hint": "Expand each left-hand side carefully: squaring a bracket gives three terms, not two.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
     "checked_by": ["author"],
     "citations": [
@@ -150,9 +149,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:32:10Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:28:07Z",
           "notes": "no problems found"
         }
       ]
@@ -167,11 +166,10 @@
     "expected_seconds": 25,
     "prompt": "(x + 3)^2 - 5 ≡ x^2 + ax + b. Find the values of a and b.",
     "options": ["a = 6, b = 4", "a = 3, b = 4", "a = 6, b = -5", "a = 6, b = 14"],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "(x + 3)^2 - 5 = x^2 + 6x + 9 - 5 = x^2 + 6x + 4, so a = 6 and b = 4.",
+    "hint": "Expand (x + 3)^2 first, take away 5, then compare the terms with x^2 + ax + b.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
     "checked_by": ["author"],
     "citations": [
@@ -217,20 +215,20 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:42:13Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:25:51Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -243,15 +241,12 @@
     "learning_point": "gcse-maths-h-a6-lp-identity-or-equation",
     "expected_seconds": 45,
     "prompt": "5(x - 2) + 3x ≡ ax + b. Find the value of b.",
-    "answer": {
-      "value": "-10"
-    },
-    "verify": {
-      "expression": "5*(0 - 2) + 3*0"
-    },
+    "answer": { "value": "-10" },
+    "verify": { "expression": "5*(0 - 2) + 3*0" },
     "marks": 1,
     "mark_scheme": ["B1 for -10"],
     "explanation": "5(x - 2) + 3x = 8x - 10, so a = 8 and b = -10.",
+    "hint": "Expand the bracket, collect like terms, then compare the number on its own with b.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -297,14 +292,6 @@
           "notes": "model answered \"-10\"; expected \"-10\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:42:30Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -319,6 +306,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:25:52Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -330,14 +325,9 @@
     "difficulty": 3,
     "learning_point": "gcse-maths-h-a6-lp-show-equivalent",
     "expected_seconds": 120,
-    "prompt": "Simplify (x + 4)^2 - (x - 4)^2 to show that (x + 4)^2 - (x - 4)^2 ≡ 16x.",
-    "answer": {
-      "expression": "16x"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(x + 4)^2 - (x - 4)^2"
-    },
+    "prompt": "Simplify (x + 4)^2 - (x - 4)^2.",
+    "answer": { "expression": "16x" },
+    "verify": { "method": "expression", "expression": "(x + 4)^2 - (x - 4)^2" },
     "steps": [
       "(x + 4)^2 - (x - 4)^2",
       "x^2 + 8x + 16 - (x^2 - 8x + 16)",
@@ -350,6 +340,7 @@
       "M1 for both expansions with the subtraction applied to every term, or for 8 × 2x",
       "A1 for 16x"
     ],
+    "hint": "Expand both squares (or use the difference of two squares), taking care that the minus sign applies to every term of the second square.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -362,6 +353,18 @@
         "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A6 (page 14; PDF page 26)",
         "quote": "know the difference between an equation and an identity; argue mathematically to show algebraic expressions are equivalent, and use algebra to support and construct arguments and proofs",
         "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Notation, vocabulary and manipulation, content reference A4 (page 14; PDF page 26)",
+        "quote": "expanding products of two or more binomials",
+        "retrieved_at": "2026-11-26",
         "supports": ["question"],
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
@@ -379,30 +382,6 @@
           "at": "2026-11-25T18:04:50Z"
         },
         {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-25T18:05:53Z",
-          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
-        },
-        {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:06:51Z",
-          "notes": "model answered \"16x\"; expected \"16x\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:07:09Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -417,6 +396,30 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:28:25Z",
+          "notes": "model answered \"16x\"; expected \"16x\""
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T10:28:53Z",
+          "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:28:55Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -429,19 +432,15 @@
     "learning_point": "gcse-maths-h-a6-lp-show-equivalent",
     "expected_seconds": 60,
     "prompt": "Expand and simplify (n + 1)^2 - n^2",
-    "answer": {
-      "expression": "2n + 1"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(n + 1)^2 - n^2"
-    },
+    "answer": { "expression": "2n + 1" },
+    "verify": { "method": "expression", "expression": "(n + 1)^2 - n^2" },
     "steps": ["(n + 1)^2 - n^2", "n^2 + 2n + 1 - n^2", "2n + 1"],
     "marks": 2,
     "mark_scheme": [
       "M1 for n^2 + 2n + 1, or for using the difference of two squares: ((n + 1) - n)((n + 1) + n)",
       "A1 for 2n + 1"
     ],
+    "hint": "Expand (n + 1)^2 as (n + 1)(n + 1), then subtract n^2.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -487,14 +486,6 @@
           "notes": "model answered \"2n + 1\"; expected \"2n + 1\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:19:31Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -509,6 +500,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:25:59Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -521,9 +520,7 @@
     "learning_point": "gcse-maths-h-a6-lp-show-equivalent",
     "expected_seconds": 120,
     "prompt": "Expand and simplify (2n + 3)^2 - (2n - 3)^2",
-    "answer": {
-      "expression": "24n"
-    },
+    "answer": { "expression": "24n" },
     "verify": {
       "method": "expression",
       "expression": "(2n + 3)^2 - (2n - 3)^2",
@@ -536,6 +533,7 @@
       "M1 for subtracting every term of the second expansion, or for 6 × 4n",
       "A1 for 24n"
     ],
+    "hint": "Expand both squares, then subtract the whole of the second one, changing every sign inside it.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -581,14 +579,6 @@
           "notes": "model answered \"24n\"; expected \"24n\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:08:11Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -603,6 +593,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:26:00Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -635,6 +633,7 @@
         "answer": "(2n + 1)^2 = 4n^2 + 4n + 1 and (2n - 1)^2 = 4n^2 - 4n - 1, so the difference is 8n + 2."
       }
     ],
+    "hint": "Expand both squares and simplify, then show that the result has 8 as a factor.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
     "checked_by": ["author"],
     "citations": [
@@ -680,20 +679,20 @@
           "notes": "top: intended 3 marks, marked 3 marks; middle: intended 2 marks, marked 2 marks; low: intended 1 marks, marked 1 marks"
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:08:59Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:26:02Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -726,6 +725,7 @@
         "answer": "Let the integers be n and n + 1. (n + 1)^2 = n^2 + 2n + 1, so the difference is n^2 + 2n + 1 - n^2 = 2n."
       }
     ],
+    "hint": "Call the integers n and n + 1, expand the difference of their squares, and show the result is 2 × (something) + 1.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
     "checked_by": ["author"],
     "citations": [
@@ -771,20 +771,20 @@
           "notes": "top: intended 3 marks, marked 3 marks; middle: intended 2 marks, marked 2 marks; low: intended 1 marks, marked 1 marks"
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:09:40Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:26:03Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -817,6 +817,7 @@
         "answer": "Let the even number be 2m and the odd number be 2n + 1. Their product is 2m + 2n + 1."
       }
     ],
+    "hint": "Write the even number as 2m and the odd number as 2n + 1, multiply them, and look for a factor of 2.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
     "checked_by": ["author"],
     "citations": [
@@ -862,20 +863,20 @@
           "notes": "top: intended 3 marks, marked 3 marks; middle: intended 2 marks, marked 2 marks; low: intended 1 marks, marked 1 marks"
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:10:10Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:26:05Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -890,6 +891,7 @@
     "front": "The symbol used to show that two expressions are identical (an identity)",
     "back": "≡",
     "explanation": "The symbol ≡ means 'is identical to': the two sides are equal for every value of the letters.",
+    "hint": "It looks like an equals sign with an extra line.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -946,9 +948,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:50:17Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:26:07Z",
           "notes": "no problems found"
         }
       ]
@@ -964,6 +966,7 @@
     "front": "The name for a statement such as 2x + 1 = 7 that is true only for particular values of x",
     "back": "Equation",
     "explanation": "2x + 1 = 7 is only true when x = 3. A statement that is true only for particular values is an equation, which you can solve.",
+    "hint": "It is the kind of statement you can solve to find x.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -1020,9 +1023,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:50:24Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:26:08Z",
           "notes": "no problems found"
         }
       ]
@@ -1038,6 +1041,7 @@
     "front": "Is x^2 + 2x = x(x + 2) true for every value of x? (yes or no)",
     "back": "Yes",
     "explanation": "Expand the right-hand side: x(x + 2) = x^2 + 2x, which is the same as the left-hand side. So it is true for every value of x (it is an identity).",
+    "hint": "Expand the right-hand side and compare it with the left-hand side.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
     "checked_by": ["author"],
     "citations": [
@@ -1093,9 +1097,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:50:31Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:26:10Z",
           "notes": "no problems found"
         }
       ]
