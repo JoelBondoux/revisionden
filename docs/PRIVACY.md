@@ -63,12 +63,39 @@ VAPID contact is our web address, never a personal email.
 Nickname, avatar and XP only. Invite codes need parent approval. No chat, no free text between
 students.
 
+### Friends league: children's data impact note (approved, not built)
+
+Design: `docs/FRIENDS_LEAGUE.md`, approved by the owner on 2026-11-26. Friends can be from other families
+(owner, 2026-11-26), so this is the first time one child's data is shown to children outside
+their family.
+
+- **What is shared**: nickname, avatar, two-part title and this week's league XP and place, only
+  with approved friends. Never real name, school, year group, subjects, grades, streaks, level,
+  activity times or free text. Other children's XP refreshes once a day so it shows no timing.
+- **Minimisation**: no chat, messages, search, discovery, profiles or public leaderboard. Friend
+  codes are single use, 48 hours, hashed and rate limited. League results are kept 8 weeks.
+- **Defaults and control**: off per child until a parent turns it on; one parent in each family
+  approves every friendship; either parent or the child can remove a friend; the child can hide
+  from the league; report and block with fixed reasons. Siblings join each other's league
+  automatically once friends is on for both.
+- **Reports**: both families' parents and AppDeck support see the fixed reason, the date and the
+  two nicknames (AppDeck also the reported avatar code), so repeated abuse can be acted on. Never
+  free text or ids.
+- **Retention and deletion**: codes and requests go within 24 hours of use or expiry; friendships,
+  blocks and reports are deleted with either child; all of it is in the family export (code hashes
+  left out).
+- **Risks** we weigh in the DPIA: pressure or upset from competition (no league pushes, no "last
+  place", effort-only praise), unwanted contact (codes in person only, two-family approval, block),
+  and a nickname that identifies a child (the nickname filter, report). Open legal questions are
+  in `docs/FRIENDS_LEAGUE.md` section 11. Must be in the DPIA before release.
+
 ## Feedback and policy confirmations
 
 Feedback stores the family, who sent it (role, and the student or parent sign-in), the kind,
 optional text (refused if it holds an email, UK mobile number or a family nickname) and optional
 device details (app version, screen, browser family, screen size, online). Never IP, location or
-contacts. Deleted 12 months after closing. Policy confirmations store only the policy, version and
+contacts. The interactive lesson pilot's one-tap "Did this help?" (W8) stores only Yes or No
+and the lesson item, never text. Deleted 12 months after closing. Policy confirmations store only the policy, version and
 date per parent sign-in.
 
 ## Error reports

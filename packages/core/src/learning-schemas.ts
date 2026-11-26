@@ -5,6 +5,7 @@
  */
 import { z } from 'zod';
 import { DailyLimitTodaySchema } from './daily-limit-schemas';
+import { AREA_MODEL_LIMITS } from './interactive/area-model';
 import { RewardCardSchema } from './rewards-schemas';
 import { IdSchema, IsoDateTimeSchema, ModeSchema } from './schemas';
 
@@ -23,6 +24,8 @@ const itemBase = {
   learningPoint: text.optional(),
   /** The item has verified steps for "Help me understand" (F10), fetched on demand. */
   canHelp: z.literal(true).optional(),
+  /** The item's id in content/ (for example gcse-maths-h-n4-0001), for Learn more links (Q6b). */
+  contentId: text.optional(),
 };
 
 export const LearnItemSchema = z.discriminatedUnion('type', [
@@ -36,6 +39,19 @@ export const LearnItemSchema = z.discriminatedUnion('type', [
   z.object({ ...itemBase, type: z.literal('numeric'), prompt: text, unit: text.optional() }),
   z.object({ ...itemBase, type: z.literal('worked_maths'), prompt: text }),
   z.object({ ...itemBase, type: z.literal('extended_answer'), prompt: text }),
+  z.object({
+    ...itemBase,
+    type: z.literal('area_model'),
+    prompt: text,
+    mode: z.enum(['explore', 'guided']),
+    /** x^2 + bx + c, within the pilot's scope A (packages/core interactive/area-model.ts). */
+    quadratic: z.object({
+      b: z.number().int().min(1).max(AREA_MODEL_LIMITS.maxB),
+      c: z.number().int().min(1).max(AREA_MODEL_LIMITS.maxC),
+    }),
+    /** The lesson's last tile step: ask the one-tap "Did this help?" once it is checked. */
+    askHelped: z.literal(true).optional(),
+  }),
   z.object({
     ...itemBase,
     type: z.literal('flashcard'),
@@ -206,6 +222,9 @@ export const FlashcardSchema = z.object({
    * `flashcard-explain.ts`). Left out when the content has none: no Explain button.
    */
   explain: z.array(text).optional(),
+  /** Deck and wrong-answer cards: the content item's id and learning point, for Learn more (Q6b). */
+  contentId: text.optional(),
+  learningPoint: text.optional(),
 });
 export type Flashcard = z.infer<typeof FlashcardSchema>;
 

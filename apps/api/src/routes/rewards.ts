@@ -37,6 +37,7 @@ import {
   TitleChoiceSchema,
   TITLE_MESSAGES,
   type StudentTitleResponse,
+  EFFECT_STYLE_UNLOCKS,
   effectStylesFor,
   type EffectStylesResponse,
   practiceKindsTried,
@@ -74,6 +75,7 @@ type ParentRewardRow = typeof parentRewards.$inferSelect;
 interface Deps {
   db: Database;
   clock: Clock;
+  config?: { styleTester?: boolean };
 }
 
 async function loadStats(db: Database, studentId: string, yearGroup: number, now: Date) {
@@ -355,7 +357,7 @@ export async function rewardsProgress(
 }
 
 /** Student routes under /v1/student/rewards (the session check runs before these). */
-export function studentRewardRoutes({ db, clock }: Deps) {
+export function studentRewardRoutes({ db, clock, config }: Deps) {
   const app = new Hono<AppEnv>();
   app.get('/', async (c) => {
     const [student] = await db
@@ -386,13 +388,19 @@ export function studentRewardRoutes({ db, clock }: Deps) {
     };
   }
 
-  /** Effect styles this student has unlocked (J10b), from their earned rewards. */
+  /**
+   * Effect styles this student has unlocked (J10b), from their earned rewards. On the dev
+   * environment only (J12c), also every style a tester may try; nothing is unlocked for real.
+   */
   app.get('/effect-styles', async (c) => {
     const earned = await db
       .select({ rewardId: rewards.rewardId })
       .from(rewards)
       .where(eq(rewards.studentId, c.var.student.studentId));
-    const body: EffectStylesResponse = { unlocked: effectStylesFor(earned.map((r) => r.rewardId)) };
+    const body: EffectStylesResponse = {
+      unlocked: effectStylesFor(earned.map((r) => r.rewardId)),
+      ...(config?.styleTester ? { testerStyles: EFFECT_STYLE_UNLOCKS.map((u) => u.style) } : {}),
+    };
     return c.json(body);
   });
 

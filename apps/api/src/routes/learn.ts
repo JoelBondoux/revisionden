@@ -14,10 +14,13 @@ import {
   comboBefore,
   comboBonusForSequence,
   comboBonusXp,
+  INTERACTIVE_PILOT_TAG,
+  arrangeInteractivePilot,
   createRng,
   helpedMasteryScore,
   helpedXp,
   RETRY_WEIGHT,
+  showsInteractivePilot,
   isShaky,
   pickStartingTest,
   selectNextItems,
@@ -149,13 +152,17 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
     return limit === undefined ? query : query.limit(limit);
   }
 
+  /** An interactive pilot step (W8): only shown in a one-topic lesson for a weak spot. */
+  const isPilotStep = (r: { item: { tags: string[] | null } }) =>
+    (r.item.tags ?? []).includes(INTERACTIVE_PILOT_TAG);
+
   async function masteryByTopic(studentId: string): Promise<Map<string, number>> {
     const rows = await db.select().from(mastery).where(eq(mastery.studentId, studentId));
     return new Map(rows.map((r) => [r.topicId, Math.round(r.value * 100)]));
   }
 
   async function subjectLesson(studentId: string, subjectId: string, count: number) {
-    const rows = await loadItems(eq(topics.subjectId, subjectId));
+    const rows = (await loadItems(eq(topics.subjectId, subjectId))).filter((r) => !isPilotStep(r));
     const levels = await masteryByTopic(studentId);
     const dueCards = await db
       .select({ itemId: flashcards.itemId, dueAt: flashcards.dueAt })
@@ -203,7 +210,15 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
     if (query.topicId) {
       // A unit's id gives its challenge: items from every topic in the unit.
       const topicIds = await topicAndDescendants(db, query.topicId);
-      const rows = await loadItems(inArray(items.topicId, topicIds), query.count);
+      const loaded = await loadItems(inArray(items.topicId, topicIds));
+      // The interactive pilot (W8) leads a weak-spot topic's lesson and is otherwise left out.
+      const show =
+        loaded.some(isPilotStep) &&
+        showsInteractivePilot({
+          mastery: (await masteryByTopic(studentId)).get(query.topicId),
+          topicCount: topicIds.length,
+        });
+      const rows = arrangeInteractivePilot(loaded, isPilotStep, show).slice(0, query.count);
       const list = rows.map((r) => toLearnItem(r.item, r.topicTitle));
       return c.json(lessonResponse(await withWarmUps(studentId, rows[0]?.subjectId, list)));
     }

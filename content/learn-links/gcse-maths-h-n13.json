@@ -1,0 +1,47 @@
+{
+  "topic": "gcse-maths-h-n13",
+  "links": [
+    {
+      "title": "Units of measure - Edexcel",
+      "url": "https://www.bbc.co.uk/bitesize/guides/zcwhy4j/revision/1",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "board": "edexcel",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Using standard units - Units of measure - Edexcel - GCSE Maths Revision - Edexcel - BBC Bitesize",
+        "teaches": "Standard units of length, time and volume, units of area and volume, compound measures (speed, density, pressure) and converting between units.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Compound measures for speed",
+      "url": "https://www.thenational.academy/pupils/lessons/compound-measures-for-speed/overview",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n13-lp-compound-measures"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Compound measures for speed | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 11, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can use compound measures for speed.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Compound measures for density",
+      "url": "https://www.thenational.academy/pupils/lessons/compound-measures-for-density/overview",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n13-lp-compound-measures"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Compound measures for density | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 11, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can use compound measures for density.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

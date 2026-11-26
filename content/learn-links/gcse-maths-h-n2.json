@@ -1,0 +1,60 @@
+{
+  "topic": "gcse-maths-h-n2",
+  "links": [
+    {
+      "title": "Checking and securing understanding of calculating with fractions and decimals",
+      "url": "https://www.thenational.academy/pupils/lessons/checking-and-securing-understanding-of-calculating-with-fractions-and-decimals/overview",
+      "provider": "oak",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of calculating with fractions and decimals | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 10, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can evaluate an expression involving decimals and fractions.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "How to add, subtract, multiply and divide fractions",
+      "url": "https://www.bbc.co.uk/bitesize/topics/zgnbxsg/articles/zt36b7h",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n2-lp-mixed-numbers"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "How to add, subtract, multiply and divide fractions - GCSE Maths - BBC Bitesize",
+        "teaches": "Adding, subtracting, multiplying and dividing fractions and mixed numbers (dividing by multiplying by the reciprocal), and fractions of amounts.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Checking and securing understanding of calculations involving negative numbers",
+      "url": "https://www.thenational.academy/pupils/lessons/checking-and-securing-understanding-of-calculations-involving-negative-numbers/overview",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n2-lp-negative-decimals"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of calculations involving negative numbers | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 10, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can evaluate calculations involving positive and negative integers.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Decimals",
+      "url": "https://www.bbc.co.uk/bitesize/topics/zgnbxsg/articles/zd68tcw",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n2-lp-place-value", "gcse-maths-h-n2-lp-negative-decimals"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "What are decimal numbers? - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Decimal place value, using it to order decimals, and adding, subtracting, multiplying and dividing decimals.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

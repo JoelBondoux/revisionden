@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { helpButton, type LearnItem } from '@revisionden/core';
 import { Button } from '../../components/Button';
+import { MathText } from '../../components/MathText';
 import { StepThrough } from '../../components/StepThrough';
 import { useLearnApi } from './learnApi';
 
@@ -42,11 +43,16 @@ export function HelpPanel({
     <div className="help-panel">
       {clueShown && item.hint && (
         <p className="help-panel__clue">
-          <strong>Clue:</strong> {item.hint}
+          <strong>Clue:</strong> <MathText text={item.hint} subject={item.topicId} />
         </p>
       )}
       {open && steps && (
-        <StepThrough steps={steps} label="Help me understand" onClose={() => setOpen(false)} />
+        <StepThrough
+          steps={steps}
+          label="Help me understand"
+          renderStep={(text) => <MathText text={text} subject={item.topicId} />}
+          onClose={() => setOpen(false)}
+        />
       )}
       {failed && (
         <p role="alert" className="feedback feedback--wrong">

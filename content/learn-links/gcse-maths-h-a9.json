@@ -1,0 +1,60 @@
+{
+  "topic": "gcse-maths-h-a9",
+  "links": [
+    {
+      "title": "Working out equations of a line and calculating gradient",
+      "url": "https://www.bbc.co.uk/bitesize/topics/z3hv2p3/articles/zqq96rd",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Equations of a line and calculating gradient - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "The equation of a straight line y = mx + c: finding the gradient m and y-intercept c from a graph or two points.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Checking and securing understanding of finding the equation of the line from coordinates",
+      "url": "https://www.thenational.academy/pupils/lessons/checking-and-securing-understanding-of-finding-the-equation-of-the-line-from-coordinates/overview",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a9-lp-line-equation"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of finding the equation of the line from coordinates | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 10, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can find the equation of the line from two coordinate pairs as well as from the gradient and one coordinate pair.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Parallel and perpendicular lines on coordinate axes",
+      "url": "https://www.thenational.academy/pupils/lessons/parallel-and-perpendicular-lines-on-coordinate-axes/overview",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a9-lp-parallel-perpendicular"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Parallel and perpendicular lines on coordinate axes | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 10, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can solve problems involving parallel/perpendicular lines on coordinate axes.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Equations of parallel and perpendicular lines",
+      "url": "https://www.bbc.co.uk/bitesize/topics/z3hv2p3/articles/zg7c239",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a9-lp-parallel-perpendicular"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Equations of parallel and perpendicular lines - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Equations of parallel lines (same gradient) and perpendicular lines (gradients multiply to −1, Higher).",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

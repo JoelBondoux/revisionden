@@ -49,3 +49,30 @@
   font-weight: var(--font-weight-bold);
   color: var(--color-text-secondary);
 }
+
+/* The dev environment's style tester (J12c): a dashed box, clearly not part of the real app. */
+.style-tester {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  border: 2px dashed var(--color-warning-text);
+  border-radius: var(--radius-md);
+}
+
+.style-tester__title {
+  margin: 0;
+  font-size: var(--font-size-md);
+}
+
+.style-tester__note {
+  margin: 0;
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-warning-text);
+}
+
+.style-tester__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}

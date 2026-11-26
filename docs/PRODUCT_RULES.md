@@ -386,6 +386,40 @@ Product owner decision, 2026-11-25: **parent view only**.
 - Implemented: `packages/core/src/learning.ts`, `apps/api/src/routes/learn.ts`,
   `apps/api/src/routes/flashcards.ts`.
 
+## Interactive lesson pilot (workstream W8, owner decision 2026-11-26)
+
+The owner pulled one interactive (Brilliant-style) lesson forward from Stage 4 as a pilot:
+factorising quadratics (spec A4) with an area model, scope A only (x² + bx + c with b and c
+positive whole numbers; negatives later).
+
+- **Who sees it:** a student whose A4 topic is a weak spot (mastery below 60) gets the pilot
+  steps first in the A4 lesson. Not at exactly 60 or above, not for a topic with no answers yet,
+  and never in a unit challenge or subject lesson (`showsInteractivePilot`,
+  `arrangeInteractivePilot` in `packages/core/src/interactive/pilot-lesson.ts`; content tag
+  `interactive-pilot`).
+- **Steps:** explore (x² + 5x + 6), two guided (x² + 6x + 8, x² + 8x + 12, each with a hint),
+  one typed (factorise x² + 9x + 20, checked by the maths engine in factorised form), then the
+  topic's normal questions as the hand-over (among them "Factorise x² + 7x + 12").
+- **The area model step** (`area_model` item type): x² + bx + c drawn as one x² square, b x
+  strips and c unit squares. The student picks the pair of numbers that multiply to c and add
+  to b; the tiles make a rectangle whose sides, x + q and x + p, are the brackets. Tapping a tile
+  lights up its term in the expression in the same colour and says what it is ("It is x by x, so
+  its area is x²"). Explore says at once whether the tiles make a rectangle; guided keeps the
+  verdict for Check. The answer is the pair ("2,3"), marked on the server.
+- Counts like any question: XP (10, as multiple choice), streak, daily goal and mastery; a wrong
+  answer gets the in-lesson retry and becomes a flashcard.
+- **No tile-movement logging.** Only the checked answer is sent, as for any question.
+- **Accessible:** tiles are buttons (one keyboard stop per kind), pairs are radio buttons, so
+  nothing needs dragging; read aloud lists the pairs; theme colours; fits 320px at 200% text.
+- **"Did this help?"** after the last tile step is checked: one tap, Yes or No, stored as
+  feedback kind `lesson_helped` or `lesson_not_helped` with the item and never any text, one
+  answer per student and item, not counted in the daily feedback limit. Parents and the
+  operator see it with the family's feedback.
+- **Hidden until verified:** the pilot items are draft content, so production does not serve
+  them until they pass `docs/VERIFICATION.md`; development serves drafts with the DRAFT banner.
+  The specification citation (1MA1 Higher, A4, page 14 / PDF page 26: "factorising quadratic
+  expressions of the form") is quote-checked.
+
 ## Learning from mistakes (workstream F5, owner request 2026-11-25)
 
 A wrong or very slow answer is not just marked and forgotten: the learning point comes back.
@@ -404,7 +438,7 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
   - At most **one retry per learning point** and **2 retries per lesson**.
   - A **second miss** on a point (its retry, or another question on it) ends retries for it today
     and **steps down** instead: "This one's tricky today, so we'll come back to it another day",
-    the topic's "Learn it first" links, and an easier question on the same topic (lower
+    with "Learn more" (as after any wrong answer), and an easier question on the same topic (lower
     difficulty) next if there is one. The point then waits for the review ladder.
   - **Never 2 hard retries in a row:** a **confidence question** (one the student has answered
     right before, same subject, another learning point) goes just before each retry; without one,
@@ -448,7 +482,24 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
 - Learn mode only: there is no clue or help in Test mode or the starting test (the API refuses a
   helped Test mode answer).
 - Implemented in `packages/core/src/help.ts`, `GET /v1/student/learn/items/:id/help`,
-  `attempts.helped` (migration 0028) and `apps/web/src/features/learn/HelpPanel.tsx`.
+  `attempts.helped` (migration 0029) and `apps/web/src/features/learn/HelpPanel.tsx`.
+
+## Showing maths (F9, owner 2026-11-26)
+
+- Powers are shown as superscripts wherever students see maths: x^2 is shown as x², 10^-3 as
+  10⁻³, 10^(2 + 8) as 10²⁺⁸ (a raised bracket loses its brackets). Only the power is raised
+  (x^2y is x²y), and a^b^c is a to the power b^c, read right to left as in maths. This covers
+  prompts, options, units, flashcards (both faces and the card list), Explain steps, answers and
+  explanations in feedback, hints, and the review batch screens. Stored content keeps its ^.
+- Screen readers hear the words from the read-aloud rules ("x squared", "to the power minus 3").
+- A ^ with nothing it can raise stays as it is (content says "Use ^ for powers", which is how a
+  power is typed).
+- Typed-answer boxes and worked maths have a "Power" key that types ^ where the cursor is, and a
+  "Shows as:" preview with the powers raised. ^ and ² typed straight in are still accepted.
+- Computing subjects (subject or topic id containing "comput") show ^ as typed, with no Power
+  key: there ^ is a real symbol (owner).
+- Implemented in `packages/core/src/powers.ts` and `apps/web/src/components/MathText.tsx`; the
+  e2e sweep `e2e/tests/powers.spec.ts` checks every real item that shows a power.
 
 ## Flashcards and mastery
 
@@ -463,6 +514,9 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
   changes the rating; the rating buttons stay once the answer has been seen. The answer face is
   empty until the answer is revealed, and each new card starts on its question with no turn, so
   the next card's answer never flashes while the card turns.
+  The card and the rating buttons are named by the words they show (F8b, WCAG 2.5.3 Label in
+  Name): the card reads its showing face, with "Turn over to see the answer" (or "Turn back to
+  the question") as its description, and a rating reads, for example, "Good 1 day".
 - **Explain (F7, owner):** on the answer side, "Explain" walks through the item's verified
   content one step at a time ("Next step", "Back", ending on the answer): its worked steps, else
   its inline mark scheme, then its `back_formula` and each condition, then the answer, then its
@@ -529,6 +583,25 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
 - Recent activity: the last 10 events (lessons, flashcards, papers, homework marked, plan edits).
   No free text written by the student is shown.
 - **Save as PDF**: made in the browser, nicknames only, nothing stored on the server.
+
+### Motion on the stats pages (K5, owner 2026-11-26)
+
+- Every stat tile number counts up from 0 to its value, and the bar charts and progress bars
+  grow in (bars from the baseline, progress bars from the left). About 700ms, ease-out, a
+  stagger of 60ms or less, the whole set within 1 second.
+- Each runs once, the first time it comes into view; never again on a re-render, refetch or
+  new period (switching Week, Term or Year shows the new values at once, with no second settle
+  sound). A value that changes later shows at once. On the parent dashboard each child's
+  dashboard animates once.
+- Reduced motion (the device setting; the app has no motion setting of its own): no animation,
+  final values at once. Printing (Save as PDF), even mid-count, shows the final numbers and
+  full bars.
+- Screen readers only ever get the final value (the moving digits are hidden from them), with
+  no live announcements. Digits use tabular figures and keep the final width, so nothing shifts,
+  and every frame is formatted like the final value (%, "1 h 20 min", "3 of 4").
+- Sound: the parent pages are silent. On the student's My stats, one soft "settle" sound and
+  vibration (`ringFill`, in the active sound pack, respecting mute) when the counts finish;
+  never per digit, and none with reduced motion.
 
 ### Rules for the numbers
 
@@ -641,7 +714,9 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   (`revisionden.bugButton`). Built in L7.
 
 - Kinds: **bug**, **idea**, **something confusing**, **other**. (Mistakes in a question keep
-  using "Report a problem" on the item, which quarantines it.)
+  using "Report a problem" on the item, which quarantines it.) Also, from the interactive lesson
+  pilot only, the one-tap **lesson_helped** / **lesson_not_helped** ("Did this help?"), which
+  carry the item and no text and do not count towards the 5 a day (W8).
 - Optional text up to 500 characters. Before saving, the same checks as the AI privacy filter
   run: email addresses, phone numbers and the student's nickname are refused with a friendly
   "please leave out personal details" message.
@@ -807,19 +882,21 @@ So nobody runs an old copy of the app for long after a deploy (decided 2026-11-2
 
 Owner request, 2026-11-25: a clear install button, not only a text link in Settings.
 
-- A card with Pip, "Add RevisionDen to this device", on the child's topic map and the parent home.
-  It is a card in the page, never a pop-up. Settings has the same entry as a button.
+- "Add RevisionDen to this device": a short row in the Today strip of the child's topic map (J12b)
+  and a card with Pip on the parent home. Both are part of the page, never a pop-up. Settings has
+  the same entry as a button. "Not now" in either hides both.
 - **Chrome, Edge and Android:** the app keeps the browser's install prompt (`beforeinstallprompt`)
   and shows it when the button is tapped.
 - **iPhone and iPad Safari** (no install prompt): the button opens a sheet with three illustrated
   steps (Share, Add to Home Screen, Add), worded for an iPhone or an iPad. `/install` shows the
   same steps for the device in use (both, plus the Chrome and Edge way, on other devices).
-- **Browsers that cannot install** (for example Firefox on a computer): no card; Settings links to
+- **Browsers that cannot install** (for example Firefox on a computer): no card or row; Settings links to
   `/install`.
 - Hidden once installed (opened from the Home Screen, `display-mode: standalone`, or the
   `appinstalled` event), and for 30 days after "Not now" on this device (local storage
   `revisionden.installDismissed`).
-- Implemented: `apps/web/src/pwa/{install.ts,InstallCard.tsx,IosSteps.tsx,installStore.ts}`.
+- Implemented: `apps/web/src/pwa/{install.ts,InstallCard.tsx,IosSteps.tsx,installStore.ts}` and
+  `apps/web/src/map/InstallRow.tsx`.
 
 ## Daily limit (wellbeing)
 
@@ -924,11 +1001,34 @@ Requested by the product owner on 2026-11-25.
 - Implemented: `apps/api/src/routes/family-parents.ts`, `apps/api/src/family-events.ts`,
   `apps/web/src/features/parents/`; migration 0012.
 
+## Me page (`/settings`, workstream W9, owner feedback 2026-11-26)
+
+Owner: "The avatar/Me settings page is a little convoluted, and it doesn't allow customising your
+own avatar." The page is now short enough for one phone screen (390 × 844):
+
+- **Top:** heading "Me", the student's avatar (large) and nickname, and **Edit my avatar**. It opens
+  the avatar builder (E's, reused as it is) in a sheet with Save and Cancel. Cancel, Escape or the
+  close button ask "Throw away your changes?" (Keep editing or Throw away) if anything changed.
+  Save sends the look with `PUT /v1/student/avatar`; the nav's Me avatar changes as soon as the
+  server says yes. The API's only rule is that every item is unlocked (locked items need their
+  reward); there is no parent approval and no rate limit. The nickname comes from
+  `GET /v1/student/me`.
+- **Then:** Get help (always the first link on the page), My progress, My rewards.
+- **Look and sound** (`/settings/look-and-sound`): Reading comfort, Appearance (theme), Effect style
+  (students only; its picker is unchanged), Read aloud, Sound (with vibration).
+- **More** (`/settings/more`): My subjects, Reminders, This device (install, Switch profile, Show
+  the bug button), Parents (Parent home, Ask a parent), Feedback (send, yours, your family's),
+  Policies and About, and What your parent can see. Both sub-pages end with "Back to Me".
+- A parent on `/settings` (no student on the device) sees no avatar header, and gets a Parent home
+  tile on the main page as well as in More.
+- Code: `apps/web/src/pages/SettingsPage.tsx`, `apps/web/src/features/me/` (`MeHeader`,
+  `MyAvatarProvider` shared with the nav). Screenshots: `docs/design/w9/`.
+
 ## Get help (support resources)
 
 Requested by the product owner on 2026-11-25.
 
-- A **"Get help"** page for students, reachable from Settings (first thing on the page). Also
+- A **"Get help"** page for students, reachable from Settings (the Me page; first link on it). Also
   reachable signed out. Owner decision, 2026-11-26 (W7): students find Get help on Settings only,
   reached from the "Me" avatar item in the main nav; it is no longer in the student header or
   footer. (Was: Settings, the profile menu and the footer of every student screen.)
@@ -1048,7 +1148,8 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   practised, chosen by spaced repetition and weak spots (never brand-new topics), across their
   subjects. Takes about 5–8 minutes.
 - Learn mode, normal XP and combos; finishing it counts as a lesson for the streak and daily goal.
-  It appears at the top of the topic map until done; it never nags (no push just for 5-a-day).
+  It appears in the topic map's Today strip, under the next mission, until done; it never nags (no
+  push just for 5-a-day).
 
 ### Recall checks
 
@@ -1059,15 +1160,48 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
 - Combos (owner decision, 2026-11-25): a wrong recall answer never resets the combo, because recall
   checks test older topics and should feel safe. A right one still adds to the combo.
 
-### Learn it first
+### Learn it first and Learn more
 
-- Each topic can link to free official lessons: Oak National Academy lessons and BBC Bitesize pages
-  that match the topic (and, later, our own verified notes).
-- Links only (open in a new tab on tap; nothing loaded from those sites until then), stored as data
-  per topic with the page title, URL, and the date checked. A CI job checks every link still works
-  (HTTP status) and fails on broken links. A topic shows the button only when it has a checked link.
+- **Allowed providers** (owner decision, 2026-11-26): **Oak National Academy**, **BBC Bitesize** and
+  **Isaac Physics / Isaac Science** (University of Cambridge). No others. Criteria: free, made for UK
+  secondary pupils, no ads, no comments or social feeds, no sign-up needed to read. Ad-supported
+  sites and exam-board pages were not chosen. Isaac's host is `isaacscience.org` (read on
+  2026-11-26: isaacphysics.org now redirects there and the site calls itself Isaac Science).
+- **External links are interim** (owner goal): all of this teaching is to be in-house, as our own
+  verified notes. The data is ready for that: provider `revisionden` points at an in-app route (not
+  a URL), is always listed first, and can hide the external links for the item, point or topic it
+  covers (`hide_external`). The notes are not built yet, so the validator refuses them for now.
+- Each topic can link to free lessons from those providers (and, later, our own verified notes).
+  A link can be for the whole topic, or only for some of its learning points or items.
+- **Learn it first**: at the top of a topic lesson (and on the parent's "Worth a look together"),
+  the topic's whole-topic links.
+- **Learn more** (owner request, 2026-11-26: "link out to authoritative, age-appropriate sources
+  for further tuition guidance when a question needs more explanation"): on a flashcard's Explain
+  panel and after a wrong answer in a lesson, behind a "Learn more" tap. It shows the most specific
+  links: those for the item, else for its learning point, else the whole topic's. Lesson items and
+  flashcards carry their content id and learning point (Q6b), so both match all three levels.
+- Links only (open in a new tab on tap; nothing loaded from those sites until then, nothing
+  recorded about taps), stored as data per topic with the page title, URL and dates.
+- A link shows only when it is both **reachable** (`checked_at`: the CI job requests every link and
+  fails on broken ones) and **match-checked** (`match`: someone opened and read the page and
+  recorded its title as fetched, what it teaches, its level and the date). A page that was not
+  opened is never recorded. The CI job also fails when a match-checked page's title changes, so the
+  match is re-checked.
+- Every reachable link needs the full match check; the validator refuses one without it. (The 11
+  Oak links from Q5 were re-read and match-checked on 2026-11-26, so the temporary "legacy" path
+  for them was removed.)
+- Coverage (2026-11-26): every GCSE Maths topic and learning point with items has a shown link:
+  44 of 44 topics and 133 of 133 learning points, 69 of them with a page of their own (139 links:
+  Oak lessons and BBC Bitesize pages). `pnpm content:check-links --coverage` prints the numbers.
 - Links point at the right level (GCSE or A-Level) and the student's board where the page is
   board-specific.
+- **Oak links go to the pupil lesson page** (owner decision, 2026-11-26): the page made for
+  students, with the lesson video and no sign-in, not Oak's teacher page. The link is the pupil
+  lesson's overview page (`/pupils/lessons/<lesson>/overview`). The validator refuses an Oak
+  teacher page (`/teachers/...`) unless the link is marked `no_pupil_page` (the lesson has no
+  pupil page). BBC Bitesize and Isaac pages are already made for students.
+  All 90 Oak links (84 lessons) were switched and re-read on 2026-11-26; every lesson had a pupil
+  page, so none is marked `no_pupil_page`.
 
 ### Read aloud and reading comfort
 

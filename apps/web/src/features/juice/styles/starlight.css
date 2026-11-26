@@ -19,9 +19,9 @@
   box-shadow: 0 0 12px rgb(255 214 90 / 60%);
 }
 
-:root[data-effect-style='starlight'] .map-summary,
-:root[data-effect-style='starlight'] .mission,
-:root[data-effect-style='starlight'] .daily-card {
+:root[data-effect-style='starlight'] .today-strip,
+:root[data-effect-style='starlight'] .today-strip__mission,
+:root[data-effect-style='starlight'] .today-strip__daily {
   border: 1px solid rgb(255 255 255 / 18%);
   border-radius: var(--radius-lg);
   background: linear-gradient(170deg, var(--sl-night), var(--sl-deep));
@@ -29,22 +29,22 @@
   box-shadow: var(--sl-glow);
 }
 
-:root[data-effect-style='starlight'] .map-summary {
-  padding: var(--space-4);
+:root[data-effect-style='starlight'] .today-strip {
+  padding: var(--space-2) var(--space-3) var(--space-1);
 }
 
-:root[data-effect-style='starlight'] .map-summary__subject {
+:root[data-effect-style='starlight'] .today-strip__heading {
   color: #c4b5ff;
 }
 
-:root[data-effect-style='starlight'] .map-summary .secondary-text,
-:root[data-effect-style='starlight'] .daily-card .secondary-text,
-:root[data-effect-style='starlight'] .daily-card__count,
-:root[data-effect-style='starlight'] .mission__time {
+:root[data-effect-style='starlight'] .today-strip__xp,
+:root[data-effect-style='starlight'] .today-strip__daily .today-strip__eyebrow,
+:root[data-effect-style='starlight'] .today-strip__daily .today-strip__title,
+:root[data-effect-style='starlight'] .today-strip__mission .today-strip__meta {
   color: var(--sl-soft);
 }
 
-:root[data-effect-style='starlight'] .mission__eyebrow {
+:root[data-effect-style='starlight'] .today-strip__mission .today-strip__eyebrow {
   color: var(--sl-cyan);
 }
 
@@ -150,5 +150,51 @@
   :root[data-effect-style='starlight'] .star--earned {
     animation: none;
     opacity: 1;
+  }
+}
+
+/* ---------- J15a: button tiles and page transition (a twinkle fade) ---------- */
+:root[data-effect-style='starlight'] .button-tile {
+  border: 1px solid rgb(180 140 255 / 55%);
+  background: linear-gradient(160deg, var(--sl-night), var(--sl-deep));
+  box-shadow: var(--sl-glow);
+  color: var(--sl-text);
+}
+
+:root[data-effect-style='starlight'] .button-tile__icon {
+  background: radial-gradient(circle, var(--sl-star) 0%, #ffd86b 70%);
+  color: var(--sl-deep);
+  box-shadow: 0 0 14px rgb(255 246 176 / 60%);
+}
+
+:root[data-effect-style='starlight'] .button-tile__badge {
+  background: rgb(255 255 255 / 14%);
+  color: var(--sl-soft);
+}
+
+:root[data-effect-style='starlight'] .button-tile:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 32px rgb(75 227 255 / 55%);
+}
+
+:root[data-effect-style='starlight'] .page-enter {
+  animation: sl-twinkle-in 340ms ease-out;
+}
+
+:root[data-effect-style='starlight'] .page-enter.page-enter--back {
+  animation: sl-twinkle-back 300ms ease-out;
+}
+
+@keyframes sl-twinkle-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(1.03);
+  }
+}
+
+@keyframes sl-twinkle-back {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
   }
 }

@@ -269,6 +269,12 @@ export function parentTargetLabel(target: ParentRewardTarget): string {
   return REWARDS.find((r) => r.id === target.rewardId)?.name ?? target.rewardId;
 }
 
-/** GET /v1/student/rewards/effect-styles (J10b): the effect styles this student has unlocked. */
-export const EffectStylesResponseSchema = z.object({ unlocked: z.array(z.string()) });
+/**
+ * GET /v1/student/rewards/effect-styles (J10b): the effect styles this student has unlocked.
+ * `testerStyles` (J12c) is only sent on the dev environment: every style a tester may try there.
+ */
+export const EffectStylesResponseSchema = z.object({
+  unlocked: z.array(z.string()),
+  testerStyles: z.array(z.string()).optional(),
+});
 export type EffectStylesResponse = z.infer<typeof EffectStylesResponseSchema>;

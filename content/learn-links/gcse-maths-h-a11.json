@@ -1,0 +1,32 @@
+{
+  "topic": "gcse-maths-h-a11",
+  "links": [
+    {
+      "title": "Key features of a quadratic graph",
+      "url": "https://www.thenational.academy/pupils/lessons/key-features-of-a-quadratic-graph/overview",
+      "provider": "oak",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Key features of a quadratic graph | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 10, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can identify the key features of a quadratic graph.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Solving quadratic equations by completing the square",
+      "url": "https://www.thenational.academy/pupils/lessons/solving-quadratic-equations-by-completing-the-square/overview",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a11-lp-turning-points"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Solving quadratic equations by completing the square | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 10, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can solve quadratic equations algebraically by completing the square.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

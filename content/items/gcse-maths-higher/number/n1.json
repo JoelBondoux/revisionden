@@ -16,6 +16,7 @@
     "answer": { "option": 2 },
     "marks": 1,
     "explanation": "As decimals, 5/8 = 0.625 and 2/3 = 0.666..., so the order is 0.6, 0.625, 0.65, 0.666...",
+    "hint": "Change each fraction into a decimal first, then compare all four numbers as decimals.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
     "checked_by": ["author"],
     "citations": [
@@ -41,7 +42,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Correct option and explanation checked with exact fractions in Python: 0.6 < 5/8 = 0.625 < 0.65 < 2/3; each wrong option is out of order.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Correct option and explanation checked with exact fractions in Python: 0.6 < 5/8 = 0.625 < 0.65 < 2/3; each wrong option is out of order. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -71,9 +72,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:42:34Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:12:49Z",
           "notes": "no problems found"
         }
       ]
@@ -96,6 +97,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "-2/5 = -0.4. -0.5 is less than -0.4 (it is further below zero), so -0.5 comes before -2/5. The order is -3, -1.25, -0.5, -2/5, 0.2.",
+    "hint": "Write the fraction as a decimal. For negative numbers, the one furthest below zero is the smallest.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
     "checked_by": ["author"],
     "citations": [
@@ -121,7 +123,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Correct option and explanation checked with exact fractions in Python: -3 < -1.25 < -0.5 < -2/5 = -0.4 < 0.2; each wrong option is out of order. Explanation reworded to state the comparison directly, after the adversarial review twice misread it. Lead ruling: keep as is for the owner's hand review. The adversarial review failed it 3 times by contradicting itself (it called option 0 wrong, then gave option 0's list as the correct order); the order -3 < -1.25 < -0.5 < -2/5 < 0.2 was checked with exact fractions.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Correct option and explanation checked with exact fractions in Python: -3 < -1.25 < -0.5 < -2/5 = -0.4 < 0.2; each wrong option is out of order. Explanation reworded to state the comparison directly, after the adversarial review twice misread it. Lead ruling: keep as is for the owner's hand review. The adversarial review failed it 3 times by contradicting itself (it called option 0 wrong, then gave option 0's list as the correct order); the order -3 < -1.25 < -0.5 < -2/5 < 0.2 was checked with exact fractions. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -150,11 +152,11 @@
         },
         {
           "name": "adversarial-review",
-          "result": "fail",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:49:17Z",
-          "notes": "wrong_answer (answer): The selected answer is option 0, which gives the order as \"-3, -1.25, -0.5, -2/5, 0.2\". This is incorrect. -2/5 is equal to -0.4. Since -0.4 is greater (less negative) than -0.5, the correct order should be \"-3, -1.25, -0.5, -2/5, 0.2\". The question appears to have two identical correct options (the text for option 0 is correct) and has marked one as the answer, but the explanation implies a different order.; factual_error (explanation): The explanation correctly states that \"-0.5 is less than -0.4 ... so -0.5 comes before -2/5\". However, the final sentence states \"The order is -3, -1.25, -0.5, -2/5, 0.2\". This list places -2/5 after -0.5, which is mathematically correct, but this seems to be a mistake in the question design where the explanation and the options are misaligned. Based on common errors, it is likely that one of the options or the explanation contains a mistake about the order of -0.5 and -2/5.; ambiguity (question): The item is fundamentally flawed as presented. The mathematically correct answer is \"-3, -1.25, -0.5, -2/5, 0.2\". This exact text is provided for option 0, marked as the correct answer, and stated in the explanation. There appears to be no error in the item as written, which is highly unusual and suggests a transcription error in the item provided for review. Assuming a typo, either the answer key is wrong, or the explanation contradicts itself, or option 0 has the wrong text.; confidence low"
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:13Z",
+          "notes": "no problems found"
         }
       ]
     },
@@ -172,6 +174,7 @@
     "answer": { "option": 1 },
     "marks": 1,
     "explanation": "-7/10 = -0.7 and -2/3 = -0.666..., so -0.75 is the smallest (the furthest below zero).",
+    "hint": "Turn the fractions into decimals. With negative numbers, the smallest is the one furthest below zero.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
     "checked_by": ["author"],
     "citations": [
@@ -197,7 +200,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Correct option and explanation checked with exact fractions in Python: -0.75 < -0.71 < -7/10 < -2/3.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Correct option and explanation checked with exact fractions in Python: -0.75 < -0.71 < -7/10 < -2/3. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -227,9 +230,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:23:23Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:14Z",
           "notes": "no problems found"
         }
       ]
@@ -247,6 +250,7 @@
     "answer": { "option": 3 },
     "marks": 1,
     "explanation": "3/8 = 0.375 and 7/20 = 0.35, so 0.4 is the largest.",
+    "hint": "Write every number as a decimal, then compare them place by place.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
     "checked_by": ["author"],
     "citations": [
@@ -272,7 +276,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Correct option and explanation checked with exact fractions in Python: 7/20 = 0.35 < 3/8 = 0.375 < 0.38 < 0.4.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Correct option and explanation checked with exact fractions in Python: 7/20 = 0.35 < 3/8 = 0.375 < 0.38 < 0.4. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -302,9 +306,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:23:54Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:16Z",
           "notes": "no problems found"
         }
       ]
@@ -322,6 +326,7 @@
     "answer": { "option": 1 },
     "marks": 1,
     "explanation": "1/3 = 0.333..., which is greater than 0.3. The others are false: -4 is less than -2, 2/5 = 0.4 is less than 0.5, and -1.5 is greater than -2.",
+    "hint": "Write each fraction as a decimal, then check each statement in turn. Remember that -4 is further below zero than -2.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
     "checked_by": ["author"],
     "citations": [
@@ -347,7 +352,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Each statement evaluated with exact fractions in Python: only 0.3 < 1/3 is true. Meaning of the symbols is the standard one named in the cited spec point.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Each statement evaluated with exact fractions in Python: only 0.3 < 1/3 is true. Meaning of the symbols is the standard one named in the cited spec point. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -377,9 +382,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:24:09Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:17Z",
           "notes": "no problems found"
         }
       ]
@@ -397,6 +402,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "3/4 = 0.75, so the two numbers are equal.",
+    "hint": "Change the fraction into a decimal, then compare it with 0.75.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
     "checked_by": ["author"],
     "citations": [
@@ -422,7 +428,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Checked with exact fractions in Python: 3/4 = 0.75, so only = is true among the options (≤ and ≥ are deliberately not offered).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Checked with exact fractions in Python: 3/4 = 0.75, so only = is true among the options (≤ and ≥ are deliberately not offered). Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -452,9 +458,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:24:25Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:19Z",
           "notes": "no problems found"
         }
       ]
@@ -472,6 +478,7 @@
     "answer": { "option": 1 },
     "marks": 1,
     "explanation": "5/6 = 0.833..., which is greater than 0.8. The others are false: -2/3 = -0.666... is less than -0.6, 0.25 equals 1/4, and -3 is less than -1.",
+    "hint": "Turn the fractions into decimals and test each statement one at a time.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
     "checked_by": ["author"],
     "citations": [
@@ -497,7 +504,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Each statement evaluated with exact fractions in Python: only 5/6 > 0.8 is true.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Each statement evaluated with exact fractions in Python: only 5/6 > 0.8 is true. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -527,9 +534,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:24:42Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:21Z",
           "notes": "no problems found"
         }
       ]
@@ -547,6 +554,7 @@
     "answer": { "option": 1 },
     "marks": 1,
     "explanation": "-5/4 = -1.25, which is further below zero than -1.2, so -5/4 < -1.2.",
+    "hint": "Write -5/4 as a decimal. On a number line, the number further to the left is the smaller one.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
     "checked_by": ["author"],
     "citations": [
@@ -572,7 +580,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Checked with exact fractions in Python: -5/4 = -1.25 < -1.2, so only < is true among the options (≤ and ≠ are deliberately not offered).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Checked with exact fractions in Python: -5/4 = -1.25 < -1.2, so only < is true among the options (≤ and ≠ are deliberately not offered). Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -602,9 +610,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:25:04Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:22Z",
           "notes": "no problems found"
         }
       ]
@@ -620,6 +628,7 @@
     "front": "Which is larger: -3 or -7?",
     "back": "-3",
     "explanation": "On a number line, -3 is to the right of -7, so -3 is larger. A negative number closer to zero is the larger one.",
+    "hint": "Picture a number line. The number further to the right is the larger one.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
     "checked_by": ["author"],
     "citations": [
@@ -645,7 +654,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Front cited to spec N1. Back checked in Python: -3 > -7. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Front cited to spec N1. Back checked in Python: -3 > -7. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -675,9 +684,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:36:33Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:24Z",
           "notes": "no problems found"
         }
       ]
@@ -693,6 +702,7 @@
     "front": "Which is smaller: 0.45 or 0.405?",
     "back": "0.405",
     "explanation": "Line up the decimal places: 0.450 and 0.405. The tenths are both 4; in the hundredths, 0 is less than 5, so 0.405 is smaller.",
+    "hint": "Give both numbers the same number of decimal places, then compare digit by digit from the left.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
     "checked_by": ["author"],
     "citations": [
@@ -718,7 +728,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Front cited to spec N1. Back checked in Python: 0.405 < 0.45. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Front cited to spec N1. Back checked in Python: 0.405 < 0.45. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -748,9 +758,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:36:41Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:26Z",
           "notes": "no problems found"
         }
       ]
@@ -766,6 +776,7 @@
     "front": "Which is larger: 2/3 or 0.6?",
     "back": "2/3",
     "explanation": "As decimals, 2/3 = 0.666... and 0.6 = 0.600. 0.666... is bigger, so 2/3 is larger.",
+    "hint": "Write the fraction as a decimal, then compare it with 0.6.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N1",
     "checked_by": ["author"],
     "citations": [
@@ -791,7 +802,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Front cited to spec N1. Back checked with exact fractions in Python: 2/3 > 0.6. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N1). Front cited to spec N1. Back checked with exact fractions in Python: 2/3 > 0.6. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -821,9 +832,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:36:48Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:27Z",
           "notes": "no problems found"
         }
       ]

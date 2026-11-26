@@ -1,0 +1,18 @@
+{
+  "topic": "gcse-maths-h-a3",
+  "links": [
+    {
+      "title": "Further algebraic terminology",
+      "url": "https://www.thenational.academy/pupils/lessons/further-algebraic-terminology/overview",
+      "provider": "oak",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Further algebraic terminology | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 10, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can appreciate the difference between an equation, an identity, an expression, a term and a formula.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

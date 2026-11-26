@@ -13,6 +13,7 @@ Tags: #product #rules #limits #defaults
   the configured ones (`GET /v1/auth/providers`). The owner is starting with Google only.
 - Students have no outside account: nickname (2–16 letters, numbers, underscores and single spaces between words, trimmed at the ends), avatar code and
   year group only. Devices linked by a one-time QR token (10 minutes, single use: used up when the device finishes its passkey; reopening before then gets a fresh challenge, E8), then a passkey.
+- Passkey set-up (E8, E8b): a failure shows a plain reason (try again, set up a screen lock, unlock instead, open in Chrome, or ask a parent for a new link) and a "Details: <error name> (RD-…)" line; only the error name is reported, as client-error kind `passkey`. Browsers without WebAuthn and in-app browsers (Google app/Lens, webviews, Instagram and similar) get "Open this page in Chrome" with Copy link and an Android intent link before the tap. When the child typed a short code, that card also shows "In Chrome, enter your code again: <code>"; the code is never put in the handed-over URL.
 - Nicknames are unique within a family. A family is created the first time a parent signs in.
 - Two parents (B3): a family can have two parents with equal control (Parent 1, Parent 2).
   Invite code or link 7 days, single use, hashed, 5 a day; either parent removes the other (access
@@ -107,7 +108,7 @@ Tags: #product #rules #limits #defaults
   rows may be batch-sampled; board-neutral physics and chemistry calculations from DfE content
   may be built now; awrt rounding is settled; spreadsheet citations use "sheet, row, cell";
   readability (textstat) warns only, aiming at reading age 13 to 14 (GCSE), 15 to 16 (A-Level).
-  Pending owner sign-off: in-house notes review and use of Oak. Oak's licence was read directly on 2026-11-26: lessons published after 1 September 2022 are OGL v3.0 (commercial use and adapting allowed, with Oak's attribution statement, no endorsement claim, third-party content excluded); earlier lessons are non-commercial only. In-copyright quotes: with
+  Teaching notes (decided 2026-11-26): approved individually until 50 consecutive clean approvals, then batch-sampled (any correction resets the count); Oak lessons published after 1 September 2022 (OGL v3.0) may be adapted as a starting draft only, with Oak's attribution shown and no implied endorsement; earlier Oak lessons and third-party items never used; Oak is never a citation source. In-copyright quotes: with
   the owner's solicitor.
 - Question generation research (QG, 2026-11-26; owner decisions in decision 0010, above): four guarantee tiers
   (computed, source-quoted, fact, judgement). Computable or source-quotable share is highest for
@@ -152,6 +153,12 @@ Tags: #product #rules #limits #defaults
   F5-flagged points (one row per topic, a count, "Learn it first" where checked lessons exist),
   from `GET /v1/students/:id/worth-a-look`. Hidden when empty; never shown to the child. Learning
   point ids are internal, so parents see topic titles only.
+- Stats motion (K5, owner 2026-11-26): stat tiles count up and bar charts / progress bars grow
+  in once when first in view (700ms ease-out, stagger ≤60ms, all within 1s), and never again on
+  that page (a period switch shows values at once; `EnterOnceScope`); none with reduced motion;
+  print always shows final values; screen readers get final values only. Parent pages silent; My stats plays
+  one soft `ringFill` settle sound when the counts finish. Helpers: `packages/core/src/count-up.ts`,
+  `apps/web/src/features/stats/countUp.tsx`. Detail: `docs/PRODUCT_RULES.md`.
 - XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, working 20,
   long answer 30; part marks earn part.
 - The 14 original rewards keep their ids and avatar items (the 100-day streak unlocks two: crown
@@ -196,11 +203,19 @@ Tags: #product #rules #limits #defaults
   `explanation` as "Why: …"), hidden when there are none (`learning_point` is never used). On
   2026-11-26, 89 of 287 marked items had none of these: 75 of 78 flashcards, 13 short answers and
   1 numeric (`gcse-maths-h-n7-0001`).
+- Flashcard accessibility (F8b): the flip card has no aria-label; its accessible name is the visible face and the turn hint is in `aria-describedby`. Rating buttons are named by their visible text (for example "Good · 1 day"). `e2e/tests/cards.spec.ts` runs axe on both sides of a card at all three sizes (WCAG 2.5.3, Label in Name).
 - Installable PWA. Main nav: five items, Map, Cards, Plan, Papers, then **Me** last (bottom bar
   on phones, side rail from 768px wide). Me shows the student's own avatar (a neutral person icon
   until it loads) and opens `/settings`, "settings and personalisation"; Get help and My progress
   (`/progress`) live there, and Me is marked current on `/settings` and `/progress` (and anything
-  under them). Progress is no longer a nav tab (owner, 2026-11-26, W7). Items share the bar and
+  under them). Progress is no longer a nav tab (owner, 2026-11-26, W7). The Me page (W9) fits one
+  phone screen: avatar, nickname and **Edit my avatar** (E's builder in a sheet; Save, or Cancel
+  with a "Throw away your changes?" check; the nav avatar updates at once; the API only checks
+  items are unlocked, no parent approval or rate limit), then Get help, My progress, My rewards,
+  and two sub-pages: Look and sound (`/settings/look-and-sound`: reading comfort, appearance,
+  effect style, read aloud, sound) and More (`/settings/more`: subjects, reminders, device,
+  parents, feedback, policies, about, what your parent can see). A parent on `/settings` gets a
+  Parent home tile instead of the avatar header. Items share the bar and
   labels wrap, so they fit 320px with text at 200%. Welcome and lessons hide the nav to keep focus. Only a linked student
   device gets the student nav: elsewhere (signed out, or a parent) About, Policies, Feedback and
   the other app pages show a small header with the logo, Sign in, Policies and About.
@@ -214,8 +229,30 @@ Tags: #product #rules #limits #defaults
   origin and its API host. The deployed smoke test fails otherwise.
 - The learning path is a topic map: one hexagon per topic, grouped by unit. States: mastered
   (gold, tick), in progress (violet, fill level shows mastery %), weak spot (orange, pulsing
-  glow), locked (grey). Each unit ends in a challenge that unlocks at 80% unit mastery. A Next
-  mission card suggests what to do next. The Cards tab shows how many flashcards are due.
+  glow), locked (grey). Each unit ends in a challenge that unlocks at 80% unit mastery. The Cards
+  tab shows how many flashcards are due.
+- Map layout (J12b, design C "Your path", owner choice 2026-11-26): subject chips on one line that
+  scrolls sideways; one **Today** strip (daily goal, the Next mission row with its Go button, the
+  5-a-day row while there is one, and the install row while the device can install); then "Your
+  path": a row of unit badges that scrolls sideways, and the chosen unit's card with **all** its
+  topics down a path that scrolls inside the card. The page itself never scrolls sideways.
+  - The current unit is the one holding the next mission, else the first with an open topic. Its
+    path opens on the next mission's topic, else the weakest weak spot, else the first topic in
+    progress. Each unit keeps its scroll position while the map is open.
+  - The path scrolls inside its card when there are at least 11 rem below it (above the tab bar)
+    and the screen is at least 20 rem wide; otherwise (short or narrow screens, big text) the page
+    scrolls instead, so there is never a scroll inside a scroll. At 390 × 844 the whole map fits
+    above the tab bar (the version footer sits below).
+  - A locked unit (no questions yet) says "Questions for <unit> are on their way. It unlocks as
+    soon as they're ready." See all opens a sheet of every unit with its progress.
+  - Past the daily goal the Today strip says "Goal smashed! <XP> XP" with a star (the bar stays
+    full) instead of a fraction like "195 / 50" (J12d, owner, 2026-11-26).
+  - The sideways rows (subjects, units) open showing the chosen item whole, moving only as far as
+    they must and lining up on an item's edge, so the first item seen is never cut mid-word; near the
+    end a little space (at most 40% of the row) may be added after the last item to allow that
+    (J12d, `map/hscroll.ts`).
+  - Code: `apps/web/src/map/` (`path.ts` rules, `UnitPath.tsx`, `TodayStrip.tsx`, `HScroller.tsx`,
+    `InstallRow.tsx`), `apps/web/src/features/daily/DailyRow.tsx`; e2e `e2e/tests/map.spec.ts`.
 - Topic map data (F2, `GET /v1/student/map`): units are the top-level topics of the subject's tree,
   leaf topics in specification order. Locked = no item may be served yet; mastered at 80%; weak
   spot = tried and below 60%; otherwise in progress (including not tried). Unit mastery averages
@@ -230,15 +267,19 @@ Tags: #product #rules #limits #defaults
   no longer shown up front); then "Help me understand" steps through the verified worked
   solution. A right answer after help earns half XP (rounded down, owner), no combo, and is
   practised like a miss (mastery 0, review ladder, flashcard). Learn mode only.
-  `attempts.helped` (migration 0028).
+  `attempts.helped` (migration 0029).
+- Powers (F9, owner 2026-11-26): shown as superscripts everywhere students see maths
+  (`packages/core/src/powers.ts`, web `MathText`), with spoken words for screen readers; stored
+  content keeps ^. A lone ^ stays ("Use ^ for powers"). Answer boxes have a Power key and a
+  "Shows as:" preview. Computing subjects (id containing "comput") keep ^ as typed (owner).
 - Mascot: Pip, an angular geometric fox (orange `#FF7A2F`). Brand violet `#6C47F5`; font Nunito,
   self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
 - Works offline for the app shell; API calls are never cached. Pages always come fresh from the
   server when online. The app checks `/version.json` on start, on return to the foreground and
   every 15 minutes and shows "A new version of RevisionDen is ready." with Refresh; an API reply
   that suggests the app is out of date makes it reload by itself once per new build.
-- "Add RevisionDen to this device" (I6): a card with Pip on the topic map and the parent home, and
-  a button in Settings. Chrome, Edge and Android show the browser's own install prompt on tap;
+- "Add RevisionDen to this device" (I6): a row in the topic map's Today strip (J12b,
+  `apps/web/src/map/InstallRow.tsx`), a card with Pip on the parent home, and a button in Settings. Chrome, Edge and Android show the browser's own install prompt on tap;
   iPhone and iPad Safari open a sheet with Share → Add to Home Screen steps (`/install` shows the
   steps for the device in use); browsers that cannot install get no card. Hidden once installed
   and for 30 days after "Not now" (local storage `revisionden.installDismissed`). Implemented in
@@ -532,6 +573,11 @@ Tags: #product #rules #limits #defaults
   table: `body` is what the student sees (prompt, marks, options, unit, hint, front, back);
   `answer` is server-only (`key` = the content answer, `verify`, `explanation`, `steps`,
   `markScheme`). Defined in `apps/api/src/learning/content-sync.ts`.
+- Hints (`hint`, shown by the "Need a clue?" button) nudge toward the method and never contain the
+  item's final answer: `pnpm content:validate` refuses one that does (text, option or flashcard back,
+  or a number equal to a numeric answer within 0.5% that the question does not show, in any
+  written form, including standard form with `^` or superscript powers). Rule in
+  `scripts/content/hint-check.mjs`, described in `docs/VERIFICATION.md` ("Hints").
 - Extended answers: blind marking replaces the blind answer (three exemplars, top, middle and low,
   marked by a second provider without the intended levels; all three must match exactly), and
   every one needs individual human approval; review batches always include them.
@@ -688,7 +734,12 @@ Tags: #product #rules #limits #defaults
   unset; on About, the feedback form, the accessibility statement and community rules); privacy,
   data rights and security `privacy@revisionden.com` (`VITE_CONTACT_EMAIL`). Both forward to the
   product owner (Cloudflare Email Routing).
-- Feedback kinds: bug, idea, something confusing, other; text up to 500 characters with personal
+- Interactive lesson pilot (owner, 2026-11-26; built W8): area model for factorising x² + bx + c
+  (A4), b and c positive only; shown first in the A4 lesson when A4 mastery is below 60 (not at
+  60, not with no history, not in unit or subject lessons); explore, 2 guided, 1 typed, then the
+  normal A4 questions; item type `area_model`; draft until verified, so dev only for now.
+- Feedback kinds: bug, idea, something confusing, other (plus lesson_helped / lesson_not_helped,
+  the pilot's one-tap "Did this help?": item only, no text, outside the 5 a day); text up to 500 characters with personal
   details refused; device details optional; parents see their family's feedback; never sent to
   GitHub automatically; 5 in any 24 hours per sender; device details off by default for students, on for parents; deleted 12 months after closing (cron).
   The form also offers "Prefer email? help@revisionden.com" and asks for only the personal details
@@ -772,7 +823,7 @@ Tags: #product #rules #limits #defaults
   reason from the reward's one catalogue target ("For: 7-day streak"); epic and legendary add a
   particle burst, legendary a shine. No reason is shown for a reward missing from the catalogue.
 - Settled in J2/J3: lessons, the starting test and flashcard review use the arena. Set complete's
-  Next mission goes to the map (`/map`, next mission card). "Or take a break. Your streak is safe for
+  Next mission goes to the map (`/map`, the Today strip's Next mission row). "Or take a break. Your streak is safe for
   today." shows when today's daily goal is met (`progress.goalMet`). The "daily cap" for "See you
   tomorrow" is the daily reward XP cap (`DAILY_REWARD_XP_CAP`, 300 XP today), confirmed by the lead
   on 2026-11-25 for now: the lesson only knows XP, not study minutes.
@@ -786,6 +837,14 @@ Tags: #product #rules #limits #defaults
   320px screen with text at 200%. The e2e test "the policies list fits a 320px screen with text at
   200%" (`e2e/tests/pages.spec.ts`, /legal) checks there is no sideways scroll and no tile wider than
   320px. The version footer's reflow is G's (#224).
+- Button tiles and page transitions (J15a, owner request 2026-11-26): parent home and Policies
+  show their links as `ButtonTile`s in a grid (two to a row on phones): a big icon and a 2–3 word
+  label, no helper sentence (Policies add who each is for as a badge). Parent home labels: Stats
+  dashboard, Children, Family feedback, Complaints, Your data, App settings, Policies, Get help, and
+  per child Rewards you set, Reminder times, Subjects. Each effect style has its own tile look, and
+  opening a page from a tile plays the style's page transition (350ms at most, reversed on Back,
+  never blocking taps). None for Get help or with reduced motion. Me (`/settings`) adopts the tiles
+  with W9 (W owns the layout). See `docs/GAME_FEEL.md` (Links; Page transitions).
 - Single screen for doing things (owner design rule, 2026-11-26; lead ruling on scope): at 390 × 844
   with default text, interactive screens (lesson, flashcards and Explain, starting test, 5-a-day and
   recall, map, Plan, papers chooser, set complete and rewards moments, Me page) show the main task
@@ -798,6 +857,14 @@ Tags: #product #rules #limits #defaults
   the app's base skin for every shared component, body text stays Nunito (the hand font is for
   headings only), and the unlockable styles change effects, sounds and accents only. Mockups in
   `docs/design/j12/SKIN.md`.
+- Dev style tester (J12c, owner request 2026-11-26): on the dev environment only, Settings →
+  Effect style offers "Tester: try any style" (all seven styles, Light/Dark, Standard/Colour-blind)
+  marked "Dev only: doesn't unlock anything for real". Turned on by the API alone: `testerStyles`
+  in `GET /v1/student/rewards/effect-styles` only when `ENVIRONMENT=development` and
+  `STYLE_TESTER=true` (dev env in `apps/api/wrangler.toml`; never staging or production, config
+  tested). The tried style is saved on the device as `revisionden.effectStyleTester`, separate from
+  the real choice, ignored unless the server sends the list, and cleared by "Reset to my unlocked
+  style". It grants no reward and changes no unlock.
 
 ## Exam practice (planned)
 
@@ -857,6 +924,11 @@ Tags: #product #rules #limits #defaults
   each (or none) on the Rewards page; saved as `students.title_first` / `title_last` (migration
   0019); `GET`/`PUT /v1/student/rewards/title`; free to change any time; included in the family data export. Shown under the nickname
   on the Rewards page; the friends league is not built yet, so it shows there once it is.
+- Friends league (FL): owner decision 2026-11-26, friends may come from other families from day
+  one, not family only. Design approved 2026-11-26, not built yet: `docs/FRIENDS_LEAGUE.md`
+  (nickname, avatar, title and weekly learning XP only; one parent per family approves; no chat;
+  10-friend cap; siblings join automatically; reports seen by both families' parents and AppDeck;
+  rank chip on Map, League page under Me; head-to-head challenges later).
 - "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
   NSPCC adult helpline, parent-only). Students reach it only from Settings, where it is the
   first tile (via the Me nav item); there is no Get help link in the student header or footer
@@ -949,21 +1021,54 @@ Tags: #product #rules #limits #defaults
   (`@fontsource/patrick-hand`, OFL-1.1, self-hosted) and the provider passes the style to U's
   `useFeedbackStyle`. Lesson surround (J10a2): follows the style; the question and answers
   sit on `.lesson__stage`, kept plain (Doodle Diary and Sticker Book: paper, night paper in dark mode).
+- Learn link providers (owner decision, 2026-11-26): only Oak National Academy, BBC Bitesize and
+  Isaac Physics / Isaac Science (Cambridge). Criteria: free, made for UK secondary pupils, no ads,
+  no comments or social feeds, no sign-up needed to read; ad-supported sites and exam-board pages
+  not chosen. Provider enum `oak | bitesize | isaac` (plus `revisionden`, planned); hosts in
+  `PROVIDER_HOSTS` (`scripts/content/learn-links.mjs`): www.thenational.academy,
+  www.bbc.co.uk/bitesize/, isaacscience.org (isaacphysics.org redirects there, read 2026-11-26).
+- Learn more (Q6, owner request 2026-11-26): on the flashcard Explain panel and after a wrong
+  lesson answer, behind a "Learn more" tap; most specific links first (item, then learning point,
+  then whole topic; flashcards use the topic). A link may carry `learning_points` or `items`.
+  A link shows anywhere (Learn it first too) only when `checked_at` is set AND it has a `match`
+  record (`page_title` as fetched, `teaches`, `level`, `checked_at`), recorded only for a page
+  actually opened. The CI link check fails a match-checked page whose title changed; it also runs
+  `--probe-providers` (what each provider's home page answers from the runner) and `--coverage`.
+  Any reachable link without a match check fails validation (the Q5 legacy path was removed once
+  its 11 links were re-read). Lesson items (`LearnItem.contentId`, from
+  `items.content_id`) and flashcards (`Flashcard.contentId`, `Flashcard.learningPoint`, from the
+  card's item) carry their content id and learning point (Q6b), so Learn more matches item, then
+  point, then topic in lessons and on the flashcard Explain panel.
+  Coverage 2026-11-26: 139 links in 44 files; 44/44 topics and 133/133 learning points with items
+  have a shown link, 69 points with their own. Pages were opened in a browser and read; the
+  match `page_title` is the raw HTML title the CI check compares.
+- Oak links go to the pupil lesson page (owner decision 2026-11-26, Q6c): URL
+  `https://www.thenational.academy/pupils/lessons/<lesson>/overview` (the bare
+  `/pupils/lessons/<lesson>` answers 308 to it; the link check reads titles only on a 200). Pupil
+  pages have the lesson video and need no sign-in; titles read "<lesson> | Oak National Academy".
+  The teacher page shows the pupil link, so pupil URLs were taken from it, not guessed. The
+  validator (`OAK_PUPIL_PAGE` in `scripts/content/learn-links.mjs`) refuses any other Oak path
+  unless the link has `no_pupil_page: true`, which is allowed only on an Oak `/teachers/` page.
+  Switched 2026-11-26: all 90 Oak links (84 lessons), each re-read (200, lesson outcome, Year 10
+  or 11, video player, no sign-in); none kept as a teacher page.
+- In-house notes (planned; external links are interim): provider `revisionden` with `route` (an
+  app path, no URL), listed first, optional `hide_external`; refused by validation until the
+  notes exist (`IN_HOUSE_NOTES_BUILT` in `scripts/content/learn-links.mjs`).
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by
   `pnpm content:check-links` in `.github/workflows/learn-links.yml` (PRs that change links, pushes
   to dev, weekly Monday 06:17 UTC); 2xx and 3xx pass. Bundled into the web app at build time;
-  the button shows at the top of a topic lesson only for links with `checked_at` set; plain links
+  the button shows at the top of a topic lesson only for whole-topic links that are shown (above); plain links
   opening in a new tab (nothing loaded until tapped). Pilot: Oak KS4 Higher lessons for the 9 GCSE
   Maths topics with items (n4, n7, a4, a6, a17, a18, r9, g9, g17), URLs found by web search only.
-  All 11 returned 200 in the CI link check on 2026-11-25, so `checked_at` is set and the buttons
-  show. No Bitesize links yet: bbc.co.uk could not be reached from the build environment.
+  Superseded on 2026-11-26 by Q6 (above): every link re-read and match-checked, Bitesize added
+  once the provider hosts were allowed in the build environment.
 - Learn it first, in-house goal (owner direction 2026-11-26, not yet built): RevisionDen should
   eventually write its own verified teaching content (topic notes, explanations per learning
   point, worked examples, code-drawn diagrams) under `docs/VERIFICATION.md`, and retire each
-  external link once our notes cover the topic. Plan and open questions (Oak licence not yet
-  confirmed): `docs/research/question-generation-2026-11.md` section 11.
+  external link once our notes cover the topic. Plan: `docs/research/question-generation-2026-11.md`
+  section 11; review and Oak rules: decision 0010.
 
 ## Operator console (planned)
 

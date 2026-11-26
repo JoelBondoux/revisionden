@@ -22,16 +22,25 @@ describe('Parent home', () => {
       'href',
       '/feedback/family',
     );
-    expect(screen.getByRole('link', { name: 'Add or manage children' })).toHaveAttribute(
-      'href',
-      '/onboarding',
-    );
+    expect(screen.getByRole('link', { name: 'Children' })).toHaveAttribute('href', '/onboarding');
     expect(screen.getByRole('link', { name: 'App settings' })).toHaveAttribute('href', '/settings');
     expect(screen.getByRole('link', { name: 'Policies' })).toHaveAttribute('href', '/legal');
-    expect(screen.getByRole('link', { name: "Download your family's data" })).toHaveAttribute(
-      'href',
-      '/onboarding',
-    );
+    expect(screen.getByRole('link', { name: 'Your data' })).toHaveAttribute('href', '/onboarding');
+    expect(screen.getByRole('link', { name: 'Complaints' })).toHaveAttribute('href', '/complaints');
+  });
+
+  // J15a (owner, 2026-11-26): the full-width rows become themed buttons with short labels.
+  it('shows its links as button tiles with short labels, Get help kept calm', async () => {
+    await open();
+    const tiles = document.querySelectorAll('.button-tile');
+    expect(tiles.length).toBeGreaterThanOrEqual(10);
+    expect(document.querySelector('.link-tile')).toBeNull();
+    for (const tile of tiles) {
+      expect(tile.textContent!.trim().split(/\s+/).length, tile.textContent!).toBeLessThanOrEqual(
+        3,
+      );
+    }
+    expect(screen.getByRole('link', { name: 'Get help' })).toHaveClass('button-tile--help');
   });
 
   it("links to the chosen child's rewards and reminder times, with a student switcher", async () => {
@@ -78,7 +87,7 @@ describe('Parent home', () => {
 
 describe('Ways in to the parent home', () => {
   it('is linked from Settings', async () => {
-    renderRoute('/settings');
+    renderRoute('/settings/more');
     expect(await screen.findByRole('link', { name: 'Parent home' })).toHaveAttribute(
       'href',
       '/parent',

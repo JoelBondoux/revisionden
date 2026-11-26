@@ -101,6 +101,18 @@ describe('environment validation', () => {
     }
   });
 
+  it('turns on the style tester only when the development flag is on in development (J12c)', () => {
+    expect(parseEnv(complete).styleTester).toBe(false);
+    expect(parseEnv({ ...complete, STYLE_TESTER: 'false' }).styleTester).toBe(false);
+    expect(parseEnv({ ...complete, STYLE_TESTER: 'true' }).styleTester).toBe(true);
+  });
+
+  it('never turns on the style tester in staging or production, even with the flag on', () => {
+    for (const ENVIRONMENT of ['staging', 'production']) {
+      expect(parseEnv({ ...complete, ENVIRONMENT, STYLE_TESTER: 'true' }).styleTester).toBe(false);
+    }
+  });
+
   it('reads the optional maths engine address', () => {
     expect(parseEnv(complete).mathsEngineUrl).toBeUndefined();
     expect(

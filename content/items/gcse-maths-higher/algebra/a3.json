@@ -8,11 +8,10 @@
     "expected_seconds": 25,
     "prompt": "Which of these is an equation?",
     "options": ["5x - 2", "5x - 2 = 13", "5x - 2 > 13", "5x - 2x"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "An equation has an equals sign and is true only for particular values (here x = 3). The others are expressions or an inequality.",
+    "hint": "Look for the one with an equals sign that is only true for particular values of x.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -51,14 +50,6 @@
           "notes": "model answered \"1\"; expected \"1\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:24:29Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
@@ -73,6 +64,14 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:36Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -86,11 +85,10 @@
     "expected_seconds": 25,
     "prompt": "Which of these is an expression?",
     "options": ["4y + 3 = 11", "4y + 3", "4y + 3 < 11", "y = 4"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "An expression is a collection of terms with no equals or inequality sign.",
+    "hint": "Look for the one with no equals sign and no inequality sign.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -147,9 +145,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:31:05Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:38Z",
           "notes": "no problems found"
         }
       ]
@@ -164,11 +162,10 @@
     "expected_seconds": 25,
     "prompt": "Which of these is an inequality?",
     "options": ["2n + 1 = 9", "2n + 1", "2n + 1 ≥ 9", "2n ≡ n + n"],
-    "answer": {
-      "option": 2
-    },
+    "answer": { "option": 2 },
     "marks": 1,
     "explanation": "An inequality compares two sides with <, >, ≤ or ≥.",
+    "hint": "Look for a sign that compares the two sides, such as <, >, ≤ or ≥.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -225,9 +222,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:31:13Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:39Z",
           "notes": "no problems found"
         }
       ]
@@ -242,11 +239,10 @@
     "expected_seconds": 25,
     "prompt": "Which of these is an identity (true for every value of x)?",
     "options": ["3x = 12", "x + x + x = 3x", "x^2 = 9", "2x + 1 = 7"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "x + x + x is 3x for every value of x. The others are equations, true only for some values.",
+    "hint": "Try each one with two different values of x: which is always true?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -293,20 +289,20 @@
           "notes": "model answered \"1\"; expected \"1\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:44Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:41Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -319,17 +315,12 @@
     "learning_point": "gcse-maths-h-a3-lp-classify",
     "expected_seconds": 60,
     "prompt": "Expand and simplify 3(x + 2) - x",
-    "answer": {
-      "expression": "2x + 6"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "3(x + 2) - x",
-      "form": "expanded"
-    },
+    "answer": { "expression": "2x + 6" },
+    "verify": { "method": "expression", "expression": "3(x + 2) - x", "form": "expanded" },
     "steps": ["3(x + 2) - x", "3x + 6 - x", "2x + 6"],
     "marks": 2,
     "mark_scheme": ["M1 for 3x + 6 - x", "A1 for 2x + 6"],
+    "hint": "Multiply out the bracket first, then collect the x terms.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -399,14 +390,6 @@
           "notes": "model answered \"2x + 6\"; expected \"2x + 6\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:41:27Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -421,6 +404,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:43Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -433,11 +424,10 @@
     "learning_point": "gcse-maths-h-a3-lp-terms-factors",
     "expected_seconds": 30,
     "prompt": "How many terms are in the expression 4x^2 - 3x + 7?",
-    "answer": {
-      "accepted": ["3", "three", "3 terms", "3terms"]
-    },
+    "answer": { "accepted": ["3", "three", "3 terms", "3terms"] },
     "marks": 1,
     "explanation": "Terms are separated by + and - signs. 4x^2 - 3x + 7 has three terms: 4x^2, -3x and 7.",
+    "hint": "Terms are separated by + and - signs, so count the parts between them.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -494,9 +484,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:50:12Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:44Z",
           "notes": "no problems found"
         }
       ]
@@ -511,11 +501,10 @@
     "expected_seconds": 25,
     "prompt": "Which of these is a factor of 6xy?",
     "options": ["6x + y", "3y", "xy^2", "x^2"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "6xy = 3y × 2x, so 3y is a factor. The other options are not factors: 6xy ÷ xy^2 = 6/y and 6xy ÷ x^2 = 6y/x leave a letter in the denominator, and 6xy ÷ (6x + y) does not simplify to a single term.",
+    "hint": "A factor divides into 6xy exactly, leaving no letters on the bottom.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -562,20 +551,20 @@
           "notes": "model answered \"1\"; expected \"1\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:33:48Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:46Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -588,11 +577,10 @@
     "learning_point": "gcse-maths-h-a3-lp-terms-factors",
     "expected_seconds": 30,
     "prompt": "Write down the term in x in the expression 5x^2 - 8x + 2.",
-    "answer": {
-      "accepted": ["-8x", "−8x"]
-    },
+    "answer": { "accepted": ["-8x", "−8x"] },
     "marks": 1,
     "explanation": "The terms are 5x^2, -8x and 2. The term in x is the one with x on its own (not x^2), and it keeps its sign: -8x.",
+    "hint": "Find the term with x on its own (not x^2), and keep the sign in front of it.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -649,9 +637,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:50:21Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:47Z",
           "notes": "no problems found"
         }
       ]
@@ -667,6 +655,7 @@
     "front": "The name for a statement such as 2(x + 1) ≡ 2x + 2 that is true for every value of x",
     "back": "Identity",
     "explanation": "2(x + 1) ≡ 2x + 2 is true whatever number x is, because expanding the bracket gives the right-hand side. A statement like this is an identity, written with ≡.",
+    "hint": "It is the name for a statement that is true whatever value x takes, written with ≡.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -723,9 +712,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:56:21Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:49Z",
           "notes": "no problems found"
         }
       ]
@@ -741,6 +730,7 @@
     "front": "The name for a statement such as 3x - 1 > 8 that compares two sides using <, >, ≤ or ≥",
     "back": "Inequality",
     "explanation": "3x - 1 > 8 does not say the two sides are equal: it says the left side is greater. A statement that compares with <, >, ≤ or ≥ is an inequality.",
+    "hint": "It compares the two sides instead of saying they are equal.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -797,9 +787,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:50:39Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:51Z",
           "notes": "no problems found"
         }
       ]
@@ -815,6 +805,7 @@
     "front": "In the expression 3x + 5y - 2, what is each of 3x, 5y and -2 called? (one word, singular)",
     "back": "Term",
     "explanation": "An expression is made of parts added or subtracted. Each part, such as 3x, 5y or -2, is called a term.",
+    "hint": "These are the separate parts that are added or subtracted to make an expression.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A3",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -871,9 +862,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:50:46Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:52Z",
           "notes": "no problems found"
         }
       ]

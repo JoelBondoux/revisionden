@@ -18,9 +18,9 @@
   box-shadow: 3px 3px 0 #000;
 }
 
-:root[data-effect-style='pixel-arcade'] .map-summary,
-:root[data-effect-style='pixel-arcade'] .daily-card,
-:root[data-effect-style='pixel-arcade'] .mission {
+:root[data-effect-style='pixel-arcade'] .today-strip,
+:root[data-effect-style='pixel-arcade'] .today-strip__daily,
+:root[data-effect-style='pixel-arcade'] .today-strip__mission {
   border: 3px solid var(--px-text);
   border-radius: 0;
   background: var(--px-panel);
@@ -28,26 +28,26 @@
   box-shadow: 5px 5px 0 #000;
 }
 
-:root[data-effect-style='pixel-arcade'] .map-summary {
-  padding: var(--space-4);
+:root[data-effect-style='pixel-arcade'] .today-strip {
+  padding: var(--space-2) var(--space-3) var(--space-1);
 }
 
-:root[data-effect-style='pixel-arcade'] .map-summary__subject,
-:root[data-effect-style='pixel-arcade'] .mission__eyebrow {
+:root[data-effect-style='pixel-arcade'] .today-strip__heading,
+:root[data-effect-style='pixel-arcade'] .today-strip__mission .today-strip__eyebrow {
   color: var(--px-gold);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
-:root[data-effect-style='pixel-arcade'] .map-summary .secondary-text,
-:root[data-effect-style='pixel-arcade'] .daily-card .secondary-text,
-:root[data-effect-style='pixel-arcade'] .daily-card__count,
-:root[data-effect-style='pixel-arcade'] .mission__time {
+:root[data-effect-style='pixel-arcade'] .today-strip__xp,
+:root[data-effect-style='pixel-arcade'] .today-strip__daily .today-strip__eyebrow,
+:root[data-effect-style='pixel-arcade'] .today-strip__daily .today-strip__title,
+:root[data-effect-style='pixel-arcade'] .today-strip__mission .today-strip__meta {
   color: var(--px-text);
 }
 
 /* Today's mission is the level-select screen's next stage. */
-:root[data-effect-style='pixel-arcade'] .mission {
+:root[data-effect-style='pixel-arcade'] .today-strip__mission {
   border-color: var(--px-green);
 }
 
@@ -136,5 +136,60 @@
   :root[data-effect-style='pixel-arcade'] .star--earned {
     animation: none;
     opacity: 1;
+  }
+}
+
+/* ---------- J15a: button tiles and page transition (a stepped, 8-bit slide) ---------- */
+:root[data-effect-style='pixel-arcade'] .button-tile {
+  border: 0;
+  border-radius: 0;
+  background: var(--px-panel);
+  box-shadow:
+    0 0 0 3px var(--px-green),
+    6px 6px 0 3px #000;
+  color: var(--px-text);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+:root[data-effect-style='pixel-arcade'] .button-tile__icon {
+  border-radius: 0;
+  background: var(--px-gold);
+  color: #000;
+  box-shadow: 3px 3px 0 #000;
+}
+
+:root[data-effect-style='pixel-arcade'] .button-tile__badge {
+  border-radius: 0;
+  background: #000;
+  color: var(--px-green);
+}
+
+:root[data-effect-style='pixel-arcade'] .button-tile:active {
+  transform: translate(4px, 4px);
+  box-shadow:
+    0 0 0 3px var(--px-pink),
+    2px 2px 0 3px #000;
+}
+
+:root[data-effect-style='pixel-arcade'] .page-enter {
+  animation: px-slide-in 320ms steps(6, end);
+}
+
+:root[data-effect-style='pixel-arcade'] .page-enter.page-enter--back {
+  animation: px-slide-back 320ms steps(6, end);
+}
+
+@keyframes px-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-32px);
+  }
+}
+
+@keyframes px-slide-back {
+  from {
+    opacity: 0;
+    transform: translateX(32px);
   }
 }

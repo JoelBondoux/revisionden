@@ -1,0 +1,32 @@
+{
+  "topic": "gcse-maths-h-a5",
+  "links": [
+    {
+      "title": "Checking and securing understanding of changing the subject",
+      "url": "https://www.thenational.academy/pupils/lessons/checking-and-securing-understanding-of-changing-the-subject/overview",
+      "provider": "oak",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of changing the subject | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 10, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can apply an understanding of inverse operations to a formula in order to make a specific variable the subject.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Formulae",
+      "url": "https://www.bbc.co.uk/bitesize/topics/z3hv2p3/articles/zs4s9ty",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a5-lp-use-formulae", "gcse-maths-h-a5-lp-rearrange"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "How to use formulae - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Substituting values into formulae using BIDMAS and changing the subject of a formula.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

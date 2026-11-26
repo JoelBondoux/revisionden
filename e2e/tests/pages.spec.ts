@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 
@@ -194,7 +195,8 @@ test("the young people's notice shows cards, expands its parts and is accessible
 test('Settings offers "Add RevisionDen to this device" as a button, accessibly', async ({
   page,
 }) => {
-  await page.goto('/settings');
+  // The install button lives under Me > More (W9).
+  await page.goto('/settings/more');
   // Chrome only offers its install prompt to a real installable site; send the event ourselves.
   await page.evaluate(() => {
     const event = new Event('beforeinstallprompt');
@@ -521,8 +523,8 @@ test('a new parent sees the terms and privacy notice as cards before onboarding,
   await expect.poll(() => stored).toMatchObject({ acceptances: expect.any(Array) });
 });
 
-// J11 (WCAG 1.4.4 and 1.4.10): at 320px wide with text at 200%, the policy tiles wrap their text
-// and shrink, so the page never scrolls sideways.
+// J11 (WCAG 1.4.4 and 1.4.10): at 320px wide with text at 200%, the policy tiles (button tiles
+// since J15a) wrap their text and shrink, so the page never scrolls sideways.
 test('the policies list fits a 320px screen with text at 200%', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 640 });
   await page.goto('/legal');
@@ -531,7 +533,7 @@ test('the policies list fits a 320px screen with text at 200%', async ({ page })
   await expectNoSidewaysScroll(page);
   const widest = await page.evaluate(() =>
     Math.max(
-      ...Array.from(document.querySelectorAll('.link-tile')).map(
+      ...Array.from(document.querySelectorAll('.button-tile')).map(
         (t) => t.getBoundingClientRect().right,
       ),
     ),
@@ -565,3 +567,43 @@ test('the footer fits a 320px screen with large text, wrapping instead of overfl
     expect(box!.x + box!.width).toBeLessThanOrEqual(320);
   }
 });
+
+/**
+ * Made-up stats (copied from the app's own demo mocks, apps/web/src/features/stats/mocks.ts),
+ * served for every stats request, since the preview build has no mock server.
+ */
+async function routeDemoStats(page: Page) {
+  const demo = JSON.parse(
+    readFileSync(new URL('./fixtures/stats-demo.json', import.meta.url), 'utf8'),
+  ) as Record<string, unknown>;
+  await page.route(/\/v1\/students?(\/|\?|$)/, (route) => {
+    const path = new URL(route.request().url()).pathname
+      .replace(/^.*\/v1\//, '')
+      .replace(PARENT_CHILD_ID, ':child');
+    const json = demo[path];
+    return json === undefined ? route.fallback() : route.fulfill({ json });
+  });
+}
+
+for (const [who, path, heading, tile] of [
+  ['My stats (/progress)', '/progress', 'My stats', 'XP'],
+  [
+    'the parent stats',
+    `/parent/stats?student=${PARENT_CHILD_ID}`,
+    'Stats dashboard',
+    'Active study time',
+  ],
+] as const) {
+  test(`${who} fits a 320px screen with text at 200%, with no sideways scroll`, async ({
+    page,
+  }) => {
+    await page.addInitScript(() => localStorage.setItem('revisionden.studentId', 'student-e2e'));
+    await routeDemoStats(page);
+    await page.setViewportSize({ width: 320, height: 640 });
+    await page.goto(path);
+    await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+    await expect(page.getByRole('heading', { level: 1, name: heading })).toBeVisible();
+    await expect(page.getByRole('group', { name: tile })).toBeVisible();
+    await expectNoSidewaysScroll(page);
+  });
+}

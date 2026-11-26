@@ -1,0 +1,60 @@
+{
+  "topic": "gcse-maths-h-n12",
+  "links": [
+    {
+      "title": "Percentages of an amount",
+      "url": "https://www.bbc.co.uk/bitesize/topics/zyxsj6f/articles/zmbtg2p",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Percentages of an amount - BBC Bitesize",
+        "teaches": "Writing one number as a percentage of another and finding a percentage of an amount (build-up, unitary and multiplier methods).",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Checking and securing understanding of finding a percentage",
+      "url": "https://www.thenational.academy/pupils/lessons/checking-and-securing-understanding-of-finding-a-percentage/overview",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n12-lp-operator-recall"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of finding a percentage | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 10, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can describe one number as a percentage of another and calculate a given percentage of an amount efficiently.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Checking and securing understanding of percentage decrease",
+      "url": "https://www.thenational.academy/pupils/lessons/checking-and-securing-understanding-of-percentage-decrease/overview",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n12-lp-percentage-operator"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of percentage decrease | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 10, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can decrease an amount by a given percentage.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "How to add, subtract, multiply and divide fractions",
+      "url": "https://www.bbc.co.uk/bitesize/topics/zgnbxsg/articles/zt36b7h",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n12-lp-fraction-operator"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "How to add, subtract, multiply and divide fractions - GCSE Maths - BBC Bitesize",
+        "teaches": "Adding, subtracting, multiplying and dividing fractions and mixed numbers (dividing by multiplying by the reciprocal), and fractions of amounts.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

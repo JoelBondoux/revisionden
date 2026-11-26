@@ -271,7 +271,10 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [x] Q4 Recall checks: 2 questions at lesson start on previously practised topics, skippable, no penalty; wrong answers become flashcards.
 - [x] Q5 Learn it first: `content/learn-links/*.json` with schema and validator, button on topics with a checked link, CI link check. Pilot GCSE Maths Higher Oak links; Bitesize and other subjects later.
 - [x] Q6 Recall checks never reset the combo: a wrong "Remember this?" answer is passed over; a right one still adds to it (owner decision).
-- [ ] Q7 BBC Bitesize links for Learn it first: find and check pages on bbc.co.uk (not reachable from the build environment), board-specific where the page is, and add them to `content/learn-links/`.
+- [x] Q9 Learn more (lead task "Q6", branch `feature/Q6-learn-more`, owner request 2026-11-26): Learn more on Explain and after a wrong answer, links per learning point or item, a recorded match check per link, Isaac allowed. Built, with match-checked links for all 44 topics and 133 learning points with items (2026-11-26). Item- and point-level matching in lessons and on flashcards followed in Q6b (`contentId` on LearnItem and Flashcard, `learningPoint` on Flashcard).
+- [x] Q10 Remove the legacy Learn it first path once the 11 Q5 Oak links have each been re-read and match-checked (`LEGACY_UNMATCHED_URLS` in `scripts/content/learn-links.mjs` and the no-match case in the web `isShown`).
+- [x] Q11 Oak links go to pupil pages (lead task "Q6c", owner decision 2026-11-26): every Oak link switched to the pupil lesson page (lesson video, no sign-in), re-read and match-checked; the validator refuses Oak teacher pages unless marked `no_pupil_page`.
+- [x] Q7 BBC Bitesize links for Learn it first: find and check pages on bbc.co.uk (not reachable from the build environment), board-specific where the page is, and add them to `content/learn-links/`.
 - [ ] Q8 Learn it first beyond the 9 pilot GCSE Maths Higher topics: the rest of the 1MA1 tree, then other subjects and A-Level, each link with a title that clearly matches the topic and a passing CI link check.
 - Tests: settings saved and applied per device; voice choice and default; maths reading; selection with fixed clock and seeded randomness; no penalty for recall; links validated and checked.
 

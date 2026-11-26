@@ -2,11 +2,60 @@
   "topic": "gcse-maths-h-a18",
   "links": [
     {
-      "title": "Solving quadratic equations by factorising GCSE",
-      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/algebraic-manipulation/lessons/solving-quadratic-equations-by-factorising",
+      "title": "Solving quadratic equations - Edexcel",
+      "url": "https://www.bbc.co.uk/bitesize/guides/z3hb97h/revision/1",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "board": "edexcel",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Quadratic equations - Solving quadratic equations - Edexcel - GCSE Maths Revision - Edexcel - BBC Bitesize",
+        "teaches": "Solving quadratic equations by factorising, the quadratic formula and completing the square, and their graphs (Higher parts).",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Solving quadratic equations by factorising",
+      "url": "https://www.thenational.academy/pupils/lessons/solving-quadratic-equations-by-factorising/overview",
       "provider": "oak",
       "level": "GCSE",
-      "checked_at": "2026-11-25"
+      "learning_points": ["gcse-maths-h-a18-lp-factorising"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Solving quadratic equations by factorising | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 10, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can solve quadratic equations algebraically by factorising.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Solving quadratic equations by completing the square",
+      "url": "https://www.thenational.academy/pupils/lessons/solving-quadratic-equations-by-completing-the-square/overview",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a18-lp-completing-square"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Solving quadratic equations by completing the square | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 10, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can solve quadratic equations algebraically by completing the square.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Solving quadratic equations by using the formula",
+      "url": "https://www.thenational.academy/pupils/lessons/solving-quadratic-equations-by-using-the-formula/overview",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a18-lp-formula"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Solving quadratic equations by using the formula | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 10, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can solve quadratic equations algebraically by using the formula.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
     }
   ]
 }

@@ -72,6 +72,20 @@ describe('Need a clue? then Help me understand (F10)', () => {
     expect(bodies[0]!.helped).toBe(true);
   });
 
+  it('raises powers in the clue and the help steps, like the question (F9)', async () => {
+    lesson({ ...short, hint: 'Demo clue x^2', canHelp: true });
+    helpSteps(['Demo step 10^3', 'Answer: demo answer']);
+    renderRoute('/learn/topic/demo-topic-a');
+    await screen.findByLabelText('Your answer');
+    await click('Need a clue?');
+    const clue = screen.getByText(/Clue:/).closest('p')!;
+    expect(clue.querySelector('sup')).toHaveTextContent('2');
+    expect(clue).toHaveTextContent('x squared');
+    await click('Help me understand');
+    const panel = await screen.findByRole('region', { name: 'Help me understand' });
+    expect(panel.querySelector('sup')).toHaveTextContent('3');
+  });
+
   it('goes straight to Help me understand when there is no clue', async () => {
     lesson({ ...short, canHelp: true });
     renderRoute('/learn/topic/demo-topic-a');

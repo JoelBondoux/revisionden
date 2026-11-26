@@ -1,0 +1,18 @@
+{
+  "topic": "gcse-maths-h-n6",
+  "links": [
+    {
+      "title": "Checking and securing understanding of roots and integer indices",
+      "url": "https://www.thenational.academy/pupils/lessons/checking-and-securing-understanding-of-roots-and-integer-indices/overview",
+      "provider": "oak",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of roots and integer indices | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 10, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can calculate with roots and integer indices, including estimating the answer.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

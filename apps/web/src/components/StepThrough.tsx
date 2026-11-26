@@ -13,12 +13,15 @@ export function StepThrough({
   label,
   onClose,
   renderStep = (text) => text,
+  children,
 }: {
   steps: readonly string[];
   /** The panel's name, e.g. "Explain" or "Help me understand". */
   label: string;
   onClose: () => void;
   renderStep?: (text: string) => React.ReactNode;
+  /** Shown under the steps, e.g. Learn more links. */
+  children?: React.ReactNode;
 }) {
   const [step, setStep] = useState(0);
   const last = step === steps.length - 1;
@@ -47,6 +50,7 @@ export function StepThrough({
           <Button onClick={() => setStep(step + 1)}>Next step</Button>
         )}
       </div>
+      {children}
     </section>
   );
 }

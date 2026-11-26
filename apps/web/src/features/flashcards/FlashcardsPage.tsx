@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, type FormEvent } from 'react';
+import { useCallback, useEffect, useId, useState, type FormEvent } from 'react';
 import {
   FLASHCARD_SESSION_MAX_CARDS,
   formatReviewDelay,
@@ -11,6 +11,7 @@ import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
+import { MathText } from '../../components/MathText';
 import { StepThrough } from '../../components/StepThrough';
 import { ArenaProgress } from '../juice';
 import { subjectLabel, useLearnApi, type FlashcardRating } from '../learn/learnApi';
@@ -18,6 +19,7 @@ import { NewRewards } from '../learn/NewRewards';
 import { DraftBanner } from '../learn/parts';
 import { useSound } from '../sound';
 import { ReadAloudButton } from '../read-aloud';
+import { LearnMore, learnLinksByTopic, learnMoreLinks } from '../learn-links';
 import './flashcards.css';
 
 const RATINGS: {
@@ -48,38 +50,50 @@ function FlipCard({
   revealed: boolean;
   onTurn: () => void;
 }) {
+  const hintId = useId();
   return (
-    <div
-      className={`flip-card${flipped ? ' flip-card--flipped' : ''}`}
-      data-testid="flip-card"
-      role="button"
-      tabIndex={0}
-      aria-label={flipped ? 'Turn back to the question' : 'Turn over to see the answer'}
-      onClick={onTurn}
-      onKeyDown={(event) => {
-        if (event.key === ' ' || event.key === 'Enter') {
-          event.preventDefault();
-          onTurn();
-        }
-      }}
-    >
-      <div className="flip-card__inner">
-        <div className="flip-card__face flip-card__face--front" aria-hidden={flipped}>
-          <span className="flip-card__label">Question</span>
-          <span className="flip-card__topic">{card.topicTitle}</span>
-          <p className="flip-card__text">{card.front}</p>
-        </div>
-        <div className="flip-card__face flip-card__face--back" aria-hidden={!flipped}>
-          {revealed && (
-            <>
-              <span className="flip-card__label">Answer</span>
-              <p className="flip-card__text">{card.back}</p>
-              {card.sourceRef && <small className="flip-card__ref">{card.sourceRef}</small>}
-            </>
-          )}
+    <>
+      <span id={hintId} className="visually-hidden">
+        {flipped ? 'Turn back to the question' : 'Turn over to see the answer'}
+      </span>
+      <div
+        className={`flip-card${flipped ? ' flip-card--flipped' : ''}`}
+        data-testid="flip-card"
+        role="button"
+        tabIndex={0}
+        // The accessible name is the text on the card's showing face (the hidden face is
+        // aria-hidden), so it matches what is seen (WCAG 2.5.3); the turn hint is the description.
+        aria-describedby={hintId}
+        onClick={onTurn}
+        onKeyDown={(event) => {
+          if (event.key === ' ' || event.key === 'Enter') {
+            event.preventDefault();
+            onTurn();
+          }
+        }}
+      >
+        <div className="flip-card__inner">
+          <div className="flip-card__face flip-card__face--front" aria-hidden={flipped}>
+            <span className="flip-card__label">Question</span>
+            <span className="flip-card__topic">{card.topicTitle}</span>
+            <p className="flip-card__text">
+              <MathText text={card.front} subject={card.subjectId} />
+            </p>
+          </div>
+          <div className="flip-card__face flip-card__face--back" aria-hidden={!flipped}>
+            {revealed && (
+              <>
+                <span className="flip-card__label">Answer</span>
+                <p className="flip-card__text">
+                  <MathText text={card.back} subject={card.subjectId} />
+                </p>
+                {card.sourceRef && <small className="flip-card__ref">{card.sourceRef}</small>}
+              </>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -271,7 +285,20 @@ function ReviewSession({
         </Button>
       )}
       {explaining && card.explain && (
-        <StepThrough steps={card.explain} label="Explain" onClose={() => setExplaining(false)} />
+        <StepThrough
+          steps={card.explain}
+          label="Explain"
+          renderStep={(text) => <MathText text={text} subject={card.subjectId} />}
+          onClose={() => setExplaining(false)}
+        >
+          <LearnMore
+            links={learnMoreLinks(learnLinksByTopic, {
+              topicId: card.topicId,
+              learningPoint: card.learningPoint,
+              itemId: card.contentId,
+            })}
+          />
+        </StepThrough>
       )}
       {revealed ? (
         <div className="ratings">
@@ -282,7 +309,6 @@ function ReviewSession({
                 key={rating}
                 variant={variant}
                 disabled={busy}
-                aria-label={`${label}, back in ${when}`}
                 onClick={() => void rate(rating)}
               >
                 <span className="ratings__label">{label}</span>
@@ -388,8 +414,12 @@ function MyCardsPanel({ overview }: { overview: FlashcardsOverview }) {
           {mine.map((card) => (
             <li key={card.id} className="deck-list__item">
               <div>
-                <p className="deck-list__title">{card.front}</p>
-                <p className="secondary-text">{card.back}</p>
+                <p className="deck-list__title">
+                  <MathText text={card.front} subject={card.subjectId} />
+                </p>
+                <p className="secondary-text">
+                  <MathText text={card.back} subject={card.subjectId} />
+                </p>
               </div>
             </li>
           ))}

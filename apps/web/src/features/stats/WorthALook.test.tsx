@@ -1,14 +1,41 @@
 import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
+import { vi } from 'vitest';
 import { server } from '../../mocks/server';
 import { renderRoute } from '../../test/render';
 import { DEMO_CHILDREN } from './mocks';
 
 const CHILD = DEMO_CHILDREN[0]!.id;
 const LOAD = { timeout: 5000 };
-// A real topic id with a checked "Learn it first" link; the titles are made up.
-const WITH_LINKS = 'gcse-maths-h-a17';
+// A made-up topic with a reachable, match-checked "Learn it first" link (Q6: only those show).
+const WITH_LINKS = 'demo-topic-with-links';
+vi.mock('../learn-links/links', async (importOriginal) => {
+  const real = await importOriginal<typeof import('../learn-links/links')>();
+  return {
+    ...real,
+    learnLinksByTopic: new Map([
+      [
+        'demo-topic-with-links',
+        [
+          {
+            title: 'Demo lesson',
+            url: 'https://www.thenational.academy/teachers/demo',
+            provider: 'oak',
+            level: 'GCSE',
+            checked_at: '2026-11-25',
+            match: {
+              page_title: 'Demo lesson',
+              teaches: 'The demo topic, at GCSE.',
+              level: 'GCSE',
+              checked_at: '2026-11-26',
+            },
+          },
+        ],
+      ],
+    ]),
+  };
+});
 
 function tricky(topics: { topicId: string; title: string; points: number }[]) {
   server.use(http.get('*/v1/students/:id/worth-a-look', () => HttpResponse.json({ topics })));

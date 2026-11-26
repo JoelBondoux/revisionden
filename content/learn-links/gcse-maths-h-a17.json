@@ -2,11 +2,44 @@
   "topic": "gcse-maths-h-a17",
   "links": [
     {
-      "title": "Checking and securing understanding of solving and interpreting linear equations GCSE",
-      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/algebraic-manipulation/lessons/checking-and-securing-understanding-of-solving-and-interpreting-linear-equations",
+      "title": "Checking and securing understanding of solving and interpreting linear equations",
+      "url": "https://www.thenational.academy/pupils/lessons/checking-and-securing-understanding-of-solving-and-interpreting-linear-equations/overview",
       "provider": "oak",
       "level": "GCSE",
-      "checked_at": "2026-11-25"
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of solving and interpreting linear equations | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 10, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can solve complex linear equations involving brackets.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Solving more complex linear equations",
+      "url": "https://www.bbc.co.uk/bitesize/topics/z3hv2p3/articles/zbjgqyc",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "How to solve equations with unknowns on both sides - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Solving linear equations with brackets, with unknowns on both sides and with fractions.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Checking and securing understanding of solving with simple algebraic fractions",
+      "url": "https://www.thenational.academy/pupils/lessons/checking-and-securing-understanding-of-solving-with-simple-algebraic-fractions/overview",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a17-lp-fractions-negatives"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of solving with simple algebraic fractions | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 11, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can solve equations involving simple algebraic fractions.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
     }
   ]
 }

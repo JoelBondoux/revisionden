@@ -273,7 +273,7 @@ def test_generate_skips_questions_already_in_the_bank():
 
 def test_template_questions_never_repeat_a_hand_written_one():
     written = build.existing_prompts(REPO / "content/items")
-    assert "Expand and simplify (x + 5)(x - 3). Use ^ for powers." in written
+    assert "Expand and simplify (x + 5)(x - 3). Use the Power key (^) for powers." in written
     for path in (REPO / build.OUT_DIR).glob("*.json"):
         assert not {i["prompt"] for i in json.loads(path.read_text())} & written
 
@@ -459,3 +459,9 @@ def test_standard_form_answers_and_steps_use_the_times_sign_like_the_question():
     assert item["steps"] == ["(9 × 10^9) × (7.8 × 10^6)", "(9 × 7.8) × 10^(9+6)", "70.2 × 10^15",
                              "7.02 × 10^16"]
     assert "*" not in item["verify"]["expression"]
+
+
+def test_the_brackets_question_points_to_the_power_key():
+    # F9 (#254) shows powers as superscripts with a "Power" key in answer boxes.
+    item = make_item(_template("double-brackets"), 1, NOW)
+    assert item["prompt"].endswith(". Use the Power key (^) for powers.")

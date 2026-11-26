@@ -1,5 +1,6 @@
 import { Card } from '../components/Card';
 import {
+  BackIcon,
   ChatIcon,
   CrownIcon,
   DocumentIcon,
@@ -7,14 +8,17 @@ import {
   HomeIcon,
   InfoIcon,
   ProgressIcon,
+  SettingsIcon,
   ShieldIcon,
+  StarIcon,
   UsersIcon,
 } from '../components/icons';
-import { LinkTile } from '../components/links';
+import { LinkButton, LinkTile } from '../components/links';
 import { useBugButton } from '../features/feedback/bugButtonContext';
 import { DeviceReminders } from '../features/notifications';
 import { AppearanceSettingsCard } from '../features/appearance';
 import { EffectStyleCard } from '../features/juice/styles';
+import { MeHeader, useMyAvatar } from '../features/me';
 import { ReadingSettingsCard } from '../features/reading';
 import { ReadAloudSettingsCard } from '../features/read-aloud';
 import { SoundSettingsCard } from '../features/sound';
@@ -22,27 +26,27 @@ import { ParentCanSee } from '../features/stats/ParentCanSee';
 import { MySubjectsCard } from '../features/onboarding/checksUi';
 import { InstallButton } from '../pwa/InstallCard';
 
+/**
+ * Me (/settings, W9): short enough for one phone screen. The avatar and nickname come first,
+ * then Get help (owner, 2026-11-26: always the first link), My progress and My rewards, then two
+ * sub-pages: Look and sound, and More for everything else.
+ */
 export function SettingsPage() {
-  const bugButton = useBugButton();
+  const student = useMyAvatar();
   return (
     <div className="stack">
-      <h1>Settings</h1>
-      {/* Get help comes first on Settings, the one place students find it (owner, 2026-11-26).
-          Tapping it only opens the private Get help page; nothing is recorded. */}
-      <section className="settings-get-help" aria-label="Get help">
-        <ul className="link-tiles">
-          <li>
-            <LinkTile
-              to="/help"
-              icon={<HeartIcon />}
-              title="Get help"
-              description="Private support if something is worrying you. Nobody is told you looked."
-            />
-          </li>
-        </ul>
-      </section>
-      {/* Progress moved here from the main nav (owner, 2026-11-26); /progress is unchanged. */}
+      <h1>Me</h1>
+      <MeHeader />
+      {/* Tapping Get help only opens the private Get help page; nothing is recorded. */}
       <ul className="link-tiles">
+        <li>
+          <LinkTile
+            to="/help"
+            icon={<HeartIcon />}
+            title="Get help"
+            description="Private support if something is worrying you. Nobody is told you looked."
+          />
+        </li>
         <li>
           <LinkTile
             to="/progress"
@@ -51,7 +55,83 @@ export function SettingsPage() {
             description="Your stats, mastery and personal bests"
           />
         </li>
+        <li>
+          <LinkTile
+            to="/rewards"
+            icon={<CrownIcon />}
+            title="My rewards"
+            description="Your level, chapter and collections"
+          />
+        </li>
+        {/* A parent on this page (no student on the device) gets their way home straight away. */}
+        {!student && (
+          <li>
+            <ParentHomeTile />
+          </li>
+        )}
+        <li>
+          <LinkTile
+            to="/settings/look-and-sound"
+            icon={<StarIcon />}
+            title="Look and sound"
+            description="Effect style, theme, sound, reading comfort and read aloud"
+          />
+        </li>
+        <li>
+          <LinkTile
+            to="/settings/more"
+            icon={<SettingsIcon />}
+            title="More"
+            description="Subjects, reminders, profiles, parents, feedback, policies and about"
+          />
+        </li>
       </ul>
+    </div>
+  );
+}
+
+function ParentHomeTile() {
+  return (
+    <LinkTile
+      to="/parent"
+      icon={<HomeIcon />}
+      title="Parent home"
+      description="Stats, rewards you set and reminders"
+    />
+  );
+}
+
+function BackToMe() {
+  return (
+    <LinkButton to="/settings" variant="quiet" icon={<BackIcon />}>
+      Back to Me
+    </LinkButton>
+  );
+}
+
+/** Look and sound (/settings/look-and-sound, W9): every setting for how the app looks and sounds. */
+export function LookAndSoundPage() {
+  return (
+    <div className="stack">
+      <h1>Look and sound</h1>
+      <ReadingSettingsCard />
+      <AppearanceSettingsCard />
+      <EffectStyleCard />
+      <ReadAloudSettingsCard />
+      <SoundSettingsCard />
+      <BackToMe />
+    </div>
+  );
+}
+
+/** More (/settings/more, W9): everything else that used to be on Settings. */
+export function MoreSettingsPage() {
+  const bugButton = useBugButton();
+  return (
+    <div className="stack">
+      <h1>More</h1>
+      <MySubjectsCard />
+      <DeviceReminders />
       <Card title="This device">
         <ul className="link-tiles">
           <li>
@@ -65,36 +145,7 @@ export function SettingsPage() {
               description="Choose who is revising"
             />
           </li>
-          <li>
-            <LinkTile
-              to="/rewards"
-              icon={<CrownIcon />}
-              title="My rewards"
-              description="Your level, chapter and collections"
-            />
-          </li>
         </ul>
-      </Card>
-      <MySubjectsCard />
-      <Card title="Parents">
-        <ul className="link-tiles">
-          <li>
-            <LinkTile
-              to="/parent"
-              icon={<HomeIcon />}
-              title="Parent home"
-              description="Stats, rewards you set and reminders"
-            />
-          </li>
-        </ul>
-      </Card>
-      <ReadingSettingsCard />
-      <AppearanceSettingsCard />
-      <EffectStyleCard />
-      <ReadAloudSettingsCard />
-      <SoundSettingsCard />
-      <DeviceReminders />
-      <Card title="Help and information">
         <label className="feedback__toggle">
           <input
             type="checkbox"
@@ -106,7 +157,12 @@ export function SettingsPage() {
         <p className="secondary-text">
           The small bug in the corner opens a bug report. Saved on this device.
         </p>
+      </Card>
+      <Card title="Parents">
         <ul className="link-tiles">
+          <li>
+            <ParentHomeTile />
+          </li>
           <li>
             <LinkTile
               to="/ask-a-parent"
@@ -115,10 +171,14 @@ export function SettingsPage() {
               description="If something feels wrong or unfair"
             />
           </li>
+        </ul>
+      </Card>
+      <Card title="Feedback">
+        <ul className="link-tiles">
           <li>
             <LinkTile
               to="/feedback"
-              state={{ from: '/settings' }}
+              state={{ from: '/settings/more' }}
               icon={<ChatIcon />}
               title="Send feedback or report a bug"
               description="Tell us what to fix or add"
@@ -140,6 +200,10 @@ export function SettingsPage() {
               description="Everything your family sent"
             />
           </li>
+        </ul>
+      </Card>
+      <Card title="Policies and about">
+        <ul className="link-tiles">
           <li>
             <LinkTile
               to="/legal"
@@ -159,6 +223,7 @@ export function SettingsPage() {
         </ul>
       </Card>
       <ParentCanSee />
+      <BackToMe />
     </div>
   );
 }

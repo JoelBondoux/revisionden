@@ -176,3 +176,15 @@
 .help-panel__clue {
   margin: 0;
 }
+
+/* F9: the Power key and the preview of a typed answer with its powers raised. */
+.power-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.answer-preview {
+  margin: 0;
+}

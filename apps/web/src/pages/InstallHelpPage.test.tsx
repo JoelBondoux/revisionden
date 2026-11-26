@@ -18,7 +18,7 @@ describe('Add to Home Screen help', () => {
   });
 
   it('is linked from Settings', async () => {
-    renderRoute('/settings');
+    renderRoute('/settings/more');
     expect(
       await screen.findByRole('link', { name: 'Add RevisionDen to this device' }),
     ).toHaveAttribute('href', '/install');
