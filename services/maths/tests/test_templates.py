@@ -417,3 +417,14 @@ def test_the_recurring_decimal_explanation_shows_the_subtraction_in_full():
 def test_a_quadratic_question_names_the_method_its_mark_scheme_rewards():
     item = make_item(_template("quadratic-factorising"), 1, NOW)
     assert item["prompt"] == "Solve x^2 + 11x + 24 = 0 by factorising."
+
+
+def test_a_question_that_only_adds_words_to_a_hand_written_one_is_a_repeat():
+    from app.templates.core import repeats
+    assert repeats("Solve x^2 + x - 12 = 0 by factorising.", {"Solve x^2 + x - 12 = 0"})
+    assert repeats("Solve 4x + 7 = 31", {"Solve 4x + 7 = 31."})
+    assert not repeats("Solve x^2 + x - 20 = 0 by factorising.", {"Solve x^2 + x - 2 = 0"})
+    written = build.existing_prompts(REPO / "content/items")
+    for path in (REPO / build.OUT_DIR).glob("*.json"):
+        for item in json.loads(path.read_text()):
+            assert not repeats(item["prompt"], written), item["id"]
