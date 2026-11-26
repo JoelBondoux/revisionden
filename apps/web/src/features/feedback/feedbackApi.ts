@@ -8,7 +8,11 @@ import type { DeviceDetails } from './details';
 /** The kinds a person chooses in the feedback form. */
 export const FEEDBACK_KINDS = ['bug', 'idea', 'confusing', 'other'] as const;
 /** Every kind a list can show: also the one-tap "Did this help?" after an interactive lesson (W8). */
-export const ALL_FEEDBACK_KINDS = [...FEEDBACK_KINDS, 'lesson_helped', 'lesson_not_helped'] as const;
+export const ALL_FEEDBACK_KINDS = [
+  ...FEEDBACK_KINDS,
+  'lesson_helped',
+  'lesson_not_helped',
+] as const;
 export const FEEDBACK_STATUSES = ['new', 'looking_into_it', 'fixed', 'will_not_fix'] as const;
 export const FEEDBACK_OUTCOMES = ['confirmed', 'duplicate'] as const;
 export type FeedbackKind = (typeof FEEDBACK_KINDS)[number];
