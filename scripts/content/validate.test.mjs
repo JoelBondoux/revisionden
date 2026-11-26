@@ -803,3 +803,40 @@ test('a fact proof must name a maths engine check kind the engine knows', async 
   );
   assert.notDeepEqual(typo, []);
 });
+
+test('control characters anywhere in content are refused, with where they are (Postgres 22P05)', async () => {
+  const withNul = {
+    ...numericItem,
+    verification: {
+      ...numericItem.verification,
+      checks: [
+        {
+          name: 'schema',
+          result: 'pass',
+          tool: 't',
+          tool_version: '1',
+          at: '2026-11-25T00:00:00Z',
+          notes: 'bad\u0000note',
+        },
+      ],
+    },
+  };
+  const tab = { ...solveItem, prompt: 'Line one\nline two\twith a tab.' };
+  const errors = await validateContent(
+    content({ items: [at('items/a.json', withNul), at('items/a.json', tab)] }),
+    { checkMaths: fakeEngine() },
+  );
+  assert.deepEqual(
+    errors.map((e) => [e.id, e.message]),
+    [[numericItem.id, 'control character U+0000 in verification.checks[0].notes']],
+  );
+});
+
+test('a vertical tab or carriage return is refused too; only tab and newline are allowed', async () => {
+  const vt = { ...numericItem, prompt: 'Work out\u000b 3/4 of 120.\r' };
+  const errors = await validateContent(content({ items: [at('items/a.json', vt)] }), {
+    checkMaths: fakeEngine(),
+  });
+  assert.match(messages(errors), /control character U\+000B in prompt/);
+  assert.match(messages(errors), /control character U\+000D in prompt/);
+});

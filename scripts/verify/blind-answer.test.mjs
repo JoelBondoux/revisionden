@@ -183,6 +183,24 @@ test('short answers match any accepted answer, ignoring case, spacing and end pu
   assert.equal(wrong.result, 'fail');
 });
 
+test('short answers use the answer normaliser: maths notation, any_order and units (#133)', async () => {
+  const circle = draftItem('fixture-circle', undefined, {
+    answer: { accepted: ['x^2 + y^2 = 36'] },
+  });
+  assert.equal((await blind(circle, 'x² + y² = 36')).result, 'pass');
+  assert.equal((await blind(circle, 'y² + x² = 36')).result, 'fail'); // order matters by default
+  const anyOrder = draftItem('fixture-any-order', undefined, {
+    answer: { accepted: ['x^2 + y^2 = 36'], any_order: true },
+  });
+  assert.equal((await blind(anyOrder, 'y² + x² = 36')).result, 'pass');
+  assert.equal((await blind(anyOrder, 'x² + y² = 6')).result, 'fail');
+  const withUnit = draftItem('fixture-unit', undefined, {
+    answer: { accepted: ['12'], units: ['cm'] },
+  });
+  assert.equal((await blind(withUnit, '12 cm')).result, 'pass');
+  assert.equal((await blind(withUnit, '12 m')).result, 'fail');
+});
+
 test('flashcards compare the model answer to the back of the card', async () => {
   const item = draftItem('fixture-card', undefined, {
     type: 'flashcard',

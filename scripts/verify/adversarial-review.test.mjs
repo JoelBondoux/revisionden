@@ -96,3 +96,19 @@ test('an unsure reviewer fails the item even with no problems listed', async () 
   assert.equal(r.result, 'fail');
   assert.equal(r.check.notes, 'no problems found; confidence low');
 });
+
+test('the reviewer is told when order does not matter, and what that covers', () => {
+  const short = {
+    ...item,
+    type: 'short_answer',
+    options: undefined,
+    answer: { accepted: ['x^2 + y^2 = 36'], any_order: true },
+  };
+  const { prompt } = reviewPrompt(short);
+  assert.match(prompt, /any_order/);
+  assert.match(prompt, /in any order/);
+  assert.match(prompt, /do not report missing reordered/i);
+  assert.match(prompt, /coordinates and inequalities are never reordered/i);
+  const ordered = { ...short, answer: { accepted: ['x^2 + y^2 = 36'] } };
+  assert.doesNotMatch(reviewPrompt(ordered).prompt, /any_order/);
+});
