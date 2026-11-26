@@ -129,6 +129,14 @@
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-26T05:05:35Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:06:56Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
     }
