@@ -1,18 +1,21 @@
-# Morning walkthrough (I11), 26 November 2026
+# Morning walkthrough, 26 November 2026
 
 Screens that changed overnight, captured at phone width (390 × 844) in light and dark mode. Each
 pair is `<screen>-light.png` and `<screen>-dark.png`; `-end` files show the bottom of a long page.
 
+These are the final shots of the night (I14), retaken after the fixes from the first walkthrough
+(I11) landed.
+
 ## How they were made
 
-- The app on `dev` (df74ca1), run with `vite` and its built-in mock API (MSW), so every screen
+- The app on `dev` (869cc6c), run with `vite` and its built-in mock API (MSW), so every screen
   shows made-up demo data. No real people or accounts.
 - The browser was a Playwright phone (touch, 390 px wide), with the device's colour scheme set to
   light or dark. The app's theme was left on System, and the effect style was the default, Doodle
   Diary.
 - The child screens use the first mock child (NovaFox). The images were shrunk to 1× and reduced
   to 128 colours to keep the repository small.
-- The full end-to-end suite passed on the same commit (102 of 102).
+- The full end-to-end suite passed on the same commit (108 of 108).
 
 | File                         | Screen                                                        |
 | ---------------------------- | ------------------------------------------------------------- |
@@ -26,33 +29,41 @@ pair is `<screen>-light.png` and `<screen>-dark.png`; `-end` files show the bott
 | `06-get-help`                | Get help, top and bottom                                      |
 | `07-parent-subjects`         | Parent Subjects page for one child, top and bottom            |
 
-## Looks broken or off
+## The first walkthrough's list
 
-None of these stops a screen from working. Most need a design decision.
+- [x] **1. A right answer had a red ring (Doodle Diary).** It is now green: a green fill and a
+      double green border (`03b`, `03c`).
+- [x] **2. Locked Challenge hexagons nearly vanished in dark mode.** They now have a light outline
+      (`01-child-home-end-dark`).
+- [x] **3. The Explain steps opened below the fold.** The page now scrolls to them, with Back and
+      Next step in view (`04c`).
+- [x] **4. The bug-report button covered content.** In the student app it now sits in the top row
+      beside Get help and the sound button (`01`, `02`, `04`). Lessons and parent pages keep the
+      corner button, with room left below the page.
+- [x] **5. The Subjects page's two rows of choices had no labels.** They now have "Exam board" and
+      "Tier" headings (`07-parent-subjects`).
+- [x] **6. Get help appeared three times on the topic map.** It is now twice: the top row and the
+      footer (`01-child-home`).
+- [ ] **7. A stray "·" in the footer.** It has moved rather than gone: when the version line wraps,
+      the "·" now starts the second line, on its own before Get help (all `-end` shots).
+- [x] **8. Faint progress tracks.** The empty part of each bar is now a solid grey-purple in both
+      modes (`01`, `02`, `03a`, `04`).
 
-1. **A right answer has a red ring (Doodle Diary).** In a lesson, the right answer gets a thin
-   green border inside a red ring, and no green fill. The red-pen ring is deliberate (see
-   `features/juice/styles/doodle-diary.css`), but red usually means wrong, and the green fill other
-   styles use is gone. At a glance it can read as a wrong answer (`03b`, `03c`).
-2. **Locked Challenge hexagons nearly vanish in dark mode.** They are near-black on the dark navy
-   background (`01-child-home-dark`).
-3. **The Explain steps open below the fold.** On a phone, tapping Explain opens the steps under the
-   rating buttons, mostly hidden behind the bottom bar. Nothing on screen moves, so it can look as
-   if nothing happened (`04c`).
-4. **The bug-report button covers content.** The floating button sits over the end of the Show
-   answer button (`04a`) and over the level circles on Rewards (`02-rewards`).
-5. **Subjects page: the two rows of choices have no labels.** The exam board row (AQA, Pearson
-   Edexcel …) and the tier row (Foundation, Higher) both end in "Not sure", with no heading to say
-   which is which (`07-parent-subjects`).
-6. **Get help appears three times on the topic map**: the header pill, a card, and the footer
-   (`01-child-home`). That may be intended, but it is a lot on one screen.
-7. **The footer has a stray "·" at the end of the version line**, left over when the line wraps
-   (all `-end` shots).
-8. **Faint progress tracks.** In light mode the empty part of the flashcard session bar is cream
-   on cream (`04a`), and so is the lesson's top progress bar (`03a`).
+The two mock-data mismatches are fixed too: the Cards badge and the Cards page both say 2, and
+parent home's Subjects link opens the child.
 
-Mock data only (not product bugs):
+## New things that look off
 
-- The Cards tab badge says 12 due, but the Cards page says "Due today (2)": two mocks disagree.
-- Parent home's Subjects link uses a child id the family mock doesn't have, so it opens "We could
-  not find that child". These shots use the family mock's child.
+None of these stops a screen from working.
+
+1. **Empty progress tracks may now be too heavy.** At 0% the flashcard session bar is a solid grey
+   bar the full width of the card (`04a`), and the empty part of the daily-goal and level bars is
+   darker than before. A child could read an empty bar as full or switched off.
+2. **The corner bug button still sits beside content on parent pages.** On parent Subjects it
+   rests next to the subject chips as you scroll (the "French" chip in `07-parent-subjects`). It
+   doesn't cover a chip in these shots, but the parent pages have no top row to move it into.
+3. **Unlocked level circles are muddy in dark mode.** On Rewards the first three circles (unlocked)
+   have dark hatching over yellow, which makes their numbers hard to read (`02-rewards-dark`).
+   This was there in the first walkthrough too, but wasn't listed.
+4. **The "+10 XP" floater crosses the question title** for a moment after a right answer (`03b`).
+   It fades within a second, so this is minor.
