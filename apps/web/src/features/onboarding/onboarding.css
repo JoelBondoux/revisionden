@@ -156,3 +156,19 @@
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
 }
+
+/* E5c: the Subjects page's exam board and tier rows, each with a visible heading. */
+.choice-fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.choice-fieldset__legend {
+  padding: 0;
+  margin-bottom: var(--space-2);
+  font-weight: var(--font-weight-black);
+}

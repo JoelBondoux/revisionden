@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- On the parent Subjects page, each subject's choices now have clear "Exam board" and "Tier" headings, so it's easy to tell the two rows apart.
 - Lessons now match your look: in Sticker Book, practice happens on a warm paper page (or night paper in dark mode), with each question on a plain, easy-to-read card.
 - A new look for rewards and celebrations, Sticker Book: your daily goal and next mission are cards taped into a sticker book, mastered topics are gold stickers, and combos, stars and confetti slap onto the page like stickers.
 - Fixed: with sound switched off, earning a reward now still gives a little buzz on phones that can vibrate (Vibration is its own setting).
@@ -141,6 +142,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- E5c: the parent Subjects page groups the exam board and tier rows in fieldsets with visible legends ("Exam board", "Tier"), on each subject and in the add picker (screenshot review #185).
 - Effect styles J10d (J): Doodle Diary (`doodle-diary.css`, scoped, AA surround in light and dark) is the free default (`DEFAULT_EFFECT_STYLE`, `index.html`); Sticker Book now says "Reach level 3" in the picker. Headings use Patrick Hand, self-hosted from `@fontsource/patrick-hand` (OFL-1.1, listed under open-source licences). `EffectStyleProvider` calls U's `useFeedbackStyle` so sounds and vibration follow the style. The game-feel CSS rule test allows the approved pen-line exception (`stroke-dashoffset` in `pen-*` keyframes only). Tests: registry, provider, picker, every stylesheet, the font licence.
 - Effect styles J10c (J): `garden-grow.css`, `comic-pop.css` and `pixel-arcade.css` (scoped, AA colours, app fonts only); the registry lists all six in ladder order and nothing is coming soon. No style puts a shadow filter on a topic hex (it doubled the topic name); removed from Sticker Book, Pop Burst and Starlight too. Tests: registry, picker, every stylesheet, the game-feel CSS rules.
 - Effect styles J10b (J; R's catalogue and rewards route cleared for J10): `effectStyle` reward item kind (types, `RewardItemSchema`, Rewards page wording); `withEffectStyles` adds the owner's ladder to existing rewards (Sticker Book `level-3`, Pop Burst `level-5`, Garden Grow `subject-topics-5`, Starlight `topics-mastered-10`, Comic Pop `level-20`, Pixel Arcade `level-40`); Garden Grow, Comic Pop and Pixel Arcade listed as coming soon in the picker; `GET /v1/student/rewards/effect-styles`; `pop-burst.css` and `starlight.css` (scoped, AA colours); the provider loads the signed-in student's unlocked styles; Settings → Effect style picker (students only). Tests: catalogue, route, registry, provider, picker and every stylesheet.

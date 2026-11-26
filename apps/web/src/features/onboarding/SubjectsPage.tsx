@@ -49,29 +49,36 @@ function BoardAndTier({
   onChange: (change: UpdateSubjectChoiceRequest) => void;
 }) {
   const subject = findSubject(subjectId);
+  // Both rows end in "Not sure", so each has a visible heading and its own fieldset.
   return (
     <>
-      <ChoiceGroup<BoardChoice>
-        label={`${name} exam board`}
-        showLabel={false}
-        options={[...(subject?.boards ?? []), 'not_sure' as const].map((b) => ({
-          value: b,
-          label: BOARD_LABELS[b],
-        }))}
-        value={board as BoardChoice}
-        onChange={(value) => onChange({ board: value })}
-      />
-      {subject?.tiered && (
-        <ChoiceGroup<PickedTier>
-          label={`${name} tier`}
+      <fieldset className="choice-fieldset">
+        <legend className="choice-fieldset__legend">Exam board</legend>
+        <ChoiceGroup<BoardChoice>
+          label={`${name} exam board`}
           showLabel={false}
-          options={(['foundation', 'higher', 'not_sure'] as const).map((t) => ({
-            value: t,
-            label: TIER_LABELS[t],
+          options={[...(subject?.boards ?? []), 'not_sure' as const].map((b) => ({
+            value: b,
+            label: BOARD_LABELS[b],
           }))}
-          value={tier as PickedTier}
-          onChange={(value) => onChange({ tier: value })}
+          value={board as BoardChoice}
+          onChange={(value) => onChange({ board: value })}
         />
+      </fieldset>
+      {subject?.tiered && (
+        <fieldset className="choice-fieldset">
+          <legend className="choice-fieldset__legend">Tier</legend>
+          <ChoiceGroup<PickedTier>
+            label={`${name} tier`}
+            showLabel={false}
+            options={(['foundation', 'higher', 'not_sure'] as const).map((t) => ({
+              value: t,
+              label: TIER_LABELS[t],
+            }))}
+            value={tier as PickedTier}
+            onChange={(value) => onChange({ tier: value })}
+          />
+        </fieldset>
       )}
     </>
   );
