@@ -174,16 +174,8 @@
     "expected_seconds": 30,
     "prompt": "Write down the equation of the circle with centre (0, 0) and radius 6.",
     "answer": {
-      "accepted": [
-        "x^2 + y^2 = 36",
-        "x^2+y^2=36",
-        "x² + y² = 36",
-        "x^2 + y^2 = 6^2",
-        "y^2 + x^2 = 36",
-        "x²+y²=36",
-        "x^2+y^2=6^2",
-        "y^2+x^2=36"
-      ]
+      "accepted": ["x^2 + y^2 = 36", "x^2 + y^2 = 6^2", "x^2 + y^2 - 36 = 0"],
+      "any_order": true
     },
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
@@ -223,28 +215,28 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:01:27Z",
-          "notes": "model answered \"x² + y² = 36\"; expected \"x^2 + y^2 = 36 | x^2+y^2=36 | x² + y² = 36 | x^2 + y^2 = 6^2 | y^2 + x^2 = 36 | x²+y²=36 | x^2+y^2=6^2 | y^2+x^2=36\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:01:47Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T01:17:38Z",
+          "notes": "model answered \"x² + y² = 36\"; expected \"x^2 + y^2 = 36 | x^2 + y^2 = 6^2 | x^2 + y^2 - 36 = 0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T01:17:44Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -623,7 +615,7 @@
     "learning_point": "gcse-maths-h-a16-lp-tangents",
     "expected_seconds": 150,
     "prompt": "Find the equation of the tangent to the circle x^2 + y^2 = 25 at the point (3, 4). Give your answer in the form ax + by = c, where a, b and c are integers with no common factor and a > 0.",
-    "answer": { "accepted": ["3x + 4y = 25", "3x+4y=25", "4y + 3x = 25", "4y+3x=25"] },
+    "answer": { "accepted": ["3x + 4y = 25"], "any_order": true },
     "marks": 3,
     "explanation": "Radius gradient 4/3, so tangent gradient -3/4: y - 4 = -(3/4)(x - 3), which gives 4y - 16 = -3x + 9, so 3x + 4y = 25.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A16",
@@ -673,22 +665,6 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:01:58Z",
-          "notes": "model answered \"3x + 4y = 25\"; expected \"3x + 4y = 25 | 3x+4y=25 | 4y + 3x = 25 | 4y+3x=25\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:02:14Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "fact-check",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
@@ -703,6 +679,22 @@
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T00:46:58Z",
+          "notes": "model answered \"3x + 4y = 25\"; expected \"3x + 4y = 25\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T00:47:18Z",
+          "notes": "no problems found"
         }
       ]
     }
