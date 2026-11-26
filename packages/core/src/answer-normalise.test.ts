@@ -28,6 +28,12 @@ describe('normalising a typed maths answer', () => {
     expect(sameAnswer('3*4', '34')).toBe(false);
   });
 
+  it('keeps a multiply sign before a signed number, so 3n × -2 is not 3n - 2', () => {
+    expect(sameAnswer('3n-2', '3n*-2')).toBe(false);
+    expect(sameAnswer('3n-2', '3n × −2')).toBe(false);
+    expect(sameAnswer('3n*-2', '3n × −2')).toBe(true);
+  });
+
   it('treats ÷ and / the same', () => {
     expect(sameAnswer('3/4', '3 ÷ 4')).toBe(true);
   });
@@ -66,6 +72,13 @@ describe('answers whose order does not matter', () => {
     expect(sameAnswer('24 - 4n', '−4n + 24', any)).toBe(true);
     expect(sameAnswer('3x + 4y = 25', '4y + 3x = 25', any)).toBe(true);
     expect(sameAnswer('3n + 2', '2 + 3n')).toBe(false);
+  });
+
+  it('reorders a product of letters only, but never the letters of a word', () => {
+    expect(sameAnswer('pq', 'qp', any)).toBe(true);
+    expect(sameAnswer('abc', 'cab', any)).toBe(true);
+    expect(sameAnswer('tangent', 'gnattne', any)).toBe(false);
+    expect(sameAnswer('pq', 'qp')).toBe(false);
   });
 
   it('keeps signs with their terms', () => {
