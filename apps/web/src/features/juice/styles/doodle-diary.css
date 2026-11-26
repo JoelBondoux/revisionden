@@ -293,3 +293,50 @@
     opacity: 1;
   }
 }
+
+/* ---------- J15a: button tiles and page transition (a page turn) ---------- */
+:root[data-effect-style='doodle-diary'] .button-tile {
+  border: 2px solid var(--color-text);
+  border-radius: var(--dd-sketch);
+  box-shadow: 3px 4px 0 var(--color-text);
+  font-family: var(--dd-hand);
+  font-size: 1.2em;
+  font-weight: 400;
+}
+
+:root[data-effect-style='doodle-diary'] .button-tile__icon {
+  border: 2px solid var(--color-text);
+  border-radius: var(--dd-blob);
+  background: var(--dd-hi);
+  color: var(--dd-ink);
+  rotate: -4deg;
+}
+
+:root[data-effect-style='doodle-diary'] .button-tile:active {
+  transform: translate(2px, 3px) rotate(-1deg);
+  box-shadow: 1px 1px 0 var(--color-text);
+}
+
+:root[data-effect-style='doodle-diary'] .page-enter {
+  transform-origin: left center;
+  animation: dd-page-turn 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+:root[data-effect-style='doodle-diary'] .page-enter.page-enter--back {
+  transform-origin: right center;
+  animation: dd-page-turn-back 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes dd-page-turn {
+  from {
+    opacity: 0.3;
+    transform: perspective(1400px) rotateY(28deg);
+  }
+}
+
+@keyframes dd-page-turn-back {
+  from {
+    opacity: 0.3;
+    transform: perspective(1400px) rotateY(-28deg);
+  }
+}

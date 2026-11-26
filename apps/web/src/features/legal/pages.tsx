@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { BackIcon, DocumentIcon } from '../../components/icons';
-import { LinkButton, LinkTile } from '../../components/links';
+import { ButtonTile, ButtonTiles, LinkButton } from '../../components/links';
 import { NotFoundPage } from '../../pages/NotFoundPage';
 import { FriendlyNotice } from './FriendlyNotice';
 import { parseFriendlyNotice } from './friendlyNotice';
@@ -90,19 +90,17 @@ export function LegalIndexPage() {
     <div className="stack">
       <h1>Policies</h1>
       <p>How RevisionDen looks after your data, and the rules for using it.</p>
-      <ul className="policy-list">
+      <ButtonTiles>
         {policies.map((p) => (
-          <li key={p.name}>
-            <LinkTile
-              to={`/legal/${p.name}`}
-              icon={<DocumentIcon />}
-              title={p.title}
-              description={p.summary}
-            />
-            <span className="policy-list__audience">{p.audience}</span>
-          </li>
+          <ButtonTile
+            key={p.name}
+            to={`/legal/${p.name}`}
+            icon={<DocumentIcon />}
+            label={p.title}
+            badge={p.audience}
+          />
         ))}
-      </ul>
+      </ButtonTiles>
     </div>
   );
 }

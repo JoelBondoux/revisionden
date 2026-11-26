@@ -1,0 +1,9 @@
+/* J15a: the page transitions are drawn by each effect style's stylesheet (`.page-enter`). With
+   reduced motion the page just swaps: the component adds no class then, and this is a backstop.
+   Only the page moves (transform and opacity), so taps are never blocked. */
+@media (prefers-reduced-motion: reduce) {
+  .page-enter,
+  .page-enter.page-enter--back {
+    animation: none !important;
+  }
+}
