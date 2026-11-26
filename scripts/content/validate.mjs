@@ -178,20 +178,28 @@ function linkErrors(content) {
   return errors;
 }
 
+// Words for an accuracy ("2 decimal places", "3 s.f.", "the nearest whole number").
+const ACCURACY = /decimal place|significant figure|nearest whole number|\bd\.p\.|\bs\.f\./i;
+// The question asks for the answer itself to be rounded: "give / write your answer (correct) to",
+// "give the positive solution correct to", "round 7.8463 to", "your answer to 1 d.p.". Accuracy
+// words about the working or a given measurement ("by rounding each number to 1 significant
+// figure", "a mass is 4.6 kg, correct to 1 decimal place") do not count.
 const ASKS_FOR_ROUNDING =
-  /decimal place|significant figure|nearest whole number|\bd\.p\.|\bs\.f\./i;
+  /\b(?:give|write|leave|round|answers?)\b[^.?!]*?\bto\b[^.?!]*?(?:decimal place|significant figure|nearest whole number|\bd\.p\.|\bs\.f\.)/i;
 
 /** A rounded numeric answer: the question says so, the answer says how, and its value is written so. */
 function roundingErrors(item) {
   const rounding = roundingOf(item.answer);
-  const asks = ASKS_FOR_ROUNDING.test(item.prompt);
   if (!rounding) {
-    return asks
+    // A decimal point (7.8463) is not the end of a sentence.
+    return ASKS_FOR_ROUNDING.test(item.prompt.replace(/(\d)\.(?=\d)/g, '$1'))
       ? ['the question asks for rounding: set answer.decimal_places or answer.significant_figures']
       : [];
   }
   const errors = [];
-  if (!asks) errors.push('answer asks for rounding but the question does not say what to round to');
+  if (!ACCURACY.test(item.prompt)) {
+    errors.push('answer asks for rounding but the question does not say what to round to');
+  }
   if (!showsRounding(item.answer.value, rounding)) {
     const how =
       rounding.decimal_places !== undefined

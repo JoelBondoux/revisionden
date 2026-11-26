@@ -333,7 +333,9 @@ Tags: #product #rules #limits #defaults
   blind check. Rounded numeric answers set `decimal_places` or `significant_figures` (not
   `tolerance`): only the value rounded half up and written to that accuracy is right (28.274 and
   28.270 are wrong for 2 dp). Validation requires the field whenever the question asks for
-  rounding.
+  the answer itself to be rounded ("give your answer correct to…", "round … to…"), not for
+  accuracy words about the working or a given measurement ("by rounding each number to 1
+  significant figure, estimate…").
 - Numeric answers accept a UK thousands separator: a space (also thin or non-breaking) or a comma
   between groups of exactly three digits (`38 700`, `38,700`); `3 87` is wrong, not 387 (S2, rule
   in PRODUCT_RULES "Learning loop").
