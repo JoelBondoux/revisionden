@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Moving to another screen now starts it at the top, instead of halfway down where the last screen was. The back button still takes you back to where you were.
 - Our privacy notices now mention that a device can be linked with a link you send, as well as a QR code. Parents will be asked to confirm the updated notice.
 - Linking your child's phone is easier: as well as the QR code, you can send them a link (it works for 24 hours) or read out a short code they can type in. You'll see when their device is set up, and you can remove a device from Parent home.
 - Adding a child is easier: Continue always works and tells you what's missing, and boards or tiers you're not sure about can be set later in Parent home, or by your child in Settings > My subjects.
@@ -80,6 +81,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Scroll and focus on a screen change (I7): `RouteChange` (`apps/web/src/layout/RouteChange.tsx`) wraps every route. A new screen scrolls to the top and focuses its `h1` (or `#main`) without a focus ring; back and forward restore the position the reader last scrolled to (kept up to date as they scroll), waiting up to 5 seconds for a loading screen's content to make it reachable; `#id` links scroll to that part; a query-only change on the same screen keeps the position; the first screen is left alone.
 - Complaints (O): starting a complaint from a child's "ask a parent" request no longer pre-fills the child's nickname, which the API refused as personal details; the summary is "Raised for my child: <topic>." from `complaintSummaryFromRequest` (Codex review on #86).
 - Links (J7 follow-up): the no-plain-links guard test now also checks stats, the policy acceptance screen and the welcome page, now that K, L and I have converted their links; the per-workstream exclusion list is gone.
 - Fact-check stage (S2, S3-A run): the judge compares meaning, not wording, so a blind statement that only adds an implied condition ("non-vertical"), an explanation or a further related fact now matches; one that contradicts, leaves out part of the fact or a condition, or covers a narrower case is still refused. New `pnpm evals fact-judge` checks this on 20 pairs (gemini-2.5-pro: same facts 3/8 before, 8/8 after; different facts 12/12 refused).

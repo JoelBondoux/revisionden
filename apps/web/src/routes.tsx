@@ -1,5 +1,6 @@
 import { Navigate, useParams, type RouteObject } from 'react-router-dom';
 import { AppLayout, FocusLayout } from './layout/AppLayout';
+import { RouteChange } from './layout/RouteChange';
 import { LinkPage } from './features/onboarding/LinkPage';
 import { UnlockPage } from './features/onboarding/UnlockPage';
 import { OnboardingPage } from './features/onboarding/OnboardingPage';
@@ -41,7 +42,8 @@ function LessonRedirect() {
   return <Navigate to={`/learn/topic/${encodeURIComponent(lessonId)}`} replace />;
 }
 
-export const routes: RouteObject[] = [
+/** Every screen, inside `RouteChange` (scroll to top and focus on a new screen, I7). */
+const screens: RouteObject[] = [
   {
     // Get help (workstream W): a calm page with no navigation and no API calls, signed in or out.
     element: <HelpLayout />,
@@ -128,3 +130,5 @@ export const routes: RouteObject[] = [
     ],
   },
 ];
+
+export const routes: RouteObject[] = [{ element: <RouteChange />, children: screens }];
