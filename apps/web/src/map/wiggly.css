@@ -247,6 +247,15 @@
   --node-bg: #fff;
 }
 
+/* The You are here tag's white text needs a deeper coral and a deeper night soil (4.5:1). */
+:root[data-effect-style='sticker-book'] .wiggly-map.wiggly-map {
+  --tag-bg: #c43b2d;
+}
+
+:root[data-effect-style='garden-grow'][data-theme='dark'] .wiggly-map.wiggly-map {
+  --tag-bg: #8f5f40;
+}
+
 .path-node__pct {
   font-size: 0.75rem;
   font-weight: 900;

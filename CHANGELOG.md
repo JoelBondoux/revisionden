@@ -160,7 +160,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
-- J15c (Codex review of #307): node text (the % and the Higher H) now reads 4.5:1 in every style, light and dark (set on the text, with Sticker Book's dark ink and Pop Burst's solid dark-mode fill); every unit opens at its next topic and keeps its place; a Higher branch at the start or end of a unit no longer breaks the route.
+- J15c (Codex review of #307): node text (the % and the Higher H) now reads 4.5:1 in every style, light and dark (set on the text, with Sticker Book's dark ink and Pop Burst's solid dark-mode fill), and the You are here tag reads 4.5:1 in Sticker Book and Garden Grow dark; every unit opens at its next topic and keeps its place; a Higher branch at the start or end of a unit no longer breaks the route.
 - J15b-3 (Codex review of train #335): Pip's shoulder breathing was keyed on the `rest` pose, so he breathed forever in lessons and after a minute idle. It now needs `PipFigure alive`, which `PipHomeButton` sets only while the idle loop runs.
 - W8c: the interactive area model fits one phone screen again now that Pip has his own row in lessons (no gap under the question, and the hint and pair question in the small text size), so the `area-model` e2e "Check fits without scrolling" passes on dev.
 - Docs: content plan tasks D7 ("either order" topic groups) and D8 (cross-subject "bridge" topics, discovered on the map) added to `docs/BACKLOG.md`, from the owner's map review.
