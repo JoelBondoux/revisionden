@@ -124,7 +124,10 @@
 .lesson__xp {
   min-width: 7ch;
   text-align: right;
-  color: var(--arena-gold);
+  /* J16c: the lesson sits on the look's own page, so its words use the look's edge colour (a
+     deeper main colour in light mode, the light accent in dark), never the arena gold. It reads
+     on the page wash and texture in every look (GAME_FEEL.md, e2e lesson.spec.ts). */
+  color: var(--color-primary-edge);
   white-space: nowrap;
 }
 
@@ -201,12 +204,12 @@
 /* Learning from mistakes (F5): why a question is showing again, or a warm-up. */
 .lesson__comeback {
   margin: 0;
-  color: var(--arena-gold);
+  color: var(--color-primary-edge);
   font-weight: var(--font-weight-extrabold);
 }
 
 .feedback__comeback {
-  color: var(--arena-gold);
+  color: var(--color-primary-edge);
   font-weight: var(--font-weight-extrabold);
 }
 

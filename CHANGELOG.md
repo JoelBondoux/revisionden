@@ -8,6 +8,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 ### What's new
 
 - On small phones, the map now opens with "You are here" clear of the bottom bar, so tapping it starts your topic. The RevisionDen title on the welcome page also fits small screens with large text.
+- Fixed: in lessons, your XP count, "Comeback!" and the warm-up notes are now easy to read in every style, in light and dark.
 - Fixed: the "+XP" that pops up after a right answer is now easy to read in every style, in light and dark.
 - Lessons have a tidier top: one Pip next to the progress bar, his tip in a speech bubble, and your own avatar beside it, nodding, hopping or going "hmm" with your answers. The question now starts higher up the screen.
 - Three new looks: Petal Glow, Turbo Drive and Rainbow Parade. Finish your starting test to unlock all three, each with its own colours, map, sounds and sparkles.
@@ -166,6 +167,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- J16c (W18 follow-up): the lesson header's XP count, the warm-up and come-back note and "Comeback!" in the feedback were still arena gold on the look's light page (1.0 to 1.5:1 in every look). They, and the lesson's "+XP", now use `--color-primary-edge` (a deeper main colour in light mode, the light accent in dark), AA in all 10 looks, light and dark, measured by a new painted-page check in `e2e/tests/lesson.spec.ts`. `GAME_FEEL.md` records the rule: page text uses the edge colour, arena-surface text `--arena-glow`. Touches `features/learn/learn.css` (F's lane, as for J14).
 - Docs: `docs/GAME_FEEL.md` brought up to date with dev (ten styles in the checks and the dev tester; Doodle Diary and Sticker Book's Home notes no longer describe the old Today strip; Doodle Diary has its own sound pack; lesson "+XP" colour since J16b).
 - W16b (Codex review of train #368): the parent-session e2e's outside-request guard now also allows a deployed site's own API host (found with the deployed smoke test's `apiUrlFor`, `E2E_API_URL` wins), so the walk can run with `E2E_BASE_URL`. Third parties are still caught. New `e2e/tests/support/origins.ts` with pure checks in `e2e/tests/origins.spec.ts`.
 - J14c (Codex review of train #355): the empty-lesson and finished screens keep Pip's Home button (only the lesson header's `LessonPip` hides the layout's Pip row), and command words shows the avatar beside Pip's line. The lesson routes are one list, `LESSON_PATHS` (`layout/lessonRoutes.ts`), used by `routes.tsx` and the layout, with a test that they stay in step.
