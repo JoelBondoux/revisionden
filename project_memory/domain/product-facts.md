@@ -334,7 +334,7 @@ Tags: #product #rules #limits #defaults
   hand; pytest checks they match a fresh generation). A rebuild keeps unchanged items' review
   records. They are ordinary `draft` items in the same pipeline and review queue. Template
   citations reuse quotes already used in the same topic. Pilot (2026-11-26): 5 templates (A4,
-  A17, A19, N12, N9), 5 items each. Fresh numbers per student at run time is not built yet.
+  A17, A19, N12, N9), 5 items each; T1c added A18, A25, N10, N5 and A7 (50 items in all). Fresh numbers per student at run time is not built yet.
 
 ## Maths engine
 

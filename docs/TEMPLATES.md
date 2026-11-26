@@ -99,6 +99,20 @@ bank already has a multiplier item, because R9 has no items or citation yet. `nu
 `short_answer` items have no `steps` field, so their worked steps are written out in the
 explanation.
 
+## Thin topics (T1c, 2026-11-26)
+
+5 more templates, 5 items each, for topics with few items:
+
+| Template                                 | Topic | Type           | Notes                                                       |
+| ---------------------------------------- | ----- | -------------- | ----------------------------------------------------------- |
+| `gcse-maths-h-a18-quadratic-factorising` | A18   | `worked_maths` | x^2 + bx + c = 0 with two different whole-number roots      |
+| `gcse-maths-h-a25-linear-nth-term`       | A25   | `short_answer` | dn + c from four terms, going up or down                    |
+| `gcse-maths-h-n10-recurring-decimal`     | N10   | `numeric`      | 0.ababab... as a fraction in its simplest form, by 100x - x |
+| `gcse-maths-h-n5-product-rule`           | N5    | `worked_maths` | Starters, mains and desserts: the product rule for counting |
+| `gcse-maths-h-a7-composite-function`     | A7    | `numeric`      | fg(k) or gf(k) with f linear and g(x) = x^2 + r             |
+
+The recheck for N10 does long division of the answer; for N5 it counts the meals one by one.
+
 ## Later
 
 - Fresh numbers per student at run time (the engine serves a new seed per attempt, marked against

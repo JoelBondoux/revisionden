@@ -1,0 +1,417 @@
+[
+  {
+    "id": "gcse-maths-h-a25-t-linear-nth-term-01",
+    "topic": "gcse-maths-h-a25",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a25-lp-linear-nth",
+    "expected_seconds": 45,
+    "prompt": "Find an expression for the nth term of the sequence 29, 36, 43, 50, ...",
+    "answer": {
+      "accepted": ["7n + 22", "29 + 7(n - 1)"],
+      "any_order": true
+    },
+    "marks": 2,
+    "hint": "Work out the difference between the terms first.",
+    "explanation": "The terms go up by 7 each time, so the nth term starts 7n. When n = 1, 7n = 7, and the first term is 29, so add 22: the nth term is 7n + 22. Check: n = 2 gives 7 × 2 + 22 = 36.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Sequences, content reference A25 (page 15; PDF page 27)",
+        "quote": "term of linear and quadratic sequences",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-a25-linear-nth-term",
+      "version": 2,
+      "seed": 1
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-a25-linear-nth-term v2",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Generated from template gcse-maths-h-a25-linear-nth-term (version 2, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:19:57Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:20:04Z",
+          "notes": "model answered \"7n + 22\"; expected \"7n + 22 | 29 + 7(n - 1)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:20:15Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a25-t-linear-nth-term-02",
+    "topic": "gcse-maths-h-a25",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a25-lp-linear-nth",
+    "expected_seconds": 45,
+    "prompt": "Find an expression for the nth term of the sequence 17, 23, 29, 35, ...",
+    "answer": {
+      "accepted": ["6n + 11", "17 + 6(n - 1)"],
+      "any_order": true
+    },
+    "marks": 2,
+    "hint": "Work out the difference between the terms first.",
+    "explanation": "The terms go up by 6 each time, so the nth term starts 6n. When n = 1, 6n = 6, and the first term is 17, so add 11: the nth term is 6n + 11. Check: n = 2 gives 6 × 2 + 11 = 23.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Sequences, content reference A25 (page 15; PDF page 27)",
+        "quote": "term of linear and quadratic sequences",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-a25-linear-nth-term",
+      "version": 2,
+      "seed": 2
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-a25-linear-nth-term v2",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Generated from template gcse-maths-h-a25-linear-nth-term (version 2, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:20:15Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:20:22Z",
+          "notes": "model answered \"6n + 11\"; expected \"6n + 11 | 17 + 6(n - 1)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:20:34Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a25-t-linear-nth-term-03",
+    "topic": "gcse-maths-h-a25",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a25-lp-linear-nth",
+    "expected_seconds": 45,
+    "prompt": "Find an expression for the nth term of the sequence 20, 22, 24, 26, ...",
+    "answer": {
+      "accepted": ["2n + 18", "20 + 2(n - 1)", "2(n + 9)"],
+      "any_order": true
+    },
+    "marks": 2,
+    "hint": "Work out the difference between the terms first.",
+    "explanation": "The terms go up by 2 each time, so the nth term starts 2n. When n = 1, 2n = 2, and the first term is 20, so add 18: the nth term is 2n + 18. Check: n = 2 gives 2 × 2 + 18 = 22.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Sequences, content reference A25 (page 15; PDF page 27)",
+        "quote": "term of linear and quadratic sequences",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-a25-linear-nth-term",
+      "version": 2,
+      "seed": 3
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-a25-linear-nth-term v2",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Generated from template gcse-maths-h-a25-linear-nth-term (version 2, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:20:35Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:20:42Z",
+          "notes": "model answered \"2n + 18\"; expected \"2n + 18 | 20 + 2(n - 1) | 2(n + 9)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:20:51Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a25-t-linear-nth-term-04",
+    "topic": "gcse-maths-h-a25",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-a25-lp-linear-nth",
+    "expected_seconds": 45,
+    "prompt": "Find an expression for the nth term of the sequence 2, 10, 18, 26, ...",
+    "answer": {
+      "accepted": ["8n - 6", "2 + 8(n - 1)", "2(4n - 3)"],
+      "any_order": true
+    },
+    "marks": 2,
+    "hint": "Work out the difference between the terms first.",
+    "explanation": "The terms go up by 8 each time, so the nth term starts 8n. When n = 1, 8n = 8, and the first term is 2, so subtract 6: the nth term is 8n - 6. Check: n = 2 gives 8 × 2 - 6 = 10.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Sequences, content reference A25 (page 15; PDF page 27)",
+        "quote": "term of linear and quadratic sequences",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-a25-linear-nth-term",
+      "version": 2,
+      "seed": 4
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-a25-linear-nth-term v2",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Generated from template gcse-maths-h-a25-linear-nth-term (version 2, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:20:51Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:20:57Z",
+          "notes": "model answered \"8n - 6\"; expected \"8n - 6 | 2 + 8(n - 1) | 2(4n - 3)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:21:04Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-a25-t-linear-nth-term-05",
+    "topic": "gcse-maths-h-a25",
+    "type": "short_answer",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-a25-lp-linear-nth",
+    "expected_seconds": 60,
+    "prompt": "Find an expression for the nth term of the sequence 7, 0, -7, -14, ...",
+    "answer": {
+      "accepted": ["14 - 7n", "7 - 7(n - 1)", "7(2 - n)"],
+      "any_order": true
+    },
+    "marks": 2,
+    "hint": "Work out the difference between the terms first.",
+    "explanation": "The terms go down by 7 each time, so the nth term starts -7n. When n = 1, -7n = -7, and the first term is 7, so add 14: the nth term is 14 - 7n. Check: n = 2 gives -7 × 2 + 14 = 0.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 2. Algebra, Sequences, content reference A25 (page 15; PDF page 27)",
+        "quote": "term of linear and quadratic sequences",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "template": {
+      "id": "gcse-maths-h-a25-linear-nth-term",
+      "version": 2,
+      "seed": 5
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "gcse-maths-h-a25-linear-nth-term v2",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Generated from template gcse-maths-h-a25-linear-nth-term (version 2, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-26T05:15:59Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:21:05Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:21:12Z",
+          "notes": "model answered \"14 - 7n\"; expected \"14 - 7n | 7 - 7(n - 1) | 7(2 - n)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T05:21:19Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  }
+]

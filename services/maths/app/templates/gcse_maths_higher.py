@@ -442,5 +442,349 @@ STANDARD_FORM_MULTIPLY = Template(
 )
 
 
+# --- A18: quadratic equations by factorising -------------------------------------------------
+
+def _quadratic_write(p: dict) -> dict:
+    r1, r2 = p["r1"], p["r2"]
+    b, c = -(r1 + r2), r1 * r2
+    equation = f"{polynomial([1, b, c])} = 0"
+    first, second = linear(1, -r1), linear(1, -r2)
+    factorised = f"({first})({second}) = 0"
+    return {
+        "difficulty": 3 if (r1 < 0 and r2 < 0) else 2,
+        "prompt": f"Solve {equation} by factorising.",
+        "answer": {"solutions": [str(r1), str(r2)]},
+        "verify": {"method": "solve", "equation": equation, "variable": "x"},
+        "steps": [equation, factorised, f"x = {r1} or x = {r2}"],
+        "mark_scheme": [f"M1 for ({first})({second})", f"A1 for both x = {r1} and x = {r2}"],
+        "hint": f"Find two numbers that multiply to give {c} and add to give {b}.",
+        "explanation": (f"Find two numbers that multiply to give {c} and add to give {b}: "
+                        f"{-r1} and {-r2}, because {bracket(-r1)} × {bracket(-r2)} = {c} and "
+                        f"{-r1} + {bracket(-r2)} = {b}. So {factorised}. One of the brackets "
+                        f"must be 0: {first} = 0 gives x = {r1}, and {second} = 0 gives "
+                        f"x = {r2}."),
+    }
+
+
+def _quadratic_recheck(p: dict, item: dict) -> list[str]:
+    match = re.fullmatch(r"Solve (.+) = 0 by factorising\.", item["prompt"])
+    if not match:
+        return ["the question is not in the expected words"]
+    errors = []
+    shown = parse(match.group(1), exact=True)
+    if not _same(shown, (X - p["r1"]) * (X - p["r2"])):
+        errors.append(f"the question shows {match.group(1)}, not the parameters' quadratic")
+    roots = set(solve(shown, X))
+    given = {parse(s, exact=True) for s in item["answer"]["solutions"]}
+    if roots != given or len(item["answer"]["solutions"]) != 2:
+        errors.append(f"the equation's solutions are {roots}, the answer says "
+                      f"{item['answer']['solutions']}")
+    return errors
+
+
+QUADRATIC_FACTORISING = Template(
+    id="gcse-maths-h-a18-quadratic-factorising",
+    version=3,  # v2: one A1 for both roots; v3: "by factorising" in the question (review)
+    topic="gcse-maths-h-a18",
+    learning_point="gcse-maths-h-a18-lp-factorising",
+    type="worked_maths",
+    difficulty=2,
+    expected_seconds=60,
+    marks=2,
+    source_ref=_ref("A18"),
+    citations=(_cite("2. Algebra, Solving equations and inequalities, content reference A18 "
+                     "(page 15; PDF page 27)",
+                     "solve quadratic equations (including those that require rearrangement) "
+                     "algebraically by factorising", "2026-11-25"),),
+    params=(IntParam("r1", -9, 9, exclude=(0,)), IntParam("r2", -9, 9, exclude=(0,))),
+    rules=(
+        Rule("the roots are different, larger one first", lambda p: p["r1"] > p["r2"]),
+        Rule("there is an x term", lambda p: p["r1"] + p["r2"] != 0),
+        Rule("the number term is at most 40 in size", lambda p: abs(p["r1"] * p["r2"]) <= 40),
+    ),
+    write=_quadratic_write,
+    recheck=_quadratic_recheck,
+)
+
+
+# --- A25: nth term of a linear sequence -------------------------------------------------------
+
+def _nth(p: dict) -> tuple[int, int]:
+    """The nth term is d n + c."""
+    return p["d"], p["first"] - p["d"]
+
+
+def _terms(p: dict) -> list[int]:
+    d, c = _nth(p)
+    return [d * n + c for n in range(1, 5)]
+
+
+def _nth_write(p: dict) -> dict:
+    d, c = _nth(p)
+    terms = _terms(p)
+    answer = linear(d, c, "n") if d > 0 or c < 0 else f"{c} - {_mono(-d, 'n')}"
+    accepted = [answer, f"{terms[0]} {'+' if d > 0 else '-'} {abs(d)}(n - 1)"]
+    g = gcd(d, c)
+    if g > 1 and d > 0:
+        accepted.append(f"{g}({linear(d // g, c // g, 'n')})")
+    elif g > 1 and c > 0:
+        accepted.append(f"{g}({c // g} - {_mono(-d // g, 'n')})")
+    move = f"add {c}" if c > 0 else f"subtract {-c}"
+    return {
+        "difficulty": 2 if d > 0 else 3,
+        "expected_seconds": 45 if d > 0 else 60,
+        "prompt": ("Find an expression for the nth term of the sequence "
+                   f"{', '.join(map(str, terms))}, ..."),
+        "answer": {"accepted": list(dict.fromkeys(accepted)), "any_order": True},
+        "hint": "Work out the difference between the terms first.",
+        "explanation": (f"The terms go {'up' if d > 0 else 'down'} by {abs(d)} each time, so the "
+                        f"nth term starts {_mono(d, 'n')}. When n = 1, {_mono(d, 'n')} = {d}, and "
+                        f"the first term is {terms[0]}, so {move}: the nth term is {answer}. "
+                        f"Check: n = 2 gives {d} × 2 {signed_term(c, '', False)} = {terms[1]}."),
+    }
+
+
+def _nth_recheck(p: dict, item: dict) -> list[str]:
+    match = re.fullmatch(r"Find an expression for the nth term of the sequence (.+), \.\.\.",
+                         item["prompt"])
+    if not match:
+        return ["the question is not in the expected words"]
+    shown = [int(t) for t in match.group(1).split(", ")]
+    errors = []
+    if shown != _terms(p):
+        errors.append("the question's terms are not the parameters' sequence")
+    n = Symbol("n")
+    for accepted in item["answer"]["accepted"]:
+        expr = parse(accepted, exact=True)
+        values = [expr.subs(n, k) for k in range(1, len(shown) + 1)]
+        if values != shown:
+            errors.append(f"{accepted} gives {values}, not the terms {shown}")
+    return errors
+
+
+LINEAR_NTH_TERM = Template(
+    id="gcse-maths-h-a25-linear-nth-term",
+    version=2,  # v2: also accepts the first-term and factorised forms (adversarial review)
+    topic="gcse-maths-h-a25",
+    learning_point="gcse-maths-h-a25-lp-linear-nth",
+    type="short_answer",
+    difficulty=2,
+    expected_seconds=45,
+    marks=2,
+    source_ref=_ref("A25"),
+    citations=(_cite("2. Algebra, Sequences, content reference A25 (page 15; PDF page 27)",
+                     "term of linear and quadratic sequences", "2026-11-25"),),
+    params=(IntParam("d", -7, 9, exclude=(-1, 0, 1)), IntParam("first", -10, 30, exclude=(0,))),
+    rules=(
+        Rule("the nth term has a number part", lambda p: _nth(p)[1] != 0),
+        Rule("every term shown is between -30 and 60",
+             lambda p: all(-30 <= t <= 60 for t in _terms(p))),
+    ),
+    write=_nth_write,
+    recheck=_nth_recheck,
+)
+
+
+# --- N10: two recurring digits as a fraction --------------------------------------------------
+
+def _recurring_write(p: dict) -> dict:
+    digits = f"{p['a']}{p['b']}"
+    k = int(digits)
+    simple = Fraction(k, 99)
+    g = 99 // simple.denominator
+    tail = (f" Simplify by dividing by {g}: {simple}." if g > 1
+            else f" {k}/99 is already in its simplest form.")
+    return {
+        "difficulty": 4,
+        "expected_seconds": 90,
+        "prompt": (f"Write 0.{digits * 3}... (the digits {digits} recur) as a fraction in its "
+                   "simplest form."),
+        "answer": {"value": f"{simple.numerator}/{simple.denominator}"},
+        "verify": {"expression": f"{k}/99"},
+        "mark_scheme": [f"M1 for 99x = {k} or {k}/99", f"A1 for {simple}"],
+        "hint": "Let x be the decimal. Two digits recur, so work out 100x - x.",
+        "explanation": (f"Let x = 0.{digits * 2}... Two digits recur, so multiply by 100: "
+                        f"100x = {digits}.{digits * 2}... Subtract: 100x - x = {digits}.{digits * 2}... - "
+                        f"0.{digits * 2}..., so 99x = {k} and x = {k}/99.{tail}"),
+    }
+
+
+def _recurring_recheck(p: dict, item: dict) -> list[str]:
+    match = re.fullmatch(r"Write 0\.(\d+)\.\.\. \(the digits (\d\d) recur\) as a fraction in "
+                         r"its simplest form\.", item["prompt"])
+    if not match:
+        return ["the question is not in the expected words"]
+    digits = match.group(2)
+    errors = []
+    if digits != f"{p['a']}{p['b']}" or match.group(1) != digits * 3:
+        errors.append("the question's digits are not the parameters")
+    num, den = (int(v) for v in item["answer"]["value"].split("/"))
+    if gcd(num, den) != 1:
+        errors.append(f"answer {num}/{den} is not in its simplest form")
+    # Long division of the answer must give the recurring digits, block after block.
+    remainder, shown = num, ""
+    for _ in range(12):
+        remainder *= 10
+        shown += str(remainder // den)
+        remainder %= den
+    if num >= den or shown != digits * 6:
+        errors.append(f"{num}/{den} is 0.{shown}..., not 0.{digits * 6}...")
+    return errors
+
+
+RECURRING_DECIMAL = Template(
+    id="gcse-maths-h-n10-recurring-decimal",
+    version=2,  # v2: the subtraction is shown in full (adversarial review)
+    topic="gcse-maths-h-n10",
+    learning_point="gcse-maths-h-n10-lp-recurring",
+    type="numeric",
+    difficulty=4,
+    expected_seconds=90,
+    marks=2,
+    source_ref=_ref("N10"),
+    citations=(_cite("1. Number, Fractions, decimals and percentages, content reference N10 "
+                     "(page 13; PDF page 25)", "change recurring decimals", "2026-11-25"),),
+    params=(IntParam("a", 1, 9), IntParam("b", 0, 9)),
+    rules=(Rule("the two digits are different", lambda p: p["a"] != p["b"]),),
+    write=_recurring_write,
+    recheck=_recurring_recheck,
+)
+
+
+# --- N5: the product rule for counting --------------------------------------------------------
+
+def _count_write(p: dict) -> dict:
+    a, b, c = p["a"], p["b"], p["c"]
+    expr = f"{a}*{b}*{c}"
+    return {
+        "difficulty": 2,
+        "expected_seconds": 60,
+        "prompt": (f"A café offers {a} starters, {b} main courses and {c} desserts. A meal is "
+                   "one starter, one main course and one dessert. How many different meals can "
+                   "be chosen?"),
+        "answer": {"expression": str(a * b * c)},
+        "verify": {"method": "expression", "expression": expr},
+        "steps": [expr, f"{a * b}*{c}", str(a * b * c)],
+        "mark_scheme": [f"M1 for {a} × {b} × {c}", f"A1 for {a * b * c}"],
+        "hint": "Multiply the number of choices for each course.",
+        "explanation": (f"Each of the {a} starters can go with each of the {b} main courses, "
+                        f"which gives {a} × {b} = {a * b} pairs. Each pair can go with each of "
+                        f"the {c} desserts: {a * b} × {c} = {a * b * c} meals."),
+    }
+
+
+def _count_recheck(p: dict, item: dict) -> list[str]:
+    match = re.fullmatch(r"A café offers (\d+) starters, (\d+) main courses and (\d+) desserts\. "
+                         r"A meal is one starter, one main course and one dessert\. How many "
+                         r"different meals can be chosen\?", item["prompt"])
+    if not match:
+        return ["the question is not in the expected words"]
+    a, b, c = (int(v) for v in match.groups())
+    errors = []
+    if (a, b, c) != (p["a"], p["b"], p["c"]):
+        errors.append("the question's numbers are not the parameters")
+    # Count the meals one by one rather than multiplying.
+    meals = sum(1 for _ in range(a) for _ in range(b) for _ in range(c))
+    if item["answer"]["expression"] != str(meals):
+        errors.append(f"there are {meals} meals, the answer says {item['answer']['expression']}")
+    return errors
+
+
+PRODUCT_RULE = Template(
+    id="gcse-maths-h-n5-product-rule",
+    version=1,
+    topic="gcse-maths-h-n5",
+    learning_point="gcse-maths-h-n5-lp-product-rule",
+    type="worked_maths",
+    difficulty=2,
+    expected_seconds=60,
+    marks=2,
+    source_ref=_ref("N5"),
+    citations=(_cite("1. Number, Structure and calculation, content reference N5 (page 12; PDF "
+                     "page 24)", "apply systematic listing strategies, including use of the "
+                     "product rule for counting", "2026-11-25"),),
+    params=(IntParam("a", 2, 8), IntParam("b", 2, 9), IntParam("c", 2, 7)),
+    rules=(Rule("there are at most 300 meals", lambda p: p["a"] * p["b"] * p["c"] <= 300),),
+    write=_count_write,
+    recheck=_count_recheck,
+)
+
+
+# --- A7: composite functions ------------------------------------------------------------------
+
+def _composite_values(p: dict) -> tuple[int, int]:
+    """(inner value, answer) for fg(k) (order 0) or gf(k) (order 1)."""
+    f = lambda x: p["p"] * x + p["q"]  # noqa: E731
+    g = lambda x: x * x + p["r"]  # noqa: E731
+    inner = g(p["k"]) if p["order"] == 0 else f(p["k"])
+    return inner, (f(inner) if p["order"] == 0 else g(inner))
+
+
+def _composite_write(p: dict) -> dict:
+    k, a, q, r = p["k"], p["p"], p["q"], p["r"]
+    f_text, g_text = linear(a, q), polynomial([1, 0, r])
+    name, first, second = ("fg", "g", "f") if p["order"] == 0 else ("gf", "f", "g")
+    inner, answer = _composite_values(p)
+    square = lambda v: f"{bracket(v)}^2" + (f" {signed_term(r, '', False)}" if r else "")  # noqa: E731
+    line = lambda v: f"{a} × {bracket(v)} {signed_term(q, '', False)}"  # noqa: E731
+    work = {"f": line, "g": square}
+    expr = (f"{a}*(({k})^2 + ({r})) + ({q})" if p["order"] == 0
+            else f"(({a})*({k}) + ({q}))^2 + ({r})")
+    return {
+        "difficulty": 3,
+        "expected_seconds": 60,
+        "prompt": f"f(x) = {f_text} and g(x) = {g_text}. Work out {name}({k}).",
+        "answer": {"value": str(answer)},
+        "verify": {"expression": expr},
+        "mark_scheme": [f"M1 for {first}({k}) = {inner}", f"A1 for {answer}"],
+        "hint": f"{name}({k}) means {second}({first}({k})): work out {first}({k}) first.",
+        "explanation": (f"{name}({k}) means {second}({first}({k})), so work out {first} first: "
+                        f"{first}({k}) = {work[first](k)} = {inner}. Then {second}({inner}) = "
+                        f"{work[second](inner)} = {answer}."),
+    }
+
+
+def _composite_recheck(p: dict, item: dict) -> list[str]:
+    match = re.fullmatch(r"f\(x\) = (.+) and g\(x\) = (.+)\. Work out (fg|gf)\((-?\d+)\)\.",
+                         item["prompt"])
+    if not match:
+        return ["the question is not in the expected words"]
+    f, g = parse(match.group(1), exact=True), parse(match.group(2), exact=True)
+    name, k = match.group(3), int(match.group(4))
+    errors = []
+    if not (_same(f, p["p"] * X + p["q"]) and _same(g, X**2 + p["r"]) and k == p["k"]
+            and name == ("fg" if p["order"] == 0 else "gf")):
+        errors.append("the question's functions are not the parameters")
+    outer, inner = (f, g) if name == "fg" else (g, f)
+    expected = outer.subs(X, inner.subs(X, k))
+    if parse(item["answer"]["value"], exact=True) != expected:
+        errors.append(f"{name}({k}) is {expected}, the answer says {item['answer']['value']}")
+    return errors
+
+
+COMPOSITE_FUNCTION = Template(
+    id="gcse-maths-h-a7-composite-function",
+    version=1,
+    topic="gcse-maths-h-a7",
+    learning_point="gcse-maths-h-a7-lp-composite",
+    type="numeric",
+    difficulty=3,
+    expected_seconds=60,
+    marks=2,
+    source_ref=_ref("A7"),
+    citations=(_cite("2. Algebra, Notation, vocabulary and manipulation, content reference A7 "
+                     "(page 14; PDF page 26)", "interpret the succession of two functions as a "
+                     "‘composite function’", "2026-11-25"),),
+    params=(IntParam("p", 2, 5), IntParam("q", -9, 9, exclude=(0,)), IntParam("r", -5, 5),
+            IntParam("k", -4, 5, exclude=(0,)), IntParam("order", 0, 1)),
+    rules=(Rule("the answer is at most 200 in size",
+                lambda p: abs(_composite_values(p)[1]) <= 200),),
+    write=_composite_write,
+    recheck=_composite_recheck,
+)
+
 TEMPLATES = (EXPAND_DOUBLE_BRACKETS, LINEAR_BOTH_SIDES, SIMULTANEOUS_ELIMINATION,
-             PERCENTAGE_CHANGE, STANDARD_FORM_MULTIPLY)
+             PERCENTAGE_CHANGE, STANDARD_FORM_MULTIPLY,
+             # T1c: thin topics
+             QUADRATIC_FACTORISING, LINEAR_NTH_TERM, RECURRING_DECIMAL, PRODUCT_RULE,
+             COMPOSITE_FUNCTION)
