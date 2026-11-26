@@ -31,48 +31,50 @@ function watchDaily() {
 }
 
 describe('Daily 5-a-day', () => {
-  it('shows the 5-a-day in the Today strip of the topic map until it is done', async () => {
+  // J15b: the 5-a-day moved from the map's Today strip to a ring on Home.
+  it('shows the 5-a-day on Home until it is done', async () => {
     useDaily();
-    renderRoute('/map');
-    const card = await screen.findByRole('region', { name: '5-a-day' }, WAIT);
-    expect(card).toHaveTextContent('0 of 2 done');
+    renderRoute('/home');
+    const ring = await screen.findByRole('progressbar', { name: '5-a-day' }, WAIT);
+    expect(ring).toHaveAttribute('aria-valuetext', '0 of 2 done');
     expect(screen.getByRole('link', { name: 'Start your 5-a-day' })).toHaveAttribute(
       'href',
       '/learn/daily',
     );
-    // It sits in the Today strip, after the next mission (the main call to action).
-    const today = screen.getByRole('region', { name: 'Today' });
-    expect(today).toContainElement(card);
-    const mission = screen.getByRole('region', { name: 'Next mission' });
-    expect(mission.compareDocumentPosition(card) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 
   it('says Continue once some are answered', async () => {
     useDaily({ answeredItemIds: [demoDaily.items[0]!.id], answered: 1 });
-    renderRoute('/map');
+    renderRoute('/home');
     expect(
       await screen.findByRole('link', { name: 'Continue your 5-a-day' }, WAIT),
     ).toBeInTheDocument();
-    expect(screen.getByRole('region', { name: '5-a-day' })).toHaveTextContent('1 of 2 done');
+    expect(screen.getByRole('progressbar', { name: '5-a-day' })).toHaveAttribute(
+      'aria-valuetext',
+      '1 of 2 done',
+    );
   });
 
-  it('is gone from the map when done, and when nothing has been practised yet', async () => {
+  it('shows it done (no link) when done, and not at all when nothing has been practised yet', async () => {
     useDaily({ done: true, answered: 2, answeredItemIds: demoDaily.items.map((i) => i.id) });
     let answered = watchDaily();
-    const { unmount } = renderRoute('/map');
+    const { unmount } = renderRoute('/home');
     await answered();
-    await screen.findByRole('region', { name: 'Next mission' }, WAIT);
-    expect(screen.queryByRole('region', { name: '5-a-day' })).not.toBeInTheDocument();
+    expect(await screen.findByRole('progressbar', { name: '5-a-day' }, WAIT)).toHaveAttribute(
+      'aria-valuetext',
+      '2 of 2 done',
+    );
+    expect(screen.queryByRole('link', { name: /your 5-a-day/ })).not.toBeInTheDocument();
     unmount();
     useDaily({ items: [], total: 0 });
     answered = watchDaily();
-    renderRoute('/map');
+    renderRoute('/home');
     await answered();
-    await screen.findByRole('region', { name: 'Next mission' }, WAIT);
-    expect(screen.queryByRole('region', { name: '5-a-day' })).not.toBeInTheDocument();
+    await screen.findByRole('link', { name: /^Go:/ }, WAIT);
+    expect(screen.queryByRole('progressbar', { name: '5-a-day' })).not.toBeInTheDocument();
   });
 
-  it('never breaks the map if the 5-a-day cannot load', async () => {
+  it('never breaks Home if the 5-a-day cannot load', async () => {
     server.use(
       http.get('*/v1/student/daily', async () => {
         await delay(SLOW_MS);
@@ -80,10 +82,10 @@ describe('Daily 5-a-day', () => {
       }),
     );
     const answered = watchDaily();
-    renderRoute('/map');
+    renderRoute('/home');
     await answered();
-    expect(await screen.findByRole('region', { name: 'Next mission' }, WAIT)).toBeInTheDocument();
-    expect(screen.queryByRole('region', { name: '5-a-day' })).not.toBeInTheDocument();
+    expect(await screen.findByRole('link', { name: /^Go:/ }, WAIT)).toBeInTheDocument();
+    expect(screen.queryByRole('progressbar', { name: '5-a-day' })).not.toBeInTheDocument();
   });
 
   it('plays the unanswered questions in the lesson player', async () => {

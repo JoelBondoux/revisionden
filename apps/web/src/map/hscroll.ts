@@ -47,8 +47,13 @@ export function rowScrollTarget(
   };
   if (!item) return { left: view.current, extraEnd: 0 };
   const { width, pad, current } = view;
-  if (item.start - pad >= current && item.end <= current + width)
-    return { left: current, extraEnd: 0 };
+  if (item.start - pad >= current && item.end <= current + width) {
+    // In view. If an item is cut at the left edge, step on to the next whole one.
+    const cut = items.some((i) => i.start < current - 0.5 && i.end > current + 0.5);
+    if (!cut) return { left: current, extraEnd: 0 };
+    const next = items.find((i) => i.start >= current - 0.5)!;
+    return at(next.start - pad);
+  }
   if (item.start - pad < current) return at(item.start - pad);
   for (const first of items.slice(0, chosen + 1)) {
     if (item.end - (first.start - pad) <= width) return at(first.start - pad);
