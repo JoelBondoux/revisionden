@@ -820,8 +820,28 @@ Requested by the product owner on 2026-11-25.
 
 - Pages: `/help` (students, also signed out) and `/parent/help` (parent area; adds a "Worried about a
   child?" card with the NSPCC Helpline). Links: Settings (Help and information), a small heart
-  "Get help" link in the student footer, the signed-out header, and parent home. The app has no
-  separate profile menu yet; add a link there when one exists.
+  "Get help" link in the student footer, the signed-out header, and parent home. Since W3 also: a
+  calm "Get help" tile on the topic map (the student's home) and a "Get help" chip in the student
+  header on every student screen (the app has no separate menu yet; add it there when one exists).
+  All use the shared link components; tapping them records nothing.
+- Layout (W3, 2026-11-25): the "Quick exit" button sits in a bar that stays at the top of the
+  screen while scrolling (sticky, padded for phone notches with `env(safe-area-inset-*)`, first
+  control after the skip link). Topics are grouped into categories
+  (`apps/web/src/features/help/categories.ts`): **Right now** (In danger right now, Thinking about
+  suicide) is always first and always open; **Feelings and mental health** starts open; **Staying
+  safe**, **Home, school and friends** and **Body and health** are collapsible (native
+  `<details>`), each summary listing its topics. A "Find a topic" box filters by the words of the
+  topics and their services; "In danger right now" always stays; a live status says how many
+  topics match. The search is component state only: never stored, sent or put in the address.
+  Grouping is presentation only: every verified entry and all wording are unchanged.
+- Service cards (W3): each service is a compact card with its name, its one-line description (and
+  any confirmed note), and its contact actions as clear buttons (shared `LinkButton`, at least
+  48px tall): **Call** and **Text** are primary buttons (`tel:`/`sms:` links unchanged); chat,
+  website, WhatsApp and email are secondary buttons (new tab, no referrer). Opening hours show
+  under each button. Age range and area sit behind "More about <service>". No plain text links,
+  no new wording. Buttons are calm on this page (normal case, no 3D shadow or press movement), and
+  in forced colours (Windows High Contrast) the danger panel, Quick exit, category headings and
+  search box keep visible borders.
 - Data: `content/support/uk-services.json`, schema `content/schemas/support-services.schema.json`.
   Each service has topics, one plain sentence of our own (`helps_with`), its official domains,
   optional age range and area, contacts (phone as `tel:`, text number with keyword as
@@ -859,7 +879,11 @@ Requested by the product owner on 2026-11-25.
 - Privacy: its own layout with no navigation, sounds or API calls; nothing is fetched to show it
   (the data is built into the app); websites open in a new tab with `rel="noreferrer"`. A unit test
   and an e2e test check that visiting it makes no API calls and no requests to other sites.
-- Style: calm and light, no game-feel effects (`features/help/help.css`).
+- Style: calm, no game-feel effects (`features/help/help.css`). Follows the app's theme (light,
+  dark, colour-blind) through its own `--help-*` colours; every text pair meets WCAG AA and Quick
+  exit and control borders meet 3:1 in every theme (`helpTheme.test.ts`). The danger panel keeps a
+  thick border and bold text in each theme (red, or orange-brown in the colour-blind palette);
+  Quick exit is solid (dark in light themes, white in dark themes).
 
 ## Quick wins from the competitor research (owner approved 2026-11-25)
 
@@ -907,5 +931,6 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   deuteranopia, protanopia and tritanopia; icons and words always carry the meaning too);
   Background pattern On (default) or Off. Applied before the first paint, so there is no flash.
   The doodle pattern is our own original art, very faint, and is never shown in high contrast or
-  forced colours. Get help stays a calm light page in every theme. The sales site follows the
+  forced colours. Get help follows the theme too (light, dark, colour-blind), with its own calm,
+  high-contrast colours (owner, 2026-11-25, W3). The sales site follows the
   device's theme only.

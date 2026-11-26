@@ -2,12 +2,62 @@
  * Get help: a calm, light page. No game-feel effects (no 3D shadows, motion or bright arena
  * colours), plain cards, large tap targets and high contrast.
  */
+/*
+ * Colours follow the app's theme (light, dark, colour-blind; W3). Every pair below meets WCAG AA
+ * (a test checks the ratios). The danger panel keeps a thick border and bold text, so it stands
+ * out without relying on colour alone; Quick exit is solid and high-contrast in every theme.
+ */
+.help-main {
+  --help-bg: #ffffff;
+  --help-text: #1f2430;
+  --help-muted: #4a5262;
+  --help-link: #1d4e89;
+  --help-border: #8a93a3;
+  --help-border-soft: #e6e9ee;
+  --help-surface-alt: #f6f8fb;
+  --help-private-bg: #eef4fb;
+  --help-note-bg: #fff8e6;
+  --help-danger: #a61b1b;
+  --help-danger-bg: #fdf1f1;
+  --help-exit-bg: #1f2430;
+  --help-exit-text: #ffffff;
+  --help-exit-border: #1f2430;
+}
+
+:root[data-theme='dark'] .help-main {
+  --help-bg: #1f1b33;
+  --help-text: #eceaf5;
+  --help-muted: #c3bfd6;
+  --help-link: #c4b5ff;
+  --help-border: #8c86a8;
+  --help-border-soft: #3a3552;
+  --help-surface-alt: #2a2545;
+  --help-private-bg: #22304a;
+  --help-note-bg: #3a3017;
+  --help-danger: #ffa8a8;
+  --help-danger-bg: #3a1a20;
+  --help-exit-bg: #ffffff;
+  --help-exit-text: #14112a;
+  --help-exit-border: #ffffff;
+}
+
+/* Colour-blind palette: the danger panel uses the app's orange-brown instead of red. */
+:root[data-palette='colourblind'] .help-main {
+  --help-danger: #7a3500;
+  --help-danger-bg: #fff0e6;
+}
+
+:root[data-theme='dark'][data-palette='colourblind'] .help-main {
+  --help-danger: #ffb98a;
+  --help-danger-bg: #3d2615;
+}
+
 .help-main {
   max-width: 44rem;
   margin: 0 auto;
   padding: var(--space-4) var(--space-4) var(--space-8);
-  background: #ffffff;
-  color: #1f2430;
+  background: var(--help-bg);
+  color: var(--help-text);
   min-height: 100dvh;
 }
 
@@ -19,7 +69,7 @@
 .help-page h2,
 .help-page h3 {
   font-weight: var(--font-weight-extrabold);
-  color: #1f2430;
+  color: var(--help-text);
 }
 
 .help-page h3 {
@@ -27,92 +77,180 @@
   margin-bottom: var(--space-1);
 }
 
-.help-page a {
-  color: #1d4e89;
+.help-main .help-page a:not(.btn) {
+  color: var(--help-link);
 }
 
-.help-page__bar {
+.help-page h4 {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-extrabold);
+  margin: 0 0 var(--space-1);
+}
+
+/* Quick exit stays at the top of the screen while scrolling, clear of a phone's notch. */
+.help-exit-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
   justify-content: flex-end;
-  margin-bottom: var(--space-2);
+  margin: calc(-1 * var(--space-4)) calc(-1 * var(--space-4)) var(--space-2);
+  padding: calc(var(--space-2) + env(safe-area-inset-top, 0px))
+    calc(var(--space-4) + env(safe-area-inset-right, 0px)) var(--space-2)
+    calc(var(--space-4) + env(safe-area-inset-left, 0px));
+  background: var(--help-bg);
+  border-bottom: 1px solid var(--help-border-soft);
+}
+
+/* Headings jumped to stay clear of the sticky bar. */
+.help-page [id] {
+  scroll-margin-top: 4.5rem;
+}
+
+.help-search {
+  margin: 0 0 var(--space-4);
+}
+
+.help-search label {
+  display: block;
+  margin-bottom: var(--space-1);
+  font-weight: var(--font-weight-extrabold);
+}
+
+.help-search__row {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.help-search input {
+  flex: 1;
+  min-width: 0;
+  min-height: var(--tap-target);
+  padding: var(--space-2) var(--space-3);
+  border: 2px solid var(--help-muted);
+  border-radius: var(--radius-sm);
+  background: var(--help-bg);
+  color: var(--help-text);
+  font-size: var(--font-size-md);
+}
+
+.help-search input:focus-visible,
+.help-search__clear:focus-visible,
+.help-category__summary:focus-visible {
+  outline: 3px solid var(--help-link);
+  outline-offset: 2px;
+}
+
+.help-search__clear {
+  min-height: var(--tap-target);
+  padding: var(--space-2) var(--space-3);
+  border: 2px solid var(--help-text);
+  border-radius: var(--radius-sm);
+  background: var(--help-bg);
+  color: var(--help-text);
+  font-weight: var(--font-weight-extrabold);
+  cursor: pointer;
+}
+
+.help-search__status {
+  min-height: 1.5em;
+  margin: var(--space-1) 0 0;
+  color: var(--help-muted);
+  font-size: var(--font-size-sm);
+}
+
+.help-category {
+  margin: 0 0 var(--space-4);
+}
+
+.help-category__title {
+  display: block;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--help-text);
+}
+
+.help-category__summary {
+  min-height: var(--tap-target);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--help-border);
+  border-radius: var(--radius-md);
+  background: var(--help-surface-alt);
+  cursor: pointer;
+  list-style-position: inside;
+}
+
+.help-category[open] > .help-category__summary {
+  margin-bottom: var(--space-3);
+}
+
+.help-category__summary .help-category__title {
+  display: inline;
+}
+
+.help-category__topics {
+  display: block;
+  margin-top: var(--space-1);
+  color: var(--help-muted);
+  font-size: var(--font-size-sm);
 }
 
 .help-exit {
   min-height: var(--tap-target);
   padding: var(--space-2) var(--space-4);
-  border: 2px solid #1f2430;
+  border: 2px solid var(--help-exit-border);
   border-radius: var(--radius-sm);
-  background: #ffffff;
-  color: #1f2430;
+  background: var(--help-exit-bg);
+  color: var(--help-exit-text);
   font-weight: var(--font-weight-extrabold);
   cursor: pointer;
 }
 
 .help-exit:focus-visible,
 .help-page a:focus-visible {
-  outline: 3px solid #1d4e89;
+  outline: 3px solid var(--help-link);
   outline-offset: 2px;
 }
 
 .help-danger {
   padding: var(--space-3) var(--space-4);
-  border-left: 6px solid #a61b1b;
+  border-left: 6px solid var(--help-danger);
   border-radius: var(--radius-sm);
-  background: #fdf1f1;
-  color: #1f2430;
+  background: var(--help-danger-bg);
+  color: var(--help-text);
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-extrabold);
 }
 
-.help-page .help-danger a {
-  color: #a61b1b;
+.help-main .help-page .help-danger a {
+  color: var(--help-danger);
 }
 
 .help-private {
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-sm);
-  background: #eef4fb;
-}
-
-.help-topics-nav ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  margin: 0 0 var(--space-6);
-  padding: 0;
-  list-style: none;
-}
-
-.help-topics-nav a {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--tap-target);
-  padding: var(--space-1) var(--space-3);
-  border: 1px solid #c9d3df;
-  border-radius: var(--radius-pill);
-  text-decoration: none;
+  background: var(--help-private-bg);
 }
 
 .help-topic {
   margin: 0 0 var(--space-4);
   padding: var(--space-4);
-  border: 1px solid #d9dee6;
+  border: 1px solid var(--help-border);
   border-radius: var(--radius-md);
-  background: #ffffff;
+  background: var(--help-bg);
   scroll-margin-top: var(--space-4);
 }
 
 .help-topic--urgent {
-  border-color: #a61b1b;
+  border-color: var(--help-danger);
   border-width: 2px;
 }
 
 .help-topic--adults {
-  background: #f6f8fb;
+  background: var(--help-surface-alt);
 }
 
-.help-services,
-.help-contacts {
+.help-services {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -120,34 +258,97 @@
 
 .help-service {
   padding: var(--space-3) 0;
-  border-top: 1px solid #e6e9ee;
+  border-top: 1px solid var(--help-border-soft);
+}
+
+.help-service__summary p {
+  margin-bottom: var(--space-2);
+}
+
+.help-service__actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.help-service__actions li {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/*
+ * Big, clear actions: at least the 44px touch target, text wraps on narrow phones. Calm on this
+ * page: normal case, no 3D shadow or press movement (no game feel on Get help).
+ */
+.help-main .help-button {
+  text-transform: none;
+  letter-spacing: normal;
+  box-shadow: none;
+  transform: none;
+  transition: none;
+}
+
+.help-main .btn--secondary.help-button {
+  border: 2px solid var(--help-border);
+}
+
+.help-button {
+  min-height: 48px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+.help-service__more {
+  margin-top: var(--space-2);
+}
+
+.help-service__more summary {
+  display: list-item;
+  padding: 10px 0;
+  cursor: pointer;
+  color: var(--help-link);
+  font-weight: var(--font-weight-extrabold);
+}
+
+.help-service__more summary:focus-visible {
+  outline: 3px solid var(--help-link);
+  outline-offset: 2px;
+}
+
+/* Windows High Contrast and other forced colours: keep the key edges visible. */
+@media (forced-colors: active) {
+  .help-danger,
+  .help-topic--urgent,
+  .help-exit,
+  .help-exit-bar,
+  .help-category__summary,
+  .help-search input {
+    border: 2px solid CanvasText;
+  }
+
+  .help-danger {
+    border-left-width: 6px;
+  }
 }
 
 .help-service p {
   margin-bottom: var(--space-2);
 }
 
-.help-contacts li {
-  margin-bottom: var(--space-2);
-}
-
-.help-action {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--tap-target);
-  font-weight: var(--font-weight-extrabold);
-  overflow-wrap: anywhere;
-}
-
 .help-note {
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
-  background: #fff8e6;
+  background: var(--help-note-bg);
 }
 
 .help-meta,
 .help-footnote {
-  color: #4a5262;
+  color: var(--help-muted);
   font-size: var(--font-size-sm);
 }
 
