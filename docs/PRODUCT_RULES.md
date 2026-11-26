@@ -389,7 +389,7 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
   - At most **one retry per learning point** and **2 retries per lesson**.
   - A **second miss** on a point (its retry, or another question on it) ends retries for it today
     and **steps down** instead: "This one's tricky today, so we'll come back to it another day",
-    the topic's "Learn it first" links, and an easier question on the same topic (lower
+    with "Learn more" (as after any wrong answer), and an easier question on the same topic (lower
     difficulty) next if there is one. The point then waits for the review ladder.
   - **Never 2 hard retries in a row:** a **confidence question** (one the student has answered
     right before, same subject, another learning point) goes just before each retry; without one,
@@ -1022,13 +1022,29 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
 - Combos (owner decision, 2026-11-25): a wrong recall answer never resets the combo, because recall
   checks test older topics and should feel safe. A right one still adds to the combo.
 
-### Learn it first
+### Learn it first and Learn more
 
-- Each topic can link to free official lessons: Oak National Academy lessons and BBC Bitesize pages
-  that match the topic (and, later, our own verified notes).
-- Links only (open in a new tab on tap; nothing loaded from those sites until then), stored as data
-  per topic with the page title, URL, and the date checked. A CI job checks every link still works
-  (HTTP status) and fails on broken links. A topic shows the button only when it has a checked link.
+- **Allowed providers** (owner decision, 2026-11-26): **Oak National Academy**, **BBC Bitesize** and
+  **Isaac Physics / Isaac Science** (University of Cambridge). No others. Criteria: free, made for UK
+  secondary pupils, no ads, no comments or social feeds, no sign-up needed to read. Ad-supported
+  sites and exam-board pages were not chosen. Isaac links are refused until its exact host is
+  confirmed on Isaac's own site.
+- Each topic can link to free lessons from those providers (and, later, our own verified notes).
+  A link can be for the whole topic, or only for some of its learning points or items.
+- **Learn it first**: at the top of a topic lesson (and on the parent's "Worth a look together"),
+  the topic's whole-topic links.
+- **Learn more** (owner request, 2026-11-26: "link out to authoritative, age-appropriate sources
+  for further tuition guidance when a question needs more explanation"): on a flashcard's Explain
+  panel and after a wrong answer in a lesson, behind a "Learn more" tap. It shows the most specific
+  links: those for the item, else for its learning point, else the whole topic's. Flashcards use
+  the topic's (a card does not carry its learning point yet).
+- Links only (open in a new tab on tap; nothing loaded from those sites until then, nothing
+  recorded about taps), stored as data per topic with the page title, URL and dates.
+- A link shows only when it is both **reachable** (`checked_at`: the CI job requests every link and
+  fails on broken ones) and **match-checked** (`match`: someone opened and read the page and
+  recorded its title as fetched, what it teaches, its level and the date). A page that was not
+  opened is never recorded. The CI job also fails when a match-checked page's title changes, so the
+  match is re-checked.
 - Links point at the right level (GCSE or A-Level) and the student's board where the page is
   board-specific.
 

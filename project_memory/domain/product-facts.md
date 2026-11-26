@@ -909,12 +909,25 @@ Tags: #product #rules #limits #defaults
   (`@fontsource/patrick-hand`, OFL-1.1, self-hosted) and the provider passes the style to U's
   `useFeedbackStyle`. Lesson surround (J10a2): follows the style; the question and answers
   sit on `.lesson__stage`, kept plain (Doodle Diary and Sticker Book: paper, night paper in dark mode).
+- Learn link providers (owner decision, 2026-11-26): only Oak National Academy, BBC Bitesize and
+  Isaac Physics / Isaac Science (Cambridge). Criteria: free, made for UK secondary pupils, no ads,
+  no comments or social feeds, no sign-up needed to read; ad-supported sites and exam-board pages
+  not chosen. Provider enum `oak | bitesize | isaac`; Isaac has no confirmed host yet, so Isaac
+  links are refused by validation (`PROVIDER_HOSTS` in `scripts/content/learn-links.mjs`).
+- Learn more (Q6, owner request 2026-11-26): on the flashcard Explain panel and after a wrong
+  lesson answer, behind a "Learn more" tap; most specific links first (item, then learning point,
+  then whole topic; flashcards use the topic). A link may carry `learning_points` or `items`.
+  A link shows anywhere (Learn it first too) only when `checked_at` is set AND it has a `match`
+  record (`page_title` as fetched, `teaches`, `level`, `checked_at`), recorded only for a page
+  actually opened. The CI link check fails a match-checked page whose title changed; it also runs
+  `--probe-providers` (what each provider's home page answers from the runner) and `--coverage`.
+  On 2026-11-26 no link had a match record yet, so no Learn it first or Learn more button shows.
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by
   `pnpm content:check-links` in `.github/workflows/learn-links.yml` (PRs that change links, pushes
   to dev, weekly Monday 06:17 UTC); 2xx and 3xx pass. Bundled into the web app at build time;
-  the button shows at the top of a topic lesson only for links with `checked_at` set; plain links
+  the button shows at the top of a topic lesson only for whole-topic links that are shown (above); plain links
   opening in a new tab (nothing loaded until tapped). Pilot: Oak KS4 Higher lessons for the 9 GCSE
   Maths topics with items (n4, n7, a4, a6, a17, a18, r9, g9, g17), URLs found by web search only.
   All 11 returned 200 in the CI link check on 2026-11-25, so `checked_at` is set and the buttons
