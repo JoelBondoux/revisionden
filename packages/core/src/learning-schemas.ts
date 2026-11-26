@@ -259,6 +259,12 @@ export const FlashcardsOverviewSchema = z.object({
   decks: z.array(FlashcardDeckSchema),
   mine: z.array(FlashcardSchema),
   draftContent: z.boolean(),
+  /** Daily limit (F11): review cards left today (0–20, or more after "10 more"). */
+  dueToday: z.number().int().min(0).optional(),
+  /** All due cards, beyond today's limit (not shown to the student as a number). */
+  backlog: z.number().int().min(0).optional(),
+  /** Today's limit is reached and cards are still due: "Done for today!". */
+  doneToday: z.boolean().optional(),
 });
 export type FlashcardsOverview = z.infer<typeof FlashcardsOverviewSchema>;
 

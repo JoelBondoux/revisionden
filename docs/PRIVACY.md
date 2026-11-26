@@ -109,6 +109,7 @@ date per parent sign-in.
   the reference code, the path `/link` and the browser's error name only (for example
   `NotAllowedError`; strict pattern, never the browser's message). A bug report sent from that
   screen may carry the same short code as `lastProblem` (letters, digits, `_`, `:` and `-` only).
+  A failed "Use my phone instead" sign-in (E10) is logged the same way, with the path `/unlock`.
 
 ## Operator console (AppDeck)
 

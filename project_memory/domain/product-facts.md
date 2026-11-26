@@ -55,6 +55,12 @@ Tags: #product #rules #limits #defaults
   parents and students; the sales site's "Sign in" goes there
   (`decisions/0007-student-passkey-unlock.md`). Implemented in
   `apps/web/src/features/onboarding/StudentUnlock.tsx`.
+- "Use my phone instead" (E10, owner decision 2026-11-26): on computers and tablets, and anywhere
+  after no passkey was found, the student can sign in with the passkey on their phone (WebAuthn
+  hybrid: the browser shows a QR code). The API adds `hints: ['hybrid']` only for
+  `{ usePhone: true }`; the normal unlock is unchanged. The computer becomes a new linked device,
+  parents are told, one new device a day, as for synced passkeys. Parent-approved sessions were not
+  chosen. `decisions/0007-student-passkey-unlock.md` "Using your phone".
 - A passkey synced to another device (iCloud Keychain, Google Password Manager) unlocks there
   too, as a new device of its own (owner decision: allow, and tell the parents). Each device keeps
   a random marker in local storage (`revisionden.deviceMarker`; the API stores its hash in
@@ -278,10 +284,15 @@ Tags: #product #rules #limits #defaults
   with questions and answers `status: "coming_soon"` (plus `subjectId` and `subjects` with
   `hasContent` for the switcher) for one with none; 404 `no_subject` only with no subject at all
   or an unknown id. The web shows "Questions for <subject> are on their way." and a switcher.
+- Daily flashcard limit (F11, owner 2026-11-26): 20 review cards a day (`DAILY_CARD_LIMIT`),
+  "10 more" on request (`EXTRA_CARDS`). Badge and "Due today" show today's remaining (0–20).
+  Order: relearning, most overdue for its interval, then weak spots, then recent wrong answers.
+  Own cards count; All decks is not limited. Held-back cards roll over with no penalty (SM-2
+  uses the card's interval, not its lateness). Parent stats show no backlog (API has `backlog`).
 - Clues and help (F10, owner 2026-11-26): "Need a clue?" shows the verified hint (no penalty,
   no longer shown up front); then "Help me understand" steps through the verified worked
   solution. A right answer after help earns half XP (rounded down, owner), no combo, and is
-  practised like a miss (mastery 0, review ladder, flashcard). Learn mode only.
+  practised like a miss (mastery 0 on the map and dashboards, review ladder, flashcard). Learn mode only.
   `attempts.helped` (migration 0029).
 - Powers (F9, owner 2026-11-26): shown as superscripts everywhere students see maths
   (`packages/core/src/powers.ts`, web `MathText`), with spoken words for screen readers; stored

@@ -107,7 +107,11 @@ const unlockVerifySchema = z
   })
   .strict();
 const unlockOptionsSchema = z
-  .object({ credentialIds: z.array(z.string()).max(10).optional() })
+  .object({
+    credentialIds: z.array(z.string()).max(10).optional(),
+    /** "Use my phone instead" (E10): hint the browser to offer the phone (hybrid, a QR code). */
+    usePhone: z.boolean().optional(),
+  })
   .strict();
 
 /** Parent routes under /v1/students: create link tokens, list and unlink devices. */
@@ -517,8 +521,8 @@ export function deviceRoutes({ db, clock, passkeys, rateLimiters }: DeviceDeps) 
   });
 
   app.post('/unlock/options', async (c) => {
-    const { credentialIds } = await readJson(c, unlockOptionsSchema);
-    const options = await passkeys.authenticationOptions({ credentialIds });
+    const { credentialIds, usePhone } = await readJson(c, unlockOptionsSchema);
+    const options = await passkeys.authenticationOptions({ credentialIds, usePhone });
     const challengeId = await createChallenge('unlock', options.challenge);
     return c.json({ challengeId, options });
   });

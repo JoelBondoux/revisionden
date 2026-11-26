@@ -243,6 +243,13 @@ Product owner decision, 2026-11-25: **parent view only**.
   it is used on becomes its own linked device, which a parent can unlink on its own, and both
   parents are told ("RevisionDen noticed <nickname>'s passkey being used on a new device"). At most
   one new device a day per passkey (cleared browser storage); an unlinked device stays refused.
+- **Use my phone instead (E10).** On a computer or tablet, and anywhere after "No RevisionDen
+  passkey was found", a second button signs in with the passkey on the student's phone: "Your
+  browser shows a QR code. Scan it with the phone you use for RevisionDen." The computer then
+  becomes a linked device, the parents are told, and the one-new-device-a-day limit applies, as
+  for synced passkeys. If it fails: could not reach your phone (turn on Bluetooth on both, keep
+  the phone close), this browser cannot sign in with your phone (try Chrome, Edge or Safari), or
+  that passkey is not linked (ask a parent), with a "Details: <error name> (RD-…)" line.
   Parents and students share
   one sign-in page, the welcome page (`decisions/0007-student-passkey-unlock.md` in project
   memory).
@@ -491,9 +498,11 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
 - Both open in place under the question, so the answer box and Check stay on screen.
 - After help the student still has to answer: help is never a free answer. The answer is
   **helped**. A right helped answer earns half the usual XP, rounded down (owner), and never a
-  combo. It is practised like a miss: it counts as wrong for mastery, goes on the review ladder,
+  combo. It is practised like a miss: it counts as wrong for mastery (on the topic map and in the
+  parent and student dashboards, while accuracy keeps its real score), goes on the review ladder,
   becomes a flashcard, and can come back in the lesson. The feedback says "Correct, with help".
-  A clue on its own changes nothing.
+  A clue on its own changes nothing. Help that arrives after the pupil has moved on never marks
+  the next question as helped.
 - Learn mode only: there is no clue or help in Test mode or the starting test (the API refuses a
   helped Test mode answer).
 - Implemented in `packages/core/src/help.ts`, `GET /v1/student/learn/items/:id/help`,
@@ -503,7 +512,8 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
 
 - Powers are shown as superscripts wherever students see maths: x^2 is shown as x², 10^-3 as
   10⁻³, 10^(2 + 8) as 10²⁺⁸ (a raised bracket loses its brackets). Only the power is raised
-  (x^2y is x²y), and a^b^c is a to the power b^c, read right to left as in maths. This covers
+  (x^2y is x²y), and a^b^c is a to the power b^c, read right to left as in maths; a compound
+  power raised again keeps its brackets (x^(a+b)^2 shows (a+b)² raised). This covers
   prompts, options, units, flashcards (both faces and the card list), Explain steps, answers and
   explanations in feedback, hints, and the review batch screens. Stored content keeps its ^.
 - Screen readers hear the words from the read-aloud rules ("x squared", "to the power minus 3").
@@ -527,6 +537,18 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
 - Mastery 0–100: weighted average of the last 30 attempts; weights halve every 30 days; two
   imaginary wrong answers as a starting point, so mastery is earned and fades without practice.
   A weak spot is a topic below 60.
+- **Daily card limit (F11, owner 2026-11-26):** at most 20 review cards a day
+  (`DAILY_CARD_LIMIT`), so the Cards tab never shows a backlog like "99+". The Cards badge and
+  "Due today" show today's remaining number (0 to 20). Which 20: cards being relearned first, then
+  the most overdue for their interval; among equally overdue cards, weak-spot topics first, then
+  the most recent wrong answers, then the one due earliest. The student's own cards count; All
+  decks is browsing, not review, and is not limited. After 20 the Cards tab says "Done for today!"
+  (with the usual celebration sound and vibration) and offers "10 more" for keen students; extra
+  cards schedule normally. Cards past the cap stay due and roll to the next day with no penalty
+  and no overdue message: SM-2 sets the next gap from the card's own interval, never from how late
+  it was reviewed, so a held-back card is not treated as forgotten. The parent stats show no
+  flashcard backlog today (the API returns `backlog` for a later parent view). Implemented in
+  `packages/core/src/card-limit.ts` and `apps/api/src/learning/card-limit.ts`.
 - Implemented: `packages/core/src/spaced-repetition.ts`, `packages/core/src/mastery.ts`.
 - **Turning a card (F7, owner):** tap the card, or press Space or Enter, to turn it either way as
   often as you like. Turning it back to the question never counts as another try and never
