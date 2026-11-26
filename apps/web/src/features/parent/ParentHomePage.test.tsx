@@ -78,7 +78,7 @@ describe('Parent home', () => {
 
 describe('Ways in to the parent home', () => {
   it('is linked from Settings', async () => {
-    renderRoute('/settings');
+    renderRoute('/settings/more');
     expect(await screen.findByRole('link', { name: 'Parent home' })).toHaveAttribute(
       'href',
       '/parent',

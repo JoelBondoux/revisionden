@@ -929,11 +929,34 @@ Requested by the product owner on 2026-11-25.
 - Implemented: `apps/api/src/routes/family-parents.ts`, `apps/api/src/family-events.ts`,
   `apps/web/src/features/parents/`; migration 0012.
 
+## Me page (`/settings`, workstream W9, owner feedback 2026-11-26)
+
+Owner: "The avatar/Me settings page is a little convoluted, and it doesn't allow customising your
+own avatar." The page is now short enough for one phone screen (390 × 844):
+
+- **Top:** heading "Me", the student's avatar (large) and nickname, and **Edit my avatar**. It opens
+  the avatar builder (E's, reused as it is) in a sheet with Save and Cancel. Cancel, Escape or the
+  close button ask "Throw away your changes?" (Keep editing or Throw away) if anything changed.
+  Save sends the look with `PUT /v1/student/avatar`; the nav's Me avatar changes as soon as the
+  server says yes. The API's only rule is that every item is unlocked (locked items need their
+  reward); there is no parent approval and no rate limit. The nickname comes from
+  `GET /v1/student/me`.
+- **Then:** Get help (always the first link on the page), My progress, My rewards.
+- **Look and sound** (`/settings/look-and-sound`): Reading comfort, Appearance (theme), Effect style
+  (students only; its picker is unchanged), Read aloud, Sound (with vibration).
+- **More** (`/settings/more`): My subjects, Reminders, This device (install, Switch profile, Show
+  the bug button), Parents (Parent home, Ask a parent), Feedback (send, yours, your family's),
+  Policies and About, and What your parent can see. Both sub-pages end with "Back to Me".
+- A parent on `/settings` (no student on the device) sees no avatar header, and gets a Parent home
+  tile on the main page as well as in More.
+- Code: `apps/web/src/pages/SettingsPage.tsx`, `apps/web/src/features/me/` (`MeHeader`,
+  `MyAvatarProvider` shared with the nav). Screenshots: `docs/design/w9/`.
+
 ## Get help (support resources)
 
 Requested by the product owner on 2026-11-25.
 
-- A **"Get help"** page for students, reachable from Settings (first thing on the page). Also
+- A **"Get help"** page for students, reachable from Settings (the Me page; first link on it). Also
   reachable signed out. Owner decision, 2026-11-26 (W7): students find Get help on Settings only,
   reached from the "Me" avatar item in the main nav; it is no longer in the student header or
   footer. (Was: Settings, the profile menu and the footer of every student screen.)
