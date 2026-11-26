@@ -6,7 +6,8 @@ import {
   FlashcardSessionSchema,
   FlashcardSchema,
   FlashcardsOverviewSchema,
-  LearnAttemptResponseSchema,
+  ItemHelpResponseSchema,
+  LearnAttemptResultSchema,
   LessonResponseSchema,
   ProgressSchema,
   StartingTestResponseSchema,
@@ -19,7 +20,7 @@ import {
   type FlashcardSessionResult,
   type FlashcardsOverview,
   type LearnAttemptRequest,
-  type LearnAttemptResponse,
+  type LearnAttemptResult,
   type LessonResponse,
   type Progress,
   type StartingTestResponse,
@@ -38,12 +39,16 @@ export interface LearnApi {
   getProgress(): Promise<Progress>;
   startStartingTest(subjectId: string): Promise<StartingTestResponse>;
   finishStartingTest(id: string): Promise<StartingTestResult>;
-  submitAttempt(attempt: LearnAttemptRequest): Promise<LearnAttemptResponse>;
-  getFlashcards(): Promise<FlashcardsOverview>;
+  submitAttempt(attempt: LearnAttemptRequest): Promise<LearnAttemptResult>;
+  /** "Help me understand" (F10): the item's verified steps, ending on the answer. */
+  getItemHelp(itemId: string): Promise<string[]>;
+  /** Today's cards under the daily limit (F11); `extra` asks for more ("10 more"). */
+  getFlashcards(extra?: number): Promise<FlashcardsOverview>;
   getDeck(topicId: string): Promise<Flashcard[]>;
   /** Starts a review session: deck XP is paid per completed session (F3). */
   /** Starts a review session; with a topic id, for that one deck. */
-  startFlashcardSession(topicId?: string): Promise<FlashcardSession>;
+  /** `extra`: the "10 more" cards asked for today (F11b), so finishing them completes it. */
+  startFlashcardSession(topicId?: string, extra?: number): Promise<FlashcardSession>;
   reviewFlashcard(
     id: string,
     rating: FlashcardRating,
@@ -89,11 +94,17 @@ export function createLearnApi({
       request('learn/starting-tests', StartingTestResponseSchema, { subjectId }),
     finishStartingTest: (id) =>
       request(`learn/starting-tests/${enc(id)}/finish`, StartingTestResultSchema, {}),
-    submitAttempt: (attempt) => request('learn/attempts', LearnAttemptResponseSchema, attempt),
-    getFlashcards: () => request('flashcards', FlashcardsOverviewSchema),
+    submitAttempt: (attempt) => request('learn/attempts', LearnAttemptResultSchema, attempt),
+    getItemHelp: async (itemId) =>
+      (await request(`learn/items/${enc(itemId)}/help`, ItemHelpResponseSchema)).steps,
+    getFlashcards: (extra) =>
+      request(extra ? `flashcards?extra=${extra}` : 'flashcards', FlashcardsOverviewSchema),
     getDeck: (topicId) => request(`flashcards/decks/${enc(topicId)}`, FlashcardSchema.array()),
-    startFlashcardSession: (topicId) =>
-      request('flashcards/sessions', FlashcardSessionSchema, topicId ? { topicId } : {}),
+    startFlashcardSession: (topicId, extra) =>
+      request('flashcards/sessions', FlashcardSessionSchema, {
+        ...(topicId ? { topicId } : {}),
+        ...(extra ? { extra } : {}),
+      }),
     reviewFlashcard: (id, rating, sessionId) =>
       request(`flashcards/${enc(id)}/review`, FlashcardReviewResponseSchema, {
         rating,

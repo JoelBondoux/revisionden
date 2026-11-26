@@ -26,6 +26,7 @@ export const EXPECTED_SECONDS: Record<Exclude<ItemType, 'extended_answer'>, numb
   numeric: 40,
   short_answer: 45,
   worked_maths: 120,
+  area_model: 60,
 };
 
 /** A right answer slower than this many times the expected time is shaky. */

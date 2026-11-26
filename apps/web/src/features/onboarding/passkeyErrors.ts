@@ -60,6 +60,37 @@ export function describePasskeyError(name: string): { kind: PasskeyProblem; mess
   return { kind, message: MESSAGES[kind] };
 }
 
+/** E10: signing in with the phone (WebAuthn hybrid) from a computer or tablet. */
+export type PhoneProblem = 'unreachable' | 'unsupported' | 'notLinked' | 'other';
+
+const PHONE_KINDS: Record<string, PhoneProblem> = {
+  // Bluetooth off, phone too far away, cancelled or timed out: browsers report all of these the
+  // same way, on purpose, so one message covers them.
+  NotAllowedError: 'unreachable',
+  AbortError: 'unreachable',
+  ERROR_CEREMONY_ABORTED: 'unreachable',
+  NotSupportedError: 'unsupported',
+  SecurityError: 'unsupported',
+  ERROR_INVALID_DOMAIN: 'unsupported',
+  ERROR_INVALID_RP_ID: 'unsupported',
+  passkey_not_verified: 'notLinked',
+  InvalidStateError: 'notLinked',
+};
+
+const PHONE_MESSAGES: Record<PhoneProblem, string> = {
+  unreachable:
+    'We could not reach your phone. Turn on Bluetooth on this device and on your phone, keep your phone close by, then try again.',
+  unsupported:
+    'This browser cannot sign in with your phone. Try Chrome, Edge or Safari, or ask a parent to link this device.',
+  notLinked: 'That passkey is not linked to RevisionDen.',
+  other: 'We could not sign in with your phone. Please try again.',
+};
+
+export function describePhoneError(name: string): { kind: PhoneProblem; message: string } {
+  const kind = PHONE_KINDS[name] ?? 'other';
+  return { kind, message: PHONE_MESSAGES[kind] };
+}
+
 /**
  * In-app browsers and web views (the Google app and Lens, Instagram, Facebook, TikTok and the
  * like) often cannot make passkeys. Matched on the user agent; only the answer is kept.

@@ -27,7 +27,7 @@ describe('bug button on every screen', () => {
   });
 
   it('can be switched off and on again in Settings', async () => {
-    renderRoute('/settings');
+    renderRoute('/settings/more');
     const toggle = await screen.findByRole('checkbox', { name: 'Show the bug button' });
     expect(toggle).toBeChecked();
     await userEvent.click(toggle);

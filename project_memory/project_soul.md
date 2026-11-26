@@ -51,6 +51,8 @@ teenagers. It replaces a paid revision subscription and runs almost entirely on 
 - Question generation rules: 3% sampling for owner-approved template batches, set texts as
   quotation-only sources, fact-table batching, warn-only readability
   (`decisions/0010-question-generation-rules.md`).
+- Database migrations land on `dev` in number order, each with a journal `when` later than the last
+  (the migrator skips older ones) (`decisions/0011-migration-order.md`).
 - Canonical backlog: `docs/BACKLOG.md` (`roadmap/improvement-plan.md` points to it).
 
 ## Maintained Pages

@@ -195,7 +195,8 @@ test("the young people's notice shows cards, expands its parts and is accessible
 test('Settings offers "Add RevisionDen to this device" as a button, accessibly', async ({
   page,
 }) => {
-  await page.goto('/settings');
+  // The install button lives under Me > More (W9).
+  await page.goto('/settings/more');
   // Chrome only offers its install prompt to a real installable site; send the event ourselves.
   await page.evaluate(() => {
     const event = new Event('beforeinstallprompt');

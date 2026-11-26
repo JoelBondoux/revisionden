@@ -1,0 +1,170 @@
+/* Interactive area model (lesson pilot W8). Colours come from the theme tokens, so it follows
+   light, dark and colour-blind palettes. Fits 320px with text at 200%: everything wraps and the
+   picture scales to the width it is given. */
+
+.area-model {
+  min-width: 0;
+  /* Tighter than other questions: the picture needs the room (single screen rule). */
+  gap: var(--space-2);
+}
+
+.area-expression {
+  margin: 0;
+  font-size: var(--font-size-lg, 1.25rem);
+  font-weight: var(--font-weight-extrabold);
+  overflow-wrap: anywhere;
+}
+
+.area-term {
+  border-radius: var(--radius-sm);
+  padding: 0 0.15em;
+  border-bottom: 3px solid transparent;
+}
+
+.area-term--square {
+  border-bottom-color: var(--color-primary);
+}
+.area-term--strip {
+  border-bottom-color: var(--color-success);
+}
+.area-term--unit {
+  border-bottom-color: var(--color-streak);
+}
+
+.area-term--lit.area-term--square {
+  background: var(--color-primary-soft);
+}
+.area-term--lit.area-term--strip {
+  background: var(--color-success-soft);
+}
+.area-term--lit.area-term--unit {
+  background: var(--color-warning-soft);
+}
+
+.area-board {
+  max-width: 28rem;
+}
+
+/* Kept short so the question, tiles, pairs and Check fit one phone screen (single screen rule). */
+.area-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: min(120px, 18vh);
+}
+
+.area-svg text {
+  fill: var(--color-text);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.area-tile {
+  cursor: pointer;
+  stroke: var(--color-surface);
+  stroke-width: 1;
+}
+
+.area-tile--square {
+  fill: var(--color-primary);
+}
+.area-tile--strip {
+  fill: var(--color-success);
+}
+.area-tile--unit {
+  fill: var(--color-streak);
+}
+.area-slot--missing {
+  fill: none;
+  stroke: var(--color-text);
+  stroke-width: 2;
+  stroke-dasharray: 4 3;
+}
+
+.area-tile--faded {
+  opacity: 0.4;
+}
+
+.area-tile--lit,
+.area-tile:focus-visible {
+  outline: none;
+  stroke: var(--color-text);
+  stroke-width: 3;
+}
+
+.area-sides,
+.area-status {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.area-status {
+  min-height: 1.5em;
+  font-weight: var(--font-weight-extrabold);
+}
+
+.area-status--right {
+  color: var(--color-success-edge);
+}
+.area-status--try {
+  color: var(--color-warning-text);
+}
+
+.area-pairs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.area-pairs__label {
+  margin: 0;
+  font-weight: var(--font-weight-extrabold);
+}
+
+.area-pairs__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.area-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 48px;
+  padding: var(--space-1) var(--space-3);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  cursor: pointer;
+}
+
+.area-pair:has(input:checked) {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.area-pair:has(input:focus-visible) {
+  box-shadow: var(--focus-ring);
+}
+
+.area-help {
+  margin: 0;
+}
+
+@media (forced-colors: active) {
+  .area-tile,
+  .area-slot--missing {
+    stroke: CanvasText;
+  }
+  .area-term--lit {
+    outline: 2px solid CanvasText;
+  }
+}
+
+.area-helped {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+}

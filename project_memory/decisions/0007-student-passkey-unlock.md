@@ -51,6 +51,34 @@ Manager. They are allowed, and the parents are told (I5b):
   devices. Clearing that browser's storage would make it a new device again, which the parents are
   told about. To stop a synced passkey everywhere, a parent unlinks every device that uses it.
 
+## Using your phone (E10, product owner, 2026-11-26)
+
+Some devices cannot hold the student's passkey (a school or shared computer, an old laptop). The
+product owner chose cross-device sign-in, "Use my phone instead": WebAuthn hybrid, where the
+browser shows a QR code that the student scans with the phone that holds their passkey (Bluetooth
+checks the phone is close by). Parent-approved sessions on such devices (option 2) were **not**
+chosen for now.
+
+- **Where.** A secondary button "Use my phone instead" under the unlock button on the welcome page
+  and at `/unlock`, with one line: "Your browser shows a QR code. Scan it with the phone you use
+  for RevisionDen." Shown on computers and tablets, and on any device once "No RevisionDen passkey
+  was found on this device". "Ask a parent to link this device" stays the fallback.
+- **Options.** The normal unlock is unchanged. The phone path asks `POST /v1/device/unlock/options`
+  with `{ usePhone: true }`, which adds `hints: ['hybrid']`. Both keep `allowCredentials` empty
+  (discoverable passkeys) and never filter by transports, so nothing blocks hybrid.
+- **Same rules as synced passkeys.** To the API the phone's passkey on a computer is a passkey on
+  a new device: the computer gets a marker and its own `devices` row, both parents are told
+  (`passkey_new_device`), and at most one new device a day per passkey. Next time that computer
+  signs in as itself.
+- **When it fails.** Plain words, as for E8: could not reach the phone (Bluetooth off, phone too far
+  away, cancelled or timed out; browsers report these the same way), this browser cannot use a
+  phone (try Chrome, Edge or Safari), or that passkey is not linked (ask a parent). A
+  "Details: <error name> (RD-…)" line; only the error name is reported (client error kind
+  `passkey`, path `/unlock`).
+- **Checked by hand on real devices.** Browser virtual authenticators cannot act as a phone, so
+  tests cover the options and the screen; the QR and Bluetooth flow needs a real computer and
+  phone.
+
 Implemented: `apps/web/src/features/onboarding/{StudentUnlock,UnlockPage}.tsx`,
 `apps/web/src/api/{unlock.ts,LoadingOrError.tsx}`, `apps/web/src/session/deviceMarker.ts`,
 `apps/api/src/routes/devices.ts` (`deviceForUnlock`), `packages/db` migration `0023_device_markers`.

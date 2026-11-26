@@ -11,7 +11,7 @@ import { OfflineBanner } from '../pwa/OfflineBanner';
 import { useStudent } from '../session/StudentContext';
 import { PublicHeader } from './PublicHeader';
 import { VersionFooter } from './VersionFooter';
-import { useOnboardingApi } from '../features/onboarding/OnboardingApiContext';
+import { MyAvatarProvider, useMyAvatar } from '../features/me';
 
 /** Flashcards due for the chosen student; zero while loading, on error or with nobody chosen. */
 function useCardsDue(): number {
@@ -26,13 +26,7 @@ function useCardsDue(): number {
 
 /** The chosen student's own avatar code for the Me nav item; null while loading or on error. */
 function useMyAvatarCode(): string | null {
-  const onboarding = useOnboardingApi();
-  const { studentId } = useStudent();
-  const avatar = useApiResource(
-    () => (studentId ? onboarding.getMyAvatar() : Promise.resolve(null)),
-    [onboarding, studentId],
-  );
-  return avatar.status === 'ready' ? (avatar.data?.avatarCode ?? null) : null;
+  return useMyAvatar()?.code ?? null;
 }
 
 /** Marks the main area while the bug button is showing (focused and public pages pad it). */
@@ -54,7 +48,12 @@ function AppPages() {
   // Only a student's linked device gets the student app nav; anyone else (signed out, or a
   // parent) gets the small public header on these pages.
   if (!studentId) return <PublicLayout />;
-  return <StudentLayout />;
+  // The nav's Me item and the Me page share one avatar, so an edit shows everywhere at once (W9).
+  return (
+    <MyAvatarProvider studentId={studentId}>
+      <StudentLayout />
+    </MyAvatarProvider>
+  );
 }
 
 function StudentLayout() {

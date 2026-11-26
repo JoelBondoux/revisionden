@@ -158,7 +158,7 @@ test("Learn more after a wrong answer opens the learning point's lesson, request
   });
   await expect(link).toHaveAttribute(
     'href',
-    'https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/arithmetic-procedures-index-laws/lessons/checking-and-securing-understanding-of-lcm-and-hcf',
+    'https://www.thenational.academy/pupils/lessons/checking-and-securing-understanding-of-lcm-and-hcf/overview',
   );
   await expect(link).toHaveAttribute('target', '_blank');
   await expect(link).toHaveAttribute('rel', 'noopener noreferrer');

@@ -1,13 +1,15 @@
 import { Hono } from 'hono';
-import { and, desc, eq, gt, inArray, isNotNull, isNull } from 'drizzle-orm';
+import { and, desc, eq, gt, inArray, isNotNull, isNull, notInArray, sql } from 'drizzle-orm';
 import { bugReward } from '@revisionden/core';
 import { z } from 'zod';
 import {
   FEEDBACK_KINDS,
   FEEDBACK_MAX_TEXT,
   FEEDBACK_STATUSES,
+  LESSON_FEEDBACK_KINDS,
   POLICIES_TO_ACCEPT,
   feedback,
+  items,
   feedbackReplies,
   policyAcceptances,
   students,
@@ -47,13 +49,23 @@ const deviceSchema = z
   })
   .partial()
   .strict();
+const isLessonKind = (kind: string) => (LESSON_FEEDBACK_KINDS as readonly string[]).includes(kind);
+
+/**
+ * A lesson tap ("Did this help?" after an interactive lesson, W8) names the item and never has
+ * text; other feedback never names an item.
+ */
 const sendSchema = z
   .object({
     kind: z.enum(FEEDBACK_KINDS),
     text: z.string().max(FEEDBACK_MAX_TEXT).optional(),
     device: deviceSchema.optional(),
+    itemId: z.string().uuid().optional(),
   })
-  .strict();
+  .strict()
+  .refine((b) => (isLessonKind(b.kind) ? !!b.itemId && b.text === undefined : !b.itemId), {
+    message: 'Lesson feedback names an item and has no text; other feedback has no item',
+  });
 const statusSchema = z.object({ status: z.enum(FEEDBACK_STATUSES) }).strict();
 const confirmSchema = z.object({ duplicateOf: z.string().optional() }).strict();
 const seenSchema = z.object({ ids: z.array(z.string()).max(50) }).strict();
@@ -117,6 +129,7 @@ function toFeedback(row: typeof feedback.$inferSelect) {
     text: row.text,
     status: row.status,
     senderRole: row.senderRole,
+    itemId: row.itemId ?? null,
     createdAt: row.createdAt.toISOString(),
     updatedAt: row.updatedAt.toISOString(),
     outcome: row.outcome ?? null,
@@ -143,7 +156,14 @@ async function sentInLastDay(db: Database, now: Date, sender: ReturnType<typeof 
   const rows = await db
     .select({ id: feedback.id })
     .from(feedback)
-    .where(and(sender, gt(feedback.createdAt, new Date(now.getTime() - DAY_MS))));
+    .where(
+      and(
+        sender,
+        gt(feedback.createdAt, new Date(now.getTime() - DAY_MS)),
+        // Lesson taps (W8) do not use up the daily limit.
+        notInArray(feedback.kind, [...LESSON_FEEDBACK_KINDS]),
+      ),
+    );
   return rows.length;
 }
 
@@ -151,9 +171,46 @@ async function sentInLastDay(db: Database, now: Date, sender: ReturnType<typeof 
 export function studentFeedbackRoutes({ db, clock }: FeedbackDeps) {
   const app = new Hono<AppEnv>();
 
+  /** One answer per student and item: a second tap replaces the first. No text is ever kept. */
+  async function saveLessonTap(
+    kind: (typeof FEEDBACK_KINDS)[number],
+    itemId: string,
+    { studentId, familyId }: { studentId: string; familyId: string },
+  ) {
+    return db.transaction(async (tx) => {
+      const [item] = await tx.select({ id: items.id }).from(items).where(eq(items.id, itemId));
+      if (!item) throw notFound('That question no longer exists');
+      const now = clock.now();
+      // One answer per student and item, enforced by the feedback_lesson_tap_unique partial
+      // index; the WHERE here repeats its predicate so Postgres can use it (W8b).
+      const [row] = await tx
+        .insert(feedback)
+        .values({
+          familyId,
+          senderRole: 'student',
+          studentId,
+          kind,
+          itemId,
+          createdAt: now,
+          updatedAt: now,
+        })
+        .onConflictDoUpdate({
+          target: [feedback.studentId, feedback.itemId],
+          targetWhere: sql`${feedback.kind} in ('lesson_helped', 'lesson_not_helped')`,
+          set: { kind, updatedAt: now },
+        })
+        .returning();
+      return row!;
+    });
+  }
+
   app.post('/feedback', async (c) => {
     const body = await readJson(c, sendSchema);
     const { studentId, familyId } = c.var.student;
+    if (body.itemId) {
+      const row = await saveLessonTap(body.kind, body.itemId, { studentId, familyId });
+      return c.json(toFeedback(row), 201);
+    }
     const profiles = (await familyProfiles(db, familyId)).filter((p) => p.id === studentId);
     if (body.text && containsPersonalData(body.text, profiles)) throw personalDetails();
     const now = clock.now();
@@ -248,6 +305,8 @@ export function parentFeedbackRoutes({ db, clock }: FeedbackDeps) {
 
   app.post('/feedback', async (c) => {
     const body = await readJson(c, sendSchema);
+    if (body.itemId)
+      throw new ApiError(400, 'invalid_request', 'Lesson feedback comes from students');
     const { familyId, authUserId } = c.var.parent;
     if (body.text && containsPersonalData(body.text, await familyProfiles(db, familyId))) {
       throw personalDetails();

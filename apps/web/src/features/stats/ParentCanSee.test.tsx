@@ -3,7 +3,7 @@ import { renderRoute } from '../../test/render';
 
 describe('What your parent can see', () => {
   it('lists, in Settings, exactly which stats the parent can see', async () => {
-    renderRoute('/settings');
+    renderRoute('/settings/more');
     const card = await screen.findByRole('region', { name: 'What your parent can see' });
     expect(card).toHaveTextContent('Study time');
     expect(card).toHaveTextContent('never your own words');
@@ -14,7 +14,7 @@ describe('What your parent can see', () => {
   });
 
   it('says that two parents can see it, if two are set up', async () => {
-    renderRoute('/settings');
+    renderRoute('/settings/more');
     const card = await screen.findByRole('region', { name: 'What your parent can see' });
     expect(card).toHaveTextContent(
       'If your family has two parents set up, both of them can see the same things.',

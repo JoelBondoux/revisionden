@@ -128,6 +128,26 @@
       record on every item, topic leaf, mark scheme and diagram, per `VERIFICATION.md`.
   - Tests: missing citation, quote, location or URL fails; verified item without required checks
     fails; `other_authoritative`-only item without `needs_human_approval` fails.
+- [ ] **D7 "Either order" topic groups (owner, 2026-11-26).** The new topic map (J15c) can fork
+      where two or more topics in a unit can genuinely be learned in either order, then rejoin.
+      Topic trees gain an optional `order_groups` list per unit (topic IDs that may be done in any
+      order). A group is added only with a reason a teacher would accept, recorded like any other
+      content decision (citation to the specification's ordering, or human approval per
+      `VERIFICATION.md`); with no group the unit stays in specification order. The Higher side
+      branch for Foundation students needs no new data (it uses each topic's tier).
+  - Tests: unknown topic ID in a group fails; a group spanning two units fails; a group without a
+    reason or approval fails; units with no groups keep specification order.
+- [ ] **D8 Cross-subject links ("bridge" topics) (owner, 2026-11-26).** On the map, a topic from
+      another subject the student also studies can appear as an optional side node where it helps
+      (for example Physics "speed, distance and time" next to Maths "rearranging formulae"). It is
+      discovered: hidden until the student first opens the linked topic, then it pops in on its own
+      side branch with "You might find this Physics topic useful", and stays there; a bridge topic's
+      own links are discovered the same way (chains). Topic trees gain optional `links` (target
+      subject and topic ID, a one-line plain-English reason, and a citation showing the overlap,
+      for example both specifications' references, or human approval). Starts once a second
+      subject (Physics) has verified content; Astronomy is not yet a subject.
+  - Tests: link to an unknown subject or topic fails; a link without a reason or citation fails;
+    links only show for subjects the student is enrolled in; discovery is remembered per student.
 
 ---
 
@@ -271,8 +291,9 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [x] Q4 Recall checks: 2 questions at lesson start on previously practised topics, skippable, no penalty; wrong answers become flashcards.
 - [x] Q5 Learn it first: `content/learn-links/*.json` with schema and validator, button on topics with a checked link, CI link check. Pilot GCSE Maths Higher Oak links; Bitesize and other subjects later.
 - [x] Q6 Recall checks never reset the combo: a wrong "Remember this?" answer is passed over; a right one still adds to it (owner decision).
-- [x] Q9 Learn more (lead task "Q6", branch `feature/Q6-learn-more`, owner request 2026-11-26): Learn more on Explain and after a wrong answer, links per learning point or item, a recorded match check per link, Isaac allowed. Built, with match-checked links for all 44 topics and 133 learning points with items (2026-11-26). Follow-up: item-level links need the lesson API to send each item's content id.
+- [x] Q9 Learn more (lead task "Q6", branch `feature/Q6-learn-more`, owner request 2026-11-26): Learn more on Explain and after a wrong answer, links per learning point or item, a recorded match check per link, Isaac allowed. Built, with match-checked links for all 44 topics and 133 learning points with items (2026-11-26). Item- and point-level matching in lessons and on flashcards followed in Q6b (`contentId` on LearnItem and Flashcard, `learningPoint` on Flashcard).
 - [x] Q10 Remove the legacy Learn it first path once the 11 Q5 Oak links have each been re-read and match-checked (`LEGACY_UNMATCHED_URLS` in `scripts/content/learn-links.mjs` and the no-match case in the web `isShown`).
+- [x] Q11 Oak links go to pupil pages (lead task "Q6c", owner decision 2026-11-26): every Oak link switched to the pupil lesson page (lesson video, no sign-in), re-read and match-checked; the validator refuses Oak teacher pages unless marked `no_pupil_page`.
 - [x] Q7 BBC Bitesize links for Learn it first: find and check pages on bbc.co.uk (not reachable from the build environment), board-specific where the page is, and add them to `content/learn-links/`.
 - [ ] Q8 Learn it first beyond the 9 pilot GCSE Maths Higher topics: the rest of the 1MA1 tree, then other subjects and A-Level, each link with a title that clearly matches the topic and a passing CI link check.
 - Tests: settings saved and applied per device; voice choice and default; maths reading; selection with fixed clock and seeded randomness; no penalty for recall; links validated and checked.
@@ -332,6 +353,11 @@ Broken down into tasks when Stage 1 ships, following the same format. Headline o
 7. Stage 3: past papers, maths working, essays and Mark my homework, access arrangements,
    A-Level extras.
 8. Stage 4: rewards UI, friends league, skip and gift days UI, mascot kits, interactive lessons.
-   - Friends league: show each student's two-part title under their nickname (R8). The title is
-     `formatTitle` of `students.title_first` and `title_last`; `GET /v1/student/rewards/title`
-     shows the shape (`docs/REWARDS.md` "Two-part titles").
+   - [x] Friends league: show each student's two-part title under their nickname (R8). Done in FL
+         PR 2 (`apps/web/src/features/league/LeaguePage.tsx`). The title is
+         `formatTitle` of `students.title_first` and `title_last`; `GET /v1/student/rewards/title`
+         shows the shape (`docs/REWARDS.md` "Two-part titles").
+   - [x] Friends league follow-up (FL, lead 2026-11-26; done in FL PR 4): an AppDeck support view of friend reports
+         (nicknames, avatar code, fixed reason and date only), where support can also close a report.
+         Parents can already close a report their child made, and closed reports are deleted 12 months
+         later (FL PR 3); see `docs/FRIENDS_LEAGUE.md` sections 7 and 8.

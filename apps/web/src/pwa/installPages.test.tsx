@@ -44,7 +44,7 @@ describe('where "Add RevisionDen to this device" appears', () => {
 
   it('in Settings, as a button rather than a text link', async () => {
     browserOffersInstall();
-    renderRoute('/settings');
+    renderRoute('/settings/more');
     const entry = await screen.findByRole('button', { name: 'Add RevisionDen to this device' });
     expect(entry).toHaveClass('btn');
   });

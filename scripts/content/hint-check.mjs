@@ -35,12 +35,12 @@ function containsAnswer(hay, needle) {
   return false;
 }
 
-// Every way a number is written in content and marking: standard form (6.4 × 10^8, 6.4e8), a
-// mixed number (1 1/3), a fraction (4/3), and a decimal, with UK thousands separators
+// Every way a number is written in content and marking: standard form (6.4 × 10^8, 6.4 × 10⁸,
+// 6.4e8), a mixed number (1 1/3), a fraction (4/3), and a decimal, with UK thousands separators
 // (640,000,000 or 640 000 000). Longest forms first, so 6.4 × 10^8 is never read as 6.4.
 const NUMBER = new RegExp(
   [
-    String.raw`-?\d+(?:\.\d+)?\s*[×xX*·⋅]\s*10\s*\^\s*\(?\s*-?\d+\s*\)?`,
+    String.raw`-?\d+(?:\.\d+)?\s*[×xX*·⋅]\s*10\s*(?:\^\s*\(?\s*-?\d+\s*\)?|⁻?[⁰¹²³⁴-⁹]+)`,
     String.raw`-?\d+(?:\.\d+)?[eE][+-]?\d+(?![a-z])`,
     String.raw`-?\d+\s+\d+\s*\/\s*\d+`,
     String.raw`-?\d+\s*\/\s*\d+`,

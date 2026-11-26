@@ -8,6 +8,7 @@
  * credential ids, and push service keys.
  */
 import { Hono } from 'hono';
+import { friendsExport } from './friends';
 import { and, eq, inArray, or, type SQL } from 'drizzle-orm';
 import type { PgColumn, PgTable } from 'drizzle-orm/pg-core';
 import {
@@ -215,6 +216,9 @@ export function familyExport({
       .where(eq(itemReports.familyId, familyId))
       .orderBy(itemReports.createdAt);
 
+    // Friends league (FL): the other children by nickname only (routes/friends.ts).
+    const friendsByStudent = new Map<string, Awaited<ReturnType<typeof friendsExport>>>();
+    for (const id of ids) friendsByStudent.set(id, await friendsExport(db, id));
     const log = await listFamilyEvents(db, { familyId, position, since: now });
     const body = {
       about:
@@ -242,10 +246,13 @@ export function familyExport({
           yearGroup: kid.yearGroup,
           titleFirst: kid.titleFirst,
           titleLast: kid.titleLast,
+          friendsAllowed: kid.friendsAllowed,
+          leagueHidden: kid.leagueHidden,
           createdAt: kid.createdAt,
           updatedAt: kid.updatedAt,
         },
         ...records.get(kid.id),
+        friends: friendsByStudent.get(kid.id),
       })),
       feedback: familyFeedback.map((row) => ({
         ...without(row, ['familyId', 'senderAuthUserId']),
