@@ -195,34 +195,41 @@ function DashboardView({
         {data.subjects.length === 0 ? (
           <NotSetUp text="No lessons yet." />
         ) : (
-          <table className="stats-table">
-            <caption className="visually-hidden">Subjects</caption>
-            <thead>
-              <tr>
-                <th scope="col">Subject</th>
-                <th scope="col">Mastery</th>
-                <th scope="col">Predicted grade</th>
-                <th scope="col">Last 4 weeks</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.subjects.map((s) => (
-                <tr key={s.subjectId}>
-                  <th scope="row">{s.name}</th>
-                  <td>{s.mastery}%</td>
-                  <td>
-                    {grade(
-                      s.predictedGrade,
-                      savedTargets.has(s.subjectId)
-                        ? (savedTargets.get(s.subjectId) ?? null)
-                        : s.targetGrade,
-                    )}
-                  </td>
-                  <td>{s.change > 0 ? `+${s.change}` : String(s.change)}</td>
+          <div
+            className="stats-table-scroll"
+            role="region"
+            aria-label="Subjects table"
+            tabIndex={0}
+          >
+            <table className="stats-table">
+              <caption className="visually-hidden">Subjects</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Subject</th>
+                  <th scope="col">Mastery</th>
+                  <th scope="col">Predicted grade</th>
+                  <th scope="col">Last 4 weeks</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {data.subjects.map((s) => (
+                  <tr key={s.subjectId}>
+                    <th scope="row">{s.name}</th>
+                    <td>{s.mastery}%</td>
+                    <td>
+                      {grade(
+                        s.predictedGrade,
+                        savedTargets.has(s.subjectId)
+                          ? (savedTargets.get(s.subjectId) ?? null)
+                          : s.targetGrade,
+                      )}
+                    </td>
+                    <td>{s.change > 0 ? `+${s.change}` : String(s.change)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </Card>
 

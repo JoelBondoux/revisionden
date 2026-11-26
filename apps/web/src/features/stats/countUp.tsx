@@ -170,7 +170,7 @@ export function CountUp({
       <span
         aria-hidden="true"
         className="count-up__digits"
-        style={{ minWidth: `${final.length}ch` }}
+        style={{ minWidth: `min(${final.length}ch, 100%)` }}
       >
         {format(shown)}
       </span>

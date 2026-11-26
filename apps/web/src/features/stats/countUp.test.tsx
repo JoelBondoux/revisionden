@@ -46,7 +46,14 @@ describe('count-up numbers', () => {
       if (text) expect(text).toMatch(/^\d+ h \d+ min$/);
     }
     render(<CountUp value={95} format={minutes} />, { wrapper: wrap });
-    expect(digits()).toHaveStyle({ minWidth: `${'1 h 35 min'.length}ch` });
+    expect(digits()!.getAttribute('style')).toContain(`min(${'1 h 35 min'.length}ch, 100%)`);
+  });
+
+  it('never reserves more width than its box, so a narrow screen with large text does not scroll sideways', () => {
+    const { show, wrap } = fakeEnv();
+    render(<CountUp value={95} format={(n) => `${n} min`} />, { wrapper: wrap });
+    show();
+    expect(digits()!.getAttribute('style')).toContain('min-width: min(6ch, 100%)');
   });
 
   it('counts decimals to the right number of places', () => {
