@@ -16,28 +16,28 @@
     },
     {
       "title": "Checking and securing understanding of rounding and truncating",
-      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-foundation/units/rounding-estimation-and-bounds/lessons/checking-and-securing-understanding-of-rounding-and-truncating",
+      "url": "https://www.thenational.academy/pupils/lessons/checking-and-securing-understanding-of-rounding-and-truncating/overview",
       "provider": "oak",
       "level": "GCSE",
       "learning_points": ["gcse-maths-h-n15-lp-rounding"],
       "checked_at": "2026-11-26",
       "match": {
-        "page_title": "Checking and securing understanding of rounding and truncating GCSE | KS4 | Y10 Maths Foundation | Lesson Resources | Oak National Academy",
-        "teaches": "Oak KS4 Maths Foundation (GCSE) lesson. Its learning outcome: \"I can estimate a value by rounding or truncating to a given degree of accuracy.\"",
+        "page_title": "Checking and securing understanding of rounding and truncating | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 10, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can estimate a value by rounding or truncating to a given degree of accuracy.\"",
         "level": "GCSE",
         "checked_at": "2026-11-26"
       }
     },
     {
       "title": "Upper and lower bounds",
-      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/rounding-estimation-and-bounds/lessons/upper-and-lower-bounds",
+      "url": "https://www.thenational.academy/pupils/lessons/upper-and-lower-bounds/overview",
       "provider": "oak",
       "level": "GCSE",
       "learning_points": ["gcse-maths-h-n15-lp-error-intervals"],
       "checked_at": "2026-11-26",
       "match": {
-        "page_title": "Upper and lower bounds GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
-        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can calculate the lower and upper bounds of values and express these as a ≤ x < b.\"",
+        "page_title": "Upper and lower bounds | Oak National Academy",
+        "teaches": "Oak pupil lesson (Year 10, Maths, KS4) with a lesson video, no sign-in. Its lesson outcome: \"I can calculate the lower and upper bounds of values and express these as a ≤ x < b.\"",
         "level": "GCSE",
         "checked_at": "2026-11-26"
       }

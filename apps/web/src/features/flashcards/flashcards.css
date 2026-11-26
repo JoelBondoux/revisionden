@@ -176,24 +176,3 @@
   outline: 3px solid var(--color-primary);
   outline-offset: 4px;
 }
-
-/* F7: Explain, one step at a time. */
-.explain {
-  /* Clear of the bottom bar (the page keeps 96px for it) when scrolled into view (F7b). */
-  scroll-margin-bottom: calc(96px + env(safe-area-inset-bottom));
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.explain__step {
-  margin: 0;
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-}
-
-.explain__nav {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-2);
-}

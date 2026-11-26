@@ -195,7 +195,8 @@ test("the young people's notice shows cards, expands its parts and is accessible
 test('Settings offers "Add RevisionDen to this device" as a button, accessibly', async ({
   page,
 }) => {
-  await page.goto('/settings');
+  // The install button lives under Me > More (W9).
+  await page.goto('/settings/more');
   // Chrome only offers its install prompt to a real installable site; send the event ourselves.
   await page.evaluate(() => {
     const event = new Event('beforeinstallprompt');
@@ -405,7 +406,7 @@ async function routeUnlock(page: Page, rpId: string) {
   return () => verified;
 }
 
-test('a student unlocks with the passkey on this device and lands on the topic map', async ({
+test('a student unlocks with the passkey on this device and lands on Home', async ({
   page,
   baseURL,
 }) => {
@@ -414,8 +415,8 @@ test('a student unlocks with the passkey on this device and lands on the topic m
   const verified = await routeUnlock(page, rpId);
   await page.goto('/');
   await page.getByRole('button', { name: "I'm a student: unlock with my passkey" }).click();
-  await expect(page.getByRole('heading', { level: 1, name: 'Topic map' })).toBeVisible();
-  expect(new URL(page.url()).pathname).toBe('/map');
+  await expect(page).toHaveURL(/\/home$/);
+  await expect(page.getByRole('heading', { level: 1, name: 'Home' })).toBeAttached();
   expect(verified()?.response?.id).toBe(credentialId);
 });
 
@@ -463,6 +464,9 @@ test("the topic map's links say what they show: each name starts with its visibl
   );
   await page.goto('/');
   await page.getByRole('button', { name: "I'm a student: unlock with my passkey" }).click();
+  await expect(page).toHaveURL(/\/home$/);
+  // Unlocking lands on Home (J15b); the map is a tap away in the menu.
+  await page.getByRole('link', { name: 'Map', exact: true }).click();
   await expect(page.getByRole('heading', { level: 1, name: 'Topic map' })).toBeVisible();
   await expect(page.locator('.hex').first()).toBeVisible();
   const results = await new AxeBuilder({ page })

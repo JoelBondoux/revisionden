@@ -23,6 +23,11 @@ const STYLED_CLASSES = [
   'get-help-link', // the Get help pill
   'learn-first__link', // "Learn it first" resource cards
   'main-nav__link', // bottom/side navigation
+  'home-cta', // Home's one big next-mission button (J15b)
+  'home-goals__cards', // Home's cards-due ring
+  'home-goals__start', // Home's 5-a-day Start pill
+  'home-fix__chip', // Home's weak-spot chips
+  'home-week__gift', // Home's weekly reward gift
 ];
 
 const LINK_COMPONENTS = new Set(['components/links.tsx', 'components/Button.tsx']);

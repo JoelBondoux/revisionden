@@ -1,0 +1,1 @@
+ALTER TABLE "flashcard_sessions" ADD COLUMN "extra_cards" integer DEFAULT 0 NOT NULL;
