@@ -168,6 +168,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- F14b (Codex review on train #383): the starting test's live region now belongs to the page, so it stays mounted from the test to the results and "Time is up." is still read when the results come back at once (it replaces the results' status line). Unit test: the same announcer element before and after, now saying "Time is up."
+
 - F14 (found by W's starting-test e2e): the starting test's one-minute warning and time up reach screen readers, through a polite live region (`data-testid="timer-announcer"`) and a status on the results' time-up line; the clock stays `aria-live="off"`. Unit tests in `StartingTestPage.test.tsx`, e2e `starting-test-timer.spec.ts` with a fast-forwarded clock. The WCAG 2.2.1 question (turn off or extend the limit) is open for the owner; the limit is unchanged.
 
 - Set complete: "Best combo" uses the arena's own text accent (`--arena-gold` was 1.37:1 on the light arena of Doodle Diary and Sticker Book); checked AA in all 10 looks, light and dark (W18; J's `learn.css`, approved crossing).

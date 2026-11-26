@@ -958,8 +958,9 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   The Settings section has a "Play a sample" button and Common, Rare, Epic and Legend reward
   samples (each tap plays another variation). The starting test timer turns orange at
   1 minute left, alongside the warning sound. Screen readers hear it too (F14): a polite live
-  region says "One minute left." once and "Time is up." at the end, and the results' "Time is
-  up" line is a status. The visible clock stays `aria-live="off"`, so it never reads every
+  region says "One minute left." once and "Time is up." at the end. It belongs to the whole page
+  (F14b), so it stays mounted from the test to the results and is still read when the results
+  come back at once. The visible clock stays `aria-live="off"`, so it never reads every
   second. Whether the 5-minute limit can be turned off or extended (WCAG 2.2.1) is an owner
   decision still to be made; the limit is unchanged.
 - Implemented: `apps/web/src/features/sound/**` (`SoundProvider`, `useSound().play(event, { mode })`,
