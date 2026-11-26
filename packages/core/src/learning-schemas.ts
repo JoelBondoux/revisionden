@@ -191,6 +191,23 @@ export const LearnAttemptResponseSchema = z.object({
 });
 export type LearnAttemptResponse = z.infer<typeof LearnAttemptResponseSchema>;
 
+/**
+ * The answer could not be marked (F12): typed working with no maths engine. Nothing is recorded
+ * (no XP, streak or mastery change); the lesson says so and moves on.
+ */
+export const UnmarkedAttemptResponseSchema = z.object({
+  unmarked: z.literal(true),
+  itemId: IdSchema,
+});
+export type UnmarkedAttemptResponse = z.infer<typeof UnmarkedAttemptResponseSchema>;
+
+/** What answering a question returns: marked, or unmarked (F12). */
+export const LearnAttemptResultSchema = z.union([
+  UnmarkedAttemptResponseSchema,
+  LearnAttemptResponseSchema,
+]);
+export type LearnAttemptResult = z.infer<typeof LearnAttemptResultSchema>;
+
 export const SubjectTopicsResponseSchema = z.object({
   subjectId: text,
   startingTestDone: z.boolean(),

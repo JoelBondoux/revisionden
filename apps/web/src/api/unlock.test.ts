@@ -17,12 +17,12 @@ describe('student unlock helpers', () => {
     expect(unlockPath()).toBe('/unlock');
   });
 
-  it('only returns to a page in this app, and to the topic map by default', () => {
+  it('only returns to a page in this app, and to Home by default', () => {
     expect(safeReturnTo('/cards')).toBe('/cards');
-    expect(safeReturnTo(null)).toBe('/map');
-    expect(safeReturnTo('https://evil.example/')).toBe('/map');
-    expect(safeReturnTo('//evil.example/')).toBe('/map');
-    expect(safeReturnTo('/\\evil.example')).toBe('/map');
-    expect(safeReturnTo('/unlock?returnTo=%2Fmap')).toBe('/map');
+    expect(safeReturnTo(null)).toBe('/home');
+    expect(safeReturnTo('https://evil.example/')).toBe('/home');
+    expect(safeReturnTo('//evil.example/')).toBe('/home');
+    expect(safeReturnTo('/\\evil.example')).toBe('/home');
+    expect(safeReturnTo('/unlock?returnTo=%2Fmap')).toBe('/home');
   });
 });
