@@ -466,7 +466,7 @@ test("the topic map's links say what they show: each name starts with its visibl
   // Unlocking lands on Home (J15b); the map is a tap away in the menu.
   await page.getByRole('link', { name: 'Map', exact: true }).click();
   await expect(page.getByRole('heading', { level: 1, name: 'Topic map' })).toBeVisible();
-  await expect(page.locator('.hex').first()).toBeVisible();
+  await expect(page.locator('.path-node').first()).toBeVisible();
   const results = await axeWhenSettled(page, (axe) =>
     axe.withRules(['label-content-name-mismatch']),
   );

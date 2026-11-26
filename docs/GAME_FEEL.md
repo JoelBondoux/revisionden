@@ -326,7 +326,9 @@ never transition. An ordinary link does not either.
 - **Idle loop** (`idle.ts`): one action about every 8 seconds (blink, a head tilt, an ear twitch,
   a look around; v3 has no arm), with slow shoulder breathing at rest, never the same twice running; naps outside 07:00 to 21:00; stops after a minute without
   a tap or key; still in lessons and tests. Moves ease in and out through in-between frames and
-  return to rest, so nothing snaps. Reduced motion: a still pose.
+  return to rest, so nothing snaps. Reduced motion: a still pose. Breathing runs only while the
+  idle loop is on (`PipFigure alive`, class `pip-figure--alive`), so being at rest never means
+  breathing in a lesson, after a minute or with reduced motion (J15b-3, Codex review of #335).
 - **Home** (`/home`, `features/home/`) is the first screen after signing in or unlocking and where
   Pip goes. One screen at 390 × 844, low on words: the level ring (count-up), streak, today's goal
   rings (XP, 5-a-day with Start or Continue, cards due), **one** big bobbing next-mission button
@@ -363,6 +365,39 @@ in view without scrolling. At 320 px or 200% text the page may scroll up and dow
   the older speech-bubble Pip (`PipSays`) becomes a short line beside Pip v3, show the student's
   framed avatar there so it can nod, hop and "hmm" (the mapping above is ready in
   `pipReactionFor`), and add the growing burst on a streak with W's `useCelebrate` (J17).
+
+## The winding map (J15c, owner sign-off of the all-themes mockup, revision 5)
+
+`apps/web/src/map/` (`WigglyMap.tsx`, `route.ts`, `bridges.ts`, `nodeArt.tsx`, `wiggly.css`,
+`wiggly-styles.css`), reference `docs/mockups/all-themes-pip.html`.
+
+- **The big subject box** at the top (Pip dressed for the subject, "Your subject", Change) opens
+  **Subject selection**: every subject with Pip dressed for it, Back to the map.
+- **One unit at a time**: a sideways pager (swipe, the arrow buttons, or the arrow keys on the
+  focused pager) with dots; the heading says the unit and its mastery.
+- **Each unit's route comes from a seed** (subject + unit, `layoutRoute`): S-bends, switchbacks, a
+  long sweep or a curl (one segment bulges sideways; no true loop, so the road never crosses
+  itself). It **climbs from the first topic at the bottom to the unit challenge at the top**, and
+  opens scrolled to the current topic with done topics below it.
+- **Nodes** are each style's own solid tiles (generated from the mockup): done, current, open
+  (its %), weak (wrench and %), locked, and the challenge. The next mission's topic is the current
+  node, with a **You are here** tag beside it. Labels are clamped to three lines (the full name is
+  in the link's name) and use the app's text colour with a page-coloured halo.
+- **Higher side branch**: for a Foundation student, topics marked `tier: 'higher'` sit on an
+  optional dotted branch that forks off the route and rejoins it (smaller "H" nodes, "Higher ·
+  optional"). **Either order**: topics sharing an `orderGroup` sit side by side and the route splits
+  and rejoins. Both are optional fields on the map topic; without them nothing changes.
+- **Bridges** (discovered, never shown up front): with links from content (D7/D8), opening a linked
+  topic reveals its first bridge the next time the map shows (a note: "You might find this Physics
+  topic useful: …"); tapping a bridge says why it helps and reveals the next link a moment later.
+  Kept in memory for the session. With no links, nothing shows.
+- **The path breathes**: each node drifts a few px on a slow sine (8 to 12 s, a little per style)
+  and the road follows; off with reduced motion, under automation (so clicks find their target),
+  and paused while the tab is hidden. The current node bobs and the tag sways (transform only).
+- **Checks** (`e2e/tests/map.spec.ts`, ported from `docs/mockups/checks`): every unit's route at
+  320 and 390 px has no overlapping nodes, labels or tags, nothing off screen, and no crossings;
+  every done, current and open node clears 3:1 against the road and the page in every app style,
+  light and dark.
 
 ## Themed particles and the prize box (J17, owner-approved mockup 2026-11-26)
 

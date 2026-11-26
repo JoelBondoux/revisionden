@@ -18,42 +18,6 @@
   box-shadow: 0 3px 0 rgb(0 0 0 / 22%);
 }
 
-:root[data-effect-style='pop-burst'] .today-strip {
-  padding: var(--space-2) var(--space-3) var(--space-1);
-  border-radius: 22px;
-  background: linear-gradient(160deg, var(--pb-night), var(--pb-plum));
-  color: #fff;
-  box-shadow: 0 6px 0 var(--pb-ink);
-}
-
-:root[data-effect-style='pop-burst'] .today-strip__heading,
-:root[data-effect-style='pop-burst'] .today-strip__xp,
-:root[data-effect-style='pop-burst'] .today-strip__daily .today-strip__eyebrow {
-  color: #fff;
-}
-
-:root[data-effect-style='pop-burst'] .today-strip__daily {
-  border: 3px solid var(--pb-night);
-  border-radius: 22px;
-  box-shadow: 0 6px 0 var(--pb-violet);
-}
-
-/* Today's mission is a big gold jelly button-card. */
-:root[data-effect-style='pop-burst'] .today-strip__mission {
-  border-radius: 24px;
-  background: var(--pb-gold);
-  color: var(--pb-ink);
-  box-shadow: 0 6px 0 var(--pb-gold-edge);
-}
-
-:root[data-effect-style='pop-burst'] .today-strip__mission .today-strip__eyebrow {
-  color: var(--pb-violet);
-}
-
-:root[data-effect-style='pop-burst'] .today-strip__mission .today-strip__meta {
-  color: var(--pb-ink);
-}
-
 :root[data-effect-style='pop-burst'] .hex--mastered .hex__shape {
   --hex-border: var(--pb-gold-edge);
   --hex-fill: var(--pb-gold);
@@ -214,6 +178,28 @@
     opacity: 0;
     transform: scale(1.08);
   }
+}
+
+/* ---------- Home and the next topic (J15c) ---------- */
+:root[data-effect-style='pop-burst'] .home-next {
+  background: linear-gradient(120deg, #ffd6ec, #e6dcff);
+}
+
+:root[data-effect-style='pop-burst'] .home-next__kicker {
+  color: var(--pb-ink);
+}
+
+:root[data-effect-style='pop-burst'] .home-cta {
+  border-color: var(--pb-gold-edge);
+  border-radius: 26px;
+  background: linear-gradient(180deg, #fff0a8 0%, var(--pb-gold) 55%, #ffd23f 100%);
+  box-shadow:
+    0 7px 0 var(--pb-gold-edge),
+    0 12px 22px rgb(224 168 0 / 35%);
+}
+
+:root[data-effect-style='pop-burst'] .unit-path__step--next .hex__shape {
+  filter: drop-shadow(0 6px 0 var(--pb-gold-edge));
 }
 
 /* J15s: the style's own background pattern, drawn in the look's ink. */

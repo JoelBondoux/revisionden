@@ -28,9 +28,9 @@ const HOOKS = [
   '.burst__particle',
   '.confetti__piece',
   '.float-up',
-  '.today-strip',
-  '.today-strip__mission',
-  '.today-strip__daily',
+  '.home-next',
+  '.home-cta',
+  '.unit-path__step--next',
   '.hex--mastered',
   '.page-header .pill',
   '.rewards__step--earned',
@@ -48,6 +48,14 @@ describe.each(EFFECT_STYLE_IDS)('the %s stylesheet', (id) => {
         expect(selector.trim().startsWith(scope), list).toBe(true);
       }
     }
+  });
+
+  it('never boxes the unit on the map: no card in a card (J15c)', () => {
+    expect(css).not.toMatch(/\.unit-card \{[^}]*(background|border|box-shadow)\s*:/);
+  });
+
+  it('has no rules left for the old Today strip (it moved to Home, J15b/J15c)', () => {
+    expect(css).not.toContain('.today-strip');
   });
 
   it('restyles the lesson moments, the Home screen and the Rewards page', () => {

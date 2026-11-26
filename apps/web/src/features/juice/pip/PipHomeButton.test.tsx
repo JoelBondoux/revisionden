@@ -133,6 +133,8 @@ describe('the Pip Home button', () => {
         const { container } = renderAt(<PipHomeButton env={env} inLesson />);
         act(() => void vi.advanceTimersByTime(20_000));
         expect(container.querySelector('svg')).toHaveClass('pip-figure--rest');
+        // Not even breathing (Codex review of #335): the rest pose alone does not mean idle motion.
+        expect(container.querySelector('svg')).not.toHaveClass('pip-figure--alive');
       } finally {
         vi.useRealTimers();
       }
@@ -145,6 +147,7 @@ describe('the Pip Home button', () => {
       const { container } = renderAt(<PipHomeButton env={env} />);
       const svg = () => container.querySelector('svg')!;
       expect(svg()).toHaveClass('pip-figure--rest');
+      expect(svg()).toHaveClass('pip-figure--alive');
       act(() => void vi.advanceTimersByTime(9000));
       expect(svg().getAttribute('class')).toMatch(/pip-figure--(blink|tilt|ears|look)/);
       act(() => void vi.advanceTimersByTime(3500));
@@ -160,6 +163,7 @@ describe('the Pip Home button', () => {
       const { container } = renderAt(<PipHomeButton env={{ ...env, reducedMotion: () => true }} />);
       act(() => void vi.advanceTimersByTime(30_000));
       expect(container.querySelector('svg')).toHaveClass('pip-figure--rest');
+      expect(container.querySelector('svg')).not.toHaveClass('pip-figure--alive');
     } finally {
       vi.useRealTimers();
     }

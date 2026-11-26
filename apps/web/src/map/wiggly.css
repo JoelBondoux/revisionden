@@ -1,0 +1,556 @@
+/*
+ * The winding map (J15c, owner sign-off of the all-themes mockup, revision 5). Layout only; each
+ * effect style's tiles, road and colours are in wiggly-styles.css (generated from the mockup).
+ * Motion: the "You are here" tag sways and the current node bobs (transform only), and the path
+ * breathes from script; all of it holds still with reduced motion.
+ */
+.wiggly-map {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.wiggly-map__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.wiggly-map__head .icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.wiggly-map__head .icon-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.wiggly-map__title {
+  flex: 1;
+  text-align: center;
+}
+
+.wiggly-map__title h2 {
+  margin: 0;
+  font-family: var(--font-heading, inherit);
+  font-size: 1.3rem;
+}
+
+.wiggly-map__title p {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: var(--font-weight-black, 900);
+  opacity: 0.8;
+}
+
+.wiggly-map__dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.wiggly-map__dots i {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.3;
+}
+
+.wiggly-map__dots i.on {
+  width: 20px;
+  opacity: 1;
+}
+
+.wiggly-map__pager {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  max-height: min(68vh, 640px);
+  border-radius: var(--radius-lg, 16px);
+}
+
+.wiggly-map__pager:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.wiggly-map__page {
+  position: relative;
+  flex: none;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 0 var(--space-4);
+  scroll-snap-align: start;
+  scrollbar-width: none;
+}
+
+.wiggly-map__locked {
+  margin: var(--space-3) 0 0;
+  font-weight: var(--font-weight-bold, 700);
+  text-align: center;
+}
+
+.path-trail {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+.path-road {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.path-road path {
+  fill: none;
+  stroke-linecap: var(--road-cap, round);
+  vector-effect: non-scaling-stroke;
+}
+
+.path-road .r {
+  stroke: var(--road, var(--color-border));
+  stroke-width: var(--road-w, 8px);
+  stroke-dasharray: var(--road-dash, none);
+}
+
+.path-road .d {
+  stroke: var(--road-done, var(--color-primary));
+  stroke-width: var(--road-done-w, 8px);
+  stroke-dasharray: var(--road-done-dash, none);
+  filter: var(--road-done-filter, none);
+}
+
+.path-road .re {
+  stroke: var(--road-edge, none);
+  stroke-width: var(--road-edge-w, 0);
+  stroke-dasharray: var(--road-dash, none);
+}
+
+.path-road .rt {
+  stroke: var(--road-tuft, none);
+  stroke-width: var(--road-tuft-w, 0);
+  stroke-dasharray: var(--road-tuft-dash, none);
+  stroke-dashoffset: var(--road-tuft-off, 0);
+}
+
+.path-road .dd {
+  stroke: var(--road-deco, none);
+  stroke-width: var(--road-deco-w, 0);
+  stroke-dasharray: var(--road-deco-dash, none);
+}
+
+.path-road .rb {
+  stroke: var(--road-branch, var(--road, var(--color-border)));
+  stroke-width: calc(var(--road-w, 8px) * 0.6);
+  stroke-dasharray: 2 9;
+  opacity: 0.9;
+}
+
+.path-road .rx {
+  stroke: var(--road-branch, var(--road, var(--color-border)));
+  stroke-width: 3px;
+  stroke-dasharray: 1 6;
+}
+
+.path-node {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  margin: -25px 0 0 -25px;
+  padding: 0;
+  border-radius: var(--node-r, 50%);
+  border: var(--node-border, 0);
+  background: var(--node-bg, transparent);
+  color: var(--node-ink, inherit);
+  box-shadow: var(--node-shadow, none);
+  font-weight: 900;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.path-node > * {
+  pointer-events: none;
+}
+
+.path-node svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.path-node--done {
+  background: var(--node-done-bg, var(--node-bg));
+  color: var(--node-done-ink, var(--node-ink));
+  border: var(--node-done-border, var(--node-border));
+}
+
+.path-node--current {
+  width: 66px;
+  height: 66px;
+  margin: -33px 0 0 -33px;
+  background: var(--node-cur-bg, var(--node-bg));
+  border: var(--node-cur-border, var(--node-border));
+  box-shadow: var(--node-cur-shadow, var(--node-shadow, none));
+}
+
+.path-node--locked {
+  background: var(--node-lock-bg, var(--node-bg));
+  border: var(--node-lock-border, var(--node-border));
+  box-shadow: var(--node-lock-shadow, none);
+  opacity: var(--node-lock-op, 1);
+}
+
+.path-node--open,
+.path-node--weak {
+  font-size: 0.75rem;
+}
+
+.path-node--weak .icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* The text on a node (an open or weak topic's %, the Higher H) uses the node's ink, else the
+   style's ink, set on the text itself so the dark theme's link colour cannot override it (Codex
+   review of #307; 4.5:1 checked in e2e map.spec.ts for every style, light and dark). */
+.path-node .path-node__pct,
+.path-node .path-node__h {
+  color: var(--node-ink, var(--ink, var(--color-text)));
+}
+
+/* Sticker Book keeps white tiles at night, so their text stays dark ink. */
+:root[data-effect-style='sticker-book'][data-theme='dark'] .wiggly-map {
+  --node-ink: #2f2a3d;
+}
+
+/* Pop Burst's vivid purple page is dark mode only, so its see-through tiles need a solid fill there. */
+:root[data-effect-style='pop-burst'][data-theme='dark'] .wiggly-map {
+  --node-bg: #fff;
+}
+
+/* The You are here tag's white text needs a deeper coral and a deeper night soil (4.5:1). */
+:root[data-effect-style='sticker-book'] .wiggly-map.wiggly-map {
+  --tag-bg: #c43b2d;
+}
+
+:root[data-effect-style='garden-grow'][data-theme='dark'] .wiggly-map.wiggly-map {
+  --tag-bg: #8f5f40;
+}
+
+.path-node__pct {
+  font-size: 0.75rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.path-node--higher {
+  width: 42px;
+  height: 42px;
+  margin: -21px 0 0 -21px;
+}
+
+.path-node__h {
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.path-node--bridge {
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  padding: 3px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--tint, #fff4d6) 75%, #fff);
+  border: 2.5px solid var(--node-ink, var(--color-text));
+  box-shadow: 0 2px 0 rgb(0 0 0 / 18%);
+}
+
+:root[data-theme='dark'] .path-node--bridge {
+  background: color-mix(in srgb, var(--tint, #fff4d6) 30%, #1d1b2a);
+  border-color: #f2f0ff;
+}
+
+.path-node:focus-visible {
+  outline: 4px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.path-node__label {
+  position: absolute;
+  width: min(120px, 46%);
+  margin-top: 30px;
+  transform: translate(-50%, 0);
+  font-size: 0.75rem;
+  font-weight: 900;
+  line-height: 1.15;
+  text-align: center;
+  /* The app's own text colour with a halo in the page colour, so labels read over the road in
+     every style (the styles' full page looks come with J15s). */
+  color: var(--color-text);
+  text-shadow:
+    0 0 3px var(--color-background),
+    0 0 6px var(--color-background),
+    0 0 10px var(--color-background);
+  pointer-events: none;
+}
+
+.path-node__label {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+.path-node__label small {
+  display: block;
+  margin-top: 1px;
+  font-size: 0.625rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.path-node--current + .path-node__label {
+  margin-top: 38px;
+}
+
+.path-node--higher + .path-node__label,
+.path-node--bridge + .path-node__label {
+  margin-top: 24px;
+}
+
+.path-here {
+  position: absolute;
+  margin-left: 42px;
+  transform: translate(0, -50%);
+  padding: 3px 10px;
+  border-radius: var(--r-chip, 999px);
+  background: var(--tag-bg, var(--color-text));
+  color: var(--tag-ink, var(--color-surface));
+  font-size: 0.75rem;
+  font-weight: 900;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.map-discovery {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md, 12px);
+  background: var(--color-primary-soft);
+  font-weight: var(--font-weight-bold, 700);
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .path-node--current {
+    animation: path-bob calc(var(--motion-pulse) * 1.5) ease-in-out infinite;
+  }
+
+  .path-here {
+    animation: path-sway calc(var(--motion-pulse) * 1.9) ease-in-out infinite;
+  }
+
+  .path-here--left {
+    animation-name: path-sway-left;
+  }
+
+  .path-node .sway {
+    transform-box: view-box;
+    transform-origin: 50% 52%;
+    animation: path-sway-plant calc(var(--motion-pulse) * 1.6) ease-in-out infinite;
+  }
+}
+
+@keyframes path-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+/* "You are here" sits beside the current node, on the side with room. */
+.path-here--left {
+  margin-left: -42px;
+  transform: translate(-100%, -50%);
+}
+
+@keyframes path-sway {
+  0%,
+  100% {
+    transform: translate(0, -50%) rotate(-2deg);
+  }
+
+  50% {
+    transform: translate(0, -50%) rotate(2deg);
+  }
+}
+
+@keyframes path-sway-left {
+  0%,
+  100% {
+    transform: translate(-100%, -50%) rotate(-2deg);
+  }
+
+  50% {
+    transform: translate(-100%, -50%) rotate(2deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .path-node,
+  .path-here,
+  .path-node * {
+    animation: none !important;
+  }
+}
+
+@keyframes path-sway-plant {
+  0%,
+  100% {
+    transform: rotate(-6deg);
+  }
+
+  50% {
+    transform: rotate(6deg);
+  }
+}
+
+/* The big subject box on the map, and Subject selection */
+.map-play {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 84px;
+  padding: var(--space-3);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg, 16px);
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+}
+
+.map-play .pip-figure {
+  width: 58px;
+  height: 63px;
+  flex: none;
+}
+
+.map-play__text {
+  display: grid;
+  min-width: 0;
+  line-height: 1.15;
+}
+
+.map-play__text small {
+  font-size: 0.8rem;
+  font-weight: 800;
+  opacity: 0.85;
+}
+
+.map-play__text b {
+  overflow-wrap: anywhere;
+  font-family: var(--font-heading, inherit);
+  font-size: 1.6rem;
+}
+
+.map-play__change {
+  margin-left: auto;
+  flex: none;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: var(--color-on-primary, #fff);
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.map-play:focus-visible,
+.map-subject:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.map-subjects-page {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.map-subjects-page h2 {
+  margin: 0;
+}
+
+.map-subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.map-subject {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-1);
+  min-height: 120px;
+  padding: var(--space-3) var(--space-2);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg, 16px);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.map-subject[aria-pressed='true'] {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+.map-subject .pip-figure {
+  width: 62px;
+  height: 67px;
+}
+
+.map-subject small {
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+.map-play-wrap {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.map-play__qualification {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: var(--font-weight-bold, 700);
+  opacity: 0.85;
+}

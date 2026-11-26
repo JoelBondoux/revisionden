@@ -60,9 +60,17 @@ interface PipFigureProps {
   pose?: PipPose;
   /** Hide the prop (very small copies). */
   hideProp?: boolean;
+  /** Idle motion is on, so he breathes at rest (never in a lesson, after a minute or reduced motion). */
+  alive?: boolean;
 }
 
-export function PipFigure({ outfit, look, pose = 'rest', hideProp = false }: PipFigureProps) {
+export function PipFigure({
+  outfit,
+  look,
+  pose = 'rest',
+  hideProp = false,
+  alive = false,
+}: PipFigureProps) {
   const id = useId().replace(/:/g, '');
   const frameClip = `pip-frame-${id}`;
   const discClip = `pip-disc-${id}`;
@@ -76,7 +84,7 @@ export function PipFigure({ outfit, look, pose = 'rest', hideProp = false }: Pip
   return (
     <svg
       viewBox="0 0 120 130"
-      className={`pip-figure pip-figure--${pose}`}
+      className={`pip-figure pip-figure--${pose}${alive ? ' pip-figure--alive' : ''}`}
       aria-hidden="true"
       focusable="false"
       data-look={lookKey}

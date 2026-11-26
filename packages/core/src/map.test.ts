@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   CardsDueSchema,
+  MapTopicSchema,
   TopicMapSchema,
   UNIT_CHALLENGE_PERCENT,
   buildTopicMap,
@@ -210,5 +211,21 @@ describe('a subject with no questions yet (RD-MBXKTC)', () => {
       { subjectId: 'gcse-chemistry', subject: 'Chemistry', hasContent: false },
       { subjectId: 'gcse-maths', subject: 'Maths', hasContent: true },
     ]);
+  });
+});
+
+// J15c: optional route hints for the winding map. Left out, nothing changes.
+describe('map topic route hints', () => {
+  const base = { id: 't', title: 'Surds', lessonId: 'surds', status: 'in-progress', mastery: 20 };
+  it('keeps a Higher-only tier and an either-order group when sent', () => {
+    expect(MapTopicSchema.parse({ ...base, tier: 'higher', orderGroup: 'g1' })).toMatchObject({
+      tier: 'higher',
+      orderGroup: 'g1',
+    });
+  });
+  it('still parses a topic without them', () => {
+    const parsed = MapTopicSchema.parse(base);
+    expect(parsed.tier).toBeUndefined();
+    expect(parsed.orderGroup).toBeUndefined();
   });
 });
