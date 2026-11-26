@@ -10,6 +10,7 @@
     "answer": { "accepted": ["x = 3, y = 2"], "any_order": true },
     "marks": 3,
     "explanation": "Add the equations: 4x = 12, so x = 3. Then 3 - 2y = -1, so y = 2.",
+    "hint": "Add the two equations: the y terms cancel.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
     "checked_by": ["author"],
     "citations": [
@@ -84,6 +85,7 @@
     "answer": { "accepted": ["x = 2, y = 1"], "any_order": true },
     "marks": 4,
     "explanation": "Multiply: 4x + 6y = 14 and 15x - 6y = 24. Add: 19x = 38, so x = 2. Then 4 + 3y = 7, so y = 1.",
+    "hint": "Multiply the equations so the y terms are the same size with opposite signs, then add them.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
     "checked_by": ["author"],
     "citations": [
@@ -159,6 +161,7 @@
     "verify": { "expression": "(10 + 4)/2" },
     "marks": 2,
     "mark_scheme": ["M1 for adding the equations, 2x = 14", "A1 for 7"],
+    "hint": "Add the two equations so the y terms cancel.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -243,6 +246,7 @@
     "steps": ["3x + 2x - 1 = 14", "5x - 1 = 14", "5x = 15", "x = 3"],
     "marks": 2,
     "mark_scheme": ["M1 for 3x + 2x - 1 = 14", "A1 for x = 3"],
+    "hint": "Replace y in the second equation with 2x - 1, then solve.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -327,6 +331,7 @@
     "steps": ["x^2 = x + 2", "x^2 - x - 2 = 0", "(x - 2)(x + 1) = 0", "x = 2 or x = -1"],
     "marks": 3,
     "mark_scheme": ["M1 for x^2 = x + 2", "M1 for (x - 2)(x + 1) = 0", "A1 for x = 2 and x = -1"],
+    "hint": "Where they meet the y-values are equal, so set x^2 equal to x + 2 and solve the quadratic.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -423,6 +428,7 @@
       "M1 for (x - 3)(x + 4) = 0",
       "A1 for x = 3 and x = -4"
     ],
+    "hint": "Substitute y = x + 1 into the circle's equation, expand, and solve the quadratic.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -511,6 +517,7 @@
       "M1 for (2x + 1)(x - 2) = 0",
       "A1 for x = 2 and x = -1/2"
     ],
+    "hint": "Set 2x^2 equal to 3x + 2, rearrange so one side is 0, and factorise.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -592,6 +599,7 @@
     "front": "x + y = 5 and x - y = 1. What is the value of x?",
     "back": "3",
     "explanation": "Add the two equations: (x + y) + (x - y) = 5 + 1, so 2x = 6 and x = 3.",
+    "hint": "Add the two equations so that y cancels.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
     "checked_by": ["author"],
     "citations": [
@@ -665,6 +673,7 @@
     "front": "x + y = 5 and x - y = 1. What is the value of y?",
     "back": "2",
     "explanation": "Adding the equations gives 2x = 6, so x = 3. Then x + y = 5 gives 3 + y = 5, so y = 2.",
+    "hint": "Find x first by adding the equations, then put it back into x + y = 5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
     "checked_by": ["author"],
     "citations": [
@@ -738,6 +747,7 @@
     "front": "y = 2x and x + y = 9. What is the value of x?",
     "back": "3",
     "explanation": "Substitute y = 2x into x + y = 9: x + 2x = 9, so 3x = 9 and x = 3.",
+    "hint": "Replace y with 2x in x + y = 9.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A19",
     "checked_by": ["author"],
     "citations": [

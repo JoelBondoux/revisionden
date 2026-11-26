@@ -11,6 +11,7 @@
     "verify": { "expression": "(19 - 4)/(5 - 0)" },
     "marks": 2,
     "mark_scheme": ["M1 for (19 - 4) ÷ 5", "A1 for 3"],
+    "hint": "Acceleration is the gradient of a velocity-time graph: change in velocity ÷ change in time.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -127,6 +128,7 @@
     "verify": { "expression": "150/3" },
     "marks": 2,
     "mark_scheme": ["M1 for 150 ÷ 3", "A1 for 50"],
+    "hint": "Speed is the gradient of a distance-time graph: change in distance ÷ change in time.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -243,6 +245,7 @@
     "verify": { "expression": "(20 - 80)/12" },
     "marks": 2,
     "mark_scheme": ["M1 for (20 - 80) ÷ 12", "A1 for -5"],
+    "hint": "Gradient = change in depth ÷ time taken. The depth is falling, so think about the sign.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -326,6 +329,7 @@
     "verify": { "expression": "(1/2)*10*20" },
     "marks": 2,
     "mark_scheme": ["M1 for (1/2) × 10 × 20", "A1 for 100"],
+    "hint": "The distance travelled is the area under the graph, which here is a triangle.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -443,6 +447,7 @@
     "verify": { "expression": "(1/2)*(6 + 14)*5" },
     "marks": 2,
     "mark_scheme": ["M1 for (1/2) × (6 + 14) × 5", "A1 for 50"],
+    "hint": "The area under the graph is a trapezium: add the two velocities, halve, then multiply by the time.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -565,6 +570,7 @@
       "A1 for 24"
     ],
     "explanation": "Strips of width 2: (1/2) × 2 × (0 + 4) + (1/2) × 2 × (4 + 16) = 4 + 20 = 24.",
+    "hint": "Each strip is 2 wide. Find y at x = 0, 2 and 4, then work out the area of each trapezium and add.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -646,6 +652,7 @@
     "front": "On a velocity-time graph, what does the gradient represent? (one word)",
     "back": "Acceleration",
     "explanation": "The gradient is the change in velocity divided by the change in time. That is the rate of change of velocity, which is acceleration.",
+    "hint": "The gradient is the change in velocity divided by the change in time. What is the rate of change of velocity called?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
     "checked_by": ["author"],
     "citations": [
@@ -740,6 +747,7 @@
     "front": "On a distance-time graph showing the total distance travelled, what does the gradient represent? (one word)",
     "back": "Speed",
     "explanation": "The gradient is the change in distance divided by the change in time. That is the rate of change of distance, which is speed.",
+    "hint": "The gradient is the change in distance divided by the change in time. What is the rate of change of distance called?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
     "checked_by": ["author"],
     "citations": [
@@ -834,6 +842,7 @@
     "front": "A velocity-time graph is a horizontal line. What is the acceleration, in m/s^2? (number only)",
     "back": "0",
     "explanation": "A horizontal line has gradient 0. On a velocity-time graph the gradient is the acceleration, so the acceleration is 0 m/s^2: the velocity is not changing.",
+    "hint": "On a velocity-time graph the gradient is the acceleration. How steep is a horizontal line?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
     "checked_by": ["author"],
     "citations": [

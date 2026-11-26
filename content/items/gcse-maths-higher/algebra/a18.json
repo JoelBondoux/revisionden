@@ -12,6 +12,7 @@
     "steps": ["x^2 + x - 12 = 0", "(x - 3)(x + 4) = 0", "x = 3 or x = -4"],
     "marks": 3,
     "mark_scheme": ["M1 for (x - 3)(x + 4)", "A1 for x = 3", "A1 for x = -4"],
+    "hint": "Find two numbers that multiply to -12 and add to 1, then factorise.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -96,6 +97,7 @@
     "steps": ["2x^2 - 7x + 3 = 0", "(2x - 1)(x - 3) = 0", "x = 1/2 or x = 3"],
     "marks": 3,
     "mark_scheme": ["M1 for (2x - 1)(x - 3)", "A1 for x = 1/2", "A1 for x = 3"],
+    "hint": "Factorise into (2x ...)(x ...), then set each bracket equal to 0.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -276,6 +278,7 @@
       "M1 for x - 4 = ±1",
       "A1 for x = 3 and x = 5"
     ],
+    "hint": "Halve the -8 to complete the square, then take the square root of both sides, remembering ±.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -363,6 +366,7 @@
       "M1 for x = -3 ± √11",
       "A1 for 0.32"
     ],
+    "hint": "Halve the 6 to complete the square, take the square root of both sides, and round only at the end.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -446,6 +450,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "(x - 2)^2 = 5, so x - 2 = ±√5 and x = 2 ± √5.",
+    "hint": "Set (x - 2)^2 - 5 = 0, add 5 to both sides, then take the square root of both sides, remembering ±.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["author"],
     "citations": [
@@ -525,6 +530,7 @@
       "M1 for the correct simplified expression",
       "A1 for 0.85"
     ],
+    "hint": "Use x = (-b ± √(b^2 - 4ac))/2a with a = 2, b = 3 and c = -4.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -624,6 +630,7 @@
       "M1 for the correct simplified expression",
       "A1 for -1.19"
     ],
+    "hint": "Use the quadratic formula with a = 1, b = -3 and c = -5, and take the minus sign for the negative solution.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -723,6 +730,7 @@
       "M1 for the correct simplified expression",
       "A1 for 0.77"
     ],
+    "hint": "Use the quadratic formula with a = 3, b = -1 and c = -1.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -816,6 +824,7 @@
     "front": "The positive solution of x^2 = 64",
     "back": "8",
     "explanation": "x^2 = 64 means x × x = 64. 8 × 8 = 64 (and also -8 × -8 = 64), so the positive solution is 8.",
+    "hint": "Which number multiplied by itself gives 64?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["author"],
     "citations": [
@@ -889,6 +898,7 @@
     "front": "The non-zero solution of x(x - 9) = 0",
     "back": "9",
     "explanation": "If two things multiply to 0, one of them must be 0. So x = 0 or x - 9 = 0. The non-zero solution is x = 9.",
+    "hint": "If two things multiply to give 0, one of them must be 0.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["author"],
     "citations": [
@@ -962,6 +972,7 @@
     "front": "The negative solution of (x - 3)(x + 8) = 0",
     "back": "-8",
     "explanation": "If two brackets multiply to 0, one of them must be 0. So x - 3 = 0 or x + 8 = 0, giving x = 3 or x = -8. The negative solution is -8.",
+    "hint": "If two brackets multiply to give 0, one of them must be 0. Set each bracket equal to 0.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A18",
     "checked_by": ["author"],
     "citations": [
