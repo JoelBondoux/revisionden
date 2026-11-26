@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react';
+import { act, screen, within } from '@testing-library/react';
 import { renderRoute } from './test/render';
 
 describe('routes', () => {
@@ -119,5 +119,14 @@ describe('routes', () => {
     renderRoute('/about');
     expect(await screen.findByRole('navigation', { name: 'Main' })).toBeInTheDocument();
     expect(screen.queryByRole('navigation', { name: 'Site' })).not.toBeInTheDocument();
+  });
+
+  it('starts each new screen at the top', async () => {
+    const scrollTo = vi.fn();
+    window.scrollTo = scrollTo as unknown as typeof window.scrollTo;
+    const { router } = renderRoute('/settings');
+    await screen.findByRole('heading', { level: 1, name: 'Settings' });
+    await act(() => router.navigate('/about'));
+    expect(scrollTo).toHaveBeenLastCalledWith(0, 0);
   });
 });

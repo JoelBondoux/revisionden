@@ -14,6 +14,7 @@ import { DAY_MS, reviewCard, type Card } from './spaced-repetition';
 import { recordDay, settleWeek, type StreakState } from './streaks';
 import type { ItemType } from './schemas';
 import { meetsRounding, roundingOf, withoutSubject, type Rounding } from './answer-format';
+import { sameAnswer } from './answer-normalise';
 
 // ---------------------------------------------------------------------------------------------
 // Content gate
@@ -51,10 +52,20 @@ export function markMultipleChoice(key: { option: number }, answer: unknown): Ma
   return mark(answer === key.option);
 }
 
-export function markShortAnswer(key: { accepted: readonly string[] }, answer: unknown): MarkResult {
+/** A short-answer key as written in content: `any_order` and `units` are optional. */
+export interface ShortAnswerKey {
+  accepted: readonly string[];
+  /** Order does not matter (commuted products and sums, reordered lists). */
+  any_order?: boolean;
+  /** Units the answer may end with, or leave off. */
+  units?: readonly string[];
+}
+
+/** Marks a typed short answer with the fairer rules in `answer-normalise.ts`. */
+export function markShortAnswer(key: ShortAnswerKey, answer: unknown): MarkResult {
   if (typeof answer !== 'string') return wrong;
-  const given = normaliseText(answer);
-  return mark(key.accepted.some((a) => normaliseText(a) === given));
+  const options = { anyOrder: key.any_order === true, units: key.units };
+  return mark(key.accepted.some((a) => sameAnswer(a, answer, options)));
 }
 
 /** A plain decimal or a simple fraction such as `3/4`; anything else is not a number. */

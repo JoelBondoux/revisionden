@@ -179,3 +179,10 @@
     padding-bottom: calc(var(--tap-target) + var(--space-6));
   }
 }
+
+/* A new screen's heading or main area gets focus for screen readers (RouteChange); no ring. */
+#main:focus,
+#main h1[tabindex='-1']:focus {
+  outline: none;
+  box-shadow: none;
+}
