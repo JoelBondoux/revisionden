@@ -373,6 +373,10 @@ in view without scrolling. At 320 px or 200% text the page may scroll up and dow
     Each pose plays once (nod 900 ms, cheer 1200 ms, hmm 1400 ms) and goes back to rest; there is
     no idle motion in a lesson. Reduced motion: no reaction. An answer from before Pip appeared is
     ignored.
+- **"+XP" reads on the lesson page (J16b).** The lesson sits on the look's own page, so "+XP"
+  there uses the look's text-safe main colour (the light accent in dark mode) with no shadow,
+  outranking each look's own "+XP" colour. `e2e/tests/lesson.spec.ts` holds "+XP" and the combo
+  badge still and measures them on what is painted behind them, in every look, light and dark.
 - **Answer field reflow:** the typed-answer field fills its row and can shrink, so at 320 px with
   200% text nothing scrolls sideways (it used to push the page 120 px; `e2e/tests/lesson.spec.ts`).
 - **One compact header (J14b).** The lesson shows Pip v3 in its own header row with the way out

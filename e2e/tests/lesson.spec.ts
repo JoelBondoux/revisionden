@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { paintedTextFailures, settle } from './support/painted';
 
 /**
  * J14: the lesson screen. Made-up items (not educational); the lesson API is stubbed. The answer
@@ -18,7 +19,7 @@ const item = {
   canHelp: true,
 };
 
-async function stubLesson(page: Page, correct = true) {
+async function stubLesson(page: Page, correct = true, combo = 1) {
   await page.addInitScript(
     (id) => window.localStorage.setItem('revisionden.studentId', id),
     STUDENT_ID,
@@ -53,7 +54,7 @@ async function stubLesson(page: Page, correct = true) {
           streak: { current: 0, best: 0, skipDays: 0 },
         },
         flashcardAdded: !correct,
-        combo: correct ? 1 : 0,
+        combo: correct ? combo : 0,
         comboBonusXp: 0,
         newlyEarned: [],
       },
@@ -171,3 +172,54 @@ test.describe('Pip is always there in a lesson', () => {
     await expect(page.locator('.lesson__pip .framed-avatar')).toBeVisible();
   });
 });
+
+// J16b (Codex review of train #361): a look may restyle the lesson's moments, but "+XP" and the
+// combo badge must read AA on the lesson arena behind them, in every look, light and dark. They
+// are held still and visible, then measured with the painted-page sampler.
+const ALL_STYLES = [
+  'doodle-diary',
+  'sticker-book',
+  'pop-burst',
+  'starlight',
+  'comic-pop',
+  'garden-grow',
+  'pixel-arcade',
+  'petal-glow',
+  'turbo-drive',
+  'rainbow-parade',
+];
+
+for (const scheme of ['light', 'dark'] as const) {
+  test(`"+XP" and the combo read on the lesson arena in every look, ${scheme} mode`, async ({
+    page,
+  }, info) => {
+    test.skip(info.project.name !== 'phone', 'The look checks run on the phone');
+    await page.emulateMedia({ colorScheme: scheme });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await stubLesson(page, true, 3);
+    await page.route('**/v1/student/rewards/effect-styles', (route) =>
+      route.fulfill({ json: { unlocked: ALL_STYLES } }),
+    );
+    const failures: string[] = [];
+    for (const style of ALL_STYLES) {
+      await page
+        .evaluate((s) => localStorage.setItem('revisionden.effectStyle', s), style)
+        .catch(() => undefined);
+      await page.addInitScript((s) => localStorage.setItem('revisionden.effectStyle', s), style);
+      await page.goto('/learn/topic/demo-topic');
+      await expect(page.locator('html')).toHaveAttribute('data-effect-style', style);
+      await page.getByLabel('Your answer').fill('demo');
+      await page.getByRole('button', { name: 'Check' }).click();
+      await expect(page.locator('.lesson__xp-pop .float-up')).toBeAttached();
+      await expect(page.locator('.combo-badge')).toBeVisible();
+      await page.addStyleTag({
+        content:
+          '.lesson__xp-pop .float-up, .combo-badge { animation: none !important; opacity: 1 !important; transform: none !important; }',
+      });
+      await settle(page);
+      const found = await paintedTextFailures(page, { only: '.lesson__xp-pop, .combo-badge' });
+      for (const f of found) failures.push(`${style} ${scheme}: ${f}`);
+    }
+    expect(failures).toEqual([]);
+  });
+}
