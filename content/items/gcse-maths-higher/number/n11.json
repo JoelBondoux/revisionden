@@ -11,6 +11,7 @@
     "verify": { "expression": "3/(3 + 5)" },
     "marks": 1,
     "explanation": "Add the parts of the ratio to find the total: 3 + 5 = 8. Red is 3 of those 8 parts, so 3/8 of the counters are red.",
+    "hint": "Add the parts of the ratio to find how many parts there are in total. Then write the red parts over that total.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N11",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -36,7 +37,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Answer backed by the maths engine (3 parts out of 3 + 5). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Answer backed by the maths engine (3 parts out of 3 + 5). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -74,9 +75,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:41:35Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:23:42Z",
           "notes": "no problems found"
         }
       ]
@@ -94,6 +95,7 @@
     "verify": { "expression": "7/(4 + 7)" },
     "marks": 1,
     "explanation": "Add the parts of the ratio to find the total: 4 + 7 = 11. Girls are 7 of those 11 parts, so 7/11 of the class are girls.",
+    "hint": "Add the two parts of the ratio to get the whole, then put the girls' part over that total.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N11",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -119,7 +121,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Answer backed by the maths engine (7 parts out of 4 + 7). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Answer backed by the maths engine (7 parts out of 4 + 7). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -157,9 +159,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:41:44Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:31Z",
           "notes": "no problems found"
         }
       ]
@@ -177,6 +179,7 @@
     "verify": { "expression": "2/(2 + 7)" },
     "marks": 1,
     "explanation": "Add the parts of the ratio to find the total: 2 + 7 = 9. Sugar is 2 of those 9 parts, so 2/9 of the mixture is sugar.",
+    "hint": "Find the total number of parts in the ratio, then write the sugar part as a fraction of that total.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N11",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -202,7 +205,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Answer backed by the maths engine (2 parts out of 2 + 7). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Answer backed by the maths engine (2 parts out of 2 + 7). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -240,9 +243,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:41:52Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:32Z",
           "notes": "no problems found"
         }
       ]
@@ -260,6 +263,7 @@
     "answer": { "option": 1 },
     "marks": 1,
     "explanation": "The children are 1 - 2/5 = 3/5 of the members, so adults : children = 2/5 : 3/5 = 2 : 3.",
+    "hint": "Work out what fraction of the members are children, then compare the two fractions as a ratio.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N11",
     "checked_by": ["author"],
     "citations": [
@@ -285,7 +289,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Checked with exact fractions in Python: children 3/5, ratio (2/5) : (3/5) = 2 : 3; each wrong option gives a different ratio.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Checked with exact fractions in Python: children 3/5, ratio (2/5) : (3/5) = 2 : 3; each wrong option gives a different ratio. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -315,9 +319,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:31:16Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:34Z",
           "notes": "no problems found"
         }
       ]
@@ -335,6 +339,7 @@
     "verify": { "expression": "24/(4/7) * (3/7)" },
     "marks": 1,
     "explanation": "If 3/7 are mints, then 4/7 are toffees. 4/7 is 24 sweets, so 1/7 is 24 ÷ 4 = 6. Mints are 3/7, so 3 × 6 = 18 mints.",
+    "hint": "Find what fraction of the sweets are toffees. Use the 24 toffees to work out one seventh, then scale up to the mints.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N11",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -360,7 +365,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Answer backed by the maths engine: toffees are 4/7, so 1/7 is 6 sweets and the mints are 3 × 6. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Answer backed by the maths engine: toffees are 4/7, so 1/7 is 6 sweets and the mints are 3 × 6. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -398,9 +403,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:42:01Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:36Z",
           "notes": "no problems found"
         }
       ]
@@ -419,6 +424,7 @@
     "steps": ["3/8 * 40", "15"],
     "marks": 2,
     "mark_scheme": ["M1 for 3/8 × 40 or 40 ÷ 8 × 3", "A1 for 15"],
+    "hint": "Add the parts of the ratio to find the total number of parts, then find the dogs' share of the 40 animals.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N11",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -444,7 +450,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Answer and every step backed by the maths engine. Only cats and dogs at the shelter is stated in the question. Mark points written by this session.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Answer and every step backed by the maths engine. Only cats and dogs at the shelter is stated in the question. Mark points written by this session. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -482,9 +488,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:31:48Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:37Z",
           "notes": "no problems found"
         }
       ]
@@ -500,6 +506,7 @@
     "front": "In the ratio 1 : 3, what fraction of the whole is the first part?",
     "back": "1/4",
     "explanation": "The whole is 1 + 3 = 4 parts. The first part is 1 of them, so it is 1/4 of the whole.",
+    "hint": "Add the parts to find the whole, then write the first part over the whole.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N11",
     "checked_by": ["author"],
     "citations": [
@@ -525,7 +532,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Front cited to spec N11. Back checked in Python: 1/(1 + 3). Front reworded after adversarial review (fraction of the whole, not of the other part). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Front cited to spec N11. Back checked in Python: 1/(1 + 3). Front reworded after adversarial review (fraction of the whole, not of the other part). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -555,9 +562,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:42:10Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:39Z",
           "notes": "no problems found"
         }
       ]
@@ -573,6 +580,7 @@
     "front": "In the ratio 2 : 1, what fraction of the whole is the first part?",
     "back": "2/3",
     "explanation": "The whole is 2 + 1 = 3 parts. The first part is 2 of them, so it is 2/3 of the whole.",
+    "hint": "Add the two parts of the ratio to get the whole, then put the first part over it.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N11",
     "checked_by": ["author"],
     "citations": [
@@ -598,7 +606,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Front cited to spec N11. Back checked in Python: 2/(2 + 1). Front reworded to match n11-0007. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Front cited to spec N11. Back checked in Python: 2/(2 + 1). Front reworded to match n11-0007. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -628,9 +636,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:42:16Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:41Z",
           "notes": "no problems found"
         }
       ]
@@ -646,6 +654,7 @@
     "front": "In the ratio 3 : 7, what fraction of the whole is the second part?",
     "back": "7/10",
     "explanation": "The whole is 3 + 7 = 10 parts. The second part is 7 of them, so it is 7/10 of the whole.",
+    "hint": "Add the parts to find the whole, then write the second part as a fraction of it.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N11",
     "checked_by": ["author"],
     "citations": [
@@ -671,7 +680,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Front cited to spec N11. Back checked in Python: 7/(3 + 7). Front reworded after adversarial review (fraction of the whole). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Front cited to spec N11. Back checked in Python: 7/(3 + 7). Front reworded after adversarial review (fraction of the whole). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -701,9 +710,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:42:24Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:43Z",
           "notes": "no problems found"
         }
       ]
