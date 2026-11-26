@@ -184,7 +184,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** Multiply the numbers: 6 × 1.6 = 9.6. To multiply powers of 10, add their indices: 10^2 × 10^8 = 10^(2 + 8) = 10^10. This gives 9.6 × 10^10. 9.6 is at least 1 and less than 10, so this is already standard form.
 - **Hint:** Multiply the numbers, then multiply the powers of 10 by adding their indices.
 - **Marks (2):** M1 for 6 × 1.6 = 9.6 or 10^2 × 10^8 = 10^10; A1 for 9.6 × 10^10
-- Seed 1, difficulty 2, `gcse-maths-h-n9-t-standard-form-multiply-01`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 1, difficulty 2, `gcse-maths-h-n9-t-standard-form-multiply-01`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 2. Work out (9 × 10^9) × (7.8 × 10^6). Give your answer in standard form.
 
@@ -193,7 +193,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** Multiply the numbers: 9 × 7.8 = 70.2. To multiply powers of 10, add their indices: 10^9 × 10^6 = 10^(9 + 6) = 10^15. This gives 70.2 × 10^15. In standard form the first number is at least 1 and less than 10. 70.2 = 7.02 × 10^1, so 70.2 × 10^15 = 7.02 × 10^1 × 10^15 = 7.02 × 10^16.
 - **Hint:** Multiply the numbers, then multiply the powers of 10 by adding their indices.
 - **Marks (2):** M1 for 70.2 × 10^15 or 70 200 000 000 000 000; A1 for 7.02 × 10^16
-- Seed 2, difficulty 3, `gcse-maths-h-n9-t-standard-form-multiply-02`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 2, difficulty 3, `gcse-maths-h-n9-t-standard-form-multiply-02`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 3. Work out (6.6 × 10^2) × (2 × 10^5). Give your answer in standard form.
 
@@ -202,7 +202,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** Multiply the numbers: 6.6 × 2 = 13.2. To multiply powers of 10, add their indices: 10^2 × 10^5 = 10^(2 + 5) = 10^7. This gives 13.2 × 10^7. In standard form the first number is at least 1 and less than 10. 13.2 = 1.32 × 10^1, so 13.2 × 10^7 = 1.32 × 10^1 × 10^7 = 1.32 × 10^8.
 - **Hint:** Multiply the numbers, then multiply the powers of 10 by adding their indices.
 - **Marks (2):** M1 for 13.2 × 10^7 or 132 000 000; A1 for 1.32 × 10^8
-- Seed 3, difficulty 3, `gcse-maths-h-n9-t-standard-form-multiply-03`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 3, difficulty 3, `gcse-maths-h-n9-t-standard-form-multiply-03`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 4. Work out (4.2 × 10^3) × (7 × 10^5). Give your answer in standard form.
 
@@ -211,7 +211,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** Multiply the numbers: 4.2 × 7 = 29.4. To multiply powers of 10, add their indices: 10^3 × 10^5 = 10^(3 + 5) = 10^8. This gives 29.4 × 10^8. In standard form the first number is at least 1 and less than 10. 29.4 = 2.94 × 10^1, so 29.4 × 10^8 = 2.94 × 10^1 × 10^8 = 2.94 × 10^9.
 - **Hint:** Multiply the numbers, then multiply the powers of 10 by adding their indices.
 - **Marks (2):** M1 for 29.4 × 10^8 or 2 940 000 000; A1 for 2.94 × 10^9
-- Seed 4, difficulty 3, `gcse-maths-h-n9-t-standard-form-multiply-04`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 4, difficulty 3, `gcse-maths-h-n9-t-standard-form-multiply-04`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 5. Work out (6 × 10^9) × (4.9 × 10^2). Give your answer in standard form.
 
@@ -220,7 +220,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Explanation:** Multiply the numbers: 6 × 4.9 = 29.4. To multiply powers of 10, add their indices: 10^9 × 10^2 = 10^(9 + 2) = 10^11. This gives 29.4 × 10^11. In standard form the first number is at least 1 and less than 10. 29.4 = 2.94 × 10^1, so 29.4 × 10^11 = 2.94 × 10^1 × 10^11 = 2.94 × 10^12.
 - **Hint:** Multiply the numbers, then multiply the powers of 10 by adding their indices.
 - **Marks (2):** M1 for 29.4 × 10^11 or 2 940 000 000 000; A1 for 2.94 × 10^12
-- Seed 5, difficulty 3, `gcse-maths-h-n9-t-standard-form-multiply-05`. Checks: grounded-writing pass, maths-engine pass.
+- Seed 5, difficulty 3, `gcse-maths-h-n9-t-standard-form-multiply-05`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ## gcse-maths-h-a18-quadratic-factorising (gcse-maths-h-a18, 5 questions)
 
