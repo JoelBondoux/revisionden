@@ -95,3 +95,7 @@ in reads as low contrast. The rules stay WCAG 2.2 A/AA (or what the check passes
 Passkey tests use Chromium's virtual authenticator (CDP `WebAuthn.addVirtualAuthenticator`):
 one holding a generated passkey for the page's host checks the real unlock prompt, and an empty
 one checks the "Ask a parent to link this device" message. The API is stubbed with `page.route`.
+The whole-session smoke test (`e2e/tests/pupil-session.spec.ts`, phone only) walks one pupil
+through unlock (virtual authenticator), Home, the map, a lesson, a right answer, the prize box
+and back Home with Pip, running `axeWhenSettled` on every screen. It catches the pieces breaking
+each other, which the per-screen specs cannot.
