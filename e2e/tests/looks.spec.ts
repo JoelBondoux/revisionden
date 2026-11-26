@@ -157,3 +157,150 @@ test('high contrast drops the page art in every look', async ({ page }) => {
     expect(image, style).toMatch(NO_ART);
   }
 });
+
+/** Lets a style change's transitions start, then finish (endless motion aside). */
+async function settle(page: Page) {
+  await page.evaluate(
+    () =>
+      new Promise<void>((done) => requestAnimationFrame(() => requestAnimationFrame(() => done()))),
+  );
+  await page.evaluate(() =>
+    Promise.all(
+      document
+        .getAnimations()
+        .filter((a) => a.effect?.getTiming().iterations !== Infinity)
+        .map((a) => a.finished.catch(() => undefined)), // a cancelled one is settled too
+    ),
+  );
+}
+
+// Codex review of train #343 (lead: J15s-b, before staging): text painted straight on the page
+// (headings, the version footer, page notes) must read AA on what is really painted behind it, the
+// page wash and texture included, not just on --color-background. The text is hidden, the page
+// is screenshotted, and the pixels behind each piece of text are sampled.
+for (const scheme of ['light', 'dark'] as const) {
+  test(`text on the page reads AA on the painted page in every look, ${scheme} mode`, async ({
+    page,
+  }) => {
+    await page.emulateMedia({ colorScheme: scheme, reducedMotion: 'reduce' });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await asStudent(page);
+    const failures: string[] = [];
+    for (const path of ['/settings', '/map']) {
+      await page.goto(path);
+      await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+      for (const style of STYLES) {
+        await page.evaluate((s) => (document.documentElement.dataset.effectStyle = s), style);
+        await settle(page);
+        // Text drawn with no box of its own behind it, up to the page.
+        const texts = await page.evaluate(() => {
+          const clear = (el: Element) => {
+            const cs = getComputedStyle(el);
+            return (
+              (cs.backgroundColor === 'rgba(0, 0, 0, 0)' || cs.backgroundColor === 'transparent') &&
+              cs.backgroundImage === 'none'
+            );
+          };
+          const out: {
+            x: number;
+            y: number;
+            w: number;
+            h: number;
+            color: string;
+            large: boolean;
+            text: string;
+          }[] = [];
+          const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+          for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+            const el = n.parentElement;
+            if (!el || !n.textContent?.trim() || el.closest('.visually-hidden')) continue;
+            let onPage = true;
+            for (let a: Element | null = el; a && a !== document.body; a = a.parentElement)
+              if (!clear(a)) onPage = false;
+            if (!onPage) continue;
+            const cs = getComputedStyle(el);
+            if (cs.visibility === 'hidden' || Number(cs.opacity) === 0) continue;
+            const range = document.createRange();
+            range.selectNodeContents(n);
+            for (const r of Array.from(range.getClientRects())) {
+              if (r.width < 4 || r.height < 4 || r.bottom < 0 || r.top > innerHeight) continue;
+              if (r.right < 0 || r.left > innerWidth) continue;
+              const size = parseFloat(cs.fontSize);
+              out.push({
+                x: r.left,
+                y: r.top,
+                w: r.width,
+                h: r.height,
+                color: cs.color,
+                large: size >= 24 || (size >= 18.66 && Number(cs.fontWeight) >= 700),
+                text: (n.textContent ?? '').trim().slice(0, 30),
+              });
+            }
+          }
+          return out;
+        });
+        const hide = await page.addStyleTag({
+          content:
+            '*, *::before, *::after { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; }',
+        });
+        await settle(page);
+        const shot = await page.screenshot({ animations: 'disabled' });
+        await hide.evaluate((s) => s.remove());
+        const bad = await page.evaluate(
+          async ({ b64, texts }) => {
+            const img = new Image();
+            img.src = `data:image/png;base64,${b64}`;
+            await img.decode();
+            const cv = document.createElement('canvas');
+            cv.width = img.width;
+            cv.height = img.height;
+            const g = cv.getContext('2d')!;
+            g.drawImage(img, 0, 0);
+            const scale = img.width / innerWidth;
+            const px = g.getImageData(0, 0, cv.width, cv.height).data;
+            const ctx = document.createElement('canvas').getContext('2d')!;
+            const rgb = (c: string) => {
+              ctx.clearRect(0, 0, 1, 1);
+              ctx.fillStyle = c;
+              ctx.fillRect(0, 0, 1, 1);
+              const d = ctx.getImageData(0, 0, 1, 1).data;
+              return [d[0]!, d[1]!, d[2]!, d[3]! / 255];
+            };
+            const lum = (c: number[]) => {
+              const f = (v: number) =>
+                (v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+              return 0.2126 * f(c[0]!) + 0.7152 * f(c[1]!) + 0.0722 * f(c[2]!);
+            };
+            const ratio = (a: number[], b: number[]) => {
+              const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m) as [number, number];
+              return (x + 0.05) / (y + 0.05);
+            };
+            const out: string[] = [];
+            for (const t of texts) {
+              const ink = rgb(t.color);
+              const samples: number[] = [];
+              for (let i = 1; i < 6; i++)
+                for (let j = 1; j < 4; j++) {
+                  const x = Math.round((t.x + (t.w * i) / 6) * scale);
+                  const y = Math.round((t.y + (t.h * j) / 4) * scale);
+                  if (x < 0 || y < 0 || x >= cv.width || y >= cv.height) continue;
+                  const k = (y * cv.width + x) * 4;
+                  const bg = [px[k]!, px[k + 1]!, px[k + 2]!];
+                  const a = ink[3]!;
+                  const fg = [0, 1, 2].map((c) => ink[c]! * a + bg[c]! * (1 - a));
+                  samples.push(ratio(fg, bg));
+                }
+              if (!samples.length) continue;
+              const worst = Math.min(...samples);
+              if (worst < (t.large ? 3 : 4.5)) out.push(`"${t.text}" ${worst.toFixed(2)}`);
+            }
+            return [...new Set(out)];
+          },
+          { b64: shot.toString('base64'), texts },
+        );
+        for (const b of bad) failures.push(`${style} ${scheme} ${path}: ${b}`);
+      }
+    }
+    expect(failures).toEqual([]);
+  });
+}

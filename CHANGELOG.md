@@ -158,6 +158,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- J15s-b (Codex review of train #343): text on the page reads AA on the painted page in every look. Pop Burst's dark wash is now a deep purple-to-plum (the purple-to-peach left the footer at 2.5:1), and Sticker Book's main colour is a shade deeper (#0b6b60) so "See all" reads over its warm glow. A new e2e check in `looks.spec.ts` hides the text, screenshots the page and checks the pixels behind each piece of on-page text, for all 7 looks in light and dark.
 - W8c: the interactive area model fits one phone screen again now that Pip has his own row in lessons (no gap under the question, and the hint and pair question in the small text size), so the `area-model` e2e "Check fits without scrolling" passes on dev.
 - Docs: content plan tasks D7 ("either order" topic groups) and D8 (cross-subject "bridge" topics, discovered on the map) added to `docs/BACKLOG.md`, from the owner's map review.
 - F11b (Codex review on train #311): an all-decks flashcard session is complete when today's offered cards are done, the daily 20 plus any "10 more", not the whole backlog. `POST /flashcards/sessions` takes `extra`, stored in `flashcard_sessions.extra_cards` (migration 0032); finish compares with `todaysCards(…, extraCards)`. The web app sends the extra it asked for.
