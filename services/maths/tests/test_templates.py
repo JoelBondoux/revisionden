@@ -428,3 +428,26 @@ def test_a_question_that_only_adds_words_to_a_hand_written_one_is_a_repeat():
     for path in (REPO / build.OUT_DIR).glob("*.json"):
         for item in json.loads(path.read_text()):
             assert not repeats(item["prompt"], written), item["id"]
+
+
+# --- answer.form (S2e, #201): templates say which form the answer must be in -----------------
+
+def test_recurring_decimal_items_ask_for_the_simplest_fraction():
+    for item in generate(_template("recurring-decimal"), 5, NOW):
+        assert item["answer"]["form"] == "simplest_fraction"
+
+
+def test_standard_form_items_ask_for_standard_form():
+    for item in generate(_template("standard-form-multiply"), 5, NOW):
+        assert item["answer"]["form"] == "standard_form"
+
+
+def test_the_engine_cross_check_also_checks_the_answer_form():
+    from app.templates.core import engine_checks
+    item = make_item(_template("recurring-decimal"), 1, NOW)
+    [check] = engine_checks(item)
+    assert check["form"] == "simplest_fraction"
+    sf = make_item(_template("standard-form-multiply"), 2, NOW)
+    checks = engine_checks(sf)
+    assert checks[0]["form"] == "standard_form"
+    assert checks[1]["expected"]["form"] == "standard_form"

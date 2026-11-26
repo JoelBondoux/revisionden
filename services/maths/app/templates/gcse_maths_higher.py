@@ -385,7 +385,7 @@ def _standard_write(p: dict) -> dict:
         "difficulty": 3 if shift else 2,
         "expected_seconds": 100 if shift else 80,
         "prompt": f"Work out ({sa} × 10^{m}) × ({sb} × 10^{n}). Give your answer in standard form.",
-        "answer": {"expression": answer},
+        "answer": {"expression": answer, "form": "standard_form"},
         "verify": {"method": "expression", "expression": steps[0]},
         "steps": steps,
         "mark_scheme": [mark, f"A1 for {sm} × 10^{power}"],
@@ -417,7 +417,7 @@ def _standard_recheck(p: dict, item: dict) -> list[str]:
 
 STANDARD_FORM_MULTIPLY = Template(
     id="gcse-maths-h-n9-standard-form-multiply",
-    version=3,  # v2: "add their indices" (review); v3: M1 also for the ordinary number
+    version=4,  # v2: "add their indices"; v3: M1 also for the ordinary number; v4: answer.form
     topic="gcse-maths-h-n9",
     learning_point="gcse-maths-h-n9-lp-calculate",
     type="worked_maths",
@@ -599,7 +599,8 @@ def _recurring_write(p: dict) -> dict:
         "expected_seconds": 90,
         "prompt": (f"Write 0.{digits * 3}... (the digits {digits} recur) as a fraction in its "
                    "simplest form."),
-        "answer": {"value": f"{simple.numerator}/{simple.denominator}"},
+        "answer": {"value": f"{simple.numerator}/{simple.denominator}",
+                   "form": "simplest_fraction"},
         "verify": {"expression": f"{k}/99"},
         "mark_scheme": [f"M1 for 99x = {k} or {k}/99", f"A1 for {simple}"],
         "hint": "Let x be the decimal. Two digits recur, so work out 100x - x.",
@@ -634,7 +635,7 @@ def _recurring_recheck(p: dict, item: dict) -> list[str]:
 
 RECURRING_DECIMAL = Template(
     id="gcse-maths-h-n10-recurring-decimal",
-    version=2,  # v2: the subtraction is shown in full (adversarial review)
+    version=3,  # v2: subtraction in full (review); v3: answer.form simplest_fraction (S2e)
     topic="gcse-maths-h-n10",
     learning_point="gcse-maths-h-n10-lp-recurring",
     type="numeric",
