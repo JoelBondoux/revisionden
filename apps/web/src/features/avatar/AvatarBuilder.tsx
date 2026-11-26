@@ -74,6 +74,9 @@ export function AvatarBuilder({
   const baseId = useId();
   const reduced = useReducedMotion();
   const sentinel = useRef<HTMLSpanElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const tabPicked = useRef(false);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const compact = useCompact(sentinel);
   const choices = choicesFrom(code);
@@ -83,6 +86,30 @@ export function AvatarBuilder({
     setChanges((n) => n + 1);
     onChange(next);
   };
+  const selectTab = (id: string) => {
+    tabPicked.current = true;
+    setTabId(id);
+  };
+
+  // After a tab is picked, bring the new panel's start into view: just below the pinned stage
+  // when they are stacked (phones, the sheet), or level with its top when side by side.
+  useEffect(() => {
+    if (!tabPicked.current) return;
+    tabPicked.current = false;
+    const stageEl = stageRef.current;
+    const stage = stageEl?.getBoundingClientRect();
+    const panel = panelRef.current?.getBoundingClientRect();
+    if (!stageEl || !stage || !panel || !panelRef.current) return;
+    const sideBySide = stage.right <= panel.left;
+    // A compact stage grows back once the page is near the top again; its bottom margin holds
+    // exactly the height it will regain, so aim below the full-size stage.
+    const regain = parseFloat(getComputedStyle(stageEl).marginBottom) || 0;
+    const target = sideBySide ? stage.top : stage.bottom + regain;
+    if (panel.top >= target) return;
+    const scroller = scrollParent(panelRef.current) ?? window;
+    scroller.scrollBy({ top: panel.top - target, behavior: reduced ? 'auto' : 'smooth' });
+  }, [tabId, reduced]);
+
   const pick = (layer: AvatarLayer, index: number) =>
     change(encodeAvatar({ ...choices, [layer]: index }));
 
@@ -96,7 +123,7 @@ export function AvatarBuilder({
     }[event.key];
     if (to === undefined) return;
     event.preventDefault();
-    setTabId(AVATAR_TABS[to]!.id);
+    selectTab(AVATAR_TABS[to]!.id);
     tabRefs.current[to]?.focus();
   };
 
@@ -104,7 +131,11 @@ export function AvatarBuilder({
     <div className="avatar-builder">
       <span ref={sentinel} className="avatar-builder__sentinel" aria-hidden="true" />
       <div className="avatar-builder__layout">
-        <div className="avatar-builder__stage" data-compact={compact ? 'true' : undefined}>
+        <div
+          ref={stageRef}
+          className="avatar-builder__stage"
+          data-compact={compact ? 'true' : undefined}
+        >
           <div className="avatar-builder__preview">
             <div className="avatar-builder__figure">
               <span
@@ -135,7 +166,7 @@ export function AvatarBuilder({
                 aria-controls={`${baseId}-panel`}
                 tabIndex={t.id === tabId ? 0 : -1}
                 className="avatar-builder__tab"
-                onClick={() => setTabId(t.id)}
+                onClick={() => selectTab(t.id)}
                 onKeyDown={(event) => moveTab(event, i)}
               >
                 {t.label}
@@ -144,6 +175,7 @@ export function AvatarBuilder({
           </div>
         </div>
         <div
+          ref={panelRef}
           role="tabpanel"
           id={`${baseId}-panel`}
           aria-labelledby={`${baseId}-tab-${tab.id}`}

@@ -112,3 +112,18 @@ test('the reviewer is told when order does not matter, and what that covers', ()
   const ordered = { ...short, answer: { accepted: ['x^2 + y^2 = 36'] } };
   assert.doesNotMatch(reviewPrompt(ordered).prompt, /any_order/);
 });
+
+test('the reviewer is told how typed answers are normalised, so it does not ask for those forms', () => {
+  const short = {
+    ...item,
+    type: 'short_answer',
+    options: undefined,
+    answer: { accepted: ['p^3q'], any_order: true },
+  };
+  const { prompt } = reviewPrompt(short);
+  assert.match(prompt, /spaces and case are ignored/i);
+  assert.match(prompt, /×, ·, \* .* multiply/);
+  assert.match(prompt, /do not report missing versions that differ only/i);
+  // Multiple choice has no typed answer, so no note.
+  assert.doesNotMatch(reviewPrompt(item).prompt, /spaces and case are ignored/i);
+});

@@ -261,6 +261,17 @@
   border-top: 1px solid var(--help-border-soft);
 }
 
+.help-service__name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.help-org-icon {
+  flex: none;
+  color: var(--help-muted, #4a5262);
+}
+
 .help-service__summary p {
   margin-bottom: var(--space-2);
 }
