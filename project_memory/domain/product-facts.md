@@ -393,7 +393,7 @@ Tags: #product #rules #limits #defaults
 - `GET /health` always answers with the version: `ok` (200) when configured, `misconfigured`
   (503) while a required secret is missing. Dev and staging deploys accept `misconfigured`;
   production does not.
-- The app shows its version in a small footer on every page (links to About).
+- The app shows its version in a small footer on every page (links to About). Outside the live app the footer also names the environment and the short commit, e.g. "(Development, ef86a9a)", so testers can tell builds apart; the live app never shows the commit.
 
 ## Verification (no mistakes on the education side)
 
