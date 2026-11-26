@@ -118,6 +118,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- S3-N3 forms: `answer.form` on the worked items that ask for a form: `index_form` on n4-0002 to 0004 (prime factors) and `standard_form` on n9-0004, so the plain value (360, 150000000000) is no longer accepted. Verification re-run on each.
 - Web tests no longer time out on a busy CI runner while a screen is still loading its data (I13, seen on `FlashcardsPage.flip`): `test-setup.ts` sets the Testing Library wait to 5 seconds for every `findBy…` and `waitFor` (the stats tests' per-file `LOAD`, now for all 564 finds) and gives each test 15 seconds. `docs/TESTING.md` says so.
 - Maths engine (T2): a rounded `value` check whose answer is an expression (`6.4*10^8` with `significant_figures`, as standard-form items send it) is now read exactly before the rounding is compared, instead of failing with InvalidOperation (Codex on train #208).
 - Maths engine (T2): `app/notation.py` rewrites everyday notation before parsing (× · ⋅, x between numbers, superscripts and the superscript minus, unicode minus and dashes, thousands separators in exact groups of three), so `/check-working`, `/equivalent`, `/solutions` and the content checks no longer refuse `2^3 × 3^2 × 5`, `1.5 × 10^11`, `2³ × 3²`, `−7` or `30,000`, or read `1.5x10^11` as the letter x.
