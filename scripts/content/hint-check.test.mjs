@@ -118,3 +118,39 @@ test('a hint with the plain value of a standard-form answer is refused (n9-0006)
 test('a hint with the answer as a mixed number is refused', () => {
   assert.equal(hintErrors(numeric('4/3', 'That is 1 1/3.', 'Find the gradient.')).length, 1);
 });
+
+test('a standard-form answer written with superscript powers is refused (n9-0006)', () => {
+  const sf = (
+    hint,
+    prompt = 'Work out (3.2 × 10^4) × (2 × 10^4). Give your answer in standard form.',
+  ) =>
+    hintErrors({
+      type: 'numeric',
+      prompt,
+      answer: { value: '6.4*10^8', form: 'standard_form' },
+      hint,
+    });
+  assert.equal(sf('The answer is 6.4 × 10⁸.').length, 1);
+  assert.equal(sf('The answer is 6.4×10⁸.').length, 1);
+  assert.deepEqual(sf('Multiply 3.2 by 2, then add the powers: 10⁴ × 10⁴.'), []);
+  // A small answer with a negative superscript power.
+  const small = (hint) =>
+    hintErrors({
+      type: 'numeric',
+      prompt: 'Write 0.00052 in standard form.',
+      answer: { value: '5.2*10^-4' },
+      hint,
+    });
+  assert.equal(small('It is 5.2 × 10⁻⁴.').length, 1);
+  assert.deepEqual(small('Move the decimal point until the number is between 1 and 10.'), []);
+});
+
+test('a superscript power already shown in the question may be repeated', () => {
+  const item = {
+    type: 'numeric',
+    prompt: 'Write 6.4 × 10⁸ as an ordinary number.',
+    answer: { value: '640000000' },
+    hint: 'Start from 6.4 × 10⁸ and move the decimal point 8 places.',
+  };
+  assert.deepEqual(hintErrors(item), []);
+});

@@ -82,10 +82,10 @@ describe('effect style picker', () => {
   });
 
   it('appears in Settings for a student, not for a parent', async () => {
-    const { unmount } = renderRoute('/settings');
+    const { unmount } = renderRoute('/settings/look-and-sound');
     expect(await screen.findByRole('heading', { name: 'Effect style' })).toBeInTheDocument();
     unmount();
-    renderRoute('/settings', { studentId: null });
+    renderRoute('/settings/look-and-sound', { studentId: null });
     await screen.findByRole('heading', { name: 'Appearance' });
     expect(screen.queryByRole('heading', { name: 'Effect style' })).not.toBeInTheDocument();
   });

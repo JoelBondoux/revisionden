@@ -109,7 +109,8 @@ const ticketFields = z
   .object({
     id: uuid,
     familyId: uuid,
-    kind: z.enum(['bug', 'idea', 'confusing', 'other']),
+    // lesson_helped / lesson_not_helped: the one-tap "Did this help?" after an interactive lesson (W8).
+    kind: z.enum(['bug', 'idea', 'confusing', 'other', 'lesson_helped', 'lesson_not_helped']),
     status: z.enum(['new', 'looking_into_it', 'fixed', 'will_not_fix']),
     senderRole: z.enum(['student', 'parent']),
     text: z.string().nullable(),

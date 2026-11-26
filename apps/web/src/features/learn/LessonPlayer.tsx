@@ -11,6 +11,7 @@ import {
 import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { CloseIcon } from '../../components/icons';
+import { MathText } from '../../components/MathText';
 import { ReadAloudButton, itemSpeechText } from '../read-aloud';
 import { LearnMore, learnLinksByTopic, learnMoreLinks } from '../learn-links';
 import {
@@ -79,12 +80,20 @@ function Feedback({
           {result.comboBonusXp ? ` (Includes +${result.comboBonusXp} XP combo bonus)` : ''}
         </p>
       ) : (
-        feedback && <p>Answer: {feedback.correctAnswer}</p>
+        feedback && (
+          <p>
+            Answer: <MathText text={feedback.correctAnswer} subject={item.topicId} />
+          </p>
+        )
       )}
       {!result.correct && typeof wrongLine === 'number' && (
         <p>Line {wrongLine + 1} is where it first goes wrong.</p>
       )}
-      {feedback?.explanation && <p>{feedback.explanation}</p>}
+      {feedback?.explanation && (
+        <p>
+          <MathText text={feedback.explanation} subject={item.topicId} />
+        </p>
+      )}
       {result.flashcardAdded && <p>Added to your flashcards for another go later.</p>}
       {comeback && <p className="feedback__comeback">Comeback! You got it this time.</p>}
       {miss === 'retry' && <p>No worries: we&apos;ll have another go at this in a moment.</p>}
@@ -96,6 +105,7 @@ function Feedback({
           links={learnMoreLinks(learnLinksByTopic, {
             topicId: item.topicId,
             learningPoint: item.learningPoint,
+            itemId: item.contentId,
           })}
         />
       )}
