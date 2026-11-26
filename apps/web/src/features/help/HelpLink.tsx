@@ -1,4 +1,4 @@
-import { LinkChip, LinkTile } from '../../components/links';
+import { LinkChip } from '../../components/links';
 
 /** A small outline heart (original artwork), used for the Get help link. */
 export function HeartIcon() {
@@ -32,18 +32,5 @@ export function GetHelpLink({ to = '/help', className }: { to?: string; classNam
       <HeartIcon />
       Get help
     </LinkChip>
-  );
-}
-
-/** A calm Get help tile for the student's home screen (the topic map). */
-export function GetHelpTile() {
-  return (
-    <LinkTile
-      to="/help"
-      className="get-help-tile"
-      title="Get help"
-      description="Private support if something is worrying you. Nobody is told you looked."
-      icon={<HeartIcon />}
-    />
   );
 }

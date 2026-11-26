@@ -16,6 +16,7 @@ export const darkTokens = {
   '--color-text-on-primary': '#FFFFFF',
   '--color-text-on-gold': '#2B2B3A',
   '--color-border': '#3A3552',
+  '--color-track': '#7C7699',
   '--color-surface': '#1F1B33',
   '--color-background': '#14112A',
   '--color-success': '#0B8457',
@@ -33,6 +34,7 @@ export const darkTokens = {
   '--color-mastery-fill': '#3B3170',
   '--color-weak': '#FF8A4C',
   '--color-challenge': '#0E0C1A',
+  '--color-challenge-edge': '#8A83B0',
   '--color-pip': '#FF7A2F',
   '--color-pip-side': '#E35F17',
   '--color-pip-ears': '#3A2622',
@@ -92,6 +94,23 @@ export const THEME_PAIRS: PairSpec[] = [
   ['white on challenge hex', '--color-text-on-primary', '--color-challenge'],
   ['white on right answer (arena)', '--arena-text', '--arena-correct'],
 ];
+
+/** Shapes that carry meaning, and what they sit on: these need 3:1 (WCAG 1.4.11, J10f). */
+export const NON_TEXT_PAIRS: PairSpec[] = [
+  ['empty progress track on surface', '--color-track', '--color-surface'],
+  ['empty progress track on background', '--color-track', '--color-background'],
+  ['Challenge hex outline on background', '--color-challenge-edge', '--color-background'],
+  ['Challenge hex outline on surface', '--color-challenge-edge', '--color-surface'],
+];
+
+/** The non-text pairs with real colours from one palette. */
+export function resolveNonTextPairs(palette: Palette): TextPair[] {
+  return NON_TEXT_PAIRS.map(([name, fg, bg]) => ({
+    name,
+    foreground: palette[fg] ?? tokens[fg as TokenName],
+    background: palette[bg] ?? tokens[bg as TokenName],
+  }));
+}
 
 /** The pairs with real colours from one palette. */
 export function resolvePairs(palette: Palette): TextPair[] {

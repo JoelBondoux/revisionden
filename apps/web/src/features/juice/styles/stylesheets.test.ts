@@ -101,6 +101,11 @@ describe.each(SURROUND_STYLES)('the %s lesson surround', (id) => {
       expect(contrastRatio(token('arena-text')!, token('arena-raised')!)).toBeGreaterThanOrEqual(
         4.5,
       );
+      // An empty progress track stays visible (WCAG 1.4.11, J10f).
+      expect(
+        contrastRatio(token('arena-track')!, token('arena-bg')!),
+        `${selector} arena-track`,
+      ).toBeGreaterThanOrEqual(3);
     }
   });
 });
@@ -124,5 +129,23 @@ describe('the Doodle Diary handwriting', () => {
     expect(licences).toContainEqual(
       expect.objectContaining({ name: '@fontsource/patrick-hand', licence: 'OFL-1.1' }),
     );
+  });
+});
+
+// J10f: Doodle Diary marks a right answer in the success colour (green, or blue for colour-blind
+// friendly colours) with a light wash, so it never reads as a red "wrong" mark.
+describe('the Doodle Diary right answer', () => {
+  const css = read('doodle-diary.css');
+  const rules = [...css.matchAll(/([^{}]*answer-option--right[^{}]*)\{([^}]*)\}/g)];
+
+  it('uses the success colour and a wash, never red', () => {
+    expect(rules.length).toBeGreaterThanOrEqual(2);
+    for (const [, , body] of rules) {
+      expect(body).not.toMatch(/--dd-red|#b8322a|#c8382e|#ff8a80/i);
+      expect(body).toMatch(/var\(--color-success/);
+    }
+    expect(
+      rules.some(([, , body]) => /background:\s*var\(--color-success-soft\)/.test(body!)),
+    ).toBe(true);
   });
 });

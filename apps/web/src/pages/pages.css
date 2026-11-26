@@ -332,7 +332,7 @@
 }
 
 .hex--challenge .hex__shape {
-  --hex-border: var(--color-challenge);
+  --hex-border: var(--color-challenge-edge);
   --hex-fill: var(--color-challenge);
   color: var(--color-gold);
 }
