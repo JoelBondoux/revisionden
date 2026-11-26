@@ -125,6 +125,34 @@ describe('marking', () => {
     expect(markNumeric({ value: '4' }, ' 4 ').correct).toBe(true);
   });
 
+  it('marks standard form by value, in its common spellings', () => {
+    const key = { value: '6.4 × 10^8' };
+    for (const given of ['6.4 × 10^8', '6.4×10⁸', '6.4x10^8', '6.4 * 10^8', '6.4e8']) {
+      expect(markNumeric(key, given).correct).toBe(true);
+    }
+    expect(markNumeric(key, '6.5 × 10^8').correct).toBe(false);
+    expect(markNumeric(key, '6.4 × 10^9').correct).toBe(false);
+  });
+
+  it('needs proper standard form when the answer is in standard form', () => {
+    const key = { value: '6.4 × 10^8' };
+    expect(markNumeric(key, '64 × 10^7').correct).toBe(false);
+    expect(markNumeric(key, '640000000').correct).toBe(false);
+    expect(markNumeric(key, '640 000 000').correct).toBe(false);
+  });
+
+  it('accepts standard form for a plain answer, and combines with rounding', () => {
+    expect(markNumeric({ value: '640000000' }, '6.4 × 10^8').correct).toBe(true);
+    expect(markNumeric({ value: '0.00032' }, '3.2 × 10⁻⁴').correct).toBe(true);
+    const sf = { value: '6.4 × 10^8', significant_figures: 2 };
+    expect(markNumeric(sf, '6.4 × 10^8').correct).toBe(true);
+    expect(markNumeric(sf, '6.40 × 10^8').correct).toBe(false);
+    expect(markNumeric(sf, '64 × 10^7').correct).toBe(false);
+    expect(markNumeric({ value: '38700', significant_figures: 3 }, '3.87 × 10^4').correct).toBe(
+      true,
+    );
+  });
+
   it('does not divide by zero in a fraction answer', () => {
     expect(markNumeric({ value: '1' }, '1/0').correct).toBe(false);
   });

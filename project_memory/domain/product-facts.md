@@ -333,6 +333,9 @@ Tags: #product #rules #limits #defaults
 - Numeric answers accept a UK thousands separator: a space (also thin or non-breaking) or a comma
   between groups of exactly three digits (`38 700`, `38,700`); `3 87` is wrong, not 387 (S2, rule
   in PRODUCT_RULES "Learning loop").
+- Numeric answers read standard form (`6.4 × 10^8`, `6.4x10⁸`, `6.4e8`) by value; a standard form
+  answer key needs proper standard form back (1 ≤ a < 10), and the validator sends the engine the
+  plain value (S2, rule in PRODUCT_RULES "Learning loop").
 - Typed short answers (F6, `packages/core/src/answer-normalise.ts`; rules in PRODUCT_RULES
   "Learning loop"): spaces, case, minus signs, multiply and divide signs, superscripts, ≤/≥ and √
   are normalised, so content lists one written form. `answer.any_order: true` also accepts
