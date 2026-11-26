@@ -53,6 +53,7 @@ import {
   studentFeedbackRoutes,
 } from './feedback/routes';
 import { parentStatsRoutes, studentStatsRoutes } from './stats/routes';
+import { worthALookRoutes } from './stats/worth-a-look';
 import { parentDailyLimitRoutes, studentDailyLimitRoutes } from './daily-limit/routes';
 import { parentTargetGradeRoutes, studentTargetGradeRoutes } from './stats/target-grades';
 import { adminErrorReportRoutes, errorReportRoutes } from './feedback/error-reports';
@@ -205,6 +206,7 @@ export function createApp(deps: AppDeps) {
   parent.route('/students', parentSubjectRoutes(deps));
   parent.route('/students', parentRewardRoutes(deps));
   parent.route('/students', parentStatsRoutes(deps));
+  parent.route('/students', worthALookRoutes(deps));
   parent.route('/students', parentDailyLimitRoutes(deps));
   parent.route('/students', parentTargetGradeRoutes(deps));
   parent.route('/onboarding', onboardingRoutes(deps));
