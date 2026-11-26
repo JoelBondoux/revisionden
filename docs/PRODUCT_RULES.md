@@ -166,6 +166,8 @@ formula and its assumptions. Summary of what is built:
   sword, jungle and space scenes. 14 rewards unlock them: one item each, except the 100-day
   streak, which unlocks two (crown and Alien skin).
 - Shuffle picks only items the student can wear. Avatars are drawn as SVG shapes, never photos.
+- The avatar can be animated (E9): idle, nod, hop and hmm move whole parts with CSS transforms, so
+  every item combination moves together; still with reduced motion. Details: `docs/GAME_FEEL.md`.
 - Implemented: `packages/core/src/nickname.ts`, `packages/core/src/avatar.ts`.
 
 ## Onboarding

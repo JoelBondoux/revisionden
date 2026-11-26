@@ -86,6 +86,11 @@ Tags: #product #rules #limits #defaults
   family log events.
 - New children start from a Boy, Girl or Neutral look (Neutral preselected); only the avatar code
   is stored, never a gender. A newly linked device offers "Make it yours" (with "Maybe later").
+- Avatar motion (E9, 2026-11-26): `AvatarSvg` takes `motion` (`idle`, `nod` right answer, `hop`
+  goal or level, `hmm` wrong answer, `still` default) and `paused` (questions and Test mode: no
+  idle loop, reactions still play); `useAvatarMotion` in `features/avatar/motion.ts`. Whole parts
+  (figure, head, eyes, mouth) move by CSS transforms, so any outfit moves together. Still with
+  reduced motion; paused in a hidden tab. Placement in the nav is J15b. `docs/GAME_FEEL.md`.
 - Most-used board per subject in England (Ofqual market report 2024 to 2025, share of
   certificates): AQA for GCSE English Language, English Literature, Biology, Chemistry, Physics,
   Combined Science, Drama, French and A-Level Physics; Pearson Edexcel for GCSE Maths, History and
