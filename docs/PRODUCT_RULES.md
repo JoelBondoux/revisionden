@@ -948,7 +948,9 @@ Requested by the product owner on 2026-11-25.
   to the organisation's name, and never hot-linked.
 - Privacy: its own layout with no navigation, sounds or API calls; nothing is fetched to show it
   (the data is built into the app); websites open in a new tab with `rel="noreferrer"`. A unit test
-  and an e2e test check that visiting it makes no API calls and no requests to other sites.
+  and an e2e test check that visiting it makes no API calls and no requests to other sites. The
+  effect style provider wraps every screen but loads nothing on Get help (J10e, tested in
+  `EffectStyleRoute.test.tsx`).
 - Style: calm, no game-feel effects (`features/help/help.css`). Follows the app's theme (light,
   dark, colour-blind) through its own `--help-*` colours; every text pair meets WCAG AA and Quick
   exit and control borders meet 3:1 in every theme (`helpTheme.test.ts`). The danger panel keeps a

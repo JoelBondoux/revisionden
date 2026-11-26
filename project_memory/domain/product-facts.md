@@ -863,7 +863,7 @@ Tags: #product #rules #limits #defaults
   Pixel Arcade `level-40`, added as `effectStyle` items by `withEffectStyles`
   (`packages/core/src/catalogue/effect-styles.ts`). All seven built (J10c, J10d): Doodle Diary (default), Sticker Book, Pop
   Burst, Garden Grow, Starlight, Comic Pop, Pixel Arcade. Unlocked list:
-  `GET /v1/student/rewards/effect-styles`. Picker: Settings → Effect style (students only), with
+  `GET /v1/student/rewards/effect-styles`, loaded by `EffectStyleRoute` inside the router: never on `/help` or `/parent/help`, again whenever the picker opens, and retried on the next screen after a failed load (J10e). Picker: Settings → Effect style (students only), with
   locked styles showing a preview and how to unlock them. Doodle Diary letters headings in Patrick Hand
   (`@fontsource/patrick-hand`, OFL-1.1, self-hosted) and the provider passes the style to U's
   `useFeedbackStyle`. Lesson surround (J10a2): follows the style; the question and answers

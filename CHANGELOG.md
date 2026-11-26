@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Fixed: a new effect style you've just earned can be picked in Settings straight away, without reloading the app.
 - Lessons now match your look: in Sticker Book, practice happens on a warm paper page (or night paper in dark mode), with each question on a plain, easy-to-read card.
 - A new look for rewards and celebrations, Sticker Book: your daily goal and next mission are cards taped into a sticker book, mastered topics are gold stickers, and combos, stars and confetti slap onto the page like stickers.
 - Fixed: with sound switched off, earning a reward now still gives a little buzz on phones that can vibrate (Vibration is its own setting).
@@ -101,6 +102,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Effect styles J10e (J): `EffectStyleProvider` moves inside the router (`EffectStyleRoute` in `routes.tsx`, out of `App.tsx`) and makes no request on `/help` or `/parent/help` (Get help makes no API calls, signed in or out). Unlocked styles are checked again when the Settings picker opens (one request at a time) and a failed load is retried on the next screen, so a newly earned style or a load that failed before unlocking no longer needs a reload (Codex review on #176). Tests: provider, picker, routes.
 - U6b: `playReward` vibration no longer depends on the reward sound playing; it follows the biggest reward and the Test mode rule, so muted sound still buzzes when Vibration is on.
 - One new device a day, made atomic (B7, follow-up to I5b): two new browsers unlocking the same synced passkey at the same moment could each add a device and alert the parents twice. Unlock now claims the day with one conditional upsert on the new `passkey_new_device_claims` table (migration `0027_new_device_claims`); the loser reuses the winner's device. The scheduled clean-up deletes claims after 24 hours. Data retention 1.12.
 - Avatar builder (J9b, Codex review of #134): picking a tab after scrolling part-way down now brings the new tab's first options into view just below the pinned stage (level with its top when wide), allowing for the compact stage growing back; instant with reduced motion.
