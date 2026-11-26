@@ -49,6 +49,10 @@ describe('Parent home', () => {
       'href',
       '/parent/subjects/00000000-0000-4000-8000-0000000000a1',
     );
+    expect(within(child).getByRole('link', { name: /^Friends/ })).toHaveAttribute(
+      'href',
+      '/parent/friends/00000000-0000-4000-8000-0000000000a1?name=demo_fox',
+    );
     await userEvent.selectOptions(screen.getByLabelText('Student'), 'demo_owl');
     const owl = await screen.findByRole('region', { name: 'demo_owl' });
     expect(within(owl).getByRole('link', { name: 'Rewards you set' })).toHaveAttribute(

@@ -1,0 +1,77 @@
+/* Friends league (FL). Shared tokens only, so the doodle skin (J) applies. */
+.league-table {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 22rem;
+  overflow-y: auto;
+}
+.league-row {
+  display: grid;
+  grid-template-columns: 2.5rem auto 1fr auto;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+  padding: var(--space-2, 0.5rem) 0;
+  min-height: 44px;
+}
+.league-row--you {
+  font-weight: 700;
+}
+.league-row__xp {
+  white-space: nowrap;
+}
+.league-who {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.league-who__title {
+  font-size: 0.85em;
+  color: var(--color-text-secondary, inherit);
+}
+.league-actions {
+  position: sticky;
+  bottom: var(--space-3, 0.75rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2, 0.5rem);
+}
+.league-check,
+.league-friend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+}
+.league-friend {
+  width: 100%;
+  min-height: 44px;
+  background: none;
+  border: 0;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+.league-friends,
+.league-waiting {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.league-waiting li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2, 0.5rem);
+  flex-wrap: wrap;
+}
+.league-reason,
+.league-hide {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 0.5rem);
+  min-height: 44px;
+}
+.league-code {
+  font-size: 1.4em;
+  letter-spacing: 0.1em;
+}

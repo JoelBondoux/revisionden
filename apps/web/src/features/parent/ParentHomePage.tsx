@@ -188,6 +188,14 @@ function ChildCard({ choices }: { choices: Child[] }) {
               description="Add or remove subjects, change boards and tiers"
             />
           </li>
+          <li>
+            <LinkTile
+              to={`/parent/friends/${id}?name=${encodeURIComponent(child.nickname)}`}
+              icon={<UsersIcon />}
+              title="Friends"
+              description="Allow friends, approve requests, and see the friends league"
+            />
+          </li>
         </ul>
       </Card>
     </>

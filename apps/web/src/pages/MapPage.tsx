@@ -13,6 +13,7 @@ import { TodayStrip } from '../map/TodayStrip';
 import { UnitPath } from '../map/UnitPath';
 import '../map/map.css';
 import { useStudent } from '../session/StudentContext';
+import { LeagueChip } from '../features/league';
 
 /** Chips for the student's subjects; a subject without questions yet says so. */
 function SubjectSwitcher({
@@ -91,6 +92,7 @@ export function MapPage() {
             {map.data.streakDays} day streak
           </Pill>
         )}
+        <LeagueChip />
       </div>
       <SubjectsNudge />
       {map.status !== 'ready' ? (

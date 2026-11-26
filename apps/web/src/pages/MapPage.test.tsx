@@ -18,6 +18,14 @@ describe('Topic map screen', () => {
     expect(await screen.findByRole('heading', { level: 1, name: 'Topic map' })).toBeInTheDocument();
   });
 
+  it("shows the student's place in the friends league, linking to the league", async () => {
+    renderRoute('/map');
+    expect(await screen.findByRole('link', { name: "You're 2nd this week" })).toHaveAttribute(
+      'href',
+      '/league',
+    );
+  });
+
   it('shows the subject, streak and daily goal', async () => {
     renderRoute('/map');
     expect(await screen.findByText('GCSE Higher Maths')).toBeInTheDocument();

@@ -73,6 +73,14 @@ export function SettingsPage() {
               description="Your level, chapter and collections"
             />
           </li>
+          <li>
+            <LinkTile
+              to="/league"
+              icon={<UsersIcon />}
+              title="Friends league"
+              description="This week's league with your friends"
+            />
+          </li>
         </ul>
       </Card>
       <MySubjectsCard />

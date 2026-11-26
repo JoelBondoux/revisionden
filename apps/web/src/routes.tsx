@@ -33,6 +33,7 @@ import { AdminFeedbackPage, FeedbackListPage } from './features/feedback/lists';
 import { MyStatsPage } from './features/stats/MyStatsPage';
 import { ParentDashboardPage } from './features/stats/ParentDashboardPage';
 import { ParentHomePage, ParentRemindersPage } from './features/parent';
+import { LeaguePage, ParentFriendsPage } from './features/league';
 import { ComplaintsPage } from './features/complaints/ComplaintsPage';
 import { AskParentPage } from './features/complaints/AskParentPage';
 import { JoinPage } from './features/parents';
@@ -80,6 +81,7 @@ const screens: RouteObject[] = [
       // Parent home (workstream P): the way in to the parent pages.
       { path: '/parent', element: <ParentHomePage /> },
       { path: '/parent/reminders/:studentId', element: <ParentRemindersPage /> },
+      { path: '/parent/friends/:studentId', element: <ParentFriendsPage /> },
       { path: '/parent/stats', element: <ParentDashboardPage /> },
       // A child's subjects after onboarding (workstream E5).
       { path: '/parent/subjects/:studentId', element: <SubjectsPage /> },
@@ -108,6 +110,7 @@ const screens: RouteObject[] = [
       { path: '/learn/subject/:subjectId', element: <SubjectPage /> },
       { path: '/cards', element: <FlashcardsPage /> },
       { path: '/rewards', element: <RewardsPage /> },
+      { path: '/league', element: <LeaguePage /> },
       {
         path: '/plan',
         element: (

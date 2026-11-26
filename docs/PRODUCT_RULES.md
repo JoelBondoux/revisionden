@@ -947,7 +947,11 @@ Owner decisions, 2026-11-26. Full design: `docs/FRIENDS_LEAGUE.md`.
   can remove, block, unblock and add a private label (30 characters, no email or phone).
   Reports are seen by both families' parents.
 - Implemented so far: `packages/core/src/league.ts`, `apps/api/src/routes/friends.ts`,
-  `apps/api/src/routes/friends-league.ts`; migration 0030. Screens to come.
+  `apps/api/src/routes/friends-league.ts`; migration 0030.
+- Screens: the League page at `/league` (from a "Friends league" tile on Me, and a rank chip
+  "You're 2nd this week" on the Map header, which moves to Home when that lands); the parent
+  Friends page at `/parent/friends/:studentId` (a "Friends" tile on the child's card). Code:
+  `apps/web/src/features/league/`. Weekly wins and rewards come next.
 
 ## Get help (support resources)
 

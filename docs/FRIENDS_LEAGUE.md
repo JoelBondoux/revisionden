@@ -218,7 +218,14 @@ New tables (one new migration):
   - Every step is in the family activity log (new kinds in `apps/api/src/family-events.ts`);
     the family export has a `friends` block per child and the profile's two settings; the daily
     clean-up deletes used or expired codes, tries after a day, and requests a day after they end.
-- **Still to come:** the web screens (PR 2); `league_weeks`, weekly wins into rewards and the
+- **PR 2 (web):** `apps/web/src/features/league/`: the League page at `/league` (the table
+  of up to 11 fits one phone screen, with "Add a friend" and "Friends" always in view; adding,
+  friend actions, report reasons and "Hide me" sit in sheets), the self-contained rank chip
+  (`LeagueChip`, "You're 2nd this week") in the Map header, a "Friends league" tile on Me
+  (Settings), and the parent Friends page at `/parent/friends/:studentId` (from a "Friends" tile
+  on the child's card in the parent home). Shared shapes: `packages/core/src/league-schemas.ts`.
+  e2e: `e2e/tests/league.spec.ts`.
+- **Still to come:** `league_weeks`, weekly wins into rewards and the
   title in the league (PR 3); the AppDeck report view, and closing a report (until then reports
   are kept until either child is deleted).
 

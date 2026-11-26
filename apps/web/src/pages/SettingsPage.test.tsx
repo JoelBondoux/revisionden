@@ -6,4 +6,12 @@ describe('Settings', () => {
     renderRoute('/settings');
     expect(await screen.findByRole('heading', { name: 'My subjects' })).toBeInTheDocument();
   });
+
+  it('links to the friends league (FL: the league lives under Me)', async () => {
+    renderRoute('/settings');
+    expect(await screen.findByRole('link', { name: /Friends league/ })).toHaveAttribute(
+      'href',
+      '/league',
+    );
+  });
 });
