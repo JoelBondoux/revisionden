@@ -109,6 +109,15 @@ Tags: #product #rules #limits #defaults
   readability (textstat) warns only, aiming at reading age 13 to 14 (GCSE), 15 to 16 (A-Level).
   Pending owner sign-off: in-house notes review and use of Oak. Oak's licence was read directly on 2026-11-26: lessons published after 1 September 2022 are OGL v3.0 (commercial use and adapting allowed, with Oak's attribution statement, no endorsement claim, third-party content excluded); earlier lessons are non-commercial only. In-copyright quotes: with
   the owner's solicitor.
+- Question generation research (QG, 2026-11-26; owner decisions in decision 0010, above): four guarantee tiers
+  (computed, source-quoted, fact, judgement). Computable or source-quotable share is highest for
+  A-Level Maths and Further Maths, A-Level Computer Science, physics, chemistry and French
+  vocabulary; English Language, Drama and Film Studies are mostly judgement. The DfE GCSE science
+  subject content (Open Government Licence) lists the physics equations (Appendix 1; Higher-tier
+  ones shown only by underlining); DfE annex E (September 2025, spreadsheet) has 266 required
+  French headwords with English meanings, not the full 1,200 to 1,700 word list, which each board
+  publishes itself. Detail, proofs of concept and owner decisions:
+  `docs/research/question-generation-2026-11.md`.
 - Onboarding takes Years 9 to 13 (9–11 GCSE, 12–13 A-Level). Exams are worked out from the year:
   Year 11 and 13 sit them next summer (2027 in school year 2026/27), Year 10 and 12 a year later,
   Year 9 two years later.
@@ -929,6 +938,11 @@ Tags: #product #rules #limits #defaults
   Maths topics with items (n4, n7, a4, a6, a17, a18, r9, g9, g17), URLs found by web search only.
   All 11 returned 200 in the CI link check on 2026-11-25, so `checked_at` is set and the buttons
   show. No Bitesize links yet: bbc.co.uk could not be reached from the build environment.
+- Learn it first, in-house goal (owner direction 2026-11-26, not yet built): RevisionDen should
+  eventually write its own verified teaching content (topic notes, explanations per learning
+  point, worked examples, code-drawn diagrams) under `docs/VERIFICATION.md`, and retire each
+  external link once our notes cover the topic. Plan and open questions (Oak licence not yet
+  confirmed): `docs/research/question-generation-2026-11.md` section 11.
 
 ## Operator console (planned)
 
