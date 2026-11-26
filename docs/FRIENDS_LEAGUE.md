@@ -256,6 +256,9 @@ New tables (one new migration):
   friendship is saved first and the request is marked started after, so if the save fails the
   request stays waiting with both approvals and approving again finishes it (production uses
   `neon-http`, which has no multi-statement transactions).
+- **Known behaviour (lead, 2026-11-26):** deleting a child does not settle their friends'
+  finished weeks first. The child's data goes at once, so a friend whose last weeks were not yet
+  settled simply has that rival missing from those weeks. Accepted.
 - **Still to come:** the AppDeck report view, where support can also close a report
   (`docs/BACKLOG.md`).
 
