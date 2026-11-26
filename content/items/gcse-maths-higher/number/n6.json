@@ -7,13 +7,10 @@
     "learning_point": "gcse-maths-h-n6-lp-powers-and-roots",
     "expected_seconds": 40,
     "prompt": "Work out 2^5 + 3^4",
-    "answer": {
-      "value": "113"
-    },
-    "verify": {
-      "expression": "2^5 + 3^4"
-    },
+    "answer": { "value": "113" },
+    "verify": { "expression": "2^5 + 3^4" },
     "marks": 1,
+    "explanation": "2^5 = 2 × 2 × 2 × 2 × 2 = 32 and 3^4 = 3 × 3 × 3 × 3 = 81. Add them: 32 + 81 = 113.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N6",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -39,7 +36,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N6). Answer backed by the maths engine.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N6). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -79,7 +76,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:23:15Z",
+          "at": "2026-11-26T03:40:19Z",
           "notes": "no problems found"
         }
       ]
@@ -93,13 +90,10 @@
     "learning_point": "gcse-maths-h-n6-lp-powers-and-roots",
     "expected_seconds": 40,
     "prompt": "Work out ∛343",
-    "answer": {
-      "value": "7"
-    },
-    "verify": {
-      "expression": "343^(1/3)"
-    },
+    "answer": { "value": "7" },
+    "verify": { "expression": "343^(1/3)" },
     "marks": 1,
+    "explanation": "The cube root asks which number, used three times in a multiplication, gives 343. 7 × 7 × 7 = 343, so ∛343 = 7.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N6",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -125,7 +119,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N6). Answer backed by the maths engine (7^3 = 343).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N6). Answer backed by the maths engine (7^3 = 343). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -165,7 +159,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:23:28Z",
+          "at": "2026-11-26T03:41:56Z",
           "notes": "no problems found"
         }
       ]
@@ -179,13 +173,10 @@
     "learning_point": "gcse-maths-h-n6-lp-powers-and-roots",
     "expected_seconds": 45,
     "prompt": "Work out the positive fourth root of 625",
-    "answer": {
-      "value": "5"
-    },
-    "verify": {
-      "expression": "625^(1/4)"
-    },
+    "answer": { "value": "5" },
+    "verify": { "expression": "625^(1/4)" },
     "marks": 1,
+    "explanation": "The positive fourth root of 625 is the positive number that gives 625 when raised to the power 4. 5^4 = 5 × 5 × 5 × 5 = 625, so the answer is 5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N6",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -211,7 +202,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N6). Answer backed by the maths engine (5^4 = 625). Prompt now asks for the positive root, after adversarial review ((-5)^4 = 625 too).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N6). Answer backed by the maths engine (5^4 = 625). Prompt now asks for the positive root, after adversarial review ((-5)^4 = 625 too). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -251,7 +242,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:31:51Z",
+          "at": "2026-11-26T03:43:50Z",
           "notes": "no problems found"
         }
       ]
@@ -265,13 +256,8 @@
     "learning_point": "gcse-maths-h-n6-lp-powers-and-roots",
     "expected_seconds": 90,
     "prompt": "Work out 2^4 × 5^2 without a calculator.",
-    "answer": {
-      "expression": "400"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "2^4 * 5^2"
-    },
+    "answer": { "expression": "400" },
+    "verify": { "method": "expression", "expression": "2^4 * 5^2" },
     "steps": ["16 * 25", "400"],
     "marks": 2,
     "mark_scheme": ["M1 for 16 and 25", "A1 for 400"],
@@ -355,9 +341,7 @@
     "expected_seconds": 40,
     "prompt": "Which is the best estimate of √50?",
     "options": ["6.9", "7.1", "7.5", "25"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "Compare the squares of the options with 50: 6.9^2 = 47.61, 7.1^2 = 50.41 and 7.5^2 = 56.25. 50.41 is closest to 50, so 7.1 is the best estimate.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N6",
@@ -432,9 +416,7 @@
     "expected_seconds": 40,
     "prompt": "∛100 lies between which two consecutive whole numbers?",
     "options": ["3 and 4", "4 and 5", "5 and 6", "9 and 10"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "4^3 = 64 and 5^3 = 125. 100 is between 64 and 125, so ∛100 is between 4 and 5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N6",
@@ -509,9 +491,7 @@
     "expected_seconds": 40,
     "prompt": "√80 lies between which two consecutive whole numbers?",
     "options": ["7 and 8", "8 and 9", "9 and 10", "40 and 41"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "8^2 = 64 and 9^2 = 81. 80 is between 64 and 81, so √80 is between 8 and 9.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N6",
@@ -586,6 +566,7 @@
     "expected_seconds": 10,
     "front": "2^6",
     "back": "64",
+    "explanation": "2^6 means six 2s multiplied: 2 × 2 × 2 × 2 × 2 × 2 = 64.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N6",
     "checked_by": ["author"],
     "citations": [
@@ -611,7 +592,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N6). Front cited to spec N6 (recognise powers of 2). Back checked in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N6). Front cited to spec N6 (recognise powers of 2). Back checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -643,7 +624,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:25:57Z",
+          "at": "2026-11-26T03:40:47Z",
           "notes": "no problems found"
         }
       ]
@@ -658,6 +639,7 @@
     "expected_seconds": 10,
     "front": "3^4",
     "back": "81",
+    "explanation": "3^4 means four 3s multiplied: 3 × 3 × 3 × 3 = 81.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N6",
     "checked_by": ["author"],
     "citations": [
@@ -683,7 +665,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N6). Front cited to spec N6 (recognise powers of 3). Back checked in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N6). Front cited to spec N6 (recognise powers of 3). Back checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -715,7 +697,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:26:06Z",
+          "at": "2026-11-26T03:40:53Z",
           "notes": "no problems found"
         }
       ]
@@ -730,6 +712,7 @@
     "expected_seconds": 10,
     "front": "5^3",
     "back": "125",
+    "explanation": "5^3 means three 5s multiplied: 5 × 5 × 5 = 125.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N6",
     "checked_by": ["author"],
     "citations": [
@@ -755,7 +738,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N6). Front cited to spec N6 (recognise powers of 5). Back checked in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N6). Front cited to spec N6 (recognise powers of 5). Back checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -787,7 +770,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:26:16Z",
+          "at": "2026-11-26T03:41:00Z",
           "notes": "no problems found"
         }
       ]

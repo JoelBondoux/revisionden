@@ -7,13 +7,10 @@
     "learning_point": "gcse-maths-h-n9-lp-convert",
     "expected_seconds": 40,
     "prompt": "0.00045 is written in standard form as A × 10^n. Find the value of n.",
-    "answer": {
-      "value": "-4"
-    },
-    "verify": {
-      "expression": "log((45/100000)/(45/10))/log(10)"
-    },
+    "answer": { "value": "-4" },
+    "verify": { "expression": "log((45/100000)/(45/10))/log(10)" },
     "marks": 1,
+    "explanation": "Move the decimal point to get a number between 1 and 10: 0.00045 becomes 4.5. The point moves 4 places to the right, and the number is less than 1, so the power is negative: 4.5 × 10^-4, so n = -4.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -51,7 +48,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer backed by the maths engine: 0.00045 = 4.5 × 10^-4, n = log10(0.00045 / 4.5).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer backed by the maths engine: 0.00045 = 4.5 × 10^-4, n = log10(0.00045 / 4.5). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -91,7 +88,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:30:40Z",
+          "at": "2026-11-26T03:39:12Z",
           "notes": "no problems found"
         }
       ]
@@ -105,13 +102,10 @@
     "learning_point": "gcse-maths-h-n9-lp-convert",
     "expected_seconds": 40,
     "prompt": "3 870 000 is written in standard form as A × 10^n. Find the value of n.",
-    "answer": {
-      "value": "6"
-    },
-    "verify": {
-      "expression": "log(3870000/(387/100))/log(10)"
-    },
+    "answer": { "value": "6" },
+    "verify": { "expression": "log(3870000/(387/100))/log(10)" },
     "marks": 1,
+    "explanation": "Move the decimal point to get a number between 1 and 10: 3 870 000 becomes 3.87. The point moves 6 places to the left, so 3 870 000 = 3.87 × 10^6, and n = 6.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -149,7 +143,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer backed by the maths engine: 3 870 000 = 3.87 × 10^6.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer backed by the maths engine: 3 870 000 = 3.87 × 10^6. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -189,7 +183,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:31:00Z",
+          "at": "2026-11-26T03:39:21Z",
           "notes": "no problems found"
         }
       ]
@@ -203,13 +197,10 @@
     "learning_point": "gcse-maths-h-n9-lp-convert",
     "expected_seconds": 40,
     "prompt": "Write 6.02 × 10^5 as an ordinary number.",
-    "answer": {
-      "value": "602000"
-    },
-    "verify": {
-      "expression": "(602/100)*10^5"
-    },
+    "answer": { "value": "602000" },
+    "verify": { "expression": "(602/100)*10^5" },
     "marks": 1,
+    "explanation": "Multiplying by 10^5 moves the decimal point 5 places to the right: 6.02 becomes 602000.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -235,7 +226,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Answer backed by the maths engine.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -275,7 +266,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:31:14Z",
+          "at": "2026-11-26T03:39:27Z",
           "notes": "no problems found"
         }
       ]
@@ -289,13 +280,8 @@
     "learning_point": "gcse-maths-h-n9-lp-calculate",
     "expected_seconds": 100,
     "prompt": "Work out (3 × 10^4) × (5 × 10^6). Give your answer in standard form.",
-    "answer": {
-      "expression": "1.5*10^11"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(3*10^4)*(5*10^6)"
-    },
+    "answer": { "expression": "1.5*10^11" },
+    "verify": { "method": "expression", "expression": "(3*10^4)*(5*10^6)" },
     "steps": ["15 * 10^10", "1.5 * 10^11"],
     "marks": 2,
     "mark_scheme": ["M1 for 15 × 10^10 or 150 000 000 000", "A1 for 1.5 × 10^11"],
@@ -390,13 +376,10 @@
     "learning_point": "gcse-maths-h-n9-lp-calculate",
     "expected_seconds": 60,
     "prompt": "Work out (2.4 × 10^3) ÷ (8 × 10^-2). Give your answer as an ordinary number.",
-    "answer": {
-      "value": "30000"
-    },
-    "verify": {
-      "expression": "((24/10)*10^3)/(8*10^-2)"
-    },
+    "answer": { "value": "30000" },
+    "verify": { "expression": "((24/10)*10^3)/(8*10^-2)" },
     "marks": 1,
+    "explanation": "Divide the numbers and the powers of 10 separately: 2.4 ÷ 8 = 0.3, and 10^3 ÷ 10^-2 = 10^(3 - (-2)) = 10^5. So the answer is 0.3 × 10^5 = 30000.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -422,7 +405,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Answer backed by the maths engine (decimals written as exact fractions).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Answer backed by the maths engine (decimals written as exact fractions). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -462,7 +445,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:31:50Z",
+          "at": "2026-11-26T03:39:35Z",
           "notes": "no problems found"
         }
       ]
@@ -476,13 +459,10 @@
     "learning_point": "gcse-maths-h-n9-lp-calculate",
     "expected_seconds": 60,
     "prompt": "Work out (6 × 10^8) + (4 × 10^7). Give your answer in standard form.",
-    "answer": {
-      "value": "6.4*10^8"
-    },
-    "verify": {
-      "expression": "(6*10^8) + (4*10^7)"
-    },
+    "answer": { "value": "6.4*10^8" },
+    "verify": { "expression": "(6*10^8) + (4*10^7)" },
     "marks": 2,
+    "explanation": "Write both with the same power of 10: 4 × 10^7 = 0.4 × 10^8. Add: 6 × 10^8 + 0.4 × 10^8 = 6.4 × 10^8.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -520,7 +500,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer backed by the maths engine: 600 000 000 + 40 000 000 = 640 000 000 = 6.4 × 10^8.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer backed by the maths engine: 600 000 000 + 40 000 000 = 640 000 000 = 6.4 × 10^8. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -560,7 +540,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:32:13Z",
+          "at": "2026-11-26T03:42:38Z",
           "notes": "no problems found"
         }
       ]
@@ -575,6 +555,7 @@
     "expected_seconds": 15,
     "front": "In standard form A × 10^n, which values can A take?",
     "back": "1 ≤ A < 10",
+    "explanation": "In standard form, A must be at least 1 and less than 10. For example, 3.2 × 10^4 is in standard form, but 32 × 10^3 is not.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
     "checked_by": ["author"],
     "citations": [
@@ -612,7 +593,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Front cited to spec N9. Back quoted from spec N9 (citation 2, supports back).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Front cited to spec N9. Back quoted from spec N9 (citation 2, supports back). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -644,7 +625,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:32:22Z",
+          "at": "2026-11-26T03:40:03Z",
           "notes": "no problems found"
         }
       ]
@@ -659,6 +640,7 @@
     "expected_seconds": 10,
     "front": "4 × 10^3 as an ordinary number",
     "back": "4000",
+    "explanation": "10^3 = 1000, so 4 × 10^3 = 4 × 1000 = 4000.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
     "checked_by": ["author"],
     "citations": [
@@ -684,7 +666,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Front cited to spec N9. Back checked in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Front cited to spec N9. Back checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -716,7 +698,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:32:34Z",
+          "at": "2026-11-26T03:40:09Z",
           "notes": "no problems found"
         }
       ]
@@ -731,6 +713,7 @@
     "expected_seconds": 10,
     "front": "10^-3 as a decimal",
     "back": "0.001",
+    "explanation": "10^-3 = 1/10^3 = 1/1000 = 0.001.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
     "checked_by": ["author"],
     "citations": [
@@ -756,7 +739,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Front cited to spec N9. Back checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Front cited to spec N9. Back checked with exact fractions in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -788,7 +771,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:32:46Z",
+          "at": "2026-11-26T03:40:17Z",
           "notes": "no problems found"
         }
       ]

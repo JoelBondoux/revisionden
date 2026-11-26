@@ -7,17 +7,11 @@
     "learning_point": "gcse-maths-h-n13-lp-convert-units",
     "expected_seconds": 30,
     "prompt": "Change 3.2 km to metres.",
-    "answer": {
-      "value": "3200",
-      "unit": "m"
-    },
-    "verify": {
-      "expression": "(32/10)*1000"
-    },
+    "answer": { "value": "3200", "unit": "m" },
+    "verify": { "expression": "(32/10)*1000" },
     "marks": 1,
-    "exact": {
-      "quantity": "length"
-    },
+    "explanation": "There are 1000 metres in 1 km, so multiply by 1000: 3.2 × 1000 = 3200 m.",
+    "exact": { "quantity": "length" },
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N13",
     "checked_by": ["maths-engine", "author"],
     "needs_human_approval": true,
@@ -44,7 +38,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Conversion factor is the SI one (1 km = 1000 m); the units checker (scripts/verify/exact/units.mjs) uses the same factor and checks the answer unit has the dimension of length. Answer backed by the maths engine. Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Conversion factor is the SI one (1 km = 1000 m); the units checker (scripts/verify/exact/units.mjs) uses the same factor and checks the answer unit has the dimension of length. Answer backed by the maths engine. Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -92,7 +86,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:34:39Z",
+          "at": "2026-11-26T03:39:10Z",
           "notes": "no problems found"
         }
       ]
@@ -106,17 +100,11 @@
     "learning_point": "gcse-maths-h-n13-lp-convert-units",
     "expected_seconds": 30,
     "prompt": "Change 450 g to kilograms.",
-    "answer": {
-      "value": "0.45",
-      "unit": "kg"
-    },
-    "verify": {
-      "expression": "450/1000"
-    },
+    "answer": { "value": "0.45", "unit": "kg" },
+    "verify": { "expression": "450/1000" },
     "marks": 1,
-    "exact": {
-      "quantity": "mass"
-    },
+    "explanation": "There are 1000 grams in 1 kg, so divide by 1000: 450 ÷ 1000 = 0.45 kg.",
+    "exact": { "quantity": "mass" },
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N13",
     "checked_by": ["maths-engine", "author"],
     "needs_human_approval": true,
@@ -143,7 +131,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Conversion factor is the SI one (1 kg = 1000 g); the units checker (scripts/verify/exact/units.mjs) uses the same factor and checks the answer unit has the dimension of mass. Answer backed by the maths engine. Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Conversion factor is the SI one (1 kg = 1000 g); the units checker (scripts/verify/exact/units.mjs) uses the same factor and checks the answer unit has the dimension of mass. Answer backed by the maths engine. Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -191,7 +179,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:34:51Z",
+          "at": "2026-11-26T03:39:16Z",
           "notes": "no problems found"
         }
       ]
@@ -205,17 +193,11 @@
     "learning_point": "gcse-maths-h-n13-lp-convert-units",
     "expected_seconds": 30,
     "prompt": "Change 2.5 hours to minutes.",
-    "answer": {
-      "value": "150",
-      "unit": "min"
-    },
-    "verify": {
-      "expression": "(25/10)*60"
-    },
+    "answer": { "value": "150", "unit": "min" },
+    "verify": { "expression": "(25/10)*60" },
     "marks": 1,
-    "exact": {
-      "quantity": "time"
-    },
+    "explanation": "There are 60 minutes in 1 hour, so multiply by 60: 2.5 × 60 = 150 minutes.",
+    "exact": { "quantity": "time" },
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N13",
     "checked_by": ["maths-engine", "author"],
     "needs_human_approval": true,
@@ -242,7 +224,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Conversion factor is the SI one (1 h = 60 min); the units checker (scripts/verify/exact/units.mjs) uses the same factor and checks the answer unit has the dimension of time. Answer backed by the maths engine. Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Conversion factor is the SI one (1 h = 60 min); the units checker (scripts/verify/exact/units.mjs) uses the same factor and checks the answer unit has the dimension of time. Answer backed by the maths engine. Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -290,7 +272,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:35:01Z",
+          "at": "2026-11-26T03:39:22Z",
           "notes": "no problems found"
         }
       ]
@@ -304,14 +286,11 @@
     "learning_point": "gcse-maths-h-n13-lp-area-volume-units",
     "expected_seconds": 50,
     "prompt": "How many cm² are there in 3 m²?",
-    "answer": {
-      "expression": "30000"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "3*100^2"
-    },
+    "answer": { "expression": "30000" },
+    "verify": { "method": "expression", "expression": "3*100^2" },
+    "steps": ["3 * 100 * 100", "3 * 10000", "30000"],
     "marks": 2,
+    "mark_scheme": ["M1 for 3 × 100 × 100 or 3 × 10 000", "A1 for 30 000"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N13",
     "checked_by": ["maths-engine", "author"],
     "needs_human_approval": true,
@@ -382,9 +361,7 @@
           "notes": "no problems found"
         }
       ]
-    },
-    "steps": ["3 * 100 * 100", "3 * 10000", "30000"],
-    "mark_scheme": ["M1 for 3 × 100 × 100 or 3 × 10 000", "A1 for 30 000"]
+    }
   },
   {
     "id": "gcse-maths-h-n13-0005",
@@ -394,17 +371,11 @@
     "learning_point": "gcse-maths-h-n13-lp-area-volume-units",
     "expected_seconds": 50,
     "prompt": "Change 80 000 cm² to m².",
-    "answer": {
-      "value": "8",
-      "unit": "m^2"
-    },
-    "verify": {
-      "expression": "80000/100^2"
-    },
+    "answer": { "value": "8", "unit": "m^2" },
+    "verify": { "expression": "80000/100^2" },
     "marks": 1,
-    "exact": {
-      "quantity": "area"
-    },
+    "explanation": "1 m = 100 cm, so 1 m² = 100 × 100 = 10 000 cm². Divide by 10 000: 80 000 ÷ 10 000 = 8 m².",
+    "exact": { "quantity": "area" },
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N13",
     "checked_by": ["maths-engine", "author"],
     "needs_human_approval": true,
@@ -431,7 +402,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Conversion factor is the SI one (1 m² = 100^2 cm²); the units checker (scripts/verify/exact/units.mjs) uses the same factor and checks the answer unit has the dimension of area. Answer backed by the maths engine. Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Conversion factor is the SI one (1 m² = 100^2 cm²); the units checker (scripts/verify/exact/units.mjs) uses the same factor and checks the answer unit has the dimension of area. Answer backed by the maths engine. Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -479,7 +450,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:35:27Z",
+          "at": "2026-11-26T03:39:30Z",
           "notes": "no problems found"
         }
       ]
@@ -493,17 +464,11 @@
     "learning_point": "gcse-maths-h-n13-lp-area-volume-units",
     "expected_seconds": 60,
     "prompt": "Change 2.5 m³ to cm³.",
-    "answer": {
-      "value": "2500000",
-      "unit": "cm^3"
-    },
-    "verify": {
-      "expression": "(25/10)*100^3"
-    },
+    "answer": { "value": "2500000", "unit": "cm^3" },
+    "verify": { "expression": "(25/10)*100^3" },
     "marks": 1,
-    "exact": {
-      "quantity": "volume"
-    },
+    "explanation": "1 m = 100 cm, so 1 m³ = 100 × 100 × 100 = 1 000 000 cm³. Multiply: 2.5 × 1 000 000 = 2 500 000 cm³.",
+    "exact": { "quantity": "volume" },
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N13",
     "checked_by": ["maths-engine", "author"],
     "needs_human_approval": true,
@@ -530,7 +495,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Conversion factor is the SI one (1 m³ = 100^3 cm³); the units checker (scripts/verify/exact/units.mjs) uses the same factor and checks the answer unit has the dimension of volume. Answer backed by the maths engine. Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Conversion factor is the SI one (1 m³ = 100^3 cm³); the units checker (scripts/verify/exact/units.mjs) uses the same factor and checks the answer unit has the dimension of volume. Answer backed by the maths engine. Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -578,7 +543,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:35:43Z",
+          "at": "2026-11-26T03:39:38Z",
           "notes": "no problems found"
         }
       ]
@@ -592,17 +557,11 @@
     "learning_point": "gcse-maths-h-n13-lp-compound-measures",
     "expected_seconds": 45,
     "prompt": "A car travels 150 km in 2.5 hours. Work out its average speed in km/h.",
-    "answer": {
-      "value": "60",
-      "unit": "km/h"
-    },
-    "verify": {
-      "expression": "150/(25/10)"
-    },
+    "answer": { "value": "60", "unit": "km/h" },
+    "verify": { "expression": "150/(25/10)" },
     "marks": 1,
-    "exact": {
-      "quantity": "speed"
-    },
+    "explanation": "Average speed = distance ÷ time = 150 ÷ 2.5 = 60 km/h.",
+    "exact": { "quantity": "speed" },
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N13",
     "checked_by": ["maths-engine", "author"],
     "needs_human_approval": true,
@@ -629,7 +588,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Average speed = distance ÷ time (standard compound measure named in the cited spec point). The units checker confirms km/h is a speed unit. Answer backed by the maths engine. Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Average speed = distance ÷ time (standard compound measure named in the cited spec point). The units checker confirms km/h is a speed unit. Answer backed by the maths engine. Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -677,7 +636,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:35:56Z",
+          "at": "2026-11-26T03:39:45Z",
           "notes": "no problems found"
         }
       ]
@@ -691,15 +650,11 @@
     "learning_point": "gcse-maths-h-n13-lp-compound-measures",
     "expected_seconds": 100,
     "prompt": "Change a speed of 15 m/s to km/h.",
-    "answer": {
-      "value": "54",
-      "unit": "km/h"
-    },
-    "verify": {
-      "expression": "15*3600/1000"
-    },
+    "answer": { "value": "54", "unit": "km/h" },
+    "verify": { "expression": "15*3600/1000" },
     "marks": 2,
     "mark_scheme": ["M1 for 15 × 3600 or 15 ÷ 1000, or 54 000 or 0.015 seen", "A1 for 54"],
+    "explanation": "In 1 hour (3600 seconds) the object goes 15 × 3600 = 54 000 m. That is 54 000 ÷ 1000 = 54 km, so the speed is 54 km/h.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N13",
     "checked_by": ["maths-engine", "author"],
     "needs_human_approval": true,
@@ -726,7 +681,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Uses 1 h = 3600 s and 1 km = 1000 m (SI factors, as in the units checker). Answer and every step backed by the maths engine. Mark points written by this session. Changed from worked maths to numeric with unit km/h after the blind answer gave \"54 km/h\" and the review asked for the unit (worked-maths answers have no unit); n13-0004 is now the worked example. M1 now also accepts 0.015 (km/s), after adversarial review. Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Uses 1 h = 3600 s and 1 km = 1000 m (SI factors, as in the units checker). Answer and every step backed by the maths engine. Mark points written by this session. Changed from worked maths to numeric with unit km/h after the blind answer gave \"54 km/h\" and the review asked for the unit (worked-maths answers have no unit); n13-0004 is now the worked example. M1 now also accepts 0.015 (km/s), after adversarial review. Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -774,14 +729,12 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:09Z",
+          "at": "2026-11-26T03:39:55Z",
           "notes": "no problems found"
         }
       ]
     },
-    "exact": {
-      "quantity": "speed"
-    }
+    "exact": { "quantity": "speed" }
   },
   {
     "id": "gcse-maths-h-n13-0009",
@@ -791,17 +744,11 @@
     "learning_point": "gcse-maths-h-n13-lp-compound-measures",
     "expected_seconds": 50,
     "prompt": "A train travels at an average speed of 80 km/h for 45 minutes. How far does it travel?",
-    "answer": {
-      "value": "60",
-      "unit": "km"
-    },
-    "verify": {
-      "expression": "80*45/60"
-    },
+    "answer": { "value": "60", "unit": "km" },
+    "verify": { "expression": "80*45/60" },
     "marks": 1,
-    "exact": {
-      "quantity": "length"
-    },
+    "explanation": "Change the time to hours: 45 minutes = 45 ÷ 60 = 0.75 hours. Distance = speed × time = 80 × 0.75 = 60 km.",
+    "exact": { "quantity": "length" },
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N13",
     "checked_by": ["maths-engine", "author"],
     "needs_human_approval": true,
@@ -828,7 +775,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Distance = speed × time, with 45 minutes = 45/60 hours. The units checker confirms km is a length unit. Answer backed by the maths engine. Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Distance = speed × time, with 45 minutes = 45/60 hours. The units checker confirms km is a length unit. Answer backed by the maths engine. Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -876,7 +823,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:36:57Z",
+          "at": "2026-11-26T03:40:04Z",
           "notes": "no problems found"
         }
       ]
@@ -891,6 +838,7 @@
     "expected_seconds": 10,
     "front": "How many metres are in 1 km?",
     "back": "1000",
+    "explanation": "'Kilo' means a thousand, so 1 km = 1000 m.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N13",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -917,7 +865,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Front cited to spec N13. Back is the SI prefix kilo = 1000 (the factor the units checker uses). Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Front cited to spec N13. Back is the SI prefix kilo = 1000 (the factor the units checker uses). Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -949,7 +897,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:06Z",
+          "at": "2026-11-26T03:40:11Z",
           "notes": "no problems found"
         }
       ]
@@ -964,6 +912,7 @@
     "expected_seconds": 10,
     "front": "How many seconds are in 1 hour?",
     "back": "3600",
+    "explanation": "1 hour = 60 minutes and 1 minute = 60 seconds, so 1 hour = 60 × 60 = 3600 seconds.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N13",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -990,7 +939,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Front cited to spec N13. Back: 60 × 60 = 3600 (the factor the units checker uses). Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Front cited to spec N13. Back: 60 × 60 = 3600 (the factor the units checker uses). Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -1022,7 +971,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:18Z",
+          "at": "2026-11-26T03:40:19Z",
           "notes": "no problems found"
         }
       ]
@@ -1037,6 +986,7 @@
     "expected_seconds": 10,
     "front": "How many millimetres are in 1 cm?",
     "back": "10",
+    "explanation": "1 cm = 10 mm. The small marks on a ruler between each centimetre are millimetres, and there are 10 of them.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N13",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -1063,7 +1013,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Front cited to spec N13. Back: 1 cm = 10 mm (SI prefixes centi = 10^-2 and milli = 10^-3, as in the units checker). Replaced \"How many cm² are in 1 m²?\" after the blind answer wrote \"10,000 cm²\" (flashcards are compared word for word). Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N13). Front cited to spec N13. Back: 1 cm = 10 mm (SI prefixes centi = 10^-2 and milli = 10^-3, as in the units checker). Replaced \"How many cm² are in 1 m²?\" after the blind answer wrote \"10,000 cm²\" (flashcards are compared word for word). Decision 0008: the answer rests on standard unit definitions (SI prefixes and 1 h = 60 min = 3600 s; average speed = distance ÷ time) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -1095,7 +1045,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:38:50Z",
+          "at": "2026-11-26T03:40:26Z",
           "notes": "no problems found"
         }
       ]

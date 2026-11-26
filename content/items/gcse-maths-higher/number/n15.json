@@ -7,14 +7,10 @@
     "learning_point": "gcse-maths-h-n15-lp-rounding",
     "expected_seconds": 30,
     "prompt": "Round 0.004637 to 2 significant figures.",
-    "answer": {
-      "value": "0.0046",
-      "significant_figures": 2
-    },
-    "verify": {
-      "expression": "46/10000"
-    },
+    "answer": { "value": "0.0046", "significant_figures": 2 },
+    "verify": { "expression": "46/10000" },
     "marks": 1,
+    "explanation": "The first significant figure is the first non-zero digit, 4. Keep two: 0.0046|37. The next digit is 3, which is less than 5, so round down: 0.0046.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -40,7 +36,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). The maths engine confirms the stated value.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). The maths engine confirms the stated value. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -68,20 +64,20 @@
           "at": "2026-11-25T17:40:50Z"
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:34:40Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "blind-answer",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T20:10:10Z",
           "notes": "model answered \"0.0046\"; expected \"0.0046\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:41:52Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -94,14 +90,10 @@
     "learning_point": "gcse-maths-h-n15-lp-rounding",
     "expected_seconds": 30,
     "prompt": "Round 38 652 to 3 significant figures.",
-    "answer": {
-      "value": "38700",
-      "significant_figures": 3
-    },
-    "verify": {
-      "expression": "38700"
-    },
+    "answer": { "value": "38700", "significant_figures": 3 },
+    "verify": { "expression": "38700" },
     "marks": 1,
+    "explanation": "Keep the first three figures: 386|52. The next digit is 5, so round up: 387. Fill the other places with zeros to keep the size: 38 700.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -127,7 +119,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). The maths engine confirms the stated value.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). The maths engine confirms the stated value. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -155,20 +147,20 @@
           "at": "2026-11-25T17:40:50Z"
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:34:52Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "blind-answer",
           "result": "fail",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T20:10:17Z",
           "notes": "model answered \"38 700\"; expected \"38700\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:42:00Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -181,14 +173,10 @@
     "learning_point": "gcse-maths-h-n15-lp-rounding",
     "expected_seconds": 30,
     "prompt": "Round 7.8463 to 2 decimal places.",
-    "answer": {
-      "value": "7.85",
-      "decimal_places": 2
-    },
-    "verify": {
-      "expression": "785/100"
-    },
+    "answer": { "value": "7.85", "decimal_places": 2 },
+    "verify": { "expression": "785/100" },
     "marks": 1,
+    "explanation": "Keep two digits after the decimal point: 7.84|63. The next digit is 6, which is 5 or more, so round up: 7.85.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -214,7 +202,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). The maths engine confirms the stated value.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). The maths engine confirms the stated value. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -242,20 +230,20 @@
           "at": "2026-11-25T17:40:50Z"
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:35:05Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "blind-answer",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T20:10:25Z",
           "notes": "model answered \"7.85\"; expected \"7.85\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:42:07Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -269,9 +257,7 @@
     "expected_seconds": 45,
     "prompt": "A length, l cm, is 8.4 cm correct to 1 decimal place. Which is the error interval for l?",
     "options": ["8.35 ≤ l < 8.45", "8.35 < l ≤ 8.45", "8.3 ≤ l < 8.5", "8.4 ≤ l < 8.5"],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "Numbers from 8.35 up to (but not including) 8.45 round to 8.4. 8.35 rounds up to 8.4, but 8.45 rounds up to 8.5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
@@ -347,9 +333,7 @@
     "expected_seconds": 45,
     "prompt": "A number, x, is truncated to 1 decimal place. The result is 5.7. Which is the error interval for x?",
     "options": ["5.65 ≤ x < 5.75", "5.7 ≤ x < 5.8", "5.6 < x ≤ 5.7", "5.7 < x ≤ 5.8"],
-    "answer": {
-      "option": 1
-    },
+    "answer": { "option": 1 },
     "marks": 1,
     "explanation": "Truncating cuts off the digits after the first decimal place. Any number from 5.7 up to (but not including) 5.8 truncates to 5.7.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
@@ -425,9 +409,7 @@
     "expected_seconds": 45,
     "prompt": "A mass, m grams, is 300 g correct to the nearest 10 g. Which is the error interval for m?",
     "options": ["290 ≤ m < 310", "295 < m ≤ 305", "295 ≤ m < 305", "299.5 ≤ m < 300.5"],
-    "answer": {
-      "option": 2
-    },
+    "answer": { "option": 2 },
     "marks": 1,
     "explanation": "Half of 10 g is 5 g, so m is from 295 g up to (but not including) 305 g.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
@@ -503,9 +485,7 @@
     "expected_seconds": 50,
     "prompt": "A number, n, is 2400 correct to 2 significant figures. Which is the error interval for n?",
     "options": ["2395 ≤ n < 2405", "2300 ≤ n < 2500", "2350 < n ≤ 2450", "2350 ≤ n < 2450"],
-    "answer": {
-      "option": 3
-    },
+    "answer": { "option": 3 },
     "marks": 1,
     "explanation": "n is 2400 correct to 2 significant figures, so n was rounded to the nearest 100. Half of 100 is 50, so n is from 2350 up to (but not including) 2450.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
@@ -581,6 +561,7 @@
     "expected_seconds": 10,
     "front": "3.456 to 1 decimal place",
     "back": "3.5",
+    "explanation": "Keep one digit after the decimal point: 3.4|56. The next digit is 5, so round up: 3.5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["author"],
     "citations": [
@@ -606,7 +587,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Front cited to spec N15. Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). ",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Front cited to spec N15. Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -638,7 +619,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:22Z",
+          "at": "2026-11-26T03:42:15Z",
           "notes": "no problems found"
         }
       ]
@@ -653,6 +634,7 @@
     "expected_seconds": 10,
     "front": "0.0719 to 1 significant figure",
     "back": "0.07",
+    "explanation": "The first significant figure is 7: 0.07|19. The next digit is 1, which is less than 5, so round down: 0.07.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["author"],
     "citations": [
@@ -678,7 +660,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Front cited to spec N15. Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). ",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Front cited to spec N15. Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -710,7 +692,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:36Z",
+          "at": "2026-11-26T03:42:21Z",
           "notes": "no problems found"
         }
       ]
@@ -725,6 +707,7 @@
     "expected_seconds": 10,
     "front": "4561 to the nearest hundred",
     "back": "4600",
+    "explanation": "Look at the hundreds: 45|61. The tens digit is 6, which is 5 or more, so round up: 4600.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["author"],
     "citations": [
@@ -750,7 +733,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Front cited to spec N15. Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). ",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Front cited to spec N15. Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -782,7 +765,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:50Z",
+          "at": "2026-11-26T03:42:29Z",
           "notes": "no problems found"
         }
       ]

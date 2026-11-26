@@ -7,13 +7,10 @@
     "learning_point": "gcse-maths-h-n3-lp-order-of-operations",
     "expected_seconds": 50,
     "prompt": "Work out 5 + 3 × (8 - 2)^2 ÷ 4",
-    "answer": {
-      "value": "32"
-    },
-    "verify": {
-      "expression": "5 + 3*(8 - 2)^2/4"
-    },
+    "answer": { "value": "32" },
+    "verify": { "expression": "5 + 3*(8 - 2)^2/4" },
     "marks": 1,
+    "explanation": "Brackets first: 8 - 2 = 6. Then the power: 6^2 = 36. Then multiply and divide from left to right: 3 × 36 = 108, and 108 ÷ 4 = 27. Add last: 5 + 27 = 32.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N3",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -39,7 +36,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N3). Answer backed by the maths engine (brackets, then the power, then × and ÷, then +).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N3). Answer backed by the maths engine (brackets, then the power, then × and ÷, then +). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -79,7 +76,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:19:45Z",
+          "at": "2026-11-26T03:38:07Z",
           "notes": "no problems found"
         }
       ]
@@ -93,13 +90,10 @@
     "learning_point": "gcse-maths-h-n3-lp-order-of-operations",
     "expected_seconds": 50,
     "prompt": "Work out (12 - 4 × 2)^3 - 6 ÷ 3",
-    "answer": {
-      "value": "62"
-    },
-    "verify": {
-      "expression": "(12 - 4*2)^3 - 6/3"
-    },
+    "answer": { "value": "62" },
+    "verify": { "expression": "(12 - 4*2)^3 - 6/3" },
     "marks": 1,
+    "explanation": "Inside the brackets, multiply first: 4 × 2 = 8, so 12 - 8 = 4. Then the power: 4^3 = 64. Then divide: 6 ÷ 3 = 2. Subtract last: 64 - 2 = 62.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N3",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -125,7 +119,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N3). Answer backed by the maths engine.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N3). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -165,7 +159,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:19:58Z",
+          "at": "2026-11-26T03:38:16Z",
           "notes": "no problems found"
         }
       ]
@@ -179,13 +173,10 @@
     "learning_point": "gcse-maths-h-n3-lp-order-of-operations",
     "expected_seconds": 50,
     "prompt": "Work out 20 - 2 × √(5^2 - 9)",
-    "answer": {
-      "value": "12"
-    },
-    "verify": {
-      "expression": "20 - 2*sqrt(5^2 - 9)"
-    },
+    "answer": { "value": "12" },
+    "verify": { "expression": "20 - 2*sqrt(5^2 - 9)" },
     "marks": 1,
+    "explanation": "Work inside the square root first: 5^2 - 9 = 25 - 9 = 16, and √16 = 4. Then multiply: 2 × 4 = 8. Subtract last: 20 - 8 = 12.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N3",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -211,7 +202,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N3). Answer backed by the maths engine.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N3). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -251,7 +242,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:20:13Z",
+          "at": "2026-11-26T03:38:32Z",
           "notes": "no problems found"
         }
       ]
@@ -265,13 +256,10 @@
     "learning_point": "gcse-maths-h-n3-lp-reciprocals",
     "expected_seconds": 30,
     "prompt": "Write down the reciprocal of 0.25",
-    "answer": {
-      "value": "4"
-    },
-    "verify": {
-      "expression": "1/0.25"
-    },
+    "answer": { "value": "4" },
+    "verify": { "expression": "1/0.25" },
     "marks": 1,
+    "explanation": "0.25 = 1/4. The reciprocal of a fraction turns it upside down, so the reciprocal of 1/4 is 4/1 = 4. Check: 0.25 × 4 = 1.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N3",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -297,7 +285,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N3). Answer backed by the maths engine (the reciprocal of a number is 1 divided by it; reciprocals are named in the cited spec point).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N3). Answer backed by the maths engine (the reciprocal of a number is 1 divided by it; reciprocals are named in the cited spec point). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -337,7 +325,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:20:26Z",
+          "at": "2026-11-26T03:38:39Z",
           "notes": "no problems found"
         }
       ]
@@ -351,13 +339,10 @@
     "learning_point": "gcse-maths-h-n3-lp-reciprocals",
     "expected_seconds": 50,
     "prompt": "Work out the sum of the reciprocal of 2/5 and the reciprocal of 4. Give your answer as a decimal.",
-    "answer": {
-      "value": "2.75"
-    },
-    "verify": {
-      "expression": "1/(2/5) + 1/4"
-    },
+    "answer": { "value": "2.75" },
+    "verify": { "expression": "1/(2/5) + 1/4" },
     "marks": 1,
+    "explanation": "The reciprocal of 2/5 is 5/2 = 2.5. The reciprocal of 4 is 1/4 = 0.25. Add them: 2.5 + 0.25 = 2.75.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N3",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -383,7 +368,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N3). Answer backed by the maths engine: 5/2 + 1/4 = 11/4 = 2.75. Prompt reworded after adversarial review (it could be read as the reciprocal of a sum).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N3). Answer backed by the maths engine: 5/2 + 1/4 = 11/4 = 2.75. Prompt reworded after adversarial review (it could be read as the reciprocal of a sum). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -423,7 +408,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:26:52Z",
+          "at": "2026-11-26T03:38:45Z",
           "notes": "no problems found"
         }
       ]
@@ -437,13 +422,10 @@
     "learning_point": "gcse-maths-h-n3-lp-reciprocals",
     "expected_seconds": 40,
     "prompt": "Work out the reciprocal of 1 1/4. Give your answer as a decimal.",
-    "answer": {
-      "value": "0.8"
-    },
-    "verify": {
-      "expression": "1/(1 + 1/4)"
-    },
+    "answer": { "value": "0.8" },
+    "verify": { "expression": "1/(1 + 1/4)" },
     "marks": 1,
+    "explanation": "Write 1 1/4 as an improper fraction: 5/4. Its reciprocal is 4/5, which is 0.8 as a decimal. Check: 1.25 × 0.8 = 1.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N3",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -469,7 +451,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N3). Answer backed by the maths engine: 1 1/4 = 5/4, reciprocal 4/5 = 0.8.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N3). Answer backed by the maths engine: 1 1/4 = 5/4, reciprocal 4/5 = 0.8. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -509,7 +491,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:21:05Z",
+          "at": "2026-11-26T03:38:52Z",
           "notes": "no problems found"
         }
       ]
@@ -523,13 +505,8 @@
     "learning_point": "gcse-maths-h-n3-lp-cancellation",
     "expected_seconds": 90,
     "prompt": "Use cancellation to work out (36 × 25) ÷ (9 × 5) without a calculator.",
-    "answer": {
-      "expression": "20"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(36*25)/(9*5)"
-    },
+    "answer": { "expression": "20" },
+    "verify": { "method": "expression", "expression": "(36*25)/(9*5)" },
     "steps": ["(36*25)/(9*5)", "(36/9)*(25/5)", "4*5", "20"],
     "marks": 2,
     "mark_scheme": ["M1 for cancelling, e.g. (36 ÷ 9) × (25 ÷ 5)", "A1 for 20"],
@@ -612,13 +589,8 @@
     "learning_point": "gcse-maths-h-n3-lp-cancellation",
     "expected_seconds": 90,
     "prompt": "Use cancellation to work out (48 × 15) ÷ (12 × 5) without a calculator.",
-    "answer": {
-      "expression": "12"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(48*15)/(12*5)"
-    },
+    "answer": { "expression": "12" },
+    "verify": { "method": "expression", "expression": "(48*15)/(12*5)" },
     "steps": ["(48*15)/(12*5)", "(48/12)*(15/5)", "4*3", "12"],
     "marks": 2,
     "mark_scheme": ["M1 for cancelling, e.g. (48 ÷ 12) × (15 ÷ 5)", "A1 for 12"],
@@ -701,13 +673,8 @@
     "learning_point": "gcse-maths-h-n3-lp-cancellation",
     "expected_seconds": 100,
     "prompt": "Use cancellation to work out (14 × 27) ÷ (21 × 9) without a calculator.",
-    "answer": {
-      "expression": "2"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(14*27)/(21*9)"
-    },
+    "answer": { "expression": "2" },
+    "verify": { "method": "expression", "expression": "(14*27)/(21*9)" },
     "steps": ["(14*27)/(21*9)", "(14/21)*(27/9)", "(2/3)*3", "2"],
     "marks": 2,
     "mark_scheme": ["M1 for cancelling, e.g. (14 ÷ 21) × (27 ÷ 9) = 2/3 × 3", "A1 for 2"],
@@ -791,6 +758,7 @@
     "expected_seconds": 10,
     "front": "The reciprocal of 1/3",
     "back": "3",
+    "explanation": "Turn 1/3 upside down to get 3/1 = 3. Check: 1/3 × 3 = 1.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N3",
     "checked_by": ["author"],
     "citations": [
@@ -816,7 +784,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N3). Front cited to spec N3 (reciprocals). Back checked in Python: 1 ÷ (1/3) = 3.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N3). Front cited to spec N3 (reciprocals). Back checked in Python: 1 ÷ (1/3) = 3. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -848,7 +816,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:22:26Z",
+          "at": "2026-11-26T03:38:59Z",
           "notes": "no problems found"
         }
       ]
@@ -863,6 +831,7 @@
     "expected_seconds": 10,
     "front": "The reciprocal of 0.5",
     "back": "2",
+    "explanation": "0.5 = 1/2, and turning 1/2 upside down gives 2. Check: 0.5 × 2 = 1.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N3",
     "checked_by": ["author"],
     "citations": [
@@ -888,7 +857,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N3). Front cited to spec N3 (reciprocals). Back checked in Python: 1 ÷ 0.5 = 2.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N3). Front cited to spec N3 (reciprocals). Back checked in Python: 1 ÷ 0.5 = 2. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -920,7 +889,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:22:38Z",
+          "at": "2026-11-26T03:39:07Z",
           "notes": "no problems found"
         }
       ]
@@ -935,6 +904,7 @@
     "expected_seconds": 10,
     "front": "The reciprocal of 1/10",
     "back": "10",
+    "explanation": "Turn 1/10 upside down to get 10/1 = 10. Check: 1/10 × 10 = 1.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N3",
     "checked_by": ["author"],
     "citations": [
@@ -960,7 +930,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N3). Front cited to spec N3 (reciprocals). Back checked in Python: 1 ÷ (1/10) = 10.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N3). Front cited to spec N3 (reciprocals). Back checked in Python: 1 ÷ (1/10) = 10. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -992,7 +962,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:22:48Z",
+          "at": "2026-11-26T03:39:14Z",
           "notes": "no problems found"
         }
       ]

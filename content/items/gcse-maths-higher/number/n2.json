@@ -7,13 +7,8 @@
     "learning_point": "gcse-maths-h-n2-lp-mixed-numbers",
     "expected_seconds": 120,
     "prompt": "Work out 2 1/3 + 1 3/4. Give your answer as an improper fraction in its simplest form.",
-    "answer": {
-      "expression": "49/12"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(2 + 1/3) + (1 + 3/4)"
-    },
+    "answer": { "expression": "49/12" },
+    "verify": { "method": "expression", "expression": "(2 + 1/3) + (1 + 3/4)" },
     "steps": ["(2*3 + 1)/3 + (1*4 + 3)/4", "7/3 + 7/4", "28/12 + 21/12", "49/12"],
     "marks": 3,
     "mark_scheme": [
@@ -100,13 +95,8 @@
     "learning_point": "gcse-maths-h-n2-lp-mixed-numbers",
     "expected_seconds": 100,
     "prompt": "Work out 3 1/2 × 1 2/5. Give your answer as an improper fraction in its simplest form.",
-    "answer": {
-      "expression": "49/10"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(3 + 1/2) * (1 + 2/5)"
-    },
+    "answer": { "expression": "49/10" },
+    "verify": { "method": "expression", "expression": "(3 + 1/2) * (1 + 2/5)" },
     "steps": ["(3*2 + 1)/2 * (1*5 + 2)/5", "7/2 * 7/5", "49/10"],
     "marks": 2,
     "mark_scheme": ["M1 for 7/2 × 7/5", "A1 for 49/10"],
@@ -189,13 +179,8 @@
     "learning_point": "gcse-maths-h-n2-lp-mixed-numbers",
     "expected_seconds": 120,
     "prompt": "Work out 2 2/3 ÷ 1 1/9. Give your answer as an improper fraction in its simplest form.",
-    "answer": {
-      "expression": "12/5"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(2 + 2/3) / (1 + 1/9)"
-    },
+    "answer": { "expression": "12/5" },
+    "verify": { "method": "expression", "expression": "(2 + 2/3) / (1 + 1/9)" },
     "steps": ["(2*3 + 2)/3 / ((1*9 + 1)/9)", "(8/3) / (10/9)", "8/3 * 9/10", "72/30", "12/5"],
     "marks": 3,
     "mark_scheme": [
@@ -282,13 +267,8 @@
     "learning_point": "gcse-maths-h-n2-lp-mixed-numbers",
     "expected_seconds": 120,
     "prompt": "Work out 4 1/5 - 2 2/3. Give your answer as an improper fraction in its simplest form.",
-    "answer": {
-      "expression": "23/15"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(4 + 1/5) - (2 + 2/3)"
-    },
+    "answer": { "expression": "23/15" },
+    "verify": { "method": "expression", "expression": "(4 + 1/5) - (2 + 2/3)" },
     "steps": ["(4*5 + 1)/5 - (2*3 + 2)/3", "21/5 - 8/3", "63/15 - 40/15", "23/15"],
     "marks": 3,
     "mark_scheme": [
@@ -375,13 +355,10 @@
     "learning_point": "gcse-maths-h-n2-lp-negative-decimals",
     "expected_seconds": 45,
     "prompt": "Work out -3.6 × -2.5",
-    "answer": {
-      "value": "9"
-    },
-    "verify": {
-      "expression": "-3.6 * -2.5"
-    },
+    "answer": { "value": "9" },
+    "verify": { "expression": "-3.6 * -2.5" },
     "marks": 1,
+    "explanation": "A negative times a negative is positive. 3.6 × 2.5 = 9, so -3.6 × -2.5 = 9.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -407,7 +384,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -447,7 +424,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:21:30Z",
+          "at": "2026-11-26T03:36:56Z",
           "notes": "no problems found"
         }
       ]
@@ -461,13 +438,10 @@
     "learning_point": "gcse-maths-h-n2-lp-negative-decimals",
     "expected_seconds": 45,
     "prompt": "Work out -7.2 ÷ 0.9",
-    "answer": {
-      "value": "-8"
-    },
-    "verify": {
-      "expression": "-7.2 / 0.9"
-    },
+    "answer": { "value": "-8" },
+    "verify": { "expression": "-7.2 / 0.9" },
     "marks": 1,
+    "explanation": "A negative divided by a positive is negative. Multiply both numbers by 10: 72 ÷ 9 = 8, so -7.2 ÷ 0.9 = -8.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -493,7 +467,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -533,7 +507,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:21:44Z",
+          "at": "2026-11-26T03:37:03Z",
           "notes": "no problems found"
         }
       ]
@@ -547,13 +521,10 @@
     "learning_point": "gcse-maths-h-n2-lp-negative-decimals",
     "expected_seconds": 40,
     "prompt": "Work out 4.8 - (-2.35)",
-    "answer": {
-      "value": "7.15"
-    },
-    "verify": {
-      "expression": "4.8 - (-2.35)"
-    },
+    "answer": { "value": "7.15" },
+    "verify": { "expression": "4.8 - (-2.35)" },
     "marks": 1,
+    "explanation": "Subtracting a negative is the same as adding: 4.8 - (-2.35) = 4.8 + 2.35 = 7.15.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -579,7 +550,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -619,7 +590,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:21:56Z",
+          "at": "2026-11-26T03:37:10Z",
           "notes": "no problems found"
         }
       ]
@@ -633,13 +604,10 @@
     "learning_point": "gcse-maths-h-n2-lp-negative-decimals",
     "expected_seconds": 45,
     "prompt": "Work out -0.6 × 0.04",
-    "answer": {
-      "value": "-0.024"
-    },
-    "verify": {
-      "expression": "-0.6 * 0.04"
-    },
+    "answer": { "value": "-0.024" },
+    "verify": { "expression": "-0.6 * 0.04" },
     "marks": 1,
+    "explanation": "6 × 4 = 24. There are 1 + 2 = 3 decimal places in 0.6 and 0.04, so 0.6 × 0.04 = 0.024. A negative times a positive is negative: -0.024.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -665,7 +633,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -705,7 +673,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:22:11Z",
+          "at": "2026-11-26T03:37:17Z",
           "notes": "no problems found"
         }
       ]
@@ -719,13 +687,10 @@
     "learning_point": "gcse-maths-h-n2-lp-place-value",
     "expected_seconds": 45,
     "prompt": "You are told that 37 × 64 = 2368. Use this to work out 3.7 × 0.64",
-    "answer": {
-      "value": "2.368"
-    },
-    "verify": {
-      "expression": "(37/10) * (64/100)"
-    },
+    "answer": { "value": "2.368" },
+    "verify": { "expression": "(37/10) * (64/100)" },
     "marks": 1,
+    "explanation": "3.7 is 37 ÷ 10 and 0.64 is 64 ÷ 100. So 3.7 × 0.64 = 2368 ÷ (10 × 100) = 2368 ÷ 1000 = 2.368.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -751,7 +716,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine (decimals written as exact fractions, 3.7 = 37/10, 0.64 = 64/100). The given fact 37 × 64 = 2368 checked in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine (decimals written as exact fractions, 3.7 = 37/10, 0.64 = 64/100). The given fact 37 × 64 = 2368 checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -791,7 +756,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:22:26Z",
+          "at": "2026-11-26T03:37:25Z",
           "notes": "no problems found"
         }
       ]
@@ -805,13 +770,10 @@
     "learning_point": "gcse-maths-h-n2-lp-place-value",
     "expected_seconds": 45,
     "prompt": "You are told that 23 × 45 = 1035. Use this to work out 0.23 × 4.5",
-    "answer": {
-      "value": "1.035"
-    },
-    "verify": {
-      "expression": "(23/100) * (45/10)"
-    },
+    "answer": { "value": "1.035" },
+    "verify": { "expression": "(23/100) * (45/10)" },
     "marks": 1,
+    "explanation": "0.23 is 23 ÷ 100 and 4.5 is 45 ÷ 10. So 0.23 × 4.5 = 1035 ÷ (100 × 10) = 1035 ÷ 1000 = 1.035.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -837,7 +799,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine (decimals written as exact fractions, 0.23 = 23/100, 4.5 = 45/10). The given fact 23 × 45 = 1035 checked in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine (decimals written as exact fractions, 0.23 = 23/100, 4.5 = 45/10). The given fact 23 × 45 = 1035 checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -877,7 +839,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:22:42Z",
+          "at": "2026-11-26T03:37:32Z",
           "notes": "no problems found"
         }
       ]
@@ -891,13 +853,10 @@
     "learning_point": "gcse-maths-h-n2-lp-place-value",
     "expected_seconds": 50,
     "prompt": "You are told that 156 × 24 = 3744. Use this to work out 3744 ÷ 2.4",
-    "answer": {
-      "value": "1560"
-    },
-    "verify": {
-      "expression": "3744 / 2.4"
-    },
+    "answer": { "value": "1560" },
+    "verify": { "expression": "3744 / 2.4" },
     "marks": 1,
+    "explanation": "From 156 × 24 = 3744, we know 3744 ÷ 24 = 156. Dividing by 2.4 instead of 24 means dividing by a number 10 times smaller, so the answer is 10 times bigger: 1560.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -923,7 +882,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine. The given fact 156 × 24 = 3744 checked in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Answer backed by the maths engine. The given fact 156 × 24 = 3744 checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -963,7 +922,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:22:58Z",
+          "at": "2026-11-26T03:37:41Z",
           "notes": "no problems found"
         }
       ]
@@ -978,6 +937,7 @@
     "expected_seconds": 10,
     "front": "-6 × -7",
     "back": "42",
+    "explanation": "6 × 7 = 42, and a negative times a negative is positive, so -6 × -7 = 42.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["author"],
     "citations": [
@@ -1003,7 +963,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Front cited to spec N2. Back checked in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Front cited to spec N2. Back checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -1035,7 +995,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:23:09Z",
+          "at": "2026-11-26T03:37:48Z",
           "notes": "no problems found"
         }
       ]
@@ -1050,6 +1010,7 @@
     "expected_seconds": 10,
     "front": "0.3 × 0.2",
     "back": "0.06",
+    "explanation": "3 × 2 = 6. There are 2 decimal places in total (one in each number), so 0.3 × 0.2 = 0.06.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["author"],
     "citations": [
@@ -1075,7 +1036,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Front cited to spec N2. Back checked with exact decimals in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Front cited to spec N2. Back checked with exact decimals in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -1107,7 +1068,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:23:23Z",
+          "at": "2026-11-26T03:37:54Z",
           "notes": "no problems found"
         }
       ]
@@ -1122,6 +1083,7 @@
     "expected_seconds": 10,
     "front": "-24 ÷ 4",
     "back": "-6",
+    "explanation": "24 ÷ 4 = 6, and a negative divided by a positive is negative, so -24 ÷ 4 = -6.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N2",
     "checked_by": ["author"],
     "citations": [
@@ -1147,7 +1109,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Front cited to spec N2. Back checked in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N2). Front cited to spec N2. Back checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:18:15Z"
         },
         {
@@ -1179,7 +1141,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:23:33Z",
+          "at": "2026-11-26T03:38:00Z",
           "notes": "no problems found"
         }
       ]

@@ -7,13 +7,10 @@
     "learning_point": "gcse-maths-h-n10-lp-terminating",
     "expected_seconds": 40,
     "prompt": "Write 0.375 as a fraction in its simplest form.",
-    "answer": {
-      "value": "3/8"
-    },
-    "verify": {
-      "expression": "375/1000"
-    },
+    "answer": { "value": "3/8" },
+    "verify": { "expression": "375/1000" },
     "marks": 1,
+    "explanation": "0.375 has 3 decimal places, so write it over 1000: 375/1000. Divide the top and bottom by 125: 3/8.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N10",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -39,7 +36,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N10). Answer backed by the maths engine; 3/8 in lowest terms checked in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N10). Answer backed by the maths engine; 3/8 in lowest terms checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -79,7 +76,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:30:40Z",
+          "at": "2026-11-26T03:40:28Z",
           "notes": "no problems found"
         }
       ]
@@ -93,13 +90,10 @@
     "learning_point": "gcse-maths-h-n10-lp-terminating",
     "expected_seconds": 30,
     "prompt": "Write 7/20 as a decimal.",
-    "answer": {
-      "value": "0.35"
-    },
-    "verify": {
-      "expression": "7/20"
-    },
+    "answer": { "value": "0.35" },
+    "verify": { "expression": "7/20" },
     "marks": 1,
+    "explanation": "Make the denominator 100: 7/20 = 35/100, which is 0.35.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N10",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -125,7 +119,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N10). Answer backed by the maths engine.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N10). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -165,7 +159,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:30:56Z",
+          "at": "2026-11-26T03:40:36Z",
           "notes": "no problems found"
         }
       ]
@@ -179,13 +173,10 @@
     "learning_point": "gcse-maths-h-n10-lp-terminating",
     "expected_seconds": 40,
     "prompt": "Write 2.45 as an improper fraction in its simplest form.",
-    "answer": {
-      "value": "49/20"
-    },
-    "verify": {
-      "expression": "245/100"
-    },
+    "answer": { "value": "49/20" },
+    "verify": { "expression": "245/100" },
     "marks": 1,
+    "explanation": "2.45 = 245/100. Divide the top and bottom by 5: 49/20.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N10",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -211,7 +202,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N10). Answer backed by the maths engine; 49/20 in lowest terms checked in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N10). Answer backed by the maths engine; 49/20 in lowest terms checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -251,7 +242,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:31:12Z",
+          "at": "2026-11-26T03:40:43Z",
           "notes": "no problems found"
         }
       ]
@@ -265,16 +256,11 @@
     "learning_point": "gcse-maths-h-n10-lp-recurring",
     "expected_seconds": 150,
     "prompt": "x = 0.454545... (the digits 45 recur). Use 100x - x to write x as a fraction in its simplest form.",
-    "answer": {
-      "solutions": ["5/11"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "99x = 45",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["5/11"] },
+    "verify": { "method": "solve", "equation": "99x = 45", "variable": "x" },
     "marks": 3,
     "mark_scheme": ["M1 for 100x = 45.4545...", "M1 for 99x = 45", "A1 for 5/11"],
+    "explanation": "Multiply by 100 to move one block of the recurring digits: 100x = 45.4545... Subtract x = 0.4545... and the recurring parts cancel, so 100x - x = 45, which gives 99x = 45 and x = 45/99 = 5/11.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N10",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -344,8 +330,7 @@
           "notes": "no problems found"
         }
       ]
-    },
-    "explanation": "Multiply by 100 to move one block of the recurring digits: 100x = 45.4545... Subtract x = 0.4545... and the recurring parts cancel, so 100x - x = 45, which gives 99x = 45 and x = 45/99 = 5/11."
+    }
   },
   {
     "id": "gcse-maths-h-n10-0005",
@@ -355,13 +340,10 @@
     "learning_point": "gcse-maths-h-n10-lp-recurring",
     "expected_seconds": 90,
     "prompt": "Write 0.272727... (the digits 27 recur) as a fraction in its simplest form.",
-    "answer": {
-      "value": "3/11"
-    },
-    "verify": {
-      "expression": "27/99"
-    },
+    "answer": { "value": "3/11" },
+    "verify": { "expression": "27/99" },
     "marks": 1,
+    "explanation": "Let x = 0.2727... Two digits recur, so multiply by 100: 100x = 27.2727... Subtract: 100x - x = 27, so 99x = 27 and x = 27/99. Simplify by dividing by 9: 3/11.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N10",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -387,7 +369,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N10). Answer backed by the maths engine (27/99 = 3/11); 3/11 = 0.(27) checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N10). Answer backed by the maths engine (27/99 = 3/11); 3/11 = 0.(27) checked with exact fractions in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -427,7 +409,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:31:50Z",
+          "at": "2026-11-26T03:40:58Z",
           "notes": "no problems found"
         }
       ]
@@ -441,13 +423,10 @@
     "learning_point": "gcse-maths-h-n10-lp-recurring",
     "expected_seconds": 120,
     "prompt": "Write 0.1666... (the 6 recurs) as a fraction in its simplest form.",
-    "answer": {
-      "value": "1/6"
-    },
-    "verify": {
-      "expression": "(16 - 1)/90"
-    },
+    "answer": { "value": "1/6" },
+    "verify": { "expression": "(16 - 1)/90" },
     "marks": 1,
+    "explanation": "Let x = 0.1666... Then 10x = 1.666... and 100x = 16.666... Subtract: 100x - 10x = 15, so 90x = 15 and x = 15/90. Simplify by dividing by 15: 1/6.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N10",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -473,7 +452,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N10). Answer backed by the maths engine (100x - 10x = 16.66... - 1.66... = 15, so x = 15/90 = 1/6); 1/6 = 0.1(6) checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N10). Answer backed by the maths engine (100x - 10x = 16.66... - 1.66... = 15, so x = 15/90 = 1/6); 1/6 = 0.1(6) checked with exact fractions in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -513,7 +492,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:32:06Z",
+          "at": "2026-11-26T03:41:06Z",
           "notes": "no problems found"
         }
       ]
@@ -528,6 +507,7 @@
     "expected_seconds": 10,
     "front": "1/8 as a decimal",
     "back": "0.125",
+    "explanation": "1 ÷ 8 = 0.125. (1/8 is half of 1/4, and 1/4 = 0.25.)",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N10",
     "checked_by": ["author"],
     "citations": [
@@ -553,7 +533,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N10). Front cited to spec N10. Back checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N10). Front cited to spec N10. Back checked with exact fractions in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -585,7 +565,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:32:18Z",
+          "at": "2026-11-26T03:41:13Z",
           "notes": "no problems found"
         }
       ]
@@ -600,6 +580,7 @@
     "expected_seconds": 10,
     "front": "0.2 as a fraction in its simplest form",
     "back": "1/5",
+    "explanation": "0.2 = 2/10. Divide the top and bottom by 2: 1/5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N10",
     "checked_by": ["author"],
     "citations": [
@@ -625,7 +606,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N10). Front cited to spec N10. Back checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N10). Front cited to spec N10. Back checked with exact fractions in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -657,7 +638,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:32:29Z",
+          "at": "2026-11-26T03:41:20Z",
           "notes": "no problems found"
         }
       ]
@@ -672,6 +653,7 @@
     "expected_seconds": 10,
     "front": "3/4 as a decimal",
     "back": "0.75",
+    "explanation": "Make the denominator 100: 3/4 = 75/100, which is 0.75.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N10",
     "checked_by": ["author"],
     "citations": [
@@ -697,7 +679,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N10). Front cited to spec N10. Back checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N10). Front cited to spec N10. Back checked with exact fractions in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -729,7 +711,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:32:42Z",
+          "at": "2026-11-26T03:41:28Z",
           "notes": "no problems found"
         }
       ]

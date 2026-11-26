@@ -7,14 +7,10 @@
     "learning_point": "gcse-maths-h-n14-lp-estimate",
     "expected_seconds": 45,
     "prompt": "By rounding each number to 1 significant figure, estimate the value of 4.87 × 31.2",
-    "answer": {
-      "value": "150",
-      "significant_figures": 2
-    },
-    "verify": {
-      "expression": "5*30"
-    },
+    "answer": { "value": "150", "significant_figures": 2 },
+    "verify": { "expression": "5*30" },
     "marks": 1,
+    "explanation": "Round each number to 1 significant figure: 4.87 is about 5 and 31.2 is about 30. Then 5 × 30 = 150.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N14",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -40,7 +36,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N14). The method (round each number to 1 significant figure) is stated in the question, so the estimate is unique; rounding checked in Python. Answer backed by the maths engine (5 × 30).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N14). The method (round each number to 1 significant figure) is stated in the question, so the estimate is unique; rounding checked in Python. Answer backed by the maths engine (5 × 30). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -68,20 +64,20 @@
           "at": "2026-11-25T17:40:50Z"
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:34:39Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "blind-answer",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T20:09:55Z",
           "notes": "model answered \"150\"; expected \"150\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:43:33Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -94,13 +90,8 @@
     "learning_point": "gcse-maths-h-n14-lp-estimate",
     "expected_seconds": 90,
     "prompt": "By rounding each number to 1 significant figure, estimate the value of (68.3 + 12.1) ÷ 0.192",
-    "answer": {
-      "expression": "400"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(70 + 10)/(2/10)"
-    },
+    "answer": { "expression": "400" },
+    "verify": { "method": "expression", "expression": "(70 + 10)/(2/10)" },
     "steps": ["(70 + 10)/0.2", "80/0.2", "400"],
     "marks": 2,
     "mark_scheme": ["M1 for (70 + 10) ÷ 0.2", "A1 for 400"],
@@ -183,14 +174,10 @@
     "learning_point": "gcse-maths-h-n14-lp-estimate",
     "expected_seconds": 60,
     "prompt": "By rounding each number to 1 significant figure, estimate the value of (612 × 0.47) ÷ 2.9",
-    "answer": {
-      "value": "100",
-      "significant_figures": 1
-    },
-    "verify": {
-      "expression": "600*(5/10)/3"
-    },
+    "answer": { "value": "100", "significant_figures": 1 },
+    "verify": { "expression": "600*(5/10)/3" },
     "marks": 1,
+    "explanation": "Round each number to 1 significant figure: 612 is about 600, 0.47 is about 0.5 and 2.9 is about 3. Then 600 × 0.5 = 300, and 300 ÷ 3 = 100.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N14",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -216,7 +203,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N14). The method (round each number to 1 significant figure) is stated in the question, so the estimate is unique; rounding checked in Python. Answer backed by the maths engine (600 × 0.5 ÷ 3).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N14). The method (round each number to 1 significant figure) is stated in the question, so the estimate is unique; rounding checked in Python. Answer backed by the maths engine (600 × 0.5 ÷ 3). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -244,20 +231,20 @@
           "at": "2026-11-25T17:40:50Z"
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:35:20Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "blind-answer",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-25T20:10:01Z",
           "notes": "model answered \"100\"; expected \"100\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:41:23Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -276,9 +263,7 @@
       "The answer should be about 2, so 201.96 is wrong",
       "The answer should be about 2000, so 201.96 is wrong"
     ],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "39.6 is about 40 and 0.51 is about 0.5, and 40 × 0.5 = 20. So 201.96 is about 10 times too big. (The exact answer is 20.196.)",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N14",
@@ -353,9 +338,7 @@
     "expected_seconds": 45,
     "prompt": "Which is the best estimate of 297 × 0.0518?",
     "options": ["0.15", "1.5", "15", "150"],
-    "answer": {
-      "option": 2
-    },
+    "answer": { "option": 2 },
     "marks": 1,
     "explanation": "297 is about 300 and 0.0518 is about 0.05, and 300 × 0.05 = 15. (The exact answer is 15.3846.)",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N14",
@@ -430,9 +413,7 @@
     "expected_seconds": 50,
     "prompt": "Which is the best estimate of 8.06^2 ÷ 0.39?",
     "options": ["16", "25.6", "160", "1600"],
-    "answer": {
-      "option": 2
-    },
+    "answer": { "option": 2 },
     "marks": 1,
     "explanation": "8.06 is about 8 and 0.39 is about 0.4. 8^2 = 64 and 64 ÷ 0.4 = 160. (The exact answer is 166.57 to 2 decimal places.)",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N14",
@@ -507,6 +488,7 @@
     "expected_seconds": 15,
     "front": "Round each number to 1 significant figure to estimate 19.8 × 5.1",
     "back": "100",
+    "explanation": "Round each number to 1 significant figure: 19.8 is about 20 and 5.1 is about 5. Then 20 × 5 = 100.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N14",
     "checked_by": ["author"],
     "citations": [
@@ -532,7 +514,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N14). Front cited to spec N14. Back: 20 × 5 = 100, checked in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N14). Front cited to spec N14. Back: 20 × 5 = 100, checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -564,7 +546,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:36:43Z",
+          "at": "2026-11-26T03:41:30Z",
           "notes": "no problems found"
         }
       ]
@@ -579,6 +561,7 @@
     "expected_seconds": 15,
     "front": "Round each number to 1 significant figure to estimate 61 ÷ 2.9",
     "back": "20",
+    "explanation": "Round each number to 1 significant figure: 61 is about 60 and 2.9 is about 3. Then 60 ÷ 3 = 20.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N14",
     "checked_by": ["author"],
     "citations": [
@@ -604,7 +587,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N14). Front cited to spec N14. Back: 60 ÷ 3 = 20, checked in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N14). Front cited to spec N14. Back: 60 ÷ 3 = 20, checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -636,7 +619,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:36:57Z",
+          "at": "2026-11-26T03:41:38Z",
           "notes": "no problems found"
         }
       ]
@@ -651,6 +634,7 @@
     "expected_seconds": 15,
     "front": "Round each number to 1 significant figure to estimate 3.9 × 7.2",
     "back": "28",
+    "explanation": "Round each number to 1 significant figure: 3.9 is about 4 and 7.2 is about 7. Then 4 × 7 = 28.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N14",
     "checked_by": ["author"],
     "citations": [
@@ -676,7 +660,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N14). Front cited to spec N14. Back: 4 × 7 = 28, checked in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N14). Front cited to spec N14. Back: 4 × 7 = 28, checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:23Z"
         },
         {
@@ -708,7 +692,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:11Z",
+          "at": "2026-11-26T03:41:45Z",
           "notes": "no problems found"
         }
       ]
