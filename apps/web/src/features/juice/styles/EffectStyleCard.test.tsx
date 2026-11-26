@@ -31,7 +31,7 @@ describe('effect style picker', () => {
   it('offers every style with Sticker Book chosen by default', async () => {
     renderCard([]);
     const group = screen.getByRole('group', { name: 'Effect style' });
-    expect(within(group).getAllByRole('radio')).toHaveLength(3);
+    expect(within(group).getAllByRole('radio')).toHaveLength(6);
     expect(within(group).getByRole('radio', { name: /^Sticker Book/ })).toBeChecked();
   });
 
@@ -43,6 +43,15 @@ describe('effect style picker', () => {
       expect.stringMatching(/Locked\. Unlock: Master 10 topics/),
     );
     expect(await screen.findByRole('radio', { name: /^Pop Burst/ })).toBeEnabled();
+  });
+
+  it('shows the styles still being made as coming soon, never choosable yet', async () => {
+    renderCard(['comic-pop']);
+    const comic = await screen.findByRole('radio', { name: /^Comic Pop/ });
+    expect(comic).toBeDisabled();
+    expect(comic).toHaveAccessibleName(
+      expect.stringMatching(/Coming soon\. Unlock: Reach level 20/),
+    );
   });
 
   it('switches to an unlocked style straight away and remembers it', async () => {

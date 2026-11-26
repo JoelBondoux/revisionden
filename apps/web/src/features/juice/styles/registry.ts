@@ -43,6 +43,39 @@ export const EFFECT_STYLES: Readonly<Record<EffectStyleId, EffectStyle>> = {
   },
 };
 
+/**
+ * Styles the owner has approved and the rewards catalogue already unlocks, still being built
+ * (J10c). The picker shows them locked, with how to unlock them; they can't be chosen yet.
+ */
+export interface ComingSoonStyle extends Omit<EffectStyle, 'id'> {
+  readonly id: string;
+}
+
+export const COMING_SOON_STYLES: readonly ComingSoonStyle[] = [
+  {
+    id: 'garden-grow',
+    name: 'Garden Grow',
+    description:
+      'Soft and calm: rewards bloom from seeds, petals drift and your map is a garden path.',
+    unlock: 'Master 5 topics in a subject',
+    swatch: ['#dff4ff', '#3fae5a', '#ff8fb1'],
+  },
+  {
+    id: 'comic-pop',
+    name: 'Comic Pop',
+    description: 'Bold outlines, halftone dots and word bubbles: every win lands with a POW!',
+    unlock: 'Reach level 20',
+    swatch: ['#ffe14d', '#ff3b3b', '#1e9bff'],
+  },
+  {
+    id: 'pixel-arcade',
+    name: 'Pixel Arcade',
+    description: 'Retro arcade with chunky pixel art, chiptune blips and treasure chests.',
+    unlock: 'Reach level 40',
+    swatch: ['#0a0820', '#39ff88', '#ff4fd8'],
+  },
+];
+
 export const DEFAULT_EFFECT_STYLE: EffectStyleId = 'sticker-book';
 
 /** Where this device remembers the chosen style. */

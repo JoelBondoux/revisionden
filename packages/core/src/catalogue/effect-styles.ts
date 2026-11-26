@@ -1,14 +1,23 @@
 /**
- * Effect styles as rewards (J10b, docs/GAME_FEEL.md "Effect styles"). Sticker Book is everyone's
- * default and never a reward. Pop Burst and Starlight come with two rewards that already exist,
- * tied to learning progress (reaching level 5; mastering 10 topics): never bought, never random,
- * never tied to a streak. Children who already earned those rewards have the styles straight away.
+ * Effect styles as rewards (J10b, docs/GAME_FEEL.md "Effect styles"). Each style comes with a
+ * reward that already exists, tied to learning progress (levels and topics mastered): never
+ * bought, never random, never tied to a streak. Children who already earned one have its style
+ * straight away.
  */
 import type { Reward } from './types';
 
+/**
+ * The owner's ladder (2026-11-26), spread across the five years so there is always a next one.
+ * Sticker Book is listed for when Doodle Diary becomes the free default; until then the web app
+ * treats Sticker Book as everyone's default.
+ */
 export const EFFECT_STYLE_UNLOCKS: readonly { style: string; rewardId: string }[] = [
+  { style: 'sticker-book', rewardId: 'level-3' },
   { style: 'pop-burst', rewardId: 'level-5' },
+  { style: 'garden-grow', rewardId: 'subject-topics-5' },
   { style: 'starlight', rewardId: 'topics-mastered-10' },
+  { style: 'comic-pop', rewardId: 'level-20' },
+  { style: 'pixel-arcade', rewardId: 'level-40' },
 ];
 
 /** Adds each effect style to the reward that unlocks it. */

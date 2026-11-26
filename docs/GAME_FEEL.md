@@ -128,9 +128,11 @@ tab say so to screen readers.
 
 - One effect style is active at a time. It sets the look and motion of the game-feel moments
   (combo badge, stars, bursts, confetti, "+XP"), the Home screen (topic map) and Rewards. The
-  owner picked **Sticker Book** as the default. Pop Burst (with the level 5 reward) and
-  Starlight (with the 10-topics-mastered reward) unlock through normal progress, never by buying
-  (J10b, `docs/REWARDS.md` "Effect styles"). The child picks in Settings → Effect style, where
+  owner picked **Sticker Book** as the default. The other styles unlock through normal
+  progress on the owner's ladder, never by buying (J10b, `docs/REWARDS.md` "Effect styles"):
+  Sticker Book at level 3 (once Doodle Diary is the default), Pop Burst at level 5, Garden Grow at
+  5 topics mastered in a subject, Starlight at 10 topics mastered, Comic Pop at level 20 and Pixel
+  Arcade at level 40. Garden Grow, Comic Pop and Pixel Arcade show as "Coming soon" until built. The child picks in Settings → Effect style, where
   locked styles show a three-colour preview and "Locked. Unlock: …". More styles may follow once
   the owner has reviewed them.
 - Pop Burst (J10b): jelly cards with a chunky bottom edge, a gold jelly mission card, gold wins,
@@ -150,6 +152,10 @@ tab say so to screen readers.
   On Rewards, earned chapter steps are stickers and locked ones are dashed outlines. Stickers keep
   their paper colours in dark mode, like real stickers, with dark ink text (AA). The combo badge
   and stars "slap" in (transform and opacity only), with no animation under reduced motion.
+- Pen-line exception (lead, approved 2026-11-26): small SVG pen lines may draw themselves by
+  animating `stroke-dashoffset`, as Doodle Diary's margin doodles and answer loops do. Only on
+  short paths, a handful at a time, never behind question text, and off under reduced motion.
+  Everything else stays transform and opacity only.
 - Every style plays its own sounds and vibration through the sound workstream's events (U6).
   Wiring the style into those events follows once U's PR is on dev.
 

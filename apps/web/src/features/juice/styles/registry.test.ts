@@ -1,5 +1,6 @@
 import { EFFECT_STYLE_UNLOCKS } from '@revisionden/core';
 import {
+  COMING_SOON_STYLES,
   DEFAULT_EFFECT_STYLE,
   EFFECT_STYLES,
   EFFECT_STYLE_IDS,
@@ -49,10 +50,23 @@ describe('effect style registry', () => {
     expect(EFFECT_STYLES['sticker-book'].unlock).toBeUndefined();
   });
 
-  it('only lists styles to unlock that the rewards catalogue actually unlocks', () => {
-    const fromCatalogue = EFFECT_STYLE_UNLOCKS.map((u) => u.style).sort();
-    const toUnlock = EFFECT_STYLE_IDS.filter((id) => EFFECT_STYLES[id].unlock).sort();
-    expect(toUnlock).toEqual(fromCatalogue);
+  it('lists every style the rewards catalogue unlocks: built ones, then the ones coming soon', () => {
+    const fromCatalogue = EFFECT_STYLE_UNLOCKS.map((u) => u.style).filter(
+      (id) => id !== DEFAULT_EFFECT_STYLE,
+    );
+    const built = EFFECT_STYLE_IDS.filter((id) => EFFECT_STYLES[id].unlock);
+    const soon = COMING_SOON_STYLES.map((s) => s.id);
+    expect([...built, ...soon].sort()).toEqual([...fromCatalogue].sort());
+    for (const id of soon) expect(EFFECT_STYLE_IDS as readonly string[]).not.toContain(id);
+  });
+
+  it("says how to unlock each style coming soon, following the owner's ladder", () => {
+    expect(COMING_SOON_STYLES.map((s) => [s.name, s.unlock])).toEqual([
+      ['Garden Grow', 'Master 5 topics in a subject'],
+      ['Comic Pop', 'Reach level 20'],
+      ['Pixel Arcade', 'Reach level 40'],
+    ]);
+    for (const s of COMING_SOON_STYLES) expect(s.swatch).toHaveLength(3);
   });
 });
 

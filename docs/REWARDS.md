@@ -291,14 +291,23 @@ league is not built yet; it should show the title under each nickname when it is
 ## Effect styles (J10b)
 
 An effect style is how rewards, combos, celebrations, the Home screen and Rewards look (see
-`docs/GAME_FEEL.md` "Effect styles"). Sticker Book is everyone's default and is never a reward.
-The other styles come as an extra `effectStyle` item on rewards that already exist, tied to
-learning progress, so children who already earned them have the style straight away:
+`docs/GAME_FEEL.md` "Effect styles"). The owner set the ladder on 2026-11-26, spread across the
+years so there is always a next one to aim for. Each style comes as an extra `effectStyle` item
+on a reward that already exists, tied to learning progress, so children who already earned it
+have the style straight away:
 
-| Style     | Comes with                                 | Reward id            |
-| --------- | ------------------------------------------ | -------------------- |
-| Pop Burst | Reaching level 5                           | `level-5`            |
-| Starlight | Mastering 10 topics (a practice milestone) | `topics-mastered-10` |
+| Style        | Comes with                      | Reward id            | Roughly when             |
+| ------------ | ------------------------------- | -------------------- | ------------------------ |
+| Sticker Book | Reaching level 3                | `level-3`            | The first week or two    |
+| Pop Burst    | Reaching level 5                | `level-5`            | The first month          |
+| Garden Grow  | Mastering 5 topics in a subject | `subject-topics-5`   | Usually the first term   |
+| Starlight    | Mastering 10 topics             | `topics-mastered-10` | Usually the first term   |
+| Comic Pop    | Reaching level 20               | `level-20`           | About the end of Year 9  |
+| Pixel Arcade | Reaching level 40               | `level-40`           | About the end of Year 10 |
+
+Sticker Book is everyone's default until Doodle Diary (proposed new default, with the owner)
+replaces it; from then it is the level 3 reward. Garden Grow, Comic Pop and Pixel Arcade are
+listed in Settings as "Coming soon" until their styles are built (J10c).
 
 They are added by `withEffectStyles` (`packages/core/src/catalogue/effect-styles.ts`), the same
 way as title words, so the source catalogue files are unchanged. `GET /v1/student/rewards/effect-styles`
