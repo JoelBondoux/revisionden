@@ -855,7 +855,8 @@ Tags: #product #rules #limits #defaults
   row), goal 22, topic complete 22, level up 28, reward unlock 30. Newly earned rewards open a prize
   box `<dialog>` (drop, three wobbles, lid burst, rewards one by one with reasons, Collect); with
   reduced motion it opens straight to the list. It is not a mystery box: it only holds rewards
-  already earned. The step sound is the reward-unlock sound until U8 adds `prizeBox`.
+  already earned. The step sound is U8's `prizeBox` (`nodePop` until it lands); the burst sound is U8's
+  `particleBurst`, at most once every 140 ms, and silent until it lands.
 - Settled in J5: light-theme motion lives in `apps/web/src/design/motion.css` and applies only to
   the topic map, rewards and stats (parent area, policies and settings stay calm). The map's Next
   mission button is the pulsing main call to action. Reward reveals show the tier, the items and the

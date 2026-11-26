@@ -1,5 +1,8 @@
 import './particles.css';
 import { useMemo } from 'react';
+import { useSound } from '../../sound/SoundProvider';
+import type { FeedbackEvent } from '../../sound/feedback/events';
+import { BURST_EVENT, burstSoundDue } from './sound';
 import {
   burstFor,
   fitToBudget,
@@ -31,6 +34,7 @@ export function resetParticles(): void {
   timers.clear();
   for (const layer of document.querySelectorAll('.fx-layer')) layer.remove();
   live = 0;
+  lastSound = null;
 }
 
 function reducedMotion(): boolean {
@@ -71,8 +75,8 @@ function play(node: HTMLElement, frames: Keyframe[], ms: number, easing: string,
 const nothing = () => undefined;
 
 /** A burst of the active style's particles from the middle of an element. */
-export function burstAt(el: Element | null | undefined, options: BurstOptions = {}): void {
-  if (!el || typeof document === 'undefined' || reducedMotion()) return;
+export function burstAt(el: Element | null | undefined, options: BurstOptions = {}): number {
+  if (!el || typeof document === 'undefined' || reducedMotion()) return 0;
   const flavour = flavourFor(document.documentElement.dataset.effectStyle ?? '');
   const box = el.getBoundingClientRect();
   const x = box.left + box.width / 2;
@@ -136,6 +140,7 @@ export function burstAt(el: Element | null | undefined, options: BurstOptions = 
       nothing,
     );
   }
+  return plan.particles.length;
 }
 
 /** The burst for a moment (a right answer grows with the combo). */
@@ -143,8 +148,8 @@ export function celebrate(
   event: CelebrateEvent,
   el: Element | null | undefined,
   { combo = 0 }: { combo?: number } = {},
-): void {
-  burstAt(el, burstFor(event, { combo }));
+): number {
+  return burstAt(el, burstFor(event, { combo }));
 }
 
 export interface Celebrate {
@@ -152,7 +157,36 @@ export interface Celebrate {
   celebrate: typeof celebrate;
 }
 
-/** The burst calls for components. */
-export function useCelebrate(): Celebrate {
-  return useMemo(() => ({ burstAt, celebrate }), []);
+let lastSound: number | null = null;
+
+/** For tests: the burst sound to play, standing in for U8's `particleBurst`. */
+export const burstSound = { event: BURST_EVENT };
+
+/**
+ * The burst calls for components, with the burst sound (at most once every 140 ms, and only when
+ * something flies). `emit` and `now` can be swapped in tests.
+ */
+const clock = () => performance.now();
+
+export function useCelebrate({
+  emit,
+  now = clock,
+}: { emit?: (event: FeedbackEvent) => unknown; now?: () => number } = {}): Celebrate {
+  const sound = useSound();
+  const play = emit ?? sound.emit;
+  return useMemo(() => {
+    const withSound = (count: number) => {
+      const t = now();
+      const event = burstSound.event;
+      if (event && count > 0 && burstSoundDue(t, lastSound)) {
+        lastSound = t;
+        play(event);
+      }
+      return count;
+    };
+    return {
+      burstAt: (el, options) => withSound(burstAt(el, options)),
+      celebrate: (event, el, options) => withSound(celebrate(event, el, options)),
+    };
+  }, [play, now]);
 }

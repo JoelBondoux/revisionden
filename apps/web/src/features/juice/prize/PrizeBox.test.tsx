@@ -2,6 +2,7 @@ import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import type { RewardCardResponse } from '@revisionden/core';
 import { stubReducedMotion } from '../testing';
 import { resetParticles } from '../particles/burst';
+import { PRIZE_STEP_EVENT } from '../particles/sound';
 import { PrizeBox, PRIZE_TIMINGS } from './PrizeBox';
 
 const emit = vi.hoisted(() => vi.fn(() => ({ sound: true, haptic: false })));
@@ -83,8 +84,10 @@ describe('the prize box (J17)', () => {
   it('plays a step sound for each reward as it pops out', () => {
     render(<PrizeBox rewards={[streak, mystery]} onClose={() => undefined} />);
     untilDone();
-    const afterOpen = sounds().slice(sounds().indexOf('rewardOpen') + 1);
-    expect(afterOpen).toHaveLength(2);
+    const calls = emit.mock.calls as unknown as [string, { step?: number }?][];
+    const afterOpen = calls.slice(sounds().indexOf('rewardOpen') + 1);
+    expect(afterOpen.map(([, o]) => o?.step)).toEqual([1, 2]);
+    expect(afterOpen.map(([e]) => e)).toEqual([PRIZE_STEP_EVENT, PRIZE_STEP_EVENT]);
   });
 
   it('opens straight away when the box is tapped mid-wobble', () => {

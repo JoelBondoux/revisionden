@@ -311,8 +311,9 @@ Ported from `docs/mockups/all-themes-pip.html` (`FX`, `burst`, `PRIZE_BOX`, `ope
   kind, name and "For: …" reason, a step sound and a small burst. Then **Collect** (focused) and
   the reward's own tiered sound. Escape closes it; Tab stays inside; focus goes back where it was.
   With reduced motion it opens at once with the full list. The "New reward" line and **See your
-  rewards** stay on the screen after Collect. The step sound uses the reward-unlock sound until
-  U8's three-step `prizeBox` sound lands.
+  rewards** stay on the screen after Collect. The step sound is U8's three-step `prizeBox` sound (`nodePop` until it lands). Bursts
+  play U8's `particleBurst` sound, at most once every 140 ms and only when something flies; until
+  it lands they add no sound of their own.
 
 ## Never (Children's Code and `REWARDS.md`)
 

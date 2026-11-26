@@ -2,7 +2,14 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { stubReducedMotion } from '../testing';
 import { MAX_LIVE_PARTICLES } from './plan';
-import { burstAt, celebrate, liveParticles, resetParticles, useCelebrate } from './burst';
+import {
+  burstAt,
+  burstSound,
+  celebrate,
+  liveParticles,
+  resetParticles,
+  useCelebrate,
+} from './burst';
 
 function target(): HTMLElement {
   const el = document.createElement('button');
@@ -97,5 +104,55 @@ describe('particle bursts (J17)', () => {
     render(<Cheer />);
     await userEvent.click(screen.getByRole('button', { name: 'Cheer' }));
     expect(particles().length).toBeGreaterThan(0);
+  });
+});
+
+describe('the burst sound (J17)', () => {
+  const emit = vi.fn(() => ({ sound: true, haptic: false }));
+  const registered = burstSound.event;
+  beforeEach(() => {
+    stubReducedMotion(false);
+    emit.mockClear();
+    // As if U8's particleBurst had landed.
+    burstSound.event = 'nodePop';
+  });
+  afterEach(() => {
+    burstSound.event = registered;
+    resetParticles();
+    vi.unstubAllGlobals();
+  });
+
+  function Cheer({ times = 1 }: { times?: number }) {
+    const { celebrate: cheer } = useCelebrate({ emit, now: () => 5000 });
+    return (
+      <button
+        type="button"
+        onClick={(e) => {
+          for (let i = 0; i < times; i++) cheer('goal', e.currentTarget);
+        }}
+      >
+        Cheer
+      </button>
+    );
+  }
+
+  it('plays once for bursts close together', async () => {
+    render(<Cheer times={3} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Cheer' }));
+    expect(emit).toHaveBeenCalledTimes(1);
+  });
+
+  it('stays quiet while U8’s burst sound has not landed', async () => {
+    burstSound.event = null;
+    render(<Cheer />);
+    await userEvent.click(screen.getByRole('button', { name: 'Cheer' }));
+    expect(emit).not.toHaveBeenCalled();
+  });
+
+  it('stays quiet when nothing flies (reduced motion)', async () => {
+    stubReducedMotion(true);
+    render(<Cheer />);
+    await userEvent.click(screen.getByRole('button', { name: 'Cheer' }));
+    expect(emit).not.toHaveBeenCalled();
   });
 });

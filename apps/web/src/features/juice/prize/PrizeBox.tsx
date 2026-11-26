@@ -12,9 +12,9 @@ import { rewardReason } from '../../rewards/RewardReveal';
 import { itemWords } from '../../rewards/parts';
 import { RewardSound } from '../../sound/RewardSound';
 import { useSound } from '../../sound/SoundProvider';
-import type { FeedbackEvent } from '../../sound/feedback/events';
 import { useReducedMotion } from '../motion';
 import { celebrate } from '../particles/burst';
+import { PRIZE_STEP_EVENT } from '../particles/sound';
 import './prize.css';
 
 /** The prize box's beats, in ms (the owner-approved mockup). */
@@ -24,12 +24,6 @@ export const PRIZE_TIMINGS = {
   itemGapMs: 650,
   itemBurstMs: 420,
 };
-
-/**
- * The sound as each reward pops out. U8 adds a three-step `prizeBox` sound; until it lands, each
- * step uses the reward unlock sound.
- */
-const STEP_SOUND: FeedbackEvent = 'rewardUnlock';
 
 type Stage = 'closed' | 'open' | 'done';
 
@@ -76,7 +70,9 @@ export function PrizeBox({ rewards, onClose }: PrizeBoxProps) {
     celebrate('prizeOpen', boxRef.current);
     const reveal = (i: number) => {
       setShown(i + 1);
-      emit(STEP_SOUND);
+      // U8's three-step prize sound (nodePop until it lands). The box has its own sounds, so its
+      // bursts add none.
+      emit(PRIZE_STEP_EVENT, { step: Math.min(i + 1, 3) });
       at(PRIZE_TIMINGS.itemBurstMs, () =>
         celebrate('prizeItem', listRef.current?.children[i] ?? null),
       );

@@ -24,7 +24,7 @@ import {
   comboStep,
   nextCombo,
   pipLine,
-  celebrate,
+  useCelebrate,
 } from '../juice';
 import { markSound, useSound } from '../sound';
 import { useLearnApi } from './learnApi';
@@ -169,8 +169,9 @@ function rightOption(item: LearnItem, result: LearnAttemptResponse, chosen: Draf
  * feedback instead, so nothing crosses the question (J10g). */
 function RightAnswerEffects({ combo }: { combo: number }) {
   const anchor = useRef<HTMLSpanElement>(null);
+  const { celebrate } = useCelebrate();
   // J17: the active style's particles, growing with the combo. Fired once, as it appears.
-  useEffect(() => celebrate('correct', anchor.current?.parentElement, { combo }), []);
+  useEffect(() => void celebrate('correct', anchor.current?.parentElement, { combo }), []);
   return <span ref={anchor} className="fx-anchor" aria-hidden="true" />;
 }
 
@@ -211,6 +212,7 @@ export function LessonPlayer({
   const [done, setDone] = useState(false);
   const shownAt = useRef(Date.now());
   const xpRef = useRef<HTMLSpanElement>(null);
+  const { celebrate } = useCelebrate();
 
   useEffect(() => {
     let live = true;
