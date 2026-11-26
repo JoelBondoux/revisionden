@@ -7,7 +7,7 @@ import {
   FlashcardSchema,
   FlashcardsOverviewSchema,
   ItemHelpResponseSchema,
-  LearnAttemptResponseSchema,
+  LearnAttemptResultSchema,
   LessonResponseSchema,
   ProgressSchema,
   StartingTestResponseSchema,
@@ -20,7 +20,7 @@ import {
   type FlashcardSessionResult,
   type FlashcardsOverview,
   type LearnAttemptRequest,
-  type LearnAttemptResponse,
+  type LearnAttemptResult,
   type LessonResponse,
   type Progress,
   type StartingTestResponse,
@@ -39,7 +39,7 @@ export interface LearnApi {
   getProgress(): Promise<Progress>;
   startStartingTest(subjectId: string): Promise<StartingTestResponse>;
   finishStartingTest(id: string): Promise<StartingTestResult>;
-  submitAttempt(attempt: LearnAttemptRequest): Promise<LearnAttemptResponse>;
+  submitAttempt(attempt: LearnAttemptRequest): Promise<LearnAttemptResult>;
   /** "Help me understand" (F10): the item's verified steps, ending on the answer. */
   getItemHelp(itemId: string): Promise<string[]>;
   getFlashcards(): Promise<FlashcardsOverview>;
@@ -92,7 +92,7 @@ export function createLearnApi({
       request('learn/starting-tests', StartingTestResponseSchema, { subjectId }),
     finishStartingTest: (id) =>
       request(`learn/starting-tests/${enc(id)}/finish`, StartingTestResultSchema, {}),
-    submitAttempt: (attempt) => request('learn/attempts', LearnAttemptResponseSchema, attempt),
+    submitAttempt: (attempt) => request('learn/attempts', LearnAttemptResultSchema, attempt),
     getItemHelp: async (itemId) =>
       (await request(`learn/items/${enc(itemId)}/help`, ItemHelpResponseSchema)).steps,
     getFlashcards: () => request('flashcards', FlashcardsOverviewSchema),
