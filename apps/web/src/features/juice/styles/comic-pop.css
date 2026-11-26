@@ -1,3 +1,4 @@
+@import '@fontsource/bangers/400.css';
 /*
  * Comic Pop, an unlockable effect style (J10c, docs/GAME_FEEL.md). Bold ink outlines, flat comic
  * colours and hard offset shadows; wins slam in. Every rule is scoped to the style. Transforms
@@ -202,12 +203,12 @@
 
 /* ---------- J15s: the full look (mirrors looks.ts; a test keeps them in step) ---------- */
 :root[data-effect-style='comic-pop']:not([data-theme='dark']) {
-  --color-background: #fff8dc;
+  --color-background: #ffe14d;
   --color-surface: #ffffff;
   --color-border: #111111;
   --color-text: #111111;
   --color-text-secondary: #444444;
-  --color-primary: #1565c0;
+  --color-primary: #1259b0;
   --color-primary-edge: #0d4a91;
   --color-primary-soft: #e0ecfb;
   --color-text-on-primary: #ffffff;
@@ -221,9 +222,12 @@
   --shadow-card: 5px 5px 0 #111111;
   --radius-sm: 4px;
   --radius-md: 4px;
-  --radius-lg: 6px;
-  --font-heading: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --radius-lg: 4px;
+  --font-heading: 'Bangers', 'Baloo 2', 'Nunito', sans-serif;
   --pattern-ink: rgb(212 32 32 / 10%);
+  --page-art:
+    radial-gradient(circle, rgba(0, 0, 0, 0.13) 1.3px, transparent 1.7px) 0 0 / 9px 9px,
+    linear-gradient(160deg, #ffe14d, #ffb02e);
 }
 
 :root[data-effect-style='comic-pop'][data-theme='dark'] {
@@ -246,8 +250,11 @@
   --shadow-card: 5px 5px 0 #000000;
   --radius-sm: 4px;
   --radius-md: 4px;
-  --radius-lg: 6px;
-  --font-heading: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --radius-lg: 4px;
+  --font-heading: 'Bangers', 'Baloo 2', 'Nunito', sans-serif;
   --pattern-ink: rgb(255 225 77 / 9%);
+  --page-art:
+    radial-gradient(circle, rgba(255, 255, 255, 0.09) 1.3px, transparent 1.7px) 0 0 / 9px 9px,
+    linear-gradient(160deg, #2b2560, #1a1638);
 }
 /* ---------- end of the full look ---------- */

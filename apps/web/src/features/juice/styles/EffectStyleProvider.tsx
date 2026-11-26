@@ -29,6 +29,7 @@ import './starlight.css';
 import './garden-grow.css';
 import './comic-pop.css';
 import './pixel-arcade.css';
+import './bars.css';
 
 export interface EffectStyleApi {
   style: EffectStyle;
@@ -105,6 +106,20 @@ function deviceStorage(): (StyleStorage & { removeItem?(key: string): void }) | 
 }
 
 /** Applies the active effect style to the page and lets screens read or change it. */
+/** Marks the page `tab-hidden` while the tab is hidden, so endless motion (living bars) pauses. */
+function usePauseWhileHidden() {
+  useEffect(() => {
+    const root = document.documentElement;
+    const update = () => root.classList.toggle('tab-hidden', document.hidden);
+    update();
+    document.addEventListener('visibilitychange', update);
+    return () => {
+      document.removeEventListener('visibilitychange', update);
+      root.classList.remove('tab-hidden');
+    };
+  }, []);
+}
+
 export function EffectStyleProvider({
   children,
   loadUnlocked = fetchUnlockedStyles,
@@ -120,6 +135,7 @@ export function EffectStyleProvider({
   revalidateKey?: string;
 }) {
   const { studentId } = useStudent();
+  usePauseWhileHidden();
   const [saved, setSaved] = useState<EffectStyleId>(() => loadEffectStyle(deviceStorage()));
   const [earned, setEarned] = useState<readonly EffectStyleId[]>([]);
   const [testerStyles, setTesterStyles] = useState<readonly EffectStyleId[] | null>(null);

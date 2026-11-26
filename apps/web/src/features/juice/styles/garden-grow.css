@@ -1,3 +1,4 @@
+@import '@fontsource/baloo-2/800.css';
 /*
  * Garden Grow, an unlockable effect style (J10c, docs/GAME_FEEL.md). Soft and calm: leafy cards,
  * wins bloom and grow up from the ground, petals for confetti. Every rule is scoped to the style.
@@ -197,10 +198,10 @@
 
 /* ---------- J15s: the full look (mirrors looks.ts; a test keeps them in step) ---------- */
 :root[data-effect-style='garden-grow']:not([data-theme='dark']) {
-  --color-background: #f1f7ec;
+  --color-background: #eaf6ee;
   --color-surface: #fffdf6;
   --color-border: #c7dfbe;
-  --color-text: #22402c;
+  --color-text: #24412e;
   --color-text-secondary: #4a6953;
   --color-primary: #26703a;
   --color-primary-edge: #1f5e30;
@@ -216,9 +217,12 @@
   --shadow-card: 0 4px 0 #d7c7af;
   --radius-sm: 18px;
   --radius-md: 22px;
-  --radius-lg: 28px;
-  --font-heading: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --radius-lg: 26px;
+  --font-heading: 'Baloo 2', 'Nunito', system-ui, sans-serif;
   --pattern-ink: rgb(44 127 65 / 10%);
+  --page-art:
+    radial-gradient(circle at 92% -4%, rgba(255, 214, 90, 0.55), transparent 140px),
+    linear-gradient(180deg, #dff4ff, #f2fbe6 62%, color-mix(in srgb, #3fae5a 28%, #f2fbe6));
 }
 
 :root[data-effect-style='garden-grow'][data-theme='dark'] {
@@ -242,7 +246,10 @@
   --radius-sm: 18px;
   --radius-md: 22px;
   --radius-lg: 28px;
-  --font-heading: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-heading: 'Baloo 2', 'Nunito', system-ui, sans-serif;
   --pattern-ink: rgb(155 227 173 / 8%);
+  --page-art:
+    radial-gradient(circle at 92% -4%, rgba(255, 214, 90, 0.55), transparent 140px),
+    linear-gradient(180deg, #0f2433, #12281c 62%, color-mix(in srgb, #3fae5a 28%, #12281c));
 }
 /* ---------- end of the full look ---------- */

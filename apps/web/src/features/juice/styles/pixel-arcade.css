@@ -1,3 +1,4 @@
+@import '@fontsource/press-start-2p/400.css';
 /*
  * Pixel Arcade, an unlockable effect style (J10c, docs/GAME_FEEL.md). A retro arcade: square
  * corners, chunky borders, neon on night blue and stepped motion. Every rule is scoped to the
@@ -224,23 +225,24 @@
   --radius-sm: 0;
   --radius-md: 0;
   --radius-lg: 0;
-  --font-heading: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-heading: 'Press Start 2P', ui-monospace, monospace;
   --pattern-ink: rgb(20 32 20 / 8%);
+  --page-art: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 3px);
 }
 
 :root[data-effect-style='pixel-arcade'][data-theme='dark'] {
   --color-background: #0a0820;
-  --color-surface: #15123a;
+  --color-surface: #141238;
   --color-border: #39ff88;
   --color-text: #e8fff4;
-  --color-text-secondary: #a8d8c0;
-  --color-primary: #7a2fd6;
-  --color-primary-edge: #39ff88;
-  --color-primary-soft: #231c58;
+  --color-text-secondary: #b5d9c8;
+  --color-primary: #0f8040;
+  --color-primary-edge: #9dffc4;
+  --color-primary-soft: #0f3322;
   --color-text-on-primary: #ffffff;
-  --color-track: #6f6ab0;
-  --color-locked-soft: #1a1640;
-  --color-mastery-fill: #3a3410;
+  --color-track: #2f8f5a;
+  --color-locked-soft: #1c1a44;
+  --color-mastery-fill: #1d5a3a;
   --color-challenge: #000000;
   --color-challenge-edge: #39ff88;
   --shadow-3d-neutral: 4px 4px 0 #000000;
@@ -249,7 +251,10 @@
   --radius-sm: 0;
   --radius-md: 0;
   --radius-lg: 0;
-  --font-heading: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --pattern-ink: rgb(57 255 136 / 7%);
+  --font-heading: 'Press Start 2P', ui-monospace, monospace;
+  --pattern-ink: rgb(57 255 136 / 6%);
+  --page-art:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at 50% 25%, #2a1f6e, #0a0820 75%);
 }
 /* ---------- end of the full look ---------- */

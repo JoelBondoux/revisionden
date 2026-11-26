@@ -896,6 +896,14 @@ Tags: #product #rules #limits #defaults
   gold, streak) are never changed by a look, so colour-blind colours work everywhere; body text
   stays Nunito. Every text pair is AA in every look, light, dark and colour-blind (`looks.test.ts`).
   J12's earlier "styles change accents only" proposal and J13a (#268) are superseded.
+  Since the J15s revision (approved all-themes mockup rev 5.1) each look also has the mockup's page
+  art and heading font (self-hosted: Baloo 2, Bangers, Press Start 2P, Patrick Hand). Vivid and
+  night pages (Pop Burst purple, Starlight night sky, Pixel Arcade screen) show in dark mode only;
+  light mode keeps a light page there, because the shared status colours need a light page.
+- Living progress bars (J15s revision): every horizontal progress bar's fill gently moves in the
+  style's own way (hatching, stripes, gloss, stars, dots, leaves, chase light) with a pulsing
+  leading edge; off with reduced motion, paused while the tab is hidden
+  (`apps/web/src/features/juice/styles/bars.css`).
 - Dev style tester (J12c, owner request 2026-11-26): on the dev environment only, Settings →
   Effect style offers "Tester: try any style" (all seven styles, Light/Dark, Standard/Colour-blind)
   marked "Dev only: doesn't unlock anything for real". Turned on by the API alone: `testerStyles`

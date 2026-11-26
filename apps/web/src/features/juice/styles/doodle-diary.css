@@ -1,3 +1,4 @@
+@import '@fontsource/patrick-hand/400.css';
 /*
  * Doodle Diary, the default effect style (J10d, docs/GAME_FEEL.md). A diary full of pen doodles:
  * sketched boxes with wobbly corners, scribbled colouring-in, handwritten headings (Patrick Hand,
@@ -365,6 +366,14 @@
   --radius-lg: 14px;
   --font-heading: 'Patrick Hand', 'Comic Neue', cursive;
   --pattern-ink: rgb(47 91 211 / 9%);
+  --page-art:
+    linear-gradient(
+      90deg,
+      transparent 30px,
+      rgba(217, 68, 58, 0.4) 30px 31.5px,
+      transparent 31.5px
+    ),
+    repeating-linear-gradient(0deg, transparent 0 25px, rgba(47, 91, 211, 0.16) 25px 26px);
 }
 
 :root[data-effect-style='doodle-diary'][data-theme='dark'] {
@@ -390,5 +399,13 @@
   --radius-lg: 14px;
   --font-heading: 'Patrick Hand', 'Comic Neue', cursive;
   --pattern-ink: rgb(169 189 255 / 8%);
+  --page-art:
+    linear-gradient(
+      90deg,
+      transparent 30px,
+      rgba(255, 120, 110, 0.4) 30px 31.5px,
+      transparent 31.5px
+    ),
+    repeating-linear-gradient(0deg, transparent 0 25px, rgba(150, 170, 255, 0.14) 25px 26px);
 }
 /* ---------- end of the full look ---------- */

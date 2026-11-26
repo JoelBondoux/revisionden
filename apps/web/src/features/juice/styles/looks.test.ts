@@ -26,7 +26,10 @@ describe.each(EFFECT_STYLE_IDS)('the %s look', (id) => {
   it.each(['light', 'dark'] as const)(
     'is carried by its stylesheet in %s, value for value',
     (mode) => {
-      expect(css).toContain(lookCss(id, mode));
+      // Prettier may wrap long values over lines, so compare with the spacing squashed.
+      const squash = (text: string) =>
+        text.replace(/\s+/g, ' ').replace(/\( /g, '(').replace(/ \)/g, ')');
+      expect(squash(css)).toContain(squash(lookCss(id, mode)));
     },
   );
 
@@ -113,3 +116,49 @@ describe.each(EFFECT_STYLE_IDS.filter((s) => s !== 'doodle-diary'))(
     });
   },
 );
+
+// J15s revision (owner sign-off of the all-themes mockup, revision 5.1): each look follows the
+// approved mockup: its own page art, its display font, and the night styles stay at night.
+const lum = (hex: string) => {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+  const f = (c: number) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+  return 0.2126 * f(r!) + 0.7152 * f(g!) + 0.0722 * f(b!);
+};
+
+describe('the looks follow the approved mockup', () => {
+  it('paints every page with the style’s own art, in light and dark', () => {
+    for (const id of EFFECT_STYLE_IDS)
+      for (const mode of ['light', 'dark'] as const)
+        expect(LOOKS[id][mode]['--page-art'], `${id} ${mode}`).toMatch(/gradient\(/);
+    expect(read('../../../design/base.css')).toMatch(
+      /body\s*\{[^}]*background:\s*var\(--page-art, none\),\s*var\(--color-background\)/,
+    );
+  });
+
+  it('puts Starlight and Pixel Arcade at night in dark mode', () => {
+    for (const id of ['starlight', 'pixel-arcade'] as const)
+      expect(lum(LOOKS[id].dark['--color-background']), id).toBeLessThan(0.05);
+  });
+
+  // A vivid page needs light text, which the shared warning and danger colours are not made for, so
+  // vivid pages show in dark mode and light mode keeps a light page (like Starlight and Pixel Arcade).
+  it('gives Pop Burst a vivid purple page with sunny highlights in dark mode', () => {
+    const pop = LOOKS['pop-burst'].dark;
+    expect(lum(pop['--color-background'])).toBeLessThan(0.2);
+    expect(lum(pop['--color-primary-edge'])).toBeGreaterThan(0.6);
+  });
+
+  it.each([
+    ['sticker-book', 'Baloo 2'],
+    ['pop-burst', 'Baloo 2'],
+    ['starlight', 'Baloo 2'],
+    ['garden-grow', 'Baloo 2'],
+    ['comic-pop', 'Bangers'],
+    ['pixel-arcade', 'Press Start 2P'],
+    ['doodle-diary', 'Patrick Hand'],
+  ] as const)('letters %s headings in %s, served from our own site', (id, font) => {
+    expect(LOOKS[id].light['--font-heading']).toContain(`'${font}'`);
+    const pkg = font.toLowerCase().replace(/ /g, '-');
+    expect(read(`${id}.css`)).toContain(`@import '@fontsource/${pkg}`);
+  });
+});

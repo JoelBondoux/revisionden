@@ -183,6 +183,24 @@ tab say so to screen readers.
   stylesheet, and keeps every text pair at AA (and shapes at 3:1) in light, dark and colour-blind;
   `e2e/tests/looks.spec.ts` runs axe on the map and Me in all 7 styles, light and dark. This
   replaces J13a's "styles change accents only" (#268, not merged).
+- **Looks match the approved all-themes mockup (J15s revision, rev 5.1, 2026-11-26).** Each look
+  takes the mockup's page art (`--page-art`, layered over the page colour by `design/base.css`) and
+  heading font, self-hosted with @fontsource (Baloo 2 for Sticker Book, Pop Burst, Starlight and
+  Garden Grow; Bangers for Comic Pop; Press Start 2P for Pixel Arcade; Patrick Hand for Doodle
+  Diary). **Vivid and night pages show in dark mode**: Pop Burst's purple page, Starlight's night
+  sky and Pixel Arcade's arcade screen need light text, which the shared warning, danger and success
+  colours are not made for, so light mode keeps a light page in those styles. To keep white text on
+  the success button readable, night and vivid looks use a deeper main colour for buttons (Starlight
+  violet, Pixel Arcade green, Pop Burst pink) and keep their bright colour (cyan, neon green, sunny
+  yellow) as the highlight (`--color-primary-edge`).
+- **Living progress bars (J15s revision).** Every horizontal bar's fill (`.progress__fill`,
+  `.arena-progress__fill`) is always gently on the move, in each style's own way: biro hatching
+  (Doodle Diary), a rolling barber stripe (Sticker Book), a gloss sweep with bubbles (Pop Burst),
+  drifting twinkling stars (Starlight), racing halftone dots (Comic Pop), drifting leaves (Garden
+  Grow) and a marching chase light (Pixel Arcade). The motion stays inside the fill, the leading
+  edge pulses, only background-position, transform and opacity animate, smooth timing only (no
+  steps), off with reduced motion, and paused while the tab is hidden (`tab-hidden` on the root,
+  set by `EffectStyleProvider`). In `features/juice/styles/bars.css`, checked by `bars.test.ts`.
 - Pop Burst (J10b): jelly cards with a chunky bottom edge, a gold jelly mission card, gold wins,
   round confetti; the badge stamps in from big and the stars drop in. Starlight (J10b): night-sky
   cards with a soft glow, mastered topics are outlined in starlight and earned steps glow; the badge brightens

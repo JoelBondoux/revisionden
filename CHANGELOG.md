@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Every style now looks like its approved design, with its own page art and heading font, and progress bars gently shimmer and move in each style's own way (they stay still if your device asks for less motion). Pop Burst's purple page, Starlight's night sky and Pixel Arcade's arcade screen now show in dark mode.
 - In the interactive factorising lesson, picking the wrong pair of numbers now shows the gaps or the spare strips, instead of drawing a different shape.
 - Coming at version 1.0: everyone who has been practising with RevisionDen before then gets a special Founding Tester badge and title, as a thank-you for helping build it. It can never be earned later.
 - Fixed: finishing the "10 more" flashcards now counts as a finished session and earns its XP, instead of saying you left early.
@@ -244,6 +245,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- J15s revision (approved all-themes mockup rev 5.1): each look gains `--page-art` (layered over the page colour in `design/base.css`, fixed attachment) and the mockup's heading font via @fontsource (`@fontsource/baloo-2`, `bangers`, `press-start-2p`; Patrick Hand imported in Doodle Diary's sheet). Vivid and night pages (Pop Burst, Starlight, Pixel Arcade) move to dark mode so every AA pair holds; their buttons use a deeper main colour with white text and keep the bright colour as `--color-primary-edge`. Living progress bars in `features/juice/styles/bars.css` (per-style `--bar-fx`, background-position/transform/opacity only, no `steps()`, reduced-motion off, paused by the root `tab-hidden` class that `EffectStyleProvider` sets on `visibilitychange`), checked by `bars.test.ts`.
 - W8b (Codex review of #269): the area model keeps exactly b strips and c unit squares for any pair, outlining missing slots or leaving spare strips over (`fitStrips`); pilot steps are never picked as warm-ups or similar-question retries; "Did this help?" is one row per student and item, enforced by a unique partial index and an upsert (migration 0033).
 - Rewards R5: Founding Tester. One-off `special` reward (badge and "Founding"/"Tester" title words), `foundingTesterStat` in core, `BETA_ENDS_AT` Worker variable (unset everywhere until 1.0, with a test that `wrangler.toml` never sets it), awarded by the normal evaluator on answers, flashcard sessions and the Rewards page, a Special card and a badge moment on reveal (code-drawn Doodle Diary badge in `features/rewards/badges.tsx`), and the 1.0 release step in `docs/ENVIRONMENTS.md`.
 - Lesson reactions hook (F13, for J14, owner approved): `LessonPlayer` takes `onAnswerReaction({ kind, combo })`, called once per marked answer, after its feedback renders, with `right`, `wrong`, `helped` or `goal` (the first right answer that meets today's goal), from `answerReaction()` in `features/learn/reaction.ts`. Never called for an unmarked answer. No visible change yet: J wires Pip and the avatar to it.
