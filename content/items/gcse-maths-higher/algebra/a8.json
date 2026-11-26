@@ -8,7 +8,9 @@
     "expected_seconds": 25,
     "prompt": "Which point is 3 units to the left of the y-axis and 2 units below the x-axis?",
     "options": ["(3, -2)", "(-3, -2)", "(-2, -3)", "(-3, 2)"],
-    "answer": { "option": 1 },
+    "answer": {
+      "option": 1
+    },
     "marks": 1,
     "explanation": "Left of the y-axis means a negative x-coordinate and below the x-axis means a negative y-coordinate: (-3, -2).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
@@ -83,7 +85,9 @@
     "expected_seconds": 25,
     "prompt": "Which of these points lies on the x-axis?",
     "options": ["(0, -4)", "(-4, 0)", "(-4, -4)", "(4, 4)"],
-    "answer": { "option": 1 },
+    "answer": {
+      "option": 1
+    },
     "marks": 1,
     "explanation": "Every point on the x-axis has y-coordinate 0, so (-4, 0) is on it. (0, -4) is on the y-axis.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
@@ -157,7 +161,9 @@
     "learning_point": "gcse-maths-h-a8-lp-read-points",
     "expected_seconds": 30,
     "prompt": "Three corners of a rectangle are at (-2, 3), (5, 3) and (5, -1). Write down the coordinates of the fourth corner.",
-    "answer": { "accepted": ["(-2, -1)", "(-2,-1)", "(−2, −1)", "(−2,−1)"] },
+    "answer": {
+      "accepted": ["(-2, -1)", "(-2,-1)", "(−2, −1)", "(−2,−1)"]
+    },
     "marks": 1,
     "explanation": "The fourth corner lines up with the other corners. It has the same x-coordinate as (-2, 3) and the same y-coordinate as (5, -1), so it is (-2, -1).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
@@ -231,8 +237,12 @@
     "learning_point": "gcse-maths-h-a8-lp-axis-distances",
     "expected_seconds": 30,
     "prompt": "A is the point (-3, 4) and B is the point (5, 4). How many units apart are A and B?",
-    "answer": { "value": "8" },
-    "verify": { "expression": "5 - (-3)" },
+    "answer": {
+      "value": "8"
+    },
+    "verify": {
+      "expression": "5 - (-3)"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for 8"],
     "explanation": "Both points have y = 4, so count along: from x = -3 to x = 5 is 8 units.",
@@ -315,8 +325,12 @@
     "learning_point": "gcse-maths-h-a8-lp-axis-distances",
     "expected_seconds": 30,
     "prompt": "P is the point (2, -6) and Q is the point (2, 3). How many units apart are P and Q?",
-    "answer": { "value": "9" },
-    "verify": { "expression": "3 - (-6)" },
+    "answer": {
+      "value": "9"
+    },
+    "verify": {
+      "expression": "3 - (-6)"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for 9"],
     "explanation": "Both points have x = 2, so count up: from y = -6 to y = 3 is 9 units.",
@@ -399,7 +413,9 @@
     "learning_point": "gcse-maths-h-a8-lp-axis-distances",
     "expected_seconds": 40,
     "prompt": "Start at the point (-4, -1). Move 6 units to the right and 5 units up. Write down the coordinates of the point you reach.",
-    "answer": { "accepted": ["(2, 4)", "(2,4)"] },
+    "answer": {
+      "accepted": ["(2, 4)", "(2,4)"]
+    },
     "marks": 1,
     "explanation": "Moving right adds to the x-coordinate: -4 + 6 = 2. Moving up adds to the y-coordinate: -1 + 5 = 4. The point is (2, 4).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A8",
@@ -473,8 +489,14 @@
     "learning_point": "gcse-maths-h-a8-lp-axis-distances",
     "expected_seconds": 60,
     "prompt": "The points (k, 2) and (5, 2) are 9 units apart, and k is negative. Work out k.",
-    "answer": { "solutions": ["-4"] },
-    "verify": { "method": "solve", "equation": "5 - k = 9", "variable": "k" },
+    "answer": {
+      "solutions": ["-4"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "5 - k = 9",
+      "variable": "k"
+    },
     "steps": ["5 - k = 9", "-k = 4", "k = -4"],
     "marks": 2,
     "mark_scheme": [

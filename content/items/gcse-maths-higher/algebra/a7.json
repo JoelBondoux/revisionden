@@ -7,8 +7,12 @@
     "learning_point": "gcse-maths-h-a7-lp-evaluate",
     "expected_seconds": 30,
     "prompt": "f(x) = 3x - 5. Work out f(4).",
-    "answer": { "value": "7" },
-    "verify": { "expression": "3*4 - 5" },
+    "answer": {
+      "value": "7"
+    },
+    "verify": {
+      "expression": "3*4 - 5"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for 7"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
@@ -90,8 +94,12 @@
     "learning_point": "gcse-maths-h-a7-lp-evaluate",
     "expected_seconds": 30,
     "prompt": "g(x) = x^2 + 1. Work out g(-3).",
-    "answer": { "value": "10" },
-    "verify": { "expression": "(-3)^2 + 1" },
+    "answer": {
+      "value": "10"
+    },
+    "verify": {
+      "expression": "(-3)^2 + 1"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for 10"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
@@ -173,8 +181,12 @@
     "learning_point": "gcse-maths-h-a7-lp-evaluate",
     "expected_seconds": 30,
     "prompt": "h(x) = (x + 6)/2. Work out h(-10).",
-    "answer": { "value": "-2" },
-    "verify": { "expression": "(-10 + 6)/2" },
+    "answer": {
+      "value": "-2"
+    },
+    "verify": {
+      "expression": "(-10 + 6)/2"
+    },
     "marks": 1,
     "mark_scheme": ["B1 for -2"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
@@ -256,8 +268,14 @@
     "learning_point": "gcse-maths-h-a7-lp-evaluate",
     "expected_seconds": 60,
     "prompt": "f(x) = 4x + 9. Find the value of a such that f(a) = 1.",
-    "answer": { "solutions": ["-2"] },
-    "verify": { "method": "solve", "equation": "4a + 9 = 1", "variable": "a" },
+    "answer": {
+      "solutions": ["-2"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "4a + 9 = 1",
+      "variable": "a"
+    },
     "steps": ["4a + 9 = 1", "4a = -8", "a = -2"],
     "marks": 2,
     "mark_scheme": ["M1 for 4a + 9 = 1", "A1 for a = -2"],
@@ -346,7 +364,9 @@
       "f^-1(x) = 2x - 3",
       "f^-1(x) = 1/(2x + 3)"
     ],
-    "answer": { "option": 0 },
+    "answer": {
+      "option": 0
+    },
     "marks": 1,
     "explanation": "Write x = 2y + 3 and make y the subject: y = (x - 3)/2. (1/(2x + 3) is the reciprocal, not the inverse.)",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
@@ -438,7 +458,9 @@
       "f^-1(x) = (x + 1)/5",
       "f^-1(x) = x/5 - 1"
     ],
-    "answer": { "option": 2 },
+    "answer": {
+      "option": 2
+    },
     "marks": 1,
     "explanation": "Write x = 5y - 1 and make y the subject: y = (x + 1)/5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
@@ -518,7 +540,9 @@
       "f^-1(x) = 3(x + 4)",
       "f^-1(x) = 3x - 4"
     ],
-    "answer": { "option": 3 },
+    "answer": {
+      "option": 3
+    },
     "marks": 1,
     "explanation": "Write x = (y + 4)/3 and make y the subject: 3x = y + 4, so y = 3x - 4.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A7",
@@ -592,8 +616,12 @@
     "learning_point": "gcse-maths-h-a7-lp-composite",
     "expected_seconds": 45,
     "prompt": "f(x) = 2x + 1 and g(x) = x^2. Work out fg(3).",
-    "answer": { "value": "19" },
-    "verify": { "expression": "2*(3^2) + 1" },
+    "answer": {
+      "value": "19"
+    },
+    "verify": {
+      "expression": "2*(3^2) + 1"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for g(3) = 9", "A1 for 19"],
     "hint": "fg(3) means f(g(3)): work out g(3) first.",
@@ -676,8 +704,12 @@
     "learning_point": "gcse-maths-h-a7-lp-composite",
     "expected_seconds": 45,
     "prompt": "f(x) = 2x + 1 and g(x) = x^2. Work out gf(3).",
-    "answer": { "value": "49" },
-    "verify": { "expression": "(2*3 + 1)^2" },
+    "answer": {
+      "value": "49"
+    },
+    "verify": {
+      "expression": "(2*3 + 1)^2"
+    },
     "marks": 2,
     "mark_scheme": ["M1 for f(3) = 7", "A1 for 49"],
     "hint": "gf(3) means g(f(3)): work out f(3) first.",
@@ -760,8 +792,14 @@
     "learning_point": "gcse-maths-h-a7-lp-composite",
     "expected_seconds": 60,
     "prompt": "f(x) = 3x - 2 and g(x) = x + 4. Find fg(x). Give your answer in its simplest form.",
-    "answer": { "expression": "3x + 10" },
-    "verify": { "method": "expression", "expression": "3(x + 4) - 2", "form": "expanded" },
+    "answer": {
+      "expression": "3x + 10"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "3(x + 4) - 2",
+      "form": "expanded"
+    },
     "steps": ["3(x + 4) - 2", "3x + 12 - 2", "3x + 10"],
     "marks": 2,
     "mark_scheme": ["M1 for 3(x + 4) - 2", "A1 for 3x + 10"],
