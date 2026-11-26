@@ -48,14 +48,18 @@ describe('Lesson player in the arena (game feel)', () => {
 
   it('celebrates a right answer: green option, particle burst and +XP floating up', async () => {
     only(0, 1);
-    renderRoute('/learn/topic/demo-topic-a');
+    const { container } = renderRoute('/learn/topic/demo-topic-a');
     await userEvent.click(await screen.findByRole('radio', { name: 'Option B' }));
     await click('Check');
     await feedback();
     const chosen = optionLabel('Option B');
     expect(chosen).toHaveClass('answer-option--right');
     expect(chosen.querySelector('.burst')).not.toBeNull();
-    expect(chosen.querySelector('.float-up')).toHaveTextContent('+10 XP');
+    // J10g: "+XP" pops just above the feedback, never across the question.
+    const floater = container.querySelector('.float-up')!;
+    expect(floater).toHaveTextContent('+10 XP');
+    expect(container.querySelector('.lesson__footer')).toContainElement(floater as HTMLElement);
+    expect(container.querySelector('.lesson__stage')!.querySelector('.float-up')).toBeNull();
     expect(screen.getByText('XP this lesson: 10 XP')).toBeInTheDocument();
   });
 
