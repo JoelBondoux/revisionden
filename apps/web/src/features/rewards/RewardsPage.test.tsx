@@ -90,6 +90,21 @@ describe('Student rewards screen', () => {
     expect(screen.queryByRole('region', { name: 'Bug Hunter' })).not.toBeInTheDocument();
   });
 
+  it('shows earned special rewards (Founding Tester) with their badge, and hides them before', async () => {
+    show(
+      fakeApi({ getMyRewards: async () => sampleRewards({}, { earnedIds: ['founding-tester'] }) }),
+    );
+    const special = await screen.findByRole('region', { name: 'Special' });
+    expect(within(special).getByText('Founding Tester')).toBeInTheDocument();
+    expect(within(special).getByRole('img', { name: 'Founding Tester badge' })).toBeInTheDocument();
+  });
+
+  it('has no Special section before anything special is earned', async () => {
+    show(fakeApi());
+    await screen.findByRole('heading', { name: 'Level 4' });
+    expect(screen.queryByRole('region', { name: 'Special' })).not.toBeInTheDocument();
+  });
+
   it('shows a hidden track once its first step is earned', async () => {
     show(
       fakeApi({

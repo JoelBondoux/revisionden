@@ -878,6 +878,11 @@ Tags: #product #rules #limits #defaults
 
 ## Titles (owner, 2026-11-25; built R8) and Get help (built, workstream W)
 
+- Founding Tester (R5, owner 2026-11-26): one-off badge and title ("Founding" + "Tester") for
+  students with an answer or completed flashcard session strictly before the 1.0 cut-off
+  `BETA_ENDS_AT` (Worker variable, UTC, unset in every environment until release; set in the 1.0
+  release step, `docs/ENVIRONMENTS.md`). Awarded automatically and once by the reward evaluator
+  (stat `foundingTester`); reward source `special`, shown only once earned. No new data.
 - Two-part titles (built R8): 120 first words and 120 last words, each unlocked by one reward
   (levels, chapters, milestones, collections, seasons, hidden tracks, secrets); a word has its
   reward's rarity. The 99 old single titles were migrated into words (their rewards now give a

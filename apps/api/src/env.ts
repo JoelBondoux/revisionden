@@ -54,6 +54,8 @@ const envSchema = z
     // Workstream O: AppDeck operator bridge. Off until set; a different secret per environment.
     APPDECK_OPERATOR_SHARED_SECRET: z.string().min(32).optional(),
     OPERATOR_RATE_LIMITER: optionalRateLimiter,
+    // R5 Founding Tester: the 1.0 cut-off as a UTC timestamp. Unset until release (docs/REWARDS.md).
+    BETA_ENDS_AT: z.string().datetime().optional(),
     // "input/output" US dollars per million tokens, e.g. "0.15/0.6".
     AI_CHECKER_PRICES: z
       .string()
@@ -102,6 +104,8 @@ export interface AppConfig {
   operatorEmails: string[];
   /** AppDeck operator bridge (`/operator/appdeck`); unset means the bridge is off (503). */
   operatorBridge?: { secret: string };
+  /** 1.0 cut-off for Founding Tester (R5); unset until release, so nobody gets it early. */
+  betaEndsAt?: Date;
 }
 
 export type SignInProvider = 'google' | 'microsoft';
@@ -179,6 +183,7 @@ export function parseEnv(env: Record<string, unknown>): AppConfig & { raw: Worke
       .split(',')
       .map((email) => email.trim().toLowerCase())
       .filter(Boolean),
+    ...(e.BETA_ENDS_AT ? { betaEndsAt: new Date(e.BETA_ENDS_AT) } : {}),
     ...(e.APPDECK_OPERATOR_SHARED_SECRET
       ? { operatorBridge: { secret: e.APPDECK_OPERATOR_SHARED_SECRET } }
       : {}),

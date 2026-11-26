@@ -314,6 +314,30 @@ lists the styles a student has unlocked (`{ unlocked: string[] }`). The child pi
 Settings → Effect style; the choice is kept on the device, and a style that isn't unlocked falls
 back to Doodle Diary. Styles are never bought, never random and never tied to a streak.
 
+## Founding Tester (R5)
+
+Owner decision 2026-11-26. A one-off **badge** and **title** ("Founding Tester": first word
+"Founding", last word "Tester") for students who used RevisionDen before version 1.0. It can never
+be earned after 1.0.
+
+- **Who:** a student with at least one answer (a lesson, quiz or practice set answer, any mode)
+  or one completed flashcard session **strictly before** the 1.0 cut-off. Activity exactly at the
+  cut-off, or after it, belongs to 1.0 and does not count. Unused accounts do not qualify.
+- **When:** automatically, once the cut-off is set and has passed. The cut-off is the Worker
+  variable `BETA_ENDS_AT` (a UTC timestamp, for example `2027-09-01T00:00:00Z`). It is unset in
+  every environment until release, so nobody can get it early; a test checks `wrangler.toml`
+  never sets it. The normal reward evaluator awards it (the stat `foundingTester` is 1 or 0,
+  `packages/core/src/founding-tester.ts`) the next time the student answers, finishes a
+  flashcard session or opens Rewards, saved once in `rewards` like every other reward, so it is
+  idempotent and auditable (the row's `earned_at`).
+- **How it looks:** announced with the normal "New!" reveal, shown as a moment (the badge drawn
+  large with a thank-you). Then it sits in a **Special** card on the Rewards page. It is never
+  teased before it is earned. Badge art: original, code-drawn, Doodle Diary style
+  (`apps/web/src/features/rewards/badges.tsx`).
+- **Privacy:** no new data; eligibility comes from existing `attempts` and `flashcard_sessions`
+  rows.
+- **Release step:** see `docs/ENVIRONMENTS.md` ("Releasing 1.0").
+
 ## Secret achievements
 
 - A set of achievements whose names and conditions are hidden until earned. The rewards page shows

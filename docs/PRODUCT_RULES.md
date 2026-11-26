@@ -107,6 +107,10 @@ The full five-year progression (levels 1 to 100, year chapters, milestones, coll
 seasonal drops, rarity, parent-set rewards) is in [`REWARDS.md`](REWARDS.md), including the level
 formula and its assumptions. Summary of what is built:
 
+- Founding Tester (R5): a one-off badge and "Founding Tester" title for students with any
+  answer or completed flashcard session before the 1.0 cut-off (`BETA_ENDS_AT`, unset until
+  release). Granted automatically once the cut-off has passed; never earnable after 1.0.
+
 - Catalogue as data (`packages/core/src/catalogue/`): every reward has one stated target (a stat,
   a collection or a seasonal challenge), a rarity, a source and the items it gives. The original
   14 targets are kept with the same ids: streaks (7, 30, 100 days), grades (target hit in a mock,

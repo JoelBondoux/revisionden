@@ -242,6 +242,25 @@ Optional AI settings (workstream H), set as plain variables when needed:
 | `AI_CHECKER_MODEL`   | unset   | OpenAI model used as the second checker; off when unset                     |
 | `AI_CHECKER_PRICES`  | unset   | Its prices, `input/output` US dollars per million tokens; needed with model |
 
+Founding Tester (R5), a plain variable that stays **unset** until 1.0:
+
+| Name           | Default | What it does                                                                                                  |
+| -------------- | ------- | ------------------------------------------------------------------------------------------------------------- |
+| `BETA_ENDS_AT` | unset   | The 1.0 cut-off as a UTC timestamp. Once set and passed, students with activity before it get Founding Tester |
+
+### Releasing 1.0
+
+When RevisionDen reaches 1.0, before or as the 1.0 release reaches production:
+
+1. Pick the cut-off moment (UTC), normally the moment 1.0 goes live.
+2. Add `BETA_ENDS_AT = "<timestamp>"` to `[env.production.vars]` (and staging, to rehearse) in
+   `apps/api/wrangler.toml`, in the same PR as the release, and remove the "no cut-off set" check
+   in `apps/api/src/env.test.ts` in that PR.
+3. Do not touch `VERSION`: the release workflow bumps it.
+
+Students get Founding Tester the next time they answer, finish a flashcard session or open
+Rewards. Leave the variable set afterwards: it is what keeps later activity from counting.
+
 Feedback triage (workstream L), set as a secret so no email is in the code:
 
 | Name              | Default | What it does                                                                          |
