@@ -28,6 +28,7 @@ import {
 } from '../juice';
 import { markSound, useSound } from '../sound';
 import { useLearnApi } from './learnApi';
+import { answerReaction, type AnswerReactionEvent } from './reaction';
 import { HelpPanel } from './HelpPanel';
 import { NewRewards } from './NewRewards';
 import {
@@ -138,6 +139,11 @@ interface LessonPlayerProps {
   aside?: ReactNode;
   /** Recall check answers (Q4): sent as recall, so a wrong one never resets the combo. */
   recall?: boolean;
+  /**
+   * Lesson reactions (F13, for J14): called once per marked answer, so Pip and the avatar can
+   * react. F decides when; J decides how (docs/PRODUCT_RULES.md "Lesson reactions").
+   */
+  onAnswerReaction?: (event: AnswerReactionEvent) => void;
 }
 
 /** Why a question is showing, for questions that came back (learning from mistakes, F5). */
@@ -188,6 +194,7 @@ export function LessonPlayer({
   onFinish,
   aside,
   recall = false,
+  onAnswerReaction,
 }: LessonPlayerProps) {
   const api = useLearnApi();
   const { play } = useSound();
@@ -203,6 +210,8 @@ export function LessonPlayer({
   const [result, setResult] = useState<LearnAttemptResponse | null>(null);
   /** It couldn't be marked now (F12: typed working with no maths engine), so it is skipped. */
   const [skipped, setSkipped] = useState(false);
+  /** The lesson reaction for the answer just marked (F13), sent once its feedback is shown. */
+  const [reaction, setReaction] = useState<AnswerReactionEvent | null>(null);
   const [checking, setChecking] = useState(false);
   const [error, setError] = useState(false);
   const [progress, setProgress] = useState<Progress | null>(null);
@@ -213,6 +222,13 @@ export function LessonPlayer({
   const shownAt = useRef(Date.now());
   const xpRef = useRef<HTMLSpanElement>(null);
   const { celebrate } = useCelebrate();
+
+  // J asked for the reaction to land with the feedback: this runs after the marked state renders.
+  useEffect(() => {
+    if (!reaction) return;
+    onAnswerReaction?.(reaction);
+    setReaction(null);
+  }, [reaction, onAnswerReaction]);
 
   useEffect(() => {
     let live = true;
@@ -287,6 +303,15 @@ export function LessonPlayer({
         play('streakDay', { delay: 0.4 });
         celebrate('goal', xpRef.current);
       }
+      setReaction({
+        kind: answerReaction({
+          correct: marked.correct,
+          helped: marked.helped === true,
+          goalWasMet: progress?.goalMet ?? false,
+          goalMet: marked.progress.goalMet,
+        }),
+        combo: streak,
+      });
       setResult(marked);
       setProgress(marked.progress);
       setCombo(streak);

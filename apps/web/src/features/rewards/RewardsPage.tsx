@@ -9,6 +9,7 @@ import { RewardSound } from '../sound';
 import { RewardReveal } from './RewardReveal';
 import { createRewardsApi, type RewardsApi } from './rewardsApi';
 import { TitlePicker } from './TitlePicker';
+import { RewardBadge } from './badges';
 import './rewards.css';
 
 /** The student rewards screen: level, this year's chapter, milestones, collections and drops. */
@@ -142,6 +143,25 @@ export function RewardsScreen({ api }: { api: RewardsApi }) {
           )}
         </Card>
       ))}
+
+      {overview.special.length > 0 && (
+        <Card title="Special">
+          <ul className="rewards__special">
+            {overview.special.map((reward) => {
+              const badge = reward.items.find((i) => i.kind === 'badge');
+              return (
+                <li key={reward.id}>
+                  {badge && badge.kind === 'badge' && (
+                    <RewardBadge id={badge.id} label={`${reward.name} badge`} />
+                  )}
+                  <strong>{reward.name}</strong>
+                  <span className="secondary-text">{itemWords(reward)}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </Card>
+      )}
 
       <Card title="Secret achievements">
         <p className="secondary-text">

@@ -107,6 +107,10 @@ The full five-year progression (levels 1 to 100, year chapters, milestones, coll
 seasonal drops, rarity, parent-set rewards) is in [`REWARDS.md`](REWARDS.md), including the level
 formula and its assumptions. Summary of what is built:
 
+- Founding Tester (R5): a one-off badge and "Founding Tester" title for students with any
+  answer or completed flashcard session before the 1.0 cut-off (`BETA_ENDS_AT`, unset until
+  release). Granted automatically once the cut-off has passed; never earnable after 1.0.
+
 - Catalogue as data (`packages/core/src/catalogue/`): every reward has one stated target (a stat,
   a collection or a seasonal challenge), a rarity, a source and the items it gives. The original
   14 targets are kept with the same ids: streaks (7, 30, 100 days), grades (target hit in a mock,
@@ -485,6 +489,30 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
   learning but is easier just after seeing the answer.
 - Implemented: `packages/core/src/mistakes.ts`, `apps/api/src/learning/mistakes.ts`, the attempts,
   lesson and daily routes, `apps/web/src/features/learn/LessonPlayer.tsx`. Migration 0026.
+
+## Lesson reactions (F13, for J14; owner approved 2026-11-26)
+
+F decides **when** Pip and the student's avatar react in a lesson; J decides **how** (Pip's mood
+or animation, the avatar's `react('nod' | 'hmm' | 'hop')`, placement and timing).
+
+- `LessonPlayer` takes an optional `onAnswerReaction(event)` with
+  `event = { kind: 'right' | 'wrong' | 'helped' | 'goal', combo }`. No styling or timing comes
+  from F.
+- It is called once per marked answer, once the right or wrong feedback is on screen (J asked for
+  this, so the reaction lands with the feedback). Kinds:
+  - `goal`: the answer was right and met today's goal for the first time today (it wins over the
+    others);
+  - `right`: a right answer;
+  - `helped`: right, but after "Help me understand" (half XP), so the reaction should be
+    encouraging, not a celebration;
+  - `wrong`: a wrong answer, helped or not.
+- `combo` is the right answers in a row after this answer, from the API (0 after a miss or a
+  helped answer).
+- It is never called for an answer that could not be marked (F12), for an error, or outside the
+  lesson player (Test mode and the starting test use their own screen).
+- Reduced motion is J's side: E9's `react()` already does nothing then.
+- Implemented in `answerReaction()` (`apps/web/src/features/learn/reaction.ts`) and
+  `LessonPlayer.tsx`.
 
 ## Typed working without the maths engine (F12, 2026-11-26)
 
@@ -870,7 +898,13 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   and sound").** Every animation fires one feedback event: `buttonPress`, `cardFlip`, `correct`,
   `wrong`, `combo` (step 1–6), `xpTick`, `ringFill`, `rewardWobble`, `rewardOpen`, `rewardUnlock`,
   `setComplete`, `levelUp`, plus `homeEnter` (Home entrance, once per visit), `nodePop` (topic
-  nodes popping in on the map) and `locked` (tapping something locked) (`useSound().emit(event)`). Each plays the active effect style's sound and
+  nodes popping in on the map), `locked` (tapping something locked) and `stylesUnlocked` (U7: the
+  one-off moment the starting test unlocks three styles together; one special reveal, the same in
+  every style, at most 3 s, never in Test mode before submit), and U8's `goalHit` (daily goal
+  ring completes), `nodeComplete` (a topic node completes), `pageTransition` (a soft whoosh
+  between screens, no vibration), `particleBurst` (synced with J's particle bursts; waits for
+  submit in Test mode) and `prizeBox` (one prize popping out of the prize box, `step` 1, 2, 3...
+  climbing) (`useSound().emit(event)`). Each plays the active effect style's sound and
   a vibration pattern. One sound pack per style, synthesised with Web Audio (no files): Sticker Book
   (paper peel, slap, stamp, pencil tick), Pop Burst (bubbly pops, jelly boings), Starlight
   (chimes, shimmer, soft swells), Comic Pop (punchy low-passed squares, whooshes, POWs), Garden Grow
@@ -881,10 +915,23 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   default is one value, `DEFAULT_STYLE` in `features/sound/feedback/styles.ts` (Doodle Diary,
   owner-approved; Sticker Book is now an unlockable style like the others). Unknown styles use the default. Style
   ids: `sticker-book`, `pop-burst`, `starlight`, `comic-pop`, `garden-grow`, `pixel-arcade`,
-  `doodle-diary`. J's style system calls
+  `doodle-diary`. U7 (owner-approved 2026-11-26) adds three styles
+  unlocked together by the starting test, never labelled by gender: Petal Glow (`petal-glow`,
+  music-box bells and petal swishes), Turbo Drive (`turbo-drive`, low thumps, clicks, whooshes and
+  power-fifth stabs) and Rainbow Parade (`rainbow-parade`, bright major-scale colour runs). J's style system calls
   `useFeedbackStyle(styleId)`. Older `play()` calls for tap, correct (combo when it has a step),
   wrong, card flip, celebration, level up and reward unlocked follow the style too; the rest keep
   the main bank, and reward tiers (U4) keep their own sounds but add the matching vibration.
+  - Juice (U8, owner 2026-11-26: "more exciting sounds, lots of pops & whizzes"): each style has
+    a flavour of pops, whizzes, sparkles, fizz and a whoosh (paper pocks for Sticker Book, coin
+    pops for Pop Burst, glassy chimes for Starlight, POW blips for Comic Pop, seed pops for
+    Garden Grow, chiptune blips for Pixel Arcade, pencil taps for Doodle Diary, bubble pops for
+    Petal Glow, click-thumps for Turbo Drive, colour pops for Rainbow Parade), layered on correct
+    (pop and sparkle), combo (a rising whizz that climbs with the step), set complete and level
+    up (whizz up, then a pop cascade) and the prize box (rattle, big POP, rewards popping out).
+    Pops vary their pitch by up to 3% either way so repeats never sound robotic; combos and
+    prize pops climb exactly a whole tone per step. Same rules: mute, first tap, Test mode,
+    throttling (bursts 60 ms, prize pops 50 ms, page whooshes 150 ms), similar loudness.
   - Vibration: a light tick for presses and flips, a double pulse for right answers, a rising rhythm
     for combos and a longer pattern for unlocks, set complete and level up; a light tick for the
     Home entrance and one short buzz for a locked tap; none for fast ticks or map nodes popping in.

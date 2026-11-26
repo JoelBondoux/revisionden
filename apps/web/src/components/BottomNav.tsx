@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { AvatarSvg } from '../features/avatar/AvatarSvg';
+import { useAvatarMotion } from '../features/avatar/motion';
+import { FramedAvatar } from '../features/juice/pip/FramedAvatar';
 import { CardsIcon, MapIcon, PapersIcon, PlanIcon, PersonIcon } from './icons';
 
 interface NavItem {
@@ -30,6 +31,8 @@ const isMePage = (pathname: string) => /^\/(settings|progress)(\/|$)/.test(pathn
 export function BottomNav({ cardsDue = 0, avatarCode }: BottomNavProps) {
   const { pathname } = useLocation();
   const meActive = isMePage(pathname);
+  // J15b-2: the avatar idles in its ring (still with reduced motion).
+  const { props: avatarMotion } = useAvatarMotion();
   return (
     <nav className="main-nav" aria-label="Main">
       <ul className="main-nav__list">
@@ -70,8 +73,12 @@ export function BottomNav({ cardsDue = 0, avatarCode }: BottomNavProps) {
             <span>Me</span>{' '}
             <span className="main-nav__icon">
               {avatarCode ? (
-                <span className="main-nav__avatar">
-                  <AvatarSvg code={avatarCode} size={28} />
+                <span className="main-nav__avatar main-nav__avatar--framed">
+                  <FramedAvatar
+                    code={avatarCode}
+                    motion={avatarMotion.motion}
+                    motionKey={avatarMotion.motionKey}
+                  />
                 </span>
               ) : (
                 <span className="main-nav__avatar main-nav__avatar--placeholder">

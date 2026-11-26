@@ -1,6 +1,8 @@
+import type { SoundFn } from '../bank';
 import { createFakeAudioContext } from '../fakeAudio';
 import { FEEDBACK_EVENTS, type FeedbackEvent } from './events';
 import {
+  basePacks,
   DEFAULT_STYLE,
   FEEDBACK_STYLES,
   SQUARE_LOWPASS_HZ,
@@ -32,7 +34,7 @@ function render(style: FeedbackStyle, event: FeedbackEvent, pitch = 1) {
 }
 
 describe('style sound packs', () => {
-  it("has a pack for each of J's seven styles; Doodle Diary is the default", () => {
+  it("has a pack for each of J's ten styles; Doodle Diary is the default", () => {
     expect(FEEDBACK_STYLES).toEqual([
       'sticker-book',
       'pop-burst',
@@ -41,6 +43,9 @@ describe('style sound packs', () => {
       'garden-grow',
       'pixel-arcade',
       'doodle-diary',
+      'petal-glow',
+      'turbo-drive',
+      'rainbow-parade',
     ]);
     expect(DEFAULT_STYLE).toBe('doodle-diary');
     expect(resolveStyle('pop-burst')).toBe('pop-burst');
@@ -69,7 +74,17 @@ describe('style sound packs', () => {
       }
       for (const n of r.ctx.noises) expect(n.stop).not.toBeNull();
       const quick = ['buttonPress', 'xpTick', 'ringFill', 'cardFlip', 'nodePop'].includes(event);
-      expect(r.end).toBeLessThanOrEqual(quick ? 0.25 : 1.4);
+      // The three-styles reveal is a one-off moment, so it may run longer (legendary cap: 3 s).
+      // U8's new moments are quick bursts that sit under J's animations.
+      const caps: Partial<Record<FeedbackEvent, number>> = {
+        stylesUnlocked: 3,
+        pageTransition: 0.3,
+        particleBurst: 0.4,
+        prizeBox: 0.5,
+        nodeComplete: 0.8,
+      };
+      const longest = caps[event] ?? (quick ? 0.25 : 1.4);
+      expect(r.end).toBeLessThanOrEqual(longest);
       // Volume-balanced: nothing louder than the existing correct chime's peak.
       expect(r.peak).toBeLessThanOrEqual(0.55);
       expect(r.peak).toBeGreaterThan(0.05);
@@ -87,7 +102,7 @@ describe('style sound packs', () => {
   });
 
   it('sounds different in each style', () => {
-    for (const event of FEEDBACK_EVENTS) {
+    for (const event of FEEDBACK_EVENTS.filter((e) => e !== 'stylesUnlocked')) {
       const sigs = new Set(FEEDBACK_STYLES.map((s) => render(s, event).signature));
       expect(sigs.size).toBe(FEEDBACK_STYLES.length);
     }
@@ -157,5 +172,127 @@ describe('style sound packs', () => {
       const r = render('garden-grow', event);
       expect(r.ctx.oscillators.every((o) => o.type !== 'square')).toBe(true);
     }
+  });
+
+  it('the "three styles unlocked" reveal is one special sound, the same in every style', () => {
+    const sigs = new Set(FEEDBACK_STYLES.map((st) => render(st, 'stylesUnlocked').signature));
+    expect(sigs.size).toBe(1);
+    const r = render(DEFAULT_STYLE, 'stylesUnlocked');
+    // Three little motifs (one per new style) and a closing chord: plenty of notes, and noise.
+    expect(r.ctx.oscillators.length).toBeGreaterThanOrEqual(12);
+    expect(r.ctx.noises.length).toBeGreaterThan(0);
+    expect(r.end).toBeGreaterThan(1.4);
+    // It ends on a held chord: the last three notes start together.
+    const starts = r.ctx.oscillators.map((o) => o.start!);
+    const last = starts.slice(-3);
+    expect(new Set(last.map((t) => t.toFixed(3))).size).toBe(1);
+  });
+
+  it('Petal Glow is soft and twinkly: high bells that swell in, quiet petal swishes', () => {
+    const correct = render('petal-glow', 'correct');
+    expect(Math.min(...correct.ctx.oscillators.map((o) => o.frequencies[0]!))).toBeGreaterThan(
+      1000,
+    );
+    const attackOf = (style: FeedbackStyle) => {
+      const ctx = createFakeAudioContext('running');
+      stylePacks[style].rewardOpen(ctx, ctx.createGain(), 0);
+      return ctx.attacks[0]!;
+    };
+    expect(attackOf('petal-glow')).toBeGreaterThan(attackOf('turbo-drive'));
+    for (const event of FEEDBACK_EVENTS) {
+      const r = render('petal-glow', event);
+      expect(r.ctx.oscillators.every((o) => o.type !== 'square')).toBe(true);
+    }
+  });
+
+  it('Turbo Drive is bold: big moments start with a low thump and a whoosh', () => {
+    for (const event of ['levelUp', 'rewardUnlock', 'setComplete'] as const) {
+      const r = render('turbo-drive', event);
+      expect(r.ctx.oscillators[0]!.frequencies[0]!).toBeLessThan(200);
+      expect(r.ctx.noises.length).toBeGreaterThan(0);
+    }
+  });
+
+  it('Rainbow Parade is a joyful run: level up climbs seven colour-notes of a major scale', () => {
+    const r = render('rainbow-parade', 'levelUp');
+    const run = r.ctx.oscillators
+      .filter((o) => o.type === 'triangle')
+      .map((o) => o.frequencies[0]!);
+    expect(run.length).toBeGreaterThanOrEqual(7);
+    const first7 = run.slice(0, 7);
+    for (let i = 1; i < 7; i++) expect(first7[i]!).toBeGreaterThan(first7[i - 1]!);
+    // Major scale steps: whole, whole, half, whole, whole, whole (in semitones).
+    const semis = first7.slice(1).map((f, i) => Math.round(12 * Math.log2(f / first7[i]!)));
+    expect(semis).toEqual([2, 2, 1, 2, 2, 2]);
+  });
+
+  describe('U8: pops, whizzes and sparkles in every style', () => {
+    const notes = (style: FeedbackStyle, event: FeedbackEvent) => {
+      const r = render(style, event);
+      return r.ctx.oscillators.length + r.ctx.noises.length;
+    };
+    /** The same event with U8's layers stripped: what the pack played before U8. */
+    const base = (style: FeedbackStyle, event: FeedbackEvent) => {
+      const ctx = createFakeAudioContext('running');
+      (basePacks[style] as Record<string, SoundFn>)[event]!(ctx, ctx.createGain(), 0);
+      return ctx.oscillators.length + ctx.noises.length;
+    };
+
+    it.each(FEEDBACK_STYLES)('%s layers juice onto the big moments', (style) => {
+      for (const event of [
+        'correct',
+        'combo',
+        'setComplete',
+        'levelUp',
+        'rewardWobble',
+        'rewardOpen',
+        'rewardUnlock',
+      ] as const) {
+        expect(notes(style, event)).toBeGreaterThan(base(style, event));
+      }
+    });
+
+    it.each(FEEDBACK_STYLES)(
+      '%s: goal hit and level up whizz up, then pop in a cascade',
+      (style) => {
+        for (const event of ['goalHit', 'levelUp'] as const) {
+          const ctx = createFakeAudioContext('running');
+          stylePacks[style][event](ctx, ctx.createGain(), 0);
+          // Some sweep rises (an oscillator or noise filter whose pitch goes up over its note).
+          const sweeps = [
+            ...ctx.oscillators.map((o) => o.frequencies),
+            ...ctx.noises.map((n) => n.frequencies),
+          ].filter((f) => f.length > 1 && f[f.length - 1]! > f[0]! * 1.5);
+          expect(sweeps.length).toBeGreaterThan(0);
+          // A cascade: at least four separate onsets after the whizz.
+          const onsets = new Set(
+            [...ctx.oscillators, ...ctx.noises].map((o) => o.start!.toFixed(2)),
+          );
+          expect(onsets.size).toBeGreaterThanOrEqual(5);
+        }
+      },
+    );
+
+    it('the three-styles reveal gains a pop cascade but stays the same in every style', () => {
+      const sigs = new Set(FEEDBACK_STYLES.map((st) => render(st, 'stylesUnlocked').signature));
+      expect(sigs.size).toBe(1);
+      expect(notes(DEFAULT_STYLE, 'stylesUnlocked')).toBeGreaterThan(
+        base(DEFAULT_STYLE, 'stylesUnlocked'),
+      );
+    });
+
+    it('page transitions are a soft whoosh: quiet and short', () => {
+      for (const style of FEEDBACK_STYLES) {
+        const r = render(style, 'pageTransition');
+        expect(r.peak).toBeLessThanOrEqual(0.2);
+        expect(r.end).toBeLessThanOrEqual(0.3);
+      }
+    });
+
+    it('a prize pop climbs with the prize number, like a combo', () => {
+      expect(render('pop-burst', 'prizeBox', 1.5).first).toBeGreaterThan(
+        render('pop-burst', 'prizeBox', 1).first,
+      );
+    });
   });
 });

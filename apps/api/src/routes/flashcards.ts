@@ -245,7 +245,7 @@ export function flashcardRoutes({ db, clock, config }: LearnDeps) {
       cardsCounted: session.cardIds.length,
       rewardedLeftToday: await rewardedLeftToday(db, studentId, now),
       progress,
-      newlyEarned: await saveNewRewards(db, studentId, now),
+      newlyEarned: await saveNewRewards(db, studentId, now, { betaEndsAt: config.betaEndsAt }),
     });
   });
 

@@ -37,7 +37,21 @@ const SOUND_GAP_MS: Partial<Record<FeedbackEvent, number>> = {
   nodePop: 70,
   ringFill: 90,
   buttonPress: 40,
+  particleBurst: 60,
+  prizeBox: 50,
+  pageTransition: 150,
 };
+/** Events whose pitch climbs with `step`, a whole tone each. */
+const STEPPED: ReadonlySet<FeedbackEvent> = new Set(['combo', 'prizeBox']);
+/** Pop-like events that vary their pitch slightly each time, so repeats never sound robotic. */
+const WOBBLE: ReadonlySet<FeedbackEvent> = new Set([
+  'correct',
+  'particleBurst',
+  'nodeComplete',
+  'nodePop',
+]);
+/** Up to 3 percent either way. */
+const WOBBLE_AMOUNT = 0.06;
 const MAX_SOUNDS_PER_SECOND = 10;
 const BUZZ_GAP_MS = 100;
 const MAX_BUZZES_PER_SECOND = 4;
@@ -51,6 +65,8 @@ export interface FeedbackDeps {
   haptics: HapticsDriver;
   now: () => number;
   reducedMotion: () => boolean;
+  /** Returns [0, 1); used for the small pitch wobble on pops. Defaults to Math.random. */
+  random?: () => number;
 }
 
 /** Keeps times inside a rolling one-second window. */
@@ -71,6 +87,7 @@ export function createFeedback(deps: FeedbackDeps): Feedback {
   const sounds = window1s();
   const buzzes = window1s();
   let lastBuzz = -Infinity;
+  const random = deps.random ?? Math.random;
 
   function playSound(event: FeedbackEvent, options: EmitOptions): boolean {
     const settings = deps.settings();
@@ -81,7 +98,11 @@ export function createFeedback(deps: FeedbackDeps): Feedback {
     if (gap !== undefined && last !== undefined && now - last < gap) return false;
     if (sounds.count(now) >= MAX_SOUNDS_PER_SECOND) return false;
     const played = deps.engine.playSound(stylePacks[style][event], {
-      pitch: event === 'combo' ? comboPitch(options.step) : 1,
+      pitch: STEPPED.has(event)
+        ? comboPitch(options.step)
+        : WOBBLE.has(event)
+          ? 1 + (random() - 0.5) * WOBBLE_AMOUNT
+          : 1,
       gain: deps.reducedMotion() ? REDUCED_GAIN : 1,
       delay: options.delay,
     });

@@ -526,7 +526,7 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
       combo,
       comboBonusXp: comboBonus,
       ...(timed ? { shaky, ...help } : {}),
-      newlyEarned: await saveNewRewards(db, studentId, now),
+      newlyEarned: await saveNewRewards(db, studentId, now, { betaEndsAt: config.betaEndsAt }),
     };
     return c.json(response);
   });

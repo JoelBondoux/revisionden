@@ -1,6 +1,6 @@
 import { IDLE_GAP_MS, IDLE_STOP_MS, nextIdle } from './idle';
 
-// J15b (owner defaults, 2026-11-26): Pip acts about every 8 seconds, one action at a time, and stops
+// J15b (owner defaults, 2026-11-26), J15b-2 (Pip v3, smoother idle with no arm): Pip acts about every 8 seconds, one action at a time, and stops
 // after a minute without input. Outside study hours he naps. Never in a lesson or test, and with
 // reduced motion he holds a still pose.
 const base = {
@@ -22,7 +22,7 @@ describe("Pip's idle loop", () => {
 
   it('picks an action, never the same one twice in a row', () => {
     const first = nextIdle({ ...base, random: () => 0 });
-    expect(['blink', 'wave', 'stretch', 'read', 'timer']).toContain(first.pose);
+    expect(['blink', 'tilt', 'ears', 'look']).toContain(first.pose);
     const again = nextIdle({ ...base, last: first.pose, random: () => 0 });
     expect(again.pose).not.toBe(first.pose);
   });

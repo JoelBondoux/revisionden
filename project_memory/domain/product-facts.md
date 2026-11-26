@@ -250,8 +250,12 @@ Tags: #product #rules #limits #defaults
   topic"), weak spots, a friends-league chip marked Soon, and this week's days studied with the
   reward gift. Pip is a round "Home" button at the top left of every student screen and lesson; in
   a lesson or test he asks "Leave this lesson?" first. He acts about every 8 s, naps 21:00 to 07:00,
-  stops after 60 s without input, keeps still in lessons and with reduced motion. He wears one item
-  for the current subject (and a prop on Home) plus a unisex touch that rotates by day. The map's
+  stops after 60 s without input, keeps still in lessons and with reduced motion. He wears one item for the current subject
+  and holds its prop in front of his ring (Pip v3, J15b-2: bigger head leaning out of the ring,
+  shoulders only, no arm; Maths a calculator, English Literature a book; soft flag washes for
+  French, German and Spanish), plus one of three gently-leaning looks that rotates by day (never
+  tied to subject or student). "Leave this lesson?" is a true modal: the page behind is inert and
+  focus stays in it. The student's avatar on the Me item sits in its own ring, head leaning out. The map's
   Today strip moved to Home: the map is now topics only. Code: `apps/web/src/features/home/`,
   `apps/web/src/features/juice/pip/`; e2e `e2e/tests/home.spec.ts`.
 - Map layout (J12b, design C "Your path", owner choice 2026-11-26; Today strip moved to Home in
@@ -291,6 +295,9 @@ Tags: #product #rules #limits #defaults
   uses the card's interval, not its lateness). Parent stats show no backlog (API has `backlog`).
   An all-decks session is complete when today's offered cards are done, including a "10 more"
   batch (F11b, `flashcard_sessions.extra_cards`, migration 0032).
+- Lesson reactions (F13, for J14, owner 2026-11-26): `LessonPlayer` calls
+  `onAnswerReaction({ kind: 'right' | 'wrong' | 'helped' | 'goal', combo })` once per marked
+  answer (never for an unmarked one). F decides when; J decides how Pip and the avatar react.
 - Clues and help (F10, owner 2026-11-26): "Need a clue?" shows the verified hint (no penalty,
   no longer shown up front); then "Help me understand" steps through the verified worked
   solution. A right answer after help earns half XP (rounded down, owner), no combo, and is
@@ -796,11 +803,18 @@ Tags: #product #rules #limits #defaults
 - Original Web Audio sounds, no files. Header quick mute and Settings (on/off, volume, tap sounds
   off by default), per device; follows the iOS silent switch where possible. No correct/wrong
   sounds in Test mode before submit. Sound is never the only signal. Workstream U.
-- Style sounds and haptics (U6): every animation fires a feedback event (15: buttonPress, cardFlip,
+- Style sounds and haptics (U6): every animation fires a feedback event (21: buttonPress, cardFlip,
   correct, wrong, combo, xpTick, ringFill, rewardWobble, rewardOpen, rewardUnlock, setComplete,
-  levelUp, homeEnter, nodePop, locked) that plays the active effect style's synthesised sound plus a vibration. Packs: Doodle
+  levelUp, homeEnter, nodePop, locked, stylesUnlocked, and U8's goalHit, nodeComplete,
+  pageTransition, particleBurst, prizeBox) that plays the active effect style's synthesised sound plus a vibration. Packs: Doodle
   Diary (default, owner-approved 2026-11-26), then the unlockable Sticker Book, Pop Burst,
-  Starlight, Comic Pop, Garden Grow and Pixel Arcade (U6c); unknown styles use the default.
+  Starlight, Comic Pop, Garden Grow and Pixel Arcade (U6c), plus three unlocked together by the
+  starting test (U7, owner-approved 2026-11-26: Petal Glow `petal-glow`, Turbo Drive
+  `turbo-drive`, Rainbow Parade `rainbow-parade`, never labelled by gender). `stylesUnlocked` is one
+  special reveal sound, the same in every style, up to 3 s. U8 (owner: "more exciting sounds,
+  lots of pops & whizzes"): every style has pops, whizzes, sparkles and fizz in its own flavour,
+  layered on correct, combo, set complete, level up and the prize box, plus the five new events;
+  pops wobble up to ±3% in pitch (combos and prize pops climb exactly a whole tone per step); unknown styles use the default.
   Default is one value, `DEFAULT_STYLE` in `feedback/styles.ts`. Square waves
   only in Comic Pop and Pixel Arcade (low-passed at 2800 Hz); "wrong" soft in every style. Vibration switch on by
   default and independent of mute; no vibration on iPhone/iPad browsers (no Vibration API).
@@ -954,6 +968,11 @@ Tags: #product #rules #limits #defaults
 
 ## Titles (owner, 2026-11-25; built R8) and Get help (built, workstream W)
 
+- Founding Tester (R5, owner 2026-11-26): one-off badge and title ("Founding" + "Tester") for
+  students with an answer or completed flashcard session strictly before the 1.0 cut-off
+  `BETA_ENDS_AT` (Worker variable, UTC, unset in every environment until release; set in the 1.0
+  release step, `docs/ENVIRONMENTS.md`). Awarded automatically and once by the reward evaluator
+  (stat `foundingTester`); reward source `special`, shown only once earned. No new data.
 - Two-part titles (built R8): 120 first words and 120 last words, each unlocked by one reward
   (levels, chapters, milestones, collections, seasons, hidden tracks, secrets); a word has its
   reward's rarity. The 99 old single titles were migrated into words (their rewards now give a
@@ -972,7 +991,9 @@ Tags: #product #rules #limits #defaults
   league or their rewards, and also before any friendship ends: remove by the child or a parent,
   block, report, or a parent turning friends off; 8 weeks kept; wins counted in
   `students.league_wins` for the league rewards). A friendship is saved before its request is
-  marked started, so a failed save can be retried by approving again (FL4b): `docs/FRIENDS_LEAGUE.md`
+  marked started; starting is safe to repeat, and a request left with both approvals is finished
+  the next time the child or a parent opens Friends (FL4b, FL4c). A removal is never undone:
+  removing, blocking, reporting or turning friends off first declines the open requests (FL4d): `docs/FRIENDS_LEAGUE.md`
   (nickname, avatar, title and weekly learning XP only; one parent per family approves; no chat;
   10-friend cap; siblings join automatically; reports seen by both families' parents and AppDeck;
   rank chip on Home (was the Map until Home landed), League page under Me; head-to-head challenges later).
