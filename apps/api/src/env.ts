@@ -35,6 +35,8 @@ const envSchema = z
     AI_RATE_LIMITER: optionalRateLimiter,
     // Development only: also serve unverified (draft) content. Ignored in staging and production.
     SERVE_DRAFT_CONTENT: z.enum(['true', 'false']).optional(),
+    // Development only (J12c): testers may try every effect style. Ignored in staging and production.
+    STYLE_TESTER: z.enum(['true', 'false']).optional(),
     MATHS_ENGINE_URL: url.optional(),
     // Workstream H: all optional, so push and live AI stay off until their secrets are set.
     VAPID_PUBLIC_KEY: secret.optional(),
@@ -89,6 +91,8 @@ export interface AppConfig {
   passkeyRpId: string;
   /** Serve draft content as well as verified. Only ever true in development. */
   serveDraftContent: boolean;
+  /** Let testers try every effect style (J12c). Only ever true in development. */
+  styleTester?: boolean;
   /** Maths engine (services/maths) used to check worked maths answers. */
   mathsEngineUrl?: string;
   /** Web push; null until both VAPID keys are set. */
@@ -169,6 +173,7 @@ export function parseEnv(env: Record<string, unknown>): AppConfig & { raw: Worke
     aiGatewayUrl: e.AI_GATEWAY_URL,
     passkeyRpId: e.PASSKEY_RP_ID ?? new URL(e.WEB_ORIGIN).hostname,
     serveDraftContent: e.ENVIRONMENT === 'development' && e.SERVE_DRAFT_CONTENT === 'true',
+    styleTester: e.ENVIRONMENT === 'development' && e.STYLE_TESTER === 'true',
     ...(e.MATHS_ENGINE_URL ? { mathsEngineUrl: e.MATHS_ENGINE_URL } : {}),
     operatorEmails: (e.OPERATOR_EMAILS ?? '')
       .split(',')

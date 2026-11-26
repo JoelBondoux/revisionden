@@ -279,6 +279,11 @@ it. Set it in `apps/api/.dev.vars` to try the drafts locally; the app then shows
 "DRAFT CONTENT" banner. Load content into a database with
 `DATABASE_URL=... pnpm --filter @revisionden/api content:sync`.
 
+`STYLE_TESTER` (workstream J) works the same way: off unless `true`, and only when `ENVIRONMENT`
+is `development`. The dev Worker sets it so testers see "Tester: try any style" in Settings →
+Effect style (any effect style and theme, nothing unlocked for real); a config test fails if
+staging or production set it.
+
 Local `wrangler dev` uses the top-level values (`localhost:8787` API, `localhost:5173` web).
 The rate limiters use Cloudflare's Workers rate limiting binding; their `namespace_id` values are
 our own numbers, not account ids.

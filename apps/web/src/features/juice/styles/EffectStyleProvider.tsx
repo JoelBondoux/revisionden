@@ -38,6 +38,21 @@ export interface EffectStyleApi {
   choose(id: EffectStyleId): void;
   /** Checks the server again for styles earned since the last check (the picker calls it). */
   refresh(): void;
+  /**
+   * The dev environment's style tester (J12c), or null anywhere else. Only the API turns it on
+   * (it sends `testerStyles` in development only), so a stray build cannot show it. Trying a style
+   * unlocks nothing; it is remembered apart from the real choice until reset.
+   */
+  tester: StyleTester | null;
+}
+
+export interface StyleTester {
+  /** Every style, Doodle Diary first. */
+  styles: readonly EffectStyleId[];
+  /** The style being tried, or null for the real choice. */
+  trying: EffectStyleId | null;
+  tryStyle(id: EffectStyleId): void;
+  reset(): void;
 }
 
 const fallback: EffectStyleApi = {
@@ -46,11 +61,42 @@ const fallback: EffectStyleApi = {
   unlocked: [DEFAULT_EFFECT_STYLE],
   choose: () => undefined,
   refresh: () => undefined,
+  tester: null,
 };
+
+/** Where this device remembers the style a tester is trying (J12c), apart from the real choice. */
+export const STYLE_TESTER_KEY = 'revisionden.effectStyleTester';
+
+/** What the server says about effect styles; tests may pass just the unlocked list. */
+export type EffectStyleAccess = { unlocked: readonly string[]; testerStyles?: readonly string[] };
+
+const isStyleList = (value: readonly string[] | EffectStyleAccess): value is readonly string[] =>
+  Array.isArray(value);
+
+function loadTrying(storage: StyleStorage | null): EffectStyleId | null {
+  try {
+    const saved = storage?.getItem(STYLE_TESTER_KEY);
+    return isEffectStyleId(saved) ? saved : null;
+  } catch {
+    return null;
+  }
+}
+
+function saveTrying(
+  storage: (StyleStorage & { removeItem?(key: string): void }) | null,
+  id: EffectStyleId | null,
+) {
+  try {
+    if (id) storage?.setItem(STYLE_TESTER_KEY, id);
+    else storage?.removeItem?.(STYLE_TESTER_KEY);
+  } catch {
+    // Private browsing or blocked site data: keep going without saving.
+  }
+}
 
 const EffectStyleContext = createContext<EffectStyleApi>(fallback);
 
-function deviceStorage(): StyleStorage | null {
+function deviceStorage(): (StyleStorage & { removeItem?(key: string): void }) | null {
   try {
     return window.localStorage;
   } catch {
@@ -67,7 +113,7 @@ export function EffectStyleProvider({
 }: {
   children: ReactNode;
   /** Loads the signed-in student's unlocked styles (tests pass their own). */
-  loadUnlocked?: () => Promise<readonly string[]>;
+  loadUnlocked?: () => Promise<readonly string[] | EffectStyleAccess>;
   /** True on screens that must make no API calls (Get help): nothing is loaded while quiet. */
   quiet?: boolean;
   /** Changes with each screen; a load that failed (say, before unlocking) is tried again. */
@@ -76,6 +122,8 @@ export function EffectStyleProvider({
   const { studentId } = useStudent();
   const [saved, setSaved] = useState<EffectStyleId>(() => loadEffectStyle(deviceStorage()));
   const [earned, setEarned] = useState<readonly EffectStyleId[]>([]);
+  const [testerStyles, setTesterStyles] = useState<readonly EffectStyleId[] | null>(null);
+  const [trying, setTrying] = useState<EffectStyleId | null>(() => loadTrying(deviceStorage()));
   // Which student the last load was for, whether it worked, and whether one is in flight.
   const status = useRef<{ for: string | null; ok: boolean; busy: boolean }>({
     for: null,
@@ -88,10 +136,12 @@ export function EffectStyleProvider({
     const forStudent = studentId;
     status.current = { for: forStudent, ok: false, busy: true };
     loadUnlocked()
-      .then((ids) => {
+      .then((result) => {
         if (status.current.for !== forStudent) return;
         status.current = { for: forStudent, ok: true, busy: false };
-        setEarned(ids.filter(isEffectStyleId));
+        const access: EffectStyleAccess = isStyleList(result) ? { unlocked: result } : result;
+        setEarned(access.unlocked.filter(isEffectStyleId));
+        setTesterStyles(access.testerStyles ? access.testerStyles.filter(isEffectStyleId) : null);
       })
       .catch(() => {
         if (status.current.for === forStudent) status.current.busy = false;
@@ -102,6 +152,7 @@ export function EffectStyleProvider({
   useEffect(() => {
     if (status.current.for === studentId) return;
     setEarned([]);
+    setTesterStyles(null);
     status.current = { for: studentId, ok: false, busy: false };
   }, [studentId]);
 
@@ -113,7 +164,12 @@ export function EffectStyleProvider({
     () => [DEFAULT_EFFECT_STYLE, ...earned.filter((id) => id !== DEFAULT_EFFECT_STYLE)],
     [earned],
   );
-  const styleId = chooseEffectStyle(saved, unlocked);
+  // A style being tried counts only while the server says this is the dev environment.
+  const testing =
+    testerStyles && trying && (trying === DEFAULT_EFFECT_STYLE || testerStyles.includes(trying))
+      ? trying
+      : null;
+  const styleId = testing ?? chooseEffectStyle(saved, unlocked);
 
   useEffect(() => {
     applyEffectStyle(document.documentElement, styleId);
@@ -126,9 +182,33 @@ export function EffectStyleProvider({
     saveEffectStyle(deviceStorage(), id);
   }, []);
 
+  const tryStyle = useCallback((id: EffectStyleId) => {
+    setTrying(id);
+    saveTrying(deviceStorage(), id);
+  }, []);
+  const resetTrying = useCallback(() => {
+    setTrying(null);
+    saveTrying(deviceStorage(), null);
+  }, []);
+  const tester = useMemo<StyleTester | null>(
+    () =>
+      testerStyles
+        ? {
+            styles: [
+              DEFAULT_EFFECT_STYLE,
+              ...testerStyles.filter((id) => id !== DEFAULT_EFFECT_STYLE),
+            ],
+            trying: testing,
+            tryStyle,
+            reset: resetTrying,
+          }
+        : null,
+    [testerStyles, testing, tryStyle, resetTrying],
+  );
+
   const value = useMemo(
-    () => ({ style: EFFECT_STYLES[styleId], styleId, unlocked, choose, refresh: load }),
-    [styleId, unlocked, choose, load],
+    () => ({ style: EFFECT_STYLES[styleId], styleId, unlocked, choose, refresh: load, tester }),
+    [styleId, unlocked, choose, load, tester],
   );
   return <EffectStyleContext.Provider value={value}>{children}</EffectStyleContext.Provider>;
 }

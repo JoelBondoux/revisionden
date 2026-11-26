@@ -817,6 +817,14 @@ Tags: #product #rules #limits #defaults
   the app's base skin for every shared component, body text stays Nunito (the hand font is for
   headings only), and the unlockable styles change effects, sounds and accents only. Mockups in
   `docs/design/j12/SKIN.md`.
+- Dev style tester (J12c, owner request 2026-11-26): on the dev environment only, Settings →
+  Effect style offers "Tester: try any style" (all seven styles, Light/Dark, Standard/Colour-blind)
+  marked "Dev only: doesn't unlock anything for real". Turned on by the API alone: `testerStyles`
+  in `GET /v1/student/rewards/effect-styles` only when `ENVIRONMENT=development` and
+  `STYLE_TESTER=true` (dev env in `apps/api/wrangler.toml`; never staging or production, config
+  tested). The tried style is saved on the device as `revisionden.effectStyleTester`, separate from
+  the real choice, ignored unless the server sends the list, and cleared by "Reset to my unlocked
+  style". It grants no reward and changes no unlock.
 
 ## Exam practice (planned)
 
