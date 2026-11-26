@@ -47,7 +47,8 @@ export interface LearnApi {
   getDeck(topicId: string): Promise<Flashcard[]>;
   /** Starts a review session: deck XP is paid per completed session (F3). */
   /** Starts a review session; with a topic id, for that one deck. */
-  startFlashcardSession(topicId?: string): Promise<FlashcardSession>;
+  /** `extra`: the "10 more" cards asked for today (F11b), so finishing them completes it. */
+  startFlashcardSession(topicId?: string, extra?: number): Promise<FlashcardSession>;
   reviewFlashcard(
     id: string,
     rating: FlashcardRating,
@@ -99,8 +100,11 @@ export function createLearnApi({
     getFlashcards: (extra) =>
       request(extra ? `flashcards?extra=${extra}` : 'flashcards', FlashcardsOverviewSchema),
     getDeck: (topicId) => request(`flashcards/decks/${enc(topicId)}`, FlashcardSchema.array()),
-    startFlashcardSession: (topicId) =>
-      request('flashcards/sessions', FlashcardSessionSchema, topicId ? { topicId } : {}),
+    startFlashcardSession: (topicId, extra) =>
+      request('flashcards/sessions', FlashcardSessionSchema, {
+        ...(topicId ? { topicId } : {}),
+        ...(extra ? { extra } : {}),
+      }),
     reviewFlashcard: (id, rating, sessionId) =>
       request(`flashcards/${enc(id)}/review`, FlashcardReviewResponseSchema, {
         rating,

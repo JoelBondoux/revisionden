@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Fixed: finishing the "10 more" flashcards now counts as a finished session and earns its XP, instead of saying you left early.
 - Friends league (while it's being tried in development): topping your league for a week now earns the league rewards, and the league page cheers last week's result.
 - A new friends league, off until a parent turns it on. Children add friends with a one-time code shared in person, and a parent in each family approves. You see this week's league from Me, or from "You're 2nd this week" on Home. Friends only ever see a nickname, avatar, title and this week's XP, with no chat. Parents manage friends from the child's card.
 - Fixed: typed working questions no longer get stuck on "Couldn't check that answer" while we can't mark them. They're left out for now, and if one is already on screen it says it's skipped, with no XP lost, and Continue moves on.
@@ -150,6 +151,9 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- F11b (Codex review on train #311): an all-decks flashcard session is complete when today's offered cards are done, the daily 20 plus any "10 more", not the whole backlog. `POST /flashcards/sessions` takes `extra`, stored in `flashcard_sessions.extra_cards` (migration 0032); finish compares with `todaysCards(…, extraCards)`. The web app sends the extra it asked for.
+
+- Docs: migration order rule in `docs/ARCHITECTURE.md` (land in number order, regenerate the journal `when` after merging `dev`), after a near-miss where a later-numbered migration could have made the deploy skip two earlier ones.
 - Typed working without the maths engine (F12, bug RD-JE5DWP): with no `MATHS_ENGINE_URL`, `selectableItem` leaves `worked_maths` out of lessons, warm-ups, similar/easier/confidence picks, the daily set (stored sets too), recall and the starting test. An answer to one anyway returns `{ unmarked: true, itemId }` (`UnmarkedAttemptResponseSchema`, `LearnAttemptResultSchema`) instead of a 503 and saves nothing; the lesson says it is skipped and Continue moves on. Answers are still accepted through `servableItem`.
 - F10b (Codex review on train #303): dashboards now count a helped answer as wrong for mastery like the topic map (`StatsAnswer.helped`, loaded in `stats/load.ts`; accuracy keeps the raw score); help that arrives after the pupil has moved on no longer marks the next question as helped (`HelpPanel` ignores it once unmounted); and `x^(a+b)^2` keeps its brackets when raised again, so it no longer shows as x to the power a+b².
 

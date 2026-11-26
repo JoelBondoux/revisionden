@@ -184,7 +184,7 @@ export function flashcardRoutes({ db, clock, config }: LearnDeps) {
   app.post('/sessions', async (c) => {
     const studentId = c.var.student.studentId;
     const now = clock.now();
-    const { topicId } = c.req.header('content-type')?.includes('json')
+    const { topicId, extra } = c.req.header('content-type')?.includes('json')
       ? await readJson(c, FlashcardSessionRequestSchema)
       : {};
     if (topicId) {
@@ -197,7 +197,7 @@ export function flashcardRoutes({ db, clock, config }: LearnDeps) {
     }
     const [session] = await db
       .insert(flashcardSessions)
-      .values({ studentId, startedAt: now, topicId: topicId ?? null })
+      .values({ studentId, startedAt: now, topicId: topicId ?? null, extraCards: extra ?? 0 })
       .returning({ id: flashcardSessions.id });
     return c.json(
       {
@@ -220,10 +220,14 @@ export function flashcardRoutes({ db, clock, config }: LearnDeps) {
       studentId,
       session.topicId ? eq(flashcards.topicId, session.topicId) : undefined,
     );
-    const dueLeft = dueCards(
-      loaded.map((l) => toCard(l.card)),
-      now.getTime(),
-    ).length;
+    // An all-decks session is complete when today's offered cards are done: the daily 20 plus
+    // any "10 more" (F11b), not the whole backlog, which rolls over to tomorrow.
+    const dueLeft = session.topicId
+      ? dueCards(
+          loaded.map((l) => toCard(l.card)),
+          now.getTime(),
+        ).length
+      : (await todaysCards(db, studentId, loaded, now, session.extraCards)).due.length;
     const outcome = sessionOutcome({
       cardsCounted: session.cardIds.length,
       dueLeft,

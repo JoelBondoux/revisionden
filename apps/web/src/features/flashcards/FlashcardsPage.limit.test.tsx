@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { server } from '../../mocks/server';
@@ -29,7 +29,15 @@ beforeEach(() =>
 describe('daily flashcard limit (F11)', () => {
   it('says "Done for today!" when today\'s cards are done, and offers 10 more', async () => {
     const asked: (string | null)[] = [];
+    const sessions: unknown[] = [];
     server.use(
+      http.post('*/v1/student/flashcards/sessions', async ({ request }) => {
+        sessions.push(await request.json());
+        return HttpResponse.json(
+          { id: card(99).id, maxCards: 20, minCards: 5, xp: 20, rewardedLeftToday: 2 },
+          { status: 201 },
+        );
+      }),
       http.get('*/v1/student/flashcards', ({ request }) => {
         const extra = new URL(request.url).searchParams.get('extra');
         asked.push(extra);
@@ -63,6 +71,8 @@ describe('daily flashcard limit (F11)', () => {
     await userEvent.click(screen.getByRole('button', { name: '10 more' }));
     expect(await screen.findByText('Limit front 1')).toBeInTheDocument();
     expect(asked).toContain('10');
+    // The session knows it is the "10 more" batch, so finishing it counts as complete (F11b).
+    await waitFor(() => expect(sessions).toEqual([{ extra: 10 }]));
   });
 
   it('has no "10 more" when nothing else is due', async () => {
