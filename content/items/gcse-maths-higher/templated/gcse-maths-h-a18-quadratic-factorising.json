@@ -7,14 +7,8 @@
     "learning_point": "gcse-maths-h-a18-lp-factorising",
     "expected_seconds": 60,
     "prompt": "Solve x^2 + 11x + 24 = 0",
-    "answer": {
-      "solutions": ["-3", "-8"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "x^2 + 11x + 24 = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["-3", "-8"] },
+    "verify": { "method": "solve", "equation": "x^2 + 11x + 24 = 0", "variable": "x" },
     "steps": ["x^2 + 11x + 24 = 0", "(x + 3)(x + 8) = 0", "x = -3 or x = -8"],
     "marks": 2,
     "mark_scheme": ["M1 for (x + 3)(x + 8)", "A1 for both x = -3 and x = -8"],
@@ -36,11 +30,7 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": {
-      "id": "gcse-maths-h-a18-quadratic-factorising",
-      "version": 2,
-      "seed": 1
-    },
+    "template": { "id": "gcse-maths-h-a18-quadratic-factorising", "version": 2, "seed": 1 },
     "verification": {
       "status": "draft",
       "version": 2,
@@ -60,6 +50,14 @@
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-26T05:15:59Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-26T05:16:38Z",
+          "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
     }
@@ -72,14 +70,8 @@
     "learning_point": "gcse-maths-h-a18-lp-factorising",
     "expected_seconds": 60,
     "prompt": "Solve x^2 - 8x + 15 = 0",
-    "answer": {
-      "solutions": ["5", "3"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "x^2 - 8x + 15 = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["5", "3"] },
+    "verify": { "method": "solve", "equation": "x^2 - 8x + 15 = 0", "variable": "x" },
     "steps": ["x^2 - 8x + 15 = 0", "(x - 5)(x - 3) = 0", "x = 5 or x = 3"],
     "marks": 2,
     "mark_scheme": ["M1 for (x - 5)(x - 3)", "A1 for both x = 5 and x = 3"],
@@ -101,11 +93,7 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": {
-      "id": "gcse-maths-h-a18-quadratic-factorising",
-      "version": 2,
-      "seed": 3
-    },
+    "template": { "id": "gcse-maths-h-a18-quadratic-factorising", "version": 2, "seed": 3 },
     "verification": {
       "status": "draft",
       "version": 2,
@@ -137,14 +125,8 @@
     "learning_point": "gcse-maths-h-a18-lp-factorising",
     "expected_seconds": 60,
     "prompt": "Solve x^2 - 6x - 16 = 0",
-    "answer": {
-      "solutions": ["8", "-2"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "x^2 - 6x - 16 = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["8", "-2"] },
+    "verify": { "method": "solve", "equation": "x^2 - 6x - 16 = 0", "variable": "x" },
     "steps": ["x^2 - 6x - 16 = 0", "(x - 8)(x + 2) = 0", "x = 8 or x = -2"],
     "marks": 2,
     "mark_scheme": ["M1 for (x - 8)(x + 2)", "A1 for both x = 8 and x = -2"],
@@ -166,11 +148,7 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": {
-      "id": "gcse-maths-h-a18-quadratic-factorising",
-      "version": 2,
-      "seed": 4
-    },
+    "template": { "id": "gcse-maths-h-a18-quadratic-factorising", "version": 2, "seed": 4 },
     "verification": {
       "status": "draft",
       "version": 2,
@@ -202,14 +180,8 @@
     "learning_point": "gcse-maths-h-a18-lp-factorising",
     "expected_seconds": 60,
     "prompt": "Solve x^2 + 7x - 18 = 0",
-    "answer": {
-      "solutions": ["2", "-9"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "x^2 + 7x - 18 = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["2", "-9"] },
+    "verify": { "method": "solve", "equation": "x^2 + 7x - 18 = 0", "variable": "x" },
     "steps": ["x^2 + 7x - 18 = 0", "(x - 2)(x + 9) = 0", "x = 2 or x = -9"],
     "marks": 2,
     "mark_scheme": ["M1 for (x - 2)(x + 9)", "A1 for both x = 2 and x = -9"],
@@ -231,11 +203,7 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": {
-      "id": "gcse-maths-h-a18-quadratic-factorising",
-      "version": 2,
-      "seed": 5
-    },
+    "template": { "id": "gcse-maths-h-a18-quadratic-factorising", "version": 2, "seed": 5 },
     "verification": {
       "status": "draft",
       "version": 2,
@@ -267,14 +235,8 @@
     "learning_point": "gcse-maths-h-a18-lp-factorising",
     "expected_seconds": 60,
     "prompt": "Solve x^2 - 6x + 5 = 0",
-    "answer": {
-      "solutions": ["5", "1"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "x^2 - 6x + 5 = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["5", "1"] },
+    "verify": { "method": "solve", "equation": "x^2 - 6x + 5 = 0", "variable": "x" },
     "steps": ["x^2 - 6x + 5 = 0", "(x - 5)(x - 1) = 0", "x = 5 or x = 1"],
     "marks": 2,
     "mark_scheme": ["M1 for (x - 5)(x - 1)", "A1 for both x = 5 and x = 1"],
@@ -296,11 +258,7 @@
         "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
       }
     ],
-    "template": {
-      "id": "gcse-maths-h-a18-quadratic-factorising",
-      "version": 2,
-      "seed": 6
-    },
+    "template": { "id": "gcse-maths-h-a18-quadratic-factorising", "version": 2, "seed": 6 },
     "verification": {
       "status": "draft",
       "version": 2,
