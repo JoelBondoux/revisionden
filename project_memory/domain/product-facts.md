@@ -297,6 +297,10 @@ Tags: #product #rules #limits #defaults
 - Diagrams are SVG drawn by code from verified data; no AI-generated or raster teaching images.
 - Items may carry `learning_point` (finer skill id; at least 3 items per learning point, for
   similar-question retries) and `expected_seconds` (5 to 900; slower than twice it is shaky).
+- Every item needs an "Explain" walkthrough (F7, #156; lead ruling for S3-N2, 2026-11-26): an
+  `explanation`, plus the working for a calculation (`steps` on worked_maths, otherwise written
+  out in the explanation, as the schema allows `steps` only on worked_maths). Rule in
+  `docs/CONTENT_RUN_1MA1.md`; validation does not enforce it yet.
 - Pilot: GCSE Maths Higher, Pearson Edexcel 1MA1 (content references N1 to S6). Every pilot
   citation has a verbatim quote from the 1MA1 specification Issue 2 (or, for the quadratic
   formula, the DfE subject content DFE-00233-2013), with page and SHA-256. All pilot content is

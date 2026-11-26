@@ -33,7 +33,7 @@ file's `verification.checks`.
 | `gcse-maths-h-n4-0001`  | multiple_choice | Ready (explanation arithmetic checked with SymPy)                                                                                                                                                                                                          |
 | `gcse-maths-h-a6-0001`  | extended_answer | Ready; needs individual approval. Exemplars (top 3, middle 2, low 1 marks) written from the mark scheme; blind marking matched all three                                                                                                                   |
 | `gcse-maths-h-g9-0001`  | short_answer    | Ready; needs individual approval. No official source defines a tangent, so it rests on the G9 spec point plus a standard definition under decision 0008 (owner, 2026-11-25)                                                                                |
-| `gcse-maths-h-a18-0002` | flashcard       | Ready (#111): `back_formula` added, so the blind answer is compared by the maths engine. Gemini gave "x = (-b +- sqrt(b^2 - 4*a*c)) / (2*a) where a != 0": same formula, condition stated. Review re-run: no problems                                      |
+| `gcse-maths-h-a18-0002` | flashcard       | Ready (#111): `back_formula` added, so the blind answer is compared by the maths engine. Gemini gave "x = (-b +- sqrt(b^2 - 4*a*c)) / (2\*a) where a != 0": same formula, condition stated. Review re-run: no problems                                     |
 
 **Decisions (settled by the owner, 2026-11-25)**
 
@@ -132,6 +132,13 @@ Short answers need only one written form: spaces, capitals, minus signs, × or *
 product, a sum, a list of values, x = 3, y = 2), and answer.units for units the answer may add
 (e.g. ["cm"]). Still list different forms of the value (√32 and 4√2, three and 3).
 Each interchangeable item goes through the pipeline on its own.
+Every item needs an "Explain" walkthrough (F7): an `explanation` of one to four short sentences
+that a Year 10 to 12 student can follow, saying why the answer is right. For a calculation, also
+give the working: `steps` on worked_maths (each line is checked by the maths engine); for
+numeric, short_answer and flashcard items, put the working in the explanation itself ("Brackets
+first: 8 - 2 = 6. ..."). Check every number in an explanation with exact arithmetic and say how
+in the grounded-writing note. Explanations go through the same pipeline as the rest of the item
+(the adversarial review reads them), and a standard fact they state follows decisions 0008 and 0009.
 
 Sources: only Pearson's own documents for 1MA1 (specification, sample assessment materials,
 past papers, mark schemes, examiner reports) and DfE or Ofqual. Get document URLs from the
