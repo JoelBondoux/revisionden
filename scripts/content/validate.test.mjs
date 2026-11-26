@@ -787,6 +787,38 @@ test('only a question that asks for the answer to be rounded needs answer roundi
   }
 });
 
+test('a question that asks for simplest form needs answer.simplest_form, and the other way round', async () => {
+  const fraction = (answer, prompt) => roundedItem(answer, prompt);
+  const asks = 'Write 0.375 as a fraction in its simplest form.';
+  assert.match(
+    messages(await validateItems(fraction({ value: '3/8' }, asks))),
+    /asks for simplest form: set answer\.simplest_form/,
+  );
+  assert.deepEqual(await validateItems(fraction({ value: '3/8', simplest_form: true }, asks)), []);
+  assert.match(
+    messages(await validateItems(fraction({ value: '3/8' }, 'Write 6/16 in its lowest terms.'))),
+    /asks for simplest form/,
+  );
+  assert.match(
+    messages(
+      await validateItems(fraction({ value: '3/8', simplest_form: true }, 'Work out 0.375.')),
+    ),
+    /simplest_form but the question does not ask for simplest form/,
+  );
+  assert.match(
+    messages(await validateItems(fraction({ value: '6/16', simplest_form: true }, asks))),
+    /answer\.value 6\/16 is not in its simplest form/,
+  );
+  assert.match(
+    messages(
+      await validateItems(
+        fraction({ value: '0.375', simplest_form: true, decimal_places: 3 }, asks),
+      ),
+    ),
+    /must NOT be valid|simplest form/,
+  );
+});
+
 test('rounding and the declared subject are sent to the maths engine', () => {
   const rounded = { ...numericItem, answer: { value: '28.3', significant_figures: 3 } };
   const rearrange = {

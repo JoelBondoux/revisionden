@@ -433,13 +433,20 @@
             },
             "subject": {
               "$ref": "#/$defs/answer_subject"
+            },
+            "simplest_form": {
+              "const": true,
+              "description": "The question asks for the answer in its simplest form: only a fraction in lowest terms (or a whole or mixed number) with the right value is right, so 69/99 is wrong for 23/33."
             }
           },
           "not": {
             "anyOf": [
               { "required": ["decimal_places", "significant_figures"] },
               { "required": ["tolerance", "decimal_places"] },
-              { "required": ["tolerance", "significant_figures"] }
+              { "required": ["tolerance", "significant_figures"] },
+              { "required": ["simplest_form", "tolerance"] },
+              { "required": ["simplest_form", "decimal_places"] },
+              { "required": ["simplest_form", "significant_figures"] }
             ]
           },
           "additionalProperties": false

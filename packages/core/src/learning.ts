@@ -16,6 +16,7 @@ import type { ItemType } from './schemas';
 import {
   meetsRounding,
   roundingOf,
+  simplestForm,
   standardForm,
   withoutSubject,
   withMinus,
@@ -102,6 +103,8 @@ export interface NumericKey extends Rounding {
   subject?: string;
   /** The answer's unit ("m", "cm^2", "pounds"): an answer may be typed with it. */
   unit?: string;
+  /** The question asks for simplest form: only a fraction in lowest terms is right, not 69/99. */
+  simplest_form?: boolean;
 }
 
 export function markNumeric(key: NumericKey, raw: unknown): MarkResult {
@@ -109,6 +112,7 @@ export function markNumeric(key: NumericKey, raw: unknown): MarkResult {
   const answer = withoutThousands(
     withoutUnit(withoutSubject(withMinus(raw), key.subject), key.unit),
   );
+  if (key.simplest_form && !simplestForm(answer)) return wrong;
   // An answer in standard form needs proper standard form (1 <= a < 10) back, not 64 × 10^7.
   const shown = standardForm(answer);
   if (standardForm(key.value) && !shown?.proper) return wrong;

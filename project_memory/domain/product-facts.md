@@ -357,6 +357,9 @@ Tags: #product #rules #limits #defaults
 - Numeric answers accept the unicode minus, mixed numbers (`1 1/3` = 4/3) and the item's own unit
   typed with the number (`15 m`, `£9600`, `100p`, `28.3 cm²`); a different unit is wrong (S2,
   rule in PRODUCT_RULES "Learning loop").
+- Numeric items whose question asks for simplest form set `answer.simplest_form: true`: only a
+  fraction in lowest terms (or a whole or mixed number) is right, so 69/99 is wrong for 23/33;
+  validation requires the flag (S2, rule in PRODUCT_RULES "Learning loop").
 - Numeric answers read standard form (`6.4 × 10^8`, `6.4x10⁸`, `6.4e8`) by value; a standard form
   answer key needs proper standard form back (1 ≤ a < 10), and the validator sends the engine the
   plain value (S2, rule in PRODUCT_RULES "Learning loop").

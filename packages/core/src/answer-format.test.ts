@@ -3,6 +3,7 @@ import {
   meetsRounding,
   roundingOf,
   shownPrecision,
+  simplestForm,
   standardForm,
   withoutSubject,
   withoutThousands,
@@ -172,5 +173,30 @@ describe('standard form', () => {
     expect(meetsRounding('6.4 × 10^8', '640000000', { significant_figures: 2 })).toBe(true);
     expect(meetsRounding('6.40 × 10^8', '640000000', { significant_figures: 2 })).toBe(false);
     expect(meetsRounding('6.4 × 10^-3', '0.0064', { decimal_places: 4 })).toBe(true);
+  });
+});
+
+describe('simplest form', () => {
+  it('accepts a whole number, a fraction in lowest terms or a mixed number with one', () => {
+    for (const text of ['23/33', '-23/33', '−23/33', '49/20', '2 9/20', '3', '-1 1/3', ' 3/8 ']) {
+      expect(simplestForm(text), text).toBe(true);
+    }
+  });
+
+  it('refuses an unsimplified fraction, a decimal or anything else', () => {
+    for (const text of [
+      '69/99',
+      '6/16',
+      '2 18/40',
+      '1 4/3',
+      '4/1',
+      '3/0',
+      '0.375',
+      '3 / 8.0',
+      'x/2',
+      '',
+    ]) {
+      expect(simplestForm(text), text).toBe(false);
+    }
   });
 });

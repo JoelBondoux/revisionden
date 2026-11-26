@@ -305,6 +305,11 @@ Product owner decision, 2026-11-25: **parent view only**.
   the unit as written (with `^2` or `²`), its words and symbols (`m` or `metres`, `£9600` or
   `9600 pounds` for pounds, `100p` for pence, `4 h` for hours). A different unit (`15 cm` when the
   unit is m) or a unit on an item without one stays wrong.
+- **Simplest form**: when a numeric item sets `answer.simplest_form` (the question says "simplest
+  form" or "lowest terms"), only a whole number, a fraction in lowest terms or a mixed number with
+  a proper fraction in lowest terms is right (`simplestForm` in
+  `packages/core/src/answer-format.ts`), so `69/99` and `0.697` are wrong for `23/33`, as in GCSE
+  marking. `49/20` and `2 9/20` are both right for `49/20`.
 - **Standard form** in numeric answers (`standardForm` in `packages/core/src/answer-format.ts`):
   `a × 10^n` with ×, x, X, \*, · or ⋅ as the multiply sign and `^n`, `^(n)` or superscript
   digits for the power, or e-notation (`6.4e8`), is read as its exact value. When the answer key is

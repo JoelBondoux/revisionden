@@ -164,6 +164,18 @@ test('a unicode minus in the blind answer is a minus', async () => {
   assert.equal((await blind(item, '1')).result, 'fail');
 });
 
+test('a simplest form answer must be in lowest terms, as marking does', async () => {
+  const item = draftItem('fixture-simplest', undefined, {
+    type: 'numeric',
+    prompt: 'Fixture? Give your answer as a fraction in its simplest form.',
+    answer: { value: '23/33', simplest_form: true },
+    verify: { expression: '23/33' },
+  });
+  assert.equal((await blind(item, '23/33')).result, 'pass');
+  assert.equal((await blind(item, '69/99')).result, 'fail');
+  assert.equal((await blind(item, '0.697')).result, 'fail');
+});
+
 test('the blind model is asked to round as the question says', () => {
   const { prompt } = blindAnswerPrompt(mc);
   assert.doesNotMatch(prompt, /accuracy the question asks/);

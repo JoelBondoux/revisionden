@@ -4,7 +4,12 @@ import { join, relative } from 'node:path';
 import { createValidators } from './schemas.mjs';
 import { learnLinkErrors } from './learn-links.mjs';
 import { controlCharacters } from '../verify/record.mjs';
-import { roundingOf, showsRounding, standardForm } from '../../packages/core/src/answer-format.ts';
+import {
+  roundingOf,
+  showsRounding,
+  simplestForm,
+  standardForm,
+} from '../../packages/core/src/answer-format.ts';
 
 const FOLDERS = {
   subjects: 'subjects',
@@ -168,7 +173,8 @@ function linkErrors(content) {
     if (MATHS_TYPES.has(item.type) && !item.checked_by.includes('maths-engine')) {
       fail('checked_by must include maths-engine for maths items');
     }
-    if (item.type === 'numeric') roundingErrors(item).forEach(fail);
+    if (item.type === 'numeric')
+      [...roundingErrors(item), ...simplestFormErrors(item)].forEach(fail);
     if (item.type === 'worked_maths') {
       const wants = item.verify.method === 'solve' ? 'solutions' : 'expression';
       if (!(wants in item.answer))
@@ -206,6 +212,23 @@ function roundingErrors(item) {
         ? `${rounding.decimal_places} decimal places`
         : `${rounding.significant_figures} significant figures`;
     errors.push(`answer.value ${item.answer.value} is not written to ${how}`);
+  }
+  return errors;
+}
+
+const ASKS_FOR_SIMPLEST_FORM = /simplest form|lowest terms/i;
+
+/** A numeric answer in simplest form: the question asks for it, the answer says so, and is in it. */
+function simplestFormErrors(item) {
+  const asks = ASKS_FOR_SIMPLEST_FORM.test(item.prompt);
+  if (item.answer.simplest_form !== true) {
+    return asks ? ['the question asks for simplest form: set answer.simplest_form to true'] : [];
+  }
+  const errors = [];
+  if (!asks)
+    errors.push('answer sets simplest_form but the question does not ask for simplest form');
+  if (!simplestForm(item.answer.value)) {
+    errors.push(`answer.value ${item.answer.value} is not in its simplest form`);
   }
   return errors;
 }

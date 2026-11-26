@@ -206,6 +206,22 @@ describe('marking', () => {
     expect(markNumeric({ value: '4/3' }, '1 1/0').correct).toBe(false);
   });
 
+  it('needs a fraction in lowest terms when the question asks for simplest form', () => {
+    const key = { value: '23/33', simplest_form: true };
+    expect(markNumeric(key, '23/33').correct).toBe(true);
+    expect(markNumeric(key, '69/99').correct).toBe(false);
+    expect(markNumeric(key, '0.69696969').correct).toBe(false);
+    expect(markNumeric(key, '46/66').correct).toBe(false);
+    expect(markNumeric(key, '24/33').correct).toBe(false);
+    expect(markNumeric({ value: '23/33' }, '69/99').correct).toBe(true);
+    const improper = { value: '49/20', simplest_form: true };
+    expect(markNumeric(improper, '49/20').correct).toBe(true);
+    expect(markNumeric(improper, '2 9/20').correct).toBe(true);
+    expect(markNumeric(improper, '98/40').correct).toBe(false);
+    expect(markNumeric(improper, '2.45').correct).toBe(false);
+    expect(markNumeric({ value: '-1/6', simplest_form: true }, '−1/6').correct).toBe(true);
+  });
+
   it('does not divide by zero in a fraction answer', () => {
     expect(markNumeric({ value: '1' }, '1/0').correct).toBe(false);
   });

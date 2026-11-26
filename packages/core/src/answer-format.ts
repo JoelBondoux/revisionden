@@ -71,6 +71,24 @@ export function withoutUnit(text: string, unit: string | undefined): string {
   return text;
 }
 
+const gcd = (a: bigint, b: bigint): bigint => (b === 0n ? a : gcd(b, a % b));
+
+/**
+ * Whether `text` is in its simplest form, as GCSE marks "give your answer in its simplest form":
+ * a whole number, a fraction in lowest terms (23/33, 49/20) or a mixed number whose fraction is
+ * proper and in lowest terms (2 9/20). An unsimplified fraction (69/99), n/1 or a decimal is not.
+ */
+export function simplestForm(text: string): boolean {
+  const t = withMinus(text).trim();
+  if (/^-?\d+$/.test(t)) return true;
+  const m = /^-?(?:(\d+)\s+)?(\d+)\/(\d+)$/.exec(t);
+  if (!m) return false;
+  const top = BigInt(m[2]!);
+  const bottom = BigInt(m[3]!);
+  if (bottom < 2n || top === 0n || gcd(top, bottom) !== 1n) return false;
+  return m[1] === undefined || top < bottom;
+}
+
 // A UK thousands separator: a space (also thin or non-breaking) or a comma, between groups of
 // exactly three digits, and the same one throughout, as in "38 700" or "1,234,567.5".
 const GROUPED = /^-?\d{1,3}(?:([ \u00a0\u2009\u202f,])\d{3})(?:\1\d{3})*(?:\.\d+)?$/;
