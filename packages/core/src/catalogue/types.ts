@@ -93,6 +93,8 @@ export interface RewardStats {
   plannedWeeks: number;
   /** Perfect sets at feedback level 2 or above (Perfectionist). */
   perfectSetsLevel2: number;
+  /** 1 for a student who used RevisionDen before the 1.0 cut-off, once it has passed (R5). */
+  foundingTester: number;
 }
 
 export type StatKey = keyof RewardStats;
@@ -103,7 +105,15 @@ export const RARITIES: readonly Rarity[] = ['common', 'rare', 'epic', 'legendary
 export type TitlePart = 'first' | 'last';
 
 export type RewardSource =
-  'level' | 'chapter' | 'milestone' | 'collection' | 'season' | 'hidden' | 'secret';
+  | 'level'
+  | 'chapter'
+  | 'milestone'
+  | 'collection'
+  | 'season'
+  | 'hidden'
+  | 'secret'
+  /** One-off rewards shown only once earned, such as Founding Tester (R5). */
+  | 'special';
 
 /** What the student gets. Avatar items point at a layer item in AVATAR_CATALOGUE. */
 export type RewardItem =

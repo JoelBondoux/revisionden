@@ -6,6 +6,7 @@ import {
   type RewardCardResponse,
 } from '@revisionden/core';
 import { ParticleBurst } from '../juice';
+import { RewardBadge } from './badges';
 import { RarityPill, itemWords } from './parts';
 import './reveal.css';
 
@@ -26,6 +27,13 @@ export function rewardReason(id: string): string | null {
   if (!season) return null;
   const measure = season.measure === 'correctAnswers' ? 'right answers' : 'daily goal days';
   return `${target.atLeast} ${measure} in ${season.name}`;
+}
+
+/** The badge of a one-off special reward (R5), shown large as its moment; null otherwise. */
+function specialBadge(reward: RewardCardResponse): string | null {
+  if (REWARDS.find((r) => r.id === reward.id)?.source !== 'special') return null;
+  const badge = reward.items.find((i) => i.kind === 'badge');
+  return badge && badge.kind === 'badge' ? badge.id : null;
 }
 
 const BURSTS: ReadonlySet<RewardCardResponse['rarity']> = new Set(['epic', 'legendary']);
@@ -49,12 +57,21 @@ export function RewardReveal({ rewards }: { rewards: readonly RewardCardResponse
             {BURSTS.has(reward.rarity) && (
               <ParticleBurst count={reward.rarity === 'legendary' ? 24 : 16} />
             )}
+            {specialBadge(reward) && (
+              <RewardBadge id={specialBadge(reward)!} label={`${reward.name} badge`} size={112} />
+            )}
             <p className="reward-reveal__name">New: {reward.name}</p>
             <span className="reward-reveal__meta">
               <RarityPill rarity={reward.rarity} />
               <span>{itemWords(reward)}</span>
             </span>
             {reason && <p className="reward-reveal__why">For: {reason}</p>}
+            {specialBadge(reward) && (
+              <p className="reward-reveal__thanks">
+                Thank you for helping build RevisionDen before version 1.0. This one can never be
+                earned again.
+              </p>
+            )}
           </li>
         );
       })}
