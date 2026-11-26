@@ -110,9 +110,10 @@ test('adds a friend: show my code, type a code, check who it is, then wait for p
   await expect(page.getByText(/a parent in each family needs to say yes/)).toBeVisible();
 });
 
-test('the map still fits one screen with the league chip in its header', async ({ page }) => {
+test('Home still fits one screen with the league chip in place of "Soon"', async ({ page }) => {
   await serveLeague(page);
   await page.route('**/v1/student/map**', (route) => route.fulfill({ json: topicMap }));
+  await page.route('**/v1/student/cards/due', (route) => route.fulfill({ json: { due: 3 } }));
   await page.route('**/v1/student/daily', (route) =>
     route.fulfill({
       json: {
@@ -120,18 +121,51 @@ test('the map still fits one screen with the league chip in its header', async (
         items: [],
         draftContent: false,
         answeredItemIds: [],
-        answered: 0,
+        answered: 1,
         total: 2,
         done: false,
       },
     }),
   );
-  await page.route('**/v1/student/cards/due', (route) => route.fulfill({ json: { due: 0 } }));
-  await page.goto('/map');
+  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  await page.route('**/v1/student/stats**', (route) =>
+    route.fulfill({
+      json: {
+        period: 'week',
+        range: { start: '2026-11-23', end: '2026-11-30', label: 'Week of 23 Nov' },
+        tiles: {
+          xp: { value: 95, previous: 80 },
+          answered: { value: 14, correct: 11, previous: 16 },
+          accuracy: { value: 79, previous: 79 },
+          streak: { current: 3 },
+        },
+        chart: {
+          buckets: days.map((label, i) => ({
+            start: `2026-11-${23 + i}`,
+            label,
+            value: [60, 35, 0, 40, 0, 0, 0][i],
+          })),
+          goal: 50,
+        },
+        mastery: [],
+        personalBests: { longestStreak: 9, longestCorrectRun: 12, bestWeek: null },
+        targets: [],
+        level: { level: 7, xpIntoLevel: 120, xpForNextLevel: 300 },
+      },
+    }),
+  );
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/home');
   await expect(page.getByRole('link', { name: "You're 2nd this week" })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Start your 5-a-day' })).toBeVisible();
-  const nav = (await page.locator('.main-nav').boundingBox())!;
-  const card = (await page.locator('.unit-card').boundingBox())!;
-  expect(card.y + card.height).toBeLessThanOrEqual(nav.y);
+  await expect(page.getByText('Soon')).toHaveCount(0);
   await expect(page.getByRole('link', { name: /^Go:/ })).toBeInViewport({ ratio: 1 });
+  const nav = (await page.locator('.main-nav').boundingBox())!;
+  const week = (await page.getByRole('list', { name: 'This week' }).boundingBox())!;
+  expect(week.y + week.height).toBeLessThanOrEqual(nav.y);
+  expect(await page.evaluate(() => window.scrollY)).toBe(0);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    ),
+  ).toBeLessThanOrEqual(0);
 });

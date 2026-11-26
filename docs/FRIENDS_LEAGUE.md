@@ -223,7 +223,8 @@ New tables (one new migration):
 - **PR 2 (web):** `apps/web/src/features/league/`: the League page at `/league` (the table
   of up to 11 fits one phone screen, with "Add a friend" and "Friends" always in view; adding,
   friend actions, report reasons and "Hide me" sit in sheets), the self-contained rank chip
-  (`LeagueChip`, "You're 2nd this week") in the Map header, a "Friends league" tile on Me
+  (`LeagueChip`, "You're 2nd this week") on Home in place of "Friends league Soon" (it
+  moved from the Map header when J15b's Home landed, as the owner asked), a "Friends league" tile on Me
   (Settings), and the parent Friends page at `/parent/friends/:studentId` (from a "Friends" tile
   on the child's card in the parent home). Shared shapes: `packages/core/src/league-schemas.ts`.
   e2e: `e2e/tests/league.spec.ts`.

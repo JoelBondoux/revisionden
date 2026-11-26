@@ -467,6 +467,19 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
 - Implemented: `packages/core/src/mistakes.ts`, `apps/api/src/learning/mistakes.ts`, the attempts,
   lesson and daily routes, `apps/web/src/features/learn/LessonPlayer.tsx`. Migration 0026.
 
+## Typed working without the maths engine (F12, 2026-11-26)
+
+- Typed working (`worked_maths`) is marked by the maths engine (`MATHS_ENGINE_URL`). When no
+  engine is set up, students are never given typed working: lessons, warm-ups, similar, easier
+  and confidence questions, the 5-a-day (including a set already made today), recall and the
+  starting test all leave it out.
+- If one is answered anyway (a lesson loaded before), the answer is **unmarked**: the API returns
+  `{ unmarked: true, itemId }` and saves nothing, so there is no attempt, XP, streak, combo or
+  mastery change, and it is not counted as wrong. The lesson says "We can't mark typed working
+  right now, so this one's skipped. No XP lost." and Continue moves on.
+- Implemented in `selectableItem` and `markItem` (`apps/api/src/learning/items.ts`),
+  `UnmarkedAttemptResponseSchema` in core and `LessonPlayer.tsx`.
+
 ## Clues and help (F10, owner 2026-11-26)
 
 - **Need a clue?** shows the item's verified hint, with no penalty. It is offered only when a
@@ -1031,7 +1044,8 @@ Owner decisions, 2026-11-26. Full design: `docs/FRIENDS_LEAGUE.md`.
 - Implemented so far: `packages/core/src/league.ts`, `apps/api/src/routes/friends.ts`,
   `apps/api/src/routes/friends-league.ts`; migration 0030.
 - Screens: the League page at `/league` (from a "Friends league" tile on Me, and a rank chip
-  "You're 2nd this week" on the Map header, which moves to Home when that lands); the parent
+  "You're 2nd this week" on Home, in place of "Friends league Soon" where friends are
+  available; it moved from the Map header when Home landed); the parent
   Friends page at `/parent/friends/:studentId` (a "Friends" tile on the child's card). Code:
   `apps/web/src/features/league/`. Weekly wins and rewards come next.
 

@@ -11,8 +11,8 @@ export function isStudentApiPath(path: string | undefined): boolean {
   return /^(\/api)?\/v1\/student(\/|$)/.test(path ?? '');
 }
 
-/** Where the student goes after unlocking when there is nowhere better. */
-export const DEFAULT_STUDENT_PAGE = '/map';
+/** Where the student goes after unlocking when there is nowhere better: Home (J15b). */
+export const DEFAULT_STUDENT_PAGE = '/home';
 
 /** The unlock page, remembering where the student was. */
 export function unlockPath(returnTo?: string): string {
