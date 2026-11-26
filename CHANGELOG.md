@@ -144,6 +144,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- F10b (Codex review on train #303): dashboards now count a helped answer as wrong for mastery like the topic map (`StatsAnswer.helped`, loaded in `stats/load.ts`; accuracy keeps the raw score); help that arrives after the pupil has moved on no longer marks the next question as helped (`HelpPanel` ignores it once unmounted); and `x^(a+b)^2` keeps its brackets when raised again, so it no longer shows as x to the power a+b².
+
 - Topic map (J12d, owner feedback 2026-11-26): the Today strip shows "Goal smashed! <XP> XP" with a star once the daily goal is reached (the progress bar's value text says so too), and the sideways rows (`HScroller`) no longer centre the chosen item, which cut the item to its left mid-word: `map/hscroll.ts` `rowScrollTarget` moves only as far as needed and lines up on an item's edge (scroll padding now equals the gap; up to 40% extra space after the last item when needed). Unit and e2e tests.
 - S3-N-H: the eight N8 "Find k" (or "Find a") hints for surds and π now say to give the number in front of √ or π, so they no longer lead to answers like 36π that are marked wrong. Re-reviewed with the carry-out-the-steps rule.
 - S3-A-H hint check: a hint that gives a standard-form answer with a superscript power ("6.4 × 10⁸", "5.2 × 10⁻⁴") is now refused, as one written with `^` already was (`scripts/content/hint-check.mjs`). Run over all 510 hints: none caught.

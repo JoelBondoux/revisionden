@@ -271,7 +271,7 @@ Tags: #product #rules #limits #defaults
 - Clues and help (F10, owner 2026-11-26): "Need a clue?" shows the verified hint (no penalty,
   no longer shown up front); then "Help me understand" steps through the verified worked
   solution. A right answer after help earns half XP (rounded down, owner), no combo, and is
-  practised like a miss (mastery 0, review ladder, flashcard). Learn mode only.
+  practised like a miss (mastery 0 on the map and dashboards, review ladder, flashcard). Learn mode only.
   `attempts.helped` (migration 0029).
 - Powers (F9, owner 2026-11-26): shown as superscripts everywhere students see maths
   (`packages/core/src/powers.ts`, web `MathText`), with spoken words for screen readers; stored

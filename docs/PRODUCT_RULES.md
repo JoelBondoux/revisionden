@@ -478,9 +478,11 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
 - Both open in place under the question, so the answer box and Check stay on screen.
 - After help the student still has to answer: help is never a free answer. The answer is
   **helped**. A right helped answer earns half the usual XP, rounded down (owner), and never a
-  combo. It is practised like a miss: it counts as wrong for mastery, goes on the review ladder,
+  combo. It is practised like a miss: it counts as wrong for mastery (on the topic map and in the
+  parent and student dashboards, while accuracy keeps its real score), goes on the review ladder,
   becomes a flashcard, and can come back in the lesson. The feedback says "Correct, with help".
-  A clue on its own changes nothing.
+  A clue on its own changes nothing. Help that arrives after the pupil has moved on never marks
+  the next question as helped.
 - Learn mode only: there is no clue or help in Test mode or the starting test (the API refuses a
   helped Test mode answer).
 - Implemented in `packages/core/src/help.ts`, `GET /v1/student/learn/items/:id/help`,
@@ -490,7 +492,8 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
 
 - Powers are shown as superscripts wherever students see maths: x^2 is shown as x², 10^-3 as
   10⁻³, 10^(2 + 8) as 10²⁺⁸ (a raised bracket loses its brackets). Only the power is raised
-  (x^2y is x²y), and a^b^c is a to the power b^c, read right to left as in maths. This covers
+  (x^2y is x²y), and a^b^c is a to the power b^c, read right to left as in maths; a compound
+  power raised again keeps its brackets (x^(a+b)^2 shows (a+b)² raised). This covers
   prompts, options, units, flashcards (both faces and the card list), Explain steps, answers and
   explanations in feedback, hints, and the review batch screens. Stored content keeps its ^.
 - Screen readers hear the words from the read-aloud rules ("x squared", "to the power minus 3").
