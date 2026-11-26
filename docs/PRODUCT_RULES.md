@@ -514,6 +514,25 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   No free text written by the student is shown.
 - **Save as PDF**: made in the browser, nicknames only, nothing stored on the server.
 
+### Motion on the stats pages (K5, owner 2026-11-26)
+
+- Every stat tile number counts up from 0 to its value, and the bar charts and progress bars
+  grow in (bars from the baseline, progress bars from the left). About 700ms, ease-out, a
+  stagger of 60ms or less, the whole set within 1 second.
+- Each runs once, the first time it comes into view; never again on a re-render, refetch or
+  new period (switching Week, Term or Year shows the new values at once, with no second settle
+  sound). A value that changes later shows at once. On the parent dashboard each child's
+  dashboard animates once.
+- Reduced motion (the device setting; the app has no motion setting of its own): no animation,
+  final values at once. Printing (Save as PDF), even mid-count, shows the final numbers and
+  full bars.
+- Screen readers only ever get the final value (the moving digits are hidden from them), with
+  no live announcements. Digits use tabular figures and keep the final width, so nothing shifts,
+  and every frame is formatted like the final value (%, "1 h 20 min", "3 of 4").
+- Sound: the parent pages are silent. On the student's My stats, one soft "settle" sound and
+  vibration (`ringFill`, in the active sound pack, respecting mute) when the counts finish;
+  never per digit, and none with reduced motion.
+
 ### Rules for the numbers
 
 - **Active study time** counts time between answers in a session; a gap of more than 5 minutes
