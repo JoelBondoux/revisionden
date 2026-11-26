@@ -785,8 +785,9 @@ Tags: #product #rules #limits #defaults
   uses `--color-primary-edge` (#C4B5FF) for violet text; colour-blind right #1F6FD1 (blue), wrong
   #B34F00 (orange), checked by simulation (ΔE ≥ 20 for deuteranopia, protanopia, tritanopia) and
   4.5:1 contrast in all four combinations. Doodle tile `apps/web/src/design/doodle-scatter.svg` (original,
-  800px, 114 doodles scattered at random angles and sizes, generated from a fixed seed by
-  `doodleTile.ts`, used as a CSS mask at 7% ink; J8b), hidden with `prefers-contrast: more` and
+  1080px dense sticker sheet: 8 hero doodles, 368 medium and about 1,450 tiny fillers, tilted up
+  to 25°, 1.4px lines, about 28KB gzipped; generated from a fixed seed by `doodleTile.ts`, used as
+  a CSS mask at 7% ink; J8b), hidden with `prefers-contrast: more` and
   forced colours. The older 240px grid tile `doodles.svg` is kept only for the public site until it
   moves to the new tile.
   Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help keeps light colours in dark.

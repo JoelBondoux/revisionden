@@ -1,28 +1,31 @@
 /**
- * J8b: the background doodle tile, scattered "topsy-turvy" rather than in a grid.
+ * J8b: the background doodle tile, a dense hand-drawn sticker sheet (the WhatsApp-wallpaper
+ * technique, with our own motifs) rather than a grid.
  *
  * The tile is generated, not drawn by hand, from a fixed seed, so it is identical on every build
- * and can be tested. Points come from Poisson-disc sampling on a torus (no rows or columns, even
- * across the edges); each doodle gets its own angle, size and line weight; and anything that
- * crosses an edge is drawn again on the opposite side, so the repeat has no seams.
+ * and can be tested. A few big hero doodles go down first, then as many medium doodles as fit, then
+ * tiny fillers in the gaps; each is kept a few pixels clear of its neighbours, measured on a tile
+ * that wraps round at the edges. Doodles sit upright or tilted by up to 25 degrees, all in one
+ * thin line weight, and anything that crosses an edge is drawn again on the opposite side, so the
+ * repeat has no seams.
  *
  * The committed `doodle-scatter.svg` is this module's output: the test checks it, and
- * `UPDATE_DOODLES=1 vitest run src/design/doodleTile.test.ts` (in apps/web) rewrites it after a
- * change here.
+ * `UPDATE_DOODLES=1 npx vitest run src/design/doodleTile.test.ts` (in apps/web) rewrites it after
+ * a change here.
  */
 
 /** Width and height of the tile, in CSS pixels. */
-export const TILE_SIZE = 800;
+export const TILE_SIZE = 1080;
 /** The fixed seed the committed tile is made from. */
 export const DOODLE_SEED = 20261126;
-/** Smallest distance between two doodle centres, in pixels. */
-export const MIN_GAP = 60;
-/** Furthest any motif reaches from its centre at scale 1 (any rotation, line included). */
-export const BOUND = 27;
+/** Line weight as drawn, in pixels, the same for every doodle. */
+export const STROKE = 1.4;
+/** Clear space between neighbouring doodles, in pixels. */
+export const GAP = 4;
 
 /**
- * Our own line motifs (original art), each drawn round its centre in about a 36px box. The first
- * sixteen are the J8 tile's doodles, recentred; the rest are new. Stroke-only, no fill.
+ * Our own line motifs (original art), each drawn round its centre in about a 36px box (fillers in
+ * about 8px). Stroke-only, no fill. The first sixteen are the J8 tile's doodles, recentred.
  */
 export const MOTIFS: Readonly<Record<string, string>> = {
   // Pip, the fox
@@ -68,19 +71,83 @@ export const MOTIFS: Readonly<Record<string, string>> = {
   wave: '<path d="M-17 0c4-12 7-12 11 0s7 12 11 0 7-12 11 0"/>',
   tick: '<path d="M-12 0l8 8 16-18"/>',
   cap: '<path d="M-17-4 0-12 17-4 0 4zM-10-1v8c6 4 14 4 20 0v-8M14-3v10"/>',
+  magnet: '<path d="M-10-12v10a10 10 0 0 0 20 0v-10h-6v10a4 4 0 0 1-8 0v-10zM-10-6h6M4-6h6"/>',
+  paperclip: '<path d="M-4 14V-10a5 5 0 0 1 10 0v20a3 3 0 0 1-6 0V-8"/>',
+  protractor:
+    '<path d="M-16 8a16 16 0 0 1 32 0zM-8 8a8 8 0 0 1 16 0M0 8v-14M-11-3l3 3M11-3l-3 3"/>',
+  pie: '<circle r="13"/><path d="M0 0v-13M0 0l11 7"/>',
+  sun: '<circle r="6"/><path d="M0-15v4M0 11v4M-15 0h4M11 0h4M-10.6-10.6l2.8 2.8M7.8 7.8l2.8 2.8M-10.6 10.6l2.8-2.8M7.8-7.8l2.8-2.8"/>',
+  // Hero doodles: drawn in the same ~36px box with more detail, shown about three times larger.
+  foxReading:
+    '<g transform="translate(-11 -19) scale(.62)"><path d="M0 11 6 0l7 8h10l7-8 6 11-6 14-12 10L6 25z"/><path d="M10 15l4-2 2 3M26 15l-4-2-2 3M15 25h6l-3 3z"/></g><path d="M-17 4c6-3 12-3 17 1 5-4 11-4 17-1v13c-6-3-12-3-17 1-5-4-11-4-17-1zM0 5v13M-13 8h8M-13 11h7M-13 14h8M5 8h8M6 11h7M5 14h8"/>',
+  bookStack:
+    '<path d="M-15 8h30v8h-30zM-12 0h26v8h-26zM-16-8h28v8h-28zM-10 8v8M9 0v8M-12-8v8M-6 12h16M-6 4h14M-8-4h16"/><path d="M2-11c-4-4-9 0-6 4 2 3 4 3 6 2 2 1 4 1 6-2 3-4-2-8-6-4zM2-11c0-2 1-4 3-5"/>',
+  labBench:
+    '<path d="M-12-16h8M-10-16v8l-8 16a3 3 0 0 0 3 4h14a3 3 0 0 0 3-4l-8-16v-8M-16 4h14M8-14h8M10-14v24a2 2 0 0 0 4 0v-24M10 0h4M-19 18h38"/><circle cx="-6" cy="-12" r="1"/><circle cx="-4" cy="0" r="1.5"/><circle cx="-9" cy="-3" r="1"/>',
+  rocketTrip:
+    '<path d="M2-18c6 6 7 15 4 24h-8c-3-9-2-18 4-24zM-2 6l-6 6v-9M6 6l6 6v-9M2 10v6M-2 14l-2 4M6 14l2 4"/><circle cx="2" cy="-6" r="3"/><path d="M-16-12h0M-12 2h0M14-14h0M16 0h0M-15-4l2 2M12 10l2 2"/>',
+  globeStand:
+    '<circle cy="-4" r="13"/><path d="M-13-4h26M0-17c-7 7-7 19 0 26M0-17c7 7 7 19 0 26M-11-11h22M-11 3h22M-16-4a16 16 0 0 0 26 12M0 12v5M-8 18h16"/>',
+  bigCalculator:
+    '<path d="M-13-17h26v34h-26zM-9-13H9v8H-9zM-7-8h4"/><path d="M-7 0h2M-1 0h2M5 0h2M-7 5h2M-1 5h2M5 5h2M-7 10h2M-1 10h2M5 10v4M-7 14h8"/>',
+  ringedPlanet:
+    '<circle r="11"/><path d="M-19 5c-5 6 4 7 19 1s23-14 18-18c-2-2-7-1-12 1M-5-6a6 6 0 0 1 6-3"/><circle cx="16" cy="-14" r="2"/><path d="M-16-14v4M-18-12h4"/>',
+  trophyCup:
+    '<path d="M-9-16H9v9c0 7-4 12-9 12s-9-5-9-12zM-9-12h-6c0 6 3 10 7 10M9-12h6c0 6-3 10-7 10M0 5v6M-8 17H8v-6H-8zM-3-10l3-3 3 3M0-13v9"/>',
+  // Fillers: tiny shapes that plug the gaps, drawn in about an 8px box.
+  dot: '<circle r=".8"/>',
+  ring: '<circle r="2.6"/>',
+  sparkle: '<path d="M0-4.5C0-1 1 0 4.5 0 1 0 0 1 0 4.5 0 1-1 0-4.5 0-1 0 0-1 0-4.5z"/>',
+  plus: '<path d="M0-3v6M-3 0h6"/>',
+  tinyStar: '<path d="M0-4l1.2 2.6 2.8.3-2.1 1.9.6 2.8L0 2.2-2.5 3.6l.6-2.8L-4-1.1l2.8-.3z"/>',
+  dash: '<path d="M-3 0h6"/>',
+  triangle: '<path d="M0-3 3 2.5h-6z"/>',
 };
 
-/** One doodle on the tile: which motif, where its centre is, and how it is turned and drawn. */
+/** Motifs used as big hero doodles. */
+export const HEROES: readonly string[] = [
+  'foxReading',
+  'bookStack',
+  'labBench',
+  'rocketTrip',
+  'globeStand',
+  'bigCalculator',
+  'ringedPlanet',
+  'trophyCup',
+];
+/** Motifs used as tiny fillers. */
+export const FILLERS: readonly string[] = [
+  'dot',
+  'ring',
+  'sparkle',
+  'plus',
+  'tinyStar',
+  'dash',
+  'triangle',
+];
+/** Everything else is a medium doodle. */
+const MEDIUMS = Object.keys(MOTIFS).filter((m) => !HEROES.includes(m) && !FILLERS.includes(m));
+
+/** One doodle on the tile: which motif, its size tier, where its centre is, and how it is turned. */
 export interface Placement {
   readonly motif: string;
+  readonly tier: 'hero' | 'medium' | 'filler';
   readonly x: number;
   readonly y: number;
-  /** Degrees, 0 to under 360. */
+  /** Degrees: -25 to 25 for heroes and medium doodles, any angle for fillers. */
   readonly rotate: number;
-  /** 0.6 to 1.4 times the motif's own size. */
+  /** Times the motif's own size. */
   readonly scale: number;
-  /** Line weight as drawn, in pixels (1.2 to 2.2), whatever the scale. */
-  readonly stroke: number;
+}
+
+/** How far a doodle's drawing reaches from its centre (the circle kept clear of others). */
+export function radius(p: Pick<Placement, 'tier' | 'scale'>): number {
+  return (p.tier === 'filler' ? 4.5 : 18) * p.scale;
+}
+
+/** How far past an edge a doodle can poke out (corners included), so it is drawn again there. */
+export function reach(p: Pick<Placement, 'tier' | 'scale'>): number {
+  return radius(p) * 1.4 + STROKE;
 }
 
 /** A small seeded random number generator (mulberry32): numbers from 0 up to 1. */
@@ -100,68 +167,6 @@ const round = (n: number, places: number) => {
   return Math.round(n * f) / f;
 };
 
-/**
- * Poisson-disc points (Bridson's method) on a square that wraps round at its edges, so no two
- * points are closer than `gap`, even across an edge. Coordinates are rounded to 0.1px.
- */
-export function scatter(
-  random: () => number,
-  size: number,
-  gap: number,
-  attempts = 30,
-): { x: number; y: number }[] {
-  const cell = gap / Math.SQRT2;
-  const cells = Math.floor(size / cell);
-  const cellSize = size / cells;
-  const grid: (number | undefined)[] = new Array(cells * cells);
-  const points: { x: number; y: number }[] = [];
-  const wrap = (v: number) => ((v % size) + size) % size;
-  const cellOf = (v: number) => Math.min(cells - 1, Math.floor(v / cellSize));
-
-  const fits = (x: number, y: number) => {
-    const cx = cellOf(x);
-    const cy = cellOf(y);
-    for (let dy = -2; dy <= 2; dy++) {
-      for (let dx = -2; dx <= 2; dx++) {
-        const i = grid[((cy + dy + cells) % cells) * cells + ((cx + dx + cells) % cells)];
-        if (i === undefined) continue;
-        const p = points[i]!;
-        const ox = Math.min(Math.abs(p.x - x), size - Math.abs(p.x - x));
-        const oy = Math.min(Math.abs(p.y - y), size - Math.abs(p.y - y));
-        if (Math.hypot(ox, oy) < gap) return false;
-      }
-    }
-    return true;
-  };
-
-  const add = (x: number, y: number) => {
-    grid[cellOf(y) * cells + cellOf(x)] = points.length;
-    points.push({ x, y });
-  };
-
-  add(round(random() * size, 1) % size, round(random() * size, 1) % size);
-  const active = [0];
-  while (active.length > 0) {
-    const pick = Math.floor(random() * active.length);
-    const from = points[active[pick]!]!;
-    let placed = false;
-    for (let k = 0; k < attempts; k++) {
-      const angle = random() * Math.PI * 2;
-      const distance = gap * (1 + random());
-      const x = round(wrap(from.x + Math.cos(angle) * distance), 1) % size;
-      const y = round(wrap(from.y + Math.sin(angle) * distance), 1) % size;
-      if (fits(x, y)) {
-        add(x, y);
-        active.push(points.length - 1);
-        placed = true;
-        break;
-      }
-    }
-    if (!placed) active.splice(pick, 1);
-  }
-  return points;
-}
-
 /** Shuffles a copy of a list with the given randomness (Fisher–Yates). */
 function shuffled<T>(items: readonly T[], random: () => number): T[] {
   const out = [...items];
@@ -172,21 +177,98 @@ function shuffled<T>(items: readonly T[], random: () => number): T[] {
   return out;
 }
 
-/** Scatters the doodles for a seed: every motif used, as evenly as the count allows. */
+interface Tier {
+  readonly tier: Placement['tier'];
+  readonly motifs: readonly string[];
+  readonly scale: readonly [number, number];
+  readonly tilt: number;
+  /** Extra space kept round this tier, on top of GAP (spreads the heroes out). */
+  readonly spread: number;
+  /** Stop after this many misses in a row (or at `max` doodles). */
+  readonly misses: number;
+  readonly max: number;
+}
+
+const TIERS: readonly Tier[] = [
+  { tier: 'hero', motifs: HEROES, scale: [2.9, 3.4], tilt: 18, spread: 160, misses: 4000, max: 8 },
+  {
+    tier: 'medium',
+    motifs: MEDIUMS,
+    scale: [0.95, 1.35],
+    tilt: 25,
+    spread: 0,
+    misses: 6000,
+    max: 2000,
+  },
+  {
+    tier: 'filler',
+    motifs: FILLERS,
+    scale: [0.8, 1.2],
+    tilt: 180,
+    spread: 0,
+    misses: 8000,
+    max: 4000,
+  },
+];
+
+/** Packs the doodles for a seed: heroes, then medium doodles, then fillers, every one kept clear. */
 export function placeDoodles(seed: number = DOODLE_SEED): Placement[] {
   const random = seededRandom(seed);
-  const points = scatter(random, TILE_SIZE, MIN_GAP);
-  const names = Object.keys(MOTIFS);
-  const deck: string[] = [];
-  while (deck.length < points.length) deck.push(...shuffled(names, random));
-  return points.map((p, i) => ({
-    motif: deck[i]!,
-    x: p.x,
-    y: p.y,
-    rotate: round(random() * 359.9, 1),
-    scale: round(0.6 + random() * 0.8, 2),
-    stroke: round(1.2 + random() * 1, 1),
-  }));
+  const placed: Placement[] = [];
+  const cell = 64;
+  const cells = Math.floor(TILE_SIZE / cell);
+  const cellSize = TILE_SIZE / cells;
+  const grid: Placement[][] = Array.from({ length: cells * cells }, () => []);
+  const heroes: Placement[] = [];
+  const cellOf = (v: number) => Math.min(cells - 1, Math.floor(v / cellSize));
+  const clear = (c: Placement, spread: number) => {
+    const fits = (p: Placement) => {
+      const dx = Math.min(Math.abs(p.x - c.x), TILE_SIZE - Math.abs(p.x - c.x));
+      const dy = Math.min(Math.abs(p.y - c.y), TILE_SIZE - Math.abs(p.y - c.y));
+      const need =
+        radius(p) + radius(c) + GAP + (p.tier === 'hero' && c.tier === 'hero' ? spread : 0);
+      return Math.hypot(dx, dy) >= need;
+    };
+    if (!heroes.every(fits)) return false;
+    const cx = cellOf(c.x);
+    const cy = cellOf(c.y);
+    for (let dy = -1; dy <= 1; dy++) {
+      for (let dx = -1; dx <= 1; dx++) {
+        const bucket = grid[((cy + dy + cells) % cells) * cells + ((cx + dx + cells) % cells)]!;
+        if (!bucket.every(fits)) return false;
+      }
+    }
+    return true;
+  };
+
+  for (const t of TIERS) {
+    let deck: string[] = [];
+    let misses = 0;
+    let count = 0;
+    while (misses < t.misses && count < t.max) {
+      if (deck.length === 0) deck = shuffled(t.motifs, random);
+      const [lo, hi] = t.scale;
+      const c: Placement = {
+        motif: deck[deck.length - 1]!,
+        tier: t.tier,
+        x: round(random() * TILE_SIZE, 1) % TILE_SIZE,
+        y: round(random() * TILE_SIZE, 1) % TILE_SIZE,
+        rotate: round((random() * 2 - 1) * t.tilt, 1),
+        scale: round(lo + random() * (hi - lo), 2),
+      };
+      if (!clear(c, t.spread)) {
+        misses++;
+        continue;
+      }
+      deck.pop();
+      misses = 0;
+      count++;
+      placed.push(c);
+      if (c.tier === 'hero') heroes.push(c);
+      else grid[cellOf(c.y) * cells + cellOf(c.x)]!.push(c);
+    }
+  }
+  return placed;
 }
 
 /** The tile as SVG markup: motifs defined once, each doodle (and its edge copies) a `<use>`. */
@@ -195,14 +277,14 @@ export function renderDoodleTile(placements: readonly Placement[]): string {
   const defs = used.map((name) => `<g id="${name}">${MOTIFS[name]}</g>`).join('\n');
   const uses: string[] = [];
   for (const p of placements) {
-    const reach = BOUND * p.scale;
+    const r = reach(p);
     const xs = [p.x];
     const ys = [p.y];
-    if (p.x < reach) xs.push(round(p.x + TILE_SIZE, 1));
-    if (p.x > TILE_SIZE - reach) xs.push(round(p.x - TILE_SIZE, 1));
-    if (p.y < reach) ys.push(round(p.y + TILE_SIZE, 1));
-    if (p.y > TILE_SIZE - reach) ys.push(round(p.y - TILE_SIZE, 1));
-    const width = round(p.stroke / p.scale, 2);
+    if (p.x < r) xs.push(round(p.x + TILE_SIZE, 1));
+    if (p.x > TILE_SIZE - r) xs.push(round(p.x - TILE_SIZE, 1));
+    if (p.y < r) ys.push(round(p.y + TILE_SIZE, 1));
+    if (p.y > TILE_SIZE - r) ys.push(round(p.y - TILE_SIZE, 1));
+    const width = round(STROKE / p.scale, 2);
     for (const y of ys) {
       for (const x of xs) {
         uses.push(
@@ -213,9 +295,9 @@ export function renderDoodleTile(placements: readonly Placement[]): string {
   }
   return [
     `<svg xmlns="http://www.w3.org/2000/svg" width="${TILE_SIZE}" height="${TILE_SIZE}" viewBox="0 0 ${TILE_SIZE} ${TILE_SIZE}" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round">`,
-    '<!-- RevisionDen doodle tile (J8b): original line drawings, scattered at random angles and sizes',
-    '     from a fixed seed. Generated by apps/web/src/design/doodleTile.ts; do not edit by hand.',
-    '     Used as a CSS mask; colour comes from the theme. -->',
+    '<!-- RevisionDen doodle tile (J8b): original line drawings packed like a sticker sheet, from a',
+    '     fixed seed. Generated by apps/web/src/design/doodleTile.ts; do not edit by hand. Used as a',
+    '     CSS mask; colour comes from the theme. -->',
     `<defs>\n${defs}\n</defs>`,
     ...uses,
     '</svg>',
