@@ -55,6 +55,12 @@ Tags: #product #rules #limits #defaults
   parents and students; the sales site's "Sign in" goes there
   (`decisions/0007-student-passkey-unlock.md`). Implemented in
   `apps/web/src/features/onboarding/StudentUnlock.tsx`.
+- "Use my phone instead" (E10, owner decision 2026-11-26): on computers and tablets, and anywhere
+  after no passkey was found, the student can sign in with the passkey on their phone (WebAuthn
+  hybrid: the browser shows a QR code). The API adds `hints: ['hybrid']` only for
+  `{ usePhone: true }`; the normal unlock is unchanged. The computer becomes a new linked device,
+  parents are told, one new device a day, as for synced passkeys. Parent-approved sessions were not
+  chosen. `decisions/0007-student-passkey-unlock.md` "Using your phone".
 - A passkey synced to another device (iCloud Keychain, Google Password Manager) unlocks there
   too, as a new device of its own (owner decision: allow, and tell the parents). Each device keeps
   a random marker in local storage (`revisionden.deviceMarker`; the API stores its hash in
