@@ -55,6 +55,12 @@ Tags: #product #rules #limits #defaults
   parents and students; the sales site's "Sign in" goes there
   (`decisions/0007-student-passkey-unlock.md`). Implemented in
   `apps/web/src/features/onboarding/StudentUnlock.tsx`.
+- "Use my phone instead" (E10, owner decision 2026-11-26): on computers and tablets, and anywhere
+  after no passkey was found, the student can sign in with the passkey on their phone (WebAuthn
+  hybrid: the browser shows a QR code). The API adds `hints: ['hybrid']` only for
+  `{ usePhone: true }`; the normal unlock is unchanged. The computer becomes a new linked device,
+  parents are told, one new device a day, as for synced passkeys. Parent-approved sessions were not
+  chosen. `decisions/0007-student-passkey-unlock.md` "Using your phone".
 - A passkey synced to another device (iCloud Keychain, Google Password Manager) unlocks there
   too, as a new device of its own (owner decision: allow, and tell the parents). Each device keeps
   a random marker in local storage (`revisionden.deviceMarker`; the API stores its hash in
@@ -86,6 +92,11 @@ Tags: #product #rules #limits #defaults
   family log events.
 - New children start from a Boy, Girl or Neutral look (Neutral preselected); only the avatar code
   is stored, never a gender. A newly linked device offers "Make it yours" (with "Maybe later").
+- Avatar motion (E9, 2026-11-26): `AvatarSvg` takes `motion` (`idle`, `nod` right answer, `hop`
+  goal or level, `hmm` wrong answer, `tap`, `still` default) and `paused` (questions and Test mode: no
+  idle loop, reactions still play); `useAvatarMotion` in `features/avatar/motion.ts`. Whole parts
+  (figure, head, eyes, mouth) move by CSS transforms, so any outfit moves together. Still with
+  reduced motion; paused in a hidden tab. Placement in the nav is J15b. `docs/GAME_FEEL.md`.
 - Most-used board per subject in England (Ofqual market report 2024 to 2025, share of
   certificates): AQA for GCSE English Language, English Literature, Biology, Chemistry, Physics,
   Combined Science, Drama, French and A-Level Physics; Pearson Edexcel for GCSE Maths, History and
@@ -188,7 +199,9 @@ Tags: #product #rules #limits #defaults
 - XP is totalled per day in UK time; a streak day counts once, the first time the day reaches the
   daily goal. Command-word lessons are items tagged `command-word` (none verified yet).
 - Worked maths answers are checked by the maths engine (`MATHS_ENGINE_URL`); long answers are not
-  marked yet ("marked by AI soon").
+  marked yet ("marked by AI soon"). Without the engine (F12), typed working is never picked for
+  students, and one answered anyway is "unmarked": nothing saved, no XP, streak or mastery
+  change, and the lesson says it was skipped.
 - Effort scores (e.g. CBI: Commitment, Behaviour and Inspiration, 1–4, 4 best) shape habits, never
   the predicted grade.
 
@@ -231,10 +244,18 @@ Tags: #product #rules #limits #defaults
   (gold, tick), in progress (violet, fill level shows mastery %), weak spot (orange, pulsing
   glow), locked (grey). Each unit ends in a challenge that unlocks at 80% unit mastery. The Cards
   tab shows how many flashcards are due.
-- Map layout (J12b, design C "Your path", owner choice 2026-11-26): subject chips on one line that
-  scrolls sideways; one **Today** strip (daily goal, the Next mission row with its Go button, the
-  5-a-day row while there is one, and the install row while the device can install); then "Your
-  path": a row of unit badges that scrolls sideways, and the chosen unit's card with **all** its
+- Home and Pip (J15b, owner direction 2026-11-26): `/home` is the student's first screen after
+  signing in or unlocking (`/learn` and `DEFAULT_STUDENT_PAGE` go there). One screen: level ring,
+  streak, goal rings (daily XP, 5-a-day, cards due), one big next-mission button (else "Pick a
+  topic"), weak spots, a friends-league chip marked Soon, and this week's days studied with the
+  reward gift. Pip is a round "Home" button at the top left of every student screen and lesson; in
+  a lesson or test he asks "Leave this lesson?" first. He acts about every 8 s, naps 21:00 to 07:00,
+  stops after 60 s without input, keeps still in lessons and with reduced motion. He wears one item
+  for the current subject (and a prop on Home) plus a unisex touch that rotates by day. The map's
+  Today strip moved to Home: the map is now topics only. Code: `apps/web/src/features/home/`,
+  `apps/web/src/features/juice/pip/`; e2e `e2e/tests/home.spec.ts`.
+- Map layout (J12b, design C "Your path", owner choice 2026-11-26; Today strip moved to Home in
+  J15b): subject chips on one line that scrolls sideways; then "Your path": a row of unit badges that scrolls sideways, and the chosen unit's card with **all** its
   topics down a path that scrolls inside the card. The page itself never scrolls sideways.
   - The current unit is the one holding the next mission, else the first with an open topic. Its
     path opens on the next mission's topic, else the weakest weak spot, else the first topic in
@@ -263,10 +284,24 @@ Tags: #product #rules #limits #defaults
   with questions and answers `status: "coming_soon"` (plus `subjectId` and `subjects` with
   `hasContent` for the switcher) for one with none; 404 `no_subject` only with no subject at all
   or an unknown id. The web shows "Questions for <subject> are on their way." and a switcher.
+- Daily flashcard limit (F11, owner 2026-11-26): 20 review cards a day (`DAILY_CARD_LIMIT`),
+  "10 more" on request (`EXTRA_CARDS`). Badge and "Due today" show today's remaining (0–20).
+  Order: relearning, most overdue for its interval, then weak spots, then recent wrong answers.
+  Own cards count; All decks is not limited. Held-back cards roll over with no penalty (SM-2
+  uses the card's interval, not its lateness). Parent stats show no backlog (API has `backlog`).
+  An all-decks session is complete when today's offered cards are done, including a "10 more"
+  batch (F11b, `flashcard_sessions.extra_cards`, migration 0032).
+- Clues and help (F10, owner 2026-11-26): "Need a clue?" shows the verified hint (no penalty,
+  no longer shown up front); then "Help me understand" steps through the verified worked
+  solution. A right answer after help earns half XP (rounded down, owner), no combo, and is
+  practised like a miss (mastery 0 on the map and dashboards, review ladder, flashcard). Learn mode only.
+  `attempts.helped` (migration 0029).
 - Powers (F9, owner 2026-11-26): shown as superscripts everywhere students see maths
   (`packages/core/src/powers.ts`, web `MathText`), with spoken words for screen readers; stored
   content keeps ^. A lone ^ stays ("Use ^ for powers"). Answer boxes have a Power key and a
   "Shows as:" preview. Computing subjects (id containing "comput") keep ^ as typed (owner).
+  A tap on any power switches every power on screen between x² and x^2 (F9b, owner), remembered
+  on the device; it never chooses an answer or turns a card.
 - Mascot: Pip, an angular geometric fox (orange `#FF7A2F`). Brand violet `#6C47F5`; font Nunito,
   self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
 - Works offline for the app shell; API calls are never cached. Pages always come fresh from the
@@ -923,12 +958,16 @@ Tags: #product #rules #limits #defaults
   `REVIEWED_BLOCKED_PAIRS` is the manual review list the picker refuses. The student picks one of
   each (or none) on the Rewards page; saved as `students.title_first` / `title_last` (migration
   0019); `GET`/`PUT /v1/student/rewards/title`; free to change any time; included in the family data export. Shown under the nickname
-  on the Rewards page; the friends league is not built yet, so it shows there once it is.
+  on the Rewards page and under each nickname in the friends league (FL, dev only for now).
 - Friends league (FL): owner decision 2026-11-26, friends may come from other families from day
-  one, not family only. Design approved 2026-11-26, not built yet: `docs/FRIENDS_LEAGUE.md`
+  one, not family only. Development only (`FRIENDS_ENABLED`, lead 2026-11-26) until the notices
+  are updated and the solicitor has reviewed them.
+  Design approved 2026-11-26; screens (League page under Me, Home rank chip, parent Friends page), core rules, API and migration 0030 built
+  and weekly wins (settled on first open each week into `league_weeks`, 8 weeks kept; wins counted in
+  `students.league_wins` for the league rewards): `docs/FRIENDS_LEAGUE.md`
   (nickname, avatar, title and weekly learning XP only; one parent per family approves; no chat;
   10-friend cap; siblings join automatically; reports seen by both families' parents and AppDeck;
-  rank chip on Map, League page under Me; head-to-head challenges later).
+  rank chip on Home (was the Map until Home landed), League page under Me; head-to-head challenges later).
 - "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
   NSPCC adult helpline, parent-only). Students reach it only from Settings, where it is the
   first tile (via the Me nav item); there is no Get help link in the student header or footer

@@ -97,7 +97,7 @@ carries over. Nothing resets at A-Level: level, XP and every earned item carry o
 | Mock and assessment grades    | target hit once; target hit in every subject; beat target                |
 | Flashcards reviewed           | 500, 2,500, 10,000                                                       |
 | Kindness                      | gift days given: 3, 10, 25; different friends helped: 5, 15              |
-| Friends league                | weekly win; 5 wins; 20 wins                                              |
+| Friends league                | weekly win; 5 wins; 20 wins (`students.league_wins`, FL)                 |
 | Exams                         | first GCSE exam sat; all GCSEs sat; first A-Level exam; all A-Levels sat |
 
 Streak milestones also grant gift days (7 → 1, 30 → 2, 100 → 3, 365 → 5, 1,000 → 10).
@@ -286,7 +286,7 @@ nickname blocked-word list. `REVIEWED_BLOCKED_PAIRS` is the manual review list: 
 badly together, refused by the picker. The choice is stored as `students.title_first` and
 `title_last` (migration 0019) through `GET` and `PUT /v1/student/rewards/title`, which accept
 only unlocked words. The Rewards page shows the title under the nickname with a picker. The friends
-league is not built yet; it should show the title under each nickname when it is.
+league (FL, dev only for now) shows each student's title under their nickname too.
 
 ## Effect styles (J10b)
 

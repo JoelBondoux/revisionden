@@ -284,6 +284,19 @@ describe('mastery', () => {
     expect(masteryAt(answers, ['t1', 't2'], since)).toEqual({ t1: t1Then, t2: 0 });
   });
 
+  it('counts a helped answer as wrong for mastery, but keeps its score for accuracy (F10)', () => {
+    const helped = [{ ...a('t9', 'maths', now - DAY, 1), helped: true }];
+    expect(masteryAt(helped, ['t9'], now)).toEqual({
+      t9: topicMastery([{ score: 0, at: now - DAY }], now),
+    });
+    expect(
+      answerTotals(helped, { start: '2000-01-01', end: '2999-01-01' }, 'Europe/London'),
+    ).toMatchObject({
+      correct: 1,
+      accuracy: 100,
+    });
+  });
+
   it('averages topic mastery per subject with the change since a moment', () => {
     const now1 = topicMastery(
       [

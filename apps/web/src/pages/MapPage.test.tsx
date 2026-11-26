@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { server } from '../mocks/server';
@@ -13,41 +13,20 @@ describe('Topic map screen', () => {
     ).toBeInTheDocument();
   });
 
-  it('still opens from the old /learn address', async () => {
-    renderRoute('/learn');
-    expect(await screen.findByRole('heading', { level: 1, name: 'Topic map' })).toBeInTheDocument();
-  });
+  // The old /learn address now opens Home (J15b): see features/home/HomePage.test.tsx.
 
-  it('shows the subject, streak and daily goal', async () => {
+  it('shows the subject and streak', async () => {
     renderRoute('/map');
     expect(await screen.findByText('GCSE Higher Maths')).toBeInTheDocument();
     expect(screen.getByText('4 day streak')).toBeInTheDocument();
-    const today = screen.getByRole('region', { name: 'Today' });
-    expect(within(today).getByRole('progressbar', { name: 'Daily goal' })).toHaveAttribute(
-      'aria-valuetext',
-      '30 of 50 XP',
-    );
   });
 
-  it('leads with the next mission in the Today strip', async () => {
+  // J15b: the map is topics only. The daily goal, next mission and 5-a-day moved to Home
+  // (features/home/HomePage.test.tsx).
+  it('has no Today strip any more', async () => {
     renderRoute('/map');
-    const today = await screen.findByRole('region', { name: 'Today' });
-    expect(today).toHaveTextContent('Next mission');
-    expect(today).toHaveTextContent('Fix weak spot: Surds');
-    expect(within(today).getByRole('link', { name: 'Go: Fix weak spot: Surds' })).toHaveAttribute(
-      'href',
-      '/learn/topic/surds',
-    );
-  });
-
-  it('puts the 5-a-day in the Today strip', async () => {
-    renderRoute('/map');
-    const today = await screen.findByRole('region', { name: 'Today' });
-    expect(await within(today).findByRole('link', { name: 'Start your 5-a-day' })).toHaveAttribute(
-      'href',
-      '/learn/daily',
-    );
-    expect(today).toHaveTextContent('0 of 2 done');
+    await screen.findByRole('region', { name: 'Number' });
+    expect(screen.queryByRole('region', { name: 'Today' })).not.toBeInTheDocument();
   });
 
   it('shows every unit on the path, with the current unit chosen', async () => {
@@ -125,38 +104,13 @@ describe('Topic map screen', () => {
     expect(message.closest('[role="status"]')).not.toBeNull();
   });
 
-  // J12d (owner, 2026-11-26): "195 / 50 XP" with a full bar looked odd. Past the goal, the strip
-  // celebrates instead.
-  it('celebrates a smashed daily goal instead of showing an odd fraction', async () => {
-    server.use(
-      http.get('*/v1/student/map', async () => {
-        const { topicMap } = await import('../mocks/data');
-        return HttpResponse.json({ ...topicMap, xpToday: 195, dailyGoalXp: 50 });
-      }),
-    );
-    renderRoute('/map');
-    const today = await screen.findByRole('region', { name: 'Today' });
-    await within(today).findByText('Goal smashed!');
-    expect(today).toHaveTextContent('195 XP');
-    expect(today).not.toHaveTextContent('195 / 50');
-    expect(within(today).getByRole('progressbar', { name: 'Daily goal' })).toHaveAttribute(
-      'aria-valuetext',
-      'Goal smashed: 195 XP, goal 50 XP',
-    );
-  });
-
-  it('leaves the next mission out of the Today strip when there is none', async () => {
-    server.use(
-      http.get('*/v1/student/map', async () => {
-        const { topicMap } = await import('../mocks/data');
-        return HttpResponse.json({ ...topicMap, nextMission: null });
-      }),
-    );
-    renderRoute('/map');
-    const today = await screen.findByRole('region', { name: 'Today' });
+  // J15b: Pip, the Home button, dresses for the subject shown on the map.
+  it('dresses Pip for the subject on the map', async () => {
+    const { container } = renderRoute('/map');
     await screen.findByRole('region', { name: 'Number' });
-    expect(today).not.toHaveTextContent('Next mission');
-    expect(within(today).queryByRole('link', { name: /^Go:/ })).not.toBeInTheDocument();
+    const pip = screen.getByRole('button', { name: 'Home' });
+    await waitFor(() => expect(pip.querySelector('[data-item="pencil"]')).not.toBeNull());
+    void container;
   });
 
   it('offers a retry when the map cannot be loaded', async () => {

@@ -41,8 +41,6 @@ async function openMap(page: Page, { textScale = 1 } = {}) {
   );
   await page.goto('/map');
   await expect(page.getByRole('region', { name: 'Algebra topics' })).toBeVisible();
-  // Wait for the 5-a-day row, which loads after the map and moves the path down.
-  await expect(page.getByRole('link', { name: 'Start your 5-a-day' })).toBeVisible();
 }
 
 async function sidewaysScroll(page: Page) {
@@ -56,7 +54,7 @@ test.beforeEach(async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'phone', 'The map layout checks are phone checks');
 });
 
-test('at 390 × 844 the whole map fits one screen, with Go and the current topic in view', async ({
+test('at 390 × 844 the whole map fits one screen, with the current topic in view', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
@@ -66,11 +64,6 @@ test('at 390 × 844 the whole map fits one screen, with Go and the current topic
   const card = (await page.locator('.unit-card').boundingBox())!;
   expect(card.y + card.height).toBeLessThanOrEqual(nav.y);
   expect(await page.evaluate(() => window.scrollY)).toBe(0);
-  // The main call to action is on screen and not under the tab bar.
-  const go = page.getByRole('link', { name: /^Go:/ });
-  await expect(go).toBeInViewport({ ratio: 1 });
-  const goBox = (await go.boundingBox())!;
-  expect(goBox.y + goBox.height).toBeLessThanOrEqual(nav.y);
   // All 25 Algebra topics are on the path, which scrolls inside its card ...
   const path = page.getByRole('region', { name: 'Algebra topics' });
   await expect(path.getByRole('listitem')).toHaveCount(26);
@@ -151,15 +144,22 @@ test('each sideways row opens with the chosen item whole and no item cut at the 
   await page.route('**/v1/student/map**', (route) => route.fulfill({ json: many }));
   await page.reload();
   await expect(page.getByRole('region', { name: 'Algebra topics' })).toBeVisible();
+  // The rows line up again once the web font has loaded (it changes every item's width).
+  await page.evaluate(() => document.fonts.ready.then(() => undefined));
   for (const name of ['Subject', 'Units']) {
     const row = page.getByRole('group', { name });
-    const cut = await row.evaluate((track) => {
-      const edge = track.getBoundingClientRect();
-      return Array.from(track.children)
-        .map((el) => el.getBoundingClientRect())
-        .filter((box) => box.left < edge.left - 1 && box.right > edge.left + 1).length;
-    });
-    expect(cut, name).toBe(0);
+    await expect
+      .poll(
+        () =>
+          row.evaluate((track) => {
+            const edge = track.getBoundingClientRect();
+            return Array.from(track.children)
+              .map((el) => el.getBoundingClientRect())
+              .filter((box) => box.left < edge.left - 1 && box.right > edge.left + 1).length;
+          }),
+        { message: name },
+      )
+      .toBe(0);
   }
   const maths = page.getByRole('group', { name: 'Subject' }).getByRole('button', { name: 'Maths' });
   const inView = await maths.evaluate((el) => {
@@ -178,15 +178,11 @@ test('the keyboard reaches every chip, badge and topic, and focus scrolls each i
   const units = page.getByRole('group', { name: 'Units' });
   const badges = units.getByRole('button');
   await expect(badges).toHaveCount(6);
-  // Tab through both subject chips, the Today strip's Go and Start, See all, then all six badges.
+  // Tab through both subject chips, See all, then all six badges (the Today strip is on Home).
   const subjects = page.getByRole('group', { name: 'Subject' });
   await subjects.getByRole('button', { name: 'Maths' }).focus();
   await page.keyboard.press('Tab');
   await expect(subjects.getByRole('button', { name: /Physics/ })).toBeFocused();
-  await page.keyboard.press('Tab');
-  await expect(page.getByRole('link', { name: /^Go:/ })).toBeFocused();
-  await page.keyboard.press('Tab');
-  await expect(page.getByRole('link', { name: 'Start your 5-a-day' })).toBeFocused();
   await page.keyboard.press('Tab');
   await expect(page.getByRole('button', { name: 'See all units' })).toBeFocused();
   for (let i = 0; i < 6; i += 1) {

@@ -1,0 +1,346 @@
+/*
+ * Pip's poses (J15b). Every move eases in and out through in-between frames and starts and ends at
+ * rest, so nothing snaps. Transforms and opacity only. With reduced motion nothing moves: a pose
+ * shows as a still (the book or the stars appear; the arm, head and eyes stay put).
+ */
+.pip-figure {
+  display: block;
+  overflow: visible;
+}
+
+.pip-figure__ring {
+  stroke: var(--pip-ring, var(--color-border, #2b2a3a));
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.pip-figure__head,
+.pip-figure__body {
+  transform-box: view-box;
+  transform-origin: 60px 98px;
+  transition: transform 400ms cubic-bezier(0.45, 0, 0.25, 1);
+}
+
+.pip-figure__arm {
+  transform-box: view-box;
+  transition: transform 450ms cubic-bezier(0.45, 0, 0.25, 1);
+}
+
+.pip-figure__eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 200ms ease-in-out;
+}
+
+.pip-figure__book,
+.pip-figure__timer,
+.pip-figure__stars,
+.pip-figure__zzz {
+  opacity: 0;
+  transform-box: view-box;
+  transition:
+    opacity 350ms ease-in-out,
+    transform 450ms cubic-bezier(0.45, 0, 0.25, 1);
+}
+
+.pip-figure__book {
+  transform: translateY(14px);
+}
+
+.pip-figure__timer {
+  transform: translateX(12px) scale(0.8);
+  transform-origin: 100px 70px;
+}
+
+/* Stills: what each pose shows, with or without motion. */
+.pip-figure--read .pip-figure__book,
+.pip-figure--timer .pip-figure__timer,
+.pip-figure--cheer .pip-figure__stars,
+.pip-figure--nap .pip-figure__zzz {
+  opacity: 1;
+  transform: none;
+}
+
+.pip-figure--read .pip-figure__head {
+  transform: rotate(4deg) translateY(3px);
+}
+
+.pip-figure--timer .pip-figure__head {
+  transform: rotate(-8deg);
+}
+
+.pip-figure--nap .pip-figure__head {
+  transform: rotate(7deg) translateY(3px);
+}
+
+.pip-figure--nap .pip-figure__eye {
+  transform: scaleY(0.15);
+}
+
+.pip-figure--encourage .pip-figure__head {
+  transform: rotate(-6deg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pip-figure--blink .pip-figure__eye {
+    animation: pip-blink 900ms ease-in-out;
+  }
+
+  .pip-figure--wave .pip-figure__arm {
+    animation: pip-wave 2200ms cubic-bezier(0.45, 0, 0.25, 1);
+  }
+
+  .pip-figure--wave .pip-figure__head {
+    animation: pip-tilt 2200ms ease-in-out;
+  }
+
+  .pip-figure--stretch .pip-figure__head,
+  .pip-figure--stretch .pip-figure__body {
+    animation: pip-stretch 1800ms cubic-bezier(0.45, 0, 0.25, 1);
+  }
+
+  .pip-figure--read .pip-figure__head {
+    animation: pip-read 3000ms ease-in-out infinite alternate;
+  }
+
+  .pip-figure--cheer .pip-figure__head,
+  .pip-figure--cheer .pip-figure__body {
+    animation: pip-hop 1400ms cubic-bezier(0.3, 0, 0.3, 1);
+  }
+
+  .pip-figure--cheer .pip-figure__stars {
+    animation: pip-twinkle 1400ms ease-in-out;
+  }
+
+  .pip-figure--nap .pip-figure__zzz {
+    animation: pip-zzz 2600ms ease-in-out infinite;
+  }
+
+  .pip-figure--nod .pip-figure__head {
+    animation: pip-nod 900ms cubic-bezier(0.45, 0, 0.25, 1);
+  }
+}
+
+@keyframes pip-blink {
+  0%,
+  35%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  45% {
+    transform: scaleY(0.4);
+  }
+
+  50%,
+  55% {
+    transform: scaleY(0.1);
+  }
+
+  65% {
+    transform: scaleY(0.6);
+  }
+}
+
+/* The arm rises from the side, waves twice and lowers again, all about the shoulder. */
+@keyframes pip-wave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  22% {
+    transform: rotate(-128deg);
+  }
+
+  36% {
+    transform: rotate(-108deg);
+  }
+
+  50% {
+    transform: rotate(-132deg);
+  }
+
+  64% {
+    transform: rotate(-110deg);
+  }
+
+  80% {
+    transform: rotate(-124deg);
+  }
+}
+
+@keyframes pip-tilt {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  30%,
+  75% {
+    transform: rotate(-5deg);
+  }
+}
+
+@keyframes pip-stretch {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+
+  30% {
+    transform: scale(0.97, 1.05) translateY(-3px);
+  }
+
+  55% {
+    transform: scale(0.96, 1.07) translateY(-4px);
+  }
+
+  80% {
+    transform: scale(1.02, 0.98);
+  }
+}
+
+@keyframes pip-read {
+  from {
+    transform: rotate(2deg) translateY(3px);
+  }
+
+  to {
+    transform: rotate(6deg) translateY(3px);
+  }
+}
+
+@keyframes pip-hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  20% {
+    transform: translateY(1px) scale(1.02, 0.97);
+  }
+
+  40% {
+    transform: translateY(-6px);
+  }
+
+  60% {
+    transform: translateY(0) scale(1.01, 0.99);
+  }
+
+  75% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes pip-twinkle {
+  0% {
+    opacity: 0;
+  }
+
+  30%,
+  70% {
+    opacity: 1;
+  }
+}
+
+@keyframes pip-zzz {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(6px, -10px);
+  }
+}
+
+@keyframes pip-nod {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  35% {
+    transform: rotate(5deg) translateY(2px);
+  }
+
+  65% {
+    transform: rotate(-1deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pip-figure * {
+    transition: none !important;
+  }
+}
+
+/* ---------- The Home button (J15b) ---------- */
+/* The tap target is the circle (56px). Pip's head and shoulders lean out above it; that part
+   never takes taps, and the row leaves room for it so it covers nothing. */
+.pip-home {
+  position: relative;
+  flex: none;
+  width: 56px;
+  height: 56px;
+  margin: 30px auto 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.pip-home .pip-figure {
+  position: absolute;
+  top: -31.7px;
+  left: -8.5px;
+  width: 73px;
+  height: 91.3px;
+  pointer-events: none;
+}
+
+.pip-home:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pip-home:active .pip-figure {
+    transform: scale(0.94);
+    transition: transform 120ms ease-out;
+  }
+}
+
+.pip-leave__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background: rgb(0 0 0 / 45%);
+}
+
+.pip-leave {
+  width: min(100%, 22rem);
+  padding: var(--space-6) var(--space-4) var(--space-4);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  color: var(--color-text);
+  text-align: center;
+}
+
+.pip-leave__actions {
+  display: grid;
+  gap: var(--space-3);
+}

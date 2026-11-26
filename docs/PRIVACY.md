@@ -63,7 +63,7 @@ VAPID contact is our web address, never a personal email.
 Nickname, avatar and XP only. Invite codes need parent approval. No chat, no free text between
 students.
 
-### Friends league: children's data impact note (approved, not built)
+### Friends league: children's data impact note (approved; API built, screens to come)
 
 Design: `docs/FRIENDS_LEAGUE.md`, approved by the owner on 2026-11-26. Friends can be from other families
 (owner, 2026-11-26), so this is the first time one child's data is shown to children outside
@@ -81,8 +81,9 @@ their family.
 - **Reports**: both families' parents and AppDeck support see the fixed reason, the date and the
   two nicknames (AppDeck also the reported avatar code), so repeated abuse can be acted on. Never
   free text or ids.
-- **Retention and deletion**: codes and requests go within 24 hours of use or expiry; friendships,
-  blocks and reports are deleted with either child; all of it is in the family export (code hashes
+- **Retention and deletion**: codes and requests go within 24 hours of use or expiry; friendships
+  and blocks are deleted with either child; a report is deleted 12 months after the reporting
+  child's parent marks it as dealt with, or with either child; all of it is in the family export (code hashes
   left out).
 - **Risks** we weigh in the DPIA: pressure or upset from competition (no league pushes, no "last
   place", effort-only praise), unwanted contact (codes in person only, two-family approval, block),
@@ -108,6 +109,7 @@ date per parent sign-in.
   the reference code, the path `/link` and the browser's error name only (for example
   `NotAllowedError`; strict pattern, never the browser's message). A bug report sent from that
   screen may carry the same short code as `lastProblem` (letters, digits, `_`, `:` and `-` only).
+  A failed "Use my phone instead" sign-in (E10) is logged the same way, with the path `/unlock`.
 
 ## Operator console (AppDeck)
 
