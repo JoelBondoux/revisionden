@@ -127,9 +127,10 @@
                   "batch-sample",
                   "units",
                   "chemical-equation",
-                  "equation-sheet"
+                  "equation-sheet",
+                  "template-approval"
                 ],
-                "description": "Pipeline step from docs/VERIFICATION.md section 3. batch-sample: released through a batch that passed the sampling rule. units, chemical-equation, equation-sheet: exact checks for the facts in an item's exact block. blind-marking: extended answers' replacement for blind-answer."
+                "description": "Pipeline step from docs/VERIFICATION.md section 3. batch-sample: released through a batch that passed the sampling rule. units, chemical-equation, equation-sheet: exact checks for the facts in an item's exact block. blind-marking: extended answers' replacement for blind-answer. template-approval: the owner approved the preview of the template this item came from (tool: reviewer role; tool_version: '<template id> v<version>'), decision 0010."
               },
               "result": {
                 "enum": ["pass", "fail"]

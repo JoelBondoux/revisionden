@@ -99,7 +99,17 @@ Tags: #product #rules #limits #defaults
   plays, all 7 19th-century novels and Animal Farm). Embedded third-party widgets (GeoGebra, Desmos,
   PhET) break the no-third-parties rule unless self-hosted and need commercial licences for a paid
   tier; Mathpix's terms are adults-only. Detail: `docs/research/specialist-tools-2026-11.md`.
-- Question generation research (QG, 2026-11-26, not yet a decision): four guarantee tiers
+- Question generation rules (decision 0010, owner 2026-11-26): batches made only of items from
+  owner-approved templates (a `template-approval` check naming the template id and version) with
+  their cross-check passed are sampled at 3%, at least 10; every other batch 10%, at least 30
+  (`packages/core/src/review-sampling.ts`). Public-domain set texts count as official for
+  quotations only, from one fixed edition per text; items from individually approved fact-table
+  rows may be batch-sampled; board-neutral physics and chemistry calculations from DfE content
+  may be built now; awrt rounding is settled; spreadsheet citations use "sheet, row, cell";
+  readability (textstat) warns only, aiming at reading age 13 to 14 (GCSE), 15 to 16 (A-Level).
+  Pending owner sign-off: in-house notes review and use of Oak. Oak's licence was read directly on 2026-11-26: lessons published after 1 September 2022 are OGL v3.0 (commercial use and adapting allowed, with Oak's attribution statement, no endorsement claim, third-party content excluded); earlier lessons are non-commercial only. In-copyright quotes: with
+  the owner's solicitor.
+- Question generation research (QG, 2026-11-26; owner decisions in decision 0010, above): four guarantee tiers
   (computed, source-quoted, fact, judgement). Computable or source-quotable share is highest for
   A-Level Maths and Further Maths, A-Level Computer Science, physics, chemistry and French
   vocabulary; English Language, Drama and Film Studies are mostly judgement. The DfE GCSE science
