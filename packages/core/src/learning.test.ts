@@ -215,6 +215,10 @@ describe('marking', () => {
     expect(markNumeric({ value: '49/20', form: 'fraction' as const }, '2 9/20').correct).toBe(
       false,
     );
+    const improper = { value: '49/20', form: 'improper_fraction' as const };
+    expect(markNumeric(improper, '49/20').correct).toBe(true);
+    expect(markNumeric(improper, '2 9/20').correct).toBe(false);
+    expect(markNumeric(improper, '98/40').correct).toBe(false);
     const simplest = { value: '23/33', form: 'simplest_fraction' as const };
     expect(markNumeric(simplest, '23/33').correct).toBe(true);
     expect(markNumeric(simplest, '69/99').correct).toBe(false);

@@ -9,6 +9,7 @@ import {
   showsRounding,
   inForm,
   standardForm,
+  withMinus,
 } from '../../packages/core/src/answer-format.ts';
 
 const FOLDERS = {
@@ -174,6 +175,7 @@ function linkErrors(content) {
       fail('checked_by must include maths-engine for maths items');
     }
     if (item.type === 'numeric') [...roundingErrors(item), ...formErrors(item)].forEach(fail);
+    if (item.type === 'worked_maths') workedFormErrors(item).forEach(fail);
     if (item.type === 'worked_maths') {
       const wants = item.verify.method === 'solve' ? 'solutions' : 'expression';
       if (!(wants in item.answer))
@@ -218,9 +220,10 @@ function roundingErrors(item) {
 // The question asks for the answer in a form: "give / write / express your answer ... in its
 // simplest form", "... as a fraction", "... in standard form", "write 360 in index form". Words
 // about the question ("0.00045 is written in standard form as A × 10^n. Find n") do not count.
-// Simplest form is checked before "as a fraction", since "as a fraction in its simplest form"
-// asks for both.
+// The most specific form wins: "as an improper fraction in its simplest form" is an improper
+// fraction, and "as a fraction in its simplest form" a simplest fraction.
 const ASKS_FOR_FORM = [
+  ['improper_fraction', /improper fraction/],
   ['simplest_fraction', /simplest form|lowest terms/],
   ['standard_form', /standard form/],
   ['index_form', /index form/],
@@ -229,7 +232,7 @@ const ASKS_FOR_FORM = [
   form,
   new RegExp(`\\b(?:give|write|express|leave|answers?)\\b[^.?!]*?(?:${words.source})`, 'i'),
 ]);
-const FRACTION_FORMS = new Set(['fraction', 'simplest_fraction']);
+const FRACTION_FORMS = new Set(['fraction', 'simplest_fraction', 'improper_fraction']);
 
 /** The form a question asks its answer in, or null. */
 function askedForm(prompt) {
@@ -256,6 +259,24 @@ function formErrors(item) {
   );
   if (FRACTION_FORMS.has(form) && rounded) {
     errors.push('a fraction answer cannot also set tolerance or rounding');
+  }
+  return errors;
+}
+
+/**
+ * A worked answer may set answer.form (not required: "simplest form" for 3x + 10 is no fraction
+ * form); when it does, the answer is written in it and verify.form is not set as well.
+ */
+function workedFormErrors(item) {
+  const { form, expression, solutions } = item.answer;
+  if (!form) return [];
+  const errors = [];
+  if (item.verify.form) errors.push('set either answer.form or verify.form, not both');
+  if (expression !== undefined && !inForm(expression, form)) {
+    errors.push(`answer.expression ${expression} is not written as a ${form}`);
+  }
+  for (const solution of solutions ?? []) {
+    if (!inForm(solution, form)) errors.push(`solution ${solution} is not written as a ${form}`);
   }
   return errors;
 }
@@ -470,6 +491,17 @@ export function immutabilityErrors(baseline, current) {
   return errors;
 }
 
+/**
+ * A numeric answer as the engine reads it. Standard form (6.4 × 10^8) goes as 640000000, or as
+ * 6.4*10^8 when the answer must be in standard form, since the engine then checks the form too.
+ */
+function engineValue(answer) {
+  const standard = standardForm(withMinus(answer.value));
+  if (!standard) return answer.value;
+  if (answer.form === 'standard_form') return `${standard.mantissa}*10^${standard.power}`;
+  return standard.plain;
+}
+
 /** The checks to send to the maths engine (services/maths, app.content_check). */
 export function mathsChecks(items) {
   const checks = [];
@@ -479,10 +511,9 @@ export function mathsChecks(items) {
         id: item.id,
         kind: 'value',
         expression: item.verify.expression,
-        // The engine reads plain numbers: standard form (6.4 × 10^8) goes as 640000000.
-        answer: standardForm(item.answer.value)?.plain ?? item.answer.value,
+        answer: engineValue(item.answer),
       };
-      for (const key of ['tolerance', 'decimal_places', 'significant_figures']) {
+      for (const key of ['tolerance', 'decimal_places', 'significant_figures', 'form']) {
         if (item.answer[key] !== undefined) check[key] = item.answer[key];
       }
       checks.push(check);
@@ -496,8 +527,10 @@ export function mathsChecks(items) {
           equation: verify.equation,
           variable: verify.variable ?? 'x',
           solutions: answer.solutions,
+          ...(answer.form ? { form: answer.form } : {}),
         });
         expected = { solutions: answer.solutions };
+        if (answer.form) expected.form = answer.form;
       } else {
         const check = {
           id: item.id,
@@ -505,11 +538,13 @@ export function mathsChecks(items) {
           expression: verify.expression,
           answer: answer.expression,
         };
-        if (verify.form) check.form = verify.form;
+        // One form for the engine: the answer form (T2) or the expression form (factorised).
+        const form = answer.form ?? verify.form;
+        if (form) check.form = form;
         if (answer.subject) check.subject = answer.subject;
         checks.push(check);
         expected = { expression: verify.expression };
-        if (verify.form) expected.form = verify.form;
+        if (form) expected.form = form;
         if (answer.subject) expected.subject = answer.subject;
       }
       if (item.steps) {

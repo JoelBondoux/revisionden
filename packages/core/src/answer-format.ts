@@ -90,7 +90,8 @@ export function withoutUnit(text: string, unit: string | undefined): string {
 const gcd = (a: bigint, b: bigint): bigint => (b === 0n ? a : gcd(b, a % b));
 
 /** The form a question asks the answer in (`answer.form`), as the maths engine reads it too. */
-export type AnswerForm = 'fraction' | 'simplest_fraction' | 'standard_form' | 'index_form';
+export type AnswerForm =
+  'fraction' | 'simplest_fraction' | 'improper_fraction' | 'standard_form' | 'index_form';
 
 const isPrime = (n: bigint): boolean => {
   if (n < 2n) return false;
@@ -121,7 +122,8 @@ export function indexForm(text: string): bigint | null {
 
 /**
  * Whether `text` is written in `form`: a fraction (a whole number or a/b, never a decimal or a
- * mixed number), a simplest fraction (also in lowest terms, so not 69/99), standard form
+ * mixed number), a simplest or improper fraction (also in lowest terms, so not 69/99; no form
+ * takes a mixed number, as the maths engine cannot read one), standard form
  * (a × 10^n, 1 <= a < 10) or index form (powers of distinct primes).
  */
 export function inForm(text: string, form: AnswerForm): boolean {
@@ -176,6 +178,9 @@ export interface StandardForm {
   figures: number;
   /** Whether the number in front is at least 1 and less than 10. */
   proper: boolean;
+  /** The number in front and the power of ten as written, for the maths engine (6.4 and 8). */
+  mantissa: string;
+  power: number;
 }
 
 /** A number written as a × 10^n (or a e n), or null when the text is not one. */
@@ -212,6 +217,8 @@ export function standardForm(text: string): StandardForm | null {
     plain: negative ? `-${plain}` : plain,
     figures: Math.max(digits.replace(/^0+/, '').length, 1),
     proper: size >= 1 && size < 10,
+    mantissa,
+    power: exponent,
   };
 }
 

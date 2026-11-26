@@ -196,6 +196,13 @@ describe('answer forms', () => {
     }
   });
 
+  it('an improper fraction is in lowest terms and never a mixed number', () => {
+    for (const text of ['49/20', '3/8', '5'])
+      expect(inForm(text, 'improper_fraction'), text).toBe(true);
+    for (const text of ['2 9/20', '98/40', '2.45'])
+      expect(inForm(text, 'improper_fraction'), text).toBe(false);
+  });
+
   it('standard form is a × 10^n with 1 <= a < 10', () => {
     for (const text of ['6.4 × 10^8', '6.4*10^8', '6.4 × 10⁸', '−3.2 × 10^-4']) {
       expect(inForm(text, 'standard_form'), text).toBe(true);
