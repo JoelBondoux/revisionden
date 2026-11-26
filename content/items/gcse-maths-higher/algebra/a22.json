@@ -68,7 +68,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:45:33Z",
+          "at": "2026-11-26T11:22:51Z",
           "notes": "no problems found"
         }
       ]
@@ -143,7 +143,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:45:43Z",
+          "at": "2026-11-26T11:23:00Z",
           "notes": "no problems found"
         }
       ]
@@ -220,7 +220,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:46:01Z",
+          "at": "2026-11-26T11:23:20Z",
           "notes": "no problems found"
         }
       ]
@@ -296,20 +296,20 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:13:49Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T11:23:29Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -384,20 +384,20 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:14:10Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T11:25:07Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -460,20 +460,20 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:51:08Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T11:25:16Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -536,20 +536,20 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:51:25Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T11:25:25Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -612,20 +612,20 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:51:41Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T11:25:33Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -702,14 +702,6 @@
           "notes": "model answered \"x = 3, x = -5\"; expected \"3, -5\""
         },
         {
-          "name": "adversarial-review",
-          "result": "fail",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:27:55Z",
-          "notes": "unsupported_claim (official_sources): The first cited source, A22, refers to solving 'quadratic inequalities in one variable'. However, the question asks to solve a quadratic equation ('= 0'), not an inequality (e.g., '< 0' or '> 0'). The content is supported by source A18, but not A22."
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -724,6 +716,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T11:25:45Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -796,7 +796,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:51:28Z",
+          "at": "2026-11-26T11:25:51Z",
           "notes": "no problems found"
         }
       ]
@@ -870,7 +870,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:51:40Z",
+          "at": "2026-11-26T11:26:02Z",
           "notes": "no problems found"
         }
       ]
@@ -962,9 +962,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:51:49Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:32:11Z",
           "notes": "no problems found"
         }
       ]

@@ -62,14 +62,6 @@
           "notes": "model answered \"8\"; expected \"8\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:11:54Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -84,6 +76,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T11:20:17Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -151,14 +151,6 @@
           "notes": "model answered \"7\"; expected \"7\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:27:34Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -173,6 +165,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T11:20:30Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -189,7 +189,7 @@
     "verify": { "method": "solve", "equation": "b + b + 3 = 41", "variable": "b" },
     "steps": ["b + b + 3 = 41", "2b + 3 = 41", "2b = 38", "b = 19"],
     "marks": 3,
-    "mark_scheme": ["B1 for b + b + 3 = 41", "M1 for 2b = 38", "A1 for 19"],
+    "mark_scheme": ["B1 for b + b + 3 = 41 oe", "M1 for 2b = 38 oe", "A1 for 19"],
     "hint": "The sister is b + 3. Add the two ages, set the total equal to 41, and solve.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
     "checked_by": ["maths-engine", "author"],
@@ -236,14 +236,6 @@
           "notes": "model answered \"19\"; expected \"19\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:46:59Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -258,6 +250,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:31:41Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -325,14 +325,6 @@
           "notes": "model answered \"12\"; expected \"12\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:13:02Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -347,6 +339,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T11:21:08Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -364,7 +364,7 @@
     "marks": 3,
     "mark_scheme": [
       "B1 for 3p + 2r = 390 and p + 2r = 190",
-      "M1 for subtracting to get 2p = 200",
+      "M1 for a correct method to eliminate one variable, for example subtracting to get 2p = 200",
       "A1 for 100"
     ],
     "hint": "Both purchases include 2 rulers, so subtract one cost from the other to remove the rulers.",
@@ -413,14 +413,6 @@
           "notes": "model answered \"100p\"; expected \"100\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:47:46Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -435,6 +427,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:31:51Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -523,7 +523,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:48:46Z",
+          "at": "2026-11-26T11:21:57Z",
           "notes": "no problems found"
         }
       ]
@@ -543,7 +543,7 @@
     "mark_scheme": [
       "B1 for n(n + 1) = 156",
       "M1 for n^2 + n - 156 = 0",
-      "M1 for (n + 13)(n - 12) = 0",
+      "M1 for a correct method to solve the quadratic, for example (n + 13)(n - 12) = 0",
       "A1 for 12 (rejecting -13)"
     ],
     "hint": "Call the integers n and n + 1, write n(n + 1) = 156, then solve the quadratic.",
@@ -592,14 +592,6 @@
           "notes": "model answered \"12\"; expected \"12\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:48:29Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -614,6 +606,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:32:01Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -686,7 +686,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:51:06Z",
+          "at": "2026-11-26T11:22:20Z",
           "notes": "no problems found"
         }
       ]
@@ -760,7 +760,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:51:14Z",
+          "at": "2026-11-26T11:22:29Z",
           "notes": "no problems found"
         }
       ]
@@ -834,7 +834,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:51:23Z",
+          "at": "2026-11-26T11:22:39Z",
           "notes": "no problems found"
         }
       ]
