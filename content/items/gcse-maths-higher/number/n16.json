@@ -530,7 +530,7 @@
     "front": "A value is 7, correct to the nearest whole number. Its upper bound",
     "back": "7.5",
     "explanation": "Values from 6.5 up to (but not including) 7.5 round to 7. The upper bound is 7.5: half a unit above 7.",
-    "hint": "The value was rounded to the nearest whole number. The upper bound is half a unit above it.",
+    "hint": "The value was rounded to the nearest whole number, so the rounding unit is 1. The upper bound is half of 1 above it.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N16",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -587,9 +587,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "openai:gpt-5.4-2026-03-05",
-          "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T10:16:02Z",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T11:13:38Z",
           "notes": "no problems found"
         }
       ]

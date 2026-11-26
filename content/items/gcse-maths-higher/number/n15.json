@@ -263,7 +263,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "Numbers from 8.35 up to (but not including) 8.45 round to 8.4. 8.35 rounds up to 8.4, but 8.45 rounds up to 8.5.",
-    "hint": "The error interval goes half a unit either side of 8.4. The lower end is included and the upper end is not.",
+    "hint": "8.4 is rounded to 1 decimal place, so the rounding unit is 0.1. Go half of 0.1 either side of 8.4: the lower end is included and the upper end is not.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -320,9 +320,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "openai:gpt-5.4-2026-03-05",
-          "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T10:15:39Z",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T11:13:30Z",
           "notes": "no problems found"
         }
       ]
