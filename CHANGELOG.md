@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Flashcards work better with screen readers: the card and the rating buttons now read out the words you can see.
 - We have worked out how to make verified questions for every subject, not just maths, and which subjects can be built fastest.
 - On small phones with large text, the policy list and other link cards now wrap their words instead of running off the side of the screen.
 - Fixed: the About page no longer scrolls sideways on a small phone with large text; the version details and support email now wrap.
@@ -126,6 +127,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Flashcards accessibility (F8b, axe on /cards): the flip card has no `aria-label`, so its accessible name is the text on its showing face, with the turn hint as `aria-describedby`; the rating buttons drop `aria-label` ("Good, back in 1 day") and are named by their visible text ("Good 1 day"). New e2e check `e2e/tests/cards.spec.ts`: axe on /cards on both sides of the card, at phone, tablet and desktop sizes.
 - Reflow J11 (J): `LinkTile` may shrink (`min-width: 0`, `max-width: 100%`) and wraps its text anywhere, so /legal fits a 320px screen with text at 200% (the version footer's reflow came with G's #224) (WCAG 1.4.4, 1.4.10). New e2e in `e2e/tests/pages.spec.ts`.
 - Project memory (J): product-facts records the J11 LinkTile reflow guarantee (320px, 200% text) and its e2e test (Codex review on #231).
 - About page reflow (L10): at 320px with 200% text the version facts grid (`max-content` label column) and the support email pushed `/about` sideways. The grid columns can now shrink and long values wrap (`about.css`); new e2e checks the whole `/about` page at 320px and 200% text has no sideways scroll (with G's footer fix, #224).
