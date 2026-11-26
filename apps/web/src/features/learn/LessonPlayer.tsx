@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
-import { PipHomeButton, usePipSubject } from '../juice/pip';
 import { LessonAvatar } from '../juice/pip/LessonAvatar';
-import { useShowsLessonPip } from '../juice/pip/lessonPip';
+import { LessonPip } from '../juice/pip/LessonPip';
 import { useMyAvatar } from '../me/MyAvatarContext';
 import { reactToAnswer } from '../juice/pip/reactions';
 import { Link } from 'react-router-dom';
@@ -203,8 +202,6 @@ export function LessonPlayer({
 }: LessonPlayerProps) {
   const api = useLearnApi();
   const { play } = useSound();
-  const pipSubject = usePipSubject();
-  useShowsLessonPip();
   const myAvatar = useMyAvatar();
   const [queue, setQueue] = useState<LessonEntry<LearnItem>[]>(() =>
     items.map((item) => ({ item })),
@@ -388,7 +385,7 @@ export function LessonPlayer({
     <form className="lesson arena" onSubmit={check}>
       <div className="lesson__top">
         {/* J14b: Pip, the Home button, in the lesson's own header row. */}
-        <PipHomeButton subjectId={pipSubject} inLesson />
+        <LessonPip />
         <Link to={doneHref} className="icon-button" aria-label="Leave lesson">
           <CloseIcon />
         </Link>
