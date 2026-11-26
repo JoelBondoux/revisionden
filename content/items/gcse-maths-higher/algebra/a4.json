@@ -147,14 +147,6 @@
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:44Z",
-          "notes": "model answered \"x^2 + 2x - 15\"; expected \"x^2 + 2x - 15\""
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -171,11 +163,19 @@
           "at": "2026-11-25T19:05:18Z"
         },
         {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:14:36Z",
+          "notes": "model answered \"x^2 + 2x - 15\"; expected \"x^2 + 2x - 15\""
+        },
+        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T10:14:54Z",
+          "at": "2026-11-26T11:14:37Z",
           "notes": "no problems found"
         }
       ]
@@ -241,14 +241,6 @@
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:38:02Z",
-          "notes": "model answered \"x^3 + 4x^2 + x - 6\"; expected \"x^3 + 4x^2 + x - 6\""
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -265,11 +257,19 @@
           "at": "2026-11-25T19:05:18Z"
         },
         {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:14:40Z",
+          "notes": "model answered \"x^3 + 4x^2 + x - 6\"; expected \"x^3 + 4x^2 + x - 6\""
+        },
+        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T10:14:56Z",
+          "at": "2026-11-26T11:14:41Z",
           "notes": "no problems found"
         }
       ]
