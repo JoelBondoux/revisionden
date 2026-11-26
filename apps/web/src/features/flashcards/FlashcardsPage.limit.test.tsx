@@ -166,4 +166,54 @@ describe('daily flashcard limit (F11)', () => {
     await new Promise((r) => setTimeout(r, 50));
     expect(sessions).toEqual([{}, { extra: 10 }]);
   });
+  it('starts a new session for "10 more" even when it brings back the same card (F11c)', async () => {
+    const sessions: unknown[] = [];
+    server.use(
+      http.post('*/v1/student/flashcards/sessions', async ({ request }) => {
+        sessions.push(await request.json().catch(() => ({})));
+        return HttpResponse.json(
+          { id: card(99).id, maxCards: 20, minCards: 5, xp: 20, rewardedLeftToday: 2 },
+          { status: 201 },
+        );
+      }),
+      http.post('*/v1/student/flashcards/sessions/:id/finish', () =>
+        HttpResponse.json({
+          completed: false,
+          reason: 'too_few_cards',
+          xpEarned: 0,
+          cardsCounted: 1,
+          rewardedLeftToday: 2,
+          progress: {
+            xpToday: 0,
+            totalXp: 0,
+            dailyGoalXp: 50,
+            goalMet: false,
+            streak: { current: 0, best: 0, skipDays: 0 },
+          },
+          newlyEarned: [],
+        }),
+      ),
+      http.get('*/v1/student/flashcards', ({ request }) => {
+        const extra = new URL(request.url).searchParams.get('extra');
+        return HttpResponse.json({
+          // The same card comes back (an Again card due again, for example).
+          due: [card(1)],
+          decks: [],
+          mine: [],
+          draftContent: true,
+          dueToday: 1,
+          backlog: extra === '10' ? 1 : 2,
+          doneToday: false,
+        });
+      }),
+    );
+    renderRoute('/cards');
+    await screen.findByText('Limit front 1');
+    await userEvent.click(screen.getByRole('button', { name: 'Show answer' }));
+    await userEvent.click(screen.getByRole('button', { name: /^Good/ }));
+    await userEvent.click(await screen.findByRole('button', { name: '10 more' }));
+    // A fresh session shows the card to review again, not the finished screen.
+    expect(await screen.findByRole('button', { name: 'Show answer' })).toBeInTheDocument();
+    await waitFor(() => expect(sessions).toEqual([{}, { extra: 10 }]));
+  });
 });
