@@ -187,6 +187,28 @@ describe('answer forms', () => {
     }
   });
 
+  it('a fraction may have spaces around the "/" and the minus, never inside a number', () => {
+    for (const text of ['3 / 8', ' 3/ 8', '- 3 / 8', '− 3 / 8']) {
+      expect(inForm(text, 'fraction'), text).toBe(true);
+      expect(inForm(text, 'simplest_fraction'), text).toBe(true);
+      expect(inForm(text, 'improper_fraction'), text).toBe(true);
+    }
+    for (const text of ['1 1/3', '1 1 / 3', '3 8/8', '3 /8 1']) {
+      expect(inForm(text, 'fraction'), text).toBe(false);
+      expect(inForm(text, 'improper_fraction'), text).toBe(false);
+    }
+  });
+
+  it('never joins digits across a run of spaces, tabs or non-breaking spaces', () => {
+    for (const text of ['1  1/3', '1  1 / 3', '1\t1/3', '1\u00a01/3', '1 \u00a0 1 / 3', '3  87']) {
+      for (const form of ['fraction', 'simplest_fraction', 'improper_fraction'] as const) {
+        expect(inForm(text, form), `${form} ${JSON.stringify(text)}`).toBe(false);
+      }
+    }
+    expect(inForm('3\u00a0/\u00a08', 'fraction')).toBe(true);
+    expect(inForm('3\t/ 8', 'fraction')).toBe(true);
+  });
+
   it('a simplest fraction is also in lowest terms', () => {
     for (const text of ['23/33', '-23/33', '49/20', '3']) {
       expect(inForm(text, 'simplest_fraction'), text).toBe(true);

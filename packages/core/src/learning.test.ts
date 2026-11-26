@@ -211,6 +211,12 @@ describe('marking', () => {
     expect(markNumeric(fraction, '3/8').correct).toBe(true);
     expect(markNumeric(fraction, '6/16').correct).toBe(true);
     expect(markNumeric(fraction, '0.375').correct).toBe(false);
+    expect(markNumeric(fraction, '3 / 8').correct).toBe(true);
+    expect(markNumeric({ value: '3/8', form: 'simplest_fraction' as const }, '3 / 8').correct).toBe(
+      true,
+    );
+    expect(markNumeric({ value: '4/3', form: 'fraction' as const }, '1 1/3').correct).toBe(false);
+    expect(markNumeric({ value: '11/3', form: 'fraction' as const }, '1 1/3').correct).toBe(false);
     expect(markNumeric({ value: '49/20', form: 'fraction' as const }, '2.45').correct).toBe(false);
     expect(markNumeric({ value: '49/20', form: 'fraction' as const }, '2 9/20').correct).toBe(
       false,
@@ -256,6 +262,25 @@ describe('marking', () => {
       expect(markNumeric(volume, given).correct, given).toBe(true);
     }
     expect(markNumeric(volume, '2500000 square centimetres').correct).toBe(false);
+  });
+
+  it('never reads a run of spaces between digits as nothing, with or without a form', () => {
+    for (const given of ['1  1 / 3', '1 \t 1/ 3']) {
+      expect(markNumeric({ value: '11/3' }, given).correct, given).toBe(false);
+      expect(markNumeric({ value: '11/3', form: 'fraction' as const }, given).correct).toBe(false);
+    }
+    expect(markNumeric({ value: '387' }, '3  87').correct).toBe(false);
+    expect(markNumeric({ value: '387' }, '3\u00a0\u00a087').correct).toBe(false);
+    for (const given of ['1  1/3', '1\t1/3', '1\u00a01/3']) {
+      // A mixed number is read as one without a form, and refused by every fraction form.
+      expect(markNumeric({ value: '4/3' }, given).correct, given).toBe(true);
+      expect(markNumeric({ value: '4/3', form: 'improper_fraction' as const }, given).correct).toBe(
+        false,
+      );
+      expect(markNumeric({ value: '13/3', form: 'fraction' as const }, given).correct).toBe(false);
+    }
+    expect(markNumeric({ value: '0.375' }, '3 / 8').correct).toBe(true);
+    expect(markNumeric({ value: '-0.375' }, '- 3 / 8').correct).toBe(true);
   });
 
   it('does not divide by zero in a fraction answer', () => {
