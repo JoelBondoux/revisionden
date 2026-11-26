@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { createRng } from './rng';
-import { batchOutcome, drawSample, sampleSize } from './review-sampling';
+import {
+  batchOutcome,
+  drawSample,
+  sampleSize,
+  samplingRule,
+  templateApproved,
+} from './review-sampling';
 
 describe('sampleSize', () => {
   it('reviews 10% of a large batch', () => {
@@ -70,5 +76,79 @@ describe('batchOutcome', () => {
 
   it('an empty sample cannot pass', () => {
     expect(batchOutcome([])).toBe('in_review');
+  });
+});
+
+// Decision 0010: template-only batches are sampled at 3%, at least 10.
+const templateItem = (overrides: Record<string, unknown> = {}) => ({
+  type: 'numeric',
+  template: { id: 'gcse-maths-h-n12-percentage-change', version: 2, seed: 1 },
+  verification: {
+    status: 'draft',
+    checks: [
+      { name: 'maths-engine', result: 'pass' },
+      {
+        name: 'template-approval',
+        result: 'pass',
+        tool: 'content-lead',
+        tool_version: 'gcse-maths-h-n12-percentage-change v2',
+      },
+    ],
+  },
+  ...overrides,
+});
+
+describe('template sampling (decision 0010)', () => {
+  it('reviews 3% of a template-only batch, at least 10', () => {
+    expect(sampleSize(1000, 'template')).toBe(30);
+    expect(sampleSize(300, 'template')).toBe(10);
+    expect(sampleSize(6, 'template')).toBe(6);
+  });
+
+  it('keeps the standard rule by default', () => {
+    expect(sampleSize(300)).toBe(30);
+    expect(sampleSize(300, 'standard')).toBe(30);
+  });
+
+  it('draws the template sample size from a template-only batch', () => {
+    expect(drawSample(batch(500), createRng(1), 'template')).toHaveLength(15);
+  });
+
+  it('approves an item from a template whose preview was approved and cross-check passed', () => {
+    expect(templateApproved(templateItem())).toBe(true);
+  });
+
+  it('does not count an unapproved template', () => {
+    const item = templateItem();
+    item.verification.checks = item.verification.checks.filter(
+      (c) => c.name !== 'template-approval',
+    );
+    expect(templateApproved(item)).toBe(false);
+  });
+
+  it('does not count an approval for another template version', () => {
+    expect(
+      templateApproved(
+        templateItem({
+          template: { id: 'gcse-maths-h-n12-percentage-change', version: 3, seed: 1 },
+        }),
+      ),
+    ).toBe(false);
+  });
+
+  it('does not count a template item whose cross-check failed', () => {
+    const item = templateItem();
+    item.verification.checks[0] = { name: 'maths-engine', result: 'fail' };
+    expect(templateApproved(item)).toBe(false);
+  });
+
+  it('does not count a hand-written item', () => {
+    expect(templateApproved(templateItem({ template: undefined }))).toBe(false);
+  });
+
+  it('uses the template rule only when every item is from an approved template', () => {
+    expect(samplingRule([templateItem(), templateItem()])).toBe('template');
+    expect(samplingRule([templateItem(), templateItem({ template: undefined })])).toBe('standard');
+    expect(samplingRule([])).toBe('standard');
   });
 });

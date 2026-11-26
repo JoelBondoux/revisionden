@@ -4,7 +4,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 
 ## gcse-maths-h-a4-double-brackets (gcse-maths-h-a4, 5 questions)
 
-### 1. Expand and simplify (x - 5)(3x - 4). Use ^ for powers.
+### 1. Expand and simplify (x - 5)(3x - 4). Use the Power key (^) for powers.
 
 - **Answer:** 3x^2 - 19x + 20
 - **Worked steps:** `(x - 5)(3x - 4)` → `3x^2 - 4x - 15x + 20` → `3x^2 - 19x + 20`
@@ -13,7 +13,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Marks (2):** M1 for at least three of the four terms correct; A1 for 3x^2 - 19x + 20
 - Seed 1, difficulty 3, `gcse-maths-h-a4-t-double-brackets-01`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
-### 2. Expand and simplify (x - 1)(x - 5). Use ^ for powers.
+### 2. Expand and simplify (x - 1)(x - 5). Use the Power key (^) for powers.
 
 - **Answer:** x^2 - 6x + 5
 - **Worked steps:** `(x - 1)(x - 5)` → `x^2 - 5x - x + 5` → `x^2 - 6x + 5`
@@ -22,7 +22,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Marks (2):** M1 for at least three of the four terms correct; A1 for x^2 - 6x + 5
 - Seed 2, difficulty 2, `gcse-maths-h-a4-t-double-brackets-02`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
-### 3. Expand and simplify (x - 4)(x - 8). Use ^ for powers.
+### 3. Expand and simplify (x - 4)(x - 8). Use the Power key (^) for powers.
 
 - **Answer:** x^2 - 12x + 32
 - **Worked steps:** `(x - 4)(x - 8)` → `x^2 - 8x - 4x + 32` → `x^2 - 12x + 32`
@@ -31,7 +31,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Marks (2):** M1 for at least three of the four terms correct; A1 for x^2 - 12x + 32
 - Seed 3, difficulty 2, `gcse-maths-h-a4-t-double-brackets-03`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
-### 4. Expand and simplify (2x - 3)(2x + 7). Use ^ for powers.
+### 4. Expand and simplify (2x - 3)(2x + 7). Use the Power key (^) for powers.
 
 - **Answer:** 4x^2 + 8x - 21
 - **Worked steps:** `(2x - 3)(2x + 7)` → `4x^2 + 14x - 6x - 21` → `4x^2 + 8x - 21`
@@ -40,7 +40,7 @@ Made by `pnpm content:templates` from the files in `content/items/gcse-maths-hig
 - **Marks (2):** M1 for at least three of the four terms correct; A1 for 4x^2 + 8x - 21
 - Seed 4, difficulty 3, `gcse-maths-h-a4-t-double-brackets-04`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
-### 5. Expand and simplify (x + 1)(2x - 3). Use ^ for powers.
+### 5. Expand and simplify (x + 1)(2x - 3). Use the Power key (^) for powers.
 
 - **Answer:** 2x^2 - x - 3
 - **Worked steps:** `(x + 1)(2x - 3)` → `2x^2 - 3x + 2x - 3` → `2x^2 - x - 3`

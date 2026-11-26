@@ -1,0 +1,60 @@
+{
+  "topic": "gcse-maths-h-a7",
+  "links": [
+    {
+      "title": "Higher – Functions",
+      "url": "https://www.bbc.co.uk/bitesize/topics/z3hv2p3/articles/zvd3wsg",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Higher – Functions – GCSE Maths Revision – BBC Bitesize",
+        "teaches": "Function notation, finding inverse functions by changing the subject, and composite functions such as gf(x) (Higher).",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Defining function notation",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/functions-and-proof/lessons/defining-function-notation",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a7-lp-evaluate"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Defining function notation GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can define function notation.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Finding the inverse of a function",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/functions-and-proof/lessons/finding-the-inverse-of-a-function",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a7-lp-inverse"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Finding the inverse of a function GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can find the inverse of a function.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Writing composite functions",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/functions-and-proof/lessons/writing-composite-functions",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a7-lp-composite"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Writing composite functions GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can write a composite function both numerically and algebraically.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

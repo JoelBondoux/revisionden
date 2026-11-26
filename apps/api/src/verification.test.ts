@@ -234,6 +234,68 @@ async function createBatch(headers: Record<string, string>, n = 400, approvalAt:
   return (await res.json()) as { id: string; sample: string[]; sampleSize: number };
 }
 
+const templateSnapshot = (i: number, approved = true) => ({
+  type: 'numeric',
+  prompt: `Template question ${i}?`,
+  template: { id: 'fixture-template', version: 1, seed: i + 1 },
+  verification: {
+    status: 'draft',
+    checks: [
+      { name: 'maths-engine', result: 'pass' },
+      ...(approved
+        ? [
+            {
+              name: 'template-approval',
+              result: 'pass',
+              tool: 'content-lead',
+              tool_version: 'fixture-template v1',
+            },
+          ]
+        : []),
+    ],
+  },
+});
+
+async function postBatch(headers: Record<string, string>, items: unknown[]) {
+  const res = await t.app.request(
+    '/v1/review/batches',
+    jsonRequest('POST', { title: 'Template batch', items }, headers),
+  );
+  expect(res.status).toBe(201);
+  return (await res.json()) as { sample: string[]; sampleSize: number; samplingRule: string };
+}
+
+describe('template batch sampling (decision 0010)', () => {
+  const templateItems = (n: number, approved = true) =>
+    Array.from({ length: n }, (_, i) => ({
+      itemId: `fixture-template-item-${i}`,
+      itemVersion: 1,
+      snapshot: templateSnapshot(i, approved),
+    }));
+
+  it('samples 3% (at least 10) when every item is from an approved template', async () => {
+    const headers = await reviewer();
+    const batch = await postBatch(headers, templateItems(300));
+    expect(batch.samplingRule).toBe('template');
+    expect(batch.sample).toHaveLength(10);
+  });
+
+  it('keeps 10% (at least 30) for a batch that mixes in a hand-written item', async () => {
+    const headers = await reviewer();
+    const items = [...templateItems(299), ...batchItems(1)];
+    const batch = await postBatch(headers, items);
+    expect(batch.samplingRule).toBe('standard');
+    expect(batch.sample).toHaveLength(30);
+  });
+
+  it('keeps 10% (at least 30) when the template preview is not approved', async () => {
+    const headers = await reviewer();
+    const batch = await postBatch(headers, templateItems(300, false));
+    expect(batch.samplingRule).toBe('standard');
+    expect(batch.sample).toHaveLength(30);
+  });
+});
+
 describe('batch sampling', () => {
   it('draws 10% (at least 30) plus every item that needs approval, replayably', async () => {
     const headers = await reviewer();

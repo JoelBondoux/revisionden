@@ -54,3 +54,32 @@ describe('BarChart', () => {
     expect(screen.getByRole('img', { name: 'Mon: 1 h' })).toBeInTheDocument();
   });
 });
+
+describe('BarChart animation (K5)', () => {
+  it('grows the bars from the baseline once, with a stagger within one second', async () => {
+    const { fakeMotionEnv } = await import('./motionTestEnv');
+    const { step, show, wrap } = fakeMotionEnv();
+    const { container } = render(<BarChart title="XP per day" buckets={buckets} unit="XP" />, {
+      wrapper: wrap,
+    });
+    const plot = () => container.querySelector('.bar-chart')!;
+    expect(plot()).toHaveClass('bar-chart--waiting');
+    show();
+    step(0);
+    expect(plot()).toHaveClass('bar-chart--growing');
+    const delays = [...container.querySelectorAll<SVGPathElement>('.bar-chart__fill')].map((p) =>
+      parseInt(p.style.getPropertyValue('--stats-delay'), 10),
+    );
+    expect(delays[0]).toBe(0);
+    expect(Math.max(...delays) + 700).toBeLessThanOrEqual(1000);
+    step(1000);
+    expect(plot()).not.toHaveClass('bar-chart--growing');
+    // Screen readers and the table always have the final values.
+    expect(screen.getByRole('img', { name: 'Mon: 60 XP' })).toBeInTheDocument();
+  });
+
+  it('does not animate without IntersectionObserver or with reduced motion', () => {
+    const { container } = render(<BarChart title="XP per day" buckets={buckets} unit="XP" />);
+    expect(container.querySelector('.bar-chart')!.className).toBe('bar-chart');
+  });
+});
