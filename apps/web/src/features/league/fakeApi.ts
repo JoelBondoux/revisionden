@@ -26,6 +26,7 @@ export function fakeLeagueApi(over: Partial<LeagueApi> = {}): LeagueApi {
     parentBlock: vi.fn(async () => undefined),
     unblock: vi.fn(async () => undefined),
     setLabel: vi.fn(async () => undefined),
+    closeReport: vi.fn(async () => undefined),
     ...over,
   };
 }

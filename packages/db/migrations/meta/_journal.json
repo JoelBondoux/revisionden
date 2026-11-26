@@ -218,6 +218,13 @@
       "when": 1795701789738,
       "tag": "0030_friends_league",
       "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "7",
+      "when": 1795702396220,
+      "tag": "0031_league_weeks",
+      "breakpoints": true
     }
   ]
 }

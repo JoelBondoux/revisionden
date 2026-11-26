@@ -77,6 +77,7 @@ describe('league API client', () => {
     await api.parentBlock('s1', 'f1');
     await api.unblock('s1', 'b1');
     await api.setLabel('s1', 'f1', 'from chess');
+    await api.closeReport('s1', 'rep 1');
     expect(calls.map((c) => [c.init.method, c.url.replace(base, '')])).toEqual([
       [undefined, '/v1/students/s1/friends'],
       ['PUT', '/v1/students/s1/friends/allowed'],
@@ -86,6 +87,7 @@ describe('league API client', () => {
       ['POST', '/v1/students/s1/friends/f1/block'],
       ['DELETE', '/v1/students/s1/friends/blocks/b1'],
       ['PUT', '/v1/students/s1/friends/f1/label'],
+      ['POST', '/v1/students/s1/friends/reports/rep%201/close'],
     ]);
   });
 

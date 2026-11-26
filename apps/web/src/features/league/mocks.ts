@@ -34,4 +34,5 @@ export const leagueHandlers: RequestHandler[] = [
   http.delete('*/v1/students/:id/friends/:otherId', gone),
   http.post('*/v1/students/:id/friends/:otherId/block', gone),
   http.put('*/v1/students/:id/friends/:otherId/label', ok),
+  http.post('*/v1/students/:id/friends/reports/:reportId/close', ok),
 ];

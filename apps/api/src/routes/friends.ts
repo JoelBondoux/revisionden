@@ -25,7 +25,9 @@ import {
   MAX_WAITING_REQUESTS,
   REPORT_REASONS,
   WRONG_CODE_TRIES_PER_HOUR,
+  LEAGUE_WEEKS_KEPT,
   formatFriendCode,
+  previousLeagueWeeks,
   formatTitle,
   newFriendCode,
   normaliseFriendCode,
@@ -38,6 +40,7 @@ import {
   friendReports,
   friendRequests,
   friendships,
+  leagueWeeks,
   students,
   type Database,
 } from '@revisionden/db';
@@ -53,6 +56,8 @@ import { isId } from '../validation';
 import { leagueFor } from './friends-league';
 
 const HOUR_MS = 60 * 60 * 1000;
+/** 12 months after a report is closed. */
+const REPORT_KEPT_DAYS = 366;
 const DAY_MS = 24 * HOUR_MS;
 
 export interface FriendDeps {
@@ -111,7 +116,7 @@ async function friendshipIds(db: Database, studentId: string): Promise<string[]>
 }
 
 /** Brothers and sisters with friends on; none when friends is off for this child. */
-async function siblings(db: Database, me: StudentRow): Promise<StudentRow[]> {
+export async function siblings(db: Database, me: StudentRow): Promise<StudentRow[]> {
   if (!me.friendsAllowed) return [];
   return db
     .select()
@@ -552,11 +557,13 @@ export function parentFriendRoutes(deps: FriendDeps) {
       const reporter = await loadStudent(db, r.reporterId);
       const reported = await loadStudent(db, r.reportedId);
       reports.push({
+        id: r.id,
         direction: r.reporterId === self.id ? 'made' : 'about',
         reason: r.reason,
         reporter: reporter?.nickname ?? null,
         reported: reported?.nickname ?? null,
         at: r.createdAt.toISOString(),
+        closed: r.closedAt !== null,
       });
     }
     return c.json({
@@ -654,6 +661,20 @@ export function parentFriendRoutes(deps: FriendDeps) {
       .where(eq(friendRequests.id, r.id));
     await logFor(db, self, 'friend_declined', now, c.var.parent.position);
     return c.json({ status: 'declined' });
+  });
+
+  // The reporting child's parents mark a report as dealt with; it is then kept 12 months.
+  app.post('/:id/friends/reports/:reportId/close', async (c) => {
+    const self = await child(c.var.parent.familyId, c.req.param('id'));
+    const reportId = c.req.param('reportId');
+    if (!isId(reportId)) throw notFound('Report not found');
+    const closed = await db
+      .update(friendReports)
+      .set({ closedAt: clock.now() })
+      .where(and(eq(friendReports.id, reportId), eq(friendReports.reporterId, self.id)))
+      .returning({ id: friendReports.id });
+    if (closed.length === 0) throw notFound('Report not found');
+    return c.json({ closed: true });
   });
 
   app.delete('/:id/friends/blocks/:otherId', async (c) => {
@@ -791,7 +812,20 @@ export async function deleteExpiredFriendRecords(db: Database, now: Date) {
     .delete(friendRequests)
     .where(or(lt(friendRequests.endedAt, dayAgo), lt(friendRequests.expiresAt, dayAgo)))
     .returning({ id: friendRequests.id });
+  // League results are kept for the last 8 finished weeks; the win count stays on the student.
+  const oldest = previousLeagueWeeks(now, LEAGUE_WEEKS_KEPT).at(-1)!.start;
+  const weeks = await db
+    .delete(leagueWeeks)
+    .where(lt(leagueWeeks.weekStart, oldest))
+    .returning({ id: leagueWeeks.studentId });
+  // Reports are kept 12 months after they are closed (docs/FRIENDS_LEAGUE.md section 8).
+  const reports = await db
+    .delete(friendReports)
+    .where(lt(friendReports.closedAt, new Date(now.getTime() - REPORT_KEPT_DAYS * DAY_MS)))
+    .returning({ id: friendReports.id });
   return {
+    friendReportsDeleted: reports.length,
+    leagueWeeksDeleted: weeks.length,
     friendCodesDeleted: codes.length,
     friendCodeTriesDeleted: tries.length,
     friendRequestsDeleted: requests.length,

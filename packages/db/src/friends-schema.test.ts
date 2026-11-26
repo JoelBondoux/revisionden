@@ -37,11 +37,14 @@ const lower = (a: string, b: string) => (a < b ? [a, b] : [b, a]);
 
 describe('friends tables (FL)', () => {
   it('has friends off and the league visible by default', async () => {
-    const { rows } = await client.query<{ friends_allowed: boolean; league_hidden: boolean }>(
-      `select friends_allowed, league_hidden from students where id = $1`,
-      [ids.nova],
-    );
-    expect(rows[0]).toEqual({ friends_allowed: false, league_hidden: false });
+    const { rows } = await client.query<{
+      friends_allowed: boolean;
+      league_hidden: boolean;
+      league_wins: number;
+    }>(`select friends_allowed, league_hidden, league_wins from students where id = $1`, [
+      ids.nova,
+    ]);
+    expect(rows[0]).toEqual({ friends_allowed: false, league_hidden: false, league_wins: 0 });
   });
 
   it('stores a friendship once, lower id first', async () => {
@@ -79,6 +82,20 @@ describe('friends tables (FL)', () => {
     ).rejects.toThrow();
   });
 
+  it('keeps one league result per child per week', async () => {
+    await client.query(
+      `insert into league_weeks (student_id, week_start, xp, place, won) values ($1, '2026-11-16', 120, 1, true)`,
+      [ids.quill],
+    );
+    await expect(
+      client.query(
+        `insert into league_weeks (student_id, week_start, xp, place, won) values ($1, '2026-11-16', 5, 2, false)`,
+        [ids.quill],
+      ),
+    ).rejects.toThrow();
+    await client.query(`delete from league_weeks where student_id = $1`, [ids.quill]);
+  });
+
   it('deletes friendships, codes, requests, blocks and reports with either child', async () => {
     await client.query(
       `insert into friend_codes (student_id, code_hash, expires_at) values ($1, 'h1', now())`,
@@ -97,6 +114,10 @@ describe('friends tables (FL)', () => {
        select id, family_id, false from students where id = $1`,
       [ids.nova],
     );
+    await client.query(
+      `insert into league_weeks (student_id, week_start, xp, won) values ($1, '2026-11-16', 0, false)`,
+      [ids.nova],
+    );
     await client.query(`delete from students where id = $1`, [ids.nova]);
     for (const table of [
       'friendships',
@@ -105,6 +126,7 @@ describe('friends tables (FL)', () => {
       'friend_blocks',
       'friend_reports',
       'friend_code_tries',
+      'league_weeks',
     ]) {
       const { rows } = await client.query<{ n: number }>(`select count(*)::int as n from ${table}`);
       expect(rows[0]!.n, table).toBe(0);

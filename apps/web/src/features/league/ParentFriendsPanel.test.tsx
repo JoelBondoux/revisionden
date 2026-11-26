@@ -59,6 +59,29 @@ describe("a parent's friends card for one child", () => {
   });
 });
 
+describe('closing a report', () => {
+  it("lets the reporting child's parent mark it as dealt with", async () => {
+    const api = fakeLeagueApi();
+    show(api);
+    await userEvent.click(await screen.findByRole('button', { name: 'Mark as dealt with' }));
+    expect(api.closeReport).toHaveBeenCalledWith('s1', 'rep-1');
+  });
+
+  it('shows a closed report as dealt with, with no button', async () => {
+    const base = sampleParentFriends();
+    show(
+      fakeLeagueApi({
+        getChildFriends: async () => ({
+          ...base,
+          reports: base.reports.map((r) => ({ ...r, closed: true })),
+        }),
+      }),
+    );
+    expect(await screen.findByText(/dealt with/)).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Mark as dealt with' })).not.toBeInTheDocument();
+  });
+});
+
 describe('the parent friends page', () => {
   it('opens from the parent home link with the child named', async () => {
     const { renderRoute } = await import('../../test/render');

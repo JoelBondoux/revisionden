@@ -5,6 +5,8 @@ import {
   WIN_MIN_XP,
   formatFriendCode,
   leagueWeek,
+  leagueWeekEndsAt,
+  previousLeagueWeeks,
   leagueXp,
   newFriendCode,
   normaliseFriendCode,
@@ -139,4 +141,24 @@ describe('a parent label for a friend', () => {
 
 it('caps friends at 10', () => {
   expect(MAX_FRIENDS).toBe(10);
+});
+
+describe('earlier weeks to settle', () => {
+  it('lists the finished weeks before this one, most recent first', () => {
+    expect(previousLeagueWeeks(at('2026-11-26T12:00:00Z'), 2)).toEqual([
+      { start: '2026-11-16', end: '2026-11-22' },
+      { start: '2026-11-09', end: '2026-11-15' },
+    ]);
+  });
+
+  it('gives the moment a week ends in UK time, for "friends by then"', () => {
+    // Sunday 22 November 2026 ends at midnight GMT.
+    expect(leagueWeekEndsAt({ start: '2026-11-16', end: '2026-11-22' }).toISOString()).toBe(
+      '2026-11-23T00:00:00.000Z',
+    );
+    // In summer time it ends at 23:00 UTC on the Sunday.
+    expect(leagueWeekEndsAt({ start: '2026-06-22', end: '2026-06-28' }).toISOString()).toBe(
+      '2026-06-28T23:00:00.000Z',
+    );
+  });
 });

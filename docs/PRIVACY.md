@@ -81,8 +81,9 @@ their family.
 - **Reports**: both families' parents and AppDeck support see the fixed reason, the date and the
   two nicknames (AppDeck also the reported avatar code), so repeated abuse can be acted on. Never
   free text or ids.
-- **Retention and deletion**: codes and requests go within 24 hours of use or expiry; friendships,
-  blocks and reports are deleted with either child; all of it is in the family export (code hashes
+- **Retention and deletion**: codes and requests go within 24 hours of use or expiry; friendships
+  and blocks are deleted with either child; a report is deleted 12 months after the reporting
+  child's parent marks it as dealt with, or with either child; all of it is in the family export (code hashes
   left out).
 - **Risks** we weigh in the DPIA: pressure or upset from competition (no league pushes, no "last
   place", effort-only praise), unwanted contact (codes in person only, two-family approval, block),

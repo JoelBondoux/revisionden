@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { ApiError } from '../../api/client';
 import { LeagueScreen } from './LeaguePage';
 import { fakeLeagueApi } from './fakeApi';
-import { sampleFriends } from './fixtures';
+import { sampleFriends, sampleLeague } from './fixtures';
 import type { LeagueApi } from './leagueApi';
 
 const show = (api: LeagueApi = fakeLeagueApi()) =>
@@ -128,5 +128,28 @@ describe('when friends are not available yet', () => {
   it('says so on the league page', async () => {
     show(fakeLeagueApi({ getFriends: () => Promise.reject(new ApiError('http', 'x', 404)) }));
     expect(await screen.findByText("Friends aren't available yet.")).toBeInTheDocument();
+  });
+});
+
+describe("last week's result", () => {
+  it('celebrates topping the league last week', async () => {
+    show(
+      fakeLeagueApi({
+        getLeague: async () => sampleLeague({ lastWeek: { xp: 320, place: 1, won: true } }),
+      }),
+    );
+    const won = await screen.findByText('You topped your league last week with 320 XP!');
+    expect(won).toHaveAttribute('role', 'status');
+  });
+
+  it('says where the student finished, kindly', async () => {
+    show(
+      fakeLeagueApi({
+        getLeague: async () => sampleLeague({ lastWeek: { xp: 90, place: 3, won: false } }),
+      }),
+    );
+    expect(
+      await screen.findByText('Last week you were 3rd with 90 XP. Nice effort!'),
+    ).toBeInTheDocument();
   });
 });

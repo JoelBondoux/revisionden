@@ -75,3 +75,10 @@
   font-size: 1.4em;
   letter-spacing: 0.1em;
 }
+
+.league-last {
+  margin: 0;
+}
+.league-last--won {
+  font-weight: 700;
+}

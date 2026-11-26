@@ -26,6 +26,7 @@ describe('league shapes', () => {
       LeagueResponseSchema.parse({
         week: { start: '2026-11-23', end: '2026-11-29' },
         hidden: false,
+        lastWeek: { xp: 120, place: 1, won: true },
         entries: [
           {
             nickname: 'A',

@@ -208,6 +208,8 @@ export const students = pgTable(
     // the child can hide from the league.
     friendsAllowed: boolean('friends_allowed').notNull().default(false),
     leagueHidden: boolean('league_hidden').notNull().default(false),
+    // Weekly league wins so far (FL PR 3); lasts after league_weeks rows are cleared.
+    leagueWins: integer('league_wins').notNull().default(0),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },
@@ -362,6 +364,25 @@ export const friendReports = pgTable(
       sql`${t.reason} in ('upsetting_name', 'do_not_know', 'pressured', 'other')`,
     ),
   ],
+);
+
+/**
+ * A child's friends league result for a finished week (FL PR 3): kept 8 weeks; each win also
+ * counts towards the league rewards (weeksTopOfLeague).
+ */
+export const leagueWeeks = pgTable(
+  'league_weeks',
+  {
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    weekStart: date('week_start').notNull(),
+    xp: integer('xp').notNull(),
+    place: integer('place'),
+    won: boolean('won').notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [primaryKey({ columns: [t.studentId, t.weekStart] })],
 );
 
 export const enrolments = pgTable(
