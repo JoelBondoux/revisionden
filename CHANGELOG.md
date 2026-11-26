@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- In the interactive factorising lesson, picking the wrong pair of numbers now shows the gaps or the spare strips, instead of drawing a different shape.
 - Fixed: finishing the "10 more" flashcards now counts as a finished session and earns its XP, instead of saying you left early.
 - Friends league (while it's being tried in development): topping your league for a week now earns the league rewards, and the league page cheers last week's result.
 - A new friends league, off until a parent turns it on. Children add friends with a one-time code shared in person, and a parent in each family approves. You see this week's league from Me, or from "You're 2nd this week" on Home. Friends only ever see a nickname, avatar, title and this week's XP, with no chat. Parents manage friends from the child's card.
@@ -240,6 +241,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- W8b (Codex review of #269): the area model keeps exactly b strips and c unit squares for any pair, outlining missing slots or leaving spare strips over (`fitStrips`); pilot steps are never picked as warm-ups or similar-question retries; "Did this help?" is one row per student and item, enforced by a unique partial index and an upsert (migration 0033).
 - Use my phone instead (E10): `POST /v1/device/unlock/options` takes `usePhone` and adds `hints: ['hybrid']`; the unlock screens offer the phone on computers and tablets and after no passkey was found, with plain messages for hybrid failures. Decision 0007 records the owner's choice.
 - Daily flashcard limit (F11, owner): `packages/core/src/card-limit.ts` (`DAILY_CARD_LIMIT` 20, `EXTRA_CARDS` 10, `cardsLeftToday`, `pickTodaysCards`; `urgency` exported from spaced-repetition). `GET /v1/student/flashcards` returns today's cards only, with `dueToday`, `backlog`, `doneToday`, and takes `?extra=`; `GET /v1/student/cards/due` counts today's remaining. Reviewed today = distinct cards last reviewed today (UK date); no migration. Web: "Done for today!" with "10 more".
 - Power switch (F9b, owner): a tap on any power in `MathText` switches every power on screen between raised and ^ (a shared store, remembered in `revisionden.powersSwitched`); computing starts with ^. The tap stops the event, so it never chooses an answer or turns a card. E2E tap test on a flashcard in `e2e/tests/powers.spec.ts`. Also fixes two F9 review findings: `2^(3)^2` now nests as 2 to the power 3^2, and read aloud and screen-reader words for powers now come from `parsePowers`, so 10^2.5 and 10^−3 are read as "to the power 2.5" and "to the power minus 3".

@@ -119,6 +119,33 @@ export function areaModelLayout(pair: AreaModelPair): AreaModelLayout {
   };
 }
 
+export interface StripFit {
+  /** Strips placed down the right side (up to q). */
+  right: number;
+  /** Strips placed along the bottom (up to p). */
+  bottom: number;
+  /** Slots in the frame with no strip to fill them: shown as outlines. */
+  missing: { side: 'right' | 'bottom'; index: number }[];
+  /** Strips left over once the frame is full: shown to the side. */
+  extra: number;
+}
+
+/**
+ * Where the b x strips go for a chosen pair (W8b, Codex review). The frame for p and q has q
+ * slots on the right and p along the bottom. The strips fill the right first, then the bottom.
+ * Tiles are never added or removed: right + bottom + extra is always b, so a wrong pair shows its
+ * gaps (missing) or its spares (extra) rather than a different rectangle.
+ */
+export function fitStrips(b: number, pair: AreaModelPair): StripFit {
+  const [p, q] = sorted(pair);
+  const right = Math.min(b, q);
+  const bottom = Math.min(b - right, p);
+  const missing: StripFit['missing'] = [];
+  for (let i = right; i < q; i += 1) missing.push({ side: 'right', index: i });
+  for (let i = bottom; i < p; i += 1) missing.push({ side: 'bottom', index: i });
+  return { right, bottom, missing, extra: b - right - bottom };
+}
+
 export type AreaModelTile = 'square' | 'strip' | 'unit';
 
 /** What a tile is and how it adds up to its term, for the quadratic on screen. */

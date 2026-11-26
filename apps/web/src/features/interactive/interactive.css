@@ -74,6 +74,13 @@
 .area-tile--unit {
   fill: var(--color-streak);
 }
+.area-slot--missing {
+  fill: none;
+  stroke: var(--color-text);
+  stroke-width: 2;
+  stroke-dasharray: 4 3;
+}
+
 .area-tile--faded {
   opacity: 0.4;
 }
@@ -146,7 +153,8 @@
 }
 
 @media (forced-colors: active) {
-  .area-tile {
+  .area-tile,
+  .area-slot--missing {
     stroke: CanvasText;
   }
   .area-term--lit {

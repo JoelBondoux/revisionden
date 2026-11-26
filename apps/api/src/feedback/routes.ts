@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { and, desc, eq, gt, inArray, isNotNull, isNull, notInArray } from 'drizzle-orm';
+import { and, desc, eq, gt, inArray, isNotNull, isNull, notInArray, sql } from 'drizzle-orm';
 import { bugReward } from '@revisionden/core';
 import { z } from 'zod';
 import {
@@ -180,16 +180,9 @@ export function studentFeedbackRoutes({ db, clock }: FeedbackDeps) {
     return db.transaction(async (tx) => {
       const [item] = await tx.select({ id: items.id }).from(items).where(eq(items.id, itemId));
       if (!item) throw notFound('That question no longer exists');
-      await tx
-        .delete(feedback)
-        .where(
-          and(
-            eq(feedback.studentId, studentId),
-            eq(feedback.itemId, itemId),
-            inArray(feedback.kind, [...LESSON_FEEDBACK_KINDS]),
-          ),
-        );
       const now = clock.now();
+      // One answer per student and item, enforced by the feedback_lesson_tap_unique partial
+      // index; the WHERE here repeats its predicate so Postgres can use it (W8b).
       const [row] = await tx
         .insert(feedback)
         .values({
@@ -200,6 +193,11 @@ export function studentFeedbackRoutes({ db, clock }: FeedbackDeps) {
           itemId,
           createdAt: now,
           updatedAt: now,
+        })
+        .onConflictDoUpdate({
+          target: [feedback.studentId, feedback.itemId],
+          targetWhere: sql`${feedback.kind} in ('lesson_helped', 'lesson_not_helped')`,
+          set: { kind, updatedAt: now },
         })
         .returning();
       return row!;

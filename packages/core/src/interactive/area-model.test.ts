@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   AREA_MODEL_LIMITS,
   areaModelLayout,
+  fitStrips,
   checkAreaModelPair,
   correctPair,
   factorPairs,
@@ -171,5 +172,31 @@ describe('what each tile is, in words', () => {
     expect(tileExplanation('strip', { b: 1, c: 0 })).toBe(
       'An x strip. It is x by 1, so its area is x. There is just 1: x.',
     );
+  });
+});
+
+describe('fitting the x strips to a chosen pair (never adding or removing tiles)', () => {
+  it('fills both sides exactly for the right pair', () => {
+    expect(fitStrips(5, [2, 3])).toEqual({ right: 3, bottom: 2, missing: [], extra: 0 });
+  });
+
+  it('keeps all b strips and outlines the missing slots when the pair adds to more than b', () => {
+    // x² + 5x + 6 with 1 and 6: the frame wants 7 strips, there are only 5.
+    const fit = fitStrips(5, [1, 6]);
+    expect(fit.right + fit.bottom + fit.extra).toBe(5);
+    expect(fit).toEqual({
+      right: 5,
+      bottom: 0,
+      missing: [
+        { side: 'right', index: 5 },
+        { side: 'bottom', index: 0 },
+      ],
+      extra: 0,
+    });
+  });
+
+  it('keeps all b strips and leaves the spare ones over when the pair adds to less than b', () => {
+    // x² + 5x + 4 with 2 and 2: the frame takes 4 strips, one is left over.
+    expect(fitStrips(5, [2, 2])).toEqual({ right: 2, bottom: 2, missing: [], extra: 1 });
   });
 });
