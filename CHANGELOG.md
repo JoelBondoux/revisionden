@@ -223,7 +223,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
-- Avatar motion (E9): `AvatarSvg` `motion` prop (idle breathing, blinks, look around; nod, hop and hmm reactions), `paused`, and the `useAvatarMotion` hook. Whole layer groups move by CSS transforms, so every item combination moves together; still with reduced motion and paused in a hidden tab.
+- Avatar motion (E9): `AvatarSvg` `motion` prop (idle breathing, blinks, look around; nod, hop, hmm and tap reactions), `paused`, and the `useAvatarMotion` hook. Whole layer groups move by CSS transforms, so every item combination moves together; still with reduced motion and paused in a hidden tab.
 
 - Learn more targets (Q6b): `LearnItem.contentId` (from `items.content_id`) and `Flashcard.contentId` / `Flashcard.learningPoint` (from the card's item), so Learn more matches the exact item, then its learning point, then the topic, in lessons and on the flashcard Explain panel. Test `apps/api/src/learn-more-targets.test.ts`.
 - Oak pupil pages (Q6c, owner decision 2026-11-26): all 90 Oak learn links (84 lessons) switched from the teacher page to the pupil lesson page `/pupils/lessons/<lesson>/overview`, each re-read and match-checked (title as fetched, lesson outcome, Year 10 or 11, lesson video present, no sign-in); none kept as a teacher page. The validator refuses any other Oak path unless the link is marked `no_pupil_page: true` (new schema field, only on an Oak `/teachers/` page). The CI title check already reads pupil pages; a test now guards it.

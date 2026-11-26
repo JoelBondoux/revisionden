@@ -285,16 +285,16 @@
 
 /* Idle: breathing with a little bounce, a blink now and then, a slow look around. */
 .avatar-svg[data-motion='idle'] [data-motion-part='figure'] {
-  animation: avatar-breathe 6.4s ease-in-out infinite;
+  animation: avatar-breathe calc(var(--motion-pulse) * 4) ease-in-out infinite;
 }
 
 .avatar-svg[data-motion='idle'] [data-motion-part='head'],
 .avatar-svg[data-motion='idle'] [data-motion-part='head-back'] {
-  animation: avatar-look 9s ease-in-out infinite;
+  animation: avatar-look calc(var(--motion-pulse) * 5.5) ease-in-out infinite;
 }
 
 .avatar-svg[data-motion='idle'] [data-motion-part='eyes'] {
-  animation: avatar-blink 5.2s ease-in-out infinite;
+  animation: avatar-blink calc(var(--motion-pulse) * 3.25) ease-in-out infinite;
 }
 
 /* Reactions play once. */
@@ -322,6 +322,11 @@
 
 .avatar-svg[data-motion='hmm'] [data-motion-part='eyes'] {
   animation: avatar-glance 1400ms var(--ease-out) both;
+}
+
+/* Tap: a quick squash and pop. */
+.avatar-svg[data-motion='tap'] [data-motion-part='figure'] {
+  animation: avatar-tap 450ms var(--ease-spring) both;
 }
 
 /* Questions and Test mode: no idle loop (reactions still play). */
@@ -455,6 +460,19 @@
   25%,
   75% {
     transform: translate(-1.5px, -1px);
+  }
+}
+
+@keyframes avatar-tap {
+  0%,
+  100% {
+    transform: none;
+  }
+  35% {
+    transform: scale(1.05, 0.93);
+  }
+  70% {
+    transform: scale(0.98, 1.03);
   }
 }
 

@@ -87,7 +87,7 @@ Tags: #product #rules #limits #defaults
 - New children start from a Boy, Girl or Neutral look (Neutral preselected); only the avatar code
   is stored, never a gender. A newly linked device offers "Make it yours" (with "Maybe later").
 - Avatar motion (E9, 2026-11-26): `AvatarSvg` takes `motion` (`idle`, `nod` right answer, `hop`
-  goal or level, `hmm` wrong answer, `still` default) and `paused` (questions and Test mode: no
+  goal or level, `hmm` wrong answer, `tap`, `still` default) and `paused` (questions and Test mode: no
   idle loop, reactions still play); `useAvatarMotion` in `features/avatar/motion.ts`. Whole parts
   (figure, head, eyes, mouth) move by CSS transforms, so any outfit moves together. Still with
   reduced motion; paused in a hidden tab. Placement in the nav is J15b. `docs/GAME_FEEL.md`.

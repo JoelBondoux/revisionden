@@ -42,6 +42,16 @@ describe('useAvatarMotion', () => {
     expect(result.current.props.motion).toBe('still');
   });
 
+  it('has a quick tap reaction', () => {
+    const { result } = renderHook(() => useAvatarMotion({ reducedMotion: () => false }));
+    act(() => result.current.react('tap'));
+    expect(result.current.props.motion).toBe('tap');
+    act(() => {
+      vi.advanceTimersByTime(REACTION_MS.tap);
+    });
+    expect(result.current.props.motion).toBe('idle');
+  });
+
   it('passes paused through, for questions and Test mode (reactions still play)', () => {
     const { result } = renderHook(() =>
       useAvatarMotion({ paused: true, reducedMotion: () => false }),
@@ -63,6 +73,14 @@ describe('avatar motion styles', () => {
     for (const body of frames) {
       const props = [...body.matchAll(/([a-z-]+):/g)].map((m) => m[1]);
       for (const p of props) expect(p).toBe('transform');
+    }
+  });
+
+  it('gives every reaction an animation as long as REACTION_MS says', () => {
+    for (const [kind, ms] of Object.entries(REACTION_MS)) {
+      expect(css, kind).toMatch(
+        new RegExp(`\\[data-motion='${kind}'\\][^{]*\\{\\s*animation: avatar-[\\w-]+ ${ms}ms`),
+      );
     }
   });
 

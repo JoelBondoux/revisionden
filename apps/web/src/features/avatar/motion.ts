@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
  * small look around and bounce); the reactions play once and go back to idle. All motion is CSS
  * transforms on whole layer groups (see avatar.css), so it works whatever the avatar wears.
  */
-export type AvatarReaction = 'nod' | 'hop' | 'hmm';
+export type AvatarReaction = 'nod' | 'hop' | 'hmm' | 'tap';
 export type AvatarMotion = 'idle' | 'still' | AvatarReaction;
 
 /** How long each reaction plays; matches the animation lengths in avatar.css. */
@@ -13,6 +13,7 @@ export const REACTION_MS: Record<AvatarReaction, number> = {
   nod: 700,
   hop: 900,
   hmm: 1400,
+  tap: 450,
 };
 
 const browserReducedMotion = () => {
@@ -37,7 +38,7 @@ export interface AvatarMotionProps {
 
 /**
  * Props for AvatarSvg plus `react(kind)`: nod for a right answer, hop for a goal or level,
- * hmm for a wrong answer. With reduced motion the avatar stays still and reactions do nothing.
+ * hmm for a wrong answer, tap when the avatar is tapped. With reduced motion the avatar stays still and reactions do nothing.
  */
 export function useAvatarMotion({
   paused = false,
