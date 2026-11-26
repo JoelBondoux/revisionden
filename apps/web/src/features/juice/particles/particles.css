@@ -1,0 +1,49 @@
+/* Particle bursts (J17). Moved by the Web Animations API (transform and opacity only). */
+.fx-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  overflow: hidden;
+}
+.fx-particle,
+.fx-ring,
+.fx-word {
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform, opacity;
+}
+.fx-particle {
+  width: var(--fx-size, 14px);
+  height: var(--fx-size, 14px);
+}
+.fx-particle svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+.fx-ring {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 4px solid var(--fx-ring, #fff);
+  opacity: 0;
+}
+.fx-word {
+  font-family: var(--font-display, inherit);
+  font-size: 2.1rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: #ffe14d;
+  -webkit-text-stroke: 2px #111;
+  paint-order: stroke;
+  white-space: nowrap;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fx-layer {
+    display: none;
+  }
+}
