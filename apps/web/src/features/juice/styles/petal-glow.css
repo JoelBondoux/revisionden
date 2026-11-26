@@ -59,7 +59,12 @@
 }
 
 :root[data-effect-style='petal-glow'] .float-up {
-  color: #b02e6a;
+  font-family: var(--font-heading);
+  color: var(--color-primary);
+}
+
+:root[data-effect-style='petal-glow'][data-theme='dark'] .float-up {
+  color: var(--color-primary-edge);
 }
 
 /* ---------- Button tiles and the page transition ---------- */

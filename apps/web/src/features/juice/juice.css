@@ -69,6 +69,20 @@
   animation-name: float-up-short;
 }
 
+/* J16b (Codex review of train #361): the lesson sits on the look's own page, light or dark, so
+   "+XP" there uses the look's text-safe main colour (the light accent in dark mode), never a
+   colour picked for a dark arena. It outranks each look's own "+XP" colour (AA, checked in e2e
+   lesson.spec.ts for every look, light and dark). */
+:root .lesson .lesson__xp-pop .float-up {
+  color: var(--color-primary);
+  /* A look's shadow or halo was drawn for its own colour, so it steps aside here. */
+  text-shadow: none;
+}
+
+:root[data-theme='dark'] .lesson .lesson__xp-pop .float-up {
+  color: var(--color-primary-edge);
+}
+
 @keyframes float-up-short {
   0% {
     opacity: 0;

@@ -59,7 +59,12 @@
 }
 
 :root[data-effect-style='turbo-drive'] .float-up {
-  color: #0e7490;
+  font-family: var(--font-heading);
+  color: var(--color-primary);
+}
+
+:root[data-effect-style='turbo-drive'][data-theme='dark'] .float-up {
+  color: var(--color-primary-edge);
 }
 
 /* ---------- Button tiles and the page transition ---------- */
