@@ -104,3 +104,101 @@ explanation.
 - Fresh numbers per student at run time (the engine serves a new seed per attempt, marked against
   its own computed answer): `docs/BACKLOG.md` T1.
 - More templates for thin Algebra and Number topics.
+
+## Design: physics and chemistry calculation templates (not built)
+
+> Design only (T1, 2026-11-26). No science template or item exists yet. Nothing here is a
+> product fact until it is built and recorded in `project_memory/`.
+
+The same idea carries over to science calculations: an answer built from the parameters and
+cross-checked independently before anything is written. Science adds three things maths does
+not have: **units**, **data that must come from the board** (equations, constants, relative
+atomic masses) and **rounding to the data given**.
+
+### Before any science template is written
+
+1. **Sourced data first.** A template may only use an equation from a verified equation sheet
+   (`content/equation-sheets/`, checked by `scripts/verify/exact/equation-sheet.mjs`) and
+   constants or relative atomic masses from a cited board data sheet stored as content. No
+   template carries a hand-typed constant or equation. If the board's sheet is not sourced
+   yet, the template waits.
+2. **A topic with items.** The citation rule is the same as for maths: reuse a quote, location
+   and SHA-256 already used by items in the same topic (the citation-reuse test). So a topic
+   needs hand-written, quote-checked items first.
+3. **The libraries.** Add `pint` (units, BSD-3-Clause) and `chempy` (equation balancing,
+   BSD-2-Clause) to `services/maths/requirements.txt` with pinned versions, as recommended in
+   `docs/research/specialist-tools-2026-11.md`. Neither may read untrusted input: templates only
+   feed them our own parameters, never student text.
+
+### Parameters
+
+- **`QuantityParam(name, low, high, step, unit)`**: a measured value, for example a mass from 0.5
+  to 20.0 kg in steps of 0.5. Values are held as exact fractions (`Fraction`), never floats, so
+  rounding is decided exactly. `pint` is created with `UnitRegistry(non_int_type=Fraction)` so
+  unit conversions stay exact too.
+- **Given-data precision** comes from `step` (0.5 kg is given to 1 decimal place), and is what
+  the "give your answer to N significant figures" wording is based on.
+- **Rules** add physical sense on top of the maths rules: an efficiency no more than 1, a
+  speed well below the speed of light, a concentration a solution could really have, an answer
+  that does not round to 0 at the accuracy asked for. Each rule is a plain-English `Rule`, as
+  now.
+- **Contexts** (a car, a kettle, a lift) come from a short reviewed list per template. Each
+  context names the quantity it uses, so a context cannot be paired with a quantity it does
+  not fit.
+
+### Writing an item
+
+- `write` takes the equation by its sheet id (`exact.equation_sheet` on the item, written as the
+  sheet writes it), rearranges it with SymPy for the unknown, converts every given value to SI
+  base units with `pint` (kJ to J, g to kg, cm³ to dm³), substitutes, and rounds half up to the
+  significant figures asked for.
+- Items are `numeric` with `answer.unit`, `answer.significant_figures` (or `decimal_places`) and
+  `exact.quantity` (for example `energy`). The existing units check
+  (`scripts/verify/exact/units.mjs`) then confirms the unit has that dimension.
+- The worked steps (in the explanation, since `numeric` items have no `steps` field) follow the
+  usual order: equation, unit conversions, substitution, rearrangement, value, rounding. Every
+  number in them comes from the same exact computation.
+- Units and symbols are written the way the board's equation sheet writes them, read from the
+  sheet, not chosen by the template.
+
+### Chemistry specifics
+
+- **Balanced equations**: `exact.chemical_equation` is checked by
+  `scripts/verify/exact/chemistry.mjs` (atoms, charge, lowest terms). The template balances with
+  ChemPy's `balance_stoichiometry`. That gives two independent balancers, which must agree.
+- **Relative formula mass**: ChemPy may parse a formula and count atoms, but its atomic masses
+  are not the board's. Masses always come from the board's cited data table. A test fails if any
+  value in the template does not match that table.
+- First candidates, once sourced: moles from mass and Mr, reacting masses from a balanced
+  equation, concentration in mol/dm³ or g/dm³, and percentage yield.
+
+### The cross-check
+
+A science instance is written only if all of these agree:
+
+1. the maths engine content checks (`value` with `significant_figures` or `decimal_places`);
+2. the exact checks: units (`exact.quantity`), the equation sheet (`exact.equation_sheet`) and,
+   for chemistry, the balanced equation;
+3. the template's `recheck`. It reads the numbers and units back from the question text,
+   converts them by hand to SI with a small table of prefixes (not `pint`), and recomputes with
+   the sheet equation solved by SymPy. It also checks that the dimensions of the formula give
+   the answer unit (`pint` dimensionality).
+
+### Risks to settle before building
+
+- **Rounding of intermediate values.** Mark schemes often accept an answer from a rounded
+  intermediate value. The item's answer uses the exact value. Whether a second accepted value is
+  needed is a marking ruling (as with simplest form), not a template choice.
+- **Board conventions differ** (constants, units such as m/s or m s⁻¹, "show that" questions).
+  Templates are per board and per specification, never shared across boards.
+- **Required practicals and graphs** are out of scope for calculation templates.
+
+### Tasks (when the owner approves scaling up)
+
+1. Source one board's physics equation sheet and data sheet, and one chemistry data table, as
+   verified content.
+2. Add `QuantityParam`, the `pint` and `chempy` dependencies, and a units-aware recheck helper,
+   with tests that a wrong unit, a wrong prefix and a wrong rounding are each caught.
+3. Pilot: 3 physics templates (for example kinetic energy, density, power) and 2 chemistry
+   templates (moles from mass, concentration), 5 instances each, through the usual pipeline and
+   the owner's review queue.
