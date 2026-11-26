@@ -3,6 +3,7 @@ import {
   collectDeviceDetails,
   findPersonalDetails,
   rememberLastProblem,
+  rememberOnScreen,
 } from './details';
 
 describe('findPersonalDetails', () => {
@@ -89,5 +90,30 @@ describe('last problem (E8)', () => {
         online: true,
       }).lastProblem,
     ).toBeUndefined();
+  });
+});
+
+describe('the question or card on screen (F16)', () => {
+  afterEach(() => rememberOnScreen(undefined));
+  const base = {
+    appVersion: '1',
+    route: '/learn',
+    userAgent: 'curl/8.0',
+    width: 400,
+    height: 800,
+    online: true,
+  };
+
+  it('adds the content id of the question or card on screen, and nothing else about it', () => {
+    rememberOnScreen('gcse-maths-h-n4-0001');
+    expect(collectDeviceDetails(base)).toMatchObject({ contentId: 'gcse-maths-h-n4-0001' });
+  });
+
+  it('drops anything that is not a plain id, and forgets it when the screen goes', () => {
+    rememberOnScreen('What is 2 + 2?');
+    expect(collectDeviceDetails(base)).not.toHaveProperty('contentId');
+    rememberOnScreen('gcse-maths-h-n4-0001');
+    rememberOnScreen(undefined);
+    expect(collectDeviceDetails(base)).not.toHaveProperty('contentId');
   });
 });

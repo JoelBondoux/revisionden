@@ -295,6 +295,8 @@ Tags: #product #rules #limits #defaults
   batch (F11b, `flashcard_sessions.extra_cards`, migration 0032).
   Each "10 more" tap starts exactly one new session (W18); an open session that is never
   finished takes no reward slot and does not change the extra count (slots are taken on finish).
+- Bug reports (F16): with device details on, a report from a lesson or the Cards tab names the
+  question or deck card on screen by its content id (never text, never a student's own card).
 - Lesson reactions (F13, for J14, owner 2026-11-26): `LessonPlayer` calls
   `onAnswerReaction({ kind: 'right' | 'wrong' | 'helped' | 'goal', combo })` once per marked
   answer (never for an unmarked one). F decides when; J decides how Pip and the avatar react.

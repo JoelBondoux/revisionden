@@ -102,6 +102,8 @@ const ticketDevice = z
     screenSize: z.string().optional(),
     online: z.boolean().optional(),
     lastProblem: z.string().optional(),
+    /** F16: the content id of the question or deck card on screen. */
+    contentId: z.string().optional(),
   })
   .strict();
 

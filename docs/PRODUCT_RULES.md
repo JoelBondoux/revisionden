@@ -808,7 +808,10 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   "please leave out personal details" message.
 - Optional "include device details": off by default for students, on by default for parents
   (Children's Code high-privacy default; lead decision 2026-11-24), either can change it: app version, screen,
-  route, browser family, screen size and online/offline. Never IP address, location or contacts.
+  route, browser family, screen size and online/offline. From a lesson or the Cards tab it also
+  names the question or deck card on screen by its content id (F16: an id only, never its text,
+  never a student's own card), so the content team can find it. Never IP address, location or
+  contacts.
 - Students can send feedback; the form tells them their parent can see it. Parents see their
   family's feedback and its status in the parent portal.
 - Stored in a `feedback` table (family id, sender role, kind, text, device details, status). The

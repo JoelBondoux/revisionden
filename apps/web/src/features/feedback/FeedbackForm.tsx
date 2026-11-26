@@ -181,6 +181,7 @@ export function FeedbackForm({ initialKind, route, variant = 'page', onClose }: 
             <li>Screen size: {device.screenSize}</li>
             <li>Connection: {device.online ? 'online' : 'offline'}</li>
             {device.lastProblem && <li>Last problem: {device.lastProblem}</li>}
+            {device.contentId && <li>Question or card: {device.contentId}</li>}
           </ul>
         )}
         <p className="secondary-text">Never your IP address, location or contacts.</p>

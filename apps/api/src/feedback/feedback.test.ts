@@ -81,6 +81,20 @@ describe('sending feedback', () => {
     expect(text.status).toBe(400);
   });
 
+  it('keeps the content id of the question or card on screen, and refuses text there (F16)', async () => {
+    const parent = await t.signInParent();
+    const ok = await sendAsParent(parent.headers, {
+      kind: 'bug',
+      device: { ...DEVICE, contentId: 'gcse-maths-h-n4-0001' },
+    });
+    expect(ok.status).toBe(201);
+    const text = await sendAsParent(parent.headers, {
+      kind: 'bug',
+      device: { ...DEVICE, contentId: 'What is 2 + 2?' },
+    });
+    expect(text.status).toBe(400);
+  });
+
   it('needs a signed-in student or parent', async () => {
     expect((await sendAsStudent({}, { kind: 'bug' })).status).toBe(401);
     expect((await sendAsParent({}, { kind: 'bug' })).status).toBe(401);

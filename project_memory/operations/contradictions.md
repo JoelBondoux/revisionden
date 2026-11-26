@@ -5,6 +5,15 @@
 
 ## Open
 
+- [ ] **Bug reports now carry the question or card on screen, but the privacy notice does not
+      list it.** F16 adds `contentId` (the content id of the lesson question or deck card on screen,
+      never its text and never a student's own card) to the optional device details of a bug report
+      (`apps/web/src/features/feedback/details.ts`, `apps/api/src/feedback/routes.ts`), while
+      `docs/legal/privacy-notice.md` 9.2 (and the young people's version) list only app version,
+      screen, browser family, screen size and online. Not settled here: the notice is L's, and a
+      notice change may need a version bump and owner sign-off. F16 asks L to add "the question or
+      card you were looking at" to 9.2 before or with the F16 merge.
+
 - [ ] **Starting test time limit vs WCAG 2.2.1 Timing Adjustable.** The starting test
       (`apps/web/src/features/learn/StartingTestPage.tsx`, `timeLimitSeconds` from
       `apps/api/src/routes/learn.ts`; e2e `e2e/tests/starting-test.spec.ts`) has a 5-minute

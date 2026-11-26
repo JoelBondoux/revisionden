@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
+import { useOnScreenContent } from '../feedback/details';
 import { LessonAvatar } from '../juice/pip/LessonAvatar';
 import { LessonPip } from '../juice/pip/LessonPip';
 import { useMyAvatar } from '../me/MyAvatarContext';
@@ -245,6 +246,10 @@ export function LessonPlayer({
       live = false;
     };
   }, [api]);
+
+  // F16: a bug report names the question on screen (its content id, never its text).
+  const onScreen = done ? undefined : queue[index]?.item;
+  useOnScreenContent(onScreen ? (onScreen.contentId ?? onScreen.id) : undefined);
 
   if (items.length === 0) {
     return (

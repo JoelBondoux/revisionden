@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 /** The device details a feedback report may include (never IP address, location or contacts). */
 export interface DeviceDetails {
   appVersion: string;
@@ -7,10 +9,31 @@ export interface DeviceDetails {
   online: boolean;
   /** The last problem this page saw, as a short code only (E8: "passkey:NotAllowedError:RD-…"). */
   lastProblem?: string;
+  /**
+   * F16: the content id of the question or deck card on screen (for example
+   * gcse-maths-h-n4-0001), so the content team can find it. Never its text, and never a
+   * student's own card.
+   */
+  contentId?: string;
 }
 
 const PROBLEM_CODE = /^[A-Za-z0-9_:-]{1,80}$/;
 let lastProblem: string | undefined;
+const CONTENT_ID = /^[A-Za-z0-9_-]{1,80}$/;
+let onScreen: string | undefined;
+
+/** Remembers the question or deck card on screen for the next bug report (F16). Ids only. */
+export function rememberOnScreen(contentId: string | undefined): void {
+  onScreen = contentId && CONTENT_ID.test(contentId) ? contentId : undefined;
+}
+
+/** Names the question or deck card on screen while the calling screen shows it (F16). */
+export function useOnScreenContent(contentId: string | undefined): void {
+  useEffect(() => {
+    rememberOnScreen(contentId);
+    return () => rememberOnScreen(undefined);
+  }, [contentId]);
+}
 
 /** Remembers the last problem a screen showed, for the next bug report. Only short codes. */
 export function rememberLastProblem(code: string | undefined): void {
@@ -53,5 +76,6 @@ export function collectDeviceDetails(input: {
     screenSize: `${Math.round(input.width)}x${Math.round(input.height)}`,
     online: input.online,
     ...(lastProblem ? { lastProblem } : {}),
+    ...(onScreen ? { contentId: onScreen } : {}),
   };
 }

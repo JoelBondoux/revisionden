@@ -46,6 +46,8 @@ const deviceSchema = z
     online: z.boolean(),
     /** E8: the last problem the screen showed, a short code only (no free text). */
     lastProblem: z.string().regex(/^[A-Za-z0-9_:-]{1,80}$/),
+    /** F16: the content id of the question or deck card on screen; an id only, never text. */
+    contentId: z.string().regex(/^[A-Za-z0-9_-]{1,80}$/),
   })
   .partial()
   .strict();

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useId, useState, type FormEvent } from 'react';
+import { useOnScreenContent } from '../feedback/details';
 import {
   EXTRA_CARDS,
   FLASHCARD_SESSION_MAX_CARDS,
@@ -173,6 +174,10 @@ function ReviewSession({
   useEffect(() => {
     void start();
   }, [start]);
+
+  // F16: a bug report names the deck card on screen (its content id), never a student's own card.
+  const shown = !result && session ? queue[index] : undefined;
+  useOnScreenContent(shown && shown.origin !== 'own' ? shown.contentId : undefined);
 
   async function finish(id: string) {
     setBusy(true);
