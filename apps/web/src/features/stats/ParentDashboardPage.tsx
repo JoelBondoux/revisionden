@@ -7,7 +7,7 @@ import { ProgressBar } from '../../components/ProgressBar';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { BarChart } from './BarChart';
-import { GrowIn } from './countUp';
+import { EnterOnceScope, GrowIn } from './countUp';
 import { DailyLimitPanel } from './DailyLimit';
 import { ParentRewardsCard } from './ParentRewardsCard';
 import { TargetGradesPanel } from './TargetGrades';
@@ -69,21 +69,24 @@ function ChildDashboard({ choices }: { choices: Child[] }) {
           Save as PDF
         </Button>
       </div>
-      {dashboard.status === 'ready' ? (
-        <>
-          <DashboardView data={dashboard.data} savedTargets={savedTargets} />
-          <DailyLimitPanel key={childId} studentId={childId} />
-          <TargetGradesPanel
-            key={`targets-${childId}`}
-            studentId={childId}
-            onSaved={(next) =>
-              setSavedTargets(new Map(next.subjects.map((t) => [t.subjectId, t.parentTarget])))
-            }
-          />
-        </>
-      ) : (
-        <LoadingOrError resource={dashboard} />
-      )}
+      {/* One scope per child: a reload never replays; another child animates once. */}
+      <EnterOnceScope key={childId}>
+        {dashboard.status === 'ready' ? (
+          <>
+            <DashboardView data={dashboard.data} savedTargets={savedTargets} />
+            <DailyLimitPanel key={childId} studentId={childId} />
+            <TargetGradesPanel
+              key={`targets-${childId}`}
+              studentId={childId}
+              onSaved={(next) =>
+                setSavedTargets(new Map(next.subjects.map((t) => [t.subjectId, t.parentTarget])))
+              }
+            />
+          </>
+        ) : (
+          <LoadingOrError resource={dashboard} />
+        )}
+      </EnterOnceScope>
     </>
   );
 }
@@ -176,6 +179,7 @@ function DashboardView({
       <Card title="Study time">
         <BarChart
           title="Study time, last 8 weeks"
+          enterKey="study-time"
           buckets={studyTime.weeks}
           unit="min"
           format={formatMinutes}
@@ -298,7 +302,7 @@ function AiAllowanceCard({ allowance }: { allowance: ParentDashboard['aiAllowanc
   const resetDay = resetDayLabel(resetsOn);
   return (
     <Card title="AI marking allowance">
-      <GrowIn>
+      <GrowIn enterKey="ai-allowance">
         <ProgressBar
           label="AI marking allowance"
           value={percentUsed}

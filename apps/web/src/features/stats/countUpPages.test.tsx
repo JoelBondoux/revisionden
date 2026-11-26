@@ -65,3 +65,30 @@ describe('count-up on the stats pages (K5)', () => {
     expect(emit).not.toHaveBeenCalled();
   });
 });
+
+describe('K5b: count-up follow-ups (Codex on #235)', () => {
+  it('switching to Term or Year does not replay the counts, the bars or the settle sound', async () => {
+    const user = (await import('@testing-library/user-event')).default.setup();
+    const { step, show, wrap } = fakeMotionEnv();
+    renderAt('/progress', <MyStatsPage />, wrap);
+    await screen.findByRole('group', { name: 'XP' }, LOAD);
+    show();
+    step(0);
+    step(1100);
+    step(16);
+    expect(emit).toHaveBeenCalledTimes(1);
+
+    await user.click(screen.getByRole('button', { name: 'Term' }));
+    await screen.findByRole('table', { name: 'XP per week' }, LOAD);
+    const xp = screen.getByRole('group', { name: 'XP' });
+    // Shown at once: no moving digits, the chart not waiting to grow.
+    expect(xp.querySelector('.count-up__digits')).toBeNull();
+    expect(document.querySelector('.bar-chart--waiting, .bar-chart--growing')).toBeNull();
+    expect(document.querySelector('.stats-grow--waiting, .stats-grow--running')).toBeNull();
+    show();
+    step(0);
+    step(1100);
+    step(16);
+    expect(emit).toHaveBeenCalledTimes(1);
+  });
+});

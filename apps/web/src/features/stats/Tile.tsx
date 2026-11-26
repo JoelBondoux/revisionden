@@ -46,6 +46,7 @@ export function Tile({
             decimals={count.decimals}
             delayMs={staggerDelay(index, of)}
             onSettled={onSettled}
+            enterKey={`tile:${label}`}
           />
         ) : (
           value

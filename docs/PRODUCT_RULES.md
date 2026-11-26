@@ -502,9 +502,12 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   grow in (bars from the baseline, progress bars from the left). About 700ms, ease-out, a
   stagger of 60ms or less, the whole set within 1 second.
 - Each runs once, the first time it comes into view; never again on a re-render, refetch or
-  new period. A value that changes later shows at once.
+  new period (switching Week, Term or Year shows the new values at once, with no second settle
+  sound). A value that changes later shows at once. On the parent dashboard each child's
+  dashboard animates once.
 - Reduced motion (the device setting; the app has no motion setting of its own): no animation,
-  final values at once. Printing (Save as PDF) always shows full bars.
+  final values at once. Printing (Save as PDF), even mid-count, shows the final numbers and
+  full bars.
 - Screen readers only ever get the final value (the moving digits are hidden from them), with
   no live announcements. Digits use tabular figures and keep the final width, so nothing shifts,
   and every frame is formatted like the final value (%, "1 h 20 min", "3 of 4").

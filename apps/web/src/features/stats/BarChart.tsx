@@ -16,6 +16,8 @@ interface BarChartProps {
   /** A goal or plan, drawn as a dashed line. */
   reference?: { value: number; label: string } | null;
   format?: (value: number) => string;
+  /** Stable across refetches (see `EnterOnceScope`), so a new period does not replay. */
+  enterKey?: string;
 }
 
 const WIDTH = 320;
@@ -43,7 +45,7 @@ function barPath(x: number, y: number, w: number, h: number): string {
  * The bars grow up from the baseline once, the first time the chart comes into view (K5);
  * never with reduced motion, and never again on a re-render or a new period.
  */
-export function BarChart({ title, buckets, unit, reference, format }: BarChartProps) {
+export function BarChart({ title, buckets, unit, reference, format, enterKey }: BarChartProps) {
   const [active, setActive] = useState<number | null>(null);
   const [showTable, setShowTable] = useState(false);
   const tooltipId = useId();
@@ -55,7 +57,10 @@ export function BarChart({ title, buckets, unit, reference, format }: BarChartPr
   const describe = (b: ChartBar) => `${b.label}: ${show(b.value)}`;
   const activeBar = active === null ? undefined : buckets[active];
   const count = buckets.length;
-  const { ref, phase } = useEnterOnce<HTMLDivElement>(COUNT_UP_MS + staggerDelay(count - 1, count));
+  const { ref, phase } = useEnterOnce<HTMLDivElement>(
+    COUNT_UP_MS + staggerDelay(count - 1, count),
+    enterKey,
+  );
 
   return (
     <div ref={ref} className={ENTER_CLASS[phase] ? `bar-chart ${ENTER_CLASS[phase]}` : 'bar-chart'}>

@@ -64,7 +64,7 @@ export function ParentRewardsCard({ studentId, api }: { studentId: string; api?:
                 r.reached && <Pill tone="gold">Reached</Pill>
               )}
             </span>
-            <GrowIn>
+            <GrowIn enterKey={`reward:${r.id}`}>
               <ProgressBar
                 label={r.title}
                 value={Math.min(r.current, r.goal)}

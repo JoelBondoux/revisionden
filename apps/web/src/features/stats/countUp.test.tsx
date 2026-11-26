@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { render, screen } from '@testing-library/react';
 import { CountUp, GrowIn, useEnterOnce } from './countUp';
 import { fakeMotionEnv as fakeEnv } from './motionTestEnv';
@@ -132,5 +134,22 @@ describe('grow in (progress bars)', () => {
     const { wrap } = fakeEnv({ reduced: true });
     render(<GrowIn>bars</GrowIn>, { wrapper: wrap });
     expect(screen.getByText('bars').className).not.toMatch(/stats-grow--/);
+  });
+});
+
+describe('print (Save as PDF) mid-count', () => {
+  it('keeps the final value in its own element while counting', () => {
+    const { step, show, wrap } = fakeEnv();
+    render(<CountUp value={80} format={percent} />, { wrapper: wrap });
+    show();
+    step(200);
+    expect(document.querySelector('.count-up__final')).toHaveTextContent('80%');
+  });
+
+  it('prints the final values: moving digits hidden, final value shown', async () => {
+    const css = readFileSync(join(__dirname, 'stats.css'), 'utf8').replace(/\s+/g, ' ');
+    const print = css.slice(css.indexOf('@media print'));
+    expect(print).toMatch(/\.count-up__digits\s*\{[^}]*display: none/);
+    expect(print).toMatch(/\.count-up__final\s*\{[^}]*position: static/);
   });
 });

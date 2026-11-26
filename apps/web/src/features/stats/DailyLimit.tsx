@@ -40,7 +40,7 @@ export function DailyLimitToday() {
         </div>
       )}
       <Card title="Today">
-        <GrowIn>
+        <GrowIn enterKey="daily-limit">
           <ProgressBar
             label="Daily limit"
             value={today.usedMinutes}

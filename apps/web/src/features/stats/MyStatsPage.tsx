@@ -5,7 +5,7 @@ import { ProgressBar } from '../../components/ProgressBar';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { BarChart } from './BarChart';
-import { GrowIn } from './countUp';
+import { EnterOnceScope, GrowIn } from './countUp';
 import { DailyLimitToday } from './DailyLimit';
 import { useSound } from '../sound';
 import { MyTargetGrades } from './TargetGrades';
@@ -60,28 +60,30 @@ export function MyStatsPage() {
   const stats = useApiResource(() => api.getMyStats(period), [api, period]);
 
   return (
-    <div className="stack stats">
-      <h1>My stats</h1>
-      <DailyLimitToday />
-      <div role="group" aria-label="Period" className="period-toggle">
-        {STATS_PERIODS.map((p) => (
-          <button
-            key={p}
-            type="button"
-            aria-pressed={p === period}
-            className="period-toggle__button"
-            onClick={() => setPeriod(p)}
-          >
-            {PERIOD_LABELS[p]}
-          </button>
-        ))}
+    <EnterOnceScope>
+      <div className="stack stats">
+        <h1>My stats</h1>
+        <DailyLimitToday />
+        <div role="group" aria-label="Period" className="period-toggle">
+          {STATS_PERIODS.map((p) => (
+            <button
+              key={p}
+              type="button"
+              aria-pressed={p === period}
+              className="period-toggle__button"
+              onClick={() => setPeriod(p)}
+            >
+              {PERIOD_LABELS[p]}
+            </button>
+          ))}
+        </div>
+        {stats.status === 'ready' ? (
+          <StatsView stats={stats.data} />
+        ) : (
+          <LoadingOrError resource={stats} />
+        )}
       </div>
-      {stats.status === 'ready' ? (
-        <StatsView stats={stats.data} />
-      ) : (
-        <LoadingOrError resource={stats} />
-      )}
-    </div>
+    </EnterOnceScope>
   );
 }
 
@@ -141,7 +143,13 @@ function StatsView({ stats }: { stats: StudentStats }) {
       </div>
 
       <Card title={CHART_TITLES[period]}>
-        <BarChart title={CHART_TITLES[period]} buckets={chart.buckets} unit="XP" reference={goal} />
+        <BarChart
+          title={CHART_TITLES[period]}
+          buckets={chart.buckets}
+          unit="XP"
+          reference={goal}
+          enterKey="xp-chart"
+        />
       </Card>
 
       <Card title="Mastery by subject">
@@ -157,7 +165,7 @@ function StatsView({ stats }: { stats: StudentStats }) {
                     <span>{m.name}</span>
                     <span>{m.mastery}%</span>
                   </div>
-                  <GrowIn>
+                  <GrowIn enterKey={`mastery:${m.subjectId}`}>
                     <ProgressBar label={`${m.name} mastery`} value={m.mastery} max={100} />
                   </GrowIn>
                   {change.trend === 'up' && (
@@ -186,7 +194,7 @@ function StatsView({ stats }: { stats: StudentStats }) {
 
       <Card title="Level">
         {level ? (
-          <GrowIn>
+          <GrowIn enterKey="level">
             <ProgressBar
               label={`Level ${level.level}`}
               value={level.xpIntoLevel}

@@ -2,11 +2,16 @@ import { act } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { MotionEnvProvider, type MotionEnv } from './countUp';
 
-/** A fake clock, frame loop and "comes into view" signal, so no real timers run. */
+/**
+ * A fake clock, frame loop and "comes into view" signal, so no real timers run. After `show()`,
+ * anything that starts observing is in view at once, as with a real IntersectionObserver for
+ * an element already on screen (a component may register a moment after the page renders).
+ */
 export function fakeMotionEnv({ reduced = false } = {}) {
   let time = 0;
   let frames: (() => void)[] = [];
   const visible: (() => void)[] = [];
+  let inView = false;
   const env: MotionEnv = {
     now: () => time,
     requestFrame: (cb) => {
@@ -15,8 +20,15 @@ export function fakeMotionEnv({ reduced = false } = {}) {
     },
     cancelFrame: () => undefined,
     observe: (_el, onVisible) => {
+      if (inView) {
+        onVisible();
+        return () => undefined;
+      }
       visible.push(onVisible);
-      return () => undefined;
+      return () => {
+        const i = visible.indexOf(onVisible);
+        if (i >= 0) visible.splice(i, 1);
+      };
     },
     reducedMotion: () => reduced,
   };
@@ -27,7 +39,11 @@ export function fakeMotionEnv({ reduced = false } = {}) {
       frames = [];
       due.forEach((cb) => cb());
     });
-  const show = () => act(() => visible.forEach((v) => v()));
+  const show = () =>
+    act(() => {
+      inView = true;
+      visible.splice(0).forEach((v) => v());
+    });
   const wrap = ({ children }: { children: ReactNode }) => (
     <MotionEnvProvider value={env}>{children}</MotionEnvProvider>
   );

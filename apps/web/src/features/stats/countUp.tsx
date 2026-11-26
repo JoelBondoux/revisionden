@@ -65,18 +65,33 @@ function useMotionEnv(): MotionEnv {
   return injected ?? fallback;
 }
 
+const EnteredContext = createContext<Set<string> | null>(null);
+
+/**
+ * Remembers, for one page, which keyed elements have already animated, so a refetch that
+ * unmounts them (switching Week, Term or Year) shows them at once instead of replaying.
+ * Put it above the page's loading boundary.
+ */
+export function EnterOnceScope({ children }: { children: ReactNode }) {
+  const [entered] = useState(() => new Set<string>());
+  return <EnteredContext.Provider value={entered}>{children}</EnteredContext.Provider>;
+}
+
 /** static: no animation at all; waiting: not yet in view; running; done: ran once. */
 export type EnterPhase = 'static' | 'waiting' | 'running' | 'done';
 
 /** Runs an enter animation of `totalMs` once, the first time `ref` comes into view. */
 export function useEnterOnce<T extends Element>(
   totalMs: number,
+  /** A key stable across refetches; with an `EnterOnceScope`, it never animates twice. */
+  key?: string,
 ): { ref: RefObject<T>; phase: EnterPhase; elapsed: number } {
   const env = useMotionEnv();
+  const entered = useContext(EnteredContext);
   const ref = useRef<T>(null);
   const start = useRef(0);
   const [phase, setPhase] = useState<EnterPhase>(() =>
-    env.observe && !env.reducedMotion() ? 'waiting' : 'static',
+    env.observe && !env.reducedMotion() && !(key && entered?.has(key)) ? 'waiting' : 'static',
   );
   const [elapsed, setElapsed] = useState(0);
 
@@ -85,9 +100,10 @@ export function useEnterOnce<T extends Element>(
     if (phase !== 'waiting' || !el || !env.observe) return undefined;
     return env.observe(el, () => {
       start.current = env.now();
+      if (key) entered?.add(key);
       setPhase('running');
     });
-  }, [env, phase]);
+  }, [env, phase, key, entered]);
 
   useEffect(() => {
     if (phase !== 'running') return undefined;
@@ -114,6 +130,8 @@ interface CountUpProps {
   delayMs?: number;
   /** Called once, when an animated count has finished. Never called without animation. */
   onSettled?: () => void;
+  /** See `useEnterOnce`. */
+  enterKey?: string;
 }
 
 /**
@@ -121,8 +139,15 @@ interface CountUpProps {
  * text); the moving digits are aria-hidden, use tabular figures and keep the final width, so
  * nothing shifts while they count.
  */
-export function CountUp({ value, format, decimals = 0, delayMs = 0, onSettled }: CountUpProps) {
-  const { ref, phase, elapsed } = useEnterOnce<HTMLSpanElement>(COUNT_UP_MS + delayMs);
+export function CountUp({
+  value,
+  format,
+  decimals = 0,
+  delayMs = 0,
+  onSettled,
+  enterKey,
+}: CountUpProps) {
+  const { ref, phase, elapsed } = useEnterOnce<HTMLSpanElement>(COUNT_UP_MS + delayMs, enterKey);
   const settled = useRef(false);
   useEffect(() => {
     if (phase !== 'done' || settled.current) return;
@@ -141,7 +166,7 @@ export function CountUp({ value, format, decimals = 0, delayMs = 0, onSettled }:
   const shown = phase === 'waiting' ? 0 : countUpValue(value, elapsed - delayMs, { decimals });
   return (
     <span ref={ref} className="count-up">
-      <span className="visually-hidden">{final}</span>
+      <span className="visually-hidden count-up__final">{final}</span>
       <span
         aria-hidden="true"
         className="count-up__digits"
@@ -162,8 +187,8 @@ const GROW_CLASS: Partial<Record<EnterPhase, string>> = {
  * Progress bars inside grow in from the left once, the first time they come into view. The
  * bars keep their roles and values, so screen readers always get the final numbers.
  */
-export function GrowIn({ children }: { children: ReactNode }) {
-  const { ref, phase } = useEnterOnce<HTMLDivElement>(COUNT_UP_MS);
+export function GrowIn({ children, enterKey }: { children: ReactNode; enterKey?: string }) {
+  const { ref, phase } = useEnterOnce<HTMLDivElement>(COUNT_UP_MS, enterKey);
   const extra = GROW_CLASS[phase];
   return (
     <div ref={ref} className={extra ? `stats-grow ${extra}` : 'stats-grow'}>
