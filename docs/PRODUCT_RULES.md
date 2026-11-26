@@ -788,7 +788,7 @@ Requested by the product owner on 2026-11-25.
   organisation's own guidance clearly allows this use or it gives written permission. None does
   yet: every service shows a neutral icon beside its exact name. Findings per organisation, and an
   email template for the owner to request permission, are in
-  `docs/legal/logo-permission-requests.md` (a test checks it covers every service). A permitted
+  `docs/LOGO_PERMISSIONS.md` (a test checks it covers every service). A permitted
   logo would be self-hosted under `apps/web/public/support-logos/`, unaltered, with alt text equal
   to the organisation's name, and never hot-linked.
 - Privacy: its own layout with no navigation, sounds or API calls; nothing is fetched to show it

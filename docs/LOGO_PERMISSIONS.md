@@ -1,6 +1,7 @@
 # Logo permission requests (Get help)
 
-Status: working document for the product owner (W4, 2026-11-26). Not a policy shown in the app.
+Status: working document for the product owner (W4, 2026-11-26). Not a policy: it is kept out of
+`docs/legal/` so it is not published in the app or on the sales site.
 
 The owner would like each support organisation's official logo on the Get help page, to make it
 easier to recognise. Logos are trademarks. We add one only when the organisation's own published

@@ -12,8 +12,9 @@ policy by L for workstream O4, 2026-11-25). Pages:
 Open points for the product owner and a solicitor are in the L pull request and in
 `project_memory/operations/contradictions.md`.
 
-`docs/legal/logo-permission-requests.md` is a working document for the owner (logo permission
-findings and an email template for Get help, W4). It is not a policy and is not listed in the app.
+Working documents that are not policies live outside `docs/legal/`, because every file in
+`docs/legal/` is published as a policy (in the app and on the sales site). For example, the Get
+help logo permission findings and email template are in `docs/LOGO_PERMISSIONS.md` (W4).
 
 ## Layout of every policy
 

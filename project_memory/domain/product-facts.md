@@ -711,7 +711,7 @@ Tags: #product #rules #limits #defaults
   Check if it's available where you live." (a `note` needs `confirmed_by`). See `docs/PRODUCT_RULES.md` (Get help).
 - Logos: none shown yet. No organisation's own guidance clearly permits it, so each service has a
   neutral icon and its exact name. Findings and permission-request template:
-  `docs/legal/logo-permission-requests.md` (W4).
+  `docs/LOGO_PERMISSIONS.md` (W4).
 - Private: the page uses its own layout with no API calls (no cards-due badge, no sounds), loads
   nothing from other sites, and opens websites with `rel="noreferrer"`. Quick exit replaces the
   history entry and goes to `/map`. Service worker v3 precaches `/help` and the built files.

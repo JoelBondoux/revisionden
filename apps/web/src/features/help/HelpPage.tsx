@@ -152,7 +152,7 @@ function ServiceEntry({ service }: { service: SupportService }) {
 /**
  * A neutral icon shown beside every organisation's name (W4). Organisations' logos are
  * trademarks; none is shown until its own guidance or written permission allows it
- * (docs/legal/logo-permission-requests.md). Decorative: the name next to it is the text.
+ * (docs/LOGO_PERMISSIONS.md). Decorative: the name next to it is the text.
  */
 function OrgIcon() {
   return (

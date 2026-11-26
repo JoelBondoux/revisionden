@@ -259,7 +259,7 @@ test('the real file lists Kooth for students under feeling low, with its availab
 test('the logo permission findings cover every support service', () => {
   const data = JSON.parse(readFileSync(SUPPORT_FILE, 'utf8'));
   const here = dirname(fileURLToPath(import.meta.url));
-  const doc = readFileSync(join(here, '../../docs/legal/logo-permission-requests.md'), 'utf8');
+  const doc = readFileSync(join(here, '../../docs/LOGO_PERMISSIONS.md'), 'utf8');
   for (const s of data.services) assert.ok(doc.includes(`\`${s.id}\``), `missing ${s.id}`);
 });
 
