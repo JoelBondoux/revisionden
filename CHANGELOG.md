@@ -115,6 +115,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Web tests no longer time out on a busy CI runner while a screen is still loading its data (I13, seen on `FlashcardsPage.flip`): `test-setup.ts` sets the Testing Library wait to 5 seconds for every `findBy…` and `waitFor` (the stats tests' per-file `LOAD`, now for all 564 finds) and gives each test 15 seconds. `docs/TESTING.md` says so.
 - Maths engine (T2): `app/notation.py` rewrites everyday notation before parsing (× · ⋅, x between numbers, superscripts and the superscript minus, unicode minus and dashes, thousands separators in exact groups of three), so `/check-working`, `/equivalent`, `/solutions` and the content checks no longer refuse `2^3 × 3^2 × 5`, `1.5 × 10^11`, `2³ × 3²`, `−7` or `30,000`, or read `1.5x10^11` as the letter x.
 - The bug button in the student app's top row shows the keyboard focus ring again (I12b, Codex review of #198): the rule that flattens it now applies only when it is not keyboard-focused. End-to-end test tabs to it and checks the ring.
 - S3-N: the estimation questions n14-0001 and n14-0003 no longer require the estimate to a set number of significant figures (the question asks only for the numbers to be rounded), so an equal estimate written another way, such as 150.0, is marked right (Codex review of #115; needs S2's #178).
