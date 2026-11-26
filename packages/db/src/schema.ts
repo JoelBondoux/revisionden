@@ -621,6 +621,8 @@ export const attempts = pgTable(
     }),
     // F5: a retry in the lesson after a wrong answer (counts at half weight for mastery).
     retry: boolean('retry').notNull().default(false),
+    // Added by workstream F10: answered after "Help me understand" (half XP, practised like a miss).
+    helped: boolean('helped').notNull().default(false),
   },
   (t) => [index('attempts_student_created_idx').on(t.studentId, t.createdAt)],
 );

@@ -22,6 +22,8 @@ const itemBase = {
   warmUp: z.literal(true).optional(),
   /** The finer learning point the item tests, when content tags one (else its topic). F5. */
   learningPoint: text.optional(),
+  /** The item has verified steps for "Help me understand" (F10), fetched on demand. */
+  canHelp: z.literal(true).optional(),
   /** The item's id in content/ (for example gcse-maths-h-n4-0001), for Learn more links (Q6b). */
   contentId: text.optional(),
 };
@@ -118,9 +120,15 @@ export const LearnAttemptRequestSchema = z
     recall: z.boolean().optional(),
     /** True for a retry in the lesson after a wrong answer: it counts at half weight (F5). */
     retry: z.boolean().optional(),
+    /** Answered after "Help me understand" (F10): Learn mode only; half XP, practised like a miss. */
+    helped: z.boolean().optional(),
   })
   .strict();
 export type LearnAttemptRequest = z.infer<typeof LearnAttemptRequestSchema>;
+
+/** "Help me understand" (F10): the item's verified worked steps, ending on the answer. */
+export const ItemHelpResponseSchema = z.object({ steps: z.array(text).min(1) });
+export type ItemHelpResponse = z.infer<typeof ItemHelpResponseSchema>;
 
 export const ProgressSchema = z.object({
   xpToday: z.number().int().min(0),
@@ -155,6 +163,8 @@ export const LearnAttemptResponseSchema = z.object({
   score: z.number().min(0).max(1),
   xpEarned: z.number().int().min(0),
   createdAt: IsoDateTimeSchema,
+  /** Answered after "Help me understand" (F10): half XP, practised like a miss. */
+  helped: z.boolean().optional(),
   /** Instant feedback (feedback level 1) in learn mode; null in test mode. */
   feedback: FeedbackSchema.nullable(),
   progress: ProgressSchema,
