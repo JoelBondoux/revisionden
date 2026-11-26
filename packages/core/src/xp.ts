@@ -15,6 +15,7 @@ export const XP_PER_CORRECT: Record<ItemType, number> = {
   numeric: 15,
   worked_maths: 20,
   extended_answer: 30,
+  area_model: 10,
 };
 
 export const FOCUS_XP_MULTIPLIER = 2;
