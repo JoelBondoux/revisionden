@@ -37,7 +37,8 @@
 - **Buttons:** chunky with a bottom edge, press-down "jelly" on tap; the main call to action
   pulses gently and has a moving shine.
 - **Set complete:** stars pop in one by one with rising notes (3 stars at 5/5, 2 at 3–4, 1
-  otherwise), confetti, XP tally, best combo, daily-goal bar fills, then **Next mission**
+  otherwise), confetti, XP tally, best combo (in the arena's text accent, `--arena-glow`, so it
+  reads AA in every look; W18), daily-goal bar fills, then **Next mission**
   (pulsing) and the line "Or take a break. Your streak is safe for today." when that is true.
 - **A question coming back** (learning from mistakes, F5): a gold line above the question says
   why: "Here's another one like it. You've got this.", "Another go at this one: you've got
