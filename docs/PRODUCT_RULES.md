@@ -482,7 +482,8 @@ or animation, the avatar's `react('nod' | 'hmm' | 'hop')`, placement and timing)
 - `LessonPlayer` takes an optional `onAnswerReaction(event)` with
   `event = { kind: 'right' | 'wrong' | 'helped' | 'goal', combo }`. No styling or timing comes
   from F.
-- It is called once per marked answer, straight after marking. Kinds:
+- It is called once per marked answer, once the right or wrong feedback is on screen (J asked for
+  this, so the reaction lands with the feedback). Kinds:
   - `goal`: the answer was right and met today's goal for the first time today (it wins over the
     others);
   - `right`: a right answer;

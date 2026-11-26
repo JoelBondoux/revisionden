@@ -54,6 +54,18 @@ describe('lesson reactions for Pip and the avatar (F13, for J14)', () => {
     expect(onReaction).toHaveBeenCalledTimes(2);
   });
 
+  it('fires once the right or wrong feedback is on screen, so the reaction lands with it (J)', async () => {
+    const feedbackShown: boolean[] = [];
+    play(
+      [short, demoSimilar],
+      vi.fn(() => {
+        feedbackShown.push(screen.queryByRole('status', { name: 'Answer feedback' }) !== null);
+      }),
+    );
+    await answer('demo answer');
+    expect(feedbackShown).toEqual([true]);
+  });
+
   it('says nothing for an answer that could not be marked (F12)', async () => {
     server.use(
       http.post('*/v1/student/learn/attempts', () =>

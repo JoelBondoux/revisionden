@@ -206,6 +206,8 @@ export function LessonPlayer({
   const [result, setResult] = useState<LearnAttemptResponse | null>(null);
   /** It couldn't be marked now (F12: typed working with no maths engine), so it is skipped. */
   const [skipped, setSkipped] = useState(false);
+  /** The lesson reaction for the answer just marked (F13), sent once its feedback is shown. */
+  const [reaction, setReaction] = useState<AnswerReactionEvent | null>(null);
   const [checking, setChecking] = useState(false);
   const [error, setError] = useState(false);
   const [progress, setProgress] = useState<Progress | null>(null);
@@ -214,6 +216,13 @@ export function LessonPlayer({
   const [bestCombo, setBestCombo] = useState(0);
   const [done, setDone] = useState(false);
   const shownAt = useRef(Date.now());
+
+  // J asked for the reaction to land with the feedback: this runs after the marked state renders.
+  useEffect(() => {
+    if (!reaction) return;
+    onAnswerReaction?.(reaction);
+    setReaction(null);
+  }, [reaction, onAnswerReaction]);
 
   useEffect(() => {
     let live = true;
@@ -286,7 +295,7 @@ export function LessonPlayer({
       play(markSound(marked), { step: comboStep(streak - 1) });
       if (marked.progress.goalMet && progress && !progress.goalMet)
         play('streakDay', { delay: 0.4 });
-      onAnswerReaction?.({
+      setReaction({
         kind: answerReaction({
           correct: marked.correct,
           helped: marked.helped === true,

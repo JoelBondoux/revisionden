@@ -240,7 +240,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
-- Lesson reactions hook (F13, for J14, owner approved): `LessonPlayer` takes `onAnswerReaction({ kind, combo })`, called once per marked answer with `right`, `wrong`, `helped` or `goal` (the first right answer that meets today's goal), from `answerReaction()` in `features/learn/reaction.ts`. Never called for an unmarked answer. No visible change yet: J wires Pip and the avatar to it.
+- Lesson reactions hook (F13, for J14, owner approved): `LessonPlayer` takes `onAnswerReaction({ kind, combo })`, called once per marked answer, after its feedback renders, with `right`, `wrong`, `helped` or `goal` (the first right answer that meets today's goal), from `answerReaction()` in `features/learn/reaction.ts`. Never called for an unmarked answer. No visible change yet: J wires Pip and the avatar to it.
 
 - Use my phone instead (E10): `POST /v1/device/unlock/options` takes `usePhone` and adds `hints: ['hybrid']`; the unlock screens offer the phone on computers and tablets and after no passkey was found, with plain messages for hybrid failures. Decision 0007 records the owner's choice.
 - Daily flashcard limit (F11, owner): `packages/core/src/card-limit.ts` (`DAILY_CARD_LIMIT` 20, `EXTRA_CARDS` 10, `cardsLeftToday`, `pickTodaysCards`; `urgency` exported from spaced-repetition). `GET /v1/student/flashcards` returns today's cards only, with `dueToday`, `backlog`, `doneToday`, and takes `?extra=`; `GET /v1/student/cards/due` counts today's remaining. Reviewed today = distinct cards last reviewed today (UK date); no migration. Web: "Done for today!" with "10 more".
