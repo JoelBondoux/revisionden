@@ -77,6 +77,10 @@ date per parent sign-in.
   anonymous row in `error_reports`: the code, the screen and failing API path with ids masked, the
   build, the browser family, online or not and the time. No family, student, account, id or text
   (strict schema in `packages/core`, `ErrorReportSchema`). Rate limited; deleted after 90 days.
+- A failed passkey set-up on a child's device (E8) is logged through `POST /v1/client-errors` with
+  the reference code, the path `/link` and the browser's error name only (for example
+  `NotAllowedError`; strict pattern, never the browser's message). A bug report sent from that
+  screen may carry the same short code as `lastProblem` (letters, digits, `_`, `:` and `-` only).
 
 ## Operator console (AppDeck)
 

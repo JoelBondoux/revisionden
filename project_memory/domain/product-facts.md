@@ -12,7 +12,7 @@ Tags: #product #rules #limits #defaults
 - Each sign-in provider is optional, but at least one must be set up; the welcome page shows only
   the configured ones (`GET /v1/auth/providers`). The owner is starting with Google only.
 - Students have no outside account: nickname (2–16 letters, numbers, underscores and single spaces between words, trimmed at the ends), avatar code and
-  year group only. Devices linked by a one-time QR token (10 minutes, single use), then a passkey.
+  year group only. Devices linked by a one-time QR token (10 minutes, single use: used up when the device finishes its passkey; reopening before then gets a fresh challenge, E8), then a passkey.
 - Nicknames are unique within a family. A family is created the first time a parent signs in.
 - Two parents (B3): a family can have two parents with equal control (Parent 1, Parent 2).
   Invite code or link 7 days, single use, hashed, 5 a day; either parent removes the other (access
