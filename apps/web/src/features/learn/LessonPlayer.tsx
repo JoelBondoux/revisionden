@@ -1,10 +1,18 @@
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import type { LearnAttemptResponse, LearnItem, Progress } from '@revisionden/core';
+import {
+  endOnSuccess,
+  planAfterMiss,
+  type LearnAttemptResponse,
+  type LearnItem,
+  type LessonEntry,
+  type Progress,
+} from '@revisionden/core';
 import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { CloseIcon } from '../../components/icons';
 import { ReadAloudButton, itemSpeechText } from '../read-aloud';
+import { LearnItFirst, checkedLinksFor, learnLinksByTopic } from '../learn-links';
 import {
   ArenaProgress,
   ComboBadge,
@@ -40,7 +48,19 @@ function feedbackSpeech(result: LearnAttemptResponse): string {
   return parts.join(' ');
 }
 
-function Feedback({ result }: { result: LearnAttemptResponse }) {
+type MissOutcome = 'retry' | 'stepDown' | 'none';
+
+function Feedback({
+  result,
+  topicId,
+  miss,
+  comeback,
+}: {
+  result: LearnAttemptResponse;
+  topicId: string;
+  miss: MissOutcome | null;
+  comeback: boolean;
+}) {
   const feedback = result.feedback;
   const wrongLine = feedback?.firstWrongLine;
   return (
@@ -66,6 +86,19 @@ function Feedback({ result }: { result: LearnAttemptResponse }) {
       )}
       {feedback?.explanation && <p>{feedback.explanation}</p>}
       {result.flashcardAdded && <p>Added to your flashcards for another go later.</p>}
+      {comeback && <p className="feedback__comeback">Comeback! You got it this time.</p>}
+      {miss === 'retry' && <p>No worries: we&apos;ll have another go at this in a moment.</p>}
+      {miss === 'stepDown' && (
+        <>
+          <p>This one&apos;s tricky today, so we&apos;ll come back to it another day.</p>
+          <LearnItFirst links={checkedLinksFor(learnLinksByTopic, topicId)} />
+        </>
+      )}
+      {result.shaky && (
+        <p>
+          Nice one. That took a little while, so it&apos;ll come back another day to make it stick.
+        </p>
+      )}
     </div>
   );
 }
@@ -83,6 +116,23 @@ interface LessonPlayerProps {
   /** Recall check answers (Q4): sent as recall, so a wrong one never resets the combo. */
   recall?: boolean;
 }
+
+/** Why a question is showing, for questions that came back (learning from mistakes, F5). */
+function comeBackNote(entry: LessonEntry<LearnItem>): string | null {
+  if (entry.reason === 'similar') return "Here's another one like it. You've got this.";
+  if (entry.reason === 'again') return "Another go at this one: you've got this.";
+  if (entry.reason === 'easier') return "Let's try an easier one on this.";
+  if (entry.reason === 'confidence') return 'A quick one you know.';
+  if (entry.item.warmUp) return 'Warm-up: this one came up last time.';
+  return null;
+}
+
+/** Questions that can come back after a wrong answer (not self-rated cards or long answers). */
+const canRetry = (item: LearnItem) => item.type !== 'flashcard' && item.type !== 'extended_answer';
+const isRetryEntry = (entry: LessonEntry<LearnItem>) =>
+  entry.reason === 'similar' || entry.reason === 'again';
+/** The learning point an item tests: its tag, or its topic (see learningPointOf in core). */
+const pointOf = (item: LearnItem) => item.learningPoint ?? item.topicId;
 
 /** The option a marked multiple choice answer should show as right, if we can tell. */
 function rightOption(item: LearnItem, result: LearnAttemptResponse, chosen: Draft): number | null {
@@ -118,6 +168,11 @@ export function LessonPlayer({
 }: LessonPlayerProps) {
   const api = useLearnApi();
   const { play } = useSound();
+  const [queue, setQueue] = useState<LessonEntry<LearnItem>[]>(() =>
+    items.map((item) => ({ item })),
+  );
+  const [miss, setMiss] = useState<MissOutcome | null>(null);
+  const [comeback, setComeback] = useState(false);
   const [index, setIndex] = useState(0);
   const [draft, setDraft] = useState<Draft>(null);
   const [result, setResult] = useState<LearnAttemptResponse | null>(null);
@@ -150,9 +205,13 @@ export function LessonPlayer({
     );
   }
 
-  const item = items[index]!;
-  const isLast = index === items.length - 1;
+  const entry = queue[index]!;
+  const item = entry.item;
+  const isLast = index === queue.length - 1;
   const answer = toAnswer(item, draft);
+  /** True when Continue really ends the lesson (no question they know is about to be added). */
+  const finishing =
+    isLast && (!result || endOnSuccess(queue, result.correct, result.confidence) === queue);
 
   async function submit(value: Answer) {
     setChecking(true);
@@ -164,7 +223,27 @@ export function LessonPlayer({
         timeMs: Math.max(0, Date.now() - shownAt.current),
         mode: 'learn',
         ...(recall ? { recall: true } : {}),
+        ...(isRetryEntry(entry) ? { retry: true } : {}),
       });
+      // Learning from mistakes (F5, owner guardrails): one retry per point and 2 per lesson, a
+      // confidence question before each retry, and a step down after a second miss.
+      if (!marked.correct && !recall && canRetry(item)) {
+        const plan = planAfterMiss(
+          queue,
+          index,
+          {
+            similar: marked.similar,
+            easier: marked.easier,
+            confidence: marked.confidence,
+            pointOf,
+            idOf: (i) => i.id,
+          },
+          Math.random,
+        );
+        setQueue(plan.queue);
+        setMiss(plan.outcome);
+      }
+      setComeback(marked.correct && isRetryEntry(entry));
       // The API counts combos (J4); older responses without it fall back to counting here.
       const streak = marked.combo ?? nextCombo(combo, marked.correct);
       // The chime rises a step per right answer in a row (the first one is the plain chime).
@@ -193,7 +272,10 @@ export function LessonPlayer({
   }
 
   function advance() {
-    if (isLast) {
+    // A lesson ends on a success: after a wrong last answer, one question they know comes next.
+    const extended =
+      isLast && result ? endOnSuccess(queue, result.correct, result.confidence) : queue;
+    if (isLast && extended === queue) {
       if (onFinish) {
         onFinish();
         return;
@@ -201,9 +283,12 @@ export function LessonPlayer({
       setDone(true);
       return;
     }
+    if (extended !== queue) setQueue(extended);
     setIndex(index + 1);
     setDraft(null);
     setResult(null);
+    setMiss(null);
+    setComeback(false);
     shownAt.current = Date.now();
   }
 
@@ -236,7 +321,7 @@ export function LessonPlayer({
         <ArenaProgress
           label="Lesson progress"
           value={index + (result || unmarked ? 1 : 0)}
-          max={items.length}
+          max={queue.length}
         />
         <span className="lesson__xp">
           <RollingNumber value={totals.xp} label="XP this lesson" suffix=" XP" />
@@ -245,7 +330,7 @@ export function LessonPlayer({
       {draftContent && <DraftBanner />}
       <div className="lesson__pip">
         <PipSays
-          line={pipLine({ index, total: items.length, combo })}
+          line={pipLine({ index, total: queue.length, combo })}
           mood={combo >= 2 ? 'cheer' : 'happy'}
         />
         <ComboBadge combo={combo} />
@@ -254,6 +339,7 @@ export function LessonPlayer({
       {intro && <p className="secondary-text">{intro}</p>}
       {aside}
       {progress && <DailyGoal progress={progress} />}
+      {comeBackNote(entry) && <p className="lesson__comeback">{comeBackNote(entry)}</p>}
       <ReadAloudButton text={itemSpeechText(item)} label="Read the question aloud" />
       <Shake key={item.id} active={result?.correct === false}>
         <ItemInput
@@ -277,17 +363,26 @@ export function LessonPlayer({
             Couldn&apos;t check that answer. Please try again.
           </p>
         )}
-        {result && <Feedback result={result} />}
+        {result && (
+          <Feedback result={result} topicId={item.topicId} miss={miss} comeback={comeback} />
+        )}
         {result && <NewRewards rewards={result.newlyEarned} />}
         {result || unmarked ? (
           <Button block variant={result?.correct ? 'success' : 'primary'} onClick={advance}>
-            {isLast ? 'Finish' : 'Continue'}
+            {finishing ? 'Finish' : 'Continue'}
           </Button>
         ) : (
           item.type !== 'flashcard' && (
-            <Button block type="submit" disabled={answer === null || checking}>
-              Check
-            </Button>
+            <>
+              <Button block type="submit" disabled={answer === null || checking}>
+                Check
+              </Button>
+              {isRetryEntry(entry) && (
+                <Button block variant="secondary" onClick={advance} disabled={checking}>
+                  Skip this one
+                </Button>
+              )}
+            </>
           )
         )}
       </div>
