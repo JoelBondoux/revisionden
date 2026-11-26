@@ -345,7 +345,9 @@ Tags: #product #rules #limits #defaults
   rules as `packages/core/src/answer-normalise.ts`): × · ⋅ and x between numbers are times,
   superscripts are powers, the unicode minus and dashes are minus, and thousands separators are
   dropped only between groups of exactly three digits. Answer forms (`app/forms.py`):
-  `fraction`, `simplest_fraction`, `standard_form`, `index_form`, checked on how the answer is
+  `fraction`, `simplest_fraction`, `improper_fraction` (lowest terms, never a mixed number;
+  the engine reads no mixed numbers), `standard_form`, `index_form` (one shared `answer.form`
+  enum with S2e), checked on how the answer is
   written as well as its value (lead ruling 2026-11-26: an unsimplified fraction is wrong when
   simplest form is asked for; ordinary form is wrong when standard form is asked for).
 - Lines of working are read exactly: decimals become fractions (`1.6` is 16/10), so steps with

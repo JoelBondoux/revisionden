@@ -5,6 +5,9 @@ written, after everyday notation is normalised (``app/notation.py``):
 
 - ``fraction``: a whole number or a single fraction ``a/b`` (a minus sign allowed), no decimals;
 - ``simplest_fraction``: the same, in lowest terms (``27/99`` is not, ``3/11`` is);
+- ``improper_fraction``: in lowest terms and never a mixed number (``49/20``, not ``2 9/20``).
+  The engine does not read mixed numbers at all, so none of the fraction forms accepts one;
+
 - ``standard_form``: ``A × 10^n`` with 1 ≤ A < 10 and n a whole number (``15 × 10^10`` and
   ``150000000000`` are not);
 - ``index_form``: a product of different primes, each written once with an optional power
@@ -21,6 +24,7 @@ from app.notation import normalise
 FRACTION = re.compile(r"-?(\d+)(?:/(\d+))?")
 STANDARD_FORM = re.compile(r"-?[1-9](?:\.\d+)?\*10\^\(?-?\d+\)?")
 PRIME_POWER = re.compile(r"(\d+)(?:\^(\d+))?")
+MIXED_NUMBER = re.compile(r"\d\s+\d+/\d")
 
 
 def _written(text: str) -> str:
@@ -54,6 +58,7 @@ def _index_form(text: str) -> bool:
 FORMS = {
     "fraction": lambda t: _fraction(t, simplest=False),
     "simplest_fraction": lambda t: _fraction(t, simplest=True),
+    "improper_fraction": lambda t: _fraction(t, simplest=True),
     "standard_form": lambda t: STANDARD_FORM.fullmatch(t) is not None,
     "index_form": _index_form,
 }
@@ -63,4 +68,6 @@ def in_form(text: str, form: str) -> bool:
     """True when ``text`` is written in ``form`` (one of ``FORMS``)."""
     if form not in FORMS:
         raise ValueError(f"unknown answer form {form!r}")
+    if "fraction" in form and MIXED_NUMBER.search(normalise(text)):
+        return False
     return FORMS[form](_written(text))
