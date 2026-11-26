@@ -199,8 +199,8 @@
   list-style: none;
 }
 
-/* Six items (with Me) share the bar equally and labels wrap, so they fit a 320px screen even
-   with text at 200% (W7). Each item is still at least 52px tall and about 53px wide there. */
+/* Five items share the bar equally and labels wrap, so the nav never gets wider than the screen,
+   even at 320px with text at 200% (W7). Each item is at least 56px wide and 52px tall. */
 .main-nav__list > li {
   flex: 1 1 0;
   min-width: 0;
@@ -213,11 +213,11 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-width: 0;
+  min-width: 56px;
   min-height: 52px;
   text-align: center;
   overflow-wrap: anywhere;
-  padding: var(--space-1) 2px;
+  padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-sm);
   font-size: 0.75rem;
   font-weight: var(--font-weight-extrabold);
@@ -246,14 +246,6 @@
   font-weight: var(--font-weight-black);
   line-height: 20px;
   text-align: center;
-}
-
-/* Very narrow phones: a touch smaller, still in rem so it grows with the reader's text size. */
-@media (max-width: 359px) {
-  .main-nav__link {
-    font-size: 0.6875rem;
-    letter-spacing: -0.02em;
-  }
 }
 
 .main-nav__avatar {

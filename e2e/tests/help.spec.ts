@@ -210,27 +210,44 @@ test.describe('students find Get help on Settings, through Me (owner, 2026-11-26
   test.describe('on a 320px screen with text at 200%', () => {
     test.use({ viewport: { width: 320, height: 640 } });
 
-    test('all five nav items fit with no sideways scroll', async ({ page }) => {
-      await asStudent(page);
-      await page.goto('/settings');
-      await expect(page.getByRole('heading', { level: 1, name: 'Settings' })).toBeVisible();
-      await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
-      const links = page.getByRole('navigation', { name: 'Main' }).getByRole('link');
-      await expect(links).toHaveCount(5);
-      const overflow = await page.evaluate(
-        () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
-      );
-      expect(overflow).toBeLessThanOrEqual(0);
-      const offScreen = await links.evaluateAll((els) =>
-        els
-          .filter((el) => {
-            const r = el.getBoundingClientRect();
-            return r.left < -0.5 || r.right > window.innerWidth + 0.5;
-          })
-          .map((el) => el.textContent?.trim()),
-      );
-      expect(offScreen).toEqual([]);
-    });
+    // J found the bottom nav wider than the screen at 320px/200%, so check the nav's own width
+    // on several student pages, not just Settings. (On phones, anything wider than the screen
+    // widens the page and the fixed nav with it; /progress's period toggle does that today and
+    // is reported to its workstream, K.)
+    for (const path of ['/map', '/cards', '/plan', '/papers', '/settings']) {
+      test(`${path}: the five nav items fit and nothing scrolls sideways`, async ({ page }) => {
+        await asStudent(page);
+        await page.goto(path);
+        const nav = page.getByRole('navigation', { name: 'Main' });
+        await expect(nav).toBeVisible();
+        await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+        const links = nav.getByRole('link');
+        await expect(links).toHaveCount(5);
+        const sizes = await nav.evaluate((el) => {
+          const list = el.querySelector('ul')!;
+          return {
+            navRight: el.getBoundingClientRect().right,
+            navScroll: el.scrollWidth - el.clientWidth,
+            listScroll: list.scrollWidth - list.clientWidth,
+            viewport: document.documentElement.clientWidth,
+            page: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+          };
+        });
+        expect(sizes.navRight).toBeLessThanOrEqual(sizes.viewport + 0.5);
+        expect(sizes.navScroll).toBeLessThanOrEqual(0);
+        expect(sizes.listScroll).toBeLessThanOrEqual(0);
+        expect(sizes.page).toBeLessThanOrEqual(0);
+        const offScreen = await links.evaluateAll((els) =>
+          els
+            .filter((el) => {
+              const r = el.getBoundingClientRect();
+              return r.left < -0.5 || r.right > window.innerWidth + 0.5;
+            })
+            .map((el) => el.textContent?.trim()),
+        );
+        expect(offScreen).toEqual([]);
+      });
+    }
   });
 
   test.describe('on a tablet, the side rail', () => {
