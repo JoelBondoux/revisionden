@@ -273,9 +273,14 @@ ones:
 - _Answer form._ A numeric question that asks for its answer in a form ("give / write / express
   your answer … as a fraction", "… in its simplest form" or "lowest terms", "… in standard form",
   "write 360 in index form") must set `answer.form` to `fraction`, `simplest_fraction`,
+  `improper_fraction` ("as an improper fraction", which wins over "simplest form"),
   `standard_form` or `index_form`; a set form needs those words, its `answer.value` must itself be
   in that form, and a fraction form never sets `tolerance` or rounding. Words about the question
-  ("0.00045 is written in standard form as A × 10^n. Find n") do not ask for a form.
+  ("0.00045 is written in standard form as A × 10^n. Find n") do not ask for a form. The form
+  goes to the maths engine as `check.form` (a worked expression uses it instead of `verify.form`;
+  an item never sets both), so the engine checks the written form too. Worked maths items may set
+  `answer.form`, and their answer or solutions must then be in it, but validation does not
+  require it ("simplest form" for 3x + 10 is no fraction form).
 
 **Clean text.** Model output is recorded in check notes, and models sometimes return control
 characters. `withCheck` (`scripts/verify/record.mjs`), which writes every check record, replaces

@@ -367,7 +367,8 @@ Tags: #product #rules #limits #defaults
   typed with the number (`15 m`, `£9600`, `100p`, `28.3 cm²`); a different unit is wrong (S2,
   rule in PRODUCT_RULES "Learning loop").
 - Numeric items whose question asks for an answer form set `answer.form`: `fraction` (no decimals,
-  so 0.375 is wrong for 3/8), `simplest_fraction` (69/99 wrong for 23/33), `standard_form` or
+  so 0.375 is wrong for 3/8), `simplest_fraction` (69/99 wrong for 23/33), `improper_fraction`
+  (lowest terms, never a mixed number; no form takes a mixed number), `standard_form` or
   `index_form` (2³ × 3² × 5, not 360); validation requires it (S2; the maths engine reads the same
   field for worked maths, T2; rule in PRODUCT_RULES "Learning loop"). Area and volume units may be
   typed in words (8 square metres, cm³, cubic centimetres).
