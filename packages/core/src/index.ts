@@ -48,5 +48,7 @@ export * from './stats-allowance';
 export * from './worth-a-look';
 export * from './count-up';
 export * from './flashcard-explain';
+export * from './interactive';
+export * from './powers';
 export * from './league';
 export * from './league-schemas';

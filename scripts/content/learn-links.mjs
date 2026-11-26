@@ -17,6 +17,13 @@ export const PROVIDER_HOSTS = {
 /** Shown in the app with a full check: reachable (checked_at) and match-checked (match). */
 export const isShownLink = (link) => link.checked_at !== null && Boolean(link.match);
 
+/**
+ * Oak links go to the pupil lesson page (owner decision 2026-11-26), which has the lesson video and
+ * needs no sign-in. The /overview page answers 200, so the link check can read its title (the bare
+ * /pupils/lessons/<lesson> answers 308). A teacher page is allowed only with no_pupil_page: true.
+ */
+export const OAK_PUPIL_PAGE = /^\/pupils\/lessons\/[a-z0-9]+(-[a-z0-9]+)*\/overview$/;
+
 /** In-house notes (provider revisionden, planned): refused until the notes exist. */
 export const IN_HOUSE_NOTES_BUILT = false;
 
@@ -79,6 +86,15 @@ export function learnLinkErrors(content) {
       } else if (!where.some((w) => url.host === w.host && url.pathname.startsWith(w.path))) {
         const hosts = where.map((w) => `${w.host}${w.path}`).join(' or ');
         add(`${link.provider} links must be on ${hosts} (${link.url})`);
+      }
+      const onOak = link.provider === 'oak' && url.host === PROVIDER_HOSTS.oak[0].host;
+      if (onOak && !link.no_pupil_page && !OAK_PUPIL_PAGE.test(url.pathname)) {
+        add(
+          `oak links must be the pupil lesson page (/pupils/lessons/<lesson>/overview), or marked no_pupil_page: ${link.url}`,
+        );
+      }
+      if (link.no_pupil_page && !(onOak && url.pathname.startsWith('/teachers/'))) {
+        add(`no_pupil_page is only for an Oak teacher page: ${link.url}`);
       }
       const known = topicItems.get(id) ?? { ids: new Set(), points: new Set() };
       for (const point of link.learning_points ?? []) {

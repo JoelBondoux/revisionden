@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { defaultBaseUrl } from '../../api/ApiContext';
 import { useApiResource } from '../../api/useApiResource';
 import { UsersIcon } from '../../components/icons';
-import { ButtonTile, LinkTile } from '../../components/links';
+import { ButtonTile } from '../../components/links';
 import { createLeagueApi, type LeagueApi } from './leagueApi';
 
 /*
@@ -20,21 +20,12 @@ function useLeagueApi(given?: LeagueApi) {
   );
 }
 
-/** "Friends league" on Me (Settings), as a list item. */
+/** "Friends league" on Me (a ButtonTile). */
 export function LeagueTile({ api: given }: { api?: LeagueApi }) {
   const api = useLeagueApi(given);
   const friends = useApiResource(() => api.getFriends(), [api]);
   if (friends.status !== 'ready') return null;
-  return (
-    <li>
-      <LinkTile
-        to="/league"
-        icon={<UsersIcon />}
-        title="Friends league"
-        description="This week's league with your friends"
-      />
-    </li>
-  );
+  return <ButtonTile to="/league" icon={<UsersIcon />} label="Friends league" />;
 }
 
 /** "Friends" on the child's card in the parent home (a ButtonTile). */

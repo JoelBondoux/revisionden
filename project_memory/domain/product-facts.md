@@ -208,7 +208,14 @@ Tags: #product #rules #limits #defaults
   on phones, side rail from 768px wide). Me shows the student's own avatar (a neutral person icon
   until it loads) and opens `/settings`, "settings and personalisation"; Get help and My progress
   (`/progress`) live there, and Me is marked current on `/settings` and `/progress` (and anything
-  under them). Progress is no longer a nav tab (owner, 2026-11-26, W7). Items share the bar and
+  under them). Progress is no longer a nav tab (owner, 2026-11-26, W7). The Me page (W9) fits one
+  phone screen: avatar, nickname and **Edit my avatar** (E's builder in a sheet; Save, or Cancel
+  with a "Throw away your changes?" check; the nav avatar updates at once; the API only checks
+  items are unlocked, no parent approval or rate limit), then Get help, My progress, My rewards,
+  as button tiles with 2–3 word labels (J15a), and two sub-pages: Look and sound (`/settings/look-and-sound`: reading comfort, appearance,
+  effect style, read aloud, sound) and More (`/settings/more`: subjects, reminders, device,
+  parents, feedback, policies, about, what your parent can see). A parent on `/settings` gets a
+  Parent home tile instead of the avatar header. Items share the bar and
   labels wrap, so they fit 320px with text at 200%. Welcome and lessons hide the nav to keep focus. Only a linked student
   device gets the student nav: elsewhere (signed out, or a parent) About, Policies, Feedback and
   the other app pages show a small header with the logo, Sign in, Policies and About.
@@ -256,6 +263,10 @@ Tags: #product #rules #limits #defaults
   with questions and answers `status: "coming_soon"` (plus `subjectId` and `subjects` with
   `hasContent` for the switcher) for one with none; 404 `no_subject` only with no subject at all
   or an unknown id. The web shows "Questions for <subject> are on their way." and a switcher.
+- Powers (F9, owner 2026-11-26): shown as superscripts everywhere students see maths
+  (`packages/core/src/powers.ts`, web `MathText`), with spoken words for screen readers; stored
+  content keeps ^. A lone ^ stays ("Use ^ for powers"). Answer boxes have a Power key and a
+  "Shows as:" preview. Computing subjects (id containing "comput") keep ^ as typed (owner).
 - Mascot: Pip, an angular geometric fox (orange `#FF7A2F`). Brand violet `#6C47F5`; font Nunito,
   self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
 - Works offline for the app shell; API calls are never cached. Pages always come fresh from the
@@ -559,7 +570,8 @@ Tags: #product #rules #limits #defaults
   `markScheme`). Defined in `apps/api/src/learning/content-sync.ts`.
 - Hints (`hint`, shown by the "Need a clue?" button) nudge toward the method and never contain the
   item's final answer: `pnpm content:validate` refuses one that does (text, option or flashcard back,
-  or a number equal to a numeric answer within 0.5% that the question does not show). Rule in
+  or a number equal to a numeric answer within 0.5% that the question does not show, in any
+  written form, including standard form with `^` or superscript powers). Rule in
   `scripts/content/hint-check.mjs`, described in `docs/VERIFICATION.md` ("Hints").
 - Extended answers: blind marking replaces the blind answer (three exemplars, top, middle and low,
   marked by a second provider without the intended levels; all three must match exactly), and
@@ -717,7 +729,12 @@ Tags: #product #rules #limits #defaults
   unset; on About, the feedback form, the accessibility statement and community rules); privacy,
   data rights and security `privacy@revisionden.com` (`VITE_CONTACT_EMAIL`). Both forward to the
   product owner (Cloudflare Email Routing).
-- Feedback kinds: bug, idea, something confusing, other; text up to 500 characters with personal
+- Interactive lesson pilot (owner, 2026-11-26; built W8): area model for factorising x² + bx + c
+  (A4), b and c positive only; shown first in the A4 lesson when A4 mastery is below 60 (not at
+  60, not with no history, not in unit or subject lessons); explore, 2 guided, 1 typed, then the
+  normal A4 questions; item type `area_model`; draft until verified, so dev only for now.
+- Feedback kinds: bug, idea, something confusing, other (plus lesson_helped / lesson_not_helped,
+  the pilot's one-tap "Did this help?": item only, no text, outside the 5 a day); text up to 500 characters with personal
   details refused; device details optional; parents see their family's feedback; never sent to
   GitHub automatically; 5 in any 24 hours per sender; device details off by default for students, on for parents; deleted 12 months after closing (cron).
   The form also offers "Prefer email? help@revisionden.com" and asks for only the personal details
@@ -1017,11 +1034,22 @@ Tags: #product #rules #limits #defaults
   actually opened. The CI link check fails a match-checked page whose title changed; it also runs
   `--probe-providers` (what each provider's home page answers from the runner) and `--coverage`.
   Any reachable link without a match check fails validation (the Q5 legacy path was removed once
-  its 11 links were re-read). Lessons match by learning point only: LearnItem has no content id
-  yet, so `items` links cannot match in the app (needs `contentId` on LearnItem from the API).
+  its 11 links were re-read). Lesson items (`LearnItem.contentId`, from
+  `items.content_id`) and flashcards (`Flashcard.contentId`, `Flashcard.learningPoint`, from the
+  card's item) carry their content id and learning point (Q6b), so Learn more matches item, then
+  point, then topic in lessons and on the flashcard Explain panel.
   Coverage 2026-11-26: 139 links in 44 files; 44/44 topics and 133/133 learning points with items
   have a shown link, 69 points with their own. Pages were opened in a browser and read; the
   match `page_title` is the raw HTML title the CI check compares.
+- Oak links go to the pupil lesson page (owner decision 2026-11-26, Q6c): URL
+  `https://www.thenational.academy/pupils/lessons/<lesson>/overview` (the bare
+  `/pupils/lessons/<lesson>` answers 308 to it; the link check reads titles only on a 200). Pupil
+  pages have the lesson video and need no sign-in; titles read "<lesson> | Oak National Academy".
+  The teacher page shows the pupil link, so pupil URLs were taken from it, not guessed. The
+  validator (`OAK_PUPIL_PAGE` in `scripts/content/learn-links.mjs`) refuses any other Oak path
+  unless the link has `no_pupil_page: true`, which is allowed only on an Oak `/teachers/` page.
+  Switched 2026-11-26: all 90 Oak links (84 lessons), each re-read (200, lesson outcome, Year 10
+  or 11, video player, no sign-in); none kept as a teacher page.
 - In-house notes (planned; external links are interim): provider `revisionden` with `route` (an
   app path, no URL), listed first, optional `hide_external`; refused by validation until the
   notes exist (`IN_HOUSE_NOTES_BUILT` in `scripts/content/learn-links.mjs`).
