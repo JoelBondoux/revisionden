@@ -3,7 +3,7 @@ import { renderRoute } from '../../test/render';
 
 describe('Appearance in Settings', () => {
   it('sits next to Reading comfort for students and parents alike', async () => {
-    renderRoute('/settings');
+    renderRoute('/settings/look-and-sound');
     const appearance = await screen.findByRole('heading', { name: 'Appearance' });
     const reading = screen.getByRole('heading', { name: 'Reading comfort' });
     expect(

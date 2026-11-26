@@ -139,6 +139,61 @@
   }
 }
 
+/* ---------- J15a: button tiles and page transition (a stepped, 8-bit slide) ---------- */
+:root[data-effect-style='pixel-arcade'] .button-tile {
+  border: 0;
+  border-radius: 0;
+  background: var(--px-panel);
+  box-shadow:
+    0 0 0 3px var(--px-green),
+    6px 6px 0 3px #000;
+  color: var(--px-text);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+:root[data-effect-style='pixel-arcade'] .button-tile__icon {
+  border-radius: 0;
+  background: var(--px-gold);
+  color: #000;
+  box-shadow: 3px 3px 0 #000;
+}
+
+:root[data-effect-style='pixel-arcade'] .button-tile__badge {
+  border-radius: 0;
+  background: #000;
+  color: var(--px-green);
+}
+
+:root[data-effect-style='pixel-arcade'] .button-tile:active {
+  transform: translate(4px, 4px);
+  box-shadow:
+    0 0 0 3px var(--px-pink),
+    2px 2px 0 3px #000;
+}
+
+:root[data-effect-style='pixel-arcade'] .page-enter {
+  animation: px-slide-in 320ms steps(6, end);
+}
+
+:root[data-effect-style='pixel-arcade'] .page-enter.page-enter--back {
+  animation: px-slide-back 320ms steps(6, end);
+}
+
+@keyframes px-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-32px);
+  }
+}
+
+@keyframes px-slide-back {
+  from {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+}
+
 /* J15s: the style's own background pattern, drawn in the look's ink. */
 :root[data-effect-style='pixel-arcade'][data-pattern='on'] body::before {
   -webkit-mask-image: url('./patterns/pixel-arcade.svg');

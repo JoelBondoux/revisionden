@@ -9,7 +9,9 @@ describe('routes', () => {
     ['/progress', 'My stats'],
     ['/parent/stats', 'Stats dashboard'],
     ['/plan', 'Plan'],
-    ['/settings', 'Settings'],
+    ['/settings', 'Me'],
+    ['/settings/look-and-sound', 'Look and sound'],
+    ['/settings/more', 'More'],
     ['/cards', 'Cards'],
     ['/papers', 'Papers'],
     ['/onboarding', "Who's studying?"],
@@ -125,7 +127,7 @@ describe('routes', () => {
     const scrollTo = vi.fn();
     window.scrollTo = scrollTo as unknown as typeof window.scrollTo;
     const { router } = renderRoute('/settings');
-    await screen.findByRole('heading', { level: 1, name: 'Settings' });
+    await screen.findByRole('heading', { level: 1, name: 'Me' });
     await act(() => router.navigate('/about'));
     expect(scrollTo).toHaveBeenLastCalledWith(0, 0);
   });

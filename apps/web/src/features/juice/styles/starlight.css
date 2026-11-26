@@ -153,6 +153,52 @@
   }
 }
 
+/* ---------- J15a: button tiles and page transition (a twinkle fade) ---------- */
+:root[data-effect-style='starlight'] .button-tile {
+  border: 1px solid rgb(180 140 255 / 55%);
+  background: linear-gradient(160deg, var(--sl-night), var(--sl-deep));
+  box-shadow: var(--sl-glow);
+  color: var(--sl-text);
+}
+
+:root[data-effect-style='starlight'] .button-tile__icon {
+  background: radial-gradient(circle, var(--sl-star) 0%, #ffd86b 70%);
+  color: var(--sl-deep);
+  box-shadow: 0 0 14px rgb(255 246 176 / 60%);
+}
+
+:root[data-effect-style='starlight'] .button-tile__badge {
+  background: rgb(255 255 255 / 14%);
+  color: var(--sl-soft);
+}
+
+:root[data-effect-style='starlight'] .button-tile:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 32px rgb(75 227 255 / 55%);
+}
+
+:root[data-effect-style='starlight'] .page-enter {
+  animation: sl-twinkle-in 340ms ease-out;
+}
+
+:root[data-effect-style='starlight'] .page-enter.page-enter--back {
+  animation: sl-twinkle-back 300ms ease-out;
+}
+
+@keyframes sl-twinkle-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(1.03);
+  }
+}
+
+@keyframes sl-twinkle-back {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+}
+
 /* J15s: the style's own background pattern, drawn in the look's ink. */
 :root[data-effect-style='starlight'][data-pattern='on'] body::before {
   -webkit-mask-image: url('./patterns/starlight.svg');

@@ -95,6 +95,7 @@
     "verify": { "expression": "sqrt(108)/sqrt(3)" },
     "marks": 1,
     "explanation": "Find the largest square number that is a factor of 108: 108 = 36 × 3. So √108 = √36 × √3 = 6√3, and a = 6.",
+    "hint": "Find the largest square number that is a factor of 108, then split the square root into two. a is the whole number in front of √3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -120,7 +121,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (√108 ÷ √3 = 6). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"a = 6\" is accepted, as the question asks for the value of a.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (√108 ÷ √3 = 6). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"a = 6\" is accepted, as the question asks for the value of a. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -158,9 +159,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:32:30Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T12:08:56Z",
           "notes": "no problems found"
         }
       ]
@@ -178,6 +179,7 @@
     "verify": { "expression": "(sqrt(48) + sqrt(27))/sqrt(3)" },
     "marks": 1,
     "explanation": "Simplify each surd: √48 = √16 × √3 = 4√3 and √27 = √9 × √3 = 3√3. Add them like terms: 4√3 + 3√3 = 7√3, so k = 7.",
+    "hint": "Write each surd as a number times √3, then add them like terms. k is the number in front of √3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -203,7 +205,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (4√3 + 3√3 = 7√3). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"k = 7\" is accepted, as the question asks for the value of k.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (4√3 + 3√3 = 7√3). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"k = 7\" is accepted, as the question asks for the value of k. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -241,9 +243,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:32:44Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T12:08:58Z",
           "notes": "no problems found"
         }
       ]
@@ -261,6 +263,7 @@
     "verify": { "expression": "(6/sqrt(3))/sqrt(3)" },
     "marks": 1,
     "explanation": "Multiply the top and bottom by √3: 6/√3 = 6√3/3 = 2√3, so k = 2.",
+    "hint": "Rationalise the denominator: multiply the top and bottom by √3, then simplify. k is the number in front of √3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -286,7 +289,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (6/√3 = 6√3/3 = 2√3). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"k = 2\" is accepted, as the question asks for the value of k.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (6/√3 = 6√3/3 = 2√3). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"k = 2\" is accepted, as the question asks for the value of k. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -324,9 +327,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:32:58Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T12:09:00Z",
           "notes": "no problems found"
         }
       ]
@@ -344,6 +347,7 @@
     "verify": { "expression": "(15/sqrt(5))/sqrt(5)" },
     "marks": 1,
     "explanation": "Multiply the top and bottom by √5: 15/√5 = 15√5/5 = 3√5, so a = 3.",
+    "hint": "Multiply the top and bottom by √5 to clear the root from the bottom, then simplify. a is the number in front of √5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -369,7 +373,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (15/√5 = 15√5/5 = 3√5). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"a = 3\" is accepted, as the question asks for the value of a.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (15/√5 = 15√5/5 = 3√5). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"a = 3\" is accepted, as the question asks for the value of a. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -407,9 +411,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:33:11Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T12:09:02Z",
           "notes": "no problems found"
         }
       ]
@@ -427,6 +431,7 @@
     "verify": { "expression": "(12/sqrt(2))/sqrt(2)" },
     "marks": 1,
     "explanation": "Multiply the top and bottom by √2: 12/√2 = 12√2/2 = 6√2, so k = 6.",
+    "hint": "Multiply the top and bottom by √2, then simplify. k is the number in front of √2.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -452,7 +457,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (12/√2 = 12√2/2 = 6√2). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"k = 6\" is accepted, as the question asks for the value of k.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (12/√2 = 12√2/2 = 6√2). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"k = 6\" is accepted, as the question asks for the value of k. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -490,9 +495,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:33:25Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T12:09:04Z",
           "notes": "no problems found"
         }
       ]
@@ -511,6 +516,7 @@
     "steps": ["9 - 3*sqrt(2) + 3*sqrt(2) - 2", "9 - 2", "7"],
     "marks": 2,
     "mark_scheme": ["M1 for 9 - 3√2 + 3√2 - 2 (at least 3 terms correct)", "A1 for 7"],
+    "hint": "Expand the brackets term by term. The two middle terms cancel, and √2 × √2 is a whole number.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -536,7 +542,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer and every step backed by the maths engine. Mark points written by this session.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer and every step backed by the maths engine. Mark points written by this session. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -574,9 +580,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:24:44Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:13:54Z",
           "notes": "no problems found"
         }
       ]
@@ -594,6 +600,7 @@
     "verify": { "expression": "pi*6^2/pi" },
     "marks": 1,
     "explanation": "The area of a circle is π × radius^2. With radius 6 cm: π × 6^2 = 36π cm², so k = 36.",
+    "hint": "Work out the area in terms of π using area = π × radius^2. Then give the number in front of π as k.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -631,7 +638,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (area = π × 6^2). Area formula for a circle is the standard one (in scope under G17 of the same specification). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"k = 36\" is accepted, as the question asks for the value of k.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (area = π × 6^2). Area formula for a circle is the standard one (in scope under G17 of the same specification). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"k = 36\" is accepted, as the question asks for the value of k. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -669,9 +676,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:33:39Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T12:09:05Z",
           "notes": "no problems found"
         }
       ]
@@ -689,6 +696,7 @@
     "verify": { "expression": "pi*14/pi" },
     "marks": 1,
     "explanation": "The circumference of a circle is π × diameter. With diameter 14 cm: 14π cm, so k = 14.",
+    "hint": "Work out the circumference in terms of π using circumference = π × diameter. Then give the number in front of π as k.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -726,7 +734,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (circumference = π × diameter). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"k = 14\" is accepted, as the question asks for the value of k.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (circumference = π × diameter). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"k = 14\" is accepted, as the question asks for the value of k. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -764,9 +772,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:33:51Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T12:09:07Z",
           "notes": "no problems found"
         }
       ]
@@ -784,6 +792,7 @@
     "verify": { "expression": "(1/2)*pi*4^2/pi" },
     "marks": 1,
     "explanation": "A whole circle of radius 4 cm has area π × 4^2 = 16π cm². A semicircle is half of that: 8π cm², so k = 8.",
+    "hint": "Work out the area of the whole circle in terms of π, then halve it. Give the number in front of π as k.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -821,7 +830,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (half of π × 4^2). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"k = 8\" is accepted, as the question asks for the value of k.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer backed by the maths engine (half of π × 4^2). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"k = 8\" is accepted, as the question asks for the value of k. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -859,9 +868,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:34:05Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T12:09:09Z",
           "notes": "no problems found"
         }
       ]
@@ -877,6 +886,7 @@
     "front": "√2 × √2",
     "back": "2",
     "explanation": "A square root multiplied by itself gives the number inside: √2 × √2 = 2.",
+    "hint": "What happens when you multiply a square root by itself?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["author"],
     "citations": [
@@ -902,7 +912,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Front cited to spec N8 (surds). Back checked with SymPy. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Front cited to spec N8 (surds). Back checked with SymPy. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -932,9 +942,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:43:30Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:01Z",
           "notes": "no problems found"
         }
       ]
@@ -950,6 +960,7 @@
     "front": "√3 × √12",
     "back": "6",
     "explanation": "Multiply the numbers inside the roots: √3 × √12 = √36 = 6.",
+    "hint": "Multiply the numbers inside the square roots, then find the square root of the result.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["author"],
     "citations": [
@@ -975,7 +986,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Front cited to spec N8 (surds). Back checked with SymPy. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Front cited to spec N8 (surds). Back checked with SymPy. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -1005,9 +1016,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:43:37Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:02Z",
           "notes": "no problems found"
         }
       ]
@@ -1023,6 +1034,7 @@
     "front": "√20 ÷ √5",
     "back": "2",
     "explanation": "Divide the numbers inside the roots: √20 ÷ √5 = √4 = 2.",
+    "hint": "Divide the numbers inside the square roots, then find the square root of the result.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["author"],
     "citations": [
@@ -1048,7 +1060,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Front cited to spec N8 (surds). Back checked with SymPy. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Front cited to spec N8 (surds). Back checked with SymPy. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:22:05Z"
         },
         {
@@ -1078,9 +1090,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:43:46Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:04Z",
           "notes": "no problems found"
         }
       ]
@@ -1099,6 +1111,7 @@
     "steps": ["25 - 5*sqrt(3) + 5*sqrt(3) - 3", "25 - 3", "22"],
     "marks": 2,
     "mark_scheme": ["M1 for 25 - 5√3 + 5√3 - 3 (at least 3 terms correct)", "A1 for 22"],
+    "hint": "Expand both brackets. The terms with √3 cancel, and √3 × √3 is a whole number.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -1124,7 +1137,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer and every step backed by the maths engine. Mark points written by this session. Added so the exact-surds learning point has 3 interchangeable items.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer and every step backed by the maths engine. Mark points written by this session. Added so the exact-surds learning point has 3 interchangeable items. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:39:38Z"
         },
         {
@@ -1162,9 +1175,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:39:56Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:06Z",
           "notes": "no problems found"
         }
       ]
@@ -1183,6 +1196,7 @@
     "steps": ["16 + 4*sqrt(5) - 4*sqrt(5) - 5", "16 - 5", "11"],
     "marks": 2,
     "mark_scheme": ["M1 for 16 + 4√5 - 4√5 - 5 (at least 3 terms correct)", "A1 for 11"],
+    "hint": "Expand the brackets carefully with the signs. The √5 terms cancel, and √5 × √5 is a whole number.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N8",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -1208,7 +1222,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer and every step backed by the maths engine. Mark points written by this session. Added so the exact-surds learning point has 3 interchangeable items.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N8). Answer and every step backed by the maths engine. Mark points written by this session. Added so the exact-surds learning point has 3 interchangeable items. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:39:38Z"
         },
         {
@@ -1246,9 +1260,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:40:10Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:07Z",
           "notes": "no problems found"
         }
       ]

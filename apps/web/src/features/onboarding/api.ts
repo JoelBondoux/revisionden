@@ -110,6 +110,8 @@ export interface OnboardingApi {
   getMySubjects(): Promise<StudentSubjects>;
   /** Student device: turn a Not sure board or tier into a real one. */
   updateMySubject(subjectId: string, change: UpdateSubjectChoiceRequest): Promise<Enrolment>;
+  /** Student device: the student's own nickname and avatar (W9 Me page). */
+  getMe(): Promise<Student>;
   getMyAvatar(): Promise<StudentAvatar>;
   saveMyAvatar(avatarCode: string): Promise<Student>;
   /**
@@ -256,6 +258,7 @@ export function createOnboardingApi({
       );
       return ref;
     },
+    getMe: () => request('v1/student/me', StudentSchema),
     getMyAvatar: () => request('v1/student/avatar', StudentAvatarSchema),
     saveMyAvatar: (avatarCode) =>
       request('v1/student/avatar', StudentSchema, { avatarCode }, 'PUT'),

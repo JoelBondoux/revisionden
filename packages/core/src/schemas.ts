@@ -102,6 +102,8 @@ export const ItemTypeSchema = z.enum([
   'worked_maths',
   'extended_answer',
   'flashcard',
+  /** Interactive area model for factorising x^2 + bx + c (lesson pilot W8). */
+  'area_model',
 ]);
 export type ItemType = z.infer<typeof ItemTypeSchema>;
 

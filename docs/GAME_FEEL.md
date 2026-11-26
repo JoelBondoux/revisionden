@@ -71,6 +71,14 @@ No plain underlined text links. Use the shared components in `apps/web/src/compo
   such as the parent home, settings and stats; wrap a list in `<ul className="link-tiles">`. The
   link's text is the title (its screen reader name, matching what it shows, WCAG 2.5.3), the
   description is read as its description, and the link stretches over the whole card.
+- **ButtonTile** in a **ButtonTiles** grid (J15a, owner request 2026-11-26): a chunky button with
+  a big icon over a short label (2–3 words, no helper sentence), two to a row on phones and more on
+  wider screens. Used on parent home and Policies, and offered to W9 for Me; `LinkTile` stays where
+  a description is needed. Each effect style gives it its own look and press (inked sketch, peeled
+  sticker, glossy candy, starry glass, comic panel, garden pot, 8-bit block); the press sound and
+  vibration are U's `buttonPress` for the active style, which plays on every link tap. An optional
+  `badge` (a count, or who a policy is for) is read as part of its name. `tone="help"` is Get help's
+  own calm tile.
 - **LinkChip**: a small pill link inside a card ("Details", "Change").
 - **TextLink**: only for links inside sentences and long prose (policies). Bold, coloured, a soft
   bar under it and an underline on hover; it stays inline for readability.
@@ -110,6 +118,24 @@ tab say so to screen readers.
   outlines, so nothing overlaps; about 58KB gzipped. Before and after: `docs/design/j8c/`.
 - **Text on gold** always uses `--color-text-on-gold` (dark), in every theme: gold buttons,
   gold and streak pills, earned reward steps, the combo badge and the mastered-topic checkmark on the map.
+
+## Avatar motion (E9, owner request 2026-11-26)
+
+- The student's own avatar can move as a puppet: whole parts (the figure, the head, the eyes, the
+  mouth) move with CSS transforms, so hats, hair and glasses ride along with the head whatever the
+  child wears. Hair that hangs behind the body (long hair, ponytails) moves in step with the head
+  but stays behind the top.
+- `<AvatarSvg code motion="idle|nod|hop|hmm|tap|still" />`; still by default, so options and lists
+  never move. `useAvatarMotion({ paused })` gives the props and `react('nod' | 'hop' | 'hmm' | 'tap')`.
+- Idle: slow breathing with a small bounce (6.4s loop), a blink every 5.2s, a slow look left and
+  right (8.8s loop); the loops are multiples of `--motion-pulse`, so nothing pulses fast. Reactions play once: **nod** for a right answer (700ms), **hop** with a squint
+  and a bigger smile for a goal or level (900ms), a gentle **hmm** head tilt for a wrong answer
+  (1.4s), and a quick **tap** squash when the avatar is tapped (450ms). Same feel as Pip: ease-in-out loops, reactions on `--ease-out` and `--ease-spring`.
+- Small moves only (at most 4px up, 7 degrees of tilt), so nothing leaves the frame: checked for
+  every hat, hair style, skin and held item.
+- `paused` (questions and Test mode) stops the idle loop; reactions still play. Nothing runs in a
+  hidden tab. Reduced motion: the avatar stays still and reactions do nothing.
+- Placement (the bigger avatar at the bottom right, in the Me nav item) is J's (J15b).
 
 ## Avatar builder layout (J9, owner request 2026-11-25)
 
@@ -233,6 +259,18 @@ list arrives, so a stray build cannot show it. The style being tried is saved on
 (`revisionden.effectStyleTester`), apart from the real choice, and only counts while the server
 still sends the list; "Reset to my unlocked style" clears it. Trying a style grants no reward,
 changes no unlock and records nothing on the server.
+
+## Page transitions (J15a, owner request 2026-11-26)
+
+Opening a page from a button tile plays the effect style's own move on the main area, and Back
+plays it in reverse: Doodle Diary a page turn, Sticker Book a peel, Pop Burst a bouncy pop-in,
+Starlight a twinkle fade, Comic Pop a panel zoom, Garden Grow a grow-in and Pixel Arcade a stepped
+8-bit slide. Each is 350ms at most, uses transform and opacity only, and never blocks a tap (it is
+a CSS animation on the page, nothing on top of it). `ButtonTile` marks the navigation
+(`state.via = 'tile'`) and `PageTransition` (in `features/juice/transitions/`, mounted for every
+route) adds `page-enter` (and `page-enter--back` on Back) to `#main`; each style's stylesheet draws
+it. With reduced motion the page just swaps. Get help (`/help`, `/parent/help`) and the Quick exit
+never transition. An ordinary link does not either.
 
 ## Never (Children's Code and `REWARDS.md`)
 

@@ -10,6 +10,7 @@ describe('xpForAnswer', () => {
       numeric: 15,
       worked_maths: 20,
       extended_answer: 30,
+      area_model: 10,
     });
     expect(xpForAnswer({ type: 'worked_maths', score: 1 })).toBe(20);
   });
