@@ -589,7 +589,7 @@
     "learning_point": "gcse-maths-h-a23-lp-position-to-term",
     "expected_seconds": 45,
     "prompt": "The nth term of a sequence is (n + 1)/(2n). Work out the 5th term. Give your answer as a fraction in its simplest form.",
-    "answer": { "value": "3/5" },
+    "answer": { "value": "3/5", "form": "simplest_fraction" },
     "verify": { "expression": "(5 + 1)/(2*5)" },
     "marks": 1,
     "mark_scheme": ["B1 for 3/5"],

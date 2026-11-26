@@ -459,7 +459,7 @@
     "learning_point": "gcse-maths-h-n9-lp-calculate",
     "expected_seconds": 60,
     "prompt": "Work out (6 × 10^8) + (4 × 10^7). Give your answer in standard form.",
-    "answer": { "value": "6.4*10^8" },
+    "answer": { "value": "6.4*10^8", "form": "standard_form" },
     "verify": { "expression": "(6*10^8) + (4*10^7)" },
     "marks": 2,
     "explanation": "Write both with the same power of 10: 4 × 10^7 = 0.4 × 10^8. Add: 6 × 10^8 + 0.4 × 10^8 = 6.4 × 10^8.",

@@ -599,7 +599,7 @@ def _recurring_write(p: dict) -> dict:
         "expected_seconds": 90,
         "prompt": (f"Write 0.{digits * 3}... (the digits {digits} recur) as a fraction in its "
                    "simplest form."),
-        "answer": {"value": f"{simple.numerator}/{simple.denominator}"},
+        "answer": {"value": f"{simple.numerator}/{simple.denominator}", "form": "simplest_fraction"},
         "verify": {"expression": f"{k}/99"},
         "mark_scheme": [f"M1 for 99x = {k} or {k}/99", f"A1 for {simple}"],
         "hint": "Let x be the decimal. Two digits recur, so work out 100x - x.",

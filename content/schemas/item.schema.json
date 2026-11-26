@@ -276,6 +276,10 @@
       "minLength": 1,
       "maxLength": 200
     },
+    "answer_form": {
+      "enum": ["fraction", "simplest_fraction", "improper_fraction", "standard_form", "index_form"],
+      "description": "The form the question asks the answer in: a fraction (whole number or a/b, no decimal or mixed number), a fraction in lowest terms, an improper fraction (lowest terms, never a mixed number), standard form (a × 10^n with 1 <= a < 10) or index form (powers of distinct primes). The value must match as well. Separate from verify.form (factorised or expanded)."
+    },
     "answer_subject": {
       "type": "string",
       "minLength": 1,
@@ -433,6 +437,9 @@
             },
             "subject": {
               "$ref": "#/$defs/answer_subject"
+            },
+            "form": {
+              "$ref": "#/$defs/answer_form"
             }
           },
           "not": {
@@ -478,6 +485,9 @@
                   "items": {
                     "$ref": "#/$defs/maths"
                   }
+                },
+                "form": {
+                  "$ref": "#/$defs/answer_form"
                 }
               },
               "additionalProperties": false
@@ -491,6 +501,9 @@
                 },
                 "subject": {
                   "$ref": "#/$defs/answer_subject"
+                },
+                "form": {
+                  "$ref": "#/$defs/answer_form"
                 }
               },
               "additionalProperties": false

@@ -787,6 +787,107 @@ test('only a question that asks for the answer to be rounded needs answer roundi
   }
 });
 
+test('a question that asks for an answer form needs answer.form, and the other way round', async () => {
+  const item = (answer, prompt) => roundedItem(answer, prompt);
+  const needs = async (prompt, form, value = '3/8') => {
+    assert.match(
+      messages(await validateItems(item({ value }, prompt))),
+      new RegExp(`set answer\\.form to "${form}"`),
+      prompt,
+    );
+    assert.deepEqual(await validateItems(item({ value, form }, prompt)), [], prompt);
+  };
+  await needs('Write 0.375 as a fraction in its simplest form.', 'simplest_fraction');
+  await needs('Write 6/16 in its lowest terms.', 'simplest_fraction');
+  await needs(
+    'Write 0.272727... (the digits 27 recur) as a fraction in its simplest form.',
+    'simplest_fraction',
+    '3/11',
+  );
+  await needs('Work out 2/3 of 4/5. Give your answer as a fraction.', 'fraction', '8/15');
+  await needs('Write 2.45 as an improper fraction.', 'improper_fraction', '49/20');
+  await needs(
+    'Write 2.45 as an improper fraction in its simplest form.',
+    'improper_fraction',
+    '49/20',
+  );
+  await needs(
+    'Work out 6 × 10^8 + 4 × 10^7. Give your answer in standard form.',
+    'standard_form',
+    '6.4*10^8',
+  );
+  await needs('Write 360 in index form.', 'index_form', '2^3 × 3^2 × 5');
+  // Describing the working or the question, not the answer's form.
+  for (const prompt of [
+    '0.00045 is written in standard form as A × 10^n. Find the value of n.',
+    'Work out 3.5 + 1.25.',
+  ]) {
+    assert.deepEqual(await validateItems(item({ value: '-4' }, prompt)), [], prompt);
+  }
+  assert.match(
+    messages(await validateItems(item({ value: '3/8', form: 'fraction' }, 'Work out 0.375.'))),
+    /answer\.form is fraction but the question does not ask for it/,
+  );
+  assert.match(
+    messages(
+      await validateItems(
+        item(
+          { value: '6/16', form: 'simplest_fraction' },
+          'Write 0.375 as a fraction in its simplest form.',
+        ),
+      ),
+    ),
+    /answer\.value 6\/16 is not written as a simplest_fraction/,
+  );
+  assert.match(
+    messages(
+      await validateItems(
+        item({ value: '3/8', form: 'fraction' }, 'Write 0.375 as a fraction in its simplest form.'),
+      ),
+    ),
+    /set answer\.form to "simplest_fraction"/,
+  );
+  assert.match(
+    messages(
+      await validateItems(
+        item({ value: '0.375', form: 'fraction', decimal_places: 3 }, 'Write 0.375 as a fraction.'),
+      ),
+    ),
+    /a fraction answer cannot also set tolerance or rounding/,
+  );
+});
+
+test('the answer form is sent to the maths engine, and a worked answer is checked against it', async () => {
+  const numeric = { ...numericItem, answer: { value: '3/8', form: 'simplest_fraction' } };
+  const worked = {
+    ...solveItem,
+    answer: { expression: '49/12', form: 'improper_fraction' },
+    verify: { method: 'expression', expression: '(2 + 1/3) + (1 + 3/4)' },
+    steps: ['7/3 + 7/4', '49/12'],
+  };
+  const solved = { ...solveItem, answer: { solutions: ['5/11'], form: 'simplest_fraction' } };
+  const checks = mathsChecks([numeric, worked, solved]);
+  assert.equal(checks[0].form, 'simplest_fraction');
+  assert.equal(checks[1].form, 'improper_fraction');
+  assert.equal(checks[2].expected.form, 'improper_fraction');
+  assert.equal(checks[3].form, 'simplest_fraction');
+  const both = { ...worked, verify: { ...worked.verify, form: 'expanded' } };
+  assert.match(
+    messages(await validateItems(both)),
+    /set either answer\.form or verify\.form, not both/,
+  );
+  const unsimplified = { ...worked, answer: { expression: '98/24', form: 'improper_fraction' } };
+  assert.match(
+    messages(await validateItems(unsimplified)),
+    /answer\.expression 98\/24 is not written as a improper_fraction/,
+  );
+  const badSolution = { ...solved, answer: { solutions: ['10/22'], form: 'simplest_fraction' } };
+  assert.match(
+    messages(await validateItems(badSolution)),
+    /solution 10\/22 is not written as a simplest_fraction/,
+  );
+});
+
 test('rounding and the declared subject are sent to the maths engine', () => {
   const rounded = { ...numericItem, answer: { value: '28.3', significant_figures: 3 } };
   const rearrange = {
@@ -806,6 +907,11 @@ test('a standard form answer is sent to the maths engine as a plain number', () 
   const [check] = mathsChecks([standard]);
   assert.equal(check.answer, '640000000');
   assert.equal(check.significant_figures, 2);
+  // With form standard_form the engine checks the form too, so it gets the engine's notation.
+  const asked = { ...numericItem, answer: { value: '6.4 × 10⁸', form: 'standard_form' } };
+  assert.equal(mathsChecks([asked])[0].answer, '6.4*10^8');
+  const negative = { ...numericItem, answer: { value: '−3.2 × 10^(−4)', form: 'standard_form' } };
+  assert.equal(mathsChecks([negative])[0].answer, '-3.2*10^-4');
 });
 
 test('a fact proof must name a maths engine check kind the engine knows', async () => {

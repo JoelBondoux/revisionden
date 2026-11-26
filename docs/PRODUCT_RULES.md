@@ -305,6 +305,19 @@ Product owner decision, 2026-11-25: **parent view only**.
   the unit as written (with `^2` or `²`), its words and symbols (`m` or `metres`, `£9600` or
   `9600 pounds` for pounds, `100p` for pence, `4 h` for hours). A different unit (`15 cm` when the
   unit is m) or a unit on an item without one stays wrong.
+- **Answer form**: when the question asks for the answer in a form, the numeric item sets
+  `answer.form` (`inForm` and `indexForm` in `packages/core/src/answer-format.ts`; the maths
+  engine uses the same names for worked maths, T2), and the answer must be in that form as well
+  as have the right value, as in GCSE marking:
+  - `fraction` ("as a fraction"): a whole number or a/b, never a decimal or a mixed number, so
+    `0.375` is wrong for 3/8;
+  - `simplest_fraction` ("simplest form", "lowest terms"): also in lowest terms, so `69/99` is
+    wrong for 23/33;
+  - `improper_fraction` ("as an improper fraction"): in lowest terms and never a mixed number, so
+    `2 9/20` and `98/40` are wrong for 49/20 (no form accepts a mixed number);
+  - `standard_form` ("in standard form"): a × 10^n with 1 ≤ a < 10, so `640000000` is wrong;
+  - `index_form` ("in index form"): powers of distinct primes, compared by value, so
+    `2³ × 3² × 5` is right and `360` is wrong.
 - **Standard form** in numeric answers (`standardForm` in `packages/core/src/answer-format.ts`):
   `a × 10^n` with ×, x, X, \*, · or ⋅ as the multiply sign and `^n`, `^(n)` or superscript
   digits for the power, or e-notation (`6.4e8`), is read as its exact value. When the answer key is
