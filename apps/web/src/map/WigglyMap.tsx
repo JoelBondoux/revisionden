@@ -81,6 +81,24 @@ function routeItems(unit: MapUnit, foundation: boolean): RouteItem[] {
 const segmentsOf = (route: Route, kinds: string[], done?: (from: string, to: string) => boolean) =>
   route.segments.filter((s) => kinds.includes(s.kind) && (!done || done(s.from, s.to)));
 
+/**
+ * Where to scroll a unit's path so `target` opens in the middle of it. On a short phone (320 × 640)
+ * the scroller runs on under the bottom nav, so the middle of the whole scroller put the current
+ * topic behind the nav, and a tap on it opened the nav's Plan (W15). Then it is centred in the part
+ * the pupil can see instead; everywhere else the path opens exactly as before.
+ */
+function placeInView(page: HTMLElement, target: HTMLElement): number {
+  const centred = Math.max(0, target.offsetTop - page.clientHeight / 2);
+  const top = page.getBoundingClientRect().top;
+  const nav = document.querySelector('.main-nav')?.getBoundingClientRect();
+  // The nav covers the path only as the phone's bottom bar, not as the side rail.
+  const navTop = nav && nav.top > top ? nav.top : Infinity;
+  const seen = Math.min(window.innerHeight, navTop) - top;
+  const bottom = target.offsetTop - centred + target.offsetHeight;
+  if (seen <= 0 || bottom <= seen) return centred;
+  return Math.max(0, target.offsetTop - seen / 2);
+}
+
 /** The breathing path: nodes drift a few px on a slow sine and the road redraws to follow. */
 function useBreathing(
   trail: React.RefObject<HTMLDivElement>,
@@ -494,9 +512,7 @@ export function WigglyMap({
         page.querySelectorAll<HTMLElement>('.path-node--open, .path-node--weak'),
       ).sort((a, b) => b.offsetTop - a.offsetTop);
       const target = page.querySelector<HTMLElement>('[data-current]') ?? available[0];
-      page.scrollTop = target
-        ? Math.max(0, target.offsetTop - page.clientHeight / 2)
-        : page.scrollHeight;
+      page.scrollTop = target ? placeInView(page, target) : page.scrollHeight;
     }
   }, [start]);
 

@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- On small phones, the map now opens with "You are here" clear of the bottom bar, so tapping it starts your topic. The RevisionDen title on the welcome page also fits small screens with large text.
 - Lessons have a tidier top: one Pip next to the progress bar, his tip in a speech bubble, and your own avatar beside it, nodding, hopping or going "hmm" with your answers. The question now starts higher up the screen.
 - In lessons Pip now reacts to your answers: a nod when you're right, a cheer for a streak or your daily goal, and an encouraging head tilt when it's not quite right. On small screens with big text, the answer box now fits without scrolling sideways.
 - Fixed: Pip now keeps completely still during lessons and tests, and settles down after a minute without a tap.
@@ -163,6 +164,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- W15: on a 320 x 640 phone the map opened with "You are here" half under the bottom nav, so a tap on it opened Plan. `placeInView` (`apps/web/src/map/WigglyMap.tsx`) now centres the current topic in the part of the unit above the nav, only when it would otherwise be hidden; elsewhere the map opens exactly as before. The welcome page's "RevisionDen" title (`apps/web/src/pages/pages.css`) ran 11px past the edge at 320px with text at 200%; it now uses `clamp(2rem, 12vw, 2.5rem)` with `overflow-wrap: anywhere` (40px from 390px up, unchanged). The pupil-session e2e walk now also runs at 320px and 320px with 200% text. Before and after shots: `docs/design/w15/`.
 - J15s-c (Codex review of train #350): the painted-page contrast check no longer skips faint text. Letters are found from two extra screenshots with the text forced black and white, then measured in their real colour; visible text with too few letter pixels fails; lines hidden by a line clamp, off screen or under another element are left out. A fixture with 1.1:1 text must fail (`e2e/tests/looks.spec.ts`).
 - W12: the prize box's accessibility check also uses the shared `axeWhenSettled` helper, so every e2e axe check now waits for animations first.
 - J15s-b (Codex review of train #343): text on the page reads AA on the painted page in every look. Pop Burst's dark wash is now a deep purple-to-plum (the purple-to-peach left the footer at 2.5:1), and Sticker Book's main colour is a shade deeper (#0b6b60) so "See all" reads over its warm glow. A new e2e check in `looks.spec.ts` screenshots the page with and without its text and checks every letter pixel against what is painted behind it (page wash, texture, road and halos included), for all 7 looks in light and dark, on Me and the map.
