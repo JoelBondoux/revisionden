@@ -103,6 +103,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- S3-N: the bounds questions n16-0002 and n16-0003 now say "correct to the nearest 0.1 kg" / "0.01 second" and no longer require the answer to a set number of decimal places, so equal answers such as 4.550 are marked right (Codex review of #115).
 - U6b: `playReward` vibration no longer depends on the reward sound playing; it follows the biggest reward and the Test mode rule, so muted sound still buzzes when Vibration is on.
 - One new device a day, made atomic (B7, follow-up to I5b): two new browsers unlocking the same synced passkey at the same moment could each add a device and alert the parents twice. Unlock now claims the day with one conditional upsert on the new `passkey_new_device_claims` table (migration `0027_new_device_claims`); the loser reuses the winner's device. The scheduled clean-up deletes claims after 24 hours. Data retention 1.12.
 - Avatar builder (J9b, Codex review of #134): picking a tab after scrolling part-way down now brings the new tab's first options into view just below the pinned stage (level with its top when wide), allowing for the compact stage growing back; instant with reduced motion.
