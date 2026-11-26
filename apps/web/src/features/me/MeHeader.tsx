@@ -32,10 +32,15 @@ export function MeHeader() {
     setError(undefined);
   }, []);
 
+  // Kept stable while the student edits: the Sheet moves focus to itself whenever its onClose
+  // changes, which would throw keyboard users back to the top after every pick (Codex P2).
+  const latest = useRef({ draft, code: avatar?.code });
+  latest.current = { draft, code: avatar?.code };
   const requestClose = useCallback(() => {
-    if (draft !== null && draft !== avatar?.code) setAsking(true);
+    const { draft: current, code } = latest.current;
+    if (current !== null && current !== code) setAsking(true);
     else close();
-  }, [draft, avatar?.code, close]);
+  }, [close]);
 
   if (!avatar || !avatar.code) return null;
   const nickname = avatar.nickname ?? '';
@@ -65,6 +70,8 @@ export function MeHeader() {
           onClick={() => {
             setSaved(false);
             setDraft(avatar.code);
+            // A reward earned since the page loaded (say, in a flashcard session) unlocks items.
+            avatar.refreshUnlocks();
           }}
         >
           Edit my avatar
