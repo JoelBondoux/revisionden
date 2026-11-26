@@ -244,8 +244,9 @@ New tables (one new migration):
   the parent Friends card); both families then see it as dealt with, and the daily clean-up
   deletes it 12 months later. An open report is kept until it is closed or either child is
   deleted.
-- **Still to come:** the AppDeck report view, where support can also close a report
-  (`docs/BACKLOG.md`).
+- **PR 4 (AppDeck reports):** `GET friend-reports` and `POST friend-reports/{id}/close` on the
+  operator bridge (`apps/api/src/routes/friends-operator.ts`, `docs/OPERATOR_CONSOLE.md`):
+  nicknames, reported avatar code, fixed reason and dates only; every read and close audited.
 
 ## 10. Owner decisions (2026-11-26, via the lead)
 
