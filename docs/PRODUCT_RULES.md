@@ -294,6 +294,11 @@ Product owner decision, 2026-11-25: **parent view only**.
   values in any order, and an equation either way round; coordinates and
   inequalities are never reordered. `answer.units` lists units the answer may end with or leave
   off. Different forms of a value (`√32` and `4√2`, `three` and `3`) still need listing.
+- **Numeric answers** accept a UK thousands separator (`withoutThousands` in
+  `packages/core/src/answer-format.ts`): a space (also a thin or non-breaking space) or a comma
+  between groups of exactly three digits, the same one throughout, so `38 700` and `38,700` are
+  38700, rounded or not. Any other space between two digits makes the answer wrong (`3 87` is not
+  387); spaces around a sign or `/` are fine.
 - **Maths working** may end with a letter answer such as `x = 2a` (or `2a = x`, or `a = x`
   either way round): a solved value may use other letters, never the unknown itself. Repeated
   alternatives count once, and a line with more than 64 ways to read it is marked wrong.
@@ -330,6 +335,13 @@ Product owner decision, 2026-11-25: **parent view only**.
   draws on every topic in the unit). The next mission is the weakest weak spot, else the first
   topic not yet mastered, else a review of the weakest mastered topic. Implemented in
   `packages/core/src/map.ts` and `apps/api/src/routes/map.ts`.
+- **Subjects with no questions yet** (owner bug RD-MBXKTC, F8): the map opens on the first
+  enrolled subject with questions. A subject with none is `status: "coming_soon"`: the Map tab
+  says "Questions for <subject> are on their way." with "Try <subject> meanwhile" when another
+  subject has questions, never the error screen. With 2 or more subjects a subject switcher shows
+  them all ("Chemistry (coming soon)"). Only a student with no subject at all, or an unknown
+  subject id, gets "Choose a subject first" (404). The 5-a-day, recall and flashcards answer
+  empty for these subjects.
 - Implemented: `packages/core/src/learning.ts`, `apps/api/src/routes/learn.ts`,
   `apps/api/src/routes/flashcards.ts`.
 
@@ -386,6 +398,17 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
   imaginary wrong answers as a starting point, so mastery is earned and fades without practice.
   A weak spot is a topic below 60.
 - Implemented: `packages/core/src/spaced-repetition.ts`, `packages/core/src/mastery.ts`.
+- **Turning a card (F7, owner):** tap the card, or press Space or Enter, to turn it either way as
+  often as you like. Turning it back to the question never counts as another try and never
+  changes the rating; the rating buttons stay once the answer has been seen. The answer face is
+  empty until the answer is revealed, and each new card starts on its question with no turn, so
+  the next card's answer never flashes while the card turns.
+- **Explain (F7, owner):** on the answer side, "Explain" walks through the item's verified
+  content one step at a time ("Next step", "Back", ending on the answer): its worked steps, else
+  its inline mark scheme, then its `back_formula` and each condition, then the answer, then its
+  verified `explanation` as a final "Why" step (enough on its own for a button). No AI-made explanation
+  (CLAUDE.md rule 7). Cards without such content, and the student's own cards, have no Explain
+  button. Implemented in `packages/core/src/flashcard-explain.ts` (`explain` on each card).
 
 ## Statistics dashboards (workstream K)
 
@@ -916,6 +939,13 @@ Requested by the product owner on 2026-11-25.
   seen from outside the UK), Beat's email and web chat hours, and Childline's message service. Grief has
   no specialist service yet (none was on the list to check) and young carers' one (Carers Trust)
   could not be checked, so both topics list Childline and Samaritans.
+- Logos (W4, 2026-11-26): organisations' logos are trademarks, so one is shown only when the
+  organisation's own guidance clearly allows this use or it gives written permission. None does
+  yet: every service shows a neutral icon beside its exact name. Findings per organisation, and an
+  email template for the owner to request permission, are in
+  `docs/LOGO_PERMISSIONS.md` (a test checks it covers every service). A permitted
+  logo would be self-hosted under `apps/web/public/support-logos/`, unaltered, with alt text equal
+  to the organisation's name, and never hot-linked.
 - Privacy: its own layout with no navigation, sounds or API calls; nothing is fetched to show it
   (the data is built into the app); websites open in a new tab with `rel="noreferrer"`. A unit test
   and an e2e test check that visiting it makes no API calls and no requests to other sites.
