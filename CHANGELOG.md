@@ -170,6 +170,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Maths templates design (T1, docs only): `docs/TEMPLATES.md` now describes how physics and chemistry calculation templates would work (units with pint, balancing with ChemPy, board data only, exact rounding, the three-way cross-check), and what must be sourced first. Nothing built.
 - U6c: sound and haptic packs for Comic Pop, Garden Grow, Pixel Arcade and Doodle Diary (all 15 feedback events), matched to J's mockup previews. The sound bank gains filtered noise (paper and pencil textures, from a fixed-seed buffer) and low-passed square waves, allowed only in Comic Pop and Pixel Arcade. `DEFAULT_STYLE` is now `doodle-diary` (owner-approved); Sticker Book is an unlockable pack.
 - E5c: the parent Subjects page groups the exam board and tier rows in fieldsets with visible legends ("Exam board", "Tier"), on each subject and in the add picker (screenshot review #185).
 - Morning walkthrough screenshots of the screens that changed overnight (child home, rewards, a lesson, flashcards, the style picker, Get help, parent Subjects) at phone width in light and dark, with a list of visual issues, in `docs/design/morning/` (I11).
