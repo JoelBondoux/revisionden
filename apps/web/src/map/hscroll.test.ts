@@ -61,6 +61,15 @@ describe('where a sideways row scrolls to show the chosen item', () => {
     expect(rowScrollTarget(items, 2, { ...view, current: 108, max: 116 }).left).toBe(108);
   });
 
+  it('steps on to a whole item when the chosen one is in view but the left item is cut', () => {
+    // 0–100, 108–208, 216–316, 324–424: at 150 the second item is cut; the third is chosen.
+    const items = chips(100, 100, 100, 100);
+    expect(rowScrollTarget(items, 2, { ...view, current: 150, max: 200 })).toEqual({
+      left: 212,
+      extraEnd: 12,
+    });
+  });
+
   it('brings an item that is off the left edge in, lined up on its own edge', () => {
     const items = chips(100, 100, 100, 100);
     expect(rowScrollTarget(items, 1, { ...view, current: 116, max: 116 }).left).toBe(108 - 4);
