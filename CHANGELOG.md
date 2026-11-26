@@ -98,6 +98,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- S3-N: the estimation questions n14-0001 and n14-0003 no longer require the estimate to a set number of significant figures (the question asks only for the numbers to be rounded), so an equal estimate written another way, such as 150.0, is marked right (Codex review of #115; needs S2's #178).
 - U6b: `playReward` vibration no longer depends on the reward sound playing; it follows the biggest reward and the Test mode rule, so muted sound still buzzes when Vibration is on.
 - Avatar builder (J9b, Codex review of #134): picking a tab after scrolling part-way down now brings the new tab's first options into view just below the pinned stage (level with its top when wide), allowing for the compact stage growing back; instant with reduced motion.
 - Content validation (S2, for S3-N): only a question that asks for the answer itself to be rounded ("give your answer correct to…", "round 7.8463 to…") needs `decimal_places` or `significant_figures`; accuracy words about the working or a given measurement ("by rounding each number to 1 significant figure, estimate…") no longer do.
