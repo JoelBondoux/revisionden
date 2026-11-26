@@ -120,6 +120,8 @@ formula and its assumptions. Summary of what is built:
 - Streak milestones come with gift days: 7 days → 1, 30 → 2, 100 → 3, 365 → 5, 1,000 → 10.
 - Rewards never come from time spent or late-night study (22:00 to 05:59 UK time), at most
   300 reward XP count a day, and there are no random draws.
+- Newly earned rewards arrive in a prize box (J17). It only appears after the rewards are earned,
+  holds exactly those and shows each one's reason, so it is never a mystery box or a random draw.
 - Avatar items only unlock from the reward that locks them; locked items are refused when saving.
 - Effect styles (J10b, owner decision 2026-11-26): the ladder is Sticker Book at level 3, Pop
   Burst at level 5, Garden Grow at 5 topics mastered in a subject, Starlight at 10 topics

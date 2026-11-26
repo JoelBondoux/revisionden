@@ -20,35 +20,6 @@
   box-shadow: 0 0 12px rgb(255 214 90 / 60%);
 }
 
-:root[data-effect-style='starlight'] .today-strip,
-:root[data-effect-style='starlight'] .today-strip__mission,
-:root[data-effect-style='starlight'] .today-strip__daily {
-  border: 1px solid rgb(255 255 255 / 18%);
-  border-radius: var(--radius-lg);
-  background: linear-gradient(170deg, var(--sl-night), var(--sl-deep));
-  color: var(--sl-text);
-  box-shadow: var(--sl-glow);
-}
-
-:root[data-effect-style='starlight'] .today-strip {
-  padding: var(--space-2) var(--space-3) var(--space-1);
-}
-
-:root[data-effect-style='starlight'] .today-strip__heading {
-  color: #c4b5ff;
-}
-
-:root[data-effect-style='starlight'] .today-strip__xp,
-:root[data-effect-style='starlight'] .today-strip__daily .today-strip__eyebrow,
-:root[data-effect-style='starlight'] .today-strip__daily .today-strip__title,
-:root[data-effect-style='starlight'] .today-strip__mission .today-strip__meta {
-  color: var(--sl-soft);
-}
-
-:root[data-effect-style='starlight'] .today-strip__mission .today-strip__eyebrow {
-  color: var(--sl-cyan);
-}
-
 /* Mastered topics glow like stars. */
 :root[data-effect-style='starlight'] .hex--mastered .hex__shape {
   --hex-border: var(--sl-star);
@@ -198,6 +169,25 @@
     opacity: 0;
     transform: translateY(-8px) scale(0.98);
   }
+}
+
+/* ---------- Home and the next topic (J15c) ---------- */
+:root[data-effect-style='starlight'] .home-next {
+  background: linear-gradient(160deg, var(--sl-night), var(--sl-deep));
+}
+
+:root[data-effect-style='starlight'] .home-next__kicker {
+  color: var(--sl-text);
+}
+
+:root[data-effect-style='starlight'] .home-cta {
+  border-color: var(--sl-star);
+  background: linear-gradient(180deg, var(--sl-star), #ffd86b);
+  box-shadow: 0 0 22px rgb(255 246 176 / 55%);
+}
+
+:root[data-effect-style='starlight'] .unit-path__step--next .hex__shape {
+  filter: drop-shadow(0 0 10px rgb(75 227 255 / 70%));
 }
 
 /* J15s: the style's own background pattern, drawn in the look's ink. */

@@ -1,5 +1,5 @@
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { axeWhenSettled } from './support/axe';
 import topicMap from './fixtures/topic-map-gcse-maths.json' with { type: 'json' };
 
 // J15b (owner, 2026-11-26): Home, the screen Pip takes you to, fits one phone screen with one big
@@ -113,9 +113,7 @@ for (const scheme of ['light', 'dark'] as const) {
     await page.goto('/home');
     await expect(page.getByRole('link', { name: /^Go:/ })).toBeVisible();
     await settle(page);
-    const results = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-      .analyze();
+    const results = await axeWhenSettled(page);
     expect(
       results.violations.map(
         (v) =>

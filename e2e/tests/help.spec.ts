@@ -1,5 +1,5 @@
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
+import { axeWhenSettled } from './support/axe';
 
 /** Get help (workstream W): private, accessible and request-free. */
 
@@ -11,9 +11,7 @@ for (const path of ['/help', '/parent/help']) {
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
     );
     expect(overflow).toBeLessThanOrEqual(0);
-    const results = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-      .analyze();
+    const results = await axeWhenSettled(page);
     expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
   });
 }
@@ -101,9 +99,7 @@ test('the topic filter narrows the list, makes no requests and stays accessible'
     return u.origin !== origin || u.pathname.startsWith('/api/') || u.pathname.startsWith('/v1/');
   });
   expect(offending).toEqual([]);
-  const results = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-    .analyze();
+  const results = await axeWhenSettled(page);
   expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
 });
 
@@ -130,9 +126,7 @@ for (const { name, settings } of APPEARANCES) {
       if (!(await summary.evaluate((el) => (el.parentElement as HTMLDetailsElement).open)))
         await summary.click();
     }
-    const results = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-      .analyze();
+    const results = await axeWhenSettled(page);
     expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
   });
 }
@@ -201,9 +195,7 @@ test.describe('students find Get help on Settings, through Me (owner, 2026-11-26
     await expect(me).toHaveAttribute('aria-current', 'page');
     await page.goBack();
     await expect(page.getByRole('heading', { level: 1, name: 'Me' })).toBeVisible();
-    const results = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-      .analyze();
+    const results = await axeWhenSettled(page);
     expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
   });
 

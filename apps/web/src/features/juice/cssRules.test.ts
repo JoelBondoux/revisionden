@@ -15,6 +15,12 @@ const files = [
   'features/juice/styles/garden-grow.css',
   'features/juice/styles/comic-pop.css',
   'features/juice/styles/pixel-arcade.css',
+  'features/home/home.css',
+  'map/map.css',
+  'map/wiggly.css',
+  'features/juice/pip/pip.css',
+  'features/juice/particles/particles.css',
+  'features/juice/prize/prize.css',
 ];
 const read = (file: string) => readFileSync(join(src, file), 'utf8');
 
@@ -58,7 +64,7 @@ describe('game feel stylesheets (performance and accessibility rules)', () => {
 
   it('gives the map, rewards and stats entrance motion and bouncy buttons', () => {
     const css = read('design/motion.css');
-    for (const selector of ['.today-strip__mission', '.hex', '.stat-tile', '.rewards', '.btn']) {
+    for (const selector of ['.home-cta', '.hex', '.stat-tile', '.rewards', '.btn']) {
       expect(css).toContain(selector);
     }
   });

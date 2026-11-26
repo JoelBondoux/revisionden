@@ -258,26 +258,19 @@ Tags: #product #rules #limits #defaults
   focus stays in it. The student's avatar on the Me item sits in its own ring, head leaning out. The map's
   Today strip moved to Home: the map is now topics only. Code: `apps/web/src/features/home/`,
   `apps/web/src/features/juice/pip/`; e2e `e2e/tests/home.spec.ts`.
-- Map layout (J12b, design C "Your path", owner choice 2026-11-26; Today strip moved to Home in
-  J15b): subject chips on one line that scrolls sideways; then "Your path": a row of unit badges that scrolls sideways, and the chosen unit's card with **all** its
-  topics down a path that scrolls inside the card. The page itself never scrolls sideways.
-  - The current unit is the one holding the next mission, else the first with an open topic. Its
-    path opens on the next mission's topic, else the weakest weak spot, else the first topic in
-    progress. Each unit keeps its scroll position while the map is open.
-  - The path scrolls inside its card when there are at least 11 rem below it (above the tab bar)
-    and the screen is at least 20 rem wide; otherwise (short or narrow screens, big text) the page
-    scrolls instead, so there is never a scroll inside a scroll. At 390 × 844 the whole map fits
-    above the tab bar (the version footer sits below).
-  - A locked unit (no questions yet) says "Questions for <unit> are on their way. It unlocks as
-    soon as they're ready." See all opens a sheet of every unit with its progress.
-  - Past the daily goal the Today strip says "Goal smashed! <XP> XP" with a star (the bar stays
-    full) instead of a fraction like "195 / 50" (J12d, owner, 2026-11-26).
-  - The sideways rows (subjects, units) open showing the chosen item whole, moving only as far as
-    they must and lining up on an item's edge, so the first item seen is never cut mid-word; near the
-    end a little space (at most 40% of the row) may be added after the last item to allow that
-    (J12d, `map/hscroll.ts`).
-  - Code: `apps/web/src/map/` (`path.ts` rules, `UnitPath.tsx`, `TodayStrip.tsx`, `HScroller.tsx`,
-    `InstallRow.tsx`), `apps/web/src/features/daily/DailyRow.tsx`; e2e `e2e/tests/map.spec.ts`.
+- Map layout (J15c, the winding map from the owner-approved all-themes mockup, revision 5): a big
+  subject box (Pip dressed for the subject, Change) that opens Subject selection; then one unit at
+  a time in a sideways pager (swipe, arrows, arrow keys, dots). Each unit's route is generated from
+  a seed (subject + unit) and climbs from the first topic at the bottom to the unit challenge at
+  the top, opening on the current topic (the next mission's topic, with a "You are here" tag).
+  Nodes are each style's own tiles (done, current, open %, weak, locked, challenge). For a
+  Foundation student, Higher-only topics (`tier: 'higher'` on the map topic) sit on an optional
+  side branch; topics sharing an `orderGroup` sit side by side (either order); bridges to other
+  subjects are discovered by opening a linked topic and kept in memory only. These three need
+  content data (D7/D8); without it nothing changes. The path breathes gently, still with reduced
+  motion and under automation. A locked unit says "Questions for <unit> are on their way. It
+  unlocks as soon as they're ready." Code: `apps/web/src/map/`, `apps/web/src/pages/MapPage.tsx`;
+  e2e `e2e/tests/map.spec.ts` (route readability and 3:1 node contrast in every style).
 - Topic map data (F2, `GET /v1/student/map`): units are the top-level topics of the subject's tree,
   leaf topics in specification order. Locked = no item may be served yet; mastered at 80%; weak
   spot = tried and below 60%; otherwise in progress (including not tried). Unit mastery averages
@@ -863,6 +856,14 @@ Tags: #product #rules #limits #defaults
   capped at 40 pieces. The combo badge shows from 2 in a row. The CTA pulse takes 1.6 s (well under 3
   flashes a second). Reduced motion removes particles, confetti, float-ups, shakes and pulsing; combo,
   stars and XP still show as text. Arena colours live in `apps/web/src/design/tokens.ts` (`--arena-*`).
+- Settled in J17 (owner-approved mockup `docs/mockups/all-themes-pip.html`): each effect style has its
+  own particles (`apps/web/src/features/juice/particles/plan.ts`, `FLAVOURS`), at most 30 a burst and
+  90 on screen; none with reduced motion. Burst sizes: right answer 18 (8 + 2 × combo from 4 in a
+  row), goal 22, topic complete 22, level up 28, reward unlock 30. Newly earned rewards open a prize
+  box `<dialog>` (drop, three wobbles, lid burst, rewards one by one with reasons, Collect); with
+  reduced motion it opens straight to the list. It is not a mystery box: it only holds rewards
+  already earned. The step sound is U8's `prizeBox` (`nodePop` until it lands); the burst sound is U8's
+  `particleBurst`, at most once every 140 ms, and silent until it lands.
 - Settled in J5: light-theme motion lives in `apps/web/src/design/motion.css` and applies only to
   the topic map, rewards and stats (parent area, policies and settings stay calm). The map's Next
   mission button is the pulsing main call to action. Reward reveals show the tier, the items and the

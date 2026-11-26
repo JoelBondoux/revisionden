@@ -1,5 +1,5 @@
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { axeWhenSettled } from './support/axe';
 
 /**
  * The interactive lesson pilot (W8): the area model steps of the A4 lesson, by touch and by
@@ -152,9 +152,7 @@ test('the area model step is accessible', async ({ page }) => {
   await stubLesson(page);
   await page.goto('/learn/topic/gcse-maths-h-a4');
   await page.getByRole('radio', { name: '2 and 3' }).check();
-  const results = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-    .analyze();
+  const results = await axeWhenSettled(page);
   expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
 });
 

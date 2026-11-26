@@ -27,8 +27,8 @@
 
 ## Effects
 
-- **Right answer:** particle burst from the chosen option (about 20 particles, 0.8 s), the option
-  turns green, "+XP" pops above the feedback, XP counter rolls up, rising chime (U's sound bank).
+- **Right answer:** a burst of the effect style's own particles from the chosen option (18,
+  growing with the combo from 4 in a row; see "Themed particles" below), the option turns green, "+XP" pops above the feedback, XP counter rolls up, rising chime (U's sound bank).
 - **Wrong answer:** small horizontal shake (0.4 s), the right option is highlighted, soft low tone.
   No red flashes, no "fail" words.
 - **Combo:** from 2 right in a row a "COMBO ×n" badge pops in; the chime rises a step per combo
@@ -51,6 +51,9 @@
 - **Pip the fox** reacts with a short line (warm-up, combo, last question).
 - **Reward reveals** use U's tiered reward sounds with a matching visual tier (common to
   legendary). A reveal always shows exactly what was earned and why: no mystery boxes.
+- **Prize box (J17):** rewards earned by an answer or a flashcard session arrive in the den prize
+  box (see "Themed particles and the prize box" below). It is not a mystery box: it only appears
+  after the rewards are already earned, holds exactly those, and shows each one's reason.
 
 ## XP rule
 
@@ -326,13 +329,80 @@ never transition. An ordinary link does not either.
 - **Idle loop** (`idle.ts`): one action about every 8 seconds (blink, a head tilt, an ear twitch,
   a look around; v3 has no arm), with slow shoulder breathing at rest, never the same twice running; naps outside 07:00 to 21:00; stops after a minute without
   a tap or key; still in lessons and tests. Moves ease in and out through in-between frames and
-  return to rest, so nothing snaps. Reduced motion: a still pose.
+  return to rest, so nothing snaps. Reduced motion: a still pose. Breathing runs only while the
+  idle loop is on (`PipFigure alive`, class `pip-figure--alive`), so being at rest never means
+  breathing in a lesson, after a minute or with reduced motion (J15b-3, Codex review of #335).
 - **Home** (`/home`, `features/home/`) is the first screen after signing in or unlocking and where
   Pip goes. One screen at 390 × 844, low on words: the level ring (count-up), streak, today's goal
   rings (XP, 5-a-day with Start or Continue, cards due), **one** big bobbing next-mission button
   (or "Pick a topic"), weak spots to fix, the friends league chip (soon), and this week's days with
   the reward gift. It reads the map, the week's stats (read-only, so Rewards keeps its "New!"
   moments), the 5-a-day and cards due. The map's Today strip moved here; the map is topics only.
+
+## The winding map (J15c, owner sign-off of the all-themes mockup, revision 5)
+
+`apps/web/src/map/` (`WigglyMap.tsx`, `route.ts`, `bridges.ts`, `nodeArt.tsx`, `wiggly.css`,
+`wiggly-styles.css`), reference `docs/mockups/all-themes-pip.html`.
+
+- **The big subject box** at the top (Pip dressed for the subject, "Your subject", Change) opens
+  **Subject selection**: every subject with Pip dressed for it, Back to the map.
+- **One unit at a time**: a sideways pager (swipe, the arrow buttons, or the arrow keys on the
+  focused pager) with dots; the heading says the unit and its mastery.
+- **Each unit's route comes from a seed** (subject + unit, `layoutRoute`): S-bends, switchbacks, a
+  long sweep or a curl (one segment bulges sideways; no true loop, so the road never crosses
+  itself). It **climbs from the first topic at the bottom to the unit challenge at the top**, and
+  opens scrolled to the current topic with done topics below it.
+- **Nodes** are each style's own solid tiles (generated from the mockup): done, current, open
+  (its %), weak (wrench and %), locked, and the challenge. The next mission's topic is the current
+  node, with a **You are here** tag beside it. Labels are clamped to three lines (the full name is
+  in the link's name) and use the app's text colour with a page-coloured halo.
+- **Higher side branch**: for a Foundation student, topics marked `tier: 'higher'` sit on an
+  optional dotted branch that forks off the route and rejoins it (smaller "H" nodes, "Higher ·
+  optional"). **Either order**: topics sharing an `orderGroup` sit side by side and the route splits
+  and rejoins. Both are optional fields on the map topic; without them nothing changes.
+- **Bridges** (discovered, never shown up front): with links from content (D7/D8), opening a linked
+  topic reveals its first bridge the next time the map shows (a note: "You might find this Physics
+  topic useful: …"); tapping a bridge says why it helps and reveals the next link a moment later.
+  Kept in memory for the session. With no links, nothing shows.
+- **The path breathes**: each node drifts a few px on a slow sine (8 to 12 s, a little per style)
+  and the road follows; off with reduced motion, under automation (so clicks find their target),
+  and paused while the tab is hidden. The current node bobs and the tag sways (transform only).
+- **Checks** (`e2e/tests/map.spec.ts`, ported from `docs/mockups/checks`): every unit's route at
+  320 and 390 px has no overlapping nodes, labels or tags, nothing off screen, and no crossings;
+  every done, current and open node clears 3:1 against the road and the page in every app style,
+  light and dark.
+
+## Themed particles and the prize box (J17, owner-approved mockup 2026-11-26)
+
+Ported from `docs/mockups/all-themes-pip.html` (`FX`, `burst`, `PRIZE_BOX`, `openPrize`).
+
+- **Particles** (`apps/web/src/features/juice/particles/`): each effect style throws its own:
+  Doodle Diary pen squiggles, loops and stars; Sticker Book stickers and hearts; Pop Burst gold
+  coins and sparkles; Starlight drifting stars (they float up); Comic Pop dots with a POW!, ZAP!,
+  WOW! or BAM! word on big moments; Garden Grow petals and leaves that sway; Pixel Arcade pixels
+  (smooth, no stepping). Petal Glow (petals and sparkle), Turbo Drive (speed streaks) and Rainbow
+  Parade (twinkling rainbow glitter) are ready for when those styles arrive. An unknown style uses
+  Doodle Diary's.
+- **Sizes** (`burstFor`): right answer 18 (from 4 in a row, 8 + 2 × combo, flying further);
+  daily goal hit 22; topic complete 22 with a word; level up 28 with a word; reward unlock 30
+  with a word; a style unlock 12; the prize box's wobbles 6, its opening 26 with a word, each
+  reward 12. Comic words also show on any burst at power 1.3 or more.
+- **Limits:** at most 30 particles in one burst and 90 on screen at once (bursts past that are
+  trimmed or dropped). Web Animations move only transform and opacity, and each particle is
+  removed when it lands. The layer is `aria-hidden` and lets taps through. Reduced motion: no
+  particles at all.
+- **Where:** right answers, the daily goal being hit and lesson complete (topic complete) today.
+  `celebrate('levelUp' | 'styleUnlock' | 'rewardUnlock', element)` and `burstAt(element, options)`
+  (from `features/juice`) are ready for level-up and style-unlock screens, which do not exist yet.
+- **Prize box** (`apps/web/src/features/juice/prize/`): a native `<dialog>`. The den box (fox-ear
+  knobs, star latch) drops in, wobbles three times with the wobble sound and small puffs (tap it
+  to skip), bursts its lid open with the open sound, then each reward pops out one by one with its
+  kind, name and "For: …" reason, a step sound and a small burst. Then **Collect** (focused) and
+  the reward's own tiered sound. Escape closes it; Tab stays inside; focus goes back where it was.
+  With reduced motion it opens at once with the full list. The "New reward" line and **See your
+  rewards** stay on the screen after Collect. The step sound is U8's three-step `prizeBox` sound (`nodePop` until it lands). Bursts
+  play U8's `particleBurst` sound, at most once every 140 ms and only when something flies; until
+  it lands they add no sound of their own.
 
 ## Never (Children's Code and `REWARDS.md`)
 
@@ -344,7 +414,8 @@ never transition. An ordinary link does not either.
 
 ## Performance and accessibility
 
-- CSS transforms and opacity only; particles capped; 60 fps on a mid-range Android phone.
+- CSS transforms and opacity only; particles capped (30 a burst, 90 on screen); 60 fps on a
+  mid-range Android phone.
 - `prefers-reduced-motion` turns off particles, shakes, confetti and pulsing (state changes still
   shown with colour and text); screen readers get the result text through a live region.
 - Contrast meets WCAG 2.2 AA on the dark arena background.

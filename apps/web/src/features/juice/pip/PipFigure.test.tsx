@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { render } from '@testing-library/react';
 import { outfitFor, PLAIN } from './outfits';
 import { PipFigure } from './PipFigure';
@@ -81,6 +83,14 @@ describe('Pip, the figure', () => {
     expect(hat.container.querySelector('[data-look-part="bandana"]')).not.toBeNull();
     const bare = render(<PipFigure outfit={PLAIN} look={{ family: 'c', variant: 1 }} />);
     expect(bare.container.querySelector('[data-look-part="beanie"]')).not.toBeNull();
+  });
+
+  it('breathes only while idle motion is on, never just because he is at rest', () => {
+    const css = readFileSync(join(import.meta.dirname, 'pip.css'), 'utf8');
+    const breathe = css.slice(0, css.indexOf('animation: pip-breathe'));
+    expect(breathe.slice(breathe.lastIndexOf('}') + 1)).toContain(
+      '.pip-figure--alive.pip-figure--rest .pip-figure__shoulders',
+    );
   });
 
   it('shows a pose as a class, so the stylesheet can move him smoothly', () => {

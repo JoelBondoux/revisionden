@@ -48,6 +48,7 @@ export function PipHomeButton({
 }: PipHomeButtonProps) {
   const navigate = useNavigate();
   const [pose, setPose] = useState<PipPose>('rest');
+  const [alive, setAlive] = useState(false);
   const [asking, setAsking] = useState(false);
   const [look] = useState(() => lookFor(today()));
   const returnFocus = useRef(false);
@@ -86,6 +87,7 @@ export function PipHomeButton({
         });
         last = next.pose;
         setPose(next.pose);
+        setAlive(next.delayMs !== null);
         if (next.pose !== 'rest' && next.pose !== 'nap') {
           settle = setTimeout(() => setPose('rest'), ACTION_MS);
         }
@@ -101,6 +103,7 @@ export function PipHomeButton({
       calm: inLesson,
       reducedMotion: env.reducedMotion(),
     });
+    setAlive(first.delayMs !== null);
     if (first.delayMs !== null) plan(first.delayMs);
     return () => {
       clearTimeout(timer);
@@ -127,7 +130,7 @@ export function PipHomeButton({
         aria-label="Home"
         onClick={() => (inLesson ? setAsking(true) : goHome())}
       >
-        <PipFigure outfit={outfitFor(subjectId)} look={look} pose={pose} />
+        <PipFigure outfit={outfitFor(subjectId)} look={look} pose={pose} alive={alive} />
       </button>
       {asking && (
         <LeaveDialog

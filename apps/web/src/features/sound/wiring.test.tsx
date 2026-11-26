@@ -13,6 +13,14 @@ import { rewardSound } from './rewardBank';
 import { FEEDBACK_EVENTS, type FeedbackEvent } from './feedback/events';
 import { DEFAULT_STYLE, stylePacks } from './feedback/styles';
 import { SoundProvider } from './SoundProvider';
+import { resetParticles } from '../juice/particles/burst';
+
+/**
+ * The sounds played, leaving out the particle bursts' own (J17). Burst sounds are throttled to
+ * one every 140 ms, so how many play depends on how fast the test clicks; sequence checks are
+ * about the marking and celebration sounds.
+ */
+const withoutBursts = (played: readonly string[]) => played.filter((e) => e !== 'particleBurst');
 
 /** Renders the whole app with sound on, recording which sounds actually play. */
 function renderWithSound(path: string) {
@@ -67,6 +75,8 @@ const lessonOf = (...indexes: number[]) =>
     ),
   );
 
+// Each test starts with the burst-sound throttle clear (J17), so its first burst always sounds.
+beforeEach(() => resetParticles());
 afterEach(() => vi.restoreAllMocks());
 
 describe('sounds in the app', () => {
@@ -82,15 +92,17 @@ describe('sounds in the app', () => {
     await userEvent.click(await screen.findByRole('radio', { name: 'Option B' }));
     await click('Check');
     await screen.findByRole('status', { name: 'Answer feedback' });
-    expect(played).toEqual(['correct']);
+    expect(withoutBursts(played)).toEqual(['correct']);
+    // J17: the right answer's particle burst has its own sound (U8), after the chime.
+    expect(played.slice(0, 2)).toEqual(['correct', 'particleBurst']);
     await click('Continue');
     await userEvent.type(await screen.findByLabelText('Your answer'), '4');
     await click('Check');
     await screen.findByRole('status', { name: 'Answer feedback' });
     // The second right answer in a row is a combo (U5/U6).
-    expect(played).toEqual(['correct', 'combo', 'streakDay']);
+    expect(withoutBursts(played)).toEqual(['correct', 'combo', 'streakDay']);
     await click('Finish');
-    expect(played.at(-1)).toBe('setComplete');
+    expect(withoutBursts(played).at(-1)).toBe('setComplete');
   });
 
   it('Learn mode: a gentle sound for a wrong answer', async () => {
@@ -197,7 +209,7 @@ describe('combo chime in lessons', () => {
     await userEvent.type(await screen.findByLabelText('Your answer'), '4');
     await click('Check');
     await screen.findByRole('status', { name: 'Answer feedback' });
-    expect(played.slice(0, 2)).toEqual(['correct', 'combo']);
+    expect(withoutBursts(played).slice(0, 2)).toEqual(['correct', 'combo']);
     const secondChime = contexts[0]!.oscillators[after]!.frequencies[0]!;
     expect(secondChime).toBeGreaterThan(firstChime);
   });
