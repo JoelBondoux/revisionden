@@ -310,9 +310,11 @@ Product owner decision, 2026-11-25: **parent view only**.
   engine uses the same names for worked maths, T2), and the answer must be in that form as well
   as have the right value, as in GCSE marking:
   - `fraction` ("as a fraction"): a whole number or a/b, never a decimal or a mixed number, so
-    `0.375` is wrong for 3/8 and `2 9/20` is wrong for 49/20;
+    `0.375` is wrong for 3/8;
   - `simplest_fraction` ("simplest form", "lowest terms"): also in lowest terms, so `69/99` is
     wrong for 23/33;
+  - `improper_fraction` ("as an improper fraction"): in lowest terms and never a mixed number, so
+    `2 9/20` and `98/40` are wrong for 49/20 (no form accepts a mixed number);
   - `standard_form` ("in standard form"): a × 10^n with 1 ≤ a < 10, so `640000000` is wrong;
   - `index_form` ("in index form"): powers of distinct primes, compared by value, so
     `2³ × 3² × 5` is right and `360` is wrong.
