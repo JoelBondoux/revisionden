@@ -194,7 +194,7 @@ tab say so to screen readers.
   reading tint replaces the page and surface colours and removes the wash and texture; the
   dyslexia-friendly font replaces every heading and style font. Text drawn straight on the page
   (headings, notes, the version footer) reads AA on the **painted** page, wash and texture
-  included (`e2e/tests/looks.spec.ts` samples the real pixels behind it, J15s-b); so Pop Burst's
+  included (`e2e/tests/looks.spec.ts`: the letters are found by drawing the text in black and in white, then measured in their real colour against the page drawn without them; faint text fails, never skips, J15s-b and J15s-c); so Pop Burst's
   dark wash is a deep purple-to-plum, not the mockup's purple-to-peach. A look also takes its
   heading font, self-hosted with @fontsource (Baloo 2 for Sticker Book, Pop Burst, Starlight and
   Garden Grow; Bangers for Comic Pop; Press Start 2P for Pixel Arcade; Patrick Hand for Doodle
