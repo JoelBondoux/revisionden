@@ -6,16 +6,15 @@ written, after everyday notation is normalised (``app/notation.py``):
 - ``fraction``: a whole number or a single fraction ``a/b`` with b ≥ 2 (a minus sign allowed),
   no decimals;
 - ``simplest_fraction``: the same, in lowest terms and not ``0/b`` (``27/99`` is not, ``3/11`` is);
-  Neither fraction form accepts a mixed number (``2 9/20``): the engine does not read mixed
-  numbers, and an improper fraction such as ``49/20`` is simply a fraction;
+- ``improper_fraction``: in lowest terms and never a mixed number (``49/20``, not ``2 9/20``).
+  The engine does not read mixed numbers at all, so none of the fraction forms accepts one;
 - ``standard_form``: ``A × 10^n`` with 1 ≤ |A| < 10 and n a whole number, |n| ≤ 100
   (``15 × 10^10`` and ``150000000000`` are not). e-notation (``6.4e8``) is refused here: the
   engine never reads it (input safety), though the app's typed-answer marking accepts it;
 - ``index_form``: a product of different primes, each written once with an optional power
   (``2^3 × 3^2 × 5``, in any order; ``360`` and ``2 × 2 × 2 × 3^2 × 5`` are not).
 
-These are the same four values, with the same rules, as ``answer.form`` in
-``packages/core/src/answer-format.ts`` (S2e), apart from e-notation.
+These match ``packages/core/src/answer-format.ts`` (S2e) apart from e-notation.
 """
 
 import re
@@ -63,6 +62,7 @@ def _index_form(text: str) -> bool:
 FORMS = {
     "fraction": lambda t: _fraction(t, simplest=False),
     "simplest_fraction": lambda t: _fraction(t, simplest=True),
+    "improper_fraction": lambda t: _fraction(t, simplest=True),
     "standard_form": lambda t: bool((m := STANDARD_FORM.fullmatch(t))
                                     and abs(int(m.group(1))) <= MAX_POWER),
     "index_form": _index_form,
