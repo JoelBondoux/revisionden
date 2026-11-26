@@ -474,6 +474,29 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
 - Implemented: `packages/core/src/mistakes.ts`, `apps/api/src/learning/mistakes.ts`, the attempts,
   lesson and daily routes, `apps/web/src/features/learn/LessonPlayer.tsx`. Migration 0026.
 
+## Lesson reactions (F13, for J14; owner approved 2026-11-26)
+
+F decides **when** Pip and the student's avatar react in a lesson; J decides **how** (Pip's mood
+or animation, the avatar's `react('nod' | 'hmm' | 'hop')`, placement and timing).
+
+- `LessonPlayer` takes an optional `onAnswerReaction(event)` with
+  `event = { kind: 'right' | 'wrong' | 'helped' | 'goal', combo }`. No styling or timing comes
+  from F.
+- It is called once per marked answer, straight after marking. Kinds:
+  - `goal`: the answer was right and met today's goal for the first time today (it wins over the
+    others);
+  - `right`: a right answer;
+  - `helped`: right, but after "Help me understand" (half XP), so the reaction should be
+    encouraging, not a celebration;
+  - `wrong`: a wrong answer, helped or not.
+- `combo` is the right answers in a row after this answer, from the API (0 after a miss or a
+  helped answer).
+- It is never called for an answer that could not be marked (F12), for an error, or outside the
+  lesson player (Test mode and the starting test use their own screen).
+- Reduced motion is J's side: E9's `react()` already does nothing then.
+- Implemented in `answerReaction()` (`apps/web/src/features/learn/reaction.ts`) and
+  `LessonPlayer.tsx`.
+
 ## Typed working without the maths engine (F12, 2026-11-26)
 
 - Typed working (`worked_maths`) is marked by the maths engine (`MATHS_ENGINE_URL`). When no

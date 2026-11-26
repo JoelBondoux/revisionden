@@ -28,6 +28,7 @@ import {
 } from '../juice';
 import { markSound, useSound } from '../sound';
 import { useLearnApi } from './learnApi';
+import { answerReaction, type AnswerReactionEvent } from './reaction';
 import { HelpPanel } from './HelpPanel';
 import { NewRewards } from './NewRewards';
 import {
@@ -138,6 +139,11 @@ interface LessonPlayerProps {
   aside?: ReactNode;
   /** Recall check answers (Q4): sent as recall, so a wrong one never resets the combo. */
   recall?: boolean;
+  /**
+   * Lesson reactions (F13, for J14): called once per marked answer, so Pip and the avatar can
+   * react. F decides when; J decides how (docs/PRODUCT_RULES.md "Lesson reactions").
+   */
+  onAnswerReaction?: (event: AnswerReactionEvent) => void;
 }
 
 /** Why a question is showing, for questions that came back (learning from mistakes, F5). */
@@ -184,6 +190,7 @@ export function LessonPlayer({
   onFinish,
   aside,
   recall = false,
+  onAnswerReaction,
 }: LessonPlayerProps) {
   const api = useLearnApi();
   const { play } = useSound();
@@ -279,6 +286,15 @@ export function LessonPlayer({
       play(markSound(marked), { step: comboStep(streak - 1) });
       if (marked.progress.goalMet && progress && !progress.goalMet)
         play('streakDay', { delay: 0.4 });
+      onAnswerReaction?.({
+        kind: answerReaction({
+          correct: marked.correct,
+          helped: marked.helped === true,
+          goalWasMet: progress?.goalMet ?? false,
+          goalMet: marked.progress.goalMet,
+        }),
+        combo: streak,
+      });
       setResult(marked);
       setProgress(marked.progress);
       setCombo(streak);

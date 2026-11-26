@@ -291,6 +291,9 @@ Tags: #product #rules #limits #defaults
   uses the card's interval, not its lateness). Parent stats show no backlog (API has `backlog`).
   An all-decks session is complete when today's offered cards are done, including a "10 more"
   batch (F11b, `flashcard_sessions.extra_cards`, migration 0032).
+- Lesson reactions (F13, for J14, owner 2026-11-26): `LessonPlayer` calls
+  `onAnswerReaction({ kind: 'right' | 'wrong' | 'helped' | 'goal', combo })` once per marked
+  answer (never for an unmarked one). F decides when; J decides how Pip and the avatar react.
 - Clues and help (F10, owner 2026-11-26): "Need a clue?" shows the verified hint (no penalty,
   no longer shown up front); then "Help me understand" steps through the verified worked
   solution. A right answer after help earns half XP (rounded down, owner), no combo, and is
