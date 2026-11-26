@@ -41,9 +41,47 @@ export function assertWritable(data) {
   }
 }
 
-/** A copy of the content with this check replacing any earlier check of the same name. */
+// Control characters (U+0000 to U+001F except tab and newline) break the database sync
+// (Postgres refuses \u0000 in jsonb: 22P05), so content never holds them.
+// eslint-disable-next-line no-control-regex
+const CONTROL = /[\u0000-\u0008\u000b-\u001f]/g;
+
+/** Text with each control character (other than tab and newline) replaced by a space. */
+export const cleanText = (text) => String(text).replace(CONTROL, ' ');
+
+/** Where control characters are in a piece of content: [{ path, code }] (path like a.b[0].c). */
+export function controlCharacters(value, path = '') {
+  if (typeof value === 'string') {
+    return [...new Set(value.match(CONTROL) ?? [])].map((ch) => ({
+      path,
+      code: `U+${ch.charCodeAt(0).toString(16).toUpperCase().padStart(4, '0')}`,
+    }));
+  }
+  if (Array.isArray(value)) {
+    return value.flatMap((v, i) => controlCharacters(v, `${path}[${i}]`));
+  }
+  if (value && typeof value === 'object') {
+    return Object.entries(value).flatMap(([k, v]) =>
+      controlCharacters(v, path ? `${path}.${k}` : k),
+    );
+  }
+  return [];
+}
+
+const cleanCheck = (check) =>
+  Object.fromEntries(
+    Object.entries(check).map(([k, v]) => [k, typeof v === 'string' ? cleanText(v) : v]),
+  );
+
+/**
+ * A copy of the content with this check replacing any earlier check of the same name. Model
+ * output in the check is cleaned of control characters first.
+ */
 export function withCheck(data, check) {
   assertWritable(data);
   const checks = data.verification.checks.filter((c) => c.name !== check.name);
-  return { ...data, verification: { ...data.verification, checks: [...checks, check] } };
+  return {
+    ...data,
+    verification: { ...data.verification, checks: [...checks, cleanCheck(check)] },
+  };
 }

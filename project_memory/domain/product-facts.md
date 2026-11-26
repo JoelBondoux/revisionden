@@ -70,6 +70,11 @@ Tags: #product #rules #limits #defaults
 - "Not sure" boards and tiers never block onboarding. They show on the finish screen, in Parent
   home ("Things to check: N", parent can set them) and in the student's Settings > My subjects
   (student can only turn Not sure into a value), with a nudge on the student's home until set.
+- After onboarding, either parent can add, remove or change a child's subjects in Parent home >
+  Subjects (E5; same picker as onboarding, Not sure allowed). Removing keeps the child's answers
+  and mastery (only the enrolment goes), so progress comes back if re-added. Subjects with no
+  questions yet say "Questions coming soon". Adds, removes and board or tier changes are important
+  family log events.
 - New children start from a Boy, Girl or Neutral look (Neutral preselected); only the avatar code
   is stored, never a gender. A newly linked device offers "Make it yours" (with "Maybe later").
 - Most-used board per subject in England (Ofqual market report 2024 to 2025, share of
@@ -207,6 +212,10 @@ Tags: #product #rules #limits #defaults
 - Parent onboarding is at `/onboarding` (family list, add a child, school report, link a device,
   finish); the student scans the QR code to `/link` and sets up a passkey.
 - Avatars are drawn as layered SVG from the avatar code (`apps/web/src/features/avatar`).
+- Avatar builder layout (J9): the preview always stays in view. Under 600px of builder width
+  (phones, the sheet) it is pinned on top and shrinks once the options scroll. At 600px or more
+  it is a sticky column on the left. Arrow-key tabs; a gentle pop on each change, off with
+  reduced motion. `apps/web/src/features/avatar/AvatarBuilder.tsx`, `avatar.css`.
 
 ## Operator console (AppDeck)
 
@@ -266,6 +275,10 @@ Tags: #product #rules #limits #defaults
 - Content is JSON in `content/`, checked by `pnpm content:validate` (schemas in
   `content/schemas/`). Every item has `source_ref` and `checked_by`; every topic-tree leaf has a
   specification reference; trees are at most 3 levels deep. Detail: `docs/CONTENT_PLAN.md`.
+- No content string may hold a control character (U+0000 to U+001F except tab and newline):
+  `pnpm content:validate` refuses them with the field path, because Postgres refuses `\u0000` in
+  jsonb (22P05) and the content sync fails. Check records written by the pipeline
+  (`withCheck` in `scripts/verify/record.mjs`) have them replaced by a space first.
 - Every maths answer (numeric and worked maths items, and model solutions) is verified by the
   maths engine before content can merge.
 - Every item, topic leaf, mark scheme and diagram carries official citations and a verification
