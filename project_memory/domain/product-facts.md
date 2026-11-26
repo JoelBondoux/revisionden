@@ -70,6 +70,11 @@ Tags: #product #rules #limits #defaults
 - "Not sure" boards and tiers never block onboarding. They show on the finish screen, in Parent
   home ("Things to check: N", parent can set them) and in the student's Settings > My subjects
   (student can only turn Not sure into a value), with a nudge on the student's home until set.
+- After onboarding, either parent can add, remove or change a child's subjects in Parent home >
+  Subjects (E5; same picker as onboarding, Not sure allowed). Removing keeps the child's answers
+  and mastery (only the enrolment goes), so progress comes back if re-added. Subjects with no
+  questions yet say "Questions coming soon". Adds, removes and board or tier changes are important
+  family log events.
 - New children start from a Boy, Girl or Neutral look (Neutral preselected); only the avatar code
   is stored, never a gender. A newly linked device offers "Make it yours" (with "Maybe later").
 - Most-used board per subject in England (Ofqual market report 2024 to 2025, share of

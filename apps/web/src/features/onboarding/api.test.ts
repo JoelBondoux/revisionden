@@ -175,6 +175,37 @@ describe('onboarding API client', () => {
     expect(String(fetch.mock.calls[1]![0])).toBe('https://api.test/v1/device/link/verify');
   });
 
+  it('lists, adds and removes a child subject', async () => {
+    const subject = {
+      studentId: STUDENT_ID,
+      subjectId: 'gcse-maths',
+      board: 'AQA',
+      tier: 'higher',
+    };
+    const list = fakeFetch(200, { subjects: [{ ...subject, hasQuestions: false }] });
+    const api = createOnboardingApi({ baseUrl: 'https://api.test', fetch: list });
+    expect((await api.getChildSubjects(STUDENT_ID))[0]!.hasQuestions).toBe(false);
+    expect(String(list.mock.calls[0]![0])).toBe(
+      `https://api.test/v1/students/${STUDENT_ID}/subjects`,
+    );
+
+    const added = fakeFetch(201, subject);
+    const api2 = createOnboardingApi({ baseUrl: 'https://api.test', fetch: added });
+    await api2.addChildSubject(STUDENT_ID, {
+      subjectId: 'gcse-maths',
+      board: 'AQA',
+      tier: 'higher',
+    });
+    expect(added.mock.calls[0]![1]?.method).toBe('POST');
+
+    const removed = vi.fn(async () => new Response(null, { status: 204 }));
+    const api3 = createOnboardingApi({ baseUrl: 'https://api.test', fetch: removed });
+    await api3.removeChildSubject(STUDENT_ID, 'gcse-maths');
+    const [url, init] = removed.mock.calls[0]! as unknown as [URL, RequestInit];
+    expect(String(url)).toBe(`https://api.test/v1/students/${STUDENT_ID}/subjects/gcse-maths`);
+    expect(init.method).toBe('DELETE');
+  });
+
   it('sets a child board or tier with PATCH', async () => {
     const fetch = fakeFetch(200, {
       studentId: STUDENT_ID,
