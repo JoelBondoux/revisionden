@@ -64,6 +64,7 @@ export function toLearnItem(row: ItemRow, topicTitle: string): LearnItem {
         prompt,
         mode: b.mode ?? 'explore',
         quadratic: b.quadratic ?? { b: 1, c: 1 },
+        ...(b.askHelped ? { askHelped: true as const } : {}),
       };
     default:
       throw new Error(`Unknown item type in the database: ${row.type}`);

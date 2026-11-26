@@ -5,10 +5,14 @@ import { z, type ZodType, type ZodTypeDef } from 'zod';
 import { defaultBaseUrl } from '../../api/ApiContext';
 import type { DeviceDetails } from './details';
 
+/** The kinds a person chooses in the feedback form. */
 export const FEEDBACK_KINDS = ['bug', 'idea', 'confusing', 'other'] as const;
+/** Every kind a list can show: also the one-tap "Did this help?" after an interactive lesson (W8). */
+export const ALL_FEEDBACK_KINDS = [...FEEDBACK_KINDS, 'lesson_helped', 'lesson_not_helped'] as const;
 export const FEEDBACK_STATUSES = ['new', 'looking_into_it', 'fixed', 'will_not_fix'] as const;
 export const FEEDBACK_OUTCOMES = ['confirmed', 'duplicate'] as const;
 export type FeedbackKind = (typeof FEEDBACK_KINDS)[number];
+export type AnyFeedbackKind = (typeof ALL_FEEDBACK_KINDS)[number];
 export type FeedbackStatus = (typeof FEEDBACK_STATUSES)[number];
 export type FeedbackOutcome = (typeof FEEDBACK_OUTCOMES)[number];
 export type Sender = 'student' | 'parent';
@@ -16,7 +20,7 @@ export type Sender = 'student' | 'parent';
 // TODO(workstream C): use the shared schemas from packages/core once they exist.
 const feedbackSchema = z.object({
   id: z.string(),
-  kind: z.enum(FEEDBACK_KINDS),
+  kind: z.enum(ALL_FEEDBACK_KINDS),
   text: z.string().nullable(),
   status: z.enum(FEEDBACK_STATUSES),
   senderRole: z.enum(['student', 'parent']),
@@ -173,11 +177,13 @@ export function useFeedbackApi(): FeedbackApi {
 }
 
 /** Plain words for each kind and status. */
-export const KIND_LABELS: Record<FeedbackKind, string> = {
+export const KIND_LABELS: Record<AnyFeedbackKind, string> = {
   bug: 'Bug',
   idea: 'Idea',
   confusing: 'Something confusing',
   other: 'Other',
+  lesson_helped: 'Interactive lesson: it helped',
+  lesson_not_helped: "Interactive lesson: it didn't help",
 };
 export const STATUS_LABELS: Record<FeedbackStatus, string> = {
   new: 'New',

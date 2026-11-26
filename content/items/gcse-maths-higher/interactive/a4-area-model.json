@@ -7,8 +7,13 @@
     "difficulty": 1,
     "expected_seconds": 90,
     "prompt": "Make x^2 + 5x + 6 into a rectangle. Which two numbers multiply to 6 and add to 5?",
-    "quadratic": { "b": 5, "c": 6 },
-    "answer": { "pair": [2, 3] },
+    "quadratic": {
+      "b": 5,
+      "c": 6
+    },
+    "answer": {
+      "pair": [2, 3]
+    },
     "marks": 1,
     "explanation": "2 × 3 = 6 and 2 + 3 = 5, so the tiles make a rectangle with sides x + 2 and x + 3: x^2 + 5x + 6 = (x + 2)(x + 3).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
@@ -51,8 +56,13 @@
     "difficulty": 1,
     "expected_seconds": 60,
     "prompt": "Make x^2 + 6x + 8 into a rectangle. Which two numbers multiply to 8 and add to 6?",
-    "quadratic": { "b": 6, "c": 8 },
-    "answer": { "pair": [2, 4] },
+    "quadratic": {
+      "b": 6,
+      "c": 8
+    },
+    "answer": {
+      "pair": [2, 4]
+    },
     "marks": 1,
     "hint": "List the pairs of numbers that multiply to 8, then find the pair that adds to 6.",
     "explanation": "2 × 4 = 8 and 2 + 4 = 6, so x^2 + 6x + 8 = (x + 2)(x + 4).",
@@ -96,9 +106,15 @@
     "difficulty": 1,
     "expected_seconds": 60,
     "prompt": "Make x^2 + 8x + 12 into a rectangle. Which two numbers multiply to 12 and add to 8?",
-    "quadratic": { "b": 8, "c": 12 },
-    "answer": { "pair": [2, 6] },
+    "quadratic": {
+      "b": 8,
+      "c": 12
+    },
+    "answer": {
+      "pair": [2, 6]
+    },
     "marks": 1,
+    "ask_helped": true,
     "hint": "Three pairs of numbers multiply to 12. Only one of them adds to 8.",
     "explanation": "2 × 6 = 12 and 2 + 6 = 8, so x^2 + 8x + 12 = (x + 2)(x + 6).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A4",
@@ -141,8 +157,14 @@
     "expected_seconds": 60,
     "learning_point": "gcse-maths-h-a4-lp-factorise",
     "prompt": "Factorise x^2 + 9x + 20",
-    "answer": { "expression": "(x + 4)(x + 5)" },
-    "verify": { "method": "expression", "expression": "x^2 + 9x + 20", "form": "factorised" },
+    "answer": {
+      "expression": "(x + 4)(x + 5)"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "x^2 + 9x + 20",
+      "form": "factorised"
+    },
     "steps": ["x^2 + 9x + 20", "(x + 4)(x + 5)"],
     "marks": 2,
     "mark_scheme": ["M1 for (x + a)(x + b) with a × b = 20 or a + b = 9", "A1 for (x + 4)(x + 5)"],

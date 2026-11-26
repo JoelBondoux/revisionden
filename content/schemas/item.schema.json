@@ -701,6 +701,10 @@
           "type": "integer",
           "minimum": 1,
           "maximum": 1
+        },
+        "ask_helped": {
+          "const": true,
+          "description": "Set on the last tile step of the lesson: after it is checked the student is asked the one-tap \"Did this help?\" (no text)."
         }
       }
     }

@@ -45,6 +45,8 @@ export const LearnItemSchema = z.discriminatedUnion('type', [
       b: z.number().int().min(1).max(AREA_MODEL_LIMITS.maxB),
       c: z.number().int().min(1).max(AREA_MODEL_LIMITS.maxC),
     }),
+    /** The lesson's last tile step: ask the one-tap "Did this help?" once it is checked. */
+    askHelped: z.literal(true).optional(),
   }),
   z.object({
     ...itemBase,

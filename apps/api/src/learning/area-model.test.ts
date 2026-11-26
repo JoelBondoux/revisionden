@@ -69,6 +69,14 @@ describe('area model items in the API (W8)', () => {
     await expect(markItem(row, 3, undefined)).rejects.toMatchObject({ status: 400 });
   });
 
+  it('passes on the "Did this help?" flag from the lesson\'s last tile step', () => {
+    const last = { ...content, ask_helped: true };
+    expect(itemBody(last).askHelped).toBe(true);
+    expect(itemBody(content).askHelped).toBeUndefined();
+    const lastRow = { ...row, body: itemBody(last) } as unknown as ItemRow;
+    expect(toLearnItem(lastRow, 'A4')).toMatchObject({ askHelped: true });
+  });
+
   it('shows the right answer as the two brackets', () => {
     expect(correctAnswerText(row)).toBe('(x + 2)(x + 4)');
   });

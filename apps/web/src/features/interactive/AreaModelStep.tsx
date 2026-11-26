@@ -10,6 +10,8 @@ import {
   type AreaModelTile,
   type LearnItem,
 } from '@revisionden/core';
+import { Button } from '../../components/Button';
+import { sendLessonTap } from './lessonFeedback';
 import './interactive.css';
 
 type AreaItem = Extract<LearnItem, { type: 'area_model' }>;
@@ -133,6 +135,7 @@ export function AreaModelStep({ item, draft, disabled, onChange }: AreaModelStep
       <p className="secondary-text area-help">
         Tap a tile to see which part of the expression it is.
       </p>
+      {disabled && item.askHelped && <DidThisHelp itemId={item.id} />}
     </div>
   );
 }
@@ -278,5 +281,39 @@ function Tiles({ b, c, pair, fits, lit, onTile }: TilesProps) {
       {shapes}
       <g aria-hidden="true">{labels}</g>
     </svg>
+  );
+}
+
+/** One tap after the lesson's last tile step: Yes or No, nothing else. */
+function DidThisHelp({ itemId }: { itemId: string }) {
+  const [state, setState] = useState<'ask' | 'sending' | 'done' | 'failed'>('ask');
+  const id = useId();
+  const tap = async (helped: boolean) => {
+    setState('sending');
+    try {
+      await sendLessonTap(itemId, helped);
+      setState('done');
+    } catch {
+      setState('failed');
+    }
+  };
+  if (state === 'done') return <p className="area-helped">Thanks for telling us.</p>;
+  return (
+    <div className="area-helped" role="group" aria-labelledby={`${id}-helped`}>
+      <p id={`${id}-helped`} className="area-pairs__label">
+        Did this help?
+      </p>
+      <div className="area-pairs__options">
+        <Button variant="secondary" disabled={state === 'sending'} onClick={() => tap(true)}>
+          Yes
+        </Button>
+        <Button variant="secondary" disabled={state === 'sending'} onClick={() => tap(false)}>
+          No
+        </Button>
+      </div>
+      {state === 'failed' && (
+        <p className="secondary-text">That didn&apos;t send. You can try again.</p>
+      )}
+    </div>
   );
 }

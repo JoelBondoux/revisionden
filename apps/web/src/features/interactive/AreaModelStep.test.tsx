@@ -1,6 +1,8 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useState } from 'react';
+import { http, HttpResponse } from 'msw';
+import { server } from '../../mocks/server';
 import type { LearnItem } from '@revisionden/core';
 import { AreaModelStep } from './AreaModelStep';
 
@@ -110,5 +112,44 @@ describe('the area model step', () => {
   it('cannot be changed once the answer is checked', () => {
     render(<Harness step={item()} disabled />);
     for (const radio of screen.getAllByRole('radio')) expect(radio).toBeDisabled();
+  });
+});
+
+describe('Did this help? (one tap, no text)', () => {
+  it('is asked after the last tile step is checked, and sends only the tap and the item', async () => {
+    const sent: unknown[] = [];
+    server.use(
+      http.post('*/v1/student/feedback', async ({ request }) => {
+        sent.push(await request.json());
+        return HttpResponse.json({}, { status: 201 });
+      }),
+    );
+    render(<Harness step={item({ askHelped: true })} disabled />);
+    const group = screen.getByRole('group', { name: 'Did this help?' });
+    await userEvent.click(within(group).getByRole('button', { name: 'Yes' }));
+    expect(await screen.findByText('Thanks for telling us.')).toBeInTheDocument();
+    expect(sent).toEqual([{ kind: 'lesson_helped', itemId: item().id }]);
+  });
+
+  it('sends "it did not help" for No', async () => {
+    const sent: unknown[] = [];
+    server.use(
+      http.post('*/v1/student/feedback', async ({ request }) => {
+        sent.push(await request.json());
+        return HttpResponse.json({}, { status: 201 });
+      }),
+    );
+    render(<Harness step={item({ askHelped: true })} disabled />);
+    await userEvent.click(screen.getByRole('button', { name: 'No' }));
+    await screen.findByText('Thanks for telling us.');
+    expect(sent).toEqual([{ kind: 'lesson_not_helped', itemId: item().id }]);
+  });
+
+  it('is not asked before the answer is checked, nor on steps without the flag', () => {
+    const { unmount } = render(<Harness step={item({ askHelped: true })} />);
+    expect(screen.queryByRole('group', { name: 'Did this help?' })).toBeNull();
+    unmount();
+    render(<Harness step={item()} disabled />);
+    expect(screen.queryByRole('group', { name: 'Did this help?' })).toBeNull();
   });
 });

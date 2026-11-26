@@ -3,6 +3,7 @@ import type { LearnItem, Progress } from '@revisionden/core';
 import { Button } from '../../components/Button';
 import { Pill } from '../../components/Pill';
 import { ProgressBar } from '../../components/ProgressBar';
+import { AreaModelStep } from '../interactive';
 import './learn.css';
 
 /** Shown whenever unverified (draft) content is on screen. Only possible in development. */
@@ -203,6 +204,8 @@ export function ItemInput({
           )}
         </div>
       );
+    case 'area_model':
+      return <AreaModelStep item={item} draft={text} disabled={disabled} onChange={onChange} />;
     default:
       return <TextAnswer item={item} text={text} disabled={disabled} onChange={onChange} />;
   }
