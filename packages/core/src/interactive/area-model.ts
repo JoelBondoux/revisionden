@@ -118,3 +118,16 @@ export function areaModelLayout(pair: AreaModelPair): AreaModelLayout {
     sides: { top: ['x', `+${q}`], left: ['x', `+${p}`] },
   };
 }
+
+export type AreaModelTile = 'square' | 'strip' | 'unit';
+
+/** What a tile is and how it adds up to its term, for the quadratic on screen. */
+export function tileExplanation(tile: AreaModelTile, { b, c }: AreaModelQuadratic): string {
+  const count = (n: number, term: string) =>
+    n === 1 ? `There is just 1: ${term}.` : `There are ${n} of them: ${term}.`;
+  if (tile === 'square') return 'The x² square. It is x by x, so its area is x².';
+  if (tile === 'strip') {
+    return `An x strip. It is x by 1, so its area is x. ${count(b, b === 1 ? 'x' : `${b}x`)}`;
+  }
+  return `A unit square. It is 1 by 1, so its area is 1. ${count(c, String(c))}`;
+}

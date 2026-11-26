@@ -10,6 +10,7 @@ import {
   isScopeA,
   parseAreaModelAnswer,
   quadraticText,
+  tileExplanation,
 } from './area-model';
 
 describe('factor pairs', () => {
@@ -151,5 +152,24 @@ describe('tile layout for a chosen pair', () => {
     const layout = areaModelLayout([3, 4]);
     expect(layout.rightStrips + layout.bottomStrips).toBe(7);
     expect(layout.units).toHaveLength(12);
+  });
+});
+
+describe('what each tile is, in words', () => {
+  it('explains the x² square, an x strip and a unit square for the quadratic on screen', () => {
+    const q = { b: 5, c: 6 };
+    expect(tileExplanation('square', q)).toBe('The x² square. It is x by x, so its area is x².');
+    expect(tileExplanation('strip', q)).toBe(
+      'An x strip. It is x by 1, so its area is x. There are 5 of them: 5x.',
+    );
+    expect(tileExplanation('unit', q)).toBe(
+      'A unit square. It is 1 by 1, so its area is 1. There are 6 of them: 6.',
+    );
+  });
+
+  it('says "There is just 1: x" for a single strip', () => {
+    expect(tileExplanation('strip', { b: 1, c: 0 })).toBe(
+      'An x strip. It is x by 1, so its area is x. There is just 1: x.',
+    );
   });
 });

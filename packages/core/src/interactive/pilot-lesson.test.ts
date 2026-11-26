@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { INTERACTIVE_PILOT_TAG, arrangeInteractivePilot, showsInteractivePilot } from './pilot-lesson';
+import {
+  INTERACTIVE_PILOT_TAG,
+  arrangeInteractivePilot,
+  showsInteractivePilot,
+} from './pilot-lesson';
 
 describe('when the interactive pilot shows (owner, 2026-11-26: A4 weak spots)', () => {
   it('shows in a one-topic lesson when the topic is a weak spot (mastery below 60)', () => {
