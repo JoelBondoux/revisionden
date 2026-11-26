@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Tap any power to switch between x² and x^2 (tap again to switch back). It changes every power on the screen, and your device remembers which you prefer.
 - The Me page and its More page now use big, easy-to-tap buttons with short names, in the same style as the rest of the app.
 - "Learn more" now points to a lesson on the exact question or skill on flashcards too, not just the topic.
 - Learn more and Learn it first now open Oak National Academy's lessons made for students, with the lesson video and no sign-in, instead of the teacher's page.
@@ -225,6 +226,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Power switch (F9b, owner): a tap on any power in `MathText` switches every power on screen between raised and ^ (a shared store, remembered in `revisionden.powersSwitched`); computing starts with ^. The tap stops the event, so it never chooses an answer or turns a card. E2E tap test on a flashcard in `e2e/tests/powers.spec.ts`. Also fixes two F9 review findings: `2^(3)^2` now nests as 2 to the power 3^2, and read aloud and screen-reader words for powers now come from `parsePowers`, so 10^2.5 and 10^−3 are read as "to the power 2.5" and "to the power minus 3".
 - W9b fixes (Codex review of #277): the avatar editor re-reads unlocked items each time it opens, so a reward earned since the page loaded unlocks its item; keyboard focus now stays on the item just picked instead of jumping back to the top of the sheet.
 - W9b: Me and More use J15a `ButtonTiles` (2–3 word labels, no helper sentences; Get help `tone="help"`); screenshots in `docs/design/w9/` refreshed.
 - Avatar motion (E9): `AvatarSvg` `motion` prop (idle breathing, blinks, look around; nod, hop, hmm and tap reactions), `paused`, and the `useAvatarMotion` hook. Whole layer groups move by CSS transforms, so every item combination moves together; still with reduced motion and paused in a hidden tab.

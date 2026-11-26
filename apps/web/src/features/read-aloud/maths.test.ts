@@ -17,6 +17,14 @@ describe('reading maths aloud', () => {
     ['28.27 cm^2', '28.27 square centimetres'],
     ['12 m^3', '12 cubic metres'],
     ['2πr', '2 pi r'],
+    // Exactly the powers the screen raises (F9b, Codex review on #254).
+    ['10^2.5', '10 to the power 2.5'],
+    ['10^−3', '10 to the power minus 3'],
+    ['10^-3', '10 to the power minus 3'],
+    ['x^2y', 'x squared y'],
+    ['e^(x^2)', 'e to the power x squared'],
+    ['x^n + 1', 'x to the power n plus 1'],
+    ['Press ^ to raise', 'Press ^ to raise'],
   ])('reads %s as "%s"', (text, spoken) => {
     expect(mathsToSpeech(text)).toBe(spoken);
   });
