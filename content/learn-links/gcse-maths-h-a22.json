@@ -1,0 +1,74 @@
+{
+  "topic": "gcse-maths-h-a22",
+  "links": [
+    {
+      "title": "Inequalities",
+      "url": "https://www.bbc.co.uk/bitesize/topics/z3hv2p3/articles/z9xk6rd",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Inequalities - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Algebraic inequalities on a number line, solving inequalities with inverse operations and finding integer solutions.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Solving simple linear inequalities",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/inequalities/lessons/solving-simple-linear-inequalities",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a22-lp-linear"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Solving simple linear inequalities GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can solve simple linear inequalities.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Solving more complicated linear inequalities",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/inequalities/lessons/solving-more-complicated-linear-inequalities",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a22-lp-linear"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Solving more complicated linear inequalities GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can solve more complicated linear inequalities.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Solving quadratic inequalities algebraically",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/inequalities/lessons/solving-quadratic-inequalities-algebraically",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a22-lp-quadratic"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Solving quadratic inequalities algebraically GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can solve a quadratic inequality algebraically.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Higher – Quadratic inequalities",
+      "url": "https://www.bbc.co.uk/bitesize/topics/z3hv2p3/articles/znxv6rd",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a22-lp-quadratic"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "What are quadratic inequalities? - BBC Bitesize",
+        "teaches": "Solving quadratic inequalities by sketching the graph, factorising or using the quadratic formula (Higher).",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

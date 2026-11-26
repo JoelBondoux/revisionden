@@ -1,0 +1,46 @@
+{
+  "topic": "gcse-maths-h-a10",
+  "links": [
+    {
+      "title": "Checking and securing understanding of finding the equation of the line from the graph",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/linear-graphs/lessons/checking-and-securing-understanding-of-finding-the-equation-of-the-line-from-the-graph",
+      "provider": "oak",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of finding the equation of the line from the graph GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can find the equation of the line from the graph.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Working out equations of a line and calculating gradient",
+      "url": "https://www.bbc.co.uk/bitesize/topics/z3hv2p3/articles/zqq96rd",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a10-lp-from-equation"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Equations of a line and calculating gradient - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "The equation of a straight line y = mx + c: finding the gradient m and y-intercept c from a graph or two points.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Calculating the rate of change",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/real-life-graphs/lessons/calculating-the-rate-of-change",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a10-lp-interpret"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Calculating the rate of change GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can calculate the gradient and interpret this as the rate of change for real life contexts.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

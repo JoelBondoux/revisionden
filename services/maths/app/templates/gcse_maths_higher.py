@@ -63,7 +63,7 @@ def _brackets_write(p: dict) -> dict:
     return {
         "difficulty": 2 if simple else 3,
         "expected_seconds": 60 if simple else 90,
-        "prompt": f"Expand and simplify {expr}. Use ^ for powers.",
+        "prompt": f"Expand and simplify {expr}. Use the Power key (^) for powers.",
         "answer": {"expression": answer},
         "verify": {"method": "expression", "expression": expr, "form": "expanded"},
         "steps": [expr, four, answer],
@@ -79,7 +79,8 @@ def _brackets_write(p: dict) -> dict:
 def _brackets_recheck(p: dict, item: dict) -> list[str]:
     a, b, m, n = p["a"], p["b"], p["p"], p["q"]
     errors = []
-    match = re.fullmatch(r"Expand and simplify (\(.+\)\(.+\))\. Use \^ for powers\.", item["prompt"])
+    match = re.fullmatch(r"Expand and simplify (\(.+\)\(.+\))\. Use the Power key \(\^\) for powers\.",
+                         item["prompt"])
     if not match:
         return ["the question is not in the expected words"]
     shown = parse(match.group(1), exact=True)
@@ -98,7 +99,7 @@ def _brackets_recheck(p: dict, item: dict) -> list[str]:
 
 EXPAND_DOUBLE_BRACKETS = Template(
     id="gcse-maths-h-a4-double-brackets",
-    version=1,
+    version=2,  # v2: "Use the Power key (^) for powers." (F9, #254)
     topic="gcse-maths-h-a4",
     learning_point="gcse-maths-h-a4-lp-expand",
     type="worked_maths",

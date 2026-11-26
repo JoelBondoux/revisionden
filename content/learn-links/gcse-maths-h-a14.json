@@ -1,0 +1,19 @@
+{
+  "topic": "gcse-maths-h-a14",
+  "links": [
+    {
+      "title": "Using and interpreting graphs - Edexcel",
+      "url": "https://www.bbc.co.uk/bitesize/guides/zpmfgdm/revision/1",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "board": "edexcel",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Real-life graphs - Using and interpreting graphs - Edexcel - GCSE Maths Revision - Edexcel - BBC Bitesize",
+        "teaches": "Real-life graphs: reading values, gradient as a rate of change, distance-time and speed-time graphs and the area under a curve (Higher parts).",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}
