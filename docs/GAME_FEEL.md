@@ -27,8 +27,8 @@
 
 ## Effects
 
-- **Right answer:** particle burst from the chosen option (about 20 particles, 0.8 s), the option
-  turns green, "+XP" pops above the feedback, XP counter rolls up, rising chime (U's sound bank).
+- **Right answer:** a burst of the effect style's own particles from the chosen option (18,
+  growing with the combo from 4 in a row; see "Themed particles" below), the option turns green, "+XP" pops above the feedback, XP counter rolls up, rising chime (U's sound bank).
 - **Wrong answer:** small horizontal shake (0.4 s), the right option is highlighted, soft low tone.
   No red flashes, no "fail" words.
 - **Combo:** from 2 right in a row a "COMBO ×n" badge pops in; the chime rises a step per combo
@@ -51,6 +51,9 @@
 - **Pip the fox** reacts with a short line (warm-up, combo, last question).
 - **Reward reveals** use U's tiered reward sounds with a matching visual tier (common to
   legendary). A reveal always shows exactly what was earned and why: no mystery boxes.
+- **Prize box (J17):** rewards earned by an answer or a flashcard session arrive in the den prize
+  box (see "Themed particles and the prize box" below). It is not a mystery box: it only appears
+  after the rewards are already earned, holds exactly those, and shows each one's reason.
 
 ## XP rule
 
@@ -366,6 +369,38 @@ never transition. An ordinary link does not either.
   every done, current and open node clears 3:1 against the road and the page in every app style,
   light and dark.
 
+## Themed particles and the prize box (J17, owner-approved mockup 2026-11-26)
+
+Ported from `docs/mockups/all-themes-pip.html` (`FX`, `burst`, `PRIZE_BOX`, `openPrize`).
+
+- **Particles** (`apps/web/src/features/juice/particles/`): each effect style throws its own:
+  Doodle Diary pen squiggles, loops and stars; Sticker Book stickers and hearts; Pop Burst gold
+  coins and sparkles; Starlight drifting stars (they float up); Comic Pop dots with a POW!, ZAP!,
+  WOW! or BAM! word on big moments; Garden Grow petals and leaves that sway; Pixel Arcade pixels
+  (smooth, no stepping). Petal Glow (petals and sparkle), Turbo Drive (speed streaks) and Rainbow
+  Parade (twinkling rainbow glitter) are ready for when those styles arrive. An unknown style uses
+  Doodle Diary's.
+- **Sizes** (`burstFor`): right answer 18 (from 4 in a row, 8 + 2 × combo, flying further);
+  daily goal hit 22; topic complete 22 with a word; level up 28 with a word; reward unlock 30
+  with a word; a style unlock 12; the prize box's wobbles 6, its opening 26 with a word, each
+  reward 12. Comic words also show on any burst at power 1.3 or more.
+- **Limits:** at most 30 particles in one burst and 90 on screen at once (bursts past that are
+  trimmed or dropped). Web Animations move only transform and opacity, and each particle is
+  removed when it lands. The layer is `aria-hidden` and lets taps through. Reduced motion: no
+  particles at all.
+- **Where:** right answers, the daily goal being hit and lesson complete (topic complete) today.
+  `celebrate('levelUp' | 'styleUnlock' | 'rewardUnlock', element)` and `burstAt(element, options)`
+  (from `features/juice`) are ready for level-up and style-unlock screens, which do not exist yet.
+- **Prize box** (`apps/web/src/features/juice/prize/`): a native `<dialog>`. The den box (fox-ear
+  knobs, star latch) drops in, wobbles three times with the wobble sound and small puffs (tap it
+  to skip), bursts its lid open with the open sound, then each reward pops out one by one with its
+  kind, name and "For: …" reason, a step sound and a small burst. Then **Collect** (focused) and
+  the reward's own tiered sound. Escape closes it; Tab stays inside; focus goes back where it was.
+  With reduced motion it opens at once with the full list. The "New reward" line and **See your
+  rewards** stay on the screen after Collect. The step sound is U8's three-step `prizeBox` sound (`nodePop` until it lands). Bursts
+  play U8's `particleBurst` sound, at most once every 140 ms and only when something flies; until
+  it lands they add no sound of their own.
+
 ## Never (Children's Code and `REWARDS.md`)
 
 - No lives or energy that run out and block learning; no waiting timers; no pay-to-continue.
@@ -376,7 +411,8 @@ never transition. An ordinary link does not either.
 
 ## Performance and accessibility
 
-- CSS transforms and opacity only; particles capped; 60 fps on a mid-range Android phone.
+- CSS transforms and opacity only; particles capped (30 a burst, 90 on screen); 60 fps on a
+  mid-range Android phone.
 - `prefers-reduced-motion` turns off particles, shakes, confetti and pulsing (state changes still
   shown with colour and text); screen readers get the result text through a live region.
 - Contrast meets WCAG 2.2 AA on the dark arena background.

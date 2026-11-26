@@ -1,12 +1,10 @@
 import { readFileSync } from 'node:fs';
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { axeWhenSettled } from './support/axe';
 
 /** Fails on any WCAG 2.2 A or AA problem axe can find on the current page. */
 async function expectAccessible(page: Page) {
-  const results = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-    .analyze();
+  const results = await axeWhenSettled(page);
   expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
 }
 
@@ -469,9 +467,9 @@ test("the topic map's links say what they show: each name starts with its visibl
   await page.getByRole('link', { name: 'Map', exact: true }).click();
   await expect(page.getByRole('heading', { level: 1, name: 'Topic map' })).toBeVisible();
   await expect(page.locator('.path-node').first()).toBeVisible();
-  const results = await new AxeBuilder({ page })
-    .withRules(['label-content-name-mismatch'])
-    .analyze();
+  const results = await axeWhenSettled(page, (axe) =>
+    axe.withRules(['label-content-name-mismatch']),
+  );
   expect(
     results.violations.flatMap((v) => v.nodes.map((n) => `${v.id}: ${n.target.join(' ')}`)),
   ).toEqual([]);

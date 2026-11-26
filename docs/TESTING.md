@@ -89,6 +89,9 @@ End-to-end tests (`e2e/tests`) run at phone (390×844), tablet (820×1180) and d
 in Chromium, fail on any axe WCAG 2.2 A/AA violation or sideways scrolling, and always run with
 `--trace off` (turn traces on only to debug one test). Without `E2E_BASE_URL` they serve the built
 app with `vite preview`. CI: `.github/workflows/e2e.yml`.
+Every axe check goes through `axeWhenSettled(page)` (`e2e/tests/support/axe.ts`): it waits for
+finite animations to finish first, because axe measures colours as drawn and a button still fading
+in reads as low contrast. The rules stay WCAG 2.2 A/AA (or what the check passes in `configure`).
 Passkey tests use Chromium's virtual authenticator (CDP `WebAuthn.addVirtualAuthenticator`):
 one holding a generated passkey for the page's host checks the real unlock prompt, and an empty
 one checks the "Ask a parent to link this device" message. The API is stubbed with `page.route`.

@@ -19,6 +19,8 @@ const files = [
   'map/map.css',
   'map/wiggly.css',
   'features/juice/pip/pip.css',
+  'features/juice/particles/particles.css',
+  'features/juice/prize/prize.css',
 ];
 const read = (file: string) => readFileSync(join(src, file), 'utf8');
 

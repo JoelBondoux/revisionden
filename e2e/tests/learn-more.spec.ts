@@ -1,5 +1,5 @@
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { axeWhenSettled } from './support/axe';
 
 /**
  * Learn more (Q6): after a wrong answer, the free lessons for the question's learning point,
@@ -131,9 +131,7 @@ async function wrongAnswerFeedback(page: Page, baseURL: string) {
 }
 
 async function expectAccessible(page: Page) {
-  const results = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-    .analyze();
+  const results = await axeWhenSettled(page);
   expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
 }
 
