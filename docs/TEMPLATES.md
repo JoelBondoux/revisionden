@@ -184,11 +184,13 @@ A science instance is written only if all of these agree:
    the sheet equation solved by SymPy. It also checks that the dimensions of the formula give
    the answer unit (`pint` dimensionality).
 
-### Risks to settle before building
+### Risks and rulings
 
-- **Rounding of intermediate values.** Mark schemes often accept an answer from a rounded
-  intermediate value. The item's answer uses the exact value. Whether a second accepted value is
-  needed is a marking ruling (as with simplest form), not a template choice.
+- **Rounding of intermediate values.** Provisional ruling (lead, 2026-11-26; **provisional,
+  owner to confirm**): follow the exam boards' "awrt" (answers which round to) convention. Accept
+  a final answer within the range that rounding the intermediate values to the item's stated
+  accuracy can produce. The template computes that range exactly for each instance, never as a
+  blanket percentage, and the recheck recomputes it independently.
 - **Board conventions differ** (constants, units such as m/s or m s⁻¹, "show that" questions).
   Templates are per board and per specification, never shared across boards.
 - **Required practicals and graphs** are out of scope for calculation templates.
