@@ -306,8 +306,7 @@ have the style straight away:
 | Pixel Arcade | Reaching level 40               | `level-40`           | About the end of Year 10 |
 
 Sticker Book is everyone's default until Doodle Diary (proposed new default, with the owner)
-replaces it; from then it is the level 3 reward. Garden Grow, Comic Pop and Pixel Arcade are
-listed in Settings as "Coming soon" until their styles are built (J10c).
+replaces it; from then it is the level 3 reward. All six styles are built (J10c).
 
 They are added by `withEffectStyles` (`packages/core/src/catalogue/effect-styles.ts`), the same
 way as title words, so the source catalogue files are unchanged. `GET /v1/student/rewards/effect-styles`

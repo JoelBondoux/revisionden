@@ -49,10 +49,6 @@
 }
 
 /* Mastered topics glow like stars. */
-:root[data-effect-style='starlight'] .hex--mastered {
-  filter: drop-shadow(0 0 8px rgb(255 246 176 / 90%));
-}
-
 :root[data-effect-style='starlight'] .hex--mastered .hex__shape {
   --hex-border: var(--sl-star);
 }

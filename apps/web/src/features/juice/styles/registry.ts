@@ -4,7 +4,14 @@
  * `:root[data-effect-style='<id>']` (see sticker-book.css). Sticker Book is the default and is
  * always available; other styles unlock as rewards (J10b).
  */
-export const EFFECT_STYLE_IDS = ['sticker-book', 'pop-burst', 'starlight'] as const;
+export const EFFECT_STYLE_IDS = [
+  'sticker-book',
+  'pop-burst',
+  'garden-grow',
+  'starlight',
+  'comic-pop',
+  'pixel-arcade',
+] as const;
 export type EffectStyleId = (typeof EFFECT_STYLE_IDS)[number];
 
 export interface EffectStyle {
@@ -41,18 +48,7 @@ export const EFFECT_STYLES: Readonly<Record<EffectStyleId, EffectStyle>> = {
     unlock: 'Master 10 topics',
     swatch: ['#241a6b', '#4be3ff', '#ff7ad9'],
   },
-};
-
-/**
- * Styles the owner has approved and the rewards catalogue already unlocks, still being built
- * (J10c). The picker shows them locked, with how to unlock them; they can't be chosen yet.
- */
-export interface ComingSoonStyle extends Omit<EffectStyle, 'id'> {
-  readonly id: string;
-}
-
-export const COMING_SOON_STYLES: readonly ComingSoonStyle[] = [
-  {
+  'garden-grow': {
     id: 'garden-grow',
     name: 'Garden Grow',
     description:
@@ -60,21 +56,31 @@ export const COMING_SOON_STYLES: readonly ComingSoonStyle[] = [
     unlock: 'Master 5 topics in a subject',
     swatch: ['#dff4ff', '#3fae5a', '#ff8fb1'],
   },
-  {
+  'comic-pop': {
     id: 'comic-pop',
     name: 'Comic Pop',
     description: 'Bold outlines, halftone dots and word bubbles: every win lands with a POW!',
     unlock: 'Reach level 20',
     swatch: ['#ffe14d', '#ff3b3b', '#1e9bff'],
   },
-  {
+  'pixel-arcade': {
     id: 'pixel-arcade',
     name: 'Pixel Arcade',
     description: 'Retro arcade with chunky pixel art, chiptune blips and treasure chests.',
     unlock: 'Reach level 40',
     swatch: ['#0a0820', '#39ff88', '#ff4fd8'],
   },
-];
+};
+
+/**
+ * Styles the owner has approved and the rewards catalogue already unlocks but that are still
+ * being built. The picker shows them locked, with how to unlock them. Empty since J10c.
+ */
+export interface ComingSoonStyle extends Omit<EffectStyle, 'id'> {
+  readonly id: string;
+}
+
+export const COMING_SOON_STYLES: readonly ComingSoonStyle[] = [];
 
 export const DEFAULT_EFFECT_STYLE: EffectStyleId = 'sticker-book';
 

@@ -60,13 +60,20 @@ describe('effect style registry', () => {
     for (const id of soon) expect(EFFECT_STYLE_IDS as readonly string[]).not.toContain(id);
   });
 
-  it("says how to unlock each style coming soon, following the owner's ladder", () => {
-    expect(COMING_SOON_STYLES.map((s) => [s.name, s.unlock])).toEqual([
+  it("builds every style on the owner's ladder, each saying how to unlock it", () => {
+    expect(COMING_SOON_STYLES).toEqual([]);
+    expect(
+      EFFECT_STYLE_IDS.filter((id) => id !== DEFAULT_EFFECT_STYLE).map((id) => [
+        EFFECT_STYLES[id].name,
+        EFFECT_STYLES[id].unlock,
+      ]),
+    ).toEqual([
+      ['Pop Burst', 'Reach level 5'],
       ['Garden Grow', 'Master 5 topics in a subject'],
+      ['Starlight', 'Master 10 topics'],
       ['Comic Pop', 'Reach level 20'],
       ['Pixel Arcade', 'Reach level 40'],
     ]);
-    for (const s of COMING_SOON_STYLES) expect(s.swatch).toHaveLength(3);
   });
 });
 

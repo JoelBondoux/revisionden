@@ -1,0 +1,146 @@
+/*
+ * Garden Grow, an unlockable effect style (J10c, docs/GAME_FEEL.md). Soft and calm: leafy cards,
+ * wins bloom and grow up from the ground, petals for confetti. Every rule is scoped to the style.
+ * Transforms and opacity only. Colours chosen for AA with the text on them.
+ */
+:root[data-effect-style='garden-grow'] {
+  --gg-leaf: #2c7f41;
+  --gg-leaf-soft: #e3f4e4;
+  --gg-petal: #ff8fb1;
+  --gg-cream: #fffdf6;
+  --gg-ink: #24412e;
+  --gg-soil: #8b5a3c;
+}
+
+/* ---------- Home ---------- */
+:root[data-effect-style='garden-grow'] .page-header .pill {
+  border-radius: 999px 999px 999px 4px;
+}
+
+:root[data-effect-style='garden-grow'] .map-summary,
+:root[data-effect-style='garden-grow'] .daily-card {
+  border: 0;
+  border-radius: 28px 28px 28px 8px;
+  background: var(--gg-cream);
+  color: var(--gg-ink);
+  box-shadow: 0 5px 0 color-mix(in srgb, var(--gg-leaf) 40%, transparent);
+}
+
+:root[data-effect-style='garden-grow'] .map-summary {
+  padding: var(--space-4);
+}
+
+:root[data-effect-style='garden-grow'] .map-summary__subject {
+  color: var(--gg-leaf);
+}
+
+:root[data-effect-style='garden-grow'] .map-summary .secondary-text,
+:root[data-effect-style='garden-grow'] .daily-card .secondary-text,
+:root[data-effect-style='garden-grow'] .daily-card__count {
+  color: var(--gg-ink);
+}
+
+/* Today's mission is a garden patch to tend. */
+:root[data-effect-style='garden-grow'] .mission {
+  border-radius: 28px 28px 28px 8px;
+  background: var(--gg-leaf-soft);
+  color: var(--gg-ink);
+  box-shadow: 0 5px 0 var(--gg-leaf);
+}
+
+:root[data-effect-style='garden-grow'] .mission__eyebrow {
+  color: #1d5a2c;
+}
+
+:root[data-effect-style='garden-grow'] .mission__time {
+  color: var(--gg-ink);
+}
+
+/* Mastered topics are in bloom: a petal-pink edge round the gold. */
+:root[data-effect-style='garden-grow'] .hex--mastered .hex__shape {
+  --hex-border: var(--gg-petal);
+}
+
+/* ---------- Rewards ---------- */
+:root[data-effect-style='garden-grow'] .rewards__step {
+  border-radius: 50% 50% 50% 8px;
+}
+
+:root[data-effect-style='garden-grow'] .rewards__step--earned {
+  background: var(--gg-petal);
+  color: #3a1424;
+}
+
+/* ---------- Lesson moments ---------- */
+:root[data-effect-style='garden-grow'] .combo-badge {
+  background: var(--gg-leaf);
+  color: #fff;
+  transform-origin: 50% 100%;
+  animation: gg-grow var(--motion-medium) ease-out;
+}
+
+:root[data-effect-style='garden-grow'] .star--earned polygon {
+  fill: var(--gg-petal);
+  stroke: #fff;
+}
+
+:root[data-effect-style='garden-grow'] .star--earned {
+  transform-origin: 50% 100%;
+  animation: gg-grow var(--motion-medium) ease-out forwards;
+}
+
+/* Bursts and confetti are petals. */
+:root[data-effect-style='garden-grow'] .burst__particle,
+:root[data-effect-style='garden-grow'] .confetti__piece {
+  border-radius: 50% 50% 50% 0;
+}
+
+:root[data-effect-style='garden-grow'] .confetti__piece {
+  width: 10px;
+  height: 10px;
+}
+
+:root[data-effect-style='garden-grow'] .spark-0 {
+  background: #ff8fb1;
+}
+
+:root[data-effect-style='garden-grow'] .spark-1 {
+  background: #ffd1dc;
+}
+
+:root[data-effect-style='garden-grow'] .spark-2 {
+  background: #7bd389;
+}
+
+:root[data-effect-style='garden-grow'] .spark-3 {
+  background: #ffd166;
+}
+
+:root[data-effect-style='garden-grow'] .float-up {
+  color: #7bd389;
+  text-shadow: 0 2px 0 var(--gg-leaf);
+}
+
+/* Wins grow up from their stem. */
+@keyframes gg-grow {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-effect-style='garden-grow'] .combo-badge,
+  :root[data-effect-style='garden-grow'] .star--earned {
+    animation: none;
+    opacity: 1;
+  }
+}

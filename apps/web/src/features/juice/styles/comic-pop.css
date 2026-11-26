@@ -1,0 +1,145 @@
+/*
+ * Comic Pop, an unlockable effect style (J10c, docs/GAME_FEEL.md). Bold ink outlines, flat comic
+ * colours and hard offset shadows; wins slam in. Every rule is scoped to the style. Transforms
+ * and opacity only. Colours chosen for AA with the text on them.
+ */
+:root[data-effect-style='comic-pop'] {
+  --cp-ink: #111;
+  --cp-yellow: #ffe14d;
+  --cp-red: #d42020;
+  --cp-blue: #1565c0;
+  --cp-paper: #fff;
+}
+
+/* ---------- Home ---------- */
+:root[data-effect-style='comic-pop'] .page-header .pill {
+  border: 2px solid var(--cp-ink);
+  box-shadow: 3px 3px 0 var(--cp-ink);
+}
+
+:root[data-effect-style='comic-pop'] .map-summary,
+:root[data-effect-style='comic-pop'] .daily-card,
+:root[data-effect-style='comic-pop'] .mission {
+  border: 3px solid var(--cp-ink);
+  border-radius: 6px;
+  background: var(--cp-paper);
+  color: var(--cp-ink);
+  box-shadow: 6px 6px 0 var(--cp-ink);
+}
+
+:root[data-effect-style='comic-pop'] .map-summary {
+  padding: var(--space-4);
+}
+
+:root[data-effect-style='comic-pop'] .map-summary__subject {
+  color: var(--cp-blue);
+}
+
+:root[data-effect-style='comic-pop'] .map-summary .secondary-text,
+:root[data-effect-style='comic-pop'] .daily-card .secondary-text,
+:root[data-effect-style='comic-pop'] .daily-card__count,
+:root[data-effect-style='comic-pop'] .mission__time {
+  color: var(--cp-ink);
+}
+
+/* Today's mission is a comic panel. */
+:root[data-effect-style='comic-pop'] .mission {
+  background: var(--cp-yellow);
+  rotate: -1deg;
+}
+
+:root[data-effect-style='comic-pop'] .mission__eyebrow {
+  color: #9b0f0f;
+}
+
+:root[data-effect-style='comic-pop'] .hex--mastered .hex__shape {
+  --hex-border: var(--cp-ink);
+}
+
+/* ---------- Rewards ---------- */
+:root[data-effect-style='comic-pop'] .rewards__step {
+  border: 2px solid var(--cp-ink);
+  border-radius: 4px;
+}
+
+:root[data-effect-style='comic-pop'] .rewards__step--earned {
+  background: var(--cp-blue);
+  color: #fff;
+}
+
+/* ---------- Lesson moments ---------- */
+:root[data-effect-style='comic-pop'] .combo-badge {
+  border: 3px solid var(--cp-ink);
+  border-radius: 4px;
+  background: var(--cp-red);
+  color: #fff;
+  rotate: -4deg;
+  animation: cp-slam var(--motion-medium) var(--ease-spring);
+}
+
+:root[data-effect-style='comic-pop'] .star--earned polygon {
+  fill: var(--cp-yellow);
+  stroke: var(--cp-ink);
+  stroke-width: 3;
+}
+
+:root[data-effect-style='comic-pop'] .star--earned {
+  animation: cp-slam var(--motion-medium) var(--ease-spring) forwards;
+}
+
+/* Bursts are halftone dots and confetti is flat comic colour. */
+:root[data-effect-style='comic-pop'] .burst__particle {
+  border-radius: 50%;
+  box-shadow: 0 0 0 1.5px var(--cp-ink);
+}
+
+:root[data-effect-style='comic-pop'] .confetti__piece {
+  border: 1.5px solid var(--cp-ink);
+}
+
+:root[data-effect-style='comic-pop'] .spark-0 {
+  background: #ffe14d;
+}
+
+:root[data-effect-style='comic-pop'] .spark-1 {
+  background: #ff3b3b;
+}
+
+:root[data-effect-style='comic-pop'] .spark-2 {
+  background: #1e9bff;
+}
+
+:root[data-effect-style='comic-pop'] .spark-3 {
+  background: #fff;
+}
+
+:root[data-effect-style='comic-pop'] .float-up {
+  color: var(--cp-yellow);
+  text-shadow:
+    2px 2px 0 var(--cp-ink),
+    -1px -1px 0 var(--cp-ink);
+}
+
+/* Wins slam into place from big. */
+@keyframes cp-slam {
+  0% {
+    opacity: 0;
+    transform: scale(2.4) rotate(-18deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.92) rotate(4deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-effect-style='comic-pop'] .combo-badge,
+  :root[data-effect-style='comic-pop'] .star--earned {
+    animation: none;
+    opacity: 1;
+  }
+}

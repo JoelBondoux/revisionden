@@ -132,12 +132,12 @@ tab say so to screen readers.
   progress on the owner's ladder, never by buying (J10b, `docs/REWARDS.md` "Effect styles"):
   Sticker Book at level 3 (once Doodle Diary is the default), Pop Burst at level 5, Garden Grow at
   5 topics mastered in a subject, Starlight at 10 topics mastered, Comic Pop at level 20 and Pixel
-  Arcade at level 40. Garden Grow, Comic Pop and Pixel Arcade show as "Coming soon" until built. The child picks in Settings → Effect style, where
+  Arcade at level 40. The child picks in Settings → Effect style, where
   locked styles show a three-colour preview and "Locked. Unlock: …". More styles may follow once
   the owner has reviewed them.
 - Pop Burst (J10b): jelly cards with a chunky bottom edge, a gold jelly mission card, gold wins,
   round confetti; the badge stamps in from big and the stars drop in. Starlight (J10b): night-sky
-  cards with a soft glow, mastered topics and earned steps glow like stars; the badge brightens
+  cards with a soft glow, mastered topics are outlined in starlight and earned steps glow; the badge brightens
   into view and the stars rise and settle.
 - A style is one entry in `apps/web/src/features/juice/styles/registry.ts` plus one stylesheet in
   which every rule is scoped to `:root[data-effect-style='<id>']`. A test checks that scoping, so
@@ -152,6 +152,13 @@ tab say so to screen readers.
   On Rewards, earned chapter steps are stickers and locked ones are dashed outlines. Stickers keep
   their paper colours in dark mode, like real stickers, with dark ink text (AA). The combo badge
   and stars "slap" in (transform and opacity only), with no animation under reduced motion.
+- Garden Grow (J10c): leafy cream cards with a soft green edge, today's mission as a garden
+  patch, mastered topics in bloom (petal edge), petal confetti; wins grow up from their stem.
+  Comic Pop (J10c): bold ink outlines and hard offset shadows, today's mission a yellow comic
+  panel, halftone-dot bursts; wins slam in from big. Pixel Arcade (J10c): square corners and
+  chunky borders, neon on night blue, square pixels that don't spin; wins step in a block at a
+  time and nothing blinks. They use the app's own fonts (no extra font files).
+- No style puts a shadow filter on a topic hex: on the map it would double the topic's name.
 - Pen-line exception (lead, approved 2026-11-26): small SVG pen lines may draw themselves by
   animating `stroke-dashoffset`, as Doodle Diary's margin doodles and answer loops do. Only on
   short paths, a handful at a time, never behind question text, and off under reduced motion.

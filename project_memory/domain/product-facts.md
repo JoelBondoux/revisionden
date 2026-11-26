@@ -818,8 +818,8 @@ Tags: #product #rules #limits #defaults
   back to Sticker Book. Unlock ladder (owner, 2026-11-26; J10b): Sticker Book `level-3`, Pop Burst
   `level-5`, Garden Grow `subject-topics-5`, Starlight `topics-mastered-10`, Comic Pop `level-20`,
   Pixel Arcade `level-40`, added as `effectStyle` items by `withEffectStyles`
-  (`packages/core/src/catalogue/effect-styles.ts`). Built: Sticker Book (default for now), Pop
-  Burst, Starlight; Garden Grow, Comic Pop, Pixel Arcade show as "Coming soon" (J10c). Unlocked list:
+  (`packages/core/src/catalogue/effect-styles.ts`). All six built (J10c): Sticker Book (default for now), Pop
+  Burst, Garden Grow, Starlight, Comic Pop, Pixel Arcade. Unlocked list:
   `GET /v1/student/rewards/effect-styles`. Picker: Settings → Effect style (students only), with
   locked styles showing a preview and how to unlock them. Proposed new free default: Doodle Diary
   (`doodle-diary`), with the owner.

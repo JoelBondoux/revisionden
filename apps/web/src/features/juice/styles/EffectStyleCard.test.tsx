@@ -45,12 +45,11 @@ describe('effect style picker', () => {
     expect(await screen.findByRole('radio', { name: /^Pop Burst/ })).toBeEnabled();
   });
 
-  it('shows the styles still being made as coming soon, never choosable yet', async () => {
+  it('offers Garden Grow, Comic Pop and Pixel Arcade once unlocked', async () => {
     renderCard(['comic-pop']);
-    const comic = await screen.findByRole('radio', { name: /^Comic Pop/ });
-    expect(comic).toBeDisabled();
-    expect(comic).toHaveAccessibleName(
-      expect.stringMatching(/Coming soon\. Unlock: Reach level 20/),
+    expect(await screen.findByRole('radio', { name: /^Comic Pop/ })).toBeEnabled();
+    expect(screen.getByRole('radio', { name: /^Pixel Arcade/ })).toHaveAccessibleName(
+      expect.stringMatching(/Locked\. Unlock: Reach level 40/),
     );
   });
 

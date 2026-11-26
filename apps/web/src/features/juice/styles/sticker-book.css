@@ -85,10 +85,6 @@
 }
 
 /* Mastered topics are gold stickers, each stuck on at its own slight angle. */
-:root[data-effect-style='sticker-book'] .hex--mastered {
-  filter: drop-shadow(2px 3px 0 var(--sb-shadow));
-}
-
 :root[data-effect-style='sticker-book'] .hex--mastered .hex__shape {
   --hex-border: #fff;
   rotate: -5deg;

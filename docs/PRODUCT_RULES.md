@@ -122,7 +122,7 @@ formula and its assumptions. Summary of what is built:
   mastered, Comic Pop at level 20 and Pixel Arcade at level 40, each on an existing reward (table
   in `REWARDS.md`). Styles are never bought, never random and never tied to a streak. Sticker Book
   is the default until Doodle Diary is approved as the free default. The child chooses in Settings
-  → Effect style; styles still being built show as "Coming soon".
+  → Effect style.
 - Rewards are celebrated where they are earned (workstream F4, product owner via lead,
   2026-11-25): an answer or a finished flashcard session saves any new reward once and shows
   "New reward: …" with the reward sound on that screen (the starting test waits for its results

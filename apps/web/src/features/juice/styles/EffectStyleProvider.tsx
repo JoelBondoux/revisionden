@@ -15,6 +15,9 @@ import { fetchUnlockedStyles } from './effectStylesApi';
 import './sticker-book.css';
 import './pop-burst.css';
 import './starlight.css';
+import './garden-grow.css';
+import './comic-pop.css';
+import './pixel-arcade.css';
 
 export interface EffectStyleApi {
   style: EffectStyle;

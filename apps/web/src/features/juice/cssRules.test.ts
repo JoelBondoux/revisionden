@@ -11,6 +11,9 @@ const files = [
   'features/juice/styles/sticker-book.css',
   'features/juice/styles/pop-burst.css',
   'features/juice/styles/starlight.css',
+  'features/juice/styles/garden-grow.css',
+  'features/juice/styles/comic-pop.css',
+  'features/juice/styles/pixel-arcade.css',
 ];
 const read = (file: string) => readFileSync(join(src, file), 'utf8');
 

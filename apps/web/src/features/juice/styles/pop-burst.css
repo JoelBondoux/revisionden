@@ -52,10 +52,6 @@
   color: var(--pb-ink);
 }
 
-:root[data-effect-style='pop-burst'] .hex--mastered {
-  filter: drop-shadow(0 4px 0 var(--pb-gold-edge));
-}
-
 :root[data-effect-style='pop-burst'] .hex--mastered .hex__shape {
   --hex-border: var(--pb-gold-edge);
   --hex-fill: var(--pb-gold);

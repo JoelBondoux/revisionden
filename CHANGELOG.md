@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Three more effect styles to unlock: Garden Grow (calm and leafy, when you master 5 topics in a subject), Comic Pop (bold and punchy, at level 20) and Pixel Arcade (retro arcade, at level 40).
 - New effect styles to unlock as you progress: Pop Burst (loud and bouncy, at level 5) and Starlight (glowing and dreamy, when you master 10 topics), with Garden Grow, Comic Pop and Pixel Arcade coming soon. Pick your style in Settings → Effect style; locked styles show a preview and how to unlock them.
 - A new look for rewards and celebrations, Sticker Book: your daily goal and next mission are cards taped into a sticker book, mastered topics are gold stickers, and combos, stars and confetti slap onto the page like stickers.
 - The doodle background is now a busy, hand-drawn sticker sheet: lots more little sketches packed close together, a few big ones (Pip reading, a rocket, a globe, a stack of books) and tiny stars and sparkles in the gaps, with no visible grid and no two of the same sketch side by side.
@@ -127,6 +128,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Effect styles J10c (J): `garden-grow.css`, `comic-pop.css` and `pixel-arcade.css` (scoped, AA colours, app fonts only); the registry lists all six in ladder order and nothing is coming soon. No style puts a shadow filter on a topic hex (it doubled the topic name); removed from Sticker Book, Pop Burst and Starlight too. Tests: registry, picker, every stylesheet, the game-feel CSS rules.
 - Effect styles J10b (J; R's catalogue and rewards route cleared for J10): `effectStyle` reward item kind (types, `RewardItemSchema`, Rewards page wording); `withEffectStyles` adds the owner's ladder to existing rewards (Sticker Book `level-3`, Pop Burst `level-5`, Garden Grow `subject-topics-5`, Starlight `topics-mastered-10`, Comic Pop `level-20`, Pixel Arcade `level-40`); Garden Grow, Comic Pop and Pixel Arcade listed as coming soon in the picker; `GET /v1/student/rewards/effect-styles`; `pop-burst.css` and `starlight.css` (scoped, AA colours); the provider loads the signed-in student's unlocked styles; Settings → Effect style picker (students only). Tests: catalogue, route, registry, provider, picker and every stylesheet.
 - Effect styles J10a (J): `features/juice/styles` (registry, `EffectStyleProvider`/`useEffectStyle`, `data-effect-style` on `<html>`, per-device choice in `revisionden.effectStyle`), and the default Sticker Book style (`sticker-book.css`, every rule scoped to the style) for the combo badge, stars, bursts, confetti, "+XP", the Home screen (daily goal, 5-a-day, next mission, streak, mastered hexes) and Rewards chapter steps. `index.html` starts in Sticker Book. Tests: registry, provider, stylesheet scoping and the game-feel CSS rules. Cookies and storage policy 1.7.
 - E5b: on the parent Subjects page, a failed add keeps the chosen subject, board and tier so the parent can try again (Codex review on #142).

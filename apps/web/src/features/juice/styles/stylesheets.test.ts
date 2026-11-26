@@ -52,6 +52,10 @@ describe.each(EFFECT_STYLE_IDS)('the %s stylesheet', (id) => {
     for (const hook of HOOKS) expect(css, hook).toContain(`${scope} ${hook}`);
   });
 
+  it('never puts a shadow filter on a topic hex, which would double its name', () => {
+    expect(css).not.toMatch(/\.hex--mastered\s*\{[^}]*filter/);
+  });
+
   it('is loaded with the app', () => {
     expect(provider).toContain(`import './${id}.css';`);
   });
