@@ -22,16 +22,25 @@ export function VersionFooter({
   const knownCommit = commit && commit !== 'unknown' ? `, ${commit}` : '';
   return (
     // Pieces sit in a wrapping flex row with a gap between them and no text separator, so a
-    // wrapped line never starts or ends with a stray "·" (G7, G8).
+    // wrapped line never starts or ends with a stray "·" (G7, G8). Each piece may wrap
+    // inside itself too, so nothing overflows a narrow screen or large text (G9).
     <footer className="version-footer">
       <span className="version-footer-item">
         <TextLink to="/about">{label}</TextLink>
-        {environment === 'Live' ? null : ` (${environment}${knownCommit})`}
       </span>
+      {environment === 'Live' ? null : (
+        <>
+          {' '}
+          <span className="version-footer-item">{`(${environment}${knownCommit})`}</span>
+        </>
+      )}
       {showHelp && (
-        <span className="version-footer-item">
-          <GetHelpLink />
-        </span>
+        <>
+          {' '}
+          <span className="version-footer-item">
+            <GetHelpLink />
+          </span>
+        </>
       )}
     </footer>
   );
