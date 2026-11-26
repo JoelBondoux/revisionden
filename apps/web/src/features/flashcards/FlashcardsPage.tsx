@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react';
+import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import {
   FLASHCARD_SESSION_MAX_CARDS,
   formatReviewDelay,
@@ -11,7 +11,8 @@ import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
-import { ArenaProgress, useReducedMotion } from '../juice';
+import { StepThrough } from '../../components/StepThrough';
+import { ArenaProgress } from '../juice';
 import { subjectLabel, useLearnApi, type FlashcardRating } from '../learn/learnApi';
 import { NewRewards } from '../learn/NewRewards';
 import { DraftBanner } from '../learn/parts';
@@ -79,41 +80,6 @@ function FlipCard({
         </div>
       </div>
     </div>
-  );
-}
-
-/** Steps from the item's verified content, one at a time, ending on the answer (F7). */
-function ExplainSteps({ steps, onClose }: { steps: readonly string[]; onClose: () => void }) {
-  const [step, setStep] = useState(0);
-  const last = step === steps.length - 1;
-  const panel = useRef<HTMLElement>(null);
-  const reduced = useReducedMotion();
-  // On a phone the panel opens below the fold, behind the bottom bar (F7b): bring it into view
-  // when it opens and on each step. Its scroll margin keeps it above the bar.
-  useEffect(() => {
-    panel.current?.scrollIntoView?.({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' });
-  }, [step, reduced]);
-  return (
-    <section ref={panel} className="explain card" aria-label="Explain">
-      <p className="explain__count secondary-text">
-        Step {step + 1} of {steps.length}
-      </p>
-      <p className="explain__step" aria-live="polite">
-        {steps[step]}
-      </p>
-      <div className="explain__nav">
-        <Button variant="secondary" disabled={step === 0} onClick={() => setStep(step - 1)}>
-          Back
-        </Button>
-        {last ? (
-          <Button variant="secondary" onClick={onClose}>
-            Close
-          </Button>
-        ) : (
-          <Button onClick={() => setStep(step + 1)}>Next step</Button>
-        )}
-      </div>
-    </section>
   );
 }
 
@@ -305,7 +271,7 @@ function ReviewSession({
         </Button>
       )}
       {explaining && card.explain && (
-        <ExplainSteps steps={card.explain} onClose={() => setExplaining(false)} />
+        <StepThrough steps={card.explain} label="Explain" onClose={() => setExplaining(false)} />
       )}
       {revealed ? (
         <div className="ratings">

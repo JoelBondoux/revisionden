@@ -132,8 +132,7 @@ function TextAnswer({
           />
           {item.type === 'numeric' && item.unit && <span className="field__unit">{item.unit}</span>}
         </span>
-      </div>
-      {item.hint && <p className="secondary-text">Hint: {item.hint}</p>}
+      </div>{' '}
     </div>
   );
 }

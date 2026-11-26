@@ -1,5 +1,6 @@
 import { inArray, type SQL } from 'drizzle-orm';
 import {
+  explainSteps,
   markMultipleChoice,
   markNumeric,
   markShortAnswer,
@@ -35,6 +36,7 @@ export function toLearnItem(row: ItemRow, topicTitle: string): LearnItem {
     draft: row.status !== 'verified',
     ...(b.hint ? { hint: b.hint } : {}),
     ...(row.learningPoint ? { learningPoint: row.learningPoint } : {}),
+    ...(helpSteps(row).length > 0 ? { canHelp: true as const } : {}),
   };
   const prompt = b.prompt ?? '';
   switch (row.type) {
@@ -134,4 +136,20 @@ export async function markItem(
         'Long answers will be marked by AI soon. For now, compare your answer with your notes.',
       );
   }
+}
+
+/**
+ * "Help me understand" (F10): the item's verified worked solution, one step at a time, ending on
+ * the answer (the F7 Explain steps). Empty for flashcards and long answers, and for items with no
+ * worked steps, mark scheme or explanation.
+ */
+export function helpSteps(row: ItemRow): string[] {
+  if (row.type === 'flashcard' || row.type === 'extended_answer') return [];
+  const a = answerOf(row);
+  return explainSteps({
+    steps: a.steps,
+    markScheme: a.markScheme,
+    explanation: a.explanation,
+    answer: correctAnswerText(row),
+  });
 }

@@ -431,6 +431,25 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
 - Implemented: `packages/core/src/mistakes.ts`, `apps/api/src/learning/mistakes.ts`, the attempts,
   lesson and daily routes, `apps/web/src/features/learn/LessonPlayer.tsx`. Migration 0026.
 
+## Clues and help (F10, owner 2026-11-26)
+
+- **Need a clue?** shows the item's verified hint, with no penalty. It is offered only when a
+  verified hint exists; the hint is no longer shown up front.
+- The button then becomes **Help me understand**: the item's verified worked solution, one step
+  at a time (worked steps, else the inline mark scheme, then its explanation, ending on the
+  answer; the F7 Explain steps). With no hint but verified steps, it starts there. With neither,
+  there is no button. Never AI-made (CLAUDE.md rule 7).
+- Both open in place under the question, so the answer box and Check stay on screen.
+- After help the student still has to answer: help is never a free answer. The answer is
+  **helped**. A right helped answer earns half the usual XP, rounded down (owner), and never a
+  combo. It is practised like a miss: it counts as wrong for mastery, goes on the review ladder,
+  becomes a flashcard, and can come back in the lesson. The feedback says "Correct, with help".
+  A clue on its own changes nothing.
+- Learn mode only: there is no clue or help in Test mode or the starting test (the API refuses a
+  helped Test mode answer).
+- Implemented in `packages/core/src/help.ts`, `GET /v1/student/learn/items/:id/help`,
+  `attempts.helped` (migration 0028) and `apps/web/src/features/learn/HelpPanel.tsx`.
+
 ## Flashcards and mastery
 
 - Flashcards follow SM-2: intervals 1 day, 6 days, then interval × ease; a wrong card comes back

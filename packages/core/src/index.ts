@@ -47,3 +47,4 @@ export * from './titles';
 export * from './stats-allowance';
 export * from './worth-a-look';
 export * from './flashcard-explain';
+export * from './help';

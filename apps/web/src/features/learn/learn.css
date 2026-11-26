@@ -164,3 +164,15 @@
   color: var(--arena-gold);
   font-weight: var(--font-weight-extrabold);
 }
+
+/* F10: the clue and Help me understand open in place under the question. */
+.help-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.help-panel__clue {
+  margin: 0;
+}

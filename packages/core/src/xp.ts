@@ -58,6 +58,8 @@ export interface ComboAnswer {
   correct: boolean;
   mode: string | null;
   at: Date;
+  /** Answered after "Help me understand" (F10): never part of a combo. */
+  helped?: boolean;
 }
 
 /**
@@ -75,6 +77,7 @@ export function comboBefore(history: readonly ComboAnswer[], now: Date): number 
     // Recall checks (Q4) feel safe: a wrong one is passed over; a right one still counts.
     if (answer.mode === RECALL_MODE && !answer.correct) continue;
     if ((answer.mode !== 'learn' && answer.mode !== RECALL_MODE) || !answer.correct) break;
+    if (answer.helped) break;
     combo += 1;
   }
   return combo;
