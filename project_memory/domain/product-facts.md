@@ -753,6 +753,11 @@ Tags: #product #rules #limits #defaults
   link components in `apps/web/src/components/links.tsx` (LinkButton, LinkTile, LinkChip; TextLink
   only inside sentences and policy prose: bold, coloured, a soft bar, underline on hover). A guard
   test, `apps/web/src/components/noTextLinks.test.ts`, keeps it that way across the whole web app (no exclusions since 2026-11-25).
+- Link tiles reflow (J11, WCAG 1.4.4 and 1.4.10): `LinkTile` may shrink (`min-width: 0`,
+  `max-width: 100%`) and wraps its text anywhere (`overflow-wrap: anywhere`), so tile lists fit a
+  320px screen with text at 200%. The e2e test "the policies list fits a 320px screen with text at
+  200%" (`e2e/tests/pages.spec.ts`, /legal) checks there is no sideways scroll and no tile wider than
+  320px. The version footer's reflow is G's (#224).
 
 ## Exam practice (planned)
 
