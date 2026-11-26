@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { server } from '../../mocks/server';
@@ -98,6 +98,37 @@ describe('Starting test', () => {
       await screen.findByRole('heading', { name: 'Your starting point' }, { timeout: 4000 }),
     ).toBeInTheDocument();
     expect(screen.getByText(/Time is up/)).toBeInTheDocument();
+    // Screen readers hear it too (F14): the line is a polite status, not just text.
+    expect(screen.getAllByRole('status').some((s) => /Time is up/.test(s.textContent ?? ''))).toBe(
+      true,
+    );
+  });
+
+  it('tells screen readers once when one minute is left, without reading every second (F14)', async () => {
+    server.use(
+      http.post('*/v1/student/learn/starting-tests', () =>
+        HttpResponse.json(
+          {
+            id: '00000000-0000-4000-8000-000000000901',
+            subjectId: 'gcse-maths',
+            timeLimitSeconds: 61,
+            items: demoItems.slice(0, 1),
+            draftContent: false,
+          },
+          { status: 201 },
+        ),
+      ),
+    );
+    renderRoute('/learn/subject/gcse-maths/start');
+    await click('Start');
+    const announcer = await screen.findByTestId('timer-announcer');
+    expect(announcer).toHaveAttribute('aria-live', 'polite');
+    expect(announcer).toHaveTextContent('');
+    await waitFor(() => expect(announcer).toHaveTextContent('One minute left.'), {
+      timeout: 3000,
+    });
+    // The visible clock never announces itself.
+    expect(document.querySelector('.timer')).toHaveAttribute('aria-live', 'off');
   });
 
   it('says when a subject has no questions ready', async () => {

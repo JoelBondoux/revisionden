@@ -28,7 +28,7 @@ function Results({ result, timeUp, earned, subjectId }: Outcome & { subjectId: s
   return (
     <div className="complete arena">
       <Card title="Your starting point">
-        {timeUp && <p>Time is up, so we marked what you answered.</p>}
+        {timeUp && <p role="status">Time is up, so we marked what you answered.</p>}
         <p>
           You got {result.correct} of {result.total} right.
         </p>
@@ -75,6 +75,8 @@ function Runner({
   const shownAt = useRef(Date.now());
   const finishing = useRef(false);
   const warned = useRef(false);
+  /** Said once by screen readers (F14): the visible clock stays quiet, so it never reads every second. */
+  const [announcement, setAnnouncement] = useState('');
 
   const finish = useCallback(
     async (timeUp: boolean) => {
@@ -101,8 +103,12 @@ function Runner({
       if (left <= 60 && !warned.current && test.timeLimitSeconds > 60) {
         warned.current = true;
         play('timerWarning', { mode: 'test' });
+        setAnnouncement('One minute left.');
       }
-      if (left === 0) void finish(true);
+      if (left === 0) {
+        setAnnouncement('Time is up.');
+        void finish(true);
+      }
     }, 250);
     return () => clearInterval(timer);
   }, [finish, play, test.timeLimitSeconds]);
@@ -148,6 +154,9 @@ function Runner({
         <ArenaProgress label="Test progress" value={index} max={test.items.length} />
         <span className={`timer${secondsLeft <= 60 ? ' timer--warning' : ''}`} aria-live="off">
           {clockText(secondsLeft)}
+        </span>
+        <span className="visually-hidden" aria-live="polite" data-testid="timer-announcer">
+          {announcement}
         </span>
       </div>
       {test.draftContent && <DraftBanner />}

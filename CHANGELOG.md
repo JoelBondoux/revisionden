@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Starting test: screen readers now say "One minute left" when the time is nearly up, and "Time is up" at the end, without reading out the clock every second.
 - Fixed: "Best combo" at the end of a lesson is now easy to read in every style, light and dark.
 - On small phones, the map now opens with "You are here" clear of the bottom bar, so tapping it starts your topic. The RevisionDen title on the welcome page also fits small screens with large text.
 - Fixed: in lessons, your XP count, "Comeback!" and the warm-up notes are now easy to read in every style, in light and dark.
@@ -169,6 +170,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 ### Fixed
 
 - J16c (W18 follow-up): the lesson header's XP count, the warm-up and come-back note and "Comeback!" in the feedback were still arena gold on the look's light page (1.0 to 1.5:1 in every look). They, and the lesson's "+XP", now use `--color-primary-edge` (a deeper main colour in light mode, the light accent in dark), AA in all 10 looks, light and dark, measured by a new painted-page check in `e2e/tests/lesson.spec.ts`. `GAME_FEEL.md` records the rule: page text uses the edge colour, arena-surface text `--arena-glow`. Touches `features/learn/learn.css` (F's lane, as for J14).
+- F14 (found by W's starting-test e2e): the starting test's one-minute warning and time up reach screen readers, through a polite live region (`data-testid="timer-announcer"`) and a status on the results' time-up line; the clock stays `aria-live="off"`. Unit tests in `StartingTestPage.test.tsx`, e2e `starting-test-timer.spec.ts` with a fast-forwarded clock. The WCAG 2.2.1 question (turn off or extend the limit) is open for the owner; the limit is unchanged.
 - Set complete: "Best combo" uses the arena's own text accent (`--arena-gold` was 1.37:1 on the light arena of Doodle Diary and Sticker Book); checked AA in all 10 looks, light and dark (W18; J's `learn.css`, approved crossing).
 - Flashcards: "10 more" now starts one new session, not two; the finished session no longer restarts when `extra` changes, which left a stray open session on the server (it never counted towards XP or the daily limit) (W18; F's `FlashcardsPage.tsx`, approved crossing).
 - Docs: `docs/GAME_FEEL.md` brought up to date with dev (ten styles in the checks and the dev tester; Doodle Diary and Sticker Book's Home notes no longer describe the old Today strip; Doodle Diary has its own sound pack; lesson "+XP" colour since J16b).
