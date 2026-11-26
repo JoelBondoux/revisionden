@@ -49,6 +49,7 @@ const SYSTEM = [
   '- outside_specification: the content goes beyond the cited specification;',
   '- unsupported_claim: a claim that the quoted sources do not back up;',
   '- wording: unclear, misleading or unsuitable wording for the age group.',
+  "For the hint, explanation and model solution steps: Carry out each step it gives literally on this question's numbers. If doing exactly what it says gives a wrong value or does not lead to the marked answer, report factual_error.",
   'Return an empty list only if you find nothing. Say "low" or "medium" confidence if unsure.',
 ].join('\n');
 
@@ -95,6 +96,15 @@ export function reviewPrompt(item) {
         'Typed answers are normalised before marking. For maths answers, spaces and case are ignored; ×, ·, * (and x between two numbers) are one multiply sign, left out where it is not needed; −, – and — are a minus; ÷ is /; superscripts are ^; ≤ and ≥ are <= and >=; √ and sqrt are the same. For word answers, case and extra spaces are ignored. So do not report missing versions that differ only in these ways.',
       ]
     : [];
+  // A hint nudges the method; the item's steps and explanation (checked by the maths engine) back
+  // it, not necessarily the specification text. A new fact in it still needs a source (rule 7).
+  const hint =
+    typeof item.hint === 'string' && item.hint.trim() !== ''
+      ? [
+          '',
+          "The hint is a method nudge, not a statement of the specification. Judge it against the item's steps and explanation, which the maths engine has checked, and the quoted sources. Report a problem only if the hint reveals the answer (wording), is not consistent with the verified steps or explanation (factual_error), is not mathematically correct and suitable for the age group (factual_error or wording), or makes a new factual claim beyond the steps and explanation; a new factual claim needs a quoted source like any other (unsupported_claim). Do not report a hint as outside_specification or unsupported_claim only because its method is not described in the quoted sources.",
+        ]
+      : [];
   // any_order (#133): marking accepts reordered answers, so the reviewer must not ask for them.
   const order =
     item.answer?.any_order === true
@@ -117,6 +127,7 @@ export function reviewPrompt(item) {
       `Item:\n${JSON.stringify(shown, null, 2)}`,
       ...numbering,
       ...typed,
+      ...hint,
       ...order,
       '',
       'Official sources:',

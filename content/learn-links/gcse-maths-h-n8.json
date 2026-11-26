@@ -1,0 +1,61 @@
+{
+  "topic": "gcse-maths-h-n8",
+  "links": [
+    {
+      "title": "Surds - Higher - Edexcel",
+      "url": "https://www.bbc.co.uk/bitesize/guides/zg6vcj6/revision/1",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "board": "edexcel",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Surds - Higher - Surds - Higher - Edexcel - GCSE Maths Revision - Edexcel - BBC Bitesize",
+        "teaches": "Surds (Higher): rational and irrational numbers, simplifying, adding, multiplying and dividing surds, expanding brackets and rationalising denominators.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Simplifying surds",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/surds/lessons/simplifying-surds",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n8-lp-simplify-surds"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Simplifying surds GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can simplify surds.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Rationalising a single term denominator",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/surds/lessons/rationalising-a-single-term-denominator",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n8-lp-rationalise"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Rationalising a single term denominator GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can use the technique of rationalising the denominator to transform a fraction to an equivalent fraction.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Accuracy of final answers",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/surds/lessons/accuracy-of-final-answers",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n8-lp-exact-pi"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Accuracy of final answers GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can appreciate the accuracy in leaving an answer without carrying out the final operation.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

@@ -18,6 +18,7 @@ import { NewRewards } from '../learn/NewRewards';
 import { DraftBanner } from '../learn/parts';
 import { useSound } from '../sound';
 import { ReadAloudButton } from '../read-aloud';
+import { LearnMore, learnLinksByTopic, learnMoreLinks } from '../learn-links';
 import './flashcards.css';
 
 const RATINGS: {
@@ -99,10 +100,12 @@ function FlipCard({
 function ExplainSteps({
   steps,
   subject,
+  topicId,
   onClose,
 }: {
   steps: readonly string[];
   subject?: string;
+  topicId: string;
   onClose: () => void;
 }) {
   const [step, setStep] = useState(0);
@@ -134,6 +137,7 @@ function ExplainSteps({
           <Button onClick={() => setStep(step + 1)}>Next step</Button>
         )}
       </div>
+      <LearnMore links={learnMoreLinks(learnLinksByTopic, { topicId })} />
     </section>
   );
 }
@@ -329,6 +333,7 @@ function ReviewSession({
         <ExplainSteps
           steps={card.explain}
           subject={card.subjectId}
+          topicId={card.topicId}
           onClose={() => setExplaining(false)}
         />
       )}
