@@ -947,7 +947,8 @@ Requested by the product owner on 2026-11-25.
   under each button. Age range and area sit behind "More about <service>". No plain text links,
   no new wording. Buttons are calm on this page (normal case, no 3D shadow or press movement), and
   in forced colours (Windows High Contrast) the danger panel, Quick exit, category headings and
-  search box keep visible borders.
+  search box keep visible borders. Button text wraps (W6): on a 320px screen with text at 200%
+  every button fits and the page never scrolls sideways (e2e `help.spec.ts`).
 - Data: `content/support/uk-services.json`, schema `content/schemas/support-services.schema.json`.
   Each service has topics, one plain sentence of our own (`helps_with`), its official domains,
   optional age range and area, contacts (phone as `tel:`, text number with keyword as

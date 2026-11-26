@@ -817,7 +817,8 @@ Tags: #product #rules #limits #defaults
   the signed-out header and parent home, plus (W3) a chip in the student header. No tile on the
   topic map (removed in W5: header chip and footer link only). There is no separate profile menu yet. Quick exit is sticky at the top;
   topics are in five categories (Right now first and always open) with a private "Find a topic"
-  filter (`features/help/categories.ts`).
+  filter (`features/help/categories.ts`). Help buttons wrap their text, so the page fits a 320px screen at 200% text with no
+  sideways scroll (W6).
 - Data: `content/support/uk-services.json` (schema `content/schemas/support-services.schema.json`).
   Every phone, text, link, opening time and age range has the URL of the service's own page it was
   copied from; `checked_at` per service. `pnpm content:validate` (and `scripts/content/support.test.mjs`)
