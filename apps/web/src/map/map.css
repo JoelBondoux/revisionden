@@ -14,7 +14,8 @@
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
-  scroll-padding-inline: var(--space-4);
+  /* The same as the gap, so a row lined up on an item shows none of the one before (J12d). */
+  scroll-padding-inline: var(--space-2);
   /* Room for focus rings and the drawn shadows, which overflow would otherwise clip. */
   padding: 6px 4px 8px;
   margin: -6px -4px -8px;
@@ -25,6 +26,13 @@
   scroll-snap-align: start;
 }
 
+/* Space after the last item, set only when the row needs it to stop on a whole item (J12d). */
+.hscroll__track::after {
+  flex: none;
+  width: var(--hscroll-extra-end, 0px);
+  content: '';
+}
+
 .hscroll::before,
 .hscroll::after {
   content: '';
@@ -32,7 +40,7 @@
   top: 0;
   bottom: 0;
   z-index: 1;
-  width: 28px;
+  width: 36px;
   pointer-events: none;
   opacity: 0;
   transition: opacity var(--motion-fast, 120ms) ease-out;
@@ -148,6 +156,31 @@
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-extrabold);
   white-space: nowrap;
+}
+
+/* Past the goal (J12d): a star and "Goal smashed!" instead of "195 / 50". */
+.today-strip__xp--smashed {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  white-space: normal;
+}
+
+.today-strip__smashed {
+  font-weight: var(--font-weight-black);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .today-strip__star {
+    animation: today-star-pop var(--motion-medium, 300ms) var(--ease-spring);
+  }
+}
+
+@keyframes today-star-pop {
+  from {
+    transform: scale(0.4) rotate(-30deg);
+  }
 }
 
 .today-strip__list {

@@ -273,7 +273,7 @@ def test_generate_skips_questions_already_in_the_bank():
 
 def test_template_questions_never_repeat_a_hand_written_one():
     written = build.existing_prompts(REPO / "content/items")
-    assert "Expand and simplify (x + 5)(x - 3). Use ^ for powers." in written
+    assert "Expand and simplify (x + 5)(x - 3). Use the Power key (^) for powers." in written
     for path in (REPO / build.OUT_DIR).glob("*.json"):
         assert not {i["prompt"] for i in json.loads(path.read_text())} & written
 
