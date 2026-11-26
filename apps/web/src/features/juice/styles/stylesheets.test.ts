@@ -149,3 +149,25 @@ describe('the Doodle Diary right answer', () => {
     ).toBe(true);
   });
 });
+
+// J10g: an earned level's number sits on a plain fill, never on hatching, and is readable (AA).
+describe.each(EFFECT_STYLE_IDS)('the %s earned levels on Rewards', (id) => {
+  const css = read(`${id}.css`);
+
+  it('never puts a pattern behind the level number', () => {
+    for (const [, body] of css.matchAll(/rewards__step--earned[^{]*\{([^}]*)\}/g)) {
+      expect(body).not.toMatch(/gradient|url\(/);
+    }
+  });
+});
+
+describe('the Doodle Diary earned level', () => {
+  it('shows its number in dark ink on solid highlighter, in light and dark mode (AA)', () => {
+    const css = read('doodle-diary.css');
+    const rule = /\.rewards__step--earned \{([^}]*)\}/.exec(css)![1]!;
+    const background = /background:\s*(#[0-9a-f]{6})/i.exec(rule)?.[1];
+    const colour = /\bcolor:\s*(#[0-9a-f]{6})/i.exec(rule)?.[1];
+    expect(contrastRatio(colour!, background!)).toBeGreaterThanOrEqual(4.5);
+    expect(css).not.toMatch(/\[data-theme='dark'\] \.rewards__step--earned/);
+  });
+});

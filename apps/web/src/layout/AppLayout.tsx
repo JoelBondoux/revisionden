@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { useApi } from '../api/ApiContext';
 import { useApiResource } from '../api/useApiResource';
 import { BottomNav } from '../components/BottomNav';
@@ -98,16 +98,27 @@ export function FocusLayout() {
   );
 }
 
+/** Parent screens: the bug button goes in a top row there, so it never covers the page (I15). */
+const isParentPage = (pathname: string) => /^\/(parent|family)(\/|$)/.test(pathname);
+
 function FocusPages() {
-  const mainClass = useMainClass('focus-main');
+  const { pathname } = useLocation();
+  const topRow = isParentPage(pathname);
+  const floatingClass = useMainClass('focus-main');
+  const mainClass = topRow ? 'focus-main' : floatingClass;
   return (
     <>
       <OfflineBanner />
       <main id="main" className={mainClass} tabIndex={-1}>
+        {topRow && (
+          <header className="parent-top-row">
+            <BugButton />
+          </header>
+        )}
         <Outlet />
       </main>
       <VersionFooter />
-      <BugButton />
+      {!topRow && <BugButton />}
     </>
   );
 }

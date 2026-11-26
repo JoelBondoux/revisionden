@@ -55,6 +55,34 @@
   animation: float-up var(--motion-burst) var(--ease-out) forwards;
 }
 
+/* In a lesson "+XP" pops just above the feedback, rising a little in the gap under the question
+   card and never across the question (J10g, calm question screens). */
+.lesson__xp-pop {
+  position: relative;
+  display: block;
+  height: 0;
+}
+
+.lesson__xp-pop .float-up {
+  inset: auto 0 0;
+  text-align: right;
+  animation-name: float-up-short;
+}
+
+@keyframes float-up-short {
+  0% {
+    opacity: 0;
+    transform: translateY(6px) scale(0.8);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-14px) scale(1.05);
+  }
+}
+
 @keyframes float-up {
   0% {
     opacity: 0;
@@ -186,7 +214,9 @@
   flex: 1;
   height: 14px;
   border-radius: var(--radius-pill);
-  background: var(--arena-track);
+  /* Empty is an outline with nothing inside (3:1), so 0% never reads as a full bar (J10g). */
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--arena-track);
   overflow: hidden;
 }
 

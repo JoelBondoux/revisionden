@@ -188,6 +188,21 @@ test('an answer form (fraction, simplest fraction, index form) is checked as mar
   assert.equal((await blind(index, '2^3 × 3^2 × 7')).result, 'fail');
 });
 
+test('a minus spaced from its number still counts in the blind check, as marking reads it', async () => {
+  const item = draftItem('fixture-spaced-minus', undefined, {
+    type: 'numeric',
+    prompt: 'Fixture?',
+    answer: { value: '3/8' },
+    verify: { expression: '3/8' },
+  });
+  assert.equal((await blind(item, '3 / 8')).result, 'pass');
+  assert.equal((await blind(item, '- 3 / 8')).result, 'fail');
+  assert.equal((await blind(item, '− 3/8')).result, 'fail');
+  const negative = { ...item, answer: { value: '-3/8' } };
+  assert.equal((await blind(negative, '- 3 / 8')).result, 'pass');
+  assert.equal((await blind(negative, 'The answer is - 3 / 8.')).result, 'pass');
+});
+
 test('the blind model is asked to round as the question says', () => {
   const { prompt } = blindAnswerPrompt(mc);
   assert.doesNotMatch(prompt, /accuracy the question asks/);

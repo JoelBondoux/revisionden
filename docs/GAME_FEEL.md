@@ -28,7 +28,7 @@
 ## Effects
 
 - **Right answer:** particle burst from the chosen option (about 20 particles, 0.8 s), the option
-  turns green, "+XP" floats up, XP counter rolls up, rising chime (U's sound bank).
+  turns green, "+XP" pops above the feedback, XP counter rolls up, rising chime (U's sound bank).
 - **Wrong answer:** small horizontal shake (0.4 s), the right option is highlighted, soft low tone.
   No red flashes, no "fail" words.
 - **Combo:** from 2 right in a row a "COMBO ×n" badge pops in; the chime rises a step per combo
@@ -159,7 +159,8 @@ tab say so to screen readers.
   handwritten (Patrick Hand, self-hosted, SIL Open Font Licence, listed under open-source
   licences) with a wavy biro underline; the daily goal, today's mission and the 5-a-day card are
   boxes sketched in pen with wobbly corners; mastered topics are outlined in ink and coloured in
-  with highlighter scribbles. On Rewards, earned steps are coloured in and locked ones are dashed
+  with highlighter scribbles. On Rewards, earned steps are solid highlighter yellow with dark ink numbers (AA in light and
+  dark, J10g) and locked ones are dashed
   pencil outlines. In lessons the surround is diary paper (night paper in dark mode) and the
   question sits on a plain white card (dark card in dark mode); a right answer gets a ring and a light
   wash in the success colour (green; blue with colour-blind friendly colours), so it never reads
@@ -190,6 +191,11 @@ tab say so to screen readers.
   `--color-track`) and the outline of a Challenge hex (`--color-challenge-edge`) reach 3:1 against
   what they sit on, in every theme and surround (WCAG 1.4.11, J10f, from the morning walkthrough
   #185). Tests: `themes.test.ts` (`NON_TEXT_PAIRS`), `tokens.test.ts` and the surround test.
+  Since J10g an empty track is an outline (an inset 2px ring in the track colour) with nothing
+  inside, so 0% reads as empty rather than a full grey bar; the fill sits inside the ring.
+- "+XP" in a lesson pops just above the feedback, in the gap under the question card, with a short
+  rise (`float-up-short`); it never crosses the question or its answers (J10g, calm question
+  screens). No style puts a pattern behind an earned level's number on Rewards (J10g).
 - No style puts a shadow filter on a topic hex: on the map it would double the topic's name.
 - Pen-line exception (lead, approved 2026-11-26): small SVG pen lines may draw themselves by
   animating `stroke-dashoffset`, as Doodle Diary's margin doodles and answer loops do. Only on
