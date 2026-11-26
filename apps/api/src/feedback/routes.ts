@@ -42,6 +42,8 @@ const deviceSchema = z
     browserFamily: z.string().max(40),
     screenSize: z.string().max(20),
     online: z.boolean(),
+    /** E8: the last problem the screen showed, a short code only (no free text). */
+    lastProblem: z.string().regex(/^[A-Za-z0-9_:-]{1,80}$/),
   })
   .partial()
   .strict();

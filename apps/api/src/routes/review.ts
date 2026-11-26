@@ -8,6 +8,7 @@ import {
   needsIndividualReview,
   readyForHumanReview,
   recheckedSince,
+  samplingRule,
   type ReviewDecision,
 } from '@revisionden/core';
 import {
@@ -190,8 +191,12 @@ export function reviewRoutes(db: Database, deps: VerificationDeps & { now: () =>
         needsHumanApproval: i.needsHumanApproval || i.snapshot.type === 'extended_answer',
       })),
     };
+    // Decision 0010: 3% (at least 10) only when every item is from an approved template whose
+    // cross-check passed; any other batch keeps 10% (at least 30). The rule follows from the item
+    // snapshots stored with the batch, so a replay of the seed gives the same sample.
+    const rule = samplingRule(input.items.map((i) => i.snapshot));
     const sampleSeed = randomSeed();
-    const sample = new Set(drawSample(input.items, createRng(sampleSeed)));
+    const sample = new Set(drawSample(input.items, createRng(sampleSeed), rule));
     const [batch] = await db
       .insert(reviewBatches)
       .values({
@@ -214,6 +219,7 @@ export function reviewRoutes(db: Database, deps: VerificationDeps & { now: () =>
     return {
       id: batch!.id,
       size: input.items.length,
+      samplingRule: rule,
       sampleSize: sample.size,
       sample: [...sample],
     };

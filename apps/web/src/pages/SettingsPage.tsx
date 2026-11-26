@@ -6,6 +6,7 @@ import {
   HeartIcon,
   HomeIcon,
   InfoIcon,
+  ProgressIcon,
   ShieldIcon,
   UsersIcon,
 } from '../components/icons';
@@ -26,6 +27,31 @@ export function SettingsPage() {
   return (
     <div className="stack">
       <h1>Settings</h1>
+      {/* Get help comes first on Settings, the one place students find it (owner, 2026-11-26).
+          Tapping it only opens the private Get help page; nothing is recorded. */}
+      <section className="settings-get-help" aria-label="Get help">
+        <ul className="link-tiles">
+          <li>
+            <LinkTile
+              to="/help"
+              icon={<HeartIcon />}
+              title="Get help"
+              description="Private support if something is worrying you. Nobody is told you looked."
+            />
+          </li>
+        </ul>
+      </section>
+      {/* Progress moved here from the main nav (owner, 2026-11-26); /progress is unchanged. */}
+      <ul className="link-tiles">
+        <li>
+          <LinkTile
+            to="/progress"
+            icon={<ProgressIcon />}
+            title="My progress"
+            description="Your stats, mastery and personal bests"
+          />
+        </li>
+      </ul>
       <Card title="This device">
         <ul className="link-tiles">
           <li>
@@ -81,14 +107,6 @@ export function SettingsPage() {
           The small bug in the corner opens a bug report. Saved on this device.
         </p>
         <ul className="link-tiles">
-          <li>
-            <LinkTile
-              to="/help"
-              icon={<HeartIcon />}
-              title="Get help"
-              description="People to talk to, any time"
-            />
-          </li>
           <li>
             <LinkTile
               to="/ask-a-parent"

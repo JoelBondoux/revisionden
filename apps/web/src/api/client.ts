@@ -60,12 +60,20 @@ const withSlash = (url: string) => (url.endsWith('/') ? url : `${url}/`);
  */
 export function reportClientError(
   options: Pick<ClientOptions, 'baseUrl' | 'fetch'>,
-  report: { ref: string; kind: 'http' | 'schema'; status?: number; url: URL },
+  report: {
+    ref: string;
+    kind: 'http' | 'schema' | 'passkey';
+    status?: number;
+    /** For `passkey`: the browser's error name only. */
+    code?: string;
+    url: URL;
+  },
 ): void {
   const body = ClientErrorReportSchema.safeParse({
     ref: report.ref,
     kind: report.kind,
     status: report.status,
+    ...(report.code ? { code: report.code } : {}),
     path: maskIdsInPath(report.url.pathname),
   });
   if (!body.success) return;
