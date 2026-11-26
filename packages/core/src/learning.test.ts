@@ -134,6 +134,15 @@ describe('marking', () => {
     expect(markNumeric(key, '6.4 × 10^9').correct).toBe(false);
   });
 
+  it('marks a huge power of ten wrong rather than failing', () => {
+    for (const given of ['1e999999999', '1e-999999999']) {
+      expect(() => markNumeric({ value: '6.4 × 10^8' }, given)).not.toThrow();
+      expect(markNumeric({ value: '6.4 × 10^8' }, given).correct).toBe(false);
+      expect(markNumeric({ value: '640000000' }, given).correct).toBe(false);
+      expect(markNumeric({ value: '1', significant_figures: 1 }, given).correct).toBe(false);
+    }
+  });
+
   it('needs proper standard form when the answer is in standard form', () => {
     const key = { value: '6.4 × 10^8' };
     expect(markNumeric(key, '64 × 10^7').correct).toBe(false);

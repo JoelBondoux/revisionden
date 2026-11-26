@@ -136,6 +136,23 @@ describe('standard form', () => {
     expect(standardForm('0.64 × 10^9')?.proper).toBe(false);
   });
 
+  it('refuses a power of ten beyond ±100 instead of building a huge number', () => {
+    for (const text of [
+      '1e999999999',
+      '1e-999999999',
+      '1 × 10^999999999',
+      '1 × 10⁹⁹⁹⁹⁹⁹⁹⁹⁹',
+      '1e101',
+    ]) {
+      expect(() => standardForm(text)).not.toThrow();
+      expect(standardForm(text)).toBeNull();
+      expect(shownPrecision(text)).toBeNull();
+      expect(meetsRounding(text, '1', { significant_figures: 1 })).toBe(false);
+    }
+    expect(standardForm('1e100')?.plain).toBe(`1${'0'.repeat(100)}`);
+    expect(standardForm('1e-100')?.plain).toBe(`0.${'0'.repeat(99)}1`);
+  });
+
   it('is null for anything that is not a × 10^n', () => {
     for (const text of [
       '640000000',
