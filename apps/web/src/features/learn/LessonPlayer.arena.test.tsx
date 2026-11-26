@@ -37,6 +37,15 @@ describe('Lesson player in the arena (game feel)', () => {
     expect(grid.querySelectorAll('.answer-option')).toHaveLength(3);
   });
 
+  it('keeps the question and its answers together on one calm stage, whatever the style', async () => {
+    only(0);
+    const { container } = renderRoute('/learn/topic/demo-topic-a');
+    const question = await screen.findByRole('group', { name: 'Demo question 1' });
+    const stage = container.querySelector('.lesson__stage')!;
+    expect(stage).toContainElement(question);
+    expect(stage.querySelector('.pip-says, .combo-badge')).toBeNull();
+  });
+
   it('celebrates a right answer: green option, particle burst and +XP floating up', async () => {
     only(0, 1);
     renderRoute('/learn/topic/demo-topic-a');

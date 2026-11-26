@@ -1,6 +1,6 @@
 # Cookies and storage
 
-Version: 1.5
+Version: 1.7
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -46,10 +46,12 @@ policies. We do not set or read those.
 | Push subscription                             | Lets the browser receive reminders, if the student turns them on                                                                           | Until reminders are turned off                       |
 | Local storage `revisionden.installDismissed`  | Remembers when "Not now" was tapped on "Add RevisionDen to this device", so the card stays hidden for 30 days (the date only)              | 30 days, or until site data is cleared               |
 | Local storage `revisionden.bugButton`         | Remembers if the student switched the bug button off on this device                                                                        | Until site data is cleared                           |
+| Local storage `revisionden.policyNotice`      | Remembers, for 24 hours, that a parent closed the "We've updated" notice without reading it (the policy versions and the time only)        | 24 hours, or until site data is cleared              |
 | Sound settings (when added)                   | Remembers mute, volume and tap sounds for this device                                                                                      | Until site data is cleared                           |
 | Local storage `revisionden.readAloud`         | Remembers whether read aloud is on and its speed on this device                                                                            | Until site data is cleared                           |
 | Local storage `revisionden.reading`           | Remembers reading comfort choices (font, text size, spacing, tint) on this device                                                          | Until site data is cleared                           |
 | Local storage `revisionden.appearance`        | Remembers appearance choices (theme, colour-blind friendly colours, background pattern) on this device                                     | Until site data is cleared                           |
+| Local storage `revisionden.effectStyle`       | Remembers which effect style (the look of rewards and celebrations, such as Sticker Book) is chosen on this device                         | Until site data is cleared                           |
 
 ### 4. What we do not use
 
@@ -63,6 +65,8 @@ need to sign in, or unlink and link the student's device again.
 
 ## Changes
 
+- 1.7: Added the setting that remembers the chosen effect style on this device.
+- 1.6: Added the setting that remembers, for 24 hours, that a parent closed the "We've updated" notice on this device.
 - 1.5: Added the device code that tells a student's devices apart when their passkey is synced.
 - 1.4: Added the setting that hides "Add RevisionDen to this device" for 30 days after "Not now".
 - 1.3: Added the appearance settings (theme, colours and background pattern) kept on the device.

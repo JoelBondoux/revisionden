@@ -217,6 +217,7 @@ Spec: `docs/LEGAL.md` and `PRODUCT_RULES.md` (About page, policies and feedback)
 - [x] L6 Friendly view of the young people's privacy notice: short-version cards, key points with "Read more", icons, Pip, gentle motion (built from the same file).
 - [x] L7 Bug button on every screen (hidden in Test mode and timed papers, can be switched off), operator Confirm bug / Duplicate of…, Bug Hunter XP and caps, confirmed-bug count for the rewards track.
 - [x] L8 Friendly "Before you start" acceptance page: the terms and privacy notice as cards built from their plain-English bullets, full text behind "Show the details", links to the full text; acceptance and stored versions unchanged.
+- [x] L9 The "We've updated" notice stops reappearing: "I've read the changes" stores the versions; closing hides it on the device for 24 hours (those versions only). It shows only the changes since the parent's accepted version, per policy.
 - Tests: placeholder filling and the missing-value message; What's new parsing (versions without the subsection hidden); feedback refuses emails, phone numbers and nicknames; a parent sees only their family's feedback; only the operator role reaches triage; rate limit; acceptance version stored.
 
 ### U. Sound effects (`apps/web/src/features/sound/**`)
@@ -297,6 +298,7 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [x] M5 Links in the app's J7 styles (buttons, tiles, chips, inline links; owner request).
 - [x] M6 Dark theme from the device setting with the app's dark values (J8; owner request).
 - [x] M7 The app's doodle background behind every page (J8), hidden for high contrast and forced colours.
+- [x] M7b The site uses the app's scattered 1080px doodle tile (J8b); the old 240px tile is removed.
 - [ ] M4 First live deploy (lead): staging, then production once the app is on `app.revisionden.com` and the Cloudflare secrets are set.
 - Tests: page render, every internal link resolves, no third-party origins, policies come from `docs/legal`, production build refuses missing operator details.
 

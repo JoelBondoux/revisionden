@@ -5,6 +5,8 @@ import { GetHelpLink } from '../features/help';
 interface VersionFooterProps {
   version?: string;
   environment?: BuildInfo['environment'];
+  /** Short commit of this build; shown outside the live app so testers can tell builds apart. */
+  commit?: string;
   /** Show the small heart "Get help" link (student screens). */
   showHelp?: boolean;
 }
@@ -13,13 +15,15 @@ interface VersionFooterProps {
 export function VersionFooter({
   version = buildInfo.version,
   environment = buildInfo.environment,
+  commit = buildInfo.commit,
   showHelp = false,
 }: VersionFooterProps) {
   const label = `RevisionDen version ${version}`;
+  const knownCommit = commit && commit !== 'unknown' ? `, ${commit}` : '';
   return (
     <footer className="version-footer">
       <TextLink to="/about">{label}</TextLink>
-      {environment === 'Live' ? null : ` (${environment})`}
+      {environment === 'Live' ? null : ` (${environment}${knownCommit})`}
       {showHelp && (
         <>
           {' · '}

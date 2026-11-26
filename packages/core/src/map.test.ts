@@ -171,3 +171,44 @@ describe('cards due', () => {
     expect(CardsDueSchema.safeParse({ due: -1 }).success).toBe(false);
   });
 });
+
+describe('a subject with no questions yet (RD-MBXKTC)', () => {
+  const base = { tier: 'none', mastery: new Map<string, number>(), progress };
+
+  it('is "coming soon" when it has no topics or no topic with questions', () => {
+    const none = buildTopicMap({ ...base, subjectId: 'gcse-chemistry', topics: [] });
+    expect(none).toMatchObject({ subjectId: 'gcse-chemistry', status: 'coming_soon', units: [] });
+    const locked = buildTopicMap({
+      ...base,
+      subjectId: 'gcse-drama',
+      topics: [unit('u', 0), leaf('t', 'u', 1, { servableItems: 0 })],
+    });
+    expect(locked.status).toBe('coming_soon');
+    expect(TopicMapSchema.parse(none).status).toBe('coming_soon');
+  });
+
+  it('is ready when any topic has questions', () => {
+    const map = buildTopicMap({
+      ...base,
+      subjectId: 'gcse-maths',
+      topics: [unit('u', 0), leaf('t', 'u', 1)],
+    });
+    expect(map.status).toBe('ready');
+  });
+
+  it('lists the student’s subjects with names and whether each has questions', () => {
+    const map = buildTopicMap({
+      ...base,
+      subjectId: 'gcse-maths',
+      topics: [],
+      subjects: [
+        { subjectId: 'gcse-chemistry', hasContent: false },
+        { subjectId: 'gcse-maths', hasContent: true },
+      ],
+    });
+    expect(map.subjects).toEqual([
+      { subjectId: 'gcse-chemistry', subject: 'Chemistry', hasContent: false },
+      { subjectId: 'gcse-maths', subject: 'Maths', hasContent: true },
+    ]);
+  });
+});

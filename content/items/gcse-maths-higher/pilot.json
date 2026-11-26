@@ -5,14 +5,11 @@
     "type": "numeric",
     "difficulty": 2,
     "prompt": "Work out 8^(2/3).",
-    "answer": {
-      "value": "4"
-    },
-    "verify": {
-      "expression": "8^(2/3)"
-    },
+    "answer": { "value": "4" },
+    "verify": { "expression": "8^(2/3)" },
     "marks": 1,
     "hint": "Find the cube root first, then square it.",
+    "explanation": "The denominator 3 means a cube root and the numerator 2 means a square. The cube root of 8 is 2, because 2 × 2 × 2 = 8. Then 2^2 = 4.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N7",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -38,7 +35,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S2 audit 2026-11-25",
           "result": "pass",
-          "notes": "Audit after writing (no writer record existed). Question scope cited (spec N7). Answer backed by the maths engine. Hint states 8^(2/3) = (cube root of 8)^2, checked with SymPy (= 4).",
+          "notes": "Audit after writing (no writer record existed). Question scope cited (spec N7). Answer backed by the maths engine. Hint states 8^(2/3) = (cube root of 8)^2, checked with SymPy (= 4). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T16:02:20Z"
         },
         {
@@ -78,7 +75,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T16:37:59Z",
+          "at": "2026-11-26T03:52:56Z",
           "notes": "no problems found"
         }
       ]
@@ -90,13 +87,8 @@
     "type": "numeric",
     "difficulty": 2,
     "prompt": "A coat costs £80. The price goes up by 15%. Work out the new price.",
-    "answer": {
-      "value": "92",
-      "unit": "£"
-    },
-    "verify": {
-      "expression": "80 * 115/100"
-    },
+    "answer": { "value": "92", "unit": "£" },
+    "verify": { "expression": "80 * 115/100" },
     "marks": 2,
     "mark_scheme": ["M1 for 80 x 1.15 or 80 + 12", "A1 for 92"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R9",
@@ -176,14 +168,8 @@
     "type": "numeric",
     "difficulty": 2,
     "prompt": "A circle has radius 3 cm. Work out its area. Give your answer correct to 2 decimal places.",
-    "answer": {
-      "value": "28.27",
-      "unit": "cm^2",
-      "decimal_places": 2
-    },
-    "verify": {
-      "expression": "pi * 3^2"
-    },
+    "answer": { "value": "28.27", "unit": "cm^2", "decimal_places": 2 },
+    "verify": { "expression": "pi * 3^2" },
     "marks": 2,
     "mark_scheme": ["M1 for pi x 3^2", "A1 for 28.27"],
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G17",
@@ -263,14 +249,8 @@
     "type": "worked_maths",
     "difficulty": 3,
     "prompt": "Solve 3x^2 + 5x - 2 = 0",
-    "answer": {
-      "solutions": ["1/3", "-2"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "3x^2 + 5x - 2 = 0",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["1/3", "-2"] },
+    "verify": { "method": "solve", "equation": "3x^2 + 5x - 2 = 0", "variable": "x" },
     "steps": ["3x^2 + 5x - 2 = 0", "(3x - 1)(x + 2) = 0", "x = 1/3 or x = -2"],
     "marks": 3,
     "mark_scheme": ["M1 for (3x - 1)(x + 2)", "A1 for x = 1/3", "A1 for x = -2"],
@@ -351,14 +331,8 @@
     "type": "worked_maths",
     "difficulty": 2,
     "prompt": "Solve 5(x - 3) = 2x + 6",
-    "answer": {
-      "solutions": ["7"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "5(x - 3) = 2x + 6",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["7"] },
+    "verify": { "method": "solve", "equation": "5(x - 3) = 2x + 6", "variable": "x" },
     "steps": ["5(x - 3) = 2x + 6", "5x - 15 = 2x + 6", "3x = 21", "x = 7"],
     "marks": 3,
     "mark_scheme": [
@@ -443,14 +417,8 @@
     "type": "worked_maths",
     "difficulty": 2,
     "prompt": "Factorise fully 6x^2 + 9x",
-    "answer": {
-      "expression": "3x(2x + 3)"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "6x^2 + 9x",
-      "form": "factorised"
-    },
+    "answer": { "expression": "3x(2x + 3)" },
+    "verify": { "method": "expression", "expression": "6x^2 + 9x", "form": "factorised" },
     "steps": ["6x^2 + 9x", "(3x)(2x) + (3x)(3)", "3x(2x + 3)"],
     "marks": 2,
     "mark_scheme": [
@@ -534,14 +502,8 @@
     "type": "worked_maths",
     "difficulty": 2,
     "prompt": "Expand and simplify (2x - 1)(x + 4)",
-    "answer": {
-      "expression": "2x^2 + 7x - 4"
-    },
-    "verify": {
-      "method": "expression",
-      "expression": "(2x - 1)(x + 4)",
-      "form": "expanded"
-    },
+    "answer": { "expression": "2x^2 + 7x - 4" },
+    "verify": { "method": "expression", "expression": "(2x - 1)(x + 4)", "form": "expanded" },
     "steps": ["(2x - 1)(x + 4)", "2x^2 + 8x - x - 4", "2x^2 + 7x - 4"],
     "marks": 2,
     "mark_scheme": ["M1 for at least three of the four terms correct", "A1 for 2x^2 + 7x - 4"],
@@ -623,9 +585,7 @@
     "difficulty": 1,
     "prompt": "Which of these numbers is prime?",
     "options": ["51", "57", "59", "63"],
-    "answer": {
-      "option": 2
-    },
+    "answer": { "option": 2 },
     "marks": 1,
     "explanation": "51 = 3 x 17, 57 = 3 x 19 and 63 = 7 x 9, so only 59 is prime.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N4",
@@ -697,10 +657,9 @@
     "type": "short_answer",
     "difficulty": 1,
     "prompt": "What is the name of a straight line that touches a circle at exactly one point?",
-    "answer": {
-      "accepted": ["tangent", "a tangent"]
-    },
+    "answer": { "accepted": ["tangent", "a tangent"] },
     "marks": 1,
+    "explanation": "A line that touches a circle at exactly one point, without crossing into it, is called a tangent. A line that cuts the circle at two points is not a tangent.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G9",
     "checked_by": ["author"],
     "citations": [
@@ -726,7 +685,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S2 audit 2026-11-25",
           "result": "pass",
-          "notes": "Question scope cited (spec G9, which names \"tangent\"). No official source defines a tangent (DfE subject content and the 1MA1 specification checked), so the answer rests on the spec point plus a standard definition under decision 0008 (project_memory/decisions/0008-definitions-policy.md, approved by the product owner 2026-11-25): needs_human_approval is set and a person must approve it individually.",
+          "notes": "Question scope cited (spec G9, which names \"tangent\"). No official source defines a tangent (DfE subject content and the 1MA1 specification checked), so the answer rests on the spec point plus a standard definition under decision 0008 (project_memory/decisions/0008-definitions-policy.md, approved by the product owner 2026-11-25): needs_human_approval is set and a person must approve it individually. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:04:00Z"
         },
         {
@@ -758,7 +717,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T16:40:27Z",
+          "at": "2026-11-26T03:53:02Z",
           "notes": "no problems found"
         }
       ]
@@ -846,10 +805,7 @@
         }
       ]
     },
-    "back_formula": {
-      "formula": "x = (-b +- sqrt(b^2 - 4ac)) / (2a)",
-      "conditions": ["a ≠ 0"]
-    }
+    "back_formula": { "formula": "x = (-b +- sqrt(b^2 - 4ac)) / (2a)", "conditions": ["a ≠ 0"] }
   },
   {
     "id": "gcse-maths-h-a6-0001",

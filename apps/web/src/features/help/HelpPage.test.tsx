@@ -154,8 +154,8 @@ describe('Get help page', () => {
 describe('ways to reach Get help', () => {
   it('Settings links to it', () => {
     renderRoute('/settings');
-    const main = screen.getByRole('main');
-    expect(within(main).getByRole('link', { name: 'Get help' })).toHaveAttribute('href', '/help');
+    const card = screen.getByRole('region', { name: 'Help and information' });
+    expect(within(card).getByRole('link', { name: 'Get help' })).toHaveAttribute('href', '/help');
   });
 
   it('the student footer has a small heart link to it', () => {
@@ -173,5 +173,19 @@ describe('ways to reach Get help', () => {
   it('parent home links to the parent version', () => {
     renderRoute('/parent', { studentId: null });
     expect(screen.getByRole('link', { name: 'Get help' })).toHaveAttribute('href', '/parent/help');
+  });
+});
+
+describe('organisation icons', () => {
+  it('shows a neutral icon beside every organisation until a logo is permitted', () => {
+    const { container } = renderRoute('/parent/help', { studentId: null });
+    const services = container.querySelectorAll('.help-service');
+    expect(services.length).toBeGreaterThan(0);
+    for (const s of services) {
+      const icon = s.querySelector('.help-org-icon');
+      expect(icon).not.toBeNull();
+      expect(icon).toHaveAttribute('aria-hidden', 'true');
+      expect(s.querySelector('img')).toBeNull();
+    }
   });
 });

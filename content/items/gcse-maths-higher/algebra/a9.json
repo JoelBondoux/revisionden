@@ -684,7 +684,10 @@
     "learning_point": "gcse-maths-h-a9-lp-parallel-perpendicular",
     "expected_seconds": 45,
     "prompt": "Find the equation of the line parallel to y = 5x + 2 that passes through (0, -3).",
-    "answer": { "accepted": ["y = 5x - 3", "y=5x-3"] },
+    "answer": {
+      "accepted": ["y = 5x - 3", "y + 3 = 5x", "y - 5x = -3", "5x - y = 3", "5x - y - 3 = 0"],
+      "any_order": true
+    },
     "marks": 1,
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A9",
     "checked_by": ["author"],
@@ -743,22 +746,6 @@
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:55:27Z",
-          "notes": "model answered \"y = 5x - 3\"; expected \"y = 5x - 3 | y=5x-3\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:55:39Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -767,12 +754,28 @@
           "at": "2026-11-25T19:05:18Z"
         },
         {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:03:13Z",
+          "notes": "model answered \"y = 5x - 3\"; expected \"y = 5x - 3 | y + 3 = 5x | y - 5x = -3 | 5x - y = 3 | 5x - y - 3 = 0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:03:21Z",
+          "notes": "no problems found"
+        },
+        {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T20:42:48Z",
-          "notes": "fact 1: maths engine proof pass; blind statement differs (\"For two non-vertical straight lines to be parallel, their gradients must be equal: if the lines have gradients m1 and m2, then parallel implies m1 = m2. Distinct parallel lines also have different intercepts; if the intercepts are the same, the lines are the same line.\")"
+          "at": "2026-11-26T04:08:05Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"For two non-vertical straight lines to be parallel, their gradients must be equal: if the lines have equations y = m1x + c1 and y = m2x + c2, then they are parallel when m1 = m2. If c1 = c2 as well, the lines are the same line; for distinct parallel lines, c1 ≠ c2.\")"
         }
       ]
     }

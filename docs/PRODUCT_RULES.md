@@ -192,6 +192,19 @@ formula and its assumptions. Summary of what is built:
   code is stored, never a gender. On the child's first open on a newly linked device, "Make it
   yours" shows the avatar builder with "Maybe later" (`GET`/`PUT /v1/student/avatar`; locked items
   still need their reward).
+- Changing subjects later (E5): each child's card in Parent home links to "Subjects"
+  (`/parent/subjects/:studentId`), where either parent can add a subject (the same picker as
+  onboarding, with "Not sure" for the board, and only subjects for the child's level that they
+  do not already take), change its board or tier, or remove it. Removing asks first and says the
+  child's progress is kept and comes back if the subject is added again: only the enrolment is
+  deleted, never the answers or mastery. A subject with no questions ready yet shows "Questions
+  coming soon". Adding, removing and changing a board or tier are important changes in the family
+  activity log ("added a subject for …", "removed a subject from …", "changed a board or tier
+  for …"), so the other parent is told. A board or tier change clears a target grade that is no
+  longer on the scale. The child's own Settings > My subjects works as before. API:
+  `GET`/`POST /v1/students/:id/subjects` (400 `invalid_subjects`, 409 `already_added`),
+  `DELETE /v1/students/:id/subjects/:subjectId` (404 if not taken) and
+  `PATCH /v1/students/:id/enrolments/:subjectId`.
 - Final exams are in the summer: Years 11 and 13 at the end of the current school year (which
   starts in September), Years 10 and 12 a year later, Year 9 two years later.
 - A new child has earned no rewards, so their avatar cannot use locked items.
@@ -275,8 +288,14 @@ Product owner decision, 2026-11-25: **parent view only**.
   values in any order, and an equation either way round; coordinates and
   inequalities are never reordered. `answer.units` lists units the answer may end with or leave
   off. Different forms of a value (`√32` and `4√2`, `three` and `3`) still need listing.
+- **Numeric answers** accept a UK thousands separator (`withoutThousands` in
+  `packages/core/src/answer-format.ts`): a space (also a thin or non-breaking space) or a comma
+  between groups of exactly three digits, the same one throughout, so `38 700` and `38,700` are
+  38700, rounded or not. Any other space between two digits makes the answer wrong (`3 87` is not
+  387); spaces around a sign or `/` are fine.
 - **Maths working** may end with a letter answer such as `x = 2a` (or `2a = x`, or `a = x`
-  either way round): a solved value may use other letters, never the unknown itself.
+  either way round): a solved value may use other letters, never the unknown itself. Repeated
+  alternatives count once, and a line with more than 64 ways to read it is marked wrong.
 - **Mastery** of a topic is recomputed from the student's last 30 attempts after every answer.
 - **Wrong answers** in a lesson (Learn mode, not the starting test) become a flashcard due at once,
   once per question.
@@ -310,6 +329,13 @@ Product owner decision, 2026-11-25: **parent view only**.
   draws on every topic in the unit). The next mission is the weakest weak spot, else the first
   topic not yet mastered, else a review of the weakest mastered topic. Implemented in
   `packages/core/src/map.ts` and `apps/api/src/routes/map.ts`.
+- **Subjects with no questions yet** (owner bug RD-MBXKTC, F8): the map opens on the first
+  enrolled subject with questions. A subject with none is `status: "coming_soon"`: the Map tab
+  says "Questions for <subject> are on their way." with "Try <subject> meanwhile" when another
+  subject has questions, never the error screen. With 2 or more subjects a subject switcher shows
+  them all ("Chemistry (coming soon)"). Only a student with no subject at all, or an unknown
+  subject id, gets "Choose a subject first" (404). The 5-a-day, recall and flashcards answer
+  empty for these subjects.
 - Implemented: `packages/core/src/learning.ts`, `apps/api/src/routes/learn.ts`,
   `apps/api/src/routes/flashcards.ts`.
 
@@ -366,6 +392,17 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
   imaginary wrong answers as a starting point, so mastery is earned and fades without practice.
   A weak spot is a topic below 60.
 - Implemented: `packages/core/src/spaced-repetition.ts`, `packages/core/src/mastery.ts`.
+- **Turning a card (F7, owner):** tap the card, or press Space or Enter, to turn it either way as
+  often as you like. Turning it back to the question never counts as another try and never
+  changes the rating; the rating buttons stay once the answer has been seen. The answer face is
+  empty until the answer is revealed, and each new card starts on its question with no turn, so
+  the next card's answer never flashes while the card turns.
+- **Explain (F7, owner):** on the answer side, "Explain" walks through the item's verified
+  content one step at a time ("Next step", "Back", ending on the answer): its worked steps, else
+  its inline mark scheme, then its `back_formula` and each condition, then the answer, then its
+  verified `explanation` as a final "Why" step (enough on its own for a button). No AI-made explanation
+  (CLAUDE.md rule 7). Cards without such content, and the student's own cards, have no Explain
+  button. Implemented in `packages/core/src/flashcard-explain.ts` (`explain` on each card).
 
 ## Statistics dashboards (workstream K)
 
@@ -397,6 +434,11 @@ Mockups: screens 19 (student) and 20 (parent).
 - Subjects table: mastery (average of topics), predicted grade and target (with "on target" or
   how far below), change in mastery over the last 4 weeks.
 - Weak spots: the three weakest topics, 4 weeks ago and now.
+- **Worth a look together** (K11): topics holding learning points the child has missed on
+  several review-ladder visits across days (flagged by F5's `worthALook`), one row per topic
+  with how many points, and "Learn it first" where the topic has checked lessons. Wording:
+  "These have been tricky for a while. A chat or a look with their teacher may help." No card
+  at all when nothing is flagged. Parent only: never on the child's My stats.
 - Latest school report effort scores (for example CBI), shown on the school's own scale.
 - Rewards (workstream K10, owner request 2026-11-25): every parent-set reward for the child with
   its progress bar, and add, edit and remove right on the dashboard ("Add a reward", "Edit",
@@ -621,7 +663,35 @@ Mockups: screens 19 (student) and 20 (parent).
   - Legendary sounds can be skipped with a tap; all reward sounds follow mute and volume, and never
     play in Test mode before submit.
 - Sound is never the only signal: every sound has a matching visual. Reduced motion does not mute
-  sound; the two settings are separate.
+  sound, but animation sounds play at half loudness and vibrations are shorter (U6).
+- **Style sounds and haptics (U6, owner rule: "All animation should have an appropriate movement
+  and sound").** Every animation fires one feedback event: `buttonPress`, `cardFlip`, `correct`,
+  `wrong`, `combo` (step 1–6), `xpTick`, `ringFill`, `rewardWobble`, `rewardOpen`, `rewardUnlock`,
+  `setComplete`, `levelUp`, plus `homeEnter` (Home entrance, once per visit), `nodePop` (topic
+  nodes popping in on the map) and `locked` (tapping something locked) (`useSound().emit(event)`). Each plays the active effect style's sound and
+  a vibration pattern. One sound pack per style, synthesised with Web Audio (no files): Sticker Book
+  (default: paper peel, slap, stamp, pencil tick), Pop Burst (bubbly pops, jelly boings), Starlight
+  (chimes, shimmer, soft swells). Styles without a pack yet use Sticker Book. J's style system calls
+  `useFeedbackStyle(styleId)`. Older `play()` calls for tap, correct (combo when it has a step),
+  wrong, card flip, celebration, level up and reward unlocked follow the style too; the rest keep
+  the main bank, and reward tiers (U4) keep their own sounds but add the matching vibration.
+  - Vibration: a light tick for presses and flips, a double pulse for right answers, a rising rhythm
+    for combos and a longer pattern for unlocks, set complete and level up; a light tick for the
+    Home entrance and one short buzz for a locked tap; none for fast ticks or map nodes popping in.
+    Sticker Book feels crisp, Pop Burst bouncy, Starlight soft and long.
+  - Settings: a **Vibration** switch next to Sound, on by default, saved per device
+    (`vibration` in `revisionden.sound`). It works on its own: muting sound does not stop vibration,
+    and turning vibration off does not mute sound.
+  - Limits: the same tick sounds at most every 70 ms (XP, map nodes) or 90 ms (ring fill), presses
+    every 40 ms,
+    and no more than 10 feedback sounds a second; vibration needs 100 ms between buzzes and at
+    most 4 a second. Nothing plays or vibrates before the first tap; mute, volume, tap sounds and
+    the Test mode rule all apply.
+  - Devices: vibration uses `navigator.vibrate` where it exists (Android browsers). iPhone and iPad
+    browsers and Home Screen apps have no Vibration API, so there is no vibration there and the
+    Settings switch says so; there is no workaround. The module (`features/sound/feedback/haptics.ts`,
+    `HapticsDriver`) is the plug-in point: a native wrapper (for example Capacitor or React Native)
+    could later pass a driver that uses the platform's real haptics on iOS and Android.
 - Volume levels (master gain): low 0.12, medium 0.25, high 0.45. Settings key on the device:
   `revisionden.sound`; if the browser cannot save, the choice still applies until the app closes.
   The Settings section has a "Play a sample" button and Common, Rare, Epic and Legend reward
@@ -807,8 +877,28 @@ Requested by the product owner on 2026-11-25.
 
 - Pages: `/help` (students, also signed out) and `/parent/help` (parent area; adds a "Worried about a
   child?" card with the NSPCC Helpline). Links: Settings (Help and information), a small heart
-  "Get help" link in the student footer, the signed-out header, and parent home. The app has no
-  separate profile menu yet; add a link there when one exists.
+  "Get help" link in the student footer, the signed-out header, and parent home. Since W3 also: a
+  calm "Get help" tile on the topic map (the student's home) and a "Get help" chip in the student
+  header on every student screen (the app has no separate menu yet; add it there when one exists).
+  All use the shared link components; tapping them records nothing.
+- Layout (W3, 2026-11-25): the "Quick exit" button sits in a bar that stays at the top of the
+  screen while scrolling (sticky, padded for phone notches with `env(safe-area-inset-*)`, first
+  control after the skip link). Topics are grouped into categories
+  (`apps/web/src/features/help/categories.ts`): **Right now** (In danger right now, Thinking about
+  suicide) is always first and always open; **Feelings and mental health** starts open; **Staying
+  safe**, **Home, school and friends** and **Body and health** are collapsible (native
+  `<details>`), each summary listing its topics. A "Find a topic" box filters by the words of the
+  topics and their services; "In danger right now" always stays; a live status says how many
+  topics match. The search is component state only: never stored, sent or put in the address.
+  Grouping is presentation only: every verified entry and all wording are unchanged.
+- Service cards (W3): each service is a compact card with its name, its one-line description (and
+  any confirmed note), and its contact actions as clear buttons (shared `LinkButton`, at least
+  48px tall): **Call** and **Text** are primary buttons (`tel:`/`sms:` links unchanged); chat,
+  website, WhatsApp and email are secondary buttons (new tab, no referrer). Opening hours show
+  under each button. Age range and area sit behind "More about <service>". No plain text links,
+  no new wording. Buttons are calm on this page (normal case, no 3D shadow or press movement), and
+  in forced colours (Windows High Contrast) the danger panel, Quick exit, category headings and
+  search box keep visible borders.
 - Data: `content/support/uk-services.json`, schema `content/schemas/support-services.schema.json`.
   Each service has topics, one plain sentence of our own (`helps_with`), its official domains,
   optional age range and area, contacts (phone as `tel:`, text number with keyword as
@@ -843,10 +933,21 @@ Requested by the product owner on 2026-11-25.
   seen from outside the UK), Beat's email and web chat hours, and Childline's message service. Grief has
   no specialist service yet (none was on the list to check) and young carers' one (Carers Trust)
   could not be checked, so both topics list Childline and Samaritans.
+- Logos (W4, 2026-11-26): organisations' logos are trademarks, so one is shown only when the
+  organisation's own guidance clearly allows this use or it gives written permission. None does
+  yet: every service shows a neutral icon beside its exact name. Findings per organisation, and an
+  email template for the owner to request permission, are in
+  `docs/LOGO_PERMISSIONS.md` (a test checks it covers every service). A permitted
+  logo would be self-hosted under `apps/web/public/support-logos/`, unaltered, with alt text equal
+  to the organisation's name, and never hot-linked.
 - Privacy: its own layout with no navigation, sounds or API calls; nothing is fetched to show it
   (the data is built into the app); websites open in a new tab with `rel="noreferrer"`. A unit test
   and an e2e test check that visiting it makes no API calls and no requests to other sites.
-- Style: calm and light, no game-feel effects (`features/help/help.css`).
+- Style: calm, no game-feel effects (`features/help/help.css`). Follows the app's theme (light,
+  dark, colour-blind) through its own `--help-*` colours; every text pair meets WCAG AA and Quick
+  exit and control borders meet 3:1 in every theme (`helpTheme.test.ts`). The danger panel keeps a
+  thick border and bold text in each theme (red, or orange-brown in the colour-blind palette);
+  Quick exit is solid (dark in light themes, white in dark themes).
 
 ## Quick wins from the competitor research (owner approved 2026-11-25)
 
@@ -894,5 +995,6 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   deuteranopia, protanopia and tritanopia; icons and words always carry the meaning too);
   Background pattern On (default) or Off. Applied before the first paint, so there is no flash.
   The doodle pattern is our own original art, very faint, and is never shown in high contrast or
-  forced colours. Get help stays a calm light page in every theme. The sales site follows the
+  forced colours. Get help follows the theme too (light, dark, colour-blind), with its own calm,
+  high-contrast colours (owner, 2026-11-25, W3). The sales site follows the
   device's theme only.
