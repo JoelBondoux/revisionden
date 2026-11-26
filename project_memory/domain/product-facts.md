@@ -177,10 +177,12 @@ Tags: #product #rules #limits #defaults
   `explanation` as "Why: …"), hidden when there are none (`learning_point` is never used). On
   2026-11-26, 89 of 287 marked items had none of these: 75 of 78 flashcards, 13 short answers and
   1 numeric (`gcse-maths-h-n7-0001`).
-- Installable PWA. Main nav tabs: Map, Cards, Plan, Papers, Progress, then **Me** last (bottom bar
+- Installable PWA. Main nav: five items, Map, Cards, Plan, Papers, then **Me** last (bottom bar
   on phones, side rail from 768px wide). Me shows the student's own avatar (a neutral person icon
-  until it loads) and opens `/settings`, "settings and personalisation" (owner, 2026-11-26, W7).
-  The six items share the bar and labels wrap, so they fit 320px with text at 200%. Welcome and lessons hide the nav to keep focus. Only a linked student
+  until it loads) and opens `/settings`, "settings and personalisation"; Get help and My progress
+  (`/progress`) live there, and Me is marked current on `/settings` and `/progress` (and anything
+  under them). Progress is no longer a nav tab (owner, 2026-11-26, W7). Items share the bar and
+  labels wrap, so they fit 320px with text at 200%. Welcome and lessons hide the nav to keep focus. Only a linked student
   device gets the student nav: elsewhere (signed out, or a parent) About, Policies, Feedback and
   the other app pages show a small header with the logo, Sign in, Policies and About.
 - Changing screen (I7, `apps/web/src/layout/RouteChange.tsx` around every route): the new screen
@@ -597,7 +599,7 @@ Tags: #product #rules #limits #defaults
 
 ## Statistics dashboards
 
-- Student "My stats" (from the Progress tab) and a parent stats dashboard, both read-only, built
+- Student "My stats" (`/progress`, from "My progress" on the Me page) and a parent stats dashboard, both read-only, built
   from data already held. Periods: week (Mon–Sun), term, school year; family time zone.
 - Active study time: time between answers; a gap over 5 minutes ends the session and is not
   counted; time past the daily cap is not counted. Accuracy: correct ÷ marked answers (part marks

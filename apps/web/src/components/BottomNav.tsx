@@ -1,7 +1,7 @@
 import type { ComponentType } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { AvatarSvg } from '../features/avatar/AvatarSvg';
-import { CardsIcon, MapIcon, PapersIcon, PlanIcon, ProgressIcon, PersonIcon } from './icons';
+import { CardsIcon, MapIcon, PapersIcon, PlanIcon, PersonIcon } from './icons';
 
 interface NavItem {
   to: string;
@@ -14,7 +14,6 @@ export const navItems: NavItem[] = [
   { to: '/cards', label: 'Cards', Icon: CardsIcon },
   { to: '/plan', label: 'Plan', Icon: PlanIcon },
   { to: '/papers', label: 'Papers', Icon: PapersIcon },
-  { to: '/progress', label: 'Progress', Icon: ProgressIcon },
 ];
 
 interface BottomNavProps {
@@ -25,7 +24,12 @@ interface BottomNavProps {
 }
 
 /** Main navigation: a bottom bar on phones, a side rail on tablets and desktops (via CSS). */
+/** Me covers Settings and Progress (and anything under them): both live on the Me page. */
+const isMePage = (pathname: string) => /^\/(settings|progress)(\/|$)/.test(pathname);
+
 export function BottomNav({ cardsDue = 0, avatarCode }: BottomNavProps) {
+  const { pathname } = useLocation();
+  const meActive = isMePage(pathname);
   return (
     <nav className="main-nav" aria-label="Main">
       <ul className="main-nav__list">
@@ -54,12 +58,14 @@ export function BottomNav({ cardsDue = 0, avatarCode }: BottomNavProps) {
           );
         })}
         {/* Last (far right on phones, bottom of the rail): the student's own settings and
-            personalisation, shown with their avatar (owner, 2026-11-26). Get help is there too. */}
+            personalisation, shown with their avatar (owner, 2026-11-26). Get help and My
+            progress are there too, so Me is marked current on Settings and Progress. */}
         <li>
-          <NavLink
+          <Link
             to="/settings"
             className="main-nav__link"
             aria-label="Me, settings and personalisation"
+            aria-current={meActive ? 'page' : undefined}
           >
             <span>Me</span>{' '}
             <span className="main-nav__icon">
@@ -73,7 +79,7 @@ export function BottomNav({ cardsDue = 0, avatarCode }: BottomNavProps) {
                 </span>
               )}
             </span>
-          </NavLink>
+          </Link>
         </li>
       </ul>
     </nav>

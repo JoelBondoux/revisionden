@@ -6,6 +6,7 @@ import {
   HeartIcon,
   HomeIcon,
   InfoIcon,
+  ProgressIcon,
   ShieldIcon,
   UsersIcon,
 } from '../components/icons';
@@ -40,6 +41,17 @@ export function SettingsPage() {
           </li>
         </ul>
       </section>
+      {/* Progress moved here from the main nav (owner, 2026-11-26); /progress is unchanged. */}
+      <ul className="link-tiles">
+        <li>
+          <LinkTile
+            to="/progress"
+            icon={<ProgressIcon />}
+            title="My progress"
+            description="Your stats, mastery and personal bests"
+          />
+        </li>
+      </ul>
       <Card title="This device">
         <ul className="link-tiles">
           <li>

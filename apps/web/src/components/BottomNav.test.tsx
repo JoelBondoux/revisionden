@@ -15,11 +15,11 @@ function renderAt(path: string, cardsDue?: number, avatarCode?: string | null) {
 const AVATAR = encodeAvatar(DEFAULT_AVATAR);
 
 describe('BottomNav', () => {
-  it('links to Map, Cards, Plan, Papers, Progress and, last, Me', () => {
+  it('links to Map, Cards, Plan, Papers and, last, Me (Progress lives on Me)', () => {
     renderAt('/map');
     const nav = screen.getByRole('navigation', { name: 'Main' });
     const names = Array.from(nav.querySelectorAll('a')).map((a) => a.textContent?.trim());
-    expect(names).toEqual(['Map', 'Cards', 'Plan', 'Papers', 'Progress', 'Me']);
+    expect(names).toEqual(['Map', 'Cards', 'Plan', 'Papers', 'Me']);
   });
 
   it('the last item, Me, opens settings and personalisation', () => {
@@ -32,12 +32,25 @@ describe('BottomNav', () => {
     expect(nameStartsWithText(me)).toBe(true);
   });
 
-  it('marks Me as the current page on Settings', () => {
-    renderAt('/settings');
-    expect(screen.getByRole('link', { name: 'Me, settings and personalisation' })).toHaveAttribute(
-      'aria-current',
-      'page',
-    );
+  it('marks Me as the current page on Settings and on Progress, including its sub-pages', () => {
+    for (const path of ['/settings', '/progress', '/progress/subjects']) {
+      const { unmount } = renderAt(path);
+      expect(
+        screen.getByRole('link', { name: 'Me, settings and personalisation' }),
+      ).toHaveAttribute('aria-current', 'page');
+      expect(screen.getByRole('link', { name: 'Map' })).not.toHaveAttribute('aria-current');
+      unmount();
+    }
+  });
+
+  it('does not mark Me on other pages, such as one that only starts with "progress"', () => {
+    for (const path of ['/map', '/progressive']) {
+      const { unmount } = renderAt(path);
+      expect(
+        screen.getByRole('link', { name: 'Me, settings and personalisation' }),
+      ).not.toHaveAttribute('aria-current');
+      unmount();
+    }
   });
 
   it("shows the student's own avatar, small and decorative, on Me", () => {

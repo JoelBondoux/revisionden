@@ -190,9 +190,17 @@ test.describe('students find Get help on Settings, through Me (owner, 2026-11-26
     await me.click();
     await expect(page.getByRole('heading', { level: 1, name: 'Settings' })).toBeVisible();
     await expect(me).toHaveAttribute('aria-current', 'page');
-    const firstLink = page.locator('main > :not(header) a').first();
-    await expect(firstLink).toHaveAttribute('href', '/help');
-    await expect(firstLink).toHaveAccessibleName(/^Get help/);
+    const pageLinks = page.locator('main > :not(header) a');
+    await expect(pageLinks.first()).toHaveAttribute('href', '/help');
+    await expect(pageLinks.first()).toHaveAccessibleName(/^Get help/);
+    // Progress lives on Me now, right after Get help, and Me stays marked there.
+    await expect(pageLinks.nth(1)).toHaveAttribute('href', '/progress');
+    await expect(nav.getByRole('link', { name: 'Progress' })).toHaveCount(0);
+    await pageLinks.nth(1).click();
+    await expect(page).toHaveURL(/\/progress$/);
+    await expect(me).toHaveAttribute('aria-current', 'page');
+    await page.goBack();
+    await expect(page.getByRole('heading', { level: 1, name: 'Settings' })).toBeVisible();
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
       .analyze();
@@ -202,13 +210,13 @@ test.describe('students find Get help on Settings, through Me (owner, 2026-11-26
   test.describe('on a 320px screen with text at 200%', () => {
     test.use({ viewport: { width: 320, height: 640 } });
 
-    test('all six nav items fit with no sideways scroll', async ({ page }) => {
+    test('all five nav items fit with no sideways scroll', async ({ page }) => {
       await asStudent(page);
       await page.goto('/settings');
       await expect(page.getByRole('heading', { level: 1, name: 'Settings' })).toBeVisible();
       await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
       const links = page.getByRole('navigation', { name: 'Main' }).getByRole('link');
-      await expect(links).toHaveCount(6);
+      await expect(links).toHaveCount(5);
       const overflow = await page.evaluate(
         () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
       );
@@ -232,7 +240,7 @@ test.describe('students find Get help on Settings, through Me (owner, 2026-11-26
       await asStudent(page);
       await page.goto('/map');
       const links = page.getByRole('navigation', { name: 'Main' }).getByRole('link');
-      await expect(links).toHaveCount(6);
+      await expect(links).toHaveCount(5);
       const me = links.last();
       await expect(me).toHaveAccessibleName('Me, settings and personalisation');
       await expect(me).toBeInViewport({ ratio: 1 });

@@ -121,6 +121,9 @@ describe('finding Get help from the student screens (owner, 2026-11-26: Settings
       .filter((a) => !header.contains(a));
     expect(pageLinks[0]).toHaveAccessibleName(expect.stringMatching(/^Get help/));
     expect(pageLinks[0]).toHaveAttribute('href', '/help');
+    // Progress moved off the main nav onto Me too (owner, 2026-11-26), right after Get help.
+    expect(pageLinks[1]).toHaveAccessibleName(expect.stringMatching(/^My progress/));
+    expect(pageLinks[1]).toHaveAttribute('href', '/progress');
   });
 });
 
