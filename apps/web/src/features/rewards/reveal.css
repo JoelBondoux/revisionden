@@ -99,3 +99,13 @@
     display: none;
   }
 }
+
+/* Founding Tester moment (R5) */
+.reward-reveal .reward-badge {
+  display: block;
+  margin: 0 auto 0.5rem;
+}
+.reward-reveal__thanks {
+  margin: 0.5rem 0 0;
+  font-style: italic;
+}

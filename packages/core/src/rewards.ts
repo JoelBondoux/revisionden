@@ -186,6 +186,8 @@ export interface RewardsOverview {
     next: RewardCard | null;
     steps: RewardCard[];
   }[];
+  /** Earned one-off special rewards (R5), such as Founding Tester. Never shown before. */
+  special: RewardCard[];
   /** Secret achievements: found ones in full, the rest as "???" cards with optional hints. */
   secrets: { found: number; total: number; cards: (RewardCard & { hint?: string })[] };
 }
@@ -337,6 +339,7 @@ export function rewardsOverview(input: OverviewInput): RewardsOverview {
     collections,
     seasons,
     hiddenTracks,
+    special: REWARDS.filter((r) => r.source === 'special' && earned.has(r.id)).map(card),
     secrets: {
       found: secretRewards.filter((r) => earned.has(r.id)).length,
       total: secretRewards.length,
