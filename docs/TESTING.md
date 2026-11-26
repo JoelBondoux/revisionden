@@ -109,3 +109,49 @@ the family screen, Parent home and the stats dashboard, with `axeWhenSettled` on
 Sign-in is stubbed inside the spec only: the stubbed `POST api/auth/sign-in/social` answers with
 the app's own callback URL, so no provider is ever called, and the test fails if any request leaves
 the test server. There is no test backdoor or flag in the app.
+
+## 6. End-to-end coverage map
+
+Which user journeys the Playwright suite (`e2e/tests`) walks end to end, and the gaps worth
+filling next. Screen-level specs (one page, its layout and axe) sit under the journey they belong
+to. Updated by W, 2026-11-26 (W17).
+
+### Covered
+
+| Journey                                                                          | Spec(s)                                                       | Sizes                          |
+| -------------------------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------ |
+| Pupil: unlock → Home → map → lesson → prize → Home                               | `pupil-session`                                               | phone; 320px; 320px/200% text  |
+| Parent: sign in → terms → add child → link device → family → Parent home → stats | `parent-session`                                              | phone                          |
+| Child sets up a passkey from a parent's link                                     | `link-passkey`                                                | all                            |
+| Unlock with a passkey; no passkey on the device                                  | `pages` (unlock, ask a parent)                                | all                            |
+| Lesson: answer, clue, help step by step, Learn more                              | `lesson`, `help.lesson`, `learn-more`, `area-model`, `powers` | phone (mostly)                 |
+| Rewards: prize box, Escape, reduced motion                                       | `prize-box`                                                   | all; 320px/200%                |
+| Map: units, swipe, Subject selection, node contrast                              | `map`                                                         | phone                          |
+| Home and Pip (fits one screen, Leave this lesson?)                               | `home`                                                        | phone                          |
+| Me: edit avatar (touch and keyboard), Cancel                                     | `me-page`                                                     | all                            |
+| Flashcards: one card, both sides                                                 | `cards`                                                       | all                            |
+| Friends league: add a friend with a code                                         | `league`                                                      | phone                          |
+| Get help (student and parent): Quick exit, filters                               | `help`                                                        | all                            |
+| Looks: every style, light and dark, contrast                                     | `looks`, `tiles`                                              | phone (`looks`); all (`tiles`) |
+| Public pages: welcome, policies, About, footer                                   | `pages`, `about-narrow`                                       | all; 320px/200% (phone)        |
+
+### Gaps to fill next (suggested, in order)
+
+1. **Daily dose and flashcard session to the end**: start `/learn/daily`, answer every item, see
+   "Done for today!"; on `/cards`, rate a full session through to its finished screen and "10
+   more". Only single screens are covered today.
+2. **Starting test**: `/learn/subject/:subjectId/start` from first question to result, including
+   the one-minute timer warning (inject the clock).
+3. **Parent settings that change what a pupil sees**: Subjects (board and tier), Reminders and
+   Friends on `/parent/subjects|reminders|friends/:studentId`, then the pupil's side reflecting
+   the change. Today only the bug-button layout is checked there.
+4. **Second parent**: invite → `/join` → both parents listed, and the removal notice.
+5. **Plan, Papers and Progress as journeys**: `/plan` and `/papers` are only checked for the
+   bottom nav at 320px/200% (`help`), and `/progress` for layout (`pages`).
+6. **Feedback and complaints**: send feedback from a pupil and read it in `/feedback/family`;
+   the complaints page.
+7. **Sign out and session expiry**: parent sign-out, and a pupil's 12-hour session ending
+   mid-lesson (back to unlock with `returnTo`).
+8. **The parent journey at 320px with 200% text**, as the pupil journey already is (W15).
+
+These are suggestions only: none is started until the lead or owner says so.
