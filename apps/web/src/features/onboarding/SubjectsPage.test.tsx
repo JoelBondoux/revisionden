@@ -146,6 +146,25 @@ describe('SubjectsPage (parent)', () => {
     );
   });
 
+  it('keeps the chosen subject when adding it fails, so the parent can try again', async () => {
+    const { api, user } = setup([subject('gcse-maths', 'Edexcel', 'higher')]);
+    vi.mocked(api.addChildSubject).mockRejectedValueOnce(
+      new OnboardingApiError('network', 'Could not reach RevisionDen.'),
+    );
+    await screen.findByRole('region', { name: 'Maths' });
+    await user.click(screen.getByRole('button', { name: 'Physics' }));
+    const board = screen.getByRole('radiogroup', { name: 'Physics exam board' });
+    await user.click(within(board).getByRole('radio', { name: 'AQA' }));
+    await user.click(screen.getByRole('button', { name: 'Add Physics' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent('Could not reach RevisionDen.');
+    expect(within(board).getByRole('radio', { name: 'AQA' })).toHaveAttribute(
+      'aria-checked',
+      'true',
+    );
+    await user.click(screen.getByRole('button', { name: 'Add Physics' }));
+    expect(await screen.findByRole('region', { name: 'Physics' })).toBeInTheDocument();
+  });
+
   it('says so when the child is not in this family', async () => {
     setup([], []);
     expect(await screen.findByText('We could not find that child.')).toBeInTheDocument();

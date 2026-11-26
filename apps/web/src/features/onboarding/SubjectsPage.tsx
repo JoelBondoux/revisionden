@@ -128,7 +128,8 @@ function AddSubject({
 }: {
   child: OnboardedChild;
   taken: string[];
-  onAdd: (choice: AddSubjectRequest) => Promise<void>;
+  /** Resolves true once the subject is added; false when it failed (the error is shown). */
+  onAdd: (choice: AddSubjectRequest) => Promise<boolean>;
 }) {
   const [choice, setChoice] = useState<AddSubjectRequest>();
   const [saving, setSaving] = useState(false);
@@ -141,8 +142,8 @@ function AddSubject({
     if (!choice) return;
     setSaving(true);
     try {
-      await onAdd(choice);
-      setChoice(undefined);
+      // Keep the choice when adding fails, so the parent can try again.
+      if (await onAdd(choice)) setChoice(undefined);
     } finally {
       setSaving(false);
     }
@@ -215,13 +216,16 @@ export function SubjectsPage() {
     };
   }, [api, studentId, reload]);
 
-  const run = async (action: () => Promise<unknown>) => {
+  /** Runs a change and reloads the list; false (with the error shown) when it failed. */
+  const run = async (action: () => Promise<unknown>): Promise<boolean> => {
     setError(undefined);
     try {
       await action();
       await reload();
+      return true;
     } catch (err) {
       setError(errorText(err, 'Could not save that.'));
+      return false;
     }
   };
 
