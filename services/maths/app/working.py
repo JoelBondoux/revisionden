@@ -149,9 +149,11 @@ def _follows(before: Line, after: Line, subject: Symbol | None = None) -> bool:
 
 
 def _solved_value(eq: Equation) -> Expr | None:
-    if isinstance(eq.lhs, Symbol) and not eq.rhs.free_symbols:
+    """The value in ``x = value`` (either way round). The value may use other letters
+    (``x = 2a``) but never the unknown itself."""
+    if isinstance(eq.lhs, Symbol) and eq.lhs not in eq.rhs.free_symbols:
         return eq.rhs
-    if isinstance(eq.rhs, Symbol) and not eq.lhs.free_symbols:
+    if isinstance(eq.rhs, Symbol) and eq.rhs not in eq.lhs.free_symbols:
         return eq.lhs
     return None
 
