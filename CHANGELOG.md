@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Big numbers can be typed with a space or comma for the thousands, like 38 700 or 38,700, and still count as right.
 - Inviting the other parent or sending your child their set-up link is quicker on a phone: tap Share link to send it with any app you like (Messages, WhatsApp, email). Where your device can't share, Copy link is still there.
 - Fixed: the "We've updated our policies" message no longer comes back every time you return. Tap "I've read the changes" and it's gone for good; close it and it waits 24 hours. It now shows only what changed since you last agreed, with a link to each full policy.
 - Parents: a new "Worth a look together" card on the stats page lists topics your child has found tricky for a while, with a "Learn it first" lesson link where there is one. It only appears when there is something to look at, and your child never sees it.
@@ -89,6 +90,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Numeric marking (S2): `withoutThousands` accepts a UK thousands separator (space, thin or non-breaking space, or comma) between groups of exactly three digits, with or without rounding; a space between other digits (`3 87`) is now wrong instead of being read as 387.
 - Adversarial review (S2, from S3-A on a1-0103): for typed answers the reviewer is told the marking normaliser's rules (spaces, case, multiply signs, minus signs, superscripts, √), so it no longer asks for `p^3*q` or `p^3 q` when `p^3q` is accepted.
 - Maths engine (F6, from Codex on #139): a final line of many letter-to-letter alternatives (`a = x, a = x, …`) no longer ties up the engine. Repeats are dropped, only readings that are an expected solution are tried, and at most 64 ways to read a line (`MAX_READINGS`).
 - Blind answer and review (S2, after #133): the blind check compares short answers with the same normaliser as marking (`x² + y² = 36` matches `x^2 + y^2 = 36`; `any_order` and `units` honoured), and the adversarial review is told when an item has `any_order: true` so it does not ask for reordered variants.

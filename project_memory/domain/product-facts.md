@@ -320,6 +320,9 @@ Tags: #product #rules #limits #defaults
   `tolerance`): only the value rounded half up and written to that accuracy is right (28.274 and
   28.270 are wrong for 2 dp). Validation requires the field whenever the question asks for
   rounding.
+- Numeric answers accept a UK thousands separator: a space (also thin or non-breaking) or a comma
+  between groups of exactly three digits (`38 700`, `38,700`); `3 87` is wrong, not 387 (S2, rule
+  in PRODUCT_RULES "Learning loop").
 - Typed short answers (F6, `packages/core/src/answer-normalise.ts`; rules in PRODUCT_RULES
   "Learning loop"): spaces, case, minus signs, multiply and divide signs, superscripts, ≤/≥ and √
   are normalised, so content lists one written form. `answer.any_order: true` also accepts

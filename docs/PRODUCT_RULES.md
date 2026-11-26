@@ -288,6 +288,11 @@ Product owner decision, 2026-11-25: **parent view only**.
   values in any order, and an equation either way round; coordinates and
   inequalities are never reordered. `answer.units` lists units the answer may end with or leave
   off. Different forms of a value (`√32` and `4√2`, `three` and `3`) still need listing.
+- **Numeric answers** accept a UK thousands separator (`withoutThousands` in
+  `packages/core/src/answer-format.ts`): a space (also a thin or non-breaking space) or a comma
+  between groups of exactly three digits, the same one throughout, so `38 700` and `38,700` are
+  38700, rounded or not. Any other space between two digits makes the answer wrong (`3 87` is not
+  387); spaces around a sign or `/` are fine.
 - **Maths working** may end with a letter answer such as `x = 2a` (or `2a = x`, or `a = x`
   either way round): a solved value may use other letters, never the unknown itself. Repeated
   alternatives count once, and a line with more than 64 ways to read it is marked wrong.
