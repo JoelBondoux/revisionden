@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Fixed: typed working questions no longer get stuck on "Couldn't check that answer" while we can't mark them. They're left out for now, and if one is already on screen it says it's skipped, with no XP lost, and Continue moves on.
 - Tap any power to switch between x² and x^2 (tap again to switch back). It changes every power on the screen, and your device remembers which you prefer.
 - The Me page and its More page now use big, easy-to-tap buttons with short names, in the same style as the rest of the app.
 - Stuck on a question? Tap "Need a clue?" for a free hint. Still stuck? "Help me understand" walks you through how to solve it, step by step. You still answer it yourself afterwards (for half the XP), and it comes back later so it sticks.
@@ -143,6 +144,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - Send us a bug, an idea or something confusing from Settings, and see what happens to it.
 
 ### Fixed
+
+- Typed working without the maths engine (F12, bug RD-JE5DWP): with no `MATHS_ENGINE_URL`, `selectableItem` leaves `worked_maths` out of lessons, warm-ups, similar/easier/confidence picks, the daily set (stored sets too), recall and the starting test. An answer to one anyway returns `{ unmarked: true, itemId }` (`UnmarkedAttemptResponseSchema`, `LearnAttemptResultSchema`) instead of a 503 and saves nothing; the lesson says it is skipped and Continue moves on. Answers are still accepted through `servableItem`.
 
 - Topic map (J12d, owner feedback 2026-11-26): the Today strip shows "Goal smashed! <XP> XP" with a star once the daily goal is reached (the progress bar's value text says so too), and the sideways rows (`HScroller`) no longer centre the chosen item, which cut the item to its left mid-word: `map/hscroll.ts` `rowScrollTarget` moves only as far as needed and lines up on an item's edge (scroll padding now equals the gap; up to 40% extra space after the last item when needed). Unit and e2e tests.
 - S3-N-H: the eight N8 "Find k" (or "Find a") hints for surds and π now say to give the number in front of √ or π, so they no longer lead to answers like 36π that are marked wrong. Re-reviewed with the carry-out-the-steps rule.

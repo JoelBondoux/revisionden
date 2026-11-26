@@ -8,8 +8,8 @@ const row = (type: string, key: Record<string, unknown>, verify = {}, body = {})
 describe('answer format when marking', () => {
   it('marks a rounded numeric answer only when written to the asked accuracy', async () => {
     const item = row('numeric', { value: '28.27', decimal_places: 2 });
-    expect((await markItem(item, '28.27', undefined)).correct).toBe(true);
-    expect((await markItem(item, '28.274', undefined)).correct).toBe(false);
+    expect((await markItem(item, '28.27', undefined))?.correct).toBe(true);
+    expect((await markItem(item, '28.274', undefined))?.correct).toBe(false);
   });
 
   it('passes the declared subject to the maths engine with the expected expression', async () => {

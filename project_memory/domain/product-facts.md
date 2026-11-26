@@ -193,7 +193,9 @@ Tags: #product #rules #limits #defaults
 - XP is totalled per day in UK time; a streak day counts once, the first time the day reaches the
   daily goal. Command-word lessons are items tagged `command-word` (none verified yet).
 - Worked maths answers are checked by the maths engine (`MATHS_ENGINE_URL`); long answers are not
-  marked yet ("marked by AI soon").
+  marked yet ("marked by AI soon"). Without the engine (F12), typed working is never picked for
+  students, and one answered anyway is "unmarked": nothing saved, no XP, streak or mastery
+  change, and the lesson says it was skipped.
 - Effort scores (e.g. CBI: Commitment, Behaviour and Inspiration, 1–4, 4 best) shape habits, never
   the predicted grade.
 
