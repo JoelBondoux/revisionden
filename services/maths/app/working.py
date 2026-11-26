@@ -23,6 +23,7 @@ from math import prod
 from sympy import Expr, FiniteSet, Mul, Pow, S, Symbol, Union, expand, simplify, solveset
 
 from app.equivalence import parse
+from app.notation import normalise
 
 MAX_LINES = 50
 # At most this many ways to read a final line of letter-to-letter alternatives (a = x).
@@ -85,6 +86,7 @@ def without_subject(text: str, subject: str | None) -> str | None:
 
 
 def _parse_line(text: str, subject: str | None = None) -> Line:
+    text = normalise(text)
     rhs = without_subject(text, subject)
     if rhs is not None and not LETTER.fullmatch(_squash(subject or "")):
         return Line(text=text, expression=parse(rhs, exact=True), states_subject=True)
