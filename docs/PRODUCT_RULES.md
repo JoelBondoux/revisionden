@@ -884,8 +884,10 @@ Requested by the product owner on 2026-11-25.
 - Pages: `/help` (students, also signed out) and `/parent/help` (parent area; adds a "Worried about a
   child?" card with the NSPCC Helpline). Links: Settings (Help and information), a small heart
   "Get help" link in the student footer, the signed-out header, and parent home. Since W3 also: a
-  calm "Get help" tile on the topic map (the student's home) and a "Get help" chip in the student
-  header on every student screen (the app has no separate menu yet; add it there when one exists).
+  "Get help" chip in the student header on every student screen (the app has no separate menu
+  yet; add it there when one exists). W5 (2026-11-26) removed W3's extra Get help tile from the
+  topic map: Get help on any student screen appears twice at most, the header chip and the footer
+  heart link.
   All use the shared link components; tapping them records nothing.
 - Layout (W3, 2026-11-25): the "Quick exit" button sits in a bar that stays at the top of the
   screen while scrolling (sticky, padded for phone notches with `env(safe-area-inset-*)`, first
