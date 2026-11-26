@@ -16,6 +16,7 @@
       "M1 for 4n = 32",
       "A1 for 8"
     ],
+    "hint": "Call the number n, write the operations in order as an equation, then solve it.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -104,6 +105,7 @@
       "M1 for 4x + 10 = 38, (x + 5) + x = 19 or 4x = 28",
       "A1 for x = 7"
     ],
+    "hint": "Perimeter = 2 × length + 2 × width. Set that equal to 38 and solve.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -188,6 +190,7 @@
     "steps": ["b + b + 3 = 41", "2b + 3 = 41", "2b = 38", "b = 19"],
     "marks": 3,
     "mark_scheme": ["B1 for b + b + 3 = 41", "M1 for 2b = 38", "A1 for 19"],
+    "hint": "The sister is b + 3. Add the two ages, set the total equal to 41, and solve.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -276,6 +279,7 @@
       "M1 for 5x - 12 = 48 or 5x = 60",
       "A1 for 12"
     ],
+    "hint": "A child ticket costs £(x - 4). Write the total cost of 2 adult and 3 child tickets and set it equal to 48.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -363,6 +367,7 @@
       "M1 for subtracting to get 2p = 200",
       "A1 for 100"
     ],
+    "hint": "Both purchases include 2 rulers, so subtract one cost from the other to remove the rulers.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -452,6 +457,7 @@
       "A1 for 5 (rejecting -8 because a width cannot be negative)"
     ],
     "explanation": "x(x + 3) = 40 gives x^2 + 3x - 40 = 0, so (x + 8)(x - 5) = 0. A width cannot be negative, so x = 5.",
+    "hint": "Area = length × width, so x(x + 3) = 40. Rearrange so one side is 0 and factorise; a width cannot be negative.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -540,6 +546,7 @@
       "M1 for (n + 13)(n - 12) = 0",
       "A1 for 12 (rejecting -13)"
     ],
+    "hint": "Call the integers n and n + 1, write n(n + 1) = 156, then solve the quadratic.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -621,6 +628,7 @@
     "front": "Write \"five less than n\" as an expression",
     "back": "n - 5",
     "explanation": "'Five less than n' means start with n and take away 5: n - 5.",
+    "hint": "'Less than n' means start with n and take something away.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
     "checked_by": ["author"],
     "citations": [
@@ -694,6 +702,7 @@
     "front": "Write \"double x, then add 3\" as an expression",
     "back": "2x + 3",
     "explanation": "Double x gives 2x. Then add 3: 2x + 3.",
+    "hint": "Do the steps in order: first double x, then add.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
     "checked_by": ["author"],
     "citations": [
@@ -767,6 +776,7 @@
     "front": "The cost, in pence, of y pens at 35p each",
     "back": "35y",
     "explanation": "Each pen costs 35p, so y pens cost 35 × y pence, written 35y.",
+    "hint": "Multiply the price of one pen by the number of pens.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A21",
     "checked_by": ["author"],
     "citations": [

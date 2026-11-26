@@ -11,6 +11,7 @@
     "verify": { "expression": "2*(2*(2*5 - 3) - 3) - 3" },
     "marks": 2,
     "mark_scheme": ["M1 for 7 and 11", "A1 for 19"],
+    "hint": "Apply the rule three times, starting from 5: multiply by 2, then subtract 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A23",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -94,6 +95,7 @@
     "verify": { "expression": "3 + 9*4" },
     "marks": 2,
     "mark_scheme": ["M1 for 3 + 9 × 4", "A1 for 39"],
+    "hint": "Each step adds 4. How many times do you add 4 to get from the 1st term to the 10th?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A23",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -177,6 +179,7 @@
     "verify": { "expression": "3*(3*2 - 1) - 1" },
     "marks": 2,
     "mark_scheme": ["M1 for u_2 = 5", "A1 for 14"],
+    "hint": "Work out u_2 from u_1 first, then use u_2 to find u_3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A23",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -261,6 +264,7 @@
     "steps": ["2*3 + k = 10", "6 + k = 10", "k = 4"],
     "marks": 2,
     "mark_scheme": ["M1 for 2 × 3 + k = 10", "A1 for k = 4"],
+    "hint": "Put u_1 = 3 into the rule to write u_2 in terms of k, then set it equal to 10.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A23",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -344,6 +348,7 @@
     "verify": { "expression": "4*20 - 3" },
     "marks": 1,
     "mark_scheme": ["B1 for 77"],
+    "hint": "Replace n with 20 in 4n - 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A23",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -427,6 +432,7 @@
     "verify": { "expression": "5^2 + 2*5" },
     "marks": 1,
     "mark_scheme": ["B1 for 35"],
+    "hint": "Replace n with 5: square it first, then add 2 × 5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A23",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -510,6 +516,7 @@
     "verify": { "expression": "3*4^2 - 2" },
     "marks": 1,
     "mark_scheme": ["B1 for 46"],
+    "hint": "Replace n with 4: square it first, then multiply by 3 and subtract 2.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A23",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -593,6 +600,7 @@
     "verify": { "expression": "(5 + 1)/(2*5)" },
     "marks": 1,
     "mark_scheme": ["B1 for 3/5"],
+    "hint": "Replace n with 5 on the top and on the bottom, then simplify the fraction.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A23",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -674,6 +682,7 @@
     "front": "The nth term of a sequence is 3n + 1. Write down the first term.",
     "back": "4",
     "explanation": "The first term is when n = 1: 3 × 1 + 1 = 4.",
+    "hint": "The first term is the one where n = 1.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A23",
     "checked_by": ["author"],
     "citations": [
@@ -747,6 +756,7 @@
     "front": "What is the term-to-term rule of the sequence 7, 11, 15, 19, ...?",
     "back": "Add 4",
     "explanation": "Each term is 4 more than the one before: 11 - 7 = 4, 15 - 11 = 4 and 19 - 15 = 4. So the rule is add 4.",
+    "hint": "Find the difference between each term and the one before it.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A23",
     "checked_by": ["author"],
     "citations": [
@@ -820,6 +830,7 @@
     "front": "The nth term of a sequence is 10 - n. Write down the 3rd term.",
     "back": "7",
     "explanation": "The 3rd term is when n = 3: 10 - 3 = 7.",
+    "hint": "The 3rd term is the one where n = 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A23",
     "checked_by": ["author"],
     "citations": [

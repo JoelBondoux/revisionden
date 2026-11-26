@@ -11,6 +11,7 @@
     "verify": { "expression": "2 + 3/1" },
     "marks": 1,
     "mark_scheme": ["B1 for 5"],
+    "hint": "Replace x_n with x_0 = 1 in the formula and work it out.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -94,6 +95,7 @@
     "verify": { "expression": "2 + 3/(2 + 3/1)" },
     "marks": 2,
     "mark_scheme": ["M1 for x_1 = 5", "A1 for 2.6"],
+    "hint": "Work out x_1 first, then put it back into the formula.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -177,6 +179,7 @@
     "verify": { "expression": "2 + 3/(2 + 3/(2 + 3/1))" },
     "marks": 2,
     "mark_scheme": ["M1 for x_1 = 5 (or a correct x_2 = 2.6)", "A1 for 3.1538"],
+    "hint": "Work out x_1 and x_2 first, keeping full accuracy, then round x_3 at the end.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -260,6 +263,7 @@
     "verify": { "expression": "((2 + 5)^(1/3) + 5)^(1/3)" },
     "marks": 2,
     "mark_scheme": ["M1 for x_1 = ∛7 = 1.91...", "A1 for 1.905"],
+    "hint": "Put x_0 = 2 into the formula to get x_1, then use x_1 to get x_2. Round only at the end.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -348,6 +352,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "f(x) changes sign between x = 2 and x = 3, so the graph of y = f(x) crosses the x-axis between them: there is a solution between 2 and 3.",
+    "hint": "Think about what the graph of y = f(x) must do between a point below the x-axis and a point above it.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["author"],
     "citations": [
@@ -439,6 +444,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "x^3 - 4x - 1 = 0 gives x^3 = 4x + 1, so x = ∛(4x + 1).",
+    "hint": "Rearrange x^3 - 4x - 1 = 0 to get x^3 on its own, then take the cube root of both sides.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["author"],
     "citations": [
@@ -514,6 +520,7 @@
     "verify": { "expression": "2^3 - 4*2 - 1" },
     "marks": 1,
     "mark_scheme": ["B1 for -1"],
+    "hint": "Put x = 2 into x^3 - 4x - 1: cube first, then multiply, then subtract.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -595,6 +602,7 @@
     "front": "x_(n+1) = 1 + 6/x_n and x_1 = 3. Work out x_2.",
     "back": "3",
     "explanation": "Put x_1 = 3 into the formula: x_2 = 1 + 6/3 = 1 + 2 = 3.",
+    "hint": "Put x_1 into the formula in place of x_n.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["author"],
     "citations": [
@@ -668,6 +676,7 @@
     "front": "The name for using a formula such as x_(n+1) = g(x_n) again and again to find an approximate solution (one word)",
     "back": "Iteration",
     "explanation": "Using a formula again and again, each time putting in the last answer, is called iteration. When the values settle down, they give closer and closer approximations to a solution.",
+    "hint": "It is the name for repeating a process, each time using the last answer.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -742,6 +751,7 @@
     "front": "The iteration x_(n+1) = (x_n + 10)/3 is used to solve an equation. Starting with x_1 = 2, work out x_3.",
     "back": "14/3",
     "explanation": "Put x_1 = 2 into the formula: x_2 = (2 + 10)/3 = 12/3 = 4. Then put in x_2 = 4: x_3 = (4 + 10)/3 = 14/3.",
+    "hint": "Work out x_2 from x_1 = 2 first, then use x_2 to find x_3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["author"],
     "citations": [

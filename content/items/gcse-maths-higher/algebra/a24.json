@@ -11,6 +11,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "Triangular numbers count dots in triangles: 1, 1 + 2, 1 + 2 + 3, ... The others are square, cube and even numbers.",
+    "hint": "Triangular numbers count dots arranged in triangles: each new row has one more dot than the row before.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -87,6 +88,7 @@
     "verify": { "expression": "6^3" },
     "marks": 1,
     "mark_scheme": ["B1 for 216"],
+    "hint": "Cube numbers are 1^3, 2^3, 3^3, ... so work out 6^3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -170,6 +172,7 @@
     "verify": { "expression": "12 + 19" },
     "marks": 1,
     "mark_scheme": ["B1 for 31"],
+    "hint": "Add the last two terms.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -254,6 +257,7 @@
     "marks": 1,
     "mark_scheme": ["B1 for 26"],
     "explanation": "The differences are 3, 5, 7, so the next difference is 9: 17 + 9 = 26.",
+    "hint": "The differences go up by 2 each time. Find the next difference and add it to the last term.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -338,6 +342,7 @@
     "steps": ["3 + (a + 3) = 11", "a + 6 = 11", "a = 5"],
     "marks": 3,
     "mark_scheme": ["M1 for 3 + (a + 3) = 11", "M1 for a + 6 = 11", "A1 for 5"],
+    "hint": "Write the fourth term as the sum of the second and third terms, set it equal to 11, and solve.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -421,6 +426,7 @@
     "verify": { "expression": "24*2" },
     "marks": 1,
     "mark_scheme": ["B1 for 48"],
+    "hint": "Find what each term is multiplied by to get the next one.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -504,6 +510,7 @@
     "verify": { "expression": "27/81" },
     "marks": 1,
     "mark_scheme": ["B1 for 1/3"],
+    "hint": "Divide any term by the one before it.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -588,6 +595,7 @@
     },
     "marks": 1,
     "explanation": "Each term is the one before multiplied by √2: √2 × √2 = 2, 2 × √2 = 2√2, and 2√2 × √2 = 4. So the next term is 4 × √2 = 4√2.",
+    "hint": "Find what each term is multiplied by to get the next one, then multiply the last term by it.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["author"],
     "citations": [
@@ -663,6 +671,7 @@
     "verify": { "expression": "5*3^3" },
     "marks": 1,
     "mark_scheme": ["B1 for 135"],
+    "hint": "Each term is the one before multiplied by 3, starting from 5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -744,6 +753,7 @@
     "front": "The next cube number after 27",
     "back": "64",
     "explanation": "Cube numbers are 1^3 = 1, 2^3 = 8, 3^3 = 27, 4^3 = 64. The next cube after 27 is 64.",
+    "hint": "Cube numbers are 1 × 1 × 1, 2 × 2 × 2, 3 × 3 × 3, ... Which one comes after 27?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["author"],
     "citations": [
@@ -817,6 +827,7 @@
     "front": "The 5th triangular number",
     "back": "15",
     "explanation": "Triangular numbers add the next whole number each time: 1, 1 + 2 = 3, 3 + 3 = 6, 6 + 4 = 10, 10 + 5 = 15. The 5th is 15.",
+    "hint": "Triangular numbers add the next whole number each time: 1, then 1 + 2, and so on.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["author"],
     "citations": [
@@ -890,6 +901,7 @@
     "front": "The common ratio of the geometric progression 5, 10, 20, 40, ...",
     "back": "2",
     "explanation": "In a geometric progression each term is the one before times the common ratio: 10 ÷ 5 = 2, 20 ÷ 10 = 2 and 40 ÷ 20 = 2. The common ratio is 2.",
+    "hint": "Divide any term by the one before it.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A24",
     "checked_by": ["author"],
     "citations": [
