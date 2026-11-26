@@ -671,6 +671,7 @@
     "expected_seconds": 15,
     "front": "Make x the subject of y = x + 5",
     "back": "x = y - 5",
+    "explanation": "x has 5 added to it. Do the inverse to both sides: subtract 5. y - 5 = x, so x = y - 5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
     "checked_by": ["author"],
     "citations": [
@@ -696,7 +697,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A5). Back checked with SymPy (solving for x).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A5). Back checked with SymPy (solving for x). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:20:51Z"
         },
         {
@@ -716,20 +717,20 @@
           "notes": "model answered \"x = y - 5\"; expected \"x = y - 5\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:40:56Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:49:57Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -743,6 +744,7 @@
     "expected_seconds": 15,
     "front": "Make x the subject of y = 4x",
     "back": "x = y/4",
+    "explanation": "x is multiplied by 4. Do the inverse to both sides: divide by 4. y/4 = x, so x = y/4.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
     "checked_by": ["author"],
     "citations": [
@@ -768,7 +770,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A5). Back checked with SymPy (solving for x).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A5). Back checked with SymPy (solving for x). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:20:51Z"
         },
         {
@@ -788,20 +790,20 @@
           "notes": "model answered \"x = y/4\"; expected \"x = y/4\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:41:08Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:04Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -815,6 +817,7 @@
     "expected_seconds": 15,
     "front": "Make x the subject of y = x/3",
     "back": "x = 3y",
+    "explanation": "x is divided by 3. Do the inverse to both sides: multiply by 3. 3y = x, so x = 3y.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
     "checked_by": ["author"],
     "citations": [
@@ -840,7 +843,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A5). Back checked with SymPy (solving for x).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A5). Back checked with SymPy (solving for x). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:20:51Z"
         },
         {
@@ -860,20 +863,20 @@
           "notes": "model answered \"x = 3y\"; expected \"x = 3y\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:41:20Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:11Z",
+          "notes": "no problems found"
         }
       ]
     }

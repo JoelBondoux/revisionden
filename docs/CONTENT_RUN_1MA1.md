@@ -132,6 +132,13 @@ Short answers need only one written form: spaces, capitals, minus signs, × or *
 product, a sum, a list of values, x = 3, y = 2), and answer.units for units the answer may add
 (e.g. ["cm"]). Still list different forms of the value (√32 and 4√2, three and 3).
 Each interchangeable item goes through the pipeline on its own.
+Every item needs an "Explain" walkthrough (F7): an `explanation` of one to four short sentences
+that a Year 10 to 12 student can follow, saying why the answer is right. For a calculation, also
+give the working: `steps` on worked_maths (each line is checked by the maths engine); for
+numeric, short_answer and flashcard items, put the working in the explanation itself ("Brackets
+first: 8 - 2 = 6. ..."). Check every number in an explanation with exact arithmetic and say how
+in the grounded-writing note. Explanations go through the same pipeline as the rest of the item
+(the adversarial review reads them), and a standard fact they state follows decisions 0008 and 0009.
 
 Sources: only Pearson's own documents for 1MA1 (specification, sample assessment materials,
 past papers, mark schemes, examiner reports) and DfE or Ofqual. Get document URLs from the
