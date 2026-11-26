@@ -103,3 +103,9 @@ with text at 200% (W15): there each screen must not scroll sideways, and "You ar
 clear of the bottom nav and open the lesson when tapped. With 200% text the map starts below the
 fold, so the walk scrolls down to it first (lead ruling, 2026-11-26: vertical scrolling is fine at
 that size; auto-scrolling past the unit header would hide context).
+The parent-session smoke test (`e2e/tests/parent-session.spec.ts`, phone only, W16) walks a new
+parent through sign-in, the terms, adding a child, linking the child's device with the QR code,
+the family screen, Parent home and the stats dashboard, with `axeWhenSettled` on every screen.
+Sign-in is stubbed inside the spec only: the stubbed `POST api/auth/sign-in/social` answers with
+the app's own callback URL, so no provider is ever called, and the test fails if any request leaves
+the test server. There is no test backdoor or flag in the app.
