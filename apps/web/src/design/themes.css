@@ -65,39 +65,7 @@
   color: var(--color-text);
 }
 
-/* Get help stays a calm, light page in every theme (its own high-contrast colours). */
-:root[data-theme='dark'] .help-main {
-  --color-primary: #6c47f5;
-  --color-primary-edge: #4b2bc9;
-  --color-primary-soft: #eee9fe;
-  --color-text: #2b2b3a;
-  --color-text-secondary: #5e5e73;
-  --color-text-on-primary: #ffffff;
-  --color-text-on-gold: #2b2b3a;
-  --color-border: #e3e3ea;
-  --color-surface: #ffffff;
-  --color-background: #f7f6fb;
-  --color-success: #0b8457;
-  --color-success-edge: #075c3c;
-  --color-success-soft: #e3f5ec;
-  --color-warning: #ff7a2f;
-  --color-warning-text: #b34f00;
-  --color-warning-soft: #fff0e6;
-  --color-danger: #c62828;
-  --color-danger-edge: #8e1b1b;
-  --color-gold: #ffc83d;
-  --color-streak: #ff9f1c;
-  --color-locked: #c4c4cf;
-  --color-locked-soft: #e5e5ec;
-  --color-mastery-fill: #d9cfff;
-  --color-weak: #c2541a;
-  --color-challenge: #2b2b3a;
-  --color-pip: #ff7a2f;
-  --color-pip-side: #e35f17;
-  --color-pip-ears: #3a2622;
-  --color-pip-muzzle: #f7f3ee;
-  color-scheme: light;
-}
+/* Get help follows the theme with its own high-contrast colours (features/help/help.css, W3). */
 
 /* Reading tints become gentle dark tints in dark mode (text keeps its contrast). */
 :root[data-theme='dark'][data-reading-tint='cream'] {

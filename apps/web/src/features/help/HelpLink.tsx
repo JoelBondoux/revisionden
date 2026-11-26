@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { LinkChip, LinkTile } from '../../components/links';
 
 /** A small outline heart (original artwork), used for the Get help link. */
 export function HeartIcon() {
@@ -22,12 +22,28 @@ export function HeartIcon() {
   );
 }
 
-/** "Get help" with a small heart, for footers and menus. */
+/**
+ * "Get help" with a small heart, for footers, headers and menus (a shared LinkChip). Tapping it
+ * only opens the private Get help page; nothing is recorded.
+ */
 export function GetHelpLink({ to = '/help', className }: { to?: string; className?: string }) {
   return (
-    <Link to={to} className={['get-help-link', className ?? ''].filter(Boolean).join(' ')}>
+    <LinkChip to={to} className={['get-help-link', className ?? ''].filter(Boolean).join(' ')}>
       <HeartIcon />
       Get help
-    </Link>
+    </LinkChip>
+  );
+}
+
+/** A calm Get help tile for the student's home screen (the topic map). */
+export function GetHelpTile() {
+  return (
+    <LinkTile
+      to="/help"
+      className="get-help-tile"
+      title="Get help"
+      description="Private support if something is worrying you. Nobody is told you looked."
+      icon={<HeartIcon />}
+    />
   );
 }

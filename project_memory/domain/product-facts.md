@@ -121,6 +121,10 @@ Tags: #product #rules #limits #defaults
   time climbs a rung, the 7-day one clears it, a slip restarts; missed on 3 visits it is parked a
   week and flagged "worth a look" for the parent dashboard). Lessons and the 5-a-day open with
   up to 2 warm-ups on due points. Retries count at half weight for mastery. Migration 0026.
+- Worth a look together (K11, lead 2026-11-25): parent stats dashboard card listing the topics with
+  F5-flagged points (one row per topic, a count, "Learn it first" where checked lessons exist),
+  from `GET /v1/students/:id/worth-a-look`. Hidden when empty; never shown to the child. Learning
+  point ids are internal, so parents see topic titles only.
 - XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, working 20,
   long answer 30; part marks earn part.
 - The 14 original rewards keep their ids and avatar items (the 100-day streak unlocks two: crown
@@ -407,7 +411,7 @@ Tags: #product #rules #limits #defaults
 - `GET /health` always answers with the version: `ok` (200) when configured, `misconfigured`
   (503) while a required secret is missing. Dev and staging deploys accept `misconfigured`;
   production does not.
-- The app shows its version in a small footer on every page (links to About).
+- The app shows its version in a small footer on every page (links to About). Outside the live app the footer also names the environment and the short commit, e.g. "(Development, ef86a9a)", so testers can tell builds apart; the live app never shows the commit.
 
 ## Verification (no mistakes on the education side)
 
@@ -598,7 +602,11 @@ Tags: #product #rules #limits #defaults
   `policy_acceptances`) on a "Before you start" page that shows each policy's plain-English
   bullets as cards (word for word, from the policy files; 4 chosen ones first, then "Show all N
   points") with the full text behind "Show the
-  details"; a changed version shows a "We've updated" prompt. A newly linked student
+  details"; a changed version shows a "We've updated" prompt listing, per changed policy, its new version and
+  only the Changes lines newer than the version that parent accepted (plus a link to the policy;
+  a policy never accepted goes through "Before you start" instead): "I've read the changes" stores the new
+  versions for that parent (each parent for themselves); closing it hides it on that device for 24
+  hours for those versions only (`revisionden.policyNotice`). A newly linked student
   device shows the young people's notice once (`revisionden.youngPeopleNotice` in local storage).
 - The young people's notice has a friendly view built from the same file: 6 short-version cards,
   2 to 4 key points per part always visible, "Read more" and "Expand all", original icons and Pip;
@@ -727,7 +735,10 @@ Tags: #product #rules #limits #defaults
   on the Rewards page; the friends league is not built yet, so it shows there once it is.
 - "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
   NSPCC adult helpline, parent-only). Reached from Settings, the heart link in the student footer,
-  the signed-out header and parent home. There is no separate profile menu yet.
+  the signed-out header and parent home, plus (W3) a Get help tile on the topic map and a chip in
+  the student header. There is no separate profile menu yet. Quick exit is sticky at the top;
+  topics are in five categories (Right now first and always open) with a private "Find a topic"
+  filter (`features/help/categories.ts`).
 - Data: `content/support/uk-services.json` (schema `content/schemas/support-services.schema.json`).
   Every phone, text, link, opening time and age range has the URL of the service's own page it was
   copied from; `checked_at` per service. `pnpm content:validate` (and `scripts/content/support.test.mjs`)
@@ -790,7 +801,7 @@ Tags: #product #rules #limits #defaults
   a CSS mask at 7% ink; J8b), hidden with `prefers-contrast: more` and
   forced colours. The older 240px grid tile `doodles.svg` is kept only for the public site until it
   moves to the new tile.
-  Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help keeps light colours in dark.
+  Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by
