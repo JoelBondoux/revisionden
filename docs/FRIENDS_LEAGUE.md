@@ -252,6 +252,10 @@ New tables (one new migration):
   Sunday cannot change last week's result; and a request left waiting for the child's check can
   be confirmed or cancelled later from the Friends sheet (`friend_checking` is what the other
   child sees).
+- **Review fixes, part 2 (FL4b, from the train #317 review):** once both families approve, the
+  friendship is saved first and the request is marked started after, so if the save fails the
+  request stays waiting with both approvals and approving again finishes it (production uses
+  `neon-http`, which has no multi-statement transactions).
 - **Still to come:** the AppDeck report view, where support can also close a report
   (`docs/BACKLOG.md`).
 

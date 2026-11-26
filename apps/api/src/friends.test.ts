@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { and, eq, inArray, or } from 'drizzle-orm';
+import { and, eq, inArray, or, sql } from 'drizzle-orm';
 import {
   attempts,
   familyEvents,
@@ -940,5 +940,48 @@ describe('review fixes (FL4-fix)', () => {
     await redeem(b, code);
     expect((await friendsOf(b)).waiting[0]!.status).toBe('confirm');
     expect((await friendsOf(a)).waiting[0]!.status).toBe('friend_checking');
+  });
+});
+
+describe('review fixes, part 2 (FL4b)', () => {
+  it('keeps the request open, so it can be tried again, if saving the friendship fails', async () => {
+    const a = await kid();
+    const b = await kid();
+    const id = await request(a, b);
+    expect((await approve(a, id)).status).toBe(200);
+    // Make the friendship save fail once, as a dropped database connection would.
+    await t.db.execute(sql`
+      create or replace function fl4b_fail() returns trigger as $$
+      begin raise exception 'fl4b: save failed'; end $$ language plpgsql`);
+    await t.db.execute(
+      sql`create trigger fl4b_fail before insert on friendships for each row execute function fl4b_fail()`,
+    );
+    try {
+      expect((await approve(b, id)).status).toBe(500);
+    } finally {
+      await t.db.execute(sql`drop trigger fl4b_fail on friendships`);
+    }
+    const [row] = await t.db.select().from(friendRequests).where(eq(friendRequests.id, id));
+    expect(row!.status).toBe('parents');
+    expect((await approve(b, id)).status).toBe(200);
+    expect((await friendsOf(a)).friends.map((f) => f.id)).toEqual([b.studentId]);
+  });
+
+  it('finishes the start when the friendship was saved but the request was not marked', async () => {
+    const a = await kid();
+    const b = await kid();
+    const id = await request(a, b);
+    await t.db
+      .update(friendRequests)
+      .set({ fromApprovedBy: 1, toApprovedBy: 1 })
+      .where(eq(friendRequests.id, id));
+    const [x, y] =
+      a.studentId < b.studentId ? [a.studentId, b.studentId] : [b.studentId, a.studentId];
+    await t.db.insert(friendships).values({ studentA: x, studentB: y });
+    const res = await approve(b, id);
+    expect(res.status).toBe(200);
+    expect(((await res.json()) as { status: string }).status).toBe('started');
+    const [row] = await t.db.select().from(friendRequests).where(eq(friendRequests.id, id));
+    expect(row!.status).toBe('started');
   });
 });

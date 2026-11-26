@@ -207,9 +207,10 @@ async function canBefriend(
 }
 
 /**
- * One family's approval (review fix, FL4-fix): only that family's column is written, so two
- * approvals at once cannot overwrite each other, then a single conditional UPDATE claims the start
- * once both columns are set. Whoever wins the claim checks the rules again and adds the friendship.
+ * One family's approval. Only that family's column is written, so two approvals at once cannot
+ * overwrite each other (FL4-fix). Once both are set, the friendship is saved first and the request
+ * is marked started after (FL4b): if the save fails, the request stays open with both approvals and
+ * approving again finishes it. Saving twice is harmless (the pair is the primary key).
  */
 export async function approveRequest(
   db: Database,
@@ -223,21 +224,23 @@ export async function approveRequest(
     eq(friendRequests.status, 'parents'),
     gt(friendRequests.expiresAt, now),
   );
-  const marked = await db
+  const [marked] = await db
     .update(friendRequests)
     .set(side === 'from' ? { fromApprovedBy: position } : { toApprovedBy: position })
     .where(open)
-    .returning({ id: friendRequests.id });
-  if (marked.length === 0) return 'closed';
-  const claimed = await db
-    .update(friendRequests)
-    .set({ status: 'started', endedAt: now })
-    .where(
-      and(open, isNotNull(friendRequests.fromApprovedBy), isNotNull(friendRequests.toApprovedBy)),
-    )
-    .returning({ id: friendRequests.id });
-  if (claimed.length === 0) return 'waiting_for_other_family';
-  // Both families said yes: check again (a block or a full list since), then start.
+    .returning();
+  if (!marked) return 'closed';
+  if (marked.fromApprovedBy === null || marked.toApprovedBy === null) {
+    return 'waiting_for_other_family';
+  }
+  const start = () =>
+    db.update(friendRequests).set({ status: 'started', endedAt: now }).where(open);
+  // Both families said yes. Already friends means an earlier try saved the friendship.
+  if (await areFriends(db, r.fromStudentId, r.toStudentId)) {
+    await start();
+    return 'started';
+  }
+  // Check again (a block or a full list since), then save the friendship, then mark it started.
   const from = await loadStudent(db, r.fromStudentId);
   const to = await loadStudent(db, r.toStudentId);
   if (!from || !to || !(await canBefriend(db, from, to, now, r.id))) {
@@ -252,6 +255,7 @@ export async function approveRequest(
     .insert(friendships)
     .values({ studentA: a, studentB: b, createdAt: now })
     .onConflictDoNothing();
+  await start();
   return 'started';
 }
 
