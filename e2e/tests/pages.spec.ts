@@ -209,15 +209,10 @@ test('Settings offers "Add RevisionDen to this device" as a button, accessibly',
   await expectAccessible(page);
 });
 
-test('the bug button never covers a button or link on a student page, however far it scrolls', async ({
-  page,
-}) => {
-  // A student uses this device; Settings is long and full of controls.
-  await page.addInitScript(() => localStorage.setItem('revisionden.studentId', 'student-e2e'));
-  await page.goto('/settings');
-  const bug = page.getByRole('button', { name: 'Report a bug' });
-  await expect(bug).toBeVisible();
-  const overlaps = await page.evaluate(async () => {
+/** What the bug button covers anywhere while the page scrolls: controls or blocks of content. */
+async function bugButtonOverlaps(page: Page) {
+  await expect(page.getByRole('button', { name: 'Report a bug' })).toBeVisible();
+  return page.evaluate(async () => {
     const button = document.querySelector('.bug-button')!;
     const hits = new Set<string>();
     const max = document.documentElement.scrollHeight - innerHeight;
@@ -225,10 +220,15 @@ test('the bug button never covers a button or link on a student page, however fa
       scrollTo(0, Math.min(y, max));
       await new Promise((r) => requestAnimationFrame(() => r(null)));
       const b = button.getBoundingClientRect();
-      for (const el of Array.from(
+      // Controls, plus every block of the page's content (cards, sections, headings): the button
+      // must not float over any of it, even in the gap beside a control.
+      const main = document.querySelector('main')!;
+      const blocks = Array.from(main.children).filter((c) => !c.contains(button));
+      const controls = Array.from(
         document.querySelectorAll('a, button, input, select, textarea, label'),
-      )) {
-        if (el === button || button.contains(el)) continue;
+      );
+      for (const el of [...blocks, ...controls]) {
+        if (el === button || button.contains(el) || el.contains(button)) continue;
         const r = el.getBoundingClientRect();
         if (r.width === 0 || r.height === 0) continue;
         const apart =
@@ -238,18 +238,14 @@ test('the bug button never covers a button or link on a student page, however fa
     }
     return [...hits];
   });
-  expect(overlaps).toEqual([]);
-});
+}
 
-test('the bug button in the top row shows the focus ring when reached with the keyboard', async ({
-  page,
-}) => {
-  await page.addInitScript(() => localStorage.setItem('revisionden.studentId', 'student-e2e'));
-  await page.goto('/settings');
+/** Tabs to the bug button and checks it shows the standard focus ring. */
+async function expectBugButtonFocusRing(page: Page) {
   const bug = page.getByRole('button', { name: 'Report a bug' });
   await expect(bug).toBeVisible();
   // Tab until the bug button has focus, so :focus-visible applies as it does for a keyboard user.
-  for (let i = 0; i < 20 && !(await bug.evaluate((el) => el === document.activeElement)); i++) {
+  for (let i = 0; i < 40 && !(await bug.evaluate((el) => el === document.activeElement)); i++) {
     await page.keyboard.press('Tab');
   }
   await expect(bug).toBeFocused();
@@ -264,6 +260,76 @@ test('the bug button in the top row shows the focus ring when reached with the k
   });
   expect(expected).not.toBe('none');
   expect(ring).toBe(expected);
+}
+
+/** A made-up family with one child taking GCSE Maths, and that child's subjects, for parent screens. */
+const PARENT_CHILD_ID = '00000000-0000-4000-8000-0000000000a1';
+async function routeDemoFamily(page: Page) {
+  const maths = {
+    studentId: PARENT_CHILD_ID,
+    subjectId: 'gcse-maths',
+    board: 'Edexcel',
+    tier: 'higher',
+  };
+  await page.route(`**/v1/students/${PARENT_CHILD_ID}/subjects`, (route) =>
+    route.fulfill({ json: { subjects: [{ ...maths, hasQuestions: false }] } }),
+  );
+  await page.route('**/v1/onboarding/family', (route) =>
+    route.fulfill({
+      json: {
+        children: [
+          {
+            student: {
+              id: PARENT_CHILD_ID,
+              nickname: 'NovaFox',
+              avatarCode: '10000000000000000000000000000',
+              yearGroup: 11,
+            },
+            enrolments: [maths],
+            level: 'gcse',
+            examSeason: { season: 'summer', year: 2027 },
+            toCheckLater: 0,
+            linkedDevices: 1,
+          },
+        ],
+      },
+    }),
+  );
+}
+
+test('the bug button never covers a button or link on a student page, however far it scrolls', async ({
+  page,
+}) => {
+  // A student uses this device; Settings is long and full of controls.
+  await page.addInitScript(() => localStorage.setItem('revisionden.studentId', 'student-e2e'));
+  await page.goto('/settings');
+  expect(await bugButtonOverlaps(page)).toEqual([]);
+});
+
+test('the bug button in the top row shows the focus ring when reached with the keyboard', async ({
+  page,
+}) => {
+  await page.addInitScript(() => localStorage.setItem('revisionden.studentId', 'student-e2e'));
+  await page.goto('/settings');
+  await expectBugButtonFocusRing(page);
+});
+
+test('the bug button never covers a choice on the parent Subjects page, however far it scrolls', async ({
+  page,
+}) => {
+  await routeDemoFamily(page);
+  await page.goto(`/parent/subjects/${PARENT_CHILD_ID}`);
+  await expect(page.getByRole('heading', { level: 1, name: "NovaFox's subjects" })).toBeVisible();
+  expect(await bugButtonOverlaps(page)).toEqual([]);
+});
+
+test('the bug button on parent pages shows the focus ring when reached with the keyboard', async ({
+  page,
+}) => {
+  await routeDemoFamily(page);
+  await page.goto(`/parent/subjects/${PARENT_CHILD_ID}`);
+  await expect(page.getByRole('heading', { level: 1, name: "NovaFox's subjects" })).toBeVisible();
+  await expectBugButtonFocusRing(page);
 });
 
 test('the install help shows illustrated iPhone and iPad steps, accessibly', async ({ page }) => {
