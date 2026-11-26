@@ -163,7 +163,28 @@
 
 .card-form {
   display: grid;
+  /* F15: a grid track defaults to fit its widest box; minmax(0, 1fr) lets it shrink to the card. */
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-3);
+  min-width: 0;
+}
+
+/* F15 (bug report, 412 px phone): an input, textarea or select is as wide as its default size or
+   its longest option, which grows with the text size and pushed the page sideways. They now fill
+   the card and can shrink, and a long topic name is cut short inside its box. */
+.card-form .field {
+  min-width: 0;
+}
+
+.card-form .field__input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.card-form select.field__input {
+  text-overflow: ellipsis;
 }
 
 /* F7: the card turns by tap or keyboard. */
