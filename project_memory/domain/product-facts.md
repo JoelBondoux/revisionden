@@ -973,7 +973,8 @@ Tags: #product #rules #limits #defaults
   block, report, or a parent turning friends off; 8 weeks kept; wins counted in
   `students.league_wins` for the league rewards). A friendship is saved before its request is
   marked started; starting is safe to repeat, and a request left with both approvals is finished
-  the next time the child or a parent opens Friends (FL4b, FL4c): `docs/FRIENDS_LEAGUE.md`
+  the next time the child or a parent opens Friends (FL4b, FL4c). A removal is never undone:
+  removing, blocking, reporting or turning friends off first declines the open requests (FL4d): `docs/FRIENDS_LEAGUE.md`
   (nickname, avatar, title and weekly learning XP only; one parent per family approves; no chat;
   10-friend cap; siblings join automatically; reports seen by both families' parents and AppDeck;
   rank chip on Home (was the Map until Home landed), League page under Me; head-to-head challenges later).
