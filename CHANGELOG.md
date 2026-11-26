@@ -7,12 +7,13 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Easier to see: a right answer in Doodle Diary is now clearly green (blue with colour-blind friendly colours), locked Challenge topics have a visible outline in dark mode, and empty progress bars in lessons and flashcards no longer fade into the page.
 - Fixed: a new effect style you've just earned can be picked in Settings straight away, without reloading the app.
 - Lessons now match your look: in Sticker Book, practice happens on a warm paper page (or night paper in dark mode), with each question on a plain, easy-to-read card.
 - A new look for rewards and celebrations, Sticker Book: your daily goal and next mission are cards taped into a sticker book, mastered topics are gold stickers, and combos, stars and confetti slap onto the page like stickers.
 - Fixed: with sound switched off, earning a reward now still gives a little buzz on phones that can vibrate (Vibration is its own setting).
 - The doodle background now looks hand-drawn, like doodles in a notebook: wobbly pen lines, a few double strokes and some scribbled-in shapes.
-- A new everyday look, Doodle Diary: your topic map is a diary page with handwritten titles, sketched boxes and topics coloured in with highlighter as you master them. In lessons, right answers get a red-pen ring and combos are scribbled in red pen; questions stay on a plain, easy-to-read card. Sticker Book is now a reward you unlock at level 3.
+- A new everyday look, Doodle Diary: your topic map is a diary page with handwritten titles, sketched boxes and topics coloured in with highlighter as you master them. In lessons, right answers get a green ring and combos are scribbled in red pen; questions stay on a plain, easy-to-read card. Sticker Book is now a reward you unlock at level 3.
 - Three more effect styles to unlock: Garden Grow (calm and leafy, when you master 5 topics in a subject), Comic Pop (bold and punchy, at level 20) and Pixel Arcade (retro arcade, at level 40).
 - New effect styles to unlock as you progress: Pop Burst (loud and bouncy, at level 5) and Starlight (glowing and dreamy, when you master 10 topics), with Garden Grow, Comic Pop and Pixel Arcade coming soon. Pick your style in Settings → Effect style; locked styles show a preview and how to unlock them.
 - Every animation now has its own sound, matched to your effect style (paper and stamps for Sticker Book, pops and boings for Pop Burst, chimes for Starlight), and phones that can vibrate give a little buzz too. Turn vibration off in Settings next to Sound. iPhones and iPads don't allow websites to vibrate.
@@ -102,6 +103,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Visual fixes J10f (J, from the morning walkthrough #185): Doodle Diary's right answer uses `--color-success`/`--color-success-soft` (ring and wash) instead of a red-pen ring; new tokens `--color-track`, `--arena-track` (also in Sticker Book and Doodle Diary surrounds) and `--color-challenge-edge`, each 3:1 against what it sits on in light, dark and colour-blind palettes (`NON_TEXT_PAIRS` in `themes.ts`). `ProgressBar`, `ArenaProgress` and the Challenge hex use them (`components.css` and `pages.css` changed at the lead's request).
 - Effect styles J10e (J): `EffectStyleProvider` moves inside the router (`EffectStyleRoute` in `routes.tsx`, out of `App.tsx`) and makes no request on `/help` or `/parent/help` (Get help makes no API calls, signed in or out). Unlocked styles are checked again when the Settings picker opens (one request at a time) and a failed load is retried on the next screen, so a newly earned style or a load that failed before unlocking no longer needs a reload (Codex review on #176). Tests: provider, picker, routes.
 - Project memory (J): product-facts had a stale duplicate of the Appearance doodle-tile paragraph (naming the removed `doodles.svg`) and the old J10a effect-styles bullet, left by a merge; now one current paragraph and one bullet.
 - U6b: `playReward` vibration no longer depends on the reward sound playing; it follows the biggest reward and the Test mode rule, so muted sound still buzzes when Vibration is on.

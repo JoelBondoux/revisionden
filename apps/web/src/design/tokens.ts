@@ -12,6 +12,8 @@ export const tokens = {
   '--color-text-on-primary': '#FFFFFF',
   '--color-text-on-gold': '#2B2B3A',
   '--color-border': '#E3E3EA',
+  /** An empty progress track: 3:1 on surface and background (WCAG 1.4.11). */
+  '--color-track': '#7F7A90',
   '--color-surface': '#FFFFFF',
   '--color-background': '#F7F6FB',
   '--color-success': '#0B8457',
@@ -29,6 +31,8 @@ export const tokens = {
   '--color-mastery-fill': '#D9CFFF',
   '--color-weak': '#C2541A',
   '--color-challenge': '#2B2B3A',
+  /** The outline of a Challenge hex: 3:1 on the page. */
+  '--color-challenge-edge': '#2B2B3A',
   '--color-pip': '#FF7A2F',
   '--color-pip-side': '#E35F17',
   '--color-pip-ears': '#3A2622',
@@ -60,6 +64,7 @@ export const tokens = {
   '--tap-target': '44px',
   '--arena-bg': '#1A1033',
   '--arena-raised': '#2A1A52',
+  '--arena-track': '#7C7699',
   '--arena-text': '#FFFFFF',
   '--arena-text-secondary': '#C9BEF0',
   '--arena-option-1': '#6C47F5',
