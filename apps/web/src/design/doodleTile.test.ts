@@ -7,6 +7,8 @@ import {
   GAP,
   HEROES,
   MOTIFS,
+  SAME_HERO_GAP,
+  SAME_MOTIF_GAP,
   STROKE,
   TILE_SIZE,
   type Placement,
@@ -66,10 +68,28 @@ describe('the doodle tile', () => {
 
   it('draws from a large set of original motifs and uses every one', () => {
     const mediums = Object.keys(MOTIFS).filter((m) => !HEROES.includes(m) && !FILLERS.includes(m));
-    expect(mediums.length).toBeGreaterThanOrEqual(36);
+    expect(mediums.length).toBeGreaterThanOrEqual(120);
     expect(new Set(tier('medium').map((p) => p.motif))).toEqual(new Set(mediums));
     expect(new Set(tier('hero').map((p) => p.motif)).size).toBe(tier('hero').length);
     expect(new Set(tier('filler').map((p) => p.motif))).toEqual(new Set(FILLERS));
+  });
+
+  it('never puts two copies of the same doodle near each other, even across the edges', () => {
+    const nearestTwin = (list: Placement[]) => {
+      let nearest = Infinity;
+      for (let i = 0; i < list.length; i++) {
+        for (let j = i + 1; j < list.length; j++) {
+          if (list[i]!.motif === list[j]!.motif) {
+            nearest = Math.min(nearest, wrappedDistance(list[i]!, list[j]!));
+          }
+        }
+      }
+      return nearest;
+    };
+    expect(nearestTwin(tier('medium'))).toBeGreaterThanOrEqual(SAME_MOTIF_GAP);
+    expect(SAME_MOTIF_GAP).toBeGreaterThanOrEqual(220);
+    expect(nearestTwin(tier('hero'))).toBeGreaterThanOrEqual(SAME_HERO_GAP);
+    expect(SAME_HERO_GAP).toBeGreaterThan(SAME_MOTIF_GAP);
   });
 
   it('packs doodles close together without any touching, even across the edges', () => {
