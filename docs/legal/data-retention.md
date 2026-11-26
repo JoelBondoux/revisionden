@@ -1,6 +1,6 @@
 # How long we keep data
 
-Version: 1.12
+Version: 1.13
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -75,6 +75,22 @@ the family account for 12 months (section 3).
 | Information stored on your device                                                                    | See [cookies and storage](cookies-and-storage.md)                                                                   | Clearing the browser's site data removes it                                                                                       |
 | Records held by our service providers                                                                | See [services we use](processors.md)                                                                                | Under each provider's terms                                                                                                       |
 
+### 2A. Friends league (not switched on yet)
+
+**DRAFT, pending review by our solicitor.** The friends league is built but not switched on. When it is, this is how long its records are
+kept. Deleting a student or the family deletes all of them, in both directions.
+
+| What                                                                   | How long                                                               | How it is deleted                                                     |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| "Allow friends" and "Hide me from the league" settings                 | With the student                                                       | With the student                                                      |
+| Friend codes (hashed)                                                  | Valid for 48 hours and usable once                                     | Deleted automatically within 24 hours of being used or expiring       |
+| Record of each friend code typed (child, family, right or wrong, time) | 24 hours, for the limits on wrong codes                                | Deleted automatically by the scheduled clean-up                       |
+| Friend requests (the two children, status, which family approved)      | Until the friendship starts or is declined, or 7 days                  | Deleted automatically within 24 hours after that                      |
+| Friendships (the two children, start date, any private parent label)   | Until removed, or either child is deleted                              | In-app remove, or with either child                                   |
+| Blocks (who blocked whom, date)                                        | Until unblocked, or either child is deleted                            | In-app unblock, or with either child                                  |
+| Reports (the two children, fixed reason, date, outcome)                | 12 months after the report is closed, or until either child is deleted | Deleted automatically by the scheduled clean-up, or with either child |
+| Weekly league results (league XP, place, won or not)                   | The last 8 weeks                                                       | Older weeks deleted automatically by the scheduled clean-up           |
+
 ### 3. Inactive accounts
 
 3.1 Accounts not used for 12 months are deleted automatically. An account counts as used whenever
@@ -102,6 +118,7 @@ to keep it, and tell you if anything cannot be deleted and why.
 
 ## Changes
 
+- 1.13: DRAFT, pending solicitor review. New section 2A: how long friends league records will be kept once it is switched on (codes, typed-code records, requests, friendships, blocks, reports and weekly results).
 - 1.12: Added the short record of when a passkey was last allowed onto a new device. It is needed for 24 hours and deleted automatically within the following 24 hours.
 - 1.11: Expired link codes, invite codes and sessions stop working straight away and are deleted within 24 hours (we no longer promise 15 minutes); the clean-up runs at least once a day.
 - 1.10: A device link sent instead of a QR code lasts 24 hours (the QR code still lasts 10 minutes), and expired link codes are deleted within 20 minutes rather than 15.

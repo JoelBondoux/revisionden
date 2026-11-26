@@ -1,6 +1,6 @@
 # Privacy notice
 
-Version: 1.10
+Version: 1.11
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -29,6 +29,9 @@ ever seem to say different things, the full text is the one that counts.
 - **Get help page.** The page listing support services (such as Childline) is private. We do
   not record, log or show you whether your child opens it or taps a number or link on it.
 - **Who else sees it.** Only the services that run the app for us, and only what each one needs.
+- **Friends league (not switched on yet, draft).** If you turn it on for your child, friends you and
+  the other family approve see only your child's nickname, avatar, title and this week's league XP.
+  See section 6A.
 - **How long.** Most data stays until you delete it. You can delete your child's data at any
   time. Accounts nobody uses for 12 months are deleted automatically. See
   [how long we keep data](data-retention.md).
@@ -151,7 +154,10 @@ profile and blanks the name and picture before anything is saved.
 - **"Ask a parent" notes:** if the student asks a parent to raise something for them, a topic
   picked from a list and an optional short note (up to 300 characters). Only the family's parents
   see it; our support staff do not, unless a parent includes it in a complaint. It is deleted when
-  a parent starts a complaint from it or dismisses it, and after 90 days at most.
+  a parent starts a complaint from it or dismisses it, and after 90 days at most;
+- **Friends league** (not switched on yet; see section 6A): whether friends is allowed and whether
+  the student hides from the league, friend codes (hashed), friend requests, friendships (with any
+  private label a parent adds), blocks, reports and weekly league results.
 
   4.3 **What we do not collect.** We do not collect or store a student's real name, date of birth,
   home address, phone number, email address, photographs, location, contacts or school name. The
@@ -179,8 +185,9 @@ profile and blanks the name and picture before anything is saved.
   Google or Microsoft account for anything else.
 
   4.6 **Features not available yet.** Some features described in our plans are not yet built,
-  including reading photos of homework or school reports, marking long answers and essays, and
-  friends. Where this notice describes them, it says so. We will update this notice, and tell you
+  including reading photos of homework or school reports and marking long answers and essays.
+  The friends league is built but not switched on; section 6A describes it as a draft. Where this
+  notice describes these features, it says so. We will update this notice, and tell you
   in the app, before any of them starts collecting data.
 
 ### 5. Why we use the data and our lawful bases
@@ -200,6 +207,7 @@ use it for advertising, we do not sell it, and we do not share it for anyone els
 | Check questions are correct, handle reports of mistakes                                                                                                    | Reports (question, version, reason, family)                                                                        | Legitimate interests in accurate educational content                                                                                                                                                                            |
 | Error reports (only when you tap "Send error report")                                                                                                      | Reference code, screen and failing service path without ids, app version, browser family, online, time (anonymous) | Legitimate interests in finding and fixing faults; sending a report is optional                                                                                                                                                 |
 | Feedback and bug reports                                                                                                                                   | Feedback kind and text, optional device details                                                                    | Legitimate interests in improving the app; sending feedback is optional                                                                                                                                                         |
+| Friends league (not switched on yet): show approved friends a student's nickname, avatar, title and weekly league XP; handle requests, blocks and reports  | Friends league data (section 6A)                                                                                   | DRAFT: to be confirmed with our solicitor before the friends league is switched on                                                                                                                                              |
 | Record that the parent confirmed the terms and this notice                                                                                                 | Policy name, version and date                                                                                      | Legitimate interests (being able to show what was agreed and what information was given)                                                                                                                                        |
 | Respond to rights requests and complaints, meet legal duties                                                                                               | Any of the above as needed                                                                                         | Legal obligation                                                                                                                                                                                                                |
 
@@ -248,6 +256,52 @@ the text anywhere. Where a device only has online voices, the device's own speec
 example the browser or operating system maker) may process the text it reads: questions, answers,
 explanations and the student's flashcards. In that case read aloud is off until the student turns
 it on, and Settings explains why. It is never used to record the student's voice.
+
+### 6A. Friends league (not switched on yet)
+
+6A.1 **DRAFT, pending review by our solicitor.** The friends league is built but not switched on. We will update this notice, and ask
+you to confirm it, before it is. This section describes how it will work.
+
+6A.2 **Off until you turn it on.** Friends is off for each child until a parent turns on "Allow
+friends" for that child. While it is off, nobody can send your child a friend request. Turning it
+off later hides the league and pauses every friendship; "Remove all friends" deletes them.
+
+6A.3 **Approval by both families.** A student adds a friend from another family by sharing a
+one-time friend code in person; the app never sends it anywhere and never asks for contact
+details. One parent in **each** family must approve. To decide, you see only the other child's
+nickname, avatar and title, never the other family's email addresses or names. Every step is in
+your family activity log.
+
+6A.4 **Brothers and sisters.** Children in the same family are in each other's league
+automatically, with no code or approval, once "Allow friends" is on for both.
+
+6A.5 **What other children see.** Approved friends (and brothers and sisters) see only your
+child's nickname, avatar, two-part title, this week's league XP and their place. They never see
+your child's real name, school, year group, subjects, grades, streaks, level, when they revise,
+their other friends, or anything about your family. Other children's league XP updates once a day,
+so nobody can tell when someone is revising. There is no chat, no messages and no profile page.
+Your child can hide from the league, and you or your child can remove a friend at any time.
+
+6A.6 **What you see.** For each child: their friends (nickname, avatar, title and the date they
+became friends), requests waiting for you, blocks, and reports. You can add a private label to a
+friend (for example "from football"); only your family's parents see it.
+
+6A.7 **Reports and blocks.** A student can report a friend, choosing from fixed reasons only (no
+free text). The friend is removed and blocked straight away and is not told it was a report.
+**Both families' parents and our support team** see the reason, the date and the two children's
+nicknames; our support team also sees the reported child's avatar code, so an upsetting nickname
+or avatar can be changed. Nobody sees any free text, ids or family details.
+
+6A.8 **How long we keep it.** Friend codes last 48 hours and requests 7 days; each is deleted
+within 24 hours after it is used, ends or expires. Friendships and blocks are kept until they are
+removed or either child is deleted. Reports are kept for 12 months after they are closed, or until
+either child is deleted. Weekly league results are kept for the last 8 weeks. Deleting a child or
+your family deletes all of this, in both directions. See [how long we keep data](data-retention.md).
+
+6A.9 **Your family's download** includes, for each child, their friends' nicknames, the dates they
+became friends, your private labels, waiting requests, blocks, reports your child made and weekly
+league results. It never includes the other family's ids or anything else about them. Friend codes
+are left out.
 
 ### 7. AI marking and what the AI provider receives
 
@@ -374,6 +428,7 @@ in the app on your next visit and ask you to confirm, and students see a plain-E
 
 ## Changes
 
+- 1.11: DRAFT, pending solicitor review. New section 6A describing the friends league, which is not switched on yet: off until a parent turns it on, approval by a parent in each family, siblings included automatically, what other children see, reports and blocks, how long it is kept and the family download.
 - 1.10: A parent can link a student's device with a one-time link they send, as well as the QR code.
 - 1.9: A passkey synced to the student's other devices works there too, as a separate device the parent can see and unlink. Each device keeps a random device code (we store only its hash), and both parents are told when a passkey is used on a new device.
 - 1.8: Labels our support team can put on your account (for example "Beta tester"), never personal information; kept while the account exists or until removed. You can leave the beta programme from the parent home.

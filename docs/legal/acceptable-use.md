@@ -1,6 +1,6 @@
 # Community rules
 
-Version: 1.2
+Version: 1.3
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -54,9 +54,27 @@ yourself are not checked automatically yet, so please take extra care.
 
 4.1 There is no chat and no free text between students.
 
-4.2 **Friends** are not available yet. When they are: friends will see only each other's nickname,
-avatar and XP; adding a friend will need an invite code and a parent's approval; and either family
-will be able to remove the friendship.
+4.2 **Friends league.** **DRAFT, pending review by our solicitor.** The friends league is not switched on yet. When it is:
+
+- A parent turns friends on for each child. It is off until they do.
+- To add a friend from another family, one of you shows a one-time friend code in the app and the
+  other types it in. Share codes in person only. Each code works once and only for 48 hours.
+- One parent in **each** family must approve before you become friends. If anyone says no, or it
+  is not approved within 7 days, it simply doesn't go ahead, and nobody is told who said no.
+- Brothers and sisters are in each other's league automatically once friends is on for both.
+- Friends see only each other's nickname, avatar, title and this week's league XP. There is no
+  chat, no messages and no profile page.
+- You can remove a friend, or hide yourself from the league, at any time. Either parent can
+  remove or block a friend too.
+
+4.2A **Being a good friend.** Only add people you know in real life. Never post or ask for friend
+codes online, never pressure anyone to add you, and never use the league to tease or upset
+anyone.
+
+4.2B **Reporting and blocking.** If a friend upsets you, tap Report and choose a reason. They are
+removed and blocked straight away, and are not told it was a report. Both families' parents and
+our support team see the reason, the date and the two nicknames, so we can act if it keeps
+happening. Nobody can send you a friend request while you have blocked them.
 
 4.3 **Gift days.** Students can give a gift day (earned with streak badges) to a friend, which
 arrives as a skip day. Gifts must never be asked for in return for anything, and pressure to gift
@@ -97,6 +115,7 @@ at {{SUPPORT_EMAIL}}.
 
 ## Changes
 
+- 1.3: DRAFT, pending solicitor review. How the friends league will work (not switched on yet): two-family approval, what friends see, siblings, being a good friend, reporting and blocking.
 - 1.2: Wording only: the AI limit is called the monthly AI marking allowance for each child.
 - 1.1: Ask for help at our help inbox, {{SUPPORT_EMAIL}}. Security problems still go to {{CONTACT_EMAIL}}.
 - 1.0 ({{EFFECTIVE_DATE}}): First version (draft, not yet reviewed by a solicitor).

@@ -1,6 +1,6 @@
 # Privacy notice for young people
 
-Version: 1.7
+Version: 1.8
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -162,6 +162,33 @@ Reading photos of homework isn't available yet. When it is: **cover your name an
 name before you take the photo.** The photo is read, you check what was read, and the photo is
 deleted straight away (and always within 24 hours).
 
+### Friends league (coming later)
+
+<!-- icon: family -->
+
+**In short:**
+
+- This isn't switched on yet.
+- When it is: friends see only your nickname, avatar, title and this week's league XP.
+- A parent in each family has to say yes first.
+
+**This part is a draft. Our solicitor still has to check it.** The friends league isn't switched
+on yet. When it is:
+
+- Your parent decides whether you can have friends. It's off until they turn it on.
+- To add a friend, one of you shows a friend code and the other types it in. Share it in person,
+  never online. A parent in **your** family and a parent in **theirs** both have to say yes.
+- Your brothers and sisters are in your league automatically once friends is on for you both.
+- Friends see only your nickname, avatar, title and this week's league XP. They never see your
+  real name, school, year, subjects, grades or when you revise. There's no chat.
+- You can hide from the league or remove a friend whenever you like. Your parents can too.
+- If a friend upsets you, tap Report. They're removed and blocked straight away. Your parents,
+  their parents and our support team see the reason you picked, the date and both nicknames.
+- Codes and requests are deleted within a few days. Friends, blocks and reports are deleted when
+  they're removed or when either of you is deleted (reports after 12 months at most). League
+  results are kept for 8 weeks.
+- Your family's download shows your friends' nicknames and when you became friends.
+
 ### Who can see your information
 
 <!-- icon: eye -->
@@ -176,7 +203,9 @@ deleted straight away (and always within 24 hours).
   your progress. If your family has two parents set up, both of them can see the same things.
 - **The companies that run the app for us**, like the hosting company and the database, but only
   what each one needs to do its job. They're listed in [services we use](processors.md).
-- Nobody else. There's no chat and no way for other students to see your work.
+- Nobody else. There's no chat and no way for other students to see your work. (When the friends
+  league is switched on, friends will see only your nickname, avatar, title and this week's league
+  XP: see above.)
 - **Read aloud** uses the voices on your device, and we don't send the text anywhere. If your
   device only has online voices, its speech service may get the text it reads out, so read aloud
   starts off and Settings tells you.
@@ -236,6 +265,7 @@ in Settings. Only your parents see it, and they can make a complaint for you.
 
 ### Changes
 
+- 1.8: Draft (our solicitor still has to check it): how the friends league will work when it's switched on, and what your friends will see.
 - 1.7: Your device can also be linked with a link your parent sends you, not just a QR code.
 - 1.6: You can ask a parent to raise something for you from Settings. Only your parents see it, and it's deleted after 90 days at most.
 - 1.5: Target grades: you can set your own target for each subject, and your parent can set one too. You both see both.

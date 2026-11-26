@@ -910,7 +910,9 @@ Tags: #product #rules #limits #defaults
   one, not family only. Design approved 2026-11-26, not built yet: `docs/FRIENDS_LEAGUE.md`
   (nickname, avatar, title and weekly learning XP only; one parent per family approves; no chat;
   10-friend cap; siblings join automatically; reports seen by both families' parents and AppDeck;
-  rank chip on Map, League page under Me; head-to-head challenges later).
+  rank chip on Map, League page under Me; head-to-head challenges later). Policy text drafted by L
+  (L11), marked DRAFT pending solicitor review: community rules 1.3 (4.2), privacy notice 1.11
+  (section 6A), young people's notice 1.8, data retention 1.13 (section 2A).
 - "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
   NSPCC adult helpline, parent-only). Students reach it only from Settings, where it is the
   first tile (via the Me nav item); there is no Get help link in the student header or footer
