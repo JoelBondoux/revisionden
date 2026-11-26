@@ -951,12 +951,16 @@ Tags: #product #rules #limits #defaults
   `REVIEWED_BLOCKED_PAIRS` is the manual review list the picker refuses. The student picks one of
   each (or none) on the Rewards page; saved as `students.title_first` / `title_last` (migration
   0019); `GET`/`PUT /v1/student/rewards/title`; free to change any time; included in the family data export. Shown under the nickname
-  on the Rewards page; the friends league is not built yet, so it shows there once it is.
+  on the Rewards page and under each nickname in the friends league (FL, dev only for now).
 - Friends league (FL): owner decision 2026-11-26, friends may come from other families from day
-  one, not family only. Design approved 2026-11-26, not built yet: `docs/FRIENDS_LEAGUE.md`
+  one, not family only. Development only (`FRIENDS_ENABLED`, lead 2026-11-26) until the notices
+  are updated and the solicitor has reviewed them.
+  Design approved 2026-11-26; screens (League page under Me, Home rank chip, parent Friends page), core rules, API and migration 0030 built
+  and weekly wins (settled on first open each week into `league_weeks`, 8 weeks kept; wins counted in
+  `students.league_wins` for the league rewards): `docs/FRIENDS_LEAGUE.md`
   (nickname, avatar, title and weekly learning XP only; one parent per family approves; no chat;
   10-friend cap; siblings join automatically; reports seen by both families' parents and AppDeck;
-  rank chip on Map, League page under Me; head-to-head challenges later).
+  rank chip on Home (was the Map until Home landed), League page under Me; head-to-head challenges later).
 - "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
   NSPCC adult helpline, parent-only). Students reach it only from Settings, where it is the
   first tile (via the Me nav item); there is no Get help link in the student header or footer

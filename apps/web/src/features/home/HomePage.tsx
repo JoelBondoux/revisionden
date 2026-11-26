@@ -13,6 +13,7 @@ import { outfitFor, touchFor } from '../juice/pip/outfits';
 import { CountUp } from '../stats/countUp';
 import { useStatsApi } from '../stats/statsApi';
 import '../../map/map.css';
+import { LeagueChip } from '../league';
 import './home.css';
 
 /**
@@ -284,9 +285,14 @@ function HomeBody({
 
       <div className="home-row-title">
         <h2 id="home-fix">Fix these</h2>
-        <span className="home-league">
-          <span>Friends league</span> <small>Soon</small>
-        </span>
+        {/* The rank chip where friends are available (dev only for now, FL); otherwise "Soon". */}
+        <LeagueChip
+          fallback={
+            <span className="home-league">
+              <span>Friends league</span> <small>Soon</small>
+            </span>
+          }
+        />
       </div>
       {weak.length > 0 ? (
         <ul className="home-fix" aria-labelledby="home-fix">

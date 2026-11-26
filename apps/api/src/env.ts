@@ -37,6 +37,8 @@ const envSchema = z
     SERVE_DRAFT_CONTENT: z.enum(['true', 'false']).optional(),
     // Development only (J12c): testers may try every effect style. Ignored in staging and production.
     STYLE_TESTER: z.enum(['true', 'false']).optional(),
+    // Dev only until the notices are updated (FL, lead 2026-11-26).
+    FRIENDS_ENABLED: z.enum(['true', 'false']).optional(),
     MATHS_ENGINE_URL: url.optional(),
     // Workstream H: all optional, so push and live AI stay off until their secrets are set.
     VAPID_PUBLIC_KEY: secret.optional(),
@@ -93,6 +95,8 @@ export interface AppConfig {
   serveDraftContent: boolean;
   /** Let testers try every effect style (J12c). Only ever true in development. */
   styleTester?: boolean;
+  /** The friends league (FL): development only until L updates the notices. */
+  friendsEnabled?: boolean;
   /** Maths engine (services/maths) used to check worked maths answers. */
   mathsEngineUrl?: string;
   /** Web push; null until both VAPID keys are set. */
@@ -174,6 +178,7 @@ export function parseEnv(env: Record<string, unknown>): AppConfig & { raw: Worke
     passkeyRpId: e.PASSKEY_RP_ID ?? new URL(e.WEB_ORIGIN).hostname,
     serveDraftContent: e.ENVIRONMENT === 'development' && e.SERVE_DRAFT_CONTENT === 'true',
     styleTester: e.ENVIRONMENT === 'development' && e.STYLE_TESTER === 'true',
+    friendsEnabled: e.ENVIRONMENT === 'development' && e.FRIENDS_ENABLED === 'true',
     ...(e.MATHS_ENGINE_URL ? { mathsEngineUrl: e.MATHS_ENGINE_URL } : {}),
     operatorEmails: (e.OPERATOR_EMAILS ?? '')
       .split(',')

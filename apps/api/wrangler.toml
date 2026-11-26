@@ -58,6 +58,10 @@ SERVE_DRAFT_CONTENT = "true"
 # Dev only (J12c): testers may try every effect style in Settings; nothing is unlocked for real.
 # The API ignores this outside development, and the config test checks staging and production.
 STYLE_TESTER = "true"
+# Dev only (FL, lead 2026-11-26): the friends league, until the policies are updated and the
+# owner's solicitor has reviewed them. The API ignores this outside development, and the config
+# test checks staging and production.
+FRIENDS_ENABLED = "true"
 
 # No cron in dev: it would wake the database every few minutes for nobody. The explicit empty
 # list removes the cron already deployed; leaving [triggers] out would keep it.

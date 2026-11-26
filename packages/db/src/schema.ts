@@ -204,6 +204,12 @@ export const students = pgTable(
     // Two-part title (workstream R8): curated words the student picked, never free text.
     titleFirst: text('title_first'),
     titleLast: text('title_last'),
+    // Friends league (workstream FL, docs/FRIENDS_LEAGUE.md): off until a parent turns it on;
+    // the child can hide from the league.
+    friendsAllowed: boolean('friends_allowed').notNull().default(false),
+    leagueHidden: boolean('league_hidden').notNull().default(false),
+    // Weekly league wins so far (FL PR 3); lasts after league_weeks rows are cleared.
+    leagueWins: integer('league_wins').notNull().default(0),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },
@@ -217,6 +223,166 @@ export const students = pgTable(
     check('students_title_first_format', sql`${t.titleFirst} ~ '^[A-Z][A-Za-z-]{0,15}$'`),
     check('students_title_last_format', sql`${t.titleLast} ~ '^[A-Z][A-Za-z-]{0,15}$'`),
   ],
+);
+
+/*
+ * Friends league (workstream FL, docs/FRIENDS_LEAGUE.md). Friends see only nickname, avatar,
+ * title and weekly league XP. Every row goes with either child (cascade).
+ */
+
+/** A one-time friend code a child shares in person: stored hashed, 48 hours, used once. */
+export const friendCodes = pgTable(
+  'friend_codes',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    codeHash: text('code_hash').notNull().unique(),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    usedAt: timestamp('used_at', { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (t) => [index('friend_codes_student_id_idx').on(t.studentId)],
+);
+
+/** Each typed code (for the wrong-try limits); deleted by the daily clean-up after a day. */
+export const friendCodeTries = pgTable(
+  'friend_code_tries',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    familyId: uuid('family_id')
+      .notNull()
+      .references(() => families.id, { onDelete: 'cascade' }),
+    ok: boolean('ok').notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('friend_code_tries_student_idx').on(t.studentId, t.createdAt),
+    index('friend_code_tries_family_idx').on(t.familyId, t.createdAt),
+  ],
+);
+
+/**
+ * A friend request: made when child B types child A's code. B confirms it is their friend, then
+ * one parent in each family approves (parent number only, as in the activity log).
+ */
+export const friendRequests = pgTable(
+  'friend_requests',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    fromStudentId: uuid('from_student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    toStudentId: uuid('to_student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    // 'child_confirm' (B checks it is their friend), 'parents' (waiting on parents),
+    // 'started', 'declined'.
+    status: text('status').notNull().default('child_confirm'),
+    fromApprovedBy: integer('from_approved_by'),
+    toApprovedBy: integer('to_approved_by'),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    endedAt: timestamp('ended_at', { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('friend_requests_from_idx').on(t.fromStudentId),
+    index('friend_requests_to_idx').on(t.toStudentId),
+    check(
+      'friend_requests_status',
+      sql`${t.status} in ('child_confirm', 'parents', 'started', 'declined')`,
+    ),
+  ],
+);
+
+/** A friendship, stored once with the lower id first; each side's parents may add a label. */
+export const friendships = pgTable(
+  'friendships',
+  {
+    studentA: uuid('student_a')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    studentB: uuid('student_b')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    // Private labels: label_a is set by student_a's parents about student_b, and so on.
+    labelA: text('label_a'),
+    labelB: text('label_b'),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.studentA, t.studentB] }),
+    index('friendships_student_b_idx').on(t.studentB),
+    check('friendships_order', sql`${t.studentA} < ${t.studentB}`),
+    check('friendships_label_a_length', sql`char_length(${t.labelA}) between 1 and 30`),
+    check('friendships_label_b_length', sql`char_length(${t.labelB}) between 1 and 30`),
+  ],
+);
+
+/** A block: the blocked child cannot become friends with the blocker again. */
+export const friendBlocks = pgTable(
+  'friend_blocks',
+  {
+    blockerId: uuid('blocker_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    blockedId: uuid('blocked_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.blockerId, t.blockedId] }),
+    index('friend_blocks_blocked_idx').on(t.blockedId),
+  ],
+);
+
+/** A report about a friend: fixed reasons only, never free text. */
+export const friendReports = pgTable(
+  'friend_reports',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    reporterId: uuid('reporter_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    reportedId: uuid('reported_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    reason: text('reason').notNull(),
+    closedAt: timestamp('closed_at', { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (t) => [
+    index('friend_reports_reporter_idx').on(t.reporterId),
+    index('friend_reports_reported_idx').on(t.reportedId),
+    check(
+      'friend_reports_reason',
+      sql`${t.reason} in ('upsetting_name', 'do_not_know', 'pressured', 'other')`,
+    ),
+  ],
+);
+
+/**
+ * A child's friends league result for a finished week (FL PR 3): kept 8 weeks; each win also
+ * counts towards the league rewards (weeksTopOfLeague).
+ */
+export const leagueWeeks = pgTable(
+  'league_weeks',
+  {
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    weekStart: date('week_start').notNull(),
+    xp: integer('xp').notNull(),
+    place: integer('place'),
+    won: boolean('won').notNull(),
+    createdAt: createdAt(),
+  },
+  (t) => [primaryKey({ columns: [t.studentId, t.weekStart] })],
 );
 
 export const enrolments = pgTable(

@@ -17,10 +17,13 @@ describe('Me (the /settings page, W9)', () => {
   it('lists Get help first, then My progress and My rewards, then Look and sound and More', async () => {
     renderRoute('/settings');
     await screen.findByRole('heading', { level: 1, name: 'Me' });
+    // Friends league (FL) shows once the API confirms friends exist (dev only for now).
+    await screen.findByRole('link', { name: 'Friends league' });
     expect(linkNames()).toEqual([
       '/help',
       '/progress',
       '/rewards',
+      '/league',
       '/settings/look-and-sound',
       '/settings/more',
     ]);
@@ -29,11 +32,19 @@ describe('Me (the /settings page, W9)', () => {
   it('shows them as chunky button tiles with short labels and no helper sentences (J15a)', async () => {
     renderRoute('/settings');
     await screen.findByRole('heading', { level: 1, name: 'Me' });
+    await screen.findByRole('link', { name: 'Friends league' });
     const main = screen.getByRole('main');
     const names = within(main)
       .getAllByRole('link')
       .map((a) => a.textContent?.trim());
-    expect(names).toEqual(['Get help', 'My progress', 'My rewards', 'Look and sound', 'More']);
+    expect(names).toEqual([
+      'Get help',
+      'My progress',
+      'My rewards',
+      'Friends league',
+      'Look and sound',
+      'More',
+    ]);
     for (const name of names) {
       expect(within(main).getByRole('link', { name: name! })).toHaveClass('button-tile');
     }
@@ -105,5 +116,13 @@ describe('More (W9)', () => {
     }
     expect(screen.getByRole('checkbox', { name: 'Show the bug button' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Back to Me/ })).toHaveAttribute('href', '/settings');
+  });
+
+  it('links to the friends league (FL: the league lives under Me)', async () => {
+    renderRoute('/settings');
+    expect(await screen.findByRole('link', { name: /Friends league/ })).toHaveAttribute(
+      'href',
+      '/league',
+    );
   });
 });
