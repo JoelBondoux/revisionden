@@ -645,6 +645,7 @@
     "expected_seconds": 15,
     "front": "On a velocity-time graph, what does the gradient represent? (one word)",
     "back": "Acceleration",
+    "explanation": "The gradient is the change in velocity divided by the change in time. That is the rate of change of velocity, which is acceleration.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
     "checked_by": ["author"],
     "citations": [
@@ -683,7 +684,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -703,14 +704,6 @@
           "notes": "model answered \"Acceleration\"; expected \"Acceleration\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:53:45Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -725,6 +718,14 @@
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
           "at": "2026-11-25T20:41:08Z",
           "notes": "fact 1: maths engine proof pass; blind statement matches (\"The gradient of a velocity–time graph represents the acceleration, i.e. the rate of change of velocity with respect to time. A positive gradient means positive acceleration, a negative gradient means deceleration (negative acceleration), and a zero gradient means constant velocity.\")"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:54:28Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -738,6 +739,7 @@
     "expected_seconds": 15,
     "front": "On a distance-time graph, what does the gradient represent? (one word)",
     "back": "Speed",
+    "explanation": "The gradient is the change in distance divided by the change in time. That is the rate of change of distance, which is speed.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
     "checked_by": ["author"],
     "citations": [
@@ -776,7 +778,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -796,14 +798,6 @@
           "notes": "model answered \"Speed\"; expected \"Speed\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:54:13Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -818,6 +812,14 @@
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
           "at": "2026-11-25T20:40:46Z",
           "notes": "fact 1: maths engine proof pass; blind statement matches (\"The gradient of a distance–time graph represents the object's speed: gradient = change in distance ÷ change in time. On a straight-line section it gives the constant speed on that interval, and on a curved graph the gradient of the tangent at a point gives the instantaneous speed.\")"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:54:46Z",
+          "notes": "ambiguity (front): The question asks what the gradient of a distance-time graph represents. While \"Speed\" is the expected answer at the GCSE level, \"Velocity\" is also a correct, and in some cases more precise, answer. The gradient can be negative if the object returns towards its starting point, which represents a negative velocity. Speed, as a scalar quantity, cannot be negative. A student who correctly understands the distinction between speed and velocity might answer \"Velocity\", which would be a valid response."
         }
       ]
     }
@@ -831,6 +833,7 @@
     "expected_seconds": 15,
     "front": "A velocity-time graph is a horizontal line. What is the acceleration, in m/s^2? (number only)",
     "back": "0",
+    "explanation": "A horizontal line has gradient 0. On a velocity-time graph the gradient is the acceleration, so the acceleration is 0 m/s^2: the velocity is not changing.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A15",
     "checked_by": ["author"],
     "citations": [
@@ -869,7 +872,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Gradient 0 means acceleration 0. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A15). Gradient 0 means acceleration 0. Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:26:24Z"
         },
         {
@@ -889,14 +892,6 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:27:00Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -911,6 +906,14 @@
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
           "at": "2026-11-25T20:41:19Z",
           "notes": "fact 1: maths engine proof pass; blind statement matches (\"The gradient of a velocity–time graph represents the acceleration, i.e. the rate of change of velocity with respect to time. This is true provided the graph shows velocity against time and the gradient is taken over the interval in question (or at a point for instantaneous acceleration).\")"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:54:54Z",
+          "notes": "no problems found"
         }
       ]
     }

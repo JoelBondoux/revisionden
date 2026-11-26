@@ -7,14 +7,8 @@
     "learning_point": "gcse-maths-h-a17-lp-solve-linear",
     "expected_seconds": 40,
     "prompt": "Solve 4x + 7 = 31",
-    "answer": {
-      "solutions": ["6"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "4x + 7 = 31",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["6"] },
+    "verify": { "method": "solve", "equation": "4x + 7 = 31", "variable": "x" },
     "steps": ["4x + 7 = 31", "4x = 24", "x = 6"],
     "marks": 2,
     "mark_scheme": ["M1 for 4x = 24", "A1 for x = 6"],
@@ -97,14 +91,8 @@
     "learning_point": "gcse-maths-h-a17-lp-solve-linear",
     "expected_seconds": 50,
     "prompt": "Solve 3(2x - 1) = 21",
-    "answer": {
-      "solutions": ["4"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "3(2x - 1) = 21",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["4"] },
+    "verify": { "method": "solve", "equation": "3(2x - 1) = 21", "variable": "x" },
     "steps": ["3(2x - 1) = 21", "6x - 3 = 21", "6x = 24", "x = 4"],
     "marks": 2,
     "mark_scheme": ["M1 for 6x - 3 = 21 or 2x - 1 = 7", "A1 for x = 4"],
@@ -187,14 +175,8 @@
     "learning_point": "gcse-maths-h-a17-lp-solve-linear",
     "expected_seconds": 50,
     "prompt": "Solve 7x - 4 = 3x + 20",
-    "answer": {
-      "solutions": ["6"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "7x - 4 = 3x + 20",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["6"] },
+    "verify": { "method": "solve", "equation": "7x - 4 = 3x + 20", "variable": "x" },
     "steps": ["7x - 4 = 3x + 20", "4x - 4 = 20", "4x = 24", "x = 6"],
     "marks": 2,
     "mark_scheme": ["M1 for 4x - 4 = 20 or 4x = 24", "A1 for x = 6"],
@@ -277,14 +259,8 @@
     "learning_point": "gcse-maths-h-a17-lp-solve-linear",
     "expected_seconds": 60,
     "prompt": "The straight lines y = 2x + 1 and y = 7 - x cross. Work out the x-coordinate of the point where they cross.",
-    "answer": {
-      "solutions": ["2"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "2x + 1 = 7 - x",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["2"] },
+    "verify": { "method": "solve", "equation": "2x + 1 = 7 - x", "variable": "x" },
     "steps": ["2x + 1 = 7 - x", "3x + 1 = 7", "3x = 6", "x = 2"],
     "marks": 2,
     "mark_scheme": ["M1 for 2x + 1 = 7 - x", "A1 for x = 2"],
@@ -379,14 +355,8 @@
     "learning_point": "gcse-maths-h-a17-lp-fractions-negatives",
     "expected_seconds": 45,
     "prompt": "Solve 2 - 3x = 11",
-    "answer": {
-      "solutions": ["-3"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "2 - 3x = 11",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["-3"] },
+    "verify": { "method": "solve", "equation": "2 - 3x = 11", "variable": "x" },
     "steps": ["2 - 3x = 11", "-3x = 9", "x = -3"],
     "marks": 2,
     "mark_scheme": ["M1 for -3x = 9", "A1 for x = -3"],
@@ -469,14 +439,8 @@
     "learning_point": "gcse-maths-h-a17-lp-fractions-negatives",
     "expected_seconds": 90,
     "prompt": "Solve (x + 5)/3 = 2x - 5",
-    "answer": {
-      "solutions": ["4"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "(x + 5)/3 = 2x - 5",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["4"] },
+    "verify": { "method": "solve", "equation": "(x + 5)/3 = 2x - 5", "variable": "x" },
     "steps": ["(x + 5)/3 = 2x - 5", "x + 5 = 6x - 15", "20 = 5x", "x = 4"],
     "marks": 3,
     "mark_scheme": ["M1 for x + 5 = 3(2x - 5)", "M1 for 20 = 5x", "A1 for x = 4"],
@@ -559,14 +523,8 @@
     "learning_point": "gcse-maths-h-a17-lp-fractions-negatives",
     "expected_seconds": 100,
     "prompt": "Solve (2x - 1)/5 = (x + 1)/2",
-    "answer": {
-      "solutions": ["-7"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "(2x - 1)/5 = (x + 1)/2",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["-7"] },
+    "verify": { "method": "solve", "equation": "(2x - 1)/5 = (x + 1)/2", "variable": "x" },
     "steps": ["(2x - 1)/5 = (x + 1)/2", "2(2x - 1) = 5(x + 1)", "4x - 2 = 5x + 5", "x = -7"],
     "marks": 3,
     "mark_scheme": ["M1 for 2(2x - 1) = 5(x + 1)", "M1 for 4x - 2 = 5x + 5", "A1 for x = -7"],
@@ -649,14 +607,8 @@
     "learning_point": "gcse-maths-h-a17-lp-fractions-negatives",
     "expected_seconds": 90,
     "prompt": "Solve 5(x + 2) - 3(x - 4) = 30",
-    "answer": {
-      "solutions": ["4"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "5(x + 2) - 3(x - 4) = 30",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["4"] },
+    "verify": { "method": "solve", "equation": "5(x + 2) - 3(x - 4) = 30", "variable": "x" },
     "steps": [
       "5(x + 2) - 3(x - 4) = 30",
       "5x + 10 - 3x + 12 = 30",
@@ -746,6 +698,7 @@
     "expected_seconds": 15,
     "front": "Solve x + 9 = 4",
     "back": "x = -5",
+    "explanation": "Subtract 9 from both sides: x = 4 - 9 = -5. Check: -5 + 9 = 4.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
     "checked_by": ["author"],
     "citations": [
@@ -771,7 +724,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Back checked with SymPy.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Back checked with SymPy. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:17Z"
         },
         {
@@ -791,20 +744,20 @@
           "notes": "model answered \"x = -5\"; expected \"x = -5\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:00:26Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:55:02Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -818,6 +771,7 @@
     "expected_seconds": 15,
     "front": "Solve 3x = 18",
     "back": "x = 6",
+    "explanation": "Divide both sides by 3: x = 18 ÷ 3 = 6. Check: 3 × 6 = 18.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
     "checked_by": ["author"],
     "citations": [
@@ -843,7 +797,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Back checked with SymPy.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Back checked with SymPy. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:17Z"
         },
         {
@@ -863,20 +817,20 @@
           "notes": "model answered \"x = 6\"; expected \"x = 6\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:00:38Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:55:09Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -890,6 +844,7 @@
     "expected_seconds": 15,
     "front": "Solve x/4 = 5",
     "back": "x = 20",
+    "explanation": "Multiply both sides by 4: x = 5 × 4 = 20. Check: 20 ÷ 4 = 5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
     "checked_by": ["author"],
     "citations": [
@@ -915,7 +870,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Back checked with SymPy.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A17). Back checked with SymPy. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:29:17Z"
         },
         {
@@ -935,20 +890,20 @@
           "notes": "model answered \"x = 20\"; expected \"x = 20\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:00:49Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:55:16Z",
+          "notes": "no problems found"
         }
       ]
     }
