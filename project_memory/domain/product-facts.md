@@ -12,7 +12,7 @@ Tags: #product #rules #limits #defaults
 - Each sign-in provider is optional, but at least one must be set up; the welcome page shows only
   the configured ones (`GET /v1/auth/providers`). The owner is starting with Google only.
 - Students have no outside account: nickname (2–16 letters, numbers, underscores and single spaces between words, trimmed at the ends), avatar code and
-  year group only. Devices linked by a one-time QR token (10 minutes, single use), then a passkey.
+  year group only. Devices linked by a one-time QR token (10 minutes, single use: used up when the device finishes its passkey; reopening before then gets a fresh challenge, E8), then a passkey.
 - Nicknames are unique within a family. A family is created the first time a parent signs in.
 - Two parents (B3): a family can have two parents with equal control (Parent 1, Parent 2).
   Invite code or link 7 days, single use, hashed, 5 a day; either parent removes the other (access
@@ -186,8 +186,12 @@ Tags: #product #rules #limits #defaults
   `explanation` as "Why: …"), hidden when there are none (`learning_point` is never used). On
   2026-11-26, 89 of 287 marked items had none of these: 75 of 78 flashcards, 13 short answers and
   1 numeric (`gcse-maths-h-n7-0001`).
-- Installable PWA. Main nav tabs: Map, Cards, Plan, Papers, Progress (bottom bar on phones, side
-  rail from 768px wide). Welcome and lessons hide the nav to keep focus. Only a linked student
+- Installable PWA. Main nav: five items, Map, Cards, Plan, Papers, then **Me** last (bottom bar
+  on phones, side rail from 768px wide). Me shows the student's own avatar (a neutral person icon
+  until it loads) and opens `/settings`, "settings and personalisation"; Get help and My progress
+  (`/progress`) live there, and Me is marked current on `/settings` and `/progress` (and anything
+  under them). Progress is no longer a nav tab (owner, 2026-11-26, W7). Items share the bar and
+  labels wrap, so they fit 320px with text at 200%. Welcome and lessons hide the nav to keep focus. Only a linked student
   device gets the student nav: elsewhere (signed out, or a parent) About, Policies, Feedback and
   the other app pages show a small header with the logo, Sign in, Policies and About.
 - Changing screen (I7, `apps/web/src/layout/RouteChange.tsx` around every route): the new screen
@@ -620,7 +624,7 @@ Tags: #product #rules #limits #defaults
 
 ## Statistics dashboards
 
-- Student "My stats" (from the Progress tab) and a parent stats dashboard, both read-only, built
+- Student "My stats" (`/progress`, from "My progress" on the Me page) and a parent stats dashboard, both read-only, built
   from data already held. Periods: week (Mon–Sun), term, school year; family time zone.
 - Active study time: time between answers; a gap over 5 minutes ends the session and is not
   counted; time past the daily cap is not counted. Accuracy: correct ÷ marked answers (part marks
@@ -783,6 +787,18 @@ Tags: #product #rules #limits #defaults
   320px screen with text at 200%. The e2e test "the policies list fits a 320px screen with text at
   200%" (`e2e/tests/pages.spec.ts`, /legal) checks there is no sideways scroll and no tile wider than
   320px. The version footer's reflow is G's (#224).
+- Single screen for doing things (owner design rule, 2026-11-26; lead ruling on scope): at 390 × 844
+  with default text, interactive screens (lesson, flashcards and Explain, starting test, 5-a-day and
+  recall, map, Plan, papers chooser, set complete and rewards moments, Me page) show the main task
+  and the primary button without scrolling, with the primary action always in view. Reading pages
+  (Get help, About, policies, long explanations, parent stats) may scroll. At 320 px or 200% text,
+  vertical scrolling is allowed, but never page sideways scrolling or clipped content. Contained scrollers are allowed (lead ruling): a sideways chip or badge row (snap, edge fade, Tab reaches every item, 44 px targets) or a labelled, focusable list scrolling inside a card; at 320 px, 200% text or on short screens, the inner vertical scroll gives way to page scrolling. Agreed, not yet
+  applied everywhere: see `docs/PRODUCT_RULES.md` (Screen layout) and `docs/design/j12/`.
+- One look (J12, proposed, owner choice pending): the owner wants one consistent style across the
+  student app instead of the current mix of doodle and default. J12's proposal: Doodle Diary is
+  the app's base skin for every shared component, body text stays Nunito (the hand font is for
+  headings only), and the unlockable styles change effects, sounds and accents only. Mockups in
+  `docs/design/j12/SKIN.md`.
 
 ## Exam practice (planned)
 
@@ -843,9 +859,9 @@ Tags: #product #rules #limits #defaults
   0019); `GET`/`PUT /v1/student/rewards/title`; free to change any time; included in the family data export. Shown under the nickname
   on the Rewards page; the friends league is not built yet, so it shows there once it is.
 - "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
-  NSPCC adult helpline, parent-only). Reached from Settings, the heart link in the student footer,
-  the signed-out header and parent home, plus (W3) a chip in the student header. No tile on the
-  topic map (removed in W5: header chip and footer link only). There is no separate profile menu yet. Quick exit is sticky at the top;
+  NSPCC adult helpline, parent-only). Students reach it only from Settings, where it is the
+  first tile (via the Me nav item); there is no Get help link in the student header or footer
+  (owner decision, 2026-11-26, W7). Also the signed-out header and parent home. Quick exit is sticky at the top;
   topics are in five categories (Right now first and always open) with a private "Find a topic"
   filter (`features/help/categories.ts`). Help buttons wrap their text, so the page fits a 320px screen at 200% text with no
   sideways scroll (W6).

@@ -1,4 +1,9 @@
-import { browserFamily, collectDeviceDetails, findPersonalDetails } from './details';
+import {
+  browserFamily,
+  collectDeviceDetails,
+  findPersonalDetails,
+  rememberLastProblem,
+} from './details';
 
 describe('findPersonalDetails', () => {
   it.each([
@@ -53,5 +58,36 @@ describe('collectDeviceDetails', () => {
       screenSize: '390x844',
       online: true,
     });
+  });
+});
+
+describe('last problem (E8)', () => {
+  afterEach(() => rememberLastProblem(undefined));
+
+  it('adds the last passkey problem to the device details, as a name and reference only', () => {
+    rememberLastProblem('passkey:NotAllowedError:RD-7K2M9Q');
+    const details = collectDeviceDetails({
+      appVersion: '00.04.012',
+      route: '/link',
+      userAgent: 'Chrome/131.0',
+      width: 412,
+      height: 915,
+      online: true,
+    });
+    expect(details.lastProblem).toBe('passkey:NotAllowedError:RD-7K2M9Q');
+  });
+
+  it('refuses anything that is not a short code', () => {
+    rememberLastProblem('passkey: Sam pressed cancel');
+    expect(
+      collectDeviceDetails({
+        appVersion: '1',
+        route: '/link',
+        userAgent: '',
+        width: 1,
+        height: 1,
+        online: true,
+      }).lastProblem,
+    ).toBeUndefined();
   });
 });

@@ -37,6 +37,14 @@ describe('error reference codes', () => {
 });
 
 describe('client error reports', () => {
+  it('accepts a passkey failure with the browser error name only', () => {
+    const report = { ref: 'RD-7K2M9Q', kind: 'passkey', path: '/link', code: 'NotAllowedError' };
+    expect(ClientErrorReportSchema.parse(report)).toEqual(report);
+    expect(
+      ClientErrorReportSchema.safeParse({ ...report, code: 'The user said no, Sam' }).success,
+    ).toBe(false);
+  });
+
   it('accepts a reference, kind, status and an id-free path', () => {
     const report = { ref: 'RD-7K2M9Q', kind: 'schema', status: 200, path: '/v1/students/:id/map' };
     expect(ClientErrorReportSchema.parse(report)).toEqual(report);

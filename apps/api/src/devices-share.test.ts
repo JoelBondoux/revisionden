@@ -112,6 +112,7 @@ describe('share links and short codes', () => {
     expect(
       ((await first.clone().json()) as { student: { nickname: string } }).student.nickname,
     ).toMatch(/^share_kid_/);
+    expect((await verify(first, 'phone')).status).toBe(201);
     expect((await redeemCode(link.code)).status).toBe(400);
   });
 

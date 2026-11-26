@@ -368,7 +368,7 @@ SameSite=Lax) and last 12 hours. Sign-in, device and AI routes are rate limited 
 with the code, status, error code, method and the path with ids masked; never a message, body,
 id or email. The web app shows the code with every "Something went wrong" ("send us this code").
 When the API gave no code (a gateway page, or a response in the wrong shape) the web app makes
-one and sends it to `POST /v1/client-errors` (strict: code, kind, status, id-free path), so the
+one and sends it to `POST /v1/client-errors` (strict: code, kind `http`, `schema` or `passkey`, status, id-free path, and for `passkey` the browser error name only), so the
 code is in the Workers logs either way. Search the Workers logs for the code to find the error.
 
 ## Web calls and API routes (workstream I)
