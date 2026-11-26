@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import type { MapUnit, TopicMap } from '@revisionden/core';
 import { Sheet } from '../components';
+import { ButtonLink } from '../components/Button';
 import { LockIcon } from '../components/icons';
 import { HScroller } from './HScroller';
 import {
@@ -166,15 +167,29 @@ function UnitCard({ unit, missionLessonId, savedScroll, onScrolled, onLocked }: 
           </p>
         )}
         <ol className="unit-path__list">
-          {unit.topics.map((topic, i) => (
-            <li
-              key={topic.id}
-              className={`unit-path__step unit-path__step--${i % 2 ? 'out' : 'in'}`}
-              data-current={topic.id === current ? '' : undefined}
-            >
-              <TopicHex topic={topic} onLocked={onLocked} />
-            </li>
-          ))}
+          {unit.topics.map((topic, i) => {
+            // The next mission's topic stands out with its own Go button (J15c).
+            const next = missionLessonId !== undefined && topic.lessonId === missionLessonId;
+            return (
+              <li
+                key={topic.id}
+                className={`unit-path__step unit-path__step--${i % 2 ? 'out' : 'in'}${next ? ' unit-path__step--next' : ''}`}
+                data-current={topic.id === current ? '' : undefined}
+              >
+                <TopicHex topic={topic} onLocked={onLocked} />
+                {next && (
+                  <ButtonLink
+                    to={`/learn/topic/${topic.lessonId}`}
+                    variant="gold"
+                    className="map-go"
+                    aria-label={`Go: ${topic.title}`}
+                  >
+                    Go
+                  </ButtonLink>
+                )}
+              </li>
+            );
+          })}
           <li className="unit-path__step unit-path__step--challenge">
             <ChallengeHex unitTitle={unit.title} challenge={unit.challenge} onLocked={onLocked} />
           </li>

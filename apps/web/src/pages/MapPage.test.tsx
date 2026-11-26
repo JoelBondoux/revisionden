@@ -97,6 +97,17 @@ describe('Topic map screen', () => {
     expect(screen.queryByRole('dialog', { name: 'All units' })).not.toBeInTheDocument();
   });
 
+  // J15c (owner, 2026-11-26): the map is topics only, and the next topic stands out: the biggest
+  // hex on the trail, glowing, with its own Go button (the map's one call to action).
+  it("marks the next mission's topic with a big Go button", async () => {
+    renderRoute('/map');
+    const path = await screen.findByRole('region', { name: 'Number topics' });
+    const go = within(path).getByRole('link', { name: 'Go: Surds' });
+    expect(go).toHaveAttribute('href', '/learn/topic/surds');
+    expect(go.closest('li')).toHaveClass('unit-path__step--next');
+    expect(within(path).getAllByRole('link', { name: /^Go:/ })).toHaveLength(1);
+  });
+
   it('explains how to unlock a locked topic', async () => {
     renderRoute('/map');
     await userEvent.click(await screen.findByRole('button', { name: 'Bounds, locked' }));

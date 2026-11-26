@@ -100,7 +100,7 @@
   }
 
   .pip-figure--read .pip-figure__head {
-    animation: pip-read 3000ms ease-in-out infinite alternate;
+    animation: pip-read calc(var(--motion-pulse) * 1.9) ease-in-out infinite alternate;
   }
 
   .pip-figure--cheer .pip-figure__head,
@@ -113,7 +113,7 @@
   }
 
   .pip-figure--nap .pip-figure__zzz {
-    animation: pip-zzz 2600ms ease-in-out infinite;
+    animation: pip-zzz calc(var(--motion-pulse) * 1.6) ease-in-out infinite;
   }
 
   .pip-figure--nod .pip-figure__head {

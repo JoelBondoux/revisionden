@@ -235,7 +235,10 @@ Tags: #product #rules #limits #defaults
   Today strip moved to Home: the map is now topics only. Code: `apps/web/src/features/home/`,
   `apps/web/src/features/juice/pip/`; e2e `e2e/tests/home.spec.ts`.
 - Map layout (J12b, design C "Your path", owner choice 2026-11-26; Today strip moved to Home in
-  J15b): subject chips on one line that scrolls sideways; then "Your path": a row of unit badges that scrolls sideways, and the chosen unit's card with **all** its
+  J15b; topics-only restyle J15c): subject chips on one line that scrolls sideways; then "Your
+  path". No card in a card: the unit's name sits on a slanted colour field and the trail is open.
+  The next mission's topic is the biggest hex on the trail, glowing, with its own **Go** button
+  (the map's one call to action; it bobs gently, still with reduced motion). Then: a row of unit badges that scrolls sideways, and the chosen unit's card with **all** its
   topics down a path that scrolls inside the card. The page itself never scrolls sideways.
   - The current unit is the one holding the next mission, else the first with an open topic. Its
     path opens on the next mission's topic, else the weakest weak spot, else the first topic in

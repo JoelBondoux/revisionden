@@ -60,19 +60,8 @@
   color: var(--dd-ink);
 }
 
-/* The Today strip and the chosen unit are boxes sketched in pen; the rows inside stay plain. */
-:root[data-effect-style='doodle-diary'] .today-strip,
+/* The chosen unit is open on the page (J15c): no box, the trail sits on the paper. */
 :root[data-effect-style='doodle-diary'] .unit-card {
-  border: 2px solid var(--dd-ink);
-  border-radius: var(--dd-sketch);
-  background: var(--dd-paper);
-  color: var(--dd-ink);
-  box-shadow: var(--dd-lift);
-}
-
-:root[data-effect-style='doodle-diary'] .today-strip__mission,
-:root[data-effect-style='doodle-diary'] .today-strip__daily {
-  border-top: 2px dashed var(--dd-ink-soft);
   color: var(--dd-ink);
 }
 
@@ -93,30 +82,6 @@
 
 :root[data-effect-style='doodle-diary'] .unit-badge[aria-pressed='true'] .unit-badge__inner {
   color: #2b2a3a;
-}
-
-:root[data-effect-style='doodle-diary'] .today-strip__heading,
-:root[data-effect-style='doodle-diary'] .today-strip__mission .today-strip__eyebrow {
-  font-family: var(--dd-hand);
-  font-size: 1.2em;
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: none;
-}
-
-:root[data-effect-style='doodle-diary'] .today-strip__heading {
-  color: var(--dd-biro);
-}
-
-:root[data-effect-style='doodle-diary'] .today-strip__mission .today-strip__eyebrow {
-  color: var(--dd-red);
-}
-
-:root[data-effect-style='doodle-diary'] .today-strip__xp,
-:root[data-effect-style='doodle-diary'] .today-strip__mission .today-strip__meta,
-:root[data-effect-style='doodle-diary'] .today-strip__daily .today-strip__eyebrow,
-:root[data-effect-style='doodle-diary'] .today-strip__daily .today-strip__title {
-  color: var(--dd-ink-soft);
 }
 
 /* Mastered topics are outlined in pen and coloured in with highlighter scribbles. */
@@ -339,4 +304,19 @@
     opacity: 0.3;
     transform: perspective(1400px) rotateY(-28deg);
   }
+}
+
+/* ---------- Home and the next topic (J15c) ---------- */
+:root[data-effect-style='doodle-diary'] .home-next {
+  background: var(--dd-hi-soft);
+}
+
+:root[data-effect-style='doodle-diary'] .home-cta {
+  border-color: var(--dd-ink);
+  border-radius: var(--dd-sketch);
+  box-shadow: 4px 5px 0 var(--dd-ink);
+}
+
+:root[data-effect-style='doodle-diary'] .unit-path__step--next .hex__shape {
+  filter: drop-shadow(0 0 6px var(--dd-hi));
 }

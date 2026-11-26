@@ -262,6 +262,14 @@ never transition. An ordinary link does not either.
   the reward gift. It reads the map, the week's stats (read-only, so Rewards keeps its "New!"
   moments), the 5-a-day and cards due. The map's Today strip moved here; the map is topics only.
 
+## The topics-only map (J15c)
+
+The map shows only topics: the unit badges, the unit's name on a slanted colour field (no card in
+a card), and the trail of topic hexes. The next mission's topic (`.unit-path__step--next`) is the
+biggest hex, glowing in gold, with its own Go button (`.map-go`). Each effect style restyles Home's
+mission field (`.home-next`), its big button (`.home-cta`) and the next hex; the old `.today-strip`
+rules are gone from every stylesheet (a test keeps it so).
+
 ## Never (Children's Code and `REWARDS.md`)
 
 - No lives or energy that run out and block learning; no waiting timers; no pay-to-continue.
