@@ -99,16 +99,19 @@ export function AreaModelStep({ item, draft, disabled, onChange }: AreaModelStep
           onTile={light}
         />
       </div>
-      {pair && (
-        <p className="area-sides" data-testid="area-sides">
-          The sides are x + {Math.max(...pair)} and x + {Math.min(...pair)}.
-        </p>
-      )}
       <p
         className={`area-status${check && showVerdict ? (check.correct ? ' area-status--right' : ' area-status--try') : ''}`}
         role="status"
       >
-        {message || verdict}
+        {message || verdict || 'Tap a tile to see which part of the expression it is.'}
+        {pair && (
+          <>
+            {' '}
+            <span className="area-sides" data-testid="area-sides">
+              The sides are x + {Math.max(...pair)} and x + {Math.min(...pair)}.
+            </span>
+          </>
+        )}
       </p>
 
       <div className="area-pairs" role="radiogroup" aria-labelledby={`${id}-pairs`}>
@@ -132,9 +135,6 @@ export function AreaModelStep({ item, draft, disabled, onChange }: AreaModelStep
           ))}
         </div>
       </div>
-      <p className="secondary-text area-help">
-        Tap a tile to see which part of the expression it is.
-      </p>
       {disabled && item.askHelped && <DidThisHelp itemId={item.id} />}
     </div>
   );

@@ -4,11 +4,13 @@
 
 .area-model {
   min-width: 0;
+  /* Tighter than other questions: the picture needs the room (single screen rule). */
+  gap: var(--space-2);
 }
 
 .area-expression {
   margin: 0;
-  font-size: var(--font-size-xl, 1.5rem);
+  font-size: var(--font-size-lg, 1.25rem);
   font-weight: var(--font-weight-extrabold);
   overflow-wrap: anywhere;
 }
@@ -43,10 +45,12 @@
   max-width: 28rem;
 }
 
+/* Kept short so the question, tiles, pairs and Check fit one phone screen (single screen rule). */
 .area-svg {
   display: block;
   width: 100%;
   height: auto;
+  max-height: min(120px, 18vh);
 }
 
 .area-svg text {

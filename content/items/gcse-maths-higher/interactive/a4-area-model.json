@@ -6,7 +6,7 @@
     "mode": "explore",
     "difficulty": 1,
     "expected_seconds": 90,
-    "prompt": "Make x^2 + 5x + 6 into a rectangle. Which two numbers multiply to 6 and add to 5?",
+    "prompt": "Make x^2 + 5x + 6 into a rectangle.",
     "quadratic": {
       "b": 5,
       "c": 6
@@ -55,7 +55,7 @@
     "mode": "guided",
     "difficulty": 1,
     "expected_seconds": 60,
-    "prompt": "Make x^2 + 6x + 8 into a rectangle. Which two numbers multiply to 8 and add to 6?",
+    "prompt": "Make x^2 + 6x + 8 into a rectangle.",
     "quadratic": {
       "b": 6,
       "c": 8
@@ -105,7 +105,7 @@
     "mode": "guided",
     "difficulty": 1,
     "expected_seconds": 60,
-    "prompt": "Make x^2 + 8x + 12 into a rectangle. Which two numbers multiply to 12 and add to 8?",
+    "prompt": "Make x^2 + 8x + 12 into a rectangle.",
     "quadratic": {
       "b": 8,
       "c": 12

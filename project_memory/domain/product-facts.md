@@ -673,7 +673,12 @@ Tags: #product #rules #limits #defaults
   unset; on About, the feedback form, the accessibility statement and community rules); privacy,
   data rights and security `privacy@revisionden.com` (`VITE_CONTACT_EMAIL`). Both forward to the
   product owner (Cloudflare Email Routing).
-- Feedback kinds: bug, idea, something confusing, other; text up to 500 characters with personal
+- Interactive lesson pilot (owner, 2026-11-26; built W8): area model for factorising x² + bx + c
+  (A4), b and c positive only; shown first in the A4 lesson when A4 mastery is below 60 (not at
+  60, not with no history, not in unit or subject lessons); explore, 2 guided, 1 typed, then the
+  normal A4 questions; item type `area_model`; draft until verified, so dev only for now.
+- Feedback kinds: bug, idea, something confusing, other (plus lesson_helped / lesson_not_helped,
+  the pilot's one-tap "Did this help?": item only, no text, outside the 5 a day); text up to 500 characters with personal
   details refused; device details optional; parents see their family's feedback; never sent to
   GitHub automatically; 5 in any 24 hours per sender; device details off by default for students, on for parents; deleted 12 months after closing (cron).
   The form also offers "Prefer email? help@revisionden.com" and asks for only the personal details
