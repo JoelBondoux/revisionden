@@ -32,12 +32,16 @@
   background-color: var(--color-primary-soft);
 }
 
-/* LinkTile: a tappable card. */
+/* LinkTile: a tappable card. It may shrink and its text wraps, even mid-word, so it fits a 320px
+   screen with text at 200% (J11, WCAG 1.4.4 and 1.4.10). */
 .link-tile {
   position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-3);
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
   min-height: var(--tap-target);
   padding: var(--space-3) var(--space-4);
   border: 2px solid var(--color-border);
