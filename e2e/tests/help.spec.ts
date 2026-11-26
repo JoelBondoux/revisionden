@@ -1,7 +1,26 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 /** Get help (workstream W): private, accessible and request-free. */
+
+/**
+ * Waits for every entrance animation to end, then runs axe. Axe measures colours as drawn, so
+ * a button still fading in reads paler than it is (a flaky 4.44:1 instead of 4.5:1). Endless
+ * animations (the gentle pulse) never finish, so they are left out; the rule itself is unchanged.
+ */
+async function axeWhenSettled(page: Page) {
+  await page.evaluate(() =>
+    Promise.all(
+      document
+        .getAnimations()
+        .filter((a) => a.effect?.getComputedTiming().iterations !== Infinity)
+        .map((a) => a.finished.catch(() => undefined)),
+    ),
+  );
+  return new AxeBuilder({ page })
+    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+    .analyze();
+}
 
 for (const path of ['/help', '/parent/help']) {
   test(`${path} is accessible and fits the screen`, async ({ page }) => {
@@ -11,9 +30,7 @@ for (const path of ['/help', '/parent/help']) {
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
     );
     expect(overflow).toBeLessThanOrEqual(0);
-    const results = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-      .analyze();
+    const results = await axeWhenSettled(page);
     expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
   });
 }
@@ -101,9 +118,7 @@ test('the topic filter narrows the list, makes no requests and stays accessible'
     return u.origin !== origin || u.pathname.startsWith('/api/') || u.pathname.startsWith('/v1/');
   });
   expect(offending).toEqual([]);
-  const results = await new AxeBuilder({ page })
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-    .analyze();
+  const results = await axeWhenSettled(page);
   expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
 });
 
@@ -130,9 +145,7 @@ for (const { name, settings } of APPEARANCES) {
       if (!(await summary.evaluate((el) => (el.parentElement as HTMLDetailsElement).open)))
         await summary.click();
     }
-    const results = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-      .analyze();
+    const results = await axeWhenSettled(page);
     expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
   });
 }
@@ -201,9 +214,7 @@ test.describe('students find Get help on Settings, through Me (owner, 2026-11-26
     await expect(me).toHaveAttribute('aria-current', 'page');
     await page.goBack();
     await expect(page.getByRole('heading', { level: 1, name: 'Me' })).toBeVisible();
-    const results = await new AxeBuilder({ page })
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-      .analyze();
+    const results = await axeWhenSettled(page);
     expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
   });
 
