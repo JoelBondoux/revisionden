@@ -4,6 +4,7 @@ import { http, HttpResponse } from 'msw';
 import { server } from '../../mocks/server';
 import { family } from '../../mocks/data';
 import { renderRoute } from '../../test/render';
+import { DEFAULT_STUDENT_PAGE } from '../../api/unlock';
 import { collectDeviceDetails } from '../feedback/details';
 import { passkeyBrowser, unlockEnv } from './StudentUnlock';
 
@@ -77,7 +78,7 @@ describe('Use my phone instead', () => {
       .mockResolvedValue({ id: 'cred-1', response: {} });
     const { router } = renderRoute('/unlock', { studentId: null });
     await userEvent.click(await screen.findByRole('button', PHONE_BUTTON));
-    await waitFor(() => expect(router.state.location.pathname).toBe('/map'));
+    await waitFor(() => expect(router.state.location.pathname).toBe(DEFAULT_STUDENT_PAGE));
     expect(optionsBody).toEqual({ usePhone: true });
     expect(authenticate).toHaveBeenCalledWith({ challenge: 'abc', hints: ['hybrid'] });
   });
