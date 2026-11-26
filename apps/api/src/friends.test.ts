@@ -10,7 +10,14 @@ import {
   students,
   topics,
 } from '@revisionden/db';
-import { localDate } from '@revisionden/core';
+import {
+  FriendCodeResponseSchema,
+  LeagueResponseSchema,
+  ParentFriendsResponseSchema,
+  RedeemFriendCodeResponseSchema,
+  StudentFriendsResponseSchema,
+  localDate,
+} from '@revisionden/core';
 import { createTestContext, jsonRequest, type TestContext } from './test/helpers';
 import { deleteExpiredFriendRecords } from './routes/friends';
 
@@ -599,6 +606,21 @@ describe('the daily clean-up', () => {
     expect(await requestsOf()).toHaveLength(0);
     expect(await triesOf()).toHaveLength(0);
     expect(await codesOf()).toHaveLength(1); // the unused one is still valid for 48 hours
+  });
+});
+
+describe('response shapes', () => {
+  it('match the shared core schemas the web app reads', async () => {
+    const a = await kid();
+    const b = await kid();
+    const code = await makeCode(a);
+    expect(FriendCodeResponseSchema.safeParse(code).success).toBe(true);
+    const redeemed = await (await redeem(b, code.code)).json();
+    expect(RedeemFriendCodeResponseSchema.parse(redeemed)).toBeTruthy();
+    expect(StudentFriendsResponseSchema.strict().safeParse(await friendsOf(a)).success).toBe(true);
+    expect(ParentFriendsResponseSchema.strict().safeParse(await parentView(a)).success).toBe(true);
+    const league = await (await get('/v1/student/league', a.headers)).json();
+    expect(LeagueResponseSchema.strict().safeParse(league).success).toBe(true);
   });
 });
 

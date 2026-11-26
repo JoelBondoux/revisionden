@@ -5,6 +5,7 @@ import { learnHandlers } from '../features/learn/mocks';
 import { dailyHandlers } from '../features/daily/mocks';
 import { recallHandlers } from '../features/recall/mocks';
 import { rewardsHandlers } from '../features/rewards/mocks';
+import { leagueHandlers } from '../features/league/mocks';
 import { feedbackHandlers } from '../features/feedback/mocks';
 import { programmeHandlers } from '../features/programmes/mocks';
 import { legalHandlers } from '../features/legal/mocks';
@@ -42,6 +43,8 @@ export const handlers: RequestHandler[] = [
   // Recall checks (workstream Q).
   ...recallHandlers,
   ...rewardsHandlers,
+  // Friends league (workstream FL).
+  ...leagueHandlers,
   // Policies, About and feedback (workstream L).
   ...feedbackHandlers,
   ...programmeHandlers,

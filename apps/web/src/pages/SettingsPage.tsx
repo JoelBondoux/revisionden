@@ -25,6 +25,7 @@ import { SoundSettingsCard } from '../features/sound';
 import { ParentCanSee } from '../features/stats/ParentCanSee';
 import { MySubjectsCard } from '../features/onboarding/checksUi';
 import { InstallButton } from '../pwa/InstallCard';
+import { LeagueTile } from '../features/league';
 
 /**
  * Me (/settings, W9): short enough for one phone screen. The avatar and nickname come first,
@@ -43,6 +44,8 @@ export function SettingsPage() {
         <ButtonTile to="/help" icon={<HeartIcon />} label="Get help" tone="help" />
         <ButtonTile to="/progress" icon={<ProgressIcon />} label="My progress" />
         <ButtonTile to="/rewards" icon={<CrownIcon />} label="My rewards" />
+        {/* Only when this server has friends (dev only for now, FL). */}
+        <LeagueTile />
         {/* A parent on this page (no student on the device) gets their way home straight away. */}
         {!student && <ParentHomeTile />}
         <ButtonTile to="/settings/look-and-sound" icon={<StarIcon />} label="Look and sound" />

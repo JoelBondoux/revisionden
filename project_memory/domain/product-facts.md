@@ -954,11 +954,12 @@ Tags: #product #rules #limits #defaults
   on the Rewards page; the friends league is not built yet, so it shows there once it is.
 - Friends league (FL): owner decision 2026-11-26, friends may come from other families from day
   one, not family only. Development only (`FRIENDS_ENABLED`, lead 2026-11-26) until the notices
-  are updated and the solicitor has reviewed them. Design approved 2026-11-26; core rules, API and migration 0030 built
-  (screens and weekly wins to come): `docs/FRIENDS_LEAGUE.md`
+  are updated and the solicitor has reviewed them.
+  Design approved 2026-11-26; screens (League page under Me, Home rank chip, parent Friends page), core rules, API and migration 0030 built
+  (weekly wins to come): `docs/FRIENDS_LEAGUE.md`
   (nickname, avatar, title and weekly learning XP only; one parent per family approves; no chat;
   10-friend cap; siblings join automatically; reports seen by both families' parents and AppDeck;
-  rank chip on Map, League page under Me; head-to-head challenges later).
+  rank chip on Home (was the Map until Home landed), League page under Me; head-to-head challenges later).
 - "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
   NSPCC adult helpline, parent-only). Students reach it only from Settings, where it is the
   first tile (via the Me nav item); there is no Get help link in the student header or footer

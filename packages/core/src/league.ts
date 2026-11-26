@@ -62,19 +62,19 @@ export function leagueXp(
     .reduce((sum, d) => sum + d.xp, 0);
 }
 
-export interface LeagueEntry {
+export interface LeagueMember {
   id: string;
   xp: number;
 }
 
-export interface RankedEntry extends LeagueEntry {
+export interface RankedEntry extends LeagueMember {
   /** 1 for first; equal XP share a place; null when no XP yet ("Not started yet"). */
   place: number | null;
   /** Top of the league with a winning total (shared on a tie). */
   winning: boolean;
 }
 
-export function rankLeague(entries: readonly LeagueEntry[]): RankedEntry[] {
+export function rankLeague(entries: readonly LeagueMember[]): RankedEntry[] {
   const sorted = [...entries].sort((a, b) => b.xp - a.xp);
   const withXp = sorted.filter((e) => e.xp > 0);
   const top = withXp[0]?.xp ?? 0;
