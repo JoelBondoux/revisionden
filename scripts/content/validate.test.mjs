@@ -763,6 +763,30 @@ test('a question that asks for rounding must say how in the answer, and the othe
   assert.match(messages(await validateItems(silent)), /does not say what to round to/);
 });
 
+test('only a question that asks for the answer to be rounded needs answer rounding', async () => {
+  const asks = /asks for rounding: set answer\.decimal_places/;
+  for (const prompt of [
+    'Round 7.8463 to 2 decimal places.',
+    'Work out x. Give the positive solution correct to 2 decimal places.',
+    'Work out the area. Write your answer to 3 significant figures.',
+    'Work out the mean. Give your answer to the nearest whole number.',
+    'Work out the speed. Your answer should be to 1 d.p.',
+  ]) {
+    assert.match(
+      messages(await validateItems(roundedItem({ value: '0.33' }, prompt))),
+      asks,
+      prompt,
+    );
+  }
+  for (const prompt of [
+    'By rounding each number to 1 significant figure, estimate the value of 4.87 × 31.2',
+    'A mass is 4.6 kg, correct to 1 decimal place. Write down the lower bound of the mass.',
+    'A number is truncated to 1 decimal place. The result is 5.7. Work out the error.',
+  ]) {
+    assert.deepEqual(await validateItems(roundedItem({ value: '0.33' }, prompt)), [], prompt);
+  }
+});
+
 test('rounding and the declared subject are sent to the maths engine', () => {
   const rounded = { ...numericItem, answer: { value: '28.3', significant_figures: 3 } };
   const rearrange = {

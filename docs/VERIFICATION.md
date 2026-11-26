@@ -256,9 +256,13 @@ ones:
   together). A right answer has the correctly rounded value and is written to that accuracy:
   `28.274` and `28.270` are wrong for 2 decimal places. Whole numbers with trailing zeros may count
   them or not (4500 is 2, 3 or 4 significant figures). The engine rounds the exact value half up,
-  as UK exams do. Validation fails an item whose question mentions decimal places, significant
-  figures or the nearest whole number without one of these fields, one with a field but no such
-  words, and one whose `answer.value` is not itself written to that accuracy.
+  as UK exams do. Validation fails an item whose question asks for the answer itself to be rounded
+  ("give your answer correct to 2 decimal places", "give the positive solution correct to…",
+  "round 7.8463 to 2 decimal places") without one of these fields, one with a field whose question
+  never mentions decimal places, significant figures or the nearest whole number, and one whose
+  `answer.value` is not itself written to that accuracy. Accuracy words about the working or a given
+  measurement ("by rounding each number to 1 significant figure, estimate…", "a mass is 4.6 kg,
+  correct to 1 decimal place") do not ask for a rounded answer.
 
 **Clean text.** Model output is recorded in check notes, and models sometimes return control
 characters. `withCheck` (`scripts/verify/record.mjs`), which writes every check record, replaces
