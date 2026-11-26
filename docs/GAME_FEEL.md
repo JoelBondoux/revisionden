@@ -377,8 +377,10 @@ in view without scrolling. At 320 px or 200% text the page may scroll up and dow
   200% text nothing scrolls sideways (it used to push the page 120 px; `e2e/tests/lesson.spec.ts`).
 - **One compact header (J14b).** The lesson shows Pip v3 in its own header row with the way out
   (×), the progress bar and the XP; while it does, the layout leaves out its separate Pip row
-  (`lessonPip.ts`; that row stays for a lesson's loading and error screens, so there is always a way
-  Home). The older speech-bubble Pip (`PipSays`) is gone: Pip's line is a speech bubble pointing up
+  (`lessonPip.ts`; that row stays for a lesson's loading, error, empty and finished screens, so there
+  is always a way Home: only the header's `LessonPip` claims him, J14c). The lesson screens are one
+  list, `LESSON_PATHS` in `layout/lessonRoutes.ts`, shared by the routes and the layout, so command
+  words gets the avatar too. The older speech-bubble Pip (`PipSays`) is gone: Pip's line is a speech bubble pointing up
   at him, beside the combo and the **student's framed avatar** (`LessonAvatar`), which holds still
   between answers and nods, hops or goes "hmm" with Pip (none with reduced motion). The question
   starts about 68 px higher at 390 × 844 (`e2e/tests/lesson.spec.ts`). The growing burst on a streak

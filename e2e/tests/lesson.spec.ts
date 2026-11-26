@@ -27,6 +27,9 @@ async function stubLesson(page: Page, correct = true) {
   await page.route('**/v1/student/avatar', (route) =>
     route.fulfill({ json: { avatarCode: '1' + '0'.repeat(28), earnedRewardIds: [] } }),
   );
+  await page.route('**/v1/student/learn/command-words', (route) =>
+    route.fulfill({ json: { items: [item], draftContent: false } }),
+  );
   await page.route('**/v1/student/learn/lesson**', (route) =>
     route.fulfill({
       json: { items: [item, { ...item, id: `${ITEM_ID.slice(0, -1)}2` }], draftContent: false },
@@ -128,5 +131,43 @@ test.describe('at 390 × 844', () => {
     await expect(page.locator('.lesson__pip .framed-avatar')).toBeVisible();
     const question = (await page.getByText('Demo question').boundingBox())!;
     expect(question.y).toBeLessThan(220);
+  });
+});
+
+// J14c (Codex review of train #355): screens without the lesson header (an empty lesson, the
+// finished screen) keep the layout's Pip, so there is always a Home button; and command words, a
+// lesson too, shows the avatar beside Pip's line.
+test.describe('Pip is always there in a lesson', () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test('on the finished screen', async ({ page }) => {
+    await stubLesson(page);
+    await page.route('**/v1/student/learn/lesson**', (route) =>
+      route.fulfill({ json: { items: [item], draftContent: false } }),
+    );
+    await page.goto('/learn/topic/demo-topic');
+    await page.getByLabel('Your answer').fill('demo');
+    await page.getByRole('button', { name: 'Check' }).click();
+    await page.getByRole('button', { name: /Continue|Finish/ }).click();
+    await expect(page.locator('.lesson__top')).toHaveCount(0);
+    await expect(page.getByRole('button', { name: 'Home' })).toBeVisible();
+  });
+
+  test('on an empty lesson', async ({ page }) => {
+    await stubLesson(page);
+    await page.route('**/v1/student/learn/lesson**', (route) =>
+      route.fulfill({ json: { items: [], draftContent: false } }),
+    );
+    await page.goto('/learn/topic/demo-topic');
+    await expect(page.getByText(/No questions are ready here yet/)).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Home' })).toBeVisible();
+  });
+
+  test('in command words, with the avatar beside his line', async ({ page }) => {
+    await stubLesson(page);
+    await page.goto('/learn/command-words');
+    await expect(page.getByText('Demo question')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Home' })).toHaveCount(1);
+    await expect(page.locator('.lesson__pip .framed-avatar')).toBeVisible();
   });
 });
