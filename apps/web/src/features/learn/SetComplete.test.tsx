@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import type { Progress } from '@revisionden/core';
 import { stubReducedMotion } from '../juice/testing';
+import { resetParticles } from '../juice/particles/burst';
 import { SetComplete } from './SetComplete';
 
 const progress = (over: Partial<Progress> = {}): Progress => ({
@@ -22,9 +23,25 @@ function show(props: Partial<Parameters<typeof SetComplete>[0]> = {}) {
 }
 
 beforeEach(() => stubReducedMotion(false));
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+  resetParticles();
+  vi.unstubAllGlobals();
+});
+
+const particles = () => document.querySelectorAll('.fx-layer .fx-particle');
 
 describe('Set complete', () => {
+  it('bursts the style’s particles for a finished topic (J17)', () => {
+    show();
+    expect(particles().length).toBeGreaterThan(0);
+  });
+
+  it('bursts nothing with reduced motion', () => {
+    stubReducedMotion(true);
+    show();
+    expect(particles()).toHaveLength(0);
+  });
+
   it('gives 2 stars for 4 of 5 and shows the XP tally and best combo', () => {
     show();
     expect(screen.getByRole('img', { name: '2 of 3 stars' })).toBeInTheDocument();

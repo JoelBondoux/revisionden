@@ -18,13 +18,13 @@ import {
   ArenaProgress,
   ComboBadge,
   FloatUp,
-  ParticleBurst,
   PipSays,
   RollingNumber,
   Shake,
   comboStep,
   nextCombo,
   pipLine,
+  celebrate,
 } from '../juice';
 import { markSound, useSound } from '../sound';
 import { useLearnApi } from './learnApi';
@@ -167,8 +167,11 @@ function rightOption(item: LearnItem, result: LearnAttemptResponse, chosen: Draf
 
 /** The celebration on a right answer: particles burst from it. "+XP" pops just above the
  * feedback instead, so nothing crosses the question (J10g). */
-function RightAnswerEffects() {
-  return <ParticleBurst />;
+function RightAnswerEffects({ combo }: { combo: number }) {
+  const anchor = useRef<HTMLSpanElement>(null);
+  // J17: the active style's particles, growing with the combo. Fired once, as it appears.
+  useEffect(() => celebrate('correct', anchor.current?.parentElement, { combo }), []);
+  return <span ref={anchor} className="fx-anchor" aria-hidden="true" />;
 }
 
 /**
@@ -207,6 +210,7 @@ export function LessonPlayer({
   const [bestCombo, setBestCombo] = useState(0);
   const [done, setDone] = useState(false);
   const shownAt = useRef(Date.now());
+  const xpRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     let live = true;
@@ -277,8 +281,10 @@ export function LessonPlayer({
       const streak = marked.combo ?? nextCombo(combo, marked.correct);
       // The chime rises a step per right answer in a row (the first one is the plain chime).
       play(markSound(marked), { step: comboStep(streak - 1) });
-      if (marked.progress.goalMet && progress && !progress.goalMet)
+      if (marked.progress.goalMet && progress && !progress.goalMet) {
         play('streakDay', { delay: 0.4 });
+        celebrate('goal', xpRef.current);
+      }
       setResult(marked);
       setProgress(marked.progress);
       setCombo(streak);
@@ -341,7 +347,7 @@ export function LessonPlayer({
   const right = result ? rightOption(item, result, draft) : null;
   const optionMark = (option: number): OptionMark => ({
     right: option === right,
-    extra: result?.correct && option === right ? <RightAnswerEffects /> : null,
+    extra: result?.correct && option === right ? <RightAnswerEffects combo={combo} /> : null,
   });
   return (
     <form className="lesson arena" onSubmit={check}>
@@ -354,7 +360,7 @@ export function LessonPlayer({
           value={index + (result || unmarked || skipped ? 1 : 0)}
           max={queue.length}
         />
-        <span className="lesson__xp">
+        <span className="lesson__xp" ref={xpRef}>
           <RollingNumber value={totals.xp} label="XP this lesson" suffix=" XP" />
         </span>
       </div>
@@ -402,7 +408,7 @@ export function LessonPlayer({
         )}
         {result?.correct && item.type !== 'multiple_choice' && (
           <span className="lesson__burst">
-            <RightAnswerEffects />
+            <RightAnswerEffects combo={combo} />
           </span>
         )}
         {error && (
