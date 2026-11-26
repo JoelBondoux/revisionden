@@ -1,22 +1,75 @@
 import { nameStartsWithText } from '../test/nameMatchesText';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { DEFAULT_AVATAR, encodeAvatar } from '@revisionden/core';
 import { BottomNav } from './BottomNav';
 
-function renderAt(path: string, cardsDue?: number) {
-  render(
+function renderAt(path: string, cardsDue?: number, avatarCode?: string | null) {
+  return render(
     <MemoryRouter initialEntries={[path]}>
-      <BottomNav cardsDue={cardsDue} />
+      <BottomNav cardsDue={cardsDue} avatarCode={avatarCode} />
     </MemoryRouter>,
   );
 }
 
+const AVATAR = encodeAvatar(DEFAULT_AVATAR);
+
 describe('BottomNav', () => {
-  it('links to Map, Cards, Plan, Papers and Progress', () => {
+  it('links to Map, Cards, Plan, Papers and, last, Me (Progress lives on Me)', () => {
     renderAt('/map');
     const nav = screen.getByRole('navigation', { name: 'Main' });
     const names = Array.from(nav.querySelectorAll('a')).map((a) => a.textContent?.trim());
-    expect(names).toEqual(['Map', 'Cards', 'Plan', 'Papers', 'Progress']);
+    expect(names).toEqual(['Map', 'Cards', 'Plan', 'Papers', 'Me']);
+  });
+
+  it('the last item, Me, opens settings and personalisation', () => {
+    renderAt('/map');
+    const links = screen.getAllByRole('link');
+    const me = links[links.length - 1]!;
+    expect(me).toHaveAccessibleName('Me, settings and personalisation');
+    expect(me).toHaveAttribute('href', '/settings');
+    // The name starts with the word on screen, for voice control.
+    expect(nameStartsWithText(me)).toBe(true);
+  });
+
+  it('marks Me as the current page on Settings and on Progress, including its sub-pages', () => {
+    for (const path of ['/settings', '/progress', '/progress/subjects']) {
+      const { unmount } = renderAt(path);
+      expect(
+        screen.getByRole('link', { name: 'Me, settings and personalisation' }),
+      ).toHaveAttribute('aria-current', 'page');
+      expect(screen.getByRole('link', { name: 'Map' })).not.toHaveAttribute('aria-current');
+      unmount();
+    }
+  });
+
+  it('does not mark Me on other pages, such as one that only starts with "progress"', () => {
+    for (const path of ['/map', '/progressive']) {
+      const { unmount } = renderAt(path);
+      expect(
+        screen.getByRole('link', { name: 'Me, settings and personalisation' }),
+      ).not.toHaveAttribute('aria-current');
+      unmount();
+    }
+  });
+
+  it("shows the student's own avatar, small and decorative, on Me", () => {
+    renderAt('/map', 0, AVATAR);
+    const me = screen.getByRole('link', { name: 'Me, settings and personalisation' });
+    const svg = me.querySelector('svg.avatar-svg');
+    expect(svg).not.toBeNull();
+    expect(svg).toHaveAttribute('aria-hidden', 'true');
+    expect(me.querySelector('.main-nav__avatar--placeholder')).toBeNull();
+  });
+
+  it('shows a neutral placeholder on Me until there is an avatar', () => {
+    for (const code of [undefined, null]) {
+      const { unmount } = renderAt('/map', 0, code);
+      const me = screen.getByRole('link', { name: 'Me, settings and personalisation' });
+      expect(me.querySelector('.main-nav__avatar--placeholder')).not.toBeNull();
+      expect(me.querySelector('svg.avatar-svg')).toBeNull();
+      unmount();
+    }
   });
 
   it('marks the current page', () => {

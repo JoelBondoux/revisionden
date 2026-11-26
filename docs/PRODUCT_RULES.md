@@ -441,7 +441,7 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
 Two read-only dashboards built from data the app already holds. No new personal data is collected.
 Mockups: screens 19 (student) and 20 (parent).
 
-### Student: My stats (from the Progress tab)
+### Student: My stats (`/progress`, from "My progress" on the Me page)
 
 On a phone the panel scrolls into view above the bottom bar when it opens and on each step
 (F7b), instantly under reduced motion.
@@ -894,8 +894,10 @@ Requested by the product owner on 2026-11-25.
 
 Requested by the product owner on 2026-11-25.
 
-- A **"Get help"** page for students, reachable from Settings, the profile menu and the footer of
-  every student screen, with a small heart icon. Also reachable signed out.
+- A **"Get help"** page for students, reachable from Settings (first thing on the page). Also
+  reachable signed out. Owner decision, 2026-11-26 (W7): students find Get help on Settings only,
+  reached from the "Me" avatar item in the main nav; it is no longer in the student header or
+  footer. (Was: Settings, the profile menu and the footer of every student screen.)
 - It lists UK support services by topic, each with what they help with, how to contact them
   (tap-to-call `tel:` links, text numbers, web chat links) and opening hours where published.
   Topics: feeling low or anxious, exam stress, suicidal thoughts (urgent), bullying (including
@@ -923,12 +925,13 @@ Requested by the product owner on 2026-11-25.
 ### How it is built (workstream W, 2026-11-25)
 
 - Pages: `/help` (students, also signed out) and `/parent/help` (parent area; adds a "Worried about a
-  child?" card with the NSPCC Helpline). Links: Settings (Help and information), a small heart
-  "Get help" link in the student footer, the signed-out header, and parent home. Since W3 also: a
-  "Get help" chip in the student header on every student screen (the app has no separate menu
-  yet; add it there when one exists). W5 (2026-11-26) removed W3's extra Get help tile from the
-  topic map: Get help on any student screen appears twice at most, the header chip and the footer
-  heart link.
+  child?" card with the NSPCC Helpline). Links: for students, a prominent Get help tile at the top
+  of Settings (above everything else), reached from the **Me** item, the last item in the main
+  nav (owner, 2026-11-26, W7). The student main nav is now five items: Map, Cards, Plan, Papers
+  and Me; Progress moved onto the Me page as "My progress", right after Get help, and Me is marked
+  current on `/settings` and `/progress` (and their sub-pages); signed out, the public header; parents, parent home. History: W3
+  added a header chip and a map tile, W5 removed the map tile, and W7 removed the student header
+  chip and the footer heart link (the owner chose "Settings only" over keeping the footer heart).
   All use the shared link components; tapping them records nothing.
 - Layout (W3, 2026-11-25): the "Quick exit" button sits in a bar that stays at the top of the
   screen while scrolling (sticky, padded for phone notches with `env(safe-area-inset-*)`, first
