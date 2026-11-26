@@ -37,6 +37,7 @@ import { ComplaintsPage } from './features/complaints/ComplaintsPage';
 import { AskParentPage } from './features/complaints/AskParentPage';
 import { JoinPage } from './features/parents';
 import { HelpLayout, HelpPage } from './features/help';
+import { EffectStyleRoute } from './features/juice/styles';
 
 function LessonRedirect() {
   const { lessonId = '' } = useParams();
@@ -134,4 +135,7 @@ const screens: RouteObject[] = [
   },
 ];
 
-export const routes: RouteObject[] = [{ element: <RouteChange />, children: screens }];
+/** The effect style wraps every screen (J10e) and knows which one is showing. */
+export const routes: RouteObject[] = [
+  { element: <EffectStyleRoute />, children: [{ element: <RouteChange />, children: screens }] },
+];

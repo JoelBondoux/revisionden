@@ -71,6 +71,7 @@
     "GET /v1/student/recall",
     "GET /v1/student/reminders/latest",
     "GET /v1/student/rewards",
+    "GET /v1/student/rewards/effect-styles",
     "GET /v1/student/rewards/title",
     "GET /v1/student/stats",
     "GET /v1/student/subjects",

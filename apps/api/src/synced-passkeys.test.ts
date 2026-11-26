@@ -196,4 +196,15 @@ describe('synced passkeys', () => {
     expect(new Set(rows.map((r) => r.counter)).size).toBe(1);
     expect(rows[0]!.counter).toBeGreaterThan(0);
   });
+
+  it('adds only one new device and one alert when two new browsers unlock at the same moment', async () => {
+    const { headers, studentId } = await family('Venus_10');
+    const { passkey } = await link(headers, studentId);
+    // The synced passkey used on two new browsers at once: neither has a marker.
+    const [a, b] = await Promise.all([unlock(passkey), unlock(passkey)]);
+    expect(a.res.status).toBe(200);
+    expect(b.res.status).toBe(200);
+    expect(await deviceIds(headers, studentId)).toHaveLength(2);
+    expect((await events(headers)).filter((e) => e.kind === 'passkey_new_device')).toHaveLength(1);
+  });
 });

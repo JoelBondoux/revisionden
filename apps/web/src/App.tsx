@@ -6,7 +6,6 @@ import { SoundProvider } from './features/sound';
 import { ReadingProvider } from './features/reading';
 import { AppearanceProvider } from './features/appearance';
 import { ReadAloudProvider } from './features/read-aloud';
-import { EffectStyleProvider } from './features/juice/styles';
 
 const router = createBrowserRouter(routes);
 
@@ -16,12 +15,11 @@ export function App() {
       <ReadingProvider>
         <ReadAloudProvider>
           <SoundProvider>
-            <EffectStyleProvider>
-              <StudentProvider>
-                {import.meta.env.PROD && <UpdateBanner />}
-                <RouterProvider router={router} />
-              </StudentProvider>
-            </EffectStyleProvider>
+            <StudentProvider>
+              {/* The effect style lives inside the router (EffectStyleRoute, J10e). */}
+              {import.meta.env.PROD && <UpdateBanner />}
+              <RouterProvider router={router} />
+            </StudentProvider>
           </SoundProvider>
         </ReadAloudProvider>
       </ReadingProvider>

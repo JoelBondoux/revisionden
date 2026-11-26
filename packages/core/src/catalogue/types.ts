@@ -120,7 +120,9 @@ export type RewardItem =
   | { kind: 'pipOutfit'; id: string }
   | { kind: 'badge'; id: string }
   /** An effect drawn over the avatar (for example the glitch effect). */
-  | { kind: 'effect'; id: string };
+  | { kind: 'effect'; id: string }
+  /** An effect style for the whole app's rewards and celebrations (J10b), e.g. Pop Burst. */
+  | { kind: 'effectStyle'; id: string };
 
 export type UnlockTarget =
   | { kind: 'stat'; stat: StatKey; atLeast: number }

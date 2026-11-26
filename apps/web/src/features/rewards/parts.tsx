@@ -17,6 +17,7 @@ const KIND_WORDS: Record<RewardCardResponse['items'][number]['kind'], string> = 
   pipOutfit: 'Pip outfit',
   badge: 'Badge',
   effect: 'Avatar effect',
+  effectStyle: 'Effect style',
 };
 
 export function RarityPill({ rarity }: { rarity: RewardCardResponse['rarity'] }) {

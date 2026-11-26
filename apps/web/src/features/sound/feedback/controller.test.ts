@@ -2,6 +2,7 @@ import { createSoundEngine } from '../engine';
 import { createFakeAudioContext, type FakeAudioContext } from '../fakeAudio';
 import { DEFAULT_SOUND_SETTINGS, type SoundSettings } from '../settings';
 import { createFeedback } from './controller';
+import { DEFAULT_STYLE } from './styles';
 
 function setup(
   settings: Partial<SoundSettings> = {},
@@ -74,7 +75,7 @@ describe('feedback: sound and vibration for every animation', () => {
     ).not.toEqual(sticker);
     expect(t.vibrations[1]).not.toEqual(stickerBuzz);
     t.feedback.setStyle('a-style-not-built-yet');
-    expect(t.feedback.style()).toBe('sticker-book');
+    expect(t.feedback.style()).toBe(DEFAULT_STYLE);
   });
 
   it('mute stops sound; the Vibration switch stops vibration; each on its own', () => {

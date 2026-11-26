@@ -37,6 +37,8 @@ import {
   TitleChoiceSchema,
   TITLE_MESSAGES,
   type StudentTitleResponse,
+  effectStylesFor,
+  type EffectStylesResponse,
   practiceKindsTried,
   weakSpotsTurnedStrong,
   type ItemType,
@@ -383,6 +385,16 @@ export function studentRewardRoutes({ db, clock }: Deps) {
       words: titleWordsFor(earned.map((r) => r.rewardId)),
     };
   }
+
+  /** Effect styles this student has unlocked (J10b), from their earned rewards. */
+  app.get('/effect-styles', async (c) => {
+    const earned = await db
+      .select({ rewardId: rewards.rewardId })
+      .from(rewards)
+      .where(eq(rewards.studentId, c.var.student.studentId));
+    const body: EffectStylesResponse = { unlocked: effectStylesFor(earned.map((r) => r.rewardId)) };
+    return c.json(body);
+  });
 
   app.get('/title', async (c) => c.json(await titleView(c.var.student.studentId)));
 
