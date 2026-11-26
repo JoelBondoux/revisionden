@@ -107,7 +107,7 @@ Tags: #product #rules #limits #defaults
   rows may be batch-sampled; board-neutral physics and chemistry calculations from DfE content
   may be built now; awrt rounding is settled; spreadsheet citations use "sheet, row, cell";
   readability (textstat) warns only, aiming at reading age 13 to 14 (GCSE), 15 to 16 (A-Level).
-  Pending owner sign-off: in-house notes review and use of Oak. Oak's licence was read directly on 2026-11-26: lessons published after 1 September 2022 are OGL v3.0 (commercial use and adapting allowed, with Oak's attribution statement, no endorsement claim, third-party content excluded); earlier lessons are non-commercial only. In-copyright quotes: with
+  Teaching notes (decided 2026-11-26): approved individually until 50 consecutive clean approvals, then batch-sampled (any correction resets the count); Oak lessons published after 1 September 2022 (OGL v3.0) may be adapted as a starting draft only, with Oak's attribution shown and no implied endorsement; earlier Oak lessons and third-party items never used; Oak is never a citation source. In-copyright quotes: with
   the owner's solicitor.
 - Question generation research (QG, 2026-11-26; owner decisions in decision 0010, above): four guarantee tiers
   (computed, source-quoted, fact, judgement). Computable or source-quotable share is highest for
@@ -957,8 +957,8 @@ Tags: #product #rules #limits #defaults
 - Learn it first, in-house goal (owner direction 2026-11-26, not yet built): RevisionDen should
   eventually write its own verified teaching content (topic notes, explanations per learning
   point, worked examples, code-drawn diagrams) under `docs/VERIFICATION.md`, and retire each
-  external link once our notes cover the topic. Plan and open questions (Oak licence not yet
-  confirmed): `docs/research/question-generation-2026-11.md` section 11.
+  external link once our notes cover the topic. Plan: `docs/research/question-generation-2026-11.md`
+  section 11; review and Oak rules: decision 0010.
 
 ## Operator console (planned)
 

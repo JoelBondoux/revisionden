@@ -89,6 +89,14 @@ hints, so the policies do not change version):
 
 ## Rules
 
+- **Credits for adapted open content** (decision 0010). Any teaching text adapted from an Oak
+  National Academy lesson published after 1 September 2022 shows, wherever it appears, Oak's
+  required statement: "A [subject] lesson by Oak National Academy licensed under Open Government
+  Licence (OGL)", with a link to
+  https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/. Nothing may suggest
+  Oak endorses RevisionDen. Oak content from before that date and anything Oak marks as
+  third-party are never used. Source: Oak's terms and conditions, read 2026-11-26.
+
 - **Truthful to the code.** Every statement about data must match what the code does today
   (`docs/PRIVACY.md`, `docs/AI.md`, `docs/ARCHITECTURE.md`, the code). If the code and a policy
   disagree, it is a bug: fix one in the same PR or record it in
