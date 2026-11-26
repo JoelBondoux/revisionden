@@ -969,7 +969,8 @@ Tags: #product #rules #limits #defaults
   league or their rewards, and also before any friendship ends: remove by the child or a parent,
   block, report, or a parent turning friends off; 8 weeks kept; wins counted in
   `students.league_wins` for the league rewards). A friendship is saved before its request is
-  marked started, so a failed save can be retried by approving again (FL4b): `docs/FRIENDS_LEAGUE.md`
+  marked started; starting is safe to repeat, and a request left with both approvals is finished
+  the next time the child or a parent opens Friends (FL4b, FL4c): `docs/FRIENDS_LEAGUE.md`
   (nickname, avatar, title and weekly learning XP only; one parent per family approves; no chat;
   10-friend cap; siblings join automatically; reports seen by both families' parents and AppDeck;
   rank chip on Home (was the Map until Home landed), League page under Me; head-to-head challenges later).
