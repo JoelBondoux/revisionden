@@ -48,6 +48,15 @@ each caught.
 
 ## Build and review
 
+**Template approval and sampling (decision 0010).** The owner reads a template's preview
+(`docs/TEMPLATE_PREVIEW.md`) and approves it once. The content session then records a passing
+`template-approval` check on each of its items (`tool`: the reviewer role, `tool_version`:
+`<template id> v<version>`, for example `gcse-maths-h-a4-double-brackets v1`). A batch made only of
+such items, with their cross-check (`maths-engine`) passed, is sampled at 3%, at least 10; a mixed
+batch keeps 10%, at least 30 (`docs/VERIFICATION.md` section 3). A new template version changes
+its items, so they need a new approval. Science templates may use the DfE subject content
+equations (board-neutral, Open Government Licence) while AQA's answer is awaited.
+
 ```bash
 pnpm content:templates   # writes content/items/gcse-maths-higher/templated/*.json and docs/TEMPLATE_PREVIEW.md
 ```
@@ -200,8 +209,7 @@ A science instance is written only if all of these agree:
 
 ### Risks and rulings
 
-- **Rounding of intermediate values.** Provisional ruling (lead, 2026-11-26; **provisional,
-  owner to confirm**): follow the exam boards' "awrt" (answers which round to) convention. Accept
+- **Rounding of intermediate values.** Settled (owner, decision 0010, 2026-11-26): follow the exam boards' "awrt" (answers which round to) convention. Accept
   a final answer within the range that rounding the intermediate values to the item's stated
   accuracy can produce. The template computes that range exactly for each instance, never as a
   blanket percentage, and the recheck recomputes it independently.

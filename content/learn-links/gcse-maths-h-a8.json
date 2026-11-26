@@ -1,0 +1,18 @@
+{
+  "topic": "gcse-maths-h-a8",
+  "links": [
+    {
+      "title": "How to plot straight line graphs",
+      "url": "https://www.bbc.co.uk/bitesize/topics/z3hv2p3/articles/zx36b7h",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "How to plot straight line graphs - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Coordinates (x, y) as movement from the origin, and plotting straight-line graphs from their equations.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

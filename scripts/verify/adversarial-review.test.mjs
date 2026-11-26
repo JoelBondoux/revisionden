@@ -127,3 +127,80 @@ test('the reviewer is told how typed answers are normalised, so it does not ask 
   // Multiple choice has no typed answer, so no note.
   assert.doesNotMatch(reviewPrompt(item).prompt, /spaces and case are ignored/i);
 });
+
+test('the reviewer judges a hint as a method nudge backed by the steps, and still wants a source for a new fact', () => {
+  const hinted = {
+    ...item,
+    type: 'worked_maths',
+    options: undefined,
+    hint: 'Collect the x terms on one side first.',
+    steps: ['5x - 2x = 7 + 2', '3x = 9', 'x = 3'],
+  };
+  const { prompt } = reviewPrompt(hinted);
+  assert.match(prompt, /hint is a method nudge/i);
+  assert.match(prompt, /reveals? the answer/i);
+  assert.match(prompt, /consistent with the (?:item's )?(?:verified |checked )?steps/i);
+  assert.match(prompt, /mathematically correct and suitable for the age group/i);
+  assert.match(prompt, /new factual claim .* needs a quoted source/i);
+  assert.match(
+    prompt,
+    /do not report .* method .* not (?:described|named) in the (?:quoted )?sources/i,
+  );
+  assert.doesNotMatch(
+    reviewPrompt({ ...hinted, hint: undefined }).prompt,
+    /hint is a method nudge/i,
+  );
+});
+
+test("the reviewer is told to carry out every step literally on the question's numbers", () => {
+  const { system } = reviewPrompt(item);
+  assert.match(
+    system,
+    /Carry out each step it gives literally on this question's numbers\. If doing exactly what it says gives a wrong value or does not lead to the marked answer, report factual_error\./,
+  );
+  assert.match(system, /hint, explanation and model solution steps/i);
+});
+
+// n10-0003's old hint, "Write 2.45 over 100", gives 0.0245, not 245/100: both providers passed it.
+const oldHint = draftItem(
+  'gcse-maths-h-n10-0003',
+  [quoted({ quote: 'fixture quoted words', location: 'page 2', supports: ['answer'] })],
+  {
+    type: 'numeric',
+    options: undefined,
+    prompt: 'Write 2.45 as an improper fraction in its simplest form.',
+    answer: { value: '49/20', form: 'improper_fraction' },
+    verify: { expression: '245/100' },
+    hint: 'Write 2.45 over 100.',
+    explanation: '2.45 = 245/100. Divide top and bottom by 5: 49/20.',
+  },
+);
+
+test('a hint that gives a wrong value when followed literally fails the review', async () => {
+  let asked;
+  const reviewer = {
+    provider: 'openai',
+    model: 'openai-fixture-model',
+    async complete(request) {
+      asked = request;
+      return {
+        output: {
+          problems: [
+            {
+              kind: 'factual_error',
+              part: 'hint',
+              description: 'Writing 2.45 over 100 gives 2.45/100 = 0.0245, not 245/100.',
+            },
+          ],
+          confidence: 'high',
+        },
+        modelVersion: 'openai-fixture-model-001',
+      };
+    },
+  };
+  const r = await runAdversarialReview(oldHint, reviewer, { now: AT });
+  assert.match(asked.system, /Carry out each step it gives literally/);
+  assert.match(asked.prompt, /Write 2\.45 over 100\./);
+  assert.equal(r.result, 'fail');
+  assert.match(r.check.notes, /^factual_error \(hint\): Writing 2\.45 over 100 gives/);
+});

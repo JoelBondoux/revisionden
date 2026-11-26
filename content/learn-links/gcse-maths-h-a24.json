@@ -1,0 +1,60 @@
+{
+  "topic": "gcse-maths-h-a24",
+  "links": [
+    {
+      "title": "Geometric and special sequences",
+      "url": "https://www.bbc.co.uk/bitesize/topics/z3hv2p3/articles/zjj4xg8",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Geometric and special sequences - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Geometric sequences (multiply by a common ratio) and other special sequences such as square, cube, triangular and Fibonacci.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Checking and securing understanding of special number sequences",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/further-sequences/lessons/checking-and-securing-understanding-of-special-number-sequences",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a24-lp-special-sequences"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of special number sequences GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can identify the features of special number sequences.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Fibonacci and alternating sequences",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/further-sequences/lessons/fibonacci-and-alternating-sequences",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a24-lp-special-sequences"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Fibonacci and alternating sequences GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can identify the features of Fibonacci and alternating sequences.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Checking and securing understanding of geometric sequences",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/further-sequences/lessons/checking-and-securing-understanding-of-geometric-sequences",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a24-lp-geometric"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of geometric sequences GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can recognise the features of a geometric sequence and continue it.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

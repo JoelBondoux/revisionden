@@ -5,6 +5,16 @@ export interface DeviceDetails {
   browserFamily: string;
   screenSize: string;
   online: boolean;
+  /** The last problem this page saw, as a short code only (E8: "passkey:NotAllowedError:RD-…"). */
+  lastProblem?: string;
+}
+
+const PROBLEM_CODE = /^[A-Za-z0-9_:-]{1,80}$/;
+let lastProblem: string | undefined;
+
+/** Remembers the last problem a screen showed, for the next bug report. Only short codes. */
+export function rememberLastProblem(code: string | undefined): void {
+  lastProblem = code && PROBLEM_CODE.test(code) ? code : undefined;
 }
 
 // The same patterns as the API's privacy filter (apps/api/src/ai/privacy.ts). The API also
@@ -42,5 +52,6 @@ export function collectDeviceDetails(input: {
     browserFamily: browserFamily(input.userAgent),
     screenSize: `${Math.round(input.width)}x${Math.round(input.height)}`,
     online: input.online,
+    ...(lastProblem ? { lastProblem } : {}),
   };
 }

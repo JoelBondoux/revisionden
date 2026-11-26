@@ -1,0 +1,32 @@
+{
+  "topic": "gcse-maths-h-n3",
+  "links": [
+    {
+      "title": "Order of operations and negative numbers",
+      "url": "https://www.bbc.co.uk/bitesize/topics/zgnbxsg/articles/z8xk6rd",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Order of operations and negative numbers - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "The order of operations (BIDMAS), using a calculator, and adding, subtracting, multiplying and dividing negative numbers.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "How to add, subtract, multiply and divide fractions",
+      "url": "https://www.bbc.co.uk/bitesize/topics/zgnbxsg/articles/zt36b7h",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n3-lp-reciprocals", "gcse-maths-h-n3-lp-reciprocal-recall"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "How to add, subtract, multiply and divide fractions - GCSE Maths - BBC Bitesize",
+        "teaches": "Adding, subtracting, multiplying and dividing fractions and mixed numbers (dividing by multiplying by the reciprocal), and fractions of amounts.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

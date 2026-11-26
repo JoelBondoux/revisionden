@@ -1,0 +1,18 @@
+{
+  "topic": "gcse-maths-h-a1",
+  "links": [
+    {
+      "title": "How to simplify expressions and expand brackets",
+      "url": "https://www.bbc.co.uk/bitesize/topics/z3hv2p3/articles/zkxk6rd",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "How to simplify expressions and expand brackets - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Algebraic definitions, writing expressions, simplifying by collecting like terms, and expanding single and double brackets.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

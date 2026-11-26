@@ -17,8 +17,8 @@
   border-radius: 999px 999px 999px 4px;
 }
 
-:root[data-effect-style='garden-grow'] .map-summary,
-:root[data-effect-style='garden-grow'] .daily-card {
+:root[data-effect-style='garden-grow'] .today-strip,
+:root[data-effect-style='garden-grow'] .today-strip__daily {
   border: 0;
   border-radius: 28px 28px 28px 8px;
   background: var(--gg-cream);
@@ -26,33 +26,33 @@
   box-shadow: 0 5px 0 color-mix(in srgb, var(--gg-leaf) 40%, transparent);
 }
 
-:root[data-effect-style='garden-grow'] .map-summary {
-  padding: var(--space-4);
+:root[data-effect-style='garden-grow'] .today-strip {
+  padding: var(--space-2) var(--space-3) var(--space-1);
 }
 
-:root[data-effect-style='garden-grow'] .map-summary__subject {
+:root[data-effect-style='garden-grow'] .today-strip__heading {
   color: var(--gg-leaf);
 }
 
-:root[data-effect-style='garden-grow'] .map-summary .secondary-text,
-:root[data-effect-style='garden-grow'] .daily-card .secondary-text,
-:root[data-effect-style='garden-grow'] .daily-card__count {
+:root[data-effect-style='garden-grow'] .today-strip__xp,
+:root[data-effect-style='garden-grow'] .today-strip__daily .today-strip__eyebrow,
+:root[data-effect-style='garden-grow'] .today-strip__daily .today-strip__title {
   color: var(--gg-ink);
 }
 
 /* Today's mission is a garden patch to tend. */
-:root[data-effect-style='garden-grow'] .mission {
+:root[data-effect-style='garden-grow'] .today-strip__mission {
   border-radius: 28px 28px 28px 8px;
   background: var(--gg-leaf-soft);
   color: var(--gg-ink);
   box-shadow: 0 5px 0 var(--gg-leaf);
 }
 
-:root[data-effect-style='garden-grow'] .mission__eyebrow {
+:root[data-effect-style='garden-grow'] .today-strip__mission .today-strip__eyebrow {
   color: #1d5a2c;
 }
 
-:root[data-effect-style='garden-grow'] .mission__time {
+:root[data-effect-style='garden-grow'] .today-strip__mission .today-strip__meta {
   color: var(--gg-ink);
 }
 

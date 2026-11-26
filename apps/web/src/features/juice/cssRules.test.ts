@@ -58,7 +58,7 @@ describe('game feel stylesheets (performance and accessibility rules)', () => {
 
   it('gives the map, rewards and stats entrance motion and bouncy buttons', () => {
     const css = read('design/motion.css');
-    for (const selector of ['.mission', '.hex', '.stat-tile', '.rewards', '.btn']) {
+    for (const selector of ['.today-strip__mission', '.hex', '.stat-tile', '.rewards', '.btn']) {
       expect(css).toContain(selector);
     }
   });
