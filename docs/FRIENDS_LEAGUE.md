@@ -261,6 +261,9 @@ New tables (one new migration):
   settled simply has that rival missing from those weeks. Accepted.
 - **Still to come:** the AppDeck report view, where support can also close a report
   (`docs/BACKLOG.md`).
+- **PR 4 (AppDeck reports):** `GET friend-reports` and `POST friend-reports/{id}/close` on the
+  operator bridge (`apps/api/src/routes/friends-operator.ts`, `docs/OPERATOR_CONSOLE.md`):
+  nicknames, reported avatar code, fixed reason and dates only; every read and close audited.
 
 ## 10. Owner decisions (2026-11-26, via the lead)
 
