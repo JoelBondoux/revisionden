@@ -108,4 +108,10 @@ hints, so the policies do not change version):
   material change (new data, new purpose, new processor) is shown to parents in the app on their
   next visit and needs them to confirm; students see a plain-English note.
 - Parents confirm the terms and privacy notice once during onboarding (version stored, no other
-  data). Students see the young people's notice when their device is first linked.
+  data). When a version changes, the "We've updated" notice lists each changed policy
+  with its new version, only the Changes lines newer than the version that parent last accepted
+  (accepted 1.7, now 1.10: the 1.8, 1.9 and 1.10 lines), and a link to the full policy; a policy
+  with nothing newer is left out, and a policy the parent never accepted goes through "Before you
+  start" instead. "I've read the changes" stores the new versions for that parent, so it never shows again for them; closing it
+  hides it on that device for 24 hours (those versions only, `revisionden.policyNotice`). It shows
+  again only for a newer version. Students see the young people's notice when their device is first linked.

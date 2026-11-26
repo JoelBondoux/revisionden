@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { DEFAULT_AVATAR, encodeAvatar } from './avatar';
-import { OnboardChildRequestSchema, UpdateAvatarRequestSchema } from './onboarding-schemas';
+import {
+  AddSubjectRequestSchema,
+  OnboardChildRequestSchema,
+  ParentSubjectsSchema,
+  UpdateAvatarRequestSchema,
+} from './onboarding-schemas';
 
 const valid = {
   nickname: 'Comet_7',
@@ -45,5 +50,34 @@ describe('UpdateSubjectChoiceRequestSchema', () => {
     expect(UpdateSubjectChoiceRequestSchema.safeParse({ tier: 'higher', x: 1 }).success).toBe(
       false,
     );
+  });
+});
+
+describe('ParentSubjectsSchema', () => {
+  it('says for each subject whether questions are ready yet', () => {
+    const subject = {
+      studentId: '00000000-0000-4000-8000-000000000001',
+      subjectId: 'gcse-history',
+      board: 'AQA',
+      tier: 'none',
+      hasQuestions: false,
+    };
+    expect(ParentSubjectsSchema.parse({ subjects: [subject] }).subjects[0]!.hasQuestions).toBe(
+      false,
+    );
+    expect(() =>
+      ParentSubjectsSchema.parse({ subjects: [{ ...subject, hasQuestions: 'no' }] }),
+    ).toThrow();
+  });
+
+  it('adds a subject with the same fields as onboarding', () => {
+    expect(
+      AddSubjectRequestSchema.safeParse({
+        subjectId: 'gcse-maths',
+        board: 'not_sure',
+        tier: 'higher',
+      }).success,
+    ).toBe(true);
+    expect(AddSubjectRequestSchema.safeParse({ subjectId: 'gcse-maths' }).success).toBe(false);
   });
 });

@@ -9,6 +9,7 @@ import {
   DocumentIcon,
   DownloadIcon,
   HeartIcon,
+  LearnIcon,
   ProgressIcon,
   SettingsIcon,
   ShieldIcon,
@@ -177,6 +178,14 @@ function ChildCard({ choices }: { choices: Child[] }) {
               icon={<BellIcon />}
               title="Reminder times"
               description="When reminders come, and quiet hours"
+            />
+          </li>
+          <li>
+            <LinkTile
+              to={`/parent/subjects/${id}`}
+              icon={<LearnIcon />}
+              title="Subjects"
+              description="Add or remove subjects, change boards and tiers"
             />
           </li>
         </ul>

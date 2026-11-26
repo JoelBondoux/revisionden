@@ -10,6 +10,7 @@ import { OfflineBanner } from '../pwa/OfflineBanner';
 import { useStudent } from '../session/StudentContext';
 import { PublicHeader } from './PublicHeader';
 import { VersionFooter } from './VersionFooter';
+import { GetHelpLink } from '../features/help';
 
 /** Flashcards due for the chosen student; zero while loading, on error or with nobody chosen. */
 function useCardsDue(): number {
@@ -56,6 +57,7 @@ function StudentLayout() {
       <BottomNav cardsDue={cardsDue} />
       <main id="main" className={mainClass} tabIndex={-1}>
         <header className="sound-header">
+          <GetHelpLink />
           <MuteButton />
         </header>
         <Outlet />
