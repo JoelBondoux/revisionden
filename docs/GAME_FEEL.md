@@ -250,7 +250,7 @@ tab say so to screen readers.
   question sits on a plain white card (dark card in dark mode); a right answer gets a ring and a light
   wash in the success colour (green; blue with colour-blind friendly colours), so it never reads
   as a red "wrong" mark (J10f; red is for wrong only). The combo badge is written in red pen ("+XP" too, except in the lesson,
-  where it takes the look's main colour, J16b), stars are drawn in pen and coloured in, and bursts
+  where it takes the look's edge colour, J16b), stars are drawn in pen and coloured in, and bursts
   and confetti are quick pen strokes. Sounds use U's Doodle Diary pack: `EffectStyleProvider` calls
   `useFeedbackStyle` with the active style.
 - Sticker Book (J10a): wins are stickers slapped onto the page. Each sticker has a white die-cut
@@ -372,10 +372,17 @@ in view without scrolling. At 320 px or 200% text the page may scroll up and dow
     Each pose plays once (nod 900 ms, cheer 1200 ms, hmm 1400 ms) and goes back to rest; there is
     no idle motion in a lesson. Reduced motion: no reaction. An answer from before Pip appeared is
     ignored.
-- **"+XP" reads on the lesson page (J16b).** The lesson sits on the look's own page, so "+XP"
-  there uses the look's text-safe main colour (the light accent in dark mode) with no shadow,
-  outranking each look's own "+XP" colour. `e2e/tests/lesson.spec.ts` holds "+XP" and the combo
-  badge still and measures them on what is painted behind them, in every look, light and dark.
+- **Words in a lesson read on what is painted behind them (J16b, J16c).** Pick the colour by the
+  surface, never by the screen's name:
+  - **on the look's page** (the lesson header's XP count, "+XP", the warm-up and come-back note,
+    "Comeback!" in the feedback): `--color-primary-edge`, a deeper main colour in light mode and
+    the light accent in dark. "+XP" also drops its look's shadow and outranks the look's own
+    colour;
+  - **on an arena surface** (a card that paints `--arena-bg`, such as the Lesson complete stat
+    cards, W18): `--arena-glow`;
+  - never `--arena-gold` as text on the page (it is 1.4:1 on a light page).
+    `e2e/tests/lesson.spec.ts` holds each of these still and measures it on what is painted behind
+    it (`paintedTextFailures`), in every look, light and dark.
 - **Answer field reflow:** the typed-answer field fills its row and can shrink, so at 320 px with
   200% text nothing scrolls sideways (it used to push the page 120 px; `e2e/tests/lesson.spec.ts`).
 - **One compact header (J14b).** The lesson shows Pip v3 in its own header row with the way out
