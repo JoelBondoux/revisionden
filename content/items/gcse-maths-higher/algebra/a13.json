@@ -294,6 +294,7 @@
     "prompt": "The point (3, 5) is on the graph of y = f(x). Write down the coordinates of the point it moves to on the graph of y = f(x) - 4.",
     "answer": { "accepted": ["(3, 1)", "(3,1)"] },
     "marks": 1,
+    "explanation": "y = f(x) - 4 moves the graph 4 units down. The x-coordinate stays the same and 4 is taken off the y-coordinate: (3, 5 - 4) = (3, 1).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
     "citations": [
@@ -326,7 +327,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). (x, y) maps to (x, y - 4): (3, 5) to (3, 1). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). (x, y) maps to (x, y - 4): (3, 5) to (3, 1). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -346,14 +347,6 @@
           "notes": "model answered \"(3, 1)\"; expected \"(3, 1) | (3,1)\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:46:24Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -368,6 +361,14 @@
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
           "at": "2026-11-25T20:38:12Z",
           "notes": "fact 1: maths engine proof pass; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: up if a > 0 and down if a < 0.\")"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:52:33Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -676,6 +677,7 @@
     "prompt": "The point (2, -7) is on the graph of y = f(x). Write down the coordinates of the point it moves to on the graph of y = f(-x).",
     "answer": { "accepted": ["(-2, -7)", "(-2,-7)", "(−2, −7)", "(−2,−7)"] },
     "marks": 1,
+    "explanation": "y = f(-x) reflects the graph in the y-axis. The x-coordinate changes sign and the y-coordinate stays the same: (2, -7) moves to (-2, -7).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
     "citations": [
@@ -708,7 +710,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). (x, y) maps to (-x, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). (x, y) maps to (-x, y). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:55:48Z"
         },
         {
@@ -728,14 +730,6 @@
           "notes": "model answered \"(-2, -7)\"; expected \"(-2, -7) | (-2,-7) | (−2, −7) | (−2,−7)\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:01:21Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -750,6 +744,14 @@
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
           "at": "2026-11-25T20:40:04Z",
           "notes": "fact 1: maths engine proof pass; blind statement matches (\"The graph of y = f(-x) is obtained by reflecting the graph of y = f(x) in the y-axis. This assumes f is defined at the corresponding x-values so that replacing x by -x makes sense.\")"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:52:40Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -763,6 +765,7 @@
     "expected_seconds": 15,
     "front": "y = f(x) + a, with a > 0, moves the graph of y = f(x) which way? (one word: left, right, up or down)",
     "back": "Up",
+    "explanation": "Adding a to f(x) adds a to every y-value, so every point moves up by a.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
     "citations": [
@@ -795,7 +798,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -815,14 +818,6 @@
           "notes": "model answered \"up\"; expected \"Up\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:47:57Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -837,6 +832,14 @@
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
           "at": "2026-11-25T20:38:40Z",
           "notes": "fact 1: maths engine proof pass; blind statement matches (\"The graph of y = f(x) + a is obtained by translating the graph of y = f(x) vertically by a units: upwards if a > 0 and downwards if a < 0.\")"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:52:50Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -850,6 +853,7 @@
     "expected_seconds": 15,
     "front": "y = f(x - a), with a > 0, moves the graph of y = f(x) which way? (one word: left, right, up or down)",
     "back": "Right",
+    "explanation": "To get the same y-value as y = f(x) gives at x = 0, y = f(x - a) needs x - a = 0, so x = a. Every point happens a units further along, so the graph moves a units to the right.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
     "citations": [
@@ -882,7 +886,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:26:22Z"
         },
         {
@@ -902,14 +906,6 @@
           "notes": "model answered \"right\"; expected \"Right\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:48:12Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -924,6 +920,14 @@
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
           "at": "2026-11-25T20:39:13Z",
           "notes": "fact 1: maths engine proof pass; blind statement matches (\"The graph of y = f(x - a) is obtained by translating the graph of y = f(x) horizontally by a units to the right. If a is negative, this means a translation to the left by |a| units.\")"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:57:40Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -937,6 +941,7 @@
     "expected_seconds": 15,
     "front": "y = -f(x) is a reflection of y = f(x) in which axis? (x-axis or y-axis)",
     "back": "x-axis",
+    "explanation": "-f(x) changes the sign of every y-value and keeps every x-value, which reflects the graph in the x-axis.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A13",
     "checked_by": ["author"],
     "citations": [
@@ -969,7 +974,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A13). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:04:51Z"
         },
         {
@@ -989,14 +994,6 @@
           "notes": "model answered \"x-axis\"; expected \"x-axis\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:09:20Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -1011,6 +1008,14 @@
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
           "at": "2026-11-25T20:39:32Z",
           "notes": "fact 1: maths engine proof pass; blind statement matches (\"The graph of y = -f(x) is obtained by reflecting the graph of y = f(x) in the x-axis. Equivalently, each point (x, y) maps to (x, -y).\")"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:53:28Z",
+          "notes": "no problems found"
         }
       ]
     }

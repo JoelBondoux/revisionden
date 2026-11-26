@@ -59,7 +59,9 @@ Tags: #product #rules #limits #defaults
   a random marker in local storage (`revisionden.deviceMarker`; the API stores its hash in
   `device_markers`). An unknown browser adds a `devices` row and logs the important family event
   "RevisionDen noticed <nickname>'s passkey being used on a new device", pushed to both parents; at
-  most one new device a day per passkey. An unlinked device's browser is refused. Devices linked
+  most one new device a day per passkey. The day is claimed with one conditional upsert on `passkey_new_device_claims`
+  (migration 0027, B7), so two new browsers unlocking at the same moment add one device and one
+  alert; claims are cleared after 24 hours. An unlinked device's browser is refused. Devices linked
   before markers are adopted quietly on their first unlock. Implemented in
   `apps/api/src/routes/devices.ts` (`deviceForUnlock`).
 - Rate limits per address: 30 a minute on sign-in and device routes, 20 a minute on AI routes.
@@ -235,7 +237,9 @@ Tags: #product #rules #limits #defaults
 - Avatar builder layout (J9): the preview always stays in view. Under 600px of builder width
   (phones, the sheet) it is pinned on top and shrinks once the options scroll. At 600px or more
   it is a sticky column on the left. Arrow-key tabs; a gentle pop on each change, off with
-  reduced motion. `apps/web/src/features/avatar/AvatarBuilder.tsx`, `avatar.css`.
+  reduced motion. Switching tabs after scrolling brings the options back to just under the
+  pinned preview (narrow) or level with the sticky column (wide), smoothly unless reduced motion is
+  on (J9b). `apps/web/src/features/avatar/AvatarBuilder.tsx`, `avatar.css`.
 
 ## Operator console (AppDeck)
 
@@ -307,6 +311,10 @@ Tags: #product #rules #limits #defaults
 - Diagrams are SVG drawn by code from verified data; no AI-generated or raster teaching images.
 - Items may carry `learning_point` (finer skill id; at least 3 items per learning point, for
   similar-question retries) and `expected_seconds` (5 to 900; slower than twice it is shaky).
+- Every item needs an "Explain" walkthrough (F7, #156; lead ruling for S3-N2, 2026-11-26): an
+  `explanation`, plus the working for a calculation (`steps` on worked_maths, otherwise written
+  out in the explanation, as the schema allows `steps` only on worked_maths). Rule in
+  `docs/CONTENT_RUN_1MA1.md`; validation does not enforce it yet.
 - Pilot: GCSE Maths Higher, Pearson Edexcel 1MA1 (content references N1 to S6). Every pilot
   citation has a verbatim quote from the 1MA1 specification Issue 2 (or, for the quadratic
   formula, the DfE subject content DFE-00233-2013), with page and SHA-256. All pilot content is
@@ -335,6 +343,9 @@ Tags: #product #rules #limits #defaults
 - Numeric answers accept a UK thousands separator: a space (also thin or non-breaking) or a comma
   between groups of exactly three digits (`38 700`, `38,700`); `3 87` is wrong, not 387 (S2, rule
   in PRODUCT_RULES "Learning loop").
+- Numeric answers read standard form (`6.4 × 10^8`, `6.4x10⁸`, `6.4e8`) by value; a standard form
+  answer key needs proper standard form back (1 ≤ a < 10), and the validator sends the engine the
+  plain value (S2, rule in PRODUCT_RULES "Learning loop").
 - Typed short answers (F6, `packages/core/src/answer-normalise.ts`; rules in PRODUCT_RULES
   "Learning loop"): spaces, case, minus signs, multiply and divide signs, superscripts, ≤/≥ and √
   are normalised, so content lists one written form. `answer.any_order: true` also accepts
@@ -430,7 +441,8 @@ Tags: #product #rules #limits #defaults
   prompts and answers are never stored, cache off, 120 requests a minute.
 - Deploys: GitHub Actions. Push to `dev` deploys dev, push to `staging` deploys staging, and
   production deploys after the release bump on `main`. Each deploy migrates the database first,
-  then the API, then the web app, then checks `/health` shows the new version.
+  then (dev and staging only) loads `content/` with `content:sync`, then the API, then the web
+  app, then checks `/health` shows the new version. Production content is not synced by deploys.
 - `GET /health` always answers with the version: `ok` (200) when configured, `misconfigured`
   (503) while a required secret is missing. Dev and staging deploys accept `misconfigured`;
   production does not.
@@ -642,8 +654,11 @@ Tags: #product #rules #limits #defaults
   sounds in Test mode before submit. Sound is never the only signal. Workstream U.
 - Style sounds and haptics (U6): every animation fires a feedback event (15: buttonPress, cardFlip,
   correct, wrong, combo, xpTick, ringFill, rewardWobble, rewardOpen, rewardUnlock, setComplete,
-  levelUp, homeEnter, nodePop, locked) that plays the active effect style's synthesised sound plus a vibration. Packs: Sticker
-  Book (default), Pop Burst, Starlight; unknown styles use Sticker Book. Vibration switch on by
+  levelUp, homeEnter, nodePop, locked) that plays the active effect style's synthesised sound plus a vibration. Packs: Doodle
+  Diary (default, owner-approved 2026-11-26), then the unlockable Sticker Book, Pop Burst,
+  Starlight, Comic Pop, Garden Grow and Pixel Arcade (U6c); unknown styles use the default.
+  Default is one value, `DEFAULT_STYLE` in `feedback/styles.ts`. Square waves
+  only in Comic Pop and Pixel Arcade (low-passed at 2800 Hz); "wrong" soft in every style. Vibration switch on by
   default and independent of mute; no vibration on iPhone/iPad browsers (no Vibration API).
   Throttled: ticks and map nodes 70 ms, ring fill 90 ms, ≤10 sounds/s, buzzes ≥100 ms apart and ≤4/s. Reduced motion: half
   loudness, shorter buzzes. `apps/web/src/features/sound/feedback/`; `HapticsDriver` lets a native
@@ -851,6 +866,21 @@ Tags: #product #rules #limits #defaults
   forced colours. The older 240px grid tile `doodles.svg` is kept only for the public site until it
   moves to the new tile.
   Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).
+- Effect styles (J10a, built): one active at a time; it restyles the game-feel moments, Home
+  (topic map) and Rewards. Default and always available: Doodle Diary (`doodle-diary`, owner decision 2026-11-26, J10d). Registry
+  `apps/web/src/features/juice/styles/registry.ts`; one stylesheet per style, scoped to
+  `:root[data-effect-style='<id>']`. Chosen per device in `localStorage` key
+  `revisionden.effectStyle` (cookies and storage policy 1.7); a style that is not unlocked falls
+  back to Doodle Diary. Unlock ladder (owner, 2026-11-26; J10b): Sticker Book `level-3`, Pop Burst
+  `level-5`, Garden Grow `subject-topics-5`, Starlight `topics-mastered-10`, Comic Pop `level-20`,
+  Pixel Arcade `level-40`, added as `effectStyle` items by `withEffectStyles`
+  (`packages/core/src/catalogue/effect-styles.ts`). All seven built (J10c, J10d): Doodle Diary (default), Sticker Book, Pop
+  Burst, Garden Grow, Starlight, Comic Pop, Pixel Arcade. Unlocked list:
+  `GET /v1/student/rewards/effect-styles`. Picker: Settings → Effect style (students only), with
+  locked styles showing a preview and how to unlock them. Doodle Diary letters headings in Patrick Hand
+  (`@fontsource/patrick-hand`, OFL-1.1, self-hosted) and the provider passes the style to U's
+  `useFeedbackStyle`. Lesson surround (J10a2): follows the style; the question and answers
+  sit on `.lesson__stage`, kept plain (Doodle Diary and Sticker Book: paper, night paper in dark mode).
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by

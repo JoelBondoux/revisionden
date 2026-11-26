@@ -13,6 +13,7 @@ import {
   parentInvites,
   parents,
   passkeyChallenges,
+  passkeyNewDeviceClaims,
   studentSessions,
   type Database,
 } from '@revisionden/db';
@@ -161,8 +162,16 @@ export async function cleanUpExpiredData({ db, now }: { db: Database; now: Date 
       .where(lt(parentInvites.expiresAt, now))
       .returning({ id: parentInvites.id }),
   );
+  // A new-device claim only matters for its 24 hours (B7).
+  const newDeviceClaimsDeleted = await count(
+    db
+      .delete(passkeyNewDeviceClaims)
+      .where(lt(passkeyNewDeviceClaims.claimedAt, new Date(now.getTime() - 24 * 60 * 60 * 1000)))
+      .returning({ id: passkeyNewDeviceClaims.credentialId }),
+  );
   return {
     feedbackDeleted,
+    newDeviceClaimsDeleted,
     familyEventsDeleted,
     parentInvitesDeleted,
     errorReportsDeleted,

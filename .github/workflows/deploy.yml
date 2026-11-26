@@ -1,9 +1,10 @@
 name: Deploy (reusable)
 
 # Called by deploy-dev.yml, deploy-staging.yml and deploy-production.yml.
-# Order: migrate the Neon branch, deploy the API Worker, build and deploy the web app, then check
-# that /health answers with the new version. Secrets are set per GitHub environment; see
-# docs/ENVIRONMENTS.md ("Deploys from GitHub Actions"). Nothing here prints a secret.
+# Order: migrate the Neon branch, load content (dev and staging), deploy the API Worker, build
+# and deploy the web app, then check that /health answers with the new version. Secrets are set
+# per GitHub environment; see docs/ENVIRONMENTS.md ("Deploys from GitHub Actions"). Nothing here
+# prints a secret.
 on:
   workflow_call:
     inputs:
@@ -62,6 +63,14 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: pnpm --filter @revisionden/db db:migrate:deploy
+
+      # Loads content/ (drafts keep their status; only dev serves them). Not on production:
+      # publishing content to the live app stays a deliberate step.
+      - name: Load content into the database
+        if: inputs.environment != 'production'
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: pnpm --filter @revisionden/api content:sync
 
       - name: Deploy the API Worker
         working-directory: apps/api

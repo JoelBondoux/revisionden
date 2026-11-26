@@ -889,6 +889,7 @@
     "expected_seconds": 15,
     "front": "The symbol used to show that two expressions are identical (an identity)",
     "back": "≡",
+    "explanation": "The symbol ≡ means 'is identical to': the two sides are equal for every value of the letters.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -915,7 +916,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A6). The specification names identities; the symbol is standard notation. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A6). The specification names identities; the symbol is standard notation. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:20:52Z"
         },
         {
@@ -935,20 +936,20 @@
           "notes": "model answered \"≡\"; expected \"≡\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:45:54Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:17Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -962,6 +963,7 @@
     "expected_seconds": 15,
     "front": "The name for a statement such as 2x + 1 = 7 that is true only for particular values of x",
     "back": "Equation",
+    "explanation": "2x + 1 = 7 is only true when x = 3. A statement that is true only for particular values is an equation, which you can solve.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -988,7 +990,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A6). Standard definition. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A6). Standard definition. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:20:52Z"
         },
         {
@@ -1008,20 +1010,20 @@
           "notes": "model answered \"Equation\"; expected \"Equation\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:46:06Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:24Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -1035,6 +1037,7 @@
     "expected_seconds": 15,
     "front": "Is x^2 + 2x = x(x + 2) true for every value of x? (yes or no)",
     "back": "Yes",
+    "explanation": "Expand the right-hand side: x(x + 2) = x^2 + 2x, which is the same as the left-hand side. So it is true for every value of x (it is an identity).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A6",
     "checked_by": ["author"],
     "citations": [
@@ -1060,7 +1063,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A6). Checked with SymPy: x(x + 2) - (x^2 + 2x) = 0.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A6). Checked with SymPy: x(x + 2) - (x^2 + 2x) = 0. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:04:50Z"
         },
         {
@@ -1080,20 +1083,20 @@
           "notes": "model answered \"yes\"; expected \"Yes\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:10:25Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:50:31Z",
+          "notes": "no problems found"
         }
       ]
     }

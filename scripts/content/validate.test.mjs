@@ -801,6 +801,13 @@ test('rounding and the declared subject are sent to the maths engine', () => {
   assert.deepEqual(checks[2].expected, { expression: '(v - u)/a', subject: 't' });
 });
 
+test('a standard form answer is sent to the maths engine as a plain number', () => {
+  const standard = { ...numericItem, answer: { value: '6.4 × 10⁸', significant_figures: 2 } };
+  const [check] = mathsChecks([standard]);
+  assert.equal(check.answer, '640000000');
+  assert.equal(check.significant_figures, 2);
+});
+
 test('a fact proof must name a maths engine check kind the engine knows', async () => {
   const withProof = (kind) => ({
     ...numericItem,

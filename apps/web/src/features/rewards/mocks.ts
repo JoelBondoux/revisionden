@@ -26,6 +26,10 @@ const view = () => sampleRewards({ parentRewards });
 
 export const rewardsHandlers: RequestHandler[] = [
   http.get('*/v1/student/rewards', () => HttpResponse.json(view())),
+  // J10b: in development, Pop Burst is unlocked and Starlight is still locked.
+  http.get('*/v1/student/rewards/effect-styles', () =>
+    HttpResponse.json({ unlocked: ['pop-burst'] }),
+  ),
   http.get('*/v1/student/rewards/title', () => HttpResponse.json(title)),
   http.put('*/v1/student/rewards/title', async ({ request }) => {
     const parsed = TitleChoiceSchema.safeParse(await request.json());
