@@ -136,3 +136,31 @@ for (const { name, settings } of APPEARANCES) {
     expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
   });
 }
+
+test.describe('on a 320px screen with text at 200%', () => {
+  test.use({ viewport: { width: 320, height: 640 } });
+
+  for (const path of ['/help', '/parent/help']) {
+    test(`${path} has no sideways scroll and every button fits`, async ({ page }) => {
+      await page.goto(path);
+      await expect(page.getByRole('heading', { level: 1, name: 'Get help' })).toBeVisible();
+      // Text resized to 200% (WCAG 1.4.4, 1.4.10), with every category opened.
+      await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+      await page.evaluate(() => {
+        document.querySelectorAll('details').forEach((d) => (d.open = true));
+      });
+      const overflow = await page.evaluate(
+        () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      );
+      expect(overflow).toBeLessThanOrEqual(0);
+      const tooWide = await page
+        .locator('.help-button')
+        .evaluateAll((els) =>
+          els
+            .filter((el) => el.getBoundingClientRect().right > window.innerWidth + 0.5)
+            .map((el) => el.textContent?.trim()),
+        );
+      expect(tooWide).toEqual([]);
+    });
+  }
+});
