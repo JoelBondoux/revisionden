@@ -115,4 +115,55 @@ describe('daily flashcard limit (F11)', () => {
     expect(await screen.findByRole('heading', { name: 'Done for today!' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '10 more' })).toBeInTheDocument();
   });
+  it('starts one new session for "10 more" after a finished one, not two (W18)', async () => {
+    const sessions: unknown[] = [];
+    server.use(
+      http.post('*/v1/student/flashcards/sessions', async ({ request }) => {
+        sessions.push(await request.json().catch(() => ({})));
+        return HttpResponse.json(
+          { id: card(99).id, maxCards: 20, minCards: 5, xp: 20, rewardedLeftToday: 2 },
+          { status: 201 },
+        );
+      }),
+      http.post('*/v1/student/flashcards/sessions/:id/finish', () =>
+        HttpResponse.json({
+          completed: false,
+          reason: 'too_few_cards',
+          xpEarned: 0,
+          cardsCounted: 1,
+          rewardedLeftToday: 2,
+          progress: {
+            xpToday: 0,
+            totalXp: 0,
+            dailyGoalXp: 50,
+            goalMet: false,
+            streak: { current: 0, best: 0, skipDays: 0 },
+          },
+          newlyEarned: [],
+        }),
+      ),
+      http.get('*/v1/student/flashcards', ({ request }) => {
+        const extra = new URL(request.url).searchParams.get('extra');
+        return HttpResponse.json({
+          due: extra === '10' ? [card(2)] : [card(1)],
+          decks: [],
+          mine: [],
+          draftContent: true,
+          dueToday: 1,
+          backlog: extra === '10' ? 1 : 2,
+          doneToday: false,
+        });
+      }),
+    );
+    renderRoute('/cards');
+    await screen.findByText('Limit front 1');
+    await userEvent.click(screen.getByRole('button', { name: 'Show answer' }));
+    await userEvent.click(screen.getByRole('button', { name: /^Good/ }));
+    await userEvent.click(await screen.findByRole('button', { name: '10 more' }));
+    expect(await screen.findByText('Limit front 2')).toBeInTheDocument();
+    await waitFor(() => expect(sessions).toHaveLength(2));
+    // Give a stray restart time to show itself.
+    await new Promise((r) => setTimeout(r, 50));
+    expect(sessions).toEqual([{}, { extra: 10 }]);
+  });
 });
