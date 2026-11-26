@@ -11,6 +11,7 @@
     "verify": { "expression": "log((45/100000)/(45/10))/log(10)" },
     "marks": 1,
     "explanation": "Move the decimal point to get a number between 1 and 10: 0.00045 becomes 4.5. The point moves 4 places to the right, and the number is less than 1, so the power is negative: 4.5 × 10^-4, so n = -4.",
+    "hint": "Move the decimal point until you have a number between 1 and 10. Count the places moved; the number is less than 1, so the power is negative.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -48,7 +49,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer backed by the maths engine: 0.00045 = 4.5 × 10^-4, n = log10(0.00045 / 4.5). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"n = -4\" is accepted, as the question asks for the value of n.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer backed by the maths engine: 0.00045 = 4.5 × 10^-4, n = log10(0.00045 / 4.5). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"n = -4\" is accepted, as the question asks for the value of n. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -86,9 +87,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:34:19Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:09Z",
           "notes": "no problems found"
         }
       ]
@@ -106,6 +107,7 @@
     "verify": { "expression": "log(3870000/(387/100))/log(10)" },
     "marks": 1,
     "explanation": "Move the decimal point to get a number between 1 and 10: 3 870 000 becomes 3.87. The point moves 6 places to the left, so 3 870 000 = 3.87 × 10^6, and n = 6.",
+    "hint": "Move the decimal point to make a number between 1 and 10, and count how many places it moves.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -143,7 +145,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer backed by the maths engine: 3 870 000 = 3.87 × 10^6. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"n = 6\" is accepted, as the question asks for the value of n.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer backed by the maths engine: 3 870 000 = 3.87 × 10^6. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Fairness sweep (S3-N3): answer.subject added so an answer written \"n = 6\" is accepted, as the question asks for the value of n. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -181,9 +183,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:34:37Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:11Z",
           "notes": "no problems found"
         }
       ]
@@ -201,6 +203,7 @@
     "verify": { "expression": "(602/100)*10^5" },
     "marks": 1,
     "explanation": "Multiplying by 10^5 moves the decimal point 5 places to the right: 6.02 becomes 602000.",
+    "hint": "Multiplying by 10^5 moves the decimal point 5 places to the right. Fill the gaps with zeros.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -226,7 +229,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -264,9 +267,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:39:27Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:13Z",
           "notes": "no problems found"
         }
       ]
@@ -285,6 +288,7 @@
     "steps": ["15 * 10^10", "1.5 * 10^11"],
     "marks": 2,
     "mark_scheme": ["M1 for 15 × 10^10 or 150 000 000 000", "A1 for 1.5 × 10^11"],
+    "hint": "Multiply the numbers, and add the powers of 10. Then make sure the first number is between 1 and 10.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -322,7 +326,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer and every step backed by the maths engine. Mark points written by this session. Fairness sweep (S3-N3): answer.form standard_form added, as the question asks for the answer in standard form; the value alone is no longer accepted.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer and every step backed by the maths engine. Mark points written by this session. Fairness sweep (S3-N3): answer.form standard_form added, as the question asks for the answer in standard form; the value alone is no longer accepted. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -360,9 +364,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T06:22:47Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:14Z",
           "notes": "no problems found"
         }
       ]
@@ -380,6 +384,7 @@
     "verify": { "expression": "((24/10)*10^3)/(8*10^-2)" },
     "marks": 1,
     "explanation": "Divide the numbers and the powers of 10 separately: 2.4 ÷ 8 = 0.3, and 10^3 ÷ 10^-2 = 10^(3 - (-2)) = 10^5. So the answer is 0.3 × 10^5 = 30000.",
+    "hint": "Divide the numbers, then divide the powers of 10 by subtracting the indices (careful with the negative one).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -405,7 +410,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Answer backed by the maths engine (decimals written as exact fractions). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Answer backed by the maths engine (decimals written as exact fractions). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -443,9 +448,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:39:35Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:16Z",
           "notes": "no problems found"
         }
       ]
@@ -463,6 +468,7 @@
     "verify": { "expression": "(6*10^8) + (4*10^7)" },
     "marks": 2,
     "explanation": "Write both with the same power of 10: 4 × 10^7 = 0.4 × 10^8. Add: 6 × 10^8 + 0.4 × 10^8 = 6.4 × 10^8.",
+    "hint": "Rewrite one number so both have the same power of 10, then add the front numbers.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -500,7 +506,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer backed by the maths engine: 600 000 000 + 40 000 000 = 640 000 000 = 6.4 × 10^8. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer backed by the maths engine: 600 000 000 + 40 000 000 = 640 000 000 = 6.4 × 10^8. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -538,9 +544,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:42:38Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:17Z",
           "notes": "no problems found"
         }
       ]
@@ -556,6 +562,7 @@
     "front": "In standard form A × 10^n, which values can A take?",
     "back": "1 ≤ A < 10",
     "explanation": "In standard form, A must be at least 1 and less than 10. For example, 3.2 × 10^4 is in standard form, but 32 × 10^3 is not.",
+    "hint": "Think about the size of the first number in standard form: how small and how big can it be?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
     "checked_by": ["author"],
     "citations": [
@@ -593,7 +600,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Front cited to spec N9. Back quoted from spec N9 (citation 2, supports back). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Front cited to spec N9. Back quoted from spec N9 (citation 2, supports back). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -623,9 +630,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:40:03Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:19Z",
           "notes": "no problems found"
         }
       ]
@@ -641,6 +648,7 @@
     "front": "4 × 10^3 as an ordinary number",
     "back": "4000",
     "explanation": "10^3 = 1000, so 4 × 10^3 = 4 × 1000 = 4000.",
+    "hint": "Work out 10^3 as an ordinary number first, then multiply.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
     "checked_by": ["author"],
     "citations": [
@@ -666,7 +674,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Front cited to spec N9. Back checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Front cited to spec N9. Back checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -696,9 +704,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:40:09Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:21Z",
           "notes": "no problems found"
         }
       ]
@@ -714,6 +722,7 @@
     "front": "10^-3 as a decimal",
     "back": "0.001",
     "explanation": "10^-3 = 1/10^3 = 1/1000 = 0.001.",
+    "hint": "A negative power means 1 over that power of 10. Then write the fraction as a decimal.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
     "checked_by": ["author"],
     "citations": [
@@ -739,7 +748,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Front cited to spec N9. Back checked with exact fractions in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Front cited to spec N9. Back checked with exact fractions in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -769,9 +778,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:40:17Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:22Z",
           "notes": "no problems found"
         }
       ]

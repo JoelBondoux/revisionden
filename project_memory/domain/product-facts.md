@@ -245,6 +245,12 @@ Tags: #product #rules #limits #defaults
     above the tab bar (the version footer sits below).
   - A locked unit (no questions yet) says "Questions for <unit> are on their way. It unlocks as
     soon as they're ready." See all opens a sheet of every unit with its progress.
+  - Past the daily goal the Today strip says "Goal smashed! <XP> XP" with a star (the bar stays
+    full) instead of a fraction like "195 / 50" (J12d, owner, 2026-11-26).
+  - The sideways rows (subjects, units) open showing the chosen item whole, moving only as far as
+    they must and lining up on an item's edge, so the first item seen is never cut mid-word; near the
+    end a little space (at most 40% of the row) may be added after the last item to allow that
+    (J12d, `map/hscroll.ts`).
   - Code: `apps/web/src/map/` (`path.ts` rules, `UnitPath.tsx`, `TodayStrip.tsx`, `HScroller.tsx`,
     `InstallRow.tsx`), `apps/web/src/features/daily/DailyRow.tsx`; e2e `e2e/tests/map.spec.ts`.
 - Topic map data (F2, `GET /v1/student/map`): units are the top-level topics of the subject's tree,
@@ -558,6 +564,10 @@ Tags: #product #rules #limits #defaults
   table: `body` is what the student sees (prompt, marks, options, unit, hint, front, back);
   `answer` is server-only (`key` = the content answer, `verify`, `explanation`, `steps`,
   `markScheme`). Defined in `apps/api/src/learning/content-sync.ts`.
+- Hints (`hint`, shown by the "Need a clue?" button) nudge toward the method and never contain the
+  item's final answer: `pnpm content:validate` refuses one that does (text, option or flashcard back,
+  or a number equal to a numeric answer within 0.5% that the question does not show). Rule in
+  `scripts/content/hint-check.mjs`, described in `docs/VERIFICATION.md` ("Hints").
 - Extended answers: blind marking replaces the blind answer (three exemplars, top, middle and low,
   marked by a second provider without the intended levels; all three must match exactly), and
   every one needs individual human approval; review batches always include them.
@@ -812,6 +822,14 @@ Tags: #product #rules #limits #defaults
   320px screen with text at 200%. The e2e test "the policies list fits a 320px screen with text at
   200%" (`e2e/tests/pages.spec.ts`, /legal) checks there is no sideways scroll and no tile wider than
   320px. The version footer's reflow is G's (#224).
+- Button tiles and page transitions (J15a, owner request 2026-11-26): parent home and Policies
+  show their links as `ButtonTile`s in a grid (two to a row on phones): a big icon and a 2–3 word
+  label, no helper sentence (Policies add who each is for as a badge). Parent home labels: Stats
+  dashboard, Children, Family feedback, Complaints, Your data, App settings, Policies, Get help, and
+  per child Rewards you set, Reminder times, Subjects. Each effect style has its own tile look, and
+  opening a page from a tile plays the style's page transition (350ms at most, reversed on Back,
+  never blocking taps). None for Get help or with reduced motion. Me (`/settings`) adopts the tiles
+  with W9 (W owns the layout). See `docs/GAME_FEEL.md` (Links; Page transitions).
 - Single screen for doing things (owner design rule, 2026-11-26; lead ruling on scope): at 390 × 844
   with default text, interactive screens (lesson, flashcards and Explain, starting test, 5-a-day and
   recall, map, Plan, papers chooser, set complete and rewards moments, Me page) show the main task
