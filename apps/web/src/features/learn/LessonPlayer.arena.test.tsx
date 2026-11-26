@@ -202,7 +202,9 @@ describe('Lesson player with reduced motion', () => {
     await click('Check');
     await feedback();
     expect(container.querySelector('.shake')).toBeNull();
-    await click('Finish');
+    // The missed question comes back at the end (F5); skip it to finish.
+    await click('Continue');
+    await click('Skip this one');
     await screen.findByRole('region', { name: 'Lesson complete' });
     expect(container.querySelector('.confetti')).toBeNull();
   });

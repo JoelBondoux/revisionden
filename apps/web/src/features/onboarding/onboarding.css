@@ -144,3 +144,15 @@
   display: grid;
   gap: var(--space-4);
 }
+
+/* E5: a subject with no questions ready yet. */
+.coming-soon-badge {
+  display: inline-block;
+  margin: 0;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--color-warning-soft);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}

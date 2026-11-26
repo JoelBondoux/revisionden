@@ -359,6 +359,18 @@
               "items": {
                 "$ref": "#/$defs/text"
               }
+            },
+            "any_order": {
+              "type": "boolean",
+              "description": "Order does not matter: products and sums in any order, a list of values in any order, an equation either way round. Coordinates and inequalities are never reordered."
+            },
+            "units": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/$defs/text"
+              },
+              "description": "Units the answer may end with, or leave off (for example cm)."
             }
           },
           "additionalProperties": false

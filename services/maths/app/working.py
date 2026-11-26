@@ -17,6 +17,7 @@ is read as its RHS, and follows from a line ``y = E`` when E is the same as RHS.
 
 import re
 from dataclasses import dataclass
+from itertools import product
 
 from sympy import Expr, FiniteSet, Mul, Pow, S, Symbol, Union, expand, simplify, solveset
 
@@ -148,12 +149,16 @@ def _follows(before: Line, after: Line, subject: Symbol | None = None) -> bool:
     return _same_values(before.expression, after.expression)
 
 
-def _solved_value(eq: Equation) -> Expr | None:
-    if isinstance(eq.lhs, Symbol) and not eq.rhs.free_symbols:
-        return eq.rhs
-    if isinstance(eq.rhs, Symbol) and not eq.lhs.free_symbols:
-        return eq.lhs
-    return None
+def _solved_values(eq: Equation) -> list[Expr]:
+    """The possible values in ``x = value`` (either way round). A value may use other letters
+    (``x = 2a``) but never the unknown itself. With a letter on each side (``a = x``) either
+    letter may be the unknown, so both are candidates."""
+    values = []
+    if isinstance(eq.lhs, Symbol) and eq.lhs not in eq.rhs.free_symbols:
+        values.append(eq.rhs)
+    if isinstance(eq.rhs, Symbol) and eq.rhs not in eq.lhs.free_symbols:
+        values.append(eq.lhs)
+    return values
 
 
 def _in_form(line: Line, form: str | None) -> bool:
@@ -171,11 +176,11 @@ def _final_answer_correct(line: Line, expected: dict) -> bool:
     if "solutions" in expected:
         if not line.is_equation:
             return False
-        values = [_solved_value(eq) for eq in line.equations]
-        if any(v is None for v in values):
+        candidates = [_solved_values(eq) for eq in line.equations]
+        if any(not c for c in candidates):
             return False
         wanted = FiniteSet(*(parse(s) for s in expected["solutions"]))
-        return _same_sets(FiniteSet(*values), wanted)
+        return any(_same_sets(FiniteSet(*values), wanted) for values in product(*candidates))
     if line.is_equation:
         return False
     return _same_values(line.expression, parse(expected["expression"])) and _in_form(

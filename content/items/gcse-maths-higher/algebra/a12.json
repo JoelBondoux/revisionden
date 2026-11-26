@@ -657,7 +657,7 @@
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
           "at": "2026-11-25T20:37:46Z",
-          "notes": "fact 1: maths engine proof pass; blind statement matches (\"Between 0° and 180°, \u0000tan x is undefined at x = 90^\u0000 only. This is because \\(\\tan x = \\frac{\\sin x}{\\cos x}\\), and at \\(90^\\circ\\), \\(\\cos 90^\\circ = 0\\), so the expression would involve division by zero.\")"
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"Between 0° and 180°, tan x is undefined at x = 90° only. This is because \\(\\tan x = \\frac{\\sin x}{\\cos x}\\), and at \\(90^\\circ\\), \\(\\cos 90^\\circ = 0\\), so the expression would involve division by zero.\")"
         }
       ]
     }

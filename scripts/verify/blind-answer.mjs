@@ -2,6 +2,7 @@
 // without seeing the answer. The step passes only if its answer matches, with high confidence.
 import { createPythonChecker } from '../content/maths-engine.mjs';
 import { stamp } from './record.mjs';
+import { sameAnswer } from '../../packages/core/src/answer-normalise.ts';
 import {
   meetsRounding,
   roundingOf,
@@ -114,11 +115,18 @@ function expectation(item) {
         },
       };
     }
-    case 'short_answer':
+    case 'short_answer': {
+      // The same answer normaliser as marking (packages/core, #133): maths notation such as
+      // x² for x^2, any_order and units. End punctuation is still ignored, as before.
+      const options = { anyOrder: item.answer.any_order === true, units: item.answer.units };
       return {
         expected: item.answer.accepted.join(' | '),
-        matches: (a) => item.answer.accepted.some((x) => words(x) === words(a)),
+        matches: (a) =>
+          item.answer.accepted.some(
+            (x) => words(x) === words(a) || sameAnswer(x, words(String(a)), options),
+          ),
       };
+    }
     case 'flashcard':
       return { expected: item.back, matches: (a) => words(a) === words(item.back) };
     case 'worked_maths':
