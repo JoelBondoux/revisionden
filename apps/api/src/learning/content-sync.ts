@@ -33,6 +33,10 @@ export interface ContentItem {
   checked_by: string[];
   verification: { status: string; version: number; [key: string]: unknown };
   tags?: string[];
+  /** Optional finer learning point (F5); items without one use their topic. */
+  learning_point?: string;
+  /** Optional expected answer time in seconds (F5); without it a rough time per type is used. */
+  expected_seconds?: number;
   prompt?: string;
   options?: string[];
   front?: string;
@@ -178,6 +182,8 @@ export async function syncContent(
     status: item.verification.status,
     difficulty: item.difficulty,
     tags: item.tags ?? [],
+    learningPoint: item.learning_point ?? null,
+    expectedSeconds: item.expected_seconds ?? null,
     reviewSnapshot: reviewSnapshot(item, schemes),
   }));
   if (itemRows.length > 0) {
@@ -197,6 +203,8 @@ export async function syncContent(
           status: excluded('status'),
           difficulty: excluded('difficulty'),
           tags: excluded('tags'),
+          learningPoint: excluded('learning_point'),
+          expectedSeconds: excluded('expected_seconds'),
           reviewSnapshot: excluded('review_snapshot'),
         },
       });

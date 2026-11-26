@@ -5,11 +5,12 @@
  * - Word answers: case and extra spaces are ignored (one space between words).
  * - Maths answers (anything with a digit or a maths sign): all spaces and case are ignored;
  *   the unicode minus and dashes are a minus; ×, ·, * (and x between two numbers) are one
- *   multiply sign, dropped unless it sits between two numbers; ÷ is /; superscripts are ^;
+ *   multiply sign, dropped unless it sits between two numbers or before a sign (`3n*-2`); ÷ is /; superscripts are ^;
  *   ≤ and ≥ are <= and >=; √, sqrt and sqrt( ) are the same; "and" and ; separate a list like ,.
  * - Only when the item says order does not matter (`any_order`): products and sums may be
  *   written in any order (signs stay with their terms), a list of values in any order, and an
- *   equation either way round. Coordinates in brackets and inequalities are never reordered.
+ *   equation either way round; a short run of letters (`pq`, up to 4) counts as a product.
+ *   Coordinates in brackets and inequalities are never reordered.
  * - Optional units (`units`): the answer may end with one of the item's units, or leave it off.
  */
 
@@ -36,6 +37,13 @@ const SUPERSCRIPTS: Record<string, string> = {
 
 const words = (text: string) => text.trim().toLowerCase().replace(/\s+/g, ' ');
 
+/**
+ * Maths when it has a digit or a maths sign. With any order on, a short run of letters on its
+ * own (up to 4, like `pq`) is a product too; longer words are never reordered letter by letter.
+ */
+const isMaths = (text: string, options: AnswerOptions) =>
+  MATHS.test(text) || (options.anyOrder === true && /^[a-z]{1,4}$/i.test(text.trim()));
+
 function withoutUnit(text: string, units: readonly string[] | undefined): string {
   for (const unit of units ?? []) {
     const u = unit.toLowerCase().replace(/\s+/g, '');
@@ -46,7 +54,7 @@ function withoutUnit(text: string, units: readonly string[] | undefined): string
 
 /** One written form of an answer; equal forms mean equal answers (see the rules above). */
 export function normaliseAnswer(text: string, options: AnswerOptions = {}): string {
-  if (!MATHS.test(text)) return words(text);
+  if (!isMaths(text, options)) return words(text);
   let s = text
     .toLowerCase()
     .replace(/[−–—‒]/g, '-')
@@ -63,7 +71,10 @@ export function normaliseAnswer(text: string, options: AnswerOptions = {}): stri
     .replace(/;/g, ',')
     .replace(/sqrt\(([a-z0-9.]+)\)/g, 'sqrt$1')
     .replace(/\*/g, (sign, at: number, all: string) =>
-      /\d/.test(all[at - 1] ?? '') && /\d/.test(all[at + 1] ?? '') ? sign : '',
+      (/\d/.test(all[at - 1] ?? '') && /\d/.test(all[at + 1] ?? '')) ||
+      /[+-]/.test(all[at + 1] ?? '')
+        ? sign
+        : '',
     );
   s = withoutUnit(s, options.units);
   return options.anyOrder ? anyOrder(s) : s;
@@ -71,7 +82,9 @@ export function normaliseAnswer(text: string, options: AnswerOptions = {}): stri
 
 /** True when two typed answers are the same answer under the rules above. */
 export function sameAnswer(expected: string, given: string, options: AnswerOptions = {}): boolean {
-  if (!MATHS.test(expected) && !MATHS.test(given)) return words(expected) === words(given);
+  if (!isMaths(expected, options) && !isMaths(given, options)) {
+    return words(expected) === words(given);
+  }
   return normaliseAnswer(expected, options) === normaliseAnswer(given, options);
 }
 

@@ -397,6 +397,10 @@ export const items = pgTable(
     status: text('status').notNull().default('draft'),
     difficulty: integer('difficulty'),
     tags: jsonb('tags').$type<string[]>(),
+    // Added by workstream F5: an optional finer learning point (the topic is used without one)
+    // and an optional expected answer time; without it a rough time per type is used.
+    learningPoint: text('learning_point'),
+    expectedSeconds: integer('expected_seconds'),
     // Workstream S2. The full content item (citations, checks, exemplars, linked mark scheme as
     // mark_scheme_detail) as synced, used only to build human review batches. Never served.
     reviewSnapshot: jsonb('review_snapshot').$type<Record<string, unknown>>(),
@@ -436,8 +440,35 @@ export const attempts = pgTable(
     startingTestId: uuid('starting_test_id').references((): AnyPgColumn => startingTests.id, {
       onDelete: 'set null',
     }),
+    // F5: a retry in the lesson after a wrong answer (counts at half weight for mastery).
+    retry: boolean('retry').notNull().default(false),
   },
   (t) => [index('attempts_student_created_idx').on(t.studentId, t.createdAt)],
+);
+
+/**
+ * Learning points coming back on the review ladder (workstream F5): after a wrong or slow answer
+ * a point is due the next day, then 3 days, then 7 days; it leaves the table once cleared.
+ */
+export const reviewPoints = pgTable(
+  'review_points',
+  {
+    studentId: uuid('student_id')
+      .notNull()
+      .references(() => students.id, { onDelete: 'cascade' }),
+    learningPoint: text('learning_point').notNull(),
+    topicId: text('topic_id').notNull(),
+    rung: integer('rung').notNull().default(0),
+    dueDay: date('due_day').notNull(),
+    // Ladder visits missed since last parked; after 3 the point is parked a week and flagged.
+    misses: integer('misses').notNull().default(0),
+    flagged: boolean('flagged').notNull().default(false),
+    updatedAt: updatedAt(),
+  },
+  (t) => [
+    primaryKey({ columns: [t.studentId, t.learningPoint] }),
+    index('review_points_student_due_idx').on(t.studentId, t.dueDay),
+  ],
 );
 
 export const mastery = pgTable(
