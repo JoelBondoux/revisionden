@@ -199,13 +199,24 @@
   list-style: none;
 }
 
+/* Five items share the bar equally and labels wrap, so the nav never gets wider than the screen,
+   even at 320px with text at 200% (W7). Each item is at least 56px wide and 52px tall. */
+.main-nav__list > li {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+}
+
 .main-nav__link {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
   min-width: 56px;
   min-height: 52px;
+  text-align: center;
+  overflow-wrap: anywhere;
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-sm);
   font-size: 0.75rem;
@@ -237,6 +248,28 @@
   text-align: center;
 }
 
+.main-nav__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+}
+
+.main-nav__avatar .avatar-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.main-nav__avatar--placeholder .icon {
+  width: 20px;
+  height: 20px;
+}
+
 .main-nav__link[aria-current='page'] {
   color: var(--color-primary);
   background: var(--color-primary-soft);
@@ -254,6 +287,10 @@
   .main-nav__list {
     flex-direction: column;
     gap: var(--space-2);
+  }
+
+  .main-nav__list > li {
+    flex: none;
   }
 
   .main-nav__link {

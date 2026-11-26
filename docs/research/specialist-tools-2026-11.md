@@ -108,7 +108,8 @@
 
 **DfE word lists.** The DfE subject content asks for "1,200 lexical items for foundation tier, and
 a further 500 lexical items for higher tier". It does **not** publish the full list; each board
-publishes its own, under its own copyright. Annex E has only the required words.
+publishes its own, under its own copyright. Annex E has only the required and optional words the
+grammar annexes need (corrected 2026-11-26, `docs/research/question-generation-2026-11.md`).
 
 Source: https://www.gov.uk/government/publications/gcse-french-german-and-spanish-subject-content
 (read 2026-11-25).
