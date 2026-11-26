@@ -391,6 +391,10 @@ Tags: #product #rules #limits #defaults
   kind or all reminders off. Implemented in `apps/api/src/notifications/schedule.ts`.
 - Pushes carry no text; the service worker fetches it from the API (generic text if locked).
   The reminder cron runs every 30 minutes from 06:30 to 20:30 UTC in production only, and does nothing (and does not open the database) until the VAPID keys are set.
+- A reminder goes at the first check at or after its set time (up to 30 minutes late). If no
+  later check that day falls outside quiet hours (for example 20:45 when quiet hours start at
+  21:00), it is sent at the day's last check outside quiet hours instead, so no reminder time is
+  ever skipped (`apps/api/src/notifications/ticks.ts`, `dueReminders` in `schedule.ts`).
 - Parent devices (H2): the parent turns on "Reward news" on the parent home (`/parent`), saved
   in `parent_push_subscriptions`. One push per parent-set reward when its target is met and it is
   not given (`parent_rewards.reached_notified_at`). It does not count towards the child's 2 a

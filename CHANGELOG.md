@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Fixed: a reminder time set after the last reminder check of the day (for example 20:45 when quiet hours start at 21:00) was never sent. It now goes at that last check, and the reminder settings say how reminder times work.
 - Fixed: worked answers written the everyday way, like 2³ × 3² × 5, 1.5 × 10^11, −7 or 30,000, are now understood and marked properly instead of being refused.
 - Four more effect styles now have their own sounds and vibrations: Comic Pop (punchy and bold), Garden Grow (soft woodwind and chimes), Pixel Arcade (retro game blips) and Doodle Diary (pencil scratches, page flips and pen clicks). Doodle Diary is now the starting sound style; Sticker Book becomes one you can unlock.
 - Number answers can now be typed with their unit (15 m, £9600, 100p), with a − minus sign, or as a mixed number like 1 1/3.

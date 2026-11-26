@@ -106,6 +106,22 @@ describe('runReminders', () => {
     );
   });
 
+  it('sends a reminder set after the last check of the day at that last check', async () => {
+    const s = await subscribedStudent({ streak: 3 });
+    await ctx.db
+      .insert(reminderSettings)
+      .values({ studentId: s.student.id, streakReminderTime: '20:45' });
+    // 20:30 GMT is the last check before 21:00 quiet hours; nothing would reach 20:45.
+    const lastCheck = new Date('2026-01-15T20:30:00Z');
+    const summary = await runReminders({ db: ctx.db, now: lastCheck, sender: fakeSender() });
+    expect(summary.reminders).toBe(1);
+    const log = await ctx.db
+      .select()
+      .from(reminderLog)
+      .where(eq(reminderLog.studentId, s.student.id));
+    expect(log.map((l) => l.kind)).toEqual(['streak']);
+  });
+
   it('ignores students with no push subscription', async () => {
     await makeStudentWithDevice(ctx.db);
     expect(await runReminders({ db: ctx.db, now: EVENING, sender: fakeSender() })).toEqual({

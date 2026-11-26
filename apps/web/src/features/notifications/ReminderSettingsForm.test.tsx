@@ -45,6 +45,12 @@ describe('ReminderSettingsForm', () => {
     expect(screen.getByText(/at most 2 reminders a day/i)).toBeInTheDocument();
   });
 
+  it('explains that reminders go out on the half hour, or at the last check before quiet hours', async () => {
+    setup();
+    expect(await screen.findByText(/checked every half hour/i)).toBeInTheDocument();
+    expect(screen.getByText(/last check before quiet hours/i)).toBeInTheDocument();
+  });
+
   it('saves changed settings for this student', async () => {
     const user = userEvent.setup();
     const { save } = setup();

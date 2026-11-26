@@ -103,14 +103,34 @@ export function isQuietTime(
   return weekday && inWindow(at.time, settings.weekdayQuietStart, settings.weekdayQuietEnd);
 }
 
+/**
+ * True when none of the later checks falls on the same local day outside quiet hours, so this
+ * check is the last chance to send anything still to come today.
+ */
+function isLastCheckToday(local: LocalClock, laterChecks: Date[], settings: ReminderSettings) {
+  return !laterChecks.some((t) => {
+    const next = localClock(t, settings.timeZone);
+    return next.date === local.date && !isQuietTime(next, settings);
+  });
+}
+
+/**
+ * The reminders to send now. A reminder is due from its set time. Checks only run at fixed
+ * times (crons.ts), so when `laterChecks` (the check times after now) shows that this is the
+ * last check of the day before quiet hours, a reminder set for later today is sent now rather
+ * than lost. Without `laterChecks`, only reminders whose time has passed are sent.
+ */
 export function dueReminders(
   now: Date,
   settings: ReminderSettings,
   state: ReminderState,
+  laterChecks?: Date[],
 ): DueReminder[] {
   if (!settings.enabled || state.practisedToday) return [];
   const local = localClock(now, settings.timeZone);
   if (isQuietTime(local, settings)) return [];
+  const lastChance = laterChecks !== undefined && isLastCheckToday(local, laterChecks, settings);
+  const reached = (time: string) => lastChance || local.time >= time;
 
   const due: DueReminder[] = [];
   const sent = new Set(state.sentToday);
@@ -118,7 +138,7 @@ export function dueReminders(
     settings.sessionReminders &&
     !sent.has('session') &&
     state.plannedSessionsToday > 0 &&
-    local.time >= settings.sessionReminderTime
+    reached(settings.sessionReminderTime)
   ) {
     due.push({
       kind: 'session',
@@ -130,7 +150,7 @@ export function dueReminders(
     settings.streakReminders &&
     !sent.has('streak') &&
     state.currentStreak > 0 &&
-    local.time >= settings.streakReminderTime
+    reached(settings.streakReminderTime)
   ) {
     due.push({
       kind: 'streak',
