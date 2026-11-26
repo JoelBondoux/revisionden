@@ -66,9 +66,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "openai:gpt-5.4-2026-03-05",
-          "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T11:34:58Z",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:44:56Z",
           "notes": "no problems found"
         }
       ]
@@ -141,9 +141,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "openai:gpt-5.4-2026-03-05",
-          "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T11:35:08Z",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:03:24Z",
           "notes": "no problems found"
         }
       ]
@@ -207,20 +207,20 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:59:33Z",
+          "notes": "no problems found"
+        },
+        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "openai:gpt-5.4-2026-03-05",
-          "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T11:35:18Z",
-          "notes": "no problems found"
         }
       ]
     }
@@ -295,9 +295,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "openai:gpt-5.4-2026-03-05",
-          "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T11:35:28Z",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:43:47Z",
           "notes": "no problems found"
         }
       ]
@@ -370,9 +370,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "openai:gpt-5.4-2026-03-05",
-          "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T11:35:38Z",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:44:01Z",
           "notes": "no problems found"
         }
       ]
@@ -436,20 +436,20 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:00:31Z",
+          "notes": "no problems found"
+        },
+        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "openai:gpt-5.4-2026-03-05",
-          "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T11:35:48Z",
-          "notes": "no problems found"
         }
       ]
     }
@@ -605,9 +605,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "openai:gpt-5.4-2026-03-05",
-          "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T11:35:58Z",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:03:40Z",
           "notes": "no problems found"
         }
       ]
@@ -620,7 +620,7 @@
     "difficulty": 1,
     "learning_point": "gcse-maths-h-a25-lp-nth-term-cards",
     "expected_seconds": 15,
-    "front": "The nth term of 1, 4, 9, 16, ... (use ^ for powers)",
+    "front": "The nth term of 1, 4, 9, 16, ... (use the Power key (^) for powers)",
     "back": "n^2",
     "explanation": "The terms are 1 × 1, 2 × 2, 3 × 3, 4 × 4: the square numbers. So the nth term is n^2.",
     "hint": "What special kind of numbers are 1, 4, 9 and 16?",
@@ -661,14 +661,6 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:01:27Z",
-          "notes": "model answered \"n^2\"; expected \"n^2\""
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -677,11 +669,19 @@
           "at": "2026-11-25T19:05:18Z"
         },
         {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:14:43Z",
+          "notes": "model answered \"n^2\"; expected \"n^2\""
+        },
+        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T11:36:07Z",
+          "at": "2026-11-26T11:14:44Z",
           "notes": "no problems found"
         }
       ]
@@ -753,9 +753,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "openai:gpt-5.4-2026-03-05",
-          "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T11:36:17Z",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:03:56Z",
           "notes": "no problems found"
         }
       ]

@@ -170,7 +170,7 @@
     "difficulty": 1,
     "learning_point": "gcse-maths-h-a1-lp-index-notation",
     "expected_seconds": 30,
-    "prompt": "Write p × p × p × q in index notation. Use ^ for powers.",
+    "prompt": "Write p × p × p × q in index notation. Use the Power key (^) for powers.",
     "answer": { "accepted": ["p^3q", "p^3q^1"], "any_order": true },
     "marks": 1,
     "explanation": "p × p × p is p^3, so the product is p^3q.",
@@ -225,14 +225,6 @@
           "at": "2026-11-25T19:05:18Z"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:05:33Z",
-          "notes": "model answered \"p^3q\"; expected \"p^3q | p^3q^1\""
-        },
-        {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
@@ -241,11 +233,19 @@
           "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:14:27Z",
+          "notes": "model answered \"p^3q\"; expected \"p^3q | p^3q^1\""
+        },
+        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T10:16:25Z",
+          "at": "2026-11-26T11:14:28Z",
           "notes": "no problems found"
         }
       ]
@@ -258,7 +258,7 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a1-lp-index-notation",
     "expected_seconds": 40,
-    "prompt": "Simplify 2x × 5x. Use ^ for powers.",
+    "prompt": "Simplify 2x × 5x. Use the Power key (^) for powers.",
     "answer": { "expression": "10x^2" },
     "verify": { "method": "expression", "expression": "2x * 5x" },
     "steps": ["2x * 5x", "2 * 5 * x * x", "10x^2"],
@@ -294,14 +294,6 @@
           "at": "2026-11-25T17:17:06Z"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:19:19Z",
-          "notes": "model answered \"10x^2\"; expected \"10x^2\""
-        },
-        {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
@@ -326,11 +318,19 @@
           "at": "2026-11-25T19:05:18Z"
         },
         {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:14:30Z",
+          "notes": "model answered \"10x^2\"; expected \"10x^2\""
+        },
+        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T10:13:58Z",
+          "at": "2026-11-26T11:14:31Z",
           "notes": "no problems found"
         }
       ]
@@ -843,7 +843,7 @@
     "difficulty": 1,
     "learning_point": "gcse-maths-h-a1-lp-notation-cards",
     "expected_seconds": 15,
-    "front": "Write a × a × a in index notation (use ^ for powers)",
+    "front": "Write a × a × a in index notation (use the Power key (^) for powers)",
     "back": "a^3",
     "explanation": "a × a × a is three a's multiplied together. Index notation writes this as a^3: the 3 counts the a's.",
     "hint": "Count how many a's are multiplied together; that count becomes the power.",
@@ -876,14 +876,6 @@
           "at": "2026-11-25T17:17:06Z"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:21:21Z",
-          "notes": "model answered \"a^3\"; expected \"a^3\""
-        },
-        {
           "name": "quote-check",
           "result": "pass",
           "tool": "revisionden-quote-check",
@@ -900,11 +892,19 @@
           "at": "2026-11-25T19:05:18Z"
         },
         {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:14:33Z",
+          "notes": "model answered \"a^3\"; expected \"a^3\""
+        },
+        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T10:14:12Z",
+          "at": "2026-11-26T11:14:34Z",
           "notes": "no problems found"
         }
       ]

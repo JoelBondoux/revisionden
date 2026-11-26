@@ -103,7 +103,7 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 60,
-    "prompt": "Expand and simplify (x + 5)(x - 3). Use ^ for powers.",
+    "prompt": "Expand and simplify (x + 5)(x - 3). Use the Power key (^) for powers.",
     "answer": { "expression": "x^2 + 2x - 15" },
     "verify": { "method": "expression", "expression": "(x + 5)(x - 3)", "form": "expanded" },
     "steps": ["(x + 5)(x - 3)", "x^2 - 3x + 5x - 15", "x^2 + 2x - 15"],
@@ -147,14 +147,6 @@
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:37:44Z",
-          "notes": "model answered \"x^2 + 2x - 15\"; expected \"x^2 + 2x - 15\""
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -171,11 +163,19 @@
           "at": "2026-11-25T19:05:18Z"
         },
         {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:14:36Z",
+          "notes": "model answered \"x^2 + 2x - 15\"; expected \"x^2 + 2x - 15\""
+        },
+        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T10:14:54Z",
+          "at": "2026-11-26T11:14:37Z",
           "notes": "no problems found"
         }
       ]
@@ -188,7 +188,7 @@
     "difficulty": 4,
     "learning_point": "gcse-maths-h-a4-lp-expand",
     "expected_seconds": 150,
-    "prompt": "Expand and simplify (x + 2)(x + 3)(x - 1). Use ^ for powers.",
+    "prompt": "Expand and simplify (x + 2)(x + 3)(x - 1). Use the Power key (^) for powers.",
     "answer": { "expression": "x^3 + 4x^2 + x - 6" },
     "verify": { "method": "expression", "expression": "(x + 2)(x + 3)(x - 1)", "form": "expanded" },
     "steps": [
@@ -241,14 +241,6 @@
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:38:02Z",
-          "notes": "model answered \"x^3 + 4x^2 + x - 6\"; expected \"x^3 + 4x^2 + x - 6\""
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -265,11 +257,19 @@
           "at": "2026-11-25T19:05:18Z"
         },
         {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:14:40Z",
+          "notes": "model answered \"x^3 + 4x^2 + x - 6\"; expected \"x^3 + 4x^2 + x - 6\""
+        },
+        {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-26T10:14:56Z",
+          "at": "2026-11-26T11:14:41Z",
           "notes": "no problems found"
         }
       ]
