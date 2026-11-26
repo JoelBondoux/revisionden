@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { GetHelpTile } from '../features/help';
 import { Navigate } from 'react-router-dom';
 import { useApi } from '../api/ApiContext';
 import { LoadingOrError } from '../api/LoadingOrError';
@@ -107,6 +108,7 @@ export function MapPage() {
           ))}
         </>
       )}
+      <GetHelpTile />
       {toast && <Toast message={toast} onDismiss={dismissToast} />}
     </div>
   );
