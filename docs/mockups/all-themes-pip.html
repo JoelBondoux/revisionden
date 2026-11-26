@@ -433,7 +433,7 @@ button { font: inherit; color: inherit; }
   --bar-bg: #000; --bar-border: 3px solid var(--ink); --bar-fill: repeating-linear-gradient(90deg, var(--acc1) 0 10px, transparent 10px 12px);
   --q-bg: #0a0820; --q-ink: var(--ink); --q-border: 3px solid var(--ink); --r-q: 0; --ans-border: 3px solid rgba(232, 255, 244, .6); --ans-shadow: 3px 3px 0 #000;
   --combo-bg: var(--acc2); --combo-ink: #000; --float: var(--acc1); --float-shadow: 2px 2px 0 #000; --label-ink: var(--ink);
-  --enter: px-slide; --enter-back: px-slide-back; --enter-ease: steps(6, end); }
+  --enter: px-slide; --enter-back: px-slide-back; --enter-ease: cubic-bezier(.22, 1, .36, 1); }
 .t-pixel-arcade .node-label, .t-pixel-arcade .here, .t-pixel-arcade .streak, .t-pixel-arcade .goals li, .t-pixel-arcade .play .t small, .t-pixel-arcade .cta .t small { font-family: 'Press Start 2P', monospace; font-size: 8px; line-height: 1.6; }
 .t-pixel-arcade .chip, .t-pixel-arcade .week li { font-size: 9px; }
 .t-pixel-arcade .question { font-size: 18px; }
@@ -554,24 +554,6 @@ button { font: inherit; color: inherit; }
 .node.current { box-shadow: 0 0 0 var(--h2w, 0px) var(--h2, transparent), var(--node-cur-shadow, var(--node-shadow, 0 0 transparent)); }
 .node.locked { box-shadow: 0 0 0 var(--h2w, 0px) var(--h2, transparent), var(--node-lock-shadow, 0 0 transparent); }
 .node:focus-visible { outline: 4px solid var(--focus, #1a73e8); outline-offset: calc(var(--h2w, 0px) + 3px); }
-.t-sticker-book .node.done { --h1: #2f2a3d; }
-.t-sticker-book .node.current { --h1: #2f2a3d; }
-.t-sticker-book .node.locked { --h1: #2f2a3d; }
-.t-pop-burst .node.done { --h1: #1a1628; }
-.t-pop-burst .node.current { --h1: #1a1628; }
-.t-pop-burst .node.locked { --h1: #1a1628; }
-.t-turbo-drive .node.done { --h1: #20232c; }
-.t-turbo-drive .node.locked { --h1: #f4f6fb; }
-[data-mode='dark'] .t-pop-burst .node.done { --h1: #1a1628; }
-[data-mode='dark'] .t-pop-burst .node.current { --h1: #1a1628; }
-[data-mode='dark'] .t-pop-burst .node.locked { --h1: #1a1628; }
-[data-mode='dark'] .t-comic-pop .node.done { --h1: #24204a; }
-[data-mode='dark'] .t-comic-pop .node.current { --h1: #24204a; }
-[data-mode='dark'] .t-turbo-drive .node.done { --h1: #20232c; }
-[data-mode='dark'] .t-turbo-drive .node.locked { --h1: #f4f6fb; }
-.t-rainbow-parade .node.done { --h1: #ffffff; }
-.t-rainbow-parade .node.locked { --h1: #2a2140; }
-[data-mode='dark'] .t-rainbow-parade .node.done { --h1: #2a2140; }
 /* ---------- Avatar in its ring, head leaning out over the top (mirrors Pip, a little smaller) ---------- */
 .avatar-svg .disc { fill: var(--pip-disc, #fff4d6); }
 .avatar-svg .ring { fill: none; stroke: var(--pip-ring, currentColor); stroke-width: 4.5; }
@@ -660,7 +642,7 @@ button { font: inherit; color: inherit; }
   --bar-fx-to: 16px 4px, 24px 5px; --bar-fx-anim: bar-roll 1.8s ease-in-out infinite alternate; }
 /* Pixel Arcade: segments with a marching chase light */
 .t-pixel-arcade { --bar-fx: repeating-linear-gradient(90deg, transparent 0 10px, rgba(0, 0, 0, .45) 10px 12px) 0 0 / auto, linear-gradient(90deg, transparent 0 40%, rgba(255, 255, 255, .7) 40% 60%, transparent 60%) 0 0 / 60px 100%;
-  --bar-fx-to: 0 0, 60px 0; --bar-fx-anim: bar-roll .9s steps(5) infinite; }
+  --bar-fx-to: 0 0, 60px 0; --bar-fx-anim: bar-roll 1.1s linear infinite; }
 /* Petal Glow: drifting petals plus sparkle */
 .t-petal-glow { --bar-fx: radial-gradient(ellipse 3.5px 2px, rgba(255, 255, 255, .7) 96%, transparent) 0 0 / 18px 16px, radial-gradient(circle, #fff 1px, transparent 1.6px) 9px 5px / 18px 16px;
   --bar-fx-to: 18px -6px, 27px -11px; --bar-fx-anim: bar-roll 2.2s linear infinite, bar-twinkle 1.6s ease-in-out infinite; }
@@ -696,12 +678,15 @@ button { font: inherit; color: inherit; }
   --node-bg: #1f3527; --node-border: 3px solid #b5e8bc; --node-done-bg: #1f3527; --node-done-border: 3px solid #b5e8bc; --node-cur-bg: #24402c; --node-cur-border: 3px solid #b5e8bc;
   --node-cur-shadow: 0 0 0 4px #e8c94a, 0 0 18px rgba(255, 210, 80, .7); --node-lock-bg: #2b2a22; --node-lock-border: 3px solid #d8c79c; --node-shadow: none; --node-lock-shadow: none; }
 
-.t-petal-glow { --node-bg: #fff4fa; --node-border: 3px solid #6e2a58; --node-shadow: 0 3px 10px rgba(162, 69, 127, .25);
-  --node-done-bg: #ffe3f1; --node-done-border: 3px solid #6e2a58; --node-cur-bg: #ffffff; --node-cur-border: 3px solid #5a24b0;
-  --node-cur-shadow: 0 0 0 4px rgba(183, 156, 255, .55), 0 0 18px rgba(167, 123, 255, .8); --node-lock-bg: #f5eef4; --node-lock-border: 3px solid #5e4a60; --node-lock-shadow: none; --node-lock-op: 1; }
-[data-mode='dark'] .t-petal-glow { --node-bg: #3a2140; --node-border: 3px solid #ffc6e5; --node-done-bg: #4a2552; --node-done-border: 3px solid #ffc6e5;
-  --node-cur-bg: #3a2140; --node-cur-border: 3px solid #d9c4ff; --node-lock-bg: #2c1c30; --node-lock-border: 3px solid #c9b3cc; --node-shadow: none; }
-
+.t-petal-glow { --node-bg: transparent; --node-border: 0; --node-shadow: none; --node-done-bg: transparent; --node-done-border: 0; --node-cur-bg: transparent; --node-cur-border: 0;
+  --node-cur-shadow: none; --node-lock-bg: transparent; --node-lock-border: 0; --node-lock-shadow: none; --node-lock-op: 1; --petal-edge: #6e2a58; --petal-shade: rgba(110, 42, 88, .35); }
+[data-mode='dark'] .t-petal-glow { --petal-edge: #ffd6ec; --petal-shade: rgba(0, 0, 0, .5); --road-done: #a8306f; }
+.t-petal-glow .node { width: 58px; height: 58px; margin: -29px 0 0 -29px; outline: 0; }
+.t-petal-glow .node.current { width: 74px; height: 74px; margin: -37px 0 0 -37px; }
+.t-petal-glow .node svg { filter: drop-shadow(0 2px 3px var(--petal-shade)); }
+.t-petal-glow .node.current svg { filter: drop-shadow(0 0 8px rgba(167, 123, 255, .9)) drop-shadow(0 2px 3px var(--petal-shade)); }
+.t-petal-glow .node .edge { stroke: var(--petal-edge); }
+.t-petal-glow .node:focus-visible { outline: 4px solid var(--focus, #1a73e8); outline-offset: 2px; }
 .t-starlight { --node-bg: #1a2156; --node-border: 2.5px solid #c9c2ff; --node-shadow: 0 0 10px rgba(201, 194, 255, .35);
   --node-done-bg: #1a2156; --node-done-border: 2.5px solid #fff6b0; --node-cur-bg: #101a4a; --node-cur-border: 3px solid #4be3ff;
   --node-cur-shadow: 0 0 0 3px rgba(75, 227, 255, .35), 0 0 18px #4be3ff; --node-lock-bg: #232745; --node-lock-border: 2.5px dashed #d4d6ff; --node-lock-shadow: none; --node-lock-op: 1; }
@@ -712,6 +697,15 @@ button { font: inherit; color: inherit; }
 .t-doodle-diary .node.locked { color: #5f5c70; }
 [data-mode='dark'] .t-doodle-diary { --node-bg: #2a2838; --node-done-bg: #4a4320; --node-done-ink: var(--hi); --node-cur-bg: #2a2838; --node-lock-bg: #23212f; --node-lock-border: 2.5px dashed #b9b5cc; --node-shadow: none; }
 [data-mode='dark'] .t-doodle-diary .node.locked { color: #b9b5cc; }
+
+/* Revision 4b: each style's own art carries its contrast (no extra rings) */
+.t-sticker-book { --node-shadow: 0 0 0 2.5px #3b3360, 3px 4px 0 rgba(0, 0, 0, .14); --node-cur-shadow: 0 0 0 2.5px #3b3360, 3px 4px 0 rgba(0, 0, 0, .14); --node-lock-shadow: 0 0 0 2.5px #3b3360; }
+.t-pop-burst { --node-border: 3px solid #fff; --node-done-border: 3px solid #fff; --node-cur-border: 3px solid #fff; --node-lock-bg: #c9b6f5; --node-lock-border: 3px solid #fff; --node-lock-op: 1; --node-ink: #4a1fa8;
+  --node-shadow: 0 0 0 2.5px #4a1fa8, 0 4px 0 rgba(90, 47, 192, .6); --node-cur-shadow: 0 0 0 2.5px #4a1fa8, 0 0 16px rgba(255, 255, 255, .8); --node-lock-shadow: 0 0 0 2.5px #4a1fa8; }
+.t-turbo-drive, [data-mode='dark'] .t-turbo-drive { --node-done-border: 3px solid #0b0c10; --node-lock-border: 3px solid #8a90a2; }
+.t-rainbow-parade { --road-done: #c79be0; --node-lock-border: 3px dashed #3d3557; }
+[data-mode='dark'] .t-rainbow-parade { --road-done: #6d3f8c; }
+[data-mode='dark'] .t-comic-pop { --node-done-border: 3px solid #111; --node-cur-border: 3px solid #111; }
 </style>
 </head>
 <body>
@@ -1090,8 +1084,8 @@ const SEED_PACKET = '<g transform="rotate(-10 6 -2)"><path d="M6 1 V-6" stroke="
 const BUSH = '<g stroke="#2f6b3a" stroke-width="1.2"><circle cx="-6.5" cy="-5" r="7" fill="#4f9d55"/><circle cx="6.5" cy="-6" r="7.5" fill="#5cb85c"/><circle cx="0" cy="-11.5" r="8" fill="#6cc46a"/></g><g stroke="#6e3519" stroke-width=".6"><circle cx="-5" cy="-9" r="2" fill="#ff8fb1"/><circle cx="4" cy="-14" r="2" fill="#ffd166"/><circle cx="7" cy="-5" r="2" fill="#ff6f91"/><circle cx="-1" cy="-4" r="1.8" fill="#fff"/></g>';
 const BLOOMS = ['#ff6f91', '#ffb347', '#b28dff', '#ff8fb1', '#6ec6ff', '#ffe066'];
 /* Petal Glow: a closed bud for locked topics */
-const PETAL_BUD = '<svg viewBox="-20 -20 40 40"><path d="M0 14 V2" stroke="#9a86a6" stroke-width="2.4" stroke-linecap="round"/><path d="M0 4 C-7 0 -6 -10 0 -14 C6 -10 7 0 0 4Z" fill="#e6d6ee" stroke="#9a86a6" stroke-width="1.4"/>' + LOCK_BADGE + '</svg>';
-const PETAL_T = (p, c, badge = '') => PETAL(p, c).replace('</svg>', `${badge}</svg>`).replace('viewBox="-20 -20 40 40"', 'viewBox="-23 -23 46 46"');
+const PETAL_N = (p, c, badge = '') => `<svg viewBox="-21 -21 42 42"><g class="edge" fill="${p}" stroke-width="1.8" stroke-linejoin="round">${[0, 60, 120, 180, 240, 300].map((a) => `<ellipse rx="6.6" ry="10.5" cy="-8.6" transform="rotate(${a})"/>`).join('')}</g><g fill="${p}">${[0, 60, 120, 180, 240, 300].map((a) => `<ellipse rx="5.4" ry="9.4" cy="-8.6" transform="rotate(${a})"/>`).join('')}</g><g fill="#fff" opacity=".55">${[0, 60, 120, 180, 240, 300].map((a) => `<ellipse rx="1.6" ry="4.5" cy="-11" transform="rotate(${a})"/>`).join('')}</g><circle r="6" fill="${c}" class="edge" stroke-width="1.6"/>${badge}</svg>`;
+const PETAL_BUD = '<svg viewBox="-21 -21 42 42"><path d="M0 16 V3" class="edge" stroke-width="2.6" stroke-linecap="round" fill="none"/><path d="M0 6 C-9 1 -8 -12 0 -17 C8 -12 9 1 0 6Z" class="edge" fill="#eadcf2" stroke-width="1.8"/><path d="M0 5 C-3 -2 -3 -9 0 -15" fill="none" stroke="#c7b2d6" stroke-width="1.4"/>' + LOCK_BADGE + '</svg>';
 /* Starlight: a star inside a night-sky tile */
 const STAR_T = (fill, glow, badge = '') => `<svg viewBox="-24 -24 48 48"><path d="M0 -15 l4.4 9.3 10.2 1.1 -7.6 6.9 2.1 10.1 -9.1 -5.2 -9.1 5.2 2.1 -10.1 -7.6 -6.9 10.2 -1.1z" fill="${fill}" ${glow ? `style="filter:drop-shadow(0 0 ${glow}px ${fill})"` : 'stroke="#8d8fbf" stroke-width="1.6"'}/>${badge}</svg>`;
 /* Each theme's path nodes: done, current, locked and the unit quest at the end. */
@@ -1103,7 +1097,7 @@ const NODES = {
   'comic-pop': (st) => st === 'done' ? IC.check('#fff') : st === 'current' ? PIP_MINI() : st === 'quest' ? IC.trophy() : IC.lock(),
   'garden-grow': (st, i = 0) => st === 'done' ? POT(BLOOM(BLOOMS[i % BLOOMS.length])) : st === 'current' ? POT(SEEDLING) : st === 'quest' ? POT(BUSH, LOCK_BADGE) : POT(SEED_PACKET, LOCK_BADGE),
   'pixel-arcade': (st) => st === 'done' ? PX_STAR : st === 'current' ? PX_FOX : st === 'quest' ? PX_CHEST : PX_LOCK,
-  'petal-glow': (st) => st === 'done' ? PETAL_T('#ff7fb8', '#ffe07a') : st === 'current' ? PETAL_T('#a77bff', '#fff') : st === 'quest' ? PETAL_T('#5fd3b8', '#ffe07a', LOCK_BADGE) : PETAL_BUD,
+  'petal-glow': (st) => st === 'done' ? PETAL_N('#ff6fae', '#ffe07a') : st === 'current' ? PETAL_N('#9a6bff', '#fff6b0') : st === 'quest' ? PETAL_N('#4fcfb0', '#ffe07a', LOCK_BADGE) : PETAL_BUD,
   'turbo-drive': (st) => st === 'done' ? CHEV('#15171d') : st === 'current' ? BOLT('#22d3ee') : st === 'quest' ? IC.trophy('#ff7a1a') : IC.lock('#8a90a2'),
   'rainbow-parade': (st) => st === 'done' ? IC.check('currentColor') : st === 'current' ? PIP_MINI() : st === 'quest' ? IC.star('none', 'currentColor', 2.2) : IC.lock('currentColor'),
 };
@@ -1343,7 +1337,7 @@ function answer(b) {
     $$('#answers .ans').forEach((x) => { x.disabled = true; });
     b.classList.add('right');
     snd('correct'); combo++; burstAt(b, { count: 18 });
-    setTimeout(() => { snd('combo', combo - 3); if (combo >= 4) burstAt($('#combo'), { count: 10 + combo, power: 0.6 + combo * 0.1 }); }, 260);
+    setTimeout(() => { snd('combo', combo - 3); if (combo >= 4) burstAt(b, { count: 8 + combo * 2, power: 0.8 + combo * 0.1 }); }, 260);
     pipAnim('a-nod', 900); ava.react('nod');
     $('#feedback').textContent = 'Right! ¾ − ½ = ¾ − ²⁄₄ = ¼';
     $('#combo').textContent = `×${combo}`;
@@ -1503,7 +1497,7 @@ const FX = {
   starlight: { make: () => STAR4(pick(['#fff6b0', '#4be3ff', '#ffffff', '#c7b8ff'])), size: [10, 20], g: -40, speed: [60, 190], spin: 90, dur: [1100, 1700], ring: '#4be3ff' },
   'comic-pop': { make: () => DOT(pick(['#ff3b30', '#1e9bff', '#ffe14d', '#111'])), size: [6, 12], g: 300, speed: [220, 420], spin: 0, dur: [600, 900], word: ['POW!', 'ZAP!', 'WOW!', 'BAM!'], ring: '#111' },
   'garden-grow': { make: () => (Math.random() < 0.6 ? PETAL_P(pick(['#ff8fb1', '#ffd1e0', '#ffffff', '#ffd166'])) : LEAF(pick(['#3fae5a', '#7ccf6b']))), size: [12, 18], g: 90, speed: [100, 230], spin: 260, sway: 28, dur: [1300, 1900], ring: '#3fae5a' },
-  'pixel-arcade': { make: () => PIXEL(pick(['#39ff88', '#ff3cac', '#ffd23f', '#4be3ff'])), size: [6, 10], g: 520, speed: [180, 380], spin: 0, steps: 10, dur: [700, 1000], ring: '#39ff88' },
+  'pixel-arcade': { make: () => PIXEL(pick(['#39ff88', '#ff3cac', '#ffd23f', '#4be3ff'])), size: [6, 10], g: 520, speed: [180, 380], spin: 0, dur: [700, 1000], ring: '#39ff88' },
   'petal-glow': { make: () => (Math.random() < 0.65 ? PETAL_P(pick(['#ffb6d8', '#d9c4ff', '#ffe07a', '#bff0e3'])) : STAR4('#ffffff')), size: [10, 18], g: 40, speed: [80, 200], spin: 180, sway: 20, dur: [1300, 1900], ring: '#ffb6d8' },
   'turbo-drive': { make: () => STREAK(pick(['#ff7a1a', '#22d3ee', '#ffffff'])), size: [18, 30], g: 0, speed: [320, 560], spin: 0, align: true, dur: [450, 700], ring: '#22d3ee' },
   'rainbow-parade': { make: () => (Math.random() < 0.55 ? GLINT(pick(RAINBOW)) : CONF(pick(RAINBOW))), size: [8, 16], g: 300, speed: [180, 380], spin: 540, twinkle: true, dur: [1100, 1600], ring: '#732982' },
@@ -1530,7 +1524,7 @@ function burst(x, y, { count = 16, power = 1, word = false } = {}) {
     };
     const ks = fx.twinkle ? [0, 0.1, 0.22, 0.35, 0.5, 0.65, 0.8, 1] : [0, 0.1, 0.35, 0.65, 1];
     const frames = ks.map((k, j) => ({ transform: at(k), opacity: (k > 0.7 ? 1 - (k - 0.7) / 0.3 : 1) * (fx.twinkle && j % 2 ? 0.35 : 1), offset: k }));
-    p.animate(frames, { duration: t * 1000, easing: fx.steps ? `steps(${fx.steps})` : 'linear' }).onfinish = () => p.remove();
+    p.animate(frames, { duration: t * 1000, easing: 'linear' }).onfinish = () => p.remove();
   }
   if (fx.word && (word || power >= 1.3)) {
     const w = document.createElement('span'); w.className = 'word'; w.textContent = pick(fx.word); layer.appendChild(w);

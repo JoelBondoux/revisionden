@@ -37,8 +37,10 @@ const over = ([r, g, b, a], bg) => [r * a + bg[0] * (1 - a), g * a + bg[1] * (1 
           const cs = getComputedStyle(n); const out = [];
           const oc = parse(cs.outlineColor);
           if (parseFloat(cs.outlineWidth) > 0 && cs.outlineStyle !== 'none' && oc?.[3] > 0.5) out.push({ by: 'halo', c: [oc] });
-          const ring = cs.boxShadow.match(/^(rgba?\([^)]*\)) 0px 0px 0px ([\d.]+)px/);
-          if (ring && parseFloat(ring[2]) >= 2 && parse(ring[1])?.[3] > 0.5) out.push({ by: 'ring', c: [parse(ring[1])] });
+          for (const m of cs.boxShadow.matchAll(/(rgba?\([^)]*\)) 0px 0px 0px ([\d.]+)px/g)) { // solid edge rings built into the tile
+            const rc = parse(m[1]); if (parseFloat(m[2]) >= 2 && rc?.[3] > 0.5) { out.push({ by: 'edge ring', c: [rc] }); break; } }
+          const art = n.querySelector('svg .edge'); // the node art's own outline (e.g. outlined petals)
+          if (art) { const ac = parse(getComputedStyle(art).stroke); if (ac && ac[3] > 0.5) out.push({ by: 'art outline', c: [ac] }); }
           const bc = parse(cs.borderTopColor);
           if (parseFloat(cs.borderTopWidth) >= 2 && bc?.[3] > 0.5) out.push({ by: 'border', c: [bc] });
           if (cs.backgroundImage !== 'none') out.push({ by: 'fill', c: colorsIn(cs.backgroundImage) });
