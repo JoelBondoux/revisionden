@@ -16,14 +16,20 @@ function memoryStorage(initial: Record<string, string> = {}) {
 
 describe('sound settings', () => {
   it('default to sound on, medium volume and tap sounds off', () => {
-    expect(DEFAULT_SOUND_SETTINGS).toEqual({ enabled: true, volume: 'medium', taps: false });
+    expect(DEFAULT_SOUND_SETTINGS).toEqual({
+      enabled: true,
+      volume: 'medium',
+      taps: false,
+      vibration: true,
+    });
     expect(loadSoundSettings(memoryStorage())).toEqual(DEFAULT_SOUND_SETTINGS);
   });
 
   it('are saved on this device and read back', () => {
     const storage = memoryStorage();
-    saveSoundSettings(storage, { enabled: false, volume: 'high', taps: true });
-    expect(loadSoundSettings(storage)).toEqual({ enabled: false, volume: 'high', taps: true });
+    const saved = { enabled: false, volume: 'high' as const, taps: true, vibration: false };
+    saveSoundSettings(storage, saved);
+    expect(loadSoundSettings(storage)).toEqual(saved);
     expect(storage.data.has(SOUND_KEY)).toBe(true);
   });
 

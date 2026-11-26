@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import type { MapTopic as Topic } from '@revisionden/core';
+import { nameStartsWithText } from '../test/nameMatchesText';
 import { ChallengeHex, TopicHex } from './TopicHex';
 
 function renderHex(topic: Topic, onLocked = vi.fn()) {
@@ -32,7 +33,7 @@ describe('TopicHex', () => {
 
   it('shows a weak spot with its warning label', () => {
     renderHex({ ...base, status: 'weak', mastery: 38 });
-    const hex = screen.getByRole('link', { name: 'Surds, weak spot, 38% mastered' });
+    const hex = screen.getByRole('link', { name: 'Surds, weak, 38% mastered' });
     expect(hex).toHaveClass('hex--weak');
     expect(hex).toHaveTextContent('WEAK · 38%');
   });
@@ -57,7 +58,9 @@ describe('ChallengeHex', () => {
         />
       </MemoryRouter>,
     );
-    const hex = screen.getByRole('button', { name: 'Number challenge, unlocks at 80% mastered' });
+    const hex = screen.getByRole('button', {
+      name: 'Challenge, unlocks at 80% mastered in Number',
+    });
     expect(hex).toHaveTextContent('Unlocks at 80%');
     await userEvent.click(hex);
     expect(onLocked).toHaveBeenCalledWith('Reach 80% mastery in Number to unlock the challenge.');
@@ -73,9 +76,37 @@ describe('ChallengeHex', () => {
         />
       </MemoryRouter>,
     );
-    expect(screen.getByRole('link', { name: 'Number challenge' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Challenge, Number' })).toHaveAttribute(
       'href',
       '/learn/topic/number-challenge',
     );
   });
+});
+
+describe('hex names', () => {
+  it.each(['mastered', 'in-progress', 'weak', 'locked'] as const)(
+    'a %s topic is named starting with the words on it, for voice control',
+    (status) => {
+      renderHex({ ...base, status, mastery: status === 'mastered' ? 100 : 38 });
+      const hex = screen.getByRole(status === 'locked' ? 'button' : 'link');
+      expect(hex.getAttribute('aria-label')).toMatch(/^Surds, /);
+      expect(nameStartsWithText(hex)).toBe(true);
+    },
+  );
+
+  it.each([true, false])(
+    'a challenge (unlocked: %s) is named starting with its words',
+    (unlocked) => {
+      render(
+        <MemoryRouter>
+          <ChallengeHex
+            unitTitle="Number"
+            challenge={{ lessonId: 'number-challenge', unlockAtPercent: 80, unlocked }}
+            onLocked={() => {}}
+          />
+        </MemoryRouter>,
+      );
+      expect(nameStartsWithText(screen.getByRole(unlocked ? 'link' : 'button'))).toBe(true);
+    },
+  );
 });

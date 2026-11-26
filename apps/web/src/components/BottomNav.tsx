@@ -35,6 +35,9 @@ export function BottomNav({ cardsDue = 0 }: BottomNavProps) {
                 className="main-nav__link"
                 aria-label={badge !== null ? `${label}, ${badge} due` : undefined}
               >
+                {/* The label comes first in the page, so the name starts with it; CSS still shows
+                    the icon (and its badge) first. */}
+                <span>{label}</span>{' '}
                 <span className="main-nav__icon">
                   <Icon />
                   {badge !== null && (
@@ -43,7 +46,6 @@ export function BottomNav({ cardsDue = 0 }: BottomNavProps) {
                     </span>
                   )}
                 </span>
-                <span>{label}</span>
               </NavLink>
             </li>
           );

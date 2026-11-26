@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { meetsRounding, roundingOf, shownPrecision, withoutSubject } from './answer-format';
+import {
+  meetsRounding,
+  roundingOf,
+  shownPrecision,
+  withoutSubject,
+  withoutThousands,
+} from './answer-format';
 
 describe('answers that state their subject', () => {
   it('reads "t = RHS" as RHS when t is the declared subject, ignoring spaces', () => {
@@ -76,5 +82,27 @@ describe('rounded answers', () => {
     expect(roundingOf({ decimal_places: 2 })).toEqual({ decimal_places: 2 });
     expect(roundingOf({ significant_figures: 3 })).toEqual({ significant_figures: 3 });
     expect(roundingOf({})).toBeNull();
+  });
+});
+
+describe('UK thousands separators', () => {
+  it('drops a space, thin space, non-breaking space or comma between groups of exactly three digits', () => {
+    expect(withoutThousands('38 700')).toBe('38700');
+    expect(withoutThousands('38\u2009700')).toBe('38700');
+    expect(withoutThousands('38\u00a0700')).toBe('38700');
+    expect(withoutThousands('38\u202f700')).toBe('38700');
+    expect(withoutThousands('38,700')).toBe('38700');
+    expect(withoutThousands(' -1 234 567.25 ')).toBe('-1234567.25');
+    expect(withoutThousands('1,234,567')).toBe('1234567');
+  });
+
+  it('leaves anything else alone, so "3 87" stays two numbers', () => {
+    expect(withoutThousands('3 87')).toBe('3 87');
+    expect(withoutThousands('38 70')).toBe('38 70');
+    expect(withoutThousands('3870 0')).toBe('3870 0');
+    expect(withoutThousands('1234 567')).toBe('1234 567');
+    expect(withoutThousands('38,700 000')).toBe('38,700 000'); // mixed separators
+    expect(withoutThousands('1 234.567 8')).toBe('1 234.567 8'); // no grouping after the point
+    expect(withoutThousands('3/4')).toBe('3/4');
   });
 });

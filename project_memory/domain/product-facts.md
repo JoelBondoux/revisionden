@@ -169,6 +169,12 @@ Tags: #product #rules #limits #defaults
 - Learning screens: `/learn/subject/:id` (topics, mastery, weak spots), `/learn/subject/:id/start`
   (starting test), `/learn/subject/:id/practice`, `/learn/topic/:id`, `/learn/command-words`,
   `/cards` (flashcards: Due today, All decks, My cards; 3D flip card, reduced motion respected).
+  F7: the card turns both ways by tap, Space or Enter without a new attempt; a new card never
+  shows its answer while turning; "Explain" steps come only from verified content (worked steps,
+  else inline mark scheme, then `back_formula` and conditions, then the answer, then the verified
+  `explanation` as "Why: …"), hidden when there are none (`learning_point` is never used). On
+  2026-11-26, 89 of 287 marked items had none of these: 75 of 78 flashcards, 13 short answers and
+  1 numeric (`gcse-maths-h-n7-0001`).
 - Installable PWA. Main nav tabs: Map, Cards, Plan, Papers, Progress (bottom bar on phones, side
   rail from 768px wide). Welcome and lessons hide the nav to keep focus. Only a linked student
   device gets the student nav: elsewhere (signed out, or a parent) About, Policies, Feedback and
@@ -191,6 +197,10 @@ Tags: #product #rules #limits #defaults
   its open topics. Next mission: weakest weak spot, else first topic not mastered, else review
   the weakest mastered topic (5 minutes). A unit id opens its challenge lesson (all its topics).
   Implemented in `packages/core/src/map.ts`.
+- Subjects with no questions yet (F8, RD-MBXKTC): the map defaults to the first enrolled subject
+  with questions and answers `status: "coming_soon"` (plus `subjectId` and `subjects` with
+  `hasContent` for the switcher) for one with none; 404 `no_subject` only with no subject at all
+  or an unknown id. The web shows "Questions for <subject> are on their way." and a switcher.
 - Mascot: Pip, an angular geometric fox (orange `#FF7A2F`). Brand violet `#6C47F5`; font Nunito,
   self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
 - Works offline for the app shell; API calls are never cached. Pages always come fresh from the
@@ -322,13 +332,18 @@ Tags: #product #rules #limits #defaults
   `tolerance`): only the value rounded half up and written to that accuracy is right (28.274 and
   28.270 are wrong for 2 dp). Validation requires the field whenever the question asks for
   rounding.
+- Numeric answers accept a UK thousands separator: a space (also thin or non-breaking) or a comma
+  between groups of exactly three digits (`38 700`, `38,700`); `3 87` is wrong, not 387 (S2, rule
+  in PRODUCT_RULES "Learning loop").
 - Typed short answers (F6, `packages/core/src/answer-normalise.ts`; rules in PRODUCT_RULES
   "Learning loop"): spaces, case, minus signs, multiply and divide signs, superscripts, ≤/≥ and √
   are normalised, so content lists one written form. `answer.any_order: true` also accepts
   commuted products and sums, reordered lists and swapped equation sides (never coordinates or
   inequalities); `answer.units` lists optional units. A multiply sign before a sign is kept
   (`3n × -2` is not `3n - 2`). The maths engine accepts a solved value in other letters (`x = 2a`,
-  and `a = x` either way round).
+  and `a = x` either way round). Repeated alternatives on a final line count once, and a line
+  with more than 64 ways to read it (`MAX_READINGS` in `services/maths/app/working.py`) is
+  marked wrong, so a long run of `a = x` cannot tie up the engine (#151).
 
 ## Reminders
 
@@ -396,9 +411,9 @@ Tags: #product #rules #limits #defaults
   change; original art only, no stock photos or AI-generated images.
   Links use the app's J7 styles (buttons, tiles, chips, bold inline links), never plain underlined
   text (owner, 2026-11-25). Light or dark follows the device only (no switch), with the app's dark
-  theme colours. Behind every page sits the app's doodle tile (`apps/web/src/design/doodles.svg`,
-  read at build time, 240px, 7% ink), always on with no switch, hidden for high contrast and forced
-  colours.
+  theme colours. Behind every page sits the app's doodle tile (`apps/web/src/design/doodle-scatter.svg`,
+  read at build time and served as `/doodle-scatter.svg`, 1080px, 7% ink), always on with no switch,
+  hidden for high contrast and forced colours.
 - Production passkeys use the RP ID `revisionden.com`; OAuth callbacks are on the API host, so the
   move to `app.` needed no change in Google or Microsoft. Dev and staging passkeys use their own
   hosts (`dev.revisionden.com`, `staging.revisionden.com`), so they work only there.
@@ -625,6 +640,14 @@ Tags: #product #rules #limits #defaults
 - Original Web Audio sounds, no files. Header quick mute and Settings (on/off, volume, tap sounds
   off by default), per device; follows the iOS silent switch where possible. No correct/wrong
   sounds in Test mode before submit. Sound is never the only signal. Workstream U.
+- Style sounds and haptics (U6): every animation fires a feedback event (15: buttonPress, cardFlip,
+  correct, wrong, combo, xpTick, ringFill, rewardWobble, rewardOpen, rewardUnlock, setComplete,
+  levelUp, homeEnter, nodePop, locked) that plays the active effect style's synthesised sound plus a vibration. Packs: Sticker
+  Book (default), Pop Burst, Starlight; unknown styles use Sticker Book. Vibration switch on by
+  default and independent of mute; no vibration on iPhone/iPad browsers (no Vibration API).
+  Throttled: ticks and map nodes 70 ms, ring fill 90 ms, ≤10 sounds/s, buzzes ≥100 ms apart and ≤4/s. Reduced motion: half
+  loudness, shorter buzzes. `apps/web/src/features/sound/feedback/`; `HapticsDriver` lets a native
+  wrapper add real haptics later.
 - Reward sounds scale with rarity (common, rare, epic, legendary; 4+ variations each, no repeat
   in a row); milestone ladders and levels climb in pitch and fullness; one sound for several
   rewards at once; legendary at most 3 s and skippable (owner, 2026-11-25; U4).
@@ -759,6 +782,9 @@ Tags: #product #rules #limits #defaults
   out for now: Papyrus (site redirects to an administrator's page), Mind, Carers Trust (bot checks block automated checking). Kooth ("Soluna by Kooth") was added for
   students under feeling low: website only, with the owner's note "Free in some parts of the UK.
   Check if it's available where you live." (a `note` needs `confirmed_by`). See `docs/PRODUCT_RULES.md` (Get help).
+- Logos: none shown yet. No organisation's own guidance clearly permits it, so each service has a
+  neutral icon and its exact name. Findings and permission-request template:
+  `docs/LOGO_PERMISSIONS.md` (W4).
 - Private: the page uses its own layout with no API calls (no cards-due badge, no sounds), loads
   nothing from other sites, and opens websites with `rel="noreferrer"`. Quick exit replaces the
   history entry and goes to `/map`. Service worker v3 precaches `/help` and the built files.
@@ -807,8 +833,8 @@ Tags: #product #rules #limits #defaults
   1080px dense sticker sheet: 8 hero doodles, 420 medium (160 motifs, no copy of a motif within
   240px of itself) and 1,600 tiny fillers, no two outlines closer than 4px plus the line, tilted up to 25°, 1.4px lines, about 35KB gzipped; generated from a fixed seed by `doodleTile.ts`, used as
   a CSS mask at 7% ink; J8b), hidden with `prefers-contrast: more` and
-  forced colours. The older 240px grid tile `doodles.svg` is kept only for the public site until it
-  moves to the new tile.
+  forced colours. The public site uses the same tile (the older 240px grid tile `doodles.svg` was
+  removed in M7).
   Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).
 - Effect styles (J10a, built): one active at a time; it restyles the game-feel moments, Home
   (topic map) and Rewards. Default and always available: Sticker Book (`sticker-book`). Registry
@@ -822,7 +848,8 @@ Tags: #product #rules #limits #defaults
   Burst, Garden Grow, Starlight, Comic Pop, Pixel Arcade. Unlocked list:
   `GET /v1/student/rewards/effect-styles`. Picker: Settings → Effect style (students only), with
   locked styles showing a preview and how to unlock them. Proposed new free default: Doodle Diary
-  (`doodle-diary`), with the owner.
+  (`doodle-diary`), with the owner. Lesson surround (J10a2): follows the style; the question and answers
+  sit on `.lesson__stage`, kept plain (Sticker Book: warm paper, night paper in dark mode).
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by
