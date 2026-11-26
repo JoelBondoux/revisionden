@@ -323,6 +323,13 @@ Product owner decision, 2026-11-25: **parent view only**.
   draws on every topic in the unit). The next mission is the weakest weak spot, else the first
   topic not yet mastered, else a review of the weakest mastered topic. Implemented in
   `packages/core/src/map.ts` and `apps/api/src/routes/map.ts`.
+- **Subjects with no questions yet** (owner bug RD-MBXKTC, F8): the map opens on the first
+  enrolled subject with questions. A subject with none is `status: "coming_soon"`: the Map tab
+  says "Questions for <subject> are on their way." with "Try <subject> meanwhile" when another
+  subject has questions, never the error screen. With 2 or more subjects a subject switcher shows
+  them all ("Chemistry (coming soon)"). Only a student with no subject at all, or an unknown
+  subject id, gets "Choose a subject first" (404). The 5-a-day, recall and flashcards answer
+  empty for these subjects.
 - Implemented: `packages/core/src/learning.ts`, `apps/api/src/routes/learn.ts`,
   `apps/api/src/routes/flashcards.ts`.
 

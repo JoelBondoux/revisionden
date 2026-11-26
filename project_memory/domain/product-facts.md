@@ -181,6 +181,10 @@ Tags: #product #rules #limits #defaults
   its open topics. Next mission: weakest weak spot, else first topic not mastered, else review
   the weakest mastered topic (5 minutes). A unit id opens its challenge lesson (all its topics).
   Implemented in `packages/core/src/map.ts`.
+- Subjects with no questions yet (F8, RD-MBXKTC): the map defaults to the first enrolled subject
+  with questions and answers `status: "coming_soon"` (plus `subjectId` and `subjects` with
+  `hasContent` for the switcher) for one with none; 404 `no_subject` only with no subject at all
+  or an unknown id. The web shows "Questions for <subject> are on their way." and a switcher.
 - Mascot: Pip, an angular geometric fox (orange `#FF7A2F`). Brand violet `#6C47F5`; font Nunito,
   self-hosted (no Google Fonts request). Every text colour pair meets 4.5:1 contrast.
 - Works offline for the app shell; API calls are never cached. Pages always come fresh from the

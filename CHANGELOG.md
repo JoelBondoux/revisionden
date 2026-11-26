@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Taking a subject we don't have questions for yet (like Chemistry or Drama)? The topic map now says the questions are on their way and offers a subject you can practise meanwhile, instead of an error. If you take more than one subject, you can switch between them at the top of the map.
 - Building an avatar is easier: your avatar now stays in view while you scroll through the options. On a phone it sits at the top and shrinks a little as you scroll; on a tablet or computer it sits on the left. Each change gives it a little bounce.
 - Parents can now change a child's subjects at any time: in Parent home, tap Subjects on your child's card to add a subject, remove one, or change its exam board or tier. Removing a subject keeps your child's progress, and it comes back if you add the subject again. Subjects without questions yet say "Questions coming soon".
 - Got one wrong? A similar question comes back a few questions later (or the same one at the end), and anything you found hard, or took a long time over, comes back as a warm-up over the next few days until it sticks.
@@ -85,6 +86,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Subjects with no questions yet (F8, owner bug RD-MBXKTC): `GET /v1/student/map` no longer answers 404 `no_subject` for an enrolled subject without content. It defaults to the first enrolled subject with questions and sends `status: "coming_soon"`, `subjectId` and `subjects` (`hasContent`). The Map tab shows a friendly empty state and a subject switcher; `getTopicMap(subjectId?)` in the web client. Tests cover the 5-a-day, cards due, flashcards and recall for these students.
 - Blind answer and review (S2, after #133): the blind check compares short answers with the same normaliser as marking (`x² + y² = 36` matches `x^2 + y^2 = 36`; `any_order` and `units` honoured), and the adversarial review is told when an item has `any_order: true` so it does not ask for reordered variants.
 - Content sync (S2): `pnpm content:validate` now refuses control characters (U+0000 to U+001F except tab and newline) anywhere in content, naming the field, and `withCheck` replaces them with a space in every check record the pipeline writes, so recorded model output can no longer break the sync to Postgres (22P05, as with the S3-A review notes fixed in #137).
 - Fairer marking review fixes (F6, from Codex on #133): a multiply sign before a signed number is kept, so `3n*-2` no longer matches `3n-2`; with `any_order`, up to 4 letters on their own (`pq`) are a product; the maths engine accepts a letter answer either way round (`a = x`).

@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useApi } from '../api/ApiContext';
 import { LoadingOrError } from '../api/LoadingOrError';
-import type { MapUnit as Unit } from '@revisionden/core';
+import type { MapSubject, MapUnit as Unit } from '@revisionden/core';
 import { useApiResource } from '../api/useApiResource';
 import { FlameIcon } from '../components/icons';
 import { Pill } from '../components/Pill';
@@ -56,13 +56,68 @@ function UnitMap({ unit, onLocked }: { unit: Unit; onLocked: (message: string) =
   );
 }
 
+/** Chips for the student's subjects; a subject without questions yet says so. */
+function SubjectSwitcher({
+  subjects,
+  current,
+  onChoose,
+}: {
+  subjects: readonly MapSubject[];
+  current: string | undefined;
+  onChoose: (subjectId: string) => void;
+}) {
+  if (subjects.length < 2) return null;
+  return (
+    <div role="group" aria-label="Subject" className="chip-row">
+      {subjects.map((s) => (
+        <button
+          key={s.subjectId}
+          type="button"
+          className="chip"
+          aria-pressed={s.subjectId === current}
+          onClick={() => onChoose(s.subjectId)}
+        >
+          {s.hasContent ? s.subject : `${s.subject} (coming soon)`}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/** A subject with no questions yet (RD-MBXKTC): a friendly note, never the error screen. */
+function ComingSoon({
+  subject,
+  other,
+  onChoose,
+}: {
+  subject: string;
+  other: MapSubject | undefined;
+  onChoose: (subjectId: string) => void;
+}) {
+  return (
+    <section className="card map-coming-soon" aria-label="Coming soon">
+      <p>Questions for {subject} are on their way.</p>
+      {other && (
+        <button
+          type="button"
+          className="btn btn--secondary"
+          onClick={() => onChoose(other.subjectId)}
+        >
+          Try {other.subject} meanwhile
+        </button>
+      )}
+    </section>
+  );
+}
+
 export function MapPage() {
   const api = useApi();
   const { studentId } = useStudent();
   const [toast, setToast] = useState<string | null>(null);
+  const [subjectId, setSubjectId] = useState<string | undefined>(undefined);
   const map = useApiResource(
-    () => (studentId ? api.getTopicMap() : new Promise<never>(() => {})),
-    [api, studentId],
+    () => (studentId ? api.getTopicMap(subjectId) : new Promise<never>(() => {})),
+    [api, studentId, subjectId],
   );
   const dismissToast = useCallback(() => setToast(null), []);
 
@@ -84,6 +139,20 @@ export function MapPage() {
         <LoadingOrError resource={map} />
       ) : (
         <>
+          <SubjectSwitcher
+            subjects={map.data.subjects ?? []}
+            current={map.data.subjectId}
+            onChoose={setSubjectId}
+          />
+          {map.data.status === 'coming_soon' && (
+            <ComingSoon
+              subject={map.data.subject}
+              other={(map.data.subjects ?? []).find(
+                (s) => s.hasContent && s.subjectId !== map.data.subjectId,
+              )}
+              onChoose={setSubjectId}
+            />
+          )}
           <div className="map-summary">
             <p className="map-summary__subject">
               {map.data.qualification} {map.data.subject}
