@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Our privacy notices now mention that a device can be linked with a link you send, as well as a QR code. Parents will be asked to confirm the updated notice.
 - Linking your child's phone is easier: as well as the QR code, you can send them a link (it works for 24 hours) or read out a short code they can type in. You'll see when their device is set up, and you can remove a device from Parent home.
 - Adding a child is easier: Continue always works and tells you what's missing, and boards or tiers you're not sure about can be set later in Parent home, or by your child in Settings > My subjects.
 - Pick a starting look (Boy, Girl or Neutral) when adding a child; your child can make it their own the first time they open the app on their device.
@@ -106,6 +107,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Data retention policy 1.10 (L): a device link sent instead of a QR code lasts 24 hours (QR code 10 minutes); expired link codes are deleted within 20 minutes of expiring (clean-up waits for a device set-up in progress). Settles E4's contradictions entry. Privacy notice 1.10 and young people's notice 1.7 mention the sent link and short code alongside the QR code.
 - E4 device linking: "Send a link instead" (Web Share with Copy link fallback, 24-hour single-use link, no personal data in the message), 8-character short codes typed at `/link` (hashed, rate-limited), waiting status with Cancel, "<nickname>'s device is set up" push via family events, linked devices (type, date) with Remove in Parent home. API: `kind` on `POST /v1/students/:id/link-tokens`, `GET`/`DELETE /v1/students/:id/link-tokens/:tokenId`, `{ code }` on `POST /v1/device/link`, `deviceType` on devices. Cancelling a link also stops a passkey set-up that had already started (`passkey_challenges.link_token_id`), and each link reports linked only when its own device finished (`device_link_tokens.linked_at`). Clean-up keeps an expired link while a passkey set-up it started is still valid. Migration 0025_device_share_links.
 - E3 onboarding fixes: Continue summary and focus; "Not sure" items on the finish screen, Parent home ("Things to check") and student Settings > My subjects, with a home nudge; API `PATCH /v1/students/:id/enrolments/:subjectId`, `GET /v1/student/subjects`, `PATCH /v1/student/subjects/:subjectId` (only Not sure to a value), `GET`/`PUT /v1/student/avatar`; starter looks and "Make it yours". Changing a board or tier clears a parent or child target grade that is not on the new scale. A board or tier change writes only the field sent, so two quick picks cannot undo each other.
 - Nicknames with single spaces (trimmed, 2–16 characters); block list and AI privacy filter treat spaces like underscores (and catch nicknames with underscores at either end, or only underscores); database migration 0024 updates the nickname check.
