@@ -68,16 +68,16 @@ describe('VersionFooter', () => {
   it('never shows a text separator, so a wrapped line can neither end nor start with a stray dot', () => {
     render(
       <MemoryRouter>
-        <VersionFooter version="00.01.002" environment="Development" commit="ef86a9a" showHelp />
+        <VersionFooter version="00.01.002" environment="Development" commit="ef86a9a" />
       </MemoryRouter>,
     );
     expect(screen.getByRole('contentinfo').textContent).not.toContain('·');
   });
 
-  it('lays the footer out as separate pieces: the version, the environment, then Get help', () => {
+  it('lays the footer out as separate pieces: the version, then the environment (no Get help link: that lives on Settings)', () => {
     render(
       <MemoryRouter>
-        <VersionFooter version="00.01.002" environment="Development" commit="ef86a9a" showHelp />
+        <VersionFooter version="00.01.002" environment="Development" commit="ef86a9a" />
       </MemoryRouter>,
     );
     const pieces = Array.from(
@@ -86,8 +86,7 @@ describe('VersionFooter', () => {
     expect(pieces.map((piece) => piece.textContent)).toEqual([
       'RevisionDen version 00.01.002',
       '(Development, ef86a9a)',
-      expect.any(String),
     ]);
-    expect(pieces[2]?.querySelector('a')).not.toBeNull();
+    expect(screen.queryByRole('link', { name: 'Get help' })).toBeNull();
   });
 });

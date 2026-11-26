@@ -1,7 +1,8 @@
-import { failureRef } from '../../api/client';
+import { failureRef, reportClientError } from '../../api/client';
 import { z, type ZodType } from 'zod';
 import {
   AvatarCodeSchema,
+  makeErrorRef,
   DeviceListSchema,
   LinkStatusSchema,
   EnrolmentSchema,
@@ -111,6 +112,11 @@ export interface OnboardingApi {
   updateMySubject(subjectId: string, change: UpdateSubjectChoiceRequest): Promise<Enrolment>;
   getMyAvatar(): Promise<StudentAvatar>;
   saveMyAvatar(avatarCode: string): Promise<Student>;
+  /**
+   * Student device: tells the server a passkey set-up failed in the browser (E8), with the
+   * error name only. Returns the reference code shown on screen. Best effort.
+   */
+  reportPasskeyError(code: string): string;
 }
 
 interface Options {
@@ -242,6 +248,14 @@ export function createOnboardingApi({
         change,
         'PATCH',
       ),
+    reportPasskeyError: (code) => {
+      const ref = makeErrorRef(Math.random);
+      reportClientError(
+        { baseUrl, fetch },
+        { ref, kind: 'passkey', code, url: new URL('/link', root) },
+      );
+      return ref;
+    },
     getMyAvatar: () => request('v1/student/avatar', StudentAvatarSchema),
     saveMyAvatar: (avatarCode) =>
       request('v1/student/avatar', StudentSchema, { avatarCode }, 'PUT'),

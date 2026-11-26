@@ -51,7 +51,7 @@ function useSettleSound(counting: number): () => void {
 }
 
 /**
- * Student "My stats" (Progress tab). Kind framing: gains and "same" only, never red or
+ * Student "My stats" ("My progress" on the Me page). Kind framing: gains and "same" only, never red or
  * "worse"; drops are shown to the parent and in the topic list, not here.
  */
 export function MyStatsPage() {

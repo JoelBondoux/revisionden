@@ -254,8 +254,23 @@ Product owner decision, 2026-11-25: **parent view only**.
   hold no nickname or other personal data (only the token and the family id).
 - Each QR code and shared link also has a short code (8 characters, no look-alikes: no 0/O,
   1/I/L, shown as ABCD-EFGH) the child can type at `/link` when the camera or link is awkward.
-  Codes and tokens are single use and stored only as hashes. Code attempts at `/link` have their
-  own rate limit per address.
+  Codes and tokens are single use and stored only as hashes: a link is used up when a device
+  finishes setting up its passkey with it (`/v1/device/link/verify`, atomically, so only one
+  device can). Opening it before then (a reload, or trying again) is fine and gets a fresh
+  5-minute passkey challenge each time while the link is unused, not cancelled and not expired
+  (E8). Code attempts at `/link` have their own rate limit per address.
+- Passkey set-up on the child's device (E8): if it fails, the page says why in plain words and
+  shows "Details: <error name> (RD-XXXXXX)". Cancelled or timed out: "Try again" (with a fresh
+  challenge fetched straight away); no screen lock: set up a PIN, pattern, fingerprint or face
+  unlock first; this device already has a passkey for the child: "Unlock with my passkey";
+  unsupported browser: open the page in Chrome (or Safari on an iPhone); link cancelled, used or
+  expired: ask a parent for a new one. Before the tap, a browser without passkeys, or an in-app
+  browser (the Google app or Lens, Instagram, Facebook, TikTok and the like), shows "Open this
+  page in Chrome" with "Copy link" and, on Android, an "Open in Chrome" link; a device that says
+  it has no screen lock gets a warning. The failure is reported with the error name only
+  (`POST /v1/client-errors`, kind `passkey`) and carried into a bug report sent from that screen
+  (`lastProblem`); a refused verify is logged with its own code (`invalid_challenge`,
+  `passkey_not_verified`, `link_cancelled`, `link_already_used`, `invalid_link_token`).
 - The parent sees "Waiting for <nickname>'s device…" and "Cancel this link" (a cancelled link no
   longer works, even on a device that had already opened it and not yet finished its passkey).
   The screen updates once the device that used that link has set up its passkey (each link
@@ -441,7 +456,7 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
 Two read-only dashboards built from data the app already holds. No new personal data is collected.
 Mockups: screens 19 (student) and 20 (parent).
 
-### Student: My stats (from the Progress tab)
+### Student: My stats (`/progress`, from "My progress" on the Me page)
 
 On a phone the panel scrolls into view above the bottom bar when it opens and on each step
 (F7b), instantly under reduced motion.
@@ -913,8 +928,10 @@ Requested by the product owner on 2026-11-25.
 
 Requested by the product owner on 2026-11-25.
 
-- A **"Get help"** page for students, reachable from Settings, the profile menu and the footer of
-  every student screen, with a small heart icon. Also reachable signed out.
+- A **"Get help"** page for students, reachable from Settings (first thing on the page). Also
+  reachable signed out. Owner decision, 2026-11-26 (W7): students find Get help on Settings only,
+  reached from the "Me" avatar item in the main nav; it is no longer in the student header or
+  footer. (Was: Settings, the profile menu and the footer of every student screen.)
 - It lists UK support services by topic, each with what they help with, how to contact them
   (tap-to-call `tel:` links, text numbers, web chat links) and opening hours where published.
   Topics: feeling low or anxious, exam stress, suicidal thoughts (urgent), bullying (including
@@ -942,12 +959,13 @@ Requested by the product owner on 2026-11-25.
 ### How it is built (workstream W, 2026-11-25)
 
 - Pages: `/help` (students, also signed out) and `/parent/help` (parent area; adds a "Worried about a
-  child?" card with the NSPCC Helpline). Links: Settings (Help and information), a small heart
-  "Get help" link in the student footer, the signed-out header, and parent home. Since W3 also: a
-  "Get help" chip in the student header on every student screen (the app has no separate menu
-  yet; add it there when one exists). W5 (2026-11-26) removed W3's extra Get help tile from the
-  topic map: Get help on any student screen appears twice at most, the header chip and the footer
-  heart link.
+  child?" card with the NSPCC Helpline). Links: for students, a prominent Get help tile at the top
+  of Settings (above everything else), reached from the **Me** item, the last item in the main
+  nav (owner, 2026-11-26, W7). The student main nav is now five items: Map, Cards, Plan, Papers
+  and Me; Progress moved onto the Me page as "My progress", right after Get help, and Me is marked
+  current on `/settings` and `/progress` (and their sub-pages); signed out, the public header; parents, parent home. History: W3
+  added a header chip and a map tile, W5 removed the map tile, and W7 removed the student header
+  chip and the footer heart link (the owner chose "Settings only" over keeping the footer heart).
   All use the shared link components; tapping them records nothing.
 - Layout (W3, 2026-11-25): the "Quick exit" button sits in a bar that stays at the top of the
   screen while scrolling (sticky, padded for phone notches with `env(safe-area-inset-*)`, first
@@ -1069,3 +1087,27 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   forced colours. Get help follows the theme too (light, dark, colour-blind), with its own calm,
   high-contrast colours (owner, 2026-11-25, W3). The sales site follows the
   device's theme only.
+
+## Screen layout
+
+- **Single screen for doing things** (owner design rule, 2026-11-26; how to apply it: lead ruling,
+  same day). On screens where the student does something, the main task fits on one screen
+  without scrolling, at 390 × 844 with default text: the question or card, the answer input, and
+  the primary button. The primary action is always in view (for example a sticky action bar).
+  Secondary detail sits behind a tap (expand, sheet or tab).
+  - Covered: the lesson and question player, flashcards (including Explain), the starting test,
+    the daily 5-a-day and recall, the map, Plan, the papers chooser, set complete and reward
+    moments, and the Me page.
+  - Not covered: reading pages (Get help, About, policies, long explanations, parent stats). These
+    may scroll.
+  - Contained scrollers are allowed (lead ruling, 2026-11-26): a row of chips or badges that
+    scrolls sideways, or a list inside a card that scrolls up and down. The page itself never
+    scrolls sideways. Sideways rows use scroll snap and an edge fade that shows there is more,
+    bring the selected item into view on load, keep every item reachable with Tab (focus scrolls
+    it into view), have touch targets of at least 44 px, and show a scrollbar or arrow buttons on
+    pointer devices. A scrolling list in a card is a labelled, focusable region.
+  - Accessibility wins: at 320 px or 200% text, with a short screen, or with a very long question,
+    the page may scroll up and down, and an inner up-and-down scroller gives way to normal page
+    scrolling (no scroll inside a scroll). The page must never scroll sideways or clip content.
+  - Status: agreed, not yet applied everywhere. Mockups and the current heights are in
+    `docs/design/j12/` (AUDIT.md); the proposed e2e check is in `docs/design/j12/SKIN.md`.
