@@ -805,6 +805,14 @@ Tags: #product #rules #limits #defaults
   320px screen with text at 200%. The e2e test "the policies list fits a 320px screen with text at
   200%" (`e2e/tests/pages.spec.ts`, /legal) checks there is no sideways scroll and no tile wider than
   320px. The version footer's reflow is G's (#224).
+- Button tiles and page transitions (J15a, owner request 2026-11-26): parent home and Policies
+  show their links as `ButtonTile`s in a grid (two to a row on phones): a big icon and a 2–3 word
+  label, no helper sentence (Policies add who each is for as a badge). Parent home labels: Stats
+  dashboard, Children, Family feedback, Complaints, Your data, App settings, Policies, Get help, and
+  per child Rewards you set, Reminder times, Subjects. Each effect style has its own tile look, and
+  opening a page from a tile plays the style's page transition (350ms at most, reversed on Back,
+  never blocking taps). None for Get help or with reduced motion. Me (`/settings`) adopts the tiles
+  with W9 (W owns the layout). See `docs/GAME_FEEL.md` (Links; Page transitions).
 - Single screen for doing things (owner design rule, 2026-11-26; lead ruling on scope): at 390 × 844
   with default text, interactive screens (lesson, flashcards and Explain, starting test, 5-a-day and
   recall, map, Plan, papers chooser, set complete and rewards moments, Me page) show the main task

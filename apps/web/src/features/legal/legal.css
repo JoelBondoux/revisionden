@@ -42,26 +42,6 @@
   padding-left: var(--space-3);
 }
 
-.policy-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: var(--space-3);
-}
-
-/* Each policy is a link tile (J7) with who it is for underneath. */
-.policy-list li {
-  display: flex;
-  flex-direction: column;
-}
-
-.policy-list__audience {
-  padding-inline: var(--space-4);
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-}
-
 @media print {
   .no-print,
   .bottom-nav,

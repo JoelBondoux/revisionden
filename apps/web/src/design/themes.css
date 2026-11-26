@@ -58,8 +58,8 @@
   color: var(--color-text-secondary);
 }
 
-:root[data-theme='dark'] .policy-list__title {
-  color: var(--color-primary-edge);
+:root[data-theme='dark'] .field__error {
+  color: var(--color-danger-edge);
 }
 
 :root[data-theme='dark'] select {
