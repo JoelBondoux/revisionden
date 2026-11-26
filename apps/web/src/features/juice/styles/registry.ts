@@ -1,10 +1,18 @@
 /**
  * Effect styles (J10): one look-and-feel for the game-feel moments, the Home screen and Rewards,
  * active at a time. A style is an entry here plus one stylesheet scoped to
- * `:root[data-effect-style='<id>']` (see sticker-book.css). Sticker Book is the default and is
- * always available; other styles unlock as rewards (J10b).
+ * `:root[data-effect-style='<id>']` (see doodle-diary.css). Doodle Diary is the default and is
+ * always available; the others unlock as rewards (J10b, J10d).
  */
-export const EFFECT_STYLE_IDS = ['sticker-book'] as const;
+export const EFFECT_STYLE_IDS = [
+  'doodle-diary',
+  'sticker-book',
+  'pop-burst',
+  'garden-grow',
+  'starlight',
+  'comic-pop',
+  'pixel-arcade',
+] as const;
 export type EffectStyleId = (typeof EFFECT_STYLE_IDS)[number];
 
 export interface EffectStyle {
@@ -12,18 +20,78 @@ export interface EffectStyle {
   readonly name: string;
   /** One plain sentence for the style picker. */
   readonly description: string;
+  /** How to unlock it (none for the default); the rewards catalogue does the unlocking. */
+  readonly unlock?: string;
+  /** Three colours for the picker's little preview. */
+  readonly swatch: readonly [string, string, string];
 }
 
 export const EFFECT_STYLES: Readonly<Record<EffectStyleId, EffectStyle>> = {
+  'doodle-diary': {
+    id: 'doodle-diary',
+    name: 'Doodle Diary',
+    description:
+      'A diary full of pen doodles: sketched boxes, scribbled colouring-in and red-pen marks on your wins.',
+    swatch: ['#fdfbf4', '#2f5bd3', '#c8382e'],
+  },
   'sticker-book': {
     id: 'sticker-book',
     name: 'Sticker Book',
     description:
       'Warm and hand-made: wins are stickers slapped onto the page, with paper confetti and a little wobble.',
+    unlock: 'Reach level 3',
+    swatch: ['#fffdf7', '#ffd166', '#c93a2b'],
+  },
+  'pop-burst': {
+    id: 'pop-burst',
+    name: 'Pop Burst',
+    description: 'Loud and bouncy: jelly squash, gold coins of XP and big confetti bursts.',
+    unlock: 'Reach level 5',
+    swatch: ['#7b4dff', '#ff7a59', '#ffe066'],
+  },
+  starlight: {
+    id: 'starlight',
+    name: 'Starlight',
+    description:
+      'Glowing and dreamy: progress lights up like stars, and rewards arrive in a swirl of sparkles.',
+    unlock: 'Master 10 topics',
+    swatch: ['#241a6b', '#4be3ff', '#ff7ad9'],
+  },
+  'garden-grow': {
+    id: 'garden-grow',
+    name: 'Garden Grow',
+    description:
+      'Soft and calm: rewards bloom from seeds, petals drift and your map is a garden path.',
+    unlock: 'Master 5 topics in a subject',
+    swatch: ['#dff4ff', '#3fae5a', '#ff8fb1'],
+  },
+  'comic-pop': {
+    id: 'comic-pop',
+    name: 'Comic Pop',
+    description: 'Bold outlines, halftone dots and word bubbles: every win lands with a POW!',
+    unlock: 'Reach level 20',
+    swatch: ['#ffe14d', '#ff3b3b', '#1e9bff'],
+  },
+  'pixel-arcade': {
+    id: 'pixel-arcade',
+    name: 'Pixel Arcade',
+    description: 'Retro arcade with chunky pixel art, chiptune blips and treasure chests.',
+    unlock: 'Reach level 40',
+    swatch: ['#0a0820', '#39ff88', '#ff4fd8'],
   },
 };
 
-export const DEFAULT_EFFECT_STYLE: EffectStyleId = 'sticker-book';
+/**
+ * Styles the owner has approved and the rewards catalogue already unlocks but that are still
+ * being built. The picker shows them locked, with how to unlock them. Empty since J10c.
+ */
+export interface ComingSoonStyle extends Omit<EffectStyle, 'id'> {
+  readonly id: string;
+}
+
+export const COMING_SOON_STYLES: readonly ComingSoonStyle[] = [];
+
+export const DEFAULT_EFFECT_STYLE: EffectStyleId = 'doodle-diary';
 
 /** Where this device remembers the chosen style. */
 export const EFFECT_STYLE_KEY = 'revisionden.effectStyle';

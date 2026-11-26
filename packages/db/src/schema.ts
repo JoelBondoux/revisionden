@@ -292,6 +292,19 @@ export const deviceMarkers = pgTable(
   (t) => [index('device_markers_device_id_idx').on(t.deviceId)],
 );
 
+/**
+ * The latest time a synced passkey was let onto a new device (B7). One row per passkey; the API
+ * claims it with a single conditional upsert, so two new browsers unlocking at the same moment
+ * cannot both add a device (and alert the parents twice). Old claims are cleared after 24 hours.
+ */
+export const passkeyNewDeviceClaims = pgTable('passkey_new_device_claims', {
+  credentialId: text('credential_id').primaryKey(),
+  studentId: uuid('student_id')
+    .notNull()
+    .references(() => students.id, { onDelete: 'cascade' }),
+  claimedAt: timestamp('claimed_at', { withTimezone: true }).notNull(),
+});
+
 /** One-time tokens a parent shows as a QR code to link a student device. */
 export const deviceLinkTokens = pgTable(
   'device_link_tokens',

@@ -97,7 +97,13 @@ const cubic = (p0: Point, p1: Point, p2: Point, p3: Point, t: number): Point => 
 
 /** The points an SVG path passes through, with curves and arcs sampled along their length. */
 export function pathPoints(d: string): Point[] {
-  const out: Point[] = [];
+  return pathPolylines(d).flat();
+}
+
+/** Like pathPoints, but one list of points per stroke (each move-to starts a new one). */
+export function pathPolylines(d: string): Point[][] {
+  const lines: Point[][] = [];
+  let out: Point[] = [];
   let cur: Point = { x: 0, y: 0 };
   let start: Point = cur;
   let lastControl: Point | null = null;
@@ -117,7 +123,11 @@ export function pathPoints(d: string): Point[] {
       const v = a.slice(i, i + size);
       if (upper === 'M' || upper === 'L' || upper === 'T') {
         cur = at(v[0]!, v[1]!);
-        if (upper === 'M' && i === 0) start = cur;
+        if (upper === 'M' && i === 0) {
+          start = cur;
+          out = [];
+          lines.push(out);
+        }
         lastControl = null;
       } else if (upper === 'H') {
         cur = { x: rel ? cur.x + v[0]! : v[0]!, y: cur.y };
@@ -157,7 +167,7 @@ export function pathPoints(d: string): Point[] {
       out.push(cur);
     }
   }
-  return out;
+  return lines.filter((l) => l.length > 0);
 }
 
 const attr = (tag: string, name: string): string | undefined =>
@@ -252,4 +262,31 @@ export function clearance(a: readonly Point[], b: readonly Point[]): number {
     }
   }
   return best;
+}
+
+/** Every stroke a motif's markup draws, in the motif's own units (circles as closed loops). */
+export function motifPolylines(markup: string): Point[][] {
+  const out: Point[][] = [];
+  const stack: Matrix[] = [IDENTITY];
+  for (const [tag, close, name] of markup.matchAll(/<(\/?)(g|path|circle|ellipse)\b[^>]*>/g)) {
+    if (close) {
+      stack.pop();
+      continue;
+    }
+    const m = multiply(stack.at(-1)!, parseTransform(attr(tag, 'transform')));
+    if (name === 'g') {
+      if (!tag.endsWith('/>')) stack.push(m);
+      continue;
+    }
+    const num = (n: string) => Number(attr(tag, n) ?? 0);
+    const loop = (pts: Point[]) => [...pts, pts[0]!];
+    const local =
+      name === 'path'
+        ? pathPolylines(attr(tag, 'd') ?? '')
+        : name === 'circle'
+          ? [loop(ring(num('cx'), num('cy'), num('r'), num('r')))]
+          : [loop(ring(num('cx'), num('cy'), num('rx'), num('ry')))];
+    for (const line of local) out.push(line.map((p) => apply(m, p)));
+  }
+  return out;
 }

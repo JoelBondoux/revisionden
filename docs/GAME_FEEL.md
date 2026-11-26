@@ -101,6 +101,12 @@ tab say so to screen readers.
   `UPDATE_DOODLES=1 npx vitest run src/design/doodleTile.test.ts` in `apps/web`. Very faint (7%
   ink), behind solid cards, no animation, off in high contrast and forced colours, and switchable
   off. Tokens and checks: `apps/web/src/design/themes.ts`. Before and after: `docs/design/j8b/`.
+- **Hand-drawn (J8c, owner decision 2026-11-26):** the shipped tile uses the doodles redrawn as if
+  sketched in a notebook (`apps/web/src/design/doodleSketch.ts`, from a fixed seed). Lines wobble
+  a little and overshoot at the corners, about one stroke in six is drawn twice, and about a third
+  of the closed shapes get a light scribbled fill at half strength. Generic sketchbook techniques
+  only, no particular book's look; the tiny fillers stay crisp. Placement uses the hand-drawn
+  outlines, so nothing overlaps; about 58KB gzipped. Before and after: `docs/design/j8c/`.
 - **Text on gold** always uses `--color-text-on-gold` (dark), in every theme: gold buttons,
   gold and streak pills, earned reward steps, the combo badge and the mastered-topic checkmark on the map.
 
@@ -128,15 +134,34 @@ tab say so to screen readers.
 
 - One effect style is active at a time. It sets the look and motion of the game-feel moments
   (combo badge, stars, bursts, confetti, "+XP"), the Home screen (topic map) and Rewards. The
-  owner picked **Sticker Book** as the default. Pop Burst and Starlight become styles a child
-  unlocks through normal progress, never by buying (J10b). More styles may follow once the owner
-  has reviewed them.
+  owner picked **Doodle Diary** as the free default (J10d). The other styles unlock through normal
+  progress on the owner's ladder, never by buying (J10b, `docs/REWARDS.md` "Effect styles"):
+  Sticker Book at level 3, Pop Burst at level 5, Garden Grow at
+  5 topics mastered in a subject, Starlight at 10 topics mastered, Comic Pop at level 20 and Pixel
+  Arcade at level 40. The child picks in Settings → Effect style, where
+  locked styles show a three-colour preview and "Locked. Unlock: …". More styles may follow once
+  the owner has reviewed them.
+- Pop Burst (J10b): jelly cards with a chunky bottom edge, a gold jelly mission card, gold wins,
+  round confetti; the badge stamps in from big and the stars drop in. Starlight (J10b): night-sky
+  cards with a soft glow, mastered topics are outlined in starlight and earned steps glow; the badge brightens
+  into view and the stars rise and settle.
 - A style is one entry in `apps/web/src/features/juice/styles/registry.ts` plus one stylesheet in
   which every rule is scoped to `:root[data-effect-style='<id>']`. A test checks that scoping, so
   removing or swapping a style never leaves bits of it behind. `EffectStyleProvider` sets
   `data-effect-style` on `<html>` and remembers the choice on this device (`localStorage`
-  `revisionden.effectStyle`). A saved style that isn't unlocked falls back to Sticker Book.
-  `index.html` starts with Sticker Book, so the first paint is already in the default style.
+  `revisionden.effectStyle`). A saved style that isn't unlocked falls back to Doodle Diary.
+  `index.html` starts with Doodle Diary, so the first paint is already in the default style.
+- Doodle Diary (J10d, the default): a diary full of pen doodles. On Home, page titles are
+  handwritten (Patrick Hand, self-hosted, SIL Open Font Licence, listed under open-source
+  licences) with a wavy biro underline; the daily goal, today's mission and the 5-a-day card are
+  boxes sketched in pen with wobbly corners; mastered topics are outlined in ink and coloured in
+  with highlighter scribbles. On Rewards, earned steps are coloured in and locked ones are dashed
+  pencil outlines. In lessons the surround is diary paper (night paper in dark mode) and the
+  question sits on a plain white card (dark card in dark mode); a right answer gets a red-pen ring
+  round it. The combo badge and "+XP" are written in red pen, stars are drawn in pen and coloured
+  in, and bursts and confetti are quick pen strokes. Sounds use U's paper-and-ink pack (Sticker
+  Book's until a Doodle Diary pack lands): `EffectStyleProvider` calls `useFeedbackStyle` with the
+  active style.
 - Sticker Book (J10a): wins are stickers slapped onto the page. Each sticker has a white die-cut
   edge, a slight tilt and a soft offset shadow; bursts and confetti are paper scraps. On Home, the
   daily goal and the next mission are cards taped into the book, the 5-a-day card is a paper
@@ -150,6 +175,17 @@ tab say so to screen readers.
   stickers, tilt or motion behind the text. Sticker Book turns the dark arena into warm paper
   (night paper in dark mode) by re-colouring the `--arena-*` tokens, with the question on a plain
   white card (a dark card in dark mode); a test checks those colours meet AA.
+- Garden Grow (J10c): leafy cream cards with a soft green edge, today's mission as a garden
+  patch, mastered topics in bloom (petal edge), petal confetti; wins grow up from their stem.
+  Comic Pop (J10c): bold ink outlines and hard offset shadows, today's mission a yellow comic
+  panel, halftone-dot bursts; wins slam in from big. Pixel Arcade (J10c): square corners and
+  chunky borders, neon on night blue, square pixels that don't spin; wins step in a block at a
+  time and nothing blinks. They use the app's own fonts (no extra font files).
+- No style puts a shadow filter on a topic hex: on the map it would double the topic's name.
+- Pen-line exception (lead, approved 2026-11-26): small SVG pen lines may draw themselves by
+  animating `stroke-dashoffset`, as Doodle Diary's margin doodles and answer loops do. Only on
+  short paths, a handful at a time, never behind question text, and off under reduced motion.
+  Everything else stays transform and opacity only.
 - Every style plays its own sounds and vibration through the sound workstream's events (U6).
   Wiring the style into those events follows once U's PR is on dev.
 

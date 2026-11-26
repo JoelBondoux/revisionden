@@ -17,6 +17,7 @@ export const RewardItemSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('pipOutfit'), id: z.string() }),
   z.object({ kind: z.literal('badge'), id: z.string() }),
   z.object({ kind: z.literal('effect'), id: z.string() }),
+  z.object({ kind: z.literal('effectStyle'), id: z.string() }),
 ]);
 
 export const RewardCardSchema = z.object({
@@ -267,3 +268,7 @@ export function parentTargetLabel(target: ParentRewardTarget): string {
   }
   return REWARDS.find((r) => r.id === target.rewardId)?.name ?? target.rewardId;
 }
+
+/** GET /v1/student/rewards/effect-styles (J10b): the effect styles this student has unlocked. */
+export const EffectStylesResponseSchema = z.object({ unlocked: z.array(z.string()) });
+export type EffectStylesResponse = z.infer<typeof EffectStylesResponseSchema>;

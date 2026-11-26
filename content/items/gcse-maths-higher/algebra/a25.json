@@ -7,9 +7,7 @@
     "learning_point": "gcse-maths-h-a25-lp-linear-nth",
     "expected_seconds": 45,
     "prompt": "Find an expression for the nth term of the sequence 5, 8, 11, 14, ...",
-    "answer": {
-      "accepted": ["3n + 2", "3n+2", "2 + 3n", "2+3n"]
-    },
+    "answer": { "accepted": ["3n + 2"], "any_order": true },
     "marks": 2,
     "explanation": "The terms go up by 3, so start with 3n: 3, 6, 9, ... Add 2.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
@@ -49,28 +47,28 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:17:31Z",
-          "notes": "model answered \"3n + 2\"; expected \"3n + 2 | 3n+2 | 2 + 3n | 2+3n\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:17:40Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T00:48:17Z",
+          "notes": "model answered \"3n + 2\"; expected \"3n + 2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T00:48:28Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -83,10 +81,9 @@
     "learning_point": "gcse-maths-h-a25-lp-linear-nth",
     "expected_seconds": 60,
     "prompt": "Find an expression for the nth term of the sequence 20, 16, 12, 8, ...",
-    "answer": {
-      "accepted": ["24 - 4n", "-4n + 24", "24-4n", "−4n + 24", "-4n+24", "−4n+24"]
-    },
+    "answer": { "accepted": ["24 - 4n", "20 - 4(n - 1)", "4(6 - n)"], "any_order": true },
     "marks": 2,
+    "explanation": "The terms go down by 4 each time, so the nth term starts -4n. When n = 1, -4n = -4, and the first term is 20, so add 24: the nth term is 24 - 4n. Check: n = 2 gives 24 - 8 = 16.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
     "checked_by": ["author"],
     "citations": [
@@ -112,7 +109,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A25). Checked: 24 - 4n gives 20, 16, 12, 8 for n = 1 to 4.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A25). Checked: 24 - 4n gives 20, 16, 12, 8 for n = 1 to 4. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:55:49Z"
         },
         {
@@ -124,28 +121,28 @@
           "notes": "citation 1: found on page 27 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:03:45Z",
-          "notes": "model answered \"24 - 4n\"; expected \"24 - 4n | -4n + 24 | 24-4n | −4n + 24 | -4n+24 | −4n+24\""
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:03:51Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T01:18:40Z",
+          "notes": "model answered \"24 - 4n\"; expected \"24 - 4n | 20 - 4(n - 1) | 4(6 - n)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:03:24Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -159,9 +156,7 @@
     "expected_seconds": 25,
     "prompt": "Which is the nth term of the sequence 7, 12, 17, 22, ...?",
     "options": ["5n + 2", "5n + 7", "7n + 5", "n + 5"],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "The terms go up by 5, so 5n; 5 × 1 + 2 = 7.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
@@ -235,9 +230,7 @@
     "learning_point": "gcse-maths-h-a25-lp-quadratic-nth",
     "expected_seconds": 120,
     "prompt": "Find an expression for the nth term of the quadratic sequence 2, 6, 12, 20, 30, ...",
-    "answer": {
-      "accepted": ["n^2 + n", "n² + n", "n(n + 1)", "n^2+n", "n²+n", "n(n+1)"]
-    },
+    "answer": { "accepted": ["n^2 + n", "n² + n", "n(n + 1)", "n^2+n", "n²+n", "n(n+1)"] },
     "marks": 3,
     "explanation": "The second difference is 2, so start with n^2: 1, 4, 9, 16, 25. What is left is 1, 2, 3, 4, 5, which is n.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
@@ -311,10 +304,9 @@
     "learning_point": "gcse-maths-h-a25-lp-quadratic-nth",
     "expected_seconds": 90,
     "prompt": "Find an expression for the nth term of the quadratic sequence 4, 7, 12, 19, 28, ...",
-    "answer": {
-      "accepted": ["n^2 + 3", "n² + 3", "n^2+3", "n²+3"]
-    },
+    "answer": { "accepted": ["n^2 + 3", "n² + 3", "n^2+3", "n²+3"] },
     "marks": 2,
+    "explanation": "The differences are 3, 5, 7, 9 and the second difference is 2, so the nth term starts with n^2. Subtract n^2 (1, 4, 9, 16, 25) from the terms: 3, 3, 3, 3, 3. So the nth term is n^2 + 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
     "checked_by": ["author"],
     "citations": [
@@ -340,7 +332,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A25). Checked: n^2 + 3 gives 4, 7, 12, 19, 28 for n = 1 to 5.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A25). Checked: n^2 + 3 gives 4, 7, 12, 19, 28 for n = 1 to 5. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:55:49Z"
         },
         {
@@ -360,20 +352,20 @@
           "notes": "model answered \"n² + 3\"; expected \"n^2 + 3 | n² + 3 | n^2+3 | n²+3\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T19:04:32Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:03:32Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -387,9 +379,7 @@
     "expected_seconds": 25,
     "prompt": "Which is the nth term of the quadratic sequence 3, 9, 19, 33, 51, ...?",
     "options": ["2n^2 + 1", "n^2 + 2", "2n^2 + 2n - 1", "4n - 1"],
-    "answer": {
-      "option": 0
-    },
+    "answer": { "option": 0 },
     "marks": 1,
     "explanation": "The second difference is 4, so start with 2n^2: 2, 8, 18, 32, 50. Each term is 1 more, so 2n^2 + 1.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
@@ -463,14 +453,8 @@
     "learning_point": "gcse-maths-h-a25-lp-quadratic-nth",
     "expected_seconds": 120,
     "prompt": "The nth term of a quadratic sequence is an^2 + b. The 1st term is 5 and the 3rd term is 21. Work out a.",
-    "answer": {
-      "solutions": ["2"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "9a + (5 - a) = 21",
-      "variable": "a"
-    },
+    "answer": { "solutions": ["2"] },
+    "verify": { "method": "solve", "equation": "9a + (5 - a) = 21", "variable": "a" },
     "steps": ["9a + (5 - a) = 21", "8a + 5 = 21", "8a = 16", "a = 2"],
     "marks": 3,
     "mark_scheme": ["M1 for a + b = 5 and 9a + b = 21", "M1 for 8a = 16", "A1 for a = 2"],
@@ -555,6 +539,7 @@
     "expected_seconds": 15,
     "front": "The nth term of 2, 4, 6, 8, ...",
     "back": "2n",
+    "explanation": "The terms go up by 2 each time, so the nth term starts 2n. When n = 1, 2n = 2, which is the first term, so the nth term is 2n.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
     "checked_by": ["author"],
     "citations": [
@@ -580,7 +565,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A25). Checked for n = 1 to 4.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A25). Checked for n = 1 to 4. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:34:26Z"
         },
         {
@@ -600,20 +585,20 @@
           "notes": "model answered \"2n\"; expected \"2n\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:01:20Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:03:40Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -627,6 +612,7 @@
     "expected_seconds": 15,
     "front": "The nth term of 1, 4, 9, 16, ... (use ^ for powers)",
     "back": "n^2",
+    "explanation": "The terms are 1 × 1, 2 × 2, 3 × 3, 4 × 4: the square numbers. So the nth term is n^2.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
     "checked_by": ["author"],
     "citations": [
@@ -652,7 +638,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A25). Checked for n = 1 to 4.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A25). Checked for n = 1 to 4. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:34:26Z"
         },
         {
@@ -672,20 +658,20 @@
           "notes": "model answered \"n^2\"; expected \"n^2\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:01:33Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:03:48Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -699,6 +685,7 @@
     "expected_seconds": 15,
     "front": "The second difference of the sequence with nth term n^2 + 5n",
     "back": "2",
+    "explanation": "Work out the terms: n = 1 gives 6, n = 2 gives 14, n = 3 gives 24, n = 4 gives 36. The first differences are 8, 10, 12, and the second difference is 2.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A25",
     "checked_by": ["author"],
     "citations": [
@@ -724,7 +711,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A25). Checked: terms 6, 14, 24, 36 have differences 8, 10, 12.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A25). Checked: terms 6, 14, 24, 36 have differences 8, 10, 12. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:34:26Z"
         },
         {
@@ -744,20 +731,20 @@
           "notes": "model answered \"2\"; expected \"2\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:01:51Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:03:56Z",
+          "notes": "no problems found"
         }
       ]
     }

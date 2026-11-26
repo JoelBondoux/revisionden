@@ -59,7 +59,9 @@ Tags: #product #rules #limits #defaults
   a random marker in local storage (`revisionden.deviceMarker`; the API stores its hash in
   `device_markers`). An unknown browser adds a `devices` row and logs the important family event
   "RevisionDen noticed <nickname>'s passkey being used on a new device", pushed to both parents; at
-  most one new device a day per passkey. An unlinked device's browser is refused. Devices linked
+  most one new device a day per passkey. The day is claimed with one conditional upsert on `passkey_new_device_claims`
+  (migration 0027, B7), so two new browsers unlocking at the same moment add one device and one
+  alert; claims are cleared after 24 hours. An unlinked device's browser is refused. Devices linked
   before markers are adopted quietly on their first unlock. Implemented in
   `apps/api/src/routes/devices.ts` (`deviceForUnlock`).
 - Rate limits per address: 30 a minute on sign-in and device routes, 20 a minute on AI routes.
@@ -235,7 +237,9 @@ Tags: #product #rules #limits #defaults
 - Avatar builder layout (J9): the preview always stays in view. Under 600px of builder width
   (phones, the sheet) it is pinned on top and shrinks once the options scroll. At 600px or more
   it is a sticky column on the left. Arrow-key tabs; a gentle pop on each change, off with
-  reduced motion. `apps/web/src/features/avatar/AvatarBuilder.tsx`, `avatar.css`.
+  reduced motion. Switching tabs after scrolling brings the options back to just under the
+  pinned preview (narrow) or level with the sticky column (wide), smoothly unless reduced motion is
+  on (J9b). `apps/web/src/features/avatar/AvatarBuilder.tsx`, `avatar.css`.
 
 ## Operator console (AppDeck)
 
@@ -847,7 +851,26 @@ Tags: #product #rules #limits #defaults
   a CSS mask at 7% ink; J8b), hidden with `prefers-contrast: more` and
   forced colours. The public site uses the same tile (the older 240px grid tile `doodles.svg` was
   removed in M7).
+  a CSS mask at 7% ink; J8b; hand-drawn since J8c: doodles redrawn by `doodleSketch.ts` with
+  wobble, corner overshoot, the odd double stroke and light scribble shading, about 58KB gzipped), hidden with `prefers-contrast: more` and
+  forced colours. The older 240px grid tile `doodles.svg` is kept only for the public site until it
+  moves to the new tile.
   Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).
+- Effect styles (J10a, built): one active at a time; it restyles the game-feel moments, Home
+  (topic map) and Rewards. Default and always available: Doodle Diary (`doodle-diary`, owner decision 2026-11-26, J10d). Registry
+  `apps/web/src/features/juice/styles/registry.ts`; one stylesheet per style, scoped to
+  `:root[data-effect-style='<id>']`. Chosen per device in `localStorage` key
+  `revisionden.effectStyle` (cookies and storage policy 1.7); a style that is not unlocked falls
+  back to Doodle Diary. Unlock ladder (owner, 2026-11-26; J10b): Sticker Book `level-3`, Pop Burst
+  `level-5`, Garden Grow `subject-topics-5`, Starlight `topics-mastered-10`, Comic Pop `level-20`,
+  Pixel Arcade `level-40`, added as `effectStyle` items by `withEffectStyles`
+  (`packages/core/src/catalogue/effect-styles.ts`). All seven built (J10c, J10d): Doodle Diary (default), Sticker Book, Pop
+  Burst, Garden Grow, Starlight, Comic Pop, Pixel Arcade. Unlocked list:
+  `GET /v1/student/rewards/effect-styles`. Picker: Settings → Effect style (students only), with
+  locked styles showing a preview and how to unlock them. Doodle Diary letters headings in Patrick Hand
+  (`@fontsource/patrick-hand`, OFL-1.1, self-hosted) and the provider passes the style to U's
+  `useFeedbackStyle`. Lesson surround (J10a2): follows the style; the question and answers
+  sit on `.lesson__stage`, kept plain (Doodle Diary and Sticker Book: paper, night paper in dark mode).
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by

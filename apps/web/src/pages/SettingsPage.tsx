@@ -13,6 +13,7 @@ import { LinkTile } from '../components/links';
 import { useBugButton } from '../features/feedback/bugButtonContext';
 import { DeviceReminders } from '../features/notifications';
 import { AppearanceSettingsCard } from '../features/appearance';
+import { EffectStyleCard } from '../features/juice/styles';
 import { ReadingSettingsCard } from '../features/reading';
 import { ReadAloudSettingsCard } from '../features/read-aloud';
 import { SoundSettingsCard } from '../features/sound';
@@ -63,6 +64,7 @@ export function SettingsPage() {
       </Card>
       <ReadingSettingsCard />
       <AppearanceSettingsCard />
+      <EffectStyleCard />
       <ReadAloudSettingsCard />
       <SoundSettingsCard />
       <DeviceReminders />

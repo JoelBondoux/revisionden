@@ -117,6 +117,12 @@ formula and its assumptions. Summary of what is built:
 - Rewards never come from time spent or late-night study (22:00 to 05:59 UK time), at most
   300 reward XP count a day, and there are no random draws.
 - Avatar items only unlock from the reward that locks them; locked items are refused when saving.
+- Effect styles (J10b, owner decision 2026-11-26): the ladder is Sticker Book at level 3, Pop
+  Burst at level 5, Garden Grow at 5 topics mastered in a subject, Starlight at 10 topics
+  mastered, Comic Pop at level 20 and Pixel Arcade at level 40, each on an existing reward (table
+  in `REWARDS.md`). Styles are never bought, never random and never tied to a streak. Doodle Diary
+  is the free default (J10d). The child chooses in Settings
+  → Effect style.
 - Rewards are celebrated where they are earned (workstream F4, product owner via lead,
   2026-11-25): an answer or a finished flashcard session saves any new reward once and shows
   "New reward: …" with the reward sound on that screen (the starting test waits for its results

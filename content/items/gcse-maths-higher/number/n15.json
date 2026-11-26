@@ -1,0 +1,774 @@
+[
+  {
+    "id": "gcse-maths-h-n15-0001",
+    "topic": "gcse-maths-h-n15",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n15-lp-rounding",
+    "expected_seconds": 30,
+    "prompt": "Round 0.004637 to 2 significant figures.",
+    "answer": { "value": "0.0046", "significant_figures": 2 },
+    "verify": { "expression": "46/10000" },
+    "marks": 1,
+    "explanation": "The first significant figure is the first non-zero digit, 4. Keep two: 0.0046|37. The next digit is 3, which is less than 5, so round down: 0.0046.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Measures and accuracy, content reference N15 (page 13; PDF page 25)",
+        "quote": "round numbers and measures to an appropriate degree of accuracy (e.g. to a specified number of decimal places or significant figures)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). The maths engine confirms the stated value. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:29:23Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:58Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:10:10Z",
+          "notes": "model answered \"0.0046\"; expected \"0.0046\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:41:52Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n15-0002",
+    "topic": "gcse-maths-h-n15",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n15-lp-rounding",
+    "expected_seconds": 30,
+    "prompt": "Round 38 652 to 3 significant figures.",
+    "answer": { "value": "38700", "significant_figures": 3 },
+    "verify": { "expression": "38700" },
+    "marks": 1,
+    "explanation": "Keep the first three figures: 386|52. The next digit is 5, so round up: 387. Fill the other places with zeros to keep the size: 38 700.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Measures and accuracy, content reference N15 (page 13; PDF page 25)",
+        "quote": "round numbers and measures to an appropriate degree of accuracy (e.g. to a specified number of decimal places or significant figures)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). The maths engine confirms the stated value. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:29:23Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:29:59Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "fail",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:10:17Z",
+          "notes": "model answered \"38 700\"; expected \"38700\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:42:00Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n15-0003",
+    "topic": "gcse-maths-h-n15",
+    "type": "numeric",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-n15-lp-rounding",
+    "expected_seconds": 30,
+    "prompt": "Round 7.8463 to 2 decimal places.",
+    "answer": { "value": "7.85", "decimal_places": 2 },
+    "verify": { "expression": "785/100" },
+    "marks": 1,
+    "explanation": "Keep two digits after the decimal point: 7.84|63. The next digit is 6, which is 5 or more, so round up: 7.85.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Measures and accuracy, content reference N15 (page 13; PDF page 25)",
+        "quote": "round numbers and measures to an appropriate degree of accuracy (e.g. to a specified number of decimal places or significant figures)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). The maths engine confirms the stated value. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:29:23Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:30:00Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T20:10:25Z",
+          "notes": "model answered \"7.85\"; expected \"7.85\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:42:07Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n15-0004",
+    "topic": "gcse-maths-h-n15",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-n15-lp-error-intervals",
+    "expected_seconds": 45,
+    "prompt": "A length, l cm, is 8.4 cm correct to 1 decimal place. Which is the error interval for l?",
+    "options": ["8.35 ≤ l < 8.45", "8.35 < l ≤ 8.45", "8.3 ≤ l < 8.5", "8.4 ≤ l < 8.5"],
+    "answer": { "option": 0 },
+    "marks": 1,
+    "explanation": "Numbers from 8.35 up to (but not including) 8.45 round to 8.4. 8.35 rounds up to 8.4, but 8.45 rounds up to 8.5.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Measures and accuracy, content reference N15 (page 13; PDF page 25)",
+        "quote": "use inequality notation to specify simple error intervals due to truncation or rounding",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. 8.35 rounds to 8.4 and 8.45 to 8.5 (ROUND_HALF_UP). Decision 0008: the answer rests on the standard definition of an error interval (rounding: lower bound ≤ x < upper bound; truncation: stated value ≤ x < next value), which the 1MA1 spec names (N15) but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-25T17:29:23Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:30:01Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:35:13Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:35:23Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n15-0005",
+    "topic": "gcse-maths-h-n15",
+    "type": "multiple_choice",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-n15-lp-error-intervals",
+    "expected_seconds": 45,
+    "prompt": "A number, x, is truncated to 1 decimal place. The result is 5.7. Which is the error interval for x?",
+    "options": ["5.65 ≤ x < 5.75", "5.7 ≤ x < 5.8", "5.6 < x ≤ 5.7", "5.7 < x ≤ 5.8"],
+    "answer": { "option": 1 },
+    "marks": 1,
+    "explanation": "Truncating cuts off the digits after the first decimal place. Any number from 5.7 up to (but not including) 5.8 truncates to 5.7.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Measures and accuracy, content reference N15 (page 13; PDF page 25)",
+        "quote": "use inequality notation to specify simple error intervals due to truncation or rounding",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. Checked in Python: truncation of 5.7 and 5.7999 gives 5.7, of 5.8 gives 5.8, of 5.65 gives 5.6. Decision 0008: the answer rests on the standard definition of an error interval (rounding: lower bound ≤ x < upper bound; truncation: stated value ≤ x < next value), which the 1MA1 spec names (N15) but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-25T17:29:23Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:30:02Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:35:31Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:45:03Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n15-0006",
+    "topic": "gcse-maths-h-n15",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-n15-lp-error-intervals",
+    "expected_seconds": 45,
+    "prompt": "A mass, m grams, is 300 g correct to the nearest 10 g. Which is the error interval for m?",
+    "options": ["290 ≤ m < 310", "295 < m ≤ 305", "295 ≤ m < 305", "299.5 ≤ m < 300.5"],
+    "answer": { "option": 2 },
+    "marks": 1,
+    "explanation": "Half of 10 g is 5 g, so m is from 295 g up to (but not including) 305 g.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Measures and accuracy, content reference N15 (page 13; PDF page 25)",
+        "quote": "use inequality notation to specify simple error intervals due to truncation or rounding",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. 295 rounds to 300 and 305 to 310 (nearest 10, ROUND_HALF_UP). Decision 0008: the answer rests on the standard definition of an error interval (rounding: lower bound ≤ x < upper bound; truncation: stated value ≤ x < next value), which the 1MA1 spec names (N15) but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-25T17:29:23Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:30:03Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:35:52Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:45:13Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n15-0007",
+    "topic": "gcse-maths-h-n15",
+    "type": "multiple_choice",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-n15-lp-error-intervals",
+    "expected_seconds": 50,
+    "prompt": "A number, n, is 2400 correct to 2 significant figures. Which is the error interval for n?",
+    "options": ["2395 ≤ n < 2405", "2300 ≤ n < 2500", "2350 < n ≤ 2450", "2350 ≤ n < 2450"],
+    "answer": { "option": 3 },
+    "marks": 1,
+    "explanation": "n is 2400 correct to 2 significant figures, so n was rounded to the nearest 100. Half of 100 is 50, so n is from 2350 up to (but not including) 2450.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
+    "checked_by": ["author"],
+    "needs_human_approval": true,
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Measures and accuracy, content reference N15 (page 13; PDF page 25)",
+        "quote": "use inequality notation to specify simple error intervals due to truncation or rounding",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Error interval is lower bound ≤ x < upper bound (the convention for rounding; truncation keeps the stated value as the lower bound); every option checked in Python. 2350 rounds to 2400 and 2450 to 2500 (2 s.f., ROUND_HALF_UP). Explanation reworded after adversarial review: it is n that was rounded to the nearest 100, not 2400. Explanation now starts from the question's own information (adversarial review, second run). Decision 0008: the answer rests on the standard definition of an error interval (rounding: lower bound ≤ x < upper bound; truncation: stated value ≤ x < next value), which the 1MA1 spec names (N15) but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-25T17:29:23Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:30:04Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:50:10Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:50:42Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n15-0008",
+    "topic": "gcse-maths-h-n15",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-n15-lp-rounding-recall",
+    "expected_seconds": 10,
+    "front": "3.456 to 1 decimal place",
+    "back": "3.5",
+    "explanation": "Keep one digit after the decimal point: 3.4|56. The next digit is 5, so round up: 3.5.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Measures and accuracy, content reference N15 (page 13; PDF page 25)",
+        "quote": "round numbers and measures to an appropriate degree of accuracy (e.g. to a specified number of decimal places or significant figures)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["front"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Front cited to spec N15. Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:29:23Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:30:05Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:17Z",
+          "notes": "model answered \"3.5\"; expected \"3.5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:42:15Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n15-0009",
+    "topic": "gcse-maths-h-n15",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-n15-lp-rounding-recall",
+    "expected_seconds": 10,
+    "front": "0.0719 to 1 significant figure",
+    "back": "0.07",
+    "explanation": "The first significant figure is 7: 0.07|19. The next digit is 1, which is less than 5, so round down: 0.07.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Measures and accuracy, content reference N15 (page 13; PDF page 25)",
+        "quote": "round numbers and measures to an appropriate degree of accuracy (e.g. to a specified number of decimal places or significant figures)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["front"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Front cited to spec N15. Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:29:23Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:30:06Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:30Z",
+          "notes": "model answered \"0.07\"; expected \"0.07\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:42:21Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n15-0010",
+    "topic": "gcse-maths-h-n15",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-n15-lp-rounding-recall",
+    "expected_seconds": 10,
+    "front": "4561 to the nearest hundred",
+    "back": "4600",
+    "explanation": "Look at the hundreds: 45|61. The tens digit is 6, which is 5 or more, so round up: 4600.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N15",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Measures and accuracy, content reference N15 (page 13; PDF page 25)",
+        "quote": "round numbers and measures to an appropriate degree of accuracy (e.g. to a specified number of decimal places or significant figures)",
+        "retrieved_at": "2026-11-25",
+        "supports": ["front"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N15). Front cited to spec N15. Rounding (halves round up) checked with Python's decimal module (ROUND_HALF_UP). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:29:23Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:30:08Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:37:43Z",
+          "notes": "model answered \"4600\"; expected \"4600\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:42:29Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  }
+]

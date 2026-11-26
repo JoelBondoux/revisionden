@@ -12,6 +12,7 @@ import {
   parents,
   operatorAuditLog,
   passkeyChallenges,
+  passkeyNewDeviceClaims,
   studentSessions,
   students,
   type Database,
@@ -69,6 +70,18 @@ describe('monthsBefore', () => {
 });
 
 describe('scheduled clean-up', () => {
+  it("deletes new-device claims once their day is over and keeps today's", async () => {
+    const f = await family(NOW);
+    await db.insert(passkeyNewDeviceClaims).values([
+      { credentialId: 'claim-old', studentId: f.studentId, claimedAt: minutes(-25 * 60) },
+      { credentialId: 'claim-today', studentId: f.studentId, claimedAt: minutes(-60) },
+    ]);
+    const result = await cleanUpExpiredData({ db, now: NOW });
+    expect(result.newDeviceClaimsDeleted).toBe(1);
+    const left = await db.select().from(passkeyNewDeviceClaims);
+    expect(left.map((c) => c.credentialId)).toEqual(['claim-today']);
+  });
+
   it('deletes expired device link codes and keeps ones still valid', async () => {
     const f = await family(NOW);
     await db.insert(deviceLinkTokens).values([

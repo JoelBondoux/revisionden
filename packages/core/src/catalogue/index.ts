@@ -1,5 +1,6 @@
 /** The full rewards catalogue as data (see docs/REWARDS.md). */
 import { CHAPTER_REWARDS } from './chapters';
+import { withEffectStyles } from './effect-styles';
 import { COLLECTIONS, COLLECTION_REWARDS } from './collections';
 import { BUG_HUNTER_REWARDS, MORE_HIDDEN_TRACK_REWARDS, SECRET_REWARDS } from './hidden';
 import { LEVEL_REWARDS } from './levels';
@@ -12,6 +13,7 @@ export * from './types';
 export * from './validate';
 export { CHAPTER_REWARDS, COLLECTIONS, COLLECTION_REWARDS, LEVEL_REWARDS, MILESTONE_REWARDS };
 export { SEASONS, SEASON_REWARDS, BUG_HUNTER_REWARDS, MORE_HIDDEN_TRACK_REWARDS, SECRET_REWARDS };
+export { EFFECT_STYLE_UNLOCKS, effectStylesFor, withEffectStyles } from './effect-styles';
 
 /** Every reward as written in the source files, with the old single titles (before R8). */
 export const SOURCE_REWARDS: readonly Reward[] = [
@@ -56,6 +58,6 @@ export function withTitleWords(
   });
 }
 
-export const REWARDS: readonly Reward[] = withTitleWords(SOURCE_REWARDS);
+export const REWARDS: readonly Reward[] = withEffectStyles(withTitleWords(SOURCE_REWARDS));
 export { TITLE_WORD_ROWS, REVIEWED_BLOCKED_PAIRS } from './title-words';
 export type { TitleWordRow } from './title-words';
