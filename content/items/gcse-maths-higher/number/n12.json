@@ -11,6 +11,7 @@
     "verify": { "expression": "3/8 * 96" },
     "marks": 1,
     "explanation": "Find 1/8 first: 96 ÷ 8 = 12. Then 3/8 is three times that: 3 × 12 = 36.",
+    "hint": "Find one eighth of 96 first, then multiply by 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N12",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -36,7 +37,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N12). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N12). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -74,9 +75,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:42:30Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:44Z",
           "notes": "no problems found"
         }
       ]
@@ -94,6 +95,7 @@
     "verify": { "expression": "2/3 * 4/5" },
     "marks": 1,
     "explanation": "'Of' means multiply. Multiply the tops and the bottoms: 2/3 × 4/5 = (2 × 4)/(3 × 5) = 8/15.",
+    "hint": "'Of' means multiply. Multiply the tops together and the bottoms together.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N12",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -119,7 +121,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N12). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N12). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -157,9 +159,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:42:38Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:46Z",
           "notes": "no problems found"
         }
       ]
@@ -178,6 +180,7 @@
     "steps": ["3/5 * (2/3 * 45)", "3/5 * 30", "18"],
     "marks": 2,
     "mark_scheme": ["M1 for 2/3 of 45 = 30 or 3/5 × 2/3 = 2/5", "A1 for 18"],
+    "hint": "Work from the right: find 2/3 of 45 first, then find 3/5 of that.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N12",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -203,7 +206,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N12). Answer and every step backed by the maths engine. Mark points written by this session. First step now shows 2/3 of 45 being found (adversarial review).",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N12). Answer and every step backed by the maths engine. Mark points written by this session. First step now shows 2/3 of 45 being found (adversarial review). Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -241,9 +244,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:34:42Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:47Z",
           "notes": "no problems found"
         }
       ]
@@ -261,6 +264,7 @@
     "verify": { "expression": "35/100 * 260" },
     "marks": 1,
     "explanation": "35% = 0.35, so 35% of 260 = 0.35 × 260 = 91. Or: 10% is 26, so 30% is 78; 5% is 13; 78 + 13 = 91.",
+    "hint": "Write 35% as a decimal and multiply, or build it from 10% and 5%.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N12",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -286,7 +290,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N12). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N12). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -324,9 +328,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:42:44Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:49Z",
           "notes": "no problems found"
         }
       ]
@@ -348,6 +352,7 @@
       "A1 for 11.20"
     ],
     "explanation": "Build it from easy percentages: 10% of £64 is £6.40, 5% is £3.20 and 2.5% is £1.60. 10% + 5% + 2.5% = 17.5%, so £6.40 + £3.20 + £1.60 = £11.20.",
+    "hint": "Build 17.5% from easier percentages: 10%, then 5% (half of 10%), then 2.5% (half of 5%).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N12",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -373,7 +378,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N12). Answer backed by the maths engine (£11.20). After adversarial review: money written as 11.20, and 2 marks with a method mark (10% + 5% + 2.5% = 17.5%, each value checked in Python). Mark points written by this session. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N12). Answer backed by the maths engine (£11.20). After adversarial review: money written as 11.20, and 2 marks with a method mark (10% + 5% + 2.5% = 17.5%, each value checked in Python). Mark points written by this session. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -411,9 +416,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:42:52Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:51Z",
           "notes": "no problems found"
         }
       ]
@@ -431,6 +436,7 @@
     "verify": { "expression": "1 - 12/100" },
     "marks": 1,
     "explanation": "Decreasing by 12% leaves 100% - 12% = 88% of the amount. 88% as a decimal is 0.88, so multiply by 0.88.",
+    "hint": "After a 12% decrease, what percentage of the amount is left? Write that as a decimal.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N12",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -456,7 +462,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N12). Answer backed by the maths engine (100% - 12% = 88% = 0.88). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N12). Answer backed by the maths engine (100% - 12% = 88% = 0.88). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -494,9 +500,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:43:01Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:52Z",
           "notes": "no problems found"
         }
       ]
@@ -512,6 +518,7 @@
     "front": "25% of 80",
     "back": "20",
     "explanation": "25% is a quarter. 80 ÷ 4 = 20.",
+    "hint": "25% is the same as a quarter.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N12",
     "checked_by": ["author"],
     "citations": [
@@ -537,7 +544,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N12). Front cited to spec N12. Back checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N12). Front cited to spec N12. Back checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -567,9 +574,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:43:08Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:54Z",
           "notes": "no problems found"
         }
       ]
@@ -585,6 +592,7 @@
     "front": "1/4 of 36",
     "back": "9",
     "explanation": "To find a quarter, divide by 4: 36 ÷ 4 = 9.",
+    "hint": "To find a quarter, divide by 4.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N12",
     "checked_by": ["author"],
     "citations": [
@@ -610,7 +618,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N12). Front cited to spec N12. Back checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N12). Front cited to spec N12. Back checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -640,9 +648,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:43:14Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:55Z",
           "notes": "no problems found"
         }
       ]
@@ -658,6 +666,7 @@
     "front": "10% of 70",
     "back": "7",
     "explanation": "10% is one tenth. 70 ÷ 10 = 7.",
+    "hint": "10% is one tenth, so divide by 10.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N12",
     "checked_by": ["author"],
     "citations": [
@@ -683,7 +692,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-N 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N12). Front cited to spec N12. Back checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N12). Front cited to spec N12. Back checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python. Hint added (S3-N-H): a nudge toward the method only, written from this item's explanation and worked steps under the same cited specification point; it does not state the answer.",
           "at": "2026-11-25T17:24:41Z"
         },
         {
@@ -713,9 +722,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:43:22Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:14:57Z",
           "notes": "no problems found"
         }
       ]
