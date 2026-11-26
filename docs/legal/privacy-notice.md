@@ -1,6 +1,6 @@
 # Privacy notice
 
-Version: 1.9
+Version: 1.10
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -75,7 +75,8 @@ devices.
 
 3.2 **Students.** Students do not have their own outside account, email address or password.
 A parent creates a profile for each student with a nickname, an avatar and a school year, and
-links the student's device with a one-time QR code. The student then unlocks the app on that
+links the student's device with a one-time QR code, or with a one-time link (with a short code)
+that the parent sends to the device. The student then unlocks the app on that
 device with a passkey (the device's own fingerprint, face or PIN check). The app is designed for
 students in Years 9 to 13 (usually aged 13 to 18).
 
@@ -373,6 +374,7 @@ in the app on your next visit and ask you to confirm, and students see a plain-E
 
 ## Changes
 
+- 1.10: A parent can link a student's device with a one-time link they send, as well as the QR code.
 - 1.9: A passkey synced to the student's other devices works there too, as a separate device the parent can see and unlink. Each device keeps a random device code (we store only its hash), and both parents are told when a passkey is used on a new device.
 - 1.8: Labels our support team can put on your account (for example "Beta tester"), never personal information; kept while the account exists or until removed. You can leave the beta programme from the parent home.
 - 1.7: Complaints: a parent can make a formal complaint in the app, kept 12 months after it is resolved. A student can ask a parent to raise something (a topic and an optional short note), seen only by the family's parents and deleted after 90 days at most.
