@@ -255,3 +255,229 @@
   color: var(--color-text-secondary);
   text-align: center;
 }
+
+/*
+ * E9: procedural avatar motion. Whole layer groups move with CSS transforms (no per-frame
+ * script), so hats, hair and glasses ride along with the head whatever the child wears. Same
+ * feel as Pip: slow ease-in-out loops, reactions on --ease-out and --ease-spring. Small moves
+ * only, so nothing leaves the frame.
+ */
+.avatar-svg [data-motion-part] {
+  transform-box: view-box;
+}
+
+.avatar-svg [data-motion-part='figure'] {
+  transform-origin: 60px 120px;
+}
+
+.avatar-svg [data-motion-part='head'],
+.avatar-svg [data-motion-part='head-back'] {
+  transform-origin: 60px 74px;
+}
+
+.avatar-svg [data-motion-part='eyes'] {
+  transform-origin: 60px 50px;
+}
+
+.avatar-svg [data-motion-part='mouth'] {
+  transform-origin: 60px 63px;
+}
+
+/* Idle: breathing with a little bounce, a blink now and then, a slow look around. */
+.avatar-svg[data-motion='idle'] [data-motion-part='figure'] {
+  animation: avatar-breathe calc(var(--motion-pulse) * 4) ease-in-out infinite;
+}
+
+.avatar-svg[data-motion='idle'] [data-motion-part='head'],
+.avatar-svg[data-motion='idle'] [data-motion-part='head-back'] {
+  animation: avatar-look calc(var(--motion-pulse) * 5.5) ease-in-out infinite;
+}
+
+.avatar-svg[data-motion='idle'] [data-motion-part='eyes'] {
+  animation: avatar-blink calc(var(--motion-pulse) * 3.25) ease-in-out infinite;
+}
+
+/* Reactions play once. */
+.avatar-svg[data-motion='nod'] [data-motion-part='head'],
+.avatar-svg[data-motion='nod'] [data-motion-part='head-back'] {
+  animation: avatar-nod 700ms var(--ease-out) both;
+}
+
+.avatar-svg[data-motion='hop'] [data-motion-part='figure'] {
+  animation: avatar-hop 900ms var(--ease-spring) both;
+}
+
+.avatar-svg[data-motion='hop'] [data-motion-part='eyes'] {
+  animation: avatar-squint 900ms var(--ease-out) both;
+}
+
+.avatar-svg[data-motion='hop'] [data-motion-part='mouth'] {
+  animation: avatar-grin 900ms var(--ease-out) both;
+}
+
+.avatar-svg[data-motion='hmm'] [data-motion-part='head'],
+.avatar-svg[data-motion='hmm'] [data-motion-part='head-back'] {
+  animation: avatar-hmm 1400ms var(--ease-out) both;
+}
+
+.avatar-svg[data-motion='hmm'] [data-motion-part='eyes'] {
+  animation: avatar-glance 1400ms var(--ease-out) both;
+}
+
+/* Tap: a quick squash and pop. */
+.avatar-svg[data-motion='tap'] [data-motion-part='figure'] {
+  animation: avatar-tap 450ms var(--ease-spring) both;
+}
+
+/* Questions and Test mode: no idle loop (reactions still play). */
+.avatar-svg[data-motion='idle'][data-paused='true'] [data-motion-part] {
+  animation: none;
+}
+
+/* Nothing runs in a hidden tab. */
+.avatar-svg[data-hidden='true'] [data-motion-part] {
+  animation-play-state: paused;
+}
+
+@keyframes avatar-breathe {
+  0%,
+  50%,
+  100% {
+    transform: none;
+  }
+  25%,
+  75% {
+    transform: scale(1.01, 1.02);
+  }
+  86% {
+    transform: translateY(-2px);
+  }
+  93% {
+    transform: scale(1.02, 0.98);
+  }
+}
+
+@keyframes avatar-look {
+  0%,
+  30%,
+  58%,
+  88%,
+  100% {
+    transform: none;
+  }
+  38%,
+  50% {
+    transform: rotate(-4deg);
+  }
+  70%,
+  80% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes avatar-blink {
+  0%,
+  92%,
+  98%,
+  100% {
+    transform: none;
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes avatar-nod {
+  0%,
+  100% {
+    transform: none;
+  }
+  25% {
+    transform: translateY(3px) scaleY(0.97);
+  }
+  50% {
+    transform: translateY(-1px);
+  }
+  75% {
+    transform: translateY(2px) scaleY(0.98);
+  }
+}
+
+@keyframes avatar-hop {
+  0%,
+  100% {
+    transform: none;
+  }
+  20% {
+    transform: scale(1.04, 0.94);
+  }
+  45% {
+    transform: translateY(-4px);
+  }
+  70% {
+    transform: scale(1.03, 0.97);
+  }
+}
+
+@keyframes avatar-squint {
+  0%,
+  100% {
+    transform: none;
+  }
+  15%,
+  80% {
+    transform: scaleY(0.45);
+  }
+}
+
+@keyframes avatar-grin {
+  0%,
+  100% {
+    transform: none;
+  }
+  20%,
+  80% {
+    transform: scale(1.15);
+  }
+}
+
+@keyframes avatar-hmm {
+  0%,
+  100% {
+    transform: none;
+  }
+  25%,
+  75% {
+    transform: rotate(-7deg);
+  }
+}
+
+@keyframes avatar-glance {
+  0%,
+  100% {
+    transform: none;
+  }
+  25%,
+  75% {
+    transform: translate(-1.5px, -1px);
+  }
+}
+
+@keyframes avatar-tap {
+  0%,
+  100% {
+    transform: none;
+  }
+  35% {
+    transform: scale(1.05, 0.93);
+  }
+  70% {
+    transform: scale(0.98, 1.03);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar-svg [data-motion-part] {
+    animation: none !important;
+  }
+}
