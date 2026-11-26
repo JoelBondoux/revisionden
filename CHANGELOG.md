@@ -372,6 +372,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Changed
 
+- Morning walkthrough screenshots in `docs/design/morning/` retaken on tonight's final `dev` (I14): seven of the first walkthrough's eight issues are fixed (the footer's stray "·" has moved, not gone), and the README lists four new small ones.
 - Get help (W5): removed the `GetHelpTile` card from the topic map, so the map shows Get help only in the student header chip and the footer heart link (three was too many); the unused `GetHelpTile` component is removed. Test: the map has exactly two Get help links.
 - Project memory (I10): `operations/contradictions.md` no longer lists eight items as open that were already settled in its Resolved section (daily limit log, OAuth tokens, youngest school year, deletion tools, own flashcards, parent reward notification, item JSON, item type names); "Topic map and cards due have no API yet" is marked settled (F2's `routes/map.ts`).
 - Doodle background J8c (J): `apps/web/src/design/doodleSketch.ts` redraws the motifs by hand at build time (wobble, corner overshoot, occasional double stroke, scribble shading at 50%; fillers stay crisp) and `doodle-scatter.svg` is now that hand-drawn tile, placed with the hand-drawn outlines (zero overlaps, no near twins, about 58KB gzipped). `doodleGeometry.ts` gains `pathPolylines` and `motifPolylines`. Tests: the sketch motifs and every tile rule on the shipped tile.
