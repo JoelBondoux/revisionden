@@ -17,6 +17,8 @@ import {
   INTERACTIVE_PILOT_TAG,
   arrangeInteractivePilot,
   createRng,
+  helpedMasteryScore,
+  helpedXp,
   RETRY_WEIGHT,
   showsInteractivePilot,
   isShaky,
@@ -49,7 +51,9 @@ import { isId } from '../validation';
 import {
   correctAnswerText,
   explanationOf,
+  helpSteps,
   markItem,
+  selectableItem,
   servableItem,
   toLearnItem,
   type ItemRow,
@@ -102,6 +106,7 @@ async function updateMastery(db: Database, studentId: string, topicId: string, n
       correct: attempts.correct,
       at: attempts.createdAt,
       retry: attempts.retry,
+      helped: attempts.helped,
     })
     .from(attempts)
     .innerJoin(items, eq(items.id, attempts.itemId))
@@ -116,7 +121,8 @@ async function updateMastery(db: Database, studentId: string, topicId: string, n
     .limit(MASTERY_WINDOW);
   const value = topicMastery(
     recent.map((r) => ({
-      score: r.score ?? (r.correct ? 1 : 0),
+      // A helped answer (F10) counts as wrong for mastery.
+      score: r.helped ? helpedMasteryScore() : (r.score ?? (r.correct ? 1 : 0)),
       at: r.at.getTime(),
       // A retry in the lesson counts at half weight (F5): it comes just after seeing the answer.
       ...(r.retry ? { weight: RETRY_WEIGHT } : {}),
@@ -135,6 +141,8 @@ async function updateMastery(db: Database, studentId: string, topicId: string, n
 export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
   const app = new Hono<AppEnv>();
   const servable = servableItem(config.serveDraftContent);
+  // What is picked for students: without the maths engine, no typed working (F12).
+  const selectable = selectableItem(config.serveDraftContent, mathsEngine !== undefined);
 
   /** Servable items with their topic titles, in a stable order. */
   async function loadItems(where: SQL, limit?: number) {
@@ -142,7 +150,7 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
       .select({ item: items, topicTitle: topics.title, subjectId: topics.subjectId })
       .from(items)
       .innerJoin(topics, eq(topics.id, items.topicId))
-      .where(and(servable, where))
+      .where(and(selectable, where))
       .orderBy(asc(items.difficulty), asc(items.contentId));
     return limit === undefined ? query : query.limit(limit);
   }
@@ -194,7 +202,7 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
   async function withWarmUps(studentId: string, subjectId: string | undefined, list: LearnItem[]) {
     if (!subjectId) return list;
     // A warm-up already in the lesson moves to the front instead of showing twice.
-    const warm = await warmUps(db, servable, studentId, [subjectId], clock.now());
+    const warm = await warmUps(db, selectable, studentId, [subjectId], clock.now());
     const warmIds = new Set(warm.map((i) => i.id));
     return [...warm, ...list.filter((i) => !warmIds.has(i.id))];
   }
@@ -226,6 +234,19 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
       sql`${items.tags} @> ${JSON.stringify([COMMAND_WORD_TAG])}::jsonb`,
     );
     return c.json(lessonResponse(rows.map((r) => toLearnItem(r.item, r.topicTitle))));
+  });
+
+  /** "Help me understand" (F10): the verified steps of a servable item, ending on the answer. */
+  app.get('/items/:id/help', async (c) => {
+    const id = c.req.param('id');
+    if (!isId(id)) throw notFound();
+    const [row] = await db
+      .select()
+      .from(items)
+      .where(and(servable, eq(items.id, id)));
+    const steps = row ? helpSteps(row) : [];
+    if (steps.length === 0) throw notFound();
+    return c.json({ steps });
   });
 
   app.get('/progress', async (c) => {
@@ -365,7 +386,12 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
   /** Right Learn mode answers in a row just before now (see `comboBefore`). */
   async function recentCombo(studentId: string, now: Date): Promise<number> {
     const history = await db
-      .select({ correct: attempts.correct, mode: attempts.mode, at: attempts.createdAt })
+      .select({
+        correct: attempts.correct,
+        mode: attempts.mode,
+        at: attempts.createdAt,
+        helped: attempts.helped,
+      })
       .from(attempts)
       .where(eq(attempts.studentId, studentId))
       .orderBy(desc(attempts.createdAt))
@@ -396,16 +422,27 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
       }
     }
 
+    if (input.helped && input.mode !== 'learn') {
+      throw new ApiError(400, 'invalid_request', 'Help is for Learn mode only');
+    }
+
     const marked = await markItem(row, input.answer, mathsEngine);
+    // F12: it can't be marked now. Nothing is saved, so no XP, streak or mastery change.
+    if (!marked) return c.json({ unmarked: true as const, itemId: row.id });
     const learning = input.mode === 'learn';
-    // Learn mode combos come from the student's own recent answers (never from the device).
-    const combo = learning && marked.correct ? (await recentCombo(studentId, now)) + 1 : 0;
+    // F10: answered after "Help me understand" (only for items that have help steps).
+    const helped = learning && input.helped === true && helpSteps(row).length > 0;
+    // Learn mode combos come from the student's own recent answers (never from the device); a
+    // helped answer is never part of one.
+    const combo =
+      learning && marked.correct && !helped ? (await recentCombo(studentId, now)) + 1 : 0;
     const comboBonus = comboBonusXp(combo);
+    const answerXp = xpForAnswer({ type: row.type as ItemType, score: marked.score });
     // No XP, rewards or streak credit past the daily limit (workstream K7).
     const xpEarned = await creditableXp(
       db,
       studentId,
-      xpForAnswer({ type: row.type as ItemType, score: marked.score }) + comboBonus,
+      (helped ? helpedXp(answerXp) : answerXp) + comboBonus,
       now,
     );
     const [saved] = await db
@@ -422,6 +459,7 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
         xpEarned,
         startingTestId: input.startingTestId ?? null,
         retry: learning && input.retry === true,
+        helped,
         createdAt: now,
       })
       .returning({ id: attempts.id, createdAt: attempts.createdAt });
@@ -444,23 +482,24 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
         db,
         studentId,
         row,
-        marked.correct ? (shaky ? 'shaky' : 'right') : 'wrong',
+        // A helped answer is practised like a miss (F10).
+        marked.correct && !helped ? (shaky ? 'shaky' : 'right') : 'wrong',
         now,
       );
     }
     // Help after a miss: a similar question (unless this was the retry), an easier one for a
     // step down after a second miss, and a confidence question the student got right before.
-    const missed = timed && !marked.correct;
+    const missed = timed && (!marked.correct || helped);
     const help = missed
       ? {
-          similar: input.retry ? null : await findSimilar(db, servable, studentId, row, now),
-          easier: await findEasier(db, servable, studentId, row, now),
-          confidence: await findConfidence(db, servable, studentId, row),
+          similar: input.retry ? null : await findSimilar(db, selectable, studentId, row, now),
+          easier: await findEasier(db, selectable, studentId, row, now),
+          confidence: await findConfidence(db, selectable, studentId, row),
         }
       : { similar: null };
 
     const flashcardAdded =
-      learning && !marked.correct && row.type !== 'flashcard'
+      learning && (!marked.correct || helped) && row.type !== 'flashcard'
         ? await addWrongAnswerCard(db, studentId, row, now)
         : false;
     const progress = await awardXp(db, studentId, xpEarned, now);
@@ -472,6 +511,7 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
       score: marked.score,
       xpEarned,
       createdAt: saved!.createdAt.toISOString(),
+      ...(helped ? { helped } : {}),
       feedback: learning
         ? {
             correctAnswer: correctAnswerText(row),

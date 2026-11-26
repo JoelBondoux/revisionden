@@ -374,3 +374,8 @@
   color: #ffffff;
   font-weight: var(--font-weight-black);
 }
+
+/* F9b: a tap on a power switches x² and x^2 (owner). */
+.math-text {
+  cursor: pointer;
+}

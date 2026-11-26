@@ -40,7 +40,7 @@ describe('learning API client', () => {
       timeMs: 10,
       mode: 'learn',
     });
-    expect(result.correct).toBe(true);
+    expect(result).toMatchObject({ correct: true });
     const session = await api.startFlashcardSession();
     expect(session.xp).toBe(20);
     const review = await api.reviewFlashcard(

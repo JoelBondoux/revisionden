@@ -31,6 +31,8 @@ export interface PasskeyService {
   }): Promise<StoredCredential | null>;
   authenticationOptions(input?: {
     credentialIds?: string[];
+    /** E10: ask the browser to offer a phone first (WebAuthn hybrid, shown as a QR code). */
+    usePhone?: boolean;
   }): Promise<PublicKeyCredentialRequestOptionsJSON>;
   verifyAuthentication(input: {
     response: AuthenticationResponseJSON;
@@ -92,12 +94,14 @@ export function createPasskeyService(config: AppConfig): PasskeyService {
       }
     },
 
-    authenticationOptions({ credentialIds } = {}) {
-      return generateAuthenticationOptions({
+    async authenticationOptions({ credentialIds, usePhone } = {}) {
+      // No transports on the allow list: a filter there could leave out the phone (hybrid).
+      const options = await generateAuthenticationOptions({
         rpID,
         userVerification: 'required',
         allowCredentials: credentialIds?.map((id) => ({ id })),
       });
+      return usePhone ? { ...options, hints: ['hybrid'] } : options;
     },
 
     async verifyAuthentication({ response, expectedChallenge, credential }) {

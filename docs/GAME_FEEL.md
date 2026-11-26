@@ -119,6 +119,24 @@ tab say so to screen readers.
 - **Text on gold** always uses `--color-text-on-gold` (dark), in every theme: gold buttons,
   gold and streak pills, earned reward steps, the combo badge and the mastered-topic checkmark on the map.
 
+## Avatar motion (E9, owner request 2026-11-26)
+
+- The student's own avatar can move as a puppet: whole parts (the figure, the head, the eyes, the
+  mouth) move with CSS transforms, so hats, hair and glasses ride along with the head whatever the
+  child wears. Hair that hangs behind the body (long hair, ponytails) moves in step with the head
+  but stays behind the top.
+- `<AvatarSvg code motion="idle|nod|hop|hmm|tap|still" />`; still by default, so options and lists
+  never move. `useAvatarMotion({ paused })` gives the props and `react('nod' | 'hop' | 'hmm' | 'tap')`.
+- Idle: slow breathing with a small bounce (6.4s loop), a blink every 5.2s, a slow look left and
+  right (8.8s loop); the loops are multiples of `--motion-pulse`, so nothing pulses fast. Reactions play once: **nod** for a right answer (700ms), **hop** with a squint
+  and a bigger smile for a goal or level (900ms), a gentle **hmm** head tilt for a wrong answer
+  (1.4s), and a quick **tap** squash when the avatar is tapped (450ms). Same feel as Pip: ease-in-out loops, reactions on `--ease-out` and `--ease-spring`.
+- Small moves only (at most 4px up, 7 degrees of tilt), so nothing leaves the frame: checked for
+  every hat, hair style, skin and held item.
+- `paused` (questions and Test mode) stops the idle loop; reactions still play. Nothing runs in a
+  hidden tab. Reduced motion: the avatar stays still and reactions do nothing.
+- Placement (the bigger avatar at the bottom right, in the Me nav item) is J's (J15b).
+
 ## Avatar builder layout (J9, owner request 2026-11-25)
 
 - The preview never scrolls away; only the options scroll or change tab. The layout follows the
@@ -238,6 +256,29 @@ a CSS animation on the page, nothing on top of it). `ButtonTile` marks the navig
 route) adds `page-enter` (and `page-enter--back` on Back) to `#main`; each style's stylesheet draws
 it. With reduced motion the page just swaps. Get help (`/help`, `/parent/help`) and the Quick exit
 never transition. An ordinary link does not either.
+
+## Pip, the Home button, and Home (J15b, owner direction 2026-11-26)
+
+- **Pip** (`features/juice/pip/`) is code-drawn original art in layers: the fox with shoulders, a
+  round frame he leans out of (the top of the ring behind his head, the bottom in front), the arm
+  always growing from the shoulder, one worn subject item, and on Home a subject prop and tint.
+  Outfits by subject: `outfits.ts` (`outfitFor`). Unisex touches (a moustache, a bow, freckles or
+  none, about half of days none) rotate by day (`touchFor`), never tied to the subject or student.
+- **The Home button**: Pip in a 56px round button, top left of every student screen and of
+  lessons and tests (a row of its own there). Accessible name "Home"; the tap target is the circle,
+  and his head leans out above it without covering anything. In a lesson or test, tapping him asks
+  **"Leave this lesson?"** (Keep going, focused first; Leave). The subject comes from the map or
+  Home, kept in memory only (`subject.ts`, nothing saved on the device).
+- **Idle loop** (`idle.ts`): one action about every 8 seconds (blink, wave, stretch, read, peek at
+  a timer), never the same twice running; naps outside 07:00 to 21:00; stops after a minute without
+  a tap or key; still in lessons and tests. Moves ease in and out through in-between frames and
+  return to rest, so nothing snaps. Reduced motion: a still pose.
+- **Home** (`/home`, `features/home/`) is the first screen after signing in or unlocking and where
+  Pip goes. One screen at 390 × 844, low on words: the level ring (count-up), streak, today's goal
+  rings (XP, 5-a-day with Start or Continue, cards due), **one** big bobbing next-mission button
+  (or "Pick a topic"), weak spots to fix, the friends league chip (soon), and this week's days with
+  the reward gift. It reads the map, the week's stats (read-only, so Rewards keeps its "New!"
+  moments), the 5-a-day and cards due. The map's Today strip moved here; the map is topics only.
 
 ## Never (Children's Code and `REWARDS.md`)
 

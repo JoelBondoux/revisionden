@@ -85,7 +85,7 @@ describe('lesson feedback in the feedback table', () => {
     expect(rows).toEqual([{ kind: 'lesson_not_helped' }]);
   });
 
-  it('migration 0031 keeps only the newest of any duplicate taps before adding the index', async () => {
+  it('migration 0033 keeps only the newest of any duplicate taps before adding the index', async () => {
     const student = (
       await client.query<{ id: string }>(
         `insert into students (family_id, nickname, avatar_code, year_group)
@@ -102,7 +102,7 @@ describe('lesson feedback in the feedback table', () => {
       [family, student, item],
     );
     const migration = readFileSync(
-      new URL('../migrations/0031_lesson_tap_unique.sql', import.meta.url),
+      new URL('../migrations/0033_lesson_tap_unique.sql', import.meta.url),
       'utf8',
     );
     for (const statement of migration.split('--> statement-breakpoint')) {

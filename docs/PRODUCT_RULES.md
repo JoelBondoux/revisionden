@@ -166,6 +166,8 @@ formula and its assumptions. Summary of what is built:
   sword, jungle and space scenes. 14 rewards unlock them: one item each, except the 100-day
   streak, which unlocks two (crown and Alien skin).
 - Shuffle picks only items the student can wear. Avatars are drawn as SVG shapes, never photos.
+- The avatar can be animated (E9): idle, nod, hop and hmm move whole parts with CSS transforms, so
+  every item combination moves together; still with reduced motion. Details: `docs/GAME_FEEL.md`.
 - Implemented: `packages/core/src/nickname.ts`, `packages/core/src/avatar.ts`.
 
 ## Onboarding
@@ -241,6 +243,13 @@ Product owner decision, 2026-11-25: **parent view only**.
   it is used on becomes its own linked device, which a parent can unlink on its own, and both
   parents are told ("RevisionDen noticed <nickname>'s passkey being used on a new device"). At most
   one new device a day per passkey (cleared browser storage); an unlinked device stays refused.
+- **Use my phone instead (E10).** On a computer or tablet, and anywhere after "No RevisionDen
+  passkey was found", a second button signs in with the passkey on the student's phone: "Your
+  browser shows a QR code. Scan it with the phone you use for RevisionDen." The computer then
+  becomes a linked device, the parents are told, and the one-new-device-a-day limit applies, as
+  for synced passkeys. If it fails: could not reach your phone (turn on Bluetooth on both, keep
+  the phone close), this browser cannot sign in with your phone (try Chrome, Edge or Safari), or
+  that passkey is not linked (ask a parent), with a "Details: <error name> (RD-…)" line.
   Parents and students share
   one sign-in page, the welcome page (`decisions/0007-student-passkey-unlock.md` in project
   memory).
@@ -422,7 +431,7 @@ positive whole numbers; negatives later).
 - **"Did this help?"** after the last tile step is checked: one tap, Yes or No, stored as
   feedback kind `lesson_helped` or `lesson_not_helped` with the item and never any text, one
   answer per student and item (a second tap changes the first; enforced by the database with a
-  unique partial index and an upsert, migration 0031, W8b), not counted in the daily feedback
+  unique partial index and an upsert, migration 0033, W8b), not counted in the daily feedback
   limit. Parents and the
   operator see it with the family's feedback.
 - **Hidden until verified:** the pilot items are draft content, so production does not serve
@@ -475,14 +484,53 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
 - Implemented: `packages/core/src/mistakes.ts`, `apps/api/src/learning/mistakes.ts`, the attempts,
   lesson and daily routes, `apps/web/src/features/learn/LessonPlayer.tsx`. Migration 0026.
 
+## Typed working without the maths engine (F12, 2026-11-26)
+
+- Typed working (`worked_maths`) is marked by the maths engine (`MATHS_ENGINE_URL`). When no
+  engine is set up, students are never given typed working: lessons, warm-ups, similar, easier
+  and confidence questions, the 5-a-day (including a set already made today), recall and the
+  starting test all leave it out.
+- If one is answered anyway (a lesson loaded before), the answer is **unmarked**: the API returns
+  `{ unmarked: true, itemId }` and saves nothing, so there is no attempt, XP, streak, combo or
+  mastery change, and it is not counted as wrong. The lesson says "We can't mark typed working
+  right now, so this one's skipped. No XP lost." and Continue moves on.
+- Implemented in `selectableItem` and `markItem` (`apps/api/src/learning/items.ts`),
+  `UnmarkedAttemptResponseSchema` in core and `LessonPlayer.tsx`.
+
+## Clues and help (F10, owner 2026-11-26)
+
+- **Need a clue?** shows the item's verified hint, with no penalty. It is offered only when a
+  verified hint exists; the hint is no longer shown up front.
+- The button then becomes **Help me understand**: the item's verified worked solution, one step
+  at a time (worked steps, else the inline mark scheme, then its explanation, ending on the
+  answer; the F7 Explain steps). With no hint but verified steps, it starts there. With neither,
+  there is no button. Never AI-made (CLAUDE.md rule 7).
+- Both open in place under the question, so the answer box and Check stay on screen.
+- After help the student still has to answer: help is never a free answer. The answer is
+  **helped**. A right helped answer earns half the usual XP, rounded down (owner), and never a
+  combo. It is practised like a miss: it counts as wrong for mastery (on the topic map and in the
+  parent and student dashboards, while accuracy keeps its real score), goes on the review ladder,
+  becomes a flashcard, and can come back in the lesson. The feedback says "Correct, with help".
+  A clue on its own changes nothing. Help that arrives after the pupil has moved on never marks
+  the next question as helped.
+- Learn mode only: there is no clue or help in Test mode or the starting test (the API refuses a
+  helped Test mode answer).
+- Implemented in `packages/core/src/help.ts`, `GET /v1/student/learn/items/:id/help`,
+  `attempts.helped` (migration 0029) and `apps/web/src/features/learn/HelpPanel.tsx`.
+
 ## Showing maths (F9, owner 2026-11-26)
 
 - Powers are shown as superscripts wherever students see maths: x^2 is shown as x², 10^-3 as
   10⁻³, 10^(2 + 8) as 10²⁺⁸ (a raised bracket loses its brackets). Only the power is raised
-  (x^2y is x²y), and a^b^c is a to the power b^c, read right to left as in maths. This covers
+  (x^2y is x²y), and a^b^c is a to the power b^c, read right to left as in maths; a compound
+  power raised again keeps its brackets (x^(a+b)^2 shows (a+b)² raised). This covers
   prompts, options, units, flashcards (both faces and the card list), Explain steps, answers and
   explanations in feedback, hints, and the review batch screens. Stored content keeps its ^.
 - Screen readers hear the words from the read-aloud rules ("x squared", "to the power minus 3").
+- A tap on any power switches every power on screen between x² and x^2, and back on another tap
+  (F9b, owner). The choice is remembered on this device (`revisionden.powersSwitched`). In
+  computing, powers start as ^ and a tap raises them. The tap only switches: it never chooses an
+  answer or turns a flashcard. Screen readers hear the same words either way.
 - A ^ with nothing it can raise stays as it is (content says "Use ^ for powers", which is how a
   power is typed).
 - Typed-answer boxes and worked maths have a "Power" key that types ^ where the cursor is, and a
@@ -499,6 +547,20 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
 - Mastery 0–100: weighted average of the last 30 attempts; weights halve every 30 days; two
   imaginary wrong answers as a starting point, so mastery is earned and fades without practice.
   A weak spot is a topic below 60.
+- **Daily card limit (F11, owner 2026-11-26):** at most 20 review cards a day
+  (`DAILY_CARD_LIMIT`), so the Cards tab never shows a backlog like "99+". The Cards badge and
+  "Due today" show today's remaining number (0 to 20). Which 20: cards being relearned first, then
+  the most overdue for their interval; among equally overdue cards, weak-spot topics first, then
+  the most recent wrong answers, then the one due earliest. The student's own cards count; All
+  decks is browsing, not review, and is not limited. After 20 the Cards tab says "Done for today!"
+  (with the usual celebration sound and vibration) and offers "10 more" for keen students; extra
+  cards schedule normally. A review session over all decks is complete (and earns its session XP
+  under the usual rules) when the cards offered today are done, the daily 20 plus any "10 more",
+  not when the whole backlog is (F11b; the session stores `extra_cards`, migration 0032). Cards past the cap stay due and roll to the next day with no penalty
+  and no overdue message: SM-2 sets the next gap from the card's own interval, never from how late
+  it was reviewed, so a held-back card is not treated as forgotten. The parent stats show no
+  flashcard backlog today (the API returns `backlog` for a later parent view). Implemented in
+  `packages/core/src/card-limit.ts` and `apps/api/src/learning/card-limit.ts`.
 - Implemented: `packages/core/src/spaced-repetition.ts`, `packages/core/src/mastery.ts`.
 - **Turning a card (F7, owner):** tap the card, or press Space or Enter, to turn it either way as
   often as you like. Turning it back to the question never counts as another try and never
@@ -992,6 +1054,35 @@ Requested by the product owner on 2026-11-25.
 - Implemented: `apps/api/src/routes/family-parents.ts`, `apps/api/src/family-events.ts`,
   `apps/web/src/features/parents/`; migration 0012.
 
+## Friends league (workstream FL)
+
+Owner decisions, 2026-11-26. Full design: `docs/FRIENDS_LEAGUE.md`.
+
+- **Development only for now** (lead ruling, 2026-11-26): behind `FRIENDS_ENABLED` (dev only);
+  in staging and production every friends route answers `404 friends_not_available`. It turns on
+  in production only after L updates the notices and the owner's solicitor reviews them.
+
+- Friends can come from other families. Off per child until a parent turns on "Allow friends".
+  A child shares a one-time 8-character code in person; the friend types it and confirms; then
+  one parent from **each** family approves (7 days). Codes: 48 hours, used once, hashed, 3 a
+  day; 3 waiting requests; 5 wrong tries an hour per child, 20 a day per family; every failure
+  says only "That code isn't valid".
+- Friends see nickname, avatar, title and this week's league XP only. No chat or free text.
+  Brothers and sisters join automatically when friends is on for both. At most 10 friends.
+- League XP: reward XP from answers and flashcard sessions this UK week (Monday to Sunday);
+  friends see totals up to the end of yesterday. Equal XP share a place; no XP has no place; a
+  win needs 50 XP and someone else with XP; ties share the win.
+- The child can hide from the league, remove, block or report (fixed reasons) a friend; parents
+  can remove, block, unblock and add a private label (30 characters, no email or phone).
+  Reports are seen by both families' parents.
+- Implemented so far: `packages/core/src/league.ts`, `apps/api/src/routes/friends.ts`,
+  `apps/api/src/routes/friends-league.ts`; migration 0030.
+- Screens: the League page at `/league` (from a "Friends league" tile on Me, and a rank chip
+  "You're 2nd this week" on Home, in place of "Friends league Soon" where friends are
+  available; it moved from the Map header when Home landed); the parent
+  Friends page at `/parent/friends/:studentId` (a "Friends" tile on the child's card). Code:
+  `apps/web/src/features/league/`. Weekly wins and rewards come next.
+
 ## Me page (`/settings`, workstream W9, owner feedback 2026-11-26)
 
 Owner: "The avatar/Me settings page is a little convoluted, and it doesn't allow customising your
@@ -1004,12 +1095,14 @@ own avatar." The page is now short enough for one phone screen (390 × 844):
   server says yes. The API's only rule is that every item is unlocked (locked items need their
   reward); there is no parent approval and no rate limit. The nickname comes from
   `GET /v1/student/me`.
-- **Then:** Get help (always the first link on the page), My progress, My rewards.
+- **Then:** Get help (always the first link on the page), My progress, My rewards, Look and sound, More, as J15a button tiles: an icon over a 2–3 word label, no helper sentences (owner, 2026-11-26). Get help uses `tone="help"` (calm, no page transition).
 - **Look and sound** (`/settings/look-and-sound`): Reading comfort, Appearance (theme), Effect style
   (students only; its picker is unchanged), Read aloud, Sound (with vibration).
 - **More** (`/settings/more`): My subjects, Reminders, This device (install, Switch profile, Show
   the bug button), Parents (Parent home, Ask a parent), Feedback (send, yours, your family's),
-  Policies and About, and What your parent can see. Both sub-pages end with "Back to Me".
+  Policies and About, and What your parent can see. Links there are button tiles too (Switch profile,
+  Parent home, Ask a parent, Send feedback, My feedback, Family feedback, Policies, About); the
+  install button keeps its own control. Both sub-pages end with "Back to Me".
 - A parent on `/settings` (no student on the device) sees no avatar header, and gets a Parent home
   tile on the main page as well as in More.
 - Code: `apps/web/src/pages/SettingsPage.tsx`, `apps/web/src/features/me/` (`MeHeader`,

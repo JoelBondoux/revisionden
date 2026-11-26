@@ -1,5 +1,6 @@
-import { inArray, type SQL } from 'drizzle-orm';
+import { and, inArray, ne, type SQL } from 'drizzle-orm';
 import {
+  explainSteps,
   checkAreaModelPair,
   factorisedForm,
   parseAreaModelAnswer,
@@ -25,6 +26,16 @@ export type ItemRow = typeof items.$inferSelect;
 export const servableItem = (serveDrafts: boolean): SQL =>
   inArray(items.status, servableStatuses(serveDrafts));
 
+/**
+ * What may be picked for a student now (F12): servable, and markable. Typed working needs the
+ * maths engine, so without one it is never picked. Answers are still accepted by `servableItem`,
+ * so a question already on screen is answered as unmarked instead of failing.
+ */
+export const selectableItem = (serveDrafts: boolean, canMarkWorking: boolean): SQL =>
+  canMarkWorking
+    ? servableItem(serveDrafts)
+    : and(servableItem(serveDrafts), ne(items.type, 'worked_maths'))!;
+
 const body = (row: ItemRow) => row.body as ItemBody;
 const answerOf = (row: ItemRow) => row.answer as ItemAnswer;
 
@@ -38,6 +49,7 @@ export function toLearnItem(row: ItemRow, topicTitle: string): LearnItem {
     draft: row.status !== 'verified',
     ...(b.hint ? { hint: b.hint } : {}),
     ...(row.learningPoint ? { learningPoint: row.learningPoint } : {}),
+    ...(helpSteps(row).length > 0 ? { canHelp: true as const } : {}),
     ...(row.contentId ? { contentId: row.contentId } : {}),
   };
   const prompt = b.prompt ?? '';
@@ -108,12 +120,15 @@ export interface Marked extends MarkResult {
   firstWrongLine?: number | null;
 }
 
-/** Marks an answer. Maths working goes to the maths engine; long answers are not marked yet. */
+/**
+ * Marks an answer. Maths working goes to the maths engine; long answers are not marked yet.
+ * Null when it cannot be marked now: typed working with no maths engine (F12).
+ */
 export async function markItem(
   row: ItemRow,
   answer: unknown,
   engine: MathsEngine | undefined,
-): Promise<Marked> {
+): Promise<Marked | null> {
   const key = answerOf(row).key ?? {};
   switch (row.type) {
     case 'multiple_choice':
@@ -138,9 +153,7 @@ export async function markItem(
     }
     case 'worked_maths': {
       if (typeof answer !== 'object' || answer === null || !('lines' in answer)) throw wrongShape();
-      if (!engine) {
-        throw new ApiError(503, 'maths_engine_unavailable', 'Maths checking is not available');
-      }
+      if (!engine) return null;
       const verify = answerOf(row).verify ?? {};
       const expected: ExpectedAnswer = {
         ...(key as ExpectedAnswer),
@@ -157,4 +170,20 @@ export async function markItem(
         'Long answers will be marked by AI soon. For now, compare your answer with your notes.',
       );
   }
+}
+
+/**
+ * "Help me understand" (F10): the item's verified worked solution, one step at a time, ending on
+ * the answer (the F7 Explain steps). Empty for flashcards and long answers, and for items with no
+ * worked steps, mark scheme or explanation.
+ */
+export function helpSteps(row: ItemRow): string[] {
+  if (row.type === 'flashcard' || row.type === 'extended_answer') return [];
+  const a = answerOf(row);
+  return explainSteps({
+    steps: a.steps,
+    markScheme: a.markScheme,
+    explanation: a.explanation,
+    answer: correctAnswerText(row),
+  });
 }

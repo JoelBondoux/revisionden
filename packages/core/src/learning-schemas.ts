@@ -22,6 +22,8 @@ const itemBase = {
   warmUp: z.literal(true).optional(),
   /** The finer learning point the item tests, when content tags one (else its topic). F5. */
   learningPoint: text.optional(),
+  /** The item has verified steps for "Help me understand" (F10), fetched on demand. */
+  canHelp: z.literal(true).optional(),
   /** The item's id in content/ (for example gcse-maths-h-n4-0001), for Learn more links (Q6b). */
   contentId: text.optional(),
 };
@@ -118,9 +120,15 @@ export const LearnAttemptRequestSchema = z
     recall: z.boolean().optional(),
     /** True for a retry in the lesson after a wrong answer: it counts at half weight (F5). */
     retry: z.boolean().optional(),
+    /** Answered after "Help me understand" (F10): Learn mode only; half XP, practised like a miss. */
+    helped: z.boolean().optional(),
   })
   .strict();
 export type LearnAttemptRequest = z.infer<typeof LearnAttemptRequestSchema>;
+
+/** "Help me understand" (F10): the item's verified worked steps, ending on the answer. */
+export const ItemHelpResponseSchema = z.object({ steps: z.array(text).min(1) });
+export type ItemHelpResponse = z.infer<typeof ItemHelpResponseSchema>;
 
 export const ProgressSchema = z.object({
   xpToday: z.number().int().min(0),
@@ -155,6 +163,8 @@ export const LearnAttemptResponseSchema = z.object({
   score: z.number().min(0).max(1),
   xpEarned: z.number().int().min(0),
   createdAt: IsoDateTimeSchema,
+  /** Answered after "Help me understand" (F10): half XP, practised like a miss. */
+  helped: z.boolean().optional(),
   /** Instant feedback (feedback level 1) in learn mode; null in test mode. */
   feedback: FeedbackSchema.nullable(),
   progress: ProgressSchema,
@@ -180,6 +190,23 @@ export const LearnAttemptResponseSchema = z.object({
   newlyEarned: z.array(RewardCardSchema),
 });
 export type LearnAttemptResponse = z.infer<typeof LearnAttemptResponseSchema>;
+
+/**
+ * The answer could not be marked (F12): typed working with no maths engine. Nothing is recorded
+ * (no XP, streak or mastery change); the lesson says so and moves on.
+ */
+export const UnmarkedAttemptResponseSchema = z.object({
+  unmarked: z.literal(true),
+  itemId: IdSchema,
+});
+export type UnmarkedAttemptResponse = z.infer<typeof UnmarkedAttemptResponseSchema>;
+
+/** What answering a question returns: marked, or unmarked (F12). */
+export const LearnAttemptResultSchema = z.union([
+  UnmarkedAttemptResponseSchema,
+  LearnAttemptResponseSchema,
+]);
+export type LearnAttemptResult = z.infer<typeof LearnAttemptResultSchema>;
 
 export const SubjectTopicsResponseSchema = z.object({
   subjectId: text,
@@ -232,6 +259,12 @@ export const FlashcardsOverviewSchema = z.object({
   decks: z.array(FlashcardDeckSchema),
   mine: z.array(FlashcardSchema),
   draftContent: z.boolean(),
+  /** Daily limit (F11): review cards left today (0–20, or more after "10 more"). */
+  dueToday: z.number().int().min(0).optional(),
+  /** All due cards, beyond today's limit (not shown to the student as a number). */
+  backlog: z.number().int().min(0).optional(),
+  /** Today's limit is reached and cards are still due: "Done for today!". */
+  doneToday: z.boolean().optional(),
 });
 export type FlashcardsOverview = z.infer<typeof FlashcardsOverviewSchema>;
 
@@ -249,7 +282,13 @@ export const FlashcardSessionSchema = z.object({
 export type FlashcardSession = z.infer<typeof FlashcardSessionSchema>;
 
 /** Optional deck scope: completion is then checked within that topic's cards only. */
-export const FlashcardSessionRequestSchema = z.object({ topicId: text.optional() }).strict();
+export const FlashcardSessionRequestSchema = z
+  .object({
+    topicId: text.optional(),
+    /** "10 more" cards asked for today (F11b): the session is complete when they are done. */
+    extra: z.number().int().min(0).max(100).optional(),
+  })
+  .strict();
 export type FlashcardSessionRequest = z.infer<typeof FlashcardSessionRequestSchema>;
 
 export const FlashcardReviewRequestSchema = z

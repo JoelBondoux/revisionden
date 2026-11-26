@@ -7,11 +7,12 @@
  */
 import { Hono } from 'hono';
 import { and, asc, eq, inArray, sql } from 'drizzle-orm';
-import { buildTopicMap, dueCards, type CardsDue, type TopicMap } from '@revisionden/core';
+import { buildTopicMap, type CardsDue, type TopicMap } from '@revisionden/core';
 import { enrolments, items, mastery, topics } from '@revisionden/db';
 import type { AppEnv } from '../context';
 import { ApiError } from '../errors';
-import { flashcardStore, toCard } from '../learning/flashcard-store';
+import { todaysCards } from '../learning/card-limit';
+import { flashcardStore } from '../learning/flashcard-store';
 import { servableItem } from '../learning/items';
 import { getProgress } from '../learning/progress';
 import type { LearnDeps } from './learn';
@@ -97,12 +98,8 @@ export function studentMapRoutes({ db, clock, config }: LearnDeps) {
     const now = clock.now();
     await cards.addNewDeckCards(studentId, now);
     const loaded = await cards.loadCards(studentId);
-    const body: CardsDue = {
-      due: dueCards(
-        loaded.map((l) => toCard(l.card)),
-        now.getTime(),
-      ).length,
-    };
+    // The badge shows today's remaining cards under the daily limit (F11), never the backlog.
+    const body: CardsDue = { due: (await todaysCards(db, studentId, loaded, now)).due.length };
     return c.json(body);
   });
 

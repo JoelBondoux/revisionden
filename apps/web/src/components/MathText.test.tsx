@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MathText } from './MathText';
 
 describe('MathText (F9)', () => {
@@ -32,7 +33,66 @@ describe('MathText (F9)', () => {
     const { container } = render(
       <MathText text="x ^ 2 and x^2" subject="a-level-computer-science" />,
     );
-    expect(container.textContent).toBe('x ^ 2 and x^2');
+    expect(container.querySelector('[aria-hidden="true"]')!.textContent).toBe('x ^ 2 and x^2');
     expect(container.querySelector('sup')).toBeNull();
+  });
+});
+
+describe('tapping a power switches x² and x^2 everywhere (F9b, owner)', () => {
+  beforeEach(() => window.localStorage.clear());
+
+  it('switches every power on screen to ^ and back again', async () => {
+    const { container } = render(
+      <>
+        <p>
+          <MathText text="x^2 + 1" />
+        </p>
+        <p>
+          <MathText text="10^-3" />
+        </p>
+      </>,
+    );
+    const shown = () =>
+      [...container.querySelectorAll('[aria-hidden="true"]')].map((e) => e.innerHTML);
+    expect(container.querySelectorAll('sup')).toHaveLength(2);
+    await userEvent.click(container.querySelector('[aria-hidden="true"]')!);
+    expect(container.querySelectorAll('sup')).toHaveLength(0);
+    expect(shown()).toEqual(['x^2 + 1', '10^-3']);
+    await userEvent.click(container.querySelectorAll('[aria-hidden="true"]')[1]!);
+    expect(container.querySelectorAll('sup')).toHaveLength(2);
+  });
+
+  it('remembers the choice on this device', async () => {
+    const first = render(<MathText text="x^2" />);
+    await userEvent.click(first.container.querySelector('[aria-hidden="true"]')!);
+    first.unmount();
+    const again = render(<MathText text="x^2" />);
+    expect(again.container.querySelector('sup')).toBeNull();
+    expect(again.container.textContent).toContain('x^2');
+  });
+
+  it('in computing, starts with ^ and a tap raises it', async () => {
+    const { container } = render(<MathText text="a^b" subject="a-level-computer-science" />);
+    expect(container.querySelector('sup')).toBeNull();
+    await userEvent.click(container.querySelector('[aria-hidden="true"]')!);
+    expect(container.querySelector('sup')!.textContent).toBe('b');
+  });
+
+  it('a tap on a power in an answer choice does not choose that answer', async () => {
+    const { container } = render(
+      <label>
+        <input type="radio" name="q" />
+        <MathText text="x^2" />
+      </label>,
+    );
+    await userEvent.click(container.querySelector('[aria-hidden="true"]')!);
+    expect(container.querySelector('input')).not.toBeChecked();
+  });
+
+  it('screen readers hear the same words either way', async () => {
+    render(<p data-testid="p">{<MathText text="x^2" />}</p>);
+    expect(screen.getByTestId('p')).toHaveTextContent(/x squared/);
+    await userEvent.click(screen.getByTestId('p').querySelector('[aria-hidden="true"]')!);
+    expect(screen.getByTestId('p')).toHaveTextContent(/x squared/);
   });
 });
