@@ -42,6 +42,8 @@ Manager. They are allowed, and the parents are told (I5b):
   shown as new and pushed to both parents.
 - **Cleared storage.** At most one new device a day per passkey: within 24 hours of the last new
   device, another unknown browser reuses that device (new marker, no new event).
+  Made atomic by B7: a conditional upsert on `passkey_new_device_claims` (one row per passkey)
+  claims the day, so simultaneous new browsers cannot both add a device.
 - **Devices linked before markers.** The first unlock of a passkey with one device and no marker
   adopts that device quietly (no event), so the release does not alert every family.
 - **Unlinking.** When a parent unlinks a device, its marker stays with no device, so that browser

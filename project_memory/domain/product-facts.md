@@ -59,7 +59,9 @@ Tags: #product #rules #limits #defaults
   a random marker in local storage (`revisionden.deviceMarker`; the API stores its hash in
   `device_markers`). An unknown browser adds a `devices` row and logs the important family event
   "RevisionDen noticed <nickname>'s passkey being used on a new device", pushed to both parents; at
-  most one new device a day per passkey. An unlinked device's browser is refused. Devices linked
+  most one new device a day per passkey. The day is claimed with one conditional upsert on `passkey_new_device_claims`
+  (migration 0027, B7), so two new browsers unlocking at the same moment add one device and one
+  alert; claims are cleared after 24 hours. An unlinked device's browser is refused. Devices linked
   before markers are adopted quietly on their first unlock. Implemented in
   `apps/api/src/routes/devices.ts` (`deviceForUnlock`).
 - Rate limits per address: 30 a minute on sign-in and device routes, 20 a minute on AI routes.

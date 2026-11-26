@@ -91,6 +91,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- One new device a day, made atomic (B7, follow-up to I5b): two new browsers unlocking the same synced passkey at the same moment could each add a device and alert the parents twice. Unlock now claims the day with one conditional upsert on the new `passkey_new_device_claims` table (migration `0027_new_device_claims`); the loser reuses the winner's device. The scheduled clean-up deletes claims after 24 hours. Data retention 1.12.
 - Avatar builder (J9b, Codex review of #134): picking a tab after scrolling part-way down now brings the new tab's first options into view just below the pinned stage (level with its top when wide), allowing for the compact stage growing back; instant with reduced motion.
 - Adversarial review (S2, from S3-A on a1-0103): for typed answers the reviewer is told the marking normaliser's rules (spaces, case, multiply signs, minus signs, superscripts, √), so it no longer asks for `p^3*q` or `p^3 q` when `p^3q` is accepted.
 - Maths engine (F6, from Codex on #139): a final line of many letter-to-letter alternatives (`a = x, a = x, …`) no longer ties up the engine. Repeats are dropped, only readings that are an expected solution are tried, and at most 64 ways to read a line (`MAX_READINGS`).

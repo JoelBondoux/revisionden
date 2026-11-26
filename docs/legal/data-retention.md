@@ -1,6 +1,6 @@
 # How long we keep data
 
-Version: 1.11
+Version: 1.12
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -57,6 +57,7 @@ the family account for 12 months (section 3).
 | Student device sessions (hashed)                                                                     | 12 hours, or until the device is locked or unlinked                                                                 | Removed on lock or unlink; expired sessions deleted automatically within 24 hours                                                 |
 | Device passkey records                                                                               | Until the parent unlinks the device or deletes the student                                                          | In-app unlink or delete                                                                                                           |
 | Device codes (hashed)                                                                                | Until the student is deleted; an unlinked device's code is kept so that device stays unlinked                       | Deleted with the student                                                                                                          |
+| When a passkey was last allowed onto a new device (passkey id and time)                              | 24 hours, so a second new device the same day is not added                                                          | Deleted automatically by the scheduled clean-up, or with the student                                                              |
 | Push addresses and keys                                                                              | Until the student turns reminders off, the push service says the address no longer works, or the device is unlinked | Deleted automatically in each of those cases                                                                                      |
 | Reminder settings and reminder log                                                                   | Until the student is deleted                                                                                        | In-app delete                                                                                                                     |
 | AI usage (tokens and cost only)                                                                      | Until the student is deleted                                                                                        | In-app delete                                                                                                                     |
@@ -101,6 +102,7 @@ to keep it, and tell you if anything cannot be deleted and why.
 
 ## Changes
 
+- 1.12: Added the short record of when a passkey was last allowed onto a new device, kept 24 hours.
 - 1.11: Expired link codes, invite codes and sessions stop working straight away and are deleted within 24 hours (we no longer promise 15 minutes); the clean-up runs at least once a day.
 - 1.10: A device link sent instead of a QR code lasts 24 hours (the QR code still lasts 10 minutes), and expired link codes are deleted within 20 minutes rather than 15.
 - 1.9: Added hashed device codes, which tell a student's devices apart when their passkey is synced.
