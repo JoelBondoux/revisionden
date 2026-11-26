@@ -134,6 +134,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- S3-N-H: the eight N8 "Find k" (or "Find a") hints for surds and π now say to give the number in front of √ or π, so they no longer lead to answers like 36π that are marked wrong. Re-reviewed with the carry-out-the-steps rule.
 - K5c: the stats settle-sound test no longer flakes under CPU load. The fake motion clock now makes React run effects left over from a render outside `act` before each `show()` and `step()`, so the tiles always start watching before the clock moves (`features/stats/motionTestEnv.tsx`).
 - Flashcards accessibility (F8b, axe on /cards): the flip card has no `aria-label`, so its accessible name is the text on its showing face, with the turn hint as `aria-describedby`; the rating buttons drop `aria-label` ("Good, back in 1 day") and are named by their visible text ("Good 1 day"). New e2e check `e2e/tests/cards.spec.ts`: axe on /cards on both sides of the card, at phone, tablet and desktop sizes.
 - K5b: on My stats, switching Week, Term or Year no longer replays the count-up, the charts or the settle sound; and printing or saving the parent dashboard as a PDF mid-count shows the final numbers (Codex on #235).
