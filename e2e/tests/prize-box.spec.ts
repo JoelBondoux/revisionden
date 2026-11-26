@@ -1,5 +1,5 @@
-import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { WCAG_TAGS, axeWhenSettled } from './support/axe';
 
 /**
  * J17: a right answer bursts the style's particles, and a reward arrives in the prize box. The
@@ -74,10 +74,7 @@ test('a reward arrives in the prize box: tap to open, see why, then Collect', as
   await expect(box.getByRole('listitem')).toContainText('For: ');
   const collect = box.getByRole('button', { name: 'Collect' });
   await expect(collect).toBeFocused();
-  const results = await new AxeBuilder({ page })
-    .include('dialog')
-    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-    .analyze();
+  const results = await axeWhenSettled(page, (axe) => axe.include('dialog').withTags(WCAG_TAGS));
   expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
   await collect.click();
   await expect(box).toBeHidden();

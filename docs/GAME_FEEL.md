@@ -334,6 +334,36 @@ never transition. An ordinary link does not either.
   the reward gift. It reads the map, the week's stats (read-only, so Rewards keeps its "New!"
   moments), the 5-a-day and cards due. The map's Today strip moved here; the map is topics only.
 
+## The lesson screen (J14, from the approved all-themes mockup rev 5.1)
+
+The lesson and question player (topic lessons, practice, command words, the 5-a-day and recall)
+follows the single-screen rule (`docs/PRODUCT_RULES.md`, Screen layout): at 390 × 844 with
+default text the question, the answer input and the primary button (Check, then Continue) are all
+in view without scrolling. At 320 px or 200% text the page may scroll up and down, never sideways.
+
+- **Order, top to bottom:** the lesson header (Pip as the Home button, the progress bar, the
+  combo and XP), the question card, the answers (2 × 2 chunky buttons for multiple choice; a
+  full-width field for typed answers), the clue and help, a one-line feedback and the action
+  button. Secondary detail (the day's goal, intro text, help steps) sits behind a tap or below
+  the action, never between the question and its answer.
+- **The question stays a calm, plain card** in every style (J10a2); the style shows around it.
+- **One Pip.** Pip v3 in the header is the lesson's Pip. He reacts to each marked answer
+  (`features/juice/pip/reactions.ts`, fed by `LessonPlayer`'s `onAnswerReaction`, which defaults
+  to `reactToAnswer`, so every lesson screen gets it):
+  - right: a nod; from 3 right in a row, a cheer;
+  - today's goal: a cheer (the avatar hops);
+  - helped (after "Help me understand"): a gentle nod only, however long the streak;
+  - wrong: an encouraging head tilt ("hmm"), never a frown.
+    Each pose plays once (nod 900 ms, cheer 1200 ms, hmm 1400 ms) and goes back to rest; there is
+    no idle motion in a lesson. Reduced motion: no reaction. An answer from before Pip appeared is
+    ignored.
+- **Answer field reflow:** the typed-answer field fills its row and can shrink, so at 320 px with
+  200% text nothing scrolls sideways (it used to push the page 120 px; `e2e/tests/lesson.spec.ts`).
+- **Built in J14a:** Pip's reactions and the field reflow. **Next (J14b):** compact the header so
+  the older speech-bubble Pip (`PipSays`) becomes a short line beside Pip v3, show the student's
+  framed avatar there so it can nod, hop and "hmm" (the mapping above is ready in
+  `pipReactionFor`), and add the growing burst on a streak with W's `useCelebrate` (J17).
+
 ## Themed particles and the prize box (J17, owner-approved mockup 2026-11-26)
 
 Ported from `docs/mockups/all-themes-pip.html` (`FX`, `burst`, `PRIZE_BOX`, `openPrize`).

@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- In lessons Pip now reacts to your answers: a nod when you're right, a cheer for a streak or your daily goal, and an encouraging head tilt when it's not quite right. On small screens with big text, the answer box now fits without scrolling sideways.
 - Rewards now arrive in a prize box: it drops in, wobbles, and pops open to show each reward you earned and why. Tap the box to open it straight away. Right answers, hitting your daily goal and finishing a lesson also burst with your effect style's own sparkles (pen doodles, stickers, gold coins, stars, petals, pixels and more). If your device asks for less motion, the box simply opens with the list and nothing flies.
 - Every style now looks like its approved design, with its own page art and heading font, and progress bars gently shimmer and move in each style's own way (they stay still if your device asks for less motion). Pop Burst's purple page, Starlight's night sky and Pixel Arcade's arcade screen now show in dark mode.
 - In the interactive factorising lesson, picking the wrong pair of numbers now shows the gaps or the spare strips, instead of drawing a different shape.
@@ -159,7 +160,9 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- W12: the prize box's accessibility check also uses the shared `axeWhenSettled` helper, so every e2e axe check now waits for animations first.
 - W11: every e2e accessibility check now uses one shared helper, `axeWhenSettled` (`e2e/tests/support/axe.ts`), which waits for entrance animations to finish before axe measures contrast, so no screen's check can fail mid-fade like the Me page's did. The rules are unchanged.
+- J14: the lesson's typed-answer field (`.field__row .field__input`) fills its row and can shrink, so at 320 px with 200% text it no longer pushes the page 120 px sideways (`e2e/tests/lesson.spec.ts`).
 - W10: the Get help and Me accessibility checks (`e2e/tests/help.spec.ts`) wait for entrance animations to finish before axe measures contrast, so a button still fading in no longer fails them about 1 run in 9. The contrast rule is unchanged.
 - W8c: the interactive area model fits one phone screen again now that Pip has his own row in lessons (no gap under the question, and the hint and pair question in the small text size), so the `area-model` e2e "Check fits without scrolling" passes on dev.
 - Docs: content plan tasks D7 ("either order" topic groups) and D8 (cross-subject "bridge" topics, discovered on the map) added to `docs/BACKLOG.md`, from the owner's map review.
@@ -252,6 +255,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- J14a: Pip reacts in lessons. `features/juice/pip/reactions.ts` (`pipReactionFor`, `reactToAnswer`, `usePipReaction`, `REACTION_POSE_MS`); `LessonPlayer`'s `onAnswerReaction` defaults to `reactToAnswer`; `PipHomeButton` plays the nod, cheer or hmm pose once per answer, then rests (none with reduced motion). The J14 lesson-screen spec is in `docs/GAME_FEEL.md`.
 - J17: themed particle bursts (`features/juice/particles`: a pure planner with per-style flavours, capped at 30 a burst and 90 on screen, off for reduced motion) on right answers (growing with the combo), the daily goal and lesson complete, plus `celebrate`/`burstAt` for level-up and style-unlock screens; and the prize box (`features/juice/prize`, a native `<dialog>`) for newly earned rewards.
 - J15s revision (approved all-themes mockup rev 5.1): each look gains `--page-wash` and `--page-texture` (layered over the page colour in `design/base.css`, fixed attachment; the texture only with Background pattern on, no art with prefers-contrast more or forced colours; reading tints and the dyslexia-friendly font win over every look via `:root:root[...][data-effect-style]` overrides in `base.css`, checked in `looks.test.ts` and `e2e/tests/looks.spec.ts`) and the mockup's heading font via @fontsource (`@fontsource/baloo-2`, `bangers`, `press-start-2p`; Patrick Hand imported in Doodle Diary's sheet). Vivid and night pages (Pop Burst, Starlight, Pixel Arcade) move to dark mode so every AA pair holds; their buttons use a deeper main colour with white text and keep the bright colour as `--color-primary-edge`. Font licences (all SIL OFL 1.1) published in `apps/web/public/licences/fonts/`, checked by `fonts.test.ts`. Living progress bars in `features/juice/styles/bars.css` (per-style `--bar-fx`, background-position/transform/opacity only, no `steps()`, reduced-motion off, paused by the root `tab-hidden` class that `EffectStyleProvider` sets on `visibilitychange`), checked by `bars.test.ts`.
 - W8b (Codex review of #269): the area model keeps exactly b strips and c unit squares for any pair, outlining missing slots or leaving spare strips over (`fitStrips`); pilot steps are never picked as warm-ups or similar-question retries; "Did this help?" is one row per student and item, enforced by a unique partial index and an upsert (migration 0033).

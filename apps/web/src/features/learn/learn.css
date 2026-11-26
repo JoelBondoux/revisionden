@@ -45,10 +45,15 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
+  min-width: 0;
 }
 
+/* J14: a text input is as wide as its default 20 characters, which grows with the text size and
+   pushed the page 120 px sideways at 320 px with 200% text. It now fills the row and can shrink. */
 .field__row .field__input {
   flex: 1;
+  width: 100%;
+  min-width: 0;
 }
 
 .field__unit {
