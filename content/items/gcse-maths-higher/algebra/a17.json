@@ -7,17 +7,12 @@
     "learning_point": "gcse-maths-h-a17-lp-solve-linear",
     "expected_seconds": 40,
     "prompt": "Solve 4x + 7 = 31",
-    "answer": {
-      "solutions": ["6"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "4x + 7 = 31",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["6"] },
+    "verify": { "method": "solve", "equation": "4x + 7 = 31", "variable": "x" },
     "steps": ["4x + 7 = 31", "4x = 24", "x = 6"],
     "marks": 2,
     "mark_scheme": ["M1 for 4x = 24", "A1 for x = 6"],
+    "hint": "Undo the + 7 first, then divide by the number multiplying x.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -63,14 +58,6 @@
           "notes": "model answered \"6\"; expected \"6\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:58:26Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -85,6 +72,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:13:31Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -97,17 +92,12 @@
     "learning_point": "gcse-maths-h-a17-lp-solve-linear",
     "expected_seconds": 50,
     "prompt": "Solve 3(2x - 1) = 21",
-    "answer": {
-      "solutions": ["4"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "3(2x - 1) = 21",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["4"] },
+    "verify": { "method": "solve", "equation": "3(2x - 1) = 21", "variable": "x" },
     "steps": ["3(2x - 1) = 21", "6x - 3 = 21", "6x = 24", "x = 4"],
     "marks": 2,
     "mark_scheme": ["M1 for 6x - 3 = 21 or 2x - 1 = 7", "A1 for x = 4"],
+    "hint": "Expand the bracket first (or divide both sides by 3), then solve.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -153,14 +143,6 @@
           "notes": "model answered \"4\"; expected \"4\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:58:40Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -175,6 +157,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:13:33Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -187,17 +177,12 @@
     "learning_point": "gcse-maths-h-a17-lp-solve-linear",
     "expected_seconds": 50,
     "prompt": "Solve 7x - 4 = 3x + 20",
-    "answer": {
-      "solutions": ["6"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "7x - 4 = 3x + 20",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["6"] },
+    "verify": { "method": "solve", "equation": "7x - 4 = 3x + 20", "variable": "x" },
     "steps": ["7x - 4 = 3x + 20", "4x - 4 = 20", "4x = 24", "x = 6"],
     "marks": 2,
     "mark_scheme": ["M1 for 4x - 4 = 20 or 4x = 24", "A1 for x = 6"],
+    "hint": "Get the x terms on one side and the numbers on the other.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -243,14 +228,6 @@
           "notes": "model answered \"x = 6\"; expected \"6\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:06:32Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -265,6 +242,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:13:35Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -277,17 +262,12 @@
     "learning_point": "gcse-maths-h-a17-lp-solve-linear",
     "expected_seconds": 60,
     "prompt": "The straight lines y = 2x + 1 and y = 7 - x cross. Work out the x-coordinate of the point where they cross.",
-    "answer": {
-      "solutions": ["2"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "2x + 1 = 7 - x",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["2"] },
+    "verify": { "method": "solve", "equation": "2x + 1 = 7 - x", "variable": "x" },
     "steps": ["2x + 1 = 7 - x", "3x + 1 = 7", "3x = 6", "x = 2"],
     "marks": 2,
     "mark_scheme": ["M1 for 2x + 1 = 7 - x", "A1 for x = 2"],
+    "hint": "Where the lines cross, the y-values are equal, so set 2x + 1 equal to 7 - x.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -345,14 +325,6 @@
           "notes": "model answered \"2\"; expected \"2\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:59:18Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -367,6 +339,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:13:37Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -379,17 +359,12 @@
     "learning_point": "gcse-maths-h-a17-lp-fractions-negatives",
     "expected_seconds": 45,
     "prompt": "Solve 2 - 3x = 11",
-    "answer": {
-      "solutions": ["-3"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "2 - 3x = 11",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["-3"] },
+    "verify": { "method": "solve", "equation": "2 - 3x = 11", "variable": "x" },
     "steps": ["2 - 3x = 11", "-3x = 9", "x = -3"],
     "marks": 2,
     "mark_scheme": ["M1 for -3x = 9", "A1 for x = -3"],
+    "hint": "Take 2 from both sides, then divide by the number multiplying x. Watch the sign.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -435,14 +410,6 @@
           "notes": "model answered \"x = -3\"; expected \"-3\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:59:29Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -457,6 +424,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:13:38Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -469,17 +444,12 @@
     "learning_point": "gcse-maths-h-a17-lp-fractions-negatives",
     "expected_seconds": 90,
     "prompt": "Solve (x + 5)/3 = 2x - 5",
-    "answer": {
-      "solutions": ["4"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "(x + 5)/3 = 2x - 5",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["4"] },
+    "verify": { "method": "solve", "equation": "(x + 5)/3 = 2x - 5", "variable": "x" },
     "steps": ["(x + 5)/3 = 2x - 5", "x + 5 = 6x - 15", "20 = 5x", "x = 4"],
     "marks": 3,
     "mark_scheme": ["M1 for x + 5 = 3(2x - 5)", "M1 for 20 = 5x", "A1 for x = 4"],
+    "hint": "Multiply both sides by 3 to clear the fraction, then collect the x terms on one side.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -525,14 +495,6 @@
           "notes": "model answered \"x = 4\"; expected \"4\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:59:45Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -547,6 +509,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:13:40Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -559,17 +529,12 @@
     "learning_point": "gcse-maths-h-a17-lp-fractions-negatives",
     "expected_seconds": 100,
     "prompt": "Solve (2x - 1)/5 = (x + 1)/2",
-    "answer": {
-      "solutions": ["-7"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "(2x - 1)/5 = (x + 1)/2",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["-7"] },
+    "verify": { "method": "solve", "equation": "(2x - 1)/5 = (x + 1)/2", "variable": "x" },
     "steps": ["(2x - 1)/5 = (x + 1)/2", "2(2x - 1) = 5(x + 1)", "4x - 2 = 5x + 5", "x = -7"],
     "marks": 3,
     "mark_scheme": ["M1 for 2(2x - 1) = 5(x + 1)", "M1 for 4x - 2 = 5x + 5", "A1 for x = -7"],
+    "hint": "Cross-multiply to clear both fractions, then expand the brackets and collect like terms.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -615,14 +580,6 @@
           "notes": "model answered \"x = -7\"; expected \"-7\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:59:58Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -637,6 +594,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:13:42Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -649,14 +614,8 @@
     "learning_point": "gcse-maths-h-a17-lp-fractions-negatives",
     "expected_seconds": 90,
     "prompt": "Solve 5(x + 2) - 3(x - 4) = 30",
-    "answer": {
-      "solutions": ["4"]
-    },
-    "verify": {
-      "method": "solve",
-      "equation": "5(x + 2) - 3(x - 4) = 30",
-      "variable": "x"
-    },
+    "answer": { "solutions": ["4"] },
+    "verify": { "method": "solve", "equation": "5(x + 2) - 3(x - 4) = 30", "variable": "x" },
     "steps": [
       "5(x + 2) - 3(x - 4) = 30",
       "5x + 10 - 3x + 12 = 30",
@@ -666,6 +625,7 @@
     ],
     "marks": 3,
     "mark_scheme": ["M1 for 5x + 10 - 3x + 12", "M1 for 2x = 8", "A1 for x = 4"],
+    "hint": "Expand both brackets carefully: the second bracket is multiplied by -3, so both of its terms change sign.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -711,14 +671,6 @@
           "notes": "model answered \"4\"; expected \"4\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:06:51Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -733,6 +685,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:13:44Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -747,6 +707,7 @@
     "front": "Solve x + 9 = 4",
     "back": "x = -5",
     "explanation": "Subtract 9 from both sides: x = 4 - 9 = -5. Check: -5 + 9 = 4.",
+    "hint": "Do the inverse of adding 9 to both sides.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
     "checked_by": ["author"],
     "citations": [
@@ -802,9 +763,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:55:02Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:13:46Z",
           "notes": "no problems found"
         }
       ]
@@ -820,6 +781,7 @@
     "front": "Solve 3x = 18",
     "back": "x = 6",
     "explanation": "Divide both sides by 3: x = 18 ÷ 3 = 6. Check: 3 × 6 = 18.",
+    "hint": "Do the inverse of multiplying by 3 to both sides.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
     "checked_by": ["author"],
     "citations": [
@@ -875,9 +837,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:55:09Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:13:47Z",
           "notes": "no problems found"
         }
       ]
@@ -893,6 +855,7 @@
     "front": "Solve x/4 = 5",
     "back": "x = 20",
     "explanation": "Multiply both sides by 4: x = 5 × 4 = 20. Check: 20 ÷ 4 = 5.",
+    "hint": "Do the inverse of dividing by 4 to both sides.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A17",
     "checked_by": ["author"],
     "citations": [
@@ -948,9 +911,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:55:16Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:13:49Z",
           "notes": "no problems found"
         }
       ]
