@@ -154,8 +154,8 @@ describe('Get help page', () => {
 describe('ways to reach Get help', () => {
   it('Settings links to it', () => {
     renderRoute('/settings');
-    const main = screen.getByRole('main');
-    expect(within(main).getByRole('link', { name: 'Get help' })).toHaveAttribute('href', '/help');
+    const card = screen.getByRole('region', { name: 'Help and information' });
+    expect(within(card).getByRole('link', { name: 'Get help' })).toHaveAttribute('href', '/help');
   });
 
   it('the student footer has a small heart link to it', () => {

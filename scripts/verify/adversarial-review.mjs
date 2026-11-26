@@ -87,6 +87,17 @@ export function reviewPrompt(item) {
         '"distractor:N" means wrong option N, also counted from 0.',
       ]
     : [];
+  // any_order (#133): marking accepts reordered answers, so the reviewer must not ask for them.
+  const order =
+    item.answer?.any_order === true
+      ? [
+          '',
+          'The answer has "any_order": true. Marking accepts products and sums in any order, a ' +
+            'list of values in any order and an equation either way round, so do not report ' +
+            'missing reordered versions of the accepted answers. Coordinates and inequalities ' +
+            'are never reordered.',
+        ]
+      : [];
   const sources = item.citations.map(
     (c, i) =>
       `${i + 1}. ${c.publisher}, ${c.title} (${c.document_ref}), ${c.location}; supports ${c.supports.join(', ')}:\n` +
@@ -97,6 +108,7 @@ export function reviewPrompt(item) {
     prompt: [
       `Item:\n${JSON.stringify(shown, null, 2)}`,
       ...numbering,
+      ...order,
       '',
       'Official sources:',
       ...sources,
