@@ -63,9 +63,9 @@ VAPID contact is our web address, never a personal email.
 Nickname, avatar and XP only. Invite codes need parent approval. No chat, no free text between
 students.
 
-### Friends league: children's data impact note (proposed, not built)
+### Friends league: children's data impact note (approved, not built)
 
-Design: `docs/FRIENDS_LEAGUE.md`, waiting for owner sign-off. Friends can be from other families
+Design: `docs/FRIENDS_LEAGUE.md`, approved by the owner on 2026-11-26. Friends can be from other families
 (owner, 2026-11-26), so this is the first time one child's data is shown to children outside
 their family.
 
@@ -76,7 +76,11 @@ their family.
   codes are single use, 48 hours, hashed and rate limited. League results are kept 8 weeks.
 - **Defaults and control**: off per child until a parent turns it on; one parent in each family
   approves every friendship; either parent or the child can remove a friend; the child can hide
-  from the league; report and block with fixed reasons.
+  from the league; report and block with fixed reasons. Siblings join each other's league
+  automatically once friends is on for both.
+- **Reports**: both families' parents and AppDeck support see the fixed reason, the date and the
+  two nicknames (AppDeck also the reported avatar code), so repeated abuse can be acted on. Never
+  free text or ids.
 - **Retention and deletion**: codes and requests go within 24 hours of use or expiry; friendships,
   blocks and reports are deleted with either child; all of it is in the family export (code hashes
   left out).

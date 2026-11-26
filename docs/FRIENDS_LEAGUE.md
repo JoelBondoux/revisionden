@@ -1,6 +1,7 @@
 # Friends league: design and privacy
 
-> Status: **proposal, waiting for owner sign-off** (workstream FL). Nothing here is built yet.
+> Status: **approved by the owner, 2026-11-26** (workstream FL), with the decisions in section 10.
+> Not built yet. The solicitor items in section 11 stay open.
 > Owner decision, 2026-11-26: friends can come from **other families from day one**, not only
 > siblings. Planned in `docs/PLAN.md` (Stage 4, "Weekly XP league; head-to-head challenges;
 > parent-approved invites"), `docs/REWARDS.md` (league rewards), `docs/BACKLOG.md` (title under
@@ -14,6 +15,8 @@
   league XP**. There is **no chat, no free text and no profile page**.
 - Each student has their own small league: them plus up to **10** friends. The league is the
   week's league XP, which comes from reward XP and so is already capped (it cannot be farmed).
+- Brothers and sisters are in each other's league automatically, with no code, when a parent has
+  turned friends on for both (section 2).
 - Topping your league for a week earns the existing league rewards (`league-top`,
   `league-wins-5`, `league-wins-20`). Head-to-head challenges come later, not in v1.
 - Friends is **off until a parent turns it on** for that child. Either parent can remove a
@@ -26,6 +29,10 @@
   "Ask a parent to turn on friends" card, and nobody can send them a request.
 - Turning it off later hides the league and pauses every friendship (links are kept so turning it
   back on restores them; the friends see the student as gone). "Remove all friends" deletes them.
+- **Siblings** (owner, 2026-11-26): children in the same family are in each other's league
+  automatically, with no code or approval, once "Allow friends" is on for both. They count towards
+  the 10, can be hidden with "Hide me", and cannot be removed or blocked as friends (turning
+  "Allow friends" off takes a child out). They see the same card as any friend.
 - The child can also switch on **"Hide me from the league"**: their friends no longer see them in
   the league, and they see a plain list of friends without scores. Friendships stay.
 
@@ -53,7 +60,7 @@ Codes and limits:
 - Entering codes: **5 wrong tries per child per hour**, and **20 per family per day**, then
   "Try again later". Wrong, expired, used, blocked and "you're already friends" codes all get the
   same "That code isn't valid" message, so a code cannot be used to probe accounts.
-- A child cannot friend themselves or a sibling with a code (siblings: see section 10).
+- A child cannot friend themselves or a sibling with a code (siblings join automatically: see section 2).
 - At most **10 friends** per child; a request that would go over is refused for both.
 - Every step is in each family's activity log ("Parent 1 approved a friend for Nova_7").
 
@@ -86,8 +93,8 @@ Codes and limits:
 - **League XP** is the student's reward XP from answers and completed flashcard sessions
   (`packages/core/src/reward-xp.ts`), so its caps already apply: at most **300 XP a UK day**,
   nothing from **22:00 to 05:59 UK**, flashcards at most **40 XP a day**. The most anyone can earn
-  is 2,100 a week. **Proposed:** leave out Bug Hunter XP and the +20 gift XP, so the league is
-  practice only and nobody swaps gift days for points.
+  is 2,100 a week. **Bug Hunter XP and the +20 gift XP do not count** (owner, 2026-11-26), so the
+  league is learning only and nobody swaps gift days for points.
 - **The week** runs Monday 00:00 to Sunday 23:59 UK time (`Europe/London`). Because nothing counts
   after 22:00, Sunday's 22:00 total is final. Results show from Monday 06:00 with a small
   celebration for the winner(s) and the new week starts at 0 for everyone.
@@ -122,12 +129,11 @@ In the parent area, per child ("Friends" card):
   **Remove** and **Block**.
 - **Waiting for you**: requests to approve or decline, and requests waiting on the other family.
 - **Blocked**: nicknames this child has blocked, with **Unblock**.
-- **Reports** this child made, and what happened.
-- **Proposed (owner decision):** an optional **private label** a parent can add to a friend (for
+- **Reports** this child made, and reports about this child (fixed reason, date, nicknames).
+- An optional **private label** (owner, 2026-11-26) a parent can add to a friend (for
   example "from football"), up to 30 characters, checked like feedback text (no email, phone or
-  family nickname), seen only by this family's parents, never by children or the other family. We
-  **recommend against** the other family choosing a label that our parents see, because it would
-  usually be a real name.
+  family nickname), seen only by this family's parents, never by children or the other family. The
+  other family cannot choose a label that our parents see, because it would usually be a real name.
 
 ## 7. Abuse and safety
 
@@ -135,11 +141,12 @@ In the parent area, per child ("Friends" card):
   student who changes nickname is shown to friends under the new one; the filter runs again.
 - **Report**: on a friend's card, "Report" with fixed reasons only (no free text): "Their nickname
   or picture upsets me", "I don't know this person", "I'm being pressured", "Something else".
-  Reporting removes the friendship and blocks them straight away, tells the child "Thanks. A parent
-  will see this", and shows the report to the reporter's own parents. The other child is not told
-  it was a report: the friend just disappears.
-- **Proposed (owner decision):** reports also reach AppDeck support as nickname + avatar code +
-  reason only, so a bad nickname can be renamed for everyone.
+  Reporting removes the friendship and blocks them straight away and tells the child "Thanks. A
+  parent will see this". The other child is not told it was a report: the friend just disappears.
+- **Who sees a report** (owner, 2026-11-26): **both families' parents and AppDeck support**, so
+  repeated abuse can be acted on. They see only the fixed reason, the date and the two nicknames
+  (AppDeck also gets the reported child's avatar code, so a bad nickname or avatar can be changed).
+  Never free text, ids, family details or anything else. A report cannot be made about a sibling.
 - **Block**: from Report, from a friend's card, or by a parent. A blocked student cannot use any
   code from the blocker, and the blocker's codes do not work for them (the same "That code isn't
   valid" message, so they are not told). A block lasts until the blocking family lifts it.
@@ -159,7 +166,7 @@ New tables (one new migration):
 | `friend_requests`     | the two children, status, which family has approved (parent number only), expiry            | started, declined or 7 days, then deleted within 24 hours      |
 | `friendships`         | the two children (stored once, lower id first), start date, optional private label per side | removed, either child deleted                                  |
 | `friend_blocks`       | blocking child, blocked child, date                                                         | unblocked, either child deleted                                |
-| `friend_reports`      | reporting child, reported child, reason code, date, outcome                                 | 12 months after closing, or either child deleted               |
+| `friend_reports`      | reporting child, reported child, reason code, date, outcome (seen as in section 7)          | 12 months after closing, or either child deleted               |
 | `league_weeks`        | per child per week: league XP, place, won (yes/no)                                          | last 8 weeks only; the win count lives on in the rewards stats |
 | `students` (2 fields) | `friends_allowed` (default false), `league_hidden` (default false)                          | with the student                                               |
 
@@ -170,7 +177,7 @@ New tables (one new migration):
 - **Export** (`GET /v1/export`): the family's friendships (friend's nickname, start date, private
   label), waiting requests, blocks, reports made and league weeks. Code hashes are left out, as now.
   It does **not** include the other family's ids or anything else about them (see section 11).
-- AppDeck sees counts only (number of friendships), plus reports if the owner says yes in 7.
+- AppDeck sees counts only (number of friendships), plus reports as in section 7.
 
 ## 9. Build plan (step 2, after sign-off)
 
@@ -183,22 +190,27 @@ New tables (one new migration):
   through shared components), Add a friend, the parent Friends card.
 - Rewards hookup: `weeksTopOfLeague` from `league_weeks`. Title under each nickname.
 - Cross-lane changes to list in the PR: export and deletion (`apps/api/src/routes/export.ts`,
-  family deletion), the rewards stats source, the cron, nav entry (Map or Me), parent home card,
+  family deletion), the rewards stats source, the cron, the Map rank chip and the Me entry, the
+  parent home card, the AppDeck report view,
   `docs/legal/*` text via workstream L.
+- Stacked PRs (lead, 2026-11-26): core rules, migration and API first; then web; then the rewards
+  hookup and title.
 - Tests: every rule above has a plain-English test first; API tests on PGlite; e2e for two
   families making friends, the league, removing, blocking, and export and deletion.
 
-## 10. Owner decisions
+## 10. Owner decisions (2026-11-26, via the lead)
 
-1. **Where the League lives**: a tile on **Me** (recommended: keeps Map about studying and fits the
-   single-screen rule) or a card on Map.
-2. **Siblings**: should brothers and sisters appear in each other's league? Proposed: yes, if a
-   parent adds them in the parent area (no code, one parent approves), counting towards the 10.
-3. **League XP**: leave out Bug Hunter and gift XP (recommended)?
-4. **Friend cap**: 10 friends (league of 11)?
-5. **Private parent label** on a friend: allow (section 6)?
-6. **Reports to AppDeck support** (section 7)?
-7. Head-to-head challenges later, not in v1 (recommended).
+1. **Where the League lives**: a small, self-contained **rank chip** on Map ("You're 2nd this
+   week") that opens the full **League page under Me**. When workstream J's Home dashboard (the
+   Pip fox button) lands, the chip moves to Home; it is built as its own component so it can sit
+   anywhere.
+2. **Siblings**: yes, automatically in each other's league with no invite, when a parent has turned
+   "Allow friends" on for both (section 2).
+3. **Reports**: both families' parents and AppDeck see them, sharing only the fixed reason and the
+   nicknames (section 7).
+4. **Accepted as proposed**: the 10-friend cap (siblings included), a private parent-only label per
+   friend, and only learning XP counts (no Bug Hunter or gift XP).
+5. Head-to-head challenges later, not in v1. Everything else as written here.
 
 ## 11. Owner / solicitor decisions
 
@@ -215,8 +227,10 @@ in `docs/legal` (workstream L does, once agreed).
   it only our choice (we would keep it either way)?
 - **Export**: is the other child's nickname in our family's export their personal data, and is it
   fine to include it (we think yes: it is what our parents already see)?
-- **Reports**: may reports go to AppDeck support, and how long may they be kept (proposed 12
-  months after closing)?
+- **Reports** (owner decided both families' parents and AppDeck see them): is sharing the
+  reporting child's nickname with the other family's parents fair and safe (it could invite
+  pressure on the reporter), what the notices must say about it, and how long reports may be kept
+  (proposed 12 months after closing)?
 - **Notices to update** (workstream L): the privacy notice and young people's notice (title and
   weekly XP are new; "XP" becomes "this week's league XP"), the acceptable use policy 4.2
   ("Friends are not available yet"), data retention (new rows), the Children's Code page
