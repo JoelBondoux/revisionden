@@ -197,6 +197,13 @@
       "when": 1795665903633,
       "tag": "0027_new_device_claims",
       "breakpoints": true
+    },
+    {
+      "idx": 28,
+      "version": "7",
+      "when": 1795689885666,
+      "tag": "0028_lesson_feedback",
+      "breakpoints": true
     }
   ]
 }

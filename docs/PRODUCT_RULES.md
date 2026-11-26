@@ -388,6 +388,40 @@ Product owner decision, 2026-11-25: **parent view only**.
 - Implemented: `packages/core/src/learning.ts`, `apps/api/src/routes/learn.ts`,
   `apps/api/src/routes/flashcards.ts`.
 
+## Interactive lesson pilot (workstream W8, owner decision 2026-11-26)
+
+The owner pulled one interactive (Brilliant-style) lesson forward from Stage 4 as a pilot:
+factorising quadratics (spec A4) with an area model, scope A only (x² + bx + c with b and c
+positive whole numbers; negatives later).
+
+- **Who sees it:** a student whose A4 topic is a weak spot (mastery below 60) gets the pilot
+  steps first in the A4 lesson. Not at exactly 60 or above, not for a topic with no answers yet,
+  and never in a unit challenge or subject lesson (`showsInteractivePilot`,
+  `arrangeInteractivePilot` in `packages/core/src/interactive/pilot-lesson.ts`; content tag
+  `interactive-pilot`).
+- **Steps:** explore (x² + 5x + 6), two guided (x² + 6x + 8, x² + 8x + 12, each with a hint),
+  one typed (factorise x² + 9x + 20, checked by the maths engine in factorised form), then the
+  topic's normal questions as the hand-over (among them "Factorise x² + 7x + 12").
+- **The area model step** (`area_model` item type): x² + bx + c drawn as one x² square, b x
+  strips and c unit squares. The student picks the pair of numbers that multiply to c and add
+  to b; the tiles make a rectangle whose sides, x + q and x + p, are the brackets. Tapping a tile
+  lights up its term in the expression in the same colour and says what it is ("It is x by x, so
+  its area is x²"). Explore says at once whether the tiles make a rectangle; guided keeps the
+  verdict for Check. The answer is the pair ("2,3"), marked on the server.
+- Counts like any question: XP (10, as multiple choice), streak, daily goal and mastery; a wrong
+  answer gets the in-lesson retry and becomes a flashcard.
+- **No tile-movement logging.** Only the checked answer is sent, as for any question.
+- **Accessible:** tiles are buttons (one keyboard stop per kind), pairs are radio buttons, so
+  nothing needs dragging; read aloud lists the pairs; theme colours; fits 320px at 200% text.
+- **"Did this help?"** after the last tile step is checked: one tap, Yes or No, stored as
+  feedback kind `lesson_helped` or `lesson_not_helped` with the item and never any text, one
+  answer per student and item, not counted in the daily feedback limit. Parents and the
+  operator see it with the family's feedback.
+- **Hidden until verified:** the pilot items are draft content, so production does not serve
+  them until they pass `docs/VERIFICATION.md`; development serves drafts with the DRAFT banner.
+  The specification citation (1MA1 Higher, A4, page 14 / PDF page 26: "factorising quadratic
+  expressions of the form") is quote-checked.
+
 ## Learning from mistakes (workstream F5, owner request 2026-11-25)
 
 A wrong or very slow answer is not just marked and forgotten: the learning point comes back.
@@ -663,7 +697,9 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   (`revisionden.bugButton`). Built in L7.
 
 - Kinds: **bug**, **idea**, **something confusing**, **other**. (Mistakes in a question keep
-  using "Report a problem" on the item, which quarantines it.)
+  using "Report a problem" on the item, which quarantines it.) Also, from the interactive lesson
+  pilot only, the one-tap **lesson_helped** / **lesson_not_helped** ("Did this help?"), which
+  carry the item and no text and do not count towards the 5 a day (W8).
 - Optional text up to 500 characters. Before saving, the same checks as the AI privacy filter
   run: email addresses, phone numbers and the student's nickname are refused with a friendly
   "please leave out personal details" message.
