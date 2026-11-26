@@ -796,8 +796,8 @@ Tags: #product #rules #limits #defaults
   uses `--color-primary-edge` (#C4B5FF) for violet text; colour-blind right #1F6FD1 (blue), wrong
   #B34F00 (orange), checked by simulation (ΔE ≥ 20 for deuteranopia, protanopia, tritanopia) and
   4.5:1 contrast in all four combinations. Doodle tile `apps/web/src/design/doodle-scatter.svg` (original,
-  1080px dense sticker sheet: 8 hero doodles, 375 medium (160 motifs, no copy of a motif within
-  240px of itself) and about 1,530 tiny fillers, tilted up to 25°, 1.4px lines, about 34KB gzipped; generated from a fixed seed by `doodleTile.ts`, used as
+  1080px dense sticker sheet: 8 hero doodles, 420 medium (160 motifs, no copy of a motif within
+  240px of itself) and 1,600 tiny fillers, no two outlines closer than 4px plus the line, tilted up to 25°, 1.4px lines, about 35KB gzipped; generated from a fixed seed by `doodleTile.ts`, used as
   a CSS mask at 7% ink; J8b), hidden with `prefers-contrast: more` and
   forced colours. The older 240px grid tile `doodles.svg` is kept only for the public site until it
   moves to the new tile.

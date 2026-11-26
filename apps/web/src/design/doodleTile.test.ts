@@ -13,11 +13,13 @@ import {
   TILE_SIZE,
   type Placement,
   placeDoodles,
+  outline,
   radius,
   reach,
   renderDoodleTile,
   seededRandom,
 } from './doodleTile';
+import { clearance } from './doodleGeometry';
 
 // J8b: the background doodles as a dense, hand-drawn sticker sheet (WhatsApp-wallpaper technique,
 // our own motifs): a few big hero doodles, lots of medium ones, and tiny fillers in every gap.
@@ -92,17 +94,24 @@ describe('the doodle tile', () => {
     expect(SAME_HERO_GAP).toBeGreaterThan(SAME_MOTIF_GAP);
   });
 
-  it('packs doodles close together without any touching, even across the edges', () => {
+  it('keeps every doodle’s real outline clear of every other, even across the edges', () => {
+    let overlaps = 0;
     let closest = Infinity;
     for (let i = 0; i < placements.length; i++) {
       const p = placements[i]!;
       for (let j = i + 1; j < placements.length; j++) {
         const q = placements[j]!;
-        closest = Math.min(closest, wrappedDistance(p, q) - radius(p) - radius(q));
+        if (wrappedDistance(p, q) > radius(p) + radius(q) + GAP + STROKE) continue;
+        // Compare q with p moved to the copy of itself nearest q.
+        const dx = Math.round((q.x - p.x) / TILE_SIZE) * TILE_SIZE;
+        const dy = Math.round((q.y - p.y) / TILE_SIZE) * TILE_SIZE;
+        const gap = clearance(outline(p, dx, dy), outline(q));
+        if (gap < GAP + STROKE - 0.01) overlaps++;
+        closest = Math.min(closest, gap);
       }
     }
-    expect(closest).toBeGreaterThanOrEqual(GAP - 0.2);
-    expect(closest).toBeLessThan(GAP + 2);
+    expect(overlaps).toBe(0);
+    expect(closest).toBeLessThan(GAP + STROKE + 2);
   });
 
   it('leaves almost no empty background: no big hole anywhere on the tile', () => {

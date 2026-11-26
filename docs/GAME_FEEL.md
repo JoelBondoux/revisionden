@@ -91,7 +91,9 @@ tab say so to screen readers.
   doodles at about 3× (Pip reading, a stack of books, a lab bench, a rocket, a globe, a calculator,
   a ringed planet, a trophy), then as many medium doodles as fit (160 motifs across school
   subjects, space, nature, music, sport, food, tech and everyday things; never two copies of one
-  motif within 240px, or two heroes within 520px, measured across the seams), then tiny fillers (dots, rings, sparkles, plus
+  motif within 240px, or two heroes within 520px, measured across the seams). Each doodle's real outline (worked out from its SVG by
+  `doodleGeometry.ts`: paths, arcs, circles and transforms, wrapped in a convex outline) stays at
+  least 4px plus the line width clear of every other, so nothing ever overlaps, then tiny fillers (dots, rings, sparkles, plus
   signs, little stars, dashes) in the gaps, each kept 4px clear of its neighbours across the edges.
   Upright or tilted by up to 25°, one 1.4px line weight, no fills; anything crossing an edge is
   drawn again on the other side, so the repeat has no seams. The output is committed as

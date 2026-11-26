@@ -14,6 +14,8 @@
  * a change here.
  */
 
+import { clearance, convexHull, footprintPoints, type Point } from './doodleGeometry';
+
 /** Width and height of the tile, in CSS pixels. */
 export const TILE_SIZE = 1080;
 /** The fixed seed the committed tile is made from. */
@@ -92,7 +94,8 @@ export const MOTIFS: Readonly<Record<string, string>> = {
   abacus:
     '<path d="M-16-14h32v28h-32zM-16-7h32M-16 0h32M-16 7h32"/><circle cx="-9" cy="-7" r="2.2"/><circle cx="-4" cy="-7" r="2.2"/><circle cx="6" cy="0" r="2.2"/><circle cx="-8" cy="7" r="2.2"/><circle cx="2" cy="7" r="2.2"/><circle cx="8" cy="7" r="2.2"/>',
   pen: '<path d="M-3-18h6v24l-3 10-3-10zM-3 0h6M0 6v4"/>',
-  sharpener: '<path d="M-12-8h20v16h-20zM8-4l6-2v10l-6-2"/><circle cx="-2" r="3"/>',
+  sharpener:
+    '<path d="M-14-8h18v16h-18zM4-5l7-3M4 5l7 3M-14 4h18"/><circle cx="-5" cy="-1" r="3"/><path d="M11-8c3 2 4 6 2 9-2 3-1 6 2 7"/>',
   glue: '<path d="M-6-6h12v22H-6zM-5-6v-6h10v6M-4-12c0-4 8-4 8 0"/>',
   bookmark:
     '<path d="M-12-16h20a4 4 0 0 1 4 4v28h-20a4 4 0 0 1-4-4zM-12 12a4 4 0 0 1 4-4h20M2-16v12l3-3 3 3v-12"/>',
@@ -249,7 +252,7 @@ export const MOTIFS: Readonly<Record<string, string>> = {
   foxReading:
     '<g transform="translate(-11 -19) scale(.62)"><path d="M0 11 6 0l7 8h10l7-8 6 11-6 14-12 10L6 25z"/><path d="M10 15l4-2 2 3M26 15l-4-2-2 3M15 25h6l-3 3z"/></g><path d="M-17 4c6-3 12-3 17 1 5-4 11-4 17-1v13c-6-3-12-3-17 1-5-4-11-4-17-1zM0 5v13M-13 8h8M-13 11h7M-13 14h8M5 8h8M6 11h7M5 14h8"/>',
   bookStack:
-    '<path d="M-15 8h30v8h-30zM-12 0h26v8h-26zM-16-8h28v8h-28zM-10 8v8M9 0v8M-12-8v8M-6 12h16M-6 4h14M-8-4h16"/><path d="M2-11c-4-4-9 0-6 4 2 3 4 3 6 2 2 1 4 1 6-2 3-4-2-8-6-4zM2-11c0-2 1-4 3-5"/>',
+    '<path d="M-17 9h30v8h-30zM-13 9v8M9 9v8M-9 13h14"/><g transform="rotate(-5 2 5)"><path d="M-12 1h28v8h-28zM-8 1v8M12 1v8M-4 5h12"/></g><path d="M-15-7h26v8h-26zM-11-7v8M7-7v8M-7-3h10M2 1v7l2-2 2 2V1"/><path d="M-1-11c-3-3-7 0-5 3 1 2 3 2 5 1 2 1 4 1 5-1 2-3-2-6-5-3zM-1-11c0-2 1-3 3-4"/>',
   labBench:
     '<path d="M-12-16h8M-10-16v8l-8 16a3 3 0 0 0 3 4h14a3 3 0 0 0 3-4l-8-16v-8M-16 4h14M8-14h8M10-14v24a2 2 0 0 0 4 0v-24M10 0h4M-19 18h38"/><circle cx="-6" cy="-12" r="1"/><circle cx="-4" cy="0" r="1.5"/><circle cx="-9" cy="-3" r="1"/>',
   rocketTrip:
@@ -308,14 +311,32 @@ export interface Placement {
   readonly scale: number;
 }
 
-/** How far a doodle's drawing reaches from its centre (the circle kept clear of others). */
-export function radius(p: Pick<Placement, 'tier' | 'scale'>): number {
-  return (p.tier === 'filler' ? 4.5 : 18) * p.scale;
+/** Each motif's convex outline in its own units, and how far it reaches from its centre. */
+const FOOTPRINTS = new Map(
+  Object.entries(MOTIFS).map(([name, markup]) => {
+    const hull = convexHull(footprintPoints(markup));
+    return [name, { hull, reach: Math.max(...hull.map((p) => Math.hypot(p.x, p.y))) }];
+  }),
+);
+
+/** How far a doodle's drawing reaches from its centre, at its size (any rotation). */
+export function radius(p: Pick<Placement, 'motif' | 'scale'>): number {
+  return FOOTPRINTS.get(p.motif)!.reach * p.scale;
 }
 
-/** How far past an edge a doodle can poke out (corners included), so it is drawn again there. */
-export function reach(p: Pick<Placement, 'tier' | 'scale'>): number {
-  return radius(p) * 1.4 + STROKE;
+/** How far past an edge a doodle can poke out (line included), so it is drawn again there. */
+export function reach(p: Pick<Placement, 'motif' | 'scale'>): number {
+  return radius(p) + STROKE;
+}
+
+/** A doodle's outline on the tile (optionally moved by dx, dy, for the copy across an edge). */
+export function outline(p: Placement, dx = 0, dy = 0): Point[] {
+  const r = (p.rotate * Math.PI) / 180;
+  const [cos, sin] = [Math.cos(r) * p.scale, Math.sin(r) * p.scale];
+  return FOOTPRINTS.get(p.motif)!.hull.map((v) => ({
+    x: p.x + dx + v.x * cos - v.y * sin,
+    y: p.y + dy + v.x * sin + v.y * cos,
+  }));
 }
 
 /** A small seeded random number generator (mulberry32): numbers from 0 up to 1. */
@@ -376,8 +397,8 @@ const TIERS: readonly Tier[] = [
     scale: [0.95, 1.35],
     tilt: 25,
     spread: 0,
-    misses: 6000,
-    max: 2000,
+    misses: 1500,
+    max: 420,
     same: SAME_MOTIF_GAP,
   },
   {
@@ -386,8 +407,8 @@ const TIERS: readonly Tier[] = [
     scale: [0.8, 1.2],
     tilt: 180,
     spread: 0,
-    misses: 8000,
-    max: 4000,
+    misses: 2500,
+    max: 1600,
     same: 0,
   },
 ];
@@ -396,19 +417,25 @@ const TIERS: readonly Tier[] = [
 export function placeDoodles(seed: number = DOODLE_SEED): Placement[] {
   const random = seededRandom(seed);
   const placed: Placement[] = [];
-  const cell = 64;
+  const cell = 80;
   const cells = Math.floor(TILE_SIZE / cell);
   const cellSize = TILE_SIZE / cells;
   const grid: Placement[][] = Array.from({ length: cells * cells }, () => []);
   const heroes: Placement[] = [];
   const cellOf = (v: number) => Math.min(cells - 1, Math.floor(v / cellSize));
+  /** True when c's outline stays GAP clear of every placed doodle's (heroes also spread out). */
   const clear = (c: Placement, spread: number) => {
+    const shape = outline(c);
     const fits = (p: Placement) => {
-      const dx = Math.min(Math.abs(p.x - c.x), TILE_SIZE - Math.abs(p.x - c.x));
-      const dy = Math.min(Math.abs(p.y - c.y), TILE_SIZE - Math.abs(p.y - c.y));
-      const need =
-        radius(p) + radius(c) + GAP + (p.tier === 'hero' && c.tier === 'hero' ? spread : 0);
-      return Math.hypot(dx, dy) >= need;
+      const ox = Math.round((c.x - p.x) / TILE_SIZE) * TILE_SIZE;
+      const oy = Math.round((c.y - p.y) / TILE_SIZE) * TILE_SIZE;
+      const centres = Math.hypot(c.x - p.x - ox, c.y - p.y - oy);
+      const extra = p.tier === 'hero' && c.tier === 'hero' ? spread : 0;
+      if (centres < radius(p) + radius(c) + extra && extra > 0) return false;
+      if (centres >= radius(p) + radius(c) + GAP + STROKE) return true;
+      // Two tiny fillers: their round reach is close to their shape, and checking it is quick.
+      if (p.tier === 'filler' && c.tier === 'filler') return false;
+      return clearance(shape, outline(p, ox, oy)) >= GAP + STROKE;
     };
     if (!heroes.every(fits)) return false;
     const cx = cellOf(c.x);
@@ -443,14 +470,14 @@ export function placeDoodles(seed: number = DOODLE_SEED): Placement[] {
         rotate: round((random() * 2 - 1) * t.tilt, 1),
         scale: round(lo + random() * (hi - lo), 2),
       };
-      if (!clear(spot, t.spread)) {
-        misses++;
-        continue;
-      }
-      // The least-used motif (ties broken at random) with no copy of itself nearby.
+      // The least-used motifs first (ties broken at random): the first with no copy of itself
+      // nearby whose outline fits here.
       const used = (m: string) => copies.get(m)?.length ?? 0;
-      const order = shuffled(t.motifs, random).sort((a, b) => used(a) - used(b));
-      const motif = order.find((m) => t.same === 0 || far(m, spot.x, spot.y, t.same));
+      const order = shuffled(t.motifs, random)
+        .sort((a, b) => used(a) - used(b))
+        .filter((m) => t.same === 0 || far(m, spot.x, spot.y, t.same))
+        .slice(0, 8);
+      const motif = order.find((m) => clear({ ...spot, motif: m }, t.spread));
       if (!motif) {
         misses++;
         continue;
