@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Number answers can now be typed with their unit (15 m, £9600, 100p), with a − minus sign, or as a mixed number like 1 1/3.
 - Standard form answers such as 6.4 × 10⁸, 6.4x10^8 or 6.4e8 are now marked right.
 - Lessons now match your look: in Sticker Book, practice happens on a warm paper page (or night paper in dark mode), with each question on a plain, easy-to-read card.
 - A new look for rewards and celebrations, Sticker Book: your daily goal and next mission are cards taped into a sticker book, mastered topics are gold stickers, and combos, stars and confetti slap onto the page like stickers.
@@ -100,6 +101,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 - U6b: `playReward` vibration no longer depends on the reward sound playing; it follows the biggest reward and the Test mode rule, so muted sound still buzzes when Vibration is on.
 - Avatar builder (J9b, Codex review of #134): picking a tab after scrolling part-way down now brings the new tab's first options into view just below the pinned stage (level with its top when wide), allowing for the compact stage growing back; instant with reduced motion.
+- Numeric marking (S2, from S3-A's Algebra sweep): `markNumeric` reads the unicode minus and dashes as a minus (`withMinus`), a mixed number (`1 1/3` = 4/3, never 11/3), and the item's own `answer.unit` typed with the answer (`withoutUnit`: the unit as written, `^2`/`²`, and words or symbols such as metres, £, p, h); a different unit stays wrong. The blind check reads the unicode minus too.
 - Standard form (S2, from Codex on #171): `standardForm` reads `a × 10^n` (×, x, X, *, ·, ⋅; `^n`, `^(n)`, superscripts) and e-notation exactly; `markNumeric` uses it with rounding and thousands separators, needs proper standard form when the key is in standard form, the blind check matches the same way, and `pnpm content:validate` sends the engine the plain value.
 - Numeric marking (S2): `withoutThousands` accepts a UK thousands separator (space, thin or non-breaking space, or comma) between groups of exactly three digits, with or without rounding; a space between other digits (`3 87`) is now wrong instead of being read as 387.
 - Adversarial review (S2, from S3-A on a1-0103): for typed answers the reviewer is told the marking normaliser's rules (spaces, case, multiply signs, minus signs, superscripts, √), so it no longer asks for `p^3*q` or `p^3 q` when `p^3q` is accepted.

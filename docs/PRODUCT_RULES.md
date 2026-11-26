@@ -293,6 +293,12 @@ Product owner decision, 2026-11-25: **parent view only**.
   between groups of exactly three digits, the same one throughout, so `38 700` and `38,700` are
   38700, rounded or not. Any other space between two digits makes the answer wrong (`3 87` is not
   387); spaces around a sign or `/` are fine.
+- **Numeric answers** also read the unicode minus and dashes (`−1`, `–1`) as a minus, a mixed
+  number (`1 1/3` is 4/3, never 11/3; `withoutUnit`, `withMinus` in
+  `packages/core/src/answer-format.ts`), and an answer typed with the item's own `answer.unit`:
+  the unit as written (with `^2` or `²`), its words and symbols (`m` or `metres`, `£9600` or
+  `9600 pounds` for pounds, `100p` for pence, `4 h` for hours). A different unit (`15 cm` when the
+  unit is m) or a unit on an item without one stays wrong.
 - **Standard form** in numeric answers (`standardForm` in `packages/core/src/answer-format.ts`):
   `a × 10^n` with ×, x, X, \*, · or ⋅ as the multiply sign and `^n`, `^(n)` or superscript
   digits for the power, or e-notation (`6.4e8`), is read as its exact value. When the answer key is
