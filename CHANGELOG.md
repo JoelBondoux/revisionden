@@ -159,6 +159,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- W12: the prize box's accessibility check also uses the shared `axeWhenSettled` helper, so every e2e axe check now waits for animations first.
 - W11: every e2e accessibility check now uses one shared helper, `axeWhenSettled` (`e2e/tests/support/axe.ts`), which waits for entrance animations to finish before axe measures contrast, so no screen's check can fail mid-fade like the Me page's did. The rules are unchanged.
 - W10: the Get help and Me accessibility checks (`e2e/tests/help.spec.ts`) wait for entrance animations to finish before axe measures contrast, so a button still fading in no longer fails them about 1 run in 9. The contrast rule is unchanged.
 - W8c: the interactive area model fits one phone screen again now that Pip has his own row in lessons (no gap under the question, and the hint and pair question in the small text size), so the `area-model` e2e "Check fits without scrolling" passes on dev.
