@@ -2,10 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   checkLinks,
-  isLegacyLink,
   isShownLink,
   isWorkingStatus,
-  LEGACY_UNMATCHED_URLS,
   learnLinkErrors,
   linkCoverage,
   listLinks,
@@ -262,15 +260,24 @@ test('a link for a learning point or item must belong to its topic and have item
   );
 });
 
-test('Isaac links are refused until its host is confirmed on its own site', () => {
-  assert.deepEqual(PROVIDER_HOSTS.isaac, []);
+test('Isaac links live on isaacscience.org (isaacphysics.org now redirects there)', () => {
+  assert.deepEqual(PROVIDER_HOSTS.isaac, [{ host: 'isaacscience.org', path: '/' }]);
+  assert.deepEqual(
+    learnLinkErrors(
+      content({
+        topic: 'gcse-maths-h-a17',
+        links: [link({ provider: 'isaac', url: 'https://isaacscience.org/concepts/x' })],
+      }),
+    ),
+    [],
+  );
   const errors = learnLinkErrors(
     content({
       topic: 'gcse-maths-h-a17',
-      links: [link({ provider: 'isaac', url: 'https://example.org/x' })],
+      links: [link({ provider: 'isaac', url: 'https://isaacphysics.org/concepts/x' })],
     }),
   );
-  assert.match(errors[0].message, /isaac has no confirmed host yet/);
+  assert.match(errors[0].message, /isaac links must be on isaacscience\.org\//);
 });
 
 test("the match check's level must be the link's level", () => {
@@ -337,6 +344,7 @@ test('the provider probe requests each provider home page and reports what it go
   assert.deepEqual(await probeProviders({ fetch: fakeFetch }), [
     { provider: 'oak', url: 'https://www.thenational.academy/', status: 200 },
     { provider: 'bitesize', url: 'https://www.bbc.co.uk/bitesize/', status: 'fetch failed' },
+    { provider: 'isaac', url: 'https://isaacscience.org/', status: 200 },
   ]);
 });
 
@@ -376,22 +384,7 @@ test('coverage counts topics and learning points with items that have a shown li
   assert.deepEqual(wide.points, { withItems: 2, withOwnLink: 0, withAnyLink: 2, missing: [] });
 });
 
-const LEGACY_URL =
-  'https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/algebraic-manipulation/lessons/checking-and-securing-understanding-of-solving-and-interpreting-linear-equations';
-
-test('the 11 Q5 Oak links are legacy: shown without a match check until re-read', () => {
-  assert.equal(LEGACY_UNMATCHED_URLS.size, 11);
-  const legacy = unmatched({ provider: 'oak', url: LEGACY_URL });
-  assert.equal(isLegacyLink(legacy), true);
-  assert.equal(isLegacyLink(link({ provider: 'oak', url: LEGACY_URL, match: match() })), false);
-  assert.equal(
-    isLegacyLink(unmatched({ provider: 'oak', url: LEGACY_URL, checked_at: null })),
-    false,
-  );
-  assert.deepEqual(learnLinkErrors(content({ topic: 'gcse-maths-h-a17', links: [legacy] })), []);
-});
-
-test('any other reachable link needs a full match check', () => {
+test('a reachable link needs a full match check (no legacy links remain)', () => {
   const errors = learnLinkErrors(content({ topic: 'gcse-maths-h-a17', links: [unmatched()] }));
   assert.match(errors[0].message, /needs a match check/);
   // Not yet reachable: no match check needed yet.

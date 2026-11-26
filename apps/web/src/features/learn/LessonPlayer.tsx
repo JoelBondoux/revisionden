@@ -96,7 +96,6 @@ function Feedback({
           links={learnMoreLinks(learnLinksByTopic, {
             topicId: item.topicId,
             learningPoint: item.learningPoint,
-            itemId: item.id,
           })}
         />
       )}

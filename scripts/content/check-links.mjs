@@ -9,13 +9,7 @@ import { dirname, join, relative, resolve } from 'node:path';
 import { readdir, readFile } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
-import {
-  checkLinks,
-  isLegacyLink,
-  linkCoverage,
-  listLinks,
-  probeProviders,
-} from './learn-links.mjs';
+import { checkLinks, linkCoverage, listLinks, probeProviders } from './learn-links.mjs';
 
 const DEFAULT_CONTENT = join(dirname(fileURLToPath(import.meta.url)), '../../content');
 
@@ -77,25 +71,16 @@ export async function run(
   if (values.coverage) {
     const learnLinks = await loadLearnLinks(root);
     const { topics, points } = linkCoverage({ items: await loadItems(root), learnLinks });
-    const legacy = learnLinks.flatMap(({ data }) => data.links).filter(isLegacyLink).length;
     out(`Topics with items: ${topics.withItems}; with a shown link: ${topics.withLink}`);
     out(
       `Learning points with items: ${points.withItems}; with a link of their own: ${points.withOwnLink}; covered by any link: ${points.withAnyLink}`,
     );
-    out(`Legacy links (shown, not yet match-checked): ${legacy}`);
     if (topics.missing.length) out(`No link yet: ${topics.missing.join(', ')}`);
     if (points.missing.length)
       out(`Learning points with no link yet: ${points.missing.join(', ')}`);
     return 0;
   }
   const learnLinks = await loadLearnLinks(root);
-  for (const { file, data } of learnLinks) {
-    for (const link of data.links.filter(isLegacyLink)) {
-      out(
-        `warning: legacy link, shown without a match check until it is re-read: ${link.url} in ${file}`,
-      );
-    }
-  }
   const links = listLinks(learnLinks);
   const results = await checkLinks(links, { fetch });
   const broken = results.filter((r) => !r.ok);

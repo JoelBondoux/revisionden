@@ -18,7 +18,6 @@ const { match } = vi.hoisted(() => ({
 
 vi.mock('./links', async (importOriginal) => {
   const real = await importOriginal<typeof import('./links')>();
-  const { demoItems: items } = await import('../learn/mocks');
   return {
     ...real,
     learnLinksByTopic: new Map([
@@ -34,11 +33,11 @@ vi.mock('./links', async (importOriginal) => {
             match,
           },
           {
-            title: 'Demo question 1 lesson',
-            url: 'https://www.thenational.academy/teachers/demo-question-1',
+            title: 'Demo point lesson',
+            url: 'https://www.thenational.academy/teachers/demo-point',
             provider: 'oak',
             level: 'GCSE',
-            items: [items[0]!.id],
+            learning_points: ['demo-topic-a-lp-demo'],
             checked_at: '2026-11-25',
             match,
           },
@@ -56,7 +55,7 @@ vi.mock('./links', async (importOriginal) => {
             match,
           },
           {
-            // For one question, so not a legacy whole-topic link: needs a match check to show.
+            // Reachable but with no match check: never shown.
             title: 'Reachable but not match-checked',
             url: 'https://www.thenational.academy/teachers/unmatched',
             provider: 'oak',
@@ -70,10 +69,14 @@ vi.mock('./links', async (importOriginal) => {
   };
 });
 
+// Demo question 1, tagged with a learning point that has its own lesson.
 const lessonOf = (index: number) =>
   server.use(
     http.get('*/v1/student/learn/lesson', () =>
-      HttpResponse.json({ items: [demoItems[index]], draftContent: true }),
+      HttpResponse.json({
+        items: [{ ...demoItems[index], learningPoint: 'demo-topic-a-lp-demo' }],
+        draftContent: true,
+      }),
     ),
   );
 
@@ -97,14 +100,14 @@ describe('Learn it first on a topic lesson', () => {
 });
 
 describe('Learn more after a wrong answer', () => {
-  it("offers the question's own lessons, tucked behind a tap", async () => {
+  it("offers the lessons for the question's learning point, tucked behind a tap", async () => {
     lessonOf(0);
     renderRoute('/learn/topic/demo-topic-a');
     const feedback = await answer('Option A');
     const button = within(feedback).getByRole('button', { name: 'Learn more' });
     expect(within(feedback).queryByRole('link')).not.toBeInTheDocument();
     await userEvent.click(button);
-    expect(within(feedback).getByRole('link', { name: /Demo question 1 lesson/ })).toHaveAttribute(
+    expect(within(feedback).getByRole('link', { name: /Demo point lesson/ })).toHaveAttribute(
       'target',
       '_blank',
     );

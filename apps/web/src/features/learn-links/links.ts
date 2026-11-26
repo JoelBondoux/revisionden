@@ -1,9 +1,8 @@
 /**
  * "Learn it first" and "Learn more" links (workstream Q): free lessons from the allowed providers
  * in content/learn-links/*.json, bundled into the app at build time (no request until a tap).
- * A web link is shown only when it is reachable (checked_at) and match-checked (match), or is a
- * legacy whole-topic link from Q5 (reachable, no match record yet; the validator allows only
- * those). External links are interim: `revisionden` is our own note (planned), with an app route
+ * A web link is shown only when it is reachable (checked_at) and match-checked (match).
+ * External links are interim: `revisionden` is our own note (planned), with an app route
  * instead of a URL, always listed first, and it can hide the external links it covers.
  */
 export type LearnLinkProvider = 'oak' | 'bitesize' | 'isaac' | 'revisionden';
@@ -41,7 +40,7 @@ export interface LearnLink {
 export const PROVIDER_NAMES: Record<LearnLinkProvider, string> = {
   oak: 'Oak National Academy',
   bitesize: 'BBC Bitesize',
-  isaac: 'Isaac',
+  isaac: 'Isaac Science',
   revisionden: 'RevisionDen notes',
 };
 
@@ -67,12 +66,11 @@ function isLink(value: unknown): value is LearnLink {
 const isWholeTopic = (l: LearnLink) => !l.learning_points && !l.items;
 export const isInHouse = (l: LearnLink) => l.provider === 'revisionden';
 
-/** Shown: an in-house note, a reachable match-checked web link, or a legacy whole-topic link. */
+/** Shown: an in-house note, or a reachable, match-checked web link. */
 export function isShown(link: LearnLink): boolean {
   if (isInHouse(link)) return true;
   if (link.checked_at === null) return false;
   const m = link.match;
-  if (m === undefined) return isWholeTopic(link);
   return (
     typeof m === 'object' &&
     m !== null &&
@@ -108,7 +106,8 @@ export function checkedLinksFor(byTopic: Map<string, LearnLink[]>, topicId: stri
 
 /**
  * "Learn more" for a question: the most specific shown links, first those for the item, then
- * those for its learning point, then the whole topic's.
+ * those for its learning point, then the whole topic's. `itemId` is the item's content id
+ * (gcse-maths-h-n4-0001), which lessons do not receive yet, so the lesson passes its point only.
  */
 export function learnMoreLinks(
   byTopic: Map<string, LearnLink[]>,

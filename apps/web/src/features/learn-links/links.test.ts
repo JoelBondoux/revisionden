@@ -26,9 +26,7 @@ describe('Learn it first links', () => {
   it('only offer links that are both reachable and match-checked', () => {
     expect(isShown(link() as never)).toBe(true);
     expect(isShown(link({ checked_at: null }) as never)).toBe(false);
-    // A reachable whole-topic link with no match record is a legacy Q5 link: still shown.
-    expect(isShown(link({ match: undefined }) as never)).toBe(true);
-    expect(isShown(link({ match: undefined, learning_points: ['p'] }) as never)).toBe(false);
+    expect(isShown(link({ match: undefined }) as never)).toBe(false);
     const byTopic = parseLearnLinkFiles([
       file('a', [
         link(),
@@ -38,15 +36,10 @@ describe('Learn it first links', () => {
     expect(checkedLinksFor(byTopic, 'a').map((l) => l.url)).toEqual([
       'https://www.thenational.academy/teachers/x',
     ]);
+    // The item's own link is not match-checked, so Learn more falls back to the topic's.
     expect(learnMoreLinks(byTopic, { topicId: 'a', itemId: 'a-1' }).map((l) => l.url)).toEqual([
       'https://www.thenational.academy/teachers/x',
     ]);
-  });
-
-  it('keep legacy links (reachable, no match record yet) in Learn it first and the topic fallback', () => {
-    const byTopic = parseLearnLinkFiles([file('a', [link({ match: undefined })])]);
-    expect(checkedLinksFor(byTopic, 'a')).toHaveLength(1);
-    expect(learnMoreLinks(byTopic, { topicId: 'a', learningPoint: 'a-lp' })).toHaveLength(1);
   });
 
   it('list an in-house note first and let it hide the external links it covers', () => {
@@ -95,7 +88,7 @@ describe('Learn it first links', () => {
     expect(PROVIDER_NAMES).toEqual({
       oak: 'Oak National Academy',
       bitesize: 'BBC Bitesize',
-      isaac: 'Isaac',
+      isaac: 'Isaac Science',
       revisionden: 'RevisionDen notes',
     });
   });
