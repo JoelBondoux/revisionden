@@ -1,10 +1,11 @@
 /**
  * Effect styles (J10): one look-and-feel for the game-feel moments, the Home screen and Rewards,
  * active at a time. A style is an entry here plus one stylesheet scoped to
- * `:root[data-effect-style='<id>']` (see sticker-book.css). Sticker Book is the default and is
- * always available; other styles unlock as rewards (J10b).
+ * `:root[data-effect-style='<id>']` (see doodle-diary.css). Doodle Diary is the default and is
+ * always available; the others unlock as rewards (J10b, J10d).
  */
 export const EFFECT_STYLE_IDS = [
+  'doodle-diary',
   'sticker-book',
   'pop-burst',
   'garden-grow',
@@ -26,11 +27,19 @@ export interface EffectStyle {
 }
 
 export const EFFECT_STYLES: Readonly<Record<EffectStyleId, EffectStyle>> = {
+  'doodle-diary': {
+    id: 'doodle-diary',
+    name: 'Doodle Diary',
+    description:
+      'A diary full of pen doodles: sketched boxes, scribbled colouring-in and red-pen marks on your wins.',
+    swatch: ['#fdfbf4', '#2f5bd3', '#c8382e'],
+  },
   'sticker-book': {
     id: 'sticker-book',
     name: 'Sticker Book',
     description:
       'Warm and hand-made: wins are stickers slapped onto the page, with paper confetti and a little wobble.',
+    unlock: 'Reach level 3',
     swatch: ['#fffdf7', '#ffd166', '#c93a2b'],
   },
   'pop-burst': {
@@ -82,7 +91,7 @@ export interface ComingSoonStyle extends Omit<EffectStyle, 'id'> {
 
 export const COMING_SOON_STYLES: readonly ComingSoonStyle[] = [];
 
-export const DEFAULT_EFFECT_STYLE: EffectStyleId = 'sticker-book';
+export const DEFAULT_EFFECT_STYLE: EffectStyleId = 'doodle-diary';
 
 /** Where this device remembers the chosen style. */
 export const EFFECT_STYLE_KEY = 'revisionden.effectStyle';

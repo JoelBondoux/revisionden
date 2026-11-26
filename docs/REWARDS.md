@@ -305,14 +305,14 @@ have the style straight away:
 | Comic Pop    | Reaching level 20               | `level-20`           | About the end of Year 9  |
 | Pixel Arcade | Reaching level 40               | `level-40`           | About the end of Year 10 |
 
-Sticker Book is everyone's default until Doodle Diary (proposed new default, with the owner)
-replaces it; from then it is the level 3 reward. All six styles are built (J10c).
+Doodle Diary is everyone's free default (owner decision 2026-11-26, built in J10d); Sticker Book
+is the level 3 reward. All six unlockable styles are built (J10c).
 
 They are added by `withEffectStyles` (`packages/core/src/catalogue/effect-styles.ts`), the same
 way as title words, so the source catalogue files are unchanged. `GET /v1/student/rewards/effect-styles`
 lists the styles a student has unlocked (`{ unlocked: string[] }`). The child picks one in
 Settings → Effect style; the choice is kept on the device, and a style that isn't unlocked falls
-back to Sticker Book. Styles are never bought, never random and never tied to a streak.
+back to Doodle Diary. Styles are never bought, never random and never tied to a streak.
 
 ## Secret achievements
 

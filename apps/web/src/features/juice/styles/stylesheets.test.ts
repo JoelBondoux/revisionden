@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { contrastRatio } from '../../../design/tokens';
 import { EFFECT_STYLE_IDS } from './registry';
+import { listLicences } from '../../about/licences';
 
 // J10: every effect style is one stylesheet, `<id>.css`, whose rules only apply while that style
 // is active, so styles can be swapped, added or removed without leaving anything behind. Each
@@ -64,13 +65,13 @@ describe.each(EFFECT_STYLE_IDS)('the %s stylesheet', (id) => {
 
 describe('the default style', () => {
   it('is on the page from the first paint', () => {
-    expect(html).toMatch(/<html lang="en-GB" data-effect-style="sticker-book">/);
+    expect(html).toMatch(/<html lang="en-GB" data-effect-style="doodle-diary">/);
   });
 });
 
 // J10a2: styles that turn the lesson surround away from the dark arena keep the question on a
 // plain card, and their surround colours meet AA in light and dark.
-const SURROUND_STYLES = ['sticker-book'] as const;
+const SURROUND_STYLES = ['doodle-diary', 'sticker-book'] as const;
 
 describe.each(SURROUND_STYLES)('the %s lesson surround', (id) => {
   const css = read(`${id}.css`);
@@ -101,5 +102,27 @@ describe.each(SURROUND_STYLES)('the %s lesson surround', (id) => {
         4.5,
       );
     }
+  });
+});
+
+// J10d: Doodle Diary letters its headings in Patrick Hand, self-hosted (SIL Open Font Licence) and
+// listed with the app's open-source licences.
+describe('the Doodle Diary handwriting', () => {
+  const webRoot = join(import.meta.dirname, '..', '..', '..', '..');
+  const readJson = (path: string) =>
+    JSON.parse(readFileSync(path, 'utf8')) as Record<string, never>;
+
+  it('is self-hosted and loaded with the app', () => {
+    expect(provider).toContain(`import '@fontsource/patrick-hand/400.css';`);
+    expect(read('doodle-diary.css')).toContain("'Patrick Hand'");
+  });
+
+  it('is listed under the open-source licences', () => {
+    const licences = listLicences(readJson(join(webRoot, 'package.json')), (name) =>
+      readJson(join(webRoot, 'node_modules', name, 'package.json')),
+    );
+    expect(licences).toContainEqual(
+      expect.objectContaining({ name: '@fontsource/patrick-hand', licence: 'OFL-1.1' }),
+    );
   });
 });

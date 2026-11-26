@@ -120,8 +120,8 @@ formula and its assumptions. Summary of what is built:
 - Effect styles (J10b, owner decision 2026-11-26): the ladder is Sticker Book at level 3, Pop
   Burst at level 5, Garden Grow at 5 topics mastered in a subject, Starlight at 10 topics
   mastered, Comic Pop at level 20 and Pixel Arcade at level 40, each on an existing reward (table
-  in `REWARDS.md`). Styles are never bought, never random and never tied to a streak. Sticker Book
-  is the default until Doodle Diary is approved as the free default. The child chooses in Settings
+  in `REWARDS.md`). Styles are never bought, never random and never tied to a streak. Doodle Diary
+  is the free default (J10d). The child chooses in Settings
   → Effect style.
 - Rewards are celebrated where they are earned (workstream F4, product owner via lead,
   2026-11-25): an answer or a finished flashcard session saves any new reward once and shows

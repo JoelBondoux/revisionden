@@ -51,7 +51,7 @@ policies. We do not set or read those.
 | Local storage `revisionden.readAloud`         | Remembers whether read aloud is on and its speed on this device                                                                            | Until site data is cleared                           |
 | Local storage `revisionden.reading`           | Remembers reading comfort choices (font, text size, spacing, tint) on this device                                                          | Until site data is cleared                           |
 | Local storage `revisionden.appearance`        | Remembers appearance choices (theme, colour-blind friendly colours, background pattern) on this device                                     | Until site data is cleared                           |
-| Local storage `revisionden.effectStyle`       | Remembers which effect style (the look of rewards and celebrations, such as Sticker Book) is chosen on this device                         | Until site data is cleared                           |
+| Local storage `revisionden.effectStyle`       | Remembers which effect style (the look of rewards and celebrations, such as Doodle Diary) is chosen on this device                         | Until site data is cleared                           |
 
 ### 4. What we do not use
 

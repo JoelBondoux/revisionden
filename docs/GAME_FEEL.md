@@ -128,9 +128,9 @@ tab say so to screen readers.
 
 - One effect style is active at a time. It sets the look and motion of the game-feel moments
   (combo badge, stars, bursts, confetti, "+XP"), the Home screen (topic map) and Rewards. The
-  owner picked **Sticker Book** as the default. The other styles unlock through normal
+  owner picked **Doodle Diary** as the free default (J10d). The other styles unlock through normal
   progress on the owner's ladder, never by buying (J10b, `docs/REWARDS.md` "Effect styles"):
-  Sticker Book at level 3 (once Doodle Diary is the default), Pop Burst at level 5, Garden Grow at
+  Sticker Book at level 3, Pop Burst at level 5, Garden Grow at
   5 topics mastered in a subject, Starlight at 10 topics mastered, Comic Pop at level 20 and Pixel
   Arcade at level 40. The child picks in Settings → Effect style, where
   locked styles show a three-colour preview and "Locked. Unlock: …". More styles may follow once
@@ -143,8 +143,19 @@ tab say so to screen readers.
   which every rule is scoped to `:root[data-effect-style='<id>']`. A test checks that scoping, so
   removing or swapping a style never leaves bits of it behind. `EffectStyleProvider` sets
   `data-effect-style` on `<html>` and remembers the choice on this device (`localStorage`
-  `revisionden.effectStyle`). A saved style that isn't unlocked falls back to Sticker Book.
-  `index.html` starts with Sticker Book, so the first paint is already in the default style.
+  `revisionden.effectStyle`). A saved style that isn't unlocked falls back to Doodle Diary.
+  `index.html` starts with Doodle Diary, so the first paint is already in the default style.
+- Doodle Diary (J10d, the default): a diary full of pen doodles. On Home, page titles are
+  handwritten (Patrick Hand, self-hosted, SIL Open Font Licence, listed under open-source
+  licences) with a wavy biro underline; the daily goal, today's mission and the 5-a-day card are
+  boxes sketched in pen with wobbly corners; mastered topics are outlined in ink and coloured in
+  with highlighter scribbles. On Rewards, earned steps are coloured in and locked ones are dashed
+  pencil outlines. In lessons the surround is diary paper (night paper in dark mode) and the
+  question sits on a plain white card (dark card in dark mode); a right answer gets a red-pen ring
+  round it. The combo badge and "+XP" are written in red pen, stars are drawn in pen and coloured
+  in, and bursts and confetti are quick pen strokes. Sounds use U's paper-and-ink pack (Sticker
+  Book's until a Doodle Diary pack lands): `EffectStyleProvider` calls `useFeedbackStyle` with the
+  active style.
 - Sticker Book (J10a): wins are stickers slapped onto the page. Each sticker has a white die-cut
   edge, a slight tilt and a soft offset shadow; bursts and confetti are paper scraps. On Home, the
   daily goal and the next mission are cards taped into the book, the 5-a-day card is a paper

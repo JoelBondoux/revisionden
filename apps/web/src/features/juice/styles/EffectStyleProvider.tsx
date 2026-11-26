@@ -11,7 +11,10 @@ import {
 import { isEffectStyleId } from './registry';
 import type { EffectStyle, EffectStyleId, StyleStorage } from './registry';
 import { useStudent } from '../../../session/StudentContext';
+import { useFeedbackStyle } from '../../sound/SoundProvider';
 import { fetchUnlockedStyles } from './effectStylesApi';
+import '@fontsource/patrick-hand/400.css';
+import './doodle-diary.css';
 import './sticker-book.css';
 import './pop-burst.css';
 import './starlight.css';
@@ -22,7 +25,7 @@ import './pixel-arcade.css';
 export interface EffectStyleApi {
   style: EffectStyle;
   styleId: EffectStyleId;
-  /** Styles this child can use (Sticker Book is always one of them). */
+  /** Styles this child can use (Doodle Diary is always one of them). */
   unlocked: readonly EffectStyleId[];
   choose(id: EffectStyleId): void;
 }
@@ -78,6 +81,8 @@ export function EffectStyleProvider({
   useEffect(() => {
     applyEffectStyle(document.documentElement, styleId);
   }, [styleId]);
+  // Sounds and vibration follow the style (U's feedback packs; unknown ids get the default pack).
+  useFeedbackStyle(styleId);
 
   const choose = useCallback((id: EffectStyleId) => {
     setSaved(id);
@@ -91,7 +96,7 @@ export function EffectStyleProvider({
   return <EffectStyleContext.Provider value={value}>{children}</EffectStyleContext.Provider>;
 }
 
-/** The active effect style (Sticker Book outside a provider). */
+/** The active effect style (Doodle Diary outside a provider). */
 export function useEffectStyle(): EffectStyleApi {
   return useContext(EffectStyleContext);
 }

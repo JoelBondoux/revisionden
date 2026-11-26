@@ -28,11 +28,14 @@ describe('effect style picker', () => {
     delete document.documentElement.dataset.effectStyle;
   });
 
-  it('offers every style with Sticker Book chosen by default', async () => {
+  it('offers every style with Doodle Diary chosen by default', async () => {
     renderCard([]);
     const group = screen.getByRole('group', { name: 'Effect style' });
-    expect(within(group).getAllByRole('radio')).toHaveLength(6);
-    expect(within(group).getByRole('radio', { name: /^Sticker Book/ })).toBeChecked();
+    expect(within(group).getAllByRole('radio')).toHaveLength(7);
+    expect(within(group).getByRole('radio', { name: /^Doodle Diary/ })).toBeChecked();
+    expect(within(group).getByRole('radio', { name: /^Sticker Book/ })).toHaveAccessibleName(
+      expect.stringMatching(/Locked\. Unlock: Reach level 3/),
+    );
   });
 
   it('shows how to unlock a locked style, and it cannot be chosen yet', async () => {

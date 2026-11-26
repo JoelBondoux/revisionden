@@ -819,19 +819,20 @@ Tags: #product #rules #limits #defaults
   moves to the new tile.
   Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).
 - Effect styles (J10a, built): one active at a time; it restyles the game-feel moments, Home
-  (topic map) and Rewards. Default and always available: Sticker Book (`sticker-book`). Registry
+  (topic map) and Rewards. Default and always available: Doodle Diary (`doodle-diary`, owner decision 2026-11-26, J10d). Registry
   `apps/web/src/features/juice/styles/registry.ts`; one stylesheet per style, scoped to
   `:root[data-effect-style='<id>']`. Chosen per device in `localStorage` key
   `revisionden.effectStyle` (cookies and storage policy 1.7); a style that is not unlocked falls
-  back to Sticker Book. Unlock ladder (owner, 2026-11-26; J10b): Sticker Book `level-3`, Pop Burst
+  back to Doodle Diary. Unlock ladder (owner, 2026-11-26; J10b): Sticker Book `level-3`, Pop Burst
   `level-5`, Garden Grow `subject-topics-5`, Starlight `topics-mastered-10`, Comic Pop `level-20`,
   Pixel Arcade `level-40`, added as `effectStyle` items by `withEffectStyles`
-  (`packages/core/src/catalogue/effect-styles.ts`). All six built (J10c): Sticker Book (default for now), Pop
+  (`packages/core/src/catalogue/effect-styles.ts`). All seven built (J10c, J10d): Doodle Diary (default), Sticker Book, Pop
   Burst, Garden Grow, Starlight, Comic Pop, Pixel Arcade. Unlocked list:
   `GET /v1/student/rewards/effect-styles`. Picker: Settings → Effect style (students only), with
-  locked styles showing a preview and how to unlock them. Proposed new free default: Doodle Diary
-  (`doodle-diary`), with the owner. Lesson surround (J10a2): follows the style; the question and answers
-  sit on `.lesson__stage`, kept plain (Sticker Book: warm paper, night paper in dark mode).
+  locked styles showing a preview and how to unlock them. Doodle Diary letters headings in Patrick Hand
+  (`@fontsource/patrick-hand`, OFL-1.1, self-hosted) and the provider passes the style to U's
+  `useFeedbackStyle`. Lesson surround (J10a2): follows the style; the question and answers
+  sit on `.lesson__stage`, kept plain (Doodle Diary and Sticker Book: paper, night paper in dark mode).
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by
