@@ -1087,7 +1087,7 @@ Tags: #product #rules #limits #defaults
   `prefers-contrast: more` and forced colours. The public site uses the same tile (the older 240px
   grid tile `doodles.svg` was removed in M7).
   Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).
-- Effect styles (J10a, built; full looks since J15s): one active at a time; it restyles the whole app (see "One look and full styles") plus the game-feel moments, Home
+- Effect styles (J10a, built; full looks since J15s): one active at a time; it restyles the whole app (see "One look and full styles") plus the game-feel moments, Home Ten styles since J16: Petal Glow, Turbo Drive and Rainbow Parade are unlocked together by finishing the starting test (reward `starting-test`), never labelled by gender.
   (topic map) and Rewards. Default and always available: Doodle Diary (`doodle-diary`, owner decision 2026-11-26, J10d). Registry
   `apps/web/src/features/juice/styles/registry.ts`; one stylesheet per style, scoped to
   `:root[data-effect-style='<id>']`. Chosen per device in `localStorage` key

@@ -1,0 +1,176 @@
+@import '@fontsource/fredoka/700.css';
+/*
+ * Petal Glow, an effect style unlocked by the starting test (J16, U7, owner-approved 2026-11-26;
+ * docs/GAME_FEEL.md). Soft and sparkly: petal cards that glow, wins bloom with a sparkle, petals for confetti. Every rule is scoped to the style. Transforms and opacity
+ * only; nothing moves with reduced motion.
+ */
+
+/* ---------- Home ---------- */
+:root[data-effect-style='petal-glow'] .page-header .pill {
+  border-radius: 999px;
+}
+
+:root[data-effect-style='petal-glow'] .hex--mastered .hex__shape {
+  --hex-border: #ff7eb6;
+}
+
+:root[data-effect-style='petal-glow'] .home-next {
+  border-radius: var(--radius-lg);
+}
+
+:root[data-effect-style='petal-glow'] .home-cta {
+  border-radius: 30px 30px 30px 30px / 24px 24px 24px 24px;
+  box-shadow:
+    0 5px 0 #e57aac,
+    0 10px 20px -8px rgb(229 122 172 / 60%);
+}
+
+:root[data-effect-style='petal-glow'] .unit-path__step--next .hex__shape {
+  --hex-border: #b79cff;
+}
+
+/* ---------- Rewards ---------- */
+:root[data-effect-style='petal-glow'] .rewards__step--earned {
+  border-color: #ff7eb6;
+}
+
+/* ---------- Lesson moments ---------- */
+:root[data-effect-style='petal-glow'] .combo-badge {
+  border-radius: 999px;
+  background: #ffb3d6;
+  color: #4a1d3f;
+}
+
+:root[data-effect-style='petal-glow'] .star--earned polygon {
+  fill: #ff7eb6;
+}
+
+:root[data-effect-style='petal-glow'] .star--earned {
+  rotate: -4deg;
+}
+
+:root[data-effect-style='petal-glow'] .burst__particle,
+:root[data-effect-style='petal-glow'] .confetti__piece {
+  background: #b79cff;
+}
+
+:root[data-effect-style='petal-glow'] .confetti__piece {
+  border-radius: 60% 0;
+}
+
+:root[data-effect-style='petal-glow'] .float-up {
+  color: #b02e6a;
+}
+
+/* ---------- Button tiles and the page transition ---------- */
+:root[data-effect-style='petal-glow'] .button-tile {
+  border-radius: 30px 30px 30px 30px / 24px 24px 24px 24px;
+  box-shadow:
+    0 5px 0 #e57aac,
+    0 10px 20px -8px rgb(229 122 172 / 60%);
+}
+
+:root[data-effect-style='petal-glow'] .button-tile:active {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+:root[data-effect-style='petal-glow'] .page-enter {
+  animation: pg-bloom 320ms cubic-bezier(0.3, 1.2, 0.5, 1);
+}
+
+:root[data-effect-style='petal-glow'] .page-enter.page-enter--back {
+  animation: pg-bloom-back 320ms cubic-bezier(0.3, 1.2, 0.5, 1);
+}
+
+@keyframes pg-bloom {
+  from {
+    opacity: 0;
+    transform: scale(0.9) rotate(-3deg);
+  }
+}
+
+@keyframes pg-bloom-back {
+  from {
+    opacity: 0;
+    transform: scale(1.06) rotate(3deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-effect-style='petal-glow'] .page-enter,
+  :root[data-effect-style='petal-glow'] .page-enter.page-enter--back {
+    animation: none;
+  }
+}
+
+/* J16: the style's own background pattern, drawn in the look's ink. */
+:root[data-effect-style='petal-glow'][data-pattern='on'] body::before {
+  -webkit-mask-image: url('./patterns/petal-glow.svg');
+  mask-image: url('./patterns/petal-glow.svg');
+  -webkit-mask-size: 220px 220px;
+  mask-size: 220px 220px;
+}
+
+/* ---------- J15s: the full look (mirrors looks.ts; a test keeps them in step) ---------- */
+:root[data-effect-style='petal-glow']:not([data-theme='dark']) {
+  --color-background: #fff3f9;
+  --color-surface: #fffafd;
+  --color-border: #e8b4cf;
+  --color-text: #4a1d3f;
+  --color-text-secondary: #7a4a6c;
+  --color-primary: #b02e6a;
+  --color-primary-edge: #8a2254;
+  --color-primary-soft: #ffe0ef;
+  --color-text-on-primary: #ffffff;
+  --color-track: #a77594;
+  --color-locked-soft: #f5e6ef;
+  --color-mastery-fill: #ffe9a8;
+  --color-challenge: #4a1d3f;
+  --color-challenge-edge: #4a1d3f;
+  --shadow-3d-neutral: 0 5px 0 #e57aac;
+  --shadow-3d-primary: 0 5px 0 #8a2254;
+  --shadow-card: 0 6px 18px rgb(214 120 180 / 25%), 0 0 0 2px #ffd6ea;
+  --radius-sm: 16px;
+  --radius-md: 22px;
+  --radius-lg: 28px;
+  --font-heading: 'Fredoka', 'Baloo 2', 'Nunito', system-ui, sans-serif;
+  --pattern-ink: rgb(255 126 182 / 16%);
+  --page-wash:
+    radial-gradient(circle at 15% 8%, rgba(255, 182, 216, 0.7), transparent 45%),
+    radial-gradient(circle at 95% 55%, rgba(183, 156, 255, 0.5), transparent 45%),
+    radial-gradient(circle at 30% 100%, rgba(143, 227, 207, 0.45), transparent 50%);
+  --page-texture: radial-gradient(circle, rgba(255, 126, 182, 0.35) 1.2px, transparent 1.6px) 0 0 /
+    22px 22px;
+}
+
+:root[data-effect-style='petal-glow'][data-theme='dark'] {
+  --color-background: #241328;
+  --color-surface: #3a2140;
+  --color-border: #6b3a62;
+  --color-text: #ffe9f5;
+  --color-text-secondary: #f0c8e2;
+  --color-primary: #b02e6a;
+  --color-primary-edge: #ffb3d6;
+  --color-primary-soft: #4a2448;
+  --color-text-on-primary: #ffffff;
+  --color-track: #a07a96;
+  --color-locked-soft: #33203a;
+  --color-mastery-fill: #4a3a18;
+  --color-challenge: #160a19;
+  --color-challenge-edge: #f0c8e2;
+  --shadow-3d-neutral: 0 5px 0 #160a19;
+  --shadow-3d-primary: 0 5px 0 #5e1638;
+  --shadow-card: 0 6px 18px rgb(0 0 0 / 35%), 0 0 0 2px #6b3a62;
+  --radius-sm: 16px;
+  --radius-md: 22px;
+  --radius-lg: 28px;
+  --font-heading: 'Fredoka', 'Baloo 2', 'Nunito', system-ui, sans-serif;
+  --pattern-ink: rgb(255 179 214 / 10%);
+  --page-wash:
+    radial-gradient(circle at 15% 8%, rgba(255, 126, 182, 0.3), transparent 45%),
+    radial-gradient(circle at 95% 55%, rgba(183, 156, 255, 0.25), transparent 45%);
+  --page-texture: radial-gradient(circle, rgba(255, 179, 214, 0.18) 1.2px, transparent 1.6px) 0 0 /
+    22px 22px;
+}
+/* ---------- end of the full look ---------- */

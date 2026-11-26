@@ -1,0 +1,187 @@
+@import '@fontsource/russo-one/400.css';
+/*
+ * Turbo Drive, an effect style unlocked by the starting test (J16, U7, owner-approved 2026-11-26;
+ * docs/GAME_FEEL.md). Fast and bold: angled cards with racing stripes, wins zoom in, speed streaks for confetti. Every rule is scoped to the style. Transforms and opacity
+ * only; nothing moves with reduced motion.
+ */
+
+/* ---------- Home ---------- */
+:root[data-effect-style='turbo-drive'] .page-header .pill {
+  border-radius: 2px 12px 2px 12px;
+}
+
+:root[data-effect-style='turbo-drive'] .hex--mastered .hex__shape {
+  --hex-border: #ff7a1a;
+}
+
+:root[data-effect-style='turbo-drive'] .home-next {
+  border-radius: var(--radius-lg);
+}
+
+:root[data-effect-style='turbo-drive'] .home-cta {
+  border-radius: 4px 16px 4px 16px;
+  box-shadow: 0 5px 0 #0b0c10;
+}
+
+:root[data-effect-style='turbo-drive'] .unit-path__step--next .hex__shape {
+  --hex-border: #22d3ee;
+}
+
+/* ---------- Rewards ---------- */
+:root[data-effect-style='turbo-drive'] .rewards__step--earned {
+  border-color: #ff7a1a;
+}
+
+/* ---------- Lesson moments ---------- */
+:root[data-effect-style='turbo-drive'] .combo-badge {
+  border-radius: 2px 12px 2px 12px;
+  background: #22d3ee;
+  color: #0b0c10;
+}
+
+:root[data-effect-style='turbo-drive'] .star--earned polygon {
+  fill: #ff7a1a;
+}
+
+:root[data-effect-style='turbo-drive'] .star--earned {
+  rotate: -4deg;
+}
+
+:root[data-effect-style='turbo-drive'] .burst__particle,
+:root[data-effect-style='turbo-drive'] .confetti__piece {
+  background: #22d3ee;
+}
+
+:root[data-effect-style='turbo-drive'] .confetti__piece {
+  width: 3px;
+  height: 18px;
+  border-radius: 1px;
+}
+
+:root[data-effect-style='turbo-drive'] .float-up {
+  color: #0e7490;
+}
+
+/* ---------- Button tiles and the page transition ---------- */
+:root[data-effect-style='turbo-drive'] .button-tile {
+  border-radius: 4px 16px 4px 16px;
+  box-shadow: 0 5px 0 #0b0c10;
+}
+
+:root[data-effect-style='turbo-drive'] .button-tile:active {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+:root[data-effect-style='turbo-drive'] .page-enter {
+  animation: td-zoom 260ms cubic-bezier(0.3, 1.2, 0.5, 1);
+}
+
+:root[data-effect-style='turbo-drive'] .page-enter.page-enter--back {
+  animation: td-zoom-back 260ms cubic-bezier(0.3, 1.2, 0.5, 1);
+}
+
+@keyframes td-zoom {
+  from {
+    opacity: 0;
+    transform: translateX(-40px) skewX(-8deg);
+  }
+}
+
+@keyframes td-zoom-back {
+  from {
+    opacity: 0;
+    transform: translateX(40px) skewX(8deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-effect-style='turbo-drive'] .page-enter,
+  :root[data-effect-style='turbo-drive'] .page-enter.page-enter--back {
+    animation: none;
+  }
+}
+
+/* J16: the style's own background pattern, drawn in the look's ink. */
+:root[data-effect-style='turbo-drive'][data-pattern='on'] body::before {
+  -webkit-mask-image: url('./patterns/turbo-drive.svg');
+  mask-image: url('./patterns/turbo-drive.svg');
+  -webkit-mask-size: 220px 220px;
+  mask-size: 220px 220px;
+}
+
+/* ---------- J15s: the full look (mirrors looks.ts; a test keeps them in step) ---------- */
+:root[data-effect-style='turbo-drive']:not([data-theme='dark']) {
+  --color-background: #f1f3f7;
+  --color-surface: #ffffff;
+  --color-border: #3a3f4d;
+  --color-text: #15171d;
+  --color-text-secondary: #474d5c;
+  --color-primary: #b34700;
+  --color-primary-edge: #8a3600;
+  --color-primary-soft: #ffe8d6;
+  --color-text-on-primary: #ffffff;
+  --color-track: #6d7383;
+  --color-locked-soft: #e3e6ec;
+  --color-mastery-fill: #ffe0c2;
+  --color-challenge: #15171d;
+  --color-challenge-edge: #15171d;
+  --shadow-3d-neutral: 0 5px 0 #0b0c10;
+  --shadow-3d-primary: 0 5px 0 #6b2a00;
+  --shadow-card: 0 6px 0 #c9cdd6;
+  --radius-sm: 4px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --font-heading: 'Russo One', 'Baloo 2', 'Nunito', sans-serif;
+  --pattern-ink: rgb(255 122 26 / 12%);
+  --page-wash: linear-gradient(
+    115deg,
+    transparent 0% 62%,
+    rgba(255, 122, 26, 0.22) 62% 66%,
+    transparent 66% 69%,
+    rgba(34, 211, 238, 0.22) 69% 72%,
+    transparent 72%
+  );
+  --page-texture: repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.025) 0 2px, transparent 2px 6px);
+}
+
+:root[data-effect-style='turbo-drive'][data-theme='dark'] {
+  --color-background: #15171d;
+  --color-surface: #20232c;
+  --color-border: #3a3f4d;
+  --color-text: #f4f6fb;
+  --color-text-secondary: #c3c8d4;
+  --color-primary: #b34700;
+  --color-primary-edge: #ffb27a;
+  --color-primary-soft: #3a2414;
+  --color-text-on-primary: #ffffff;
+  --color-track: #7a8193;
+  --color-locked-soft: #1b1d24;
+  --color-mastery-fill: #3a2a14;
+  --color-challenge: #0b0c10;
+  --color-challenge-edge: #c3c8d4;
+  --shadow-3d-neutral: 0 5px 0 #0b0c10;
+  --shadow-3d-primary: 0 5px 0 #5c2400;
+  --shadow-card: 0 6px 0 #0b0c10;
+  --radius-sm: 4px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --font-heading: 'Russo One', 'Baloo 2', 'Nunito', sans-serif;
+  --pattern-ink: rgb(255 122 26 / 10%);
+  --page-wash:
+    linear-gradient(
+      115deg,
+      transparent 0% 62%,
+      rgba(255, 122, 26, 0.28) 62% 66%,
+      transparent 66% 69%,
+      rgba(34, 211, 238, 0.24) 69% 72%,
+      transparent 72%
+    ),
+    radial-gradient(ellipse at 50% 0%, #2a2f3d, #15171d 70%);
+  --page-texture: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 0 2px,
+    transparent 2px 6px
+  );
+}
+/* ---------- end of the full look ---------- */

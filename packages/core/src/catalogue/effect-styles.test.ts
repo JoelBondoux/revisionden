@@ -21,6 +21,18 @@ describe('effect style rewards', () => {
       ['starlight', 'topics-mastered-10', { kind: 'stat', stat: 'topicsMastered', atLeast: 10 }],
       ['comic-pop', 'level-20', { kind: 'stat', stat: 'level', atLeast: 20 }],
       ['pixel-arcade', 'level-40', { kind: 'stat', stat: 'level', atLeast: 40 }],
+      // J16 (U7, owner-approved 2026-11-26): three styles unlocked together by the starting test.
+      ['petal-glow', 'starting-test', { kind: 'stat', stat: 'startingTestsCompleted', atLeast: 1 }],
+      [
+        'turbo-drive',
+        'starting-test',
+        { kind: 'stat', stat: 'startingTestsCompleted', atLeast: 1 },
+      ],
+      [
+        'rainbow-parade',
+        'starting-test',
+        { kind: 'stat', stat: 'startingTestsCompleted', atLeast: 1 },
+      ],
     ];
     for (const [style, rewardId, target] of ladder) {
       expect(reward(rewardId).target, rewardId).toEqual(target);
@@ -46,6 +58,11 @@ describe('effect style rewards', () => {
   it('lists the styles a child has unlocked from their earned rewards, in ladder order', () => {
     expect(effectStylesFor([])).toEqual([]);
     expect(effectStylesFor(['level-2', 'level-5'])).toEqual(['pop-burst']);
+    expect(effectStylesFor(['starting-test'])).toEqual([
+      'petal-glow',
+      'turbo-drive',
+      'rainbow-parade',
+    ]);
     expect(effectStylesFor(['topics-mastered-10', 'level-5', 'level-3', 'nope'])).toEqual([
       'sticker-book',
       'pop-burst',

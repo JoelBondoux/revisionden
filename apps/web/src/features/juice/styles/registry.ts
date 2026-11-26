@@ -12,6 +12,9 @@ export const EFFECT_STYLE_IDS = [
   'starlight',
   'comic-pop',
   'pixel-arcade',
+  'petal-glow',
+  'turbo-drive',
+  'rainbow-parade',
 ] as const;
 export type EffectStyleId = (typeof EFFECT_STYLE_IDS)[number];
 
@@ -78,6 +81,31 @@ export const EFFECT_STYLES: Readonly<Record<EffectStyleId, EffectStyle>> = {
     description: 'Retro arcade with chunky pixel art, chiptune blips and treasure chests.',
     unlock: 'Reach level 40',
     swatch: ['#0a0820', '#39ff88', '#ff4fd8'],
+  },
+  // J16 (U7, owner-approved 2026-11-26): three styles unlocked together by the starting test,
+  // never labelled by gender.
+  'petal-glow': {
+    id: 'petal-glow',
+    name: 'Petal Glow',
+    description:
+      'Soft and sparkly: petals drift, buttons glow and every win blooms with a sparkle.',
+    unlock: 'Finish your starting test',
+    swatch: ['#fff3f9', '#ff7eb6', '#b79cff'],
+  },
+  'turbo-drive': {
+    id: 'turbo-drive',
+    name: 'Turbo Drive',
+    description: 'Fast and bold: racing stripes, speed streaks and wins that zoom over the line.',
+    unlock: 'Finish your starting test',
+    swatch: ['#15171d', '#ff7a1a', '#22d3ee'],
+  },
+  'rainbow-parade': {
+    id: 'rainbow-parade',
+    name: 'Rainbow Parade',
+    description:
+      'Bright and joyful: a parade of rainbow colour, with twinkling glitter on every win.',
+    unlock: 'Finish your starting test',
+    swatch: ['#fffaf2', '#732982', '#ffed00'],
   },
 };
 

@@ -218,6 +218,17 @@ tab say so to screen readers.
   round confetti; the badge stamps in from big and the stars drop in. Starlight (J10b): night-sky
   cards with a soft glow, mastered topics are outlined in starlight and earned steps glow; the badge brightens
   into view and the stars rise and settle.
+- **Three styles unlocked by the starting test (J16, U7, owner-approved 2026-11-26; never labelled
+  by gender).** Petal Glow (`petal-glow`: soft pink and lilac petal cards, flower tiles on the map,
+  drifting-petal bars, Fredoka headings), Turbo Drive (`turbo-drive`: angled cards, racing stripes,
+  chevron bars, Russo One headings; its asphalt page is dark-mode only, like the other night styles)
+  and the calmer Rainbow Parade (`rainbow-parade`: clean cards, a soft rainbow stripe across the page,
+  glitter bars, Baloo 2 headings; the rainbow is decoration only, never a state cue). They are full
+  looks like the others (AA in light, dark and colour-blind, page art obeying the pattern and
+  contrast settings) and come with their own sounds (U7), particles (J17) and map tiles (J15c).
+  Petal Glow's open topics get a soft petal-edged tile and Turbo Drive's open tiles a light edge, so
+  every node stands out 3:1 from the road. Unlocked by the existing `starting-test` reward
+  (`packages/core/src/catalogue/effect-styles.ts`).
 - A style is one entry in `apps/web/src/features/juice/styles/registry.ts` plus one stylesheet in
   which every rule is scoped to `:root[data-effect-style='<id>']`. A test checks that scoping, so
   removing or swapping a style never leaves bits of it behind. `EffectStyleProvider` sets
@@ -411,7 +422,7 @@ Ported from `docs/mockups/all-themes-pip.html` (`FX`, `burst`, `PRIZE_BOX`, `ope
   coins and sparkles; Starlight drifting stars (they float up); Comic Pop dots with a POW!, ZAP!,
   WOW! or BAM! word on big moments; Garden Grow petals and leaves that sway; Pixel Arcade pixels
   (smooth, no stepping). Petal Glow (petals and sparkle), Turbo Drive (speed streaks) and Rainbow
-  Parade (twinkling rainbow glitter) are ready for when those styles arrive. An unknown style uses
+  Parade (twinkling rainbow glitter) are live since J16. An unknown style uses
   Doodle Diary's.
 - **Sizes** (`burstFor`): right answer 18 (from 4 in a row, 8 + 2 × combo, flying further);
   daily goal hit 22; topic complete 22 with a word; level up 28 with a word; reward unlock 30

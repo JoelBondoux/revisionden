@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Three new looks: Petal Glow, Turbo Drive and Rainbow Parade. Finish your starting test to unlock all three, each with its own colours, map, sounds and sparkles.
 - In lessons Pip now reacts to your answers: a nod when you're right, a cheer for a streak or your daily goal, and an encouraging head tilt when it's not quite right. On small screens with big text, the answer box now fits without scrolling sideways.
 - Fixed: Pip now keeps completely still during lessons and tests, and settles down after a minute without a tap.
 - A new topic map: tap the big box at the top to change subject (Pip dresses for each one). Each unit is its own winding path you climb from the bottom to the unit challenge at the top, with "You are here" next to your topic. Swipe sideways (or use the arrows) for the next unit. Every unit has its own shape, the path gently breathes, and each style draws the topics its own way (plant pots in Garden Grow, pixel art in Pixel Arcade...).
@@ -260,6 +261,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- J16: Petal Glow, Turbo Drive and Rainbow Parade join `EFFECT_STYLE_IDS` with full looks (`looks.ts`, AA-checked), stylesheets (`petal-glow.css`, `turbo-drive.css`, `rainbow-parade.css`), patterns, living-bar flavours and self-hosted fonts (`@fontsource/fredoka`, `@fontsource/russo-one`, OFL licences in `public/licences/fonts/`). Unlocked by the `starting-test` reward (`EFFECT_STYLE_UNLOCKS` in core). The map's node-contrast e2e now chooses each style as a child does (unlocked, saved, reloaded), so each style's own node art is checked.
 - W13: an e2e guard (`e2e/tests/about-narrow.spec.ts`) checks that `/about` on a 320px phone, with normal text and with text at 200%, for a visitor and for a signed-in student, never scrolls sideways and has nothing past the screen edge. It locks in L10's reflow fix (643ece25), which fixed the sideways scroll G reported; it fails with the CSS from before L10.
 - J14a: Pip reacts in lessons. `features/juice/pip/reactions.ts` (`pipReactionFor`, `reactToAnswer`, `usePipReaction`, `REACTION_POSE_MS`); `LessonPlayer`'s `onAnswerReaction` defaults to `reactToAnswer`; `PipHomeButton` plays the nod, cheer or hmm pose once per answer, then rests (none with reduced motion). The J14 lesson-screen spec is in `docs/GAME_FEEL.md`.
 - J15c: the winding map (`apps/web/src/map/WigglyMap.tsx`): seeded bottom-to-top routes per subject and unit (`route.ts`), a sideways unit pager, each style's node tiles and road (`nodeArt.tsx`, `wiggly-styles.css`, generated from the approved mockup), You are here, the subject box and Subject selection, breathing (off with reduced motion and under automation), a Higher side branch for Foundation students from the new optional map-topic `tier`, either-order pairs from the optional `orderGroup`, discovered bridges behind data hooks (`bridges.ts`); e2e route-readability and 3:1 node-contrast checks ported from the mockup. Replaces UnitPath and TopicHex.

@@ -18,6 +18,10 @@ export const EFFECT_STYLE_UNLOCKS: readonly { style: string; rewardId: string }[
   { style: 'starlight', rewardId: 'topics-mastered-10' },
   { style: 'comic-pop', rewardId: 'level-20' },
   { style: 'pixel-arcade', rewardId: 'level-40' },
+  // J16 (U7, owner-approved 2026-11-26): unlocked together by finishing the starting test.
+  { style: 'petal-glow', rewardId: 'starting-test' },
+  { style: 'turbo-drive', rewardId: 'starting-test' },
+  { style: 'rainbow-parade', rewardId: 'starting-test' },
 ];
 
 /** Adds each effect style to the reward that unlocks it. */
