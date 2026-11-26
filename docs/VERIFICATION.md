@@ -283,7 +283,7 @@ answers, the expression or solutions for worked maths, the correct option for mu
 the back of a flashcard (ignoring case, spaces next to symbols and the minus sign used), or, for a
 numeric answer, any number in the hint (standard form, mixed numbers, fractions and decimals
 with thousands separators all count) equal to it or within 0.5% of it (`1/2` for 0.5, `1.333` for
-4/3, `640000000` for 6.4 × 10^8), unless the question already shows that number written the same way.
+4/3, `640000000` or `6.4 × 10⁸` for 6.4 × 10^8; powers may be written with `^` or in superscript), unless the question already shows that number written the same way.
 
 **Answer format (S3-A rulings, 2026-11-25).** One set of rules in `packages/core/src/answer-format.ts`
 serves student marking, content validation and the blind check, and the maths engine applies the same

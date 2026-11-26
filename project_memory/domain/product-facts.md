@@ -553,7 +553,8 @@ Tags: #product #rules #limits #defaults
   `markScheme`). Defined in `apps/api/src/learning/content-sync.ts`.
 - Hints (`hint`, shown by the "Need a clue?" button) nudge toward the method and never contain the
   item's final answer: `pnpm content:validate` refuses one that does (text, option or flashcard back,
-  or a number equal to a numeric answer within 0.5% that the question does not show). Rule in
+  or a number equal to a numeric answer within 0.5% that the question does not show, in any
+  written form, including standard form with `^` or superscript powers). Rule in
   `scripts/content/hint-check.mjs`, described in `docs/VERIFICATION.md` ("Hints").
 - Extended answers: blind marking replaces the blind answer (three exemplars, top, middle and low,
   marked by a second provider without the intended levels; all three must match exactly), and
