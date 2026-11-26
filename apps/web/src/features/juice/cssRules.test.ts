@@ -7,6 +7,7 @@ const files = [
   'design/motion.css',
   'features/juice/juice.css',
   'features/rewards/reveal.css',
+  'features/avatar/avatar.css',
 ];
 const read = (file: string) => readFileSync(join(src, file), 'utf8');
 

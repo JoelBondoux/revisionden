@@ -190,6 +190,10 @@ Tags: #product #rules #limits #defaults
 - Parent onboarding is at `/onboarding` (family list, add a child, school report, link a device,
   finish); the student scans the QR code to `/link` and sets up a passkey.
 - Avatars are drawn as layered SVG from the avatar code (`apps/web/src/features/avatar`).
+- Avatar builder layout (J9): the preview always stays in view. Under 600px of builder width
+  (phones, the sheet) it is pinned on top and shrinks once the options scroll. At 600px or more
+  it is a sticky column on the left. Arrow-key tabs; a gentle pop on each change, off with
+  reduced motion. `apps/web/src/features/avatar/AvatarBuilder.tsx`, `avatar.css`.
 
 ## Operator console (AppDeck)
 
