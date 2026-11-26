@@ -85,6 +85,10 @@ export interface SoundEngine {
   sampleReward(tier: RewardTier): PlayedReward | null;
   /** Skips a legendary sound that is playing (a tap). Returns whether one was skipped. */
   skip(): boolean;
+  /** True once the first tap or key press has allowed sound. */
+  isUnlocked(): boolean;
+  /** Plays any sound function (style packs), at `gain` of the volume. Returns whether it played. */
+  playSound(fn: SoundFn, options?: { pitch?: number; gain?: number; delay?: number }): boolean;
 }
 
 /**
@@ -133,7 +137,7 @@ export function createSoundEngine(deps: SoundEngineDeps): SoundEngine {
   }
 
   /** Plays a sound function through its own volume, after anything still playing if `follow`. */
-  function run(fn: SoundFn, delay: number, follow = false, pitch = 1) {
+  function run(fn: SoundFn, delay: number, follow = false, pitch = 1, gain = 1) {
     const settings = deps.settings();
     if (!unlocked || !settings.enabled || deps.isHidden()) return null;
     const audio = context();
@@ -142,6 +146,7 @@ export function createSoundEngine(deps: SoundEngineDeps): SoundEngine {
       wake(audio);
       master.gain.value = VOLUME_LEVELS[settings.volume];
       const voice = audio.createGain();
+      voice.gain.value = gain;
       voice.connect(master);
       const start = Math.max(audio.currentTime + delay, follow ? busyUntil : 0);
       const end = fn(audio, voice, start, pitch);
@@ -186,6 +191,10 @@ export function createSoundEngine(deps: SoundEngineDeps): SoundEngine {
     },
     sampleReward(tier) {
       return reward({ tier, step: 0, voice: 'standard', fanfare: null }, 0);
+    },
+    isUnlocked: () => unlocked,
+    playSound(fn, options = {}) {
+      return run(fn, options.delay ?? 0, false, options.pitch ?? 1, options.gain ?? 1) !== null;
     },
     skip() {
       if (!ctx || !skippable || ctx.currentTime >= skippable.until) return false;

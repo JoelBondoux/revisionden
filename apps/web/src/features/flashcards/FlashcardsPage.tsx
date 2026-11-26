@@ -30,10 +30,38 @@ const RATINGS: {
   { rating: 'easy', label: 'Easy', variant: 'primary' },
 ];
 
-/** A card that turns over in 3D (no animation when reduced motion is asked for). */
-function FlipCard({ card, flipped }: { card: Flashcard; flipped: boolean }) {
+/**
+ * A card that turns over in 3D (no animation when reduced motion is asked for). Tap it, or press
+ * Space or Enter, to turn it either way as often as you like (F7). The answer face stays empty
+ * until the answer has been revealed, and a new card is a new element that starts on its
+ * question, so the next card's answer never shows while the card turns (F7 bug fix).
+ */
+function FlipCard({
+  card,
+  flipped,
+  revealed,
+  onTurn,
+}: {
+  card: Flashcard;
+  flipped: boolean;
+  revealed: boolean;
+  onTurn: () => void;
+}) {
   return (
-    <div className={`flip-card${flipped ? ' flip-card--flipped' : ''}`} data-testid="flip-card">
+    <div
+      className={`flip-card${flipped ? ' flip-card--flipped' : ''}`}
+      data-testid="flip-card"
+      role="button"
+      tabIndex={0}
+      aria-label={flipped ? 'Turn back to the question' : 'Turn over to see the answer'}
+      onClick={onTurn}
+      onKeyDown={(event) => {
+        if (event.key === ' ' || event.key === 'Enter') {
+          event.preventDefault();
+          onTurn();
+        }
+      }}
+    >
       <div className="flip-card__inner">
         <div className="flip-card__face flip-card__face--front" aria-hidden={flipped}>
           <span className="flip-card__label">Question</span>
@@ -41,12 +69,44 @@ function FlipCard({ card, flipped }: { card: Flashcard; flipped: boolean }) {
           <p className="flip-card__text">{card.front}</p>
         </div>
         <div className="flip-card__face flip-card__face--back" aria-hidden={!flipped}>
-          <span className="flip-card__label">Answer</span>
-          <p className="flip-card__text">{card.back}</p>
-          {card.sourceRef && <small className="flip-card__ref">{card.sourceRef}</small>}
+          {revealed && (
+            <>
+              <span className="flip-card__label">Answer</span>
+              <p className="flip-card__text">{card.back}</p>
+              {card.sourceRef && <small className="flip-card__ref">{card.sourceRef}</small>}
+            </>
+          )}
         </div>
       </div>
     </div>
+  );
+}
+
+/** Steps from the item's verified content, one at a time, ending on the answer (F7). */
+function ExplainSteps({ steps, onClose }: { steps: readonly string[]; onClose: () => void }) {
+  const [step, setStep] = useState(0);
+  const last = step === steps.length - 1;
+  return (
+    <section className="explain card" aria-label="Explain">
+      <p className="explain__count secondary-text">
+        Step {step + 1} of {steps.length}
+      </p>
+      <p className="explain__step" aria-live="polite">
+        {steps[step]}
+      </p>
+      <div className="explain__nav">
+        <Button variant="secondary" disabled={step === 0} onClick={() => setStep(step - 1)}>
+          Back
+        </Button>
+        {last ? (
+          <Button variant="secondary" onClick={onClose}>
+            Close
+          </Button>
+        ) : (
+          <Button onClick={() => setStep(step + 1)}>Next step</Button>
+        )}
+      </div>
+    </section>
   );
 }
 
@@ -80,6 +140,9 @@ function ReviewSession({
   const [cameBack, setCameBack] = useState<string[]>([]);
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
+  /** The answer has been shown for this card: the ratings stay, however often it is turned. */
+  const [revealed, setRevealed] = useState(false);
+  const [explaining, setExplaining] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<'start' | 'review' | 'finish' | null>(null);
   const [sooner, setSooner] = useState(0);
@@ -158,6 +221,13 @@ function ReviewSession({
 
   const card = queue[index]!;
 
+  /** Turns the card either way; the first turn reveals the answer (not a new attempt). */
+  function turn() {
+    play('cardFlip');
+    setRevealed(true);
+    setFlipped((f) => !f);
+  }
+
   async function rate(rating: FlashcardRating) {
     setBusy(true);
     setError(null);
@@ -173,6 +243,8 @@ function ReviewSession({
         setCameBack((ids) => [...ids, card.id]);
       }
       setFlipped(false);
+      setRevealed(false);
+      setExplaining(false);
       if (index + 1 >= nextQueue.length) {
         setBusy(false);
         await finish(session!.id);
@@ -203,7 +275,14 @@ function ReviewSession({
           ? `Finish the session for ${session.xp} XP (at least ${session.minCards} cards).`
           : "You've had today's 2 rewarded sessions. Keep going: every card helps you remember."}
       </p>
-      <FlipCard card={card} flipped={flipped} />
+      <FlipCard
+        // A new element per card, so it starts on its question with no turn (F7 bug fix).
+        key={`${card.id}-${index}`}
+        card={card}
+        flipped={flipped}
+        revealed={revealed}
+        onTurn={turn}
+      />
       <ReadAloudButton
         text={flipped ? [card.back, card.sourceRef].filter(Boolean).join('. ') : card.front}
         label="Read the card aloud"
@@ -213,7 +292,15 @@ function ReviewSession({
           Couldn&apos;t save that. Please try again.
         </p>
       )}
-      {flipped ? (
+      {flipped && card.explain && !explaining && (
+        <Button variant="secondary" onClick={() => setExplaining(true)}>
+          Explain
+        </Button>
+      )}
+      {explaining && card.explain && (
+        <ExplainSteps steps={card.explain} onClose={() => setExplaining(false)} />
+      )}
+      {revealed ? (
         <div className="ratings">
           {RATINGS.map(({ rating, label, variant }) => {
             const when = formatReviewDelay(card.nextReviewMs[rating] ?? 0);
@@ -232,7 +319,7 @@ function ReviewSession({
           })}
         </div>
       ) : (
-        <Button block onClick={() => (play('cardFlip'), setFlipped(true))}>
+        <Button block onClick={turn}>
           Show answer
         </Button>
       )}

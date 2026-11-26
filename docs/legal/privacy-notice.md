@@ -113,13 +113,13 @@ students in Years 9 to 13 (usually aged 13 to 18).
 - if one parent removes the other, a note that the removed parent was removed and when, kept only
   until they have seen it in the app.
 
-4.1a **Two parents.** Either parent can invite a second parent, remove the other parent (who then
-loses access at once and sees a notice the next time they sign in), and download or delete the
-family's data. Deleting the whole family account needs both parents to confirm. Each parent is
-told in the app, and by push notification if they turned it on, about important changes the other
-parent makes: children added or removed, rewards given, limits changed, data downloaded and
-requests to delete the family account. These notifications say "Parent 1" or "Parent 2", never a
-name.
+  4.1a **Two parents.** Either parent can invite a second parent, remove the other parent (who then
+  loses access at once and sees a notice the next time they sign in), and download or delete the
+  family's data. Deleting the whole family account needs both parents to confirm. Each parent is
+  told in the app, and by push notification if they turned it on, about important changes the other
+  parent makes: children added or removed, rewards given, limits changed, data downloaded and
+  requests to delete the family account. These notifications say "Parent 1" or "Parent 2", never a
+  name.
 
 We do not store your name or profile picture. The app asks the sign-in provider for a minimum
 profile and blanks the name and picture before anything is saved.
@@ -349,11 +349,11 @@ own data, and our tests check this.
   records. For anything else, contact us at {{CONTACT_EMAIL}}. We will reply within one month, which
   the law lets us extend in some cases; we will tell you if we do. There is normally no charge.
 
-12.4 In the parent area, "Download your family's data" gives you a file (in the common JSON
-format) with everything we hold about you and your children. It leaves out only security codes
-such as scrambled session codes and device keys. In the parent home, "Delete the family account"
-deletes the whole family, every child's records and both parents' sign-ins; when there are two
-parents, the other parent must confirm it first.
+  12.4 In the parent area, "Download your family's data" gives you a file (in the common JSON
+  format) with everything we hold about you and your children. It leaves out only security codes
+  such as scrambled session codes and device keys. In the parent home, "Delete the family account"
+  deletes the whole family, every child's records and both parents' sign-ins; when there are two
+  parents, the other parent must confirm it first.
 
 ### 13. Complaints
 
