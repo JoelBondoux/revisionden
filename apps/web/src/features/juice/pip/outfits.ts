@@ -1,33 +1,50 @@
 /**
- * Pip's outfits (J15b, owner direction 2026-11-26). Pip is dressed lightly for the current
- * subject: one item worn (a hat, glasses, a collar...) and, on bigger sizes, one prop and a faint
- * background tint. Pip is unisex: a small touch (a moustache, a bow, freckles, or nothing) rotates
- * by day, and is never tied to a subject or to the student. All art is original and code-drawn.
+ * Pip's outfits (J15b, revised J15b-2 from the owner-approved all-themes mockup, 2026-11-26).
+ * Pip dresses for the current subject: at most one worn item (a hat, glasses, a collar...) and one
+ * prop he holds in front of his ring, on a faint disc tint. French, German and Spanish add a soft
+ * wash of flag colours behind him. A gently-leaning look rotates by day and is never tied to a
+ * subject or to the student: Pip is always just Pip. All art is original and code-drawn.
  */
 
 export type OutfitItem =
-  | 'pencil'
   | 'round-glasses'
+  | 'dark-glasses'
+  | 'safety-specs'
   | 'goggles'
-  | 'lab-collar'
+  | 'visor'
+  | 'blue-pen'
   | 'leaf'
-  | 'ruff'
   | 'explorer-hat'
   | 'beret'
+  | 'alpine-hat'
   | 'headset'
-  | 'bow-tie';
+  | 'lab-collar'
+  | 'bow-tie'
+  | 'neckerchief';
 
 export type OutfitProp =
-  | 'protractor'
-  | 'magnet'
-  | 'test-tube'
+  | 'calculator'
+  | 'compass'
+  | 'chart'
+  | 'speech-bubble'
+  | 'book'
   | 'magnifier'
-  | 'quill'
+  | 'test-tube'
+  | 'magnet'
+  | 'flask'
+  | 'laptop'
   | 'scroll'
   | 'croissant'
-  | 'laptop'
+  | 'pretzel'
+  | 'guitar'
   | 'mask'
   | 'clapperboard';
+
+export interface FlagWash {
+  dir: 'vertical' | 'horizontal';
+  /** Equal bands, first to last (left to right, or top to bottom). */
+  colours: readonly string[];
+}
 
 export interface Outfit {
   /** What the subject is, for the sheet and tests (never read out). */
@@ -36,30 +53,80 @@ export interface Outfit {
   prop: OutfitProp | null;
   /** A faint background colour inside the ring. */
   tint: string;
+  flag?: FlagWash;
 }
 
-export type UnisexTouch = 'none' | 'moustache' | 'bow' | 'freckles';
+/** Items worn on the head; the beanie look gives way to a bandana when one of these is on. */
+export const HATS: readonly OutfitItem[] = [
+  'explorer-hat',
+  'beret',
+  'alpine-hat',
+  'visor',
+  'headset',
+];
 
 /** Plain Pip, for screens with no subject. */
 export const PLAIN: Outfit = { subject: 'none', item: null, prop: null, tint: '#fff4d6' };
 
 /** Which outfit each subject gets, matched on the subject id (`gcse-maths`, `a-level-physics`). */
 const OUTFITS: readonly [RegExp, Outfit][] = [
-  [/maths|further-math/, { subject: 'Maths', item: 'pencil', prop: 'protractor', tint: '#e3ebff' }],
+  [
+    /further-math/,
+    { subject: 'Further Maths', item: 'round-glasses', prop: 'compass', tint: '#e8e2ff' },
+  ],
+  [/statistic/, { subject: 'Statistics', item: 'visor', prop: 'chart', tint: '#dff5ee' }],
+  [/maths|mathematics/, { subject: 'Maths', item: null, prop: 'calculator', tint: '#e3ebff' }],
+  [
+    /english-lit|literature/,
+    { subject: 'English Literature', item: null, prop: 'book', tint: '#f6ead8' },
+  ],
+  [
+    /english/,
+    { subject: 'English Language', item: 'blue-pen', prop: 'speech-bubble', tint: '#e6f0ff' },
+  ],
+  [
+    /combined/,
+    { subject: 'Combined Science', item: 'safety-specs', prop: 'flask', tint: '#e0f3ff' },
+  ],
   [/physics/, { subject: 'Physics', item: 'goggles', prop: 'magnet', tint: '#e6e0ff' }],
   [/chemistry/, { subject: 'Chemistry', item: 'lab-collar', prop: 'test-tube', tint: '#dff5f0' }],
   [/biology/, { subject: 'Biology', item: 'leaf', prop: 'magnifier', tint: '#e3f4e4' }],
-  [
-    /english-lit|literature/,
-    { subject: 'English Literature', item: 'ruff', prop: 'quill', tint: '#f6ead8' },
-  ],
-  [/history/, { subject: 'History', item: 'explorer-hat', prop: 'scroll', tint: '#f3ead2' }],
-  [/french/, { subject: 'French', item: 'beret', prop: 'croissant', tint: '#ffe8e3' }],
   [/computer/, { subject: 'Computer Science', item: 'headset', prop: 'laptop', tint: '#dff1ff' }],
+  [/history/, { subject: 'History', item: 'explorer-hat', prop: 'scroll', tint: '#f3ead2' }],
+  [
+    /french/,
+    {
+      subject: 'French',
+      item: 'beret',
+      prop: 'croissant',
+      tint: '#ffe8e3',
+      flag: { dir: 'vertical', colours: ['#0055a4', '#ffffff', '#ef4135'] },
+    },
+  ],
+  [
+    /german/,
+    {
+      subject: 'German',
+      item: 'alpine-hat',
+      prop: 'pretzel',
+      tint: '#e8f2e0',
+      flag: { dir: 'horizontal', colours: ['#000000', '#dd0000', '#ffce00'] },
+    },
+  ],
+  [
+    /spanish/,
+    {
+      subject: 'Spanish',
+      item: 'neckerchief',
+      prop: 'guitar',
+      tint: '#fff0dc',
+      flag: { dir: 'horizontal', colours: ['#aa151b', '#f1bf00', '#f1bf00', '#aa151b'] },
+    },
+  ],
   [/drama/, { subject: 'Drama', item: 'bow-tie', prop: 'mask', tint: '#f6e2f4' }],
   [
     /film/,
-    { subject: 'Film Studies', item: 'round-glasses', prop: 'clapperboard', tint: '#ececec' },
+    { subject: 'Film Studies', item: 'dark-glasses', prop: 'clapperboard', tint: '#ececec' },
   ],
 ];
 
@@ -70,15 +137,27 @@ export function outfitFor(subjectId: string | null | undefined): Outfit {
   return OUTFITS.find(([pattern]) => pattern.test(key))?.[1] ?? PLAIN;
 }
 
-/** Half the days are plain; the rest rotate the three touches. */
-const TOUCHES: readonly UnisexTouch[] = ['none', 'moustache', 'none', 'bow', 'none', 'freckles'];
+/**
+ * Three gently-leaning looks, two versions each (owner, 2026-11-26): A a tuft or a tiny moustache;
+ * B a bow with lashes, or a clip with a little blush; C a stud earring with freckles, or a beanie
+ * (a bandana when he already wears a hat). No flags or symbols, and Pip keeps his name.
+ */
+export const LOOK_FAMILIES = ['a', 'b', 'c'] as const;
+export type LookFamily = (typeof LOOK_FAMILIES)[number];
+export interface PipLook {
+  family: LookFamily;
+  variant: 0 | 1;
+}
 
 /**
- * Today's unisex touch. It depends only on the date (and an optional seed, such as the session),
- * never on the subject or on who the student is.
+ * Today's look. It depends only on the date (YYYY-MM-DD): the family changes every day and the
+ * version every three days, so all six come round within a week.
  */
-export function touchFor(day: string, seed = 0): UnisexTouch {
-  let hash = seed;
-  for (const ch of day) hash = (hash * 31 + ch.charCodeAt(0)) >>> 0;
-  return TOUCHES[hash % TOUCHES.length]!;
+export function lookFor(day: string): PipLook {
+  const days = Math.floor(Date.parse(`${day}T00:00:00Z`) / 86_400_000);
+  const n = Number.isFinite(days) ? days : 0;
+  return {
+    family: LOOK_FAMILIES[((n % 3) + 3) % 3]!,
+    variant: Math.floor(n / 3) % 2 === 0 ? 0 : 1,
+  };
 }

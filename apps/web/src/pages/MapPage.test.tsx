@@ -120,7 +120,7 @@ describe('Topic map screen', () => {
     const { container } = renderRoute('/map');
     await screen.findByRole('region', { name: 'Number' });
     const pip = screen.getByRole('button', { name: 'Home' });
-    await waitFor(() => expect(pip.querySelector('[data-item="pencil"]')).not.toBeNull());
+    await waitFor(() => expect(pip.querySelector('[data-prop="calculator"]')).not.toBeNull());
     void container;
   });
 
