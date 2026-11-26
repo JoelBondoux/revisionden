@@ -609,6 +609,14 @@ Tags: #product #rules #limits #defaults
 - Original Web Audio sounds, no files. Header quick mute and Settings (on/off, volume, tap sounds
   off by default), per device; follows the iOS silent switch where possible. No correct/wrong
   sounds in Test mode before submit. Sound is never the only signal. Workstream U.
+- Style sounds and haptics (U6): every animation fires a feedback event (12: buttonPress, cardFlip,
+  correct, wrong, combo, xpTick, ringFill, rewardWobble, rewardOpen, rewardUnlock, setComplete,
+  levelUp) that plays the active effect style's synthesised sound plus a vibration. Packs: Sticker
+  Book (default), Pop Burst, Starlight; unknown styles use Sticker Book. Vibration switch on by
+  default and independent of mute; no vibration on iPhone/iPad browsers (no Vibration API).
+  Throttled: ticks 70/90 ms, ≤10 sounds/s, buzzes ≥100 ms apart and ≤4/s. Reduced motion: half
+  loudness, shorter buzzes. `apps/web/src/features/sound/feedback/`; `HapticsDriver` lets a native
+  wrapper add real haptics later.
 - Reward sounds scale with rarity (common, rare, epic, legendary; 4+ variations each, no repeat
   in a row); milestone ladders and levels climb in pitch and fullness; one sound for several
   rewards at once; legendary at most 3 s and skippable (owner, 2026-11-25; U4).
