@@ -121,6 +121,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- E5b: on the parent Subjects page, a failed add keeps the chosen subject, board and tier so the parent can try again (Codex review on #142).
 - Share invite links (I8): `ShareLink` and `browserShareApis` (`apps/web/src/pwa/{ShareLink.tsx,share.ts}`) give the second-parent invite (`ParentsPanel`, B3's lane, authorised by the lead) and the child device link (`LinkDeviceStep`) a big "Share link" button using `navigator.share` where it exists, "Copy link" otherwise or after a failed share, and treat a closed share sheet (`AbortError`) as no error. Share text names no child; the QR code and codes stay.
 - Dev and staging footers show the short commit next to the environment, e.g. "(Development, ef86a9a)", so a new build is easy to spot. The live app is unchanged (G5).
 - Policy notice fix (L9): closing the "We've updated" sheet saved nothing, so it reappeared on every visit to `/onboarding`. "I've read the changes" (was "Confirm") stores the versions as before; closing hides it on the device for 24 hours for those versions only (`policyNoticeSnooze.ts`, `revisionden.policyNotice`). Cookies and storage 1.6. The notice shows only the Changes lines newer than that parent's accepted version, per policy (`policyChanges.ts`, numeric version compare so 1.10 > 1.9), hides policies with nothing newer, and a policy never accepted now goes through "Before you start".
