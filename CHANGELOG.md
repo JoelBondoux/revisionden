@@ -99,6 +99,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 ### Fixed
 
 - U6b: `playReward` vibration no longer depends on the reward sound playing; it follows the biggest reward and the Test mode rule, so muted sound still buzzes when Vibration is on.
+- One new device a day, made atomic (B7, follow-up to I5b): two new browsers unlocking the same synced passkey at the same moment could each add a device and alert the parents twice. Unlock now claims the day with one conditional upsert on the new `passkey_new_device_claims` table (migration `0027_new_device_claims`); the loser reuses the winner's device. The scheduled clean-up deletes claims after 24 hours. Data retention 1.12.
 - Avatar builder (J9b, Codex review of #134): picking a tab after scrolling part-way down now brings the new tab's first options into view just below the pinned stage (level with its top when wide), allowing for the compact stage growing back; instant with reduced motion.
 - Numeric marking (S2): `withoutThousands` accepts a UK thousands separator (space, thin or non-breaking space, or comma) between groups of exactly three digits, with or without rounding; a space between other digits (`3 87`) is now wrong instead of being read as 387.
 - Adversarial review (S2, from S3-A on a1-0103): for typed answers the reviewer is told the marking normaliser's rules (spaces, case, multiply signs, minus signs, superscripts, √), so it no longer asks for `p^3*q` or `p^3 q` when `p^3q` is accepted.
