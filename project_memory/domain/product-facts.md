@@ -250,7 +250,7 @@ Tags: #product #rules #limits #defaults
   topic"), weak spots, a friends-league chip marked Soon, and this week's days studied with the
   reward gift. Pip is a round "Home" button at the top left of every student screen and lesson; in
   a lesson or test he asks "Leave this lesson?" first. He acts about every 8 s, naps 21:00 to 07:00,
-  stops after 60 s without input, keeps still in lessons and with reduced motion. In a lesson he reacts once to each marked answer (J14): a nod, a cheer from 3 right in a row or for today's goal, a gentle nod after help, an encouraging head tilt for a wrong answer; none with reduced motion (`features/juice/pip/reactions.ts`). Since J14b the lesson shows him in its own header row (with ×, progress and XP) and the layout's separate Pip row steps aside; his line is a speech bubble beside the student's framed avatar, which reacts with him. He wears one item for the current subject
+  stops after 60 s without input, keeps still in lessons and with reduced motion. In a lesson he reacts once to each marked answer (J14): a nod, a cheer from 3 right in a row or for today's goal, a gentle nod after help, an encouraging head tilt for a wrong answer; none with reduced motion (`features/juice/pip/reactions.ts`). Since J14b the lesson shows him in its own header row (with ×, progress and XP), his line is a speech bubble beside the student's framed avatar (which nods, hops or goes "hmm" with him), and the older second Pip is gone. Only a mounted `LessonPip` (the lesson header) tells the layout to leave out its own Pip row (J14c), so a lesson's loading, error, empty and finished screens keep the layout's Pip and Home button. The lesson screens are one list, `LESSON_PATHS` (`apps/web/src/layout/lessonRoutes.ts`), shared by the routes and the layout: topic lessons, the 5-a-day, practice, the starting test and command words (which counts as a lesson page, so it shows the avatar). In the lesson, "+XP" uses the look's text-safe main colour (the light accent in dark mode) with no shadow, so it reads on the look's page in every look (J16b). He wears one item for the current subject
   and holds its prop in front of his ring (Pip v3, J15b-2: bigger head leaning out of the ring,
   shoulders only, no arm; Maths a calculator, English Literature a book; soft flag washes for
   French, German and Spanish), plus one of three gently-leaning looks that rotates by day (never
@@ -921,10 +921,14 @@ Tags: #product #rules #limits #defaults
   with Background pattern on; high contrast gets a plain page; reading tints and the
   dyslexia-friendly font override every look (`apps/web/src/design/base.css`).
   Lead ruling (2026-11-26, accessibility comes first): rich pages are dark-mode only for Pop Burst,
-  Starlight and Pixel Arcade, light pages in light mode, and those looks use deeper button colours
+  Starlight, Pixel Arcade and (since J16) Turbo Drive's asphalt, light pages in light mode, and those looks use deeper button colours
   with white text (the bright colour stays as the highlight). Every self-hosted font (Nunito,
-  OpenDyslexic, Baloo 2, Bangers, Press Start 2P, Patrick Hand; all SIL OFL 1.1, via @fontsource)
-  ships with its licence in `apps/web/public/licences/fonts/` (checked by `fonts.test.ts`).
+  OpenDyslexic, Baloo 2, Bangers, Press Start 2P, Patrick Hand, and since J16 Fredoka and Russo One;
+  all SIL OFL 1.1, via @fontsource) ships with its licence in `apps/web/public/licences/fonts/`
+  (checked by `fonts.test.ts`). Text drawn straight on the page reads AA on the painted page, wash
+  and texture included (J15s-b/c: `e2e/tests/support/painted.ts` finds each letter by drawing the
+  text in black and in white and measures it in its real colour; faint text fails, never skips), so
+  Pop Burst's dark wash is a deep purple-to-plum.
 - Living progress bars (J15s revision): every horizontal progress bar's fill gently moves in the
   style's own way (hatching, stripes, gloss, stars, dots, leaves, chase light) with a pulsing
   leading edge; off with reduced motion, paused while the tab is hidden
@@ -1092,8 +1096,12 @@ Tags: #product #rules #limits #defaults
   `prefers-contrast: more` and forced colours. The public site uses the same tile (the older 240px
   grid tile `doodles.svg` was removed in M7).
   Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).
-- Effect styles (J10a, built; full looks since J15s): one active at a time; it restyles the whole app (see "One look and full styles") plus the game-feel moments, Home Ten styles since J16: Petal Glow, Turbo Drive and Rainbow Parade are unlocked together by finishing the starting test (reward `starting-test`), never labelled by gender.
-  (topic map) and Rewards. Default and always available: Doodle Diary (`doodle-diary`, owner decision 2026-11-26, J10d). Registry
+- Effect styles (J10a, built; full looks since J15s): one active at a time; it restyles the whole app (see "One look and full styles") plus the game-feel moments, Home
+  (topic map) and Rewards. Default and always available: Doodle Diary (`doodle-diary`, owner decision 2026-11-26, J10d).
+  Ten styles since J16: the six on the level and mastery ladder plus Petal Glow (`petal-glow`), Turbo
+  Drive (`turbo-drive`) and the calmer Rainbow Parade (`rainbow-parade`), unlocked together by
+  finishing the starting test (existing reward `starting-test`, `EFFECT_STYLE_UNLOCKS` in
+  `packages/core/src/catalogue/effect-styles.ts`), never labelled by gender. Registry
   `apps/web/src/features/juice/styles/registry.ts`; one stylesheet per style, scoped to
   `:root[data-effect-style='<id>']`. Chosen per device in `localStorage` key
   `revisionden.effectStyle` (cookies and storage policy 1.7); a style that is not unlocked falls
