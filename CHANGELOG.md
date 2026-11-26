@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- On the topic map, going past your daily goal now says "Goal smashed!" with a star, instead of an odd fraction like 195 / 50. The subject and unit rows also open with every visible chip whole, instead of one cut off at the left edge.
 - After a wrong answer, and on a flashcard's Explain, a "Learn more" button can now open free lessons on that exact question or skill from Oak National Academy, BBC Bitesize or Isaac. Every link was opened and checked to teach the right thing at the GCSE level, and there are now links for every GCSE Maths topic and skill with questions.
 - Behind the scenes: questions made by our maths engine from an approved recipe now need fewer spot checks by a person once the recipe itself has been approved, so new practice questions can arrive faster; every automatic check still runs.
 - Flashcards work better with screen readers: the card and the rating buttons now read out the words you can see.
@@ -134,6 +135,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Topic map (J12d, owner feedback 2026-11-26): the Today strip shows "Goal smashed! <XP> XP" with a star once the daily goal is reached (the progress bar's value text says so too), and the sideways rows (`HScroller`) no longer centre the chosen item, which cut the item to its left mid-word: `map/hscroll.ts` `rowScrollTarget` moves only as far as needed and lines up on an item's edge (scroll padding now equals the gap; up to 40% extra space after the last item when needed). Unit and e2e tests.
 - K5c: the stats settle-sound test no longer flakes under CPU load. The fake motion clock now makes React run effects left over from a render outside `act` before each `show()` and `step()`, so the tiles always start watching before the clock moves (`features/stats/motionTestEnv.tsx`).
 - Flashcards accessibility (F8b, axe on /cards): the flip card has no `aria-label`, so its accessible name is the text on its showing face, with the turn hint as `aria-describedby`; the rating buttons drop `aria-label` ("Good, back in 1 day") and are named by their visible text ("Good 1 day"). New e2e check `e2e/tests/cards.spec.ts`: axe on /cards on both sides of the card, at phone, tablet and desktop sizes.
 - K5b: on My stats, switching Week, Term or Year no longer replays the count-up, the charts or the settle sound; and printing or saving the parent dashboard as a PDF mid-count shows the final numbers (Codex on #235).

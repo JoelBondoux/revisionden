@@ -238,6 +238,12 @@ Tags: #product #rules #limits #defaults
     above the tab bar (the version footer sits below).
   - A locked unit (no questions yet) says "Questions for <unit> are on their way. It unlocks as
     soon as they're ready." See all opens a sheet of every unit with its progress.
+  - Past the daily goal the Today strip says "Goal smashed! <XP> XP" with a star (the bar stays
+    full) instead of a fraction like "195 / 50" (J12d, owner, 2026-11-26).
+  - The sideways rows (subjects, units) open showing the chosen item whole, moving only as far as
+    they must and lining up on an item's edge, so the first item seen is never cut mid-word; near the
+    end a little space (at most 40% of the row) may be added after the last item to allow that
+    (J12d, `map/hscroll.ts`).
   - Code: `apps/web/src/map/` (`path.ts` rules, `UnitPath.tsx`, `TodayStrip.tsx`, `HScroller.tsx`,
     `InstallRow.tsx`), `apps/web/src/features/daily/DailyRow.tsx`; e2e `e2e/tests/map.spec.ts`.
 - Topic map data (F2, `GET /v1/student/map`): units are the top-level topics of the subject's tree,
