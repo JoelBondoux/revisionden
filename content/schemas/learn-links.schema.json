@@ -110,6 +110,10 @@
             "maxLength": 200,
             "description": "Only for provider revisionden: the app route of the in-house note, e.g. /notes/gcse-maths-h-a17."
           },
+          "no_pupil_page": {
+            "const": true,
+            "description": "Only for an Oak teacher page (/teachers/...): the lesson has no pupil page, so the teacher page is kept. Oak links otherwise go to the pupil lesson page."
+          },
           "hide_external": {
             "type": "boolean",
             "description": "Only for provider revisionden: once shown, the external links for the same item, learning point or topic are hidden."
