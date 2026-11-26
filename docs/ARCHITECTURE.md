@@ -137,6 +137,8 @@ one already applied. A migration that lands out of order is skipped silently. So
   `when` is later.
 - Never edit a migration that has already been applied on dev; add a new one instead.
 
+Recorded in project memory: `decisions/0011-migration-order.md`.
+
 | Table                       | Key fields                                                                                                                                                                                                                                                                                                                                     |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `auth_users`                | id, email, email_verified, name (always blank), image (always null)                                                                                                                                                                                                                                                                            |
