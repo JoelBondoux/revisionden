@@ -14,6 +14,7 @@ import { LinkButton } from '../../components/links';
 import { Sheet } from '../../components/Sheet';
 import { BeforeYouStart } from './BeforeYouStart';
 import { Markdown } from './Markdown';
+import { deviceStorage, isSnoozed, snooze, type SnoozeStorage } from './policyNoticeSnooze';
 import { usePolicyLibrary } from './PolicyLibraryContext';
 import './legal.css';
 
@@ -80,10 +81,20 @@ export function acceptanceStatus(
 
 /**
  * Wraps parent screens: a new parent confirms the terms and privacy notice once (versions
- * stored); after a policy changes, a sheet shows what changed and asks them to confirm.
- * If the check cannot be made (offline, API down), the screen is shown anyway.
+ * stored); after a policy changes, a sheet shows what changed. "I've read the changes" stores
+ * the new versions for this parent; closing it hides it on this device for 24 hours (those
+ * versions only). If the check cannot be made (offline, API down), the screen is shown anyway.
  */
-export function PolicyGate({ children }: { children: ReactNode }) {
+export function PolicyGate({
+  children,
+  storage = deviceStorage(),
+  now = Date.now,
+}: {
+  children: ReactNode;
+  /** Where a closed notice is remembered (this device's local storage by default). */
+  storage?: SnoozeStorage;
+  now?: () => number;
+}) {
   const api = useLegalApi();
   const library = usePolicyLibrary();
   const [status, setStatus] = useState<AcceptanceStatus | 'loading'>('loading');
@@ -102,13 +113,23 @@ export function PolicyGate({ children }: { children: ReactNode }) {
   useEffect(() => {
     let live = true;
     api.list().then(
-      (accepted) => live && setStatus(acceptanceStatus(accepted, current)),
+      (accepted) => {
+        if (!live) return;
+        const next = acceptanceStatus(accepted, current);
+        const closed =
+          next.kind === 'changed' && isSnoozed(storage, versionsOf(next.policies), now());
+        setStatus(closed ? { kind: 'ok' } : next);
+      },
       () => live && setStatus({ kind: 'ok' }),
     );
     return () => {
       live = false;
     };
+    // storage and now are fixed for the life of the gate.
   }, [api, current]);
+
+  const versionsOf = (policies: AcceptedPolicy[]) =>
+    Object.fromEntries(policies.map((p) => [p, current[p]!]));
 
   const accept = useCallback(
     async (policies: AcceptedPolicy[]) => {
@@ -151,7 +172,10 @@ export function PolicyGate({ children }: { children: ReactNode }) {
       <Sheet
         open={changed.length > 0}
         title={`We've updated our ${titles.join(' and ')}`}
-        onClose={() => setStatus({ kind: 'ok' })}
+        onClose={() => {
+          snooze(storage, versionsOf(changed), now());
+          setStatus({ kind: 'ok' });
+        }}
       >
         <div className="stack">
           {changed.map((p) => (
@@ -170,7 +194,7 @@ export function PolicyGate({ children }: { children: ReactNode }) {
             </p>
           )}
           <Button block onClick={() => void accept(changed)}>
-            Confirm
+            I&apos;ve read the changes
           </Button>
         </div>
       </Sheet>

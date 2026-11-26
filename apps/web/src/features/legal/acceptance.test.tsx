@@ -82,12 +82,24 @@ function fakeApi(accepted: Acceptance[]): LegalApi {
   };
 }
 
-const show = (api: LegalApi) =>
+function memoryStorage() {
+  const map = new Map<string, string>();
+  return {
+    map,
+    getItem: (k: string) => map.get(k) ?? null,
+    setItem: (k: string, v: string) => void map.set(k, v),
+  };
+}
+
+const show = (
+  api: LegalApi,
+  device: { storage?: ReturnType<typeof memoryStorage>; now?: () => number } = {},
+) =>
   render(
     <PolicyLibraryProvider library={library}>
       <LegalApiProvider value={api}>
         <MemoryRouter>
-          <PolicyGate>
+          <PolicyGate storage={device.storage ?? memoryStorage()} now={device.now}>
             <h1>Onboarding</h1>
           </PolicyGate>
         </MemoryRouter>
@@ -203,9 +215,60 @@ describe('PolicyGate', () => {
       expect.stringMatching(BUTTON_LINK),
     );
     expect(dialog).toHaveTextContent('We now keep feedback for 12 months.');
-    await userEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+    await userEvent.click(screen.getByRole('button', { name: "I've read the changes" }));
     expect(api.accept).toHaveBeenCalledWith([{ policy: 'privacy-notice', version: '1.1' }]);
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+
+  describe('closing the "We\'ve updated" notice without reading it', () => {
+    const outdated = (): Acceptance[] => [
+      { policy: 'privacy-notice', version: '1.0', acceptedAt: at },
+      { policy: 'terms-of-use', version: '1.0', acceptedAt: at },
+    ];
+
+    it('does not show it again when the parent comes back to the screen', async () => {
+      const storage = memoryStorage();
+      const api = fakeApi(outdated());
+      const first = show(api, { storage });
+      await screen.findByRole('dialog', { name: "We've updated our Privacy notice" });
+      await userEvent.click(screen.getByRole('button', { name: 'Close' }));
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+      expect(api.accept).not.toHaveBeenCalled();
+      first.unmount();
+
+      show(api, { storage });
+      expect(await screen.findByRole('heading', { name: 'Onboarding' })).toBeInTheDocument();
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+
+    it('shows it again after 24 hours on this device', async () => {
+      const storage = memoryStorage();
+      let now = Date.parse('2026-11-26T09:00:00Z');
+      const api = fakeApi(outdated());
+      const first = show(api, { storage, now: () => now });
+      await screen.findByRole('dialog');
+      await userEvent.keyboard('{Escape}');
+      first.unmount();
+
+      now += 24 * 60 * 60 * 1000 + 1;
+      show(api, { storage, now: () => now });
+      expect(
+        await screen.findByRole('dialog', { name: "We've updated our Privacy notice" }),
+      ).toBeInTheDocument();
+    });
+
+    it('shows it again as soon as a newer version ships', async () => {
+      const storage = memoryStorage();
+      // Closed while 1.1 was the newest version, on another build.
+      storage.setItem(
+        'revisionden.policyNotice',
+        JSON.stringify({ versions: { 'privacy-notice': '1.0' }, until: Date.now() + 3_600_000 }),
+      );
+      show(fakeApi(outdated()), { storage });
+      expect(
+        await screen.findByRole('dialog', { name: "We've updated our Privacy notice" }),
+      ).toBeInTheDocument();
+    });
   });
 
   it('does not lock anyone out when the acceptances cannot be loaded', async () => {
