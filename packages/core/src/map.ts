@@ -6,6 +6,8 @@
  * - Topic state: locked when no item may be served yet; mastered at 80% or more; a weak spot when
  *   the student has tried it and is below 60%; otherwise in progress (including not tried yet).
  * - Unit mastery is the average of its open (not locked) topics; the unit challenge unlocks at 80%.
+ * - A subject with no question that may be served yet is `coming_soon` (owner bug RD-MBXKTC):
+ *   the Map tab shows a friendly empty state and a subject switcher, never an error.
  * - Next mission follows the next-item rule (weak spots first, weakest first): the weakest weak
  *   spot, else the first topic not yet mastered, else a review of the weakest mastered topic.
  */
@@ -55,7 +57,21 @@ export const NextMissionSchema = z.object({
 });
 export type NextMission = z.infer<typeof NextMissionSchema>;
 
+/** One of the student's subjects, for the Map tab's subject switcher. */
+export const MapSubjectSchema = z.object({
+  subjectId: z.string(),
+  subject: z.string(),
+  /** False while no question in the subject may be served yet ("coming soon"). */
+  hasContent: z.boolean(),
+});
+export type MapSubject = z.infer<typeof MapSubjectSchema>;
+
 export const TopicMapSchema = z.object({
+  /** Optional so older stored or mocked maps still parse; the API always sends them. */
+  subjectId: z.string().optional(),
+  /** `coming_soon` while the subject has no question that may be served (RD-MBXKTC). */
+  status: z.enum(['ready', 'coming_soon']).optional(),
+  subjects: z.array(MapSubjectSchema).optional(),
   subject: z.string(),
   qualification: z.string(),
   streakDays: z.number().int().nonnegative(),
@@ -90,6 +106,8 @@ export interface BuildTopicMapInput {
   /** Mastery 0–100 for topics the student has tried. */
   mastery: ReadonlyMap<string, number>;
   progress: { xpToday: number; dailyGoalXp: number; streakDays: number };
+  /** The student's subjects in enrolment order, for the subject switcher. */
+  subjects?: readonly { subjectId: string; hasContent: boolean }[];
 }
 
 const capitalise = (word: string) => word.charAt(0).toUpperCase() + word.slice(1);
@@ -181,7 +199,15 @@ export function buildTopicMap(input: BuildTopicMapInput): TopicMap {
     });
   }
 
+  const open = units.some((u) => u.topics.some((t) => t.status !== 'locked'));
   return {
+    subjectId: input.subjectId,
+    status: open ? 'ready' : 'coming_soon',
+    subjects: (input.subjects ?? []).map((s) => ({
+      subjectId: s.subjectId,
+      subject: subjectNames(s.subjectId, 'none').subject,
+      hasContent: s.hasContent,
+    })),
     ...subjectNames(input.subjectId, input.tier),
     streakDays: input.progress.streakDays,
     xpToday: input.progress.xpToday,

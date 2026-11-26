@@ -35,11 +35,6 @@
       reviews have no timestamped record) are in the catalogue but their stats count as 0 until the
       data exists (`packages/core/src/catalogue/hidden.ts`).
 
-- [ ] **Daily limit changes in the activity log.** `docs/PRODUCT_RULES.md` ("Two parents") says the
-      other parent is told when a limit changes, but the daily limit (same page, "Daily limit") has
-      no API route yet. B3 logs `PUT /v1/students/:id/daily-limit` as an important change
-      (`apps/api/src/family-events.ts`, `LOGGED_CHANGES`); the limits workstream must use that
-      route (or update the table) when it builds it.
 - [ ] **AQA's AI clause and our content pipeline.** AQA's copyright policy says it "does not
       permit the use of any AQA material in any manner or for any purposes in connection with the
       training" of AI tools and "will not allow the use of any AQA material" in a third-party work
@@ -56,25 +51,6 @@
       exams sat, weak spots fixed, perfect sets, gifting and the friends league
       are in the catalogue, but nothing records those numbers yet, so the rewards route counts them
       as 0 (`apps/api/src/routes/rewards.ts`). They unlock once those features store the numbers.
-- [ ] **OAuth tokens kept.** `docs/PRIVACY.md` and the policies say only the parent's sign-in
-      email is stored, but Better Auth stores `access_token`, `refresh_token` and `id_token` in
-      `auth_accounts` (`packages/db/src/schema.ts`, `apps/api/src/auth.ts`); a Google or Microsoft
-      ID token usually carries the account name and picture URL. Not settled: auth is workstream
-      B's lane. The privacy notice (4.5) describes it as it is today.
-- [ ] **Youngest school year.** Onboarding and the policies take Years 9 to 13 (13+), but the
-      `students_year_group_range` check in `packages/db/src/schema.ts` allows 7 to 13. Not
-      settled: schema is B's lane; needs a product owner nod to tighten to 9.
-- [ ] **Promised deletion tools not built.** `docs/PRIVACY.md` says "export first is offered" and
-      "accounts unused for 12 months are deleted automatically"; neither exists in `apps/api`.
-      Expired link tokens, student sessions and parent sessions are not cleaned up either. The
-      policies (`docs/legal/data-retention.md`) say "still to do". Not settled: outside L's lane.
-- [ ] **Own flashcards are not privacy-checked.** Students can write their own flashcards (300
-      characters a side, `apps/api/src/routes/flashcards.ts`) and they are stored as free text with
-      no personal-data check, unlike AI requests and feedback. Not settled: F's lane; the
-      community rules ask students to take care.
-- [ ] **Parent reward notification.** `docs/REWARDS.md` says the parent gets a notification when a
-      parent-set target is met; not built (reminders are workstream H). The student celebration is
-      built.
 - [ ] **Live AI providers in the docs.** `docs/ARCHITECTURE.md` (diagram) and `docs/AI.md` (photo
       reading by Gemini or Claude) describe Gemini and OpenAI as live providers, but in the code only
       Anthropic is used live; OpenAI's `second_check` job is not called by any route and Gemini is
@@ -88,14 +64,6 @@
       marking) live in `apps/api/src/notifications/routes.ts` and `apps/api/src/ai/routes.ts`, but
       `docs/ARCHITECTURE.md` (Conventions) says every body has a Zod schema in `packages/core`.
       Not settled: `packages/core` is outside workstream H's lane (same TODO as B's device routes).
-- [ ] Item JSON in the `items` table has no fixed format yet. H's marking reads
-      `body.prompt`, `body.marks`, `body.mark_scheme` (or `body.mark_points`) and
-      `answer.accepted` (`apps/api/src/ai/items.ts`), matching `content/schemas/item.schema.json`;
-      the content loader (F or D) must store items in that shape. Not settled: no loader exists yet.
-- [ ] **Item type names.** `content/schemas/item.schema.json` uses `worked_maths` and
-      `extended_answer`; `packages/core/src/schemas.ts` (`ItemTypeSchema`, XP table) uses `working` and
-      `long_answer`. F maps them (`contentTypeToItemType`) instead of renaming either, because both
-      sit in other workstreams' lanes. Pick one set of names.
 - [ ] **Question reports when a family is deleted.** `docs/legal/data-retention.md` says reports
       of a mistake are "kept as part of the content audit trail; linked to the family until the
       family account is deleted", but `item_reports.family_id` is `on delete cascade`
@@ -103,13 +71,15 @@
       clean-up) deletes its reports too. Not settled: keeping them needs a nullable family id and
       a decision from workstream V on the audit trail; B2 left the code as it is.
 
-- [ ] **Topic map and cards due have no API yet.** The web app's map (`/map`) and Cards badge call
+## Resolved
+
+- [x] **Topic map and cards due have no API yet.** The web app's map (`/map`) and Cards badge call
       `GET /v1/student/map` and `GET /v1/student/cards/due` (`apps/web/src/api/client.ts`), agreed
       with F2, but `apps/api` has neither, so on staging the map shows "Something went wrong" (with
       a code) and the badge shows 0. A student device therefore has no way into subject lessons
       except a direct link. Not settled: F2's lane; no F2 branch or PR exists yet (2026-11-25).
-
-## Resolved
+      Settled (I10, 2026-11-26): F2 built both routes (`apps/api/src/routes/map.ts`, mounted at
+      `/v1/student`; listed in `apps/api/routes.json`), so the map and the Cards badge read real data.
 
 - [x] **The privacy notices only mention the QR code for linking a device.** E4 (#105) added
       "Send a link instead" (`apps/api/src/routes/devices.ts`), but `docs/legal/privacy-notice.md`

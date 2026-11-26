@@ -1,0 +1,780 @@
+[
+  {
+    "id": "gcse-maths-h-n9-0001",
+    "topic": "gcse-maths-h-n9",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n9-lp-convert",
+    "expected_seconds": 40,
+    "prompt": "0.00045 is written in standard form as A × 10^n. Find the value of n.",
+    "answer": { "value": "-4" },
+    "verify": { "expression": "log((45/100000)/(45/10))/log(10)" },
+    "marks": 1,
+    "explanation": "Move the decimal point to get a number between 1 and 10: 0.00045 becomes 4.5. The point moves 4 places to the right, and the number is less than 1, so the power is negative: 4.5 × 10^-4, so n = -4.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "calculate with and interpret standard form",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "where 1 ≤ A < 10 and n is an integer",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer backed by the maths engine: 0.00045 = 4.5 × 10^-4, n = log10(0.00045 / 4.5). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:24:41Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:50Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:30:32Z",
+          "notes": "model answered \"-4\"; expected \"-4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:39:12Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n9-0002",
+    "topic": "gcse-maths-h-n9",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n9-lp-convert",
+    "expected_seconds": 40,
+    "prompt": "3 870 000 is written in standard form as A × 10^n. Find the value of n.",
+    "answer": { "value": "6" },
+    "verify": { "expression": "log(3870000/(387/100))/log(10)" },
+    "marks": 1,
+    "explanation": "Move the decimal point to get a number between 1 and 10: 3 870 000 becomes 3.87. The point moves 6 places to the left, so 3 870 000 = 3.87 × 10^6, and n = 6.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "calculate with and interpret standard form",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "where 1 ≤ A < 10 and n is an integer",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer backed by the maths engine: 3 870 000 = 3.87 × 10^6. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:24:41Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:51Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:30:49Z",
+          "notes": "model answered \"6\"; expected \"6\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:39:21Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n9-0003",
+    "topic": "gcse-maths-h-n9",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n9-lp-convert",
+    "expected_seconds": 40,
+    "prompt": "Write 6.02 × 10^5 as an ordinary number.",
+    "answer": { "value": "602000" },
+    "verify": { "expression": "(602/100)*10^5" },
+    "marks": 1,
+    "explanation": "Multiplying by 10^5 moves the decimal point 5 places to the right: 6.02 becomes 602000.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "calculate with and interpret standard form",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Answer backed by the maths engine. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:24:41Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:52Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:31:08Z",
+          "notes": "model answered \"602000\"; expected \"602000\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:39:27Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n9-0004",
+    "topic": "gcse-maths-h-n9",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-n9-lp-calculate",
+    "expected_seconds": 100,
+    "prompt": "Work out (3 × 10^4) × (5 × 10^6). Give your answer in standard form.",
+    "answer": { "expression": "1.5*10^11" },
+    "verify": { "method": "expression", "expression": "(3*10^4)*(5*10^6)" },
+    "steps": ["15 * 10^10", "1.5 * 10^11"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 15 × 10^10 or 150 000 000 000", "A1 for 1.5 × 10^11"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "calculate with and interpret standard form",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "where 1 ≤ A < 10 and n is an integer",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer and every step backed by the maths engine. Mark points written by this session.",
+          "at": "2026-11-25T17:24:41Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:54Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:31:23Z",
+          "notes": "model answered \"1.5 × 10^11\"; expected \"1.5*10^11\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:31:37Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n9-0005",
+    "topic": "gcse-maths-h-n9",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-n9-lp-calculate",
+    "expected_seconds": 60,
+    "prompt": "Work out (2.4 × 10^3) ÷ (8 × 10^-2). Give your answer as an ordinary number.",
+    "answer": { "value": "30000" },
+    "verify": { "expression": "((24/10)*10^3)/(8*10^-2)" },
+    "marks": 1,
+    "explanation": "Divide the numbers and the powers of 10 separately: 2.4 ÷ 8 = 0.3, and 10^3 ÷ 10^-2 = 10^(3 - (-2)) = 10^5. So the answer is 0.3 × 10^5 = 30000.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "calculate with and interpret standard form",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Answer backed by the maths engine (decimals written as exact fractions). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:24:41Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:55Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:31:43Z",
+          "notes": "model answered \"30000\"; expected \"30000\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:39:35Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n9-0006",
+    "topic": "gcse-maths-h-n9",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-n9-lp-calculate",
+    "expected_seconds": 60,
+    "prompt": "Work out (6 × 10^8) + (4 × 10^7). Give your answer in standard form.",
+    "answer": { "value": "6.4*10^8" },
+    "verify": { "expression": "(6*10^8) + (4*10^7)" },
+    "marks": 2,
+    "explanation": "Write both with the same power of 10: 4 × 10^7 = 0.4 × 10^8. Add: 6 × 10^8 + 0.4 × 10^8 = 6.4 × 10^8.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "calculate with and interpret standard form",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "where 1 ≤ A < 10 and n is an integer",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Standard form A × 10^n with 1 ≤ A < 10 and n an integer, as quoted from spec N9 (citation 2). Answer backed by the maths engine: 600 000 000 + 40 000 000 = 640 000 000 = 6.4 × 10^8. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:24:41Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:56Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:32:00Z",
+          "notes": "model answered \"6.4 × 10^8\"; expected \"6.4*10^8\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:42:38Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n9-0007",
+    "topic": "gcse-maths-h-n9",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n9-lp-sf-recall",
+    "expected_seconds": 15,
+    "front": "In standard form A × 10^n, which values can A take?",
+    "back": "1 ≤ A < 10",
+    "explanation": "In standard form, A must be at least 1 and less than 10. For example, 3.2 × 10^4 is in standard form, but 32 × 10^3 is not.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "calculate with and interpret standard form",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "where 1 ≤ A < 10 and n is an integer",
+        "retrieved_at": "2026-11-25",
+        "supports": ["back"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Front cited to spec N9. Back quoted from spec N9 (citation 2, supports back). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:24:41Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:57Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:32:17Z",
+          "notes": "model answered \"1 ≤ A < 10\"; expected \"1 ≤ A < 10\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:40:03Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n9-0008",
+    "topic": "gcse-maths-h-n9",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-n9-lp-sf-recall",
+    "expected_seconds": 10,
+    "front": "4 × 10^3 as an ordinary number",
+    "back": "4000",
+    "explanation": "10^3 = 1000, so 4 × 10^3 = 4 × 1000 = 4000.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "calculate with and interpret standard form",
+        "retrieved_at": "2026-11-25",
+        "supports": ["front"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Front cited to spec N9. Back checked in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:24:41Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:58Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:32:29Z",
+          "notes": "model answered \"4000\"; expected \"4000\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:40:09Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n9-0009",
+    "topic": "gcse-maths-h-n9",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-n9-lp-sf-recall",
+    "expected_seconds": 10,
+    "front": "10^-3 as a decimal",
+    "back": "0.001",
+    "explanation": "10^-3 = 1/10^3 = 1/1000 = 0.001.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N9",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Structure and calculation, content reference N9 (page 12; PDF page 24)",
+        "quote": "calculate with and interpret standard form",
+        "retrieved_at": "2026-11-25",
+        "supports": ["front"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N9). Front cited to spec N9. Back checked with exact fractions in Python. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:24:41Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:24:59Z",
+          "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:32:41Z",
+          "notes": "model answered \"0.001\"; expected \"0.001\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:40:17Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  }
+]

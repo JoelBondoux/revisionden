@@ -222,7 +222,10 @@ function ServiceEntry({ service, level = 4 }: { service: SupportService; level?:
   return (
     <li className="help-service">
       <div className="help-service__summary">
-        <Heading>{service.service}</Heading>
+        <Heading className="help-service__name">
+          <OrgIcon />
+          {service.service}
+        </Heading>
         <p>{service.helps_with}</p>
         {service.note && <p className="help-note">{service.note}</p>}
       </div>
@@ -242,6 +245,32 @@ function ServiceEntry({ service, level = 4 }: { service: SupportService; level?:
         </details>
       )}
     </li>
+  );
+}
+
+/**
+ * A neutral icon shown beside every organisation's name (W4). Organisations' logos are
+ * trademarks; none is shown until its own guidance or written permission allows it
+ * (docs/LOGO_PERMISSIONS.md). Decorative: the name next to it is the text.
+ */
+function OrgIcon() {
+  return (
+    <svg
+      className="help-org-icon"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H11l-4.5 4v-4h0A2.5 2.5 0 0 1 4 13.5z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 

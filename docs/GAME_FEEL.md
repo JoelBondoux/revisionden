@@ -101,6 +101,12 @@ tab say so to screen readers.
   `UPDATE_DOODLES=1 npx vitest run src/design/doodleTile.test.ts` in `apps/web`. Very faint (7%
   ink), behind solid cards, no animation, off in high contrast and forced colours, and switchable
   off. Tokens and checks: `apps/web/src/design/themes.ts`. Before and after: `docs/design/j8b/`.
+- **Hand-drawn (J8c, owner decision 2026-11-26):** the shipped tile uses the doodles redrawn as if
+  sketched in a notebook (`apps/web/src/design/doodleSketch.ts`, from a fixed seed). Lines wobble
+  a little and overshoot at the corners, about one stroke in six is drawn twice, and about a third
+  of the closed shapes get a light scribbled fill at half strength. Generic sketchbook techniques
+  only, no particular book's look; the tiny fillers stay crisp. Placement uses the hand-drawn
+  outlines, so nothing overlaps; about 58KB gzipped. Before and after: `docs/design/j8c/`.
 - **Text on gold** always uses `--color-text-on-gold` (dark), in every theme: gold buttons,
   gold and streak pills, earned reward steps, the combo badge and the mastered-topic checkmark on the map.
 
@@ -123,6 +129,35 @@ tab say so to screen readers.
   moves what comes after the builder.
 - Locked items get their spoken name from the visible text plus hidden words ("Crown, locked.
   Unlock: 100-day streak"), so what is seen is what is said (WCAG 2.5.3).
+
+## Effect styles (J10, owner decision 2026-11-26)
+
+- One effect style is active at a time. It sets the look and motion of the game-feel moments
+  (combo badge, stars, bursts, confetti, "+XP"), the Home screen (topic map) and Rewards. The
+  owner picked **Sticker Book** as the default. Pop Burst and Starlight become styles a child
+  unlocks through normal progress, never by buying (J10b). More styles may follow once the owner
+  has reviewed them.
+- A style is one entry in `apps/web/src/features/juice/styles/registry.ts` plus one stylesheet in
+  which every rule is scoped to `:root[data-effect-style='<id>']`. A test checks that scoping, so
+  removing or swapping a style never leaves bits of it behind. `EffectStyleProvider` sets
+  `data-effect-style` on `<html>` and remembers the choice on this device (`localStorage`
+  `revisionden.effectStyle`). A saved style that isn't unlocked falls back to Sticker Book.
+  `index.html` starts with Sticker Book, so the first paint is already in the default style.
+- Sticker Book (J10a): wins are stickers slapped onto the page. Each sticker has a white die-cut
+  edge, a slight tilt and a soft offset shadow; bursts and confetti are paper scraps. On Home, the
+  daily goal and the next mission are cards taped into the book, the 5-a-day card is a paper
+  note, the streak is a sticker, and mastered topics are gold stickers stuck on at slight angles.
+  On Rewards, earned chapter steps are stickers and locked ones are dashed outlines. Stickers keep
+  their paper colours in dark mode, like real stickers, with dark ink text (AA). The combo badge
+  and stars "slap" in (transform and opacity only), with no animation under reduced motion.
+- The lesson surround follows the active style (J10a2, owner rule 2026-11-26: "not a school
+  app", "fun around the learning", "calm question screens"). The question and its answers sit on
+  `.lesson__stage`, which a style may give a plain, high-contrast card, but never texture,
+  stickers, tilt or motion behind the text. Sticker Book turns the dark arena into warm paper
+  (night paper in dark mode) by re-colouring the `--arena-*` tokens, with the question on a plain
+  white card (a dark card in dark mode); a test checks those colours meet AA.
+- Every style plays its own sounds and vibration through the sound workstream's events (U6).
+  Wiring the style into those events follows once U's PR is on dev.
 
 ## Never (Children's Code and `REWARDS.md`)
 

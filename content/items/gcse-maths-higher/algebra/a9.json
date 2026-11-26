@@ -684,7 +684,10 @@
     "learning_point": "gcse-maths-h-a9-lp-parallel-perpendicular",
     "expected_seconds": 45,
     "prompt": "Find the equation of the line parallel to y = 5x + 2 that passes through (0, -3).",
-    "answer": { "accepted": ["y = 5x - 3", "y=5x-3"] },
+    "answer": {
+      "accepted": ["y = 5x - 3", "y + 3 = 5x", "y - 5x = -3", "5x - y = 3", "5x - y - 3 = 0"],
+      "any_order": true
+    },
     "marks": 1,
     "explanation": "Parallel lines have the same gradient, so the gradient is 5. The line passes through (0, -3), so the y-intercept is -3. The equation is y = 5x - 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A9",
@@ -744,14 +747,6 @@
           "notes": "citation 1: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 26 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
-          "name": "blind-answer",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:55:27Z",
-          "notes": "model answered \"y = 5x - 3\"; expected \"y = 5x - 3 | y=5x-3\""
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -760,20 +755,28 @@
           "at": "2026-11-25T19:05:18Z"
         },
         {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T04:03:13Z",
+          "notes": "model answered \"y = 5x - 3\"; expected \"y = 5x - 3 | y + 3 = 5x | y - 5x = -3 | 5x - y = 3 | 5x - y - 3 = 0\""
+        },
+        {
           "name": "fact-check",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05 + gemini:gemini-2.5-pro + maths-engine",
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
-          "at": "2026-11-25T20:42:48Z",
-          "notes": "fact 1: maths engine proof pass; blind statement differs (\"For two non-vertical straight lines to be parallel, their gradients must be equal: if the lines have gradients m1 and m2, then parallel implies m1 = m2. Distinct parallel lines also have different intercepts; if the intercepts are the same, the lines are the same line.\")"
+          "at": "2026-11-26T04:08:05Z",
+          "notes": "fact 1: maths engine proof pass; blind statement matches (\"For two non-vertical straight lines to be parallel, their gradients must be equal: if the lines have equations y = m1x + c1 and y = m2x + c2, then they are parallel when m1 = m2. If c1 = c2 as well, the lines are the same line; for distinct parallel lines, c1 ≠ c2.\")"
         },
         {
           "name": "adversarial-review",
-          "result": "fail",
+          "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:50:52Z",
-          "notes": "wrong_answer (answer): The question asks for the equation of the line but does not specify the form it should be in (e.g. y = mx + c). Therefore, other algebraically equivalent forms of the equation should be accepted, such as 'y + 3 = 5x' or '5x - y - 3 = 0'."
+          "at": "2026-11-26T04:35:49Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -833,20 +836,20 @@
           "notes": "model answered \"7\"; expected \"7\""
         },
         {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:55:51Z",
+          "notes": "no problems found"
+        },
+        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:50:59Z",
-          "notes": "no problems found"
         }
       ]
     }
@@ -918,20 +921,20 @@
           "notes": "model answered \"-4\"; expected \"-4\""
         },
         {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T18:06:27Z",
+          "notes": "no problems found"
+        },
+        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:51:09Z",
-          "notes": "no problems found"
         }
       ]
     }
@@ -998,6 +1001,14 @@
           "notes": "model answered \"-1/2\"; expected \"-1/2\""
         },
         {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:56:18Z",
+          "notes": "no problems found"
+        },
+        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -1012,14 +1023,6 @@
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
           "at": "2026-11-25T18:36:34Z",
           "notes": "fact 1: maths engine proof pass; blind statement matches (\"For two non-vertical straight lines with gradients m₁ and m₂, the lines are perpendicular if and only if m₁m₂ = -1. Equivalently, each gradient is the negative reciprocal of the other, provided both gradients are defined.\")"
-        },
-        {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:51:17Z",
-          "notes": "no problems found"
         }
       ]
     }

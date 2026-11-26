@@ -1,0 +1,712 @@
+[
+  {
+    "id": "gcse-maths-h-n11-0001",
+    "topic": "gcse-maths-h-n11",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n11-lp-ratio-to-fraction",
+    "expected_seconds": 40,
+    "prompt": "Red and blue counters are in a bag in the ratio 3 : 5. What fraction of the counters are red?",
+    "answer": { "value": "3/8" },
+    "verify": { "expression": "3/(3 + 5)" },
+    "marks": 1,
+    "explanation": "Add the parts of the ratio to find the total: 3 + 5 = 8. Red is 3 of those 8 parts, so 3/8 of the counters are red.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N11",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Fractions, decimals and percentages, content reference N11 (page 13; PDF page 25)",
+        "quote": "identify and work with fractions in ratio problems",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Answer backed by the maths engine (3 parts out of 3 + 5). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:24:41Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:25:10Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:30:30Z",
+          "notes": "model answered \"3/8\"; expected \"3/8\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:41:35Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n11-0002",
+    "topic": "gcse-maths-h-n11",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n11-lp-ratio-to-fraction",
+    "expected_seconds": 40,
+    "prompt": "In a class the ratio of boys to girls is 4 : 7. What fraction of the class are girls?",
+    "answer": { "value": "7/11" },
+    "verify": { "expression": "7/(4 + 7)" },
+    "marks": 1,
+    "explanation": "Add the parts of the ratio to find the total: 4 + 7 = 11. Girls are 7 of those 11 parts, so 7/11 of the class are girls.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N11",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Fractions, decimals and percentages, content reference N11 (page 13; PDF page 25)",
+        "quote": "identify and work with fractions in ratio problems",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Answer backed by the maths engine (7 parts out of 4 + 7). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:24:41Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:25:11Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:30:44Z",
+          "notes": "model answered \"7/11\"; expected \"7/11\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:41:44Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n11-0003",
+    "topic": "gcse-maths-h-n11",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-n11-lp-ratio-to-fraction",
+    "expected_seconds": 40,
+    "prompt": "Sugar and flour are mixed in the ratio 2 : 7. What fraction of the mixture is sugar?",
+    "answer": { "value": "2/9" },
+    "verify": { "expression": "2/(2 + 7)" },
+    "marks": 1,
+    "explanation": "Add the parts of the ratio to find the total: 2 + 7 = 9. Sugar is 2 of those 9 parts, so 2/9 of the mixture is sugar.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N11",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Fractions, decimals and percentages, content reference N11 (page 13; PDF page 25)",
+        "quote": "identify and work with fractions in ratio problems",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Answer backed by the maths engine (2 parts out of 2 + 7). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:24:41Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:25:12Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:30:57Z",
+          "notes": "model answered \"2/9\"; expected \"2/9\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:41:52Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n11-0004",
+    "topic": "gcse-maths-h-n11",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-n11-lp-fraction-to-ratio",
+    "expected_seconds": 40,
+    "prompt": "2/5 of the members of a club are adults. All the other members are children. What is the ratio of adults to children?",
+    "options": ["2 : 5", "2 : 3", "3 : 2", "3 : 5"],
+    "answer": { "option": 1 },
+    "marks": 1,
+    "explanation": "The children are 1 - 2/5 = 3/5 of the members, so adults : children = 2/5 : 3/5 = 2 : 3.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N11",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Fractions, decimals and percentages, content reference N11 (page 13; PDF page 25)",
+        "quote": "identify and work with fractions in ratio problems",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Checked with exact fractions in Python: children 3/5, ratio (2/5) : (3/5) = 2 : 3; each wrong option gives a different ratio.",
+          "at": "2026-11-25T17:24:41Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:25:13Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:31:09Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:31:16Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n11-0005",
+    "topic": "gcse-maths-h-n11",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-n11-lp-fraction-to-ratio",
+    "expected_seconds": 60,
+    "prompt": "In a bag, 3/7 of the sweets are mints and the rest are toffees. There are 24 toffees. How many mints are there?",
+    "answer": { "value": "18" },
+    "verify": { "expression": "24/(4/7) * (3/7)" },
+    "marks": 1,
+    "explanation": "If 3/7 are mints, then 4/7 are toffees. 4/7 is 24 sweets, so 1/7 is 24 ÷ 4 = 6. Mints are 3/7, so 3 × 6 = 18 mints.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N11",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Fractions, decimals and percentages, content reference N11 (page 13; PDF page 25)",
+        "quote": "identify and work with fractions in ratio problems",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Answer backed by the maths engine: toffees are 4/7, so 1/7 is 6 sweets and the mints are 3 × 6. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:24:41Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:25:14Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:31:23Z",
+          "notes": "model answered \"18\"; expected \"18\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:42:01Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n11-0006",
+    "topic": "gcse-maths-h-n11",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-n11-lp-fraction-to-ratio",
+    "expected_seconds": 100,
+    "prompt": "There are 40 animals at a shelter. The ratio of cats to dogs is 5 : 3. How many dogs are there?",
+    "answer": { "expression": "15" },
+    "verify": { "method": "expression", "expression": "40*3/(5 + 3)" },
+    "steps": ["3/8 * 40", "15"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 3/8 × 40 or 40 ÷ 8 × 3", "A1 for 15"],
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N11",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Fractions, decimals and percentages, content reference N11 (page 13; PDF page 25)",
+        "quote": "identify and work with fractions in ratio problems",
+        "retrieved_at": "2026-11-25",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Answer and every step backed by the maths engine. Only cats and dogs at the shelter is stated in the question. Mark points written by this session.",
+          "at": "2026-11-25T17:24:41Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:25:15Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:31:38Z",
+          "notes": "model answered \"15\"; expected \"15\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:31:48Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n11-0007",
+    "topic": "gcse-maths-h-n11",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-n11-lp-ratio-fraction-recall",
+    "expected_seconds": 10,
+    "front": "In the ratio 1 : 3, what fraction of the whole is the first part?",
+    "back": "1/4",
+    "explanation": "The whole is 1 + 3 = 4 parts. The first part is 1 of them, so it is 1/4 of the whole.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N11",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Fractions, decimals and percentages, content reference N11 (page 13; PDF page 25)",
+        "quote": "identify and work with fractions in ratio problems",
+        "retrieved_at": "2026-11-25",
+        "supports": ["front"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Front cited to spec N11. Back checked in Python: 1/(1 + 3). Front reworded after adversarial review (fraction of the whole, not of the other part). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:24:41Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:25:16Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:34:33Z",
+          "notes": "model answered \"1/4\"; expected \"1/4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:42:10Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n11-0008",
+    "topic": "gcse-maths-h-n11",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-n11-lp-ratio-fraction-recall",
+    "expected_seconds": 10,
+    "front": "In the ratio 2 : 1, what fraction of the whole is the first part?",
+    "back": "2/3",
+    "explanation": "The whole is 2 + 1 = 3 parts. The first part is 2 of them, so it is 2/3 of the whole.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N11",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Fractions, decimals and percentages, content reference N11 (page 13; PDF page 25)",
+        "quote": "identify and work with fractions in ratio problems",
+        "retrieved_at": "2026-11-25",
+        "supports": ["front"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Front cited to spec N11. Back checked in Python: 2/(2 + 1). Front reworded to match n11-0007. Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:24:41Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:25:17Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:34:46Z",
+          "notes": "model answered \"2/3\"; expected \"2/3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:42:16Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-n11-0009",
+    "topic": "gcse-maths-h-n11",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-n11-lp-ratio-fraction-recall",
+    "expected_seconds": 10,
+    "front": "In the ratio 3 : 7, what fraction of the whole is the second part?",
+    "back": "7/10",
+    "explanation": "The whole is 3 + 7 = 10 parts. The second part is 7 of them, so it is 7/10 of the whole.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference N11",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "location": "Higher tier knowledge, skills and understanding, 1. Number, Fractions, decimals and percentages, content reference N11 (page 13; PDF page 25)",
+        "quote": "identify and work with fractions in ratio problems",
+        "retrieved_at": "2026-11-25",
+        "supports": ["front"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S3-N 2026-11-25",
+          "result": "pass",
+          "notes": "Written by this session from the spec excerpt only. Question scope cited (spec N11). Front cited to spec N11. Back checked in Python: 7/(3 + 7). Front reworded after adversarial review (fraction of the whole). Explanation added (S3-N2): its arithmetic was checked with exact fractions in Python.",
+          "at": "2026-11-25T17:24:41Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-25T17:25:18Z",
+          "notes": "citation 1: found on page 25 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-25T17:40:50Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-25T17:34:59Z",
+          "notes": "model answered \"7/10\"; expected \"7/10\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:42:24Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  }
+]

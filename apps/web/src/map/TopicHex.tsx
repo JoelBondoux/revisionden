@@ -12,7 +12,7 @@ function topicLabel(topic: Topic): string {
     case 'in-progress':
       return `${topic.title}, ${topic.mastery}% mastered`;
     case 'weak':
-      return `${topic.title}, weak spot, ${topic.mastery}% mastered`;
+      return `${topic.title}, weak, ${topic.mastery}% mastered`;
     case 'locked':
       return `${topic.title}, locked`;
   }
@@ -44,8 +44,13 @@ function HexShell({ children }: { children: ReactNode }) {
 export function TopicHex({ topic, onLocked }: { topic: Topic; onLocked: OnLocked }) {
   const className = `hex hex--${topic.status}`;
   const label = topicLabel(topic);
+  // The title comes first in the page, so the name starts with the words on screen in the
+  // same order (CSS still shows the hexagon above the title).
   const content = (
     <>
+      <span className="hex__title" aria-hidden="true">
+        {topic.title}
+      </span>{' '}
       <HexShell>
         {topic.status === 'in-progress' && (
           <span className="hex__fill-area" aria-hidden="true">
@@ -56,9 +61,6 @@ export function TopicHex({ topic, onLocked }: { topic: Topic; onLocked: OnLocked
           <HexBody topic={topic} />
         </span>
       </HexShell>
-      <span className="hex__title" aria-hidden="true">
-        {topic.title}
-      </span>
     </>
   );
 
@@ -91,6 +93,9 @@ interface ChallengeHexProps {
 export function ChallengeHex({ unitTitle, challenge, onLocked }: ChallengeHexProps) {
   const content = (
     <>
+      <span className="hex__title" aria-hidden="true">
+        Challenge
+      </span>{' '}
       <HexShell>
         <span className="hex__content" aria-hidden="true">
           <CrownIcon />
@@ -99,9 +104,6 @@ export function ChallengeHex({ unitTitle, challenge, onLocked }: ChallengeHexPro
           )}
         </span>
       </HexShell>
-      <span className="hex__title" aria-hidden="true">
-        Challenge
-      </span>
     </>
   );
 
@@ -110,7 +112,7 @@ export function ChallengeHex({ unitTitle, challenge, onLocked }: ChallengeHexPro
       <button
         type="button"
         className="hex hex--challenge"
-        aria-label={`${unitTitle} challenge, unlocks at ${challenge.unlockAtPercent}% mastered`}
+        aria-label={`Challenge, unlocks at ${challenge.unlockAtPercent}% mastered in ${unitTitle}`}
         onClick={() =>
           onLocked(
             `Reach ${challenge.unlockAtPercent}% mastery in ${unitTitle} to unlock the challenge.`,
@@ -125,7 +127,7 @@ export function ChallengeHex({ unitTitle, challenge, onLocked }: ChallengeHexPro
     <Link
       to={`/learn/topic/${challenge.lessonId}`}
       className="hex hex--challenge hex--unlocked"
-      aria-label={`${unitTitle} challenge`}
+      aria-label={`Challenge, ${unitTitle}`}
     >
       {content}
     </Link>

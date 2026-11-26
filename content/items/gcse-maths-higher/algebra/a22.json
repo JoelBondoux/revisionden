@@ -726,6 +726,7 @@
     "expected_seconds": 15,
     "front": "Solve 2x > 10",
     "back": "x > 5",
+    "explanation": "Divide both sides by 2 (a positive number, so the sign stays the same): x > 5.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
     "checked_by": ["author"],
     "citations": [
@@ -751,7 +752,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Checked with SymPy.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Checked with SymPy. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:34:39Z"
         },
         {
@@ -771,20 +772,20 @@
           "notes": "model answered \"x > 5\"; expected \"x > 5\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:52:18Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:51:28Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -798,6 +799,7 @@
     "expected_seconds": 15,
     "front": "The integer values of n such that 1 < n < 4",
     "back": "2, 3",
+    "explanation": "n must be bigger than 1 and smaller than 4. The integers in between are 2 and 3 (1 and 4 themselves are not included).",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
     "checked_by": ["author"],
     "citations": [
@@ -823,7 +825,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Checked by listing integers.",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Checked by listing integers. Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T17:34:39Z"
         },
         {
@@ -843,20 +845,20 @@
           "notes": "model answered \"2, 3\"; expected \"2, 3\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:52:33Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:51:40Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -870,6 +872,7 @@
     "expected_seconds": 15,
     "front": "When you divide both sides of an inequality by a negative number, should you keep or reverse the inequality sign? (answer keep or reverse)",
     "back": "Reverse",
+    "explanation": "Dividing by a negative number swaps which side is bigger. For example, 2 < 3, but -2 > -3. So you reverse the sign.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A22",
     "checked_by": ["author"],
     "citations": [
@@ -907,7 +910,7 @@
           "tool": "anthropic:content-session",
           "tool_version": "S3-A writer 2026-11-25",
           "result": "pass",
-          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009).",
+          "notes": "Written by this session from the cited specification point only. Question scope cited (spec A22). Standard result not stated in the cited sources (decision 0008 applied to a standard fact): needs individual human approval. The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval. Standard facts listed in facts for the fact-check stage (decision 0009). Its standard fact passed the fact check (engine proof and matching blind statement), so it no longer needs individual approval (decision 0009). Explanation added (S3-N2): written from the same cited specification point; any arithmetic in it was checked with exact fractions in Python.",
           "at": "2026-11-25T18:18:48Z"
         },
         {
@@ -927,14 +930,6 @@
           "notes": "model answered \"reverse\"; expected \"Reverse\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:25:05Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -949,6 +944,14 @@
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
           "at": "2026-11-25T20:42:18Z",
           "notes": "fact 1: maths engine proof pass; blind statement matches (\"When you multiply or divide both sides of an inequality by a negative number, the inequality sign must be reversed. For example, if a < b and c < 0, then ac > bc.\"); fact 2: maths engine proof pass; blind statement matches (\"When you divide both sides of an inequality by a negative number, you must reverse the inequality sign. For example, if a < b and c < 0, then a/c > b/c.\")"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T03:51:49Z",
+          "notes": "no problems found"
         }
       ]
     }
