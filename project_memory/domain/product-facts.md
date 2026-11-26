@@ -812,7 +812,8 @@ Tags: #product #rules #limits #defaults
   4.5:1 contrast in all four combinations. Doodle tile `apps/web/src/design/doodle-scatter.svg` (original,
   1080px dense sticker sheet: 8 hero doodles, 420 medium (160 motifs, no copy of a motif within
   240px of itself) and 1,600 tiny fillers, no two outlines closer than 4px plus the line, tilted up to 25°, 1.4px lines, about 35KB gzipped; generated from a fixed seed by `doodleTile.ts`, used as
-  a CSS mask at 7% ink; J8b), hidden with `prefers-contrast: more` and
+  a CSS mask at 7% ink; J8b; hand-drawn since J8c: doodles redrawn by `doodleSketch.ts` with
+  wobble, corner overshoot, the odd double stroke and light scribble shading, about 58KB gzipped), hidden with `prefers-contrast: more` and
   forced colours. The older 240px grid tile `doodles.svg` is kept only for the public site until it
   moves to the new tile.
   Text on gold or streak orange uses `--color-text-on-gold` (including the mastered-topic checkmark on the map). Get help follows the theme (light, dark, colour-blind) with its own AA-checked `--help-*` colours (W3).

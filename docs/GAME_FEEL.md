@@ -101,6 +101,12 @@ tab say so to screen readers.
   `UPDATE_DOODLES=1 npx vitest run src/design/doodleTile.test.ts` in `apps/web`. Very faint (7%
   ink), behind solid cards, no animation, off in high contrast and forced colours, and switchable
   off. Tokens and checks: `apps/web/src/design/themes.ts`. Before and after: `docs/design/j8b/`.
+- **Hand-drawn (J8c, owner decision 2026-11-26):** the shipped tile uses the doodles redrawn as if
+  sketched in a notebook (`apps/web/src/design/doodleSketch.ts`, from a fixed seed). Lines wobble
+  a little and overshoot at the corners, about one stroke in six is drawn twice, and about a third
+  of the closed shapes get a light scribbled fill at half strength. Generic sketchbook techniques
+  only, no particular book's look; the tiny fillers stay crisp. Placement uses the hand-drawn
+  outlines, so nothing overlaps; about 58KB gzipped. Before and after: `docs/design/j8c/`.
 - **Text on gold** always uses `--color-text-on-gold` (dark), in every theme: gold buttons,
   gold and streak pills, earned reward steps, the combo badge and the mastered-topic checkmark on the map.
 
