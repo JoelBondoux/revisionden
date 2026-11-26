@@ -159,6 +159,11 @@ Tags: #product #rules #limits #defaults
 - Learning screens: `/learn/subject/:id` (topics, mastery, weak spots), `/learn/subject/:id/start`
   (starting test), `/learn/subject/:id/practice`, `/learn/topic/:id`, `/learn/command-words`,
   `/cards` (flashcards: Due today, All decks, My cards; 3D flip card, reduced motion respected).
+  F7: the card turns both ways by tap, Space or Enter without a new attempt; a new card never
+  shows its answer while turning; "Explain" steps come only from verified content (worked steps,
+  else inline mark scheme, then `back_formula` and conditions), hidden when there are none. On
+  2026-11-26, 161 of 287 marked items had no such steps: 75 of 78 flashcards, all 59 multiple
+  choice, all 26 short answers and 1 numeric (`gcse-maths-h-n7-0001`).
 - Installable PWA. Main nav tabs: Map, Cards, Plan, Papers, Progress (bottom bar on phones, side
   rail from 768px wide). Welcome and lessons hide the nav to keep focus. Only a linked student
   device gets the student nav: elsewhere (signed out, or a parent) About, Policies, Feedback and

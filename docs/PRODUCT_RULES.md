@@ -379,6 +379,16 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
   imaginary wrong answers as a starting point, so mastery is earned and fades without practice.
   A weak spot is a topic below 60.
 - Implemented: `packages/core/src/spaced-repetition.ts`, `packages/core/src/mastery.ts`.
+- **Turning a card (F7, owner):** tap the card, or press Space or Enter, to turn it either way as
+  often as you like. Turning it back to the question never counts as another try and never
+  changes the rating; the rating buttons stay once the answer has been seen. The answer face is
+  empty until the answer is revealed, and each new card starts on its question with no turn, so
+  the next card's answer never flashes while the card turns.
+- **Explain (F7, owner):** on the answer side, "Explain" walks through the item's verified
+  content one step at a time ("Next step", "Back", ending on the answer): its worked steps, else
+  its inline mark scheme, then its `back_formula` and each condition. No AI-made explanation
+  (CLAUDE.md rule 7). Cards without such content, and the student's own cards, have no Explain
+  button. Implemented in `packages/core/src/flashcard-explain.ts` (`explain` on each card).
 
 ## Statistics dashboards (workstream K)
 

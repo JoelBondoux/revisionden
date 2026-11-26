@@ -23,6 +23,7 @@ import {
   FlashcardSessionRequestSchema,
   RATING_QUALITY,
   dueCards,
+  explainSteps,
   previewReviews,
   reviewCard,
   type Flashcard,
@@ -35,7 +36,7 @@ import { ApiError, notFound } from '../errors';
 import { readJson } from '../http';
 import { isId } from '../validation';
 import { correctAnswerText, servableItem } from '../learning/items';
-import type { ItemBody } from '../learning/content-sync';
+import type { ItemAnswer, ItemBody } from '../learning/content-sync';
 import { creditableXp } from '../daily-limit/state';
 import { awardXp } from '../learning/progress';
 import { claimFinish, rewardedLeftToday, takeRewardSlot } from '../learning/flashcard-sessions';
@@ -50,16 +51,31 @@ function cardText({ card, item }: Loaded): { front: string; back: string } {
   return { front: body.prompt ?? '', back: correctAnswerText(item) };
 }
 
+/** Explain steps from the item's verified content (none for the student's own cards). */
+function explainOf({ item }: Loaded, back: string): { explain?: string[] } {
+  if (!item) return {};
+  const answer = (item.answer ?? {}) as ItemAnswer;
+  const steps = explainSteps({
+    steps: answer.steps,
+    markScheme: answer.markScheme,
+    backFormula: answer.backFormula,
+    answer: back,
+  });
+  return steps.length > 0 ? { explain: steps } : {};
+}
+
 export function toFlashcard(loaded: Loaded, now: Date): Flashcard {
   const { card, item, topic } = loaded;
   const preview = previewReviews(toCard(card), now.getTime());
+  const text = cardText(loaded);
   return {
     id: card.id,
     topicId: topic.id,
     topicTitle: topic.title,
     subjectId: topic.subjectId,
     origin: card.origin,
-    ...cardText(loaded),
+    ...text,
+    ...explainOf(loaded, text.back),
     ...(item?.sourceRef ? { sourceRef: item.sourceRef } : {}),
     draft: item !== null && item.status !== 'verified',
     dueAt: card.dueAt.toISOString(),
