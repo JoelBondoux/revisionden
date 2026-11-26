@@ -61,6 +61,8 @@
   --arena-track: #7c7699;
   --arena-text: #ffffff;
   --arena-text-secondary: #c9bef0;
+  /* Text on the answer buttons' own fills (J17x: page text comes from the look, arena.css). */
+  --arena-on-option: #ffffff;
   --arena-option-1: #6c47f5;
   --arena-option-1-edge: #4b2bc9;
   --arena-option-2: #0e7490;

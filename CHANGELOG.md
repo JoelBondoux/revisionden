@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Fixed: in light mode, lessons, practice, tests and the Lesson complete screen no longer show white words on a pale page in Pop Burst, Starlight, Comic Pop, Garden Grow, Pixel Arcade, Petal Glow, Turbo Drive and Rainbow Parade. Every style now writes in its own dark ink there, whatever your background pattern, contrast or reading colour settings.
 - Fixed: "Best combo" at the end of a lesson is now easy to read in every style, light and dark.
 - On small phones, the map now opens with "You are here" clear of the bottom bar, so tapping it starts your topic. The RevisionDen title on the welcome page also fits small screens with large text.
 - Fixed: in lessons, your XP count, "Comeback!" and the warm-up notes are now easy to read in every style, in light and dark.
@@ -168,6 +169,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- J17x part 1 (owner report: white text on light pages): `design/arena.css` painted a dark arena page under white `--arena-text`, but `base.css`'s look page (`:root[data-pattern='on'] body`, the same specificity, later) won whenever the background pattern was on, so 8 of the 10 looks showed white lesson words on their light page (1.0 to 1.7:1); with the pattern off or high contrast the dark page came back. The arena now paints no page and takes its page tokens from the look (`ARENA_FROM_PAGE`, set on `.arena` itself so no setting or style sheet can undo it); answer buttons use a new `--arena-on-option` (white). Doodle Diary and Sticker Book drop their own arena colours. New tests: `looks.test.ts` (arena tokens AA in all 10 looks, light and dark; no style sheet sets them; on-option text on every fill; no white or on-primary text on `--color-mastery-fill`) and `e2e/tests/arena-looks.spec.ts` (a lesson in all 10 looks: light with pattern on, off, high contrast and a cream tint; dark with pattern on and off).
 - J16c (W18 follow-up): the lesson header's XP count, the warm-up and come-back note and "Comeback!" in the feedback were still arena gold on the look's light page (1.0 to 1.5:1 in every look). They, and the lesson's "+XP", now use `--color-primary-edge` (a deeper main colour in light mode, the light accent in dark), AA in all 10 looks, light and dark, measured by a new painted-page check in `e2e/tests/lesson.spec.ts`. `GAME_FEEL.md` records the rule: page text uses the edge colour, arena-surface text `--arena-glow`. Touches `features/learn/learn.css` (F's lane, as for J14).
 - Set complete: "Best combo" uses the arena's own text accent (`--arena-gold` was 1.37:1 on the light arena of Doodle Diary and Sticker Book); checked AA in all 10 looks, light and dark (W18; J's `learn.css`, approved crossing).
 - Flashcards: "10 more" now starts one new session, not two; the finished session no longer restarts when `extra` changes, which left a stray open session on the server (it never counted towards XP or the daily limit) (W18; F's `FlashcardsPage.tsx`, approved crossing).
