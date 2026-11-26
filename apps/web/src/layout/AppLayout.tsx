@@ -7,6 +7,7 @@ import { BugButtonProvider, useBugButtonVisible } from '../features/feedback/bug
 import { RewardNotices } from '../features/feedback/RewardNotices';
 import { MuteButton } from '../features/sound';
 import { PipHomeButton, usePipSubject } from '../features/juice/pip';
+import { useLessonShowsPip } from '../features/juice/pip/lessonPip';
 import { OfflineBanner } from '../pwa/OfflineBanner';
 import { useStudent } from '../session/StudentContext';
 import { PublicHeader } from './PublicHeader';
@@ -124,6 +125,8 @@ function FocusPages() {
   const { pathname } = useLocation();
   const topRow = isParentPage(pathname);
   const lesson = isLessonPage(pathname);
+  const { studentId } = useStudent();
+  const lessonShowsPip = useLessonShowsPip();
   const pipSubject = usePipSubject();
   const floatingClass = useMainClass('focus-main');
   const mainClass = topRow ? 'focus-main' : floatingClass;
@@ -136,12 +139,20 @@ function FocusPages() {
             <BugButton />
           </header>
         )}
-        {lesson && (
+        {/* While the lesson itself shows Pip in its header (J14b), this row steps aside. */}
+        {lesson && !lessonShowsPip && (
           <header className="lesson-top-row">
             <PipHomeButton subjectId={pipSubject} inLesson />
           </header>
         )}
-        <Outlet />
+        {/* J14b: lessons show the student's avatar beside Pip's line, so they load it. */}
+        {lesson && studentId ? (
+          <MyAvatarProvider studentId={studentId}>
+            <Outlet />
+          </MyAvatarProvider>
+        ) : (
+          <Outlet />
+        )}
       </main>
       <VersionFooter />
       {!topRow && <BugButton />}

@@ -24,6 +24,9 @@ async function stubLesson(page: Page, correct = true) {
     STUDENT_ID,
   );
   await page.route('**/v1/student/recall*', (route) => route.fulfill({ status: 404, json: {} }));
+  await page.route('**/v1/student/avatar', (route) =>
+    route.fulfill({ json: { avatarCode: '1' + '0'.repeat(28), earnedRewardIds: [] } }),
+  );
   await page.route('**/v1/student/learn/lesson**', (route) =>
     route.fulfill({
       json: { items: [item, { ...item, id: `${ITEM_ID.slice(0, -1)}2` }], draftContent: false },
@@ -84,7 +87,7 @@ test.describe('on a 320px screen with text at 200%', () => {
 test('Pip nods at a right answer, then rests', async ({ page }) => {
   await stubLesson(page);
   await page.goto('/learn/topic/demo-topic');
-  const pip = page.locator('.lesson-top-row svg.pip-figure');
+  const pip = page.locator('.lesson__top svg.pip-figure');
   await expect(pip).toHaveClass(/pip-figure--rest/);
   await page.getByLabel('Your answer').fill('demo');
   await page.getByRole('button', { name: 'Check' }).click();
@@ -101,6 +104,29 @@ test.describe('with reduced motion', () => {
     await page.getByLabel('Your answer').fill('not it');
     await page.getByRole('button', { name: 'Check' }).click();
     await expect(page.getByRole('status', { name: 'Answer feedback' })).toBeVisible();
-    await expect(page.locator('.lesson-top-row svg.pip-figure')).toHaveClass(/pip-figure--rest/);
+    await expect(page.locator('.lesson__top svg.pip-figure')).toHaveClass(/pip-figure--rest/);
+  });
+});
+
+// J14b: one compact header. Pip, the way out, the progress bar and XP share one row; Pip's line
+// sits beside the student's avatar, and the question starts high on a 390 × 844 phone.
+test.describe('at 390 × 844', () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test('one Pip in one header row, the avatar beside his line, and the question high up', async ({
+    page,
+  }) => {
+    await stubLesson(page);
+    await page.goto('/learn/topic/demo-topic');
+    await expect(page.getByText('Demo question')).toBeVisible();
+    await expect(page.locator('svg.pip-figure:visible')).toHaveCount(1);
+    await expect(page.getByRole('button', { name: 'Home' })).toHaveCount(1);
+    const top = page.locator('.lesson__top');
+    for (const name of ['Home', 'Leave lesson'])
+      await expect(top.getByRole(name === 'Home' ? 'button' : 'link', { name })).toBeVisible();
+    await expect(top.getByRole('progressbar', { name: 'Lesson progress' })).toBeVisible();
+    await expect(page.locator('.lesson__pip .framed-avatar')).toBeVisible();
+    const question = (await page.getByText('Demo question').boundingBox())!;
+    expect(question.y).toBeLessThan(220);
   });
 });

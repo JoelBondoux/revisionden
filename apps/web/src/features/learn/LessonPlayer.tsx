@@ -1,4 +1,8 @@
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
+import { PipHomeButton, usePipSubject } from '../juice/pip';
+import { LessonAvatar } from '../juice/pip/LessonAvatar';
+import { useShowsLessonPip } from '../juice/pip/lessonPip';
+import { useMyAvatar } from '../me/MyAvatarContext';
 import { reactToAnswer } from '../juice/pip/reactions';
 import { Link } from 'react-router-dom';
 import {
@@ -19,7 +23,6 @@ import {
   ArenaProgress,
   ComboBadge,
   FloatUp,
-  PipSays,
   RollingNumber,
   Shake,
   comboStep,
@@ -200,6 +203,9 @@ export function LessonPlayer({
 }: LessonPlayerProps) {
   const api = useLearnApi();
   const { play } = useSound();
+  const pipSubject = usePipSubject();
+  useShowsLessonPip();
+  const myAvatar = useMyAvatar();
   const [queue, setQueue] = useState<LessonEntry<LearnItem>[]>(() =>
     items.map((item) => ({ item })),
   );
@@ -381,6 +387,8 @@ export function LessonPlayer({
   return (
     <form className="lesson arena" onSubmit={check}>
       <div className="lesson__top">
+        {/* J14b: Pip, the Home button, in the lesson's own header row. */}
+        <PipHomeButton subjectId={pipSubject} inLesson />
         <Link to={doneHref} className="icon-button" aria-label="Leave lesson">
           <CloseIcon />
         </Link>
@@ -394,12 +402,11 @@ export function LessonPlayer({
         </span>
       </div>
       {draftContent && <DraftBanner />}
+      {/* J14b: one Pip (in the header above); his line sits beside the student's avatar. */}
       <div className="lesson__pip">
-        <PipSays
-          line={pipLine({ index, total: queue.length, combo })}
-          mood={combo >= 2 ? 'cheer' : 'happy'}
-        />
+        <p className="lesson__pip-line">{pipLine({ index, total: queue.length, combo })}</p>
         <ComboBadge combo={combo} />
+        <LessonAvatar code={myAvatar?.code} />
       </div>
       <h1>{title}</h1>
       {intro && <p className="secondary-text">{intro}</p>}
