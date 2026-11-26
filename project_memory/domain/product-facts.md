@@ -771,6 +771,18 @@ Tags: #product #rules #limits #defaults
   320px screen with text at 200%. The e2e test "the policies list fits a 320px screen with text at
   200%" (`e2e/tests/pages.spec.ts`, /legal) checks there is no sideways scroll and no tile wider than
   320px. The version footer's reflow is G's (#224).
+- Single screen for doing things (owner design rule, 2026-11-26; lead ruling on scope): at 390 × 844
+  with default text, interactive screens (lesson, flashcards and Explain, starting test, 5-a-day and
+  recall, map, Plan, papers chooser, set complete and rewards moments, Me page) show the main task
+  and the primary button without scrolling, with the primary action always in view. Reading pages
+  (Get help, About, policies, long explanations, parent stats) may scroll. At 320 px or 200% text,
+  vertical scrolling is allowed, but never page sideways scrolling or clipped content. Contained scrollers are allowed (lead ruling): a sideways chip or badge row (snap, edge fade, Tab reaches every item, 44 px targets) or a labelled, focusable list scrolling inside a card; at 320 px, 200% text or on short screens, the inner vertical scroll gives way to page scrolling. Agreed, not yet
+  applied everywhere: see `docs/PRODUCT_RULES.md` (Screen layout) and `docs/design/j12/`.
+- One look (J12, proposed, owner choice pending): the owner wants one consistent style across the
+  student app instead of the current mix of doodle and default. J12's proposal: Doodle Diary is
+  the app's base skin for every shared component, body text stays Nunito (the hand font is for
+  headings only), and the unlockable styles change effects, sounds and accents only. Mockups in
+  `docs/design/j12/SKIN.md`.
 
 ## Exam practice (planned)
 
