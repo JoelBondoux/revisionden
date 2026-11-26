@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
+import { ShareLink } from '../../pwa/ShareLink';
+import { browserShareApis, type ShareApis } from '../../pwa/share';
 import {
   longDate,
   messageOf,
@@ -10,6 +12,10 @@ import {
   type ParentsApi,
 } from './parentsApi';
 
+/** The message sent with a second-parent invite: plain, with no child's details. */
+export const inviteMessage = (link: string) =>
+  `Join our family on RevisionDen as a parent: ${link}`;
+
 /**
  * Two parents (B3): who the parents are, inviting a second parent, removing the other parent
  * and deleting the whole family (which needs both parents when there are two).
@@ -17,8 +23,11 @@ import {
 export function ParentsPanel({
   api: given,
   onDeleted,
+  share = browserShareApis(typeof navigator === 'undefined' ? undefined : navigator),
 }: {
   api?: ParentsApi;
+  /** Injected in tests; defaults to the device's share sheet and clipboard (I8). */
+  share?: ShareApis;
   /** Called once the family account is deleted. */
   onDeleted: () => void;
 }) {
@@ -84,6 +93,7 @@ export function ParentsPanel({
               <span>Invite link</span>
               <input readOnly value={invite.link} onFocus={(e) => e.currentTarget.select()} />
             </label>
+            <ShareLink text={inviteMessage(invite.link)} share={share} />
             <p className="secondary-text">
               It works once, until {longDate(invite.expiresAt)}. They sign in with their own Google
               or Microsoft account.
