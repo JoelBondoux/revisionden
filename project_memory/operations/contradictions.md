@@ -5,6 +5,23 @@
 
 ## Open
 
+- [ ] **Friends league policy drafts need the solicitor (L11).** Workstream L drafted the friends
+      league text, each part marked "DRAFT, pending review by our solicitor": `docs/legal/acceptable-use.md`
+      1.3 (4.2 to 4.2B), `privacy-notice.md` 1.11 (summary, 4.2, 4.6, 5.2 row, new 6A),
+      `privacy-for-young-people.md` 1.8 ("Friends league (coming later)") and `data-retention.md` 1.13
+      (new 2A). For the solicitor, with `docs/FRIENDS_LEAGUE.md` section 11:
+      (1) the lawful basis (the 5.2 row says "to be confirmed"; core service or the two parents'
+      approvals as consent); (2) whether a parent's approval is needed in law for 13+;
+      (3) telling the other family's parents the reporting child's nickname (6A.7) is fair and safe;
+      (4) report retention of 12 months after closing; (5) including friends' nicknames in the family
+      download (6A.9); (6) the DPIA (`childrens-code.md` 2.2) before release.
+      Code differences to settle before release: closing a report is not built yet, so reports are
+      kept until either child is deleted, not "12 months after closing"; `league_weeks` (8 weeks) is
+      FL PR 3, not built yet. Not changed yet: `childrens-code.md` (standards 2.2, 2.7, 2.9, 2.11,
+      2.13) and `processors.md` (the parent's processing table), left for after the solicitor's view.
+      Releasing the privacy notice 1.11 asks every parent to confirm it again, so the lead or owner
+      should choose when it ships (with the friends switch, or before).
+
 - [x] **Clean-up cadence vs "within 15 minutes" retention promise.** The clean-up now runs once
       a day in production (`apps/api/src/crons.ts`, `apps/api/wrangler.toml`) to let the Neon database
       suspend, but `docs/legal/data-retention.md` (summary, and the table rows for parent sessions, invite
