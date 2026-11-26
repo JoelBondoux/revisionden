@@ -5,9 +5,8 @@
  */
 
 /* Entrance: cards rise in, hexes and stat tiles pop in one after another. */
-.today-strip__mission,
+
 .unit-card,
-.today-strip,
 .rewards > *,
 .stats > * {
   animation: enter-rise var(--motion-medium) var(--ease-out) both;
@@ -71,25 +70,17 @@
 }
 
 /* Bouncy buttons: a springy squash on tap. */
-.today-strip__mission .btn,
+
 .rewards .btn,
 .stats .btn,
 .period-toggle__button {
   transition: transform var(--motion-fast) var(--ease-spring);
 }
 
-.today-strip__mission .btn:active:not(:disabled),
 .rewards .btn:active:not(:disabled),
 .stats .btn:active:not(:disabled),
 .period-toggle__button:active {
   transform: translateY(5px) scale(0.97, 0.94);
-}
-
-/* The map's Next mission button is the main call to action, so it pulses too. */
-.today-strip__mission .btn {
-  position: relative;
-  overflow: hidden;
-  animation: cta-pulse var(--motion-pulse) ease-in-out infinite;
 }
 
 /* The main call to action: pulses gently with a moving shine (about 0.6 times a second). */
@@ -130,14 +121,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .today-strip__mission,
   .unit-card,
-  .today-strip,
   .rewards > *,
   .stats > *,
   .unit-path .hex,
   .stat-tile,
-  .today-strip__mission .btn,
   .cta-pulse,
   .cta-pulse::after {
     animation: none;
@@ -145,5 +133,26 @@
 
   .cta-pulse::after {
     display: none;
+  }
+}
+
+/* Home's big next-mission button and the map's Go (J15c): a springy press. */
+.home-cta,
+.map-go {
+  transition: transform var(--motion-fast) var(--ease-spring);
+}
+
+.home-cta:active,
+.map-go:active {
+  transform: translateY(4px) scale(0.98, 0.95);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-cta,
+  .map-go,
+  .home-cta:active,
+  .map-go:active {
+    transform: none;
+    transition: none;
   }
 }

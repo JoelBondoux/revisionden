@@ -18,45 +18,6 @@
   border-radius: 999px 999px 999px 4px;
 }
 
-:root[data-effect-style='garden-grow'] .today-strip,
-:root[data-effect-style='garden-grow'] .today-strip__daily {
-  border: 0;
-  border-radius: 28px 28px 28px 8px;
-  background: var(--gg-cream);
-  color: var(--gg-ink);
-  box-shadow: 0 5px 0 color-mix(in srgb, var(--gg-leaf) 40%, transparent);
-}
-
-:root[data-effect-style='garden-grow'] .today-strip {
-  padding: var(--space-2) var(--space-3) var(--space-1);
-}
-
-:root[data-effect-style='garden-grow'] .today-strip__heading {
-  color: var(--gg-leaf);
-}
-
-:root[data-effect-style='garden-grow'] .today-strip__xp,
-:root[data-effect-style='garden-grow'] .today-strip__daily .today-strip__eyebrow,
-:root[data-effect-style='garden-grow'] .today-strip__daily .today-strip__title {
-  color: var(--gg-ink);
-}
-
-/* Today's mission is a garden patch to tend. */
-:root[data-effect-style='garden-grow'] .today-strip__mission {
-  border-radius: 28px 28px 28px 8px;
-  background: var(--gg-leaf-soft);
-  color: var(--gg-ink);
-  box-shadow: 0 5px 0 var(--gg-leaf);
-}
-
-:root[data-effect-style='garden-grow'] .today-strip__mission .today-strip__eyebrow {
-  color: #1d5a2c;
-}
-
-:root[data-effect-style='garden-grow'] .today-strip__mission .today-strip__meta {
-  color: var(--gg-ink);
-}
-
 /* Mastered topics are in bloom: a petal-pink edge round the gold. */
 :root[data-effect-style='garden-grow'] .hex--mastered .hex__shape {
   --hex-border: var(--gg-petal);
@@ -186,6 +147,21 @@
     opacity: 0;
     transform: translateY(-12px) scaleY(0.95);
   }
+}
+
+/* ---------- Home and the next topic (J15c) ---------- */
+:root[data-effect-style='garden-grow'] .home-next {
+  background: var(--gg-leaf-soft);
+}
+
+:root[data-effect-style='garden-grow'] .home-cta {
+  border-color: var(--gg-leaf);
+  border-radius: 28px 28px 12px 12px;
+  box-shadow: 0 6px 0 var(--gg-soil);
+}
+
+:root[data-effect-style='garden-grow'] .unit-path__step--next .hex__shape {
+  filter: drop-shadow(0 0 8px var(--gg-petal));
 }
 
 /* J15s: the style's own background pattern, drawn in the look's ink. */

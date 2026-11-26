@@ -29,72 +29,67 @@ describe('Topic map screen', () => {
     expect(screen.queryByRole('region', { name: 'Today' })).not.toBeInTheDocument();
   });
 
-  it('shows every unit on the path, with the current unit chosen', async () => {
+  // J15c (owner sign-off of the all-themes mockup, revision 5): one unit at a time on a winding
+  // path that climbs from the bottom; swipe sideways (or use the arrows) for the next unit.
+  it('opens on the current unit, with arrows and a swipeable pager for the others', async () => {
     renderRoute('/map');
-    const units = await screen.findByRole('group', { name: 'Units' });
-    const number = within(units).getByRole('button', { name: 'Number, 57% mastered' });
-    expect(number).toHaveAttribute('aria-pressed', 'true');
-    expect(within(units).getByRole('button', { name: 'Algebra, coming soon' })).toHaveAttribute(
-      'aria-pressed',
-      'false',
-    );
+    const pager = await screen.findByRole('group', { name: 'Units' });
+    expect(within(pager).getByRole('region', { name: 'Number' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: 'Number' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Previous unit' })).toBeDisabled();
+    await userEvent.click(screen.getByRole('button', { name: 'Next unit' }));
+    expect(await screen.findByRole('heading', { level: 2, name: 'Algebra' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Next unit' })).toBeDisabled();
   });
 
-  it('shows the chosen unit with its mastery and all of its topics', async () => {
+  it('moves between units with the arrow keys too', async () => {
+    renderRoute('/map');
+    const pager = await screen.findByRole('group', { name: 'Units' });
+    pager.focus();
+    await userEvent.keyboard('{ArrowRight}');
+    expect(await screen.findByRole('heading', { level: 2, name: 'Algebra' })).toBeInTheDocument();
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(await screen.findByRole('heading', { level: 2, name: 'Number' })).toBeInTheDocument();
+  });
+
+  it('shows every topic of a unit on its path, and the unit quest at the top', async () => {
     renderRoute('/map');
     const number = await screen.findByRole('region', { name: 'Number' });
-    expect(number).toHaveTextContent('57% mastered');
-    const topics = within(number).getByRole('region', { name: 'Number topics' });
-    expect(topics).toHaveAttribute('tabindex', '0');
-    const path = within(topics);
-    expect(path.getByRole('link', { name: 'Fractions, mastered' })).toBeInTheDocument();
+    const path = within(number);
+    expect(path.getByRole('link', { name: 'Fractions, mastered' })).toHaveAttribute(
+      'href',
+      '/learn/topic/fractions',
+    );
     expect(path.getByRole('link', { name: 'Indices, mastered' })).toBeInTheDocument();
-    expect(path.getByRole('link', { name: 'Surds, weak, 38% mastered' })).toBeInTheDocument();
+    expect(
+      path.getByRole('link', { name: 'Surds, weak, 38% mastered, you are here' }),
+    ).toBeInTheDocument();
     expect(path.getByRole('link', { name: 'Standard form, 45% mastered' })).toBeInTheDocument();
     expect(path.getByRole('button', { name: 'Bounds, locked' })).toBeInTheDocument();
     expect(
       path.getByRole('button', { name: 'Challenge, unlocks at 80% mastered in Number' }),
     ).toBeInTheDocument();
+    expect(number).toHaveTextContent('57% mastered');
   });
 
-  it('swaps the card to another unit, and says how a locked unit unlocks', async () => {
+  it("puts the You are here tag on the next mission's topic, and only there", async () => {
     renderRoute('/map');
-    const units = await screen.findByRole('group', { name: 'Units' });
-    await userEvent.click(within(units).getByRole('button', { name: 'Algebra, coming soon' }));
+    const number = await screen.findByRole('region', { name: 'Number' });
+    expect(within(number).getAllByText('You are here')).toHaveLength(1);
+    expect(within(number).getByRole('link', { name: /you are here$/ })).toHaveAttribute(
+      'href',
+      '/learn/topic/surds',
+    );
+  });
+
+  it('says how a unit with no questions yet unlocks', async () => {
+    renderRoute('/map');
+    await userEvent.click(await screen.findByRole('button', { name: 'Next unit' }));
     const algebra = await screen.findByRole('region', { name: 'Algebra' });
     expect(algebra).toHaveTextContent(
       "Questions for Algebra are on their way. It unlocks as soon as they're ready.",
     );
     expect(within(algebra).getByRole('button', { name: 'Expanding, locked' })).toBeInTheDocument();
-    expect(screen.queryByRole('region', { name: 'Number' })).not.toBeInTheDocument();
-    expect(within(units).getByRole('button', { name: 'Algebra, coming soon' })).toHaveAttribute(
-      'aria-pressed',
-      'true',
-    );
-  });
-
-  it("keeps each unit's place on the path when switching back", async () => {
-    renderRoute('/map');
-    const units = await screen.findByRole('group', { name: 'Units' });
-    const path = screen.getByRole('region', { name: 'Number topics' });
-    path.scrollTop = 120;
-    path.dispatchEvent(new Event('scroll'));
-    await userEvent.click(within(units).getByRole('button', { name: 'Algebra, coming soon' }));
-    await screen.findByRole('region', { name: 'Algebra topics' });
-    await userEvent.click(within(units).getByRole('button', { name: 'Number, 57% mastered' }));
-    expect((await screen.findByRole('region', { name: 'Number topics' })).scrollTop).toBe(120);
-  });
-
-  it('opens an overview of all units from See all, and goes to the one chosen', async () => {
-    renderRoute('/map');
-    await userEvent.click(await screen.findByRole('button', { name: 'See all units' }));
-    const all = await screen.findByRole('dialog', { name: 'All units' });
-    expect(
-      within(all).getByRole('button', { name: /Number.*2 of 5 topics mastered/ }),
-    ).toBeInTheDocument();
-    await userEvent.click(within(all).getByRole('button', { name: /Algebra/ }));
-    expect(await screen.findByRole('region', { name: 'Algebra' })).toBeInTheDocument();
-    expect(screen.queryByRole('dialog', { name: 'All units' })).not.toBeInTheDocument();
   });
 
   it('explains how to unlock a locked topic', async () => {
@@ -196,23 +191,30 @@ describe('Topic map for subjects with no questions yet (RD-MBXKTC)', () => {
     expect(screen.queryByRole('button', { name: /meanwhile/ })).not.toBeInTheDocument();
   });
 
-  it('switches subject from the subject switcher', async () => {
+  it('changes subject from the big subject box, on the Subject selection page', async () => {
     const asked = mapsBySubject({
       default: { ...topicMap, subjectId: 'gcse-maths', status: 'ready', subjects },
       'gcse-chemistry': { ...comingSoon, subjects },
     });
     renderRoute('/map');
-    const switcher = await screen.findByRole('group', { name: 'Subject' });
-    expect(within(switcher).getByRole('button', { name: 'Maths' })).toHaveAttribute(
+    await userEvent.click(await screen.findByRole('button', { name: 'Your subject Maths Change' }));
+    const picker = await screen.findByRole('region', { name: 'Pick a subject' });
+    expect(within(picker).getByRole('button', { name: 'Maths' })).toHaveAttribute(
       'aria-pressed',
       'true',
     );
-    await userEvent.click(
-      within(switcher).getByRole('button', { name: 'Chemistry (coming soon)' }),
-    );
+    await userEvent.click(within(picker).getByRole('button', { name: 'Chemistry, coming soon' }));
     expect(
       await screen.findByText('Questions for Chemistry are on their way.'),
     ).toBeInTheDocument();
     expect(asked).toContain('gcse-chemistry');
+  });
+
+  it('goes back from Subject selection without changing anything', async () => {
+    mapsBySubject({ default: { ...topicMap, subjectId: 'gcse-maths', status: 'ready', subjects } });
+    renderRoute('/map');
+    await userEvent.click(await screen.findByRole('button', { name: 'Your subject Maths Change' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Back to the map' }));
+    expect(await screen.findByRole('region', { name: 'Number' })).toBeInTheDocument();
   });
 });
