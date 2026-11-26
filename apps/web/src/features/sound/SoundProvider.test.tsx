@@ -143,6 +143,7 @@ describe('SoundSettingsCard', () => {
       enabled: true,
       volume: 'high',
       taps: true,
+      vibration: true,
     });
     await userEvent.click(screen.getByRole('button', { name: 'Play a sample' }));
     expect(contexts[0]!.gains[0]!.value).toBeGreaterThan(0.3);
