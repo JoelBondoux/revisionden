@@ -6,6 +6,7 @@ import {
   darkTokens,
   deltaE,
   resolvePairs,
+  resolveNonTextPairs,
   simulate,
   type Deficiency,
 } from './themes';
@@ -40,6 +41,19 @@ describe.each([
 ] as const)('%s: text contrast (WCAG 2.2 AA)', (_, palette) => {
   it.each(resolvePairs(palette))('$name reaches 4.5 to 1', ({ foreground, background }) => {
     expect(contrastRatio(foreground, background)).toBeGreaterThanOrEqual(4.5);
+  });
+});
+
+// WCAG 1.4.11: shapes that carry meaning (an empty progress track, the outline of a locked
+// Challenge hex) reach 3:1 against what they sit on (J10f, morning walkthrough #185).
+describe.each([
+  ['light', light],
+  ['dark', dark],
+  ['light colour-blind', lightCb],
+  ['dark colour-blind', darkCb],
+] as const)('%s: non-text contrast (WCAG 2.2 AA)', (_, palette) => {
+  it.each(resolveNonTextPairs(palette))('$name reaches 3 to 1', ({ foreground, background }) => {
+    expect(contrastRatio(foreground, background)).toBeGreaterThanOrEqual(3);
   });
 });
 

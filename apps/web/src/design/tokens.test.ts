@@ -126,6 +126,10 @@ describe('arena theme (practice screens, mockup 22)', () => {
   it.each(arenaTextPairs)('$name reaches at least 4.5 to 1', ({ foreground, background }) => {
     expect(contrastRatio(foreground, background)).toBeGreaterThanOrEqual(4.5);
   });
+
+  it('keeps an empty progress track visible: 3 to 1 on the arena (J10f)', () => {
+    expect(contrastRatio(tokens['--arena-track'], tokens['--arena-bg'])).toBeGreaterThanOrEqual(3);
+  });
 });
 
 describe('motion tokens', () => {

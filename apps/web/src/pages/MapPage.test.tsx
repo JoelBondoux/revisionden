@@ -89,7 +89,7 @@ describe('Topic map screen', () => {
         HttpResponse.json({
           enrolments: [
             {
-              studentId: '8f6d2b1e-4c3a-4d5e-9f00-000000000001',
+              studentId: '00000000-0000-4000-8000-0000000000a1',
               subjectId: 'gcse-maths',
               board: 'not_sure',
               tier: 'higher',

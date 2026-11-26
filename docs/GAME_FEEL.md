@@ -161,8 +161,9 @@ tab say so to screen readers.
   boxes sketched in pen with wobbly corners; mastered topics are outlined in ink and coloured in
   with highlighter scribbles. On Rewards, earned steps are coloured in and locked ones are dashed
   pencil outlines. In lessons the surround is diary paper (night paper in dark mode) and the
-  question sits on a plain white card (dark card in dark mode); a right answer gets a red-pen ring
-  round it. The combo badge and "+XP" are written in red pen, stars are drawn in pen and coloured
+  question sits on a plain white card (dark card in dark mode); a right answer gets a ring and a light
+  wash in the success colour (green; blue with colour-blind friendly colours), so it never reads
+  as a red "wrong" mark (J10f; red is for wrong only). The combo badge and "+XP" are written in red pen, stars are drawn in pen and coloured
   in, and bursts and confetti are quick pen strokes. Sounds use U's paper-and-ink pack (Sticker
   Book's until a Doodle Diary pack lands): `EffectStyleProvider` calls `useFeedbackStyle` with the
   active style.
@@ -185,6 +186,10 @@ tab say so to screen readers.
   panel, halftone-dot bursts; wins slam in from big. Pixel Arcade (J10c): square corners and
   chunky borders, neon on night blue, square pixels that don't spin; wins step in a block at a
   time and nothing blinks. They use the app's own fonts (no extra font files).
+- Empty progress tracks (the lesson and flashcard bars, `--arena-track`; other bars,
+  `--color-track`) and the outline of a Challenge hex (`--color-challenge-edge`) reach 3:1 against
+  what they sit on, in every theme and surround (WCAG 1.4.11, J10f, from the morning walkthrough
+  #185). Tests: `themes.test.ts` (`NON_TEXT_PAIRS`), `tokens.test.ts` and the surround test.
 - No style puts a shadow filter on a topic hex: on the map it would double the topic's name.
 - Pen-line exception (lead, approved 2026-11-26): small SVG pen lines may draw themselves by
   animating `stroke-dashoffset`, as Doodle Diary's margin doodles and answer loops do. Only on

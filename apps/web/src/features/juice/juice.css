@@ -186,7 +186,7 @@
   flex: 1;
   height: 14px;
   border-radius: var(--radius-pill);
-  background: var(--arena-raised);
+  background: var(--arena-track);
   overflow: hidden;
 }
 

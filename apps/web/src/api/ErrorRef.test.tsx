@@ -6,7 +6,7 @@ import { server } from '../mocks/server';
 import { ErrorRef, refOf } from './ErrorRef';
 import { ApiError } from './client';
 
-const show = (path = '/family/8f6d2b1e-4c3a-4d5e-9f00-000000000001/rewards') =>
+const show = (path = '/family/00000000-0000-4000-8000-0000000000a1/rewards') =>
   render(
     <MemoryRouter initialEntries={[path]}>
       <ErrorRef code={{ ref: 'RD-VDMW5E', status: 404, apiPath: '/v1/student/map' }} />

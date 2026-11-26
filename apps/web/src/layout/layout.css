@@ -105,6 +105,11 @@
   color: inherit;
 }
 
+/* Each footer piece wraps as a whole, separator included (G7). */
+.version-footer-item {
+  white-space: nowrap;
+}
+
 .app-shell > .version-footer {
   margin-top: -72px;
   padding-bottom: calc(96px + env(safe-area-inset-bottom));
@@ -158,26 +163,25 @@
   gap: var(--space-2);
 }
 
-/* Room for the bug button (L7) below the content, so it never covers anything. It is 48px tall
-   and sits 16px from the bottom, or 72px above the bottom navigation on phones. */
+/* Room for the bug button (L7) below the content on focused and public pages, where it floats in
+   the corner: it is 48px tall and sits 16px from the bottom. */
 .focus-main.has-bug-button,
 .focus-main.has-bug-button + .version-footer {
   padding-bottom: calc(var(--tap-target) + var(--space-8) + env(safe-area-inset-bottom));
 }
 
-.app-shell > .app-main.has-bug-button,
-.app-shell > .app-main.has-bug-button + .version-footer {
-  padding-bottom: calc(136px + env(safe-area-inset-bottom));
+/* In the student app it sits in the top row beside Get help and mute instead, so it can never
+   cover a button or text while the page scrolls (I12). */
+.app-shell .sound-header {
+  align-items: center;
+  gap: var(--space-2);
 }
 
-@media (min-width: 768px) {
-  .app-shell > .app-main.has-bug-button {
-    padding-bottom: calc(var(--tap-target) + var(--space-8) + var(--space-4));
-  }
-
-  .app-shell > .app-main.has-bug-button + .version-footer {
-    padding-bottom: calc(var(--tap-target) + var(--space-6));
-  }
+.app-shell .sound-header .bug-button {
+  position: static;
+  width: var(--tap-target);
+  height: var(--tap-target);
+  box-shadow: none;
 }
 
 /* A new screen's heading or main area gets focus for screen readers (RouteChange); no ring. */

@@ -17,6 +17,7 @@
   /* The lesson surround turns to paper (J10a2); the moments stay stickers. */
   --arena-bg: #f6efe0;
   --arena-raised: #fffdf7;
+  --arena-track: #7f7a90;
   --arena-text: #2f2a3d;
   --arena-text-secondary: #57516b;
   --arena-glow: #0e6b60;
@@ -26,6 +27,7 @@
 :root[data-effect-style='sticker-book'][data-theme='dark'] {
   --arena-bg: #221d33;
   --arena-raised: #2c2640;
+  --arena-track: #7c7699;
   --arena-text: #f3eefc;
   --arena-text-secondary: #c9c2e0;
   --arena-glow: #6fe0cf;

@@ -748,7 +748,7 @@ Tags: #product #rules #limits #defaults
 
 ## Bug Hunter and secret achievements (planned)
 
-- Bug icon on every screen opens the bug report sheet. A student's bug confirmed by the operator:
+- Bug icon on every screen opens the bug report sheet (student app: in the top row beside Get help and sound; focused and public screens: a corner button, with room below the page). A student's bug confirmed by the operator:
   +50 XP and a step on the hidden Bug Hunter track (badge, title, avatar item, frame, Pip outfit,
   effect, legendary set at 20). Duplicates +10 XP; at most 3 confirmed-bug rewards a week; parents
   are thanked, not rewarded.
@@ -798,8 +798,8 @@ Tags: #product #rules #limits #defaults
   on the Rewards page; the friends league is not built yet, so it shows there once it is.
 - "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
   NSPCC adult helpline, parent-only). Reached from Settings, the heart link in the student footer,
-  the signed-out header and parent home, plus (W3) a Get help tile on the topic map and a chip in
-  the student header. There is no separate profile menu yet. Quick exit is sticky at the top;
+  the signed-out header and parent home, plus (W3) a chip in the student header. No tile on the
+  topic map (removed in W5: header chip and footer link only). There is no separate profile menu yet. Quick exit is sticky at the top;
   topics are in five categories (Right now first and always open) with a private "Find a topic"
   filter (`features/help/categories.ts`).
 - Data: `content/support/uk-services.json` (schema `content/schemas/support-services.schema.json`).
@@ -861,7 +861,9 @@ Tags: #product #rules #limits #defaults
   `apps/web/src/design/themes.ts` / `themes.css`: dark keeps button colours with white text and
   uses `--color-primary-edge` (#C4B5FF) for violet text; colour-blind right #1F6FD1 (blue), wrong
   #B34F00 (orange), checked by simulation (ΔE ≥ 20 for deuteranopia, protanopia, tritanopia) and
-  4.5:1 contrast in all four combinations. Doodle tile `apps/web/src/design/doodle-scatter.svg` (original,
+  4.5:1 contrast in all four combinations; shapes that carry meaning (empty progress tracks
+  `--color-track` / `--arena-track`, the Challenge hex outline `--color-challenge-edge`) reach 3:1
+  (`NON_TEXT_PAIRS`, J10f). Doodle tile `apps/web/src/design/doodle-scatter.svg` (original,
   1080px dense sticker sheet: 8 hero doodles, 420 medium (160 motifs, no copy of a motif within
   240px of itself) and 1,600 tiny fillers, no two outlines closer than 4px plus the line, tilted up
   to 25°, 1.4px lines; generated from a fixed seed by `doodleTile.ts`, used as a CSS mask at 7% ink;

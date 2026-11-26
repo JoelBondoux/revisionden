@@ -23,11 +23,21 @@ export function VersionFooter({
   return (
     <footer className="version-footer">
       <TextLink to="/about">{label}</TextLink>
-      {environment === 'Live' ? null : ` (${environment}${knownCommit})`}
+      {environment === 'Live' ? null : (
+        <>
+          {' '}
+          <span className="version-footer-item">{`(${environment}${knownCommit})`}</span>
+        </>
+      )}
       {showHelp && (
         <>
-          {' · '}
-          <GetHelpLink />
+          {' '}
+          {/* The dot travels with the link (no-break space, nowrap), so a wrapped line never ends
+              in a stray "·". */}
+          <span className="version-footer-item">
+            {'·\u00a0'}
+            <GetHelpLink />
+          </span>
         </>
       )}
     </footer>

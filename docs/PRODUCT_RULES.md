@@ -435,6 +435,9 @@ Mockups: screens 19 (student) and 20 (parent).
 
 ### Student: My stats (from the Progress tab)
 
+On a phone the panel scrolls into view above the bottom bar when it opens and on each step
+(F7b), instantly under reduced motion.
+
 - Period toggle: **Week** (Monday to Sunday, UK time), **Term** (weeks of the current term),
   **Year** (school year, September to August).
 - Headline tiles: XP, questions answered (and how many correct), accuracy, current streak. Each
@@ -578,8 +581,10 @@ Mockups: screens 19 (student) and 20 (parent).
 
 ### Feedback and bug reports
 
-- **Bug icon:** a small bug button sits in a corner of every screen (above the bottom nav, never
-  covering content, hidden during timed papers and Test mode questions). It opens the bug report
+- **Bug icon:** a small bug button is on every screen, never covering content: in the student app
+  it sits in the top row beside Get help and the sound button; on focused and public screens it
+  sits in a corner, with room left below the page. It is hidden during timed papers and Test mode
+  questions. It opens the bug report
   sheet straight away, with the current screen filled in. Students can turn the icon off in
   Settings.
 - When the operator confirms a student's bug, the student is told in the app and earns the Bug
@@ -911,8 +916,10 @@ Requested by the product owner on 2026-11-25.
 - Pages: `/help` (students, also signed out) and `/parent/help` (parent area; adds a "Worried about a
   child?" card with the NSPCC Helpline). Links: Settings (Help and information), a small heart
   "Get help" link in the student footer, the signed-out header, and parent home. Since W3 also: a
-  calm "Get help" tile on the topic map (the student's home) and a "Get help" chip in the student
-  header on every student screen (the app has no separate menu yet; add it there when one exists).
+  "Get help" chip in the student header on every student screen (the app has no separate menu
+  yet; add it there when one exists). W5 (2026-11-26) removed W3's extra Get help tile from the
+  topic map: Get help on any student screen appears twice at most, the header chip and the footer
+  heart link.
   All use the shared link components; tapping them records nothing.
 - Layout (W3, 2026-11-25): the "Quick exit" button sits in a bar that stays at the top of the
   screen while scrolling (sticky, padded for phone notches with `env(safe-area-inset-*)`, first
