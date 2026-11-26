@@ -134,8 +134,33 @@ async function stubApi(page: Page, rpId: string) {
   return calls;
 }
 
-/** No WCAG 2.2 A or AA problem axe can find, once the screen's animations have settled. */
-async function expectAccessible(page: Page, where: string, dialogOnly = false) {
+/** The screen sizes the walk runs at: the phone project's own, then narrow phones (WCAG 1.4.10). */
+const SIZES = [
+  { label: '', width: null, textScale: 1 },
+  { label: ' (320px)', width: 320, textScale: 1 },
+  { label: ' (320px, text at 200%)', width: 320, textScale: 2 },
+] as const;
+
+/** Text at `scale` times its size on every page the walk opens (WCAG 1.4.4). */
+async function biggerText(page: Page, scale: number) {
+  await page.addInitScript((size) => {
+    document.addEventListener('DOMContentLoaded', () => {
+      const css = document.createElement('style');
+      css.textContent = `html { font-size: ${size}% !important; }`;
+      document.head.appendChild(css);
+    });
+  }, scale * 100);
+}
+
+/**
+ * Checks one screen: axe finds no WCAG 2.2 A or AA problem once its animations have settled, and
+ * on a narrow phone nothing scrolls sideways or (in the prize box) reaches past the screen's edge.
+ */
+async function checkScreen(
+  page: Page,
+  where: string,
+  { dialogOnly, narrow }: { dialogOnly: boolean; narrow: boolean },
+) {
   const results = await axeWhenSettled(
     page,
     dialogOnly ? (axe) => axe.include('dialog').withTags(WCAG_TAGS) : undefined,
@@ -144,57 +169,90 @@ async function expectAccessible(page: Page, where: string, dialogOnly = false) {
     results.violations.map((v) => `${v.id}: ${v.help}`),
     `axe on ${where}`,
   ).toEqual([]);
+  if (!narrow) return;
+  const overflow = await page.evaluate((inDialog) => {
+    const width = document.documentElement.clientWidth;
+    if (!inDialog) return document.documentElement.scrollWidth - width;
+    const dialog = document.querySelector('dialog')!;
+    const parts = [dialog, ...Array.from(dialog.querySelectorAll('*'))];
+    return Math.max(...parts.map((el) => el.getBoundingClientRect().right)) - width;
+  }, dialogOnly);
+  expect(overflow, `sideways overflow on ${where}`).toBeLessThanOrEqual(0);
 }
 
-test('a pupil unlocks, follows the map to a lesson, earns a prize and goes back Home', async ({
-  page,
-  baseURL,
-}) => {
-  const rpId = new URL(baseURL!).hostname;
-  await passkeyOnThisPhone(page, rpId);
-  const calls = await stubApi(page, rpId);
+for (const size of SIZES) {
+  test(`a pupil unlocks, follows the map to a lesson, earns a prize and goes back Home${size.label}`, async ({
+    page,
+    baseURL,
+  }) => {
+    if (size.width) await page.setViewportSize({ width: size.width, height: 640 });
+    if (size.textScale !== 1) await biggerText(page, size.textScale);
+    const check = (where: string, dialogOnly = false) =>
+      checkScreen(page, where, { dialogOnly, narrow: size.width !== null });
+    const rpId = new URL(baseURL!).hostname;
+    await passkeyOnThisPhone(page, rpId);
+    const calls = await stubApi(page, rpId);
 
-  // Sign in: the welcome page's student button answers the passkey prompt and lands on Home.
-  await page.goto('/');
-  await expectAccessible(page, 'the welcome page');
-  await page.getByRole('button', { name: "I'm a student: unlock with my passkey" }).click();
-  await expect(page).toHaveURL(/\/home$/);
-  expect(calls.unlocked).toBe(true);
-  await expect(page.getByRole('link', { name: /^Go:/ })).toBeVisible();
-  await expectAccessible(page, 'Home');
+    // Sign in: the welcome page's student button answers the passkey prompt and lands on Home.
+    await page.goto('/');
+    await check('the welcome page');
+    await page.getByRole('button', { name: "I'm a student: unlock with my passkey" }).click();
+    await expect(page).toHaveURL(/\/home$/);
+    await expect.poll(() => calls.unlocked).toBe(true);
+    await expect(page.getByRole('link', { name: /^Go:/ })).toBeVisible();
+    await check('Home');
 
-  // The map opens on the current unit; "You are here" starts that topic's lesson.
-  await page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Map' }).click();
-  await expect(page.getByRole('group', { name: 'Units' })).toBeVisible();
-  await expectAccessible(page, 'the map');
-  // The current node bobs for as long as it is on screen (by design), so tap it without waiting
-  // for it to hold still.
-  await page.getByRole('link', { name: /you are here$/ }).click({ force: true });
-  await expect(page).toHaveURL(new RegExp(`/learn/topic/${LESSON_ID}$`));
-  await expect(page.getByLabel('Your answer')).toBeVisible();
-  await expectAccessible(page, 'the lesson');
+    // The map opens on the current unit; "You are here" starts that topic's lesson.
+    await page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Map' }).click();
+    await expect(page.getByRole('group', { name: 'Units' })).toBeVisible();
+    await check('the map');
+    // It opens with "You are here" in view and clear of the bottom nav, so a tap on it is a tap
+    // on the topic, not on the nav (at 320 × 640 it opened half under the nav). With text at
+    // 200% the map starts below the fold, so the pupil scrolls down to it first.
+    const here = page.getByRole('link', { name: /you are here$/ });
+    if (size.textScale !== 1) {
+      await here.evaluate((el) => {
+        const nav = document.querySelector('.main-nav')!.getBoundingClientRect();
+        const node = el.getBoundingClientRect();
+        window.scrollBy(0, node.top + node.height / 2 - nav.top / 2);
+      });
+    }
+    const clear = await here.evaluate((el) => {
+      const node = el.getBoundingClientRect();
+      const nav = document.querySelector('.main-nav')!.getBoundingClientRect();
+      return { nodeTop: node.top, nodeBottom: node.bottom, navTop: nav.top };
+    });
+    expect(clear.nodeTop, 'You are here is on screen').toBeGreaterThanOrEqual(0);
+    expect(clear.nodeBottom, 'You are here is clear of the nav').toBeLessThanOrEqual(clear.navTop);
+    // The current node bobs for as long as it is on screen (by design), so tap it without waiting
+    // for it to hold still.
+    await here.click({ force: true });
+    await expect(page).toHaveURL(new RegExp(`/learn/topic/${LESSON_ID}$`));
+    await expect(page.getByLabel('Your answer')).toBeVisible();
+    await check('the lesson');
 
-  // A right answer earns a reward, which arrives in the prize box.
-  await page.getByLabel('Your answer').fill('demo');
-  await page.getByRole('button', { name: 'Check' }).click();
-  expect(calls.answered).toBe(true);
-  const box = page.getByRole('dialog');
-  await expect(box.getByRole('heading', { name: 'A prize box!' })).toBeVisible();
-  await box.getByRole('button', { name: 'Open the prize box' }).click();
-  await expect(box.getByRole('listitem')).toContainText('7-day streak');
-  await expect(box.getByRole('button', { name: 'Collect' })).toBeFocused();
-  await expectAccessible(page, 'the prize box', true);
-  await box.getByRole('button', { name: 'Collect' }).click();
-  await expect(box).toBeHidden();
-  await expectAccessible(page, 'the lesson after the prize');
+    // A right answer earns a reward, which arrives in the prize box.
+    await page.getByLabel('Your answer').fill('demo');
+    await page.getByRole('button', { name: 'Check' }).click();
+    await expect.poll(() => calls.answered).toBe(true);
+    const box = page.getByRole('dialog');
+    await expect(box.getByRole('heading', { name: 'A prize box!' })).toBeVisible();
+    await box.getByRole('button', { name: 'Open the prize box' }).click();
+    await expect(box.getByRole('listitem')).toContainText('7-day streak');
+    await expect(box.getByRole('button', { name: 'Collect' })).toBeFocused();
+    await check('the prize box', true);
+    await box.getByRole('button', { name: 'Collect' }).click();
+    await expect(box).toBeHidden();
+    await check('the lesson after the prize');
 
-  // Pip goes back Home, checking first, since the lesson is still open.
-  await page.getByRole('button', { name: 'Home' }).click();
-  await page
-    .getByRole('dialog', { name: 'Leave this lesson?' })
-    .getByRole('button', { name: 'Leave' })
-    .click();
-  await expect(page).toHaveURL(/\/home$/);
-  await expect(page.getByRole('link', { name: /^Go:/ })).toBeVisible();
-  await expectAccessible(page, 'Home, back from the lesson');
-});
+    // Pip goes back Home, checking first, since the lesson is still open.
+    await page.getByRole('button', { name: 'Home' }).click();
+    await page
+      .getByRole('dialog', { name: 'Leave this lesson?' })
+      .getByRole('button', { name: 'Leave' })
+      .click();
+    await expect(page).toHaveURL(/\/home$/);
+    await expect(page.getByRole('link', { name: /^Go:/ })).toBeVisible();
+    await check('Home, back from the lesson');
+  });
+}
