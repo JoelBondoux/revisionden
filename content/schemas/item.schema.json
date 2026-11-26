@@ -25,7 +25,8 @@
         "numeric",
         "worked_maths",
         "flashcard",
-        "extended_answer"
+        "extended_answer",
+        "area_model"
       ]
     },
     "topic": {
@@ -259,6 +260,14 @@
       "then": {
         "$ref": "#/$defs/extended_answer"
       }
+    },
+    {
+      "if": {
+        "$ref": "#/$defs/isType/area_model"
+      },
+      "then": {
+        "$ref": "#/$defs/area_model"
+      }
     }
   ],
   "unevaluatedProperties": false,
@@ -330,6 +339,13 @@
         "properties": {
           "type": {
             "const": "extended_answer"
+          }
+        }
+      },
+      "area_model": {
+        "properties": {
+          "type": {
+            "const": "area_model"
           }
         }
       }
@@ -444,9 +460,15 @@
           },
           "not": {
             "anyOf": [
-              { "required": ["decimal_places", "significant_figures"] },
-              { "required": ["tolerance", "decimal_places"] },
-              { "required": ["tolerance", "significant_figures"] }
+              {
+                "required": ["decimal_places", "significant_figures"]
+              },
+              {
+                "required": ["tolerance", "decimal_places"]
+              },
+              {
+                "required": ["tolerance", "significant_figures"]
+              }
             ]
           },
           "additionalProperties": false
@@ -626,6 +648,59 @@
             },
             "additionalProperties": false
           }
+        }
+      }
+    },
+    "area_model": {
+      "description": "Interactive area model for factorising x^2 + bx + c (lesson pilot W8, owner 2026-11-26). The student splits the b strips into two numbers p and q (p x q = c, p + q = b) and the tiles make a rectangle with sides (x + p) and (x + q). Scope A: b and c positive whole numbers that factorise.",
+      "required": ["prompt", "mode", "quadratic", "answer", "marks"],
+      "properties": {
+        "prompt": {
+          "$ref": "#/$defs/text"
+        },
+        "mode": {
+          "enum": ["explore", "guided"],
+          "description": "explore: the first look at the tiles; guided: the student finds the pair, with a hint if they are stuck."
+        },
+        "quadratic": {
+          "type": "object",
+          "required": ["b", "c"],
+          "additionalProperties": false,
+          "properties": {
+            "b": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 13
+            },
+            "c": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 36
+            }
+          },
+          "description": "x^2 + bx + c. The limits keep the tiles on a phone screen (AREA_MODEL_LIMITS in packages/core)."
+        },
+        "answer": {
+          "type": "object",
+          "required": ["pair"],
+          "additionalProperties": false,
+          "properties": {
+            "pair": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          },
+          "description": "The two numbers that split the middle term, smaller first."
+        },
+        "marks": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1
         }
       }
     }

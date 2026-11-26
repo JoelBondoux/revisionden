@@ -30,7 +30,7 @@ const SCHEMA_FOR = {
 };
 const MAX_QUOTE_WORDS = 50;
 const FORBIDDEN_FILES = /\.(pdf|png|jpe?g|gif|webp|bmp|tiff?|heic|docx?)$/i;
-const MATHS_TYPES = new Set(['numeric', 'worked_maths']);
+const MATHS_TYPES = new Set(['numeric', 'worked_maths', 'area_model']);
 
 async function filesUnder(dir) {
   try {
@@ -176,6 +176,7 @@ function linkErrors(content) {
     }
     if (item.type === 'numeric') [...roundingErrors(item), ...formErrors(item)].forEach(fail);
     if (item.type === 'worked_maths') workedFormErrors(item).forEach(fail);
+    if (item.type === 'area_model') areaModelErrors(item).forEach(fail);
     if (item.type === 'worked_maths') {
       const wants = item.verify.method === 'solve' ? 'solutions' : 'expression';
       if (!(wants in item.answer))
@@ -183,6 +184,30 @@ function linkErrors(content) {
     }
   }
   return errors;
+}
+
+// Area model items (lesson pilot W8). The same rules as packages/core/src/interactive/area-model.ts
+// (scope A: b and c positive and the quadratic factorises); kept here so the CLI needs no build.
+const areaPairs = (c) => {
+  const pairs = [];
+  for (let p = 1; p * p <= c; p += 1) if (c % p === 0) pairs.push([p, c / p]);
+  return pairs;
+};
+const areaQuadratic = ({ b, c }) => `x^2 + ${b === 1 ? 'x' : `${b}x`} + ${c}`;
+
+/** The pair must split the middle term (multiply to c, add to b), smaller number first. */
+function areaModelErrors(item) {
+  const { quadratic, answer } = item;
+  const [p, q] = answer.pair;
+  const right = areaPairs(quadratic.c).find(([a, b]) => a + b === quadratic.b);
+  if (!right) return [`${areaQuadratic(quadratic)} does not factorise with whole numbers`];
+  if (p > q) return [`answer pair ${p}, ${q} must be written smaller number first`];
+  if (p !== right[0] || q !== right[1]) {
+    return [
+      `answer pair ${p}, ${q} does not make ${areaQuadratic(quadratic)}: use ${right[0]}, ${right[1]}`,
+    ];
+  }
+  return [];
 }
 
 // Words for an accuracy ("2 decimal places", "3 s.f.", "the nearest whole number").
@@ -517,6 +542,15 @@ export function mathsChecks(items) {
         if (item.answer[key] !== undefined) check[key] = item.answer[key];
       }
       checks.push(check);
+    } else if (item.type === 'area_model') {
+      const [p, q] = item.answer.pair;
+      checks.push({
+        id: item.id,
+        kind: 'expression',
+        expression: areaQuadratic(item.quadratic),
+        answer: `(x + ${p})(x + ${q})`,
+        form: 'factorised',
+      });
     } else if (item.type === 'worked_maths') {
       const { verify, answer } = item;
       let expected;
