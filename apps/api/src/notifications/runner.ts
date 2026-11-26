@@ -15,6 +15,7 @@ import {
   type ReminderKind,
   type ReminderSettings,
 } from './schedule';
+import { reminderTicksAfter } from './ticks';
 import type { PushSender } from './web-push';
 
 export interface ReminderRunSummary {
@@ -55,6 +56,8 @@ export async function runReminders(deps: {
   sender: PushSender;
 }): Promise<ReminderRunSummary> {
   const { db, now, sender } = deps;
+  // The production check times after this one: lets the rules spot the day's last check.
+  const laterChecks = reminderTicksAfter(now);
   const subs = await db.select().from(pushSubscriptions);
   const byStudent = new Map<string, typeof subs>();
   for (const sub of subs)
@@ -98,12 +101,19 @@ export async function runReminders(deps: {
       .flatMap((p) => (Array.isArray(p.sessions) ? (p.sessions as { date?: unknown }[]) : []))
       .filter((s) => s.date === today).length;
 
-    const due = dueReminders(now, settings, {
-      sentToday: sent.map((s) => s.kind as ReminderKind),
-      practisedToday: recent.some((a) => localClock(a.createdAt, settings.timeZone).date === today),
-      currentStreak: streak?.current ?? 0,
-      plannedSessionsToday,
-    });
+    const due = dueReminders(
+      now,
+      settings,
+      {
+        sentToday: sent.map((s) => s.kind as ReminderKind),
+        practisedToday: recent.some(
+          (a) => localClock(a.createdAt, settings.timeZone).date === today,
+        ),
+        currentStreak: streak?.current ?? 0,
+        plannedSessionsToday,
+      },
+      laterChecks,
+    );
 
     for (const reminder of due) {
       // The unique (student, kind, day) key stops a second, overlapping run sending it again.

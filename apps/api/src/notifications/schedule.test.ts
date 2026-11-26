@@ -1,3 +1,4 @@
+import { reminderTicksAfter } from './ticks';
 import { describe, expect, it } from 'vitest';
 import {
   DEFAULT_REMINDER_SETTINGS,
@@ -165,5 +166,85 @@ describe('dueReminders', () => {
       state({ currentStreak: 1, sentToday: ['session'] }),
     );
     expect(r!.message).toContain('1-day');
+  });
+});
+
+describe('dueReminders at the last check before quiet hours', () => {
+  const at = (iso: string) => new Date(iso);
+  const ticksAfter = (now: Date) => reminderTicksAfter(now);
+  const late = { ...settings, streakReminderTime: '20:45' };
+
+  it('sends a 20:45 reminder at the 20:30 check in winter, as no later check can', () => {
+    const now = at('2026-01-15T20:30:00Z'); // 20:30 GMT; quiet from 21:00
+    const due = dueReminders(now, late, state({ sentToday: ['session'] }), ticksAfter(now));
+    expect(due.map((r) => r.kind)).toEqual(['streak']);
+  });
+
+  it('sends it at the 19:30 UTC check in summer, the last one before 21:00 BST', () => {
+    const now = at('2026-07-15T19:30:00Z'); // 20:30 BST; the 20:00 UTC check is 21:00 BST
+    const due = dueReminders(now, late, state({ sentToday: ['session'] }), ticksAfter(now));
+    expect(due.map((r) => r.kind)).toEqual(['streak']);
+  });
+
+  it('waits when a later check that day can still send it on time', () => {
+    const now = at('2026-01-15T20:00:00Z'); // the 20:30 check comes next
+    expect(dueReminders(now, late, state({ sentToday: ['session'] }), ticksAfter(now))).toEqual([]);
+  });
+
+  it('does not send early just because school hours start after this check', () => {
+    // Thursday 08:00 GMT: the 08:30 check falls in school hours, but 16:30 checks come later.
+    const now = at('2026-01-15T08:00:00Z');
+    expect(dueReminders(now, settings, state(), ticksAfter(now))).toEqual([]);
+  });
+
+  it('sends a time set inside quiet hours at the last check, so it is never lost', () => {
+    const now = at('2026-01-17T20:30:00Z'); // Saturday 20:30 GMT
+    const inQuiet = { ...settings, sessionReminderTime: '22:00', streakReminders: false };
+    expect(dueReminders(now, inQuiet, state(), ticksAfter(now)).map((r) => r.kind)).toEqual([
+      'session',
+    ]);
+  });
+
+  it('still respects quiet hours, the daily limit and what was already sent', () => {
+    const quietNow = at('2026-01-15T21:00:00Z');
+    expect(dueReminders(quietNow, late, state(), ticksAfter(quietNow))).toEqual([]);
+    const now = at('2026-01-15T20:30:00Z');
+    expect(
+      dueReminders(now, late, state({ sentToday: ['session', 'streak'] }), ticksAfter(now)),
+    ).toEqual([]);
+  });
+
+  it('keeps the old behaviour when the check times are not known', () => {
+    const now = at('2026-01-15T20:30:00Z');
+    expect(dueReminders(now, late, state({ sentToday: ['session'] }))).toEqual([]);
+  });
+});
+
+describe('every reminder time gets sent with the production check times', () => {
+  // Saturdays (no school-hours window), in winter (GMT) and summer (BST).
+  const days = ['2026-01-17', '2026-07-18'];
+  const times: string[] = [];
+  for (let m = 7 * 60 + 30; m < 21 * 60; m += 5) {
+    times.push(`${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`);
+  }
+
+  it.each(days)('on %s, each time from 07:30 to 20:55 is sent exactly once', (day) => {
+    const checks = reminderTicksAfter(new Date(`${day}T00:00:00Z`)).filter((t) =>
+      t.toISOString().startsWith(day),
+    );
+    for (const time of times) {
+      const s = { ...settings, streakReminderTime: time, sessionReminders: false };
+      const sent: string[] = [];
+      for (const check of checks) {
+        const due = dueReminders(
+          check,
+          s,
+          state({ sentToday: sent as ReminderState['sentToday'] }),
+          reminderTicksAfter(check),
+        );
+        sent.push(...due.map((r) => r.kind));
+      }
+      expect(sent, `${day} ${time}`).toEqual(['streak']);
+    }
   });
 });
