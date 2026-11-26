@@ -14,6 +14,13 @@ export function withoutSubject(answer: string, subject: string | undefined): str
   return right.trim();
 }
 
+/**
+ * `text` with the spaces around a sign or "/" removed ("- 3 / 8" -> "-3/8"). Any other space is
+ * kept, however long the run (two spaces, a tab, a non-breaking space), so digits are never
+ * joined across one: "1  1 / 3" stays "1  1/3", never 11/3.
+ */
+export const compactSpaces = (text: string): string => text.trim().replace(/\s*([/+-])\s*/g, '$1');
+
 /** The unicode minus and the dashes people type for one (−, –, —, ‒) as a plain "-". */
 export const withMinus = (text: string): string => text.replace(/[−–—‒]/g, '-');
 
@@ -130,8 +137,11 @@ export function inForm(text: string, form: AnswerForm): boolean {
   const t = withMinus(text).trim();
   if (form === 'standard_form') return standardForm(t)?.proper === true;
   if (form === 'index_form') return indexForm(t) !== null;
-  if (/^-?\d+$/.test(t)) return true;
-  const m = /^-?(\d+)\/(\d+)$/.exec(t);
+  // Spaces may sit around a sign or "/" (3 / 8). Any other space leaves a mixed number (1 1/3),
+  // which no form accepts, and never joins digits into 11/3.
+  const tight = compactSpaces(t);
+  if (/^-?\d+$/.test(tight)) return true;
+  const m = /^-?(\d+)\/(\d+)$/.exec(tight);
   if (!m) return false;
   const top = BigInt(m[1]!);
   const bottom = BigInt(m[2]!);
