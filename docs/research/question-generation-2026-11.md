@@ -43,6 +43,10 @@ mechanical cell checks. Both work. Both also found real traps: the physics sourc
 equations only by underlining, which text extraction loses; and French meanings must keep their
 person markers ("(we) must") or a question can have two right answers.
 
+**Own teaching content** (section 11, owner direction): worked examples can be computed like
+items; topic notes are fact-tier, claim by claim. Plan: links now, in-house notes next, then retire
+each external link once our notes cover the topic.
+
 **Biggest blockers are legal, not technical.** AQA leads 9 of our 15 subjects and its copyright
 policy bars its material from AI-assisted works (`docs/research/board-shares-2026-11.md`). The
 board-neutral DfE subject content (Open Government Licence) is the safest source for the
@@ -547,6 +551,10 @@ None of these is changed by this document. Each would change or add to a rule.
 9. **Legal checks** (owner and solicitor): short quotes from in-copyright set texts and films under
    the quotation exception; AQA and Pearson written answers on AI terms (already open in
    `project_memory/operations/contradictions.md`).
+10. **Teaching notes and Oak.** Whether lesson notes may be batch-sampled like items or need
+    individual approval, and whether Oak's open-licence text may be adapted as a starting draft
+    (each claim still officially cited) or used as an "other authoritative" source.
+11. **Readability thresholds** for notes (textstat), and whether they warn or block.
 
 ## 10. Proofs of concept
 
@@ -680,7 +688,105 @@ check pass; uniqueness report empty for F1 to F4.
   items at most (recognition, production and multiple choice per word), not the full 1,200 to 1,700
   words a student needs. The full lists are the boards' own (section 3.6).
 
-## 11. Sources, not confirmed, and hosts needed
+## 11. In-house teaching content (owner direction, 2026-11-26)
+
+The owner's direction, passed on by the lead: "Eventually I'd really like to have all that
+in-house": the explanations we now link out to under "Learn it first" (Oak, BBC Bitesize; Isaac
+Physics was also named). This section is about how RevisionDen could write its **own** verified
+topic notes, step-by-step explanations for each learning point, worked examples (1 to 3 per topic,
+`docs/CONTENT_PLAN.md`) and code-drawn diagrams, all under `docs/VERIFICATION.md` (section 1
+already lists "Lesson text and interactive lessons: every factual statement and every simulated
+behaviour").
+
+### 11.1 Guarantee tier per kind of teaching content
+
+| Content                                         | Best tier                                  | How                                                                                                                                                     | Where it can still go wrong                                                                                                  |
+| ----------------------------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Maths and science worked examples               | **(a) Computed**                           | A template writes the example and its steps; the engine checks every line (`worked_maths` steps, as for items). Science steps follow the equation sheet | Explanation wording around the numbers; the blind and adversarial checks still run                                           |
+| CS worked examples (traces, conversions)        | **(a) Computed**                           | The interpreter or tracer produces each step                                                                                                            | As above                                                                                                                     |
+| Code-drawn diagrams                             | **(a)** for values, **(c)** for labels     | SVG from the same data as the example; labels from a verified terminology table                                                                         | A diagram that is drawn right but teaches the wrong idea: the owner sees each diagram type once                              |
+| Vocabulary and grammar notes (French)           | **(b) Source-quoted**                      | Tables built from DfE annex E rows, grammar rules quoted from the subject content's grammar annex                                                       | Display clean-up (section 10.2)                                                                                              |
+| Set-text notes (plot by act, key quotes)        | **(b)** for quotes, **(c)** for commentary | Quotes and scene order from the public-domain text; commentary is claims and needs citations                                                            | Interpretation is not fact; keep commentary to what a cited source supports                                                  |
+| Topic notes (what you need to know)             | **(c) Fact**                               | One note per specification point, each sentence tied to a quote from the specification or DfE content; the same pipeline as items, run per claim        | Specifications state scope, not truth (section 1c): a sentence with no official source falls back to decisions 0008 and 0009 |
+| Explanations of why (misconceptions, intuition) | **(c) Fact** at best                       | Written from cited facts only; no new claims                                                                                                            | The easiest place for an invented fact; the adversarial review must check each sentence                                      |
+| Essay guidance (how to plan, model paragraphs)  | **(d) Judgement**                          | Tied to the board's assessment objectives; labelled as guidance                                                                                         | Board material and AQA's AI clause                                                                                           |
+
+**Review cost (estimates, as in section 2.3).** A topic note of about 300 words with 8 to 12 cited
+claims takes about 5 to 8 minutes to review; a computed worked example about 1 minute. Notes are
+lesson text, not quiz items, so whether they may be batch-sampled or need individual approval is
+not settled by `docs/VERIFICATION.md` (section 9, item 10 below). A GCSE subject of about 60
+specification points means about 60 notes and 60 to 180 worked examples: roughly 6 to 8 owner
+hours for notes if each is approved individually, plus 1 to 3 hours for computed examples.
+
+### 11.2 Readability for 14 to 18 year olds
+
+- **Tool:** `textstat` (MIT, PyPI 0.7.13, tools survey), run in the content pipeline on every note
+  and explanation. It gives standard formulas such as Flesch Reading Ease and Flesch-Kincaid grade.
+- **Use it as a warning, not a gate on meaning.** The formulas count sentence and word length, so
+  subject terms ("photosynthesis", "electromagnetic") push the score up whatever we do. Suggested
+  check: score the text with the topic's specification terms removed, and flag notes above a set
+  level for a rewrite. The thresholds are an owner decision (section 9, item 11); no figure is
+  proposed here as a fact.
+- Plain-English house rules already used in this repository apply: short sentences, one idea per
+  sentence, key terms defined where first used.
+
+### 11.3 Accessibility
+
+Already built and reused as is (`project_memory/domain/product-facts.md`):
+
+- **Read aloud** (Q2): Web Speech API with on-device voices preferred, maths read sensibly. Notes
+  need structure that reads well: headings, lists and no meaning carried only by layout.
+- **Reading comfort** (Q1): OpenDyslexic font (SIL OFL 1.1, bundled), text size, spacing and tint.
+  Notes must reflow at large text sizes (no fixed-width tables for prose).
+- **Diagrams:** each SVG has alt text generated from the same verified data, and a text
+  alternative (a table of the values) for graphs.
+- **Maths:** KaTeX or MathJax rendering (tools survey); MathJax has the better screen-reader output.
+
+### 11.4 Licensing: what we may take from Oak
+
+Oak's site (`www.thenational.academy`, `support.thenational.academy`) was **blocked** in this
+session. What follows comes from search results limited to Oak's own sites, so it is **not
+confirmed** and must be read on the live pages before anything is reused:
+
+- Oak's terms and conditions (https://www.thenational.academy/legal/terms-and-conditions)
+  reportedly put lessons published after September 2022 ("Collection 2") under the Open Government
+  Licence v3.0, which the terms say allows use for any purpose, including commercial, if its
+  conditions are followed; older content ("Collection 1") is reportedly on a limited licence for
+  non-commercial educational use.
+- Oak's help page "A guide to using our licensed content"
+  (https://support.thenational.academy/a-guide-to-our-website-licensing) reportedly requires a
+  specified attribution statement, says not to imply Oak endorses a product, and describes the
+  licence as compatible with CC BY 4.0.
+- Third-party material inside Oak lessons (images and other owners' content) is reportedly
+  excluded from the open licence (Oak blog, "Open innovation: Licensing and access to Oak's new
+  resources").
+
+**What this would allow, if confirmed:** adapting or paraphrasing Collection 2 text (with Oak's
+attribution, no endorsement claim, and third-party items left out), including in a paid tier. It
+would **not** make Oak a citation source: `docs/VERIFICATION.md` section 2 allows exam board and
+government documents first, and Oak is neither a board nor a regulator. Oak text could be a
+starting draft, but every claim in our note still needs an official citation. Whether Oak counts as
+"other authoritative" (with individual approval) is an owner decision (section 9, item 10).
+BBC Bitesize and Isaac Physics: no licence was checked; treat them as link-only.
+
+Hosts needed to confirm: `www.thenational.academy`, `support.thenational.academy`,
+`www.nationalarchives.gov.uk` (the OGL v3.0 text itself).
+
+### 11.5 Phased plan
+
+1. **Now: links.** Keep "Learn it first" links (Q5) as they are, per topic, checked weekly.
+2. **Next: in-house notes where we are strongest.** Start where content is computed or
+   source-quoted: maths worked examples from templates, physics and chemistry worked calculations,
+   CS traces, French grammar tables. Then topic notes for the same topics. A note ships only when it
+   passes the pipeline.
+3. **Then: retire links per topic.** When a topic's notes cover every learning point in that topic
+   (each learning point has a verified explanation and at least one worked example where the topic
+   has calculations), hide the external link for that topic. Keep the link data, so it can come back
+   if a note is quarantined.
+4. **Later: the essay subjects.** Guidance notes tied to assessment objectives, after the legal
+   questions on board material are settled.
+
+## 12. Sources, not confirmed, and hosts needed
 
 **Read directly on 2026-11-26** (SHA-256 of the file read):
 
@@ -725,5 +831,6 @@ check pass; uniqueness report empty for F1 to F4.
 
 **Hosts needed to check the rest:** `cdn.sanity.io` (AQA documents), `www.cambridge.org` (OCR's
 parent company terms), `www.gutenberg.org` and `standardebooks.org` (set-text sources),
-`pearson.com` and `loginstatic.pearson.com` (Pearson's wider terms), and the AQA copyright pages on
+`pearson.com` and `loginstatic.pearson.com` (Pearson's wider terms), `www.thenational.academy`
+and `support.thenational.academy` (Oak's licence, section 11.4), and the AQA copyright pages on
 `www.aqa.org.uk` (returned 403 rather than being blocked, so a retry may work).

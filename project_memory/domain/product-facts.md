@@ -928,6 +928,11 @@ Tags: #product #rules #limits #defaults
   Maths topics with items (n4, n7, a4, a6, a17, a18, r9, g9, g17), URLs found by web search only.
   All 11 returned 200 in the CI link check on 2026-11-25, so `checked_at` is set and the buttons
   show. No Bitesize links yet: bbc.co.uk could not be reached from the build environment.
+- Learn it first, in-house goal (owner direction 2026-11-26, not yet built): RevisionDen should
+  eventually write its own verified teaching content (topic notes, explanations per learning
+  point, worked examples, code-drawn diagrams) under `docs/VERIFICATION.md`, and retire each
+  external link once our notes cover the topic. Plan and open questions (Oak licence not yet
+  confirmed): `docs/research/question-generation-2026-11.md` section 11.
 
 ## Operator console (planned)
 
