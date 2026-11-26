@@ -76,13 +76,13 @@ the last one. Each stage ends with a `[minor]` release to `main`.
 
 ### Stage 4: Motivation and friends (target 00.05.000)
 
-| Feature                 | Acceptance criteria                                                                     |
-| ----------------------- | --------------------------------------------------------------------------------------- |
-| Badges and rewards      | 20+ rewards with varied targets; unlock avatar items                                    |
-| Friends league          | Weekly XP league; head-to-head challenges; parent-approved invites                      |
-| Skip days and gift days | Skip days earned by weekly goal; gift days come with rewards and can only be given away |
-| Subject mascot kits     | Pip the fox in a different kit per subject                                              |
-| Interactive lessons     | Brilliant-style simulations, starting with the weakest topics                           |
+| Feature                 | Acceptance criteria                                                                                                                                                                                |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Badges and rewards      | 20+ rewards with varied targets; unlock avatar items                                                                                                                                               |
+| Friends league          | Weekly XP league; head-to-head challenges; parent-approved invites                                                                                                                                 |
+| Skip days and gift days | Skip days earned by weekly goal; gift days come with rewards and can only be given away                                                                                                            |
+| Subject mascot kits     | Pip the fox in a different kit per subject                                                                                                                                                         |
+| Interactive lessons     | Brilliant-style simulations, starting with the weakest topics. Pilot pulled forward (owner, 2026-11-26): area model for factorising x² + bx + c (A4), see PRODUCT_RULES "Interactive lesson pilot" |
 
 ### Stage 5: Public release, optional (target 01.00.000)
 
