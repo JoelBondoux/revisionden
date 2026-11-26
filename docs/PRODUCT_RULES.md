@@ -1050,3 +1050,20 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   forced colours. Get help follows the theme too (light, dark, colour-blind), with its own calm,
   high-contrast colours (owner, 2026-11-25, W3). The sales site follows the
   device's theme only.
+
+## Screen layout
+
+- **Single screen for doing things** (owner design rule, 2026-11-26; how to apply it: lead ruling,
+  same day). On screens where the student does something, the main task fits on one screen
+  without scrolling, at 390 × 844 with default text: the question or card, the answer input, and
+  the primary button. The primary action is always in view (for example a sticky action bar).
+  Secondary detail sits behind a tap (expand, sheet or tab).
+  - Covered: the lesson and question player, flashcards (including Explain), the starting test,
+    the daily 5-a-day and recall, the map, Plan, the papers chooser, set complete and reward
+    moments, and the Me page.
+  - Not covered: reading pages (Get help, About, policies, long explanations, parent stats). These
+    may scroll.
+  - Accessibility wins: at 320 px or 200% text, or with a very long question, the page may scroll
+    up and down. It must never scroll sideways or clip content.
+  - Status: agreed, not yet applied everywhere. Mockups and the current heights are in
+    `docs/design/j12/` (AUDIT.md); the proposed e2e check is in `docs/design/j12/SKIN.md`.

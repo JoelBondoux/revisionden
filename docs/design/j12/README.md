@@ -3,6 +3,11 @@
 The owner's note: "the topic page is just too long, this needs a redesign." These are mockups for
 the owner to choose from. No product code has changed yet.
 
+J12 also covers two later owner notes: one consistent look across the student app, and a rule
+that interactive screens fit on one screen. See [AUDIT.md](AUDIT.md) for today's screens and
+[SKIN.md](SKIN.md) for the Doodle Diary skin, the three map layouts in it, and single-screen lesson
+and flashcard mockups.
+
 ## How they were made
 
 - The app on `dev`, run with `vite` and its built-in mock API (MSW). Made-up demo data only, no
