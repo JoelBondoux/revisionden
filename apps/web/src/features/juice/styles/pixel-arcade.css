@@ -1,0 +1,140 @@
+/*
+ * Pixel Arcade, an unlockable effect style (J10c, docs/GAME_FEEL.md). A retro arcade: square
+ * corners, chunky borders, neon on night blue and stepped motion. Every rule is scoped to the
+ * style. Transforms and opacity only; nothing blinks. Colours chosen for AA with their text.
+ */
+:root[data-effect-style='pixel-arcade'] {
+  --px-night: #0a0820;
+  --px-panel: #15123a;
+  --px-text: #e8fff4;
+  --px-green: #39ff88;
+  --px-pink: #ff4fd8;
+  --px-gold: #ffd23f;
+}
+
+/* ---------- Home ---------- */
+:root[data-effect-style='pixel-arcade'] .page-header .pill {
+  border-radius: 0;
+  box-shadow: 3px 3px 0 #000;
+}
+
+:root[data-effect-style='pixel-arcade'] .map-summary,
+:root[data-effect-style='pixel-arcade'] .daily-card,
+:root[data-effect-style='pixel-arcade'] .mission {
+  border: 3px solid var(--px-text);
+  border-radius: 0;
+  background: var(--px-panel);
+  color: var(--px-text);
+  box-shadow: 5px 5px 0 #000;
+}
+
+:root[data-effect-style='pixel-arcade'] .map-summary {
+  padding: var(--space-4);
+}
+
+:root[data-effect-style='pixel-arcade'] .map-summary__subject,
+:root[data-effect-style='pixel-arcade'] .mission__eyebrow {
+  color: var(--px-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+:root[data-effect-style='pixel-arcade'] .map-summary .secondary-text,
+:root[data-effect-style='pixel-arcade'] .daily-card .secondary-text,
+:root[data-effect-style='pixel-arcade'] .daily-card__count,
+:root[data-effect-style='pixel-arcade'] .mission__time {
+  color: var(--px-text);
+}
+
+/* Today's mission is the level-select screen's next stage. */
+:root[data-effect-style='pixel-arcade'] .mission {
+  border-color: var(--px-green);
+}
+
+:root[data-effect-style='pixel-arcade'] .hex--mastered .hex__shape {
+  --hex-border: var(--px-gold);
+}
+
+/* ---------- Rewards ---------- */
+:root[data-effect-style='pixel-arcade'] .rewards__step {
+  border-radius: 0;
+}
+
+:root[data-effect-style='pixel-arcade'] .rewards__step--earned {
+  background: var(--px-gold);
+  color: #000;
+  box-shadow: 2px 2px 0 #000;
+}
+
+/* ---------- Lesson moments ---------- */
+:root[data-effect-style='pixel-arcade'] .combo-badge {
+  border-radius: 0;
+  background: var(--px-pink);
+  color: #000;
+  box-shadow: 3px 3px 0 #000;
+  text-transform: uppercase;
+  animation: px-step var(--motion-medium) steps(4);
+}
+
+:root[data-effect-style='pixel-arcade'] .star--earned polygon {
+  fill: var(--px-gold);
+  stroke: #000;
+  stroke-linejoin: miter;
+}
+
+:root[data-effect-style='pixel-arcade'] .star--earned {
+  animation: px-step var(--motion-medium) steps(3) forwards;
+}
+
+/* Bursts and confetti are square pixels that don't spin. */
+:root[data-effect-style='pixel-arcade'] .burst__particle,
+:root[data-effect-style='pixel-arcade'] .confetti__piece {
+  border-radius: 0;
+}
+
+:root[data-effect-style='pixel-arcade'] .confetti__piece {
+  width: 8px;
+  height: 8px;
+}
+
+:root[data-effect-style='pixel-arcade'] .spark-0 {
+  background: #39ff88;
+}
+
+:root[data-effect-style='pixel-arcade'] .spark-1 {
+  background: #ff4fd8;
+}
+
+:root[data-effect-style='pixel-arcade'] .spark-2 {
+  background: #ffd23f;
+}
+
+:root[data-effect-style='pixel-arcade'] .spark-3 {
+  background: #4be3ff;
+}
+
+:root[data-effect-style='pixel-arcade'] .float-up {
+  color: var(--px-green);
+  text-shadow: 2px 2px 0 #000;
+  text-transform: uppercase;
+}
+
+/* Wins step into place a block at a time. */
+@keyframes px-step {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-effect-style='pixel-arcade'] .combo-badge,
+  :root[data-effect-style='pixel-arcade'] .star--earned {
+    animation: none;
+    opacity: 1;
+  }
+}

@@ -16,12 +16,12 @@ export function App() {
       <ReadingProvider>
         <ReadAloudProvider>
           <SoundProvider>
-            <EffectStyleProvider>
-              <StudentProvider>
+            <StudentProvider>
+              <EffectStyleProvider>
                 {import.meta.env.PROD && <UpdateBanner />}
                 <RouterProvider router={router} />
-              </StudentProvider>
-            </EffectStyleProvider>
+              </EffectStyleProvider>
+            </StudentProvider>
           </SoundProvider>
         </ReadAloudProvider>
       </ReadingProvider>

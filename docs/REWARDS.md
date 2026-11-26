@@ -288,6 +288,32 @@ badly together, refused by the picker. The choice is stored as `students.title_f
 only unlocked words. The Rewards page shows the title under the nickname with a picker. The friends
 league is not built yet; it should show the title under each nickname when it is.
 
+## Effect styles (J10b)
+
+An effect style is how rewards, combos, celebrations, the Home screen and Rewards look (see
+`docs/GAME_FEEL.md` "Effect styles"). The owner set the ladder on 2026-11-26, spread across the
+years so there is always a next one to aim for. Each style comes as an extra `effectStyle` item
+on a reward that already exists, tied to learning progress, so children who already earned it
+have the style straight away:
+
+| Style        | Comes with                      | Reward id            | Roughly when             |
+| ------------ | ------------------------------- | -------------------- | ------------------------ |
+| Sticker Book | Reaching level 3                | `level-3`            | The first week or two    |
+| Pop Burst    | Reaching level 5                | `level-5`            | The first month          |
+| Garden Grow  | Mastering 5 topics in a subject | `subject-topics-5`   | Usually the first term   |
+| Starlight    | Mastering 10 topics             | `topics-mastered-10` | Usually the first term   |
+| Comic Pop    | Reaching level 20               | `level-20`           | About the end of Year 9  |
+| Pixel Arcade | Reaching level 40               | `level-40`           | About the end of Year 10 |
+
+Doodle Diary is everyone's free default (owner decision 2026-11-26, built in J10d); Sticker Book
+is the level 3 reward. All six unlockable styles are built (J10c).
+
+They are added by `withEffectStyles` (`packages/core/src/catalogue/effect-styles.ts`), the same
+way as title words, so the source catalogue files are unchanged. `GET /v1/student/rewards/effect-styles`
+lists the styles a student has unlocked (`{ unlocked: string[] }`). The child picks one in
+Settings → Effect style; the choice is kept on the device, and a style that isn't unlocked falls
+back to Doodle Diary. Styles are never bought, never random and never tied to a streak.
+
 ## Secret achievements
 
 - A set of achievements whose names and conditions are hidden until earned. The rewards page shows
