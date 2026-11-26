@@ -198,6 +198,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Topic map redesign mockups (J12, docs only): `docs/design/j12/` has before shots and three directions for a shorter map (A collapsed units, B one unit at a time, C your path), each with a single Today strip, in light, dark, colour-blind, 320px and 200% text, with page lengths (today 10.8 screens at 390x844; the designs 1.3 to 1.5) and an accessibility comparison.
 - Maths templates design (T1, docs only): `docs/TEMPLATES.md` now describes how physics and chemistry calculation templates would work (units with pint, balancing with ChemPy, board data only, exact rounding, the three-way cross-check), and what must be sourced first. Nothing built.
 - Maths engine answer forms (T2, `app/forms.py`): `form` on `/check-working` expected answers and on content `value` and `expression` checks can be `fraction`, `simplest_fraction`, `improper_fraction`, `standard_form` or `index_form`; the answer must have the right value and be written in that form.
 - U6c: sound and haptic packs for Comic Pop, Garden Grow, Pixel Arcade and Doodle Diary (all 15 feedback events), matched to J's mockup previews. The sound bank gains filtered noise (paper and pencil textures, from a fixed-seed buffer) and low-passed square waves, allowed only in Comic Pop and Pixel Arcade. `DEFAULT_STYLE` is now `doodle-diary` (owner-approved); Sticker Book is an unlockable pack.
