@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Fixed: "Best combo" at the end of a lesson is now easy to read in every style, light and dark.
 - On small phones, the map now opens with "You are here" clear of the bottom bar, so tapping it starts your topic. The RevisionDen title on the welcome page also fits small screens with large text.
 - Fixed: in lessons, your XP count, "Comeback!" and the warm-up notes are now easy to read in every style, in light and dark.
 - Fixed: the "+XP" that pops up after a right answer is now easy to read in every style, in light and dark.
@@ -168,6 +169,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 ### Fixed
 
 - J16c (W18 follow-up): the lesson header's XP count, the warm-up and come-back note and "Comeback!" in the feedback were still arena gold on the look's light page (1.0 to 1.5:1 in every look). They, and the lesson's "+XP", now use `--color-primary-edge` (a deeper main colour in light mode, the light accent in dark), AA in all 10 looks, light and dark, measured by a new painted-page check in `e2e/tests/lesson.spec.ts`. `GAME_FEEL.md` records the rule: page text uses the edge colour, arena-surface text `--arena-glow`. Touches `features/learn/learn.css` (F's lane, as for J14).
+- Set complete: "Best combo" uses the arena's own text accent (`--arena-gold` was 1.37:1 on the light arena of Doodle Diary and Sticker Book); checked AA in all 10 looks, light and dark (W18; J's `learn.css`, approved crossing).
+- Flashcards: "10 more" now starts one new session, not two; the finished session no longer restarts when `extra` changes, which left a stray open session on the server (it never counted towards XP or the daily limit) (W18; F's `FlashcardsPage.tsx`, approved crossing).
 - Docs: `docs/GAME_FEEL.md` brought up to date with dev (ten styles in the checks and the dev tester; Doodle Diary and Sticker Book's Home notes no longer describe the old Today strip; Doodle Diary has its own sound pack; lesson "+XP" colour since J16b).
 - W16b (Codex review of train #368): the parent-session e2e's outside-request guard now also allows a deployed site's own API host (found with the deployed smoke test's `apiUrlFor`, `E2E_API_URL` wins), so the walk can run with `E2E_BASE_URL`. Third parties are still caught. New `e2e/tests/support/origins.ts` with pure checks in `e2e/tests/origins.spec.ts`.
 - J14c (Codex review of train #355): the empty-lesson and finished screens keep Pip's Home button (only the lesson header's `LessonPip` hides the layout's Pip row), and command words shows the avatar beside Pip's line. The lesson routes are one list, `LESSON_PATHS` (`layout/lessonRoutes.ts`), used by `routes.tsx` and the layout, with a test that they stay in step.
@@ -272,6 +275,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- E2E `daily-and-cards`: the 5-a-day from Home to Lesson complete and back to Home showing it done, and a whole flashcard session (with an Again) to "Done for today!", then "10 more" to "Deck done!", axe on every screen (W18, coverage gap 1; `docs/TESTING.md` section 6 updated).
 - W17: an end-to-end coverage map in `docs/TESTING.md` (section 6): which user journeys the Playwright suite walks end to end, and eight suggested gaps to fill next, in order. Docs only; none of the gap tests is started.
 - W16: a whole-session parent smoke test (`e2e/tests/parent-session.spec.ts`, phone project): a new parent signs in, confirms the terms, adds a child, links the child's device with the QR code, finishes, opens the family screen and Parent home, and reads the stats dashboard, with `axeWhenSettled` on every screen. Everything outside the browser is stubbed in the spec (made-up data, the existing stats fixture); sign-in never reaches Google, and the test fails if any request leaves the test server. `docs/TESTING.md` describes it.
 - W14: a whole-session smoke test (`e2e/tests/pupil-session.spec.ts`, phone project): a pupil unlocks with a passkey (Chromium's virtual authenticator), goes Home, opens the map, starts the "You are here" topic, answers, opens and collects the prize box, and goes back Home with Pip, with `axeWhenSettled` (WCAG 2.2 A/AA) on every screen. The API is stubbed with a made-up pupil and question. `docs/TESTING.md` describes it.

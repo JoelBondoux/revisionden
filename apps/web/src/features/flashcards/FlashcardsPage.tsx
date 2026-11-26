@@ -158,14 +158,17 @@ function ReviewSession({
   const [sooner, setSooner] = useState(0);
   const [result, setResult] = useState<FlashcardSessionResult | null>(null);
 
+  // The "10 more" batch this session was opened for. A later "10 more" brings new cards and so a
+  // new ReviewSession; this one must not restart for it (W18: that left a stray open session).
+  const [batch] = useState(extra);
   const start = useCallback(async () => {
     setError(null);
     try {
-      setSession(await api.startFlashcardSession(topicId, extra));
+      setSession(await api.startFlashcardSession(topicId, batch));
     } catch {
       setError('start');
     }
-  }, [api, topicId, extra]);
+  }, [api, topicId, batch]);
 
   useEffect(() => {
     void start();

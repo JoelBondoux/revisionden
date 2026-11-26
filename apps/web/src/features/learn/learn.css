@@ -196,9 +196,12 @@
   margin-bottom: var(--space-4);
 }
 
+/* W18: the set-complete stats sit on the look's arena, which is light in some looks, so "Best
+   combo" uses the arena's own text accent (as the lesson's "Show me" does), never arena gold
+   (1.37:1 on a light arena). AA in every look, checked in e2e daily-and-cards.spec.ts. */
 .stat--combo {
   grid-column: 1 / -1;
-  color: var(--arena-gold);
+  color: var(--arena-glow);
 }
 
 /* Learning from mistakes (F5): why a question is showing again, or a warm-up. */
