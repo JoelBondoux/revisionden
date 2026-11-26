@@ -82,6 +82,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- Fairer marking review fixes (F6, from Codex on #133): a multiply sign before a signed number is kept, so `3n*-2` no longer matches `3n-2`; with `any_order`, up to 4 letters on their own (`pq`) are a product; the maths engine accepts a letter answer either way round (`a = x`).
 - Scroll and focus on a screen change (I7): `RouteChange` (`apps/web/src/layout/RouteChange.tsx`) wraps every route. A new screen scrolls to the top and focuses its `h1` (or `#main`) without a focus ring; back and forward restore the position the reader last scrolled to (kept up to date as they scroll), waiting up to 5 seconds for a loading screen's content to make it reachable; `#id` links scroll to that part; a query-only change on the same screen keeps the position; the first screen is left alone.
 - Complaints (O): starting a complaint from a child's "ask a parent" request no longer pre-fills the child's nickname, which the API refused as personal details; the summary is "Raised for my child: <topic>." from `complaintSummaryFromRequest` (Codex review on #86).
 - Links (J7 follow-up): the no-plain-links guard test now also checks stats, the policy acceptance screen and the welcome page, now that K, L and I have converted their links; the per-workstream exclusion list is gone.
