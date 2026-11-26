@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { EffectStyleProvider, useEffectStyle } from './EffectStyleProvider';
 import { StudentProvider } from '../../../session/StudentContext';
@@ -30,6 +30,22 @@ describe('effect style provider', () => {
   beforeEach(() => {
     localStorage.clear();
     delete document.documentElement.dataset.effectStyle;
+  });
+
+  it('pauses the living progress bars while the tab is hidden', () => {
+    const hidden = vi.spyOn(document, 'hidden', 'get').mockReturnValue(true);
+    const { unmount } = render(
+      <EffectStyleProvider>
+        <Probe />
+      </EffectStyleProvider>,
+    );
+    act(() => void document.dispatchEvent(new Event('visibilitychange')));
+    expect(document.documentElement).toHaveClass('tab-hidden');
+    hidden.mockReturnValue(false);
+    act(() => void document.dispatchEvent(new Event('visibilitychange')));
+    expect(document.documentElement).not.toHaveClass('tab-hidden');
+    unmount();
+    hidden.mockRestore();
   });
 
   it('applies Doodle Diary to the page by default', () => {

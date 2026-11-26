@@ -93,6 +93,12 @@ importers:
 
   apps/web:
     dependencies:
+      '@fontsource/baloo-2':
+        specifier: 5.2.6
+        version: 5.2.6
+      '@fontsource/bangers':
+        specifier: 5.2.6
+        version: 5.2.6
       '@fontsource/nunito':
         specifier: ^5.3.0
         version: 5.3.0
@@ -102,6 +108,9 @@ importers:
       '@fontsource/patrick-hand':
         specifier: 5.3.0
         version: 5.3.0
+      '@fontsource/press-start-2p':
+        specifier: 5.2.6
+        version: 5.2.6
       '@revisionden/core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -1160,6 +1169,12 @@ packages:
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
+  '@fontsource/baloo-2@5.2.6':
+    resolution: {integrity: sha512-B+gINI0sVun4airBTw4kKVP24p1Di2PNKq7+Pcy/Na3g/wi50fyRuWjRn3QchA8Dn1D1PfRUmFuTridK52gx7Q==}
+
+  '@fontsource/bangers@5.2.6':
+    resolution: {integrity: sha512-KSOq6IE/wOwRRDPmpxBzleTy2Kg8GDkzYNdb15ZYWnJZIrfzP9Cllr3vqf7t/mxanI9ssE4hq5sT5fGyS1dz3A==}
+
   '@fontsource/nunito@5.3.0':
     resolution: {integrity: sha512-vw9TaTQJ/zpEpKrsODuPmOvaVjXgdda6B+xXA4YqjrdeJ62MLgVoDerdRXFQHyBnSCt2yQ2nHKCHPP/Pv7Xq4Q==}
 
@@ -1168,6 +1183,9 @@ packages:
 
   '@fontsource/patrick-hand@5.3.0':
     resolution: {integrity: sha512-V8C38IlIFfdWg0Xtri3F7sLCVpm069rUwn6w4n+oyn38gt7H4arOJmuReg3tAw1Q6jHqZp89wTnAAJagq4Atxw==}
+
+  '@fontsource/press-start-2p@5.2.6':
+    resolution: {integrity: sha512-qzNBsl4yQaLpQLftsj9kfrNvOrhftj5MUoNk3vQf3tQwZ4mhpDD6XucBWySlA1kG2q054pVqRt73UZSP0AldYA==}
 
   '@hexagon/base64@1.1.28':
     resolution: {integrity: sha512-lhqDEAvWixy3bZ+UOYbPwUbBkwBq5C1LAJ/xPC8Oi+lL54oyakv/npbA0aU2hgCsx/1NUd4IBvV03+aUBWxerw==}
@@ -4137,11 +4155,17 @@ snapshots:
       '@eslint/core': 0.17.0
       levn: 0.4.1
 
+  '@fontsource/baloo-2@5.2.6': {}
+
+  '@fontsource/bangers@5.2.6': {}
+
   '@fontsource/nunito@5.3.0': {}
 
   '@fontsource/opendyslexic@5.3.0': {}
 
   '@fontsource/patrick-hand@5.3.0': {}
+
+  '@fontsource/press-start-2p@5.2.6': {}
 
   '@hexagon/base64@1.1.28': {}
 
