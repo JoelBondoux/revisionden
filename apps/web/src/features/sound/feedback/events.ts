@@ -23,6 +23,17 @@ export const FEEDBACK_EVENTS = [
   'locked',
   // U7: the one-off reveal when the starting test unlocks three new styles at once.
   'stylesUnlocked',
+  // U8 (owner: "more exciting sounds, lots of pops & whizzes"), synced with J's particle bursts.
+  /** The daily goal ring completes: a whizz up, then a pop cascade. */
+  'goalHit',
+  /** A topic node completes on the map. */
+  'nodeComplete',
+  /** Moving between screens: a soft whoosh. */
+  'pageTransition',
+  /** One of J's particle bursts: a pop and a fizz. */
+  'particleBurst',
+  /** One prize popping out of the prize box; pass `step` (1, 2, 3...) so each pops higher. */
+  'prizeBox',
 ] as const;
 
 export type FeedbackEvent = (typeof FEEDBACK_EVENTS)[number];
@@ -45,6 +56,12 @@ const RULE: Record<FeedbackEvent, SoundEvent> = {
   nodePop: 'cardFlip',
   locked: 'cardFlip',
   stylesUnlocked: 'rewardUnlocked',
+  goalHit: 'celebration',
+  nodeComplete: 'cardFlip',
+  pageTransition: 'cardFlip',
+  // Bursts celebrate wins, so they wait for submit in Test mode like marking does.
+  particleBurst: 'correct',
+  prizeBox: 'rewardUnlocked',
 };
 
 export function feedbackAllowed(event: FeedbackEvent, mode?: SoundMode): boolean {

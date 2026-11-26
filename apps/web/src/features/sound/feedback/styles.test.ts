@@ -1,6 +1,8 @@
+import type { SoundFn } from '../bank';
 import { createFakeAudioContext } from '../fakeAudio';
 import { FEEDBACK_EVENTS, type FeedbackEvent } from './events';
 import {
+  basePacks,
   DEFAULT_STYLE,
   FEEDBACK_STYLES,
   SQUARE_LOWPASS_HZ,
@@ -73,7 +75,15 @@ describe('style sound packs', () => {
       for (const n of r.ctx.noises) expect(n.stop).not.toBeNull();
       const quick = ['buttonPress', 'xpTick', 'ringFill', 'cardFlip', 'nodePop'].includes(event);
       // The three-styles reveal is a one-off moment, so it may run longer (legendary cap: 3 s).
-      const longest = event === 'stylesUnlocked' ? 3 : quick ? 0.25 : 1.4;
+      // U8's new moments are quick bursts that sit under J's animations.
+      const caps: Partial<Record<FeedbackEvent, number>> = {
+        stylesUnlocked: 3,
+        pageTransition: 0.3,
+        particleBurst: 0.4,
+        prizeBox: 0.5,
+        nodeComplete: 0.8,
+      };
+      const longest = caps[event] ?? (quick ? 0.25 : 1.4);
       expect(r.end).toBeLessThanOrEqual(longest);
       // Volume-balanced: nothing louder than the existing correct chime's peak.
       expect(r.peak).toBeLessThanOrEqual(0.55);
@@ -214,5 +224,75 @@ describe('style sound packs', () => {
     // Major scale steps: whole, whole, half, whole, whole, whole (in semitones).
     const semis = first7.slice(1).map((f, i) => Math.round(12 * Math.log2(f / first7[i]!)));
     expect(semis).toEqual([2, 2, 1, 2, 2, 2]);
+  });
+
+  describe('U8: pops, whizzes and sparkles in every style', () => {
+    const notes = (style: FeedbackStyle, event: FeedbackEvent) => {
+      const r = render(style, event);
+      return r.ctx.oscillators.length + r.ctx.noises.length;
+    };
+    /** The same event with U8's layers stripped: what the pack played before U8. */
+    const base = (style: FeedbackStyle, event: FeedbackEvent) => {
+      const ctx = createFakeAudioContext('running');
+      (basePacks[style] as Record<string, SoundFn>)[event]!(ctx, ctx.createGain(), 0);
+      return ctx.oscillators.length + ctx.noises.length;
+    };
+
+    it.each(FEEDBACK_STYLES)('%s layers juice onto the big moments', (style) => {
+      for (const event of [
+        'correct',
+        'combo',
+        'setComplete',
+        'levelUp',
+        'rewardWobble',
+        'rewardOpen',
+        'rewardUnlock',
+      ] as const) {
+        expect(notes(style, event)).toBeGreaterThan(base(style, event));
+      }
+    });
+
+    it.each(FEEDBACK_STYLES)(
+      '%s: goal hit and level up whizz up, then pop in a cascade',
+      (style) => {
+        for (const event of ['goalHit', 'levelUp'] as const) {
+          const ctx = createFakeAudioContext('running');
+          stylePacks[style][event](ctx, ctx.createGain(), 0);
+          // Some sweep rises (an oscillator or noise filter whose pitch goes up over its note).
+          const sweeps = [
+            ...ctx.oscillators.map((o) => o.frequencies),
+            ...ctx.noises.map((n) => n.frequencies),
+          ].filter((f) => f.length > 1 && f[f.length - 1]! > f[0]! * 1.5);
+          expect(sweeps.length).toBeGreaterThan(0);
+          // A cascade: at least four separate onsets after the whizz.
+          const onsets = new Set(
+            [...ctx.oscillators, ...ctx.noises].map((o) => o.start!.toFixed(2)),
+          );
+          expect(onsets.size).toBeGreaterThanOrEqual(5);
+        }
+      },
+    );
+
+    it('the three-styles reveal gains a pop cascade but stays the same in every style', () => {
+      const sigs = new Set(FEEDBACK_STYLES.map((st) => render(st, 'stylesUnlocked').signature));
+      expect(sigs.size).toBe(1);
+      expect(notes(DEFAULT_STYLE, 'stylesUnlocked')).toBeGreaterThan(
+        base(DEFAULT_STYLE, 'stylesUnlocked'),
+      );
+    });
+
+    it('page transitions are a soft whoosh: quiet and short', () => {
+      for (const style of FEEDBACK_STYLES) {
+        const r = render(style, 'pageTransition');
+        expect(r.peak).toBeLessThanOrEqual(0.2);
+        expect(r.end).toBeLessThanOrEqual(0.3);
+      }
+    });
+
+    it('a prize pop climbs with the prize number, like a combo', () => {
+      expect(render('pop-burst', 'prizeBox', 1.5).first).toBeGreaterThan(
+        render('pop-burst', 'prizeBox', 1).first,
+      );
+    });
   });
 });
