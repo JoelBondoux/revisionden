@@ -11,6 +11,7 @@
     "verify": { "expression": "2 + 3/1" },
     "marks": 1,
     "mark_scheme": ["B1 for 5"],
+    "hint": "Replace x_n with x_0 = 1 in the formula and work it out.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -74,9 +75,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:40:18Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:30:11Z",
           "notes": "no problems found"
         }
       ]
@@ -94,6 +95,7 @@
     "verify": { "expression": "2 + 3/(2 + 3/1)" },
     "marks": 2,
     "mark_scheme": ["M1 for x_1 = 5", "A1 for 2.6"],
+    "hint": "Work out x_1 first, then put it back into the formula.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -157,9 +159,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:40:30Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:30:21Z",
           "notes": "no problems found"
         }
       ]
@@ -177,6 +179,7 @@
     "verify": { "expression": "2 + 3/(2 + 3/(2 + 3/1))" },
     "marks": 2,
     "mark_scheme": ["M1 for x_1 = 5 (or a correct x_2 = 2.6)", "A1 for 3.1538"],
+    "hint": "Work out x_1 and x_2 first, keeping full accuracy, then round x_3 at the end.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -242,7 +245,7 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:48:29Z",
+          "at": "2026-11-26T11:19:55Z",
           "notes": "no problems found"
         }
       ]
@@ -260,7 +263,9 @@
     "verify": { "expression": "((2 + 5)^(1/3) + 5)^(1/3)" },
     "marks": 2,
     "mark_scheme": ["M1 for x_1 = ∛7 = 1.91...", "A1 for 1.905"],
+    "hint": "Put x_0 = 2 into the formula to get x_1, then use x_1 to get x_2. Round only at the end.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
+    "needs_human_approval": true,
     "checked_by": ["maths-engine", "author"],
     "citations": [
       {
@@ -322,11 +327,11 @@
         },
         {
           "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:41:22Z",
-          "notes": "no problems found"
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:48:54Z",
+          "notes": "wrong_answer (answer): Using x_(n+1)=∛(x_n+5) with x_0=2 gives x_1=∛7≈1.912931 and then x_2=∛(1.912931+5)=∛6.912931≈1.905778, which rounds to 1.906 to 3 decimal places, not 1.905.; factual_error (mark_scheme): The final accuracy mark gives 1.905, but carrying out the iteration exactly as stated gives x_2≈1.905778, so to 3 decimal places the value is 1.906."
         }
       ]
     }
@@ -348,6 +353,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "f(x) changes sign between x = 2 and x = 3, so the graph of y = f(x) crosses the x-axis between them: there is a solution between 2 and 3.",
+    "hint": "Think about what the graph of y = f(x) must do between a point below the x-axis and a point above it.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["author"],
     "citations": [
@@ -401,14 +407,6 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:11:08Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -423,6 +421,14 @@
           "tool_version": "gpt-5.4-2026-03-05; gemini-2.5-pro",
           "at": "2026-11-25T20:41:58Z",
           "notes": "fact 1: maths engine proof pass; blind statement matches (\"If f is continuous on [a,b] and f(a) and f(b) have opposite signs (so f(a)f(b)<0), then there exists at least one c in (a,b) such that f(c)=0.\")"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:49:06Z",
+          "notes": "outside_specification (question): The item asks students to infer the existence of a root from sign changes of f(x) between x = 2 and x = 3. The only cited source is A20, 'find approximate solutions to equations numerically using iteration'. This source does not support assessing the Intermediate Value Theorem/sign-change argument used here.; unsupported_claim (explanation): The explanation states that because f(x) changes sign between x = 2 and x = 3, 'the graph of y = f(x) crosses the x-axis between them'. The quoted source does not provide support for this claim."
         }
       ]
     }
@@ -439,6 +445,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "x^3 - 4x - 1 = 0 gives x^3 = 4x + 1, so x = ∛(4x + 1).",
+    "hint": "Rearrange x^3 - 4x - 1 = 0 to get x^3 on its own, then take the cube root of both sides.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["author"],
     "citations": [
@@ -484,20 +491,20 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:44:38Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:30:58Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -514,6 +521,7 @@
     "verify": { "expression": "2^3 - 4*2 - 1" },
     "marks": 1,
     "mark_scheme": ["B1 for -1"],
+    "hint": "Put x = 2 into x^3 - 4x - 1: cube first, then multiply, then subtract.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -559,14 +567,6 @@
           "notes": "model answered \"-1\"; expected \"-1\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:11:24Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -581,6 +581,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:49:16Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -595,6 +603,7 @@
     "front": "x_(n+1) = 1 + 6/x_n and x_1 = 3. Work out x_2.",
     "back": "3",
     "explanation": "Put x_1 = 3 into the formula: x_2 = 1 + 6/3 = 1 + 2 = 3.",
+    "hint": "Put x_1 into the formula in place of x_n.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["author"],
     "citations": [
@@ -650,9 +659,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:50:31Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:49:27Z",
           "notes": "no problems found"
         }
       ]
@@ -668,6 +677,7 @@
     "front": "The name for using a formula such as x_(n+1) = g(x_n) again and again to find an approximate solution (one word)",
     "back": "Iteration",
     "explanation": "Using a formula again and again, each time putting in the last answer, is called iteration. When the values settle down, they give closer and closer approximations to a solution.",
+    "hint": "It is the name for repeating a process, each time using the last answer.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["author"],
     "needs_human_approval": true,
@@ -724,9 +734,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:57:26Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T11:31:31Z",
           "notes": "no problems found"
         }
       ]
@@ -742,6 +752,7 @@
     "front": "The iteration x_(n+1) = (x_n + 10)/3 is used to solve an equation. Starting with x_1 = 2, work out x_3.",
     "back": "14/3",
     "explanation": "Put x_1 = 2 into the formula: x_2 = (2 + 10)/3 = 12/3 = 4. Then put in x_2 = 4: x_3 = (4 + 10)/3 = 14/3.",
+    "hint": "Work out x_2 from x_1 = 2 first, then use x_2 to find x_3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A20",
     "checked_by": ["author"],
     "citations": [
@@ -787,20 +798,20 @@
           "at": "2026-11-25T19:05:18Z"
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:17:28Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "blind-answer",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
           "at": "2026-11-26T04:17:43Z",
           "notes": "model answered \"14/3\"; expected \"14/3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "gemini:gemini-2.5-pro",
+          "tool_version": "gemini-2.5-pro",
+          "at": "2026-11-26T11:20:07Z",
+          "notes": "no problems found"
         }
       ]
     }

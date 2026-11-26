@@ -92,4 +92,15 @@ describe('policies index', () => {
     );
     expect(screen.getByText('Parents and carers')).toBeInTheDocument();
   });
+
+  // J15a (owner, 2026-11-26): the policy rows become themed buttons: the policy's name and who it
+  // is for, without the helper sentence.
+  it('shows each policy as a button tile named by its title and who it is for', () => {
+    show('/legal');
+    const link = screen.getByRole('link', { name: 'Privacy notice Parents and carers' });
+    expect(link).toHaveClass('button-tile');
+    expect(link.closest('ul')).toHaveClass('button-tiles');
+    expect(document.querySelector('.link-tile')).toBeNull();
+    expect(screen.queryByText('What we collect, why, and your rights')).not.toBeInTheDocument();
+  });
 });

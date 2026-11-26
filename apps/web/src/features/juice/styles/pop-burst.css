@@ -155,3 +155,62 @@
     opacity: 1;
   }
 }
+
+/* ---------- J15a: button tiles and page transition (a bouncy pop-in) ---------- */
+:root[data-effect-style='pop-burst'] .button-tile {
+  border: 0;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #7b54f0 0%, var(--pb-night) 60%, var(--pb-violet) 100%);
+  box-shadow:
+    0 6px 0 #3a1a7a,
+    0 10px 18px rgb(91 51 214 / 30%);
+  color: #fff;
+}
+
+:root[data-effect-style='pop-burst'] .button-tile::before {
+  position: absolute;
+  inset: 6px 12px auto;
+  height: 32%;
+  border-radius: 18px;
+  background: linear-gradient(rgb(255 255 255 / 45%), rgb(255 255 255 / 0%));
+  content: '';
+  pointer-events: none;
+}
+
+:root[data-effect-style='pop-burst'] .button-tile__icon {
+  background: var(--pb-gold);
+  color: var(--pb-ink);
+  box-shadow: 0 3px 0 var(--pb-gold-edge);
+}
+
+:root[data-effect-style='pop-burst'] .button-tile__badge {
+  background: rgb(255 255 255 / 20%);
+  color: #fff;
+}
+
+:root[data-effect-style='pop-burst'] .button-tile:active {
+  transform: translateY(5px) scale(1.04, 0.9);
+  box-shadow: 0 1px 0 #3a1a7a;
+}
+
+:root[data-effect-style='pop-burst'] .page-enter {
+  animation: pb-pop-in 340ms cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+:root[data-effect-style='pop-burst'] .page-enter.page-enter--back {
+  animation: pb-pop-back 300ms cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+@keyframes pb-pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+}
+
+@keyframes pb-pop-back {
+  from {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+}

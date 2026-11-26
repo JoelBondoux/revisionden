@@ -11,6 +11,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "Subtract u: v - u = at. Divide by a: t = (v - u)/a.",
+    "hint": "Undo what is done to t one step at a time: first remove u from the right-hand side, then deal with the a.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
     "checked_by": ["author"],
     "citations": [
@@ -56,20 +57,20 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:57:04Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:25:27Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -86,6 +87,7 @@
     "answer": { "option": 1 },
     "marks": 1,
     "explanation": "Add 7: y + 7 = 3x. Divide by 3: x = (y + 7)/3.",
+    "hint": "Undo the - 7 first by doing the inverse to both sides, then undo the multiply by 3.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
     "checked_by": ["author"],
     "citations": [
@@ -131,20 +133,20 @@
           "notes": "model answered \"1\"; expected \"1\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:57:18Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:25:28Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -161,6 +163,7 @@
     "answer": { "option": 2 },
     "marks": 1,
     "explanation": "Multiply by 5: 5y = x + 4. Subtract 4: x = 5y - 4.",
+    "hint": "Clear the fraction first by multiplying both sides by 5, then get x on its own.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
     "checked_by": ["author"],
     "citations": [
@@ -206,20 +209,20 @@
           "notes": "model answered \"2\"; expected \"2\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:57:33Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:25:30Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -241,6 +244,7 @@
     "answer": { "option": 0 },
     "marks": 1,
     "explanation": "Multiply by (b - 1): ab - a = 2b + 3. Collect b terms: ab - 2b = a + 3. Factorise: b(a - 2) = a + 3, so b = (a + 3)/(a - 2).",
+    "hint": "Multiply both sides by (b - 1), gather all the b terms on one side, then factorise out b.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
     "checked_by": ["author"],
     "citations": [
@@ -286,20 +290,20 @@
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T18:58:38Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:25:32Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -316,6 +320,7 @@
     "verify": { "expression": "(1/2)*(5 + 9)*4" },
     "marks": 2,
     "mark_scheme": ["M1 for (1/2) × (5 + 9) × 4", "A1 for 28"],
+    "hint": "Add a and b first, then multiply by h and halve the result.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -379,9 +384,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:37:41Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:25:34Z",
           "notes": "no problems found"
         }
       ]
@@ -399,6 +404,7 @@
     "verify": { "expression": "pi*3^2" },
     "marks": 2,
     "mark_scheme": ["M1 for π × 3^2", "A1 for 28.3"],
+    "hint": "Square the radius first, then multiply by π. Round only at the very end.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -462,9 +468,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:37:56Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:25:35Z",
           "notes": "no problems found"
         }
       ]
@@ -483,6 +489,7 @@
     "steps": ["30 = 2(9 + w)", "15 = 9 + w", "w = 6"],
     "marks": 2,
     "mark_scheme": ["M1 for 30 = 2(9 + w) or 15 = 9 + w", "A1 for w = 6"],
+    "hint": "Put in the values you know, divide both sides by 2, then get w on its own.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -540,14 +547,6 @@
           "notes": "model answered \"6\"; expected \"6\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:40:29Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -562,6 +561,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:25:37Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -579,6 +586,7 @@
     "steps": ["115 = 40 + 25h", "75 = 25h", "h = 3"],
     "marks": 2,
     "mark_scheme": ["M1 for 115 = 40 + 25h", "A1 for h = 3"],
+    "hint": "Put C = 115 into the formula, take away the fixed 40, then divide by the cost per hour.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
     "checked_by": ["maths-engine", "author"],
     "citations": [
@@ -636,14 +644,6 @@
           "notes": "model answered \"3\"; expected \"3\""
         },
         {
-          "name": "adversarial-review",
-          "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-25T17:40:42Z",
-          "notes": "no problems found"
-        },
-        {
           "name": "schema",
           "result": "pass",
           "tool": "revisionden-content-validate",
@@ -658,6 +658,14 @@
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
           "at": "2026-11-25T19:05:18Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:25:39Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -672,6 +680,7 @@
     "front": "Make x the subject of y = x + 5",
     "back": "x = y - 5",
     "explanation": "x has 5 added to it. Do the inverse to both sides: subtract 5. y - 5 = x, so x = y - 5.",
+    "hint": "Something is added to x. Do the inverse operation to both sides.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
     "checked_by": ["author"],
     "citations": [
@@ -727,9 +736,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:49:57Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:25:40Z",
           "notes": "no problems found"
         }
       ]
@@ -745,6 +754,7 @@
     "front": "Make x the subject of y = 4x",
     "back": "x = y/4",
     "explanation": "x is multiplied by 4. Do the inverse to both sides: divide by 4. y/4 = x, so x = y/4.",
+    "hint": "x is multiplied by a number. Do the inverse operation to both sides.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
     "checked_by": ["author"],
     "citations": [
@@ -800,9 +810,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:50:04Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:25:42Z",
           "notes": "no problems found"
         }
       ]
@@ -818,6 +828,7 @@
     "front": "Make x the subject of y = x/3",
     "back": "x = 3y",
     "explanation": "x is divided by 3. Do the inverse to both sides: multiply by 3. 3y = x, so x = 3y.",
+    "hint": "x is divided by a number. Do the inverse operation to both sides.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference A5",
     "checked_by": ["author"],
     "citations": [
@@ -873,9 +884,9 @@
         {
           "name": "adversarial-review",
           "result": "pass",
-          "tool": "gemini:gemini-2.5-pro",
-          "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T03:50:11Z",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-26T10:25:43Z",
           "notes": "no problems found"
         }
       ]

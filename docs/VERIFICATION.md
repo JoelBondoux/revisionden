@@ -270,9 +270,20 @@ answers: same words ignoring case and end punctuation, or the same answer under 
 side is compared with the expected one, notation is read strictly so `/ 2a` is not `/ (2a)`), and the
 answer states every listed condition such as `a ≠ 0` as a whole clause (`a ≠ 0.5` does not count), otherwise it fails for a person to check; worked maths: the same
 solutions in any order (a solution may use other letters, `x = 2a`), or the same expression; an answer written `<subject> = …` counts as its right-hand side when the item declares that `answer.subject`). The reviewer sees the whole item and the
-quoted sources (and, for typed answers, a note of the marking normaliser's rules such as spaces and multiply signs, and for `any_order` items a note not to ask for reordered versions of the accepted answers, so it does not ask for forms marking already accepts) and must report factual errors, a wrong answer, ambiguity, a second correct
+quoted sources (and, for typed answers, a note of the marking normaliser's rules such as spaces and multiply signs, and for `any_order` items a note not to ask for reordered versions of the accepted answers, so it does not ask for forms marking already accepts; and, for an item with a hint, that a hint is a method nudge judged against the item's engine-checked steps and explanation: it must not reveal the answer, must agree with the steps, must be mathematically correct and suitable for the age group, and any new factual claim in it still needs a quoted source). The reviewer also carries out each step of the hint, explanation and model solution literally on the question's numbers, and reports a factual_error if doing exactly what it says gives a wrong value or does not reach the marked answer ("write 2.45 over 100" gives 0.0245) and must report factual errors, a wrong answer, ambiguity, a second correct
 option, content outside the specification, unsupported claims or poor wording; any problem or
 an unsure reviewer fails. Tests use recorded fixtures only.
+
+**Hints (S3-A-H, 2026-11-26).** A `hint` is educational content and goes through the same checks
+as the rest of the item (the adversarial review sees it; the blind answer does not). It is a one- or
+two-sentence nudge toward the method, grounded in the item's own steps, explanation and citations,
+and never the answer or a step that gives it away. `pnpm content:validate` refuses a hint that
+contains the item's final answer (`scripts/content/hint-check.mjs`): the accepted text for short
+answers, the expression or solutions for worked maths, the correct option for multiple choice and
+the back of a flashcard (ignoring case, spaces next to symbols and the minus sign used), or, for a
+numeric answer, any number in the hint (standard form, mixed numbers, fractions and decimals
+with thousands separators all count) equal to it or within 0.5% of it (`1/2` for 0.5, `1.333` for
+4/3, `640000000` for 6.4 × 10^8), unless the question already shows that number written the same way.
 
 **Answer format (S3-A rulings, 2026-11-25).** One set of rules in `packages/core/src/answer-format.ts`
 serves student marking, content validation and the blind check, and the maths engine applies the same

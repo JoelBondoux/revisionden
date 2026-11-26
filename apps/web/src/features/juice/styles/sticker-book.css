@@ -277,3 +277,51 @@
     opacity: 1;
   }
 }
+
+/* ---------- J15a: button tiles and page transition (a sticker peel) ---------- */
+:root[data-effect-style='sticker-book'] .button-tile {
+  border: 0;
+  border-radius: 20px;
+  box-shadow: var(--sb-sticker);
+  rotate: -1.5deg;
+}
+
+:root[data-effect-style='sticker-book'] .button-tiles__item:nth-child(even) .button-tile {
+  rotate: 1.5deg;
+}
+
+:root[data-effect-style='sticker-book'] .button-tile__icon {
+  background: var(--sb-tape);
+  color: var(--sb-ink);
+}
+
+:root[data-effect-style='sticker-book'] .button-tile:active {
+  transform: scale(0.94);
+  box-shadow:
+    0 0 0 3px #fff,
+    0 0 0 5px var(--sb-edge);
+}
+
+:root[data-effect-style='sticker-book'] .page-enter {
+  transform-origin: top left;
+  animation: sb-peel-in 300ms var(--ease-spring);
+}
+
+:root[data-effect-style='sticker-book'] .page-enter.page-enter--back {
+  transform-origin: top right;
+  animation: sb-peel-back 300ms var(--ease-spring);
+}
+
+@keyframes sb-peel-in {
+  from {
+    opacity: 0;
+    transform: rotate(-5deg) translate(-16px, -10px);
+  }
+}
+
+@keyframes sb-peel-back {
+  from {
+    opacity: 0;
+    transform: rotate(5deg) translate(16px, -10px);
+  }
+}
