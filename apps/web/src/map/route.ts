@@ -156,11 +156,16 @@ export function layoutRoute({
     for (const a of mainRows[m - 1]!.points)
       for (const b of mainRows[m]!.points) segments.push({ from: a.key, to: b.key, kind: 'main' });
   }
+  // A branch forks off the row before it and rejoins the row after it; at the start or end of a
+  // unit there is nothing to fork from or rejoin, so that end is simply open.
   rows.forEach((row, i) => {
     if (!isHigher(row)) return;
-    segments.push({ from: rows[i - 1]!.points[0]!.key, to: row.points[0]!.key, kind: 'branch' });
-    if (!isHigher(rows[i + 1]))
-      segments.push({ from: row.points[0]!.key, to: rows[i + 1]!.points[0]!.key, kind: 'branch' });
+    const before = rows[i - 1];
+    const after = rows[i + 1];
+    if (before)
+      segments.push({ from: before.points[0]!.key, to: row.points[0]!.key, kind: 'branch' });
+    if (after && !isHigher(after))
+      segments.push({ from: row.points[0]!.key, to: after.points[0]!.key, kind: 'branch' });
   });
   if (shape === 'a curl') {
     const at = (key: string) => points.find((p) => p.key === key)!;

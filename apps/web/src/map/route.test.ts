@@ -70,6 +70,21 @@ describe('the route through a unit', () => {
     );
   });
 
+  it('copes with a Higher branch at the start or the end of a unit (Codex review of #307)', () => {
+    const h = (key: string) => ({ key, kind: 'higher' as const });
+    const first = layoutRoute({ seed: 'h0', items: [h('h1'), main('a'), main('b')] });
+    expect(first.points.map((p) => p.key)).toEqual(expect.arrayContaining(['h1', 'a', 'b']));
+    expect(
+      first.segments.filter((s) => s.kind === 'branch').map((s) => `${s.from}>${s.to}`),
+    ).toEqual(['h1>a']);
+    const last = layoutRoute({ seed: 'h9', items: [main('a'), main('b'), h('h1')] });
+    // At the end, the branch rejoins at the unit challenge.
+    expect(
+      last.segments.filter((s) => s.kind === 'branch').map((s) => `${s.from}>${s.to}`),
+    ).toEqual(['b>h1', 'h1>quest']);
+    expect(layoutRoute({ seed: 'hh', items: [h('h1'), h('h2')] }).points).toHaveLength(3);
+  });
+
   it('splits around two topics that can be done in either order, then rejoins', () => {
     const items = [
       main('a'),

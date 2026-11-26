@@ -481,15 +481,23 @@ export function WigglyMap({
     [map.units.length],
   );
 
-  // Open on the current unit, and on its current topic (done topics below it).
+  // Open on the current unit. Every unit's path starts at its next topic (done topics below it):
+  // the current topic, else the lowest topic you can do, else the bottom. Placed once, so each
+  // unit keeps where you left it when you come back (Codex review of #307).
   useEffect(() => {
     const el = pager.current;
     if (!el) return;
     el.scrollLeft = start * el.clientWidth;
-    const page = el.children[start] as HTMLElement | undefined;
-    const current = page?.querySelector<HTMLElement>('[data-current]');
-    if (page && current) page.scrollTop = Math.max(0, current.offsetTop - page.clientHeight / 2);
-    else if (page) page.scrollTop = page.scrollHeight;
+    for (const child of Array.from(el.children)) {
+      const page = child as HTMLElement;
+      const available = Array.from(
+        page.querySelectorAll<HTMLElement>('.path-node--open, .path-node--weak'),
+      ).sort((a, b) => b.offsetTop - a.offsetTop);
+      const target = page.querySelector<HTMLElement>('[data-current]') ?? available[0];
+      page.scrollTop = target
+        ? Math.max(0, target.offsetTop - page.clientHeight / 2)
+        : page.scrollHeight;
+    }
   }, [start]);
 
   const scrollTimer = useRef<ReturnType<typeof setTimeout>>();

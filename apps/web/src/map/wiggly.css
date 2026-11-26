@@ -229,6 +229,24 @@
   height: 18px;
 }
 
+/* The text on a node (an open or weak topic's %, the Higher H) uses the node's ink, else the
+   style's ink, set on the text itself so the dark theme's link colour cannot override it (Codex
+   review of #307; 4.5:1 checked in e2e map.spec.ts for every style, light and dark). */
+.path-node .path-node__pct,
+.path-node .path-node__h {
+  color: var(--node-ink, var(--ink, var(--color-text)));
+}
+
+/* Sticker Book keeps white tiles at night, so their text stays dark ink. */
+:root[data-effect-style='sticker-book'][data-theme='dark'] .wiggly-map {
+  --node-ink: #2f2a3d;
+}
+
+/* Pop Burst's vivid purple page is dark mode only, so its see-through tiles need a solid fill there. */
+:root[data-effect-style='pop-burst'][data-theme='dark'] .wiggly-map {
+  --node-bg: #fff;
+}
+
 .path-node__pct {
   font-size: 0.75rem;
   font-weight: 900;

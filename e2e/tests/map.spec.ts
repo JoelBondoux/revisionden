@@ -106,6 +106,21 @@ test('swipe sideways, or use the arrows, for the next unit', async ({ page }) =>
   ).toBeVisible();
 });
 
+// Codex review of #307: every unit opens near the topics you can do next, not at the top of its
+// path, the first time you visit it, and keeps where you left it after that.
+test('another unit opens near its next topic, then remembers where you were', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await openMap(page);
+  // The map opens on Algebra; Number's weak topics sit low on its path.
+  await page.getByRole('button', { name: 'Previous unit' }).click();
+  const number = page.locator('.wiggly-map__page').nth(0);
+  await expect(number.locator('.path-node--weak').first()).toBeInViewport();
+  await number.evaluate((el) => (el.scrollTop = 40));
+  await page.getByRole('button', { name: 'Next unit' }).click();
+  await page.getByRole('button', { name: 'Previous unit' }).click();
+  expect(await number.evaluate((el) => el.scrollTop)).toBe(40);
+});
+
 test('the big subject box opens Subject selection', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await openMap(page);
@@ -351,6 +366,70 @@ for (const scheme of ['light', 'dark'] as const) {
         { b64: shot.toString('base64') },
       );
       for (const r of result) failures.push(`${style} ${scheme} ${r}`);
+    }
+    expect(failures).toEqual([]);
+  });
+}
+
+// Codex review of #307: the text on a node (an open or weak topic's %, the Higher H) reads 4.5:1
+// on the node's own fill, in every style, light and dark.
+for (const scheme of ['light', 'dark'] as const) {
+  test(`in ${scheme} mode the % and H on every node read 4.5:1, in every style`, async ({
+    page,
+  }) => {
+    await page.emulateMedia({ colorScheme: scheme });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await openMap(page);
+    const failures: string[] = [];
+    for (const style of STYLES) {
+      await page.evaluate((s) => (document.documentElement.dataset.effectStyle = s), style);
+      const found = await page.evaluate(() => {
+        const ctx = document.createElement('canvas').getContext('2d')!;
+        const parse = (c: string): number[] | null => {
+          if (!c || c === 'none' || c === 'transparent') return null;
+          ctx.clearRect(0, 0, 1, 1);
+          ctx.fillStyle = '#000';
+          ctx.fillStyle = c;
+          ctx.fillRect(0, 0, 1, 1);
+          const d = ctx.getImageData(0, 0, 1, 1).data;
+          return d[3] ? [d[0]!, d[1]!, d[2]!, d[3]! / 255] : null;
+        };
+        const lum = ([r, g, b]: number[]) => {
+          const f = (c: number) =>
+            (c /= 255) <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+          return 0.2126 * f(r!) + 0.7152 * f(g!) + 0.0722 * f(b!);
+        };
+        const over = (c: number[], bg: number[]) =>
+          c.slice(0, 3).map((v, i) => v * (c[3] ?? 1) + bg[i]! * (1 - (c[3] ?? 1)));
+        const ratio = (a: number[], b: number[]) => {
+          const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m) as [number, number];
+          return (x + 0.05) / (y + 0.05);
+        };
+        const pageBg = parse(getComputedStyle(document.body).backgroundColor) ?? [255, 255, 255, 1];
+        const out: string[] = [];
+        for (const text of Array.from(
+          document.querySelectorAll<HTMLElement>(
+            '.path-node:not(.path-node--locked) .path-node__pct, .path-node .path-node__h',
+          ),
+        )) {
+          const node = text.closest('.path-node')!;
+          const cs = getComputedStyle(node);
+          const fills = (
+            cs.backgroundImage.match(/(rgba?|color)\([^)]*\)|#[0-9a-f]{3,8}\b/gi) || []
+          )
+            .map(parse)
+            .filter((c): c is number[] => Boolean(c && c[3]! > 0.5));
+          const solid = parse(cs.backgroundColor);
+          const under = fills.length ? fills : [solid && solid[3]! > 0.2 ? solid : pageBg];
+          const ink = parse(getComputedStyle(text).color)!;
+          const worst = Math.min(
+            ...under.map((u) => ratio(over(ink, over(u, pageBg)), over(u, pageBg))),
+          );
+          if (worst < 4.5) out.push(`${node.className} ${text.textContent}: ${worst.toFixed(2)}`);
+        }
+        return out;
+      });
+      for (const f of found) failures.push(`${style} ${scheme} ${f}`);
     }
     expect(failures).toEqual([]);
   });
